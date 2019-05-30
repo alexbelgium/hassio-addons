@@ -1,0 +1,52 @@
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+variables:
+  versionHadolint: 'v1.16.3'
+  versionBuilder: '2.0'
+
+jobs:
+
+- job: 'Hadolint'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - script: sudo docker pull hadolint/hadolint:$(versionHadolint)
+    displayName: 'Install Hadolint'
+  - script: |
+      set -e
+      shopt -s globstar
+      for dockerfile in **/Dockerfile
+      do
+        echo "Linting: $dockerfile"
+        sudo docker run --rm -i \
+          -v $(pwd)/.hadolint.yaml:/.hadolint.yaml:ro \
+          hadolint/hadolint:$(versionHadolint) < "$dockerfile"
+      done
+    displayName: 'Run Hadolint'
+
+- job: 'JQ'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - script: sudo apt-get install -y jq
+    displayName: 'Install JQ'
+  - bash: |
+      shopt -s globstar
+      cat **/*.json | jq '.'
+    displayName: 'Run JQ'
+
+- job: 'znc'
+  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  dependsOn:
+  - 'Hadolint'
+  - 'JQ'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - template: .azure-pipelines/addon-template.yml
+    parameters:
+      addon: 'znc'
+      arch: '--all'
