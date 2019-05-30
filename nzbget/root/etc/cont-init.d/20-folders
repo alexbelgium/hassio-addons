@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bash
+
+mkdir -p /share/downloads
+mkdir -p /config/nzbget
