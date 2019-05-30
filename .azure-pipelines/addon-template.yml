@@ -5,10 +5,7 @@ parameters:
   arch: ''
 
 steps:
-  - task: Docker@2
-    inputs:
-      containerRegistry: 'DockerHub'
-      command: 'login'
+  - script: sudo docker login -u $(dockerUser) -p $(dockerPassword)
     displayName: 'DockerHub login'
   - script: sudo docker pull homeassistant/amd64-builder:$(versionBuilder)
     displayName: 'Install Builder'
