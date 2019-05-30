@@ -50,3 +50,16 @@ jobs:
     parameters:
       addon: 'znc'
       arch: '--all'
+
+- job: 'hydra2'
+  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  dependsOn:
+  - 'Hadolint'
+  - 'JQ'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - template: .azure-pipelines/addon-template.yml
+    parameters:
+      addon: 'hydra2'
+      arch: '--all'

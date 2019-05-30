@@ -2,7 +2,7 @@
     "name": "znc",
     "version": "0.0.5",
     "slug": "znc",
-    "description": "znc add-on based on linuxserver.io image",
+    "description": "IRC network bouncer",
     "url": "https://github.com/petersendev/hassio-addons/znc",
     "startup": "services",
     "arch": [

@@ -1,0 +1,33 @@
+{
+    "name": "hydra2",
+    "version": "0.0.1",
+    "slug": "hydra2",
+    "description": "Meta search application for NZB indexers",
+    "url": "https://github.com/petersendev/hassio-addons/hydra2",
+    "startup": "services",
+    "arch": [
+      "aarch64",
+      "amd64",
+      "armhf"
+    ],
+    "ports": {
+      "5076/tcp": 5076
+    },
+    "ports_description": {
+      "5076/tcp": "web interface"
+    },
+    "map": [
+      "config:rw",
+      "share:rw",
+      "ssl"
+    ],
+    "webui": "http://[HOST]:[PORT:5076]",
+    "boot": "auto",
+    "environment": {
+      "PUID": "1000",
+      "PGID": "1000"
+    },
+    "options": {},
+    "schema": {},
+    "image": "petersendev/hassio-hydra2-{arch}"
+  }
