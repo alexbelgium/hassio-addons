@@ -1,6 +1,6 @@
 {
     "name": "nzbget",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "slug": "nzbget",
     "legacy": true,
     "description": "Usenet downloader",
