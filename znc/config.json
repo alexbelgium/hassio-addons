@@ -1,7 +1,8 @@
 {
     "name": "znc",
-    "version": "0.0.5",
+    "version": "0.1.0",
     "slug": "znc",
+    "legacy": true,
     "maintenance": {
       "github_release": "https://github.com/linuxserver/docker-znc"
     },
@@ -28,11 +29,14 @@
     ],
     "webui": "http://[HOST]:[PORT:6500]",
     "boot": "auto",
-    "environment": {
-      "PUID": "1000",
-      "PGID": "1000"
+    "options": {
+      "PUID": 1001,
+      "PGID": 1001
     },
-    "options": {},
-    "schema": {},
+    "schema": {
+      "PUID": "int",
+      "PGID": "int",
+      "TZ": "str?"
+    },
     "image": "petersendev/hassio-znc-{arch}"
   }
