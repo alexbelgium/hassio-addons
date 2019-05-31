@@ -1,7 +1,8 @@
 {
     "name": "hydra2",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "slug": "hydra2",
+    "legacy": true,
     "description": "Meta search application for NZB indexers",
     "url": "https://github.com/petersendev/hassio-addons/hydra2",
     "startup": "services",
@@ -23,11 +24,14 @@
     ],
     "webui": "http://[HOST]:[PORT:5076]",
     "boot": "auto",
-    "environment": {
-      "PUID": "1000",
-      "PGID": "1000"
+    "options": {
+      "PUID": 1001,
+      "PGID": 1001
     },
-    "options": {},
-    "schema": {},
+    "schema": {
+      "PUID": "int",
+      "PGID": "int",
+      "TZ": "str?"
+    },
     "image": "petersendev/hassio-hydra2-{arch}"
   }

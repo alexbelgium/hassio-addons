@@ -1,7 +1,8 @@
 {
     "name": "nzbget",
-    "version": "0.0.4",
+    "version": "0.1.0",
     "slug": "nzbget",
+    "legacy": true,
     "description": "Usenet downloader",
     "url": "https://github.com/petersendev/hassio-addons/nzbget",
     "startup": "services",
@@ -23,11 +24,14 @@
     ],
     "webui": "http://[HOST]:[PORT:6789]",
     "boot": "auto",
-    "environment": {
-      "PUID": "1000",
-      "PGID": "1000"
+    "options": {
+      "PUID": 1001,
+      "PGID": 1001
     },
-    "options": {},
-    "schema": {},
+    "schema": {
+      "PUID": "int",
+      "PGID": "int",
+      "TZ": "str?"
+    },
     "image": "petersendev/hassio-nzbget-{arch}"
   }
