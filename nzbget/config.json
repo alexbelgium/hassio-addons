@@ -3,6 +3,9 @@
     "version": "0.1.1",
     "slug": "nzbget",
     "legacy": true,
+    "maintenance": {
+      "github_release": "https://github.com/linuxserver/docker-nzbget"
+    },
     "description": "Usenet downloader",
     "url": "https://github.com/petersendev/hassio-addons/nzbget",
     "startup": "services",

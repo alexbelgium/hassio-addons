@@ -3,6 +3,9 @@
     "version": "0.1.0",
     "slug": "sonarr",
     "legacy": true,
+    "maintenance": {
+      "github_release": "https://github.com/linuxserver/docker-sonarr"
+    },
     "description": "PVR for usenet and bittorrent users",
     "url": "https://github.com/petersendev/hassio-addons/sonarr",
     "startup": "services",
