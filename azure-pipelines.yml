@@ -76,3 +76,16 @@ jobs:
     parameters:
       addon: 'nzbget'
       arch: '--all'
+
+- job: 'sonarr'
+  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  dependsOn:
+  - 'Hadolint'
+  - 'JQ'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - template: .azure-pipelines/addon-template.yml
+    parameters:
+      addon: 'sonarr'
+      arch: '--all'

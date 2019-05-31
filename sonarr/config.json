@@ -1,10 +1,10 @@
 {
-    "name": "nzbget",
-    "version": "0.1.1",
-    "slug": "nzbget",
+    "name": "sonarr",
+    "version": "0.1.0",
+    "slug": "sonarr",
     "legacy": true,
-    "description": "Usenet downloader",
-    "url": "https://github.com/petersendev/hassio-addons/nzbget",
+    "description": "PVR for usenet and bittorrent users",
+    "url": "https://github.com/petersendev/hassio-addons/sonarr",
     "startup": "services",
     "arch": [
       "aarch64",
@@ -12,17 +12,17 @@
       "armhf"
     ],
     "ports": {
-      "6789/tcp": 6789
+      "8989/tcp": 8989
     },
     "ports_description": {
-      "6789/tcp": "web interface"
+      "8989/tcp": "web interface"
     },
     "map": [
       "config:rw",
       "share:rw",
       "ssl"
     ],
-    "webui": "http://[HOST]:[PORT:6789]",
+    "webui": "http://[HOST]:[PORT:8989]",
     "boot": "auto",
     "options": {
       "PUID": 1001,
@@ -33,5 +33,5 @@
       "PGID": "int",
       "TZ": "str?"
     },
-    "image": "petersendev/hassio-nzbget-{arch}"
+    "image": "petersendev/hassio-sonarr-{arch}"
   }
