@@ -1,4 +1,13 @@
 #!/usr/bin/with-contenv bash
 
-mkdir -p /share/downloads
-mkdir -p /config/nzbget
+if [ ! -d /share/downloads ]; then
+  echo "Creating /share/downloads"
+  mkdir -p /share/downloads
+  chown -R abc:abc /share/downloads
+fi
+
+if [ ! -d /config/nzbget ]; then
+  echo "Creating /config/nzbget"
+  mkdir -p /config/nzbget
+  chown -R abc:abc /config/nzbget
+fi
