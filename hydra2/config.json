@@ -1,37 +1,40 @@
 {
-    "name": "hydra2",
-    "version": "0.1.0",
-    "slug": "hydra2",
-    "legacy": true,
-    "description": "Meta search application for NZB indexers",
-    "url": "https://github.com/petersendev/hassio-addons/hydra2",
-    "startup": "services",
-    "arch": [
-      "aarch64",
-      "amd64",
-      "armhf"
-    ],
-    "ports": {
-      "5076/tcp": 5076
-    },
-    "ports_description": {
-      "5076/tcp": "web interface"
-    },
-    "map": [
-      "config:rw",
-      "share:rw",
-      "ssl"
-    ],
-    "webui": "http://[HOST]:[PORT:5076]",
-    "boot": "auto",
-    "options": {
-      "PUID": 1001,
-      "PGID": 1001
-    },
-    "schema": {
-      "PUID": "int",
-      "PGID": "int",
-      "TZ": "str?"
-    },
-    "image": "petersendev/hassio-hydra2-{arch}"
-  }
+  "name": "hydra2",
+  "version": "0.1.0",
+  "slug": "hydra2",
+  "legacy": true,
+  "maintenance": {
+    "github_release": "https://github.com/linuxserver/docker-hydra2"
+  },
+  "description": "Meta search application for NZB indexers",
+  "url": "https://github.com/petersendev/hassio-addons/hydra2",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf"
+  ],
+  "ports": {
+    "5076/tcp": 5076
+  },
+  "ports_description": {
+    "5076/tcp": "web interface"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:5076]",
+  "boot": "auto",
+  "options": {
+    "PUID": 1001,
+    "PGID": 1001
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?"
+  },
+  "image": "petersendev/hassio-hydra2-{arch}"
+}
