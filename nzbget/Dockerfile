@@ -1,4 +1,4 @@
-FROM linuxserver/nzbget:v21.0-ls15
+FROM linuxserver/nzbget:v21.0-ls16
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/nzbget|g" /etc/services.d/nzbget/run \

@@ -1,4 +1,4 @@
-FROM linuxserver/znc:znc-1.7.3-ls14
+FROM linuxserver/znc:znc-1.7.3-ls15
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/znc|g" /etc/services.d/znc/run \
