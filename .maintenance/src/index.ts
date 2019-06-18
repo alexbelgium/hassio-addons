@@ -52,7 +52,9 @@ async function run(opts: { patch: boolean })
 
         const versionRegex = config.maintenance.version_regex ? new RegExp(config.maintenance.version_regex) : null;
 
-        const dockerFilePath = path.join(root, addon, "Dockerfile");
+        const addonPath = path.join(root, addon);
+        const changelogPath = path.join(addonPath, "CHANGELOG.md");
+        const dockerFilePath = path.join(addonPath, "Dockerfile");
         const dockerFile = (await fs.readFileAsync(dockerFilePath)).toString();
         const dockerBaseImageLine = dockerFile.split("\n")[0];
         const parts = dockerBaseImageLine.split(":");
@@ -109,6 +111,24 @@ async function run(opts: { patch: boolean })
                 console.log(chalk.yellow(`bumping version from ${chalk.cyanBright(version)} to ${chalk.cyanBright(newVersion)}`));
                 config.version = newVersion;
                 await fs.writeJSONAsync(configPath, config);
+
+                let oldChangelog = "";
+                if (await fs.existsAsync(changelogPath))
+                {
+                    oldChangelog = (await fs.readFileAsync(changelogPath)).toString();
+                }
+
+                let changelog = `## ${newVersion}\n\n - ${minorUpgrade ?
+                    `Update ${config.name} to ${newAppVersion} (${image}:${releaseInfo.tag_name})` :
+                    `Update base image to ${image}:${releaseInfo.tag_name}`}`;
+
+                if (oldChangelog)
+                {
+                    changelog += `\n\n${oldChangelog}`;
+                }
+
+                await fs.writeFileAsync(changelogPath, changelog);
+
                 updated = true;
             }
         }
