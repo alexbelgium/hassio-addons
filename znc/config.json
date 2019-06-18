@@ -4,7 +4,8 @@
   "slug": "znc",
   "legacy": true,
   "maintenance": {
-    "github_release": "https://github.com/linuxserver/docker-znc"
+    "github_release": "https://github.com/linuxserver/docker-znc",
+    "version_regex": "(\\d+\\.\\d+\\.\\d+-?\\w*)-(ls\\d+)"
   },
   "description": "IRC network bouncer",
   "url": "https://github.com/petersendev/hassio-addons/znc",

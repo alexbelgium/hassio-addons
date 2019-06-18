@@ -4,7 +4,8 @@
   "slug": "sonarr",
   "legacy": true,
   "maintenance": {
-    "github_release": "https://github.com/linuxserver/docker-sonarr"
+    "github_release": "https://github.com/linuxserver/docker-sonarr",
+    "version_regex": "(\\d+\\.\\d+\\.\\d+\\.\\d+)-(ls\\d+)"
   },
   "description": "PVR for usenet and bittorrent users",
   "url": "https://github.com/petersendev/hassio-addons/sonarr",

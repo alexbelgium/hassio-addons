@@ -3,8 +3,17 @@ import * as path from "path";
 import * as request from "request-promise";
 import chalk from "chalk";
 import * as semver from "semver";
+import * as yargs from "yargs";
 
-async function run()
+
+const argv = yargs
+    .option("patch", {
+        alias: "p",
+        default: false
+    })
+    .argv;
+
+async function run(opts: { patch: boolean })
 {
     const root = "..";
 
@@ -41,6 +50,8 @@ async function run()
             continue;
         }
 
+        const versionRegex = config.maintenance.version_regex ? new RegExp(config.maintenance.version_regex) : null;
+
         const dockerFilePath = path.join(root, addon, "Dockerfile");
         const dockerFile = (await fs.readFileAsync(dockerFilePath)).toString();
         const dockerBaseImageLine = dockerFile.split("\n")[0];
@@ -53,21 +64,55 @@ async function run()
             json: true
         });
 
+        let coloredTag = tag;
+        let appVersion = "";
+        if (versionRegex)
+        {
+            const r = versionRegex.exec(tag);
+            if (r && r.length > 1)
+            {
+                appVersion = r[1];
+                coloredTag = tag.replace(appVersion, chalk.yellowBright(appVersion));
+            }
+        }
+
         if (tag == releaseInfo.tag_name)
         {
-            console.log(chalk.greenBright(`base image ${image}:${chalk.magenta(tag)} is up-to-date`))
+            console.log(chalk.greenBright(`base image ${image}:${chalk.magenta(coloredTag)} is up-to-date`))
         }
         else
         {
-            console.log(chalk.yellowBright(`updating base image from ${image}:${chalk.magenta(tag)} to ${image}:${chalk.magenta(releaseInfo.tag_name)}`));
-            await fs.writeFileAsync(dockerFilePath, dockerFile.replace(`${image}:${tag}`, `${image}:${releaseInfo.tag_name}`));
-            const newVersion = semver.inc(version, "patch");
-            console.log(chalk.yellow(`bumping version from ${chalk.cyanBright(version)} to ${chalk.cyanBright(newVersion)}`));
-            config.version = newVersion;
-            await fs.writeJSONAsync(configPath, config);
-            updated = true;
+            let newAppVersion = "";
+            let newColoredTag = releaseInfo.tag_name;
+            if (versionRegex)
+            {
+                const nr = versionRegex.exec(releaseInfo.tag_name);
+                if (nr && nr.length > 1)
+                {
+                    newAppVersion = nr[1];
+                    newColoredTag = newColoredTag.replace(newAppVersion, chalk.yellowBright(newAppVersion));
+                }
+            }
+
+            let minorUpgrade = appVersion && newAppVersion && appVersion != newAppVersion;
+
+            if (!opts.patch && !minorUpgrade)
+            {
+                console.log(chalk.gray(`ignoring patch for ${image}:${chalk.magenta(coloredTag)} to ${image}:${chalk.magenta(newColoredTag)}`))
+            }
+            else
+            {
+                console.log(chalk.yellowBright(`updating base image from ${image}:${chalk.magenta(coloredTag)} to ${image}:${chalk.magenta(newColoredTag)}`));
+                await fs.writeFileAsync(dockerFilePath, dockerFile.replace(`${image}:${tag}`, `${image}:${releaseInfo.tag_name}`));
+
+                const newVersion = semver.inc(version, minorUpgrade ? "minor" : "patch");
+                console.log(chalk.yellow(`bumping version from ${chalk.cyanBright(version)} to ${chalk.cyanBright(newVersion)}`));
+                config.version = newVersion;
+                await fs.writeJSONAsync(configPath, config);
+                updated = true;
+            }
         }
     }
 };
 
-run();
+run(argv);
