@@ -1,4 +1,4 @@
-FROM linuxserver/sonarr:2.0.0.5322-ls19
+FROM linuxserver/sonarr:2.0.0.5338-ls31
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/sonarr|g" /etc/services.d/sonarr/run \
