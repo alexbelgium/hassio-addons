@@ -1,4 +1,4 @@
-FROM linuxserver/hydra2:v2.6.14-ls33
+FROM linuxserver/hydra2:v2.6.17-ls37
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/hydra2|g" /etc/services.d/nzbhydra2/run \
