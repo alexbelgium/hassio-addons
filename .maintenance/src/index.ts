@@ -24,6 +24,11 @@ async function run(opts: { patch: boolean })
     let updated = false;
     for (const addon of dirs)
     {
+        if(addon === "tmp")
+        {
+            continue;
+        }
+        
         if (!first)
         {
             console.log(chalk.gray("============================================================="));
