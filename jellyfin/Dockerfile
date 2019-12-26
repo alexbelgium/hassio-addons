@@ -1,4 +1,4 @@
-FROM linuxserver/jellyfin:v10.4.1-ls24
+FROM linuxserver/jellyfin:v10.4.3-ls29
 
 RUN sed -i "s|/config/data|/share/jellyfin/data|g" /etc/services.d/jellyfin/run \
     && sed -i "s|/config/log|/share/jellyfin/log|g" /etc/services.d/jellyfin/run \

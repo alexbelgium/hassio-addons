@@ -1,6 +1,6 @@
 {
   "name": "radarr",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "slug": "radarr",
   "legacy": true,
   "maintenance": {
