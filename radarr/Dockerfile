@@ -1,4 +1,4 @@
-FROM linuxserver/radarr:v0.2.0.1358-ls22
+FROM linuxserver/radarr:v0.2.0.1450-ls46
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/radarr|g" /etc/services.d/radarr/run \
