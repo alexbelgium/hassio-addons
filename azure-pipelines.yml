@@ -103,6 +103,19 @@ jobs:
       addon: 'radarr'
       arch: '--all'
 
+- job: 'emby'
+  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  dependsOn:
+  - 'Hadolint'
+  - 'JQ'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - template: .azure-pipelines/addon-template.yml
+    parameters:
+      addon: 'emby'
+      arch: '--all'
+
 - job: 'jellyfin'
   condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
