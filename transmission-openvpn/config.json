@@ -1,6 +1,6 @@
 {
   "name": "transmission-openvpn",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "slug": "transmission-openvpn",
   "legacy": true,
   "maintenance": {
@@ -40,7 +40,8 @@
     "OPENVPN_USERNAME": "",
     "OPENVPN_PASSWORD": "",
     "LOCAL_NETWORK": "192.168.0.0/16",
-    "WEBPROXY_ENABLED": "false"
+    "WEBPROXY_ENABLED": "false",
+    "CREATE_TUN_DEVICE": "true"
   },
   "schema": {
     "PUID": "int",
@@ -50,7 +51,8 @@
     "OPENVPN_USERNAME": "str",
     "OPENVPN_PASSWORD": "str",
     "LOCAL_NETWORK": "str",
-    "WEBPROXY_ENABLED": "bool"
+    "WEBPROXY_ENABLED": "bool",
+    "CREATE_TUN_DEVICE": "bool"
   },
   "environment": {
     "TRANSMISSION_DOWNLOAD_DIR": "/share/transmission-openvpn/completed",
