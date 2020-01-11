@@ -24,11 +24,11 @@ async function run(opts: { patch: boolean })
     let updated = false;
     for (const addon of dirs)
     {
-        if(addon === "tmp")
+        if (addon === "tmp")
         {
             continue;
         }
-        
+
         if (!first)
         {
             console.log(chalk.gray("============================================================="));
@@ -56,6 +56,7 @@ async function run(opts: { patch: boolean })
         }
 
         const versionRegex = config.maintenance.version_regex ? new RegExp(config.maintenance.version_regex) : null;
+        const releaseRegex = config.maintenance.release_regex ? new RegExp(config.maintenance.release_regex) : null;
 
         const addonPath = path.join(root, addon);
         const changelogPath = path.join(addonPath, "CHANGELOG.md");
@@ -80,6 +81,15 @@ async function run(opts: { patch: boolean })
             {
                 appVersion = r[1];
                 coloredTag = tag.replace(appVersion, chalk.yellowBright(appVersion));
+            }
+        }
+
+        if (releaseRegex)
+        {
+            const r = releaseRegex.exec(releaseInfo.tag_name);
+            if (r && r.length > 1)
+            {
+                releaseInfo.tag_name = r[1];
             }
         }
 

@@ -1,0 +1,62 @@
+{
+  "name": "transmission-openvpn",
+  "version": "0.0.1",
+  "slug": "transmission-openvpn",
+  "legacy": true,
+  "maintenance": {
+    "github_release": "https://github.com/haugene/docker-transmission-openvpn",
+    "version_regex": "(\\d+\\.\\d)",
+    "release_regex": "v(\\d+\\.\\d)"
+  },
+  "description": "OpenVPN and Transmission with WebUI",
+  "url": "https://github.com/petersendev/hassio-addons/transmission-openvpn",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf"
+  ],
+  "ports": {
+    "9091/tcp": 9091
+  },
+  "ports_description": {
+    "9091/tcp": "web ui"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:9091]",
+  "boot": "auto",
+  "privileged": [
+    "NET_ADMIN"
+  ],
+  "options": {
+    "PUID": 1001,
+    "PGID": 1001,
+    "OPENVPN_PROVIDER": "PIA",
+    "OPENVPN_CONFIG": "CA Toronto",
+    "OPENVPN_USERNAME": "",
+    "OPENVPN_PASSWORD": "",
+    "LOCAL_NETWORK": "192.168.0.0/16",
+    "WEBPROXY_ENABLED": "false"
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "OPENVPN_PROVIDER": "str",
+    "OPENVPN_CONFIG": "str",
+    "OPENVPN_USERNAME": "str",
+    "OPENVPN_PASSWORD": "str",
+    "LOCAL_NETWORK": "str",
+    "WEBPROXY_ENABLED": "bool"
+  },
+  "environment": {
+    "TRANSMISSION_DOWNLOAD_DIR": "/share/transmission-openvpn/completed",
+    "TRANSMISSION_INCOMPLETE_DIR": "/share/transmission-openvpn/incomplete",
+    "TRANSMISSION_WATCH_DIR": "/share/transmission-openvpn/watch",
+    "TRANSMISSION_HOME": "/share/transmission-openvpn/transmission-home"
+  },
+  "image": "petersendev/hassio-transmission-openvpn-{arch}"
+}
