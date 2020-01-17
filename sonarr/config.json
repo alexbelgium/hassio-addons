@@ -1,6 +1,6 @@
 {
   "name": "sonarr",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "slug": "sonarr",
   "legacy": true,
   "maintenance": {
@@ -37,5 +37,10 @@
     "PGID": "int",
     "TZ": "str?"
   },
+  "snapshot_exlude": [
+    "**/Backups/*",
+    "**/logs/*",
+    "**/MediaCover/*"
+  ],
   "image": "petersendev/hassio-sonarr-{arch}"
 }

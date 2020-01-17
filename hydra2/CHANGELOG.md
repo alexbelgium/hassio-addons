@@ -1,3 +1,7 @@
+## 0.9.0
+
+ - Update hydra2 to 2.11.2 (linuxserver/hydra2:v2.11.2-ls53)
+
 ## 0.8.0
 
  - Update hydra2 to 2.10.8 (linuxserver/hydra2:v2.10.8-ls50)
