@@ -1,6 +1,6 @@
 {
   "name": "hydra2",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "slug": "hydra2",
   "legacy": true,
   "maintenance": {
@@ -37,5 +37,9 @@
     "PGID": "int",
     "TZ": "str?"
   },
+  "snapshot_exlude": [
+    "**/backup/*",
+    "**/logs/*"
+  ],
   "image": "petersendev/hassio-hydra2-{arch}"
 }
