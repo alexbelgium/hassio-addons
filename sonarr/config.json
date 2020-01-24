@@ -1,6 +1,6 @@
 {
   "name": "sonarr",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "slug": "sonarr",
   "legacy": true,
   "maintenance": {
@@ -37,7 +37,7 @@
     "PGID": "int",
     "TZ": "str?"
   },
-  "snapshot_exlude": [
+  "snapshot_exclude": [
     "**/Backups/*",
     "**/logs/*",
     "**/MediaCover/*"

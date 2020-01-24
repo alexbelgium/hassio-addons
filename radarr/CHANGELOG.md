@@ -1,6 +1,6 @@
-## 0.3.1
+## 0.3.2
 
- - set snapshot_exlude for logs and MediaCover
+ - set snapshot_exclude for logs and MediaCover
 
 ## 0.3.0
 
