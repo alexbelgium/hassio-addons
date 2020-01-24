@@ -1,6 +1,6 @@
 {
   "name": "radarr",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "slug": "radarr",
   "legacy": true,
   "maintenance": {
@@ -37,7 +37,7 @@
     "PGID": "int",
     "TZ": "str?"
   },
-  "snapshot_exlude": [
+  "snapshot_exclude": [
     "**/Backups/*",
     "**/logs/*",
     "**/MediaCover/*"
