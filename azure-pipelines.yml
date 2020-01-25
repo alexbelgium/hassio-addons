@@ -141,3 +141,16 @@ jobs:
     parameters:
       addon: 'transmission-openvpn'
       arch: '--all'
+
+- job: 'jackett'
+  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  dependsOn:
+  - 'Hadolint'
+  - 'JQ'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - template: .azure-pipelines/addon-template.yml
+    parameters:
+      addon: 'jackett'
+      arch: '--all'

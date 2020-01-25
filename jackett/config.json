@@ -1,0 +1,45 @@
+{
+  "name": "jackett",
+  "version": "0.1.0",
+  "slug": "jackett",
+  "legacy": true,
+  "maintenance": {
+    "github_release": "https://github.com/linuxserver/docker-jackett",
+    "version_regex": "v(\\d+\\.\\d+\\.\\d+)-(ls\\d+)"
+  },
+  "description": "API Support for your favorite torrent trackers",
+  "url": "https://github.com/petersendev/hassio-addons/jackett",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf"
+  ],
+  "ports": {
+    "9117/tcp": 9117
+  },
+  "ports_description": {
+    "9117/tcp": "web interface"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:9117]",
+  "boot": "auto",
+  "options": {
+    "PUID": 1001,
+    "PGID": 1001
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?"
+  },
+  "environment": {
+    "XDG_DATA_HOME": "/share/jackett",
+    "XDG_CONFIG_HOME": "/config/jackett"
+  },
+  "image": "petersendev/hassio-jackett-{arch}"
+}
