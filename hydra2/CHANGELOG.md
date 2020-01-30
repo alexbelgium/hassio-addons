@@ -1,3 +1,7 @@
+## 0.10.0
+
+ - Update hydra2 to 2.12.4 (linuxserver/hydra2:v2.12.4-ls55)
+
 ## 0.9.1
 
  - set snapshot_exclude
