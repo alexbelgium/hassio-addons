@@ -11,7 +11,9 @@
   "url": "https://github.com/petersendev/hassio-addons/transmission-magnet-redirect",
   "startup": "services",
   "arch": [
-    "amd64"
+    "aarch64",
+    "amd64",
+    "armhf"
   ],
   "ports": {
     "9092/tcp": 9092
