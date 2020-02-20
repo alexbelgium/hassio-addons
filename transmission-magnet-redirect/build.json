@@ -1,0 +1,11 @@
+{
+    "build_from_template": {
+        "image": "petersendev/transmission-magnet-redirect",
+        "version": "0.1.2"
+    },
+    "build_from": {
+        "amd64": "petersendev/transmission-magnet-redirect:0.1.2"
+    },
+    "squash": false,
+    "args": {}
+}

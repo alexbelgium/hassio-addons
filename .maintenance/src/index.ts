@@ -39,6 +39,7 @@ async function run(opts: { patch: boolean })
         }
 
         const configPath = path.join(root, addon, "config.json");
+        const buildJsonPath = path.join(root, addon, "build.json");
         const config = await fs.readJSONAsync(configPath);
         let version = semver.valid(config.version);
         if (!version)
@@ -51,7 +52,7 @@ async function run(opts: { patch: boolean })
 
         if (!config.maintenance || !config.maintenance.github_release)
         {
-            console.log(chalk.yellow("no valid maintenace section found, skipping"));
+            console.log(chalk.yellow("no valid maintenance section found, skipping"));
             continue;
         }
 
@@ -61,11 +62,26 @@ async function run(opts: { patch: boolean })
         const addonPath = path.join(root, addon);
         const changelogPath = path.join(addonPath, "CHANGELOG.md");
         const dockerFilePath = path.join(addonPath, "Dockerfile");
-        const dockerFile = (await fs.readFileAsync(dockerFilePath)).toString();
-        const dockerBaseImageLine = dockerFile.split("\n")[0];
-        const parts = dockerBaseImageLine.split(":");
-        const image = parts[0].replace("FROM ", "");
-        const tag = parts[1];
+
+        let image: string;
+        let tag: string;
+        let dockerFile: string;
+
+        const build_json = (await fs.existsAsync(buildJsonPath)) ? await fs.readJSONAsync(buildJsonPath) : null;
+
+        if (!build_json)
+        {
+            dockerFile = (await fs.readFileAsync(dockerFilePath)).toString();
+            const dockerBaseImageLine = dockerFile.split("\n")[0];
+            const parts = dockerBaseImageLine.split(":");
+            image = parts[0].replace("FROM ", "");
+            tag = parts[1];
+        }
+        else
+        {
+            image = build_json.build_from_template.image;
+            tag = build_json.build_from_template.version;
+        }
 
         const releaseInfo = await request({
             uri: `${config.maintenance.github_release}/releases/latest`,
@@ -95,6 +111,7 @@ async function run(opts: { patch: boolean })
 
         if (tag == releaseInfo.tag_name)
         {
+            //TODO: different output for build.json usage
             console.log(chalk.greenBright(`base image ${image}:${chalk.magenta(coloredTag)} is up-to-date`))
         }
         else
@@ -119,8 +136,21 @@ async function run(opts: { patch: boolean })
             }
             else
             {
-                console.log(chalk.yellowBright(`updating base image from ${image}:${chalk.magenta(coloredTag)} to ${image}:${chalk.magenta(newColoredTag)}`));
-                await fs.writeFileAsync(dockerFilePath, dockerFile.replace(`${image}:${tag}`, `${image}:${releaseInfo.tag_name}`));
+                if (!build_json)
+                {
+                    console.log(chalk.yellowBright(`updating base image from ${image}:${chalk.magenta(coloredTag)} to ${image}:${chalk.magenta(newColoredTag)}`));
+                    await fs.writeFileAsync(dockerFilePath, dockerFile.replace(`${image}:${tag}`, `${image}:${releaseInfo.tag_name}`));
+                }
+                else
+                {
+                    console.log(chalk.yellowBright(`updating base images in build.json from ${image}:{arch}-${chalk.magenta(coloredTag)} to ${image}:{arch}-${chalk.magenta(newColoredTag)}`));
+                    build_json.build_from_template.version = releaseInfo.tag_name;
+                    for (let arch in build_json.build_from)
+                    {
+                        build_json.build_from[arch] = build_json.build_from[arch].replace(tag, releaseInfo.tag_name);
+                    }
+                    await fs.writeJSONAsync(buildJsonPath, build_json, { spaces: 4 });
+                }
 
                 const newVersion = semver.inc(version, minorUpgrade ? "minor" : "patch");
                 console.log(chalk.yellow(`bumping version from ${chalk.cyanBright(version)} to ${chalk.cyanBright(newVersion)}`));

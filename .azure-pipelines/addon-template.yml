@@ -3,6 +3,7 @@
 parameters:
   addon: ''
   arch: ''
+  additionalArgs: ''
 
 steps:
   - script: sudo docker login -u $(dockerUser) -p $(dockerPassword)
@@ -15,5 +16,5 @@ steps:
         -v /run/docker.sock:/run/docker.sock:rw -v $(pwd):/data:ro \
         homeassistant/amd64-builder:$(versionBuilder) \
         --addon ${{ parameters.arch }} -t /data/${{ parameters.addon }} \
-        --docker-hub petersendev --docker-hub-check
+        --docker-hub petersendev --docker-hub-check ${{ parameters.additionalArgs }}
     displayName: 'Build ${{ parameters.addon }}'

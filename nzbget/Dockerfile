@@ -1,4 +1,6 @@
-FROM linuxserver/nzbget:v21.0-ls16
+ARG BUILD_FROM
+# hadolint ignore=DL3006
+FROM $BUILD_FROM
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/nzbget|g" /etc/services.d/nzbget/run \

@@ -5,7 +5,7 @@ trigger:
 
 variables:
   versionHadolint: 'v1.16.3'
-  versionBuilder: '2.0'
+  versionBuilder: 'latest'
 
 jobs:
 
@@ -39,7 +39,7 @@ jobs:
     displayName: 'Run JQ'
 
 - job: 'znc'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -49,10 +49,12 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'znc'
-      arch: '--all'
+      arch: '--armhf --amd64 --aarch64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test
 
 - job: 'hydra2'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -62,10 +64,12 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'hydra2'
-      arch: '--all'
+      arch: '--armhf --amd64 --aarch64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test
 
 - job: 'nzbget'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -75,10 +79,12 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'nzbget'
-      arch: '--all'
+      arch: '--armhf --amd64 --aarch64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test
 
 - job: 'sonarr'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -88,10 +94,12 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'sonarr'
-      arch: '--all'
+      arch: '--armhf --amd64 --aarch64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test
 
 - job: 'radarr'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -101,10 +109,12 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'radarr'
-      arch: '--all'
+      arch: '--armhf --amd64 --aarch64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test
 
 - job: 'emby'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -114,10 +124,12 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'emby'
-      arch: '--all'
+      arch: '--armhf --amd64 --aarch64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test
 
 - job: 'jellyfin'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -127,10 +139,12 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'jellyfin'
-      arch: '--all'
+      arch: '--armhf --amd64 --aarch64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test
 
 - job: 'transmission_openvpn'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -140,10 +154,12 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'transmission-openvpn'
-      arch: '--all'
+      arch: '--amd64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test
 
 - job: 'jackett'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -153,10 +169,12 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'jackett'
-      arch: '--all'
+      arch: '--armhf --amd64 --aarch64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test
 
 - job: 'transmission_magnet_redirect'
-  condition: and(eq(variables['Build.SourceBranchName'], 'master'), succeeded('Hadolint'), succeeded('JQ'))
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
   dependsOn:
   - 'Hadolint'
   - 'JQ'
@@ -166,4 +184,6 @@ jobs:
   - template: .azure-pipelines/addon-template.yml
     parameters:
       addon: 'transmission-magnet-redirect'
-      arch: '--all'
+      arch: '--amd64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test

@@ -1,0 +1,13 @@
+{
+    "build_from_template": {
+        "image": "linuxserver/radarr",
+        "version": "v0.2.0.1480-ls51"
+    },
+    "build_from": {
+        "armhf": "linuxserver/radarr:arm32v7-v0.2.0.1480-ls51",
+        "aarch64": "linuxserver/radarr:arm64v8-v0.2.0.1480-ls51",
+        "amd64": "linuxserver/radarr:amd64-v0.2.0.1480-ls51"
+    },
+    "squash": false,
+    "args": {}
+}

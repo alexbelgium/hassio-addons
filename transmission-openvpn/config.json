@@ -1,12 +1,11 @@
 {
   "name": "transmission-openvpn",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "slug": "transmission-openvpn",
-  "legacy": true,
   "maintenance": {
     "github_release": "https://github.com/haugene/docker-transmission-openvpn",
-    "version_regex": "(\\d+\\.\\d)",
-    "release_regex": "v(\\d+\\.\\d)"
+    "version_regex": "(\\d+\\.\\d+)",
+    "release_regex": "v(\\d+\\.\\d+)"
   },
   "description": "OpenVPN and Transmission with WebUI",
   "url": "https://github.com/petersendev/hassio-addons/transmission-openvpn",

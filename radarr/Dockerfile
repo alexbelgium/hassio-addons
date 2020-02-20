@@ -1,4 +1,6 @@
-FROM linuxserver/radarr:v0.2.0.1450-ls46
+ARG BUILD_FROM
+# hadolint ignore=DL3006
+FROM $BUILD_FROM
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/radarr|g" /etc/services.d/radarr/run \

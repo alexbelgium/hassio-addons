@@ -1,4 +1,6 @@
-FROM linuxserver/jellyfin:v10.4.3-ls29
+ARG BUILD_FROM
+# hadolint ignore=DL3006
+FROM $BUILD_FROM
 
 RUN sed -i "s|/config/data|/share/jellyfin/data|g" /etc/services.d/jellyfin/run \
     && sed -i "s|/config/log|/share/jellyfin/log|g" /etc/services.d/jellyfin/run \

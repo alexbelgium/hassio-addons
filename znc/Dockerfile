@@ -1,4 +1,6 @@
-FROM linuxserver/znc:znc-1.7.5-ls23
+ARG BUILD_FROM
+# hadolint ignore=DL3006
+FROM $BUILD_FROM
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/znc|g" /etc/services.d/znc/run \

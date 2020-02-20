@@ -2,7 +2,6 @@
   "name": "transmission-magnet-redirect",
   "version": "0.1.2",
   "slug": "transmission-magnet-redirect",
-  "legacy": true,
   "maintenance": {
     "github_release": "https://github.com/petersendev/docker-transmission-magnet-redirect",
     "version_regex": "(\\d+\\.\\d\\.\\d)"
@@ -11,9 +10,7 @@
   "url": "https://github.com/petersendev/hassio-addons/transmission-magnet-redirect",
   "startup": "services",
   "arch": [
-    "aarch64",
-    "amd64",
-    "armhf"
+    "amd64"
   ],
   "ports": {
     "9092/tcp": 9092

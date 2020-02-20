@@ -1,0 +1,13 @@
+{
+    "build_from_template": {
+        "image": "linuxserver/nzbget",
+        "version": "v21.0-ls16"
+    },
+    "build_from": {
+        "armhf": "linuxserver/nzbget:arm32v7-v21.0-ls16",
+        "aarch64": "linuxserver/nzbget:arm64v8-v21.0-ls16",
+        "amd64": "linuxserver/nzbget:amd64-v21.0-ls16"
+    },
+    "squash": false,
+    "args": {}
+}

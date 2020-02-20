@@ -1,1 +1,3 @@
-FROM petersendev/transmission-magnet-redirect:0.1.2
+ARG BUILD_FROM
+# hadolint ignore=DL3006
+FROM $BUILD_FROM

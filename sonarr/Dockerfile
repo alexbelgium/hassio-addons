@@ -1,4 +1,6 @@
-FROM linuxserver/sonarr:2.0.0.5338-ls31
+ARG BUILD_FROM
+# hadolint ignore=DL3006
+FROM $BUILD_FROM
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/sonarr|g" /etc/services.d/sonarr/run \

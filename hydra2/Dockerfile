@@ -1,4 +1,6 @@
-FROM linuxserver/hydra2:v2.12.4-ls55
+ARG BUILD_FROM
+# hadolint ignore=DL3006
+FROM $BUILD_FROM
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/hydra2|g" /etc/services.d/nzbhydra2/run \

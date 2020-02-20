@@ -1,4 +1,6 @@
-FROM haugene/transmission-openvpn:2.7
+ARG BUILD_FROM
+# hadolint ignore=DL3006
+FROM $BUILD_FROM
 
 RUN usermod -d /config-internal abc \
     && sed -i "s|/config|/config-internal|g" /etc/openvpn/adjustConfigs.sh \

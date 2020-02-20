@@ -2,7 +2,6 @@
   "name": "znc",
   "version": "0.3.0",
   "slug": "znc",
-  "legacy": true,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-znc",
     "version_regex": "(\\d+\\.\\d+\\.\\d+-?\\w*)-(ls\\d+)"
