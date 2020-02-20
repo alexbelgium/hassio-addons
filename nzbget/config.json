@@ -2,6 +2,7 @@
   "name": "nzbget",
   "version": "0.1.2",
   "slug": "nzbget",
+  "legacy": true,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-nzbget",
     "version_regex": "v(\\d+\\.\\d+\\.?\\d*)-(ls\\d+)"

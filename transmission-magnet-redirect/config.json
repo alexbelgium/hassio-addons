@@ -2,6 +2,7 @@
   "name": "transmission-magnet-redirect",
   "version": "0.1.2",
   "slug": "transmission-magnet-redirect",
+  "legacy": true,
   "maintenance": {
     "github_release": "https://github.com/petersendev/docker-transmission-magnet-redirect",
     "version_regex": "(\\d+\\.\\d\\.\\d)"
