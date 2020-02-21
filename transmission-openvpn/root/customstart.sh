@@ -12,7 +12,7 @@ if [ -d /config/transmission-openvpn/openvpn ]; then
 fi
 
 for k in $(bashio::jq "${__BASHIO_ADDON_CONFIG}" 'keys | .[]'); do
-    export $k=$(bashio::config $k)
+    export $k="$(bashio::config $k)"
 done
 
 /etc/openvpn/start.sh
