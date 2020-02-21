@@ -1,8 +1,8 @@
 {
   "name": "sonarr",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "slug": "sonarr",
-  "legacy": true,
+  "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-sonarr",
     "version_regex": "(\\d+\\.\\d+\\.\\d+\\.\\d+)-(ls\\d+)"

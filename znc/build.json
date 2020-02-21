@@ -1,12 +1,12 @@
 {
     "build_from_template": {
         "image": "linuxserver/znc",
-        "version": "znc-1.7.5-ls23"
+        "version": "znc-1.7.5-ls28"
     },
     "build_from": {
-        "armhf": "linuxserver/znc:arm32v7-znc-1.7.5-ls23",
-        "aarch64": "linuxserver/znc:arm64v8-znc-1.7.5-ls23",
-        "amd64": "linuxserver/znc:amd64-znc-1.7.5-ls23"
+        "armhf": "linuxserver/znc:arm32v7-znc-1.7.5-ls28",
+        "aarch64": "linuxserver/znc:arm64v8-znc-1.7.5-ls28",
+        "amd64": "linuxserver/znc:amd64-znc-1.7.5-ls28"
     },
     "squash": false,
     "args": {}

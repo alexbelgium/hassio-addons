@@ -1,8 +1,8 @@
 {
   "name": "radarr",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "slug": "radarr",
-  "legacy": true,
+  "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-radarr",
     "version_regex": "v(\\d+\\.\\d+\\.\\d+\\.\\d+)-(ls\\d+)"

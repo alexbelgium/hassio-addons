@@ -1,3 +1,7 @@
+## 0.3.0
+
+ - not a legacy addon anymore
+
 ## 0.2.2
 
  - Added transmission environment variables to options validation

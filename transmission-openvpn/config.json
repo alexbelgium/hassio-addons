@@ -1,8 +1,8 @@
 {
   "name": "transmission-openvpn",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "slug": "transmission-openvpn",
-  "legacy": true,
+  "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/haugene/docker-transmission-openvpn",
     "version_regex": "(\\d+\\.\\d+)",
