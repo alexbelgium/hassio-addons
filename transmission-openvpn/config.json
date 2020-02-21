@@ -1,6 +1,6 @@
 {
   "name": "transmission-openvpn",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "slug": "transmission-openvpn",
   "legacy": false,
   "maintenance": {
@@ -55,6 +55,7 @@
     "OPENVPN_PASSWORD": "str",
     "OPENVPN_PROVIDER": "str",
     "OPENVPN_USERNAME": "str",
+    "CREATE_TUN_DEVICE": "bool?",
     "TRANSMISSION_ALT_SPEED_DOWN": "str?",
     "TRANSMISSION_ALT_SPEED_ENABLED": "bool?",
     "TRANSMISSION_ALT_SPEED_TIME_BEGIN": "str?",

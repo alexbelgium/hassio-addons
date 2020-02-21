@@ -1,4 +1,4 @@
-## 0.3.1
+## 0.3.2
 
  - not a legacy addon anymore
 

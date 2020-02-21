@@ -39,12 +39,6 @@ export async function run(manager: Manager, opts: any)
         await fs.writeJSONAsync(optionsFilePath, config.options);
     }
 
-    const ports = [];
-    for (let p in config.ports)
-    {
-        ports.push(config.ports[p]);
-    }
-
     if (!opts.nobuild)
     {
         console.log("building image(s)");
@@ -61,7 +55,9 @@ export async function run(manager: Manager, opts: any)
             `${path.resolve(configTmpPath)}:/config`,
             "-v",
             `${path.resolve(dataTmpPath)}:/data`,
-            ...[].concat(...ports.map(x => ["-p", `${x}:${x}`])),
+            ...[].concat(...Object.keys(config.ports).map(x => ["-p", `${config.ports[x]}:${config.ports[x]}`])),
+            ...[].concat(...(config.privileged || []).map(x => ["--cap-add", `${x}`])),
+            ...[].concat(...Object.keys(config.environment || {}).map(x => ["-e", `${x}=${config.environment[x]}`])),
             "--name",
             addon,
             `petersendev/hassio-${addon}-amd64:latest`
@@ -84,6 +80,5 @@ export async function run(manager: Manager, opts: any)
     }
 
     process.on('SIGINT', exit);
-
     child = spawn("docker", args, { stdio: 'inherit' });
 }
