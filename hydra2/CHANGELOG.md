@@ -1,3 +1,7 @@
+## 0.13.0
+
+ - Update hydra2 to 2.14.1 (linuxserver/hydra2:v2.14.1-ls59)
+
 ## 0.12.0
 
  - not a legacy addon anymore
