@@ -1,3 +1,7 @@
+## 0.4.0
+
+ - Update transmission-openvpn to 2.12 (haugene/transmission-openvpn:2.12)
+
 ## 0.3.2
 
  - not a legacy addon anymore
