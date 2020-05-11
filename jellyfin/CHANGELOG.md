@@ -1,3 +1,11 @@
+## 0.5.0
+
+ - Update jellyfin to 10.5.5 (linuxserver/jellyfin:v10.5.5-ls52)
+
+## 0.4.0
+
+ - Update jellyfin to 10.5.0 (linuxserver/jellyfin:v10.5.0-ls39)
+
 ## 0.3.0
 
  - not a legacy addon anymore
