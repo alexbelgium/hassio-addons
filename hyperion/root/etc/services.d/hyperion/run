@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info 'Starting hyperiond...'
+
+exec hyperiond -u /config/hyperion

@@ -1,0 +1,11 @@
+{
+    "build_from": {
+        "armhf": "hassioaddons/debian-base-armhf:3.2.0",
+        "aarch64": "hassioaddons/debian-base-aarch64:3.2.0",
+        "amd64": "hassioaddons/debian-base:3.2.0"
+    },
+    "squash": false,
+    "args": {
+        "RELEASE": "2.0.0-alpha.6"
+    }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "hyperion",
+  "version": "0.1.0",
+  "slug": "hyperion",
+  "legacy": false,
+  "maintenance": {
+    "github_release": "https://github.com/hyperion-project/hyperion.ng",
+    "include_prerelease": true,
+    "version_regex": "(\\d+\\.\\d+\\.?\\d*-?\\w*.?\\d*)"
+  },
+  "description": "Ambient Ligting implementation",
+  "url": "https://github.com/petersendev/hassio-addons/hyperion",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "ports": {
+    "8090/tcp": 8090,
+    "19333/tcp": 19333,
+    "19400/tcp": 19400,
+    "19444/tcp": 19444,
+    "19445/tcp": 19445
+  },
+  "ports_description": {
+    "8090/tcp": "web interface",
+    "19333/tcp": "Boblight Server",
+    "19400/tcp": "Flatbuffers Server",
+    "19444/tcp": "JSON Server",
+    "19445/tcp": "Protocol Buffers Server"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:8090]",
+  "boot": "auto",
+  "options": {
+  },
+  "schema": {
+  },
+  "image": "petersendev/hassio-hyperion-{arch}"
+}

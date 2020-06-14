@@ -187,3 +187,18 @@ jobs:
       arch: '--amd64'
       ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
         additionalArgs: --test
+
+- job: 'hyperion'
+  condition: and(succeeded('Hadolint'), succeeded('JQ'))
+  dependsOn:
+  - 'Hadolint'
+  - 'JQ'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - template: .azure-pipelines/addon-template.yml
+    parameters:
+      addon: 'hyperion'
+      arch: '--armhf --amd64 --aarch64'
+      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
+        additionalArgs: --test

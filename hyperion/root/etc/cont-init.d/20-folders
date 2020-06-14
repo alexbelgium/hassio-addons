@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+if [ ! -d /config/hyperion ]; then
+  echo "Creating /config/hyperion"
+  mkdir -p /config/hyperion
+  #chown -R abc:abc /config/hyperion
+fi
