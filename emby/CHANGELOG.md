@@ -1,3 +1,7 @@
+## 0.4.0
+
+ - Update emby to 4.4.3.0 (linuxserver/emby:4.4.3.0-ls45)
+
 ## 0.3.0
 
  - Update emby to 4.4.2.0 (linuxserver/emby:4.4.2.0-ls40)
