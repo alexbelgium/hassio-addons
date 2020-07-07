@@ -1,3 +1,7 @@
+## 0.6.0
+
+ - Update radarr to 0.2.0.1504 (linuxserver/radarr:v0.2.0.1504-ls68)
+
 ## 0.5.0
 
  - not a legacy addon anymore
