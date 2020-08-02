@@ -7,198 +7,73 @@ variables:
   versionHadolint: 'v1.16.3'
   versionBuilder: 'latest'
 
-jobs:
+stages:
+  - stage: lint
+    jobs:
+      - job: 'Hadolint'
+        pool:
+          vmImage: 'ubuntu-16.04'
+        steps:
+        - script: sudo docker pull hadolint/hadolint:$(versionHadolint)
+          displayName: 'Install Hadolint'
+        - script: |
+            set -e
+            shopt -s globstar
+            for dockerfile in **/Dockerfile
+            do
+              echo "Linting: $dockerfile"
+              sudo docker run --rm -i \
+                -v $(pwd)/.hadolint.yaml:/.hadolint.yaml:ro \
+                hadolint/hadolint:$(versionHadolint) < "$dockerfile"
+            done
+          displayName: 'Run Hadolint'
 
-- job: 'Hadolint'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: sudo docker pull hadolint/hadolint:$(versionHadolint)
-    displayName: 'Install Hadolint'
-  - script: |
-      set -e
-      shopt -s globstar
-      for dockerfile in **/Dockerfile
-      do
-        echo "Linting: $dockerfile"
-        sudo docker run --rm -i \
-          -v $(pwd)/.hadolint.yaml:/.hadolint.yaml:ro \
-          hadolint/hadolint:$(versionHadolint) < "$dockerfile"
-      done
-    displayName: 'Run Hadolint'
-
-- job: 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: sudo apt-get install -y jq
-    displayName: 'Install JQ'
-  - bash: |
-      shopt -s globstar
-      cat **/*.json | jq '.'
-    displayName: 'Run JQ'
-
-- job: 'znc'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'znc'
-      arch: '--armhf --amd64 --aarch64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'hydra2'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'hydra2'
-      arch: '--armhf --amd64 --aarch64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'nzbget'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'nzbget'
-      arch: '--armhf --amd64 --aarch64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'sonarr'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'sonarr'
-      arch: '--armhf --amd64 --aarch64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'radarr'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'radarr'
-      arch: '--armhf --amd64 --aarch64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'emby'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'emby'
-      arch: '--armhf --amd64 --aarch64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'jellyfin'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'jellyfin'
-      arch: '--armhf --amd64 --aarch64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'transmission_openvpn'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'transmission-openvpn'
-      arch: '--amd64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'jackett'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'jackett'
-      arch: '--armhf --amd64 --aarch64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'transmission_magnet_redirect'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'transmission-magnet-redirect'
-      arch: '--amd64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
-
-- job: 'hyperion'
-  condition: and(succeeded('Hadolint'), succeeded('JQ'))
-  dependsOn:
-  - 'Hadolint'
-  - 'JQ'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - template: .azure-pipelines/addon-template.yml
-    parameters:
-      addon: 'hyperion'
-      arch: '--armhf --amd64 --aarch64'
-      ${{ if ne(variables['Build.SourceBranchName'], 'master') }}:
-        additionalArgs: --test
+      - job: 'JQ'
+        pool:
+          vmImage: 'ubuntu-16.04'
+        steps:
+        - script: sudo apt-get install -y jq
+          displayName: 'Install JQ'
+        - bash: |
+            shopt -s globstar
+            cat **/*.json | jq '.'
+          displayName: 'Run JQ'
+  - stage: build
+    dependsOn: lint
+    jobs:
+      - template: .azure-pipelines/job-matrix.yml
+        parameters:
+          matrix:
+            - addon: znc
+              jobName: znc
+              arch: '--armhf --amd64 --aarch64'
+            - addon: hydra2
+              jobName: hydra2
+              arch: '--armhf --amd64 --aarch64'
+            - addon: nzbget
+              jobName: nzbget
+              arch: '--armhf --amd64 --aarch64'
+            - addon: sonarr
+              jobName: sonarr
+              arch: '--armhf --amd64 --aarch64'
+            - addon: radarr
+              jobName: radarr
+              arch: '--armhf --amd64 --aarch64'
+            - addon: emby
+              jobName: emby
+              arch: '--armhf --amd64 --aarch64'
+            - addon: jellyfin
+              jobName: jellyfin
+              arch: '--armhf --amd64 --aarch64'
+            - addon: jackett
+              jobName: jackett
+              arch: '--armhf --amd64 --aarch64'
+            - addon: transmission-openvpn
+              jobName: transmission_openvpn
+              arch: '--amd64'
+            - addon: transmission-magnet-redirect
+              jobName: transmission_magnet_redirect
+              arch: '--amd64'
+            - addon: hyperion
+              jobName: hyperion
+              arch: '--armhf --amd64 --aarch64'
