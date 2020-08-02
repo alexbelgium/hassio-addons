@@ -1,6 +1,6 @@
 {
   "name": "hyperion",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "slug": "hyperion",
   "legacy": false,
   "maintenance": {
@@ -36,9 +36,7 @@
   ],
   "webui": "http://[HOST]:[PORT:8090]",
   "boot": "auto",
-  "options": {
-  },
-  "schema": {
-  },
+  "options": {},
+  "schema": {},
   "image": "petersendev/hassio-hyperion-{arch}"
 }
