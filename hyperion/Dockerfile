@@ -20,6 +20,7 @@ RUN apt-get update \
 		libqt5gui5=5.11.3+dfsg1-1+deb10u3 \
 		libqt5core5a=5.11.3+dfsg1-1+deb10u3 \
 		libusb-1.0=2:1.0.22-2 \
+		zlib1g-dev=1:1.2.11.dfsg-1 \
 	&& if [[ "${BUILD_ARCH}" = "amd64" ]]; then ARCH="Linux-x86_64"; fi \
 	&& if [[ "${BUILD_ARCH}" = "aarch64" ]]; then ARCH="Linux-aarch64"; fi \
     && curl -fsSL https://github.com/hyperion-project/hyperion.ng/releases/download/${RELEASE}/Hyperion-${RELEASE}-${ARCH}.deb > /tmp/Hyperion-${RELEASE}-${ARCH}.deb \

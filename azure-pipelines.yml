@@ -44,6 +44,18 @@ stages:
       - template: .azure-pipelines/job-matrix.yml
         parameters:
           matrix:
+            - addon: hyperion
+              jobName: hyperion
+              arch: '--armhf --amd64 --aarch64'
+            - addon: transmission-openvpn
+              jobName: transmission_openvpn
+              arch: '--amd64'
+            - addon: transmission-magnet-redirect
+              jobName: transmission_magnet_redirect
+              arch: '--amd64'
+            - addon: jackett
+              jobName: jackett
+              arch: '--armhf --amd64 --aarch64'
             - addon: znc
               jobName: znc
               arch: '--armhf --amd64 --aarch64'
@@ -64,16 +76,4 @@ stages:
               arch: '--armhf --amd64 --aarch64'
             - addon: jellyfin
               jobName: jellyfin
-              arch: '--armhf --amd64 --aarch64'
-            - addon: jackett
-              jobName: jackett
-              arch: '--armhf --amd64 --aarch64'
-            - addon: transmission-openvpn
-              jobName: transmission_openvpn
-              arch: '--amd64'
-            - addon: transmission-magnet-redirect
-              jobName: transmission_magnet_redirect
-              arch: '--amd64'
-            - addon: hyperion
-              jobName: hyperion
               arch: '--armhf --amd64 --aarch64'
