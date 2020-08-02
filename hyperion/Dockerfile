@@ -12,7 +12,7 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		libjpeg62-turbo=1:1.5.2-2+b1 \
 		libavahi-compat-libdnssd1=0.7-4+b1 \
-		libdbus-1-3=1.12.16-1 \
+		libdbus-1-3=1.12.20-0+deb10u1 \
 		libqt5sql5=5.11.3+dfsg1-1+deb10u3 \
 		libqt5serialport5=5.11.3-2 \
 		libqt5network5=5.11.3+dfsg1-1+deb10u3 \
