@@ -77,3 +77,6 @@ stages:
             - addon: jellyfin
               jobName: jellyfin
               arch: '--armhf --amd64 --aarch64'
+            - addon: heimdall
+              jobName: heimdall
+              arch: '--armhf --amd64 --aarch64'
