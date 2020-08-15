@@ -20,6 +20,9 @@ https://github.com/petersendev/hassio-addons
 ### [emby](emby/)
 A Free Software Media System that puts you in control of managing and streaming your media.
 
+### [heimdall](heimdall/)
+Application Dashboard
+
 ### [hydra2](hydra2/)
 Meta search application for NZB indexers
 
