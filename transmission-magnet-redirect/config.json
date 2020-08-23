@@ -1,6 +1,6 @@
 {
     "name": "transmission-magnet-redirect",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "slug": "transmission-magnet-redirect",
     "legacy": false,
     "maintenance": {
@@ -19,6 +19,9 @@
     "ports_description": {
         "9092/tcp": "web ui"
     },
+    "map": [
+        "share:rw"
+    ],
     "webui": "http://[HOST]:[PORT:9092]",
     "boot": "auto",
     "options": {
