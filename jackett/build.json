@@ -1,12 +1,12 @@
 {
     "build_from_template": {
         "image": "linuxserver/jackett",
-        "version": "v0.16.962-ls13"
+        "version": "v0.16.1023-ls15"
     },
     "build_from": {
-        "armhf": "linuxserver/jackett:arm32v7-v0.16.962-ls13",
-        "aarch64": "linuxserver/jackett:arm64v8-v0.16.962-ls13",
-        "amd64": "linuxserver/jackett:amd64-v0.16.962-ls13"
+        "armhf": "linuxserver/jackett:arm32v7-v0.16.1023-ls15",
+        "aarch64": "linuxserver/jackett:arm64v8-v0.16.1023-ls15",
+        "amd64": "linuxserver/jackett:amd64-v0.16.1023-ls15"
     },
     "squash": false,
     "args": {}
