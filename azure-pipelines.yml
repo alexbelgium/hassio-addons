@@ -49,7 +49,7 @@ stages:
               arch: '--armhf --amd64 --aarch64'
             - addon: transmission-openvpn
               jobName: transmission_openvpn
-              arch: '--amd64'
+              arch: '--armhf --amd64 --aarch64'
             - addon: transmission-magnet-redirect
               jobName: transmission_magnet_redirect
               arch: '--amd64'
