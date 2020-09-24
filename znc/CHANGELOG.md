@@ -1,3 +1,7 @@
+## 0.7.0
+
+ - Update znc to 1.8.2 (linuxserver/znc:znc-1.8.2-ls41)
+
 ## 0.6.0
 
  - Update znc to 1.8.1 (linuxserver/znc:znc-1.8.1-ls38)

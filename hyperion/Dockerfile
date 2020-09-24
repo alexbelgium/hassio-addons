@@ -21,17 +21,10 @@ RUN apt-get update \
 		libqt5core5a=5.11.3+dfsg1-1+deb10u3 \
 		libusb-1.0=2:1.0.22-2 \
 		zlib1g-dev=1:1.2.11.dfsg-1 \
-        # unzip needed for zlib fix, see below
-        unzip=6.0-23+deb10u1 \
 	&& if [[ "${BUILD_ARCH}" = "amd64" ]]; then ARCH="Linux-x86_64"; fi \
 	&& if [[ "${BUILD_ARCH}" = "aarch64" ]]; then ARCH="Linux-aarch64"; fi \
     && curl -fsSL https://github.com/hyperion-project/hyperion.ng/releases/download/${RELEASE}/Hyperion-${RELEASE}-${ARCH}.deb > /tmp/Hyperion-${RELEASE}-${ARCH}.deb \
 	&& dpkg -i /tmp/Hyperion-${RELEASE}-${ARCH}.deb \
-    # temporary zlib fix, see https://github.com/hyperion-project/hyperion.ng/issues/881
-    && mkdir /usr/share/hyperion/lib/python/ \
-    && unzip /usr/share/hyperion/bin/python35.zip -d /usr/share/hyperion/lib/python \
-    && rm /usr/share/hyperion/bin/python35.zip \
-    # temporary zlib fix end
 	&& rm -fr \
         /tmp/* \
         /var/{cache,log}/* \
