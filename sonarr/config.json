@@ -8,7 +8,7 @@
     "version_regex": "(\\d+\\.\\d+\\.\\d+\\.\\d+)-(ls\\d+)"
   },
   "description": "PVR for usenet and bittorrent users",
-  "url": "https://github.com/petersendev/hassio-addons/sonarr",
+  "url": "https://github.com/petersendev/hassio-addons/tree/master/sonarr",
   "startup": "services",
   "arch": [
     "aarch64",

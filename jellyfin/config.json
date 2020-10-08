@@ -8,7 +8,7 @@
     "version_regex": "v(\\d+\\.\\d+\\.\\d+)-(ls\\d+)"
   },
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
-  "url": "https://github.com/petersendev/hassio-addons/jellyfin",
+  "url": "https://github.com/petersendev/hassio-addons/tree/master/jellyfin",
   "startup": "services",
   "arch": [
     "aarch64",
