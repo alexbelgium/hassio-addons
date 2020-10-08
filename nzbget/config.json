@@ -8,7 +8,7 @@
     "version_regex": "v(\\d+\\.\\d+\\.?\\d*)-(ls\\d+)"
   },
   "description": "Usenet downloader",
-  "url": "https://github.com/petersendev/hassio-addons/nzbget",
+  "url": "https://github.com/petersendev/hassio-addons/tree/master/nzbget#readme",
   "startup": "services",
   "arch": [
     "aarch64",

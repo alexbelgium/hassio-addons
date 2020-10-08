@@ -8,7 +8,7 @@
     "version_regex": "(\\d+\\.\\d+\\.\\d+-?\\w*)-(ls\\d+)"
   },
   "description": "IRC network bouncer",
-  "url": "https://github.com/petersendev/hassio-addons/znc",
+  "url": "https://github.com/petersendev/hassio-addons/tree/master/znc#readme",
   "startup": "services",
   "arch": [
     "aarch64",

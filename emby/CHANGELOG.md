@@ -1,3 +1,7 @@
+## 0.6.0
+
+ - Update emby to 4.5.1.0 (linuxserver/emby:4.5.1.0-ls58)
+
 ## 0.5.0
 
  - Update emby to 4.5.0.50 (linuxserver/emby:4.5.0.50-ls56)

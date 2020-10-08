@@ -8,7 +8,7 @@
         "version_regex": "(\\d+\\.\\d\\.\\d)"
     },
     "description": "Redirect magnet links to transmission",
-    "url": "https://github.com/petersendev/hassio-addons/transmission-magnet-redirect",
+    "url": "https://github.com/petersendev/hassio-addons/tree/master/transmission-magnet-redirect#readme",
     "startup": "services",
     "arch": [
         "amd64"

@@ -8,7 +8,7 @@
     "version_regex": "v(\\d+\\.\\d+\\.\\d+)-(ls\\d+)"
   },
   "description": "Meta search application for NZB indexers",
-  "url": "https://github.com/petersendev/hassio-addons/hydra2",
+  "url": "https://github.com/petersendev/hassio-addons/tree/master/hydra2#readme",
   "startup": "services",
   "arch": [
     "aarch64",

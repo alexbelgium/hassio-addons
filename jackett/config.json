@@ -1,6 +1,6 @@
 {
   "name": "jackett",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "slug": "jackett",
   "legacy": false,
   "maintenance": {
@@ -8,7 +8,7 @@
     "version_regex": "v(\\d+\\.\\d+\\.\\d+)-(ls\\d+)"
   },
   "description": "API Support for your favorite torrent trackers",
-  "url": "https://github.com/petersendev/hassio-addons/jackett",
+  "url": "https://github.com/petersendev/hassio-addons/tree/master/jackett#readme",
   "startup": "services",
   "arch": [
     "aarch64",

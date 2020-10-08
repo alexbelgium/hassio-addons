@@ -9,7 +9,7 @@
     "version_regex": "(\\d+\\.\\d+\\.?\\d*-?\\w*.?\\d*)"
   },
   "description": "Ambient Ligting implementation",
-  "url": "https://github.com/petersendev/hassio-addons/hyperion",
+  "url": "https://github.com/petersendev/hassio-addons/tree/master/hyperion#readme",
   "startup": "services",
   "arch": [
     "aarch64",

@@ -9,7 +9,7 @@
     "release_regex": "v(\\d+\\.\\d+)"
   },
   "description": "OpenVPN and Transmission with WebUI",
-  "url": "https://github.com/petersendev/hassio-addons/transmission-openvpn",
+  "url": "https://github.com/petersendev/hassio-addons/tree/master/transmission-openvpn#readme",
   "startup": "services",
   "arch": [
     "aarch64",
