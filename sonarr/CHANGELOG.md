@@ -1,3 +1,7 @@
+## 0.4.1
+
+ - Mount /media folder
+
 ## 0.4.0
 
  - Update sonarr to 2.0.0.5344 (linuxserver/sonarr:2.0.0.5344-ls53)

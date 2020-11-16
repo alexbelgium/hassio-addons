@@ -1,3 +1,7 @@
+## 0.5.1
+
+ - Mount /media folder
+
 ## 0.5.0
 
  - Update jellyfin to 10.5.5 (linuxserver/jellyfin:v10.5.5-ls52)

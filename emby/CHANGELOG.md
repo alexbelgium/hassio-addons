@@ -1,3 +1,7 @@
+## 0.7.1
+
+ - Mount /media folder
+
 ## 0.7.0
 
  - Update emby to 4.5.2.0 (linuxserver/emby:4.5.2.0-ls58)
