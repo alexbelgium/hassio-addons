@@ -1,6 +1,6 @@
 {
   "name": "radarr",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "slug": "radarr",
   "legacy": false,
   "maintenance": {
@@ -24,6 +24,7 @@
   "map": [
     "config:rw",
     "share:rw",
+    "media:rw",
     "ssl"
   ],
   "webui": "http://[HOST]:[PORT:7878]",

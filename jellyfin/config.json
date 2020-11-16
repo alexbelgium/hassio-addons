@@ -1,6 +1,6 @@
 {
   "name": "jellyfin",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "slug": "jellyfin",
   "legacy": false,
   "maintenance": {
@@ -24,6 +24,7 @@
   "map": [
     "config:rw",
     "share:rw",
+    "media:rw",
     "ssl"
   ],
   "webui": "http://[HOST]:[PORT:8096]",

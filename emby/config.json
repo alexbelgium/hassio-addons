@@ -1,6 +1,6 @@
 {
   "name": "emby",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "slug": "emby",
   "legacy": false,
   "maintenance": {
@@ -24,6 +24,7 @@
   "map": [
     "config:rw",
     "share:rw",
+    "media:rw",
     "ssl"
   ],
   "webui": "http://[HOST]:[PORT:8096]",
