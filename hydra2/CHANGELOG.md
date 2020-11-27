@@ -1,3 +1,8 @@
+## 0.16.0
+
+ - Fix base image (linuxserver/nzbhydra2)
+ - Update hydra2 to 3.5.1 (linuxserver/nzbhydra2:v3.5.1-ls1)
+
 ## 0.15.0
 
  - Update hydra2 to 2.19.6 (linuxserver/hydra2:v2.19.6-ls69)
