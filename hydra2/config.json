@@ -1,10 +1,10 @@
 {
   "name": "hydra2",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "slug": "hydra2",
   "legacy": false,
   "maintenance": {
-    "github_release": "https://github.com/linuxserver/docker-hydra2",
+    "github_release": "https://github.com/linuxserver/docker-nzbhydra2",
     "version_regex": "v(\\d+\\.\\d+\\.\\d+)-(ls\\d+)"
   },
   "description": "Meta search application for NZB indexers",

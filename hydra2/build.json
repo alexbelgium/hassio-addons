@@ -1,12 +1,12 @@
 {
     "build_from_template": {
-        "image": "linuxserver/hydra2",
-        "version": "v2.19.6-ls69"
+        "image": "linuxserver/nzbhydra2",
+        "version": "v3.5.1-ls1"
     },
     "build_from": {
-        "armhf": "linuxserver/hydra2:arm32v7-v2.19.6-ls69",
-        "aarch64": "linuxserver/hydra2:arm64v8-v2.19.6-ls69",
-        "amd64": "linuxserver/hydra2:amd64-v2.19.6-ls69"
+        "armhf": "linuxserver/nzbhydra2:arm32v7-v3.5.1-ls1",
+        "aarch64": "linuxserver/nzbhydra2:arm64v8-v3.5.1-ls1",
+        "amd64": "linuxserver/nzbhydra2:amd64-v3.5.1-ls1"
     },
     "squash": false,
     "args": {}
