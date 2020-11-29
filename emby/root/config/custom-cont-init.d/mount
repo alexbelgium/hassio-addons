@@ -8,7 +8,7 @@ if bashio::config.has_value 'localdisks'; then
     for disk in $MOREDISKS 
     do
         bashio::log.info "Mount ${disk}"
-            mount $disk /share/$disk && \
+            mount $disk /share/storage && \
             bashio::log.info "Success!"   
     done || \
     bashio::log.warning "Protection mode is ON. Unable to mount local drives!"
