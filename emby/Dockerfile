@@ -5,6 +5,9 @@ FROM $BUILD_FROM
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# copy local files
+COPY root/ /
+
 RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends \
@@ -27,7 +30,5 @@ RUN apt-get update \
 
 RUN sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config 
-
-# copy local files
-COPY root/ /
+    && sed -i "s|/config|/emby|g" /etc/config/custom-cont-init.d/mount 
 
