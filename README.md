@@ -18,7 +18,7 @@ https://github.com/alexbelgium/hassio-addons
 [//]: # (ADDONLIST_START)
 
 ### [emby](emby/)
-- A Free Software Media System that puts you in control of managing and streaming your media.
+A Free Software Media System that puts you in control of managing and streaming your media.
 - Forked from : https://github.com/petersendev/hassio-addons
 - Modifications : switch to beta versions, add smb and local disks mount
 
