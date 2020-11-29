@@ -1,2 +1,9 @@
 #!/usr/bin/with-contenv bashio
-mount /dev/sdb1 /share/test
+
+if [ ! -d /share/storage ]; then
+  echo "Creating /share/storage"
+  mkdir -p /share/storage
+  chown -R abc:abc /share/storage
+fi
+
+mount /dev/sdb1 /share/storage
