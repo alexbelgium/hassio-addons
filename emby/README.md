@@ -2,7 +2,7 @@
 
 ## About
 
-Forked from petersendev to add latest beta versions, smb and local hdd mount.
+Forked from /petersendev to add latest beta versions, smb and local hdd mount.
 
 [emby](https://emby.media/) organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone emby Media Server.
 
@@ -26,4 +26,4 @@ comparison to installing any other Hass.io add-on.
 Webui can be found at `<your-ip>:8096`.
 
 
-[repository]: https://github.com/petersendev/hassio-addons
+[repository]: https://github.com/alexbelgium/hassio-addons
