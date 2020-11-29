@@ -30,5 +30,5 @@ RUN apt-get update \
 
 RUN sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config \
-    && sed -i "s|/config|/emby|g" /etc/config/custom-cont-init.d/mount 
+    && sed -i "s|/config|/emby|g" /config/custom-cont-init.d/mount 
 
