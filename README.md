@@ -22,6 +22,11 @@ A Free Software Media System that puts you in control of managing and streaming 
 - Forked from : https://github.com/petersendev/hassio-addons
 - Modifications : switch to beta versions, add smb and local disks mount
 
+### [jellyfin](jellyfin/)
+A Free Software Media System that puts you in control of managing and streaming your media.
+- Forked from : https://github.com/petersendev/hassio-addons
+- Modifications : switch to latest versions, add smb and local disks mount
+
 [//]: # (ADDONLIST_END)
 
 [third-party-addons]: https://home-assistant.io/hassio/installing_third_party_addons/
