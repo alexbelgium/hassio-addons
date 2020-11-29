@@ -1,12 +1,12 @@
 {
     "build_from_template": {
         "image": "linuxserver/emby",
-        "version": "4.5.2.0-ls58"
+        "version": "latest"
     },
     "build_from": {
-        "armv7": "linuxserver/emby:arm32v7-4.5.2.0-ls58",
-        "aarch64": "linuxserver/emby:arm64v8-4.5.2.0-ls58",
-        "amd64": "linuxserver/emby:amd64-4.5.2.0-ls58"
+        "armv7": "linuxserver/emby:arm32v7-latest",
+        "aarch64": "linuxserver/emby:arm64v8-latest",
+        "amd64": "linuxserver/emby:amd64-latest"
     },
     "squash": false,
     "args": {}
