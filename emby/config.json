@@ -1,6 +1,6 @@
 {
   "name": "emby_nas",
-  "version": "1.7",
+  "version": "1.8",
   "slug": "emby_nas",
   "legacy": false,
   "maintenance": {
@@ -36,8 +36,8 @@
   "options": {
     "PUID": 1001,
     "PGID": 1001,
-    "localdisks": ["/dev/sdb1"],
-    "networkdisks": ["<//SERVER/SHARE>"],
+    "localdisks": "/dev/sdb1",
+    "networkdisks": "<//SERVER/SHARE>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
   },
@@ -45,8 +45,8 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "localdisks": ["str"],
-    "networkdisks": ["str"],
+    "localdisks": "str",
+    "networkdisks": "str",
     "cifsusername": "str",
     "cifspassword": "str"
   }
