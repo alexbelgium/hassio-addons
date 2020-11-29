@@ -8,7 +8,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-        jq=1.5+dfsg-2 \    
+        jq=1.5+dfsg-2 \
+        cifs-utils \
     \
     && curl -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
