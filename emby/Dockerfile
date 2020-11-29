@@ -5,9 +5,6 @@ FROM $BUILD_FROM
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# copy local files
-COPY root/ /
-
 RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends \
@@ -28,6 +25,9 @@ RUN apt-get update \
       /tmp/* \
       /var/{cache,log}/* \
       /var/lib/apt/lists/*
+
+# copy local files
+COPY root/ /
 
 RUN sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config \
