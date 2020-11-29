@@ -1,6 +1,8 @@
-# Hassio Add-ons by petersendev: emby
+# Hassio Add-ons by alexbelium: emby
 
 ## About
+
+Forked from petersendev to add latest beta versions, smb and local hdd mount.
 
 [emby](https://emby.media/) organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone emby Media Server.
 
