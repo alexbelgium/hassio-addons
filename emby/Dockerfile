@@ -11,7 +11,6 @@ RUN apt-get update \
         jq=1.5+dfsg-2 \
     \
     && apt-get -y upgrade cifs-utils \
-    && mkdir /config/custom-cont-init.d \
     && curl -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
     && mkdir /tmp/bashio \
