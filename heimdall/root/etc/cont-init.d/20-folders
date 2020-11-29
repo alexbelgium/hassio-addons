@@ -1,7 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-if [ ! -d /config/heimdall ]; then
-  echo "Creating /config/heimdall"
-  mkdir -p /config/heimdall
-  chown -R abc:abc /config/heimdall
-fi

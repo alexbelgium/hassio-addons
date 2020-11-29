@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bashio
-
-bashio::log.info 'Starting transmission-magnet-redirect...'
-
-cd /app
-exec dotnet TransmissionMagnetRedirect.dll
