@@ -34,7 +34,7 @@
   "options": {
     "PUID": 1001,
     "PGID": 1001,
-    "local_hdd": "<Local>",
+    "localdisks": ["/dev/sdb1"],
     "networkdisks": ["<//SERVER/SHARE>"],
     "cifsusername": "<username>",
     "cifspassword": "<password>"
@@ -43,7 +43,7 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "local_hdd": "str",
+    "localdisks": ["str"],
     "networkdisks": ["str"],
     "cifsusername": "str",
     "cifspassword": "str"
