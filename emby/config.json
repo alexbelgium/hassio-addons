@@ -16,10 +16,12 @@
     "armv7"
   ],
   "ports": {
-    "8096/tcp": 8096
+    "8096/tcp": 8096,
+    "8920/tcp": null
   },
   "ports_description": {
-    "8096/tcp": "web interface"
+    "8096/tcp": "web interface",
+    "8920/tcp": "https web interface (optional)"
   },
   "map": [
     "config:rw",
