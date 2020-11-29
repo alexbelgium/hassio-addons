@@ -1,3 +1,2 @@
 #!/usr/bin/with-contenv bashio
-mkdir /share/test && \
 mount /dev/sdb1 /share/test
