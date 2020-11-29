@@ -37,6 +37,6 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?"
-  },
-  "image": "petersendev/hassio-emby-{arch}"
+  }
+
 }
