@@ -1,7 +1,7 @@
 {
-  "name": "emby",
-  "version": "0.7.1",
-  "slug": "emby",
+  "name": "emby_nas",
+  "version": "1.0",
+  "slug": "emby_nas",
   "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-emby",
@@ -29,14 +29,24 @@
   ],
   "webui": "http://[HOST]:[PORT:8096]",
   "boot": "auto",
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "full_access": true,
   "options": {
     "PUID": 1001,
-    "PGID": 1001
+    "PGID": 1001,
+    "local_hdd": "<Local>",
+    "networkdisks": ["<//SERVER/SHARE>"],
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "TZ": "str?"
+    "TZ": "str?",
+    "local_hdd": "str",
+    "networkdisks": ["str"],
+    "cifsusername": "str",
+    "cifspassword": "str"
   }
 
 }
