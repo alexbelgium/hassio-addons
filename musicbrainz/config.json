@@ -1,7 +1,7 @@
 {
-  "name": "musicbrainz with smb and hdd",
+  "name": "musicbrainz with smb and hdd (test)",
   "version": "1.0",
-  "slug": "musicbrainz_nas",
+  "slug": "musicbrainz_nas_test",
   "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-musicbrainz",
