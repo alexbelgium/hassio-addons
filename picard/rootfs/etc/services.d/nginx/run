@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+
+# Wait for transmission to become available
+bashio::net.wait_for 9091
+
+bashio::log.info "Starting NGinx..."
+
+exec nginx
