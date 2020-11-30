@@ -28,7 +28,5 @@ RUN apt-get update \
 # copy local files
 COPY root/ /
 
-RUN sed -i "s|/config|/musicbrainz|g" /etc/services.d/server/run \
-    && sed -i "s|/config|/musicbrainz|g" /etc/cont-init.d/30-initialise-database \
-    && sed -i "s|/config|/musicbrainz|g" /etc/cont-init.d/40-config
+RUN sed -i "s|/config|/musicbrainz|g" /etc/services.d/server/run
 
