@@ -1,0 +1,52 @@
+{
+  "name": "qbittorrent beta with smb and hdd",
+  "version": "1.0",
+  "slug": "qbittorrent_nas",
+  "legacy": false,
+  "maintenance": {
+    "github_release": "https://github.com/linuxserver/docker-qbittorrent",
+    "version_regex": "(\\d+\\.\\d+\\.\\d+.\\d+)-(ls\\d+)"
+  },
+  "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/qbittorrent#readme",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "ports": {
+    "8080/tcp": 8080  },
+  "ports_description": {
+    "8080/tcp": "web interface"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:8080]",
+  "boot": "auto",
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "full_access": true,
+  "options": {
+    "PUID": 1001,
+    "PGID": 1001,
+    "localdisks": "/dev/sdb1",
+    "networkdisks": "<//SERVER/SHARE>",
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?",
+    "localdisks": "str",
+    "networkdisks": "str",
+    "cifsusername": "str",
+    "cifspassword": "str"
+  }
+
+}
