@@ -1,0 +1,7 @@
+{
+    "build_from": {
+        "armv7": "mikenye/picard:latest"
+    },
+    "squash": false,
+    "args": {}
+}

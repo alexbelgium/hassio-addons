@@ -1,0 +1,50 @@
+{
+  "name": "Musicbrainz Picard",
+  "version": "1.0",
+  "slug": "musicbrainz_picard",
+  "legacy": false,
+  "maintenance": {
+    "github_release": "https://github.com/mikenye/docker-picard/tree",
+    "version_regex": "(\\d+\\.\\d+\\.\\d+.\\d+)-(ls\\d+)"
+  },
+  "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/musicbrainz_picard#readme",
+  "startup": "services",
+  "arch": [
+    "armv7"
+  ],
+  "ports": {
+    "5050/tcp": 5050
+  },
+  "ports_description": {
+    "5050/tcp": "web interface"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:5050]",
+  "boot": "auto",
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "full_access": true,
+  "options": {
+    "PUID": 1001,
+    "PGID": 1001,
+    "localdisks": "/dev/sdb1",
+    "networkdisks": "<//SERVER/SHARE>",
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?",
+    "localdisks": "str",
+    "networkdisks": "str",
+    "cifsusername": "str",
+    "cifspassword": "str"
+  }
+
+}
