@@ -1,18 +1,19 @@
 {
-  "name": "musicbrainz with smb and hdd",
-  "version": "2.0",
-  "slug": "musicbrainz_nas",
+  "name": "musicbrainz with smb and hdd (test)",
+  "version": "1.0",
+  "slug": "musicbrainz_nas_test",
   "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-musicbrainz",
     "version_regex": "(\\d+\\.\\d+\\.\\d+.\\d+)-(ls\\d+)"
   },
   "description": "A free open music encyclopedia that collects music metadata and makes it available to the public.",
-  "url": "https://github.com/petersendev/hassio-addons/tree/master/musicbrainz#readme",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/musicbrainz#readme",
   "startup": "services",
   "arch": [
     "aarch64",
     "amd64",
+    "armhf",
     "armv7"
   ],
   "ports": {
@@ -23,8 +24,7 @@
   "map": [
     "config:rw",
     "share:rw",
-    "media:rw",
-    "ssl"
+    "media:rw"
   ],
   "webui": "http://[HOST]:[PORT:5000]",
   "boot": "auto",
