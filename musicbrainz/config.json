@@ -13,7 +13,7 @@
   "arch": [
     "aarch64",
     "amd64",
-    "amdhf",
+    "armhf",
     "armv7"
   ],
   "ports": {
