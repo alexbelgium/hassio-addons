@@ -29,5 +29,5 @@ RUN apt-get update \
 COPY root/ /
 
 RUN sed -i "s|/config|/musicbrainz|g" /etc/services.d/server/run \
-    && sed -i "s|/config|/musicbrainz|g" /etc/cont-init.d/30-config
+    && sed -i "s|/config|/musicbrainz|g" /etc/cont-init.d/40-config
 
