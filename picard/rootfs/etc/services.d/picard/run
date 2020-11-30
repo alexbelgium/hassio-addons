@@ -1,7 +1,0 @@
-#!/usr/bin/with-contenv bashio
-# ==============================================================================
-# Runs Picard
-# ==============================================================================
-bashio::log.info "Starting Picard..."
-
-exec /usr/bin/picard --foreground --config-dir /data/picard
