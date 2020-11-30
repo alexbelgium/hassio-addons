@@ -1,6 +1,6 @@
 {
   "name": "musicbrainz with smb and hdd",
-  "version": "2.0",
+  "version": "1.0",
   "slug": "musicbrainz_nas",
   "legacy": false,
   "maintenance": {
@@ -23,8 +23,7 @@
   "map": [
     "config:rw",
     "share:rw",
-    "media:rw",
-    "ssl"
+    "media:rw"
   ],
   "webui": "http://[HOST]:[PORT:5000]",
   "boot": "auto",
