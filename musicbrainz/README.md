@@ -14,14 +14,13 @@ comparison to installing any other Hass.io add-on.
 1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
-1. Start the add-on.
+1. Start the add-on. The initial import and setup of the database can take quite a long time, dependant on your download speed etc, be patient and don't restart the container before it's complete.
 1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences, see the official documentation for for that.
+1. You must register here to receive a MusicBrainz code to allow you to receive database updates, it is free. Get Code [here] (https://metabrainz.org/supporters/account-type).
 
 
 ## Configuration
 
 Webui can be found at `<your-ip>:5000`.
-
 
 [repository]: https://github.com/alexbelgium/hassio-addons
