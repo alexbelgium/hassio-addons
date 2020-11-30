@@ -8,7 +8,7 @@
     "version_regex": "(\\d+\\.\\d+\\.\\d+.\\d+)-(ls\\d+)"
   },
   "description": "A free open music encyclopedia that collects music metadata and makes it available to the public.",
-  "url": "https://github.com/petersendev/hassio-addons/tree/master/musicbrainz#readme",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/musicbrainz#readme",
   "startup": "services",
   "arch": [
     "aarch64",
