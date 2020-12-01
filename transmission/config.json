@@ -32,7 +32,9 @@
     "devices": [
       "/dev/net/tun:/dev/net/tun:rwm"
     ],
-    "hassio_api": true,
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "full_access": true,
+  "hassio_api": true,
     "homeassistant_api": false,
     "host_network": false,
     "options": {
