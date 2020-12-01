@@ -1,6 +1,6 @@
 {
   "name": "Emby beta with smb and hdd",
-  "version": "2.0",
+  "version": "2.1",
   "slug": "emby_nas",
   "legacy": false,
   "maintenance": {
