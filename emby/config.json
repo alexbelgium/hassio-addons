@@ -37,7 +37,7 @@
   "options": {
     "PUID": 1001,
     "PGID": 1001,
-    "localdisks": [- "NAS"],
+    "localdisks": [- "<PARTITION LABEL>"],
     "networkdisks": "<//SERVER/SHARE>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
