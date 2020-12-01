@@ -46,7 +46,7 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "localdisks": "str",
+    "localdisks": ["str"],
     "networkdisks": "str",
     "cifsusername": "str",
     "cifspassword": "str"
