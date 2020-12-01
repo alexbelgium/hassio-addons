@@ -28,6 +28,7 @@
     "config:rw",
     "share:rw",
     "media:rw",
+    "mnt:rw",
     "ssl"
   ],
   "webui": "http://[HOST]:[PORT:8096]",
@@ -37,7 +38,7 @@
   "options": {
     "PUID": 1001,
     "PGID": 1001,
-    "localdisks": [- "<PARTITION LABEL>"],
+    "localdisks": ["-<PARTITION LABEL>"],
     "networkdisks": "<//SERVER/SHARE>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
