@@ -10,13 +10,13 @@ if bashio::config.has_value 'localdisks'; then
     for disk in $MOREDISKS 
     do
         bashio::log.info "Mount ${disk}"
-        mkdir -p /mnt/$disk && \
-            if [ ! -d /mnt/$disk ]; then
-              echo "Creating /mnt/$disk"
-              mkdir -p /mnt/$disk
-              chown -R abc:abc /mnt/$disk
+        mkdir -p /storage/$disk && \
+            if [ ! -d /storage/$disk ]; then
+              echo "Creating /storage/$disk"
+              mkdir -p /storage/$disk
+              chown -R abc:abc /storage/$disk
             fi
-            mount -t auto /dev_/disk/by-label/$disk /mnt/$disk -o nosuid,relatime,noexec && \
+            mount -t auto /dev_/disk/by-label/$disk /storage/$disk -o nosuid,relatime,noexec && \
             bashio::log.info "Success!"   
     done || \
     bashio::log.warning "Protection mode is ON. Unable to mount local drives!"
@@ -32,13 +32,13 @@ if bashio::config.has_value 'networkdisks'; then
     do
         bashio::log.info "Mount ${disk}"
         mkdir -p /share/storagecifs && \
-            if [ ! -d /mnt/storagecifs ]; then
-              echo "Creating /mnt/storagecifs"
-              mkdir -p /mnt/storagecifs
-              chown -R abc:abc /mnt/storagecifs
+            if [ ! -d /storage/storagecifs ]; then
+              echo "Creating /storage/storagecifs"
+              mkdir -p /storage/storagecifs
+              chown -R abc:abc /storage/storagecifs
             fi
 
-            mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /mnt/storagecifs && \
+            mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /storage/storagecifs && \
             bashio::log.info "Success!"   
     done || \
     bashio::log.warning "Protection mode is ON. Unable to mount external drives!"
