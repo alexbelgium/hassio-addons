@@ -37,7 +37,7 @@
   "options": {
     "PUID": 1001,
     "PGID": 1001,
-    "localdisks": ["-sda1"],
+    "localdisks": [-"sda1"],
     "networkdisks": "<//SERVER/SHARE>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
