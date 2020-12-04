@@ -1,0 +1,13 @@
+{
+    "build_from_template": {
+        "image": "linuxserver/sonarr",
+        "version": "latest"
+    },
+    "build_from": {
+        "armhf": "linuxserver/sonarr:arm32v7-latest",
+        "aarch64": "linuxserver/sonarr:arm64v8-latest",
+        "amd64": "linuxserver/sonarr:amd64-latest"
+    },
+    "squash": false,
+    "args": {}
+}
