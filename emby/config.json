@@ -1,6 +1,6 @@
 {
   "name": "Emby beta with smb and hdd",
-  "version": "1.4",
+  "version": "1.5",
   "slug": "emby_nas",
   "legacy": false,
   "maintenance": {
@@ -37,7 +37,7 @@
   "options": {
     "PUID": 1001,
     "PGID": 1001,
-    "localdisks": ["-sda1"],
+    "localdisks": ["sda1"],
     "networkdisks": "<//SERVER/SHARE>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
