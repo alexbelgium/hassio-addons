@@ -1,7 +1,7 @@
 {
   "name": "jackett",
   "version": "0.17.0",
-  "slug": "jackett",
+  "slug": "Jackett",
   "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-jackett",
@@ -41,6 +41,5 @@
   "environment": {
     "XDG_DATA_HOME": "/share/jackett",
     "XDG_CONFIG_HOME": "/config/jackett"
-  },
-  "image": "petersendev/hassio-jackett-{arch}"
+  }
 }
