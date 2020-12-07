@@ -1,7 +1,7 @@
 {
-  "name": "jackett",
-  "version": "0.17.0",
-  "slug": "Jackett",
+  "name": "Jackett",
+  "version": "1.0",
+  "slug": "jackett",
   "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-jackett",
