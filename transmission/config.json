@@ -1,5 +1,5 @@
 {
-  "name": "Radarr",
+  "name": "Transmission",
   "version": "latest",
   "slug": "transmission",
   "description": "The torrent client for Hass.io with OpenVPN support",
