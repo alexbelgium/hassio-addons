@@ -1,5 +1,5 @@
 ARG BUILD_FROM
-$BUILD_FROM
+FROM $BUILD_FROM
 
 # MOFIFY DATA PATH
 RUN sed -i "s|config|data|g" /etc/services.d/doublecommander/run
