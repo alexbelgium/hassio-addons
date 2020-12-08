@@ -19,13 +19,19 @@ https://github.com/alexbelgium/hassio-addons
 
 ### [emby](emby/)
 A Free Software Media System that puts you in control of managing and streaming your media.
+- Based on linuxserver image latest beta
 - Forked from : https://github.com/petersendev/hassio-addons
 - Modifications : switch to beta versions, add smb and local disks mount
 
-### [jellyfin](jellyfin/)
-A Free Software Media System that puts you in control of managing and streaming your media.
-- Forked from : https://github.com/petersendev/hassio-addons
-- Modifications : switch to latest versions, add smb and local disks mount
+### [transmission](transmission/)
+The torrent client for Hass.io with OpenVPN support.
+- Based on latest transmission
+- Forked from : https://github.com/Alexwijn/hassio-addon-transmission
+- Modifications : add smb and local disks mount
+
+### [doublecommander](doublecommander/)
+A free cross platform open source file manager with two panels side by side.
+- Based on latest linuxserver image
 
 [//]: # (ADDONLIST_END)
 
