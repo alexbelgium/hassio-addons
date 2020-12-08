@@ -1,6 +1,6 @@
 {
   "name": "Double commander",
-  "version": "latest",
+  "version": "1.0",
   "slug": "doublecommander",
   "description": "Radarr add-on based on the prebuilt docker image from linuxserver",
   "url": "https://github.com/marcelveldt/hassio-addons-repo/radarr",
