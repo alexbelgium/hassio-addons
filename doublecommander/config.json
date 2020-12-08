@@ -16,7 +16,9 @@
   },
   "map": [
     "backup:rw",
+    "config:rw",
     "share:rw",
+    "media:rw",
     "ssl"
   ],
   "webui": "http://[HOST]:[PORT:3000]",
