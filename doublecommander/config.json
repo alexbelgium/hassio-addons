@@ -1,6 +1,6 @@
 {
   "name": "Double commander",
-  "version": "1.0",
+  "version": "1.1",
   "slug": "doublecommander",
   "description": "Radarr add-on based on the prebuilt docker image from linuxserver",
   "url": "https://github.com/marcelveldt/hassio-addons-repo/radarr",
@@ -20,6 +20,8 @@
   ],
   "webui": "http://[HOST]:[PORT:3000]",
   "boot": "auto",
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"], 
+  "full_access": true,
   "environment": {
     "PUID": "0",
     "PGID": "0"
