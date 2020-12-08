@@ -1,9 +1,10 @@
-# Marcelveldt's Hassio Add-ons: Radarr
+# Hassio Add-ons by alexbelgium: doublecommander
 
 ## About
 
-Radarr add-on based on the prebuilt docker image from linuxserver
-Radarr - A fork of Sonarr to work with movies à la Couchpotato.
+Double Commander is a free cross platform open source file manager with two panels side by side. It is inspired by Total Commander and features some new ideas.
+
+This addon is based on the [docker image](https://github.com/linuxserver/docker-doublecommander) from linuxserver.io.
 
 ## Installation
 
@@ -20,13 +21,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at <your-ip>:7878 
-
-By default hassio folders backup, share and ssl are available within the addon.
-You can use the share folder to access/store your media files.
-
-Documentation for Radarr: https://github.com/Radarr/Radarr
+Webui can be found at `<your-ip>:3000`.
 
 
-
-[repository]: https://github.com/marcelveldt/hassio-addons-repo
+[repository]: https://github.com/alexbelgium/hassio-addons

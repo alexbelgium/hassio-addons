@@ -1,13 +1,14 @@
 {
   "name": "Double commander",
-  "version": "1.1",
+  "version": "1.2",
   "slug": "doublecommander",
-  "description": "Radarr add-on based on the prebuilt docker image from linuxserver",
-  "url": "https://github.com/marcelveldt/hassio-addons-repo/radarr",
+  "description": "Double Commander is a free cross platform open source file manager with two panels side by side.",
+  "url": "https://github.com/alexbelgium/hassio-addons/doublecommander",
   "startup": "services",
   "arch": [
     "aarch64",
     "amd64",
+    "armv7",
     "armhf"
   ],
   "ports": {
