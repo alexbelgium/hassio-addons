@@ -28,16 +28,26 @@
     "media:rw",
     "ssl"
   ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "full_access": true,
   "webui": "http://[HOST]:[PORT:7878]",
   "boot": "auto",
   "options": {
     "PUID": 1001,
-    "PGID": 1001
+    "PGID": 1001, 
+    "localdisks": ["sda1"], 
+    "networkdisks": "<//SERVER/SHARE>", 
+    "cifsusername": "<username>", 
+    "cifspassword": "<password>"
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "TZ": "str?"
+    "TZ": "str?", 
+    "localdisks": ["str"], 
+    "networkdisks": "str", 
+    "cifsusername": "str", 
+    "cifspassword": "str"
   },
   "snapshot_exclude": [
     "**/Backups/*",
