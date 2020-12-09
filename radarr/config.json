@@ -1,7 +1,7 @@
 {
   "name": "radarr NAS",
   "version": "0.6.1",
-  "slug": "radarr",
+  "slug": "radarr_nas",
   "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-radarr",
