@@ -21,7 +21,11 @@ https://github.com/alexbelgium/hassio-addons
 A Free Software Media System that puts you in control of managing and streaming your media.
 - Based on linuxserver image latest beta
 - Forked from : https://github.com/petersendev/hassio-addons
-- Modifications : switch to beta versions, add smb and local disks mount
+- Modifications : switch to linuxserver beta versions, add smb and local disks mount
+
+### [radarr](radarr/)
+- Forked from : https://github.com/petersendev/hassio-addons
+- Modifications : add smb and local disks mount
 
 ### [transmission](transmission/)
 The torrent client for Hass.io with OpenVPN support.
