@@ -1,5 +1,5 @@
 {
-    "name": "Transmission with NAS",
+    "name": "Transmission NAS",
     "version": "1.0",
     "slug": "transmission",
     "description": "The torrent client for Hass.io with OpenVPN support",

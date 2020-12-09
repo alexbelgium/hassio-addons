@@ -1,5 +1,5 @@
 {
-  "name": "Emby beta with smb and hdd",
+  "name": "Emby beta NAS",
   "version": "1.5",
   "slug": "emby_nas",
   "legacy": false,
