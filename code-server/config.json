@@ -22,7 +22,7 @@
     "ssl"
   ],
   "webui": "http://[HOST]:[PORT:3000]",
-  "boot": auto
+  "boot": auto, 
   "environment": {
     "PUID": "0",
     "PGID": "0"
