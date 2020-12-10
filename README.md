@@ -37,6 +37,10 @@ The torrent client for Hass.io with OpenVPN support.
 A free cross platform open source file manager with two panels side by side.
 - Based on latest linuxserver image
 
+### [code-server](code-server/)
+Code-server is VS Code running on a remote server, accessible through the browser.
+- Based on latest linuxserver image
+
 [//]: # (ADDONLIST_END)
 
 [third-party-addons]: https://home-assistant.io/hassio/installing_third_party_addons/
