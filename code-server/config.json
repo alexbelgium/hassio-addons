@@ -26,12 +26,12 @@
   "webui": "http://[HOST]:[PORT:8443]",
   "boot": "auto", 
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PUID": 0,
+    "PGID": 0
   },
   "options": {
-    "PUID": "0",
-    "PGID": "0"
+    "PUID": 0,
+    "PGID": 0
 	},
   "schema": {
     "PUID": "int",
