@@ -17,24 +17,29 @@ https://github.com/alexbelgium/hassio-addons
 
 [//]: # (ADDONLIST_START)
 
-### [emby](emby/)
+### [Emby NAS](emby/)
 A Free Software Media System that puts you in control of managing and streaming your media.
 - Based on linuxserver image latest beta
 - Forked from : https://github.com/petersendev/hassio-addons
 - Modifications : switch to linuxserver beta versions, add smb and local disks mount
 
-### [radarr](radarr/)
+### [Radarr NAS](radarr/)
 - Forked from : https://github.com/petersendev/hassio-addons
 - Modifications : add smb and local disks mount
 
-### [transmission](transmission/)
+### [Transmission NAS](transmission/)
 The torrent client for Hass.io with OpenVPN support.
 - Based on latest transmission
 - Forked from : https://github.com/Alexwijn/hassio-addon-transmission
 - Modifications : add smb and local disks mount
 
-### [doublecommander](doublecommander/)
+### [Doublecommander NAS](doublecommander/)
 A free cross platform open source file manager with two panels side by side.
+- Based on latest linuxserver image
+- Modifications : add smb and local disks mount
+
+### [Code-server](code-server/)
+Code-server is VS Code running on a remote server, accessible through the browser.
 - Based on latest linuxserver image
 
 [//]: # (ADDONLIST_END)
