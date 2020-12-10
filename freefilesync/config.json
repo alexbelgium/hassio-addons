@@ -1,0 +1,66 @@
+{
+    "name": "Transmission NAS",
+    "version": "1.0",
+    "slug": "transmission",
+    "description": "The torrent client for Hass.io with OpenVPN support",
+    "url": "https://github.com/pierrickrouxel/hassio-addon-transmission",
+    "webui": "http://[HOST]:[PORT:9091]/transmission/web/",
+    "startup": "services",
+    "ingress": "true",
+    "ingress_port": 8099,
+    "panel_icon": "mdi:progress-download",
+    "panel_title": "Transmission",
+    "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+    "map": [
+      "config:rw",
+      "share:rw",
+      "ssl"
+    ],
+    "boot": "auto",
+    "ports": {
+      "9091/tcp": null,
+      "51413/tcp": 51413,
+      "51413/udp": 51413
+    },
+   "ports_description": {
+      "9091/tcp": "Web UI port (Not required for Hass.io Ingress)",
+      "51413/tcp": "Peer port (setup port forwarding to this port)",
+      "51413/udp": "Peer port (setup port forwarding to this port)"
+    },
+    "privileged": [
+      "NET_ADMIN"
+    ],
+    "devices": [
+      "/dev/net/tun:/dev/net/tun:rwm"
+    ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "full_access": true,
+  "hassio_api": true,
+    "homeassistant_api": false,
+    "host_network": false,
+    "options": {
+      "log_level": "info",
+      "authentication_required": false,
+      "username": "",
+      "password": "",
+      "localdisks": ["sda1"],
+      "openvpn_enabled": false,
+      "openvpn_config": "",
+      "openvpn_username": "",
+      "openvpn_password": ""
+    },
+    "schema": {
+      "log_level": "match(^(trace|debug|info|notice|warning|error|fatal)$)",
+      "authentication_required": "bool",
+      "username": "str",
+      "password": "str",
+      "localdisks": ["str"],
+      "openvpn_enabled": "bool",
+      "openvpn_config": "str",
+      "openvpn_username": "str",
+      "openvpn_password": "str"
+    },
+    "environment": {
+      "LOG_FORMAT": "{LEVEL}: {MESSAGE}"
+    }
+  }
