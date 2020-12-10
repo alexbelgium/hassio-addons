@@ -43,7 +43,7 @@
       "authentication_required": false,
       "username": "",
       "password": "",
-	  "localdisks": ["-sda1"],
+      "localdisks": ["sda1"],
       "openvpn_enabled": false,
       "openvpn_config": "",
       "openvpn_username": "",
