@@ -1,6 +1,6 @@
-FROM jlesage/baseimage-gui:ubuntu-18.04
-
-LABEL maintainer="carvajal.diego@gmail.com"
+ARG BUILD_FROM=hassioaddons/base:8.0.1
+# hadolint ignore=DL3006
+FROM ${BUILD_FROM}
 
 # Update and Add musicbrainz Repo
 RUN apt-get update && \
