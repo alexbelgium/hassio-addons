@@ -1,0 +1,38 @@
+{
+  "name": "VS code",
+  "version": "1.°",
+  "slug": "code-server",
+  "description": "Double Commander is a free cross platform open source file manager with two panels side by side.",
+  "url": "https://github.com/alexbelgium/hassio-addons/code-server",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "ports": {
+    "8443/tcp": 8443
+  },
+  "map": [
+    "backup:rw",
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:3000]",
+  "environment": {
+    "PUID": "0",
+    "PGID": "0"
+  },
+  "options": {
+    "PUID": "0",
+    "PGID": "0"
+	},
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?"
+  }
+}
