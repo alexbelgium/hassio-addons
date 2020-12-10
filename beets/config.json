@@ -1,1 +1,45 @@
-
+{
+  "name": "Beets",
+  "version": "1.0",
+  "slug": "beets",
+  "description": "Beets is a music library manager and not, for the most part, a music player.",
+  "url": "https://github.com/alexbelgium/hassio-addons/doublecommander",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "ports": {
+    "8337/tcp": 8337
+  },
+  "map": [
+    "backup:rw",
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:8337]",
+  "boot": "auto",
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"], 
+  "full_access": true,
+  "options": {
+    "PUID": "0",
+    "PGID": "0",
+    "localdisks": ["-sda1"],
+    "networkdisks": "<//SERVER/SHARE>",
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
+	},
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?",
+    "localdisks": ["str"],
+    "networkdisks": "str",
+    "cifsusername": "str",
+    "cifspassword": "str"
+  }
+  }
