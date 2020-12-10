@@ -1,10 +1,10 @@
-# Hassio Add-ons by alexbelgium: doublecommander
+# Hassio Add-ons by alexbelgium: code-server
 
 ## About
 
-Double Commander is a free cross platform open source file manager with two panels side by side. It is inspired by Total Commander and features some new ideas.
+Code-server is VS Code running on a remote server, accessible through the browser.
 
-This addon is based on the [docker image](https://github.com/linuxserver/docker-doublecommander) from linuxserver.io.
+This addon is based on the [docker image](https://github.com/linuxserver/code-server) from linuxserver.io.
 
 ## Installation
 
@@ -21,7 +21,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at `<your-ip>:3000`.
+Webui can be found at `<your-ip>:8443`.
 
 
 [repository]: https://github.com/alexbelgium/hassio-addons
