@@ -25,9 +25,8 @@ RUN apt-get update \
       /var/{cache,log}/* \
       /var/lib/apt/lists/*
 
-# copy local files
-COPY root/ /
-
 RUN sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config
 
+# copy local files
+COPY root/ /
