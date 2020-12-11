@@ -24,6 +24,7 @@
   "webui": "http://[HOST]:[PORT:3000]",
   "boot": "auto",
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"], 
+  "host_network": true,
   "full_access": true,
   "environment": {
     "PUID": "0",
