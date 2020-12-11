@@ -18,11 +18,15 @@
   ],
   "ports": {
     "8096/tcp": 8096,
-    "8920/tcp": null
+    "8920/tcp": null,
+    "7359/udp": null,
+    "1900/udp": null
   },
   "ports_description": {
     "8096/tcp": "web interface",
-    "8920/tcp": "https web interface (optional)"
+    "8920/tcp": "https web interface (optional)",
+    "7359/udp": "udp server discover (optional)",
+    "1900/udp": "dlna (optional)"
   },
   "map": [
     "config:rw",
