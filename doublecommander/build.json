@@ -1,13 +1,13 @@
 {
     "build_from_template": {
         "image": "linuxserver/doublecommander",
-        "version": "latest"
+        "version": "0.8.2-1-ls35"
     },
     "build_from": {
-        "armv7": "linuxserver/doublecommander:arm32v7-latest",
-        "armhf": "linuxserver/doublecommander:arm32v7-latest",
-        "aarch64": "linuxserver/doublecommander:arm64v8-latest",
-        "amd64": "linuxserver/doublecommander:amd64-latest"
+        "armv7": "linuxserver/doublecommander:arm32v7-0.8.2-1-ls35",
+        "armhf": "linuxserver/doublecommander:arm32v7-0.8.2-1-ls35",
+        "aarch64": "linuxserver/doublecommander:arm64v8-0.8.2-1-ls35",
+        "amd64": "linuxserver/doublecommander:amd64-0.8.2-1-ls35"
     },
     "squash": false,
     "args": {}
