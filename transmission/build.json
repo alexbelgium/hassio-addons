@@ -1,11 +1,11 @@
 {
-    "build_from": {
-        "armv7": "linuxserver/transmission:arm32v7-3.00-r0-ls69",
-        "armhf": "linuxserver/transmission:arm32v7-3.00-r0-ls69",
-        "aarch64": "linuxserver/code-server:arm64v8-3.00-r0-ls69",
-        "amd64": "linuxserver/code-server:amd64-3.00-r0-ls69"
-    },
     "squash": false,
+    "build_from": {
+        "aarch64": "hassioaddons/base-aarch64:8.0.1",
+        "amd64": "hassioaddons/base-amd64:8.0.1",
+        "armhf": "hassioaddons/base-armhf:8.0.1",
+        "armv7": "hassioaddons/base-armv7:8.0.1",
+        "i386": "hassioaddons/base-i386:8.0.1"
+    },
     "args": {}
 }
-
