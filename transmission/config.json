@@ -1,6 +1,6 @@
 {
     "name": "Transmission NAS",
-    "version": "1.1",
+    "version": "1.2",
     "slug": "transmission",
     "description": "The torrent client for Hass.io with OpenVPN support",
     "url": "https://github.com/pierrickrouxel/hassio-addon-transmission",
@@ -14,6 +14,7 @@
     "map": [
       "config:rw",
       "share:rw",
+      "media:rw",
       "ssl"
     ],
     "boot": "auto",
