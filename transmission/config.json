@@ -1,7 +1,7 @@
 {
-  "name": "Transmission_2",
+  "name": "Transmission",
   "version": "3.00-r0-ls69",
-  "slug": "transmission_2",
+  "slug": "transmission",
   "description": "The torrent client for Hass.io",
   "url": "https://hub.docker.com/alexbelgium/transmission",
   "startup": "services",
