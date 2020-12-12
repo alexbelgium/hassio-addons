@@ -2,7 +2,7 @@
 
 ## About
 
-Transmission is designed for easy, powerful use. Transmission has the features you want from a BitTorrent client: encryption, a web interface, peer exchange, magnet links, DHT, µTP, UPnP and NAT-PMP port forwarding, webseed support, watch directories, tracker editing, global and per-torrent speed limits, and more.
+[Transmission](https://github.com/linuxserver/Transmission) - a torrent client.
 
 This addon is based on the [docker image](https://github.com/linuxserver/transmission) from linuxserver.io.
 
@@ -24,4 +24,4 @@ comparison to installing any other Hass.io add-on.
 Webui can be found at `<your-ip>:9091`.
 
 
-[repository]: https://github.com/alexbelgium/hassio-addons
+[repository]: https://github.com/petersendev/hassio-addons

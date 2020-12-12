@@ -2,7 +2,7 @@
 
 ## About
 
-[Radarr](https://github.com/Radarr/Radarr) - A fork of Sonarr to work with movies à la Couchpotato.
+[Radarr](https://github.com/Radarr/Radarr) - A fork of Sonarr to work with movies like Couchpotato.
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-radarr) from linuxserver.io.
 

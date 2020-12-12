@@ -7,7 +7,7 @@
     "github_release": "https://github.com/linuxserver/docker-radarr",
     "version_regex": "v(\\d+\\.\\d+\\.\\d+\\.\\d+)-(ls\\d+)"
   },
-  "description": "A fork of Sonarr to work with movies à la Couchpotato",
+  "description": "A fork of Sonarr to work with movies like Couchpotato",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr#readme",
   "startup": "services",
   "arch": [
