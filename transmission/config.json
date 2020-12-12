@@ -1,7 +1,7 @@
 {
-  "name": "Transmission",
+  "name": "Transmission_2",
   "version": "3.00-r0-ls69",
-  "slug": "transmission",
+  "slug": "transmission_2",
   "description": "The torrent client for Hass.io",
   "url": "https://hub.docker.com/alexbelgium/transmission",
   "startup": "services",
@@ -41,7 +41,7 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
-	"TRANSMISSION_WEB_HOME": "str?",
+    "TRANSMISSION_WEB_HOME": "str?",
     "TZ": "str?"
   }
 }
