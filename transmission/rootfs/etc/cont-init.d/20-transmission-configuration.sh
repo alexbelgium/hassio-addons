@@ -6,7 +6,7 @@ declare authentication_required
 declare username
 declare password
 
-if ! bashio::fs.directory_exists '/data/transmission'; then
+if ! bashio::fs.directory_exists '/share/transmission'; then
   mkdir '/share/transmission'
 fi
 
