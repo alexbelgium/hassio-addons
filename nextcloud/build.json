@@ -1,0 +1,10 @@
+{
+    "squash": false,
+    "build_from": {
+        "aarch64": "linuxserver/nextcloud:arm64v8-20.0.3-ls110",
+        "amd64": "linuxserver/nextcloud-20.0.3-ls110",
+        "armhf": "linuxserver/nextcloud:arm32v7-20.0.3-ls110",
+        "armv7": "linuxserver/nextcloud:arm32v7-20.0.3-ls110"
+    },
+    "args": {}
+}

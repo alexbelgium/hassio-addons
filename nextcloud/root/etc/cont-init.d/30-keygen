@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+/defaults/nextcloud-perms.sh
+SUBJECT="/C=US/ST=CA/L=Carlsbad/O=Linuxserver.io/OU=LSIO Server/CN=*"
+if [[ -f /ssl/nextcloud/keys/cert.key && -f /ssl/nextcloud/keys/cert.crt ]]; then
+echo "using keys found in /ssl/nextcloud/keys"
+else
+echo "generating self-signed keys in /ssl/nextcloud/keys, you can replace these with your own keys if required"
+openssl req -new -x509 -days 3650 -nodes -out /ssl/nextcloud/keys/cert.crt -keyout /ssl/nextcloud/keys/cert.key -subj "$SUBJECT"
+fi
+
+

@@ -27,11 +27,21 @@ A Free Software Media System that puts you in control of managing and streaming 
 - Forked from : https://github.com/petersendev/hassio-addons
 - Modifications : add smb and local disks mount
 
-### [Transmission NAS](transmission/)
+### [Transmission NAS](transmission_nas/)
 The torrent client for Hass.io with OpenVPN support.
 - Based on latest transmission
 - Forked from : https://github.com/Alexwijn/hassio-addon-transmission
 - Modifications : add smb and local disks mount
+
+### [Transmission](transmission/)
+The torrent client for Hass.io.
+- Based on linuxserver image
+
+### [nextcloud](nextcloud/)
+A Nextcloud container, brought to you by LinuxServer.io. 
+- Based on linuxserver image
+- Forked from : https://github.com/haberda/hassio_addons
+- Modifications : update based on images numbering instead of "latest"
 
 ### [Doublecommander NAS](doublecommander/)
 A free cross platform open source file manager with two panels side by side.
