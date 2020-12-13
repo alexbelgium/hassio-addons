@@ -1,4 +1,4 @@
-# Hassio Add-ons by alexbelgium: code-server
+# Hassio Add-ons by alexbelgium: transmission linuxserver
 
 ## About
 
