@@ -1,6 +1,6 @@
 {
     "name": "Transmission NAS",
-    "version": "3.00-r0-ls69",
+    "version": "3.00-r0-ls69_test",
     "slug": "transmission_ls",
   "description": "Bittorrent client based on linuxserver image.",
   "url": "https://github.com/alexbelgium/transmission_ls",
