@@ -1,7 +1,0 @@
-#!/usr/bin/with-contenv bashio
-# ==============================================================================
-# Runs Transmission
-# ==============================================================================
-bashio::log.info "Starting Transmission..."
-
-exec /usr/bin/transmission-daemon --foreground --config-dir /share/transmission
