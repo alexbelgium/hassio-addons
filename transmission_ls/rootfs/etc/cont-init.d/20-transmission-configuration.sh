@@ -18,7 +18,7 @@ CONFIG=$(</share/transmission/settings.json)
 
 download_dir=$(bashio::config 'download_dir')
 incomplete_dir=$(bashio::config 'incomplete_dir')
-if ! bashio::config.is_empty 'incomplete_dir'; then
+if incomplete_dir=""; then
   incomplete_bool=false ; else
   incomplete_bool=true
 fi
