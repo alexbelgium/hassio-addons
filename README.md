@@ -23,7 +23,7 @@ A Free Software Media System that puts you in control of managing and streaming 
 - Forked from : https://github.com/petersendev/hassio-addons
 - Modifications : switch to linuxserver beta versions, add smb and local disks mount
 
-### [Transmission](transmission_ls/)
+### [Transmission](transmission/)
 The torrent client for Hass.io.
 - Based on linuxserver image
 - Modifications : add smb and local disks mount, exposed settings.json in /share/transmission
@@ -42,11 +42,6 @@ A free cross platform open source file manager with two panels side by side.
 ### [Code-server](code-server/)
 Code-server is VS Code running on a remote server, accessible through the browser.
 - Based on latest linuxserver image
-
-### [Transmission NAS](transmission_nas/)
-The torrent client for Hass.io with OpenVPN support.
-- Forked from : https://github.com/Alexwijn/hassio-addon-transmission
-- Modifications : add smb and local disks mount
 
 ### [Radarr NAS](radarr/)
 A fork of Sonarr to work with movies like Couchpotato
