@@ -1,4 +1,4 @@
-# Hassio Add-ons by alexbelgium: transmission linuxserver
+# Transmission
 
 ## About
 
