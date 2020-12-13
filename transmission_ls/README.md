@@ -2,9 +2,8 @@
 
 ## About
 
-Code-server is VS Code running on a remote server, accessible through the browser.
-
-This addon is based on the [docker image](https://github.com/linuxserver/code-server) from linuxserver.io.
+Transmission is a bittorrent client.
+This addon is based on the [docker image](https://github.com/linuxserver/transmission) from linuxserver.io.
 
 ## Installation
 
@@ -21,7 +20,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at `<your-ip>:8443`.
+Webui can be found at `<your-ip>:9091.
 
 
 [repository]: https://github.com/alexbelgium/hassio-addons
