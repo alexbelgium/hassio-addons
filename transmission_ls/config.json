@@ -1,6 +1,6 @@
 {
-    "name": "Transmission",
-    "version": "3.00-r0",
+    "name": "Transmission NAS",
+    "version": "3.00-r0-ls69",
     "slug": "transmission_ls",
   "description": "Bittorrent client based on linuxserver image.",
   "url": "https://github.com/alexbelgium/transmission_ls",
@@ -39,7 +39,11 @@
     "PUID": 0,
     "PGID": 0,
     "download_dir": "/share/downloads", 
-    "incomplete_dir": "/share/incomplete"
+    "incomplete_dir": "/share/incomplete",
+    "localdisks": ["sda1"],
+    "networkdisks": "<//SERVER/SHARE>",
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
 	},
   "schema": {
     "PUID": "int",
@@ -47,5 +51,9 @@
     "TZ": "str?",
     "download_dir": "str",
     "incomplete_dir": "str"
+    "localdisks": ["str"],
+    "networkdisks": "str",
+    "cifsusername": "str",
+    "cifspassword": "str"
   }
 }
