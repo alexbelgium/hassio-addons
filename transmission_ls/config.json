@@ -29,7 +29,7 @@
   ],
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "full_access": true,
-  "webui": "http://[HOST]:[PORT:8443]",
+  "webui": "http://[HOST]:[PORT:9091]",
   "boot": "auto", 
   "environment": {
   "PUID": 0,
