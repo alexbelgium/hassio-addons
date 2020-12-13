@@ -21,8 +21,8 @@ incomplete_dir=$(bashio::config 'incomplete_dir')
 
 # Defaults
 if ! bashio::config.has_value 'incomplete_dir'; then
-  incomplete_bool="true" ; else
-  incomplete_bool="false"
+  incomplete_bool=true ; else
+  incomplete_bool=false
 fi
 CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir\"=\"${incomplete_dir}\"")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"download-dir\"=\"${download_dir}\"")
