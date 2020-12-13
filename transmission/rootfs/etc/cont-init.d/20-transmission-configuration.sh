@@ -5,6 +5,9 @@ declare CONFIG
 declare authentication_required
 declare username
 declare password
+declare incomplete_bool
+declare download_dir
+declare incomplete_dir
 
 if ! bashio::fs.directory_exists '/share/transmission'; then
   mkdir '/share/transmission'
