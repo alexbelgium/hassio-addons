@@ -12,14 +12,14 @@
     "armhf"
   ],
    "ports": {
-      "9091/tcp": null,
+      "9091/tcp": 9091,
       "51413/tcp": 51413,
       "51413/udp": 51413
     },
    "ports_description": {
-      "9091/tcp": "Web UI port (Not required for Hass.io Ingress)",
-      "51413/tcp": "Peer port (setup port forwarding to this port)",
-      "51413/udp": "Peer port (setup port forwarding to this port)"
+      "9091/tcp": "Web UI port (required)",
+      "51413/tcp": "Peer port (setup router port forwarding to this port)",
+      "51413/udp": "Peer port (setup router port forwarding to this port)"
     },
   "map": [
     "config:rw",
