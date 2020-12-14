@@ -29,6 +29,6 @@ Options :
 
 Complete transmission options are in /share/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
 
-Webui can be found at `<your-ip>:9091.
+Webui can be found at `<your-ip>:9091`.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
