@@ -17,10 +17,16 @@ comparison to installing any other Hass.io add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences by modying the json file in /share/transmission, see the official documentation for for that.
 
-
 ## Configuration
 
-Webui can be found at `<your-ip>:9091.
+Options : 
+    "download_dir": "/share/downloads"      # where the files will be saved after download
+    "incomplete_dir": "/share/incomplete"   # where the files are saved during download
+    "localdisks": ["sda1"]                  # list of devices to mount, '' if none
+    "networkdisks": "<//SERVER/SHARE>"      # list of smbv2/3 servers to mount, '' if none
+    "cifsusername": "<username>"            # smb username
+    "cifspassword": "<password>"            # smb password
 
+Webui can be found at `<your-ip>:9091.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
