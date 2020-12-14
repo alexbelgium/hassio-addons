@@ -32,7 +32,7 @@ The torrent client for Hass.io.
 A Nextcloud container, brought to you by LinuxServer.io. 
 - Based on linuxserver image
 - Forked from : https://github.com/haberda/hassio_addons
-- Modifications : update based on images numbering instead of "latest"
+- Modifications : update based on images numbering instead of "latest", tesseract for ocr
 
 ### [Doublecommander NAS](doublecommander/)
 A free cross platform open source file manager with two panels side by side.
