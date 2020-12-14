@@ -4,6 +4,11 @@ FROM ${BUILD_FROM}
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
+RUN apk update
+RUN apk upgrade
+RUN apk add tesseract-ocr
+RUN apk add tesseract-ocr-data-deu
+
 # modify/copy files
 RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/*
 
