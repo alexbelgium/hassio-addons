@@ -20,12 +20,12 @@ comparison to installing any other Hass.io add-on.
 ## Configuration
 
 Options : 
-1. "download_dir": "/share/downloads"      # where the files will be saved after download
-1. "incomplete_dir": "/share/incomplete"   # where the files are saved during download
-1. "localdisks": ["sda1"]                  # list of devices to mount, '' if none
-1. "networkdisks": "<//SERVER/SHARE>"      # list of smbv2/3 servers to mount, '' if none
-1. "cifsusername": "<username>"            # smb username
-1. "cifspassword": "<password>"            # smb password
+- "download_dir": "/share/downloads"      # where the files will be saved after download
+- "incomplete_dir": "/share/incomplete"   # where the files are saved during download
+- "localdisks": ["sda1"]                  # list of devices to mount, '' if none
+- "networkdisks": "<//SERVER/SHARE>"      # list of smbv2/3 servers to mount, '' if none
+- "cifsusername": "<username>"            # smb username
+- "cifspassword": "<password>"            # smb password
 
 Webui can be found at `<your-ip>:9091.
 
