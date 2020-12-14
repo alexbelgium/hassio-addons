@@ -15,7 +15,7 @@ comparison to installing any other Hass.io add-on.
 1. Click the `Save` button to store your configuration.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences by modying the json file in /share/transmission, see the official documentation for for that.
+1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
 
@@ -26,6 +26,8 @@ Options :
 - "networkdisks": "<//SERVER/SHARE>"      # list of smbv2/3 servers to mount, '' if none
 - "cifsusername": "<username>"            # smb username
 - "cifspassword": "<password>"            # smb password
+
+Complete transmission options are in /share/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
 
 Webui can be found at `<your-ip>:9091.
 
