@@ -1,8 +1,12 @@
-# Hassio Add-ons by petersendev: Radarr
+# Home assistant add-on: Radarr
 
 ## About
 
+Forked to add latest version, addition of OCR
+- Inital version : https://github.com/petersendev/hassio-addons
+
 [Radarr](https://github.com/Radarr/Radarr) - A fork of Sonarr to work with movies like Couchpotato.
+![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-radarr) from linuxserver.io.
 
@@ -25,3 +29,7 @@ Webui can be found at `<your-ip>:7878`.
 
 
 [repository]: https://github.com/petersendev/hassio-addons
+[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
+[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
+[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
