@@ -31,6 +31,9 @@ CONFIG=$(bashio::jq "${CONFIG}" ".\"bind-address-ipv4\"=\"0.0.0.0\"")
 echo "${CONFIG}" > /share/transmission/settings.json
 
 # Adapt UDP
+if ! bashio::fs.file_exists '/etc/sysctl.conf'; then
+  echo "{}" > /etc/sysctl.conf
+fi
 SYSCTL=$(</etc/sysctl.conf)
 SYSCTL=$(bashio::jq "${SYSCTL}" ".\"net.core.rmem_max\"=\"4194304")
 SYSCTL=$(bashio::jq "${SYSCTL}" ".\"net.core.wmem_max\"=\"1048576")
