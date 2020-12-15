@@ -2,7 +2,6 @@
 # ==============================================================================
 
 declare CONFIG
-declare SYSCTL
 declare incomplete_bool
 declare download_dir
 declare incomplete_dir
@@ -29,12 +28,3 @@ CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-host-whitelist-enabled\"=false")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"bind-address-ipv4\"=\"0.0.0.0\"")
 
 echo "${CONFIG}" > /share/transmission/settings.json
-
-# Adapt UDP
-if ! bashio::fs.file_exists '/etc/sysctl.conf'; then
-  echo "{}" > /etc/sysctl.conf
-fi
-SYSCTL=$(</etc/sysctl.conf)
-SYSCTL=$(bashio::jq "${SYSCTL}" ".\"net.core.rmem_max\"=\"4194304")
-SYSCTL=$(bashio::jq "${SYSCTL}" ".\"net.core.wmem_max\"=\"1048576")
-echo "${SYSCTL}" > /etc/sysctl.conf
