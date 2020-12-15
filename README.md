@@ -21,12 +21,12 @@ https://github.com/alexbelgium/hassio-addons
 A Free Software Media System that puts you in control of managing and streaming your media.
 - Based on linuxserver image latest beta
 - Forked from : https://github.com/petersendev/hassio-addons
-- Modifications : switch to linuxserver beta versions, add smb and local disks mount
+- Modifications : switch to linuxserver beta versions, add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
 ### [Transmission](transmission/)
 The torrent client for Hass.io.
 - Based on linuxserver image
-- Modifications : add smb and local disks mount, exposed settings.json in /share/transmission
+- Modifications :  exposed settings.json in /share/transmission, add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
 ### [Nextcloud OCR](nextcloud/)
 A Nextcloud container, brought to you by LinuxServer.io. 
@@ -37,7 +37,7 @@ A Nextcloud container, brought to you by LinuxServer.io.
 ### [Doublecommander NAS](doublecommander/)
 A free cross platform open source file manager with two panels side by side.
 - Based on latest linuxserver image
-- Modifications : add smb and local disks mount
+- Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
 ### [Code-server](code-server/)
 Code-server is VS Code running on a remote server, accessible through the browser.
@@ -46,7 +46,7 @@ Code-server is VS Code running on a remote server, accessible through the browse
 ### [Radarr NAS](radarr/)
 A fork of Sonarr to work with movies like Couchpotato
 - Forked from : https://github.com/petersendev/hassio-addons
-- Modifications : add smb and local disks mount
+- Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
 [//]: # (ADDONLIST_END)
 
