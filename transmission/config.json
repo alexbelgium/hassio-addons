@@ -51,9 +51,9 @@
     "TZ": "str?",
     "download_dir": "str",
     "incomplete_dir": "str",
-    "localdisks": ["str"],
-    "networkdisks": "str",
-    "cifsusername": "str",
-    "cifspassword": "str"
+    "localdisks": ["str?"],
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?"
   }
 }
