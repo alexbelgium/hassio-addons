@@ -1,0 +1,50 @@
+{
+    "name": "Joal Desktop test",
+    "version": "2.1.24",
+    "slug": "joal",
+    "description": "Joal Desktop docker".
+    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
+    "startup": "services",
+    "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+   "ports": {
+      "1234/tcp": 1234
+    },
+   "ports_description": {
+      "1234/tcp": "Web UI port (required),
+    },
+  "map": [
+    "share:rw"
+  ],
+  "webui": "http://[HOST]:[PORT:1234]",
+  "boot": "auto", 
+  "environment": {
+  "PUID": 0,
+  "PGID": 0
+  },
+  "options": {
+    "PUID": 0,
+    "PGID": 0,
+    "download_dir": "/share/downloads", 
+    "incomplete_dir": "/share/incomplete",
+    "localdisks": ["sda1"],
+    "networkdisks": "//SERVER/SHARE",
+    "cifsusername": "username",
+    "cifspassword": "password"
+	},
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?",
+    "download_dir": "str",
+    "incomplete_dir": "str",
+    "localdisks": ["str?"],
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?"
+  }
+}
