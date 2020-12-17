@@ -41,9 +41,9 @@
     "download_dir": "/share/downloads", 
     "incomplete_dir": "/share/incomplete",
     "localdisks": ["sda1"],
-    "networkdisks": "<//SERVER/SHARE>",
-    "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "networkdisks": "//SERVER/SHARE",
+    "cifsusername": "username",
+    "cifspassword": "password"
 	},
   "schema": {
     "PUID": "int",
