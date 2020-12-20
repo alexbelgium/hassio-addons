@@ -10,8 +10,7 @@ RUN mkdir -p /joal \
         /tmp/*
 
 COPY rootfs/ /
-        
-        
+
 CMD [ "--joal-conf=/joal" ]
 VOLUME [ "/data" ]
 ENTRYPOINT [ "run.sh" ]
