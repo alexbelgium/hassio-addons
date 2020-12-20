@@ -11,8 +11,8 @@ RUN mkdir -p /joal \
 
 COPY run.sh /
 RUN chmod a+x /run.sh
-# CMD [ "/run.sh" ]
-#ENTRYPOINT [ "init" ]
+#CMD [ "/run.sh" ]
+#ENTRYPOINT [ "/" ]
 
 CMD [ "--joal-conf=/joal" ]
 VOLUME [ "/data" ]
