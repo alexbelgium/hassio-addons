@@ -16,8 +16,8 @@
       "8081/tcp": 8081
     },
    "ports_description": {
-      "49152/tcp": "torrent port - hardcoded, can't change",
-      "8081/tcp": "Web UI port - hardcoded, can't change"
+      "49152/tcp": "torrent port",
+      "8081/tcp": "Web UI port"
     },
   "webui": "http://[HOST]:[PORT:8081]/joal/ui",
   "boot": "auto", 
