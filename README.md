@@ -28,6 +28,9 @@ The torrent client for Hass.io.
 - Based on linuxserver image
 - Modifications :  exposed settings.json in /share/transmission, add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
+### [Joal](joal/)
+An open source command line RatioMaster with WebUI.
+
 ### [Nextcloud OCR](nextcloud/)
 A Nextcloud container, brought to you by LinuxServer.io. 
 - Based on linuxserver image
