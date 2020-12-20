@@ -9,5 +9,9 @@ RUN mkdir -p /joal \
     && rm -fr \
         /tmp/*
 
+COPY rootfs/ /
+RUN chmod a+x /run.sh
+
+CMD [ "/run.sh" ]
 CMD [ "--joal-conf=/joal" ]
 VOLUME [ "/data" ]
