@@ -8,6 +8,10 @@ RUN mkdir -p /joal \
     && chown -R $(id -u):$(id -g) /joal \
     && rm -fr \
         /tmp/*
+
+COPY rootfs/ /
+        
         
 CMD [ "--joal-conf=/joal" ]
 VOLUME [ "/data" ]
+ENTRYPOINT [ "run.sh" ]
