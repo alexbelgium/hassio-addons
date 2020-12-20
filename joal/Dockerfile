@@ -1,16 +1,16 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-RUN mkdir -p /tmp/resources \
+RUN mkdir -p /joal \
     &&  curl -L -s \
         "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" \
-        | tar zxvf - -C /tmp/resources \
-    && chown -R $(id -u):$(id -g) /tmp/resources \
+        | tar zxvf - -C /joal \
+    && chown -R $(id -u):$(id -g) /joal \
     && rm -fr \
         /tmp/*
 
 COPY run.sh /
-RUN chmod a+x /run.sh
+RUN chmod 777 /run.sh
 #CMD [ "/run.sh" ]
 #ENTRYPOINT [ "/" ]
 
