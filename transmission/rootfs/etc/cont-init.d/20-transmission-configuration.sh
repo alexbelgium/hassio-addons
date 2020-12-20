@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
 
-cp -R -u -p /joal /share/joal
+cp -R -n /joal /share/joal
