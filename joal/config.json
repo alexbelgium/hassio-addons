@@ -25,7 +25,7 @@
   "environment": {
   },
   "options": {
-  "secret_token": "lrMY24Byhx",
+  "secret_token": "lrMY24Byhx"
   },
   "schema": {
   "secret_token": "str",
