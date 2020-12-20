@@ -23,14 +23,11 @@
   "boot": "auto", 
   "host_network": true,
   "environment": {
-  "spring.main.web-environment": true,
-  "joal.iframe.enabled":false,
-  "joal.ui.path.prefix": "joal",
-  "joal.ui.secret-token": "lrMY24Byhx",
-  "server.port": 8081
   },
   "options": {
+  "joal.ui.secret-token": "lrMY24Byhx",
   },
   "schema": {
+  "joal.ui.secret-token": "str",
   }
 }
