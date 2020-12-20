@@ -25,9 +25,9 @@
   "environment": {
   },
   "options": {
-  "joal.ui.secret-token": "lrMY24Byhx",
+  "secret_token": "lrMY24Byhx",
   },
   "schema": {
-  "joal.ui.secret-token": "str",
+  "secret_token": "str",
   }
 }
