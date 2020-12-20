@@ -1,11 +1,16 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# Copy root filesystem
-COPY rootfs /
 
-# MOFIFY DATA PATH
-RUN sed -i "s|config|share/transmission|g" /etc/services.d/transmission/run \
-    && sed -i "s|config|share/transmission|g" /etc/cont-init.d/20-config
+RUN mkdir -p /joal \
+    &&  curl -L -s \
+        "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" \
+        | tar zxvf - -C /joal \
+    && chown -R $(id -u):$(id -g) /joal \
+    && rm -fr \
+        /tmp/*
 
+VOLUME /data
+        
+CMD [ "--joal-conf=/joal" ]
 VOLUME [ "/data" ]

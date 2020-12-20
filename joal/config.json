@@ -2,7 +2,7 @@
     "name": "Joal Desktop test",
     "version": "2.1.24",
     "slug": "joal",
-    "description": "Joal Desktop docker".
+    "description": "An open source command line RatioMaster with WebUI",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
     "startup": "services",
     "arch": [
@@ -12,39 +12,25 @@
     "armhf"
   ],
    "ports": {
-      "1234/tcp": 1234
+      "49152/tcp": 49152,
+      "8081/tcp": 8081
     },
    "ports_description": {
-      "1234/tcp": "Web UI port (required),
+      "49152/tcp": "torrent port - hardcoded, can't change",
+      "8081/tcp": "Web UI port - hardcoded, can't change"
     },
-  "map": [
-    "share:rw"
-  ],
-  "webui": "http://[HOST]:[PORT:1234]",
+  "webui": "http://[HOST]:[PORT:8081]/joal/ui",
   "boot": "auto", 
+  "host_network": true,
   "environment": {
-  "PUID": 0,
-  "PGID": 0
+  "spring.main.web-environment": true,
+  "joal.iframe.enabled":false,
+  "joal.ui.path.prefix": "joal",
+  "joal.ui.secret-token": "lrMY24Byhx",
+  "server.port": 8081
   },
   "options": {
-    "PUID": 0,
-    "PGID": 0,
-    "download_dir": "/share/downloads", 
-    "incomplete_dir": "/share/incomplete",
-    "localdisks": ["sda1"],
-    "networkdisks": "//SERVER/SHARE",
-    "cifsusername": "username",
-    "cifspassword": "password"
-	},
+  },
   "schema": {
-    "PUID": "int",
-    "PGID": "int",
-    "TZ": "str?",
-    "download_dir": "str",
-    "incomplete_dir": "str",
-    "localdisks": ["str?"],
-    "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?"
   }
 }

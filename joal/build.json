@@ -3,7 +3,7 @@
         "armv7": "anthonyraymond/joal:2.1.24-arm",
         "armhf": "anthonyraymond/joal:2.1.24-arm",
         "aarch64": "anthonyraymond/joal:2.1.24-arm64",
-        "amd64": "anthonyraymond/joal:2.1.24-amd64",
+        "amd64": "anthonyraymond/joal:2.1.24-amd64"
     },
     "squash": false,
     "args": {}
