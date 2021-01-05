@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Home Assistant Community Add-on: AdGuard Home
+# Runs the Nginx daemon
+# ==============================================================================
+
+# Wait for adguard to become available
+bashio::net.wait_for 45158 localhost 900
+
+bashio::log.info "Starting NGinx..."
+
+# Disable HA Authentication if front door is open
+if bashio::config.true 'leave_front_door_open'; then
+    export DISABLE_HA_AUTHENTICATION=true
+fi
+
+exec nginx

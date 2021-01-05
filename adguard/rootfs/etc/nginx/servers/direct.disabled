@@ -1,0 +1,11 @@
+server {
+    listen %%port%% default_server;
+
+    include /etc/nginx/includes/server_params.conf;
+    include /etc/nginx/includes/proxy_params.conf;
+
+    location / {
+        access_by_lua_file /etc/nginx/lua/ha-auth.lua;
+        proxy_pass %%protocol%%://backend;
+    }
+}
