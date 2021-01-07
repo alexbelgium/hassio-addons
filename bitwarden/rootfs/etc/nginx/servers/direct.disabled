@@ -1,0 +1,19 @@
+server {
+    listen 7277 default_server;
+
+    include /etc/nginx/includes/server_params.conf;
+    include /etc/nginx/includes/proxy_params.conf;
+
+    location / {
+        proxy_pass http://backend;
+    }
+
+    location /notifications/hub {
+        proxy_pass http://wsbackend;
+    }
+
+    location /notifications/hub/negotiate {
+        proxy_pass http://backend;
+    }
+
+}

@@ -51,8 +51,10 @@ A fork of Sonarr to work with movies like Couchpotato
 - Forked from : https://github.com/petersendev/hassio-addons
 - Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
-### [Adguard beta](adguard/)
-Updated version of the community addon adguard
+### [Bitwarden](bitwarden/)
+Open source password management solution
+- Forked from : https://github.com/hassio-addons/addon-bitwarden
+- Modifications : updated version
 
 [//]: # (ADDONLIST_END)
 

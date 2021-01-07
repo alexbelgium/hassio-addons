@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Home Assistant Community Add-on: Bitwarden
+# Runs the Nginx daemon
+# ==============================================================================
+bashio::net.wait_for 80
+bashio::log.info "Starting NGinx..."
+
+exec nginx
