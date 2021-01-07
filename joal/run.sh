@@ -1,5 +1,5 @@
 #!/usr/bin/env bashio
-TOKEN="lrMY24Byhx"
+TOKEN=(bashio::config 'secret_token')
 
 cp -R -n /joal /data/joal
 
