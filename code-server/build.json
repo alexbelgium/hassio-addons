@@ -1,13 +1,9 @@
 {
-    "build_from_template": {
-        "image": "linuxserver/code-server",
-        "version": "v3.7.4-ls60"
-    },
     "build_from": {
-        "armv7": "linuxserver/code-server:arm32v7-v3.7.4-ls60",
-        "armhf": "linuxserver/code-server:arm32v7-v3.7.4-ls60",
-        "aarch64": "linuxserver/code-server:arm64v8-v3.7.4-ls60",
-        "amd64": "linuxserver/code-server:amd64-v3.7.4-ls60"
+        "armv7": "linuxserver/code-server:arm32v7-v3.8.0-ls63",
+        "armhf": "linuxserver/code-server:arm32v7-v3.8.0-ls63",
+        "aarch64": "linuxserver/code-server:arm64v8-v3.8.0-ls63",
+        "amd64": "linuxserver/code-server:amd64-v3.8.0-ls63"
     },
     "squash": false,
     "args": {}
