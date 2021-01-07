@@ -1,5 +1,5 @@
-CONFIG_PATH=/data/options.json
-TOKEN="$(bashio::config 'secret_token')"
+#!/usr/bin/with-contenv bashio
+TOKEN=$(bashio::config 'secret_token')
 
 cp -R -n /joal /data/joal
 
