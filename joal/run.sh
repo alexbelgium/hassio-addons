@@ -1,4 +1,4 @@
-# #!/usr/bin/with-contenv bashio
+#!/usr/bin/env bashio
 TOKEN="lrMY24Byhx"
 
 cp -R -n /joal /data/joal
