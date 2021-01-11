@@ -1,7 +1,7 @@
 {
   "name": "Nextcloud OCR",
   "url": "https://github.com/alexbelgium/hassio_addons",
-  "version": "20.0.3-ls110",
+  "version": "version-20.0.4",
   "slug": "nextcloud_ocr",
   "ingress": false,
   "ingress_port": 0,
