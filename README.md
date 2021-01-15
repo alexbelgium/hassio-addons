@@ -1,7 +1,7 @@
 # Hassio Add-ons by alexbelgium
 
 ## About
-My hassio addon repository.
+My hassio addon repository. Addons ongoing testing are [here](https://github.com/alexbelgium/hassio-addons-test).
 
 ## Installation
 
@@ -45,11 +45,6 @@ A free cross platform open source file manager with two panels side by side.
 ### [Code-server](code-server/)
 Code-server is VS Code running on a remote server, accessible through the browser.
 - Based on latest linuxserver image
-
-### [Radarr NAS](radarr/)
-A fork of Sonarr to work with movies like Couchpotato
-- Forked from : https://github.com/petersendev/hassio-addons
-- Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
 ### [Bitwarden](bitwarden/)
 Open source password management solution
