@@ -1,9 +1,9 @@
 {
     "build_from": {
-        "armv7": "linuxserver/transmission:arm32v7-version-3.00-r0",
-        "armhf": "linuxserver/transmission:arm32v7-version-3.00-r0",
-        "aarch64": "linuxserver/transmission:arm64v8-version-3.00-r0",
-        "amd64": "linuxserver/transmission:amd64-version-3.00-r0"
+        "armv7": "linuxserver/transmission:arm32v7-3.00-r0-ls71",
+        "armhf": "linuxserver/transmission:arm32v7-3.00-r0-ls71",
+        "aarch64": "linuxserver/transmission:arm64v8-3.00-r0-ls71",
+        "amd64": "linuxserver/transmission:amd64-3.00-r0-ls71"
     },
     "squash": false,
     "args": {}
