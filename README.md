@@ -1,7 +1,7 @@
 # Hassio Add-ons by alexbelgium
 
 ## About
-My hassio addon repository. Addons ongoing testing are [here](https://github.com/alexbelgium/hassio-addons-test).
+My hassio addon repository. 
 
 ## Installation
 
