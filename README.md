@@ -51,6 +51,11 @@ Open source password management solution
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 - Modifications : updated version
 
+### [Radarr NAS - Not maintained](radarr/)	
+A fork of Sonarr to work with movies like Couchpotato	
+- Forked from : https://github.com/petersendev/hassio-addons	
+- Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
+
 [//]: # (ADDONLIST_END)
 
 [third-party-addons]: https://home-assistant.io/hassio/installing_third_party_addons/
