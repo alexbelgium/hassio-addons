@@ -1,6 +1,8 @@
-ARG BUILD_ARCH
-ARG BUILD_VERSION
-FROM linuxserver/transmission:${BUILD_ARCH}-${BUILD_VERSION}
+ARG BUILD_FROM
+FROM $BUILD_FROM
+#ARG BUILD_ARCH
+#ARG BUILD_VERSION
+#FROM linuxserver/transmission:${BUILD_ARCH}-${BUILD_VERSION}
 
 # Add bashio
 RUN apk add --no-cache \
