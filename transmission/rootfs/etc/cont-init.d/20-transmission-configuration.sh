@@ -6,6 +6,7 @@ declare incomplete_bool
 declare download_dir
 declare incomplete_dir
 
+# Create basic settings.json if not existing
 if ! bashio::fs.directory_exists '/share/transmission'; then
   mkdir '/share/transmission'
 fi
@@ -15,10 +16,10 @@ if ! bashio::fs.file_exists '/share/transmission/settings.json'; then
 fi
 
 CONFIG=$(</share/transmission/settings.json)
-
 download_dir=$(bashio::config 'download_dir')
 incomplete_dir=$(bashio::config 'incomplete_dir')
 
+# if incomplete dir > 2, to allow both null and '', set it as existing
 if [ ${#incomplete_dir} -ge 2 ]
 then
         CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
