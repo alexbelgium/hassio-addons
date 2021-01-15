@@ -1,6 +1,6 @@
 {
   "name": "Emby beta NAS",
-  "version": "beta-version-4.6.0.10",
+  "version": "beta-4.6.0.10-ls73",
   "slug": "emby_nas",
   "legacy": false,
   "maintenance": {
