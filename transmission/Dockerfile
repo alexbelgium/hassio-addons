@@ -2,6 +2,16 @@
 ARG BUILD_VERSION
 #FROM $BUILD_FROM
 ARG BUILD_ARCH
+if [ $BUILD_ARCH = "armv7" ]; then
+    ARG BUILD_ARCH="arm32v7"
+  elif [ $BUILD_ARCH = "armhf" ]; then
+    ARG BUILD_ARCH="arm32v7"
+  elif [ $BUILD_ARCH = "aarch64" ]; then
+    ARG BUILD_ARCH="arm64v8"
+  elif [ $BUILD_ARCH = "amd64" ]; then
+    ARG BUILD_ARCH="amd64"
+fi
+
 FROM linuxserver/transmission:${BUILD_ARCH}-${BUILD_VERSION}
 
 # Add bashio
