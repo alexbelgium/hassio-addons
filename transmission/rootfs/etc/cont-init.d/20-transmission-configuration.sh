@@ -19,10 +19,18 @@ CONFIG=$(</share/transmission/settings.json)
 download_dir=$(bashio::config 'download_dir')
 incomplete_dir=$(bashio::config 'incomplete_dir')
 
+
+# if incomplete dir > 2, to allow both null and '', set it as existing
+if [ ${#incomplete_dir} -ge 2 ]
+then
+        CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
+else
+        CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=false")
+fi
+
 # Defaults
 CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir\"=\"${incomplete_dir}\"")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"download-dir\"=\"${download_dir}\"")
-CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-whitelist-enabled\"=false")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-host-whitelist-enabled\"=false")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"bind-address-ipv4\"=\"0.0.0.0\"")
