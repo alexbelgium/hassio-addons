@@ -1,6 +1,6 @@
 {
   "name": "radarr NAS",
-  "version": "1.0",
+  "version": "v0.2.0.1504-ls68",
   "slug": "radarr_nas",
   "legacy": false,
   "maintenance": {

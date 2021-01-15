@@ -1,9 +1,9 @@
 {
     "build_from": {
-        "armv7": "linuxserver/doublecommander:arm32v7-0.8.2-1-ls38",
-        "armhf": "linuxserver/doublecommander:arm32v7-0.8.2-1-ls38",
-        "aarch64": "linuxserver/doublecommander:arm64v8-0.8.2-1-ls38",
-        "amd64": "linuxserver/doublecommander:amd64-0.8.2-1-ls38"
+        "armv7": "linuxserver/doublecommander:arm32v7",
+        "armhf": "linuxserver/doublecommander:arm32v7",
+        "aarch64": "linuxserver/doublecommander:arm64v8",
+        "amd64": "linuxserver/doublecommander:amd64"
     },
     "squash": false,
     "args": {}
