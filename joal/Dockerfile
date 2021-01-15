@@ -1,4 +1,5 @@
 ARG BUILD_FROM
+ARG BUILD_VERSION
 FROM $BUILD_FROM
 
 #Install bashio
@@ -18,7 +19,7 @@ RUN apt-get update \
 #Install Joal
 RUN mkdir -p /joal \
     &&  curl -L -s \
-        "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" \
+        "https://github.com/anthonyraymond/joal/releases/download/${BUILD_VERSION}/joal.tar.gz" \
         | tar zxvf - -C /joal \
     && chown -R $(id -u):$(id -g) /joal
 
