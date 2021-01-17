@@ -6,7 +6,7 @@ ARG BITWARDEN_ARCH
 ARG BUILD_VERSION
 
 # hadolint ignore=DL3006
-FROM "bitwardenrs/server:${BUILD_VERSION}${BITWARDEN_ARCH}" as bitwarden
+FROM "bitwardenrs/server:1.18.0${BITWARDEN_ARCH}" as bitwarden
 
 ###############################################################################
 # Build the actual add-on.
