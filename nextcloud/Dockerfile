@@ -8,18 +8,16 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN apk --update-cache upgrade
-RUN apk add tesseract-ocr
-RUN apk add tesseract-ocr-data-deu
+# Add OCR
+RUN apk add --no-cache \
+    tesseract-ocr \
+    tesseract-ocr-data-deu
 
 # modify/copy files
-RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/*
-
-RUN sed -i "s|config|data/config|g" /etc/cont-init.d/*
-
-RUN sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/*
-
-RUN sed -i "s|config|data/config|g" /etc/services.d/nginx/*
+RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
+    && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
+    && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
+    && sed -i "s|config|data/config|g" /etc/services.d/nginx/*
 
 COPY root/ /
 
