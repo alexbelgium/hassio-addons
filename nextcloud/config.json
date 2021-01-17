@@ -27,11 +27,13 @@
   "panel_icon": "mdi:cloud",
   "options": {
     "PUID": 1001,
-    "PGID": 1001
+    "PGID": 1001, 
+    "OCR": false
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
+    "OCR": "bool?",
     "TZ": "str?"
   }
 }
