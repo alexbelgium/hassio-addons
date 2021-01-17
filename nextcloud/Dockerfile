@@ -9,9 +9,9 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Add OCR
-RUN apk add --no-cache \
-    tesseract-ocr \
-    tesseract-ocr-data-deu
+# RUN apk add --no-cache \
+#    tesseract-ocr \
+#    tesseract-ocr-data-deu
 
 # modify/copy files
 RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
