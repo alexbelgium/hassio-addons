@@ -5,8 +5,10 @@ FROM ${BUILD_FROM}-${BUILD_VERSION}
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
-RUN apk update
-RUN apk upgrade
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apk --update-cache upgrade
 RUN apk add tesseract-ocr
 RUN apk add tesseract-ocr-data-deu
 
