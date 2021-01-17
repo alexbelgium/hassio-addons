@@ -19,14 +19,19 @@
     "media:rw",
     "ssl:rw"
   ],
-  "options":{
-  },
-  "schema": {
-  },
   "ports": {
     "443/tcp": 8099,
 	"80/tcp": null
   },
   "webui": "https://[HOST]:[PORT:443]",
-  "panel_icon": "mdi:cloud"
+  "panel_icon": "mdi:cloud",
+  "options": {
+    "PUID": 1001,
+    "PGID": 1001
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?"
+  }
 }
