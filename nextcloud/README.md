@@ -25,6 +25,9 @@ comparison to installing any other Hass.io add-on.
 
 Webui can be found at `<your-ip>:port`.
 
+To install OCR capability, add "OCR"=true to your config.
+The language must be set with "OCR-LANG"="eng". Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
+
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
