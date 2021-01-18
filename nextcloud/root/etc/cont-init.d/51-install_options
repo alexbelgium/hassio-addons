@@ -1,21 +1,17 @@
 #!/usr/bin/with-contenv bashio
 
-declare CONFIG
-declare OCR_LANG
-
-CONFIG=$(</data/options.json)
-OCR_LANG=$(bashio::config 'OCR-LANG')
-
 # Install OCR if requested
-if [ $(bashio::config 'OCR') = true ]; then
-bashio::log.info 'Installing OCR' && \
-bashio::log.info 'Select OCR language from https://github.com/tesseract-ocr/langdata...' && \
-apk add --no-cache \
-    tesseract-ocr \
-    tesseract-ocr-data-${OCR_LANG}
-elif [ $(bashio::config 'OCR') = false ]; then
-bashio::log.info 'Removing OCR' && \
-apk del \
-    tesseract-ocr \
-    tesseract-ocr-data-${OCR_LANG}
+if bashio::config.has_value 'OCR'; then
+    if $(bashio::config 'OCR') = true; then
+        bashio::log.info 'Installing OCR' && \
+        apk add --no-cache tesseract-ocr \
+    elif $(bashio::config 'OCR') = false; then
+        bashio::log.info 'Removing OCR' && \
+        apk del tesseract-ocr.*
+    fi
+    # Install additional language if requested
+    if bashio::config.has_value 'OCRLANG'; then
+        bashio::log.info 'Installing OCR language' && \
+        apk add --no-cache tesseract-ocr-data-$(bashio::config 'OCRLANG')
+    fi    
 fi
