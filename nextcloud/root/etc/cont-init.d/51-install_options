@@ -3,7 +3,7 @@
 declare CONFIG
 declare OCR_LANG
 
-CONFIG=$(</share/nextcloud_ocr/settings.json)
+CONFIG=$(</data/options.json)
 OCR_LANG=$(bashio::config 'OCR-LANG')
 
 # Install OCR if requested
