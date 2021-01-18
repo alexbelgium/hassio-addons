@@ -16,10 +16,7 @@ RUN apk add --no-cache \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr \
-    /tmp/* \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/*
+    && rm -fr /tmp/bashio.tar.gz
 
 # Copy root filesystem
 COPY rootfs /

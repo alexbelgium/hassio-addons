@@ -12,7 +12,7 @@ RUN curl -J -L -o /tmp/bashio.tar.gz \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/* 
+    && rm -fr /tmp/bashio.tar.gz 
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/radarr|g" /etc/services.d/radarr/run \
