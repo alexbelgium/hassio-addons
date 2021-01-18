@@ -15,3 +15,13 @@ if bashio::config.has_value 'OCR'; then
         apk del tesseract-ocr.*
     fi
 fi
+
+# Add additional trusted domains
+
+# if bashio::config.has_value 'Trusted_Domains'; then
+# TRUSTEDDOMAINS=$(bashio::config 'Trusted_Domains')
+# for domains in $TRUSTEDDOMAINS
+# do
+# ./occ config:system:set trusted_domains 2 --value=$domains
+# done || \
+# fi
