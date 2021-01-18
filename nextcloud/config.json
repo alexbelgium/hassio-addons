@@ -28,12 +28,14 @@
   "options": {
     "PUID": 1001,
     "PGID": 1001, 
-    "OCR": false
+    "OCR": false,
+    "OCR-LANG": "eng"
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
     "OCR": "bool?",
+    "OCR-LANG": "str?",
     "TZ": "str?"
   }
 }

@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv bashio
+
+declare CONFIG
+declare OCR_LANG
+
+CONFIG=$(</share/nextcloud_ocr/settings.json)
+OCR_LANG=$(bashio::config 'OCR-LANG')
+
+# Install OCR if requested
+if [ $(bashio::config 'OCR') = true ]; then
+bashio::log.info 'Installing OCR' && \
+bashio::log.info 'Select OCR language from https://github.com/tesseract-ocr/langdata...' && \
+apk add --no-cache \
+    tesseract-ocr \
+    tesseract-ocr-data-${OCR_LANG}
+elif [ $(bashio::config 'OCR') = false ]; then
+bashio::log.info 'Removing OCR' && \
+apk del \
+    tesseract-ocr \
+    tesseract-ocr-data-${OCR_LANG}
+fi
