@@ -29,7 +29,7 @@
     "PUID": 1001,
     "PGID": 1001, 
     "OCR": false,
-    "OCR-LANG": "eng"
+    "OCR-LANG": ""
   },
   "schema": {
     "PUID": "int",
