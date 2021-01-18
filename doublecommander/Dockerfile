@@ -15,7 +15,11 @@ RUN apt-get update \
     --strip 1 -C /tmp/bashio \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    && rm -fr \
+    /tmp/* \
+    /var/{cache,log}/* \
+    /var/lib/apt/lists/*
 
 # copy local files
 COPY root/ /
