@@ -4,7 +4,7 @@
 if bashio::config.has_value 'OCR'; then
     if $(bashio::config 'OCR') = true; then
         bashio::log.info 'Installing OCR' && \
-        apk add --no-cache tesseract-ocr \
+        apk add --no-cache tesseract-ocr
     elif $(bashio::config 'OCR') = false; then
         bashio::log.info 'Removing OCR' && \
         apk del tesseract-ocr.*
