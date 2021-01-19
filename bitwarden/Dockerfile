@@ -2,7 +2,7 @@
 ###############################################################################
 # Get prebuild containers from Bitwarden RS
 ###############################################################################
-#ARG BUILD_VERSION
+ARG BUILD_VERSION
 
 # hadolint ignore=DL3006
 #FROM "bitwardenrs/server:${BUILD_VERSION}" as bitwarden
@@ -13,7 +13,8 @@
 # hadolint ignore=DL3006
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
-
+FROM "bitwardenrs/server:${BUILD_VERSION}" as bitwarden
+ 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
