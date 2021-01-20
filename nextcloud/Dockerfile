@@ -9,9 +9,8 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Add bashio
-RUN set +e \
-    && apk add --no-cache \
-    curl jq \
+RUN apk add --no-cache \
+    curl jq a \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
     && mkdir /tmp/bashio \
@@ -21,7 +20,7 @@ RUN set +e \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz
+    && rm -fr /tmp/bashio.tar.gz || echo "Error, no OCR available" 
 
 # modify/copy files
 RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
