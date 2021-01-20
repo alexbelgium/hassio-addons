@@ -1,4 +1,4 @@
-ARG BUILD_FROM=hassioaddons/debian-base:3.2.3
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base/amd64:4.0.0
 ###############################################################################
 # Get prebuild containers from Bitwarden RS
 ###############################################################################
@@ -11,7 +11,6 @@ FROM "bitwardenrs/server:${BUILD_VERSION}" as bitwarden
 # Build the actual add-on.
 ###############################################################################
 # hadolint ignore=DL3006
-ARG BUILD_FROM
 FROM ${BUILD_FROM}
  
 # Set shell
@@ -28,10 +27,10 @@ RUN \
     apt-get update \
     \
     && apt-get install -y --no-install-recommends \
-    nginx=1.14.2-2+deb10u3 libpq5 libmariadb3 \
+        nginx=1.14.2-2+deb10u3 \
     && apt-get clean \
     && rm -f -r \
-    /etc/nginx \
+        /etc/nginx \
     \
     && mkdir -p /var/log/nginx \
     && touch /var/log/nginx/error.log
