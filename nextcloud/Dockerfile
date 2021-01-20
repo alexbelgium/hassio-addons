@@ -9,7 +9,11 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Add bashio
-RUN apk add --no-cache \
+RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/repositories \ 
+    && echo '@testing https://dl-3.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \ 
+    && echo '@community https://dl-3.alpinelinux.org/alpine/latest-stable/community' \
+    \
+    && apk add --no-cache \
     curl jq \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
