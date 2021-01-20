@@ -6,10 +6,11 @@ FROM ${BUILD_FROM}-${BUILD_VERSION}
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
 # Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c", "+e"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Add bashio
-RUN apk add --no-cache \
+RUN set +e \
+    apk add --no-cache \
     curl \
     jq \
     && curl -J -L -o /tmp/bashio.tar.gz \
