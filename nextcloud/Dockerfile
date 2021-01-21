@@ -8,6 +8,7 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Added repo to solve issues with some systems that cause error code 1 when fetching apk
 # Add bashio
 RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/repositories \ 
     && echo '@testing https://dl-3.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \ 
@@ -24,7 +25,8 @@ RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/rep
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz || echo "Error, no OCR available" 
+    && rm -fr /tmp/bashio.tar.gz \
+    || echo "Error, no OCR available" 
 
 # modify/copy files
 RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
