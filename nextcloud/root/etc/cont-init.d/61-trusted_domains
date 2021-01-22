@@ -11,9 +11,9 @@ fi
 
 bashio::log.info "Currently set trusted domains :"
 $LAUNCHER config:system:get trusted_domains || bashio::log.info "Please first define an admin user before adding additional trusted domains." \
-&& installation="no"
+&& installation="no" \
 
-if bashio::config.has_value 'trusted_domains' && ! $installation = "no"; then
+if bashio::config.has_value 'trusted_domains' && $installation != "no"; then
     bashio::log.info "Trusted domains set in the configuration. Refreshing domains."  && \
     ###################################
     # Remove previous trusted domains #
