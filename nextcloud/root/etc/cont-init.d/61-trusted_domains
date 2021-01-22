@@ -1,9 +1,5 @@
 #!/usr/bin/with-contenv bashio
 
-# permissions
-chown abc:abc \
-	/data/config/www/nextcloud/config/config.php
-
 if bashio::config.has_value 'trusted_domains'; then
     bashio::log.info "Trusted domains set in the configuration. Refreshing domains."  && \
     LAUNCHER=`find / -name "occ"`
@@ -14,7 +10,7 @@ if bashio::config.has_value 'trusted_domains'; then
     i=2
     until [ $i -gt 5 ]
     do
-      $LAUNCHER config:system:delete trusted_domains $i && \
+      $LAUNCHER -u abc:abc config:system:delete trusted_domains $i && \
       ((i=i+1))
     done
 
@@ -27,14 +23,10 @@ if bashio::config.has_value 'trusted_domains'; then
     for domain in $TRUSTEDDOMAINS
     do
         bashio::log.info "... adding ${domain}" && \
-        $LAUNCHER config:system:set trusted_domains $i --value=${domain} && \
+        $LAUNCHER -u abc:abc config:system:set trusted_domains $i --value=${domain} && \
         ((i=i+1))
     done
 fi
 
 bashio::log.info "Remaining configurated trusted domains :"
-bashio::log.info `$LAUNCHER config:system:get trusted_domains`
-
-# permissions
-chown abc:abc \
-	/data/config/www/nextcloud/config/config.php
+bashio::log.info `$LAUNCHER -u abc:abc config:system:get trusted_domains`
