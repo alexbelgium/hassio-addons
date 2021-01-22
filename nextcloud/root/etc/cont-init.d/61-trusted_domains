@@ -2,7 +2,15 @@
 
 if bashio::config.has_value 'trusted_domains'; then
     bashio::log.info "Trusted domains set in the configuration. Refreshing domains."  && \
+
+    ####################
+    # Set occ location #
+    ####################
+    LAUNCHER="/data/config/www/nextcloud/occ"
+    if ! bashio::fs.file_exists '/data/config/www/nextcloud/occ'; then
     LAUNCHER=`find / -name "occ"`
+    fi
+    
     ###################################
     # Remove previous trusted domains #
     ###################################
