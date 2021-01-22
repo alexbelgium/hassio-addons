@@ -10,7 +10,7 @@ LAUNCHER=`find / -name "occ" -print -quit`
 fi
 
 bashio::log.info "Currently set trusted domains :"
-$LAUNCHER config:system:get trusted_domains || bashio::log.info "Please first define an admin user before adding additional trusted domains." || exit
+$LAUNCHER config:system:get trusted_domains || exit
 
 if bashio::config.has_value 'trusted_domains'; then
     bashio::log.info "Trusted domains set in the configuration. Refreshing domains."  && \
