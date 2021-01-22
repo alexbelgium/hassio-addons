@@ -28,7 +28,7 @@
   "options": {
     "PUID": 1001,
     "PGID": 1001, 
-    "trusted_domains": [[HOST]],
+    "trusted_domains": ["[HOST]"],
     "OCR": false,
     "OCRLANG": "fra"
   },
