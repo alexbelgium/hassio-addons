@@ -8,4 +8,5 @@ echo "generating self-signed keys in /ssl/nextcloud/keys, you can replace these 
 openssl req -new -x509 -days 3650 -nodes -out /ssl/nextcloud/keys/cert.crt -keyout /ssl/nextcloud/keys/cert.key -subj "$SUBJECT"
 fi
 
-
+# openssl rsa -outform der -in /ssl/privkey.pem -out /ssl/nextcloud/keys/cert.key
+# openssl x509 -outform der -in /ssl/fullchain.pem -out /ssl/nextcloud/keys/cert.crt
