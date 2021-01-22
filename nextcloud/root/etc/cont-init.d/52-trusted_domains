@@ -1,0 +1,31 @@
+#!/usr/bin/with-contenv bashio
+
+if bashio::config.has_value 'trusted_domains'; then
+    bashio::log.info "Trusted domains set in the configuration. Refreshing domains."  
+    ###################################
+    # Remove previous trusted domains #
+    ###################################
+    bashio::log.info "... removing previously added trusted domain (except for first one created - this one should be removed manually)"
+    i=2
+    until [ $i -gt 5 ]
+    do
+      /usr/bin/occ config:system:delete trusted_domains $i
+      ((i=i+1))
+    done
+
+    ###########################
+    # Add new trusted domains #
+    ###########################
+    TRUSTEDDOMAINS=$(bashio::config 'trusted_domains')
+    bashio::log.info "... alignement with trusted domains list : ${TRUSTEDDOMAINS}" && \
+    for domain in $TRUSTEDDOMAINS
+    i=2
+    do
+        bashio::log.info "... adding ${domain}"
+        /usr/bin/occ config:system:set trusted_domains $i --value=${domain}
+        ((i=i+1))
+    done || \
+fi
+
+  bashio::log.info "Remaining configurated trusted domains :"
+  bashio::log.info echo /usr/bin/occ config:system:get trusted_domains
