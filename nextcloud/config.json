@@ -11,7 +11,6 @@
     "armv7"
   ],
   "description": "Nextcloud for Home Assistant",
-  "startup": "system",
   "boot": "manual",
   "auto_uart": true,
   "map": [
