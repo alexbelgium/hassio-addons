@@ -23,10 +23,12 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at `<your-ip>:port`.
+- PGID/PUID : allows setting user.
+- trusted_domains : allows to select the trusted domains. Domains not in this lis will be removed, except for the first one used in the initial configuration. 
+- OCR : set to true to install tesseract-ocr capability. 
+- OCRLANG : Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
 
-To install OCR capability, add "OCR"=true to your config.
-The language must be set with "OCR-LANG"="eng". Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
+Webui can be found at `<your-ip>:port`.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
