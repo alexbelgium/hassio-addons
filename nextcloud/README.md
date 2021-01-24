@@ -3,9 +3,8 @@
 
 ## About
 
-Forked to add latest version, addition of OCR
-- Inital version : https://github.com/haberda/hassio_addons
-
+Various tweaks and configuration options addition. 
+Inital fork from version : https://github.com/haberda/hassio_addons
 This addon is based on the [docker image](https://github.com/linuxserver/nextcloud) from linuxserver.io.
 
 ## Installation
