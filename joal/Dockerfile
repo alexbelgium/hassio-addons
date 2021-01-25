@@ -1,11 +1,12 @@
 ARG BUILD_FROM
-ARG BUILD_VERSION
 FROM $BUILD_FROM
 
 VOLUME [ "/data" ]
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+ARG BUILD_VERSION
 
 RUN \
 #Install bashio
@@ -25,7 +26,7 @@ RUN \
     \
 #Install Joal
     # && curl -s -L -o /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" \
-    && wget -O /tmp/joal.tar.gz https://github.com/anthonyraymond/joal/releases/download/${BUILD_VERSION}/joal.tar.gz \
+    && wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$BUILD_VERSION/joal.tar.gz" \
     && mkdir -p /data/joal \
     && tar zxvf /tmp/joal.tar.gz -C /data/joal \
     && chown -R $(id -u):$(id -g) /data/joal \
