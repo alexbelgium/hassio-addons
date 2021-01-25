@@ -2,6 +2,7 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM $BUILD_FROM
 
+VOLUME [ "/data" ]
 
 RUN \
 #Install bashio
@@ -34,6 +35,3 @@ RUN \
 COPY run.sh /
 RUN chmod 777 /run.sh
 ENTRYPOINT [ "/run.sh" ]
-
-# CMD [ "--joal-conf=/joal" ]
-VOLUME [ "/data" ]
