@@ -24,7 +24,8 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     \
 #Install Joal
-    &&  curl -J -L -o /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/${BUILD_VERSION}/joal.tar.gz" \
+    && download="https://github.com/anthonyraymond/joal/releases/download/${BUILD_VERSION}/joal.tar.gz"
+    && curl -J -L -o /tmp/joal.tar.gz $download \
     && mkdir -p /data/joal \
     && tar zxvf /tmp/joal.tar.gz -C /data/joal \
     && chown -R $(id -u):$(id -g) /data/joal \
