@@ -16,14 +16,14 @@ RUN \
     --strip 1 -C /tmp/bashio \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     \
 #Install Joal
     && mkdir -p /joal \
     &&  curl -L -s \
     "https://github.com/anthonyraymond/joal/releases/download/${BUILD_VERSION}/joal.tar.gz" \
     | tar zxvf - -C /joal/ \
-    && chown -R $(id -u):$(id -g) /joal
+    && chown -R $(id -u):$(id -g) /joal \
 #Clean
     && rm -fr \
     /tmp/* \
