@@ -20,11 +20,10 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     \
 #Install Joal
-    && mkdir -p /joal \
-    &&  curl -L -s -O \
+    &&  curl -J -L -o /tmp/joal.tar.gz \
     "https://github.com/anthonyraymond/joal/releases/download/${BUILD_VERSION}/joal.tar.gz" \
-    && tar zxvf joal.tar.gz -C /joal/ \
-    && rm joal.tar.gz \
+    && mkdir /joal \
+    && tar zxvf /tmp/joal.tar.gz -C /joal/ \
     && chown -R $(id -u):$(id -g) /joal \
 #Clean
     && rm -fr \
