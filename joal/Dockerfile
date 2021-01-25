@@ -20,9 +20,10 @@ RUN \
     \
 #Install Joal
     && mkdir -p /joal \
-    &&  curl -L -s \
+    &&  curl -L -s -O \
     "https://github.com/anthonyraymond/joal/releases/download/${BUILD_VERSION}/joal.tar.gz" \
-    | tar zxvf - -C /joal/ \
+    && tar zxvf joal.tar.gz -C /joal/ \
+    && rm joal.tar.gz \
     && chown -R $(id -u):$(id -g) /joal \
 #Clean
     && rm -fr \
