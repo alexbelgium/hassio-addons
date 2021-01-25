@@ -23,7 +23,7 @@ RUN \
     &&  curl -J -L -o /tmp/joal.tar.gz \
     "https://github.com/anthonyraymond/joal/releases/download/2.1.14/joal.tar.gz" \
     && mkdir -p /data/joal \
-    && tar xvf /tmp/joal.tar.gz -C /data/joal/ \
+    && tar zxvf /tmp/joal.tar.gz -C /data/joal/ \
     && chown -R $(id -u):$(id -g) /data/joal \
 #Clean
     && rm -fr \
