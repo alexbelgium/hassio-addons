@@ -7,8 +7,8 @@ RUN \
 #Install bashio
     apt-get update \
     && apt-get install -y --no-install-recommends \
+    curl \
     jq \
-    tar \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
     && mkdir /tmp/bashio \
@@ -20,11 +20,11 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     \
 #Install Joal
-    &&  curl -J -L -o /tmp/joal.tar.gz \
-    "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" \
-    && mkdir -p /joal \
-    && tar zxvf /tmp/joal.tar.gz -C /joal/ \
-    && chown -R $(id -u):$(id -g) /joal \
+#    &&  curl -J -L -o /tmp/joal.tar.gz \
+#    "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" \
+#    && mkdir -p /joal \
+#    && tar zxvf /tmp/joal.tar.gz -C /joal/ \
+#    && chown -R $(id -u):$(id -g) /joal \
 #Clean
     && rm -fr \
     /tmp/* \
