@@ -20,7 +20,7 @@ for addons in $(bashio::config "addon|keys"); do
     UPSTREAM=$(bashio::config "addon[${addons}].upstream")
     CURRENT=$(bashio::config "addon[${addons}].current")
     BETA=$(bashio::config "addon[${addons}].beta")
-    BASENAME=$(basename $REPOSITORY)
+    BASENAME=$(basename https://github.com/$REPOSITORY)
     bashio::log.info "... $SLUG : check started"
   
       #If beta flag, select beta version
