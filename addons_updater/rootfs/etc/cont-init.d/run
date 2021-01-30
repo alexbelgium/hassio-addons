@@ -47,7 +47,7 @@ for addons in $(bashio::config "addon|keys"); do
         #Change all instances of version
       bashio::log.info "... $SLUG : updating files"
       
-        files=$(grep -rl '"'${CURRENT}'"' /${BASENAME}/${SLUG}) && echo $files | xargs sed -i 's/"'${CURRENT}'"/"'${LASTVERSION}'"/g'
+      files=$(grep -rl '"'${CURRENT}'"' /${BASENAME}/${SLUG}) && echo $files | xargs sed -i 's/"'${CURRENT}'"/"'${LASTVERSION}'"/g'
       git commit -m "Bot update to $CURRENT" $files
       
       #Git commit and push
@@ -57,7 +57,7 @@ for addons in $(bashio::config "addon|keys"); do
 
       #Update the current flag
       bashio::log.info "... $SLUG : updating current flag"
-        sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/options.json                                                       
+      sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/options.json                                                       
                                                                      
       #Log                                                 
       bashio::log.info "... $SLUG : updated and published"  
