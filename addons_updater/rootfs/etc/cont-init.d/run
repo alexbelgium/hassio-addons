@@ -49,13 +49,13 @@ for addons in $(bashio::config "addon|keys"); do
         #Change all instances of version
       bashio::log.info "... $SLUG : updating files"
       
-        files=$(grep -rl '"'${CURRENT}'"' /hassio-addons/emby) && echo $files | xargs sed -i 's/"'${CURRENT}'"/"'${LASTVERSION}'"/g'
-      git commit -m "Bot update" $files
+        files=$(grep -rl '"'${CURRENT}'"' /${BASENAME}/${SLUG}) && echo $files | xargs sed -i 's/"'${CURRENT}'"/"'${LASTVERSION}'"/g'
+      git commit -m "Bot update to $CURRENT" $files
       
       #Git commit and push
       bashio::log.info "... $SLUG : push to master"
       git remote set-url origin https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}                                    
-        git push 
+      git push 
 
       #Update the current flag
       bashio::log.info "... $SLUG : updating current flag"
