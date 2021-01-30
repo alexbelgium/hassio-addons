@@ -26,10 +26,10 @@ for addons in $(bashio::config "addon|keys"); do
       #If beta flag, select beta version
       if [ ${BETA} = true ]; then
       bashio::log.info "... $SLUG : beta is on"
-      LASTVERSION=$(lastversion --pre $UPSTREAM)
+      LASTVERSION=$(lastversion --pre https://github.com/$UPSTREAM)
       else 
       bashio::log.info "... $SLUG : beta is off"
-      LASTVERSION=$(lastversion $UPSTREAM)
+      LASTVERSION=$(lastversion https://github.com/$UPSTREAM)
       fi
 
     if [ ${CURRENT} != ${LASTVERSION} ]; then
