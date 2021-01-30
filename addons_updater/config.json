@@ -1,0 +1,31 @@
+{
+    "name": "Addons_Updater",
+    "version": "1.0",
+    "slug": "updater",
+    "description": "Automatic addons update upon upstream new release",
+    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/updater",
+    "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+   "ports": {
+    },
+   "ports_description": {
+    },
+  "environment": {
+  },
+  "options": {
+  "addon": [{ "slug": "addon slug", "current": "1.1.1.1", "beta": false, "repository": "https://github.com/user/repo", "upstream": "github_user/repo_name" }],
+  "gituser": "gituser",
+  "gitpass": "gitpassword",
+  "frequency": 7
+  },
+  "schema": {
+  "addon": [{ "slug": "str", "current": "str", "beta": "bool" , "repository": "str", "upstream": "str"}],
+  "gituser": "str",
+  "gitpass": "str",
+  "frequency": "int"
+  }
+}
