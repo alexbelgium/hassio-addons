@@ -21,10 +21,8 @@ for addons in $(bashio::config "addon|keys"); do
     CURRENT=$(bashio::config "addon[${addons}].current")
     BETA=$(bashio::config "addon[${addons}].beta")
     BASENAME=$(basename $REPOSITORY)
-	bashio::log.info "... $SLUG : check started"
-
-      git remote set-url origin https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}    
-
+    bashio::log.info "... $SLUG : check started"
+  
       #If beta flag, select beta version
       if [ ${BETA} = true ]; then
       bashio::log.info "... $SLUG : beta is on"
