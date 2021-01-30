@@ -20,7 +20,7 @@ for addons in $(bashio::config "addon|keys"); do
     UPSTREAM=$(bashio::config "addon[${addons}].upstream")
     CURRENT=$(bashio::config "addon[${addons}].current")
     BETA=$(bashio::config "addon[${addons}].beta")
-    BASENAME=$(basename https://github.com/$REPOSITORY)
+    BASENAME=$(basename "https://github.com/$REPOSITORY")
     bashio::log.info "... $SLUG : check started"
   
       #If beta flag, select beta version
@@ -38,7 +38,7 @@ for addons in $(bashio::config "addon|keys"); do
         #Update local version
         bashio::log.info "... $SLUG : cloning base repo"
       cd /
-      git clone https://github.com/${REPOSITORY} || cd /${BASENAME} && git fetch --all && git reset --hard origin/master
+      git clone "https://github.com/${REPOSITORY}" || cd "/${BASENAME}" && git fetch --all && git reset --hard origin/master
 
         #Define the folder addon
       bashio::log.info "... $SLUG : checking exists in repo"
