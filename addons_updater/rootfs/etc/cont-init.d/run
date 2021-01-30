@@ -48,7 +48,9 @@ for addons in $(bashio::config "addon|keys"); do
       bashio::log.info "... $SLUG : updating files"
       
       files=$(grep -rl '"'${CURRENT}'"' /${BASENAME}/${SLUG}) && echo $files | xargs sed -i 's/"'${CURRENT}'"/"'${LASTVERSION}'"/g'
-      git commit -m "Bot update to $CURRENT" $files
+      
+if [ $files != "" ]; then
+      git commit -m "Bot update to $CURRENT" $files || true
       
       #Git commit and push
       bashio::log.info "... $SLUG : push to master"
@@ -61,6 +63,9 @@ for addons in $(bashio::config "addon|keys"); do
                                                                      
       #Log                                                 
       bashio::log.info "... $SLUG : updated and published"  
+else
+bashio::log.info "... $SLUG : couldn't update, please check the current version"
+fi
       
     else                                                                                
         bashio::log.info "Addon $SLUG is already up-to-date."                           
