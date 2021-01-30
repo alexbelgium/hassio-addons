@@ -1,7 +1,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 
-FROM ${BUILD_FROM}-${BUILD_VERSION}
+FROM ${BUILD_FROM}${BUILD_VERSION}
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
