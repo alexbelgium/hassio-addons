@@ -52,7 +52,7 @@ for addons in $(bashio::config "addon|keys"); do
       
       #Git commit and push
       bashio::log.info "... $SLUG : push to master"
-      git remote set-url origin https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}                                    
+      git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}"                                    
       git push 
 
       #Update the current flag
