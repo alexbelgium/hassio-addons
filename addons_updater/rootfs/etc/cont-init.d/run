@@ -53,7 +53,7 @@ for addons in $(bashio::config "addon|keys"); do
       #Git commit and push
       bashio::log.info "... $SLUG : push to master"
       git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" |  echo                                  
-      git push 
+      git push | echo "No changes"
 
       #Update the current flag
       bashio::log.info "... $SLUG : updating current flag"
@@ -66,3 +66,4 @@ for addons in $(bashio::config "addon|keys"); do
         bashio::log.info "Addon $SLUG is already up-to-date."                           
     fi                                                               
 done                                                                 
+exit
