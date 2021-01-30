@@ -13,11 +13,8 @@
    "ports": {
     },
    "ports_description": {
-    },
-  "homeassistant_api": true, 
+    }, 
   "hassio_api": true, 
-  "hassio_role": "manager", 
-  "auth_api": true, 
   "environment": {
   },
   "options": {
