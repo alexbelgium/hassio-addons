@@ -36,7 +36,7 @@ for addons in $(bashio::config "addon|keys"); do
         cd "/data/$BASENAME"
         git fetch 
           if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
-        git pull
+        git pull --ff-only
         fi
       fi
 
