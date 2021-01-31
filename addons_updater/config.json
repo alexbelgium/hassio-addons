@@ -16,7 +16,7 @@
     }, 
   "startup": "once",
   "boot": "manual",
-  "environment": { "GIT_DISCOVERY_ACROSS_FILESYSTEM" = 1" }, 
+  "environment": { "GIT_DISCOVERY_ACROSS_FILESYSTEM" = "1" }, 
   "options": {
   "addon": [{ "slug": "addon slug", "beta": false, "fulltag": false, "repository": "https://github.com/user/repo", "upstream": "github_user/repo_name" }],
   "gituser": "gituser",
