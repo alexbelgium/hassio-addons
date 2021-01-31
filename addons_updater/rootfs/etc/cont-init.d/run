@@ -19,6 +19,7 @@ for addons in $(bashio::config "addon|keys"); do
     REPOSITORY=$(bashio::config "addon[${addons}].repository")
     UPSTREAM=$(bashio::config "addon[${addons}].upstream")
     BETA=$(bashio::config "addon[${addons}].beta")
+    FULLTAG=$(bashio::config "addon[${addons}].fulltag")
     BASENAME=$(basename "https://github.com/$REPOSITORY")
   
       #Update local version
@@ -33,14 +34,23 @@ for addons in $(bashio::config "addon|keys"); do
       #Find current version
       bashio::log.info "... $SLUG : get current version"
       CURRENT=$(jq .version config.json) || bashio::log.error "$SLUG addon version in config.json not found. Exiting." exit
-  
+     #Prepare tag flag
+
+if [ ${FULLTAG} = true ]; then
+bashio::log.info "... $SLUG : fulltag is on"
+FULLTAG="--format tag"
+else
+bashio::log.info "... $SLUG : fulltag is off"
+FULLTAG=""
+fi 
+
       #If beta flag, select beta version
       if [ ${BETA} = true ]; then
       bashio::log.info "... $SLUG : beta is on"
-      LASTVERSION='"'$(lastversion --pre "https://github.com/$UPSTREAM" --format tag)'"'
+      LASTVERSION='"'$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG)'"'
       else 
       bashio::log.info "... $SLUG : beta is off"
-      LASTVERSION='"'$(lastversion "https://github.com/$UPSTREAM" --format tag)'"'
+      LASTVERSION='"'$(lastversion "https://github.com/$UPSTREAM" $FULLTAG)'"'
       fi
 
     if [ ${CURRENT} != ${LASTVERSION} ]; then
