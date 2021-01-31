@@ -31,7 +31,7 @@ for addons in $(bashio::config "addon|keys"); do
         bashio::log.info "... $SLUG : updating ${REPOSITORY}"       
         cd "/data/$BASENAME"
         git fetch 
-          if [ $(git rev-parse HEAD) !== $(git rev-parse @{u}) ]; then
+          if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
         git pull
         fi
       fi
