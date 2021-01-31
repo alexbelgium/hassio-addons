@@ -13,10 +13,10 @@ git config --system user.name ${GITUSER}
 git config --system user.password ${GITPASS}
 git config --system user.email ${GITMAIL}
 
-#if bashio::config.has_value 'gitapi'; then
-#bashio::log.info "... setting github API"
+if bashio::config.has_value 'gitapi'; then
+bashio::log.info "... setting github API"
 export GITHUB_API_TOKEN=$(bashio::config 'gitapi')
-#fi
+fi
 
 bashio::log.info "... parse addons"
 for addons in $(bashio::config "addon|keys"); do
