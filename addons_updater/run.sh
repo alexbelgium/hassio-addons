@@ -14,6 +14,7 @@ git config --system user.password ${GITPASS}
 git config --system user.email ${GITMAIL}
 
 if [ bashio::config.has_value 'git-api' ]; then
+bashio::log.info "... setting github API"
 export GITHUB_API_TOKEN=$(bashio::config 'git-api')
 fi
 
