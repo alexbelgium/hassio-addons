@@ -53,7 +53,7 @@ for addons in $(bashio::config "addon|keys"); do
       files=$(grep -rl ${CURRENT} /${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g"
       
 if [ $files != null ]; then
-      git commit -m "Bot update to $CURRENT" $files || true
+      git commit -m "Bot update to $LASTVERSION" $files || true
       
       #Git commit and push
       bashio::log.info "... $SLUG : push to master"
