@@ -18,14 +18,14 @@
   "environment": {
   },
   "options": {
-  "addon": [{ "slug": "addon slug", "beta": false, "repository": "https://github.com/user/repo", "upstream": "github_user/repo_name" }],
+  "addon": [{ "slug": "addon slug", "beta": false, "fulltag": false, "repository": "https://github.com/user/repo", "upstream": "github_user/repo_name" }],
   "gituser": "gituser",
   "gitpass": "gitpassword",
   "gitmail": "youremail@gmail.com",
   "frequency": 7
   },
   "schema": {
-  "addon": [{ "slug": "str", "beta": "bool" , "repository": "str", "upstream": "str"}],
+  "addon": [{ "slug": "str", "beta": "bool", "fulltag": "bool", "repository": "str", "upstream": "str"}],
   "gituser": "str",
   "gitpass": "str",
   "gitmail": "str",
