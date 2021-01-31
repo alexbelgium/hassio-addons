@@ -99,4 +99,3 @@ fi
         bashio::log.info "Addon $SLUG is already up-to-date."                           
     fi                                                               
 done                                                                 
-exit
