@@ -13,7 +13,7 @@ git config --system user.name ${GITUSER}
 git config --system user.password ${GITPASS}
 git config --system user.email ${GITMAIL}
 
-if [ bashio::config.has_value 'git-api']; then
+if [ bashio::config.has_value 'git-api' ]; then
 export GITHUB_API_TOKEN=$(bashio::config 'git-api')
 fi
 
