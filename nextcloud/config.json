@@ -1,7 +1,7 @@
 {
   "name": "Nextcloud OCR",
   "url": "https://github.com/linuxserver/docker-nextcloud",
-  "version": "20.0.6-ls117",
+  "version": "20.0.6-ls118",
   "slug": "nextcloud_ocr",
   "ingress": false,
   "ingress_port": 0,
