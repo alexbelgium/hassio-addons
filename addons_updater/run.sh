@@ -60,7 +60,7 @@ fi
         #Change all instances of version
       bashio::log.info "... $SLUG : updating files"
       
-      files=$(grep -rl ${CURRENT} /${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g"
+      files=$(grep -rl ${CURRENT} /data/${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g"
       
 if [ $files != null ]; then
       git commit -m "Bot update to $LASTVERSION" $files || true
