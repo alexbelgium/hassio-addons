@@ -22,9 +22,8 @@ comparison to installing any other Hass.io add-on.
 
 No webUI. Set everything through configuration.
 
-'''
+```
   - slug: the slug name from your repo
-    current: the initial version of your addon
     beta: true/false ; should it look only for releases or prereleases ok
     repository: 'name/repo' coming from github
     upstream: name/repo, example is 'linuxserver/docker-emby'
@@ -32,7 +31,7 @@ No webUI. Set everything through configuration.
   - gituser: your github email
   - gitpass: add your github password here, or a specific key if you have two factor identification enabled
   - frequency: placeholder for automatic update. Not used.
-'''
+```
 
 
 [repository]: https://github.com/alexbelgium/hassio-addons
