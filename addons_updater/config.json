@@ -27,6 +27,7 @@
   "addon": [{ "slug": "str", "beta": "bool", "fulltag": "bool", "repository": "str", "upstream": "str"}],
   "gituser": "str",
   "gitpass": "str",
-  "gitmail": "str"
+  "gitmail": "str",
+  "git-api": "str?"
   }
 }
