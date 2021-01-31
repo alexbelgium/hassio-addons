@@ -37,10 +37,10 @@ for addons in $(bashio::config "addon|keys"); do
       #If beta flag, select beta version
       if [ ${BETA} = true ]; then
       bashio::log.info "... $SLUG : beta is on"
-      LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" --format tag)
+      LASTVERSION='"'$(lastversion --pre "https://github.com/$UPSTREAM" --format tag)'"'
       else 
       bashio::log.info "... $SLUG : beta is off"
-      LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" --format tag)
+      LASTVERSION='"'$(lastversion "https://github.com/$UPSTREAM" --format tag)'"'
       fi
 
     if [ ${CURRENT} != ${LASTVERSION} ]; then
@@ -50,7 +50,7 @@ for addons in $(bashio::config "addon|keys"); do
         #Change all instances of version
       bashio::log.info "... $SLUG : updating files"
       
-      files=$(grep -rl '"'${CURRENT}'"' /${BASENAME}/${SLUG}) && echo $files | xargs sed -i 's/"'${CURRENT}'"/"'${LASTVERSION}'"/g'
+      files=$(grep -rl ${CURRENT} /${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g"
       
 if [ $files != null ]; then
       git commit -m "Bot update to $CURRENT" $files || true
