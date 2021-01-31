@@ -28,6 +28,6 @@
   "gituser": "str",
   "gitpass": "str",
   "gitmail": "str",
-  "git-api": "str?"
+  "gitapi": "str?"
   }
 }
