@@ -9,8 +9,10 @@ RUN \
     && pip install --upgrade pip \
     && pip install lastversion
 
-# Copy root filesystem
-COPY rootfs /
+# Copy script
+COPY run.sh /
+RUN chmod a+x /run.sh
+CMD [ "/run.sh"] 
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
