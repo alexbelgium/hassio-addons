@@ -2,8 +2,7 @@
     "name": "Addons_Updater",
     "version": "1.0",
     "slug": "updater",
-    "description": "Automatic addons update upon upstream new release",
-    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/updater",
+    "description": "Automatic addons update by aligning version tag with upstream releases",
     "arch": [
     "aarch64",
     "amd64",
