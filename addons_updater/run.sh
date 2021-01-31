@@ -39,7 +39,7 @@ for addons in $(bashio::config "addon|keys"); do
         #git fetch 
         #if [[ "$(git rev-parse HEAD)" !== "$(git rev-parse @{u})" ]]; then
         #git pull --ff-only
-        fi
+        #fi
       fi
 
       #Define the folder addon
