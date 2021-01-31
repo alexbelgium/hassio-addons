@@ -32,7 +32,6 @@ addon:
 gituser: your github username
 gituser: your github email
 gitpass: add your github password here, or a specific key if you have two factor identification enabled
-frequency: placeholder for automatic update. Not used.
 ```
 
 
