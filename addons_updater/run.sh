@@ -6,13 +6,16 @@ bashio::log.info "Checking status of referenced repositoriess..."
 bashio::log.info "... github authentification"
 GITUSER=$(bashio::config 'gituser')
 GITPASS=$(bashio::config 'gitpass')
-GITMAIL=$(bashio::config 'gitemail')
+GITMAIL=$(bashio::config 'gitmail')
 git config --system http.sslVerify false
 git config --system credential.helper 'cache --timeout 7200'
 git config --system user.name ${GITUSER}
 git config --system user.password ${GITPASS}
 git config --system user.email ${GITMAIL}
-export GITHUB_API_TOKEN=$(bashio::config 'GIT-API')
+
+if [ bashio::config.has_value 'git-api']; then
+export GITHUB_API_TOKEN=$(bashio::config 'git-api')
+fi
 
 bashio::log.info "... parse addons"
 for addons in $(bashio::config "addon|keys"); do
