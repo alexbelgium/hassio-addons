@@ -12,6 +12,7 @@ git config --system credential.helper 'cache --timeout 7200'
 git config --system user.name ${GITUSER}
 git config --system user.password ${GITPASS}
 git config --system user.email ${GITMAIL}
+export GITHUB_API_TOKEN=$(bashio::config 'GIT-API')
 
 bashio::log.info "... parse addons"
 for addons in $(bashio::config "addon|keys"); do
