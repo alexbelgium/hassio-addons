@@ -20,14 +20,12 @@
   "addon": [{ "slug": "addon slug", "beta": false, "fulltag": false, "repository": "https://github.com/user/repo", "upstream": "github_user/repo_name" }],
   "gituser": "gituser",
   "gitpass": "gitpassword",
-  "gitmail": "youremail@gmail.com",
-  "frequency": 7
+  "gitmail": "youremail@gmail.com"
   },
   "schema": {
   "addon": [{ "slug": "str", "beta": "bool", "fulltag": "bool", "repository": "str", "upstream": "str"}],
   "gituser": "str",
   "gitpass": "str",
-  "gitmail": "str",
-  "frequency": "int"
+  "gitmail": "str"
   }
 }
