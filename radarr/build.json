@@ -1,10 +1,8 @@
 {
     "build_from": {
-        "armhf": "linuxserver/radarr:arm32v7",
-        "armv7": "linuxserver/radarr:arm32v7",
-        "aarch64": "linuxserver/radarr:arm64v8",
-        "amd64": "linuxserver/radarr:amd64"
-    },
-    "squash": false,
-    "args": {}
+        "armhf": "linuxserver/radarr:arm32v7-version-",
+        "armv7": "linuxserver/radarr:arm32v7-version-",
+        "aarch64": "linuxserver/radarr:arm64v8-version-",
+        "amd64": "linuxserver/radarr:amd64-version-"
+    }
 }
