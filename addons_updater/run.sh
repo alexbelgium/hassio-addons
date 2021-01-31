@@ -22,10 +22,19 @@ for addons in $(bashio::config "addon|keys"); do
     FULLTAG=$(bashio::config "addon[${addons}].fulltag")
     BASENAME=$(basename "https://github.com/$REPOSITORY")
   
-      #Update local version
-      bashio::log.info "... $SLUG : cloning ${REPOSITORY}"
-      cd /data/
-      git clone "https://github.com/${REPOSITORY}" || cd "/data/${BASENAME}" && git fetch --all && git reset --hard origin/master
+      #Create or update local version
+      if [ ! -d /data/$BASENAME ]; then 
+        bashio::log.info "... $SLUG : cloning ${REPOSITORY}"
+        cd /data/
+        git clone "https://github.com/${REPOSITORY}"
+      else
+        bashio::log.info "... $SLUG : updating ${REPOSITORY}"       
+        cd "/data/$BASENAME"
+        git fetch 
+          if [ $(git rev-parse HEAD) !== $(git rev-parse @{u}) ]; then
+        git pull
+        fi
+      fi
 
       #Define the folder addon
       bashio::log.info "... $SLUG : checking slug exists in repo"
