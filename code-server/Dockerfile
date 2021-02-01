@@ -18,7 +18,6 @@ RUN apt-get update \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr \
     /tmp/* \
-    /var/{cache,log}/* \
     /var/lib/apt/lists/*
 
 # MOFIFY DATA PATH
