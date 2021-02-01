@@ -17,6 +17,9 @@ https://github.com/alexbelgium/hassio-addons
 
 [//]: # (ADDONLIST_START)
 
+### [Addons Updater](addons_updater/)
+Automatic addons update by aligning version tag with github upstream releases
+
 ### [Emby NAS](emby/)
 A Free Software Media System that puts you in control of managing and streaming your media.
 - Based on linuxserver image latest beta
