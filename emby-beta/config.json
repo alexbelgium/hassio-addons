@@ -1,7 +1,7 @@
 {
-  "name": "Emby NAS",
-  "version": "4.5.4.0",
-  "slug": "emby",
+  "name": "Emby beta NAS",
+  "version": "4.6.0.22",
+  "slug": "emby_nas",
   "legacy": false,
   "maintenance": {
     "github_release": "https://github.com/linuxserver/docker-emby",

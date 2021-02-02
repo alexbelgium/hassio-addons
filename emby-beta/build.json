@@ -1,0 +1,8 @@
+{
+    "build_from": {
+        "armv7": "linuxserver/emby:arm32v7-version-",
+        "armhf": "linuxserver/emby:arm32v7-version-",
+        "aarch64": "linuxserver/emby:arm64v8-version-",
+        "amd64": "linuxserver/emby:amd64-version-"
+    }
+}
