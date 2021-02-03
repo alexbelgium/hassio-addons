@@ -22,7 +22,7 @@ FROM ${BUILD_FROM}${BUILD_VERSION}
 # COPY rootfs /
 
 # MOFIFY DATA PATH
-# RUN sed -i "s|/data/papermerge|/papermerge|g" /etc/services.d/papermerge/run \
-#    && sed -i "s|/data/papermerge|/papermerge|g" /etc/cont-init.d/30-config
-
-VOLUME [ "/data" ]
+RUN sed -i "s|/data/media|/share/papermerge/media|g" /defaults/papermerge.conf.py \
+    && sed -i "s|/app/papermerge/static|/share/papermerge/static|g" /defaults/papermerge.conf.py
+    
+VOLUME [ "/data" "/share" ]
