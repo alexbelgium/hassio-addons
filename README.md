@@ -17,11 +17,9 @@ website of Home Assistant, and use the following URL:
 Automatic addons update by aligning version tag with github upstream releases
 
 ### [Bitwarden](bitwarden/)
-<details>
-<summary>Open source password management solution</summary>
+Open source password management solution
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 - Modifications : updated version
-</details>
 
 ### [Code-server](code-server/)
 Code-server is VS Code running on a remote server, accessible through the browser.
