@@ -9,10 +9,6 @@ Adding this add-ons repository to your Hass.io Home Assistant instance is
 pretty easy. Follow [the official instructions][third-party-addons] on the
 website of Home Assistant, and use the following URL:
 
-```txt
-https://github.com/alexbelgium/hassio-addons
-```
-
 ## Available addons
 
 [//]: # (ADDONLIST_START)
@@ -22,7 +18,7 @@ Automatic addons update by aligning version tag with github upstream releases
 
 ### [Bitwarden](bitwarden/)
 <details>
-<summary>Click to expand!</summary>
+<summary>Open source password management solution</summary>
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 - Modifications : updated version
 </details>
