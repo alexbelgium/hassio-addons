@@ -21,6 +21,10 @@ Open source password management solution
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 - Modifications : updated version
 
+### [cloudcommander - not maintained](cloudcommander/)
+Cloud Commander a file manager for the web with console and editor.
+This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cloudcmd).
+
 ### [Code-server](code-server/)
 Code-server is VS Code running on a remote server, accessible through the browser.
 - Based on latest linuxserver image https://hub.docker.com/r/linuxserver/code-server
@@ -45,7 +49,7 @@ A Nextcloud container, brought to you by LinuxServer.io.
 - Forked from : https://github.com/haberda/hassio_addons
 - Modifications : update based on images numbering instead of "latest", tesseract for ocr
 
-### [Papermerge](papermerge/)
+### [Papermerge - Not maintained](papermerge/)
 Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
