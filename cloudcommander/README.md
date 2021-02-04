@@ -3,7 +3,7 @@
 
 ## About
 
-Cloud Commander a file manager for the web with console and editor
+Cloud Commander a file manager for the web with console and editor.
 This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cloudcmd).
 
 ## Installation
