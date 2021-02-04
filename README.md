@@ -22,6 +22,7 @@ Automatic addons update by aligning version tag with github upstream releases
 
 ### [Bitwarden](bitwarden/)
 <details>
+<summary>Click to expand!</summary>
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 - Modifications : updated version
 </details>
