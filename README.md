@@ -6,10 +6,9 @@ My hassio addon repository.
 ## Installation
 
 Adding this add-ons repository to your Hass.io Home Assistant instance is
-pretty easy. Follow [the official instructions][third-party-addons] on the
+pretty easy. Follow [the official instructions](https://home-assistant.io/hassio/installing_third_party_addons) on the
 website of Home Assistant, and use the following URL: 
-```txt
-https://github.com/alexbelgium/hassio-addons
+```https://github.com/alexbelgium/hassio-addons
 ```
 
 ## Available addons
@@ -67,5 +66,3 @@ https://github.com/alexbelgium/hassio-addons
 - Modifications :  exposed settings.json in /share/transmission, add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
 [//]: # (ADDONLIST_END)
-
-[third-party-addons]: https://home-assistant.io/hassio/installing_third_party_addons/
