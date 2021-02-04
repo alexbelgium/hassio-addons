@@ -21,7 +21,7 @@ Open source password management solution
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 - Modifications : updated version
 
-### [cloudcommander - not maintained](cloudcommander/)
+### [cloudcommander (stale)](cloudcommander/)
 Cloud Commander a file manager for the web with console and editor.
 This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cloudcmd).
 
@@ -49,11 +49,11 @@ A Nextcloud container, brought to you by LinuxServer.io.
 - Forked from : https://github.com/haberda/hassio_addons
 - Modifications : update based on images numbering instead of "latest", tesseract for ocr
 
-### [Papermerge - Not maintained](papermerge/)
+### [Papermerge (stale)](papermerge/)
 Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
-### [Radarr NAS - Not maintained](radarr/)	
+### [Radarr NAS (stale)(radarr/)	
 A fork of Sonarr to work with movies like Couchpotato	
 - Forked from : https://hub.docker.com/r/linuxserver/radarr
 - Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
