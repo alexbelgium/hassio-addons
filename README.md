@@ -16,12 +16,6 @@ website of Home Assistant, and use the following URL: https://github.com/alexbel
 ### [Addons Updater](addons_updater/)
 Automatic addons update by aligning version tag with github upstream releases
 
-<details>
-  <summary>[Addons Updater](addons_updater/)</summary>
-Automatic addons update by aligning version tag with github upstream releases
-</details>
-
-
 ### [Bitwarden](bitwarden/)
 Open source password management solution
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
