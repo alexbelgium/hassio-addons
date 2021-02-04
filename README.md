@@ -21,9 +21,10 @@ https://github.com/alexbelgium/hassio-addons
 Automatic addons update by aligning version tag with github upstream releases
 
 ### [Bitwarden](bitwarden/)
-Open source password management solution
+<details>
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 - Modifications : updated version
+</details>
 
 ### [Code-server](code-server/)
 Code-server is VS Code running on a remote server, accessible through the browser.
