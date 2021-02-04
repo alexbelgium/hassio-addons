@@ -21,7 +21,7 @@ Open source password management solution
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 - Modifications : updated version
 
-### [Cloudcommander](cloudcommander/) <p style="color:blue"><small><I>stale</I></small></p>
+### [Cloudcommander](cloudcommander/) <em>stale</em>
 Cloud Commander a file manager for the web with console and editor.
 This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cloudcmd).
 
