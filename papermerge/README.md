@@ -1,4 +1,4 @@
-# Home assistant add-on: Transmission
+# Home assistant add-on: Papermerge
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 ## About
