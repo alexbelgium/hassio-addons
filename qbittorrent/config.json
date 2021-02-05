@@ -33,9 +33,7 @@
   },
   "options": {
     "PUID": 0,
-    "PGID": 0,
-    "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem"
+    "PGID": 0
   },
   "schema": {
     "PUID": "int",
