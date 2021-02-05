@@ -29,7 +29,7 @@
   "PGID": 0
   },
   "schema": {
-  "PUID": "str",
-  "PGID": "str"
+  "PUID": "int",
+  "PGID": "int"
   }
 }

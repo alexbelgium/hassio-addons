@@ -26,13 +26,17 @@ RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/rep
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr /tmp/bashio.tar.gz \
-    || echo "Error, no OCR available" 
+    || echo "Error, no OCR available"  
 
 # modify/copy files
 RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
     && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
-    && sed -i "s|config|data/config|g" /etc/services.d/nginx/*
+    && sed -i "s|config|data/config|g" /etc/services.d/nginx/* \
+    # Allow UID and GID setting
+    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
 
 COPY root/ /
 

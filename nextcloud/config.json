@@ -29,8 +29,8 @@
   "webui": "https://[HOST]:[PORT:443]",
   "panel_icon": "mdi:cloud",
   "options": {
-    "PUID": 1001,
-    "PGID": 1001, 
+    "PUID": 0,
+    "PGID": 0, 
     "trusted_domains": ["your-domain"],
     "OCR": false,
     "OCRLANG": "fra"
