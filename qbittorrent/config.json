@@ -21,10 +21,11 @@
       "6881/tcp": "Peer port",
       "6881/udp": "Peer port"
     },
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw"
+  "map":[
+      "media:rw",
+      "config:rw",
+      "share:rw",
+      "ssl"
   ],
   "webui": "http://[HOST]:[PORT:8080]",
   "boot": "auto", 
