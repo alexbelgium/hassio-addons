@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo "Default username/password : admin/adminadmin"
+echo "Default username/password : homeassistant/adminadmin"
