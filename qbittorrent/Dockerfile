@@ -32,7 +32,7 @@ RUN \
     && sed '11,13d' /defaults/qBittorrent.conf \ 
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\Username=Homeassistant' >> /defaults/qBittorrent.conf \
+    # && echo 'WebUI\Username=Homeassistant' >> /defaults/qBittorrent.conf \
     # use /data instead of /config for hass.io environment
     &&  files=$(grep -rls '/config' /etc) && echo $files | xargs sed -i "s=/config=/data=g"
 
