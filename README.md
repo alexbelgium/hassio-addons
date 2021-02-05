@@ -56,6 +56,9 @@ https://github.com/alexbelgium/hassio-addons
 - Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
+### [Qbittorrent)](qbittorrent/)
+- Based on linuxserver image : https://hub.docker.com/r/linuxserver/qbittorrent
+
 ### [Radarr NAS](radarr/) <sub><i>stale</i></sub>
 - A fork of Sonarr to work with movies like Couchpotato	
 - Forked from : https://hub.docker.com/r/linuxserver/radarr

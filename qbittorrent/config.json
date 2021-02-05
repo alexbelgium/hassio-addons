@@ -1,0 +1,43 @@
+{
+    "name": "Qbittorrent",
+    "version": "14.3.3.99202101191832-7248-da0b276d5ubuntu18.04.1",
+    "slug": "qbittorrent",
+    "description": "A Qbittorrent container, brought to you by LinuxServer.io",
+    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/qbittorrent",
+    "startup": "services",
+    "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+   "ports": {
+      "8080/tcp": 8081,
+      "6881/tcp": 6881,
+      "6881/udp": 6881
+    },
+   "ports_description": {
+      "8080/tcp": "Web UI port",
+      "6881/tcp": "Peer port",
+      "6881/udp": "Peer port"
+    },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw"
+  ],
+  "webui": "http://[HOST]:[PORT:8080]",
+  "boot": "auto", 
+  "environment": {
+  "WEBUI_PORT": "8080"
+  },
+  "options": {
+    "PUID": 0,
+    "PGID": 0
+	},
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?"
+  }
+}
