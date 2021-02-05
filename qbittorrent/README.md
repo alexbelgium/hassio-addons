@@ -22,8 +22,8 @@ comparison to installing any other Hass.io add-on.
 The webui is at <your-ip>:8081 and the default username/password is admin/adminadmin.
   
 Options : 
-- "downloads": "/share/downloads"      # where the files will be saved after download
-- "temppath": "/share/incomplete"   # where the files are saved during download
+- certfile: "/ssl/fullchain.pem", sets https
+- keyfile: "/ssl/privkey.pem"
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
