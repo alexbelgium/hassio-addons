@@ -34,7 +34,7 @@ RUN \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
     # && echo 'WebUI\Username=Homeassistant' >> /defaults/qBittorrent.conf \
     # use /data instead of /config for hass.io environment
-    &&  files=$(grep -rls '/config' /etc) && echo $files | xargs sed -i "s=/config=/data=g"
+    &&  files=$(grep -rls '/config' /) && echo $files | xargs sed -i "s=/config=/data=g"
 
 # Copy root filesystem
 COPY rootfs /
