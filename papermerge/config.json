@@ -25,6 +25,8 @@
   "webui": "http://[HOST]:[PORT:8000]",
   "boot": "auto", 
   "environment": {
+  "PUID": 0,
+  "PGID": 0
   },
   "options": {
     "PUID": 1000,
