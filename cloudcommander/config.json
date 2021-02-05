@@ -23,6 +23,8 @@
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"], 
   "full_access": true,
   "environment": {
+  "PUID": 0,
+  "PGID": 0
   },
   "options": {
 	},
