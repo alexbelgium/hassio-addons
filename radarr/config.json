@@ -32,6 +32,10 @@
   "full_access": true,
   "webui": "http://[HOST]:[PORT:7878]",
   "boot": "auto",
+  "environment": {
+  "PUID": 0,
+  "PGID": 0
+  },
   "options": {
     "PUID": 1001,
     "PGID": 1001, 
