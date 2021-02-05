@@ -22,6 +22,10 @@
     "443/tcp": 8099,
 	"80/tcp": null
   },
+  "environment": {
+  "PUID": 0,
+  "PGID": 0
+  },
   "webui": "https://[HOST]:[PORT:443]",
   "panel_icon": "mdi:cloud",
   "options": {
