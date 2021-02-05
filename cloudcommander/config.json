@@ -23,11 +23,13 @@
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"], 
   "full_access": true,
   "environment": {
+  },
+  "options": {
   "PUID": 0,
   "PGID": 0
   },
-  "options": {
-	},
   "schema": {
+  "PUID": "str",
+  "PGID": "str"
   }
 }
