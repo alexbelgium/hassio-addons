@@ -1,4 +1,4 @@
-# Home assistant add-on: Qbittorrent
+# Home assistant add-on: qBittorrent
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 ## About
@@ -19,11 +19,8 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
-The webui is at <your-ip>:8081 and the default username/password is admin/adminadmin.
+The webui is at <your-ip>:8081 and the default username/password is described in the startup log.
   
-Options : 
-- certfile: "/ssl/fullchain.pem", sets https
-- keyfile: "/ssl/privkey.pem"
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
