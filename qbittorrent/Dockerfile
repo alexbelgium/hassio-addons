@@ -24,6 +24,10 @@ RUN apt-get update \
     /var/{cache,log}/* \
     /var/lib/apt/lists/* \
     \
+# Allow UID and GID setting
+    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/'{PUID:-911}'/'(bashio::config 'PUID')'/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/'{PGID:-911}'/'(bashio::config 'PGID')'/g' /etc/cont-init.d/10-adduser \
 # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \ 
 # Allow connection to webUI
