@@ -26,7 +26,7 @@
     "share:rw",
     "media:rw"
   ],
-  "webui": "http://[HOST]:[PORT:8080]/mlkjzerhg",
+  "webui": "http://[HOST]:[PORT:8080]",
   "boot": "auto", 
   "environment": {
   "WEBUI_PORT": "8080"
@@ -40,8 +40,8 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "certfile": "str",
-    "keyfile": "str",
+    "certfile": "str?",
+    "keyfile": "str?",
     "TZ": "str?"
   }
 }
