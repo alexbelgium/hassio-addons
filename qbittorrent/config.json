@@ -33,15 +33,11 @@
   },
   "options": {
     "PUID": 0,
-    "PGID": 0,
-    "local_ip_subset": "192.168.178.0/24"
+    "PGID": 0
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "certfile": "str?",
-    "keyfile": "str?",
-    "local_ip_subset": "str?",
     "TZ": "str?"
   }
 }
