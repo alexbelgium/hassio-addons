@@ -26,18 +26,22 @@
     "share:rw",
     "media:rw"
   ],
-  "webui": "http://[HOST]:[PORT:8080]",
+  "webui": "http://[HOST]:[PORT:8080]/mlkjzerhg",
   "boot": "auto", 
   "environment": {
   "WEBUI_PORT": "8080"
   },
   "options": {
     "PUID": 0,
-    "PGID": 0
-	},
+    "PGID": 0,
+    "certfile": "fullchain.pem",
+    "keyfile": "privkey.pem"
+  },
   "schema": {
     "PUID": "int",
     "PGID": "int",
+    "certfile": "str",
+    "keyfile": "str",
     "TZ": "str?"
   }
 }
