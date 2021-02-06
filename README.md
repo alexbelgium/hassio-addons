@@ -52,11 +52,11 @@ https://github.com/alexbelgium/hassio-addons
 - Forked from : https://github.com/haberda/hassio_addons
 - Modifications : update based on images numbering instead of "latest", tesseract for ocr
 
-### [Papermerge)](papermerge/) <sub><i>stale</i></sub>
+### [Papermerge](papermerge/) <sub><i>stale</i></sub>
 - Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
-### [Qbittorrent)](qbittorrent/)
+### [Qbittorrent](qbittorrent/)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/qbittorrent
 
 ### [Radarr NAS](radarr/) <sub><i>stale</i></sub>
