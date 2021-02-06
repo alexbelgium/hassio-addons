@@ -4,7 +4,7 @@
 sed -i '/HTTPS/d' /config/qBittorrent/qBittorrent.conf
 
 # Define preferences line
-LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
+LINE=$(sed -n '/Preferences/=' /config/qBittorrent/qBittorrent.conf)
 LINE=$[LINE + 1] 
 
 bashio::config.require.ssl
