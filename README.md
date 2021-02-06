@@ -1,9 +1,7 @@
-# Hassio Add-ons by alexbelgium
+# About
+My home assistant addon repository, by alexbelgium
 
-## About
-My hassio addon repository. 
-
-## Installation
+# Installation
 
 Adding this add-ons repository to your Hass.io Home Assistant instance is
 pretty easy. Follow [the official instructions](https://home-assistant.io/hassio/installing_third_party_addons) on the
@@ -12,11 +10,11 @@ website of Home Assistant, and use the following URL:
 https://github.com/alexbelgium/hassio-addons
 ```
 
-## Available addons
+# Available addons
 
 [//]: # (ADDONLIST_START)
 
-### [Addons Updater](addons_updater/)
+## [Addons Updater](addons_updater/)
 - Automatic addons update by aligning version tag with github upstream releases
 
 ### [Bitwarden](bitwarden/)
