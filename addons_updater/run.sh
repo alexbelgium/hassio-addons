@@ -77,6 +77,7 @@ fi
       files=$(grep -rl ${CURRENT} /data/${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g"
       
       #Update changelog
+      touch /data/${BASENAME}/${SLUG}/CHANGELOG.md
       sed -i "1i " /data/${BASENAME}/${SLUG}/CHANGELOG.md 
       sed -i "1i${LASTVERSION} : update to latest linuxserver version" /data/${BASENAME}/${SLUG}/CHANGELOG.md 
             
