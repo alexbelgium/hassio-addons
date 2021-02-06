@@ -1,6 +1,6 @@
 {
     "name": "Qbittorrent",
-    "version": "14.3.3.99202101191832-7248-da0b276d5ubuntu18.04.1-ls113",
+    "version": "14.3.3.99202101191832-7248-da0b276d5ubuntu18.04.1",
     "slug": "qbittorrent",
     "description": "A Qbittorrent container, brought to you by LinuxServer.io",
     "url": "https://github.com/alexbelgium/hassio-addons/tree/master/qbittorrent",
