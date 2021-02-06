@@ -4,11 +4,7 @@ FROM coderaiser/cloudcmd:$BUILD_VERSION
 
 COPY run.sh /
 
-RUN chmod 777 /run.sh \
-# Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+RUN chmod 777 /run.sh
 
 ENTRYPOINT [ "/run.sh" ]
 
