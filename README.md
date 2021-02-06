@@ -56,7 +56,7 @@ https://github.com/alexbelgium/hassio-addons
 - Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
-### [Qbittorrent](qbittorrent/) <sub><i>NAS</i></sub>
+### [Qbittorrent](qbittorrent/) ![smb][smb-shield]
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/qbittorrent
 
 ### [Radarr](radarr/) <sub><i>NAS</i></sub> <sub><i>stale</i></sub> 
@@ -70,3 +70,5 @@ https://github.com/alexbelgium/hassio-addons
 - Modifications :  exposed settings.json in /share/transmission, add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
 [//]: # (ADDONLIST_END)
+
+[smb-shield]: https://img.shields.io/badge/SMB-yes-green.svg
