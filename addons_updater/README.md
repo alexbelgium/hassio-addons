@@ -22,7 +22,7 @@ comparison to installing any other Hass.io add-on.
 
 No webUI. Set everything through configuration.
 
-```
+```yaml
 addon:
   - slug: the slug name from your repo
     beta: true/false ; should it look only for releases or prereleases ok
