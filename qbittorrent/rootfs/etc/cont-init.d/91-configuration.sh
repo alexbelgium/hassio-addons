@@ -28,8 +28,8 @@ bashio::log.info "Default username/password : admin/adminadmin"
 if bashio::config.has_value 'whitelist'; then
 WHITELIST=$(bashio::config 'whitelist')
 #clean data
-sed -i '/AuthSubnetWhitelist/d' /config/qBittorrent/qBittorrent.conf
 cd /config/qBittorrent
+sed -i '/AuthSubnetWhitelist/d' /config/qBittorrent/qBittorrent.conf
 sed -i "$LINE i\WebUI\\\AuthSubnetWhitelistEnabled=true" qBittorrent.conf
 sed -i "$LINE i\WebUI\\\AuthSubnetWhitelist=$WHITELIST" qBittorrent.conf
 bashio::log.info "Whitelisted subsets will not require a password : $WHITELIST"
