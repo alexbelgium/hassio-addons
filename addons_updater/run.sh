@@ -35,9 +35,7 @@ for addons in $(bashio::config "addon|keys"); do
       else
         bashio::log.info "... $SLUG : updating ${REPOSITORY}"       
         cd "/data/$BASENAME"
-        git fetch --all
-        git reset --hard origin/master
-        git pull
+        git pull --rebase 
       fi
 
       #Define the folder addon
