@@ -37,7 +37,7 @@ https://github.com/alexbelgium/hassio-addons
 - Based on latest linuxserver image
 - Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
-### [Emby NAS](emby/)
+### [Emby NAS](emby/) <sub><i>NAS</i></sub>
 - A Free Software Media System that puts you in control of managing and streaming your media.
 - Based on linuxserver image latest beta : https://hub.docker.com/r/linuxserver/emby
 - Forked from : https://github.com/petersendev/hassio-addons
@@ -56,10 +56,10 @@ https://github.com/alexbelgium/hassio-addons
 - Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
-### [Qbittorrent](qbittorrent/)
+### [Qbittorrent](qbittorrent/) <sub><i>NAS</i></sub>
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/qbittorrent
 
-### [Radarr](radarr/) <sub><i>stale</i></sub> <sub><i>NAS</i></sub>
+### [Radarr](radarr/) <sub><i>NAS</i></sub> <sub><i>stale</i></sub> 
 - A fork of Sonarr to work with movies like Couchpotato	
 - Forked from : https://hub.docker.com/r/linuxserver/radarr
 - Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
