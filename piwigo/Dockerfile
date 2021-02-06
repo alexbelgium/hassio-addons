@@ -31,9 +31,9 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Set ssl with letsencrypt defaults
     && sed -i 's=/config/keys/cert.crt=/ssl/fullchain.pem=g' /defaults/default \
-    && sed -i 's=/config/keys/cert.key=/ssl/privkey.pem=g' /defaults/default \
+    && sed -i 's=/config/keys/cert.key=/ssl/privkey.pem=g' /defaults/default
     # Use data instead of config
-    && sed -i 's/config/data/g' /defaults/default \
-    && sed -i 's/config/data/g' /etc/cont-init.d/40-install
+    #&& sed -i 's/config/data/g' /defaults/default \
+    #&& sed -i 's/config/data/g' /etc/cont-init.d/40-install
 
 VOLUME [ "/data" ]
