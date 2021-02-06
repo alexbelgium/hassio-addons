@@ -42,6 +42,7 @@
     "ssl": false,
     "certfile": "/ssl/fullchain.pem", 
     "keyfile": "/ssl/privkey.pem",
+    "whitelist": "localhost,127.0.0.1,192.168.178.0/24",
     "PUID": 0,
     "PGID": 0
   },
@@ -49,6 +50,7 @@
     "ssl": "bool",
     "certfile": "str", 
     "keyfile": "str",
+    "whitelist": "str?",
     "PUID": "int",
     "PGID": "int",
     "localdisks": "str?",
