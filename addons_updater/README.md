@@ -26,7 +26,7 @@ No webUI. Set everything through configuration.
 addon:
   - slug: the slug name from your repo
     beta: true/false ; should it look only for releases or prereleases ok
-    fulltage: true is for example "v3.0.1-ls67" false is "3.0.1"
+    fulltag: true is for example "v3.0.1-ls67" false is "3.0.1"
     repository: 'name/repo' coming from github
     upstream: name/repo, example is 'linuxserver/docker-emby'
 gituser: your github username
