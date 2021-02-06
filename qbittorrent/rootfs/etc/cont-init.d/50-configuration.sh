@@ -14,12 +14,9 @@ if bashio::config.true 'ssl'; then
   cd /config/qBittorrent
   LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
   LINE=$[LINE + 1] 
-  sed "$LINEi\ WebUI\HTTPS\Enabled=True" qBittorrent.conf
-  sed "$LINEi\ WebUI\HTTPS\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
-  sed "$LINEi\ WebUI\HTTPS\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
-  #echo 'WebUI\HTTPS\Enabled=True' >> qBittorrent.conf
-  #echo "WebUI\HTTPS\CertificatePath=/ssl/$CERTFILE" >> qBittorrent.conf
-  #echo "WebUI\HTTPS\KeyPath=/ssl/$KEYFILE" >> qBittorrent.conf
+  sed -i "$LINE i\WebUI\\HTTPS\\Enabled=True" qBittorrent.conf
+  sed -i "$LINE i\WebUI\\HTTPS\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
+  sed -i "$LINE i\WebUI\\HTTPS\\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
   #else bashio::log.error "Certificates not found in $CERTFILE and/or $KEYFILE" 
   #fi 
 fi
