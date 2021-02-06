@@ -77,9 +77,9 @@ fi
       files=$(grep -rl ${CURRENT} /data/${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g"
       
       #Update changelog
-      echo "${LASTVERSION} : update to latest linuxserver version" >> /data/${BASENAME}/${SLUG}/CHANGELOG.md
-      echo "" >> /data/${BASENAME}/${SLUG}/CHANGELOG.md   
-      
+      sed -i "1i " /data/${BASENAME}/${SLUG}/CHANGELOG.md 
+      sed -i "1i${LASTVERSION} : update to latest linuxserver version" /data/${BASENAME}/${SLUG}/CHANGELOG.md 
+            
 if [ $files != null ]; then
       git commit -m "Bot update to $LASTVERSION" $files || true
       
