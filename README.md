@@ -64,7 +64,7 @@ https://github.com/alexbelgium/hassio-addons
 - Forked from : https://hub.docker.com/r/linuxserver/radarr
 - Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
-### [Transmission](transmission/)
+### [Transmission](transmission/) ![smb][smb-shield] 
 - The torrent client for Hass.io.
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/transmission
 - Modifications :  exposed settings.json in /share/transmission, add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
