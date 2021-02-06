@@ -27,12 +27,12 @@ GPID: user
 ssl: true/false
 certfile: fullchain.pem #ssl certificate
 keyfile: privkey.pem #sslkeyfile
-# Optional settings
-whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password
-localdisks: "sda1" # list of device to mount
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount
-cifsusername: "username" # smb username
-cifspassword: "password" # smb password
+
+whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password (optional)
+localdisks: "sda1" # list of device to mount (optional)
+networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
+cifsusername: "username" # smb username (optional)
+cifspassword: "password" # smb password (optional)
 ```
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
