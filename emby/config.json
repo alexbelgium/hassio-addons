@@ -2,13 +2,8 @@
   "name": "Emby beta NAS",
   "version": "4.6.0.22",
   "slug": "emby_nas",
-  "legacy": false,
-  "maintenance": {
-    "github_release": "https://github.com/linuxserver/docker-emby",
-    "version_regex": "(\\d+\\.\\d+\\.\\d+.\\d+)-(ls\\d+)"
-  },
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
-  "url": "https://github.com/petersendev/hassio-addons/tree/master/emby#readme",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby#readme",
   "startup": "services",
   "arch": [
     "aarch64",
