@@ -21,7 +21,7 @@
     },
   "webui": "http://[HOST]:[PORT:8081]/joal/ui",
   "boot": "auto", 
-  "host_network": true,
+  "host_network": false,
   "environment": {
   },
   "options": {
