@@ -56,6 +56,10 @@ https://github.com/alexbelgium/hassio-addons
 - Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
+### &#10003; [Piwigo](piwigo/) ![smb][smb-shield]
+- Piwigo is a photo gallery software for the web
+- Based on linuxserver image : https://hub.docker.com/r/linuxserver/piwigo
+
 ### &#10003; [Qbittorrent](qbittorrent/) ![smb][smb-shield]
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/qbittorrent
 
