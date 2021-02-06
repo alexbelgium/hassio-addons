@@ -21,6 +21,10 @@
       "6881/tcp": "Peer port",
       "6881/udp": "Peer port"
     },
+  "privileged": [
+    "SYS_ADMIN"
+  ],
+  "full_access": true,
   "map":[
       "media:rw",
       "config:rw",
