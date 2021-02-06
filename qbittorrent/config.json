@@ -37,14 +37,14 @@
   "options": {
     "ssl": false,
     "certfile": "/ssl/fullchain.pem", 
-    "keyfile": "/ssl/privkey.pem"
+    "keyfile": "/ssl/privkey.pem",
     "PUID": 0,
     "PGID": 0
   },
   "schema": {
     "ssl": "bool",
     "certfile": "str", 
-    "keyfile": "str"
+    "keyfile": "str",
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?"
