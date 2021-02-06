@@ -10,10 +10,10 @@ RUN \
     apk add --no-cache \
     jq \
     curl \
+    cifs-utils \
     \
-    && apt-get -y upgrade cifs-utils \
     && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
+    "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
     /tmp/bashio.tar.gz \
@@ -23,7 +23,6 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr \
     /tmp/* \
-    /var/{cache,log}/* \
     /var/lib/apt/lists/* \
     \
     # Allow UID and GID setting
