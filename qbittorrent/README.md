@@ -26,6 +26,8 @@ comparison to installing any other Hass.io add-on.
 
 **Options**
 ```yaml
+GUID: user
+GPID: user
 download_dir: "/share/downloads" # where the files will be saved after download
 incomplete_dir: "/share/incomplete" # where the files are saved during download
 localdisks: "sda1" # list of device to mount
