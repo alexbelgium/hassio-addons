@@ -14,7 +14,7 @@ https://github.com/alexbelgium/hassio-addons
 
 [//]: # (ADDONLIST_START)
 
-## [Addons Updater](addons_updater/)
+### [Addons Updater](addons_updater/)
 - Automatic addons update by aligning version tag with github upstream releases
 
 ### [Bitwarden](bitwarden/)
