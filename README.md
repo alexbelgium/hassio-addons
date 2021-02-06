@@ -24,7 +24,7 @@ https://github.com/alexbelgium/hassio-addons
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 - Modifications : updated version
 
-### [Cloudcommander](cloudcommander/) <sub><i>stale</i></sub>
+### [Cloudcommander](cloudcommander/) ![stale][stale-shield]
 - Cloud Commander a file manager for the web with console and editor.
 - This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cloudcmd).
 
@@ -32,12 +32,12 @@ https://github.com/alexbelgium/hassio-addons
 - Code-server is VS Code running on a remote server, accessible through the browser.
 - Based on latest linuxserver image https://hub.docker.com/r/linuxserver/code-server
 
-### [Doublecommander NAS](doublecommander/)
+### [Doublecommander](doublecommander/) ![smb][smb-shield]
 - A free cross platform open source file manager with two panels side by side.
 - Based on latest linuxserver image
 - Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
 
-### [Emby NAS](emby/) <sub><i>NAS</i></sub>
+### [Emby](emby/) ![smb][smb-shield]
 - A Free Software Media System that puts you in control of managing and streaming your media.
 - Based on linuxserver image latest beta : https://hub.docker.com/r/linuxserver/emby
 - Forked from : https://github.com/petersendev/hassio-addons
@@ -52,14 +52,14 @@ https://github.com/alexbelgium/hassio-addons
 - Forked from : https://github.com/haberda/hassio_addons
 - Modifications : update based on images numbering instead of "latest", tesseract for ocr
 
-### [Papermerge](papermerge/) <sub><i>stale</i></sub>
+### [Papermerge](papermerge/) ![stale][stale-shield]
 - Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
 ### [Qbittorrent](qbittorrent/) ![smb][smb-shield]
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/qbittorrent
 
-### [Radarr](radarr/) <sub><i>NAS</i></sub> <sub><i>stale</i></sub> 
+### [Radarr](radarr/) ![smb][smb-shield] ![stale][stale-shield]
 - A fork of Sonarr to work with movies like Couchpotato	
 - Forked from : https://hub.docker.com/r/linuxserver/radarr
 - Modifications : add smb and local disks mount [(@dianlight)](https://github.com/dianlight)
@@ -71,4 +71,5 @@ https://github.com/alexbelgium/hassio-addons
 
 [//]: # (ADDONLIST_END)
 
+[stale-shield]: https://img.shields.io/badge/-Stale-lightgrey
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
