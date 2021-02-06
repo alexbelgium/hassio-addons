@@ -24,14 +24,14 @@ comparison to installing any other Hass.io add-on.
 The webui is at <your-ip>:8081 and the default username/password is described in the startup log.
 
 **Options**
-
-"download_dir": "/share/downloads" # where the files will be saved after download
-"incomplete_dir": "/share/incomplete" # where the files are saved during download
-"localdisks": "sda1" # list of device to mount
-"networkdisks": "<//SERVER/SHARE>" # list of smbv2/3 servers to mount
-"cifsusername": "username" # smb username
-"cifspassword": "password" # smb password
-
+```yaml
+download_dir: "/share/downloads" # where the files will be saved after download
+incomplete_dir: "/share/incomplete" # where the files are saved during download
+localdisks: "sda1" # list of device to mount
+networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount
+cifsusername: "username" # smb username
+cifspassword: "password" # smb password
+```
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
