@@ -23,7 +23,6 @@
   "full_access": true,
   "map":[
       "media:rw",
-      "config:rw",
       "share:rw",
       "ssl"
   ],
