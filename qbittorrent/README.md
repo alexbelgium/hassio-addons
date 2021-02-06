@@ -19,11 +19,11 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
-**Webui
+**Webui**
 
 The webui is at <your-ip>:8081 and the default username/password is described in the startup log.
 
-**Options
+**Options**
 
 "download_dir": "/share/downloads" # where the files will be saved after download
 "incomplete_dir": "/share/incomplete" # where the files are saved during download
