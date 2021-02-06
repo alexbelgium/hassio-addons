@@ -78,8 +78,9 @@ fi
       
       #Update changelog
       touch /data/${BASENAME}/${SLUG}/CHANGELOG.md
-      sed -i "1i " /data/${BASENAME}/${SLUG}/CHANGELOG.md 
-      sed -i "1i${LASTVERSION} : update to latest linuxserver version" /data/${BASENAME}/${SLUG}/CHANGELOG.md 
+      sed -i "1i\ " /data/${BASENAME}/${SLUG}/CHANGELOG.md
+      sed -i "1i\## ${LASTVERSION}"
+      sed -i "1i\Update to latest version from $UPSTREAM" /data/${BASENAME}/${SLUG}/CHANGELOG.md 
             
 if [ $files != null ]; then
       git commit -m "Bot update to $LASTVERSION" $files || true
