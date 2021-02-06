@@ -1,10 +1,10 @@
-# Home assistant add-on: qBittorrent
+# Home assistant add-on: Piwigo
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 ## About
 
-Transmission is a bittorrent client.
-This addon is based on the [docker image](https://github.com/linuxserver/qbittorrent) from linuxserver.io.
+Piwigo is a photo gallery software for the Web. 
+This addon is based on the [docker image](https://github.com/linuxserver/piwigo) from linuxserver.io.
 
 ## Installation
 
@@ -19,7 +19,7 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
-Webui can be found at <http://your-ip:8081>. The default username/password : described in the startup log. Configurations can be done through the app, except for the following options.
+Webui can be found at <http://your-ip:81>. 
 
 ```yaml
 GUID: user
@@ -27,7 +27,6 @@ GPID: user
 ssl: true/false
 certfile: fullchain.pem #ssl certificate
 keyfile: privkey.pem #sslkeyfile
-whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password (optional)
 localdisks: "sda1" # list of device to mount (optional)
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
