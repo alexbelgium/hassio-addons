@@ -28,8 +28,9 @@ comparison to installing any other Hass.io add-on.
 ```yaml
 GUID: user
 GPID: user
-download_dir: "/share/downloads" # where the files will be saved after download
-incomplete_dir: "/share/incomplete" # where the files are saved during download
+ssl:true/false
+certfile: fullchain.pem #ssl certificate
+keyfile: privkey.pem #sslkeyfile
 localdisks: "sda1" # list of device to mount
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount
 cifsusername: "username" # smb username
