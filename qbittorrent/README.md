@@ -20,6 +20,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 **Webui**
+
 Webui : <your-ip>:8081
 Default username/password : described in the startup log.
 
