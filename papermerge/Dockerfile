@@ -4,7 +4,8 @@ ARG BUILD_VERSION
 FROM ${BUILD_FROM}${BUILD_VERSION}
 
 # Add bashio
-RUN apk add --no-cache \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
     curl \
     jq \
     && curl -J -L -o /tmp/bashio.tar.gz \
