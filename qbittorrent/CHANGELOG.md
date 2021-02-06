@@ -2,4 +2,5 @@
 - Update to latest version from linuxserver/docker-qbittorrent
 - Enables PUID/GUID options
 - Addition of ssl options
+- Addition of possibility to mount local disc or smb
 
