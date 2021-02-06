@@ -71,4 +71,4 @@ https://github.com/alexbelgium/hassio-addons
 
 [//]: # (ADDONLIST_END)
 
-[smb-shield]: https://img.shields.io/badge/SMB-yes-green?style=flat.svg
+[smb-shield]: https://img.shields.io/badge/SMB-yes-green?style=plastic.svg
