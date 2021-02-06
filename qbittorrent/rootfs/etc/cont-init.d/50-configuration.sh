@@ -13,6 +13,7 @@ if bashio::config.true 'ssl'; then
   #if [ bashio::fs.file_exists "/ssl/$CERTFILE" ] && [ bashio::fs.file_exists "/ssl/$KEYFILE" ]; then
   cd /config/qBittorrent
   LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
+  LINE=$[LINE + 1] 
   sed "$LINEi\ WebUI\HTTPS\Enabled=True" qBittorrent.conf
   sed "$LINEi\ WebUI\HTTPS\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
   sed "$LINEi\ WebUI\HTTPS\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
