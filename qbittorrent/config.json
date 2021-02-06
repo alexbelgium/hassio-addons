@@ -27,7 +27,7 @@
       "share:rw",
       "ssl"
   ],
-  "webui": "http://[HOST]:[PORT:8080]",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "boot": "auto", 
   "environment": {
   "WEBUI_PORT": "8080",
@@ -35,10 +35,16 @@
   "PGID": 0
   },
   "options": {
+    "ssl": false,
+    "certfile": "/ssl/fullchain.pem", 
+    "keyfile": "/ssl/privkey.pem"
     "PUID": 0,
     "PGID": 0
   },
   "schema": {
+    "ssl": "bool",
+    "certfile": "str", 
+    "keyfile": "str"
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?"
