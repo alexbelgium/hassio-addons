@@ -83,7 +83,8 @@ fi
       sed -i "1i\Update to latest version from $UPSTREAM" /data/${BASENAME}/${SLUG}/CHANGELOG.md 
             
 if [ $files != null ]; then
-      git commit -m "Bot update to $LASTVERSION" $files || true
+      git commit -m "Update to $LASTVERSION" $files || true
+      git commit -m "Update to $LASTVERSION" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
       
       #Git commit and push
       bashio::log.info "... $SLUG : push to master"
