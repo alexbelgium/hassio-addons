@@ -20,8 +20,8 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 **Webui**
-
-The webui is at <your-ip>:8081 and the default username/password is described in the startup log.
+Webui : <your-ip>:8081
+Default username/password : described in the startup log.
 
 **Options**
 ```yaml
