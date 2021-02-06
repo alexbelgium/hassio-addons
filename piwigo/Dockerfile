@@ -2,6 +2,9 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}${BUILD_VERSION}
 
+# Copy root filesystem
+COPY rootfs / 
+
 RUN \
     # Install bashio
     apk add --no-cache \
@@ -26,9 +29,9 @@ RUN \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser 
-
-# Copy root filesystem
-COPY rootfs /
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    # Use data instead of config
+    && sed -i 's/config/data/g' /defaults/default \
+    && sed -i 's/config/data/g' /etc/cont-init.d/40-install
 
 VOLUME [ "/data" ]
