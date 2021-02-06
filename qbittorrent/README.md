@@ -28,7 +28,7 @@ comparison to installing any other Hass.io add-on.
 ```yaml
 GUID: user
 GPID: user
-ssl:true/false
+ssl: true/false
 certfile: fullchain.pem #ssl certificate
 keyfile: privkey.pem #sslkeyfile
 localdisks: "sda1" # list of device to mount
