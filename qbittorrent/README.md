@@ -27,6 +27,8 @@ GPID: user
 ssl: true/false
 certfile: fullchain.pem #ssl certificate
 keyfile: privkey.pem #sslkeyfile
+# Optional settings
+whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password
 localdisks: "sda1" # list of device to mount
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount
 cifsusername: "username" # smb username
