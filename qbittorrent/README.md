@@ -19,12 +19,8 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
-**Webui**
+Webui can be found at <http://your-ip:8081>. The default username/password : described in the startup log. Configurations can be done through the app, except for the following options.
 
-- Webui: http://your-ip:8081
-- Default username/password : described in the startup log.
-
-**Options**
 ```yaml
 GUID: user
 GPID: user
