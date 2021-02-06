@@ -51,6 +51,10 @@
     "keyfile": "str",
     "PUID": "int",
     "PGID": "int",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?"
     "TZ": "str?"
   }
 }
