@@ -36,9 +36,9 @@ RUN \
     && sed -i 's=/config/keys/cert.key=/ssl/privkey.pem=g' /etc/cont-init.d/30-keygen \
     # Use data instead of config
     && sed -i 's|/config|/data|g' /defaults/default \
-    && files=$(grep -rl "/config" /etc/cont-init.d \
+    && files=$(grep -rl "/config" /etc/cont-init.d) \
     && echo $files | xargs sed -i "s|/config|/data|g" \    
-    && files=$(grep -rl "/config" /etc/system.d \
+    && files=$(grep -rl "/config" /etc/system.d) \
     && echo $files | xargs sed -i "s|/config|/data|g"
     #&& sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config \
     #&& sed -i 's|/config|/data|g' /etc/cont-init.d/40-install
