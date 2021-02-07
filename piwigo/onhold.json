@@ -1,6 +1,5 @@
 {
-NOT WORKING
-    name": "Piwigo",
+    "name": "Piwigo",
     "version": "11.3.0",
     "slug": "piwigo",
     "description": "Piwigo is a photo gallery software for the web",
