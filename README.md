@@ -6,6 +6,8 @@ My home assistant addon repository
 - ![sql][sql-shield] : requires an external sql database server
 - ![stale][stale-shield] : will be updated but not tested each time
 
+In case of issue, create an issue in the repository and reference the full log from supervisor (all red or white text). 
+
 ## Installation
 
 Adding this add-ons repository to your Hass.io Home Assistant instance is
