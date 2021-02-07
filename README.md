@@ -80,4 +80,4 @@ https://github.com/alexbelgium/hassio-addons
 
 [stale-shield]: https://img.shields.io/badge/-Stale-lightgrey
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
-[sql-shield]: https://img.shields.io/badge/SQL-external-green
+[sql-shield]: https://img.shields.io/badge/SQL--green
