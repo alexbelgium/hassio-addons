@@ -22,7 +22,7 @@ comparison to installing any other Hass.io add-on.
 
 1. You must create a user and database for piwigo to use in a mysql/mariadb server.
 1. In the setup page for database, use the ip address rather than hostname.
-1. A basic nginx configuration file can be found in /config/nginx/site-confs, edit the file to enable ssl (port 443 by default), set servername etc.
+1. A basic nginx configuration file can be found in /data/nginx/site-confs, edit the file to enable ssl (port 443 by default), set servername etc.
 1. Self-signed keys are generated the first time you run the container and can be found in /data/keys, if needed, you can replace them with your own.
 1. The easiest way to edit the configuration file is to enable local files editor from the plugins page and use it to configure email settings etc.
 
