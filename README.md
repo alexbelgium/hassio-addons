@@ -78,6 +78,6 @@ https://github.com/alexbelgium/hassio-addons
 
 [//]: # (ADDONLIST_END)
 
-[stale-shield]: https://img.shields.io/badge/-Stale-lightgrey
+[stale-shield]: https://img.shields.io/badge/Stale--orange
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [sql-shield]: https://img.shields.io/badge/SQL--green
