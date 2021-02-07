@@ -23,7 +23,6 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr \
     /tmp/* \
-    /var/lib/apt/lists/* \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
