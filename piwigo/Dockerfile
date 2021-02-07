@@ -41,7 +41,6 @@ RUN \
     # && files=$(grep -rl "/config" /etc/services.d) \
     # && echo $files | xargs sed -i "s|/config|/data|g"
     # && sed -i "s|/config|/data/piwigo|g" /etc/cont-init.d/30-config \
-    && sed -i 's|/config|/data/piwigo|g' /etc/cont-init.d/40-install \
-    && sed -i 's|/config|/data/piwigo|g' /etc/services.d/piwigo/run
+    && sed -i 's|/config|/data/piwigo|g' /etc/cont-init.d/40-install
 
 VOLUME [ "/data" ]
