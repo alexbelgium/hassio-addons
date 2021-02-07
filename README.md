@@ -1,12 +1,12 @@
 # Home assistant add-on: alexbelgium
 
 ## About
-My home assistant addon repository
+My home assistant addon repository. 
+In case of issue, create an issue in the repository and reference the full log from supervisor (all red or white text). 
+
 - ![smb][smb-shield] : allows accessing smb shares, or a local external disk
 - ![sql][sql-shield] : requires an external sql database server
 - ![stale][stale-shield] : will be updated but not tested each time
-
-In case of issue, create an issue in the repository and reference the full log from supervisor (all red or white text). 
 
 ## Installation
 
