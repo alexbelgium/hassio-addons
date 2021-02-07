@@ -35,6 +35,7 @@ RUN \
     && sed -i 's=/config/keys/cert.crt=/ssl/fullchain.pem=g' /etc/cont-init.d/30-keygen \
     && sed -i 's=/config/keys/cert.key=/ssl/privkey.pem=g' /etc/cont-init.d/30-keygen \
     # Use data instead of config
+    && sed -i "s|/config|/data/piwigo|g" /defaults/default \
     && sed -i "s|/config|/data/piwigo|g" /etc/cont-init.d/01-envfile \
     && sed -i "s|/config|/data/piwigo|g" /etc/cont-init.d/20-config \
     && sed -i "s|/config|/data/piwigo|g" /etc/cont-init.d/30-keygen \
