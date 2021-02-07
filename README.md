@@ -49,7 +49,7 @@ https://github.com/alexbelgium/hassio-addons
 ### &#10003; [Joal](joal/)
 - An open source command line RatioMaster with WebUI.
 
-### &#10003; [Nextcloud OCR](nextcloud/)
+### &#10003; [Nextcloud OCR](nextcloud/) ![smb][smb-shield]
 - A Nextcloud container, brought to you by LinuxServer.io. 
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/nextcloud
 - Forked from : https://github.com/haberda/hassio_addons
