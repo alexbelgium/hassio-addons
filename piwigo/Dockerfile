@@ -5,6 +5,8 @@ FROM ${BUILD_FROM}${BUILD_VERSION}
 # Copy root filesystem
 COPY rootfs / 
 
+VOLUME [ "/data" ]
+
 RUN \
     # Install bashio
     apk add --no-cache \
@@ -32,5 +34,3 @@ RUN \
     && sed -i 's|/config|/data|g' /defaults/default \
     && files=$(grep -rl "/config" /etc/cont-init.d/*) && echo $files | xargs sed -i "s|/config|/data|g" \
     && files=$(grep -rl "/config" /etc/services.d/*) && echo $files | xargs sed -i "s|/config|/data|g"
-
-VOLUME [ "/data" ]
