@@ -2,6 +2,9 @@
 
 ## About
 My home assistant addon repository
+- ![smb][smb-shield] : allows accessing smb shares, or a local external disk
+- ![sql][sql-shield] : requires an external sql database server
+- ![stale][stale-shield] : will be updated but not tested each time
 
 ## Installation
 
@@ -56,7 +59,7 @@ https://github.com/alexbelgium/hassio-addons
 - Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
-### &#10003; [Piwigo](piwigo/) ![smb][smb-shield]
+### &#10003; [Piwigo](piwigo/) ![smb][smb-shield] ![sql][sql-shield]
 - Piwigo is a photo gallery software for the web
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/piwigo
 
@@ -77,3 +80,4 @@ https://github.com/alexbelgium/hassio-addons
 
 [stale-shield]: https://img.shields.io/badge/-Stale-lightgrey
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
+[sql-shield]: https://img.shields.io/badge/SQL-external-green
