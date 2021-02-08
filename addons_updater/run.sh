@@ -1,13 +1,14 @@
 #!/usr/bin/with-contenv bashio
 
 bashio::log.info "Checking status of referenced repositoriess..."
+VERBOSE=$(bashio::config 'verbose')
 
-#Defining github values
-bashio::log.info "... github authentification"
+#Defining github value      
+LOGINFO="... github authentification" &€ if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
+
 GITUSER=$(bashio::config 'gituser')
 GITPASS=$(bashio::config 'gitpass')
 GITMAIL=$(bashio::config 'gitmail')
-VERBOSE=$(bashio::config 'verbose')
 git config --system http.sslVerify false
 git config --system credential.helper 'cache --timeout 7200'
 git config --system user.name ${GITUSER}
