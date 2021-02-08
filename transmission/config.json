@@ -32,12 +32,10 @@
   "webui": "http://[HOST]:[PORT:9091]",
   "boot": "auto", 
   "environment": {
-  "PUID": 0,
-  "PGID": 0
   },
   "options": {
-    "PUID": 0,
-    "PGID": 0,
+    "PUID": 1000,
+    "PGID": 1000,
     "download_dir": "/share/downloads", 
     "incomplete_dir": "/share/incomplete",
     "localdisks": ["sda1"],
