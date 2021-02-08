@@ -7,6 +7,7 @@ bashio::log.info "... github authentification"
 GITUSER=$(bashio::config 'gituser')
 GITPASS=$(bashio::config 'gitpass')
 GITMAIL=$(bashio::config 'gitmail')
+VERBOSE=$(bashio::config 'verbose')
 git config --system http.sslVerify false
 git config --system credential.helper 'cache --timeout 7200'
 git config --system user.name ${GITUSER}
@@ -14,7 +15,9 @@ git config --system user.password ${GITPASS}
 git config --system user.email ${GITMAIL}
 
 if bashio::config.has_value 'gitapi'; then
-bashio::log.info "... setting github API"
+LOGINFO="... setting github API"
+if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+
 export GITHUB_API_TOKEN=$(bashio::config 'gitapi')
 fi
 
@@ -28,48 +31,57 @@ for addons in $(bashio::config "addon|keys"); do
     BASENAME=$(basename "https://github.com/$REPOSITORY")
   
       #Create or update local version
-      if [ ! -d /data/$BASENAME ]; then 
-        bashio::log.info "... $SLUG : cloning ${REPOSITORY}"
+      if [ ! -d /data/$BASENAME ]; then
+        LOGINFO="... $SLUG : cloning ${REPOSITORY}"
+        if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
         cd /data/
         git clone "https://github.com/${REPOSITORY}"
       else
-        bashio::log.info "... $SLUG : updating ${REPOSITORY}"       
+        LOGINFO="... $SLUG : updating ${REPOSITORY}"
+        if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
         cd "/data/$BASENAME"
         git pull --rebase 
       fi
 
       #Define the folder addon
-      bashio::log.info "... $SLUG : checking slug exists in repo"
+      LOGINFO="... $SLUG : checking slug exists in repo"
+      if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
       cd /data/${BASENAME}/${SLUG} || bashio::log.error "$SLUG addon not found in this repository. Exiting." exit
   
       #Find current version
-      bashio::log.info "... $SLUG : get current version"
+      LOGINFO="... $SLUG : get current version"
+      if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
       CURRENT=$(jq .version config.json) || bashio::log.error "$SLUG addon version in config.json not found. Exiting." exit
       
 #Prepare tag flag
 if [ ${FULLTAG} = true ]; then
-bashio::log.info "... $SLUG : fulltag is on"
+LOGINFO="... $SLUG : fulltag is on"
+if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
 FULLTAG="--format tag"
 else
-bashio::log.info "... $SLUG : fulltag is off"
+LOGINFO="... $SLUG : fulltag is off"
+if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
 FULLTAG=""
 fi 
 
       #If beta flag, select beta version
       if [ ${BETA} = true ]; then
-      bashio::log.info "... $SLUG : beta is on"
+      LOGINFO="... $SLUG : beta is on"
+      if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
       LASTVERSION='"'$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG)'"'
       else 
-      bashio::log.info "... $SLUG : beta is off"
+      LOGINFO="... $SLUG : beta is off"
+      if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
       LASTVERSION='"'$(lastversion "https://github.com/$UPSTREAM" $FULLTAG)'"'
       fi
 
     if [ ${CURRENT} != ${LASTVERSION} ]; then
-        bashio::log.info "... $SLUG : update from $CURRENT to $LASTVERSION"
-
+      LOGINFO="... $SLUG : update from $CURRENT to $LASTVERSION"
+      if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
         
         #Change all instances of version
-      bashio::log.info "... $SLUG : updating files"
+      LOGINFO="... $SLUG : updating files"
+      if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
       files=$(grep -rl ${CURRENT} /data/${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g"
       
       #Update changelog
@@ -83,21 +95,19 @@ if [ $files != null ]; then
       git commit -m "Update to $LASTVERSION" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
       
       #Git commit and push
-      bashio::log.info "... $SLUG : push to master"
+      LOGINFO="... $SLUG : push to github
+      if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
       git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" |  echo                                  
-      git push | echo "No changes"
-
-      #Update the current flag
-      bashio::log.info "... $SLUG : updating current flag"
-      sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/options.json                                                       
+      git push | echo "No changes"                                                   
                                                                      
       #Log                                                 
-      bashio::log.info "... $SLUG : updated and published"  
+      bashio::log.info "$SLUG updated to $LASTVERSION"  
 else
-bashio::log.info "... $SLUG : couldn't update, please check the current version"
+bashio::log.error "... $SLUG : couldn't update"
 fi
       
     else                                                                                
-        bashio::log.info "Addon $SLUG is already up-to-date."                           
+      LOGINFO="Addon $SLUG is already up-to-date."
+      if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi                            
     fi                                                               
 done                                                                 
