@@ -91,7 +91,7 @@ if [ $files != null ]; then
       #Log                                                 
       bashio::log.info "$SLUG updated to $LASTVERSION"  
 else
-bashio::log.error '... $SLUG : update failed'
+bashio::log.error "... $SLUG : update failed"
 fi
       
     else                                                                                
