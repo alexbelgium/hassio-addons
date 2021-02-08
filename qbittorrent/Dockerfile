@@ -2,9 +2,6 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}${BUILD_VERSION}
 
-# Copy root filesystem
-COPY rootfs /
-
 RUN \
     # Install bashio
     apt-get update \
@@ -37,9 +34,11 @@ RUN \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
     # use /data instead of /config for hass.io environment
     # &&  files=$(grep -rls '/config' /) && echo $files | xargs sed -i "s=/config=/data=g" \
-    # Allow custom scripts execution
-    && chmod -R 755 /scripts/
 
+# Copy root filesystem
+COPY rootfs /
 
+# Allow custom scripts execution
+RUN chmod -R 755 /scripts/
 
 VOLUME [ "/data" ]
