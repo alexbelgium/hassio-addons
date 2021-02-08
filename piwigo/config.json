@@ -30,8 +30,6 @@
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]",
   "boot": "auto", 
   "environment": {
-  "PUID": 1000,
-  "PGID": 1000
   },
   "options": {
     "PUID": 1000,
