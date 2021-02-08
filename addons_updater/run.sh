@@ -20,7 +20,8 @@ LOGINFO="... setting github API" && if [ $VERBOSE = true ]; then bashio::log.inf
 export GITHUB_API_TOKEN=$(bashio::config 'gitapi')
 fi
 
-bashio::log.info "... parse addons"
+LOGINFO="... parse addons" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
+
 for addons in $(bashio::config "addon|keys"); do
     SLUG=$(bashio::config "addon[${addons}].slug")
     REPOSITORY=$(bashio::config "addon[${addons}].repository")
@@ -84,7 +85,7 @@ if [ $files != null ]; then
       git commit -m "Update to $LASTVERSION" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
       
       #Git commit and push
-      LOGINFO="... $SLUG : push to github && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
+      LOGINFO="... $SLUG : push to github" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
       git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" |  echo                                  
       git push | echo "No changes"                                                   
                                                                      
