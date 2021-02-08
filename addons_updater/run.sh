@@ -96,6 +96,6 @@ bashio::log.error "... $SLUG : update failed"
 fi
       
     else                                                                                
-      LOGINFO="Addon $SLUG is already up-to-date." && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi                            
+      bashio::log.info "Addon $SLUG is already up-to-date"                        
     fi                                                               
 done                                                                 
