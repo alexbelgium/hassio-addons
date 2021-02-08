@@ -29,6 +29,6 @@
   "gitpass": "str",
   "gitmail": "str",
   "gitapi": "str?",
-  "verbose": "str"
+  "verbose": "bool"
   }
 }
