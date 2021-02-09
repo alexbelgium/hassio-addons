@@ -34,18 +34,10 @@ if bashio::config.has_value 'customUI'; then
 bashio::log.info "Alternate UI enabled. If webui don't work, disable this option"
 CUSTOMUI=$(bashio::config 'customUI')
 
-### ADD WGET
-apt-get update
-apt-get install wget
-rm -fr \
-    /tmp/* \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/*
-
 ### IF VUETORRENT
 if [ CUSTOMUI="vuetorrent" ];then
 CUSTOMUI="WDaan/VueTorrent"
-wget $(curl -s https://api.github.com/repos/$CUSTOMUI/releases/latest | grep 'browser_' | cut -d\" -f4)
+wget $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip")
 mkdir -p /data/$CUSTOMUI
 unzip release.zip -o -d /data/$CUSTOMUI/
 rm release.zip
@@ -56,9 +48,9 @@ sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent
 fi
 
 ### IF qbit-matUI
-if [ CUSTOMUI="qbit" ];then
+if [ CUSTOMUI="qbit-matUI" ];then
 CUSTOMUI="bill-ahmed/qbit-matUI"
-wget $(curl -s https://api.github.com/repos/$CUSTOMUI/releases/latest | grep 'browser_' | cut -d\" -f4)
+wget $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip")
 mkdir -p /data/$CUSTOMUI
 unzip release.zip -o -d /data/$CUSTOMUI/
 rm release.zip
