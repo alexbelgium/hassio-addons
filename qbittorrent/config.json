@@ -53,7 +53,7 @@
     "PUID": "int",
     "PGID": "int",
     "localdisks": "str?",
-    "customUI": "list(vuetorrent|qbit| )", 
+    "customUI": "list(vuetorrent|qbit|null)", 
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
