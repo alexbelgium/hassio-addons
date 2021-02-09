@@ -4,7 +4,7 @@ bashio::log.info "Checking status of referenced repositoriess..."
 VERBOSE=$(bashio::config 'verbose')
 
 #Defining github value      
-LOGINFO="... github authentification" &€ if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
+LOGINFO="... github authentification" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
 
 GITUSER=$(bashio::config 'gituser')
 GITPASS=$(bashio::config 'gitpass')
