@@ -28,6 +28,10 @@ Webui can be found at `<your-ip>:8000`.
 GUID: user
 GPID: user
 ocrlang: Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
+localdisks: "sda1" # list of device to mount (optional)
+networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
+cifsusername: "username" # smb username (optional)
+cifspassword: "password" # smb password (optional)
 ```
 
 [repository]: https://github.com/alexbelgium/hassio-addons
