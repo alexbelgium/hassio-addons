@@ -33,10 +33,40 @@ sed -i '/AlternativeUIEnabled/d' qBittorrent.conf
 if bashio::config.has_value 'customUI'; then
 bashio::log.info "Alternate UI enabled. If webui don't work, disable this option"
 CUSTOMUI=$(bashio::config 'customUI')
-CUSTOMUI="/data/$CUSTOMUI"
-sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" qBittorrent.conf
-sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUI" qBittorrent.conf
-fi
+
+### ADD WGET
+apt-get update
+apt-get install wget
+rm -fr \
+    /tmp/* \
+    /var/{cache,log}/* \
+    /var/lib/apt/lists/*
+
+### IF VUETORRENT
+if [ CUSTOMUI="vuetorrent" ];then
+CUSTOMUI="WDaan/VueTorrent"
+wget $(curl -s https://api.github.com/repos/$CUSTOMUI/releases/latest | grep 'browser_' | cut -d\" -f4)
+mkdir -p /data/$CUSTOMUI
+unzip release.zip -o -d /data/$CUSTOMUI/
+rm release.zip
+CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
+FOLDER="$(dirname "$CUSTOMUIDIR")"
+sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
+sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
+elif
+
+### IF qbit-matUI
+if [ CUSTOMUI="qbit" ];then
+CUSTOMUI="bill-ahmed/qbit-matUI"
+wget $(curl -s https://api.github.com/repos/$CUSTOMUI/releases/latest | grep 'browser_' | cut -d\" -f4)
+mkdir -p /data/$CUSTOMUI
+unzip release.zip -o -d /data/$CUSTOMUI/
+rm release.zip
+CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
+FOLDER="$(dirname "$CUSTOMUIDIR")"
+sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
+sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
+elif
 
 ################
 # WHITELIST    #
