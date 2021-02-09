@@ -25,16 +25,17 @@
   "webui": "http://[HOST]:[PORT:8000]",
   "boot": "auto", 
   "environment": {
-  "DOCKER_MODS": "linuxserver/mods:papermerge-multilangocr",
-  "OCRLANG": "eng,fra"	  
+  "DOCKER_MODS": "linuxserver/mods:papermerge-multilangocr"
   },
   "options": {
     "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "ocrlang": "eng,fra"
 	},
   "schema": {
     "PUID": "int",
     "PGID": "int",
+    "ocrlang": "str",
     "TZ": "str?"
   }
 }
