@@ -53,7 +53,7 @@ https://github.com/alexbelgium/hassio-addons
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/nextcloud
 - Forked from : https://github.com/haberda/hassio_addons
 
-### &#10003; [Papermerge](papermerge/) ![stale][stale-shield]
+### &#10003; [Papermerge](papermerge/) ![smb][smb-shield]
 - Open source document management system (DMS)
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
 
