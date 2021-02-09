@@ -25,8 +25,8 @@
   "webui": "http://[HOST]:[PORT:8000]",
   "boot": "auto", 
   "environment": {
-  "PUID": 0,
-  "PGID": 0
+  "DOCKER_MODS": "linuxserver/mods:papermerge-multilangocr",
+  "OCRLANG": "eng,fra"	  
   },
   "options": {
     "PUID": 0,
