@@ -27,6 +27,7 @@
   "environment": {
   "DOCKER_MODS": "linuxserver/mods:papermerge-multilangocr"
   },
+  "full_access": true,
   "options": {
     "PUID": 0,
     "PGID": 0,
