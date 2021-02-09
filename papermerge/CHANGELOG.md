@@ -1,1 +1,2 @@
 - Enables PUID/GUID options
+- Enables english/french OCR
