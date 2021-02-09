@@ -36,6 +36,10 @@
     "PUID": "int",
     "PGID": "int",
     "ocrlang": "str",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?",
     "TZ": "str?"
   }
 }
