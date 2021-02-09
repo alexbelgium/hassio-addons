@@ -68,6 +68,8 @@ sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorre
 sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
 fi
 
+fi
+
 ################
 # WHITELIST    #
 ################
