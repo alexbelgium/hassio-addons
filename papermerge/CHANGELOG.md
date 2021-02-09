@@ -1,2 +1,3 @@
 - Enables PUID/GUID options
 - Enables english/french OCR
+- Enables mounting of local hdd or smb share
