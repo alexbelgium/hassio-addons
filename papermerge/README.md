@@ -24,6 +24,12 @@ Default login is admin:admin via the webui, accessible at http://SERVERIP:PORT
 
 Webui can be found at `<your-ip>:8000`.
 
+```yaml
+GUID: user
+GPID: user
+ocrlang: Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
+```
+
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
