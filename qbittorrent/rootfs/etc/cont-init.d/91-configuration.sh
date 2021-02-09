@@ -53,7 +53,7 @@ CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
 FOLDER="$(dirname "$CUSTOMUIDIR")"
 sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
 sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
-elif
+fi
 
 ### IF qbit-matUI
 if [ CUSTOMUI="qbit" ];then
@@ -66,12 +66,13 @@ CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
 FOLDER="$(dirname "$CUSTOMUIDIR")"
 sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
 sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
-elif
+fi
 
 ################
 # WHITELIST    #
 ################
 
+cd /config/qBittorrent/
 if bashio::config.has_value 'whitelist'; then
 WHITELIST=$(bashio::config 'whitelist')
 #clean data
