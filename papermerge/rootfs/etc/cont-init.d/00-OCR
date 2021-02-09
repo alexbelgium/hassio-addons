@@ -1,4 +1,0 @@
-#!/usr/bin/with-contenv bashio
-
-export OCRLANG=$(bashio::config 'ocrlang')
-bashio::log.info "Adding OCR language : $OCRLANG"

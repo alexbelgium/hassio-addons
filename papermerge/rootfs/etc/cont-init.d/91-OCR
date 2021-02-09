@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+
+# Allow OCR setting
+sed -i 's/bash/bashio/g' /etc/cont-init.d/98-multilangocr
+sed -i "2i\OCRLANG=$(bashio::config "ocrlang")" /etc/cont-init.d/98-multilangocr
