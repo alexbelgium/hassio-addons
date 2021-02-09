@@ -8,6 +8,7 @@ RUN \
     \
     && apt-get install -y --no-install-recommends \
     jq \
+    wget \
     \
     && apt-get -y upgrade cifs-utils \
     && curl -J -L -o /tmp/bashio.tar.gz \
