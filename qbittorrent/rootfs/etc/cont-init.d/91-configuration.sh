@@ -38,10 +38,10 @@ CUSTOMUI=$(bashio::config 'customUI')
 ### IF VUETORRENT
 if [ CUSTOMUI="vuetorrent" ];then
 CUSTOMUI="WDaan/VueTorrent"
-wget -O release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip")
+curl -J -L -o /release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip")
 mkdir -p /data/$CUSTOMUI
-unzip release.zip -o -d /data/$CUSTOMUI/
-rm *.zip
+unzip -o /release.zip -d /data/$CUSTOMUI/
+rm /*.zip
 CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
 FOLDER="$(dirname "$CUSTOMUIDIR")"
 sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
@@ -51,10 +51,10 @@ fi
 ### IF qbit-matUI
 if [ CUSTOMUI="qbit-matUI" ];then
 CUSTOMUI="bill-ahmed/qbit-matUI"
-wget -O release.zip $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip")
+curl -J -L -o /release.zip $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip")
 mkdir -p /data/$CUSTOMUI
-unzip release.zip -o -d /data/$CUSTOMUI/
-rm *.zip
+unzip -o /release.zip -d /data/$CUSTOMUI/
+rm /*.zip
 CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
 FOLDER="$(dirname "$CUSTOMUIDIR")"
 sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
