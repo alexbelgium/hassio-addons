@@ -38,7 +38,7 @@ CUSTOMUI=$(bashio::config 'customUI')
 ### IF VUETORRENT
 if [ CUSTOMUI="vuetorrent" ];then
 CUSTOMUI="WDaan/VueTorrent"
-curl -s -J -L -o /release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip") > /dev/null 
+curl -s -S -J -L -o /release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip") > /dev/null 
 mkdir -p /data/$CUSTOMUI
 unzip -o /release.zip -d /data/$CUSTOMUI/
 rm /*.zip
