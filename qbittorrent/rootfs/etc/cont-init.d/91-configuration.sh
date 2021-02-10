@@ -74,8 +74,7 @@ if bashio::config.has_value 'customUI'; then
   mkdir -p /data/webui/$CUSTOMUI
   unzip -u -q /data/webui/release.zip -d /data/webui/$CUSTOMUI
   rm /data/webui/*.zip
-  CUSTOMUIDIR=$(find /data/webui/$CUSTOMUI -iname "public" -type d)
-  CUSTOMUIDIR="$(dirname "$CUSTOMUIDIR")"
+  CUSTOMUIDIR="$(dirname "$(find /data/webui/$CUSTOMUI -iname "public" -type d)")"
   sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
   sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
 fi
