@@ -1,8 +1,11 @@
 #!/usr/bin/with-contenv bashio
-bashio::log.info 'Mounting external hdd...'
 
+######################
+# MOUNT LOCAL SHARES #
+######################
 # Mount local Share if configured and if Protection Mode is active
 if bashio::config.has_value 'localdisks'; then
+    bashio::log.info 'Mounting external hdd...'
     MOREDISKS=$(bashio::config 'localdisks')
     bashio::log.info "Local Disks mounting.. ${MOREDISKS}" && \
     for disk in $MOREDISKS 
@@ -20,8 +23,12 @@ if bashio::config.has_value 'localdisks'; then
     bashio::log.warning "Protection mode is ON. Unable to mount local drives!"
 fi
 
+####################
+# MOUNT SMB SHARES #
+####################
 # Mount CIFS Share if configured and if Protection Mode is active
 if bashio::config.has_value 'networkdisks'; then
+    bashio::log.info 'Mounting smb share...'
     MOREDISKS=$(bashio::config 'networkdisks')
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
