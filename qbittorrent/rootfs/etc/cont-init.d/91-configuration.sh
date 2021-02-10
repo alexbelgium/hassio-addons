@@ -45,8 +45,9 @@ fi
 # Alternate UI #
 ################
 
-#clean data
+# Clean data
 sed -i '/AlternativeUIEnabled/d' qBittorrent.conf
+sed -i '/RootFolder/d' qBittorrent.conf
 rm -f -r /data/webui
 mkdir -p /data/webui
 
