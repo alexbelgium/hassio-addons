@@ -1,5 +1,9 @@
 #!/usr/bin/with-contenv bashio
 
+##########
+# INIT   #
+##########
+
 # Define preferences line 
 cd /config/qBittorrent/
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
@@ -37,15 +41,15 @@ CUSTOMUI=$(bashio::config 'customUI')
 
 ### IF VUETORRENT
 if [ CUSTOMUI="vuetorrent" ];then
-CUSTOMUI="WDaan/VueTorrent"
-curl -s -S -J -L -o /release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip") > /dev/null 
-mkdir -p /data/$CUSTOMUI
-unzip -o /release.zip -d /data/$CUSTOMUI/
-rm /*.zip
-CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
-FOLDER="$(dirname "$CUSTOMUIDIR")"
-sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
-sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
+  CUSTOMUI="WDaan/VueTorrent"
+  curl -s -S -J -L -o /release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip") > /dev/null 
+  mkdir -p /data/$CUSTOMUI
+  unzip -o /release.zip -d /data/$CUSTOMUI/
+  rm /*.zip
+  CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
+  FOLDER="$(dirname "$CUSTOMUIDIR")"
+  sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
+  sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
 fi
 
 ### IF qbit-matUI
@@ -76,6 +80,10 @@ sed -i "$LINE i\WebUI\\\AuthSubnetWhitelistEnabled=true" qBittorrent.conf
 sed -i "$LINE i\WebUI\\\AuthSubnetWhitelist=$WHITELIST" qBittorrent.conf
 bashio::log.info "Whitelisted subsets will not require a password : $WHITELIST"
 fi
+
+##########
+# CLOSE  #
+##########
 
 bashio::log.info "Default username/password : admin/adminadmin"
 bashio::log.info "Configuration can be found in /config/qBittorrent"
