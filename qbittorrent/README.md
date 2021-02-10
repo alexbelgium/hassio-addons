@@ -34,6 +34,10 @@ networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
 ```
+
+## Support
+Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-qbittorrent/279247)
+
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
