@@ -12,6 +12,7 @@ LINE=$[LINE + 1]
 # Clean data
 sed -i '/HTTPS/d' qBittorrent.conf
 
+
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
   bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
@@ -37,10 +38,10 @@ CUSTOMUI=$(bashio::config 'customUI')
 ### IF VUETORRENT
 if [ CUSTOMUI="vuetorrent" ];then
 CUSTOMUI="WDaan/VueTorrent"
-wget $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip")
+wget -O release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip")
 mkdir -p /data/$CUSTOMUI
 unzip release.zip -o -d /data/$CUSTOMUI/
-rm release.zip
+rm *.zip
 CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
 FOLDER="$(dirname "$CUSTOMUIDIR")"
 sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
@@ -50,10 +51,10 @@ fi
 ### IF qbit-matUI
 if [ CUSTOMUI="qbit-matUI" ];then
 CUSTOMUI="bill-ahmed/qbit-matUI"
-wget $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip")
+wget -O release.zip $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip")
 mkdir -p /data/$CUSTOMUI
 unzip release.zip -o -d /data/$CUSTOMUI/
-rm release.zip
+rm *.zip
 CUSTOMUIDIR=$(find /data/$CUSTOMUI -iname "public" -type d)
 FOLDER="$(dirname "$CUSTOMUIDIR")"
 sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
