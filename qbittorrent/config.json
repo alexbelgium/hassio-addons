@@ -40,7 +40,7 @@
     "ssl": false,
     "certfile": "fullchain.pem", 
     "keyfile": "privkey.pem",
-    "whitelist": "localhost,127.0.0.1,172.30.32.2,192.168.0.0/16",
+    "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16",
     "autostop": true,
     "PUID": 0,
     "PGID": 0
