@@ -18,11 +18,10 @@
     "8080/tcp": "Web UI port"
   },
   "privileged": [
-    "SYS_ADMIN"
+    "SYS_ADMIN", 
+    "SYS_RAWIO"
   ],
-  "full_access": true,
   "map": [
-    "ssl"
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "boot": "auto",
