@@ -12,5 +12,5 @@ fi
 timeout ${timeout_argument} "${timeout}" \
 bash -c \
 "until echo > /dev/tcp/${host}/${port} ; do sleep 0.5; done" \
->/dev/null 2>&1 && bash -c "scrutiny-collector-metrics run" || echo "port $port is not available" && "s6-svscanctl -t /var/run/s6/services"
+>/dev/null 2>&1 && bash -c "scrutiny-collector-metrics run" || echo "port $port is not available. Is Protected mode enabled ?" && "s6-svscanctl -t /var/run/s6/services"
 
