@@ -1,10 +1,10 @@
-# Home assistant add-on: qBittorrent
+# Home assistant add-on: Scrunity
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 ## About
 
-Transmission is a bittorrent client.
-This addon is based on the [docker image](https://github.com/linuxserver/qbittorrent) from linuxserver.io.
+Scrutiny WebUI for smartd S.M.A.R.T monitoring
+This addon is based on the [docker image](https://hub.docker.com/r/linuxserver/emby) from linuxserver.io.
 
 ## Installation
 
@@ -19,24 +19,12 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
-Webui can be found at <http://your-ip:8081>. The default username/password : described in the startup log. Configurations can be done through the app, except for the following options.
+Webui can be found at <http://your-ip:8085>. Configurations can be done through the app, except for the following options.
 
 ```yaml
 GUID: user
 GPID: user
-ssl: true/false
-certfile: fullchain.pem #ssl certificate
-keyfile: privkey.pem #sslkeyfile
-whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password (optional)
-customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start.
-localdisks: "sda1" # list of device to mount (optional)
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
-cifsusername: "username" # smb username (optional)
-cifspassword: "password" # smb password (optional)
 ```
-
-## Support
-Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-qbittorrent/279247)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
