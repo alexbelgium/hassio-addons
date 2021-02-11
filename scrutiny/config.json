@@ -21,6 +21,12 @@
     "SYS_ADMIN", 
     "SYS_RAWIO"
   ],
+  "devices": [
+  "/dev/sda", 
+  "/dev/sdb", 
+  "/dev/nvme1n1" 
+  ], 
+  "udev": "true", 
   "map": [
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
