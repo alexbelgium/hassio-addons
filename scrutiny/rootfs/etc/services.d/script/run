@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 port="8080"
 host="localhost"
 timeout="30"
