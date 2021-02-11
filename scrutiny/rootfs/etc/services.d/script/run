@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/usr/bin/with-contenv bash
+
 port="8080"
 host="localhost"
 timeout="30"
