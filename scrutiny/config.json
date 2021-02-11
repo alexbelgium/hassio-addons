@@ -22,9 +22,9 @@
     "SYS_RAWIO"
   ],
   "devices": [
-  "/dev/sda:rwm", 
-  "/dev/sdb:rwm", 
-  "/dev/nvme1n1:rwm" 
+  "/dev/sda", 
+  "/dev/sdb", 
+  "/dev/nvme1n1" 
   ], 
   "udev": "true",
   "full_access": "true", 
