@@ -33,7 +33,7 @@
   },
   "options": {
     "PUID": 0,
-    "PGID": 0,
+    "PGID": 0
   },
   "schema": {
     "PUID": "int",
