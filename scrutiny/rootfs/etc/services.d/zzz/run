@@ -23,8 +23,8 @@ bash -c \
 # CHECK PRIV #
 ##############
 
-ip link delete dummy0 type dummy >/dev/null && \ 
-  ip link add dummy0 type dummy >/dev/null \
+ip link delete dummy0 type dummy >/dev/null || true
+ip link add dummy0 type dummy >/dev/null \
   || bashio::log.error "Privileged mode is disabled, the addon will stop"; \
   bashio::log.error "sending TERM signal"; \
   s6-svscanctl -t /var/run/s6/services
