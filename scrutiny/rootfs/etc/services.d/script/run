@@ -11,4 +11,4 @@ fi
 timeout ${timeout_argument} "${timeout}" \
 bash -c \
 "until echo > /dev/tcp/${host}/${port} ; do sleep 0.5; done" \
->/dev/null 2>&1 && exec scrutiny-collector-metrics run || echo "port $port is not available"
+>/dev/null 2>&1 && "scrutiny-collector-metrics run" || echo "port $port is not available"
