@@ -1,36 +1,35 @@
 {
-    "name": "Piwigo",
-    "version": "11.3.0",
-    "slug": "piwigo",
-    "description": "Piwigo is a photo gallery software for the web",
-    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/piwigo",
-    "startup": "services",
-    "arch": [
+  "name": "Piwigo",
+  "version": "11.3.0",
+  "slug": "piwigo",
+  "description": "Piwigo is a photo gallery software for the web",
+  "url": "https://hub.docker.com/r/linuxserver/piwigo",
+  "startup": "services",
+  "arch": [
     "aarch64",
     "amd64",
     "armv7",
     "armhf"
   ],
-   "ports": {
-      "80/tcp": 81
-    },
-   "ports_description": {
-      "80/tcp": "Web UI port"
-    },
+  "ports": {
+    "80/tcp": 81
+  },
+  "ports_description": {
+    "80/tcp": "Web UI port"
+  },
   "privileged": [
     "SYS_ADMIN"
   ],
   "full_access": true,
-  "map":[
-      "config:rw",
-      "media:rw",
-      "share:rw",
-      "ssl"
+  "map": [
+    "config:rw",
+    "media:rw",
+    "share:rw",
+    "ssl"
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]",
-  "boot": "auto", 
-  "environment": {
-  },
+  "boot": "auto",
+  "environment": {},
   "options": {
     "PUID": 1000,
     "PGID": 1000
@@ -44,4 +43,4 @@
     "cifspassword": "str?",
     "TZ": "str?"
   }
-} 
+}

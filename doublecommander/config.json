@@ -3,7 +3,7 @@
   "version": "0.8.2-1-ls41",
   "slug": "doublecommander",
   "description": "Double Commander is a free cross platform open source file manager with two panels side by side.",
-  "url": "https://github.com/alexbelgium/hassio-addons/doublecommander",
+  "url": "https://hub.docker.com/r/linuxserver/doublecommander",
   "startup": "services",
   "arch": [
     "aarch64",
@@ -23,7 +23,10 @@
   ],
   "webui": "http://[HOST]:[PORT:3000]",
   "boot": "auto",
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"], 
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "host_network": true,
   "full_access": true,
   "environment": {
@@ -33,16 +36,20 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "localdisks": ["sda1"],
+    "localdisks": [
+      "sda1"
+    ],
     "networkdisks": "<//SERVER/SHARE>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
-	},
+  },
   "schema": {
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "localdisks": ["str"],
+    "localdisks": [
+      "str"
+    ],
     "networkdisks": "str",
     "cifsusername": "str",
     "cifspassword": "str"

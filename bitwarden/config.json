@@ -3,18 +3,24 @@
   "version": "1.19.0",
   "slug": "bitwarden",
   "description": "Open source password management solution",
-  "url": "https://github.com/alexbelgium/hassio-addons",
+  "url": "https://hub.docker.com/r/bitwardenrs/server",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7277]",
   "startup": "services",
   "init": false,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "ports": {
     "7277/tcp": 7277
   },
   "ports_description": {
     "7277/tcp": "Bitwarden Vault"
   },
-  "map": ["ssl"],
+  "map": [
+    "ssl"
+  ],
   "options": {
     "ssl": true,
     "certfile": "fullchain.pem",

@@ -3,7 +3,7 @@
   "version": "3.0.2.4552",
   "slug": "radarr_nas",
   "description": "A fork of Sonarr to work with movies like Couchpotato",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr#readme",
+  "url": "https://hub.docker.com/r/linuxserver/radarr",
   "startup": "services",
   "arch": [
     "aarch64",
@@ -23,34 +23,41 @@
     "media:rw",
     "ssl"
   ],
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "full_access": true,
   "webui": "http://[HOST]:[PORT:7878]",
   "boot": "auto",
   "environment": {
-  "PUID": 0,
-  "PGID": 0
+    "PUID": 0,
+    "PGID": 0
   },
   "options": {
     "PUID": 0,
-    "PGID": 0, 
-    "localdisks": ["sda1"], 
-    "networkdisks": "<//SERVER/SHARE>", 
-    "cifsusername": "<username>", 
+    "PGID": 0,
+    "localdisks": [
+      "sda1"
+    ],
+    "networkdisks": "<//SERVER/SHARE>",
+    "cifsusername": "<username>",
     "cifspassword": "<password>"
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "TZ": "str?", 
-    "localdisks": ["str"], 
-    "networkdisks": "str", 
-    "cifsusername": "str", 
+    "TZ": "str?",
+    "localdisks": [
+      "str"
+    ],
+    "networkdisks": "str",
+    "cifsusername": "str",
     "cifspassword": "str"
   },
   "snapshot_exclude": [
     "**/Backups/*",
     "**/logs/*",
     "**/MediaCover/*"
-   ] 
+  ]
 }

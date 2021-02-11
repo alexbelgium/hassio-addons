@@ -21,16 +21,18 @@
     "media:rw",
     "ssl"
   ],
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "full_access": true,
   "webui": "http://[HOST]:[PORT:8443]",
-  "boot": "auto", 
-  "environment": {
-  },
+  "boot": "auto",
+  "environment": {},
   "options": {
     "PUID": 0,
     "PGID": 0
-	},
+  },
   "schema": {
     "PUID": "int",
     "PGID": "int",
