@@ -4,8 +4,9 @@
 # CHECK PRIV #
 ##############
 
-ip link delete dummy0 type dummy >/dev/null
-ip link add dummy0 type dummy >/dev/null || {echo "Privileged mode is disabled, the addon will stop" && s6-svscanctl -t /var/run/s6/services}
+ip link delete dummy0 type dummy >/dev/null \
+| ip link add dummy0 type dummy >/dev/null \
+|| { echo "Privileged mode is disabled, the addon will stop" && s6-svscanctl -t /var/run/s6/services }
 
 ####################
 # Add local drives #
