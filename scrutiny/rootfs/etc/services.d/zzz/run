@@ -16,7 +16,9 @@ fi
 timeout ${timeout_argument} "${timeout}" \
 bash -c \
 "until echo > /dev/tcp/${host}/${port} ; do sleep 0.5; done" \
->/dev/null 2>&1 && bash -c "scrutiny-collector-metrics run" || echo "port $port is not available, local devices won't be available"
+>/dev/null 2>&1 && bash -c "scrutiny-collector-metrics run" \
+|| { echo "port $port is not available, local devices won't be available" && s6-svscanctl -t /var/run/s6/services } 
+
 
 ##############
 # CHECK PRIV #
@@ -25,3 +27,4 @@ bash -c \
 ip link delete dummy0 type dummy >/dev/null \
 | ip link add dummy0 type dummy >/dev/null \
 || { echo "Privileged mode is disabled, the addon will stop" && s6-svscanctl -t /var/run/s6/services }
+
