@@ -34,15 +34,15 @@ https://github.com/alexbelgium/hassio-addons
 
 ### &#10003; [Code-server](code-server/)
 - Code-server is VS Code running on a remote server, accessible through the browser.
-- Based on latest linuxserver image https://hub.docker.com/r/linuxserver/code-server
+- Based on https://hub.docker.com/r/linuxserver/code-server
 
 ### &#10003; [Doublecommander](doublecommander/) ![smb][smb-shield]
 - A free cross platform open source file manager with two panels side by side.
-- Based on latest linuxserver image
+- Based on https://hub.docker.com/r/linuxserver/doublecommander
 
 ### &#10003; [Emby](emby/) ![smb][smb-shield]
 - A Free Software Media System that puts you in control of managing and streaming your media.
-- Based on linuxserver image latest beta : https://hub.docker.com/r/linuxserver/emby
+- Based on https://hub.docker.com/r/linuxserver/emby
 - Forked from : https://github.com/petersendev/hassio-addons
 
 ### &#10003; [Joal](joal/)
@@ -55,22 +55,26 @@ https://github.com/alexbelgium/hassio-addons
 
 ### &#10003; [Papermerge](papermerge/) ![smb][smb-shield]
 - Open source document management system (DMS)
-- Based on linuxserver image : https://hub.docker.com/r/linuxserver/papermerge
+- Based on https://hub.docker.com/r/linuxserver/papermerge
 
 ### &#10003; [Piwigo](piwigo/) ![smb][smb-shield] ![sql][sql-shield]
 - Piwigo is a photo gallery software for the web
-- Based on linuxserver image : https://hub.docker.com/r/linuxserver/piwigo
+- Based on https://hub.docker.com/r/linuxserver/piwigo
 
 ### &#10003; [Qbittorrent](qbittorrent/) ![smb][smb-shield]
-- Based on linuxserver image : https://hub.docker.com/r/linuxserver/qbittorrent
+- Based on https://hub.docker.com/r/linuxserver/qbittorrent
 
 ### &#10003; [Radarr](radarr/) ![smb][smb-shield] ![stale][stale-shield]
 - A fork of Sonarr to work with movies like Couchpotato	
-- Forked from : https://hub.docker.com/r/linuxserver/radarr
+- Based on https://hub.docker.com/r/linuxserver/radarr
+
+### &#10003; [Scrutiny](scrutiny/)
+- Scrutiny WebUI for smartd S.M.A.R.T monitoring
+- Based on https://hub.docker.com/r/linuxserver/scrutiny
 
 ### &#10003; [Transmission](transmission/) ![smb][smb-shield] 
 - The torrent client for Hass.io.
-- Based on linuxserver image : https://hub.docker.com/r/linuxserver/transmission
+- Based on https://hub.docker.com/r/linuxserver/transmission
 
 [//]: # (ADDONLIST_END)
 
