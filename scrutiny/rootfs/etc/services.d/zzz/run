@@ -26,5 +26,5 @@ bash -c \
 ip link delete dummy0 type dummy >/dev/null; \
 ip link add dummy0 type dummy >/dev/null \
   || bashio::log.error "Privileged mode is disabled, the addon will stop"; \
-  echo "sending TERM signal"; \
+  bashio::log.error "sending TERM signal"; \
   s6-svscanctl -t /var/run/s6/services
