@@ -26,7 +26,8 @@
   "/dev/sdb:/dev/sdb:rwm", 
   "/dev/nvme1n1:/dev/nvme1n1:rwm" 
   ], 
-  "udev": "true", 
+  "udev": "true",
+  "full_access": "true", 
   "map": [
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
