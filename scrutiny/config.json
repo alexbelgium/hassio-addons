@@ -24,11 +24,13 @@
   "devices": [
   "/dev/sda", 
   "/dev/sdb", 
-  "/dev/nvme1n1" 
+  "/dev/nvme1n1", 
+  "/dev"
   ], 
   "udev": "true",
   "full_access": "true", 
   "map": [
+  "sys"
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "boot": "auto",
