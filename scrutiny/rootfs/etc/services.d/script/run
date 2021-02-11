@@ -1,0 +1,14 @@
+#!/bin/bash
+port="8080"
+host="localhost"
+timeout="30"
+timeout_argument=""
+
+if timeout -t 1337 true >/dev/null 2>&1; then
+    timeout_argument="-t"
+fi
+
+timeout ${timeout_argument} "${timeout}" \
+bash -c \
+"until echo > /dev/tcp/${host}/${port} ; do sleep 0.5; done" \
+>/dev/null 2>&1 && scrutiny-collector-metrics run || echo "port $port is not available"

@@ -33,13 +33,10 @@ RUN \
     && sed '11,13d' /defaults/qBittorrent.conf \ 
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
-    # use /data instead of /config for hass.io environment
-    # &&  files=$(grep -rls '/config' /) && echo $files | xargs sed -i "s=/config=/data=g" \
+# use /data instead of /config for hass.io environment
+# &&  files=$(grep -rls '/config' /) && echo $files | xargs sed -i "s=/config=/data=g" \
 
 # Copy root filesystem
 COPY rootfs /
-
-# Allow custom scripts execution
-RUN chmod -R 755 /scripts/
 
 VOLUME [ "/data" ]
