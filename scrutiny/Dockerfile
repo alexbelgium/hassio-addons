@@ -28,9 +28,7 @@ RUN \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
     # use /data instead of /config for hass.io environment
-    # &&  files=$(grep -rls '/config' /etc/cont-init.d/) && echo $files | xargs sed -i "s=/config=/data=g" \
-    # &&  files=$(grep -rls '/config' /etc/services.d/) && echo $files | xargs sed -i "s=/config=/data=g"
-    # && sed -i 's/bash/bashio/g' /etc/services.d/web/run \
-    # && sed -i -e '$a bashio::net.wait_for 8080 && bash -c "scrutiny-collector-metrics run"' /etc/services.d/web/run 
+    && files=$(grep -rl /config /etc/cont-init.d) && echo $files | xargs sed -i "s=/config=/data=g" \
+    && files=$(grep -rl /config /etc/services.d) && echo $files | xargs sed -i "s=/config=/data=g"
 
 VOLUME [ "/data" ]
