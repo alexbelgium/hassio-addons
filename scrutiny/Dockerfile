@@ -33,4 +33,4 @@ RUN \
     # && sed -i 's/bash/bashio/g' /etc/services.d/web/run \
     # && sed -i -e '$a bashio::net.wait_for 8080 && bash -c "scrutiny-collector-metrics run"' /etc/services.d/web/run 
 
-VOLUME [ "/data:/config" ]
+VOLUME [ "/data" ]
