@@ -30,6 +30,7 @@
   "udev": "true",
   "full_access": "true", 
   "map": [
+  "config"
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "boot": "auto",
