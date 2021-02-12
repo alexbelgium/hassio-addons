@@ -28,7 +28,7 @@ RUN \
     && sed -i -e '$a bashio::net.wait_for 8080 && bash -c "scrutiny-collector-metrics run"' /etc/services.d/web/run
     
 
-Copy root filesystem
+# Copy root filesystem
 COPY rootfs /
 
 VOLUME [ "/data" ]
