@@ -31,4 +31,4 @@ RUN \
 # Copy root filesystem
 COPY rootfs /
 
-VOLUME [ "/data" ]
+VOLUME [ "/data:/config" ]
