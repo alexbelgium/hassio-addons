@@ -2,6 +2,9 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}${BUILD_VERSION}
 
+# Copy root filesystem
+COPY rootfs /
+
 RUN \
     # Install bashio
     apk add --no-cache \
@@ -24,11 +27,10 @@ RUN \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/bash/bashio/g' /etc/services.d/web/run \
-    && sed -i -e '$a bashio::net.wait_for 8080 && bash -c "scrutiny-collector-metrics run"' /etc/services.d/web/run
-    
-
-# Copy root filesystem
-COPY rootfs /
+    # use /data instead of /config for hass.io environment
+    &&  files=$(grep -rls '/config' '/etc/cont-init.d/') && echo $files | xargs sed -i "s=/config=/data=g" \
+    &&  files=$(grep -rls '/config' '/etc/services.d/') && echo $files | xargs sed -i "s=/config=/data=g"
+    # && sed -i 's/bash/bashio/g' /etc/services.d/web/run \
+    # && sed -i -e '$a bashio::net.wait_for 8080 && bash -c "scrutiny-collector-metrics run"' /etc/services.d/web/run 
 
 VOLUME [ "/data:/config" ]
