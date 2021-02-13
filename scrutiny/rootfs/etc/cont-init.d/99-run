@@ -11,7 +11,7 @@ chown -R abc:abc /data
 # Add local drives #
 ####################
 
-scrutiny-collector-metrics run || bashio::log.error "Local devices not seen" 
+/usr/bin/scrutiny-collector-metrics run || bashio::log.error "Local devices not seen" 
 
 #port="8080"
 #host="localhost"
