@@ -12,6 +12,7 @@ chown -R abc:abc /data
 ####################
 
 sed -i 's|# - /dev/sda| - /dev/sda|g' /config/scrutiny.yaml
+sed -i 's|# - /dev/sda| - /dev/sda|g' /config/scrutiny/scrutiny.yaml
 
 #port="8080"
 #host="localhost"
