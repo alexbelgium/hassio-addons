@@ -30,7 +30,7 @@ RUN \
 
 # use /data instead of /config for hass.io environment
 RUN grep -rl /etc/cont-init.d/* -e '/config' | xargs sed -i "" 's=/config=/data=g' \
-    && grep -rl /etc/system.d/* -e '/config' | xargs sed -i "" 's=/config=/data=g' \
+    && grep -rl /etc/services.d/* -e '/config' | xargs sed -i "" 's=/config=/data=g' \
     && grep -rl /defaults/* -e '/config' | xargs sed -i "" 's=/config=/data=g' || true
 
 VOLUME [ "/data:/config" ]
