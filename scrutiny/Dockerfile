@@ -30,6 +30,6 @@ RUN \
 # use /data instead of /config
     # && grep -rl /etc/cont-init.d/* -e '/config' | xargs sed -i 's=/config=/data=g' \
     # && grep -rl /etc/services.d/* -e '/config' | xargs sed -i 's=/config=/data=g' \
-    sed -i 's|/config|/data|g' /defaults/scrutiny.yaml
+    && sed -i 's|/config|/data|g' /defaults/scrutiny.yaml
 
 VOLUME [ "/data" ]
