@@ -26,9 +26,13 @@ RUN \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # use /data instead of /config for hass.io environment
+    && grep -rl '/config' /etc/cont-init.d/* | xargs sed -i "" 's=/config=/data=g' \
+    && grep -rl '/config' /etc/system.d/* | xargs sed -i "" 's=/config=/data=g' \
+    && grep -rl '/config' /defaults/* | xargs sed -i "" 's=/config=/data=g'
+ 
    # && files=$(grep -rl "/config" /etc/cont-init.d/) && echo $files | xargs sed -i "s=/config=/data=g" \
    # && files=$(grep -rl "/config" /etc/services.d/) && echo $files | xargs sed -i "s=/config=/data=g"
 
-VOLUME [ "/data" ]
+VOLUME [ "/data:/config" ]
