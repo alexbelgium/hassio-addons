@@ -6,9 +6,10 @@ FROM ${BUILD_FROM}${BUILD_VERSION}
 COPY rootfs /
 
 RUN \
-    chmod 777 /run.sh
+    chmod 777 /run.sh \
+    \
     # Install bashio
-    apk add --no-cache \
+    && apk add --no-cache \
     jq \
     curl \
     cifs-utils \
