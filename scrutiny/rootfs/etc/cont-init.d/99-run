@@ -1,5 +1,12 @@
 #!/usr/bin/with-contenv bashio
 
+##############
+# Data usage #
+##############
+
+bashio::log.e=info "Setting permissions" 
+chown -R abc:abc /data
+
 ####################
 # Add local drives #
 ####################
