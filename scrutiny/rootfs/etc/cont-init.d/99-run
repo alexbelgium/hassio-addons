@@ -4,7 +4,7 @@
 # Data usage #
 ##############
 
-bashio::log.e=info "Setting permissions" 
+bashio::log.info "Setting permissions" 
 chown -R abc:abc /data
 
 ####################
