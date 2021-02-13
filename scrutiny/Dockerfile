@@ -6,6 +6,7 @@ FROM ${BUILD_FROM}${BUILD_VERSION}
 COPY rootfs /
 
 RUN \
+    chmod 777 /run.sh
     # Install bashio
     apk add --no-cache \
     jq \
