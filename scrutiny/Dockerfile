@@ -32,4 +32,4 @@ RUN \
     # && grep -rl /etc/services.d/* -e '/config' | xargs sed -i 's=/config=/data=g' \
     && grep -rl /defaults/* -e '/config' | xargs sed -i 's=/config=/data=g'
 
-VOLUME [ "/data:/config" ]
+VOLUME [ "/data" ]
