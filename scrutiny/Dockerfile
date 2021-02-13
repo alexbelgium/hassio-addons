@@ -27,9 +27,10 @@ RUN \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-# use /data instead of /config
+# use /data instead of /config for database
     # && grep -rl /etc/cont-init.d/* -e '/config' | xargs sed -i 's=/config=/data=g' \
     # && grep -rl /etc/services.d/* -e '/config' | xargs sed -i 's=/config=/data=g' \
-    && sed -i 's|/config|/data|g' /defaults/scrutiny.yaml
+    && sed -i 's|/config|/data|g' /defaults/scrutiny.yaml \
+    && sed '$ a @reboot /run.sh' /etc/crontabs/root
 
 VOLUME [ "/data" ]
