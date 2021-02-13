@@ -29,7 +29,7 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
 # use /data instead of /config for hass.io environment
     && grep -rl /etc/cont-init.d/* -e '/config' | xargs sed -i "" 's=/config=/data=g' \
-    && grep -rl /etc/services.d/* -e '/config' | xargs sed -i "" 's=/config=/data=g' \
+    # && grep -rl /etc/services.d/* -e '/config' | xargs sed -i "" 's=/config=/data=g' \
     && grep -rl /defaults/* -e '/config' | xargs sed -i "" 's=/config=/data=g'
 
 VOLUME [ "/data:/config" ]
