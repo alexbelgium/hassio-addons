@@ -33,6 +33,6 @@ RUN \
     # && grep -rl /etc/cont-init.d/* -e '/config' | xargs sed -i 's=/config=/data=g' \
     # && grep -rl /etc/services.d/* -e '/config' | xargs sed -i 's=/config=/data=g' \
     && sed -i 's|/config|/data|g' /defaults/scrutiny.yaml \
-    && sed '$ a @reboot /run.sh' /etc/crontabs/root
+    && sed -i -e '$a\@reboot /run.sh' /etc/crontabs/root
 
 VOLUME [ "/data" ]
