@@ -12,7 +12,7 @@ profile db21ed7f_scrutiny flags=(attach_disconnected,mediate_deleted) {
   capability setgid,
   capability setuid,
   capability dac_override,
-  capability sys_amin, 
+  capability sys_admin, 
   capability dac_read_search, 
 
   # S6-Overlay
