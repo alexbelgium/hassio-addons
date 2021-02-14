@@ -47,4 +47,4 @@ Create an issue on github, or ask on the [home assistant thread](https://communi
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
-[privilegedopt-shield]: https://img.shields.io/badge/privileged-optional-green.svg
+[privilegedopt-shield]: https://img.shields.io/badge/privileged-optional-yellow.svg
