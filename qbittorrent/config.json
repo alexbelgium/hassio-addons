@@ -21,9 +21,8 @@
     "6881/tcp": "Peer port",
     "6881/udp": "Peer port"
   },
-  "privileged": [
-    "SYS_ADMIN"
-  ],
+  "privileged": ["SYS_ADMIN"],
+  "devices": ["/dev/sda","/dev/sdb", "/dev/sda1","/dev/sdb1","/dev/mmcblk0p1"],
   "full_access": true,
   "map": [
     "media:rw",
