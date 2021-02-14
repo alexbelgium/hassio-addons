@@ -20,10 +20,12 @@ if bashio::config.has_value 'download-folder'; then
   mkdir -p $DOWNLOADS || true
   chown -R abc:abc $DOWNLOADS || bashio::log.info "Error, please check default save folder configuration in addon"
   bashio::log.info "Downloads folder created"
-fi
 
-mkdir -p /share/qBittorrent || true
-chown -R abc:abc /share/qBittorrent
+else
+  mkdir -p /share/qBittorrent || true
+  chown -R abc:abc /share/qBittorrent
+
+fi
 
 ################
 # SSL CONFIG   #
