@@ -41,7 +41,6 @@
     "keyfile": "privkey.pem",
     "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16",
     "download-folder": "/share/qBittorrent", 
-    "autostop": true,
     "PUID": 0,
     "PGID": 0
   },
@@ -50,7 +49,6 @@
     "certfile": "str",
     "keyfile": "str",
     "whitelist": "str?",
-    "autostop": "bool?",
     "PUID": "int",
     "PGID": "int",
     "download-folder": "str?", 
