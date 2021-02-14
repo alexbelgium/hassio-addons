@@ -7,6 +7,7 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![smb][smb-shield] : allows accessing smb shares, or a local external disk
 - ![sql][sql-shield] : requires an external sql database server
 - ![stale][stale-shield] : will be updated but not tested each time
+- ![privileged][privileged-shield] : requires protection mode off to run
 
 ## Installation
 
@@ -68,7 +69,7 @@ https://github.com/alexbelgium/hassio-addons
 - A fork of Sonarr to work with movies like Couchpotato	
 - Based on https://hub.docker.com/r/linuxserver/radarr
 
-### &#10003; [Scrutiny](scrutiny/)
+### &#10003; [Scrutiny](scrutiny/) ![privileged][privileged-shield]
 - Scrutiny WebUI for smartd S.M.A.R.T monitoring
 - Based on https://hub.docker.com/r/linuxserver/scrutiny
 
@@ -81,3 +82,5 @@ https://github.com/alexbelgium/hassio-addons
 [stale-shield]: https://img.shields.io/badge/Stale--orange
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [sql-shield]: https://img.shields.io/badge/SQL--green
+[privileged-shield]: https://img.shields.io/badge/privileged-required-orange.svg
+ 
