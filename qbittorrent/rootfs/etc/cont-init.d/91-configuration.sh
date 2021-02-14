@@ -19,7 +19,7 @@ if bashio::config.has_value 'SavePath'; then
   sed -i "$LINE i\Downloads\\\SavePath=$DOWNLOADS" qBittorrent.conf
   mkdir -p $DOWNLOADS || true
   chown -R abc:abc $DOWNLOADS || bashio::log.info "Error, please check default save folder configuration in addon"
-  bashio::log.info "Downloads folder created"
+  bashio::log.info "Downloads can be found in $DOWNLOADS"
 
 else
   mkdir -p /share/qBittorrent || true
