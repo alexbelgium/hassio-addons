@@ -13,8 +13,8 @@ LINE=$((LINE + 1))
 # Default folder #
 ##################
 
-if bashio::config.has_value 'download-folder'; then
-  DOWNLOADS=$(bashio::config 'download-folder')
+if bashio::config.has_value 'SavePath'; then
+  DOWNLOADS=$(bashio::config 'SavePath')
   sed -i '/SavePath/d' qBittorrent.conf
   sed -i "$LINE i\Downloads\\\SavePath=$DOWNLOADS" qBittorrent.conf
   mkdir -p $DOWNLOADS || true
