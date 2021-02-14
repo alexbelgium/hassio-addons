@@ -17,18 +17,12 @@
   "ports_description": {
     "8080/tcp": "Web UI port"
   },
-  "privileged": [
-    "SYS_ADMIN", 
-    "SYS_RAWIO"
-  ],
-  "devices": [
-  "/dev/sda", 
-  "/dev/sdb", 
-  "/dev/nvme1n1", 
-  "/dev"
-  ], 
+  "devices": ["/dev/sda","/dev/sdb", "/dev/sda1","/dev/sdb1","/dev/mmcblk0p1"],
+  "privileged": ["SYS_ADMIN", "SYS_RAWIO"],
+  "full_access": true, 
   "udev": "true",
-  "full_access": "true", 
+  "full_access": "true",
+  "apparmor": "true",
   "map": [
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
@@ -39,8 +33,8 @@
     "SCRUTINY_COLLECTOR": "true"
   },
   "options": {
-    "PUID": 1000,
-    "PGID": 1000
+    "PUID": 0,
+    "PGID": 0
   },
   "schema": {
     "PUID": "int",
