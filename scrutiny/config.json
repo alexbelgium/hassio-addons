@@ -22,7 +22,7 @@
   "full_access": true, 
   "udev": "true",
   "full_access": "true",
-  "apparmor": "true",
+  "apparmor": "false",
   "map": [
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
