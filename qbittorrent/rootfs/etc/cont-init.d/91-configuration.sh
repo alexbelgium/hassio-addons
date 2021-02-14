@@ -13,7 +13,7 @@ LINE=$((LINE + 1))
 # Default folder #
 ##################
 
-mkdir -p /share/qbittorrent || true
+mkdir -p /share/qBittorrent || true
 chown -R abc:abc /share/qBittorrent
 
 ################
