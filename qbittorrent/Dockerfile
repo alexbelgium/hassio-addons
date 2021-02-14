@@ -33,7 +33,7 @@ RUN \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Set download folder to /share
-    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qbittorrent.conf \
+    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \ 
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
