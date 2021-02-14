@@ -1,0 +1,46 @@
+#include <tunables/global>
+
+profile scrutiny_addon flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  
+  capability,
+  file,
+  mount,
+  umount,
+  remount,
+
+  capability setgid,
+  capability setuid,
+  capability dac_override,
+
+  # S6-Overlay
+  /bin/** ix,
+  /usr/bin/** ix,
+  /usr/lib/bashio/** ix,
+  /etc/s6/** rix,
+  /run/s6/** rix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /init rix,
+  /var/run/** mrwkl,
+  /var/run/ mrwkl,
+  /proc/self/attr/** mrwkl,
+  # Files required
+  /dev/sda1 mrwkl,
+  /dev/sdb1 mrwkl,
+  /dev/mmcblk0p1 mrwkl,
+  /dev/* mrwkl,
+  /tmp/** mrkwl,
+  
+  # Data access
+  /data/** rw,
+
+
+  # suppress ptrace denials when using 'docker ps' or using 'ps' inside a container
+  ptrace (trace,read) peer=docker-default,
+ 
+  # docker daemon confinement requires explict allow rule for signal
+  signal (receive) set=(kill,term) peer=/usr/bin/docker,
+
+}
