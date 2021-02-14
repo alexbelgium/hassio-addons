@@ -9,6 +9,13 @@ cd /config/qBittorrent/
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$((LINE + 1))
 
+##################
+# Default folder #
+##################
+
+mkdir -p /share/qbittorrent || true
+chown -R abc:abc /share/qBittorrent
+
 ################
 # SSL CONFIG   #
 ################
