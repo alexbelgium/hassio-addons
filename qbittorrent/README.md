@@ -31,6 +31,7 @@ certfile: fullchain.pem #ssl certificate
 keyfile: privkey.pem #sslkeyfile
 whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password (optional)
 customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start.
+SavePath: "/share/qbittorrent" # Define the download directory
 localdisks: "sda1" # list of device to mount (optional)
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
