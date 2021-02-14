@@ -13,6 +13,15 @@ LINE=$((LINE + 1))
 # Default folder #
 ##################
 
+if bashio::config.has_value 'download-folder'; then
+  DOWNLOADS=$(bashio::config 'download-folder')
+  sed -i '/SavePath/d' qBittorrent.conf
+  sed -i "$LINE i\Downloads\\\SavePath=$DOWNLOADS" qBittorrent.conf
+  mkdir -p $DOWNLOADS || true
+  chown -R abc:abc $DOWNLOADS || bashio::log.info "Error, please check default save folder configuration in addon"
+  bashio::log.info "Downloads folder created"
+fi
+
 mkdir -p /share/qBittorrent || true
 chown -R abc:abc /share/qBittorrent
 
