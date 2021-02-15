@@ -59,9 +59,9 @@ if bashio::config.has_value 'whitelist'; then
   bashio::log.info "Whitelisted subsets will not require a password : $WHITELIST"
 fi
 
-################
+###############
 # USERNAME    #
-################
+###############
 
 cd /config/qBittorrent/
 if bashio::config.has_value 'Username'; then
