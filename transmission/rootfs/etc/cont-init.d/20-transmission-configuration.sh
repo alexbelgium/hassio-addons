@@ -6,19 +6,35 @@ declare incomplete_bool
 declare download_dir
 declare incomplete_dir
 
-# Create basic settings.json if not existing
-if ! bashio::fs.directory_exists '/share/transmission'; then
-  mkdir '/share/transmission'
+##########################
+# IMPORT PREVIOUS FOLDER #
+##########################
+if [ -d '/share/transmission' ] && [ ! -d '/config/transmission' ]; then
+  mkdir -p /config/transmission
+  chown -R abc:abc /config/transmission
+  mv /config/transmission /share/transmission
+  echo "Folder migrated to /config/transmission"
 fi
 
-if ! bashio::fs.file_exists '/share/transmission/settings.json'; then
-  echo "{}" > /share/transmission/settings.json
+###############
+# PERMISSIONS #
+###############
+#Default folders
+
+mkdir -p /config/transmission
+chown -R abc:abc /config/transmission
+
+if ! bashio::fs.file_exists '/config/transmission/settings.json'; then
+  cp /defaults/settings.json /config/transmission/settings.json
 fi
 
-CONFIG=$(</share/transmission/settings.json)
+#################
+# CONFIGURATION #
+#################
+# Variables 
 download_dir=$(bashio::config 'download_dir')
 incomplete_dir=$(bashio::config 'incomplete_dir')
-
+CONFIG=$(</config/transmission/settings.json)
 
 # if incomplete dir > 2, to allow both null and '', set it as existing
 if [ ${#incomplete_dir} -ge 2 ]
@@ -35,4 +51,4 @@ CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-whitelist-enabled\"=false")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-host-whitelist-enabled\"=false")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"bind-address-ipv4\"=\"0.0.0.0\"")
 
-echo "${CONFIG}" > /share/transmission/settings.json
+echo "${CONFIG}" > /config/transmission/settings.json
