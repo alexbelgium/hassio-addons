@@ -40,6 +40,7 @@
     "keyfile": "privkey.pem",
     "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16",
     "SavePath": "/share/qBittorrent", 
+    "Username": "admin",
     "PUID": 0,
     "PGID": 0
   },
@@ -50,7 +51,8 @@
     "whitelist": "str?",
     "PUID": "int",
     "PGID": "int",
-    "SavePath": "str?", 
+    "SavePath": "str?",
+    "Username": "str?",
     "customUI": "list(|vuetorrent|qbit-matUI|qb-web)?",
     "networkdisks": "str?",
     "cifsusername": "str?",
