@@ -21,7 +21,7 @@ comparison to installing any other Hass.io add-on.
 ## Configuration
 Webui can be found at <http://your-ip:8081>. The default username/password : described in the startup log. Configurations can be done through the app, except for the following options.
 
-Network disk is mounted to /share/externalcifs
+Network disk is mounted to /share/storagecifs
 
 ```yaml
 GUID: user
