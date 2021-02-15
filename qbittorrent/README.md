@@ -1,6 +1,5 @@
 # Home assistant add-on: qBittorrent
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
-![privileged is optional][privilegedopt-shield]
 
 ## About
 
@@ -33,7 +32,6 @@ keyfile: privkey.pem #sslkeyfile
 whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password (optional)
 customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start.
 SavePath: "/share/qbittorrent" # Define the download directory
-localdisks: "sda1" # list of device to mount (optional)
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
@@ -47,4 +45,3 @@ Create an issue on github, or ask on the [home assistant thread](https://communi
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
-[privilegedopt-shield]: https://img.shields.io/badge/privileged-optional-yellow.svg
