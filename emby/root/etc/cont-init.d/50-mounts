@@ -32,7 +32,7 @@ if bashio::config.has_value 'networkdisks'; then
         echo "Creating /share/storagecifs"
         mkdir -p /share/storagecifs
         chown -R abc:abc /share/storagecifs
-        mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /storage/storagecifs && \
+        mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /share/storagecifs && \
         bashio::log.info "Success!"   
     done || \
     bashio::log.warning "Protection mode is ON. Unable to mount external drives!"
