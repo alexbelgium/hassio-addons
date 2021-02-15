@@ -60,6 +60,20 @@ if bashio::config.has_value 'whitelist'; then
 fi
 
 ################
+# USERNAME    #
+################
+
+cd /config/qBittorrent/
+if bashio::config.has_value 'Username'; then
+  USERNAME=$(bashio::config 'Username')
+  #clean data
+  sed -i '/WebUI\\\Username/d' qBittorrent.conf
+  #add data
+  sed -i "$LINE i\WebUI\\\Username=$USERNAME" qBittorrent.conf
+  bashio::log.info "WEBUI username set to $USERNAME"
+fi
+
+################
 # Alternate UI #
 ################
 
