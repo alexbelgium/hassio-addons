@@ -5,7 +5,7 @@
 ## About
 
 Scrutiny WebUI for smartd S.M.A.R.T monitoring
-This addon is based on the [docker image](https://hub.docker.com/r/linuxserver/emby) from linuxserver.io.
+This addon is based on the [docker image](https://hub.docker.com/r/linuxserver/scrutiny) from linuxserver.io.
 
 ## Installation
 
