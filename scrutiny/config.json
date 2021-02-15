@@ -2,6 +2,7 @@
   "name": "Scrutiny",
   "version": "27b923b5-ls10",
   "slug": "scrutiny",
+  "stage": "experimental",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
   "url": "https://hub.docker.com/r/linuxserver/scrutiny",
   "startup": "services",
