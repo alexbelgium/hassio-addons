@@ -9,7 +9,7 @@ declare incomplete_dir
 ##########################
 # IMPORT PREVIOUS FOLDER #
 ##########################
-if [ -d '/share/transmission' ] && [ ! -d '/config/transmission' ]; then
+if [ -d '/share/transmission' ]; then
   mkdir -p /config/transmission
   chown -R abc:abc /config/transmission
   mv /config/transmission /share/transmission
@@ -25,7 +25,7 @@ mkdir -p /config/transmission
 chown -R abc:abc /config/transmission
 
 if ! bashio::fs.file_exists '/config/transmission/settings.json'; then
-  cp /defaults/settings.json /config/transmission/settings.json
+  cp "/defaults/settings.json" "/config/transmission/settings.json"
 fi
 
 #################
