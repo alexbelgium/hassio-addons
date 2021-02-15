@@ -36,10 +36,16 @@ download_dir=$(bashio::config 'download_dir')
 incomplete_dir=$(bashio::config 'incomplete_dir')
 CONFIG=$(</config/transmission/settings.json)
 
+# Permissions
+mkdir -p $download_dir || true
+chown abc:abc $download_dir || true
+
 # if incomplete dir > 2, to allow both null and '', set it as existing
 if [ ${#incomplete_dir} -ge 2 ]
 then
         CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
+        mkdir -p $incomplete_dir
+        chown abc:abc $incomplete_dir
 else
         CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=false")
 fi
