@@ -30,6 +30,7 @@ ssl: true/false
 certfile: fullchain.pem #ssl certificate
 keyfile: privkey.pem #sslkeyfile
 whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password (optional)
+Username: "admin" #username to access webui. Please change it as the default is admin for all installations. 
 customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start.
 SavePath: "/share/qbittorrent" # Define the download directory
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
