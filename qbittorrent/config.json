@@ -22,6 +22,7 @@
     "6881/udp": "Peer port"
   },
   "full_access": true,
+  "apparmor": true,
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "map": [
     "media:rw",
