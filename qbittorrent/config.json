@@ -22,6 +22,7 @@
     "6881/udp": "Peer port"
   },
   "apparmor": true,
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "map": [
     "media:rw",
     "config:rw",
@@ -30,7 +31,6 @@
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "boot": "auto",
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "environment": {
     "WEBUI_PORT": "8080"
   },
@@ -52,6 +52,7 @@
     "PGID": "int",
     "SavePath": "str?", 
     "customUI": "list(|vuetorrent|qbit-matUI|qb-web)?",
+    "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
