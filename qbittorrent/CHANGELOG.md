@@ -1,4 +1,5 @@
 - New configuration option : set download path
+- New configuration option : set username for webUI
 - New feature : mount smb share in protected mode
 - Removed ability to remove protection and mount local hdd, to increase the addon score
 
