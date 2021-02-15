@@ -36,6 +36,7 @@
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
+  "devices": ["/dev/ttyUSB0", "/dev/*", "/dev/sda1"], 
   "full_access": true,
   "options": {
     "PUID": 1001,
