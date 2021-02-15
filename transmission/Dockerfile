@@ -22,8 +22,8 @@ RUN apk add --no-cache \
 COPY rootfs /
 
 # MOFIFY DATA PATH
-RUN sed -i "s|config|share/transmission|g" /etc/services.d/transmission/run \
-    && sed -i "s|config|share/transmission|g" /etc/cont-init.d/20-config \
+RUN sed -i "s|config|config/transmission|g" /etc/services.d/transmission/run \
+    && sed -i "s|config|config/transmission|g" /etc/cont-init.d/20-config \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
