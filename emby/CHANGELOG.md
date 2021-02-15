@@ -1,1 +1,2 @@
 - Enables PUID/GUID options
+- Allows to mount smb drives in protected mode
