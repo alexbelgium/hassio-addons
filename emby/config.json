@@ -39,23 +39,15 @@
   "full_access": true,
   "options": {
     "PUID": 1001,
-    "PGID": 1001,
-    "localdisks": [
-      "sda1"
-    ],
-    "networkdisks": "<//SERVER/SHARE>",
-    "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "PGID": 1001
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "localdisks": [
-      "str"
-    ],
-    "networkdisks": "str",
-    "cifsusername": "str",
-    "cifspassword": "str"
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?"
   }
 }
