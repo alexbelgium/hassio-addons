@@ -31,6 +31,7 @@
   ],
   "webui": "http://[HOST]:[PORT:8096]",
   "boot": "auto",
+  "apparmor": "true", 
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
