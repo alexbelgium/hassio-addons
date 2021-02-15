@@ -52,7 +52,6 @@
     "PGID": "int",
     "SavePath": "str?", 
     "customUI": "list(|vuetorrent|qbit-matUI|qb-web)?",
-    "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
