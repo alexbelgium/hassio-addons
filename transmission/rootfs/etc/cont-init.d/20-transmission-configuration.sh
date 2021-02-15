@@ -9,12 +9,12 @@ declare incomplete_dir
 ##########################
 # IMPORT PREVIOUS FOLDER #
 ##########################
-if [ -d '/share/transmission' ]; then
-  mkdir -p /config/transmission
-  chown -R abc:abc /config/transmission
-  mv /config/transmission /share/transmission
-  echo "Folder migrated to /config/transmission"
-fi
+#if [ -d '/share/transmission' ]; then
+#  mkdir -p /config/transmission
+#  chown -R abc:abc /config/transmission
+#  mv /config/transmission /share/transmission
+#  echo "Folder migrated to /config/transmission"
+#fi
 
 ###############
 # PERMISSIONS #
