@@ -21,7 +21,6 @@
   "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
   "full_access": true, 
   "udev": "true",
-  "full_access": "true",
   "apparmor": "false",
   "map": [
   ],
