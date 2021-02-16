@@ -22,4 +22,4 @@ RUN apk add --no-cache \
 	
 VOLUME [ "/data" ]
 
-CMD ["--root=/data", "--address=0.0.0.0", "--database=/config/filebrowser/filebrowser.db"]
+CMD ["--root=/", "--address=0.0.0.0", "--database=/config/filebrowser/filebrowser.db"]
