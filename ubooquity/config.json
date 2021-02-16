@@ -30,18 +30,19 @@
     "share:rw",
     "ssl"
   ],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:2202]",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:2203]/ubooquity/admin",
   "boot": "auto",
   "environment": {
-    "MAXMEM": "512"
   },
   "options": {
     "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "maxmem": 120
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
+    "maxmem": "int",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",

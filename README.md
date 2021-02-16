@@ -77,10 +77,14 @@ https://github.com/alexbelgium/hassio-addons
 - The torrent client for Hass.io.
 - Based on https://hub.docker.com/r/linuxserver/transmission
 
+### &#10003; [Ubooquity](ubooquity/) ![smb][smb-shield] 
+- Free, lightweight and easy-to-use home server for your comics and ebooks
+- Based on https://hub.docker.com/r/linuxserver/ubooquity
+
 [//]: # (ADDONLIST_END)
 
-[stale-shield]: https://img.shields.io/badge/Stale--orange
+[stale-shield]: https://img.shields.io/badge/Stale--orange.svg
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
-[sql-shield]: https://img.shields.io/badge/SQL--green
+[sql-shield]: https://img.shields.io/badge/SQL-external-orange.svg
 [privileged-shield]: https://img.shields.io/badge/privileged-required-orange.svg
  
