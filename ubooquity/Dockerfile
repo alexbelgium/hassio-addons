@@ -27,11 +27,8 @@ RUN apk add --no-cache \
     # Allow maximum memory setting
     && sed -i 's|bash|bashio|g' /etc/services.d/ubooquity/run \
     && sed -i 's|{MAXMEM:-512}|(bashio::config "maxmem")|g' /etc/services.d/ubooquity/run \
-    #    # Set default folders
-    && sed -i 's|/files|/share/ubooquity/files/|g' /defaults/preferences.json \
-    && sed -i 's|/comics|/share/ubooquity/comics|g' /defaults/preferences.json \
-    && sed -i 's|/books|/share/ubooquity/books|g' /defaults/preferences.json \
+    # Set config directory
     && sed -i 's|config|config/ubooquity|g' /etc/cont-init.d/30-config \
     && sed -i 's|config|config/ubooquity|g' /etc/services.d/ubooquity/run
-
+    
 VOLUME [ "/data" ]
