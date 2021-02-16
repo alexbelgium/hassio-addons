@@ -24,11 +24,11 @@ RUN apk add --no-cache \
     && sed -i 's|bash|bashio|g' /etc/cont-init.d/10-adduser \
     && sed -i 's|{PUID:-911}|(bashio::config "PUID")|g' /etc/cont-init.d/10-adduser \
     && sed -i 's|{PGID:-911}|(bashio::config "PGID")|g' /etc/cont-init.d/10-adduser \
+    # Set config directory
+    && sed -i 's|/config|/config/ubooquity|g' /etc/cont-init.d/30-config \
+    && sed -i 's|/config|/config/ubooquity|g' /etc/services.d/ubooquity/run \
     # Allow maximum memory setting
     && sed -i 's|bash|bashio|g' /etc/services.d/ubooquity/run \
-    && sed -i 's|{MAXMEM:-512}|(bashio::config "maxmem")|g' /etc/services.d/ubooquity/run \
-    # Set config directory
-    && sed -i 's|config|config/ubooquity|g' /etc/cont-init.d/30-config \
-    && sed -i 's|config|config/ubooquity|g' /etc/services.d/ubooquity/run
-    
+    && sed -i 's|{MAXMEM:-512}|(bashio::config "maxmem")|g' /etc/services.d/ubooquity/run
+
 VOLUME [ "/data" ]
