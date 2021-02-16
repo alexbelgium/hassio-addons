@@ -33,7 +33,7 @@
   "webui": "[PROTO:ssl]://[HOST]:[PORT:2203]",
   "boot": "auto",
   "environment": {
-    "MAXMEM": "512"
+    "MAXMEM": "250"
   },
   "options": {
     "PUID": 0,
