@@ -1,8 +1,11 @@
 #!/usr/bin/with-contenv bashio
-bashio::log.info 'Mounting external hdd...'
 
+######################
+# MOUNT LOCAL SHARES #
+######################
 # Mount local Share if configured and if Protection Mode is active
 if bashio::config.has_value 'localdisks'; then
+    bashio::log.info 'Mounting external hdd...'
     MOREDISKS=$(bashio::config 'localdisks')
     bashio::log.info "Local Disks mounting.. ${MOREDISKS}" && \
     for disk in $MOREDISKS 
@@ -20,8 +23,12 @@ if bashio::config.has_value 'localdisks'; then
     bashio::log.warning "Protection mode is ON. Unable to mount local drives!"
 fi
 
+####################
+# MOUNT SMB SHARES #
+####################
 # Mount CIFS Share if configured and if Protection Mode is active
 if bashio::config.has_value 'networkdisks'; then
+    bashio::log.info 'Mounting smb share...'
     MOREDISKS=$(bashio::config 'networkdisks')
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
@@ -29,15 +36,11 @@ if bashio::config.has_value 'networkdisks'; then
     for disk in $MOREDISKS 
     do
         bashio::log.info "Mount ${disk}"
-        mkdir -p /share/storagecifs && \
-            if [ ! -d /storage/storagecifs ]; then
-              echo "Creating /storage/storagecifs"
-              mkdir -p /storage/storagecifs
-              chown -R abc:abc /storage/storagecifs
-            fi
-
-            mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /storage/storagecifs && \
-            bashio::log.info "Success!"   
+        echo "Creating /storage/storagecifs"
+        mkdir -p /storage/storagecifs
+        chown -R abc:abc /storage/storagecifs
+        mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /storage/storagecifs && \
+        bashio::log.info "Success!"   
     done || \
     bashio::log.warning "Protection mode is ON. Unable to mount external drives!"
 fi
