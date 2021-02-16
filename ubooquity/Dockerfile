@@ -5,9 +5,6 @@ FROM ${BUILD_FROM}${BUILD_VERSION}
 # Copy root filesystem
 COPY rootfs / 
 
-VOLUME [ "/data" ]
-VOLUME [ "/share" ]
-
 # Add bashio
 RUN apk add --no-cache \
     curl \
@@ -38,3 +35,5 @@ RUN apk add --no-cache \
     # Allow maximum memory setting
     && sed -i 's|bash|bashio|g' /etc/services.d/ubooquity/run \
     && sed -i 's|{MAXMEM:-512}|(bashio::config "maxmem")|g' /etc/services.d/ubooquity/run
+
+VOLUME [ "/data" ]
