@@ -36,11 +36,11 @@ if bashio::config.has_value 'networkdisks'; then
     for disk in $MOREDISKS 
     do
         bashio::log.info "Mount ${disk}"
-        echo "Creating /share/storagecifs"
-        mkdir -p /share/storagecifs
-        chown -R abc:abc /share/storagecifs
-        mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /share/storagecifs && \
-        bashio::log.info "SMB share was successfully mapped to /share/storagecifs"   
+        echo "Creating /mnt/storagecifs"
+        mkdir -p /mnt/storagecifs
+        chown -R abc:abc /mnt/storagecifs
+        mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /mnt/storagecifs && \
+        bashio::log.info "SMB share was successfully mapped to /mnt/storagecifs"   
     done || \
     bashio::log.warning "Protection mode is ON. Unable to mount external drives!"
 fi
