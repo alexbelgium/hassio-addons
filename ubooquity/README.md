@@ -20,7 +20,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 Access the admin page at http://<your-ip>:2203/ubooquity/admin and set a password.
-Then you can access the webui at http://<your-ip>:2202/ubooquity/
+Then you can access the webui at http://<your-ip>:2202/ubooquity/ (or top left of the admin page)
 This container will automatically scan your files at startup.
 
 Network disk is mounted to /share/storagecifs
