@@ -1,4 +1,4 @@
-#!/bin/sh bashio
+#!/usr/bin/with-contenv bashio
 
 ####################
 # MOUNT SMB SHARES #
