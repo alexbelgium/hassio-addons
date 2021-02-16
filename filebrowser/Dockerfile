@@ -1,5 +1,5 @@
 ARG BUILD_VERSION
-FROM hurlenko/filebrowser:$BUILD_VERSION
+FROM hurlenko/filebrowser:v$BUILD_VERSION
 
 # Copy root filesystem
 COPY rootfs / 
