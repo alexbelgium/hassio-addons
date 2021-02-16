@@ -40,7 +40,7 @@ if bashio::config.has_value 'networkdisks'; then
         mkdir -p /share/storagecifs
         chown -R abc:abc /share/storagecifs
         mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /share/storagecifs && \
-        bashio::log.info "Success!"   
+        bashio::log.info "SMB share was successfully mapped to /share/storagecifs"   
     done || \
     bashio::log.warning "Protection mode is ON. Unable to mount external drives!"
 fi
