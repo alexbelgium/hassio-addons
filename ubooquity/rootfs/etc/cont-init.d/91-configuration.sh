@@ -3,6 +3,8 @@
 ###########
 # FOLDERS #
 ###########
+mkdir -p $FILES $COMICS $BOOKS /config/ubooquity
+chown -R abc:abc $FILES $COMICS $BOOKS /config/ubooquity
 
 FILES=$(jq ".filesPaths[0].pathString" /config/ubooquity/preferences.json)
 COMICS=$(jq ".comicsPaths[0].pathString" /config/ubooquity/preferences.json)
