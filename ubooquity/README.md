@@ -34,7 +34,7 @@ cifspassword: "password" # smb password (optional)
 ```
 
 ## Support
-Create an issue on github
+Create an issue on the [repository github][repository]
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
