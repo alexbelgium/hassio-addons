@@ -1,8 +1,5 @@
 ARG BUILD_VERSION
-FROM "hurlenko/filebrowser:v$BUILD_VERSION" 
-
-# Copy root filesystem
-COPY rootfs / 
+FROM "hurlenko/filebrowser:v$BUILD_VERSION"
 
 RUN apk add --no-cache \
     curl \
