@@ -23,6 +23,7 @@
     "media:rw",
     "config:rw",
     "addons:rw",
+    "backup:rw",
     "share:rw",
     "ssl"
   ],
@@ -31,6 +32,9 @@
   "FB_BASEURL": "/filebrowser"
   },
   "options": {
+  "networkdisks": "//server/share",
+  "cifsusername": "username",
+  "cifspassword": "password"
   },
   "schema": {
     "networkdisks": "str?",
