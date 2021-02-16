@@ -1,0 +1,50 @@
+{
+  "name": "Ubooquity",
+  "version": "2.1.2-ls57",
+  "slug": "ubooquity",
+  "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
+  "url": "https://hub.docker.com/r/linuxserver/ubooquity",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "ports": {
+    "2202/tcp": 2202,
+    "2203/tcp": 2203
+  },
+  "ports_description": {
+    "2202/tcp": "Library page (to expose)",
+    "2203/tcp": "Admin page (local)"
+  },
+  "apparmor": true,
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
+  "map": [
+    "media:rw",
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:2202]",
+  "boot": "auto",
+  "environment": {
+    "MAXMEM": "512"
+  },
+  "options": {
+    "PUID": 0,
+    "PGID": 0
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?",
+    "TZ": "str?"
+  }
+}

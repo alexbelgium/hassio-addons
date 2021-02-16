@@ -1,0 +1,2 @@
+- Enables PUID/GUID options
+- Addition of possibility to mount smb
