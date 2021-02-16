@@ -37,12 +37,12 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "maxmem": 120
+    "maxmem": "120m"
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "maxmem": "int",
+    "maxmem": "str",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
