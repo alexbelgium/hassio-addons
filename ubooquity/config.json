@@ -30,7 +30,7 @@
     "share:rw",
     "ssl"
   ],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:2202]",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:2203]",
   "boot": "auto",
   "environment": {
     "MAXMEM": "512"
