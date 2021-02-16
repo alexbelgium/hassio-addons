@@ -26,6 +26,7 @@
     "ssl"
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
+  "full_access": "true",
   "environment": {
   "FB_BASEURL": "/filebrowser"
   },
