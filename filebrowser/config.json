@@ -12,10 +12,10 @@
     "armhf"
   ],
   "ports": {
-    "8080/tcp": 8087
+    "443/tcp": 8087
   },
   "ports_description": {
-    "8080/tcp": "Web UI port"
+    "443/tcp": "Web UI port"
   },
   "apparmor": true,
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
