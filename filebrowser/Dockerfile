@@ -19,7 +19,7 @@ RUN apk add --no-cache \
     && rm -fr /tmp/bashio.tar.gz\
 	\
 	&& mkdir -p -m 777 /config/filebrowser	
-	
-VOLUME [ "/data" ]
 
-CMD ["--root=/", "--address=0.0.0.0", "--database=/config/filebrowser/filebrowser.db"]
+COPY run.sh /
+RUN chmod 777 /run.sh
+ENTRYPOINT [ "/run.sh" ]
