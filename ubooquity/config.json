@@ -37,11 +37,17 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
+    "FilesFolder": "/share/ubooquity/files",
+    "ComicsFolder": "/share/ubooquity/comics",
+    "BooksFolder": "/share/ubooquity/books",
     "maxmem": 120
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
+    "FilesFolder": "str",
+    "ComicsFolder": "str",
+    "BooksFolder": "str",
     "maxmem": "int",
     "networkdisks": "str?",
     "cifsusername": "str?",
