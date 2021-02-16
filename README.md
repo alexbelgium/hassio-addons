@@ -29,10 +29,6 @@ https://github.com/alexbelgium/hassio-addons
 - Open source password management solution
 - Forked from : https://github.com/hassio-addons/addon-bitwarden
 
-### &#10003; [Cloudcommander](cloudcommander/) ![stale][stale-shield]
-- Cloud Commander a file manager for the web with console and editor.
-- This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cloudcmd).
-
 ### &#10003; [Code-server](code-server/)
 - Code-server is VS Code running on a remote server, accessible through the browser.
 - Based on https://hub.docker.com/r/linuxserver/code-server
@@ -45,6 +41,10 @@ https://github.com/alexbelgium/hassio-addons
 - A Free Software Media System that puts you in control of managing and streaming your media.
 - Based on https://hub.docker.com/r/linuxserver/emby
 - Forked from : https://github.com/petersendev/hassio-addons
+
+### &#10003; [Filebrowser](filebrowser/)
+- A file manager for the web
+- This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/filebrowser).
 
 ### &#10003; [Joal](joal/)
 - An open source command line RatioMaster with WebUI.
