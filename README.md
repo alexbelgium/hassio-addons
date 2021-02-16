@@ -83,8 +83,8 @@ https://github.com/alexbelgium/hassio-addons
 
 [//]: # (ADDONLIST_END)
 
-[stale-shield]: https://img.shields.io/badge/Stale--orange
+[stale-shield]: https://img.shields.io/badge/Stale--orange.svg
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
-[sql-shield]: https://img.shields.io/badge/SQL--green
+[sql-shield]: https://img.shields.io/badge/SQL-external-orange.svg
 [privileged-shield]: https://img.shields.io/badge/privileged-required-orange.svg
  
