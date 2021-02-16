@@ -3,9 +3,9 @@
 ###########
 # FOLDERS #
 ###########
-FILES=&(bashio::config "FilesFolder")
-COMICS=&(bashio::config "ComicsFolder")
-BOOKS=&(bashio::config "BooksFolder")
+FILES=$(bashio::config "FilesFolder")
+COMICS=$(bashio::config "ComicsFolder")
+BOOKS=$(bashio::config "BooksFolder")
 
 jq ".filesPaths.pathString = $FILES" /config/ubooquity/preferences.json
 jq ".comicsPaths.pathString = $COMICS" /config/ubooquity/preferences.json
