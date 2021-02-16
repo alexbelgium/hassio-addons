@@ -22,3 +22,4 @@ VOLUME [ "/data" ]
 COPY run.sh /
 RUN chmod 777 /run.sh
 ENTRYPOINT [ "/run.sh" ]
+CMD [ "" ] 
