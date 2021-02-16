@@ -30,7 +30,7 @@
     "share:rw",
     "ssl"
   ],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:2203]",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:2203]/ubooquity/admin",
   "boot": "auto",
   "environment": {
   },
