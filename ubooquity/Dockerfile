@@ -23,14 +23,14 @@ RUN apk add --no-cache \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr /tmp/bashio.tar.gz \
     \
+    # Set config directory
+    && sed -i 's|config|config/ubooquity|g' /etc/cont-init.d/10-adduser \
+    && sed -i 's|config|config/ubooquity|g' /etc/cont-init.d/30-config \
+    && sed -i 's|config|config/ubooquity|g' /etc/services.d/ubooquity/run \
     # Allow UID and GID setting
     && sed -i 's|bash|bashio|g' /etc/cont-init.d/10-adduser \
     && sed -i 's|{PUID:-911}|(bashio::config "PUID")|g' /etc/cont-init.d/10-adduser \
     && sed -i 's|{PGID:-911}|(bashio::config "PGID")|g' /etc/cont-init.d/10-adduser \
-    # Set config directory
-    && sed -i 's|/config|/config/ubooquity|g' /etc/cont-init.d/10-adduser \
-    && sed -i 's|/config|/config/ubooquity|g' /etc/cont-init.d/30-config \
-    && sed -i 's|/config|/config/ubooquity|g' /etc/services.d/ubooquity/run \
     # Set default directory
     && sed -i 's|/files|/share/ubooquity/files|g' /defaults/preferences.json \
     && sed -i 's|/comics|/share/ubooquity/comics|g' /defaults/preferences.json \
