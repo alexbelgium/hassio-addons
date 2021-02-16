@@ -3,13 +3,17 @@
 ###########
 # FOLDERS #
 ###########
-FILES=$(bashio::config "FilesFolder")
-COMICS=$(bashio::config "ComicsFolder")
-BOOKS=$(bashio::config "BooksFolder")
+FILES='"'$(bashio::config "FilesFolder")'"'
+COMICS='"'$(bashio::config "ComicsFolder")'"'
+BOOKS='"'$(bashio::config "BooksFolder")'"'
 
-jq ".filesPaths.pathString = $FILES" /config/ubooquity/preferences.json
-jq ".comicsPaths.pathString = $COMICS" /config/ubooquity/preferences.json
-jq ".booksPaths.pathString = $BOOKS" /config/ubooquity/preferences.json
+CURRENTFILES=$(jq ".filesPaths[0].pathString" /config/ubooquity/preferences.json)
+CURRENTCOMICS=$(jq ".comicsPaths[0].pathString" /config/ubooquity/preferences.json)
+CURRENTBOOKS=$(jq ".booksPaths[0].pathString" /config/ubooquity/preferences.json)
+
+sed -i "s|$CURRENTFILES|$FILES|g" /config/ubooquity/preferences.json
+sed -i "s|$CURRENTCOMICS|$COMICS|g" /config/ubooquity/preferences.json
+sed -i "s|$CURRENTBOOKS|$BOOKS|g" /config/ubooquity/preferences.json
 
 mkdir -p FILES COMICS BOOKS
 
