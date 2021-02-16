@@ -22,6 +22,7 @@
   "map": [
     "media:rw",
     "config:rw",
+    "addons:rw",
     "share:rw",
     "ssl"
   ],
