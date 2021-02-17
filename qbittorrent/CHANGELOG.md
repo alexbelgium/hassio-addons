@@ -1,3 +1,4 @@
+## 14.3.3.99202101191832-7248-da0b276d5ubuntu20.04.1-ls116-dev2
 - New configuration option : set download path
 - New configuration option : set username for webUI
 - New feature : mount smb share in protected mode
