@@ -23,5 +23,5 @@ VOLUME [ "/data" ]
 WORKDIR /usr/src
 COPY run.sh /
 RUN chmod 777 /run.sh
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT [ "/bin/sh" ]
 CMD [ "run.sh" ] 
