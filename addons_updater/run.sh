@@ -62,12 +62,20 @@ fi
       #If beta flag, select beta version
       if [ ${BETA} = true ]; then
       LOGINFO="... $SLUG : beta is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
-      LASTVERSION='"'$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG)'"'
+      LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG)
       else 
       LOGINFO="... $SLUG : beta is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-      LASTVERSION='"'$(lastversion "https://github.com/$UPSTREAM" $FULLTAG)'"'
+      LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG)
       fi
 
+     # Take only into account first part of tag
+     CURRENT=${CURRENT:0:${#LASTVERSION}}
+
+     # Add brackets
+     CURRENT='"'$CURRENT'"'
+     LASTVERSION='"'$LASTVERSION'"'
+
+     # Update if needed 
     if [ ${CURRENT} != ${LASTVERSION} ]; then
       LOGINFO="... $SLUG : update from $CURRENT to $LASTVERSION" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
         
