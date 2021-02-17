@@ -72,7 +72,6 @@ fi
      # CURRENT=${CURRENT:0:${#LASTVERSION}}
 
      # Add brackets
-     CURRENT='"'$CURRENT'"'
      LASTVERSION='"'$LASTVERSION'"'
 
      # Update if needed 
