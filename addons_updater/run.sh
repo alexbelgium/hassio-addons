@@ -69,7 +69,7 @@ fi
       fi
 
      # Take only into account first part of tag
-     CURRENT=${CURRENT:0:${#LASTVERSION}}
+     # CURRENT=${CURRENT:0:${#LASTVERSION}}
 
      # Add brackets
      CURRENT='"'$CURRENT'"'
