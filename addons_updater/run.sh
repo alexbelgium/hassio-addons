@@ -39,7 +39,9 @@ for addons in $(bashio::config "addon|keys"); do
       else
         LOGINFO="... $SLUG : updating ${REPOSITORY}" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi   
         cd "/data/$BASENAME"
-      git pull --rebase || git status && git reset --hard
+      # git pull --rebase
+      git status
+      git reset --hard
       fi
 
       #Define the folder addon
