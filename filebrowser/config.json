@@ -1,6 +1,6 @@
 {
   "name": "Filebrowser",
-  "version": "v2.11.0",
+  "version": "2.11.0",
   "slug": "filebrowser",
   "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files",
   "url": "https://github.com/hurlenko/filebrowser-docker",
