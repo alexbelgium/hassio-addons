@@ -20,8 +20,8 @@ RUN apk add --no-cache \
 	&& mkdir -p -m 777 /config/filebrowser	
 
 VOLUME [ "/data" ]
-WORKDIR /usr/src
+WORKDIR /
 COPY run.sh /
 RUN chmod 777 /run.sh
-ENTRYPOINT [ "/bin/sh" ]
-CMD [ "run.sh" ] 
+ENTRYPOINT [ "/bin/bash" ]
+CMD [ "/run.sh" ] 
