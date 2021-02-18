@@ -33,9 +33,9 @@ whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a passwo
 Username: "admin" #username to access webui. Please change it as the default is admin for all installations. 
 customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start.
 SavePath: "/share/qbittorrent" # Define the download directory
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
-cifsusername: "username" # smb username (optional)
-cifspassword: "password" # smb password (optional)
+networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password, same for all smb shares)
 ```
 
 ## Support
