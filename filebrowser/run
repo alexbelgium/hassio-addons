@@ -3,6 +3,7 @@
 ###############
 # SET UID GID #
 ###############
+bashio::log.info 'PUID GUID set to root'
 PUID=0
 PGID=0
 
