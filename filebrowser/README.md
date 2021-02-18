@@ -25,9 +25,9 @@ Default username: "admin" and password: "admin"
 Network disk is mounted to /share/storagecifs
 
 ```yaml
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
-cifsusername: "username" # smb username (optional)
-cifspassword: "password" # smb password (optional)
+networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password, same for all smb shares)
 ```
 
 ## Support
