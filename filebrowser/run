@@ -10,15 +10,16 @@ PGID=0
 ####################
 # MOUNT SMB SHARES #
 ####################
-# Mount CIFS Share if configured and if Protection Mode is active
 if bashio::config.has_value 'networkdisks'; then
-# Define variables 
+    # Mount CIFS Share if configured and if Protection Mode is active
+    bashio::log.info 'Mounting smb share(s)...'
+
+    # Define variables 
     MOREDISKS=$(bashio::config 'networkdisks')
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
 
-# Mounting disks
-    bashio::log.info 'Mounting smb share(s)...'
+    # Mounting disks
     for disk in ${MOREDISKS//,/ }  # Separate comma separated values
     do
       disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
@@ -33,8 +34,6 @@ fi
 ################
 # SSL CONFIG   #
 ################
-
-# Clean data
 
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
