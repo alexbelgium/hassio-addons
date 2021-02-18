@@ -1,7 +1,8 @@
 - New configuration option : set download path
 - New configuration option : set username for webUI
 - New feature : mount smb share in protected mode
-- Changed path :cChanged smb mount path from /storage/externalcifs to /mnt/externalcifs
+- New feature : mount multiple smb shares
+- Changed path : changed smb mount path from /storage/externalcifs to /mnt/$NAS name
 - Removed feature : ability to remove protection and mount local hdd, to increase the addon score
 
 ## 14.3.3.99202101191832-7248-da0b276d5ubuntu20.04.1-ls116
