@@ -21,7 +21,6 @@ if bashio::config.has_value 'networkdisks'; then
         bashio::log.info "Mount ${disk}"
         echo "Creating /storage/storagecifs"
         mkdir -p /storage/storagecifs
-        chown -R abc:abc /storage/storagecifs
         mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /storage/storagecifs && \
         bashio::log.info "Success!"   
     done || \
