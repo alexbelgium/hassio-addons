@@ -1,15 +1,15 @@
 #!/usr/bin/env bashio
 
-###############
-# SET UID GID #
-###############
+####################
+# SET UID GID v1.0 #
+####################
 bashio::log.info 'PUID GUID set to root'
 PUID=0
 PGID=0
 
-####################
-# MOUNT SMB SHARES #
-####################
+#########################
+# MOUNT SMB SHARES v1.0 #
+#########################
 if bashio::config.has_value 'networkdisks'; then
     # Mount CIFS Share if configured and if Protection Mode is active
     bashio::log.info 'Mounting smb share(s)...'
@@ -31,9 +31,9 @@ if bashio::config.has_value 'networkdisks'; then
     done || true
 fi
 
-################
-# SSL CONFIG   #
-################
+###################
+# SSL CONFIG v1.0 #
+###################
 
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
