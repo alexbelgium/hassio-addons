@@ -35,7 +35,8 @@ if bashio::config.true 'ssl'; then
   CERTFILE="-t /ssl/$(bashio::config 'certfile')"
   KEYFILE="-k /ssl/$(bashio::config 'keyfile')"
 else
- /./filebrowser config set t /ssl/$CERTFILE k /ssl/$KEYFILE
+  CERTFILE=""
+  KEYFILE=""
 fi
 
 ######################
