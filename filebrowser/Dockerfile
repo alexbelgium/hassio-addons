@@ -21,7 +21,7 @@ RUN apk add --no-cache \
 
 VOLUME [ "/data" ]
 WORKDIR /
-COPY run.sh /
-RUN chmod 777 /run.sh
-ENTRYPOINT [ "/bin/bash" ]
-CMD [ "/run.sh" ] 
+COPY run /
+RUN chmod 777 /run
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/run" ] 
