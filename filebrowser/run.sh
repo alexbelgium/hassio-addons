@@ -22,9 +22,25 @@ if bashio::config.has_value 'networkdisks'; then
     bashio::log.warning "Protection mode is ON. Unable to mount external drives!"
 fi
 
+################
+# SSL CONFIG   #
+################
+
+# Clean data
+
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+  bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+  #set variables
+  CERTFILE="-t /ssl/$(bashio::config 'certfile')"
+  KEYFILE="-k /ssl/$(bashio::config 'keyfile')"
+else
+ /./filebrowser config set t /ssl/$CERTFILE k /ssl/$KEYFILE
+fi
+
 ######################
 # LAUNCH FILEBROWSER #
 ######################
 bashio::log.info "Default username/password : admin/admin"
 
-/./filebrowser --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.db  --commands 'ghdl,python,gtkwave,echo,bash,sh' 
+/./filebrowser --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.db  --commands 'ghdl,python,gtkwave,echo,bash,sh' $CERTFILE $KEYFILE
