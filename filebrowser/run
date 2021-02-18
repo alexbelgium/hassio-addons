@@ -12,20 +12,22 @@ PGID=0
 ####################
 # Mount CIFS Share if configured and if Protection Mode is active
 if bashio::config.has_value 'networkdisks'; then
-    bashio::log.info 'Mounting smb share...'
+# Define variables 
     MOREDISKS=$(bashio::config 'networkdisks')
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
-    bashio::log.info "Network Disks mounting.. ${MOREDISKS}" && \
-    for disk in $MOREDISKS 
+
+# Mounting disks
+    bashio::log.info 'Mounting smb share(s)...'
+    for disk in ${MOREDISKS//,/ }  # Separate comma separated values
     do
-        bashio::log.info "Mount ${disk}"
-        echo "Creating /storage/storagecifs"
-        mkdir -p /storage/storagecifs
-        mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /storage/storagecifs && \
-        bashio::log.info "Success!"   
-    done || \
-    bashio::log.warning "Protection mode is ON. Unable to mount external drives!"
+      disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
+      diskname=${disk##*/} # Get only last part of the name
+      mkdir -p /mnt/$diskname  # Create dir
+      chown -R root:root /mnt/$diskname  # Permissions
+      mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /mnt/$diskname # Mount share
+      bashio::log.info "... $disk successfully mounted to /mnt/$diskname"
+    done || bashio::log.error "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD"
 fi
 
 ################
