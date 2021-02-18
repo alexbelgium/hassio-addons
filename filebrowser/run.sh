@@ -44,4 +44,4 @@ fi
 ######################
 bashio::log.info "Default username/password : admin/admin"
 
-/./filebrowser --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.db  --commands 'ghdl,python,gtkwave,echo,bash,sh' $CERTFILE $KEYFILE
+/./filebrowser --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.db  $CERTFILE $KEYFILE
