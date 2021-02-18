@@ -1,5 +1,11 @@
 #!/usr/bin/env bashio
 
+###############
+# SET UID GID #
+###############
+PUID=0
+PGID=0
+
 ####################
 # MOUNT SMB SHARES #
 ####################
