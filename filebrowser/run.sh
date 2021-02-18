@@ -1,4 +1,4 @@
-#!/bin/bash /usr/bin/bashio 
+#!/usr/bin/env bashio
 
 ####################
 # MOUNT SMB SHARES #
