@@ -41,6 +41,7 @@
     "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16",
     "SavePath": "/share/qBittorrent", 
     "Username": "admin",
+    "smbv1": false, 
     "PUID": 0,
     "PGID": 0
   },
@@ -57,6 +58,7 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
+    "smbv1": bool,
     "TZ": "str?"
   }
 }
