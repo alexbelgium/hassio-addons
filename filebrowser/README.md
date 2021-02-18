@@ -35,7 +35,7 @@ cifspassword: "password" # optional, smb password, same for all smb shares)
 ```
 
 ## Support
-Create an issue on github
+Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-filebrowser/282108/3) 
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
