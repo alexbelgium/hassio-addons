@@ -32,11 +32,17 @@
   "FB_BASEURL": "/filebrowser"
   },
   "options": {
+  "ssl": false,
+  "certfile": "fullchain.pem",
+  "keyfile": "privkey.pem",    
   "networkdisks": "//server/share",
   "cifsusername": "username",
   "cifspassword": "password"
   },
   "schema": {
+    "ssl": "bool",
+    "certfile": "str",
+    "keyfile": "str",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?"
