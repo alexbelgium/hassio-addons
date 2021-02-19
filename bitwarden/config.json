@@ -1,6 +1,7 @@
 {
   "name": "Bitwarden RS",
   "version": "1.19.0",
+  "current": "1.19.0",
   "slug": "bitwarden",
   "description": "Open source password management solution",
   "url": "https://hub.docker.com/r/bitwardenrs/server",
