@@ -1,6 +1,7 @@
 {
     "name": "Cloudcommander",
     "version": "15.6.0",
+    "current": "15.6.0",
     "slug": "cloudcommander",
     "description": "Cloud Commander a file manager for the web with console and editor",
     "url": "https://github.com/coderaiser/cloudcmd",
