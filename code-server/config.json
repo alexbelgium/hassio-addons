@@ -1,6 +1,7 @@
 {
   "name": "VS code",
   "version": "3.9.0",
+  "upstream": "3.9.0",
   "slug": "code-server",
   "description": "Code-server is VS Code running on a remote server, accessible through the browser.",
   "url": "https://hub.docker.com/r/linuxserver/code-server",
