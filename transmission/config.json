@@ -34,6 +34,7 @@
   "full_access": true,
   "webui": "http://[HOST]:[PORT:9091]",
   "boot": "auto",
+  "apparmor": "true",
   "environment": {},
   "options": {
     "PUID": 1000,
