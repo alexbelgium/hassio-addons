@@ -1,9 +1,10 @@
 {
   "name": "Transmission NAS",
   "version": "3.00-r2-ls78",
+  "upstream": "3.00-r2-ls78",
   "slug": "transmission_ls",
   "description": "Bittorrent client based on linuxserver image",
-  "url": "https://hub.docker.com/r/linuxserver/transmission",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
   "arch": [
     "aarch64",

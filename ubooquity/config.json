@@ -1,9 +1,10 @@
 {
   "name": "Ubooquity",
   "version": "2.1.2-ls57",
+  "upstream": "2.1.2-ls57",
   "slug": "ubooquity",
   "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
-  "url": "https://hub.docker.com/r/linuxserver/ubooquity",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
   "arch": [
     "aarch64",

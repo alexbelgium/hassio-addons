@@ -1,10 +1,11 @@
 {
   "name": "Scrutiny",
   "version": "27b923b5-ls10",
+  "upstream": "27b923b5-ls10",
   "slug": "scrutiny",
   "stage": "experimental",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
-  "url": "https://hub.docker.com/r/linuxserver/scrutiny",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
   "arch": [
     "aarch64",

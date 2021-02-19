@@ -1,10 +1,11 @@
 {
   "name": "Piwigo",
   "version": "11.3.0",
+  "upstream": "11.3.0",
   "slug": "piwigo",
   "stage": "experimental",
   "description": "Piwigo is a photo gallery software for the web",
-  "url": "https://hub.docker.com/r/linuxserver/piwigo",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
   "arch": [
     "aarch64",

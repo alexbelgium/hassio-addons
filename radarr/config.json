@@ -1,9 +1,10 @@
 {
   "name": "Radarr NAS",
   "version": "3.0.2.4552",
+  "upstream": "3.0.2.4552",
   "slug": "radarr_nas",
   "description": "A fork of Sonarr to work with movies like Couchpotato",
-  "url": "https://hub.docker.com/r/linuxserver/radarr",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
   "arch": [
     "aarch64",

@@ -3,7 +3,7 @@
     "version": "2.1.24",
     "slug": "joal",
     "description": "An open source command line RatioMaster with WebUI",
-    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/joal",
+    "url": "https://github.com/alexbelgium/hassio-addons",
     "startup": "services",
     "arch": [
     "aarch64",

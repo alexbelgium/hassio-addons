@@ -4,7 +4,7 @@
   "upstream": "3.9.0",
   "slug": "code-server",
   "description": "Code-server is VS Code running on a remote server, accessible through the browser.",
-  "url": "https://hub.docker.com/r/linuxserver/code-server",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
   "arch": [
     "aarch64",

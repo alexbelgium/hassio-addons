@@ -1,10 +1,10 @@
 {
   "name": "Bitwarden RS",
   "version": "1.19.0",
-  "current": "1.19.0",
+  "upstream": "1.19.0",
   "slug": "bitwarden",
   "description": "Open source password management solution",
-  "url": "https://hub.docker.com/r/bitwardenrs/server",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7277]",
   "startup": "services",
   "init": false,

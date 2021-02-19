@@ -1,9 +1,10 @@
 {
   "name": "Papermerge",
   "version": "1.5.5",
+  "upstream": "1.5.5",
   "slug": "papermerge",
   "description": "Open source document management system (DMS)",
-  "url": "https://hub.docker.com/r/linuxserver/papermerge",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "arch": [
     "aarch64",
     "amd64",
