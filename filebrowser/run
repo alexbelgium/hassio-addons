@@ -31,6 +31,7 @@ if bashio::config.has_value 'networkdisks'; then
     do
       disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
       diskname=${disk##*/} # Get only last part of the name
+      rm -r /mnt/$diskname || true # Create dir
       mkdir -p /mnt/$diskname  # Create dir
       chown -R root:root /mnt/$diskname  # Permissions
       mount -t cifs -o username=$CIFS_USERNAME,password=${CIFS_PASSWORD}${SMBVERS} $disk /mnt/$diskname \
