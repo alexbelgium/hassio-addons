@@ -40,7 +40,11 @@
   "full_access": true,
   "options": {
     "PUID": 1001,
-    "PGID": 1001
+    "PGID": 1001,
+    "networkdisks": "//server/share",
+    "cifsusername": "username",
+    "cifspassword": "password", 
+    "smbv1": false
   },
   "schema": {
     "PUID": "int",
@@ -49,6 +53,7 @@
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
+    "cifspassword": "str?",
+    "smbv1": "bool"
   }
 }
