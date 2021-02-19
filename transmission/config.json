@@ -44,7 +44,7 @@
     "networkdisks": "//ADDRESS/SHARE",
     "cifsusername": "username",
     "cifspassword": "password",
-    "smbv1": false, 
+    "smbv1": "false", 
   },
   "schema": {
     "PUID": "int",
