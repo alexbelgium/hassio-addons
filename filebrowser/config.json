@@ -4,6 +4,7 @@
   "slug": "filebrowser",
   "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files",
   "url": "https://github.com/alexbelgium/hassio-addons",
+  "repository": "this is a test",
   "startup": "services",
   "arch": [
     "aarch64",
