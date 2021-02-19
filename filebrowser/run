@@ -55,14 +55,6 @@ else
   KEYFILE=""
 fi
 
-###########
-# No Auth #
-###########
-
-if bashio::config.true 'NoAuth'; then
-  NOAUTH="--noauth"
-fi
-
 ######################
 # LAUNCH FILEBROWSER #
 ######################
