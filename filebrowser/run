@@ -60,7 +60,7 @@ fi
 ###########
 
 if bashio::config.true 'NoAuth'; then
-  NOAUTH="--auth.method=noauth"
+  NOAUTH="--noauth"
 fi
 
 ######################
