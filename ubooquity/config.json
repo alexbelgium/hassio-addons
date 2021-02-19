@@ -38,7 +38,11 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "maxmem": 120
+    "maxmem": 120,
+    "networkdisks": "//IP/SHARE",
+    "cifsusername": "username",
+    "cifspassword": "folder",
+    "smbv1": "false"
   },
   "schema": {
     "PUID": "int",
@@ -47,6 +51,7 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
+    "smbv1": "bool",
     "TZ": "str?"
   }
 }
