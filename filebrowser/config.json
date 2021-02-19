@@ -33,6 +33,7 @@
   "FB_BASEURL": "/filebrowser"
   },
   "options": {
+  "NoAuth": false,
   "ssl": false,
   "certfile": "fullchain.pem",
   "keyfile": "privkey.pem",    
@@ -42,6 +43,7 @@
   "smbv1": false
   },
   "schema": {
+    "NoAuth": "bool",
     "ssl": "bool",
     "certfile": "str",
     "keyfile": "str",
