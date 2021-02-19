@@ -91,7 +91,8 @@ if bashio::config.has_value 'customUI'; then
   ### Download WebUI
   case $CUSTOMUI in
   "vuetorrent")
-    curl -s -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip") >/dev/null
+    curl -s -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip") >/dev/null \
+    || curl -s -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*.zip") >/dev/null
     ;;
 
   "qbit-matUI")
