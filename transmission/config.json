@@ -41,12 +41,10 @@
     "PGID": 1000,
     "download_dir": "/share/downloads",
     "incomplete_dir": "/share/incomplete",
-    "localdisks": [
-      "sda1"
-    ],
-    "networkdisks": "//SERVER/SHARE",
+    "networkdisks": "//ADDRESS/SHARE",
     "cifsusername": "username",
-    "cifspassword": "password"
+    "cifspassword": "password",
+    "smbv1": false, 
   },
   "schema": {
     "PUID": "int",
@@ -54,11 +52,9 @@
     "TZ": "str?",
     "download_dir": "str",
     "incomplete_dir": "str?",
-    "localdisks": [
-      "str?"
-    ],
     "networkdisks": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
+    "cifspassword": "str?",
+    "smbv1": "bool",
   }
 }
