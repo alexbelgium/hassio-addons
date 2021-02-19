@@ -3,6 +3,8 @@
 - Update to latest version from linuxserver/docker-transmission
 - Change directory from /share/transmission to /config/transmission
 - Correct permissions changes
+- Changed smb mounts location to /mnt/SHARE name
+- Allow to mount several SMB shares using comma separated values (same password & username)
 
 ## 3.00-r2-ls77
 - Update to latest version from linuxserver/docker-transmission
