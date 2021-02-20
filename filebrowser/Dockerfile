@@ -1,5 +1,5 @@
 ARG BUILD_VERSION
-FROM "hurlenko/filebrowser:v$BUILD_VERSION"
+FROM "hurlenko/filebrowser:v2.11.0"
 
 RUN apk add --no-cache \
     curl \
