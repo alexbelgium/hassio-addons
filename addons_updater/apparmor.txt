@@ -1,0 +1,77 @@
+#include <tunables/global>
+
+profile db21ed7f_qbittorrent flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  
+  capability,
+  file,
+  mount,
+  umount,
+  remount,
+
+ capability chown, 
+ capability dac_override, 
+ capability dac_read_search, 
+ capability fowner, 
+ capability fsetid, 
+ capability kill, 
+ capability setgid, 
+ capability setuid, 
+ capability setpcap, 
+ capability linux_immutable, 
+ capability net_bind_service, 
+ capability net_broadcast, 
+ capability net_admin, 
+ capability net_raw, 
+ capability ipc_lock, 
+ capability ipc_owner,
+ capability sys_module, 
+ capability sys_rawio,
+ capability sys_chroot, 
+ capability sys_ptrace, 
+ capability sys_pacct, 
+ capability sys_admin, 
+ capability sys_boot, 
+ capability sys_nice, 
+ capability sys_resource, 
+ capability sys_time, 
+ capability sys_tty_config, 
+ capability mknod, 
+ capability lease, 
+ capability audit_write, 
+ capability audit_control, 
+ capability setfcap, 
+ capability mac_override, 
+ capability mac_admin, 
+
+
+# S6-Overlay
+  /bin/** ix,
+  /usr/bin/** ix,
+  /usr/lib/bashio/** ix,
+  /etc/s6/** rix,
+  /run/s6/** rix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /init rix,
+  /var/run/** mrwkl,
+  /var/run/ mrwkl,
+  /dev/i2c-1 mrwkl, 
+  # Files required
+  /dev/sda1 mrwkl,
+  /dev/sdb1 mrwkl,
+  /dev/mmcblk0p1 mrwkl,
+  /dev/* mrwkl,
+  /tmp/** mrkwl,
+  
+  # Data access
+  /data/** rw, 
+
+  # suppress ptrace denials when using 'docker ps' or using 'ps' inside a container
+  ptrace (trace,read) peer=docker-default,
+ 
+  # docker daemon confinement requires explict allow rule for signal
+  signal (receive) set=(kill,term) peer=/usr/bin/docker,
+
+}
