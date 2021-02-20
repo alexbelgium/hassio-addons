@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 
 #########################
-# MOUNT SMB SHARES v1.0 #
+# MOUNT SMB SHARES v1.1 #
 #########################
 if bashio::config.has_value 'networkdisks'; then
     # Mount CIFS Share if configured and if Protection Mode is active
@@ -24,9 +24,11 @@ if bashio::config.has_value 'networkdisks'; then
     do
       disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
       diskname=${disk##*/} # Get only last part of the name
+      rm -r /mnt/$diskname 2>/dev/null || true # Create dir
       mkdir -p /mnt/$diskname  # Create dir
       chown -R root:root /mnt/$diskname  # Permissions
-      mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD$SMBVERS $disk /mnt/$diskname && \
-      bashio::log.info "... $disk successfully mounted to /mnt/$diskname" || bashio::log.error "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD" # Mount share
+      mount -t cifs -o username=$CIFS_USERNAME,password=${CIFS_PASSWORD}${SMBVERS} $disk /mnt/$diskname \
+      && bashio::log.info "... $disk successfully mounted to /mnt/$diskname" \
+      || bashio::log.error "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD" 
     done || true
 fi
