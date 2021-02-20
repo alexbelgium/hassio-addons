@@ -96,11 +96,11 @@ if bashio::config.has_value 'customUI'; then
     ;;
 
   "qbit-matUI")
-    curl -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip") >/dev/null
+    curl -s -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip") >/dev/null
     ;;
 
   "qb-web")
-    curl -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip") >/dev/null
+    curl -s -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip") >/dev/null
     ;;
   esac
 
