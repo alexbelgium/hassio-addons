@@ -8,7 +8,7 @@ PUID=0
 PGID=0
 
 #########################
-# MOUNT SMB SHARES v1.0 #
+# MOUNT SMB SHARES v1.1 #
 #########################
 if bashio::config.has_value 'networkdisks'; then
     # Mount CIFS Share if configured and if Protection Mode is active
@@ -31,7 +31,7 @@ if bashio::config.has_value 'networkdisks'; then
     do
       disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
       diskname=${disk##*/} # Get only last part of the name
-      rm -r /mnt/$diskname || true # Create dir
+      rm -r /mnt/$diskname 2>/dev/null || true # Create dir
       mkdir -p /mnt/$diskname  # Create dir
       chown -R root:root /mnt/$diskname  # Permissions
       mount -t cifs -o username=$CIFS_USERNAME,password=${CIFS_PASSWORD}${SMBVERS} $disk /mnt/$diskname \
