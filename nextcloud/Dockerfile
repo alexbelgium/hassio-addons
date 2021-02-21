@@ -29,25 +29,17 @@ RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/rep
     && rm -fr /tmp/bashio.tar.gz
 
 # modify/copy files
-RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/*
-
-RUN sed -i "s|config|data/config|g" /etc/cont-init.d/*
-
-RUN sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/*
-
-RUN sed -i "s|config|data/config|g" /etc/services.d/nginx/*
+RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
+    && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
+    && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
+    && sed -i "s|config|data/config|g" /etc/services.d/nginx/*
 
 COPY root/ /
 
-# modify/copy files
-#RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
-#    && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
-#    && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
-#    && sed -i "s|config|data/config|g" /etc/services.d/nginx/* \
-    # Allow UID and GID setting
+# Allow UID and GID setting
 run sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-   && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-   && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
 
 RUN ["chmod", "+x", "/defaults/nextcloud-perms.sh"]
 
