@@ -78,7 +78,7 @@ for addons in $(bashio::config "addon|keys"); do
     #Change all instances of version
     LOGINFO="... $SLUG : updating files" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     files=$(grep -rl ${CURRENT} /data/${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g" # Change all tags in all addon files
-    jq --arg variable "$LASTVERSION" '.version = $variable' /data/${BASENAME}/${SLUG}/options.json | sponge /data/${BASENAME}/${SLUG}/options.json # Replace version tag
+    jq --arg variable "$LASTVERSION" '.version = $variable' /data/${BASENAME}/${SLUG}/config.json | sponge /data/${BASENAME}/${SLUG}/config.json # Replace version tag
 
     #Update changelog
     touch /data/${BASENAME}/${SLUG}/CHANGELOG.md
