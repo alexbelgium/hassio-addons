@@ -5,7 +5,7 @@ VOLUME [ "/data" ]
 
 #Install last version https://github.com/dvershinin/lastversion
 RUN \
-    apk add --no-cache git \
+    apk add --no-cache git moreutils \
     && pip install --upgrade pip \
     && pip install lastversion
 
