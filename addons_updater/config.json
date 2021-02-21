@@ -1,7 +1,6 @@
 {
     "name": "Addons_Updater",
-    "version": "1.6",
-    "upstream": "1.6",
+    "version": "1.7",
     "slug": "updater",
     "description": "Automatic addons update by aligning version tag with upstream releases",
     "url": "https://github.com/alexbelgium/hassio-addons",
