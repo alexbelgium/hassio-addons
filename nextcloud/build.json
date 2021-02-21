@@ -1,10 +1,10 @@
 {
-    "squash": false,
-    "build_from": {
-        "aarch64": "linuxserver/nextcloud:arm64v8-version-",
-        "amd64": "linuxserver/nextcloud:amd64-version-",
-        "armhf": "linuxserver/nextcloud:arm32v7-version-",
-        "armv7": "linuxserver/nextcloud:arm32v7-version-"
-    },
-    "args": {}
+  "squash": false,
+  "build_from": {
+    "aarch64": "linuxserver/nextcloud:arm64v8-version-",
+    "amd64": "linuxserver/nextcloud:amd64-version-",
+    "armhf": "linuxserver/nextcloud:arm32v7-version-",
+    "armv7": "linuxserver/nextcloud:arm32v7-version-"
+  },
+  "args": {}
 }

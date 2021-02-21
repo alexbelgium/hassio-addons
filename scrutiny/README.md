@@ -1,6 +1,6 @@
 # Home assistant add-on: Scrunity
-![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield] ![Privileged required][privileged-shield]
 
+![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield] ![Privileged required][privileged-shield]
 
 ## About
 
@@ -20,6 +20,7 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
+
 Webui can be found at <http://your-ip:8085>. Configurations can be done through the app, except for the following options.
 
 ```yaml
