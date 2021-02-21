@@ -28,6 +28,8 @@ RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/rep
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr /tmp/bashio.tar.gz
 
+COPY root/ /
+
 # modify/copy files
 RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
     && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
@@ -37,8 +39,6 @@ RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
-
-COPY root/ /
 
 RUN ["chmod", "+x", "/defaults/nextcloud-perms.sh"]
 
