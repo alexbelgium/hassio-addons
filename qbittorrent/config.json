@@ -3,36 +3,49 @@
   "version": "14.3.3.99202101191832-7248-da0b276d5ubuntu20.04.1-ls116-rev2",
   "upstream": "14.3.3.99202101191832-7248-da0b276d5ubuntu20.04.1-ls116",
   "slug": "qbittorrent",
-  "description": "qBittorrent is a bittorrent client",
+  "description": "qBittorrent is a bittorrent client",  
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
-  "ports": {
-    "8080/tcp": 8081,
-    "6881/tcp": 6881,
-    "6881/udp": 6881
-  },
-  "ports_description": {
-    "8080/tcp": "Web UI port",
-    "6881/tcp": "Peer port",
-    "6881/udp": "Peer port"
-  },
+    "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+   "ports": {
+      "8080/tcp": 8081,
+      "6881/tcp": 6881,
+      "6881/udp": 6881
+    },
+   "ports_description": {
+      "8080/tcp": "Web UI port",
+      "6881/tcp": "Peer port",
+      "6881/udp": "Peer port"
+    },
+  "map":[
+      "media:rw",
+      "config:rw",
+      "share:rw",
+      "ssl"
+  ],
   "apparmor": true,
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
-  "map": ["media:rw", "config:rw", "share:rw", "ssl"],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
+  "webui": "http://[HOST]:[PORT:8080]",
+  "boot": "auto", 
   "environment": {
-  "WEBUI_PORT": "8080"
+  "WEBUI_PORT": "8080",
+  "PUID": "0",
+  "PGID": "0"
   },
   "options": {
     "ssl": false,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16",
+    "PUID": "0",
+    "PGID": "0",
     "SavePath": "/share/qBittorrent",
     "Username": "admin",
-    "smbv1": false,
-    "PUID": "0",
-    "PGID": "0"
+    "smbv1": false
   },
   "schema": {
     "ssl": "bool",
