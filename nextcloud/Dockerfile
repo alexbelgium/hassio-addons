@@ -26,8 +26,7 @@ RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/rep
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz \
-    || echo "Error, no OCR available"  
+    && rm -fr /tmp/bashio.tar.gz
 
 # modify/copy files
 RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
