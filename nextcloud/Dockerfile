@@ -28,8 +28,6 @@ RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/rep
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr /tmp/bashio.tar.gz
 
-COPY root/ /
-
 # modify/copy files
 RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/*
 
@@ -38,6 +36,8 @@ RUN sed -i "s|config|data/config|g" /etc/cont-init.d/*
 RUN sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/*
 
 RUN sed -i "s|config|data/config|g" /etc/services.d/nginx/*
+
+COPY root/ /
 
 # modify/copy files
 #RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
