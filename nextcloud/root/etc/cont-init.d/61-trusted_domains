@@ -4,15 +4,15 @@
     # Initialization   #
     ####################
 
-LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
+if bashio::config.has_value 'trusted_domains'; then
+LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ" || bashio::log.info "/data/config/www/nextcloud/occ not found"
 if ! bashio::fs.file_exists '/data/config/www/nextcloud/occ'; then
 LAUNCHER=`find / -name "occ" -print -quit`
-fi
+fi || bashio::log.info "occ not found"
 
 bashio::log.info "Currently set trusted domains :"
-$LAUNCHER config:system:get trusted_domains || exit
+$LAUNCHER config:system:get trusted_domains || bashio::log.info "No trusted domain set yet. The first one will be set when doing initial configuration"
 
-if bashio::config.has_value 'trusted_domains'; then
     bashio::log.info "Trusted domains set in the configuration. Refreshing domains."  && \
     ###################################
     # Remove previous trusted domains #
@@ -37,7 +37,9 @@ if bashio::config.has_value 'trusted_domains'; then
         $LAUNCHER config:system:set trusted_domains $i --value=${domain} && \
         ((i=i+1))
     done
-fi
 
 bashio::log.info "Remaining configurated trusted domains :"
-bashio::log.info `$LAUNCHER config:system:get trusted_domains`
+bashio::log.info "$LAUNCHER config:system:get trusted_domains"
+
+fi
+
