@@ -69,16 +69,16 @@ for addons in $(bashio::config "addon|keys"); do
   fi
 
   # Add brackets
-  LASTVERSION='"'$LASTVERSION'"'
+  LASTVERSION='"'${LASTVERSION}'"'
 
   # Update if needed
   if [ ${CURRENT} != ${LASTVERSION} ]; then
-    LOGINFO="... $SLUG : update from $CURRENT to $LASTVERSION" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+    LOGINFO="... $SLUG : update from ${CURRENT} to ${LASTVERSION}" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
 
     #Change all instances of version
     LOGINFO="... $SLUG : updating files" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     files=$(grep -rl ${CURRENT} /data/${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g" # change all tags in all addon files
-    jq --arg LASTVERSION "$LASTVERSION" '.upstream = $LASTVERSION' /data/${BASENAME}/${SLUG}/config.json                 # Correct config upstream
+    jq --arg LASTVERSION "${LASTVERSION}" '.version = ${LASTVERSION}' /data/${BASENAME}/${SLUG}/config.json                 # Correct config upstream
 
     #Update changelog
     touch /data/${BASENAME}/${SLUG}/CHANGELOG.md
@@ -87,8 +87,8 @@ for addons in $(bashio::config "addon|keys"); do
     sed -i "1i\ " /data/${BASENAME}/${SLUG}/CHANGELOG.md
 
     if [ $files != null ]; then
-      git commit -m "Update to $LASTVERSION" $files || true
-      git commit -m "Update to $LASTVERSION" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
+      git commit -m "Update to ${LASTVERSION}" $files || true
+      git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
 
       #Git commit and push
       LOGINFO="... $SLUG : push to github" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
@@ -96,7 +96,7 @@ for addons in $(bashio::config "addon|keys"); do
       git push | echo "No changes"
 
       #Log
-      bashio::log.info "$SLUG updated to $LASTVERSION"
+      bashio::log.info "$SLUG updated from ${CURRENT} to ${LASTVERSION}"
     else
       bashio::log.error "... $SLUG : update failed"
     fi
