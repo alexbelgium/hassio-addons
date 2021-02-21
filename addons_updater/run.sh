@@ -39,7 +39,7 @@ for addons in $(bashio::config "addon|keys"); do
   else
     LOGINFO="... $SLUG : updating ${REPOSITORY}" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     cd "/data/$BASENAME"
-    git pull --rebase || git reset --hard
+    git pull --rebase || git reset --hard; git pull --rebase
   fi
 
   #Define the folder addon
@@ -88,6 +88,7 @@ for addons in $(bashio::config "addon|keys"); do
 
     if [ $files != null ]; then
       git commit -m "Update to ${LASTVERSION}" $files || true
+      git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/config.json|| true
       git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
 
       #Git commit and push
