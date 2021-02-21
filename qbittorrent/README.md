@@ -3,7 +3,7 @@
 
 ## About
 
-Transmission is a bittorrent client.
+qBittorrent is a bittorrent client.
 This addon is based on the [docker image](https://github.com/linuxserver/qbittorrent) from linuxserver.io.
 
 ## Installation
