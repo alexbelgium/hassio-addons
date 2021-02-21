@@ -1,6 +1,6 @@
 ARG BUILD_VERSION
-
-FROM coderaiser/cloudcmd:$BUILD_VERSION
+ARG BUILD_UPSTREAM="15.7.0"
+FROM coderaiser/cloudcmd:$BUILD_UPSTREAM
 
 COPY run.sh /
 

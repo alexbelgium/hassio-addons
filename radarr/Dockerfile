@@ -1,7 +1,8 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
+ARG BUILD_UPSTREAM="3.0.2.4552"
+FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
-FROM ${BUILD_FROM}${BUILD_VERSION}
 
 RUN curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
