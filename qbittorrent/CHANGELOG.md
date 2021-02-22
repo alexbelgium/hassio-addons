@@ -1,3 +1,6 @@
+ 
+## 14.3.3.99202101191832-7248-da0b276d5ubuntu20.04.1-ls117
+- Update to latest version from linuxserver/docker-qbittorrent
 ## 14.3.3-ls116-rev2
 
 - Try a shorter name to allow update showing in supervisor
