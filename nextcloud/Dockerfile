@@ -6,9 +6,6 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 # Added repo to solve issues with some systems that cause error code 1 when fetching apk
 # Add bashio
 RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/repositories \ 
