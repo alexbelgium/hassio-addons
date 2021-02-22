@@ -22,7 +22,7 @@ $LAUNCHER config:system:get trusted_domains || bashio::log.info "No trusted doma
     until [ $i -gt 5 ]
     do
       $LAUNCHER config:system:delete trusted_domains $i && \
-      ((i=i+1))
+      ((i=i+1)) || exit
     done
 
     ###########################
