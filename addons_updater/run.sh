@@ -91,9 +91,11 @@ for addons in $(bashio::config "addon|keys"); do
     sed -i "1i\ " /data/${BASENAME}/${SLUG}/CHANGELOG.md
     LOGINFO="... $SLUG : files updated" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
 
-    git commit -m "Update to ${LASTVERSION}" $files || true
-    git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/config.json|| true
-    git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
+    git add -A # add all modified files
+    git commit -m "Update to ${LASTVERSION}"
+    #git commit -m "Update to ${LASTVERSION}" $files || true
+    #git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/config.json|| true
+    #git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
 
     #Git commit and push
     LOGINFO="... $SLUG : push to github" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
