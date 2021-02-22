@@ -3,7 +3,6 @@
 #permissions
 chown abc:abc \
 	/data/config/nextcloud/config \
-	/data/config/www/nextcloud/config \
 	/data/config/nextcloud/data
 chown -R abc:abc  \
 	/var/lib/nginx
