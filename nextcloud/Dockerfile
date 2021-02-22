@@ -33,11 +33,6 @@ RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
 
 COPY root/ /
 
-# Allow UID and GID setting
-RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
-
 RUN ["chmod", "+x", "/defaults/nextcloud-perms.sh"]
 
 VOLUME ["/share", "/ssl", "/data", "/media"]
