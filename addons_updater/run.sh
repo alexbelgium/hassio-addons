@@ -81,7 +81,8 @@ for addons in $(bashio::config "addon|keys"); do
 
     # Remove " and modify version
     LASTVERSION=${LASTVERSION//\"}
-    CURRENT=${CURRENT//\"} 
+    CURRENT=${CURRENT//\"}
+    if [ ${#LASTVERSION} > 7 ]; then LASTVERSION=${LASTVERSION: -8}; fi
     jq --arg variable $LASTVERSION '.version = $variable' /data/${BASENAME}/${SLUG}/config.json | sponge /data/${BASENAME}/${SLUG}/config.json # Replace version tag
 
     #Update changelog
