@@ -1,7 +1,7 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 
-PUID=${PUID:-911}
-PGID=${PGID:-911}
+PUID=$(bashio::config "PUID")
+PGID=$(bashio::config "PGID")
 
 groupmod -o -g "$PGID" abc
 usermod -o -u "$PUID" abc
