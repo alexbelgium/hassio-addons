@@ -89,22 +89,19 @@ for addons in $(bashio::config "addon|keys"); do
     sed -i "1i\- Update to latest version from $UPSTREAM" /data/${BASENAME}/${SLUG}/CHANGELOG.md
     sed -i "1i\## ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md
     sed -i "1i\ " /data/${BASENAME}/${SLUG}/CHANGELOG.md
+    LOGINFO="... $SLUG : files updated" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
 
-    if [ $files != null ]; then
-      git commit -m "Update to ${LASTVERSION}" $files || true
-      git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/config.json|| true
-      git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
+    git commit -m "Update to ${LASTVERSION}" $files || true
+    git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/config.json|| true
+    git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
 
-      #Git commit and push
-      LOGINFO="... $SLUG : push to github" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-      git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" | echo
-      git push | echo "No changes"
+    #Git commit and push
+    LOGINFO="... $SLUG : push to github" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+    git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" | echo
+    git push | echo "No changes"
 
-      #Log
-      bashio::log.info "$SLUG updated from ${CURRENT} to ${LASTVERSION}"
-    else
-      bashio::log.error "... $SLUG : update failed"
-    fi
+    #Log
+    bashio::log.info "$SLUG updated from ${CURRENT} to ${LASTVERSION}"
 
   else
     bashio::log.info "Addon $SLUG is already up-to-date"
