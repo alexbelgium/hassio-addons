@@ -16,11 +16,12 @@ if bashio::config.has_value 'theme'; then
     && unzip -q /data/release.zip -d /config/ubooquity/themes/ \
     ;;
 
-#  case $CUSTOMUI in
-#  "plextheme")
-#    curl -s -S -J -L -o /data/release.zip https://github.com/FinalAngel/plextheme/archive/master.zip >/dev/null \
-#    && unzip -q /data/release.zip -d /config/ubooquity/themes/ \
-#    ;;
+  case $CUSTOMUI in
+  "plextheme-master")
+    curl -s -S -J -L -o /data/release.zip https://github.com/FinalAngel/plextheme/archive/master.zip >/dev/null \
+    && unzip -q /data/release.zip -d /config/ubooquity/themes/ \
+#    && mv /config/ubooquity/themes/plextheme-master/ /config/ubooquity/themes/
+    ;;
 
   esac
 
