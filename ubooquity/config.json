@@ -47,6 +47,7 @@
     "PUID": "int",
     "PGID": "int",
     "maxmem": "int",
+    "customUI": "list(|comixology2)?",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
