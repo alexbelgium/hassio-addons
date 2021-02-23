@@ -103,7 +103,7 @@ for addons in $(bashio::config "addon|keys"); do
     git push | echo "No changes"
 
     #Log
-    bashio::log.info "$SLUG updated from ${CURRENT} to ${LASTVERSION}"
+    bashio::log.info "Addon $SLUG updated from ${CURRENT} to ${LASTVERSION}"
 
   else
     bashio::log.info "Addon $SLUG is already up-to-date"
