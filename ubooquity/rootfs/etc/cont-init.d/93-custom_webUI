@@ -4,9 +4,9 @@
 # Alternate UI #
 ################
 
-if bashio::config.has_value 'customUI'; then
+if bashio::config.has_value 'theme'; then
   ### Variables
-  CUSTOMUI=$(bashio::config 'customUI')
+  CUSTOMUI=$(bashio::config 'theme')
   bashio::log.info "Alternate theme enabled : $CUSTOMUI. If webui don't work, disable this option"
 
   ### Download WebUI
@@ -26,7 +26,8 @@ if bashio::config.has_value 'customUI'; then
 
   ### Clean files
   rm /data/release.zip || true
+
+  ### Set preference
+  jq --arg variable $CUSTOMUI '.theme = $variable' /config/ubooquity/preferences.json | sponge /config/ubooquity/preferences.json
   
-else
-  rm -rfv /config/ubooquity/themes/* && bashio::log.info "Custom themes files removed" || true
 fi
