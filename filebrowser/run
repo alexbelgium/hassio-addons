@@ -11,6 +11,7 @@ PGID=0
 # MOUNT SMB SHARES v1.1 #
 #########################
 if bashio::config.has_value 'networkdisks'; then
+
   # Mount CIFS Share if configured and if Protection Mode is active
   bashio::log.info 'Mounting smb share(s)...'
 
@@ -28,6 +29,7 @@ if bashio::config.has_value 'networkdisks'; then
 
   # Mounting disks
   for disk in ${MOREDISKS//,/ }; do          # Separate comma separated values
+    ping $disk || {bashio::log.error "Disk unreachable. Check that name is correct (//ip/share)"} # Check if name correct
     disk=$(echo $disk | sed "s,/$,,")        # Remove / at end of name
     diskname=${disk##*/}                     # Get only last part of the name
     rm -r /mnt/$diskname 2>/dev/null || true # Create dir
