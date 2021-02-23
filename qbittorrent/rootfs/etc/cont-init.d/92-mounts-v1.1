@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bashio
 
-#########################
-# MOUNT SMB SHARES v1.1 #
-#########################
+####################
+# MOUNT SMB SHARES #
+####################
 if bashio::config.has_value 'networkdisks'; then
     # Mount CIFS Share if configured and if Protection Mode is active
     bashio::log.info 'Mounting smb share(s)...'
