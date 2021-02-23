@@ -37,7 +37,7 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "maxmem": 120,
+    "maxmem": 200,
     "networkdisks": "//IP/SHARE",
     "cifsusername": "username",
     "cifspassword": "folder",
