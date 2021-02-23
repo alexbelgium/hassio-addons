@@ -29,8 +29,9 @@ if bashio::config.has_value 'networkdisks'; then
 
   # Mounting disks
   for disk in ${MOREDISKS//,/ }; do          # Separate comma separated values
-    disk=$(echo $disk | sed "s,/$,,")        # Remove / at end of name
-    diskname=${disk##*/}                     # Get only last part of the name
+    disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
+    diskname=${disk//\\//} #replace \ with /
+    diskname=${diskname##*/} # Get only last part of the name
     rm -r /mnt/$diskname 2>/dev/null || true # Create dir
     mkdir -p /mnt/$diskname                  # Create dir
     chown -R root:root /mnt/$diskname        # Permissions
