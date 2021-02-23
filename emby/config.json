@@ -1,12 +1,17 @@
 {
   "name": "Emby beta NAS",
-  "version": "4.6.0.26",
-  "upstream": "4.6.0.26",
+  "version": "4.6.0.28",
+  "upstream": "4.6.0.28",
   "slug": "emby_nas",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
   "ports": {
     "8096/tcp": 8096,
     "8920/tcp": null,
@@ -19,12 +24,24 @@
     "7359/udp": "udp server discover (optional)",
     "1900/udp": "dlna (optional)"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "webui": "http://[HOST]:[PORT:8096]",
   "boot": "auto",
   "apparmor": "true",
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
-  "devices": ["/dev/ttyUSB0", "/dev/*", "/dev/sda1"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
+  "devices": [
+    "/dev/ttyUSB0",
+    "/dev/*",
+    "/dev/sda1"
+  ],
   "full_access": true,
   "options": {
     "PUID": 1001,
