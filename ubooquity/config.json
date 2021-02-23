@@ -48,7 +48,7 @@
     "PUID": "int",
     "PGID": "int",
     "maxmem": "int",
-    "theme": "list(default|comixology2)",
+    "theme": "list(default|comixology2|plextheme-master)",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
