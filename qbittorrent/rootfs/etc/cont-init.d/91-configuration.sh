@@ -106,7 +106,7 @@ if bashio::config.has_value 'customUI'; then
 
   ### Install WebUI
   mkdir -p /data/webui/$CUSTOMUI
-  unzip -u -q /data/webui/release.zip -d /data/webui/$CUSTOMUI
+  unzip -q /data/webui/release.zip -d /data/webui/$CUSTOMUI
   rm /data/webui/*.zip
   CUSTOMUIDIR="$(dirname "$(find /data/webui/$CUSTOMUI -iname "public" -type d)")"
   sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
