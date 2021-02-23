@@ -40,12 +40,13 @@ cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
 smbv1: false # Should smbv1 be used instead of 2.1+?
 ```
-# Illustration
---------------
-![books_library|596x500](upload://bzV9qEgjl9iE90bX3hYyaYjdnTz.jpeg) 
 
 ## Support
 Create an issue on the [repository github][repository], or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-ubooquity/283811)
+
+# Illustration
+--------------
+![alt text](https://vaemendis.net/ubooquity/data/images/screenshots/books_library.jpg)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
