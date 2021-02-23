@@ -1,5 +1,9 @@
 #!/usr/bin/with-contenv bashio
 
+######################
+# MOUNT LOCAL SHARES #
+######################
+
 bashio::log.info 'Mounting external hdd...'
 
 # Mount local Share if configured and if Protection Mode is active
