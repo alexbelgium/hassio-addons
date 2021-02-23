@@ -1,7 +1,4 @@
- 
-## 4.6.0.28
-- Update to latest version from linuxserver/docker-emby
- 
+
 ## 4.6.0.28
 - Update to latest version from linuxserver/docker-emby
  
