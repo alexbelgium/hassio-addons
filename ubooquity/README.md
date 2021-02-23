@@ -32,6 +32,7 @@ maxmem: 300 # The quantity of memory allocated to Ubooquity depends on the hardw
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
+smbv1: false # Should smbv1 be used instead of 2.1+?
 ```
 
 ## Support
