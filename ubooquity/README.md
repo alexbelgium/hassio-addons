@@ -23,7 +23,7 @@ Access the admin page at http://<your-ip>:2203/ubooquity/admin and set a passwor
 Then you can access the webui at http://<your-ip>:2202/ubooquity/ (or top left of the admin page)
 This container will automatically scan your files at startup.
 
-Network disk is mounted to /share/storagecifs
+Network disk is mounted to /mnt/sharename
 
 ```yaml
 GUID: user
@@ -36,7 +36,7 @@ smbv1: false # Should smbv1 be used instead of 2.1+?
 ```
 
 ## Support
-Create an issue on the [repository github][repository]
+Create an issue on the [repository github][repository], or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-ubooquity/283811)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
