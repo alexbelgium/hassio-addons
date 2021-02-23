@@ -4,7 +4,7 @@
 ## About
 
 Free, lightweight and easy-to-use home server for your comics and ebooks
-This addon is based on the [docker image](https://github.com/linuxserver/ubooquity) from linuxserver.io.
+This addon is based on the [docker image](https://github.com/linuxserver/docker-ubooquity) from linuxserver.io.
 
 ## Installation
 
