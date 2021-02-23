@@ -37,7 +37,8 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "maxmem": 200,
+    "maxmem": 200, 
+    "theme": "default",
     "networkdisks": "//IP/SHARE",
     "cifsusername": "username",
     "cifspassword": "folder",
@@ -47,7 +48,7 @@
     "PUID": "int",
     "PGID": "int",
     "maxmem": "int",
-    "customUI": "list(|comixology2)?",
+    "theme": "list(default|comixology2)",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
