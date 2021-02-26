@@ -1,9 +1,9 @@
 {
     "build_from": {
-        "armv7": "linuxserver/papermerge:arm32v7-v",
-        "armhf": "linuxserver/papermerge:arm32v7-v",
-        "aarch64": "linuxserver/papermerge:arm64v8-v",
-        "amd64": "linuxserver/papermerge:amd64-v"
+        "armv7": "linuxserver/papermerge:arm32v7-",
+        "armhf": "linuxserver/papermerge:arm32v7-",
+        "aarch64": "linuxserver/papermerge:arm64v8-",
+        "amd64": "linuxserver/papermerge:amd64-"
     }
 }
 
