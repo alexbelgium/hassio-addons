@@ -1,7 +1,7 @@
 {
   "name": "Ubooquity",
-  "version": "2.1.2-ls58-rev2",
-  "upstream": "2.1.2-ls58",
+  "version": "2.1.2-ls59",
+  "upstream": "2.1.2-ls59",
   "slug": "ubooquity",
   "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -37,7 +37,7 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "maxmem": 200, 
+    "maxmem": 200,
     "theme": "default",
     "networkdisks": "//IP/SHARE",
     "cifsusername": "username",
