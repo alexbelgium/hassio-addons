@@ -96,14 +96,14 @@ for addons in $(bashio::config "addon|keys"); do
 
     #Git commit and push 
     git add -A # add all modified files
-    git commit -m "Update to ${LASTVERSION}"
+    git commit -m "Update to ${LASTVERSION}" >/dev/null
     #git commit -m "Update to ${LASTVERSION}" $files || true
     #git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/config.json|| true
     #git commit -m "Update to ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md || true
 
     LOGINFO="... $SLUG : push to github" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" | echo
-    git push | echo "No changes"
+    git push  >/dev/null | echo "No changes"
 
     #Log
     bashio::log.info "Addon $SLUG updated from ${CURRENT} to ${LASTVERSION}"
