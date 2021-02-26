@@ -99,7 +99,7 @@ for addons in $(bashio::config "addon|keys"); do
     git commit -m "Update to ${LASTVERSION}" >/dev/null
 
     LOGINFO="... $SLUG : push to github" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" | echo
+    git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}"
     git push  >/dev/null
 
     #Log
