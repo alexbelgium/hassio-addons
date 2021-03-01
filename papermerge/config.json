@@ -15,7 +15,7 @@
     "8000/tcp": 8000
   },
   "ports_description": {
-    "9000/tcp": "Web UI port (required)"
+    "8000/tcp": "Web UI port (required)"
   },
   "map": [
     "config:rw",
@@ -24,11 +24,9 @@
     "ssl"
   ],
   "webui": "http://[HOST]:[PORT:8000]",
-  "boot": "auto",
   "environment": {
     "DOCKER_MODS": "linuxserver/mods:papermerge-multilangocr"
   },
-  "full_access": true,
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -38,7 +36,6 @@
     "PUID": "int",
     "PGID": "int",
     "ocrlang": "str",
-    "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
