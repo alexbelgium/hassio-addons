@@ -1,7 +1,7 @@
 {
   "name": "Cloudcommander",
-  "version": "15.9.0",
-  "upstream": "15.9.0",
+  "version": "15.9.1",
+  "upstream": "15.9.1",
   "slug": "cloudcommander",
   "description": "Cloud Commander a file manager for the web with console and editor",
   "url": "https://github.com/alexbelgium/hassio-addons",
