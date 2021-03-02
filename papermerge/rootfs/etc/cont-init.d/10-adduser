@@ -34,8 +34,6 @@ User gid:    $(id -g abc)
 -------------------------------------
 "
 
-mkdir -p /config/papermerge || true
-
 chown abc:abc /app
-chown abc:abc /config/papermerge
+chown abc:abc /config
 chown abc:abc /defaults
