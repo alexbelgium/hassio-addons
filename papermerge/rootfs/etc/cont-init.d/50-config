@@ -12,16 +12,16 @@ fi
 
 mkdir -p /data/{media,queue,static}
 
-if [ ! -f "/config/papermerge/settings.py" ]; then
-	cp /defaults/settings.py /config/papermerge/settings.py
+if [ ! -f "/config/settings.py" ]; then
+	cp /defaults/settings.py /config/settings.py
 fi
 
-if [ ! -f "/config/papermerge/papermerge.conf.py" ]; then
-	cp /defaults/papermerge.conf.py /config/papermerge/papermerge.conf.py
+if [ ! -f "/config/papermerge.conf.py" ]; then
+	cp /defaults/papermerge.conf.py /config/papermerge.conf.py
 fi
 
-ln -sf /config/papermerge/settings.py /app/papermerge/settings/production.py
-ln -sf /config/papermerge/papermerge.conf.py /app/papermerge/papermerge.conf.py
+ln -sf /config/settings.py /app/papermerge/settings/production.py
+ln -sf /config/papermerge.conf.py /app/papermerge/papermerge.conf.py
 
 cd /app/papermerge
 python3 ./manage.py makemigrations
@@ -32,7 +32,7 @@ python3 ./manage.py check
 
 mv /defaults/uwsgi.ini /app/papermerge > /dev/null
 
-mkdir -p /config/papermerge || true
+mkdir -p /config || true
 
 # permissions
 chown -R abc:abc \
