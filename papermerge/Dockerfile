@@ -20,6 +20,10 @@ RUN apt-get update \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr /tmp/bashio.tar.gz
 
+#Replace config with /config/papermerge
+RUN sed -i 's=/config=/config/papermerge=g' /etc/cont-init.d/10-adduser \
+    && sed -i 's=/config=/config/papermerge=g' /etc/cont-init.d/50-config
+
 # Copy root filesystem
 COPY rootfs /
 
