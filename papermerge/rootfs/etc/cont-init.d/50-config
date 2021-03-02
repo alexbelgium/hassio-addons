@@ -20,7 +20,7 @@ if [ ! -f "/config/papermerge/papermerge.conf.py" ]; then
 	cp /defaults/papermerge.conf.py /config/papermerge/papermerge.conf.py
 fi
 
-ln -sf /config/papermerge/settings.py /app/papermerge/config/papermerge/settings/production.py
+ln -sf /config/papermerge/settings.py /app/papermerge/settings/production.py
 ln -sf /config/papermerge/papermerge.conf.py /app/papermerge/papermerge.conf.py
 
 cd /app/papermerge
