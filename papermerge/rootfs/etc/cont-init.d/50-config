@@ -1,0 +1,54 @@
+#!/usr/bin/with-contenv bash
+
+export DJANGO_SETTINGS_MODULE=config.settings.production
+
+# configure redis options
+if [[ -v "$REDIS_URL" ]]; then
+    rm -rf /etc/services.d/redis
+    printf '%s\n' '' 'CELERY_BROKER_URL = "redis://$REDIS_URL"' 'CELERY_BROKER_TRANSPORT_OPTIONS = {}' 'CELERY_RESULT_BACKEND = "redis://$REDIS_URL"' >> /defaults/settings.py
+else
+    printf '%s\n' '' 'CELERY_BROKER_URL = "redis://localhost"' 'CELERY_BROKER_TRANSPORT_OPTIONS = {}' 'CELERY_RESULT_BACKEND = "redis://localhost"' >> /defaults/settings.py
+fi
+
+mkdir -p /data/{media,queue,static}
+
+if [ ! -f "/config/papermerge/settings.py" ]; then
+	cp /defaults/settings.py /config/papermerge/settings.py
+fi
+
+if [ ! -f "/config/papermerge/papermerge.conf.py" ]; then
+	cp /defaults/papermerge.conf.py /config/papermerge/papermerge.conf.py
+fi
+
+ln -sf /config/papermerge/settings.py /app/papermerge/config/papermerge/settings/production.py
+ln -sf /config/papermerge/papermerge.conf.py /app/papermerge/papermerge.conf.py
+
+cd /app/papermerge
+python3 ./manage.py makemigrations
+python3 ./manage.py migrate
+
+python3 ./manage.py collectstatic --no-input
+python3 ./manage.py check
+
+mv /defaults/uwsgi.ini /app/papermerge > /dev/null
+
+mkdir -p /config/papermerge || true
+
+# permissions
+chown -R abc:abc \
+	/app/papermerge \
+	/config/papermerge \
+	/data
+
+cat << EOF | s6-setuidgid abc python3 /app/papermerge/manage.py shell
+from django.contrib.auth import get_user_model
+
+# see ref. below
+UserModel = get_user_model()
+
+if not UserModel.objects.filter(username='admin').exists():
+    user = UserModel.objects.create_user('admin', password='admin')
+    user.is_superuser = True
+    user.is_staff = True
+    user.save()
+EOF
