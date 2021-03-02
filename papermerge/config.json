@@ -30,7 +30,8 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "ocrlang": "eng,fra"
+    "ocrlang": "eng,fra",
+    "smbv1": false
   },
   "schema": {
     "PUID": "int",
