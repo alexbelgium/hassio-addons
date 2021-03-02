@@ -4,9 +4,6 @@ ARG BUILD_UPSTREAM="v2.0.0rc38-ls28"
 
 FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
-# Copy root filesystem
-COPY rootfs /
-
 # Add bashio
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -23,6 +20,8 @@ RUN apt-get update \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr /tmp/bashio.tar.gz
 
+# Copy root filesystem
+COPY rootfs /
 
 # MOFIFY DATA PATH
 RUN sed -i "s|/data/media|/share/papermerge/media|g" /defaults/papermerge.conf.py \
