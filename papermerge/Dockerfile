@@ -20,9 +20,6 @@ RUN apt-get update \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr /tmp/bashio.tar.gz
 
-# Copy root filesystem
-COPY rootfs /
-
 # MOFIFY DATA PATH
 RUN sed -i "s|/data/media|/share/papermerge/media|g" /defaults/papermerge.conf.py \
     # && sed -i "s|/app/papermerge/static|/share/papermerge/static|g" /defaults/papermerge.conf.py \
@@ -30,5 +27,8 @@ RUN sed -i "s|/data/media|/share/papermerge/media|g" /defaults/papermerge.conf.p
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+
+# Copy root filesystem
+COPY rootfs / 
 
 VOLUME [ "/data" "/share" ]
