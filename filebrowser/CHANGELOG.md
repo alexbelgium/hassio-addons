@@ -1,3 +1,6 @@
+ 
+## 2.12.0
+- Update to latest version from hurlenko/filebrowser-docker
 - Allow mounting shares named \ip\share in addition to //ip/share
 
 ## 2.11.0
