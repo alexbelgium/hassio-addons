@@ -32,7 +32,7 @@
     "ocrlang": "eng,fra",
     "smbv1": false
   },
-  "apparmor": false,
+  "apparmor": true,
   "schema": {
     "PUID": "int",
     "PGID": "int",
