@@ -35,6 +35,7 @@ RUN \
     && sed -i 's| /config| /data|g' /etc/cont-init.d/* \
     && sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
     && sed -i 's| /config| /data|g' /etc/crontabs/root \
-    && sed -i -e '$a\@reboot /run.sh' /etc/crontabs/root
+    && sed -i -e '$a\@reboot /run.sh' /etc/crontabs/root \
+    && sed -i -e '$a\5 * * * * /run.sh' /etc/crontabs/root
 
 VOLUME [ "/data" ]
