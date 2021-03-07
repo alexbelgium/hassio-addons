@@ -7,6 +7,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.1.24"
 
+VOLUME [ "/data" ]  
+
 RUN \
 #Install bashio
     apt-get update \
@@ -41,4 +43,3 @@ RUN chmod 777 /run.sh
 
 ENTRYPOINT [ "/run.sh" ]
 
-VOLUME [ "/data" ] 
