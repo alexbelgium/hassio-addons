@@ -23,8 +23,6 @@ RUN apt-get update \
 # Copy root filesystem
 COPY rootfs / 
 
-VOLUME [ "/data" ] 
-
 RUN \
     # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
@@ -35,3 +33,4 @@ RUN \
     && sed -i "s|/config|/data/config|g" /etc/cont-init.d/* \
     && sed -i "s|/config|/data/config|g" /defaults/*
 
+VOLUME [ "/data" ] 
