@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.1.24"
 
-VOLUME "/data"
+VOLUME ["/data"]
 
 RUN \
 #Install bashio
