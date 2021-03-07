@@ -1,6 +1,6 @@
 {
   "name": "Scrutiny",
-  "version": "27b923b5-ls10-rev2",
+  "version": "27b923b5-ls10-rev3",
   "upstream": "27b923b5-ls10",
   "slug": "scrutiny",
   "stage": "experimental",
