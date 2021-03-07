@@ -19,7 +19,7 @@
   "ports_description": {
     "8080/tcp": "Web UI port"
   },
-  "devices": ["/dev/nvme0", "/dev/*","/dev/sda","/dev/sdb", "/dev/sda1","/dev/sdb1","/dev/mmcblk0p1"],
+  "devices": ["/dev/sda","/dev/sdb", "/dev/sda1","/dev/sdb1"],
   "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
   "full_access": true, 
   "udev": "true",
