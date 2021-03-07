@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bash
 
-if [ ! -d /data/config ]; then
-  echo "Creating /data/config"
-  mkdir -p /data/config
-  chown -R abc:abc /data/config
+if [ ! -d /config ]; then
+  echo "Creating /config"
+  mkdir -p /config
+  chown -R abc:abc /config
 fi
