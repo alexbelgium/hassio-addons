@@ -33,7 +33,8 @@ RUN \
 # use /data instead of /config for database
     # && grep -rl /etc/cont-init.d/* -e '/config' | xargs sed -i 's=/config=/data=g' \
     # && grep -rl /etc/services.d/* -e '/config' | xargs sed -i 's=/config=/data=g' \
-    && sed -i 's|/config|/data|g' /defaults/scrutiny.yaml \
+    && sed -i 's| /config| /data|g' /defaults/scrutiny.yaml \
+    && sed -i 's| /config| /data|g' /etc/cont-init.d/* \
     && sed -i -e '$a\@reboot /run.sh' /etc/crontabs/root
 
 VOLUME [ "/data" ]
