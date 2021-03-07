@@ -18,7 +18,6 @@
     "8000/tcp": "Web UI port (required)"
   },
   "map": [
-    "config:rw",
     "share:rw",
     "media:rw",
     "ssl"
