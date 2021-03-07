@@ -23,15 +23,16 @@ RUN apt-get update \
 # Copy root filesystem
 COPY rootfs / 
 
-VOLUME [ "/data" "/share" ] 
+VOLUME [ "/data" ] 
 
 # MOFIFY DATA PATH
-RUN sed -i "s|/data/media|/share/papermerge/media|g" /defaults/papermerge.conf.py \
-    # && sed -i "s|/app/papermerge/static|/share/papermerge/static|g" /defaults/papermerge.conf.py \
+RUN \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Change config path
     && mkdir -p /data/config \
-    && sed -i "s|config|data/config|g" /etc/cont-init.d/*
+    && sed -i "s|/config|/data/config|g" /etc/cont-init.d/* \
+    && sed -i "s|/config|/data/config|g" /defaults/*
+
