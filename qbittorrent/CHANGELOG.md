@@ -1,8 +1,8 @@
- 
+
 ## 14.3.3.99202101191832-7248-da0b276d5ubuntu20.04.1-ls118
 - Update to latest version from linuxserver/docker-qbittorrent
 - Allow mounting shares named \ip\share in addition to //ip/share
- 
+
 ## 14.3.3.99202101191832-7248-da0b276d5ubuntu20.04.1-ls117
 - Update to latest version from linuxserver/docker-qbittorrent
 
