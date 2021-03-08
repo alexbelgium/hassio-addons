@@ -1,7 +1,7 @@
 {
   "name": "Scrutiny",
-  "version": "27b923b5-ls10-rev3",
-  "upstream": "27b923b5-ls10",
+  "version": "27b923b5-ls11",
+  "upstream": "27b923b5-ls11",
   "slug": "scrutiny",
   "stage": "experimental",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
