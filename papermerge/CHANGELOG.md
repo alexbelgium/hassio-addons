@@ -1,16 +1,16 @@
 
 ## v2.0.0rc45-ls29
 - Update to latest version from linuxserver/docker-papermerge
- 
+
 ## v2.0.0rc45-ls28
 - Update to latest version from linuxserver/docker-papermerge
- 
+
 ## v2.0.0rc43-ls28
 - Update to latest version from linuxserver/docker-papermerge
- 
+
 ## v2.0.0rc38-ls28
 - Update to latest version from linuxserver/docker-papermerge
- 
+
 ## v2.0.0rc35-ls28
 - Update to latest version from linuxserver/docker-papermerge
 - Enables PUID/GUID options
