@@ -1,3 +1,6 @@
+
+## v2.0.0rc45-ls29
+- Update to latest version from linuxserver/docker-papermerge
  
 ## v2.0.0rc45-ls28
 - Update to latest version from linuxserver/docker-papermerge
