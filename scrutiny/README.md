@@ -21,8 +21,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Due to a bug, the UI doesn't show on screen less than 960px. You need to switch your mobile browser to desktop mode for the UI to show. Here is the upstream bug opened : Actually the developer is aware of the issue. Here is the link : https://github.com/AnalogJ/scrutiny/issues/92
-
+Due to a bug, the UI doesn't show on screen less than 960px. You need to switch your mobile browser to desktop mode for the UI to show. Here is the upstream bug opened : https://github.com/AnalogJ/scrutiny/issues/92
 
 Webui can be found at <http://your-ip:8085>. Configurations can be done through the app, except for the following options.
 
