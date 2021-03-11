@@ -1,6 +1,6 @@
 {
   "name": "Scrutiny",
-  "version": "27b923b5-ls11",
+  "version": "27b923b5-ls11-rev2",
   "upstream": "27b923b5-ls11",
   "slug": "scrutiny",
   "stage": "experimental",
@@ -21,7 +21,6 @@
   },
   "devices": ["/dev/sda","/dev/sdb", "/dev/sda1","/dev/sdb1"],
   "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
-  "full_access": true, 
   "udev": "true",
   "apparmor": "true",
   "map": [
