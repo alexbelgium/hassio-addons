@@ -1,4 +1,5 @@
+- Removed full access flag
 
 ## 27b923b5-ls11
 - Enables PUID/GUID options
-- Dally update of values 
+- Daily update of values 
