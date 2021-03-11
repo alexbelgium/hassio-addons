@@ -7,34 +7,4 @@
 bashio::log.info "Setting permissions" 
 chown -R abc:abc /data
 
-####################
-# Add local drives #
-####################
-
-# sed -i 's|# - /dev/sda| - /dev/sda|g' /config/scrutiny.yaml
-# sed -i 's|# - /dev/sda| - /dev/sda|g' /config/scrutiny/scrutiny.yaml
-
-#port="8080"
-#host="localhost"
-#timeout="30"
-#timeout_argument=""
-
-#if timeout -t 1337 true >/dev/null 2>&1; then
-    timeout_argument="-t"
-#fi
-
-#timeout ${timeout_argument} "${timeout}" \
-#bash -c \
-#"until echo > /dev/tcp/${host}/${port} ; do sleep 0.5; done" \
-#>/dev/null 2>&1 && bash -c "scrutiny-collector-metrics run" \
-#|| bashio::log.error "port $port is not available, local devices won't be available"
-
-##############
-# CHECK PRIV #
-##############
-
-#ip link delete dummy0 type dummy >/dev/null || true
-#ip link add dummy0 type dummy >/dev/null \
-#  || bashio::log.error "Privileged mode is disabled, the addon will stop"; \
-#  bashio::log.error "sending TERM signal"; \
-#  s6-svscanctl -t /var/run/s6/services
+bashio::log.error "due to a bug in upstream image, you must use desktop mode to see the webUI"
