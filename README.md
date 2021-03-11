@@ -83,7 +83,7 @@ https://github.com/alexbelgium/hassio-addons
 - A fork of Sonarr to work with movies like Couchpotato
 - Based on https://hub.docker.com/r/linuxserver/radarr
 
-### &#10003; [Scrutiny](scrutiny/) ![privileged][privileged-shield]
+### &#10003; [Scrutiny](scrutiny/)
 
 - Scrutiny WebUI for smartd S.M.A.R.T monitoring
 - Based on https://hub.docker.com/r/linuxserver/scrutiny
