@@ -26,10 +26,12 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr \
     /tmp/* \
-    # Allow UID and GID setting
+# Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+# Correct visualization bug on mobile
+    && sed -i 's|content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"|content="width=device-width, initial-scale=1.0"|g' /app/scrutiny-web/index.html \
 # use /data instead of /config for database
     && sed -i 's| /config| /data|g' /defaults/scrutiny.yaml \
     && sed -i 's| /config| /data|g' /etc/cont-init.d/* \
