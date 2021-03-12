@@ -24,7 +24,7 @@
   "apparmor": "true",
   "map": [
   ],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]/web/dashboard",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "boot": "auto",
   "environment": {
     "SCRUTINY_API_ENDPOINT": "http://localhost:8080",
