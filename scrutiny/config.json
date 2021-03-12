@@ -13,7 +13,7 @@
     "armhf"
   ],
   "ports": {
-    "8080/tcp": 8085
+    "8080/tcp": 8086
   },
   "ports_description": {
     "8080/tcp": "Web UI port"
