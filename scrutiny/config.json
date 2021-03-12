@@ -4,7 +4,7 @@
   "upstream": "27b923b5-ls11",
   "slug": "scrutiny",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
-  "url": "https://github.com/alexbelgium/hassio-addons",
+  "url": "https://github.com/AnalogJ/scrutiny",
   "startup": "services",
   "arch": [
     "aarch64",
