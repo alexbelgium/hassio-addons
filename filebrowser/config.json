@@ -1,7 +1,7 @@
 {
   "name": "Filebrowser",
-  "version": "2.12.1",
-  "upstream": "2.12.1",
+  "version": "2.13.0",
+  "upstream": "2.13.0",
   "slug": "filebrowser",
   "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files",
   "url": "https://github.com/alexbelgium/hassio-addons",

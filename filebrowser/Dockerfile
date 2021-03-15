@@ -1,5 +1,5 @@
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.12.1"
+ARG BUILD_UPSTREAM="2.13.0"
 FROM hurlenko/filebrowser:v${BUILD_UPSTREAM}
 
 RUN apk add --no-cache \
