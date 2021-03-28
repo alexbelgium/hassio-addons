@@ -1,4 +1,7 @@
 
+## 14.3.4.99202103270406-7346-81a7b0c03ubuntu20.04.1-ls123
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ## 14.3.3.99202103251603-7345-332b173e0ubuntu20.04.1-ls122
 - Update to latest version from linuxserver/docker-qbittorrent ; Rebase to focal.
 
