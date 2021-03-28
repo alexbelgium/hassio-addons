@@ -1,4 +1,7 @@
 
+## 1.20.0
+- Update to latest version from dani-garcia/bitwarden_rs
+
 ## 1.19.0
 - Update to latest version from dani-garcia/bitwarden_rs
 
