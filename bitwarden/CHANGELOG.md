@@ -1,6 +1,6 @@
 
 ## 1.20.0
-- Update to latest version from dani-garcia/bitwarden_rs
+- Update to latest version from dani-garcia/bitwarden_rs (Implemented Send functionality, Updated web vault to 2.19.0, CORS fixes, Updated diagnostics page with more info, Updated dependencies) 
 
 ## 1.19.0
 - Update to latest version from dani-garcia/bitwarden_rs
