@@ -1,7 +1,7 @@
 {
   "name": "Papermerge",
-  "version": "v2.0.0rc48-ls31",
-  "upstream": "v2.0.0rc48-ls31",
+  "version": "v2.0.0-ls32",
+  "upstream": "v2.0.0-ls32",
   "slug": "papermerge",
   "description": "Open source document management system (DMS)",
   "url": "https://github.com/alexbelgium/hassio-addons",
