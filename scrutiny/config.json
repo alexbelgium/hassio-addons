@@ -1,7 +1,7 @@
 {
   "name": "Scrutiny",
-  "version": "27b923b5-ls11-ingress",
-  "upstream": "27b923b5-ls11",
+  "version": "27b923b5-ls12-ingress",
+  "upstream": "27b923b5-ls12",
   "slug": "scrutiny",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
   "url": "https://github.com/AnalogJ/scrutiny",
