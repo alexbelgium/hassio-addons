@@ -1,6 +1,6 @@
 {
   "name": "Scrutiny",
-  "version": "27b923b5-ls12-ingress",
+  "version": "27b923b5-ls12",
   "upstream": "27b923b5-ls12",
   "slug": "scrutiny",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
