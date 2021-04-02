@@ -4,7 +4,5 @@
 # Data usage #
 ##############
 
-bashio::log.info "Setting permissions" 
+bashio::log.info "Setting permissions"
 chown -R abc:abc /data
-
-bashio::log.error "due to a bug in upstream image, you must use desktop mode to see the webUI"
