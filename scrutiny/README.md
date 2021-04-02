@@ -4,8 +4,7 @@
 
 ## About
 
-Scrutiny WebUI for smartd S.M.A.R.T monitoring
-This addon is based on the [docker image](https://hub.docker.com/r/linuxserver/scrutiny) from linuxserver.io.
+[Scrutiny](https://github.com/AnalogJ/scrutiny) is a Hard Drive Health Dashboard & Monitoring solution, merging manufacturer provided S.M.A.R.T metrics with real-world failure rates. This addon is based on the [docker image](https://hub.docker.com/r/linuxserver/scrutiny) from [linuxserver.io](https://www.linuxserver.io/).
 
 ## Installation
 
