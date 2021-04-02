@@ -1,4 +1,7 @@
 
+## 2.1.2-ls60
+- Update to latest version from linuxserver/docker-ubooquity
+
 ## 2.1.2-ls59
 - Update to latest version from linuxserver/docker-ubooquity
 - Allow custom themes : comixology 
