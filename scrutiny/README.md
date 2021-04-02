@@ -42,6 +42,9 @@ keyfile: privkey.pem #sslkeyfile
 --------------
 ![](https://github.com/AnalogJ/scrutiny/raw/master/docs/dashboard.png)
 
+## Support
+Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-scrutiny-smart-dashboard/295747)
+
 https://github.com/alexbelgium/hassio-addons
 
 [repository]: https://github.com/alexbelgium/hassio-addons
