@@ -1,4 +1,7 @@
 
+## 14.3.4.99202104031018-7348-2b6baa609ubuntu20.04.1-ls125
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ## 14.3.4.99202103280404-7347-2be30a50eubuntu20.04.1-ls124
 - Update to latest version from linuxserver/docker-qbittorrent
 
