@@ -20,7 +20,7 @@
   "udev": "true",
   "apparmor": "true",
   "map": [],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
+  "webui": "http://[HOST]:[PORT:8080]",
   "boot": "auto",
   "environment": {
     "SCRUTINY_API_ENDPOINT": "http://localhost:8080",
