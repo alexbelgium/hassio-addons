@@ -49,12 +49,6 @@ RUN \
     && sed -i -e '$a @reboot /run.sh' /etc/crontabs/root \
     && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root \
  # correct url paths  
-    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g' \
- # correct viewport bug
-    && sed -i 's|"lt-md":"(max-width:  959px)"|"lt-md":"(max-width:  100px)" |g' main-es2015.2cbbffb254a0e9c77985.js \
-    && sed -i 's|"lt-md":"(max-width:  959px)"|"lt-md":"(max-width:  100px)" |g' main-es5.2cbbffb254a0e9c77985.js \
-# allow true url for ingress 
-    && grep -rl '/api/' /app | xargs sed -i 's|/api/|api/|g' || true \
-    && grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
+    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
 
 VOLUME [ "/data" ]
