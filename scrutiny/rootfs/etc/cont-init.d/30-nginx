@@ -36,5 +36,5 @@ sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 ######################
 
 # allow true url for ingress 
-grep -rl '/api/' /app | xargs sed -i 's|/api/|api/|g' || true
-grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
+# grep -rl '/api/' /app | xargs sed -i 's|/api/|api/|g' || true
+# grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
