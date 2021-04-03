@@ -39,7 +39,7 @@ RUN \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
 # Correct visualization bug on mobile
-    && sed -i 's|content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"|content="width=980, initial-scale=1.0"|g' /app/scrutiny-web/index.html \
+#    && sed -i 's|content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"|content="width=980, initial-scale=1.0"|g' /app/scrutiny-web/index.html \
 # use /data instead of /config for database
     && sed -i 's| /config| /data|g' /defaults/scrutiny.yaml \
     && sed -i 's| /config| /data|g' /etc/cont-init.d/* \
@@ -49,6 +49,12 @@ RUN \
     && sed -i -e '$a @reboot /run.sh' /etc/crontabs/root \
     && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root \
  # correct url paths  
-    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
-   
+    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g' \
+ # correct viewport bug
+    && sed -i 's|"lt-md":"(max-width:  959px)"|"lt-md":"(max-width:  100px)" |g' main-es2015.2cbbffb254a0e9c77985.js \
+    && sed -i 's|"lt-md":"(max-width:  959px)"|"lt-md":"(max-width:  100px)" |g' main-es5.2cbbffb254a0e9c77985.js \
+# allow true url for ingress 
+    && grep -rl '/api/' /app | xargs sed -i 's|/api/|api/|g' || true \
+    && grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
+
 VOLUME [ "/data" ]
