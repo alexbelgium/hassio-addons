@@ -1,3 +1,4 @@
+- New ingress icon, thanks to @ElVit
 
 ## 27b923b5-ls12
 - Removed full access flag
