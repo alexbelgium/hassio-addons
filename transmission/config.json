@@ -38,8 +38,8 @@
   "apparmor": "true",
   "environment": {},
   "options": {
-    "PUID": 1000,
-    "PGID": 1000,
+    "PUID": 0,
+    "PGID": 0,
     "download_dir": "/share/downloads",
     "incomplete_dir": "/share/incomplete",
     "networkdisks": "//ADDRESS/SHARE",
