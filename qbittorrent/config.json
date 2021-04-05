@@ -11,7 +11,7 @@
     "armv7",
     "armhf"
   ],
-  "ingress": false,
+  "ingress": true,
   "ingress_port": 8099,
   "panel_icon": "mdi:progress-download",
   "ports": {
