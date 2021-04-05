@@ -1,6 +1,6 @@
 {
   "name": "Qbittorrent",
-  "version": "14.3.4.99202104031018-7348-2b6baa609ubuntu20.04.1-ls125-rev2",
+  "version": "14.3.4.99202104031018-7348-2b6baa609ubuntu20.04.1-ls125-rev3",
   "upstream": "14.3.4.99202104031018-7348-2b6baa609ubuntu20.04.1-ls125",
   "slug": "qbittorrent",
   "description": "qBittorrent is a bittorrent client",
@@ -11,7 +11,7 @@
     "armv7",
     "armhf"
   ],
-  "ingress": false,
+  "ingress": true,
   "ingress_port": 8099,
   "panel_icon": "mdi:progress-download",
   "ports": {
