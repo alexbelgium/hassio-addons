@@ -80,8 +80,8 @@ fi
 # Clean data
 sed -i '/AlternativeUIEnabled/d' qBittorrent.conf
 sed -i '/RootFolder/d' qBittorrent.conf
-rm -f -r /data/webui
-mkdir -p /data/webui
+rm -f -r /webui
+mkdir -p /webui
 
 if bashio::config.has_value 'customUI'; then
   ### Variables
@@ -91,24 +91,24 @@ if bashio::config.has_value 'customUI'; then
   ### Download WebUI
   case $CUSTOMUI in
   "vuetorrent")
-    curl -s -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip") >/dev/null \
-    || curl -s -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip") >/dev/null \
+    curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip") >/dev/null \
+    || curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*release.zip") >/dev/null \
     ;;
 
   "qbit-matUI")
-    curl -s -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip") >/dev/null
+    curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip") >/dev/null
     ;;
 
   "qb-web")
-    curl -s -S -J -L -o /data/webui/release.zip $(curl -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip") >/dev/null
+    curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip") >/dev/null
     ;;
   esac
 
   ### Install WebUI
-  mkdir -p /data/webui/$CUSTOMUI
-  unzip -q /data/webui/release.zip -d /data/webui/$CUSTOMUI
-  rm /data/webui/*.zip
-  CUSTOMUIDIR="$(dirname "$(find /data/webui/$CUSTOMUI -iname "public" -type d)")"
+  mkdir -p /webui/$CUSTOMUI
+  unzip -q /webui/release.zip -d /webui/$CUSTOMUI
+  rm /webui/*.zip
+  CUSTOMUIDIR="$(dirname "$(find /webui/$CUSTOMUI -iname "public" -type d)")"
   sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
   sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
 fi
