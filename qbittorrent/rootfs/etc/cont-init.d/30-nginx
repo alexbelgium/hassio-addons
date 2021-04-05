@@ -20,7 +20,7 @@ if bashio::var.has_value "${port}"; then
         mv /etc/nginx/servers/direct-ssl.disabled /etc/nginx/servers/direct.conf
         sed -i "s/%%certfile%%/${certfile}/g" /etc/nginx/servers/direct.conf
         sed -i "s/%%keyfile%%/${keyfile}/g" /etc/nginx/servers/direct.conf
-
+        sed -i "s/http/https/g" /etc/nginx/servers/ingress.conf
     else
         mv /etc/nginx/servers/direct.disabled /etc/nginx/servers/direct.conf
     fi
