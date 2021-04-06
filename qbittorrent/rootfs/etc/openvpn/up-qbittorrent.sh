@@ -7,9 +7,4 @@ if [ -n "${UMASK_SET}" ] && [ -z "${UMASK}" ]; then
   umask ${UMASK_SET}
 fi
 
-declare CONFIG
-CONFIG=$(</config/qBittorrent/qBittorrent.conf)
-CONFIG=$(bashio::jq "${CONFIG}" ".\"bind-address-ipv4\"=\"${1}\"")
-echo "${CONFIG}" > /config/qBittorrent/qBittorrent.conf
-
-exec /usr/bin/transmission-daemon --foreground --config-dir /data/transmission
+exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"
