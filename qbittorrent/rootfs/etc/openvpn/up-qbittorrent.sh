@@ -8,8 +8,8 @@ if [ -n "${UMASK_SET}" ] && [ -z "${UMASK}" ]; then
 fi
 
 declare CONFIG
-CONFIG=$(</data/qbittorrent/settings.json)
+CONFIG=$(</config/qBittorrent/qBittorrent.conf)
 CONFIG=$(bashio::jq "${CONFIG}" ".\"bind-address-ipv4\"=\"${1}\"")
-echo "${CONFIG}" > /data/qbittorrent/settings.json
+echo "${CONFIG}" > /config/qBittorrent/qBittorrent.conf
 
 exec /usr/bin/transmission-daemon --foreground --config-dir /data/transmission
