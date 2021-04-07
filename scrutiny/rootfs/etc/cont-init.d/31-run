@@ -32,13 +32,14 @@ bashio::log.info "$Frequency updates"
 
 case $FREQUENCY in
   "Hourly") 
-    sed -i 's|0 0 * * *|0 * * * *|g' /etc/crontabs/root
+    sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
     ;;
 
   "Daily")
+    sed -i -e '$a 0 0 * * * /run.sh' /etc/crontabs/root
     ;;
 
   "Weekly")
-    sed -i 's|0 0 * * *|0 0 * * 0|g' /etc/crontabs/root
+    sed -i -e '$a 0 0 * * 0 /run.sh' /etc/crontabs/root
     ;;
 esac
