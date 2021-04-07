@@ -51,7 +51,7 @@
     "SavePath": "/share/qBittorrent",
     "Username": "admin",
     "PUID": "0",
-    "PGID": "0",
+    "PGID": "0"
   },
   "schema": {
     "ssl": "bool",
