@@ -21,3 +21,29 @@ grep -rl '"lt-md":"(max-width:  959px)"' /app | xargs sed -i 's|"lt-md":"(max-wi
 # allow true url for ingress 
 grep -rl '/api/' /app | xargs sed -i 's|/api/|api/|g' || true
 grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
+
+################
+# CRON OPTIONS #
+################
+
+### Remove previous values
+rm /config/crontabs/*
+
+### Variables
+FREQUENCY=$(bashio::config 'Updates')
+bashio::log.info "Updates every $FREQUENCY"
+
+### Set frequency
+case $FREQUENCY in
+  "Hourly") 
+    sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
+    ;;
+
+  "Daily")
+    sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
+    ;;
+
+  "Weekly")
+    sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
+    ;;
+esac
