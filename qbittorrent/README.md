@@ -21,7 +21,9 @@ comparison to installing any other Hass.io add-on.
 ## Configuration
 Webui can be found at <http://your-ip:8081>. The default username/password : described in the startup log. Configurations can be done through the app, except for the following options.
 
-Network disk is mounted to /share/storagecifs
+Network disk is mounted to /mnt/storagename
+
+OpenVPN must be enabled from within qBittorrent options
 
 ```yaml
 GUID: user
@@ -37,6 +39,10 @@ smbv1: false # Should smbv1 be used instead of 2.1+?
 networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password, same for all smb shares)
+openvpn_enabled: yes/no
+openvpn_config: must reference an openvpn config files stored in /config/openvpn
+openvpn_username: openvpn username
+openvpn_password": openvpn password
 ```
 
 ## Support
