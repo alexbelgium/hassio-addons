@@ -1,0 +1,57 @@
+{
+  "name": "Double commander",
+  "version": "0.8.2-1-ls48",
+  "slug": "doublecommander",
+  "description": "Double Commander is a free cross platform open source file manager with two panels side by side.",
+  "url": "https://hub.docker.com/r/linuxserver/doublecommander",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "ports": {
+    "3000/tcp": 3000
+  },
+  "map": [
+    "backup:rw",
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:3000]",
+  "boot": "auto",
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
+  "host_network": true,
+  "full_access": true,
+  "environment": {
+    "PUID": "0",
+    "PGID": "0"
+  },
+  "options": {
+    "PUID": 0,
+    "PGID": 0,
+    "localdisks": [
+      "sda1"
+    ],
+    "networkdisks": "<//SERVER/SHARE>",
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?",
+    "localdisks": [
+      "str"
+    ],
+    "networkdisks": "str",
+    "cifsusername": "str",
+    "cifspassword": "str"
+  }
+}
