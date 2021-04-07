@@ -26,9 +26,6 @@ grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
 # CRON OPTIONS #
 ################
 
-### Remove previous values
-rm /config/crontabs/*
-
 ### Variables
 FREQUENCY=$(bashio::config 'Updates')
 bashio::log.info "Updates every $FREQUENCY"
