@@ -29,7 +29,7 @@ grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
 rm /config/crontabs/* || true
 # Align update with options
 FREQUENCY=$(bashio::config 'Updates')
-bashio::log.info "$Frequency updates"
+bashio::log.info "$FREQUENCY updates"
 
 case $FREQUENCY in
   "Hourly") 
