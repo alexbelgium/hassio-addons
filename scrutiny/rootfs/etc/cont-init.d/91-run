@@ -26,12 +26,6 @@ grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
 # CRON OPTIONS #
 ################
 
-# Remove default daily update
-sed -i '$d' /etc/crontabs/root
-
-# Update at boot
-sed -i -e '$a @reboot /run.sh' /etc/crontabs/root
-
 # Align update with options
 FREQUENCY=$(bashio::config 'Updates')
 bashio::log.info "$Frequency updates"
