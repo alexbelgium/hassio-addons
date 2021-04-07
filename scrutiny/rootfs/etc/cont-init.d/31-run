@@ -28,7 +28,7 @@ grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
 
 ### Variables
 FREQUENCY=$(bashio::config 'Updates')
-bashio::log.info "Updates every $FREQUENCY"
+bashio::log.info "$Frequency updates"
 
 ### Set frequency
 case $FREQUENCY in
