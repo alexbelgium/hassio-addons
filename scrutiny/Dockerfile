@@ -47,7 +47,7 @@ RUN \
     && sed -i 's| /config| /data|g' /etc/crontabs/root \
  # analyse local devices at reboot and every hours   
     && sed -i -e '$a @reboot /run.sh' /etc/crontabs/root \
-    && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root \
+ #  && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root \
  # correct url paths  
     && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
 
