@@ -40,10 +40,10 @@ case $FREQUENCY in
     ;;
 
   "Daily")
-    sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
+    sed -i -e '$a 0 0 * * * /run.sh' /etc/crontabs/root
     ;;
 
   "Weekly")
-    sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
+    sed -i -e '$a 0 0 * * 0 /run.sh' /etc/crontabs/root
     ;;
 esac
