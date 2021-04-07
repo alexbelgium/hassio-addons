@@ -49,7 +49,9 @@
     "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16",
     "customUI": "vuetorrent",
     "SavePath": "/share/qBittorrent",
-    "Username": "admin"
+    "Username": "admin",
+    "PUID": "0",
+    "PGID": "0",
   },
   "schema": {
     "ssl": "bool",
