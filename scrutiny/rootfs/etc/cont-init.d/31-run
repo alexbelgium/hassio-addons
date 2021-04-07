@@ -29,6 +29,7 @@ grep -rl 'api/' /app | xargs sed -i 's|api/|./api/|g' || true
 FREQUENCY=$(bashio::config 'Updates')
 
 bashio::log.info "$Frequency updates"
+sed -i '$d' /etc/crontabs/root
 
 case $FREQUENCY in
   "Hourly") 
