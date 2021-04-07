@@ -1,6 +1,6 @@
 {
   "name": "Double commander",
-  "version": "0.8.2-1-ls48",
+  "version": "0.8.2",
   "slug": "doublecommander",
   "description": "Double Commander is a free cross platform open source file manager with two panels side by side.",
   "url": "https://hub.docker.com/r/linuxserver/doublecommander",
