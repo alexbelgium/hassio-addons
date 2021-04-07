@@ -1,6 +1,6 @@
 {
   "name": "Scrutiny",
-  "version": "27b923b5-ls12-rev3",
+  "version": "27b923b5-ls12-rev4",
   "upstream": "27b923b5-ls12",
   "slug": "scrutiny",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
@@ -31,6 +31,7 @@
     "ssl": false,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
+    "Updates": "Hourly", 
     "PUID": 0,
     "PGID": 0
   },
@@ -38,6 +39,7 @@
     "ssl": "bool",
     "certfile": "str",
     "keyfile": "str",
+    "Updates": "list(|Hourly|Daily|Weekly)",
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?"
