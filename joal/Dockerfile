@@ -37,6 +37,9 @@ RUN \
     /var/{cache,log}/* \
     /var/lib/apt/lists/*
 
+# Copy root filesystem
+COPY rootfs /
+
 COPY run.sh /
 RUN chmod 777 /run.sh
 
