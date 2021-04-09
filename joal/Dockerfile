@@ -13,6 +13,7 @@ RUN \
     && apt-get install -y --no-install-recommends \
     wget \
     jq \
+    nginx \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
     && mkdir /tmp/bashio \
