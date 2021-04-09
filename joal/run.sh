@@ -11,5 +11,9 @@ chown -R $(id -u):$(id -g) /data/joal
 rm /data/joal/jack-of*
 
 mv -f /config.json /data/joal/ || true
-
 java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN
+
+# Wait for transmission to become available
+bashio::net.wait_for 8081 localhost 900
+bashio::log.info "Starting NGinx..."
+exec nginx
