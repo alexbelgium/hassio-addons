@@ -1,7 +1,7 @@
 {
   "name": "Ubooquity",
-  "version": "2.1.2-ls60",
-  "upstream": "2.1.2-ls60",
+  "version": "2.1.2-ls61",
+  "upstream": "2.1.2-ls61",
   "slug": "ubooquity",
   "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
   "url": "https://github.com/alexbelgium/hassio-addons",
