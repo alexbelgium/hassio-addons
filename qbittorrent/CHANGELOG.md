@@ -1,3 +1,6 @@
+
+## 14.3.4.99202104090418-7349-789803700ubuntu20.04.1-ls126
+- Update to latest version from linuxserver/docker-qbittorrent
 - Addition of ingress
 - Viewtorrent as default ui
 
