@@ -4,7 +4,7 @@
   "upstream": "1.20.0",
   "slug": "bitwarden",
   "description": "Open source password management solution",
-  "url": "https://github.com/alexbelgium/hassio-addons",
+  "url": "https://github.com/alexbelgium/hassio-addons//tree/master/bitwarden#readme",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7277]",
   "startup": "services",
   "init": false,
