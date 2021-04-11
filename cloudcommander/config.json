@@ -4,7 +4,7 @@
   "upstream": "15.9.4",
   "slug": "cloudcommander",
   "description": "Cloud Commander a file manager for the web with console and editor",
-  "url": "https://github.com/alexbelgium/hassio-addons",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander#readme",
   "arch": [
     "aarch64",
     "amd64",
