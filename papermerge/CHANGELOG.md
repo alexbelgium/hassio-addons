@@ -1,4 +1,7 @@
 
+## v2.0.1-ls34
+- Update to latest version from linuxserver/docker-papermerge
+
 ## v2.0.1-ls33
 - Update to latest version from linuxserver/docker-papermerge
 
