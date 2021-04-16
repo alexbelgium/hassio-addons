@@ -1,4 +1,7 @@
 
+## 2.1.2-ls62
+- Update to latest version from linuxserver/docker-ubooquity
+
 ## 2.1.2-ls61
 - Update to latest version from linuxserver/docker-ubooquity
 
