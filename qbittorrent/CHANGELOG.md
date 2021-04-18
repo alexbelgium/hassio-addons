@@ -1,4 +1,7 @@
 
+## 14.3.4.99202104180633-7350-2c8f322afubuntu20.04.1-ls127
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ## 14.3.4.99202104090418-7349-789803700ubuntu20.04.1-ls126
 - Update to latest version from linuxserver/docker-qbittorrent
 - Addition of ingress
