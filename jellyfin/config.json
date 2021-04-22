@@ -1,5 +1,5 @@
 {
-  "name": "jellyfin NAS",
+  "name": "Jellyfin NAS",
   "version": "10.7.2-1-ls108",
   "upstream": "10.7.2-1-ls108",
   "slug": "jellyfin",
@@ -27,8 +27,8 @@
   "devices": ["/dev/ttyUSB0", "/dev/*", "/dev/sda1"],
   "full_access": true,
   "options": {
-    "PUID": 1001,
-    "PGID": 1001,
+    "PUID": 0,
+    "PGID": 0,
     "networkdisks": "//server/share",
     "cifsusername": "username",
     "cifspassword": "password",
