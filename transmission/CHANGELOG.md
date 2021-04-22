@@ -1,4 +1,7 @@
 
+## 3.00-r2-ls86
+- Update to latest version from linuxserver/docker-transmission
+
 ## 3.00-r2-ls85
 - Update to latest version from linuxserver/docker-transmission
 
