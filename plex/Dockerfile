@@ -31,8 +31,7 @@ RUN apt-get update \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
 
-RUN sed -i "s|/config|/plex|g" /etc/services.d/plex/run \
-    && sed -i "s|/config|/plex|g" /etc/cont-init.d/30-config
+RUN grep -rl '/config' /etc/cont-init.d/ | xargs sed -i 's|/config|/config/plex|g'  #change config folder
 
 # copy local files
 COPY root/ /
