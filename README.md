@@ -54,6 +54,11 @@ https://github.com/alexbelgium/hassio-addons
 - A file manager for the web
 - This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/filebrowser).
 
+### &#10003; [Jellyfin](jellyfin/) ![smb][smb-shield]
+
+- A Free Software Media System that puts you in control of managing and streaming your media.
+- Based on https://hub.docker.com/r/linuxserver/jellyfin
+
 ### &#10003; [Joal](joal/)
 
 - An open source command line RatioMaster with WebUI.
@@ -73,6 +78,11 @@ https://github.com/alexbelgium/hassio-addons
 
 - Piwigo is a photo gallery software for the web
 - Based on https://hub.docker.com/r/linuxserver/piwigo
+
+### &#10003; [Plex](plex/) ![smb][smb-shield]
+
+- Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
+- Based on https://hub.docker.com/r/linuxserver/plex
 
 ### &#10003; [Qbittorrent](qbittorrent/) ![smb][smb-shield]
 
