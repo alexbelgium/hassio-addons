@@ -28,6 +28,6 @@ if bashio::config.has_value 'networkdisks'; then
       mkdir -p /mnt/$diskname  # Create dir
       chown -R root:root /mnt/$diskname  # Permissions
       mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD$SMBVERS $disk /mnt/$diskname && \
-      bashio::log.info "... $disk successfully mounted to /mnt/$diskname" || bashio::log.error "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD" # Mount share
+      bashio::log.info "... $disk successfully mounted to /mnt/$diskname" || bashio::log.error "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD . Please check your remote share path, the username and password, and try to check the smbv1 box in option if your share is using smb v1" # Mount share
     done
 fi
