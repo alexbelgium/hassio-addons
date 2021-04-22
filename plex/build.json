@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "armv7": "linuxserver/plex:arm32v7-v",
-    "armhf": "linuxserver/plex:arm32v7-v",
-    "aarch64": "linuxserver/plex:arm64v8-v",
-    "amd64": "linuxserver/plex:amd64-v"
+    "armv7": "linuxserver/plex:arm32v7-",
+    "armhf": "linuxserver/plex:arm32v7-",
+    "aarch64": "linuxserver/plex:arm64v8-",
+    "amd64": "linuxserver/plex:amd64-"
   }
 }
