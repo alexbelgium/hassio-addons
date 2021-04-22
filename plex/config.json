@@ -1,0 +1,64 @@
+{
+  "name": "plex beta NAS",
+  "version": "1.22.3.4392-d7c624def-ls44",
+  "upstream": "1.22.3.4392-d7c624def-ls44",
+  "slug": "plex_nas",
+  "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "startup": "services",
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "ports": {
+    "1900/udp": 1900,
+    "3005/tcp": 3005,
+    "8324/tcp": 8324,
+    "32400/tcp": 32400,
+    "32410/udp": 32410,
+    "32412/udp": 32412,
+    "32413/udp": 32413,
+    "32414/udp": 32414,
+    "32469/tcp": 32469,
+    "33400/tcp": 33400,
+    "33443/tcp": 33443
+  },
+  "ports_description": {
+    "1900/udp": "Plex DLNA Server",
+    "3005/tcp": "Plex Home Theater via Plex Companion",
+    "8324/tcp": "Plex for Roku via Plex Companion",
+    "32400/tcp": "Plex Media Server Interface",
+    "32410/udp": "GDM network discovery",
+    "32412/udp": "GDM network discovery",
+    "32413/udp": "GDM network discovery",
+    "32414/udp": "GDM network discovery",
+    "32469/tcp": "Plex DLNA Server",
+    "33400/tcp": "WebTools",
+    "33443/tcp": "WebTools"
+  },
+  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "webui": "http://[HOST]:[PORT:32400]/web",
+  "boot": "auto",
+  "apparmor": "true",
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "devices": ["/dev/ttyUSB0", "/dev/*", "/dev/sda1"],
+  "full_access": true,
+  "environment": {
+    "VERSION": "docker"
+  },
+  "options": {
+    "PUID": 0,
+    "PGID": 0,
+    "networkdisks": "//server/share",
+    "cifsusername": "username",
+    "cifspassword": "password",
+    "smbv1": false
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?",
+    "smbv1": "bool"
+  }
+}
