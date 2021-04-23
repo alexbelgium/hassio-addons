@@ -31,6 +31,7 @@ RUN apt-get update \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     && sed -i "s|/config|/config/jellyfin|g" /etc/services.d/jellyfin/run \
+    && sed -i "s|/config|/config/jellyfin|g" /etc/cont-init.d/10-adduser \
     && sed -i "s|/config|/config/jellyfin|g" /etc/cont-init.d/30-config
 
 # copy local files
