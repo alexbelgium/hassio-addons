@@ -24,8 +24,18 @@ if bashio::config.true 'openvpn_enabled'; then
   bashio::log.info "openvpn correctly set, please modify manually qbittorrent options to select it"
 
   # CONFIGURE QBITTORRENT
-  port="$1"
+  
+  # Define preferences line
+  cd /config/qBittorrent/
+  LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
+  LINE=$((LINE + 1))
+  # Remove previous line and bind tun0
+  sed -i '/Interface/d' qBittorrent.conf
+  sed -i "$LINE i\Connection\\\Interface=tun0" qBittorrent.conf
+  sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
 
+  # Other configs
+  port="$1"
   QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
   if [ -f "$QBT_CONFIG_FILE" ]; then
       # if Connection address line exists
@@ -44,4 +54,5 @@ else
   # Ensure no redirection by removing the direction tag
   bashio::log.info "Direct connection without VPN enabled"
   sed -i '/PortRangeMin/d' $QBT_CONFIG_FILE
+  sed -i '/Interface/d' $QBT_CONFIG_FILE
 fi
