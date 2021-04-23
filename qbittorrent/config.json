@@ -33,7 +33,11 @@
   "apparmor": true,
   "privileged": [
     "SYS_ADMIN",
-    "DAC_READ_SEARCH"
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
+  ],
+  "devices": [
+    "/dev/net/tun"
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "boot": "auto",
