@@ -12,7 +12,7 @@ if bashio::config.true 'openvpn_enabled'; then
   # CONFIGURE OPENVPN
   openvpn_config=$(bashio::config 'openvpn_config')
 
-  cp "/config/openvpn/${openvpn_config}.ovpn" /etc/openvpn/config.ovpn ||   bashio::log.error "openvpn config file not found in /config/openvpn/${openvpn_config}.ovpn"
+  cp "/config/openvpn/${openvpn_config}" /etc/openvpn/config.ovpn ||   bashio::log.error "openvpn config file not found in /config/openvpn/${openvpn_config}"
 
   openvpn_username=$(bashio::config 'openvpn_username')
   echo "${openvpn_username}" > /etc/openvpn/credentials
