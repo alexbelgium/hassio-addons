@@ -1,6 +1,6 @@
 {
   "name": "Jellyfin NAS",
-  "version": "10.7.2-1-ls108-dev1",
+  "version": "10.7.2-1-ls108-dev2",
   "upstream": "10.7.2-1-ls108",
   "slug": "jellyfin",
   "stage": "experimental", 
