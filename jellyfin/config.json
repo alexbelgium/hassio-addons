@@ -10,7 +10,7 @@
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "ports": {
     "8096/tcp": 8096,
-    "8920/tcp": null,
+    "8920/tcp": 8920,
     "7359/udp": null,
     "1900/udp": null
   },
