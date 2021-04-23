@@ -20,5 +20,6 @@ if bashio::config.true 'openvpn_enabled'; then
   sed -i 's/auth-user-pass.*/auth-user-pass \/etc\/openvpn\/credentials/g' /etc/openvpn/config.ovpn
 
   sed -i "1a\/etc/openvpn/up-qbittorrent.sh \"\${4}\" &\n" /etc/openvpn/up.sh
+  bashio::log.info "openvpn correctly set, please modify manually qbittorrent options to select it"
 
 fi
