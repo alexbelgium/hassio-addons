@@ -3,7 +3,7 @@
   "version": "1.22.3.4392-d7c624def-ls44",
   "upstream": "1.22.3.4392-d7c624def-ls44",
   "slug": "plex_nas",
-  "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices." 
+  "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
