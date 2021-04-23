@@ -3,7 +3,7 @@
 WEBUI_PORT=${WEBUI_PORT:-8080}
 
 if bashio::config.true 'openvpn_enabled'; then
-    exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh
+    exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh
 else
     exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"
 fi
