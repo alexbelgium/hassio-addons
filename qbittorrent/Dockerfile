@@ -48,7 +48,7 @@ RUN \
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
     # chmod openvpn files
-    && chmod +x /etc/openvpn/up-qbittorrent.sh
+    && chmod +x /etc/openvpn/up.sh
 
 VOLUME [ "/data" ]
 
