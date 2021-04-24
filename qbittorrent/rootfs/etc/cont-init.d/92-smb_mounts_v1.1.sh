@@ -42,7 +42,7 @@ if bashio::config.has_value 'networkdisks'; then
       if [ $? == 0 ]; then
         mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD,vers=2.1 $disk /mnt/$diskname && \
         bashio::log.info "... $disk successfully mounted to /mnt/$diskname" && \
-        bashio::log.error "Your smb share uses smbv3."
+        bashio::log.error "Your smb share uses smbv2.1, please remove smbv1 option."
         true
       fi
 
