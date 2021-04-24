@@ -29,5 +29,19 @@ if bashio::config.has_value 'networkdisks'; then
       chown -R root:root /mnt/$diskname  # Permissions
       mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD$SMBVERS $disk /mnt/$diskname && \
       bashio::log.info "... $disk successfully mounted to /mnt/$diskname" || bashio::log.error "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD . Please check your remote share path, the username and password, and try to check the smbv1 box in option if your share is using smb v1" # Mount share
+      
+      # Test smbv1
+      if [ $? == 0 ]; then
+        mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD,vers=1.0 $disk /mnt/$diskname && \
+        bashio::log.info "... $disk successfully mounted to /mnt/$diskname" && \
+        bashio::log.error "Your smb share uses smbv1. Please check the relevant option in the addons options." # Mount share
+      fi
+
+      # Test smbv3
+      if [ $? == 0 ]; then
+        mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD,vers=3.0 $disk /mnt/$diskname && \
+        bashio::log.info "... $disk successfully mounted to /mnt/$diskname" && \
+        bashio::log.error "Your smb share uses smbv3."
+      fi
     done
 fi
