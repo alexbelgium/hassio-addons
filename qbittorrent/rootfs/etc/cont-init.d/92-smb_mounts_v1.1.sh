@@ -35,7 +35,6 @@ if bashio::config.has_value 'networkdisks'; then
         mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD,vers=1.0 $disk /mnt/$diskname && \
         bashio::log.info "... $disk successfully mounted to /mnt/$diskname" && \
         bashio::log.error "Your smb share uses smbv1. Please check the relevant option in the addons options." # Mount share
-        true
       fi
 
       # Test smbv2.1
@@ -43,7 +42,6 @@ if bashio::config.has_value 'networkdisks'; then
         mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD,vers=2.1 $disk /mnt/$diskname && \
         bashio::log.info "... $disk successfully mounted to /mnt/$diskname" && \
         bashio::log.error "Your smb share uses smbv2.1, please remove smbv1 option."
-        true
       fi
 
       # Test smbv3
@@ -51,7 +49,6 @@ if bashio::config.has_value 'networkdisks'; then
         mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD,vers=3.0 $disk /mnt/$diskname && \
         bashio::log.info "... $disk successfully mounted to /mnt/$diskname" && \
         bashio::log.error "Your smb share uses smbv3."
-        true
       fi
 
       # Test ntlmv2
@@ -59,7 +56,6 @@ if bashio::config.has_value 'networkdisks'; then
         mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD,sec=ntlmv2 $disk /mnt/$diskname && \
         bashio::log.info "... $disk successfully mounted to /mnt/$diskname" && \
         bashio::log.error "Your smb share requires ntlmv2."
-        true
       fi
 
       # if still fail 
