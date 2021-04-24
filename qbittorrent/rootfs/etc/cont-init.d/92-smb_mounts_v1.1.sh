@@ -50,7 +50,7 @@ if bashio::config.has_value 'networkdisks'; then
       if [ $? == 0 ]; then
         mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD,sec=ntlmv2 $disk /mnt/$diskname && \
         bashio::log.info "... $disk successfully mounted to /mnt/$diskname" && \
-        bashio::log.error "Your smb share uses smbv3."
+        bashio::log.error "Your smb share requires ntlmv2."
         true
       fi
 
