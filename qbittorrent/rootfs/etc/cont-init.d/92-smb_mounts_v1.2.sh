@@ -12,8 +12,8 @@ if bashio::config.has_value 'networkdisks'; then
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
 
-    if bashio::config.has_value 'domain'; then 
-      DOMAIN=",domain=$(bashio::config 'domain')" 
+    if bashio::config.has_value 'cifsdomain'; then 
+      DOMAIN=",domain=$(bashio::config 'cifsdomain')" 
     else
       DOMAIN=""
     fi
