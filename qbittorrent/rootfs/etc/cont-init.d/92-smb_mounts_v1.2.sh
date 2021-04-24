@@ -59,9 +59,12 @@ if bashio::config.has_value 'networkdisks'; then
         bashio::log.info "... $disk successfully mounted to /mnt/$disk name with ntlmv2 and smbv3"
       fi
 
-      # if still fail 
       if [ $? != 0 ]; then
+        # message if still fail
         bashio::log.critical "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD . Please check your remote share path, the username and password, and try to check the smbv1 box in option if your share is using smb v1" # Mount share
+      else
+        # test write permissions
+        touch /mnt/$diskname/testaze && rm /mnt/$diskname/testaze || bashio::log.critical "Unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" 
       fi
 
     done
