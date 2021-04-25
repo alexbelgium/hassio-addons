@@ -30,6 +30,7 @@ for addons in $(bashio::config "addon|keys"); do
   BETA=$(bashio::config "addon[${addons}].beta")
   FULLTAG=$(bashio::config "addon[${addons}].fulltag")
   BASENAME=$(basename "https://github.com/$REPOSITORY")
+  DATE=${date +”%d-%b-%Y”}
 
   #Create or update local version
   if [ ! -d /data/$BASENAME ]; then
@@ -90,7 +91,7 @@ for addons in $(bashio::config "addon|keys"); do
     #Update changelog
     touch /data/${BASENAME}/${SLUG}/CHANGELOG.md
     sed -i "1i - Update to latest version from $UPSTREAM" /data/${BASENAME}/${SLUG}/CHANGELOG.md
-    sed -i "1i ## ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md
+    sed -i "1i ## ${LASTVERSION} (${DATE})" /data/${BASENAME}/${SLUG}/CHANGELOG.md
     sed -i "1i " /data/${BASENAME}/${SLUG}/CHANGELOG.md
     LOGINFO="... $SLUG : files updated" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
 
@@ -103,9 +104,9 @@ for addons in $(bashio::config "addon|keys"); do
     git push  >/dev/null
 
     #Log
-    bashio::log.warning "Addon $SLUG updated from ${CURRENT} to ${LASTVERSION}"
+    bashio::log.warning "$SLUG updated from ${CURRENT} to ${LASTVERSION}"
 
   else
-    bashio::log.info "Addon $SLUG is already up-to-date"
+    bashio::log.info "$SLUG is already up-to-date"
   fi
 done
