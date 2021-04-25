@@ -98,7 +98,7 @@ https://github.com/alexbelgium/hassio-addons
 
 - Based on https://hub.docker.com/r/linuxserver/qbittorrent
 
-### &#10003; [Radarr](radarr/) ![smb][smb-shield] ![stale][stale-shield]
+### &#10003; [Radarr](radarr/) ![smb][smb-shield]
 
 - A fork of Sonarr to work with movies like Couchpotato
 - Based on https://hub.docker.com/r/linuxserver/radarr
