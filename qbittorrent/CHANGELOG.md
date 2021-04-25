@@ -1,4 +1,3 @@
-
 ## 14.3.4.99202104250604-7352-b2a43eeffubuntu20.04.1-ls128
 - Update to latest version from linuxserver/docker-qbittorrent
 - Clarified steps to check in case of smb mount fail
