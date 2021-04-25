@@ -27,6 +27,11 @@ https://github.com/alexbelgium/hassio-addons
 ### &#10003; [Addons Updater](addons_updater/)
 
 - Automatic addons update by aligning version tag with github upstream releases
+- 
+### &#10003; [Bazarr](bazarr/) ![smb][smb-shield]
+
+- Companion application to Sonarr and Radarr to download subtitles
+- Based on https://hub.docker.com/r/linuxserver/bazarr
 
 ### &#10003; [Bitwarden](bitwarden/)
 
@@ -53,6 +58,11 @@ https://github.com/alexbelgium/hassio-addons
 
 - A file manager for the web
 - This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/filebrowser).
+
+### &#10003; [Jackett](jackett/) ![smb][smb-shield]
+
+- Translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
+- Based on https://hub.docker.com/r/linuxserver/jackett
 
 ### &#10003; [Jellyfin](jellyfin/) ![smb][smb-shield]
 
@@ -92,6 +102,11 @@ https://github.com/alexbelgium/hassio-addons
 
 - A fork of Sonarr to work with movies like Couchpotato
 - Based on https://hub.docker.com/r/linuxserver/radarr
+
+### &#10003; [Sonarr](sonarr/) ![smb][smb-shield]
+
+- Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them.
+- Based on https://hub.docker.com/r/linuxserver/sonarr
 
 ### &#10003; [Scrutiny](scrutiny/)
 
