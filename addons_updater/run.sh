@@ -30,7 +30,7 @@ for addons in $(bashio::config "addon|keys"); do
   BETA=$(bashio::config "addon[${addons}].beta")
   FULLTAG=$(bashio::config "addon[${addons}].fulltag")
   BASENAME=$(basename "https://github.com/$REPOSITORY")
-  DATE=${date +”%d-%b-%Y”}
+  DATE="$(date '+%d-%m-%Y')"
 
   #Create or update local version
   if [ ! -d /data/$BASENAME ]; then
