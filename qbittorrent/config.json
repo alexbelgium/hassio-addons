@@ -36,7 +36,6 @@
     "DAC_READ_SEARCH",
     "NET_ADMIN"
   ],
-  "full_access": true,
   "devices": [
     "/dev/net/tun"
   ],
