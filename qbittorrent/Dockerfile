@@ -16,6 +16,7 @@ RUN \
     curl \
     cifs-utils \
     nginx \
+    coreutils \
     openvpn \
     \    
     # Install tempio
