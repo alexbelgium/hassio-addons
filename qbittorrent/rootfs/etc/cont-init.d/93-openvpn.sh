@@ -34,7 +34,6 @@ if bashio::config.true 'openvpn_enabled'; then
   # CONFIGURE QBITTORRENT #
   #########################
   
-  port="$1"
   QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
   # Define preferences line
   cd /config/qBittorrent/
