@@ -1,5 +1,5 @@
 #!/bin/sh
-/etc/openvpn/up-transmission.sh "${4}" &
+/etc/openvpn/up-qbittorrent.sh "${4}" &
 
 # Copyright (c) 2006-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
