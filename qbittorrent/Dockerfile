@@ -46,7 +46,10 @@ RUN \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \ 
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf 
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
+    # Prepare openvpn
+    && touch /etc/openvpn/up.sh \
+    && chmod +x /etc/openvpn/up.sh
 
 VOLUME [ "/data" ]
 
