@@ -31,7 +31,7 @@ LATEST_RELEASE=$(curl -s -L https://api.github.com/repos/wdaan/vuetorrent/releas
               | grep "browser_download_url.*zip" \
               | cut -d : -f 2,3 \
               | tr -d \" \
-              | xargs) # to trim whitespaceq
+              | xargs) >/dev/null # to trim whitespaceq
 
 curl -O -J -L $LATEST_RELEASE >/dev/null
 unzip -o vuetorrent.zip -d / >/dev/null 
