@@ -21,13 +21,16 @@ if bashio::config.true 'openvpn_enabled'; then
   echo "${openvpn_username}" > /etc/openvpn/credentials
   openvpn_password=$(bashio::config 'openvpn_password')
   echo "${openvpn_password}" >> /etc/openvpn/credentials
+  sed -i 's/auth-user-pass.*/auth-user-pass \/etc\/openvpn\/credentials/g' /etc/openvpn/config.ovpn
   
+  # Permissions
   chmod 600 /etc/openvpn/credentials
   chmod 755 /etc/openvpn/up.sh
-  chmod 755 /etc/openvpn/down.sh 
-
-  sed -i 's/auth-user-pass.*/auth-user-pass \/etc\/openvpn\/credentials/g' /etc/openvpn/config.ovpn
+  chmod 755 /etc/openvpn/down.sh
+  chmod 755 /etc/openvpn/up-qbittorrent.sh  
   chmod +x /etc/openvpn/up.sh
+  chmod +x /etc/openvpn/up-qbittorrent.sh
+
   bashio::log.info "openvpn correctly set, qbittorrent will run tunnelled through openvpn"
 
   #########################
