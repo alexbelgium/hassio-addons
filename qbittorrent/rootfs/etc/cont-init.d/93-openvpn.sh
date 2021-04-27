@@ -28,6 +28,7 @@ if bashio::config.true 'openvpn_enabled'; then
   bashio::log.info "openvpn correctly set, qbittorrent will run tunnelled through openvpn"
   
   sed -i "1a\/etc/openvpn/up-qbittorrent.sh \"\${4}\" &\n" /etc/openvpn/up.sh
+  chmod +x /etc/openvpn/up.sh
 
   #########################
   # CONFIGURE QBITTORRENT #
@@ -46,7 +47,6 @@ if bashio::config.true 'openvpn_enabled'; then
       # Remove previous line and bind tun0
       sed -i '/Interface/d' qBittorrent.conf
       sed -i "$LINE i\Connection\\\Interface=tun0" qBittorrent.conf
-      sed -i "$LINE i\Connection\\\InterfaceAddress=" qBittorrent.conf
       sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
   else
       bashio::log.error "qBittorrent config file doesn't exist, openvpn must be added manually to qbittorrent options "
@@ -61,7 +61,6 @@ else
   sed -i '/PortRangeMin/d' qBittorrent.conf
   sed -i '/Interface/d' qBittorrent.conf 
   sed -i "$LINE i\Connection\\\Interface=" qBittorrent.conf
-  sed -i "$LINE i\Connection\\\InterfaceAddress=" qBittorrent.conf
   sed -i "$LINE i\Connection\\\InterfaceName=" qBittorrent.conf
   bashio::log.info "Direct connection without VPN enabled"
 fi
