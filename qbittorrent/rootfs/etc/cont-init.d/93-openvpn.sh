@@ -28,8 +28,6 @@ if bashio::config.true 'openvpn_enabled'; then
   bashio::log.info "openvpn correctly set, qbittorrent will run tunnelled through openvpn"
   
   sed -i "1a\/etc/openvpn/up-qbittorrent.sh \"\${4}\" &\n" /etc/openvpn/up.sh
-  
-  chmod +x /etc/openvpn/up.sh
 
   #########################
   # CONFIGURE QBITTORRENT #
