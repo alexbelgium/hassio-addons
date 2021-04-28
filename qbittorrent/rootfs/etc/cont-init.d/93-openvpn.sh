@@ -62,7 +62,5 @@ else
   # Ensure no redirection by removing the direction tag
   cd /config/qBittorrent/
   sed -i '/Interface/d' qBittorrent.conf 
-  sed -i "$LINE i\Connection\\\Interface=" qBittorrent.conf
-  sed -i "$LINE i\Connection\\\InterfaceName=" qBittorrent.conf
   bashio::log.info "Direct connection without VPN enabled"
 fi
