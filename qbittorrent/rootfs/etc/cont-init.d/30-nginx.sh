@@ -33,6 +33,6 @@ LATEST_RELEASE=$(curl -s -L https://api.github.com/repos/wdaan/vuetorrent/releas
               | tr -d \" \
               | xargs) >/dev/null
 
-curl -O -J -L $LATEST_RELEASE >/dev/null
+curl -s -S -O -J -L $LATEST_RELEASE >/dev/null
 unzip -o vuetorrent.zip -d / >/dev/null 
 rm /vuetorrent.zip >/dev/null
