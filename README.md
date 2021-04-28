@@ -27,7 +27,7 @@ https://github.com/alexbelgium/hassio-addons
 ### &#10003; [Addons Updater](addons_updater/)
 
 - Automatic addons update by aligning version tag with github upstream releases
-- 
+
 ### &#10003; [Bazarr](bazarr/) ![smb][smb-shield]
 
 - Companion application to Sonarr and Radarr to download subtitles
