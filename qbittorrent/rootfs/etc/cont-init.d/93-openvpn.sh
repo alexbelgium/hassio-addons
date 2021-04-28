@@ -47,7 +47,7 @@ if bashio::config.true 'openvpn_enabled'; then
   if [ -f "$QBT_CONFIG_FILE" ]; then 
       # Remove previous line and bind tun0
       sed -i '/Interface/d' qBittorrent.conf
-      sed -i '/PortRangeMin/d' qBittorrent.conf     
+      # sed -i '/PortRangeMin/d' qBittorrent.conf     
       # Bind tun0
      # sed -i "$LINE i\Connection\\\Interface=tun0" qBittorrent.conf
      # sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
