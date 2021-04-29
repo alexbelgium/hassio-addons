@@ -28,6 +28,12 @@ else
 fi
 
 ################
+# Correct Port #
+################
+sed -i '/PortRangeMin/d' qBittorrent.conf
+sed -i "$LINE i\Connection\\\PortRangeMin=6881" qBittorrent.conf
+
+################
 # SSL CONFIG   #
 ################
 
