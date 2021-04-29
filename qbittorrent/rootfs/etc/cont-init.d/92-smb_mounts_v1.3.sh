@@ -41,12 +41,12 @@ if bashio::config.has_value 'networkdisks'; then
       fi
 
       #If mounting failed, tries to mount as NFS
-      if [ $MOUNTED = true ]; then
-        bashio::log.info "... mounts as NFS"
-        disknfs=$(echo $disk | sed 's/^\///')
-        disknfs=$(echo $disknfs | sed 's/^\///')
-        mount -t nfs $disknfs /mnt/$diskname 2>ERRORCODE && MOUNTED=true || MOUNTED=false
-      fi
+      #if [ $MOUNTED = true ]; then
+      #  bashio::log.info "... mounts as NFS"
+      #  disknfs=$(echo $disk | sed 's/^\///')
+      #  disknfs=$(echo $disknfs | sed 's/^\///')
+      #  mount -t nfs $disknfs /mnt/$diskname 2>ERRORCODE && MOUNTED=true || MOUNTED=false
+      #fi
       
         # if Fail test different smb and sec versions
       if [ $MOUNTED = false ]; then
