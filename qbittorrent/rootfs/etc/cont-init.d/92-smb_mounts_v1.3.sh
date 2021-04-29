@@ -46,7 +46,7 @@ if bashio::config.has_value 'networkdisks'; then
       
       # if Fail test different smb and sec versions
       if [ $MOUNTED = false ]; then
-        for SMBVERS in ",vers=3.0" ",vers=1.0" ",vers=2.1" ",vers=2.0" ",vers=3.0.2"
+        for SMBVERS in ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=2.0" ",vers=3.0.2"
         do
            mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN$SMBVERS $disk /mnt/$diskname 2>/dev/null && MOUNTED=true && break  || MOUNTED=false
            for SECVERS in ",sec=ntlmi" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=ntlm" ",sec=krb5i" ",sec=krb5"
