@@ -89,6 +89,7 @@ sed -i '/AlternativeUIEnabled/d' qBittorrent.conf
 sed -i '/RootFolder/d' qBittorrent.conf
 rm -f -r /webui
 mkdir -p /webui
+chown abc:abc /webui
 
 if bashio::config.has_value 'customUI'; then
   ### Variables
