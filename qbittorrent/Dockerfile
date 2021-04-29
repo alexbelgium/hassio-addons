@@ -17,6 +17,7 @@ RUN \
         jq \
         curl \
         cifs-utils \
+        keyutils \ # needed for krb5
         nginx \
         coreutils \
         openvpn \
