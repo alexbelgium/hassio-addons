@@ -31,30 +31,26 @@ if bashio::config.has_value 'networkdisks'; then
       chown -R root:root /mnt/$diskname
       
       #Tries to mount with default options
-      bashio::log.info "... trying to mount with default options"
+      bashio::log.info "... trying to mount network disk"
       mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname 2>ERRORCODE && MOUNTED=true || MOUNTED=false
 
       #If mounting failed, tries to force uid/gid 0/0
       if [ $MOUNTED = false ]; then
-        bashio::log.info "... trying to force uid 0 gid 0"
         mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,uid=0,gid=0,forceuid,forcegid,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname 2>ERRORCODE && MOUNTED=true || MOUNTED=false
       fi
       
       #If mounting failed, no force uid/gid 0/0
       if [ $MOUNTED = false ]; then
-        bashio::log.info "... trying to force uid 0 gid 0"
         mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,noforceuid,noforcegid,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname 2>ERRORCODE && MOUNTED=true || MOUNTED=false
       fi
       
       # if Fail test different smb and sec versions
       if [ $MOUNTED = false ]; then
-        for SMBVERS in ",vers=2.1" ",vers=3.0" ",vers=1.0" ",vers=3.1.1" ",vers=2.0" ",vers=3.0.2"
+        for SMBVERS in ",vers=3.0" ",vers=1.0" ",vers=2.1" ",vers=2.0" ",vers=3.0.2"
         do
-           bashio::log.warning "... trying to mount with $SMBVERS"
            mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN$SMBVERS $disk /mnt/$diskname 2>/dev/null && MOUNTED=true && break  || MOUNTED=false
            for SECVERS in ",sec=ntlmi" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=ntlm" ",sec=krb5i" ",sec=krb5"
            do
-                bashio::log.warning "... trying to mount with $SMBVERS $SECVERS"
                 mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN$SMBVERS$SECVERS $disk /mnt/$disk name 2>/dev/null && MOUNTED=true && break 2 && break || MOUNTED=false
            done
         done
