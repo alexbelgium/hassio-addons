@@ -72,7 +72,6 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "cifsdomain": "str?",
-    "smbv1": "bool?",
     "openvpn_enabled": "bool?",
     "openvpn_config": "str?",
     "openvpn_username": "str?",
