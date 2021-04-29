@@ -37,7 +37,7 @@ if bashio::config.has_value 'networkdisks'; then
       if [ $? != 0 ]; then
       #Tries to force uid/gid 0/0
         bashio::log.info "... trying to force uid 0 gid 0"
-        mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,uid=0,gid=0,forceuid,forcegid,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN $disk /mnt/$diskname
+        mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,uid=0,gid=0,forceuid,forcegid,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname
 
         # if Fail test different smb and sec versions
         while [ $? -ne 0 ]; do
