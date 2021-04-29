@@ -56,7 +56,7 @@ if bashio::config.has_value 'networkdisks'; then
         touch /mnt/$diskname/testaze && rm /mnt/$diskname/testaze || bashio::log.fatal "Unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" 
       else
         # message if still fail
-        bashio::log.fatal "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD. Please check your remote share path, username, password, domain" # Mount share
+        bashio::log.fatal "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD. Please check your remote share path, username, password, domain, try putting 0 in UID and GID" # Mount share
       fi
 
     done
