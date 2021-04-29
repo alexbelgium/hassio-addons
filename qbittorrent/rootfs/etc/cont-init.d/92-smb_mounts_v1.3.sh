@@ -33,7 +33,6 @@ if bashio::config.has_value 'networkdisks'; then
       chown -R root:root /mnt/$diskname
       
       #Tries to mount with default options
-      bashio::log.info "... trying to mount network disk"
       mount -t cifs -o rw,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname 2>ERRORCODE && MOUNTED=true || MOUNTED=false
       
       # if Fail test different smb and sec versions
