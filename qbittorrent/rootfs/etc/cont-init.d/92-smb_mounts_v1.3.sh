@@ -11,7 +11,6 @@ if bashio::config.has_value 'networkdisks'; then
     MOREDISKS=$(bashio::config 'networkdisks')
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
-    MOUNTOPTIONS=""
 
     if bashio::config.has_value 'cifsdomain'; then 
       DOMAIN=",domain=$(bashio::config 'cifsdomain')" 
@@ -45,12 +44,10 @@ if bashio::config.has_value 'networkdisks'; then
         for SMBVERS in ",vers=2.1" ",vers=3.0" ",vers=1.0" ",vers=3.1.1" ",vers=2.0" ",vers=3.0.2"
         do
            bashio::log.warning "... trying to mount with $SMBVERS"
-           MOUNTOPTIONS=" $SMBVERS"
            mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN$SMBVERS $disk /mnt/$diskname && break
            for SECVERS in ",sec=ntlmi" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=ntlm" ",sec=krb5i" ",sec=krb5"
            do
                 bashio::log.warning "... trying to mount with $SMBVERS $SECVERS"
-                MOUNTOPTIONS=" $SMBVERS $SECVERS"
                 mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN$SMBVERS$SECVERS $disk /mnt/$diskname && break 2 && break
            done
         done
@@ -59,7 +56,7 @@ if bashio::config.has_value 'networkdisks'; then
       # Messages
       if [ $? = 0 ]; then
         #Test write permissions
-        touch /mnt/$diskname/testaze && rm /mnt/$diskname/testaze && bashio::log.info "... $disk successfully mounted to /mnt/$diskname$MOUNTOPTIONS" || bashio::log.fatal "Unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" 
+        touch /mnt/$diskname/testaze && rm /mnt/$diskname/testaze && bashio::log.info "... $disk successfully mounted to /mnt/$diskname" || bashio::log.fatal "Unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" 
       else
         # message if still fail
         bashio::log.fatal "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD. Please check your remote share path, username, password, domain, try putting 0 in UID and GID" # Mount share
