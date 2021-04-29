@@ -35,13 +35,13 @@ if bashio::config.has_value 'networkdisks'; then
       mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname && MOUNTFAIL=false || MOUNTED=false
 
       #If mounting failed, tries to force uid/gid 0/0
-      if [ $MOUNTFAIL = true ]; then
+      if [ $MOUNTED = true ]; then
         bashio::log.info "... trying to force uid 0 gid 0"
         mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,uid=0,gid=0,forceuid,forcegid,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname && MOUNTFAIL=false || MOUNTED=false
       fi
 
         # if Fail test different smb and sec versions
-      if [ $MOUNTFAIL=true ]; then
+      if [ $MOUNTED = false ]; then
         for SMBVERS in ",vers=2.1" ",vers=3.0" ",vers=1.0" ",vers=3.1.1" ",vers=2.0" ",vers=3.0.2"
         do
            bashio::log.warning "... trying to mount with $SMBVERS"
