@@ -30,7 +30,7 @@ if bashio::config.has_value 'networkdisks'; then
       chown -R root:root /mnt/$diskname
       
       #Tries to mount with default options
-      #mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN $disk /mnt/$diskname
+      #mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,uid=0,gid=0,forceuid,forcegid,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN $disk /mnt/$diskname
       
       # if Fail test different smb and sec versions
       while [ $? -ne 0 ]; do
