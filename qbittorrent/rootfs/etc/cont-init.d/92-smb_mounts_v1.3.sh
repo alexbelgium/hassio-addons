@@ -33,27 +33,28 @@ if bashio::config.has_value 'networkdisks'; then
       bashio::log.info "... trying to mount with default options"
       mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN $disk /mnt/$diskname
 
-      #Tries to force uid/gid 0/0
+      #If mounting failed
       if [ $? != 0 ]; then
+      #Tries to force uid/gid 0/0
         bashio::log.info "... trying to force uid 0 gid 0"
         mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,uid=0,gid=0,forceuid,forcegid,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN $disk /mnt/$diskname
-      fi
 
-      # if Fail test different smb and sec versions
-      while [ $? -ne 0 ]; do
-            # Declare all possible options
-            declare -a SMBVERSION=( ",vers=2.1" ",vers=3.0" ",vers=1.0" ",vers=3.1.1" ",vers=2.0" ",vers=3.0.2" )
-            declare -a SECVERSION=( ",sec=ntlmi" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=ntlm" ",sec=krb5i" ",sec=krb5" )
+        # if Fail test different smb and sec versions
+        while [ $? -ne 0 ]; do
+                # Declare all possible options
+                declare -a SMBVERSION=( ",vers=2.1" ",vers=3.0" ",vers=1.0" ",vers=3.1.1" ",vers=2.0" ",vers=3.0.2" )
+                declare -a SECVERSION=( ",sec=ntlmi" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=ntlm" ",sec=krb5i" ",sec=krb5" )
 
-            # Test all options until successful
-            for SMBVERS in ${SMBVERSION[@]}; do
-                for SECVERS in ${SECVERSION[@]}; do
-                     bashio::log.warning "... trying to mount with $SMBVERS $SECVERS "
-                     mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN$SMBVERS $disk /mnt/$diskname || \
-                     mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN$SMBVERS$SECVERS $disk /mnt/$diskname
+                # Test all options until successful
+                for SMBVERS in ${SMBVERSION[@]}; do
+                    for SECVERS in ${SECVERSION[@]}; do
+                         bashio::log.warning "... trying to mount with $SMBVERS $SECVERS "
+                         mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN$SMBVERS $disk /mnt/$diskname || \
+                         mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}"$DOMAIN$SMBVERS$SECVERS $disk /mnt/$diskname
+                    done
                 done
-            done
-      done
+        done
+      fi
 
       # Messages
       if [ $? = 0 ]; then
