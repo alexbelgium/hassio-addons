@@ -35,11 +35,17 @@ if bashio::config.has_value 'networkdisks'; then
       mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname 2>ERRORCODE && MOUNTED=true || MOUNTED=false
 
       #If mounting failed, tries to force uid/gid 0/0
-      if [ $MOUNTED = true ]; then
+      if [ $MOUNTED = false ]; then
         bashio::log.info "... trying to force uid 0 gid 0"
         mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,uid=0,gid=0,forceuid,forcegid,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname 2>ERRORCODE && MOUNTED=true || MOUNTED=false
       fi
-
+      
+      #If mounting failed, no force uid/gid 0/0
+      if [ $MOUNTED = false ]; then
+        bashio::log.info "... trying to force uid 0 gid 0"
+        mount -t cifs -o rw,iocharset=utf8,file_mode=0777,dir_mode=0777,noforceuid,noforcegid,forceuid,forcegid,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$DOMAIN $disk /mnt/$diskname 2>ERRORCODE && MOUNTED=true || MOUNTED=false
+      fi
+      
       #If mounting failed, tries to mount as NFS
       #if [ $MOUNTED = true ]; then
       #  bashio::log.info "... mounts as NFS"
