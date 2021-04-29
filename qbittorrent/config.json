@@ -69,7 +69,7 @@
     "Username": "str?",
     "customUI": "list(|vuetorrent|qbit-matUI|qb-web)?",
     "networkdisks": "str?",
-    "smbv1": "str?",
+    "smbv1": "bool?",
     "cifsusername": "str?",
     "cifspassword": "str?",
     "cifsdomain": "str?",
