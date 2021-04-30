@@ -39,7 +39,6 @@
   "apparmor": "true",
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "devices": ["/dev/ttyUSB0", "/dev/*", "/dev/sda1"],
-  "full_access": true,
   "environment": {
     "VERSION": "docker", 
     "PUID": 0,
@@ -57,7 +56,6 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
