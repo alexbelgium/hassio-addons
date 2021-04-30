@@ -35,7 +35,8 @@
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH",
-    "NET_ADMIN"
+    "NET_ADMIN", 
+    "DAC_OVERRIDE" 
   ],
   "devices": [
     "/dev/net/tun"
