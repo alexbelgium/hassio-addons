@@ -41,7 +41,9 @@
   "devices": ["/dev/ttyUSB0", "/dev/*", "/dev/sda1"],
   "full_access": true,
   "environment": {
-    "VERSION": "docker"
+    "VERSION": "docker", 
+    "PUID": 0,
+    "PGID": 0
   },
   "options": {
     "PUID": 0,
