@@ -42,7 +42,6 @@
     "/dev/*",
     "/dev/sda1"
   ],
-  "full_access": true,
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -55,7 +54,6 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
