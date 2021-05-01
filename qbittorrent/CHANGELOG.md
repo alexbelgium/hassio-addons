@@ -1,4 +1,4 @@
-- Use of DNS 8.8.8.8 and 1.1.1.1 if vpn is not used to avoid spamming DNS ad removers
+- Use of DNS 8.8.8.8 and 1.1.1.1 if vpn is not used to avoid spamming local DNS (like adguard)
 
 ## 14.3.4.99202104300534-7354-9f8a6e8fbubuntu20.04.1-ls131 (01-05-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
