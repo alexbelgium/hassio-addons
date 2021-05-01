@@ -1,4 +1,6 @@
 #!/bin/sh
+
+# launch qbittorrent
 /etc/openvpn/up-qbittorrent.sh "${4}" &
 
 # Copyright (c) 2006-2007 Gentoo Foundation
@@ -78,6 +80,10 @@ if [ -n "${RC_SVCNAME}" ]; then
 		/etc/init.d/${RC_SVCNAME} --quiet start
 	fi
 fi
+
+###############
+# ALLOW WEBUI #
+###############
 
 /usr/sbin/ip route add 10.0.0.0/8 via 172.30.32.1
 /usr/sbin/ip route add 192.168.0.0/16 via 172.30.32.1
