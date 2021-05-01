@@ -15,7 +15,6 @@
   },
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
-  "full_access": true,
   "webui": "http://[HOST]:[PORT:6767]",
   "boot": "auto",
   "environment": {
@@ -24,20 +23,15 @@
   },
   "options": {
     "PUID": 0,
-    "PGID": 0,
-    "localdisks": ["sda1"],
-    "networkdisks": "<//SERVER/SHARE>",
-    "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "PGID": 0
   },
   "schema": {
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "localdisks": ["str"],
-    "networkdisks": "str",
-    "cifsusername": "str",
-    "cifspassword": "str"
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?"
   },
   "snapshot_exclude": ["**/Backups/*", "**/logs/*", "**/MediaCover/*"]
 }
