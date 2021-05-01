@@ -32,6 +32,7 @@
   ],
   "apparmor": true,
   "host_network": false,
+  "full_access": true, 
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH",
