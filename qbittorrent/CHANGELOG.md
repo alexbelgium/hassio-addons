@@ -1,6 +1,9 @@
+- Use of DNS 8.8.8.8 and 1.1.1.1 if vpn is not used to avoid spamming DNS ad removers
 
 ## 14.3.4.99202104300534-7354-9f8a6e8fbubuntu20.04.1-ls131 (01-05-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
+- Robust the smb script to test for several common options
+- smbv1 bit is not used anymore
 
 ## 14.3.4.99202104281424-7353-7dd9e7343ubuntu20.04.1-ls130 (29-04-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
