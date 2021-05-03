@@ -4,9 +4,23 @@
 # DNS SETTING #
 ###############
 
-DNS="# Avoid usage of local dns such as adguard home or pihole\n"
-DNS="${DNS}nameserver 8.8.8.8\n"
-DNS="${DNS}nameserver 1.1.1.1"
-printf "${DNS}" > /etc/resolv.conf
-chmod 644 /etc/resolv.conf
+# Avoid usage of local dns such as adguard home or pihole\n"
 
+if bashio::config.has_value 'DNS_server'; then
+    # Define variables 
+    DNSSERVER=$(bashio::config 'DNS_server')
+    DNS=""
+    DNSLIST=""
+
+    # Get DNS servers
+    for DNSSERVER in ${DNS_server//,/ }  # Separate comma separated values
+      do
+        DNS="${DNS}nameserver $DNSSERVER\n"
+        DNSLIST="$DNSSERVER $DNSLIST"
+      done
+
+    # Write resolv.conf
+    printf "${DNS}" > /etc/resolv.conf
+    chmod 644 /etc/resolv.conf
+    bashio::log.info 'DNS SERVERS set to $DNSLIST'
+fi
