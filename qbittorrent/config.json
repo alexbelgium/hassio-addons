@@ -20,7 +20,7 @@
     "6881/udp": 6881
   },
   "ports_description": {
-    "8080/tcp": "Web UI port",
+    "8080/tcp": "Web UI port (nor required for Ingress)",
     "6881/tcp": "Peer port",
     "6881/udp": "Peer port"
   },
