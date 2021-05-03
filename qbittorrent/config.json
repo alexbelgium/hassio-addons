@@ -55,6 +55,7 @@
     "customUI": "vuetorrent",
     "SavePath": "/share/qBittorrent",
     "Username": "admin",
+    "DNS_server": "8.8.8.8,1.1.1.1"
     "PUID": "0",
     "PGID": "0"
   },
@@ -68,6 +69,7 @@
     "SavePath": "str?",
     "Username": "str?",
     "customUI": "list(|vuetorrent|qbit-matUI|qb-web)?",
+    "DNS_server": "str?",
     "networkdisks": "str?",
     "smbv1": "bool?",
     "cifsusername": "str?",
