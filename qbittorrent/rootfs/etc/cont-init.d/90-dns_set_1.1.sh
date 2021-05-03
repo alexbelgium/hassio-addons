@@ -13,10 +13,10 @@ if bashio::config.has_value 'DNS_server'; then
     DNSLIST=""
 
     # Get DNS servers
-    for DNSSERVER in ${DNS_server//,/ }  # Separate comma separated values
+    for server in ${DNSSERVER//,/ }  # Separate comma separated values
       do
-        DNS="${DNS}nameserver $DNSSERVER\n"
-        DNSLIST="$DNSSERVER $DNSLIST"
+        DNS="${DNS}nameserver $server\n"
+        DNSLIST="$server $DNSLIST"
       done
 
     # Write resolv.conf
