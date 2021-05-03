@@ -1,4 +1,4 @@
-- Use of DNS 8.8.8.8 and 1.1.1.1 if vpn is not used to avoid spamming local DNS (like adguard)
+- New option : use specific DNS instead of the router ones to avoid spamming, especially useful if using adguard home/pihole. Keep blank to use the router dns. 
 
 ## 14.3.4.99202104300534-7354-9f8a6e8fbubuntu20.04.1-ls131 (01-05-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
