@@ -41,8 +41,7 @@
     "theme": "default",
     "networkdisks": "//IP/SHARE",
     "cifsusername": "username",
-    "cifspassword": "folder",
-    "smbv1": "false"
+    "cifspassword": "folder"
   },
   "schema": {
     "PUID": "int",
@@ -52,7 +51,7 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
-    "smbv1": "bool",
+    "smbv1": "bool?",
     "TZ": "str?"
   }
 }
