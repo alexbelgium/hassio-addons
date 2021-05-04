@@ -49,8 +49,7 @@
     "PGID": 0,
     "networkdisks": "//server/share",
     "cifsusername": "username",
-    "cifspassword": "password",
-    "smbv1": false
+    "cifspassword": "password"
   },
   "schema": {
     "PUID": "int",
@@ -59,6 +58,6 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
-    "smbv1": "bool"
+    "smbv1": "bool?"
   }
 }
