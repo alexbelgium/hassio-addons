@@ -37,9 +37,6 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "localdisks": [
-      "sda1"
-    ],
     "networkdisks": "<//SERVER/SHARE>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
@@ -48,11 +45,9 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "localdisks": [
-      "str"
-    ],
-    "networkdisks": "str",
-    "cifsusername": "str",
-    "cifspassword": "str"
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?",
+    "cifsdomain": "str?"
   }
 }
