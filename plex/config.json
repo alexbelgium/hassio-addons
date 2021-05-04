@@ -1,12 +1,17 @@
 {
   "name": "Plex NAS",
-  "version": "1.22.3.4392-d7c624def-ls44",
-  "upstream": "1.22.3.4392-d7c624def-ls44",
+  "version": "1.22.3.4392-d7c624def-ls45",
+  "upstream": "1.22.3.4392-d7c624def-ls45",
   "slug": "plex_nas",
   "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
   "ports": {
     "1900/udp": 1900,
     "3005/tcp": 3005,
@@ -33,14 +38,26 @@
     "33400/tcp": "WebTools",
     "33443/tcp": "WebTools"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "webui": "http://[HOST]:[PORT:32400]/web",
   "boot": "auto",
   "apparmor": "true",
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
-  "devices": ["/dev/ttyUSB0", "/dev/*", "/dev/sda1"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
+  "devices": [
+    "/dev/ttyUSB0",
+    "/dev/*",
+    "/dev/sda1"
+  ],
   "environment": {
-    "VERSION": "docker", 
+    "VERSION": "docker",
     "PUID": "0",
     "PGID": "0"
   },
