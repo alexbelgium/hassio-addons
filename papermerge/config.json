@@ -29,8 +29,7 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "ocrlang": "eng,fra",
-    "smbv1": false
+    "ocrlang": "eng,fra"
   },
   "apparmor": true,
   "schema": {
@@ -40,7 +39,7 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
-    "smbv1": "bool",
+    "smbv1": "bool?",
     "TZ": "str?"
   }
 }
