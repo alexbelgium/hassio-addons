@@ -1,7 +1,7 @@
 {
   "name": "Jellyfin NAS",
-  "version": "10.7.2-1-ls110",
-  "upstream": "10.7.2-1-ls110",
+  "version": "10.7.5-1-ls111",
+  "upstream": "10.7.5-1-ls111",
   "slug": "jellyfin",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "url": "https://github.com/alexbelgium/hassio-addons",
