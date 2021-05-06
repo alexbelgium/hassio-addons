@@ -15,7 +15,8 @@
   "init": false,
   "map": ["ssl"],
   "ports": {
-    "9000/tcp": 9000
+    "9000/tcp": 9000,
+    "8000/tcp": null
   },
   "ports_description": {
     "9000/tcp": "Web UI port",
@@ -28,12 +29,12 @@
     "ssl": false,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-	"password": "default"
+    "password": "default"
   },
   "schema": {
     "ssl": "bool",
     "certfile": "str",
     "keyfile": "str",
-	"password": "str"
+    "password": "str"
   }
 }
