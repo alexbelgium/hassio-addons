@@ -18,9 +18,8 @@ bashio::log.info "Starting Portainer..."
 CURRENTPASSWORD=""
 PASSWORD=$(bashio::config 'password')
 
-if ! bashio::fs.file_exists "/data/portainer_password"; then
+touch "/data/portainer_password"
 CURRENTPASSWORD=$( cat /data/portainer_password )
-fi
 
 if [ $CURRENTPASSWORD != $PASSWORD ]; then
 rm /data/portainer.db
