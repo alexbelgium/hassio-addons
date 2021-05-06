@@ -10,6 +10,7 @@ declare portainer_protocol=http
 # Generate Ingress configuration
 if bashio::config.true 'ssl'; then
 portainer_protocol=https
+fi
 
 bashio::var.json \
     interface "$(bashio::addon.ip_address)" \
@@ -21,4 +22,4 @@ bashio::var.json \
     | tempio \
         -template /etc/nginx/templates/ingress.gtpl \
         -out /etc/nginx/servers/ingress.conf
-fi
+
