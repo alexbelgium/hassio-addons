@@ -94,6 +94,11 @@ https://github.com/alexbelgium/hassio-addons
 - Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
 - Based on https://hub.docker.com/r/linuxserver/plex
 
+### &#10003; [Portainer](portainer/)
+
+- Forked from : https://github.com/hassio-addons/addon-portainer
+- Updated to latest version, add webui, ssl, password management 
+
 ### &#10003; [Qbittorrent](qbittorrent/) ![smb][smb-shield]
 
 - Based on https://hub.docker.com/r/linuxserver/qbittorrent
