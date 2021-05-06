@@ -1,0 +1,4 @@
+- ssl
+- ingress with nginx 
+- password setting through addon option
+- webui
