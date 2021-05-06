@@ -15,10 +15,18 @@ bashio::log.info "Starting Portainer..."
 # SET PASSWORD #
 ################
 
-if ! bashio::fs.file_exists "/data/portainer_password"; then
-fi
- 
+CURRENTPASSWORD=""
 PASSWORD=$(bashio::config 'password')
+
+if ! bashio::fs.file_exists "/data/portainer_password"; then
+CURRENTPASSWORD=$( cat /data/portainer_password )
+fi
+
+if [ $CURRENTPASSWORD != $PASSWORD ]; then
+rm /data/portainer.db
+bashio::log.warning "... password changed, database reseted"
+fi
+
 echo -n $PASSWORD > /data/portainer_password
 options+=(--admin-password-file /data/portainer_password)
 bashio::log.info "... password set to $PASSWORD"
