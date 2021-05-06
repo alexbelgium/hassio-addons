@@ -30,7 +30,7 @@ if bashio::config.true 'ssl'; then
   #set variables
   CERTFILE="/ssl/$(bashio::config 'certfile')"
   KEYFILE="/ssl/$(bashio::config 'keyfile')"
-  options+=(--ssl 'true')
+  options+=(--ssl)
   options+=(--sslcert /ssl/$CERTFILE)
   options+=(--sslkey /ssl/$KEYFILE)
   bashio::log.info "... ssl activated"
