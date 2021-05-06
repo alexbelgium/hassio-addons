@@ -26,11 +26,11 @@ bashio::log.info "... password set to $PASSWORD"
 
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
-  bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+  bashio::log.info "... ssl enabled. If webui don't work, disable ssl or check your certificate paths"
   #set variables
   CERTFILE="/ssl/$(bashio::config 'certfile')"
   KEYFILE="/ssl/$(bashio::config 'keyfile')"
-  options+=(--ssl true)
+  options+=(--ssl 'true')
   options+=(--sslcert /ssl/$CERTFILE)
   options+=(--sslkey /ssl/$KEYFILE)
   bashio::log.info "... ssl activated"
