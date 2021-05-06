@@ -6,7 +6,7 @@
   "description": "Manage your Docker environment with ease",
   "url": "https://github.com/hassio-addons/addon-portainer",
   "advanced": true,
-  "ingress": true,
+  "ingress": false,
   "ingress_port": 1337,
   "startup": "services",
   "panel_icon": "mdi:docker",
