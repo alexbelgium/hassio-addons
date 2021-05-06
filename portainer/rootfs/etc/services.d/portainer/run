@@ -15,9 +15,12 @@ bashio::log.info "Starting Portainer..."
 # SET PASSWORD #
 ################
 
+if ! bashio::fs.file_exists "/data/portainer_password"; then
+fi
+ 
 PASSWORD=$(bashio::config 'password')
-echo -n $PASSWORD > /tmp/portainer_password
-options+=(--admin-password-file /tmp/portainer_password)
+echo -n $PASSWORD > /data/portainer_password
+options+=(--admin-password-file /data/portainer_password)
 bashio::log.info "... password set to $PASSWORD"
 
 ##############
