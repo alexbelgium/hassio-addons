@@ -21,7 +21,7 @@ PASSWORD=$(bashio::config 'password')
 touch "/data/portainer_password"
 CURRENTPASSWORD=$( cat /data/portainer_password )
 
-if [ $CURRENTPASSWORD !== $PASSWORD ]; then
+if [ "$CURRENTPASSWORD" != "$PASSWORD" ]; then
 rm /data/portainer.db
 bashio::log.warning "... password changed, database reseted"
 fi
