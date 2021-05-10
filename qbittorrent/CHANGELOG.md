@@ -1,4 +1,7 @@
 
+## 14.3.5.99202105022253-7365-063844ed4ubuntu20.04.1-ls133 (11-05-2021)
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ## 14.3.5.99202105022253-7365-063844ed4ubuntu20.04.1-ls132 (04-05-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
 - New option : use specific DNS instead of the router ones to avoid spamming, especially useful if using adguard home/pihole. Keep blank to use the router dns. 
