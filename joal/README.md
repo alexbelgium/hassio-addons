@@ -27,13 +27,13 @@ You'll need to open the options and encode the secret token lrMY24Byhx (or modif
 secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
 ```
 
-## Illustration
-
-![image](https://user-images.githubusercontent.com/44178713/117990142-29c3b200-b33d-11eb-86c8-a3007d73c3da.png)
-
 ## Support
 For HA : create an issue on github
 For Joal : see the upstream repo here https://github.com/anthonyraymond/joal
+
+## Illustration
+
+![image](https://user-images.githubusercontent.com/44178713/117990142-29c3b200-b33d-11eb-86c8-a3007d73c3da.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
