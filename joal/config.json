@@ -15,8 +15,8 @@
     "armhf"
   ],
   "ports": {
-    "49152/tcp": 49152,
-    "8081/tcp": 8081
+    "49152/tcp": null,
+    "8081/tcp": null
   },
   "ports_description": {
     "49152/tcp": "torrent port",
