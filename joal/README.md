@@ -5,6 +5,7 @@
 
 An open source command line RatioMaster with WebUI.
 This addon is based on the [docker image](https://hub.docker.com/r/anthonyraymond/joal) from Anthony Raymond.
+All credits for the app go to Anthony, please visit his repository here : https://github.com/anthonyraymond/joal
 
 ## Installation
 
