@@ -20,8 +20,8 @@
     "8081/tcp": null
   },
   "ports_description": {
-    "49152/tcp": "torrent port",
-    "8081/tcp": "Web UI port"
+    "49152/tcp": "torrent port (not required)",
+    "8081/tcp": "Web UI port (not required for Ingress)"
   },
   "webui": "http://[HOST]:[PORT:8081]/joal/ui",
   "boot": "auto",
