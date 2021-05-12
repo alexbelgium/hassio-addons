@@ -7,7 +7,7 @@ In case of issue, create an issue in the repository and reference the full log f
 
 - ![smb][smb-shield] : allows accessing smb shares, or a local external disk
 - ![sql][sql-shield] : requires an external sql database server
-- ![stale][stale-shield] : will be updated but not tested each time
+- ![base][base-shield] : will be updated but not tested each time
 - ![privileged][privileged-shield] : requires protection mode off to run
 - ![ingress][ingress-shield] : supports Ingress
 ## Installation
