@@ -9,7 +9,7 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![sql][sql-shield] : requires an external sql database server
 - ![stale][stale-shield] : will be updated but not tested each time
 - ![privileged][privileged-shield] : requires protection mode off to run
-
+- ![ingress][ingress-shield] : supports Ingress
 ## Installation
 
 Adding this add-ons repository to your Home Assistant instance is
@@ -71,7 +71,7 @@ https://github.com/alexbelgium/hassio-addons
 - A Free Software Media System that puts you in control of managing and streaming your media.
 - Based on https://hub.docker.com/r/linuxserver/jellyfin
 
-### &#10003; [Joal](joal/)
+### &#10003; [Joal](joal/) ![ingress][ingress-shield]
 
 - An open source command line RatioMaster with WebUI.
 
@@ -96,7 +96,7 @@ https://github.com/alexbelgium/hassio-addons
 - Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
 - Based on https://hub.docker.com/r/linuxserver/plex
 
-### &#10003; [Qbittorrent](qbittorrent/) ![smb][smb-shield]  ![support][support-shield]
+### &#10003; [Qbittorrent](qbittorrent/) ![smb][smb-shield]  ![support][support-shield] ![ingress][ingress-shield]
 
 - Based on https://hub.docker.com/r/linuxserver/qbittorrent
 - Support : [Home Assistant addon : qbittorrent (supports openvpn & smb mounts) - Home Assistant OS - Home Assistant Community (home-assistant.io)](https://community.home-assistant.io/t/home-assistant-addon-qbittorrent-supports-openvpn-smb-mounts/279247)
@@ -111,7 +111,7 @@ https://github.com/alexbelgium/hassio-addons
 - Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them.
 - Based on https://hub.docker.com/r/linuxserver/sonarr
 
-### &#10003; [Scrutiny](scrutiny/)  ![support][support-shield]
+### &#10003; [Scrutiny](scrutiny/)  ![support][support-shield] ![ingress][ingress-shield]
 
 - Scrutiny WebUI for smartd S.M.A.R.T monitoring
 - Based on https://hub.docker.com/r/linuxserver/scrutiny
@@ -133,4 +133,5 @@ https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [sql-shield]: https://img.shields.io/badge/SQL-external-orange.svg
 [privileged-shield]: https://img.shields.io/badge/privileged-required-orange.svg
+[ingress-shield]: https://img.shields.io/badge/ingress--green.svg
 [support-shield]: https://img.shields.io/badge/Support-thread-green.svg 
