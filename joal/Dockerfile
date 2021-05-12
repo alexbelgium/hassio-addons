@@ -13,6 +13,8 @@ RUN \
     && apt-get install -y --no-install-recommends \
     wget \
     jq \
+    nginx \
+#Install bashio
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.10.1.tar.gz" \
     && mkdir /tmp/bashio \
@@ -36,7 +38,8 @@ RUN \
     /var/{cache,log}/* \
     /var/lib/apt/lists/*
 
-COPY run.sh /
+# Copy root filesystem
+COPY rootfs / 
 RUN chmod 777 /run.sh
 
 ENTRYPOINT [ "/run.sh" ]
