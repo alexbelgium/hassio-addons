@@ -86,6 +86,11 @@ https://github.com/alexbelgium/hassio-addons
 - Open source document management system (DMS)
 - Based on https://hub.docker.com/r/linuxserver/papermerge
 
+### &#10003; [Portainer](portainer/) ![privileged][privileged-shield] ![ingress][ingress-shield] 
+
+- Forked from : https://github.com/hassio-addons/addon-portainer
+- Updated to latest version, add webui, ssl, password management
+
 ### &#10003; [Piwigo](piwigo/) ![smb][smb-shield] ![sql][sql-shield] ![base][base-shield]
 
 - Piwigo is a photo gallery software for the web
