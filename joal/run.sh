@@ -4,9 +4,9 @@ TOKEN=$(bashio::config 'secret_token')
 
 mv -f /data/joal/config.json / || true
 
-curl -s -L -o /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz"
+curl -s -S -L -o /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/2.1.24/joal.tar.gz" >/dev/null
 mkdir -p /data/joal
-tar zxvf /tmp/joal.tar.gz -C /data/joal
+tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
 chown -R $(id -u):$(id -g) /data/joal
 rm /data/joal/jack-of*
 
