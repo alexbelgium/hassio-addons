@@ -18,4 +18,4 @@ nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environm
 # Wait for transmission to become available
 bashio::net.wait_for 8081 localhost 900
 bashio::log.info "... starting NGinx"
-exec nginx
+exec nginx || bashio::log.fatal "... Nginx not started, only access through webui available"
