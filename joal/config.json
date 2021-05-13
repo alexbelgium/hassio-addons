@@ -33,6 +33,6 @@
   },
   "schema": {
     "secret_token": "str", 
-    "run_for_hours": "str?"
+    "run_duration": "str?"
   }
 }
