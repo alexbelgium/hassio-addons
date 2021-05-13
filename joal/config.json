@@ -28,8 +28,7 @@
   "host_network": false,
   "environment": {},
   "options": {
-    "secret_token": "lrMY24Byhx",
-    "run_for_hours": "12"
+    "secret_token": "lrMY24Byhx"
   },
   "schema": {
     "secret_token": "str", 
