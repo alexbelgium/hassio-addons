@@ -25,7 +25,6 @@ TOKEN=$(bashio::config 'secret_token')
 UPSTREAM="2.1.24"
 
 mv -f /data/joal/config.json / || true
-get latest version
 #curl -s -S -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz") >/dev/null
 wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$UPSTREAM/joal.tar.gz"
 mkdir -p /data/joal
