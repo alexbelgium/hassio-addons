@@ -1,7 +1,7 @@
 {
   "name": "Transmission NAS",
-  "version": "3.00-r2-ls86",
-  "upstream": "3.00-r2-ls86",
+  "version": "3.00-r2-ls87",
+  "upstream": "3.00-r2-ls87",
   "slug": "transmission_ls",
   "description": "Bittorrent client based on linuxserver image",
   "url": "https://github.com/alexbelgium/hassio-addons",
