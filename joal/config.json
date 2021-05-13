@@ -29,7 +29,7 @@
   "environment": {},
   "options": {
     "secret_token": "lrMY24Byhx",
-    "run_for_hours": "12",
+    "run_for_hours": "12"
   },
   "schema": {
     "secret_token": "str", 
