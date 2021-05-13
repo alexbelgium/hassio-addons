@@ -22,16 +22,15 @@ sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 
 declare TOKEN
 TOKEN=$(bashio::config 'secret_token')
-UPSTREAM=$(bashio::config 'upstream')
 
-mv -f /data/joal/config.json / || true
-wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/${UPSTREAM}/joal.tar.gz"
-mkdir -p /data/joal
-tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
-chown -R $(id -u):$(id -g) /data/joal
-rm /data/joal/jack-of*
-bashio::log.info "... Joal updated"
-mv -f /config.json /data/joal/ || true
+#mv -f /data/joal/config.json / || true
+#wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$UPSTREAM/joal.tar.gz"
+#mkdir -p /data/joal
+#tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
+#chown -R $(id -u):$(id -g) /data/joal
+#rm /data/joal/jack-of*
+#bashio::log.info "... Joal updated"
+#mv -f /config.json /data/joal/ || true
 
 ###############
 # LAUNCH APPS #
