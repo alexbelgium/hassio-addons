@@ -7,8 +7,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.1.24"
 
-VOLUME [ "/data" ]
-
 RUN \
 #Install bashio
     apt-get update \
@@ -38,6 +36,8 @@ RUN \
     /tmp/* \
     /var/{cache,log}/* \
     /var/lib/apt/lists/*
+
+VOLUME [ "/data" ]
 
 # Copy root filesystem
 COPY rootfs / 
