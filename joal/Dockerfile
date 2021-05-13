@@ -26,11 +26,11 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     \
 #Install Joal
-    && wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$BUILD_UPSTREAM/joal.tar.gz" \
-    && mkdir -p /data/joal \
-    && tar zxvf /tmp/joal.tar.gz -C /data/joal \
-    && chown -R $(id -u):$(id -g) /data/joal \
-    && rm /data/joal/jack-of* \
+#    && wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$BUILD_UPSTREAM/joal.tar.gz" \
+#    && mkdir -p /data/joal \
+#    && tar zxvf /tmp/joal.tar.gz -C /data/joal \
+#    && chown -R $(id -u):$(id -g) /data/joal \
+#    && rm /data/joal/jack-of* \
 #Clean
     && rm -fr \
     /tmp/* \
