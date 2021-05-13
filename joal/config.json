@@ -1,6 +1,6 @@
 {
   "name": "Joal",
-  "version": "2.1.24-12",
+  "version": "2.1.24-13",
   "upstream": "2.1.24",
   "slug": "joal",
   "description": "An open source command line RatioMaster with WebUI",
