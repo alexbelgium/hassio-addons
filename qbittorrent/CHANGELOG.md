@@ -1,3 +1,4 @@
+- Add banner in log
 
 ## 14.3.5.99202105022253-7365-063844ed4ubuntu20.04.1-ls133 (11-05-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
