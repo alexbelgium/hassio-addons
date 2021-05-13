@@ -40,9 +40,9 @@ mv -f /config.json /data/joal/ || true
 ###############
 
 if [ $VERBOSE = true ]; then 
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN >/dev/null
-else
   nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN
+else
+  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN >/dev/null
 fi \
 & bashio::log.info "... Joal started with secret token $TOKEN"
 # Wait for transmission to become available
