@@ -40,22 +40,21 @@ mv -f /config.json /data/joal/ || true
 
 nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN \
 & bashio::log.info "... Joal started with secret token $TOKEN" \
-& { sleep $Timeout && bashio::log.info "... Timeout achieved, addon will stop !"} & \
 # Wait for transmission to become available
 bashio::net.wait_for 8081 localhost 900 || true
 bashio::log.info "... Nginx started for Ingress" 
-exec nginx
+exec nginx & \
 
 ###########
 # TIMEOUT #
 ###########
 
-#if bashio::config.has_value 'run_duration'; then
-#  RUNTIME=$(bashio::config 'run_duration')
-#  bashio::log.info "... Addon will stop after $RUNTIME hours"
-#  sleep $TIMEOUT && \
-#  bashio::log.info "... Timeout achieved, addon will stop !" && \
-#  kill "$PID"
-#else
-#  bashio::log.info "... run_duration option not defined, addon will run continuously"
-#fi
+if bashio::config.has_value 'run_duration'; then
+  RUNTIME=$(bashio::config 'run_duration')
+  bashio::log.info "... Addon will stop after $RUNTIME hours"
+  sleep $RUNTIME && \
+  bashio::log.info "... Timeout achieved, addon will stop !" && \
+  kill "$PID"
+else
+  bashio::log.info "... run_duration option not defined, addon will run continuously"
+fi
