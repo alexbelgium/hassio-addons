@@ -2,3 +2,4 @@
 ## 2.1.24
 - Update to latest version from anthonyraymond/joal
 - Add ingress
+- Add option for auto stop after x time
