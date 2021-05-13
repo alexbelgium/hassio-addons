@@ -53,9 +53,8 @@ if bashio::config.has_value 'run_for_hours'; then
   RUNTIME=$(bashio::config 'run_for_hours')
   bashio::log.info "... Addon will stop after $RUNTIME hours"
   sleep $TIMEOUT && \
-  kill "$PID" && \
-  bashio::log.info "... Timeout achieved, addon will stop !" 
-
+  bashio::log.info "... Timeout achieved, addon will stop !" && \
+  kill "$PID"
 else
   bashio::log.info "... run_for_hours option not defined, addon will run continuously"
 fi
