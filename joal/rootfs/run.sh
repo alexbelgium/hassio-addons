@@ -60,8 +60,15 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 declare TOKEN
 TOKEN=$(bashio::config 'secret_token')
-#UPSTREAM=$(bashio::config 'upstream')
 VERBOSE=$(bashio::config 'verbose') || true
+
+# check password change 
+
+if [ "$TOKEN" = "lrMY24Byhx" ]; then
+bashio::log.warning "The token is still the default one, please change from addon options" 
+fi
+
+# download latest version
 
 mv -f /data/joal/config.json / || true
 if [ $VERBOSE = true ]; then
