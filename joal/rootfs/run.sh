@@ -42,8 +42,8 @@ nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environm
 & bashio::log.info "... Joal started with secret token $TOKEN"
 # Wait for transmission to become available
 bashio::net.wait_for 8081 localhost 900 || true
-exec nginx || bashio::log.fatal "... Nginx not started, only access through webui available" \
-& bashio::log.info "... Nginx started for Ingress" 
+bashio::log.info "... Nginx started for Ingress" 
+exec nginx
 
 ###########
 # TIMEOUT #
