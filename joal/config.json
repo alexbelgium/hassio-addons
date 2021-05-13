@@ -29,10 +29,11 @@
   "environment": {},
   "options": {
     "secret_token": "lrMY24Byhx", 
-    "run_duration": "5m"
+    "run_duration": "12h"
   },
   "schema": {
     "secret_token": "str", 
-    "run_duration": "str?"
+    "run_duration": "str?",
+    "verbose": "bool?"
   }
 }
