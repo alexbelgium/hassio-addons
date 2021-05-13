@@ -1,6 +1,4 @@
 #!/usr/bin/env bashio
-bashio::log.info "Starting addon..."
-VERBOSE=$(bashio::config 'verbose') || true
 
 ##########
 # BANNER #
@@ -62,7 +60,8 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 declare TOKEN
 TOKEN=$(bashio::config 'secret_token')
-UPSTREAM="2.1.24"
+UPSTREAM=$(bashio::config 'upstream')
+VERBOSE=$(bashio::config 'verbose') || true
 
 mv -f /data/joal/config.json / || true
 if [ $VERBOSE = true ]; then 
@@ -74,7 +73,7 @@ mkdir -p /data/joal
 tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
 chown -R $(id -u):$(id -g) /data/joal
 rm /data/joal/jack-of*
-bashio::log.info "... Joal updated"
+bashio::log.info "Joal updated"
 mv -f /config.json /data/joal/ || true
 
 ###############
@@ -86,10 +85,10 @@ if [ $VERBOSE = true ]; then
 else
   nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN >/dev/null
 fi \
-& bashio::log.info "... Joal started with secret token $TOKEN"
+& bashio::log.info "Joal started with secret token $TOKEN"
 # Wait for transmission to become available
 bashio::net.wait_for 8081 localhost 900 || true
-bashio::log.info "... Nginx started for Ingress" 
+bashio::log.info "Nginx started for Ingress" 
 exec nginx & \
 
 ###########
@@ -98,10 +97,10 @@ exec nginx & \
 
 if bashio::config.has_value 'run_duration'; then
   RUNTIME=$(bashio::config 'run_duration')
-  bashio::log.info "... Addon will stop after $RUNTIME"
+  bashio::log.info "Addon will stop after $RUNTIME"
   sleep $RUNTIME && \
-  bashio::log.info "... Timeout achieved, addon will stop !" && \
+  bashio::log.info "Timeout achieved, addon will stop !" && \
   exit 0
 else
-  bashio::log.info "... run_duration option not defined, addon will run continuously"
+  bashio::log.info "Run_duration option not defined, addon will run continuously"
 fi
