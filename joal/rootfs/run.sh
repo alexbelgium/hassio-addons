@@ -49,8 +49,8 @@ exec nginx || bashio::log.fatal "... Nginx not started, only access through webu
 # TIMEOUT #
 ###########
 
-if bashio::config.has_value 'run_for_hours'; then
-  RUNTIME=$(bashio::config 'run_for_hours')
+if bashio::config.has_value 'run_duration'; then
+  RUNTIME=$(bashio::config 'run_duration')
   bashio::log.info "... Addon will stop after $RUNTIME hours"
   sleep $TIMEOUT && \
   bashio::log.info "... Timeout achieved, addon will stop !" && \
