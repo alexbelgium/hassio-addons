@@ -1,5 +1,6 @@
 #!/usr/bin/env bashio
 bashio::log.info "Starting addon..."
+VERBOSE=$(bashio::config 'verbose') || true
 
 #################
 # NGINX SETTING #
