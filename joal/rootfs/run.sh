@@ -58,5 +58,4 @@ if bashio::config.has_value 'run_for_hours'; then
 
 else
   bashio::log.info "... run_for_hours option not defined, addon will run continuously"
-fi" 
-
+fi
