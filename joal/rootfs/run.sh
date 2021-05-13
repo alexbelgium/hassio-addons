@@ -60,6 +60,7 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 declare TOKEN
 TOKEN=$(bashio::config 'secret_token')
+PATH="${bashio::config 'path':-joal}"
 VERBOSE=$(bashio::config 'verbose') || true
 
 # check password change 
@@ -90,9 +91,9 @@ mv -f /config.json /data/joal/ || true
 ###############
 
 if [ $VERBOSE = true ]; then 
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN
+  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=$PATH --joal.ui.secret-token=$TOKEN
 else
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN >/dev/null
+  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=$PATH --joal.ui.secret-token=$TOKEN >/dev/null
 fi \
 & bashio::log.info "Joal started with secret token $TOKEN"
 # Wait for transmission to become available
