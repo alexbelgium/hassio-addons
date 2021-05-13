@@ -39,7 +39,8 @@ mv -f /config.json /data/joal/ || true
 ###############
 
 nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN \
-& bashio::log.info "... Joal started with secret token $TOKEN"
+& bashio::log.info "... Joal started with secret token $TOKEN" \
+& { sleep $Timeout && bashio::log.info "... Timeout achieved, addon will stop !"} & \
 # Wait for transmission to become available
 bashio::net.wait_for 8081 localhost 900 || true
 bashio::log.info "... Nginx started for Ingress" 
