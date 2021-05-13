@@ -26,8 +26,11 @@ TOKEN=$(bashio::config 'secret_token')
 UPSTREAM="2.1.24"
 
 mv -f /data/joal/config.json / || true
-#curl -s -S -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz") >/dev/null
-wget -q -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$UPSTREAM/joal.tar.gz"
+if [ $VERBOSE = true ]; then 
+  wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$UPSTREAM/joal.tar.gz"
+else
+  wget -q -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$UPSTREAM/joal.tar.gz"
+fi
 mkdir -p /data/joal
 tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
 chown -R $(id -u):$(id -g) /data/joal
@@ -59,7 +62,6 @@ if bashio::config.has_value 'run_duration'; then
   bashio::log.info "... Addon will stop after $RUNTIME"
   sleep $RUNTIME && \
   bashio::log.info "... Timeout achieved, addon will stop !" && \
-  #kill "$PID"
   exit 0
 else
   bashio::log.info "... run_duration option not defined, addon will run continuously"
