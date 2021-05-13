@@ -1,3 +1,4 @@
+- Add banner in log
 
 ## 2.15.0
 - Update to latest version from hurlenko/filebrowser-docker
