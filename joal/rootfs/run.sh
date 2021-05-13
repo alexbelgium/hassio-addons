@@ -38,7 +38,7 @@ mv -f /config.json /data/joal/ || true
 # LAUNCH APPS #
 ###############
 
-nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN \
+nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN >/dev/null \
 & bashio::log.info "... Joal started with secret token $TOKEN"
 # Wait for transmission to become available
 bashio::net.wait_for 8081 localhost 900 || true
