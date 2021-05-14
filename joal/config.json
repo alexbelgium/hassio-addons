@@ -28,13 +28,14 @@
   "host_network": false,
   "environment": {},
   "options": {
-    "secret_token": "lrMY24Byhx", 
+    "ui_path": "joal",
+    "secret_token": "lrMY24Byhx",
     "run_duration": "12h"
   },
   "schema": {
+    "ui_path": "str",
     "secret_token": "str", 
     "run_duration": "str?",
-    "verbose": "bool?", 
-    "path": "str?"
+    "verbose": "bool?"
   }
 }
