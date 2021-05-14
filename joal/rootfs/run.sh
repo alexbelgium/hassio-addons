@@ -34,6 +34,8 @@ if bashio::supervisor.ping; then
     bashio::log.blue \
         ' or support in, e.g., GitHub, forums or the Discord chat.'
     bashio::log.blue \
+        ' https://github.com/alexbelgium/hassio-addons'
+    bashio::log.blue \
         '-----------------------------------------------------------'
 fi
 
@@ -85,16 +87,19 @@ rm /data/joal/jack-of*
 bashio::log.info "Joal updated"
 mv -f /config.json /data/joal/ || true
 
+# Set path
+PATH=$(bashio::config 'ui_path')
+
 ###############
 # LAUNCH APPS #
 ###############
 
 if [ $VERBOSE = true ]; then 
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN
+  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${PATH} --joal.ui.secret-token=$TOKEN
 else
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="joal" --joal.ui.secret-token=$TOKEN >/dev/null
+  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${PATH} --joal.ui.secret-token=$TOKEN >/dev/null
 fi \
-& bashio::log.info "Joal started with secret token $TOKEN"
+& bashio::log.info "Joal started with path ip/${PATH}/ui secret token $TOKEN"
 # Wait for transmission to become available
 bashio::net.wait_for 8081 localhost 900 || true
 bashio::log.info "Nginx started for Ingress" 
