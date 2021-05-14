@@ -49,14 +49,14 @@ declare ingress_interface
 declare ingress_port
 declare keyfile
 # Set path
-PATH=$(bashio::config 'ui_path')
+UIPATH=$(bashio::config 'ui_path')
 
 port=$(bashio::addon.port 80)
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%path%%/${PATH}/g" /etc/nginx/servers/ingress.conf
+sed -i "s/%%path%%/${UIPATH}/g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 ################
@@ -95,9 +95,9 @@ mv -f /config.json /data/joal/ || true
 ###############
 
 if [ $VERBOSE = true ]; then 
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${PATH} --joal.ui.secret-token=$TOKEN
+  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${UIPATH} --joal.ui.secret-token=$TOKEN
 else
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${PATH} --joal.ui.secret-token=$TOKEN >/dev/null
+  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${UIPATH} --joal.ui.secret-token=$TOKEN >/dev/null
 fi \
 & bashio::log.info "Joal started with path ip/${PATH}/ui secret token $TOKEN"
 # Wait for transmission to become available
