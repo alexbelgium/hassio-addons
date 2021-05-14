@@ -3,3 +3,5 @@
 - Update to latest version from anthonyraymond/joal
 - Add ingress
 - Add option for auto stop after x time
+- Add option for setting a custom path
+- Add option for setting a custom secret key
