@@ -48,12 +48,15 @@ declare certfile
 declare ingress_interface
 declare ingress_port
 declare keyfile
+# Set path
+PATH=$(bashio::config 'ui_path')
 
 port=$(bashio::addon.port 80)
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
+sed -i "s/%%path%%/${PATH}/g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 ################
@@ -86,9 +89,6 @@ chown -R $(id -u):$(id -g) /data/joal
 rm /data/joal/jack-of*
 bashio::log.info "Joal updated"
 mv -f /config.json /data/joal/ || true
-
-# Set path
-PATH=$(bashio::config 'ui_path')
 
 ###############
 # LAUNCH APPS #
