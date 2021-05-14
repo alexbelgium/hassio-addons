@@ -1,7 +1,7 @@
 {
   "name": "Piwigo",
-  "version": "11.4.0",
-  "upstream": "11.4.0",
+  "version": "11.5.0",
+  "upstream": "11.5.0",
   "slug": "piwigo",
   "stage": "experimental",
   "description": "Piwigo is a photo gallery software for the web",
