@@ -1,3 +1,6 @@
+
+## 4.6.0.46 (15-05-2021)
+- Update to latest version from linuxserver/docker-emby
 - Add banner to log
 
 ## 4.6.0.45 (13-05-2021)
