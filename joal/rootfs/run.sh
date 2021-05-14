@@ -45,7 +45,6 @@ fi
 
 declare TOKEN
 TOKEN=$(bashio::config 'secret_token')
-PATH=$(bashio::config 'ui_path')
 VERBOSE=$(bashio::config 'verbose') || true
 
 # check password change 
@@ -81,7 +80,9 @@ declare ingress_interface
 declare ingress_port
 declare keyfile
 
+PATH=$(bashio::config 'ui_path')
 port=$(bashio::addon.port 80)
+
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
