@@ -43,7 +43,7 @@ fi
 
 declare TOKEN
 TOKEN=$(bashio::config 'secret_token')
-PATH=${$(bashio::config 'path'):-joal}
+PATH="{$(bashio::config 'path'):-joal}"
 VERBOSE=$(bashio::config 'verbose') || true
 
 # check password change 
