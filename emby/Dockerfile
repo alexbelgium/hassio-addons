@@ -3,36 +3,45 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="4.6.0.46"
 
 FROM ${BUILD_FROM}${BUILD_UPSTREAM}
+ARG BASHIO_VERSION=0.13.0
+ARG TEMPIO_VERSION=2021.01.0
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN apt-get update \
-    \
+RUN \
+    apt-get update \
     && apt-get install -y --no-install-recommends \
     jq \
+    cifs-utils \
     \
-    && apt-get -y upgrade cifs-utils \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-    /tmp/bashio.tar.gz \
-    --strip 1 -C /tmp/bashio \
-    \
+    ##################
+    # Install bashio #
+    ##################
+    && mkdir -p /tmp/bashio \
+    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr \
-    /tmp/* \
+    && rm -rf /tmp/bashio \
+    \
     /var/{cache,log}/* \
     /var/lib/apt/lists/* \
-    # Allow UID and GID setting
+    \
+    #############################
+    # Allow UID and GID setting #
+    #############################
+    \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i "s|chown abc:abc /config||g" /etc/cont-init.d/10-adduser
-
-RUN sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
+    && sed -i "s|chown abc:abc /config||g" /etc/cont-init.d/10-adduser \
+    \
+    ###########
+    # FOLDERS #
+    ###########
+    \
+    && sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config
 
 # copy local files
