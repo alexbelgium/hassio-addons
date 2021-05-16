@@ -6,7 +6,7 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.21.0"
 
 # hadolint ignore=DL3006
-FROM "bitwardenrs/server:${BUILD_UPSTREAM}" as bitwarden
+FROM "vaultwarden/server:${BUILD_UPSTREAM}" as bitwarden
 
 ###############################################################################
 # Build the actual add-on.
