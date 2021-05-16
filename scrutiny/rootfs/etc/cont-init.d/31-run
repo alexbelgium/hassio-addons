@@ -11,8 +11,8 @@ chown -R abc:abc /data
 # VIEWPORT CORRECTION #
 #######################
 
- # correct viewport bug
-grep -rl '"lt-md":"(max-width:  959px)"' /app | xargs sed -i 's|"lt-md":"(max-width:  959px)"|"lt-md":"(max-width:  100px)"|g' || true
+# correct viewport bug
+# grep -rl '"lt-md":"(max-width:  959px)"' /app | xargs sed -i 's|"lt-md":"(max-width:  959px)"|"lt-md":"(max-width:  100px)"|g' || true
     
 ######################
 # API URL CORRECTION #
