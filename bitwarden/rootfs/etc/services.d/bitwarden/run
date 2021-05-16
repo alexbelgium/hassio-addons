@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
 # Home Assistant Community Add-on: Bitwarden
-# Runs the Bitwarden RS server
+# Runs the Vaultwarden server
 # ==============================================================================
 declare admin_token
 declare log_level
@@ -76,6 +76,6 @@ export WEBSOCKET_ENABLED=true
 export WEBSOCKET_PORT=8080
 
 # Run the Bitwarden server
-bashio::log.info 'Starting the Bitwarden RS server...'
+bashio::log.info 'Starting the Vaultwarden server...'
 cd /opt || bashio::exit.nok
-exec ./bitwarden_rs
+exec ./vaultwarden
