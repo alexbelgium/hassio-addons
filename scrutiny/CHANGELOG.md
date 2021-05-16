@@ -1,5 +1,5 @@
 
-##fd4f0429
+## fd4f0429
 - New ingress icon, thanks to @ElVit
 - New features, selecting of update rate with addon option
 - Add banner in log
