@@ -6,7 +6,7 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.21.0"
 
 # hadolint ignore=DL3006
-FROM "vaultwarden/server:${BUILD_UPSTREAM}" as bitwarden
+FROM "vaultwarden/server:${BUILD_UPSTREAM}" as vaultwarden
 
 ###############################################################################
 # Build the actual add-on.
@@ -18,9 +18,9 @@ FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Get the Bitwarden from official images
-COPY --from=bitwarden /bitwarden_rs /opt/bitwarden_rs
-COPY --from=bitwarden /Rocket.toml /opt/Rocket.toml
-COPY --from=bitwarden /web-vault /opt/web-vault
+COPY --from=vaultwarden /vaultwarden /opt/vaultwarden
+COPY --from=vaultwarden /Rocket.toml /opt/Rocket.toml
+COPY --from=vaultwarden /web-vault /opt/web-vault
 
 # add Nginx
 # hadolint ignore=DL3009
