@@ -1,5 +1,5 @@
 {
-  "name": "Bitwarden RS",
+  "name": "Bitwarden (Vaultwarden)",
   "version": "1.21.0",
   "upstream": "1.21.0",
   "slug": "bitwarden",
