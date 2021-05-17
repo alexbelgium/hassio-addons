@@ -2,9 +2,6 @@ server {
   listen {{ .interface }}:{{ .port }} default_server;
   include /etc/nginx/includes/server_params.conf;
   include /etc/nginx/includes/proxy_params.conf;
-  include /etc/nginx/includes/ssl_params.conf;
-  ssl_certificate /ssl/{{ .certfile }};
-  ssl_certificate_key /ssl/{{ .keyfile }};
   client_max_body_size 0;
   
   location / {
