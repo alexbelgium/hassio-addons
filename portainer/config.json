@@ -1,7 +1,7 @@
 {
   "name": "Portainer",
-  "version": "2.1.1-dev4",
-  "upstream": "2.1.1",
+  "version": "2.5.0",
+  "upstream": "2.5.0",
   "slug": "portainer",
   "description": "Manage your Docker environment with ease",
   "url": "https://github.com/hassio-addons/addon-portainer",
@@ -11,9 +11,16 @@
   "startup": "services",
   "panel_icon": "mdi:docker",
   "homeassistant": "0.92.0b2",
-  "arch": ["aarch64", "amd64", "armhf", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf",
+    "armv7"
+  ],
   "init": false,
-  "map": ["ssl"],
+  "map": [
+    "ssl"
+  ],
   "ports": {
     "9000/tcp": 9000,
     "8000/tcp": null
