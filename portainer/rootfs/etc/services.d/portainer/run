@@ -15,18 +15,22 @@ bashio::log.info "Starting Portainer..."
 # SET PASSWORD #
 ################
 
+# Set password
 CURRENTPASSWORD=""
 PASSWORD=$(bashio::config 'password')
-
 touch "/data/portainer_password"
 CURRENTPASSWORD=$( cat /data/portainer_password )
 
-if [ "$CURRENTPASSWORD" != "$PASSWORD" ]; then
-rm /data/portainer.db || true
-rm data/hidden || true
-bashio::log.warning "... password changed, database reseted"
+# Reset password if not first run
+if bashio::fs.file_exists "/data/hidden"; then
+	if [ "$CURRENTPASSWORD" != "$PASSWORD" ]; then
+		rm /data/portainer.db || true
+		rm data/hidden || true
+		bashio::log.warning "... password changed, database reseted"
+	fi
 fi
 
+# Define option
 echo -n $PASSWORD > /data/portainer_password
 options+=(--admin-password-file /data/portainer_password)
 bashio::log.info "... password set to $PASSWORD"
