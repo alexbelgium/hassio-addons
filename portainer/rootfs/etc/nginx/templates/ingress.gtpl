@@ -6,14 +6,20 @@ server {
   
   location / {
     proxy_pass {{ .protocol }}://backend/;
-    resolver 127.0.0.11 valid=30s;
+    resolver 127.0.0.11 valid=60s;
     proxy_set_header Connection "";
+    proxy_connect_timeout 30m;
+    proxy_send_timeout 30m;
+    proxy_read_timeout 30m;
   }
   
   location /api/websocket/ {
     proxy_pass {{ .protocol }}://backend/api/websocket/;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
-    resolver 127.0.0.11 valid=30s;
+    resolver 127.0.0.11 valid=60s;
+    proxy_connect_timeout 30m;
+    proxy_send_timeout 30m;
+    proxy_read_timeout 30m;
   }
 }
