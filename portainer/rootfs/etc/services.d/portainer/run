@@ -6,7 +6,7 @@
 declare -a options
 options+=(--data /data)
 options+=(--bind 0.0.0.0:9000)
-options+=(--templates /opt/portainer/templates.json)
+#options+=(--templates /opt/portainer/templates.json)
 options+=(--host unix:///var/run/docker.sock)
 
 bashio::log.info "Starting Portainer..."
