@@ -22,7 +22,8 @@ touch "/data/portainer_password"
 CURRENTPASSWORD=$( cat /data/portainer_password )
 
 if [ "$CURRENTPASSWORD" != "$PASSWORD" ]; then
-rm /data/portainer.dB || true
+rm /data/portainer.db || true
+rm data/hidden || true
 bashio::log.warning "... password changed, database reseted"
 fi
 
