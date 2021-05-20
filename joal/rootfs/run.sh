@@ -75,7 +75,6 @@ fi
 
 # download latest version
 
-mv -f /data/joal/config.json / || true
 if [ $VERBOSE = true ]; then
   curl -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")
   #wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$UPSTREAM/joal.tar.gz"
@@ -88,7 +87,21 @@ tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
 chown -R $(id -u):$(id -g) /data/joal
 rm /data/joal/jack-of*
 bashio::log.info "Joal updated"
-mv -f /config.json /data/joal/ || true
+
+##################
+# SYMLINK CONFIG #
+##################
+
+if [ ! -d /config/joal ]; then
+  echo "Creating /config/joal"
+  mkdir -p /config/joal
+fi
+
+if [ ! -f /config/joal/config.json ]; then
+  touch /joal/config.json
+  echo "Symlinking config files"
+  ln -s /config/joal/config.json /joal/config.json
+fi
 
 ###############
 # LAUNCH APPS #
