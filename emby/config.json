@@ -6,7 +6,7 @@
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
-  "ingress": true,
+  "ingress": false,
   "ingress_port": 8099,
   "arch": [
     "aarch64",
