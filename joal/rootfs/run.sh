@@ -75,6 +75,7 @@ fi
 
 # download latest version
 
+rn
 if [ $VERBOSE = true ]; then
   curl -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")
   #wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$UPSTREAM/joal.tar.gz"
@@ -92,13 +93,15 @@ bashio::log.info "Joal updated"
 # SYMLINK CONFIG #
 ##################
 
+# If config doesn't exist, create it
 if [ ! -f /config/joal/config.json ]; then
   bashio::log.info "Symlinking config files" 
-  touch /data/joal/config.json
   mkdir -p /config/joal
-  touch /config/joal/config.json
-  ln -s /config/joal/config.json /data/joal/config.json
+  cp /data/joal/config.json /config/joal/config.json
 fi
+
+# Refresh symlink
+ln -sf /config/joal/config.json /data/joal/config.json
 
 ###############
 # LAUNCH APPS #
