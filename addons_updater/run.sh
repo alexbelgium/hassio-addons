@@ -113,6 +113,10 @@ for addons in $(bashio::config "addon|keys"); do
   # Add brackets
   LASTVERSION='"'${LASTVERSION}'"'
 
+  # Do not compare with ls tag for linuxserver images (to avoid updating only for dependencies)
+  LASTVERSION=${LASTVERSION%-ls*}
+  CURRENT=${CURRENT%-ls*}
+
   # Update if needed
   if [ ${CURRENT} != ${LASTVERSION} ]; then
     LOGINFO="... $SLUG : update from ${CURRENT} to ${LASTVERSION}" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
