@@ -28,7 +28,7 @@ comparison to installing any other Hass.io add-on.
 
 Webui can be found at `<your-ip>:7878`.
 
-[repository]: https://github.com/petersendev/hassio-addons
+[repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
