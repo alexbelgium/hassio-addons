@@ -15,6 +15,9 @@
     "armv7",
     "armhf"
   ],
+  "map": [
+    "config:rw"
+  ],
   "ports": {
     "49152/tcp": null,
     "8081/tcp": 8091
