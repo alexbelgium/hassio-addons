@@ -92,15 +92,12 @@ bashio::log.info "Joal updated"
 # SYMLINK CONFIG #
 ##################
 
-if [ ! -d /config/joal ]; then
-  echo "Creating /config/joal"
-  mkdir -p /config/joal
-fi
-
 if [ ! -f /config/joal/config.json ]; then
-  touch /joal/config.json
-  echo "Symlinking config files"
-  ln -s /config/joal/config.json /joal/config.json
+  bashio::log.info "Symlinking config files" 
+  touch /data/joal/config.json
+  mkdir -p /config/joal
+  touch /config/joal/config.json
+  ln -s /config/joal/config.json /data/joal/config.json
 fi
 
 ###############
