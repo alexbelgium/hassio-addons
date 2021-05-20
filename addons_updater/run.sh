@@ -114,11 +114,11 @@ for addons in $(bashio::config "addon|keys"); do
   LASTVERSION='"'${LASTVERSION}'"'
 
   # Do not compare with ls tag for linuxserver images (to avoid updating only for dependencies)
-  LASTVERSION=${LASTVERSION%-ls*}
-  CURRENT=${CURRENT%-ls*}
+  LASTVERSION2=${LASTVERSION%-ls*}
+  CURRENT2=${CURRENT%-ls*}
 
   # Update if needed
-  if [ ${CURRENT} != ${LASTVERSION} ]; then
+  if [ ${CURRENT2} != ${LASTVERSION2} ]; then
     LOGINFO="... $SLUG : update from ${CURRENT} to ${LASTVERSION}" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
 
     #Change all instances of version
@@ -152,6 +152,6 @@ for addons in $(bashio::config "addon|keys"); do
     bashio::log.warning "$SLUG updated from ${CURRENT} to ${LASTVERSION}"
 
   else
-    bashio::log.info "$SLUG is already up-to-date"
+    bashio::log.info "$SLUG is up-to-date (${CURRENT})"
   fi
 done
