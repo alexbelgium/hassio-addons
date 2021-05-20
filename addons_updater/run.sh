@@ -152,6 +152,6 @@ for addons in $(bashio::config "addon|keys"); do
     bashio::log.warning "$SLUG updated from ${CURRENT} to ${LASTVERSION}"
 
   else
-    bashio::log.info "$SLUG is up-to-date (${CURRENT})"
+    bashio::log.info "$SLUG is up-to-date ${CURRENT}"
   fi
 done
