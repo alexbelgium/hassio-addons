@@ -1,4 +1,7 @@
 
+## 21.0.2 (20-05-2021)
+- Update to latest version from linuxserver/docker-nextcloud
+
 ## 21.0.1
 - Update to latest version from linuxserver/docker-nextcloud
 
