@@ -14,7 +14,6 @@ RUN \
     && apt-get install -y --no-install-recommends \
     jq \
     cifs-utils \
-    nginx \
     \
     ##################
     # Install bashio #
