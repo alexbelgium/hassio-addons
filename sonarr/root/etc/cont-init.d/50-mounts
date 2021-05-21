@@ -25,12 +25,12 @@ if bashio::config.has_value 'networkdisks'; then
     MOREDISKS=$(bashio::config 'networkdisks')
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
-    ITERATOR=0
+    ITERATOR=1
     bashio::log.info "Network Disks mounting.. ${MOREDISKS}" && \
     for disk in $MOREDISKS
     do
         bashio::log.info "Mount ${disk}"
-        if [ "$ITERATOR" -eq "0" ]; then
+        if [ "$ITERATOR" -eq "1" ]; then
             mkdir -p /share/storagecifs && \
                 if [ ! -d /storage/storagecifs ]; then
                 echo "Creating /storage/storagecifs"
