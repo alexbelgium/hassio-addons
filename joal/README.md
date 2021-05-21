@@ -26,6 +26,8 @@ Webui can be found at `<your-ip>:8081/joal/ui`, or through Ingress in the app
 You'll need to open the options and encode the secret token lrMY24Byhx (or modify it)
 ```yaml
 secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
+ui_path: joal #the path where Joal will be accessible
+run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
 ```
 
 Ingress connection :
