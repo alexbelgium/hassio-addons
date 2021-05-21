@@ -37,7 +37,8 @@
     "localdisks": ["str"],
     "networkdisks": "str",
     "cifsusername": "str",
-    "cifspassword": "str"
+    "cifspassword": "str",
+    "smbv1": "bool?"
   },
   "snapshot_exclude": ["**/Backups/*", "**/logs/*", "**/MediaCover/*"]
 }
