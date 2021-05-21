@@ -79,6 +79,7 @@
     "openvpn_config": "str?",
     "openvpn_username": "str?",
     "openvpn_password": "str?",
+    "openvpn_ip_override": "str?",
     "TZ": "str?"
   }
 }
