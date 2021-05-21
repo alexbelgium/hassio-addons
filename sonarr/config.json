@@ -26,7 +26,7 @@
     "PUID": 0,
     "PGID": 0,
     "localdisks": ["sda1"],
-    "networkdisks": "<//SERVER/SHARE>",
+    "networkdisks": "<//SERVER/SHARE> <//SERVER2/SHARE2>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
   },
