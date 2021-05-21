@@ -1,6 +1,13 @@
 #!/usr/bin/with-contenv bashio
 bashio::log.info 'Mounting external hdd...'
 
+# Allow SMB1
+if bashio::config.true 'smbv1'; then
+    SMBVERS=",vers=1.0"
+else
+    SMBVERS=""
+fi
+
 # Mount local Share if configured and if Protection Mode is active
 if bashio::config.has_value 'localdisks'; then
     MOREDISKS=$(bashio::config 'localdisks')
@@ -37,7 +44,7 @@ if bashio::config.has_value 'networkdisks'; then
                 mkdir -p /storage/storagecifs
                 chown -R abc:abc /storage/storagecifs
                 fi
-                mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /storage/storagecifs && \
+                mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD$SMBVERS $disk /storage/storagecifs && \
                 bashio::log.info "Success!"
         else
             mkdir -p /share/storagecifs$ITERATOR && \
@@ -46,7 +53,7 @@ if bashio::config.has_value 'networkdisks'; then
                 mkdir -p /storage/storagecifs$ITERATOR
                 chown -R abc:abc /storage/storagecifs$ITERATOR
                 fi
-                mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD $disk /storage/storagecifs$ITERATOR && \
+                mount -t cifs -o username=$CIFS_USERNAME,password=$CIFS_PASSWORD$SMBVERS $disk /storage/storagecifs$ITERATOR && \
                 bashio::log.info "Success!"
         fi
         ITERATOR=$((ITERATOR+1))
