@@ -30,7 +30,7 @@ if bashio::config.has_value 'networkdisks'; then
     for disk in $MOREDISKS
     do
         bashio::log.info "Mount ${disk}"
-        if [ $ITERATOR -eq 0 ]; then
+        if [ "$ITERATOR" -eq "0" ]; then
             mkdir -p /share/storagecifs && \
                 if [ ! -d /storage/storagecifs ]; then
                 echo "Creating /storage/storagecifs"
