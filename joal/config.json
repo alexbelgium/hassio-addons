@@ -39,6 +39,7 @@
     "ui_path": "str",
     "secret_token": "str", 
     "run_duration": "str?",
+    "ingress_url": "str?",
     "verbose": "bool?"
   }
 }
