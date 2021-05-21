@@ -28,6 +28,12 @@ You'll need to open the options and encode the secret token lrMY24Byhx (or modif
 secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
 ```
 
+Ingress connection :
+Server Address : YOURIP/api/hassio_ingress/INGRESSURL/ (example : 192.168.178.23:8123/api/hassio_ingress/qG_eJSO51uoHqkxiZzgzi9s5ZeNn5CVxBJH7ymrhW6c/)
+Server port : 8123
+Path prefix : YOURPATH (see addon option)
+Secret token : YOURTOKEN (see addon option)
+
 ## Support
 For HA : create an issue on github
 For Joal : see the upstream repo here https://github.com/anthonyraymond/joal
