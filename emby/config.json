@@ -1,7 +1,7 @@
 {
   "name": "Emby NAS",
-  "version": "4.6.0.50",
-  "upstream": "4.6.0.50",
+  "version": "4.6.0.51",
+  "upstream": "4.6.0.51",
   "slug": "emby_nas",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "url": "https://github.com/alexbelgium/hassio-addons",
