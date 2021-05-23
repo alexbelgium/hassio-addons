@@ -1,4 +1,7 @@
 
+## 15.9.4 (23-05-2021)
+- Update to latest version from coderaiser/cloudcmd
+
 ## 15.9.4
 - Update to latest version from coderaiser/cloudcmd
 
