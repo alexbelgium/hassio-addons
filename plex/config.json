@@ -1,7 +1,7 @@
 {
   "name": "Plex NAS",
-  "version": "1.22.3.4523-d0ce30438-ls48",
-  "upstream": "1.22.3.4523-d0ce30438-ls48",
+  "version": "1.23.1.4571-6119e8eed-ls50",
+  "upstream": "1.23.1.4571-6119e8eed-ls50",
   "slug": "plex_nas",
   "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
   "url": "https://github.com/alexbelgium/hassio-addons",
