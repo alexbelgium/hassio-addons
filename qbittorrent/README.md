@@ -41,6 +41,7 @@ networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separat
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password, same for all smb shares)
 openvpn_enabled: yes/no
+openvpn_alternative_mode: true/false # if enabled, will tunnel only qbittorrent and not webui through vpn. Allows webui connection from external networks, but risk of decreased stability. 
 openvpn_config: must reference an openvpn config files stored in /config/openvpn
 openvpn_username: openvpn username
 openvpn_password": openvpn password
