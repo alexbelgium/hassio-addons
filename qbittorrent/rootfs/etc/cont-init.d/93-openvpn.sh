@@ -55,7 +55,23 @@ if bashio::config.true 'openvpn_enabled'; then
       bashio::log.error "qBittorrent config file doesn't exist, openvpn must be added manually to qbittorrent options "
       exit 1
   fi
+
+  #####################
+  # ALTERNATIVE MODE  #
+  #####################
+
+  if bashio::config.true 'openvpn_alternative_mode'; then
+     # Remove previous line and bind tun0
+     sed -i '/Interface/d' qBittorrent.conf
+     # Bind tun0
+     sed -i "$LINE i\Connection\\\Interface=tun0" qBittorrent.conf
+     sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
+     # Modify ovpn config 
+     echo "route-nopull" >> /etc/openvpn/config.ovpn
+  fi
+
 else
+
   ##################
   # REMOVE OPENVPN #
   ##################
@@ -63,4 +79,5 @@ else
   cd /config/qBittorrent/
   sed -i '/Interface/d' qBittorrent.conf 
   bashio::log.info "Direct connection without VPN enabled"
+
 fi
