@@ -76,10 +76,10 @@
     "cifspassword": "str?",
     "cifsdomain": "str?",
     "openvpn_enabled": "bool?",
+    "openvpn_alternative_mode": "bool?",
     "openvpn_config": "str?",
     "openvpn_username": "str?",
     "openvpn_password": "str?",
-    "openvpn_alternative_mode": "bool?",
     "TZ": "str?"
   }
 }
