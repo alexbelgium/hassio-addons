@@ -1,7 +1,7 @@
 {
   "name": "Radarr NAS",
-  "version": "3.2.0.5048",
-  "upstream": "3.2.0.5048",
+  "version": "3.2.1.5070",
+  "upstream": "3.2.1.5070",
   "slug": "radarr_nas",
   "description": "A fork of Sonarr to work with movies like Couchpotato",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -38,7 +38,9 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "localdisks": ["sda1"],
+    "localdisks": [
+      "sda1"
+    ],
     "networkdisks": "<//SERVER/SHARE> <//SERVER2/SHARE2>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
@@ -47,10 +49,12 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
-    "localdisks": ["str"],
+    "localdisks": [
+      "str"
+    ],
     "networkdisks": "str",
     "cifsusername": "str",
     "cifspassword": "str"
   },
-   "smbv1": "bool?"
+  "smbv1": "bool?"
 }
