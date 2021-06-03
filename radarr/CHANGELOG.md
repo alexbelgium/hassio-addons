@@ -1,4 +1,7 @@
 
+## 3.2.2.5080 (04-06-2021)
+- Update to latest version from linuxserver/docker-radarr
+
 ## 3.2.1.5070 (28-05-2021)
 - Update to latest version from linuxserver/docker-radarr
 
