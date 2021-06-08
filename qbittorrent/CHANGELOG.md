@@ -1,3 +1,6 @@
+
+## 14.3.5.99202106080759-7366-33e090cfcubuntu20.04.1-ls136 (09-06-2021)
+- Update to latest version from linuxserver/docker-qbittorrent
 - Add banner in log
 - New option openvpn_alternative_mode, binds only ovpn to qbittorrent and not webui 
 

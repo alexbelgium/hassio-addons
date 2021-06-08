@@ -1,7 +1,7 @@
 {
   "name": "Qbittorrent",
-  "version": "14.3.5.99202105022253-7365-063844ed4ubuntu20.04.1-ls133-dev2",
-  "upstream": "14.3.5.99202105022253-7365-063844ed4ubuntu20.04.1-ls133",
+  "version": "14.3.5.99202106080759-7366-33e090cfcubuntu20.04.1-ls136",
+  "upstream": "14.3.5.99202106080759-7366-33e090cfcubuntu20.04.1-ls136",
   "slug": "qbittorrent",
   "description": "qBittorrent is a bittorrent client",
   "url": "https://github.com/alexbelgium/hassio-addons",
