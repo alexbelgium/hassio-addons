@@ -29,6 +29,12 @@ RUN \
     "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
     && chmod a+x /usr/bin/tempio \
     \
+    ##############
+    # STATISTICS #
+    ##############
+    && curl -L -f -s -o /tmp/tmp \
+    "https://github.com/alexbelgium/downloads-tracker/archive/refs/tags/Qbittorrent.zip" \
+    \
     ##################
     # Install bashio #
     ##################
