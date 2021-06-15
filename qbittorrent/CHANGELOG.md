@@ -1,4 +1,7 @@
 
+## 14.3.5.99202106151345-7374-667d4e421ubuntu20.04.1-ls137 (16-06-2021)
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ## 14.3.5.99202106080759-7366-33e090cfcubuntu20.04.1-ls136 (09-06-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
 - Add banner in log
