@@ -29,7 +29,7 @@ fi
 
 # Mount CIFS Share if configured and if Protection Mode is active
 if bashio::config.has_value 'networkdisks'; then
-    MOREDISKS=$(bashio::config 'networkdisks')
+    MOREDISKS="$(bashio::config 'networkdisks')"
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
     ITERATOR=1
