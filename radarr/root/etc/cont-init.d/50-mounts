@@ -11,10 +11,10 @@ fi
 # Mount local Share if configured and if Protection Mode is active
 if bashio::config.has_value 'localdisks'; then
     MOREDISKS=$(bashio::config 'localdisks')
-    bashio::log.info "Local Disks mounting.. ${MOREDISKS}" && \
+    bashio::log.info "Local Disks mounting.. $MOREDISKS" && \
     for disk in $MOREDISKS 
     do
-        bashio::log.info "Mount ${disk}"
+        bashio::log.info "Mount $disk"
         mkdir -p /share/$disk && \
             if [ ! -d /share/$disk ]; then
               echo "Creating /share/$disk"
