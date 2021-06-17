@@ -28,6 +28,8 @@ if bashio::config.has_value 'networkdisks'; then
     bashio::log.info "Network Disks mounting.. ${MOREDISKS}" && \
     for disk in $MOREDISKS 
     do
+        disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
+        disk=${disk//\\//} #replace \ with /
         bashio::log.info "Mount ${disk}"
         mkdir -p /share/storagecifs && \
             if [ ! -d /storage/storagecifs ]; then
