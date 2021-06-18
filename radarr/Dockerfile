@@ -4,7 +4,17 @@ ARG BUILD_UPSTREAM="3.2.2.5080"
 FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
 
-RUN curl -J -L -o /tmp/bashio.tar.gz \
+RUN \
+    ################
+    # Install apps #
+    ################
+    apt-get update \
+    && apt-get install -y \
+        jq \
+        curl \
+        cifs-utils \
+    \ 
+    && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
