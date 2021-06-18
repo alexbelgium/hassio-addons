@@ -1,4 +1,7 @@
 
+## 10.7.6-1-ls118 (19-06-2021)
+- Update to latest version from linuxserver/docker-jellyfin
+
 ## 10.7.5-1-ls113 (20-05-2021)
 - Update to latest version from linuxserver/docker-jellyfin
 - Add banner to log
