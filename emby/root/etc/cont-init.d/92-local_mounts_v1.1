@@ -10,7 +10,7 @@ bashio::log.info 'Mounting external hdd...'
 if bashio::config.has_value 'localdisks'; then
     MOREDISKS=$(bashio::config 'localdisks')
     bashio::log.info "Local Disks mounting.. ${MOREDISKS}" && \
-    for disk in $MOREDISKS 
+    for disk in ${MOREDISKS//,/ }  # Separate comma separated values
     do
         bashio::log.info "Mount ${disk}"
         mkdir -p /share/$disk && \
