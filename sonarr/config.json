@@ -1,6 +1,6 @@
 {
   "name": "Sonarr NAS",
-  "version": "3.0.6.1265",
+  "version": "3.0.6.1265-dev3",
   "upstream": "3.0.6.1265",
   "slug": "sonarr_nas",
   "description": "Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. ",
