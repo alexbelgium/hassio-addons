@@ -1,6 +1,6 @@
 {
   "name": "Radarr NAS",
-  "version": "3.2.2.5080-dev2",
+  "version": "3.2.2.5080-dev3",
   "upstream": "3.2.2.5080",
   "slug": "radarr_nas",
   "description": "A fork of Sonarr to work with movies like Couchpotato",
