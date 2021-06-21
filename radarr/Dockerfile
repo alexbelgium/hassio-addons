@@ -13,6 +13,7 @@ RUN \
         jq \
         curl \
         cifs-utils \
+        keyutils \
     \ 
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
