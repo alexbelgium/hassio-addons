@@ -25,10 +25,6 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio \
     \
-    # use /data instead of /config for hass.io environment
-    && sed -i "s|/config|/config/prowlarr|g" /etc/services.d/prowlarr/run \
-    && sed -i "s|/config|/config/prowlarr|g" /etc/cont-init.d/30-config \
-    \
     ########################################
     # Correct upstream image folders links #
     ########################################
@@ -40,7 +36,8 @@ RUN \
 	\
     # Correct permissions 
     && sed -i 's|/config|-R /config/prowlarr|g' /etc/cont-init.d/10-adduser \    
-    && sed -i 's=	/config=/config/prowlarr || true=g' /etc/cont-init.d/30-config
-
+    && sed -i 's=	/config=/config/prowlarr || true=g' /etc/cont-init.d/30-config \
+    && sed -i 's|/config|/config/prowlarr|g' /etc/services.d/prowlarr/run
+	
 # copy local files
 COPY root/ /
