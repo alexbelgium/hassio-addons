@@ -1,0 +1,34 @@
+{
+  "name": "Organizr",
+  "version": "1.90",
+  "upstream": "1.90",
+  "slug": "organizr",
+  "description": "An HTPC/Homelab services organizer that is written in PHP",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "ports": {
+    "80/tcp": 88
+  },
+  "ports_description": {
+    "80/tcp": "web interface"
+  },
+  "map": [
+    "ssl"
+  ],
+  "webui": "http://[HOST]:[PORT:80]",
+  "boot": "auto",
+  "environment": {
+    "PUID": "0",
+    "PGID": "0"
+	},
+  "options": {
+  },
+  "schema": {
+  }
+}
