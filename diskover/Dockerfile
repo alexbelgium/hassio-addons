@@ -8,8 +8,7 @@ RUN \
     ################
     # Install apps #
     ################
-    apt-get update \
-    && apt-get install -y \
+    apk add --no-cache \
         jq \
         curl \
         cifs-utils \
