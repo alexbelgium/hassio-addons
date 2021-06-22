@@ -28,9 +28,14 @@ RUN \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
-    #	\
-	# Allow custom config folder
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    \
+    # Allow custom config folder
+    grep -rl '/config/' /defaults/ | xargs sed -i 's|/config/|/config/organizr/|g' \
+    grep -rl '/config/' /etc/cont-init.d/ | xargs sed -i 's|/config/|/config/organizr/|g' \
+    grep -rl '/config/' /etc/logrotate.d/ | xargs sed -i 's|/config/|/config/organizr/|g' \
+    grep -rl '/config/' /etc/services.d/ | xargs sed -i 's|/config/|/config/organizr/|g'
+
     #&& sed -i 's=/config=/config/organizr=g' /etc/cont-init.d/10-adduser \
     #&& sed -i 's=/config=/config/organizr=g' /etc/cont-init.d/20-config \
     #&& sed -i 's=/config=/config/organizr=g' /etc/cont-init.d/30-setup \
