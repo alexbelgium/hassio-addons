@@ -4,10 +4,17 @@ FROM ${BUILD_FROM}
 ARG BASHIO_VERSION=0.13.0
 
 RUN \
+    ################
+    # Install apps #
+    ################
+    apk add --no-cache \
+      curl \
+      jq \
+    \
     ###################
     # Install bashio #
     ##################
-    mkdir -p /tmp/bashio \
+    && mkdir -p /tmp/bashio \
     && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
