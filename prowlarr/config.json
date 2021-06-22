@@ -1,0 +1,53 @@
+{
+  "name": "Prowlarr NAS",
+  "version": "0.1.0.515",
+  "upstream": "0.1.0.515",
+  "slug": "prowlarr",
+  "description": "Indexer manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various PVR apps",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "ports": {
+    "9696/tcp": 9696
+  },
+  "ports_description": {
+    "9696/tcp": "web interface"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
+  "webui": "http://[HOST]:[PORT:9696]",
+  "boot": "auto",
+  "environment": {
+    "PUID": "0",
+    "PGID": "0"
+  },
+  "options": {
+    "PUID": 0,
+    "PGID": 0,
+    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?",
+    "smbv1": "bool?"
+  }
+}
