@@ -35,8 +35,8 @@ RUN \
 	\
     # Correct permissions 
     && sed -i 's|/config|-R /config/diskover|g' /etc/cont-init.d/10-adduser \    
-    && sed -i 's=	/config=/config/diskover || true=g' /etc/cont-init.d/30-config \
-    && sed -i 's|/config|/config/diskover|g' /etc/services.d/diskover/run
+    && sed -i 's=	/config=/config/diskover || true=g' /etc/cont-init.d/50-diskover-config \
+    && sed -i 's=	/config=/config/diskover || true=g' /etc/cont-init.d/60-diskover-web-config
 	
 # copy local files
 COPY root/ /
