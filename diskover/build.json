@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "armhf": "linuxserver/diskover:arm32v7-version-v",
-    "armv7": "linuxserver/diskover:arm32v7-version-v",
-    "aarch64": "linuxserver/diskover:arm64v8-version-v",
-    "amd64": "linuxserver/diskover:amd64-version-v"
+    "armhf": "linuxserver/diskover:arm32v7-version-",
+    "armv7": "linuxserver/diskover:arm32v7-version-",
+    "aarch64": "linuxserver/diskover:arm64v8-version-",
+    "amd64": "linuxserver/diskover:amd64-version-"
   }
 }
