@@ -1,0 +1,50 @@
+{
+  "name": "diskover NAS",
+  "version": "v1.5.0.13",
+  "upstream": "v1.5.0.13",
+  "slug": "diskover",
+  "description": "File system crawler and disk space usage software that uses Elasticsearch to index and manage data across heterogeneous storage systems",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "startup": "services",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "ports": {
+    "80/tcp": 87,
+    "9181/tcp": 9181,
+    "9999/tcp": 9999
+  },
+  "ports_description": {
+    "80/tcp": "diskover Web UI",
+	"9181/tcp": "rq-dashboard web UI",
+	"9999/tcp": "diskover socket server"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
+  "webui": "http://[HOST]:[PORT:80]",
+  "boot": "auto",
+  "environment": {
+    "PUID": "0",
+    "PGID": "0"
+  },
+  "options": {
+    "PUID": 0,
+    "PGID": 0
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?"
+  }
+}
