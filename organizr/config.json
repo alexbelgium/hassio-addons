@@ -19,6 +19,7 @@
     "80/tcp": "web interface"
   },
   "map": [
+    "config",
     "ssl"
   ],
   "webui": "http://[HOST]:[PORT:80]",
