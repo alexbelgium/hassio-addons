@@ -31,20 +31,10 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \
     # Allow custom config folder
-    && grep -rl '/config' /defaults/ | xargs sed -i 's|/config|/config/organizr|g' \
-    && grep -rl '/config' /etc/cont-init.d/ | xargs sed -i 's|/config|/config/organizr|g' \
-    && grep -rl '/config' /etc/logrotate.d/ | xargs sed -i 's|/config|/config/organizr|g' \
-    && grep -rl '/config' /etc/services.d/ | xargs sed -i 's|/config|/config/organizr|g'
+    && grep -rl '/config' /defaults/ | xargs sed -i 's|/config|/data/organizr|g' \
+    && grep -rl '/config' /etc/cont-init.d/ | xargs sed -i 's|/config|/data/organizr|g' \
+    && grep -rl '/config' /etc/logrotate.d/ | xargs sed -i 's|/config|/data/organizr|g' \
+    && grep -rl '/config' /etc/services.d/ | xargs sed -i 's|/config|/data/organizr|g'
 
-    #&& sed -i 's=/config=/config/organizr=g' /etc/cont-init.d/10-adduser \
-    #&& sed -i 's=/config=/config/organizr=g' /etc/cont-init.d/20-config \
-    #&& sed -i 's=/config=/config/organizr=g' /etc/cont-init.d/30-setup \
-    #&& sed -i 's=/config=/config/organizr=g' /etc/cont-init.d/40-install \
-    #&& sed -i 's=/config=/config/organizr=g' /etc/logrotate.d/nginx \
-    #&& sed -i 's=/config=/config/organizr=g' /etc/logrotate.d/php_ftm7 \
-    #&& sed -i 's=/config=/config/organizr=g' /etc/services.d/nginx/run \
-    #&& sed -i 's=/config=/config/organizr=g' /etc/services.d/nginx/run \
-
-	
 # copy local files
 COPY root/ /
