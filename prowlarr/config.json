@@ -1,7 +1,7 @@
 {
   "name": "Prowlarr NAS",
-  "version": "0.1.0.515",
-  "upstream": "0.1.0.515",
+  "version": "nightly-0.1.0.515-ls41",
+  "upstream": "nightly-0.1.0.515-ls41",
   "slug": "prowlarr",
   "description": "Indexer manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various PVR apps",
   "url": "https://github.com/alexbelgium/hassio-addons",
