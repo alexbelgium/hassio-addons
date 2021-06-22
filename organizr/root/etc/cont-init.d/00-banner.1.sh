@@ -32,7 +32,7 @@ if bashio::supervisor.ping; then
         ' Please, share the above information when looking for help'
     bashio::log.blue \
         ' or support in, e.g., GitHub, forums or the Discord chat.'
-    bashio::log.blue \
+    bashio::log.green \
         ' https://github.com/alexbelgium/hassio-addons'
     bashio::log.blue \
         '-----------------------------------------------------------'
