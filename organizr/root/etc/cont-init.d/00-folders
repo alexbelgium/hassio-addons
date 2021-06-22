@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bash
 
-if [ ! -d /config/organizr ]; then
-  echo "Creating /config/organizr"
-  mkdir -p /config/organizr
-  chown -R abc:abc /config/organizr
+if [ ! -d /data/organizr ]; then
+  echo "Creating /data/organizr"
+  mkdir -p /data/organizr
+  chown -R abc:abc /data/organizr
 fi
