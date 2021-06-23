@@ -26,7 +26,7 @@ RUN \
 # Copy root filesystem
 COPY rootfs / 
 
-CMD ["/run.sh"]
+#CMD ["/run.sh"]
 
 VOLUME [ "/data" ]
 
