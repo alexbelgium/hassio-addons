@@ -39,12 +39,17 @@ if bashio::supervisor.ping; then
         '-----------------------------------------------------------'
 fi
 
+while true
+  do
+    sleep 60
+  done
+
 #################
 # Create config #
 #################
-mustache-cli /data/options.json /templates/inadyn.mustache > /usr/local/etc/inadyn.conf
+#mustache-cli /data/options.json /templates/inadyn.mustache > /usr/local/etc/inadyn.conf
 
 ##############
 # Launch App #
 ##############
-/usr/sbin/inadyn --foreground
+#/usr/sbin/inadyn --foreground
