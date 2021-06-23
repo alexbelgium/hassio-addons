@@ -43,7 +43,7 @@ COPY rootfs /
 
 WORKDIR /
 RUN chmod 777 /run.sh
-ENTRYPOINT [ "/usr/bin/" ]
+ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/run.sh" ] 
 CMD ["/run.sh"]
 
