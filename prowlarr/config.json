@@ -3,7 +3,7 @@
   "version": "nightly-0.1.0.515-ls41",
   "upstream": "nightly-0.1.0.515-ls41",
   "slug": "prowlarr",
-  "description": "Indexer manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various PVR apps",
+  "description": "Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
   "arch": [
