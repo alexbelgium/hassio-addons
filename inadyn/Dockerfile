@@ -13,6 +13,7 @@ RUN \
       curl \
       jq \
       bash \
+      xz build-base libressl-dev ca-certificates \
     \
     ##################
     # Install bashio #
@@ -22,9 +23,12 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio 
-
-RUN apk upgrade --no-cache &&\
+    && rm -rf /tmp/bashio \
+    \
+    ####################
+    # Install mustache #
+    ####################
+    && apk upgrade --no-cache &&\
     apk add --no-cache --virtual .build-deps\
     build-base\
     git\
@@ -32,7 +36,7 @@ RUN apk upgrade --no-cache &&\
     go get -u github.com/quantumew/mustache-cli &&\
     cp $GOPATH/bin/* /usr/bin/ && \
     rm -rf $GOPATH /var/cache/apk/* /tmp/src &&\
-    apk del .build-deps build-base
+    apk del .build-deps xz build-base
 
 # Copy root filesystem
 COPY rootfs / 
