@@ -42,7 +42,7 @@ fi
 #################
 # Create config #
 #################
-/usr/bin/mustache-cli /data/options.json /templates/inadyn.mustache > /usr/local/etc/inadyn.conf
+mustache-cli /data/options.json /templates/inadyn.mustache > /usr/local/etc/inadyn.conf
 
 ##############
 # Launch App #
