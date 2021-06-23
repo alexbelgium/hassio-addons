@@ -34,7 +34,7 @@ RUN \
     git\
     go &&\
     go get -u github.com/quantumew/mustache-cli &&\
-    cp $GOPATH/bin/* /usr/local/bin/ && \
+    cp $GOPATH/bin/* /usr/bin/ && \
     rm -rf $GOPATH /var/cache/apk/* /tmp/src &&\
     apk del .build-deps xz build-base
 
@@ -43,7 +43,7 @@ COPY rootfs /
 
 WORKDIR /
 RUN chmod 777 /run.sh
-ENTRYPOINT [ "/usr/bin/env" ]
+ENTRYPOINT [ "/usr/bin/" ]
 CMD [ "/run.sh" ] 
 CMD ["/run.sh"]
 
