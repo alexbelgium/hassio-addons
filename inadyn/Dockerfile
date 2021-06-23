@@ -32,7 +32,7 @@ RUN apk upgrade --no-cache &&\
     go get -u github.com/quantumew/mustache-cli &&\
     cp $GOPATH/bin/* /usr/bin/ && \
     rm -rf $GOPATH /var/cache/apk/* /tmp/src &&\
-    apk del .build-deps xz build-base
+    apk del .build-deps build-base
 
 # Copy root filesystem
 COPY rootfs / 
