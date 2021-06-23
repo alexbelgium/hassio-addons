@@ -5,6 +5,10 @@ ARG BASHIO_VERSION=0.13.0
 ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
+ENV LANG='C.UTF-8'\
+    TERM='xterm-256color'\
+    GOPATH='/opt/go'
+
 RUN \
     ################
     # Install apps #
