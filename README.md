@@ -81,6 +81,11 @@ https://github.com/alexbelgium/hassio-addons
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/nextcloud
 - Forked from : https://github.com/haberda/hassio_addons
 
+### &#10003; [Papermerge](papermerge/)
+
+- An HTPC/Homelab services organizer that is written in PHP
+- Based on https://hub.docker.com/r/linuxserver/organizr
+
 ### &#10003; [Papermerge](papermerge/) ![smb][smb-shield]
 
 - Open source document management system (DMS)
@@ -100,6 +105,11 @@ https://github.com/alexbelgium/hassio-addons
 
 - Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
 - Based on https://hub.docker.com/r/linuxserver/plex
+
+### &#10003; [Prowlarr](prowlarr/) ![smb][smb-shield] ![base][base-shield]
+
+- Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
+- Based on https://hub.docker.com/r/linuxserver/prowlarr
 
 ### &#10003; [Qbittorrent](qbittorrent/) ![smb][smb-shield]  ![support][support-shield] ![ingress][ingress-shield]
 
