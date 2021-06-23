@@ -12,6 +12,7 @@ RUN \
     apk add --no-cache \
       curl \
       jq \
+      bash \
     \
     ##################
     # Install bashio #
