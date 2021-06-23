@@ -34,7 +34,7 @@ RUN \
     git\
     go &&\
     go get -u github.com/quantumew/mustache-cli &&\
-    cp $GOPATH/bin/* /usr/bin/ && \
+    cp $GOPATH/bin/* /usr/local/bin/ && \
     rm -rf $GOPATH /var/cache/apk/* /tmp/src &&\
     apk del .build-deps xz build-base
 
