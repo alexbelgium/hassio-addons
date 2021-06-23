@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bashio
 
 # ==============================================================================
 # Home Assistant Community Add-on: Base Images
