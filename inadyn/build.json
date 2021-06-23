@@ -1,0 +1,8 @@
+{
+  "build_from": {
+    "armv7": "troglobit/inadyn:latest",
+    "armhf": "troglobit/inadyn:latest",
+    "aarch64": "troglobit/inadyn:latest",
+    "amd64": "troglobit/inadyn:latest"
+  }
+}

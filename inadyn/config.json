@@ -1,0 +1,59 @@
+{
+  "name": "Inadyn",
+  "version": "2.8.1",
+  "upstream": "2.8.1",
+  "slug": "inadyn",
+  "description": "Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "map": [
+    "ssl"
+  ],
+  "host_network": true,
+  "environment": {
+  },
+  "options": {
+    "providers": [
+      {
+        "provider": "yourprovider",
+        "username": "username",
+        "password": "password",
+        "hostname": "dynamic-subdomain.example.com"
+      }
+    ]
+  },
+  "schema": {
+    "verify_address": "bool?",
+    "fake_address": "bool?",
+    "allow_ipv6": "bool?",
+    "iface": "str?",
+    "iterations": "int?",
+    "period": "int?",
+    "forced_update": "bool?",
+    "secure_ssl": "bool?",
+    "providers": [
+      {
+        "provider": "str",
+        "custom_provider": "bool?",
+        "username": "str",
+        "password": "str?",
+        "ssl": "bool?",
+        "hostname": "str",
+        "checkip_ssl": "bool?",
+        "checkip_server": "str?",
+        "checkip_command": "str?",
+        "checkip_path": "str?",
+        "user_agent": "str?",
+        "wildcard": "bool?",
+        "ddns_server": "str?",
+        "ddns_path": "str?",
+        "append_myip": "bool?"
+      }
+    ]
+  }
+}
