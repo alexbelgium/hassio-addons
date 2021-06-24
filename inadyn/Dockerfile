@@ -5,9 +5,9 @@ ARG BASHIO_VERSION=0.13.0
 ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
-ENV LANG='C.UTF-8'\
-    TERM='xterm-256color'\
-    GOPATH='/opt/go'
+#ENV LANG='C.UTF-8'\
+#    TERM='xterm-256color'\
+#    GOPATH='/opt/go'
 
 RUN \
     ################
@@ -17,7 +17,7 @@ RUN \
       curl \
       jq \
       bash \
-      xz build-base libressl-dev ca-certificates \
+      xz build-base libressl-dev ca-certificates npm \
     \
     ##################
     # Install bashio #
@@ -32,15 +32,19 @@ RUN \
     ####################
     # Install mustache #
     ####################
-    && apk upgrade --no-cache &&\
-    apk add --no-cache --virtual .build-deps\
-    build-base\
-    git\
-    go &&\
-    go get -u github.com/quantumew/mustache-cli &&\
-    cp $GOPATH/bin/* /usr/bin/ && \
-    rm -rf $GOPATH /var/cache/apk/* /tmp/src &&\
-    apk del .build-deps xz build-base
+    && apk add --no-cache \
+        go \
+        npm \
+    && npm install mustache-cli --global        
+#    && apk upgrade --no-cache &&\
+#    apk add --no-cache --virtual .build-deps\
+#    build-base\
+#    git\
+#    go &&\
+#    go get -u github.com/quantumew/mustache-cli &&\
+#    cp $GOPATH/bin/* /usr/bin/ && \
+#    rm -rf $GOPATH /var/cache/apk/* /tmp/src &&\
+#    apk del .build-deps xz build-base
 
 # Copy root filesystem
 COPY rootfs / 
