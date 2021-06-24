@@ -39,15 +39,9 @@ if bashio::supervisor.ping; then
         '-----------------------------------------------------------'
 fi
 
-while true
-do
-sleep 60
-done
-
 #################
 # Create config #
 #################
-
 mustache-cli /data/options.json /templates/inadyn.mustache > /etc/inadyn.conf
 
 ##############
