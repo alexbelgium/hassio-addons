@@ -48,7 +48,7 @@ done
 # Create config #
 #################
 
-mustache-cli -C /data/options.json /templates/inadyn.mustache > /etc/inadyn.conf
+mustache-cli /data/options.json /templates/inadyn.mustache > /etc/inadyn.conf
 
 ##############
 # Launch App #
