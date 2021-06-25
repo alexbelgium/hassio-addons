@@ -26,6 +26,33 @@ comparison to installing any other Hass.io add-on.
 To configure with addon options, no webUI.
 For configuration, see https://github.com/troglobit/inadyn
 
+```
+"verify_address": "bool?",
+"fake_address": "bool?",
+"allow_ipv6": "bool?",
+"iface": "str?",
+"iterations": "int?",
+"period": "int?",
+"forced_update": "bool?",
+"secure_ssl": "bool?",
+"providers":
+      - "provider": "str",
+        "custom_provider": "bool?",
+        "username": "str",
+        "password": "str?",
+        "ssl": "bool?",
+        "hostname": "str",
+        "checkip_ssl": "bool?",
+        "checkip_server": "str?",
+        "checkip_command": "str?",
+        "checkip_path": "str?",
+        "user_agent": "str?",
+        "wildcard": "bool?",
+        "ddns_server": "str?",
+        "ddns_path": "str?",
+        "append_myip": "bool?"
+```
+
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
