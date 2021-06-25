@@ -26,32 +26,87 @@ comparison to installing any other Hass.io add-on.
 To configure with addon options, no webUI.
 For configuration, see https://github.com/troglobit/inadyn
 
+### Configuration
+
+The available configuration options are as follows (this is filled in with some example data):
+
 ```
-"verify_address": "bool?",
-"fake_address": "bool?",
-"allow_ipv6": "bool?",
-"iface": "str?",
-"iterations": "int?",
-"period": "int?",
-"forced_update": "bool?",
-"secure_ssl": "bool?",
-"providers":
-      - "provider": "str",
-        "custom_provider": "bool?",
-        "username": "str",
-        "password": "str?",
-        "ssl": "bool?",
-        "hostname": "str",
-        "checkip_ssl": "bool?",
-        "checkip_server": "str?",
-        "checkip_command": "str?",
-        "checkip_path": "str?",
-        "user_agent": "str?",
-        "wildcard": "bool?",
-        "ddns_server": "str?",
-        "ddns_path": "str?",
-        "append_myip": "bool?"
+{
+  "verify_address": false,
+  "fake_address": false,
+  "allow_ipv6": true,
+  "iface": "eth0",
+  "iterations": 0,
+  "period": 300,
+  "forced_update": false,
+  "secure_ssl": true,
+  "providers": [
+    {
+      "provider": "providerslug",
+      "custom_provider": false,
+      "username": "yourusername",
+      "password": "yourpassword_or_token",
+      "ssl": true,
+      "hostname": "dynamic-subdomain.example.com",
+      "checkip_ssl": false,
+      "checkip_server": "api.example.com",
+      "checkip_command": "/sbin/ifconfig eth0 | grep 'inet6 addr'",
+      "checkip_path": "/",
+      "user_agent": "Mozilla/5.0",
+      "ddns_server": "ddns.example.com",
+      "ddns_path": "",
+      "append_myip": false
+    }
+  ]
+}
 ```
+
+You should not fill in all of these, only use what is necessary. A typical example would look like:
+
+```
+{
+    {
+      "provider": "duckdns",
+      "username": "your-token",
+      "hostname": "sub.duckdns.org"
+    }
+  ]
+}
+```
+
+or:
+
+```
+{
+  "providers": [
+    {
+      "provider": "someprovider",
+      "username": "username",
+      "password": "password",
+      "hostname": "your.domain.com"
+    }
+  ]
+}
+```
+
+for a custom provider that is not supported by inadyn you can do:
+```
+{
+  "providers": [
+    {
+      "provider": "arbitraryname",
+      "username": "username",
+      "password": "password",
+      "hostname": "your.domain.com",
+      "ddns_server": "api.cp.easydns.com",
+      "ddns_path": "/somescript.php?hostname=%h&myip=%i",
+      "custom_provider": true
+    }
+  ]
+}
+```
+
+the tokens in ddns_path are outlined in the `inadyn.conf(5)` man page.
 
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [repository]: https://github.com/alexbelgium/hassio-addons
