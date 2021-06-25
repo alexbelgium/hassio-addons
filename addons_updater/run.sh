@@ -125,7 +125,7 @@ for addons in $(bashio::config "addon|keys"); do
     LOGINFO="... $SLUG : updating files" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     #files=$(grep -rl ${CURRENT} /data/${BASENAME}/${SLUG}) && echo $files | xargs sed -i "s/${CURRENT}/${LASTVERSION}/g" # Change all tags in all addon files
     sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/config.json
-    sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/Dockerfile
+    sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/Dockerfile || true #Allow absence
     sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/build.json || true #Allow absence of build.json
 
     # Remove " and modify version
