@@ -22,10 +22,10 @@ RUN apk add --no-cache \
 
 VOLUME [ "/data" ]
 WORKDIR /
-COPY run /
-RUN chmod 777 /run
+COPY run.sh /
+RUN chmod 777 /run.sh
 ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/run" ] 
+CMD [ "/run.sh" ] 
 
 
 ### LABELS
