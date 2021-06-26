@@ -4,6 +4,8 @@ FROM coderaiser/cloudcmd:$BUILD_UPSTREAM
 
 COPY run.sh /
 
+ARG BASHIO_VERSION=0.13.0
+
 RUN \
     ################
     # Install apps #
