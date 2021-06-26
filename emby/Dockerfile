@@ -10,10 +10,14 @@ ARG TEMPIO_VERSION=2021.01.0
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
+    ################
+    # Install apps #
+    ################
     apt-get update \
     && apt-get install -y --no-install-recommends \
     jq \
     cifs-utils \
+    keyutils \
     \
     ##################
     # Install bashio #
