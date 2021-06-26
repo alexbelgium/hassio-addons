@@ -21,7 +21,7 @@ if bashio::config.has_value 'localdisks'; then
               chown -R abc:abc /share/$disk
             fi
             mount /dev/$disk /share/$disk && \
-            bashio::log.info "Success!"   
+            bashio::log.info "Success! Mounted to /nmt/$disk"  
     done || \
     bashio::log.warning "Protection mode is ON. Unable to mount local drives!"
 fi
