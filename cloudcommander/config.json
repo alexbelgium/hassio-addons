@@ -29,4 +29,9 @@
   "environment": {},
   "options": {},
   "schema": {}
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?",
+    "smbv1": "bool?"
 }
