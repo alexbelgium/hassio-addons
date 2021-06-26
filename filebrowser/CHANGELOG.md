@@ -1,6 +1,5 @@
 - Add banner in log
 - Update smb mount code
-- Add noauth
 
 ## 2.15.0
 - Update to latest version from hurlenko/filebrowser-docker
