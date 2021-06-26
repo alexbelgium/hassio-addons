@@ -154,4 +154,4 @@ PGID=0
 bashio::log.info "Default username/password : admin/admin"
 bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 
-/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.db
+/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.db --auth.method=noauth
