@@ -28,10 +28,11 @@
   "full_access": true,
   "environment": {},
   "options": {},
-  "schema": {}
+  "schema": {
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
     "smbv1": "bool?"
+  }
 }
