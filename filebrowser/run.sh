@@ -152,16 +152,27 @@ PGID=0
 # LAUNCH FILEBROWSER #
 ######################
 
+NOAUTH=""
+
 if bashio::config.true 'NoAuth'; then
-  /./filebrowser config init || true
-  /./filebrowser config set --auth.method=noauth
+  if ! bashio::fs.file_exists "/data/noauth"; then
+    rm /data/auth || true
+    touch /data/noauth
+    rm /config/filebrowser/filebrowser.dB || true
+    NOAUTH="--no-auth"
+    bashio::log.warning "Auth method change, database reset"
+  fi
   bashio::log.info "NoAuth option selected"
 else
-  /./filebrowser config init || true 
-  /./filebrowser config set --auth.method=json
+  if ! bashio::fs.file_exists "/data/auth"; then
+    rm /data/noauth || true
+    touch /data/auth
+    rm /config/filebrowser/filebrowser.dB || true
+    bashio::log.warning "Auth method change, database reset"
+  fi
   bashio::log.info "Default username/password : admin/admin"
 fi
 
 bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 
-/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB 
+/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH
