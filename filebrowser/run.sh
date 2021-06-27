@@ -159,7 +159,7 @@ if bashio::config.true 'NoAuth'; then
     rm /data/auth || true
     touch /data/noauth
     rm /config/filebrowser/filebrowser.dB || true
-    NOAUTH="--no-auth"
+    NOAUTH="--noauth"
     bashio::log.warning "Auth method change, database reset"
   fi
   bashio::log.info "NoAuth option selected"
