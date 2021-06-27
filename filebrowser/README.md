@@ -28,6 +28,7 @@ Network disk is mounted to /share/storagecifs
 ssl: true/false
 certfile: fullchain.pem #ssl certificate
 keyfile: privkey.pem #sslkeyfile
+NoAuth: true/false #Remove password. Resets database when changed. 
 smbv1: false # Should smbv1 be used instead of 2.1+?
 networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
