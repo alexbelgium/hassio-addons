@@ -1,3 +1,6 @@
+
+## 15.9.7 (28-06-2021)
+- Update to latest version from coderaiser/cloudcmd
 - Allow mounting SMB shares
 - Allow mounting local drives
 
