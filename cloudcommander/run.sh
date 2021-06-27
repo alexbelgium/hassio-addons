@@ -61,7 +61,7 @@ if bashio::config.has_value 'localdisks'; then
             mount /dev/$disk /mnt && \
             bashio::log.info "Success! Mounted to /nmt/$disk"   
     done || \
-    bashio::log.warning "Protection mode is ON. Unable to mount local drives!"
+    bashio::log.warning "Error, /dev/$disk couldn't be mounted. Is priviledged mode on?"
 fi || true
 
 ####################
