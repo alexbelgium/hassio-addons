@@ -156,18 +156,18 @@ NOAUTH=""
 
 if bashio::config.true 'NoAuth'; then
   if ! bashio::fs.file_exists "/data/noauth"; then
-    rm /data/auth || true
+    rm /data/auth &> /dev/null || true
+    rm /config/filebrowser/filebrowser.dB &> /dev/null || true
     touch /data/noauth
-    rm /config/filebrowser/filebrowser.dB || true
     NOAUTH="--noauth"
     bashio::log.warning "Auth method change, database reset"
   fi
   bashio::log.info "NoAuth option selected"
 else
   if ! bashio::fs.file_exists "/data/auth"; then
-    rm /data/noauth || true
+    rm /data/noauth &> /dev/null || true
+    rm /config/filebrowser/filebrowser.dB &> /dev/null || true
     touch /data/auth
-    rm /config/filebrowser/filebrowser.dB || true
     bashio::log.warning "Auth method change, database reset"
   fi
   bashio::log.info "Default username/password : admin/admin"
