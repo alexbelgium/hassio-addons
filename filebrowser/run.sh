@@ -153,9 +153,11 @@ PGID=0
 ######################
 
 if bashio::config.true 'NoAuth'; then
+  /./filebrowser config init || true
   /./filebrowser config set --auth.method=noauth
   bashio::log.info "NoAuth option selected"
 else
+  /./filebrowser config init || true 
   /./filebrowser config set --auth.method=json
   bashio::log.info "Default username/password : admin/admin"
 fi
