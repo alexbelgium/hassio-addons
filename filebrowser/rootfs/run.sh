@@ -175,4 +175,8 @@ fi
 
 bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 
-/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH
+/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH & \
+
+bashio::net.wait_for 8080 localhost 900 || true
+bashio::log.info "Nginx started for Ingress" 
+exec nginx
