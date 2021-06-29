@@ -9,8 +9,7 @@ ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
 RUN \
-    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
-    && apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - \
     ################
     # Install apps #
     ################
