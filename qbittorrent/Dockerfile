@@ -12,9 +12,11 @@ RUN \
     ####################
     # AVOID NTP ISSUES #
     ####################
-    apt-get install -y ntp \
-    && service ntpd stop \
-    && ntpdate pool.ntp.org \
+    #date -s "$(wget -qSO- --max-redirect=0 google.com 2>&1 | grep Date: | cut -d' ' -f5-8)Z"
+    #sudo apt update
+    #apt-get install -y ntp \
+    #&& service ntpd stop \
+    #&& ntpdate pool.ntp.org \
     \    
     ################
     # Install apps #
