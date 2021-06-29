@@ -17,7 +17,7 @@ RUN \
     #apt-get install -y ntp \
     #&& service ntpd stop \
     #&& ntpdate pool.ntp.org \
-    \    
+    #\    
     ################
     # Install apps #
     ################
