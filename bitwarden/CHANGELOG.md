@@ -1,4 +1,7 @@
 
+## 1.22.1 (30-06-2021)
+- Update to latest version from dani-garcia/bitwarden_rs
+
 ## 1.22.0 (29-06-2021)
 - Update to latest version from dani-garcia/bitwarden_rs
 - Project renamed to vaultwarden
