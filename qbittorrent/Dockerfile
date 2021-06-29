@@ -12,7 +12,7 @@ RUN \
     ####################
     # AVOID NTP ISSUES #
     ####################
-    yum install -y ntp \
+    apt-get install -y ntp \
     && service ntpd stop \
     && ntpdate pool.ntp.org \
     \    
