@@ -31,13 +31,14 @@ RUN \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-	\
-	# Correct config folder
-	&& grep -rl "/config" /etc/cont-init.d | xargs sed -i 's|/config|/config/flexget|g' \
-	\
-	# Set password
+    \
+    # Correct config folder
+    && grep -rl "/config" /etc/cont-init.d | xargs sed -i 's|/config|/config/flexget|g' \
+    && sed '2 mkdir -p /config/flexget' /etc/cont-init.d/10-adduser \
+    \
+    # Set password
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/20-config \
-	&& sed -i 's/# set FG_WEBUI_PASSWD/if bashio::config.has_value "WebuiPass"; then FG_WEBUI_PASSWD=$(bashio::config "WebuiPass"); fi/g' /etc/cont-init.d/20-config
+    && sed -i 's/# set FG_WEBUI_PASSWD/if bashio::config.has_value "WebuiPass"; then FG_WEBUI_PASSWD=$(bashio::config "WebuiPass"); fi/g' /etc/cont-init.d/20-config
 	
 VOLUME [ "/data" ]
 
