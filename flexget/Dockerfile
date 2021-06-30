@@ -33,7 +33,7 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \
     # Correct config folder
-    && grep -rl "/config" /etc/cont-init.d | xargs sed -i 's|/config|/config/flexget|g' \
+    && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/flexget|g' \
     && sed '2a mkdir -p /config/flexget' /etc/cont-init.d/10-adduser \
     \
     # Set password
