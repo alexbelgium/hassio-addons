@@ -1,7 +1,7 @@
 {
     "name": "Flexget",
     "version": "3.1.120",
-	"upstream": "3.1.120",
+    "upstream": "3.1.120",
     "slug": "flexget",
     "description": "FlexGet is a multipurpose automation tool for all of your media",
     "url": "https://github.com/alexbelgium/hassio-addons",
@@ -17,6 +17,8 @@
     "config:rw"
     ],
     "environment": {
+    "FG_PLUGINS": "",
+    "FG_WEBUI_PASSWD": ""
     },
     "options": {
     "PUID": 0,
