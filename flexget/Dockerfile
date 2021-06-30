@@ -34,7 +34,7 @@ RUN \
     \
     # Correct config folder
     && grep -rl "/config" /etc/cont-init.d | xargs sed -i 's|/config|/config/flexget|g' \
-    && sed '2 mkdir -p /config/flexget' /etc/cont-init.d/10-adduser \
+    && sed '1 a mkdir -p /config/flexget' /etc/cont-init.d/10-adduser \
     \
     # Set password
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/20-config \
