@@ -1,6 +1,7 @@
 {
     "name": "ResilioSync",
     "version": "2.7.2.1375-ls90",
+	"upstream": "2.7.2.1375-ls90",
     "slug": "resiliosync",
     "description": "Self-hosted file share and collaboration platform on the web",
     "url": "https://github.com/tyjtyj/hassio-addons",
