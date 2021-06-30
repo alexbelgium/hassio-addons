@@ -25,7 +25,8 @@
     "schema": {
     "PUID": "int",
     "PGID": "int",
-    "WebuiPass": "str?"
+    "WebuiPass": "str?", 
+    "FG_PLUGINS": "str?" 
     },
     "arch": [
         "aarch64",
