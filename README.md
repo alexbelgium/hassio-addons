@@ -126,6 +126,12 @@ https://github.com/alexbelgium/hassio-addons
 - A fork of Sonarr to work with movies like Couchpotato
 - Based on https://hub.docker.com/r/linuxserver/radarr
 
+### &#10003; [Resioliosync](resiolosync/) ![smb][smb-shield] ![base][base-shield]
+
+- Self-hosted file share and collaboration platform on the web
+- Based on https://hub.docker.com/r/linuxserver/resiolio-sync
+- Developed by @TyjTyj
+
 ### &#10003; [Sonarr](sonarr/) ![smb][smb-shield] ![base][base-shield]
 
 - Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them.
