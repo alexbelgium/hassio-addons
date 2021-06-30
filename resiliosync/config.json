@@ -1,0 +1,35 @@
+{
+    "name": "ResilioSync",
+    "version": "2.7.2.1375-ls90",
+    "slug": "resiliosync",
+    "description": "Self-hosted file share and collaboration platform on the web",
+    "url": "https://github.com/tyjtyj/hassio-addons",
+    "webui": "http://[HOST]:[PORT:8888]",
+    "startup": "services",
+    "boot": "auto",
+    "ports": {
+        "8888/tcp": 8888,
+        "55555/tcp": 55555
+    },
+    "ports_description": {
+        "8888/tcp": "Web interface",
+        "55555/tcp": "Sync Port"
+    },
+    "map": [
+        "share:rw"
+    ],
+    "environment": {
+    "PUID": "1000",
+    "GUID": "1000"
+    },
+    "options": {
+    },
+    "schema": {
+    },
+    "arch": [
+        "aarch64",
+        "amd64",
+        "armhf",
+        "armv7"
+    ]
+}

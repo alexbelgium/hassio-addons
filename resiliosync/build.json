@@ -1,0 +1,8 @@
+{
+  "build_from": {
+    "armhf" : "linuxserver/resilio-sync:arm32v7-",
+    "armv7": "linuxserver/resilio-sync:arm32v7-",
+    "aarch64": "linuxserver/resilio-sync:arm64v8-",
+    "amd64" : "linuxserver/resilio-sync:amd64-"
+  }
+}
