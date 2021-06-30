@@ -10,11 +10,11 @@
         "5050/tcp": 5050
     },
     "ports_description": {
-        "5050/tcp": "Web interface"
+    "5050/tcp": "Web interface"
     },
     "map": [
-        "share:rw",
-		"config:rw"
+    "share:rw",
+    "config:rw"
     ],
     "environment": {
     },
@@ -25,7 +25,7 @@
     "schema": {
     "PUID": "int",
     "PGID": "int",
-	"WebuiPass": "str?"
+    "WebuiPass": "str?"
     },
     "arch": [
         "aarch64",
