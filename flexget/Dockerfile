@@ -1,7 +1,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="3.1.120"
-FROM wiserain/flexget:${BUILD_UPSTREAM}
+FROM wiserain/flexget:latest
 
 RUN \
     ##################
