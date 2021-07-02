@@ -61,6 +61,12 @@ https://github.com/alexbelgium/hassio-addons
 - This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/filebrowser).
 - Support : [Home Assistant addon : FileBrowser - Home Assistant OS - Home Assistant Community (home-assistant.io)](https://community.home-assistant.io/t/home-assistant-addon-filebrowser/282108)
 
+### &#10003; [Flexget](flexget/)
+
+- FlexGet is a multipurpose automation tool for all of your media
+- Based on https://hub.docker.com/r/wiserain/flexget
+- Developed for @TyjTyj
+
 ### &#10003; [Inadyn](inadyn/)
 
 - Inadyn, or In-a-Dyn, is a small and simple Dynamic DNS, DDNS, client with HTTPS support. Commonly available in many GNU/Linux distributions, used in off the shelf routers and Internet gateways to automate the task of keeping your Internet name in sync with your public¹ IP address. It can also be used in installations with redundant (backup) connections to the Internet.
