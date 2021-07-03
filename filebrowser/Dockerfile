@@ -7,7 +7,7 @@ RUN apk add --no-cache \
     jq \
     bash \
     bind-tools \
-	nginx \
+	#nginx \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.12.1.tar.gz" \
     && mkdir /tmp/bashio \
