@@ -135,13 +135,13 @@ declare ingress_interface
 declare ingress_port
 declare keyfile
 
-port=$(bashio::addon.port 80)
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
-sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%baseurl%%/filebrowser/g" /etc/nginx/servers/ingress.conf
-mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
+#port=$(bashio::addon.port 80)
+#ingress_port=$(bashio::addon.ingress_port)
+#ingress_interface=$(bashio::addon.ip_address)
+#sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
+#sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
+#sed -i "s/%%baseurl%%/filebrowser/g" /etc/nginx/servers/ingress.conf
+#mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 ###################
 # SSL CONFIG v1.0 #
@@ -192,8 +192,9 @@ fi
 
 bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 
-/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH & \
+/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH 
 
-bashio::net.wait_for 8080 localhost 900 || true
-bashio::log.info "Nginx started for Ingress" 
-exec nginx
+#& \
+#bashio::net.wait_for 8080 localhost 900 || true
+#bashio::log.info "Nginx started for Ingress" 
+#exec nginx
