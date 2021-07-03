@@ -5,11 +5,16 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 ARG BASHIO_VERSION=0.13.0
 
 RUN \
-     ################
-    # Install apps #
-    ################
+    ###############################
+    # Install apps test both dist #
+    ###############################
     apt-get update \
     && apt-get install -y \
+        jq \
+        curl \
+        cifs-utils \
+        keyutils \
+    || apk add --no-cache \
         jq \
         curl \
         cifs-utils \
