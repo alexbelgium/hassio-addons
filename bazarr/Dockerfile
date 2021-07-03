@@ -2,22 +2,33 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="0.9.5"
 FROM ${BUILD_FROM}${BUILD_UPSTREAM}
+ARG BASHIO_VERSION=0.13.0
 
-
-RUN curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-    /tmp/bashio.tar.gz \
-    --strip 1 -C /tmp/bashio \
-    \
+RUN \
+     ################
+    # Install apps #
+    ################
+    apt-get update \
+    && apt-get install -y \
+        jq \
+        curl \
+        cifs-utils \
+        keyutils \
+    \ 
+    ##################
+    # Install bashio #
+    ##################
+    && mkdir -p /tmp/bashio \
+    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz 
-
-# use /data instead of /config for hass.io environment
-RUN sed -i "s|/config|/config/bazarr|g" /etc/services.d/bazarr/run \
-    && sed -i "s|/config|/config/bazarr|g" /etc/cont-init.d/30-config \
+    && rm -rf /tmp/bashio \
+    \
+    # Correct config folder
+    && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/bazarr|g' \
+    && grep -rl " /config" /etc/services.d | xargs sed -i 's| /config| /config/bazarr|g' \
+    && sed -i 's=/config/flexget=/config/bazarr || true=g' /etc/cont-init.d/10-adduser \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
