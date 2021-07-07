@@ -3,7 +3,7 @@ ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
 # Correct data path
-RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g' \
+RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
 
 VOLUME [ "/data" ]
 
