@@ -1,6 +1,6 @@
 {
   "name": "Mealie",
-  "version": "0.5.1",
+  "version": "0.5.1-v2",
   "upstream": "0.5.1",
   "slug": "mealie",
   "description": "Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family",
@@ -9,10 +9,10 @@
   "startup": "services",
   "boot": "auto",
   "ports": {
-    "9925/tcp": 9925
+    "80/tcp": 9925
   },
   "ports_description": {
-    "9925/tcp": "Web interface"
+    "80/tcp": "Web interface"
   },
   "map": [
   ],
