@@ -21,6 +21,9 @@ comparison to installing any other Hass.io add-on.
 
 - Start the addon. Wait a while and check the log for any errors.
 - Open yourdomain.com:9925 (where ":9925" is the port configured in the addon).
+- Default 
+  - Username: changeme@email.com
+  - Password: MyPassword
 
 ## Support
 
