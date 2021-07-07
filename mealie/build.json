@@ -1,0 +1,8 @@
+{
+  "build_from": {
+    "armhf" : "hkotel/mealie:v0.4.3",
+    "armv7": "hkotel/mealie:v0.4.3",
+    "aarch64": "hkotel/mealie:latest",
+    "amd64" : "hkotel/mealie:latest"
+  }
+}

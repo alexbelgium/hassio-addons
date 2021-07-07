@@ -1,0 +1,29 @@
+{
+  "name": "Mealie",
+  "version": "0.5.1",
+  "upstream": "0.5.1",
+  "slug": "mealie",
+  "description": "A Self Hosted Recipe Manager",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "webui": "http://[HOST]:[PORT:9925]",
+  "startup": "services",
+  "boot": "auto",
+  "ports": {
+    "9925/tcp": 9925
+  },
+  "ports_description": {
+    "9925/tcp": "Web interface"
+  },
+  "map": [
+  ],
+  "environment": {
+  },
+  "options": {},
+  "schema": {},
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf",
+    "armv7"
+  ]
+}
