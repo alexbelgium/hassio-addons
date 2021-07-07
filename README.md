@@ -86,6 +86,10 @@ https://github.com/alexbelgium/hassio-addons
 
 - An open source command line RatioMaster with WebUI.
 
+### &#10003; [Mealie](mealie/)
+- Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
+- Based on docker : https://hub.docker.com/r/hkotel/mealie
+
 ### &#10003; [Nextcloud OCR](nextcloud/) ![smb][smb-shield]
 
 - A Nextcloud container, brought to you by LinuxServer.io.
