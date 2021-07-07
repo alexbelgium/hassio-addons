@@ -2,7 +2,7 @@
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 ## About
-A Self Hosted Recipe Manager
+Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family.
 This addon is based on the [docker image](https://hub.docker.com/r/hkotel/mealie) from hay-kot.
 
 ## Installation
