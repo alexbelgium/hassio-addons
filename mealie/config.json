@@ -17,6 +17,7 @@
   "map": [
   ],
   "environment": {
+    "DB_ENGINE": "sqlite"
   },
   "options": {},
   "schema": {},
