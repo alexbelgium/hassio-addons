@@ -1,7 +1,7 @@
 {
   "name": "Flexget",
-  "version": "3.1.131",
-  "upstream": "3.1.131",
+  "version": "3.1.132",
+  "upstream": "3.1.132",
   "slug": "flexget",
   "description": "FlexGet is a multipurpose automation tool for all of your media",
   "url": "https://github.com/alexbelgium/hassio-addons",
