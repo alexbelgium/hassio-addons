@@ -1,7 +1,7 @@
 {
   "name": "Prowlarr NAS",
-  "version": "nightly-0.1.0.611-ls68",
-  "upstream": "nightly-0.1.0.611-ls68",
+  "version": "nightly-0.1.0.624-ls70",
+  "upstream": "nightly-0.1.0.624-ls70",
   "slug": "prowlarr",
   "description": "Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required",
   "url": "https://github.com/alexbelgium/hassio-addons",
