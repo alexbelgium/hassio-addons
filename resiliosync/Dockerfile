@@ -39,6 +39,7 @@ RUN \
     \
     # Correct sync folder
     && grep -rl "/sync/" /etc/cont-init.d | xargs sed -i 's|/sync/|/share/resiliosync|g' \
+    && grep -rl " /sync" /etc/cont-init.d | xargs sed -i 's| /sync| /share/resiliosync|g' \
     && sed -i 's=/sync/=/share/resiliosync/=g' /defaults
 
 VOLUME [ "/data" ]
