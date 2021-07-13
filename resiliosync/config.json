@@ -17,11 +17,10 @@
     "55555/tcp": "Sync Port"
   },
   "map": [
-    "share:rw"
+    "share:rw", 
+    "config:rw"
   ],
   "environment": {
-    "PUID": "0",
-    "GUID": "0"
   },
   "options": {
     "PUID": 0,
