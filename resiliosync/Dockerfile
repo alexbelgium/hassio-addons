@@ -38,9 +38,9 @@ RUN \
     && sed -i 's=/config/resiliosync=/config/resiliosync || true=g' /etc/cont-init.d/10-adduser \
     \
     # Correct sync folder
-    && grep -rl "/sync/" /etc/cont-init.d | xargs sed -i 's|/sync/|/share/sync|g' \
-    && grep -rl "/sync/" /etc/services.d | xargs sed -i 's|/sync/|/share/sync|g' \
-    && sed -i 's=/sync/=/share/resiliosync=g' /defaults
+    && grep -rl "/sync/" /etc/cont-init.d | xargs sed -i 's|/sync/|/share/resiliosync|g' \
+    && grep -rl "/sync/" /etc/services.d | xargs sed -i 's|/sync/|/share/resiliosync|g' \
+    && sed -i 's=/sync/=/share/resiliosync/=g' /defaults
 
 VOLUME [ "/data" ]
 
