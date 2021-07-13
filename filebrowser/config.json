@@ -26,6 +26,7 @@
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
+  "full_access": true,
   "map": [
     "media:rw",
     "config:rw",
@@ -50,6 +51,7 @@
     "ssl": "bool",
     "certfile": "str",
     "keyfile": "str",
+    "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
