@@ -23,8 +23,14 @@
     "PUID": "0",
     "GUID": "0"
   },
-  "options": {},
-  "schema": {},
+  "options": {
+    "PUID": 0,
+    "PGID": 0
+  },
+  "schema": {
+    "PUID": "int",
+    "PGID": "int"
+  },
   "arch": [
     "aarch64",
     "amd64",
