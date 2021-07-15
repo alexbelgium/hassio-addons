@@ -1,7 +1,7 @@
 {
   "name": "VS code",
-  "version": "3.10.2",
-  "upstream": "3.10.2",
+  "version": "3.11.0",
+  "upstream": "3.11.0",
   "slug": "code-server",
   "description": "Code-server is VS Code running on a remote server, accessible through the browser.",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/coder-server#readme",
