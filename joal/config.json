@@ -1,7 +1,7 @@
 {
   "name": "Joal",
-  "version": "2.1.24-15",
-  "upstream": "2.1.24",
+  "version": "2.1.26",
+  "upstream": "2.1.26",
   "slug": "joal",
   "description": "An open source command line RatioMaster with WebUI",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -37,7 +37,7 @@
   },
   "schema": {
     "ui_path": "str",
-    "secret_token": "str", 
+    "secret_token": "str",
     "run_duration": "str?",
     "verbose": "bool?"
   }

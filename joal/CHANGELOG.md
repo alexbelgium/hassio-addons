@@ -1,3 +1,6 @@
+
+## 2.1.26 (18-07-2021)
+- Update to latest version from anthonyraymond/joal
 - config exposed in /config/joal
 
 ## 2.1.24
