@@ -1,3 +1,6 @@
+
+## 0.9.6 (21-07-2021)
+- Update to latest version from linuxserver/docker-bazarr
 - Enable smb mounts
 
 ## 0.9.5 (09-05-2021)
