@@ -1,12 +1,11 @@
 {
   "name": "ResilioSync",
-  "version": "2.7.2.1375-3",
+  "version": "2.7.2.1375-4",
   "upstream": "2.7.2.1375",
   "slug": "resiliosync",
   "description": "Self-hosted file share and collaboration platform on the web",
   "url": "https://github.com/tyjtyj/hassio-addons",
   "webui": "http://[HOST]:[PORT:8888]",
-  "startup": "services",
   "boot": "auto",
   "ports": {
     "8888/tcp": 8888,
