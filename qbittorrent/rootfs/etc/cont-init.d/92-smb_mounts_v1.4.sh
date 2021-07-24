@@ -47,6 +47,12 @@ if bashio::config.has_value 'networkdisks'; then
         done
       fi
 
+      # Test smbclient if not mounted yet
+      if [ $MOUNTED = false ]; then
+        smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD --option="client min protocol"="NT1" && \
+        bashio::log.info "Mounted with smbclient"
+      fi
+
       # Messages
       if [ $MOUNTED = true ]; then
         #Test write permissions
