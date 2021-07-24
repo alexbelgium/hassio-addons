@@ -21,6 +21,7 @@ RUN \
         curl \
         cifs-utils \
         keyutils \
+        samba \
         nginx \
         coreutils \
         openvpn \
