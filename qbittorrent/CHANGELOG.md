@@ -1,3 +1,4 @@
+- Improved smb mount code
 
 ## 14.3.6.99202107121017-7389-3ac8c97e6ubuntu20.04.1-ls145 (13-07-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
