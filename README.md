@@ -96,7 +96,12 @@ https://github.com/alexbelgium/hassio-addons
 - Based on linuxserver image : https://hub.docker.com/r/linuxserver/nextcloud
 - Forked from : https://github.com/haberda/hassio_addons
 
-### &#10003; [Papermerge](papermerge/)
+### &#10003; [Ombi](ombi/)
+
+- Self-hosted Plex Request and user management system
+- Based on https://hub.docker.com/r/linuxserver/ombi
+
+### &#10003; [Organizr](organizr/)
 
 - An HTPC/Homelab services organizer that is written in PHP
 - Based on https://hub.docker.com/r/linuxserver/organizr
@@ -163,6 +168,11 @@ https://github.com/alexbelgium/hassio-addons
 - Free, lightweight and easy-to-use home server for your comics and ebooks
 - Based on https://hub.docker.com/r/linuxserver/ubooquity
 - Support : [Home assistant addon : Ubooquity (=Plex for books and comics) - Home Assistant OS - Home Assistant Community (home-assistant.io)](https://community.home-assistant.io/t/home-assistant-addon-ubooquity-plex-for-books-and-comics/283811)
+
+### &#10003; [xTeVe](xteve/)
+
+- M3U Proxy for Plex DVR and Emby Live TV.
+- Based on https://hub.docker.com/r/tnwhitwell/xteve
 
 [//]: # "ADDONLIST_END"
 [base-shield]: https://img.shields.io/badge/Basic--orange.svg
