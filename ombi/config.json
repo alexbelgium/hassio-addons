@@ -1,7 +1,7 @@
 {
   "name": "Ombi",
-  "version": "v4.0.1430-ls97",
-  "upstream": "v4.0.1430-ls97",
+  "version": "4.0.1430",
+  "upstream": "4.0.1430",
   "slug": "ombi",
   "description": "Self-hosted Plex Request and user management system",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -15,8 +15,7 @@
   "map": [
     "config:rw"
   ],
-  "environment": {
-  },
+  "environment": {},
   "options": {
     "PUID": 0,
     "PGID": 0
