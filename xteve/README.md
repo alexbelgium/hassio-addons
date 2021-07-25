@@ -24,7 +24,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at <http://your-ip:34400>.
+Webui can be found at <http://your-ip:34400/web>.
 
 ## Support
 
