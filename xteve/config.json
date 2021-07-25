@@ -14,11 +14,11 @@
   },
   "map": ["config:rw"],
   "environment": { 
-    "$XTEVE_CONF": "/home/xteve/conf",
-    "$XTEVE_CONF/data": "/home/xteve/conf/data",
-    "$XTEVE_CONF/backup": "/home/xteve/conf/backup",
-    "$GUIDE2GO_HOME": "/home/xteve/guide2go",
-    "$GUIDE2GO_CONF": "/home/xteve/guide2go/conf"
+    "$XTEVE_CONF": "/data/xteve/conf",
+    "$XTEVE_CONF/data": "/data/xteve/conf/data",
+    "$XTEVE_CONF/backup": "/data/xteve/conf/backup",
+    "$GUIDE2GO_HOME": "/data/xteve/guide2go",
+    "$GUIDE2GO_CONF": "/data/xteve/guide2go/conf"
   },
   "options": {},
   "schema": {},
