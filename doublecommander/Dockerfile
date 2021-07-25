@@ -7,6 +7,7 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     jq \
+    samba \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
     && mkdir /tmp/bashio \

@@ -25,6 +25,17 @@ RUN \
         nginx \
         coreutils \
         openvpn \
+    # Backup if change
+        || apk add --no-cache \
+            apt-transport-https \
+            jq \
+            curl \
+            cifs-utils \
+            keyutils \
+            samba \
+            nginx \
+            coreutils \
+            openvpn \
     \    
     ##################
     # Install tempio #

@@ -12,6 +12,7 @@ RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends \
     jq \
+    samba \
     \
     && apt-get -y upgrade cifs-utils \
     \

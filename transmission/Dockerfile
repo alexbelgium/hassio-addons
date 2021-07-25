@@ -7,6 +7,7 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 RUN apk add --no-cache \
     curl \
     jq \
+    samba \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
     && mkdir /tmp/bashio \

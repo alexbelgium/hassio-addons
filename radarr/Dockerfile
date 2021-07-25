@@ -5,7 +5,7 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 ARG BASHIO_VERSION=0.13.0
 
 RUN \
-    ################
+     ################
     # Install apps #
     ################
     apt-get update \
@@ -14,6 +14,7 @@ RUN \
         curl \
         cifs-utils \
         keyutils \
+        samba \
     \ 
     ###################
     # Install bashio #

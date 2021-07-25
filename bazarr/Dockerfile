@@ -14,11 +14,13 @@ RUN \
         curl \
         cifs-utils \
         keyutils \
+        bazarr \
     || apk add --no-cache \
         jq \
         curl \
         cifs-utils \
         keyutils \
+        bazarr \
     \ 
     ##################
     # Install bashio #

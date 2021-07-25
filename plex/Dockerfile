@@ -1,35 +1,35 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.23.5.4862-0f739d462-ls64"
+ARG BASHIO_VERSION=0.13.0
 
 FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN apt-get update \
-    \
-    && apt-get install -y --no-install-recommends \
-    jq \
-    \
-    && apt-get -y upgrade cifs-utils \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-    /tmp/bashio.tar.gz \
-    --strip 1 -C /tmp/bashio \
-    \
+RUN \
+    ################
+    # Install apps #
+    ################
+    apt-get update \
+    && apt-get install -y \
+        jq \
+        curl \
+        cifs-utils \
+        keyutils \
+        samba \
+        plex \
+    \ 
+    ###################
+    # Install bashio #
+    ##################
+    && mkdir -p /tmp/bashio \
+    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr \
-    /tmp/* \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/*
-    # Allow UID and GID setting
-    #&& sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    #&& sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    #&& sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+    && rm -rf /tmp/bashio
 
 RUN grep -rl '/config' /etc/cont-init.d/ | xargs sed -i 's|/config|/config/plex|g'  #change config folder
 

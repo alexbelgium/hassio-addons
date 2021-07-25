@@ -1,24 +1,33 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.0.1"
+ARG BASHIO_VERSION=0.13.0
 
 FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
 # Add bashio
-RUN apt-get update \
+RUN \
+    ################
+    # Install apps #
+    ################
+    apt-get update \
     && apt-get install -y --no-install-recommends \
-    curl \
-    jq \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-    /tmp/bashio.tar.gz \
-    --strip 1 -C /tmp/bashio \
-    \
+        jq \
+        curl \
+        cifs-utils \
+        keyutils \
+        samba \
+        plex \
+    \ 
+    ###################
+    # Install bashio #
+    ##################
+    && mkdir -p /tmp/bashio \
+    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz
+    && rm -rf /tmp/bashio
 
 # Copy root filesystem
 COPY rootfs / 
