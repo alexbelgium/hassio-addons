@@ -3,8 +3,8 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.0.9"
 FROM dnsforge/xteve:latest
 
-RUN cp -vnpr /home/xteve/conf* /data/xteve/conf || true && \
-    cp -vnpr /home/xteve/conf* /data/xteve/guide2go || true
+#RUN cp -vnpr /home/xteve/conf* /data/xteve/conf || true && \
+#    cp -vnpr /home/xteve/conf* /data/xteve/guide2go || true
 
 ### LABELS
 ARG BUILD_ARCH
