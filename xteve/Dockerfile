@@ -3,11 +3,7 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="3.1.133"
 FROM tnwhitwell/xteve:latest
 
-VOLUME [ "/config" ]
-
-RUN mkdir -p "/config/xteve"
-
-CMD [ "-config", "/config/xteve" ]
+CMD [ "-config", "/data" ]
 
 ### LABELS
 ARG BUILD_ARCH

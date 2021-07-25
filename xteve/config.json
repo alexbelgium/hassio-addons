@@ -3,7 +3,7 @@
   "version": "2.1.2.0120-alpine3.12.3",
   "upstream": "2.1.2.0120-alpine3.12.3",
   "slug": "xteve",
-  "description": "M3U Proxy for Plex DVR and Emby Live TV.",
+  "description": "M3U Proxy for Plex DVR and Emby Live TV",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "webui": "http://[HOST]:[PORT:34400]",
   "ports": {
