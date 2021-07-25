@@ -1,11 +1,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="3.1.133"
-FROM tnwhitwell/xteve:latest
-
-RUN cp -vnpr /config/* /data
-
-CMD [ "-config", "/data" ]
+ARG BUILD_UPSTREAM="1.0.9"
+FROM dnsforge/xteve:latest
 
 ### LABELS
 ARG BUILD_ARCH
