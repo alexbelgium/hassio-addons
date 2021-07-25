@@ -12,7 +12,7 @@
   "ports_description": {
     "34400/tcp": "Web interface"
   },
-  "map": ["config:rw"],
+  "map": ["config:rw", "share:rw"],
   "environment": { 
   },
   "options": {},
