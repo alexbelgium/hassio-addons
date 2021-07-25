@@ -1,7 +1,7 @@
 {
   "name": "Xteve",
-  "version": "2.1.2.0120-alpine3.12.3",
-  "upstream": "2.1.2.0120-alpine3.12.3",
+  "version": "1.0.9",
+  "upstream": "1.0.9",
   "slug": "xteve",
   "description": "M3U Proxy for Plex DVR and Emby Live TV",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -13,7 +13,13 @@
     "34400/tcp": "Web interface"
   },
   "map": ["config:rw"],
-  "environment": {},
+  "environment": { 
+    "$XTEVE_CONF": "/home/xteve/conf",
+    "$XTEVE_CONF/data": "/home/xteve/conf/data",
+    "$XTEVE_CONF/backup": "/home/xteve/conf/backup",
+    "$GUIDE2GO_HOME": "/home/xteve/guide2go",
+    "$GUIDE2GO_CONF": "/home/xteve/guide2go/conf"
+  },
   "options": {},
   "schema": {},
   "arch": ["aarch64", "amd64", "armhf", "armv7"]
