@@ -5,7 +5,9 @@
 ## About
 
 M3U Proxy for Plex DVR and Emby Live TV.
+
 Project homepage : https://github.com/xteve-project/xTeVe
+
 Based on the docker image : https://hub.docker.com/r/tnwhitwell/xteve
 
 ## Installation
