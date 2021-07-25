@@ -1,4 +1,7 @@
 
+## nightly-0.1.0.710-ls83 (25-07-2021)
+- Update to latest version from linuxserver/docker-prowlarr
+
 ## nightly-0.1.0.702-ls81 (22-07-2021)
 - Update to latest version from linuxserver/docker-prowlarr
 
