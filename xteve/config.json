@@ -17,7 +17,6 @@
     "$XTEVE_CONF": "/data/xteve/conf",
     "$XTEVE_CONF/data": "/data/xteve/conf/data",
     "$XTEVE_CONF/backup": "/data/xteve/conf/backup",
-    "$GUIDE2GO_HOME": "/data/xteve/guide2go",
     "$GUIDE2GO_CONF": "/data/xteve/guide2go/conf"
   },
   "options": {},
