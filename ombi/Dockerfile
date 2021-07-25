@@ -39,7 +39,7 @@ RUN \
     \
     # Correct config folder
     && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/ombi|g' || true \
-    && grep -rl " /config" /etc/services.d | xargs sed -i 's|/config|/config/ombi|g' || true \
+    && grep -rl "/config" /etc/services.d | xargs sed -i 's|/config|/config/ombi|g' || true \
     && sed -i 's=/config/ombi=/config/ombi || true=g' /etc/cont-init.d/10-adduser || true
 
 VOLUME [ "/data" ]
