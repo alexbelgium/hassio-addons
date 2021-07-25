@@ -4,8 +4,8 @@
 
 ## About
 
-Self-hosted file share and collaboration platform on the web.
-This addon is based on the [docker image](https://github.com/linuxserver/resilio-sync) from linuxserver.io.
+Self-hosted Plex Request and user management system.
+This addon is based on the [docker image](https://github.com/linuxserver/ombi) from linuxserver.io.
 
 ## Installation
 
@@ -20,7 +20,7 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
-Webui can be found at <http://your-ip:8888>.
+Webui can be found at <http://your-ip:3579>.
 
 ```yaml
 GUID: user
