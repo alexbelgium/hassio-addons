@@ -3,6 +3,10 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.2.0"
 FROM collelog/xteve:latest-alpine
 
+RUN cp -vnpr /etc/opt/xteve* /data || true
+
+CMD ["-config", "data", "-port", "34400"]
+
 ### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
