@@ -13,6 +13,7 @@ RUN \
     curl \
     cifs-utils \
     keyutils \
+    samba \
     \
     ##################
     # Install bashio #
