@@ -1,11 +1,12 @@
-# Home assistant add-on: Ombi
+# Home assistant add-on: Xteve
 
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 ## About
 
-Self-hosted Plex Request and user management system.
-This addon is based on the [docker image](https://github.com/linuxserver/ombi) from linuxserver.io.
+M3U Proxy for Plex DVR and Emby Live TV.
+Project homepage : https://github.com/xteve-project/xTeVe
+Based on the docker image : https://hub.docker.com/r/tnwhitwell/xteve
 
 ## Installation
 
@@ -21,12 +22,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at <http://your-ip:3579>.
-
-```yaml
-GUID: user
-GPID: user
-```
+Webui can be found at <http://your-ip:34400>.
 
 ## Support
 
