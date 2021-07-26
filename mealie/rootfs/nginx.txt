@@ -1,4 +1,6 @@
 
+bashio::log.info "Custom script started" 
+
 #########
 # NGINX #
 #########
