@@ -13,18 +13,18 @@ RUN \
     ##################
     # Install bashio #
     ##################
-    #&& curl -J -L -o /tmp/bashio.tar.gz \
-    #"https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
-    #&& mkdir /tmp/bashio \
-    #&& tar zxvf \
-    #/tmp/bashio.tar.gz \
-    #--strip 1 -C /tmp/bashio \
-    #\
-    #&& mv /tmp/bashio/lib /usr/lib/bashio \
-    #&& ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-   # && rm -fr \
-    #/tmp/* \
-   # \
+    && mkdir -p /bashio/bashio \
+    && curl -J -L -o /bashio/bashio.tar.gz \
+    "https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
+    && tar zxvf \
+    /bashio/bashio.tar.gz \
+    --strip 1 -C /bashio/bashio \
+    \
+    && mv /bashio/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    && rm -fr \
+    /bashio \
+    \
     ###############
     # Adapt image #
     ###############
