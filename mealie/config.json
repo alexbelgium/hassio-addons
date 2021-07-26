@@ -1,7 +1,7 @@
 {
   "name": "Mealie",
-  "version": "0.5.1-dev3",
-  "upstream": "0.5.1",
+  "version": "0.5.2",
+  "upstream": "0.5.2",
   "slug": "mealie",
   "description": "Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -15,7 +15,7 @@
     "80/tcp": "Web interface"
   },
   "map": [
-   "share:rw"
+    "share:rw"
   ],
   "environment": {
     "DB_ENGINE": "sqlite"
