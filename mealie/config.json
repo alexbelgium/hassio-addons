@@ -9,7 +9,7 @@
   "startup": "services",
   "boot": "auto",
   "ingress": true,
-  "ingress_port": 8099,
+  "ingress_port": 80,
   "panel_icon": "mdi:SilverwareForkKnife",
   "ports": {
     "80/tcp": 9925
