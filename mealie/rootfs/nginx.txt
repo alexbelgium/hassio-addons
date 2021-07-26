@@ -21,3 +21,5 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 bashio::net.wait_for 9000 localhost 900 || true
 bashio::log.info "Nginx started for Ingress" 
 exec nginx
+
+fi
