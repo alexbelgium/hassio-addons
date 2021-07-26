@@ -2,8 +2,37 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
-# Correct data path
-RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
+COPY rootfs /
+
+RUN \
+    ################
+    # Install apps #
+    ################
+    apk add --no-cache jq curl bash \
+    \
+    ##################
+    # Install bashio #
+    ##################
+    && curl -J -L -o /tmp/bashio.tar.gz \
+    "https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
+    && mkdir /tmp/bashio \
+    && tar zxvf \
+    /tmp/bashio.tar.gz \
+    --strip 1 -C /tmp/bashio \
+    \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    && rm -fr \
+    /tmp/* \
+    \
+    ###############
+    # Adapt image #
+    ###############
+	# Correct data path
+	&& grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g' \
+	# Add nginx
+	&& sed -i 's|#!/bin/sh|#!/bin/env bashio|g' /app/mealie/run.sh \
+	&& cat nginx.txt >> /app/mealie/run.sh
 
 VOLUME [ "/data" ]
 
