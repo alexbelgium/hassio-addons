@@ -22,14 +22,13 @@ RUN \
     \
     && mv /bashio/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr \
-    /bashio \
+    && rm -fr /bashio \
     \
     ###############
     # Adapt image #
     ###############
     # Correct data path
-    && grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
+    && grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g' \
     # Add nginx
     && sed -i 's|#!/bin/sh|#!/bin/env bashio|g' /app/mealie/run.sh \
     && cat /nginx.txt >> /app/mealie/run.sh
