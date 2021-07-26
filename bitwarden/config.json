@@ -1,7 +1,7 @@
 {
   "name": "Bitwarden (Vaultwarden)",
-  "version": "1.22.1",
-  "upstream": "1.22.1",
+  "version": "1.22.2",
+  "upstream": "1.22.2",
   "slug": "bitwarden",
   "description": "Open source password management solution",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bitwarden#readme",
