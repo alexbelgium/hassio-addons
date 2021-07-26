@@ -31,8 +31,8 @@ RUN \
     # Correct data path
     && grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
     # Add nginx
-    #&& sed -i 's|#!/bin/sh|#!/bin/env bashio|g' /app/mealie/run.sh \
-    #&& cat /nginx.txt >> /app/mealie/run.sh
+    && sed -i 's|#!/bin/sh|#!/bin/env bashio|g' /app/mealie/run.sh \
+    && cat /nginx.txt >> /app/mealie/run.sh
 
 VOLUME [ "/data" ]
 
