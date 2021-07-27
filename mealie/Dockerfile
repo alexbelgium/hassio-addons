@@ -30,7 +30,13 @@ RUN \
     # Correct data path
     && grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g' \
     # Add nginx
-    && sed -i 's|#!/bin/sh|#!/usr/bin/env bashio|g' /app/mealie/run.sh
+    && sed -i '1d' /app/mealie/run.sh \ 
+    && cat /app/mealie/run.sh >> /nginx.txt \
+    && cat /nginx.txt > /app/mealie/run.sh \
+    && chmod +x /app/mealie/run.sh
+
+    #&& sed -i 's|#!/bin/sh|#!/usr/bin/env bashio|g' /app/mealie/run.sh \
+    #&& sed -i '1 a bashio::log.info "Mealie started"' /app/mealie/run.sh \
     #&& sed -i '$ d' /app/mealie/run.sh \
     #&& sed -i 's|--preload|--preload & bashio::log.info "Mealie started"|g' /app/mealie/run.sh \
     #&& cat /nginx.txt >> /app/mealie/run.sh
