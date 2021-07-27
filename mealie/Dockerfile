@@ -28,10 +28,9 @@ RUN \
     # Adapt image #
     ###############
     # Correct data path
-    && grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
+    && grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g' \
     # Add nginx
-    #&& chmod 777 /app/mealie/run.sh
-    #&& sed -i 's|#!/bin/sh|#!/usr/bin/env bashio|g' /app/mealie/run.sh \
+    && sed -i 's|#!/bin/sh|#!/usr/bin/env bashio|g' /app/mealie/run.sh
     #&& sed -i '$ d' /app/mealie/run.sh \
     #&& sed -i 's|--preload|--preload & bashio::log.info "Mealie started"|g' /app/mealie/run.sh \
     #&& cat /nginx.txt >> /app/mealie/run.sh
