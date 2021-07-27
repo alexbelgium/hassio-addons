@@ -8,7 +8,7 @@ RUN \
     ################
     # Install apps #
     ################
-    apk add --no-cache jq curl bash \
+    apk add --no-cache jq curl bash nginx \
     \
     ##################
     # Install bashio #
