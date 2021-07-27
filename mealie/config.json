@@ -10,7 +10,7 @@
   "boot": "auto",
   "ingress": false,
   "ingress_port": 8099,
-  "panel_icon": "mdi:SilverwareForkKnife",
+  "panel_icon": "mdi:silverwareforkknife",
   "ports": {
     "80/tcp": 9925
   },
