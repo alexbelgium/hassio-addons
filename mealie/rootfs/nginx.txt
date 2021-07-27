@@ -1,3 +1,4 @@
+#!/usr/bin/env bashio
 
 bashio::log.info "Custom script started" 
 
@@ -17,9 +18,5 @@ ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
-
-bashio::net.wait_for 9000 localhost 900 || true
-bashio::log.info "Nginx started for Ingress" 
-exec nginx
-
-fi
+ 
+exec nginx & bashio::log.info "Nginx started for Ingress" 
