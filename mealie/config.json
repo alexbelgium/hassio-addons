@@ -8,7 +8,7 @@
   "webui": "http://[HOST]:[PORT:9925]",
   "startup": "services",
   "boot": "auto",
-  "ingress": true,
+  "ingress": false,
   "ingress_port": 8099,
   "panel_icon": "mdi:SilverwareForkKnife",
   "ports": {
