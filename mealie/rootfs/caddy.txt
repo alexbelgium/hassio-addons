@@ -11,6 +11,18 @@
 
 	# Handles Recipe Images / Assets
 	handle_path /api/media/recipes/* {
+		header X-Frame-Options "SAMEORIGIN"
+                header X-Content-Type-Options nosniff
+                header X-Robots-Tag none
+                header -X-Frame-Options
+                header Accept-Encoding ""
+                header Connection $connection_upgrade
+                header Upgrade $http_upgrade
+                header Host $http_host
+                header X-Forwarded-For $proxy_add_x_forwarded_for
+                header X-Forwarded-Proto $scheme
+                header X-NginX-Proxy true
+                header X-Real-IP $remote_addr
 		header @static Cache-Control max-age=31536000
 		header X-Frame-Options "SAMEORIGIN"
 		root * /app/data/recipes/
@@ -18,6 +30,18 @@
 	}
 
 	handle @proxied {
+		header X-Frame-Options "SAMEORIGIN"
+                header X-Content-Type-Options nosniff
+                header X-Robots-Tag none
+                header -X-Frame-Options
+                header Accept-Encoding ""
+                header Connection $connection_upgrade
+                header Upgrade $http_upgrade
+                header Host $http_host
+                header X-Forwarded-For $proxy_add_x_forwarded_for
+                header X-Forwarded-Proto $scheme
+                header X-NginX-Proxy true
+                header X-Real-IP $remote_addr
 		header X-Frame-Options "SAMEORIGIN"
 		uri strip_suffix /
 		reverse_proxy http://127.0.0.1:9000
@@ -36,7 +60,6 @@
                 header X-Forwarded-Proto $scheme
                 header X-NginX-Proxy true
                 header X-Real-IP $remote_addr
-
 		header @static Cache-Control max-age=31536000
 		root * /app/dist
 		try_files {path}.html {path} /
