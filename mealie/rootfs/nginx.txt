@@ -61,8 +61,8 @@ sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
  
 #Correct image
-grep -rl '"/' /app/dist/ | xargs sed -i 's|"/|"./|g' || true
-grep -rl '/api/' /app/dist/ | xargs sed -i 's|/api/|./api/|g' || true
+grep -rl '"/' /app/dist/ | xargs sed -i 's|"/|"|g' || true
+grep -rl '/api/' /app/dist/ | xargs sed -i 's|/api/|api/|g' || true
  
 #exec nginx & bashio::log.info "Nginx started for Ingress" 
 fi
