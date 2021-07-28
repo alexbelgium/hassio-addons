@@ -43,7 +43,7 @@ fi
 # NGINX #
 #########
 
-test="true"
+test="false"
 if $test; then
 bashio::log.info "Starting nginx" 
 
