@@ -1,3 +1,6 @@
+
+## 2.16.0 (29-07-2021)
+- Update to latest version from hurlenko/filebrowser-docker
 - Add banner in log
 - Update smb mount code
 - Allow mount local drives (needs priviledged mode) 
