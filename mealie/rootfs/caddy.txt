@@ -29,5 +29,11 @@
 		root * /app/dist
 		try_files {path}.html {path} /
 		file_server
+	} 
+
+	handle_path /* {
+		header X-Frame-Options "SAMEORIGIN"
+		reverse_proxy http://127.0.0.1:9000
 	}
+
 }
