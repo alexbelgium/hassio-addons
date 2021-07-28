@@ -29,13 +29,13 @@
                 header X-Robots-Tag none
                 header -X-Frame-Options
                 header Accept-Encoding ""
-                Connection $connection_upgrade
-                Upgrade $http_upgrade
-                Host $http_host
-                X-Forwarded-For $proxy_add_x_forwarded_for
-                X-Forwarded-Proto $scheme
-                X-NginX-Proxy true
-                X-Real-IP $remote_addr
+                header Connection $connection_upgrade
+                header Upgrade $http_upgrade
+                header Host $http_host
+                header X-Forwarded-For $proxy_add_x_forwarded_for
+                header X-Forwarded-Proto $scheme
+                header X-NginX-Proxy true
+                header X-Real-IP $remote_addr
 
 		header @static Cache-Control max-age=31536000
 		root * /app/dist
