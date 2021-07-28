@@ -29,12 +29,12 @@
                 header X-Robots-Tag none
                 header -X-Frame-Options
                 header Accept-Encoding ""
-                Connection $connection_upgrade;
-                Upgrade $http_upgrade;
-                Host $http_host;
-                X-Forwarded-For $proxy_add_x_forwarded_for;
-                X-Forwarded-Proto $scheme;
-                X-NginX-Proxy true;
+                Connection $connection_upgrade
+                Upgrade $http_upgrade
+                Host $http_host
+                X-Forwarded-For $proxy_add_x_forwarded_for
+                X-Forwarded-Proto $scheme
+                X-NginX-Proxy true
                 X-Real-IP $remote_addr
 
 		header @static Cache-Control max-age=31536000
