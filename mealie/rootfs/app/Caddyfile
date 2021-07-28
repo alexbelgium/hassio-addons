@@ -16,6 +16,7 @@
 	# Handles Recipe Images / Assets
 	handle_path /api/media/recipes/* {
 		header @static Cache-Control max-age=31536000
+		header X-Frame-Options "SAMEORIGIN"
 		root * /app/data/recipes/
 		file_server
 	}
@@ -29,6 +30,7 @@
 	handle {
 		header @static Cache-Control max-age=31536000
 		root * /app/dist
+		header X-Frame-Options "SAMEORIGIN"
 		try_files {path}.html {path} /
 		file_server
 	}
