@@ -18,11 +18,13 @@
 	}
 
 	handle @proxied {
+		header X-Frame-Options "SAMEORIGIN"
 		uri strip_suffix /
 		reverse_proxy http://127.0.0.1:9000
 	}
 
 	handle {
+		header X-Frame-Options "SAMEORIGIN"
 		header @static Cache-Control max-age=31536000
 		root * /app/dist
 		try_files {path}.html {path} /
