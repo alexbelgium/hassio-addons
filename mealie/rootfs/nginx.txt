@@ -45,6 +45,8 @@ fi
 
 test="true"
 if $test; then
+bashio::log.info "Starting nginx" 
+
 declare port
 declare certfile
 declare ingress_interface
