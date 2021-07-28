@@ -1,5 +1,5 @@
 
-:8099 {
+:81 {
 	@proxied path /api/* /docs /openapi.json
 
 	@static {
