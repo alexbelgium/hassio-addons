@@ -21,8 +21,7 @@
     "share:rw"
   ],
   "environment": {
-    "DB_ENGINE": "sqlite",
-    "API_DOCS": "true"
+    "DB_ENGINE": "sqlite"
   },
   "options": {},
   "schema": {},
