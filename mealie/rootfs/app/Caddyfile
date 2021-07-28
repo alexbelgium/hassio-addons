@@ -22,7 +22,7 @@
 	}
 
 	handle @proxied {
-		uri strip_suffix /
+
 		header X-Frame-Options "SAMEORIGIN"
 		reverse_proxy http://127.0.0.1:9000
 	}
