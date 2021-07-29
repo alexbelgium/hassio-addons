@@ -54,8 +54,8 @@ declare keyfile
 port=$(bashio::addon.port 80)
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
-sed -i "s/%%port%%/${ingress_port}/g" /app/Caddyfile
-sed -i "s/%%interface%%/${ingress_interface}/g" /app/Caddyfile
+sed -i "s/%%port%%/${ingress_port}/g" /app/Caddyfile || true
+sed -i "s/%%interface%%/${ingress_interface}/g" /app/Caddyfile || true
 
 #mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 #Correct image
