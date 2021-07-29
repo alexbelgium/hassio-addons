@@ -60,7 +60,7 @@
                 header X-Forwarded-Proto $scheme
                 header X-NginX-Proxy true
                 header X-Real-IP $remote_addr
-		X-External-Path $http_x_ingress_path;
+		header X-External-Path $http_x_ingress_path;
 		header @static Cache-Control max-age=31536000
 		root * /app/dist
 		try_files {path}.html {path} /
