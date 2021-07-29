@@ -18,8 +18,8 @@ RUN apk add --no-cache \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr /tmp/bashio.tar.gz\
-	\
-	&& mkdir -p -m 777 /config/filebrowser	
+    \
+    && mkdir -p -m 777 /config/filebrowser	
 
 # Copy root filesystem
 COPY rootfs / 
