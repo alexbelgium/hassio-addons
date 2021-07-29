@@ -24,7 +24,6 @@
                 header X-NginX-Proxy true
                 header X-Real-IP $remote_addr
 		header @static Cache-Control max-age=31536000
-		header X-Frame-Options "SAMEORIGIN"
 		root * /app/data/recipes/
 		file_server
 	}
@@ -42,13 +41,11 @@
                 header X-Forwarded-Proto $scheme
                 header X-NginX-Proxy true
                 header X-Real-IP $remote_addr
-		header X-Frame-Options "SAMEORIGIN"
 		uri strip_suffix /
 		reverse_proxy http://127.0.0.1:9000
 	}
 
 	handle {
-		header X-Frame-Options "SAMEORIGIN"
                 header X-Content-Type-Options nosniff
                 header X-Robots-Tag none
                 header -X-Frame-Options
