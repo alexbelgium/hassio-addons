@@ -11,7 +11,7 @@
 
 	# Handles Recipe Images / Assets
 	handle_path /api/media/recipes/* {
-		header X-Frame-Options "SAMEORIGIN"
+		header Access-Control-Allow-Origin * 
                 header X-Content-Type-Options nosniff
                 header X-Robots-Tag none
                 header -X-Frame-Options
@@ -29,7 +29,7 @@
 	}
 
 	handle @proxied {
-		header X-Frame-Options "SAMEORIGIN"
+		header Access-Control-Allow-Origin * 
                 header X-Content-Type-Options nosniff
                 header X-Robots-Tag none
                 header -X-Frame-Options
@@ -46,6 +46,7 @@
 	}
 
 	handle {
+		header Access-Control-Allow-Origin * 
                 header X-Content-Type-Options nosniff
                 header X-Robots-Tag none
                 header -X-Frame-Options
