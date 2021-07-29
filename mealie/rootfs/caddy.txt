@@ -22,6 +22,7 @@
                 header X-Forwarded-For $proxy_add_x_forwarded_for
                 header X-Forwarded-Proto $scheme
                 header X-NginX-Proxy true
+		header X-External-Path $http_x_ingress_path
                 header X-Real-IP $remote_addr
 		header @static Cache-Control max-age=31536000
 		root * /app/data/recipes/
@@ -41,6 +42,7 @@
                 header X-Forwarded-Proto $scheme
                 header X-NginX-Proxy true
                 header X-Real-IP $remote_addr
+	        header X-External-Path $http_x_ingress_path;
 		uri strip_suffix /
 		reverse_proxy http://127.0.0.1:9000
 	}
@@ -58,6 +60,7 @@
                 header X-Forwarded-Proto $scheme
                 header X-NginX-Proxy true
                 header X-Real-IP $remote_addr
+		X-External-Path $http_x_ingress_path;
 		header @static Cache-Control max-age=31536000
 		root * /app/dist
 		try_files {path}.html {path} /
