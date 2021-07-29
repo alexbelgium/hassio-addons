@@ -21,8 +21,7 @@
     "share:rw"
   ],
   "environment": {
-    "DB_ENGINE": "sqlite",
-    "BASE_URL": "test"
+    "DB_ENGINE": "sqlite"
   },
   "options": {},
   "schema": {},
