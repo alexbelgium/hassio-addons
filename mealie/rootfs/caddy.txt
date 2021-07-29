@@ -1,5 +1,5 @@
 
-%%port%% {
+:%%port%% {
 	@proxied path /api/* /docs /openapi.json
 
 	@static {
