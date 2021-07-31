@@ -27,13 +27,23 @@
   "options": {
     "networkdisks": "//server/share",
     "cifsusername": "username",
-    "cifspassword": "password"
+    "cifspassword": "password", 
+    "UPLOAD_NSFW": "true",
+    "STORAGE_PATH": "/data/photoprism/storage",
+    "ORIGINALS_PATH": "/data/photoprism/originals",
+    "IMPORT_PATH": "/data/photoprism/import",
+    "BACKUP_PATH": "/data/photoprism/backup"
   },
   "schema": {
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
+    "cifspassword": "str?", 
+    "UPLOAD_NSFW": "bool",
+    "STORAGE_PATH": "str",
+    "ORIGINALS_PATH": "str",
+    "IMPORT_PATH": "str",
+    "BACKUP_PATH": "str"
   },
   "arch": ["aarch64", "amd64", "armhf", "armv7"]
 }
