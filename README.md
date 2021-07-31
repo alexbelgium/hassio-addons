@@ -111,15 +111,20 @@ https://github.com/alexbelgium/hassio-addons
 - Open source document management system (DMS)
 - Based on https://hub.docker.com/r/linuxserver/papermerge
 
-### &#10003; [Portainer](portainer/) ![privileged][privileged-shield] ![ingress][ingress-shield] 
+### &#10003; [Photoprism](photoprism/) ![smb][smb-shield] ![sql][sql-shield] ![ram][ram-shield]
 
-- Forked from : https://github.com/hassio-addons/addon-portainer
-- Updated to latest version, add webui, ssl, password management
+- Piwigo is a photo gallery software for the web
+- Based on https://hub.docker.com/r/linuxserver/piwigo
 
 ### &#10003; [Piwigo](piwigo/) ![smb][smb-shield] ![sql][sql-shield] ![base][base-shield]
 
 - Piwigo is a photo gallery software for the web
 - Based on https://hub.docker.com/r/linuxserver/piwigo
+- 
+### &#10003; [Portainer](portainer/) ![privileged][privileged-shield] ![ingress][ingress-shield] 
+
+- Forked from : https://github.com/hassio-addons/addon-portainer
+- Updated to latest version, add webui, ssl, password management
 
 ### &#10003; [Plex](plex/) ![smb][smb-shield] 
 
@@ -163,7 +168,7 @@ https://github.com/alexbelgium/hassio-addons
 - The torrent client for Hass.io.
 - Based on https://hub.docker.com/r/linuxserver/transmission
 
-### &#10003; [Ubooquity](ubooquity/) ![smb][smb-shield]  ![support][support-shield]
+### &#10003; [Ubooquity](ubooquity/) ![smb][smb-shield]  ![support][support-shield] ![ram][ram-shield]
 
 - Free, lightweight and easy-to-use home server for your comics and ebooks
 - Based on https://hub.docker.com/r/linuxserver/ubooquity
@@ -181,3 +186,4 @@ https://github.com/alexbelgium/hassio-addons
 [privileged-shield]: https://img.shields.io/badge/privileged-required-orange.svg
 [ingress-shield]: https://img.shields.io/badge/ingress--green.svg
 [support-shield]: https://img.shields.io/badge/Support-thread-green.svg 
+[ram]: https://img.shields.io/badge/RAM_min-4Gb-orange.svg 
