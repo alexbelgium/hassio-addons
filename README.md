@@ -10,6 +10,8 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![base][base-shield] : will be updated but not tested each time
 - ![privileged][privileged-shield] : requires protection mode off to run
 - ![ingress][ingress-shield] : supports Ingress
+- ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
+- 
 ## Installation
 
 Adding this add-ons repository to your Home Assistant instance is
