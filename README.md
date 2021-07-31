@@ -186,4 +186,4 @@ https://github.com/alexbelgium/hassio-addons
 [privileged-shield]: https://img.shields.io/badge/privileged-required-orange.svg
 [ingress-shield]: https://img.shields.io/badge/ingress--green.svg
 [support-shield]: https://img.shields.io/badge/Support-thread-green.svg 
-[ram]: https://img.shields.io/badge/RAM_min-4Gb-orange.svg 
+[ram-shield]: https://img.shields.io/badge/RAM_min-4Gb-orange.svg 
