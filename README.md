@@ -8,7 +8,6 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![smb][smb-shield] : allows accessing smb shares, or a local external disk
 - ![ingress][ingress-shield] : supports Ingress
 - ![sql][sql-shield] : requires an external sql database server
-- ![base][base-shield] : will be updated but not tested each time
 - ![privileged][privileged-shield] : requires protection mode off to run
 - ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
 
@@ -31,7 +30,7 @@ https://github.com/alexbelgium/hassio-addons
 - Automatic addons update by aligning version tag with github upstream releases
 - Support : [[New addon] automatically update addons based on github upstream new releases - Share your Projects! - Home Assistant Community (home-assistant.io)](https://community.home-assistant.io/t/new-addon-automatically-update-addons-based-on-github-upstream-new-releases/275416)
 
-### &#10003; [Bazarr](bazarr/) ![smb][smb-shield]  ![base][base-shield]
+### &#10003; [Bazarr](bazarr/) ![smb][smb-shield]
 
 - Companion application to Sonarr and Radarr to download subtitles
 - Based on https://hub.docker.com/r/linuxserver/bazarr
@@ -74,7 +73,7 @@ https://github.com/alexbelgium/hassio-addons
 - Inadyn, or In-a-Dyn, is a small and simple Dynamic DNS, DDNS, client with HTTPS support. Commonly available in many GNU/Linux distributions, used in off the shelf routers and Internet gateways to automate the task of keeping your Internet name in sync with your public¹ IP address. It can also be used in installations with redundant (backup) connections to the Internet.
 - Based on https://hub.docker.com/r/troglobit/inadyn
 
-### &#10003; [Jackett](jackett/) ![smb][smb-shield] ![base][base-shield]
+### &#10003; [Jackett](jackett/) ![smb][smb-shield]
 
 - Translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
 - Based on https://hub.docker.com/r/linuxserver/jackett
@@ -118,7 +117,7 @@ https://github.com/alexbelgium/hassio-addons
 - Piwigo is a photo gallery software for the web
 - Based on https://hub.docker.com/r/linuxserver/piwigo
 
-### &#10003; [Piwigo](piwigo/) ![smb][smb-shield] ![sql][sql-shield] ![base][base-shield]
+### &#10003; [Piwigo](piwigo/) ![smb][smb-shield] ![sql][sql-shield]
 
 - Piwigo is a photo gallery software for the web
 - Based on https://hub.docker.com/r/linuxserver/piwigo
@@ -133,7 +132,7 @@ https://github.com/alexbelgium/hassio-addons
 - Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
 - Based on https://hub.docker.com/r/linuxserver/plex
 
-### &#10003; [Prowlarr](prowlarr/) ![smb][smb-shield] ![base][base-shield]
+### &#10003; [Prowlarr](prowlarr/) ![smb][smb-shield]
 
 - Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
 - Based on https://hub.docker.com/r/linuxserver/prowlarr
@@ -143,18 +142,18 @@ https://github.com/alexbelgium/hassio-addons
 - Based on https://hub.docker.com/r/linuxserver/qbittorrent
 - Support : [Home Assistant addon : qbittorrent (supports openvpn & smb mounts) - Home Assistant OS - Home Assistant Community (home-assistant.io)](https://community.home-assistant.io/t/home-assistant-addon-qbittorrent-supports-openvpn-smb-mounts/279247)
 
-### &#10003; [Radarr](radarr/) ![smb][smb-shield] ![base][base-shield]
+### &#10003; [Radarr](radarr/) ![smb][smb-shield]
 
 - A fork of Sonarr to work with movies like Couchpotato
 - Based on https://hub.docker.com/r/linuxserver/radarr
 
-### &#10003; [Resioliosync](resiolosync/) ![smb][smb-shield] ![base][base-shield]
+### &#10003; [Resioliosync](resiolosync/) ![smb][smb-shield]
 
 - Self-hosted file share and collaboration platform on the web
 - Based on https://hub.docker.com/r/linuxserver/resiolio-sync
 - Developed by @TyjTyj
 
-### &#10003; [Sonarr](sonarr/) ![smb][smb-shield] ![base][base-shield]
+### &#10003; [Sonarr](sonarr/) ![smb][smb-shield]
 
 - Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them.
 - Based on https://hub.docker.com/r/linuxserver/sonarr
@@ -182,7 +181,6 @@ https://github.com/alexbelgium/hassio-addons
 - Based on https://hub.docker.com/r/tnwhitwell/xteve
 
 [//]: # "ADDONLIST_END"
-[base-shield]: https://img.shields.io/badge/Basic--orange.svg
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [sql-shield]: https://img.shields.io/badge/SQL-external-orange.svg
 [privileged-shield]: https://img.shields.io/badge/privileged-required-orange.svg
