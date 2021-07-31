@@ -65,7 +65,7 @@ Create an issue on github, or ask on the [home assistant thread](https://communi
 
 # Illustration (vuetorrent webui)
 --------------
-
+https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/qbittorrent/illustration.png
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
