@@ -14,6 +14,9 @@
   "ingress": true,
   "ingress_port": 8099,
   "panel_icon": "mdi:progress-download",
+  "hassio_api": true,
+  "hassio_role": "manager",
+  "homeassistant_api": true,
   "ports": {
     "8080/tcp": 8081,
     "6881/tcp": 6881,
