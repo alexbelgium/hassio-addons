@@ -6,12 +6,12 @@ My home assistant addon repository.
 In case of issue, create an issue in the repository and reference the full log from supervisor (all red or white text).
 
 - ![smb][smb-shield] : allows accessing smb shares, or a local external disk
+- ![ingress][ingress-shield] : supports Ingress
 - ![sql][sql-shield] : requires an external sql database server
 - ![base][base-shield] : will be updated but not tested each time
 - ![privileged][privileged-shield] : requires protection mode off to run
-- ![ingress][ingress-shield] : supports Ingress
 - ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
-- 
+
 ## Installation
 
 Adding this add-ons repository to your Home Assistant instance is
