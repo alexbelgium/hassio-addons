@@ -1,3 +1,71 @@
+![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
+![Supports smb mounts][smb-shield] ![Supports openvpn][openvpn-shield] ![Supports ingress][ingress-shield] ![Supports ssl][ssl-shield]
+
+# About
+----------
+[Qbittorrent](https://github.com/qbittorrent/qBittorrent) is a cross-platform free and open-source BitTorrent client.
+This addon is based on the docker image from [linuxserver.io](https://www.linuxserver.io/).
+
+This addons has several configurable options :
+- allowing to mount local external drive, or smb share from the addon
+- [alternative webUI](https://github.com/qbittorrent/qBittorrent/wiki/List-of-known-alternate-WebUIs)
+- usage of ssl
+- ingress
+- optional openvpn support
+- allow setting specific DNS servers
+
+# Installation
+----------
+The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
+
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA) 
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+1. Install this add-on.
+1. Click the `Save` button to store your configuration.
+1. Set the add-on options to your preferences
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+1. Open the webUI and adapt the software options
+
+# Configuration
+--------------
+Webui can be found at <http://your-ip:8080>, or in your sidebar using Ingress.
+The default username/password : described in the startup log. 
+Configurations can be done through the app webUI, except for the following options
+
+Network disk is mounted to /mnt/share name
+
+```yaml
+GUID: user
+GPID: user
+ssl: true/false
+certfile: fullchain.pem #ssl certificate
+keyfile: privkey.pem #sslkeyfile
+whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password (optional)
+Username: "admin" #username to access webui. Please change it as the default is admin for all installations. 
+customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start.
+DNS_servers : 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
+SavePath: "/share/qbittorrent" # Define the download directory
+networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password
+cifsdomain: "domain" # optional, allow setting the domain for the smb share
+password, same for all smb shares
+openvpn_enabled: true/false # is openvpn required to start qbittorrent
+openvpn_alternative_mode: true/false # if enabled, will tunnel only qbittorrent and not webui through vpn. Allows webui connection from external networks, but risk of decreased stability. 
+openvpn_config": For example "config.ovpn" # name of the file located in /config/openvpn. 
+openvpn_username": USERNAME
+openvpn_password: YOURPASSWORD
+```
+# Integration with HA
+Use the [qBittorrent integration](https://www.home-assistant.io/integrations/qbittorrent/)
+
+# Illustration (vuetorrent webui)
+--------------
+![68747470733a2f2f696d6775722e636f6d2f49556b61446e492e706e67|690x365](upload://vAgu8M22MuLz1DkdsytZfAa7UJO.png) 
+
+
+
 # Home assistant add-on: qBittorrent
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield] ![Supports openvpn][openvpn-shield] ![Supports ingress][ingress-shield] ![Supports ssl][ssl-shield]
@@ -59,3 +127,4 @@ Create an issue on github, or ask on the [home assistant thread](https://communi
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
+
