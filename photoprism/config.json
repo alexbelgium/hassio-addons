@@ -27,7 +27,8 @@
     "STORAGE_PATH": "/share/photoprism/storage",
     "ORIGINALS_PATH": "/share/photoprism/originals",
     "IMPORT_PATH": "/share/photoprism/import",
-    "BACKUP_PATH": "/share/photoprism/backup"
+    "BACKUP_PATH": "/share/photoprism/backup", 
+    "CUSTOM_OPTIONS": "--site-title HA_Photoprism" 
   },
   "schema": {
     "localdisks": "str?",
