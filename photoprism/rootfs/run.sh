@@ -127,6 +127,27 @@ fi || true
 # LAUNCH APP #
 ##############
 
+# Configure app
+export PHOTOPRISM_UPLOAD_NSFW=$(bashio::config 'UPLOAD_NSFW')
+export PHOTOPRISM_STORAGE_PATH=$(bashio::config 'STORAGE_PATH')
+export PHOTOPRISM_ORIGINALS_PATH=$(bashio::config 'ORIGINALS_PATH')
+export PHOTOPRISM_IMPORT_PATH=$(bashio::config 'IMPORT_PATH')
+export PHOTOPRISM_BACKUP_PATH=$(bashio::config 'BACKUP_PATH')
+
+# Test configs
+for variabletest in PHOTOPRISM_STORAGE_PATH PHOTOPRISM_ORIGINALS_PATH PHOTOPRISM_IMPORT_PATH PHOTOPRISM_BACKUP_PATH
+do
+# Check if path exists
+if [ ! bashio::fs.directory_exists($variabletest ]; then
+bashio::log.info "Path $variabletest doesn't exist. Creating it now..." 
+mkdir -p $variable || bashio::log.fatal "Can't create $variabletest path"
+fi
+# Check if path writable
+touch $variabletest/aze && rm $variabletest/aze || bashio::log.fatal "$variable path is not writable"
+fi
+done
+
+# Start messages
 bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default admin password: "please_change_password"'
 
