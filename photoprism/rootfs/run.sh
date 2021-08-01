@@ -134,7 +134,11 @@ export PHOTOPRISM_ORIGINALS_PATH=$(bashio::config 'ORIGINALS_PATH')
 export PHOTOPRISM_IMPORT_PATH=$(bashio::config 'IMPORT_PATH')
 export PHOTOPRISM_BACKUP_PATH=$(bashio::config 'BACKUP_PATH')
 
-$CUSTOMOPTIONS=$(bashio::config 'CUSTOM_OPTIONS':"") 
+if bashio::config.has_value 'CUSTOM_OPTIONS'; then
+  CUSTOMOPTIONS=$(bashio::config 'CUSTOM_OPTIONS')
+else
+  CUSTOMOPTIONS=""
+fi
 
 # Test configs
 for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPRISM_IMPORT_PATH $PHOTOPRISM_BACKUP_PATH
@@ -156,4 +160,4 @@ bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default username : admin, default password: "please_change_password"'
 
 cd /
-./entrypoint.sh photoprism "start $CUSTOMOPTIONS"
+./entrypoint.sh photoprism start $CUSTOMOPTIONS
