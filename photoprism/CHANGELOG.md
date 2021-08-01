@@ -1,1 +1,4 @@
+- Allow mounting smb and local disks
+- Allow custom paths from options
+- Allow any custom photoprism flags
 - Initial release
