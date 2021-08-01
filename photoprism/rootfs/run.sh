@@ -160,4 +160,4 @@ bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default username : admin, default password: "please_change_password"'
 
 cd /
-./entrypoint.sh photoprism start $CUSTOMOPTIONS
+./entrypoint.sh photoprism start '"'$CUSTOMOPTIONS'"'
