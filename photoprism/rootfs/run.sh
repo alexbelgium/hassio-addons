@@ -151,7 +151,7 @@ done
 
 # Start messages
 bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
-bashio::log.info 'Default admin password: "please_change_password"'
+bashio::log.info 'Default username : admin, default password: "please_change_password"'
 
 cd /
-./entrypoint.sh photoprism start
+./entrypoint.sh photoprism start $CUSTOMOPTIONS
