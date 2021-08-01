@@ -138,7 +138,7 @@ export PHOTOPRISM_BACKUP_PATH=$(bashio::config 'BACKUP_PATH')
 for variabletest in PHOTOPRISM_STORAGE_PATH PHOTOPRISM_ORIGINALS_PATH PHOTOPRISM_IMPORT_PATH PHOTOPRISM_BACKUP_PATH
 do
 # Check if path exists
-if [ ! bashio::fs.directory_exists($variabletest) ]; then
+if [ ! bashio::fs.directory_exists $variabletest ]; then
 bashio::log.info "Path $variabletest doesn't exist. Creating it now..." 
 mkdir -p $variable || bashio::log.fatal "Can't create $variabletest path"
 fi
