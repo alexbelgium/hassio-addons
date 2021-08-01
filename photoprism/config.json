@@ -38,7 +38,8 @@
     "STORAGE_PATH": "str",
     "ORIGINALS_PATH": "str",
     "IMPORT_PATH": "str",
-    "BACKUP_PATH": "str"
+    "BACKUP_PATH": "str",
+    "CUSTOM_OPTIONS": "str?" 
   },
   "arch": ["aarch64", "amd64", "armhf", "armv7"]
 }
