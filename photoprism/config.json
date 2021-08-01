@@ -29,10 +29,10 @@
     "cifsusername": "username",
     "cifspassword": "password", 
     "UPLOAD_NSFW": "true",
-    "STORAGE_PATH": "/data/photoprism/storage",
-    "ORIGINALS_PATH": "/data/photoprism/originals",
-    "IMPORT_PATH": "/data/photoprism/import",
-    "BACKUP_PATH": "/data/photoprism/backup"
+    "STORAGE_PATH": "/share/photoprism/storage",
+    "ORIGINALS_PATH": "/share/photoprism/originals",
+    "IMPORT_PATH": "/share/photoprism/import",
+    "BACKUP_PATH": "/share/photoprism/backup"
   },
   "schema": {
     "localdisks": "str?",
