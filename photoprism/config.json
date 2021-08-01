@@ -1,6 +1,6 @@
 {
   "name": "Photoprism",
-  "version": "0.1",
+  "version": "0.2",
   "upstream": "preview",
   "slug": "photoprism",
   "description": "A server-based application for browsing, organizing and sharing your personal photo collection",
@@ -17,11 +17,6 @@
   "map": ["media:rw", "share:rw"],
   "full_access": true,
   "environment": {
-    "PHOTOPRISM_UPLOAD_NSFW": "true",
-    "PHOTOPRISM_STORAGE_PATH": "/data/photoprism/storage",
-    "PHOTOPRISM_ORIGINALS_PATH": "/data/photoprism/originals",
-    "PHOTOPRISM_IMPORT_PATH": "/data/photoprism/import",
-    "PHOTOPRISM_BACKUP_PATH": "/data/photoprism/backup",
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password"
   },
   "options": {
