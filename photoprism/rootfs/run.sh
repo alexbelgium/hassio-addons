@@ -144,7 +144,6 @@ mkdir -p $variable || bashio::log.fatal "Can't create $variabletest path"
 fi
 # Check if path writable
 touch $variabletest/aze && rm $variabletest/aze || bashio::log.fatal "$variable path is not writable"
-fi
 done
 
 # Start messages
