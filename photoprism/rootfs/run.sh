@@ -1,6 +1,6 @@
 #!/usr/bin/env bashio
 
-bashio::log.warning "Warning - minimum configuration required: 2 cpu cores and 4 GB of memory" 
+bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores and 4 GB of memory" 
 
 ##########
 # BANNER #
@@ -143,7 +143,7 @@ then
 true
 else 
 bashio::log.info "Path $variabletest doesn't exist. Creating it now..." 
-mkdir -p $variable || bashio::log.fatal "Can't create $variabletest path"
+mkdir -p $variabletest || bashio::log.fatal "Can't create $variabletest path"
 fi
 # Check if path writable
 touch $variabletest/aze && rm $variabletest/aze || bashio::log.fatal "$variable path is not writable"
