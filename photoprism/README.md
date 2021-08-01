@@ -26,7 +26,22 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at <http://your-ip:2342>.
+Webui can be found at <http://your-ip:2342>
+
+```yaml
+"localdisks": "sda1" # Optional, requires priviledged mode
+"networkdisks": "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+"cifsusername": "username" # optional, smb username, same for all smb shares
+"cifspassword": "password" # optional, smb password
+"cifsdomain": "domain" # optional, allow setting the domain for the smb share
+"password, same for all smb shares
+"UPLOAD_NSFW": "true" allow uploads that may be offensive 
+"STORAGE_PATH": "/share/photoprism/storage" # storage PATH for cache, database and sidecar files 
+"ORIGINALS_PATH": "/share/photoprism/originals" # originals PATH containing your photo and video collection 
+"IMPORT_PATH": "/share/photoprism/import" # PATH for importing files to originals
+"BACKUP_PATH": "/share/photoprism/backup" # backup storage PATH 
+"CUSTOM_OPTIONS": "--site-title HA_Photoprism" # custom options from https://docs.photoprism.org/getting-started/config-options/
+```
 
 ## Support
 
