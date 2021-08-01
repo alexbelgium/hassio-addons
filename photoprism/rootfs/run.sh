@@ -140,6 +140,7 @@ do
 # Check if path exists
 if bashio::fs.directory_exists $variabletest
 then
+true
 else 
 bashio::log.info "Path $variabletest doesn't exist. Creating it now..." 
 mkdir -p $variable || bashio::log.fatal "Can't create $variabletest path"
