@@ -34,7 +34,6 @@ Webui can be found at <http://your-ip:2342>
 "cifsusername": "username" # optional, smb username, same for all smb shares
 "cifspassword": "password" # optional, smb password
 "cifsdomain": "domain" # optional, allow setting the domain for the smb share
-"password, same for all smb shares
 "UPLOAD_NSFW": "true" allow uploads that may be offensive 
 "STORAGE_PATH": "/share/photoprism/storage" # storage PATH for cache, database and sidecar files 
 "ORIGINALS_PATH": "/share/photoprism/originals" # originals PATH containing your photo and video collection 
