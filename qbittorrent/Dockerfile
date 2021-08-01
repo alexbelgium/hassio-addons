@@ -22,8 +22,6 @@ RUN \
         nginx \
         coreutils \
         openvpn \
-#test
-        snapd \
     && apt-get clean \
     \    
     ##################
