@@ -6,7 +6,7 @@
   "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "startup": "services",
-  "ingress": false,
+  "ingress": true,
   "ingress_port": 8099,
   "panel_icon": "mdi:file-search",
   "arch": [
