@@ -125,24 +125,6 @@ if bashio::config.has_value 'networkdisks'; then
     done
 fi || true
 
-#################
-# NGINX SETTING #
-#################
-
-declare port
-declare certfile
-declare ingress_interface
-declare ingress_port
-declare keyfile
-
-port=$(bashio::addon.port 80)
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
-sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%baseurl%%/filebrowser/g" /etc/nginx/servers/ingress.conf
-mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
-
 ###################
 # SSL CONFIG v1.0 #
 ###################

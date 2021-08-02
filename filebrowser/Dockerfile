@@ -15,7 +15,6 @@ RUN \
         samba \
         bash \
         bind-tools \
-        nginx \
         \
     ##################
     # Install bashio #
