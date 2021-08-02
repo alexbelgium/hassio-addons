@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "armhf": "linuxserver/ombi:arm32v7-version-v",
-    "armv7": "linuxserver/ombi:arm32v7-version-v",
-    "aarch64": "linuxserver/ombi:arm64v8-version-v",
-    "amd64": "linuxserver/ombi:amd64-version-v"
+    "armhf": "linuxserver/ombi:arm32v7-latest",
+    "armv7": "linuxserver/ombi:arm32v7-latest",
+    "aarch64": "linuxserver/ombi:arm64v8-latest",
+    "amd64": "linuxserver/ombi:amd64-latest"
   }
 }

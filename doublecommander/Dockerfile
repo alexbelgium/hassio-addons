@@ -1,7 +1,6 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="0.8.2-1-ls54"
-FROM ${BUILD_FROM}${BUILD_UPSTREAM}
+FROM ${BUILD_FROM}
 
 # Install bashio
 RUN apt-get update \
@@ -9,7 +8,7 @@ RUN apt-get update \
     jq \
     samba \
     && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.7.1.tar.gz" \
+    "https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
     /tmp/bashio.tar.gz \

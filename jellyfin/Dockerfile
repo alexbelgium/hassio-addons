@@ -1,8 +1,6 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="10.7.6-1-ls118"
-
-FROM ${BUILD_FROM}${BUILD_UPSTREAM}
+FROM ${BUILD_FROM}
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
