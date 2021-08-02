@@ -148,7 +148,8 @@ fi || true
 
 bashio::log.info "The server will start. Please wait 30 seconds before the web UI is available. Enjoy !"
 
-./usr/src/app/bin/cloudcmd.mjs & bashio::net.wait_for 8080 localhost 900 || true
-bashio::log.info "Nginx started for Ingress" 
-exec nginx
+./usr/src/app/bin/cloudcmd.mjs 
+#& bashio::net.wait_for 8080 localhost 900 || true
+#bashio::log.info "Nginx started for Ingress" 
+#exec nginx
 
