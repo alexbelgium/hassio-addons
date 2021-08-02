@@ -1,9 +1,6 @@
 ARG BUILD_VERSION
 FROM coderaiser/cloudcmd:latest
 
-# Copy root filesystem
-COPY rootfs / 
-
 ARG BASHIO_VERSION=0.13.0
 
 RUN \
@@ -30,12 +27,16 @@ RUN \
     && rm -rf /tmp/bashio \
     \
     /var/{cache,log}/* \
-    /var/lib/apt/lists/* \
-    \
+    /var/lib/apt/lists/*
+
+# Copy root filesystem
+COPY rootfs / 
+
+RUN \
     ###############
     # Permissions #
     ###############
-    && chmod 777 /run.sh
+    chmod 777 /run.sh
 
 ENTRYPOINT [ "/run.sh" ]
 
