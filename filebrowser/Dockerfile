@@ -8,12 +8,15 @@ RUN \
     # Install apps #
     ################
     apk add --no-cache \
-    curl \
-    jq \
-    bash \
-    bind-tools \
-    nginx \
-    \
+        curl \
+        jq \
+        cifs-utils \
+        keyutils \
+        samba \
+        bash \
+        bind-tools \
+        nginx \
+        \
     ##################
     # Install bashio #
     ##################
