@@ -12,12 +12,12 @@ RUN \
     ################
     apt-get update \
     && apt-get install -y --no-install-recommends \
-		jq \
-		cifs-utils \
-		keyutils \
-		samba \
-		nginx \
-	&& apt-get clean
+        jq \
+        cifs-utils \    
+        keyutils \
+        samba \
+        nginx \
+    && apt-get clean \
     \
     ##################
     # Install bashio #
