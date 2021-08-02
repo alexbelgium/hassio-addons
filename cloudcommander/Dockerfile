@@ -4,7 +4,7 @@ FROM coderaiser/cloudcmd:latest
 # Copy root filesystem
 COPY rootfs / 
 
-ARG BASHIO_VERSION=0.13.0
+ARG BASHIO_VERSION=0.13.1
 
 RUN \
     ################
