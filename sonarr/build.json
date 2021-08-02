@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "armhf": "linuxserver/sonarr:arm32v7-version-",
-    "armv7": "linuxserver/sonarr:arm32v7-version-",
-    "aarch64": "linuxserver/sonarr:arm64v8-version-",
-    "amd64": "linuxserver/sonarr:amd64-version-"
+    "armhf": "linuxserver/sonarr:arm32v7-latest",
+    "armv7": "linuxserver/sonarr:arm32v7-latest",
+    "aarch64": "linuxserver/sonarr:arm64v8-latest",
+    "amd64": "linuxserver/sonarr:amd64-latest"
   }
 }
