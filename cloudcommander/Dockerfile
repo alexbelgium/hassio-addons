@@ -1,7 +1,8 @@
 ARG BUILD_VERSION
 FROM coderaiser/cloudcmd:latest
 
-COPY run.sh /
+# Copy root filesystem
+COPY rootfs / 
 
 ARG BASHIO_VERSION=0.13.0
 
@@ -11,9 +12,12 @@ RUN \
     ################
     apt-get update \
     && apt-get install -y --no-install-recommends \
-    jq \
-    cifs-utils \
-    keyutils \
+		jq \
+		cifs-utils \
+		keyutils \
+		samba \
+		nginx \
+	&& apt-get clean
     \
     ##################
     # Install bashio #
