@@ -42,6 +42,10 @@ Webui can be found at <http://your-ip:2342>
 "CUSTOM_OPTIONS": "--site-title HA_Photoprism" # custom options from https://docs.photoprism.org/getting-started/config-options/
 ```
 
+## Illustration
+
+![1622396210_840_560](https://user-images.githubusercontent.com/44178713/127819841-2281ac79-ea96-4b41-9704-522957c5b9c3.jpg)
+
 ## Support
 
 Create an issue on github
