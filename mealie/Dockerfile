@@ -4,6 +4,8 @@ FROM ${BUILD_FROM}
 
 COPY rootfs /
 
+ARG BASHIO_VERSION=0.13.0
+
 RUN \
     ################
     # Install apps #
@@ -13,16 +15,12 @@ RUN \
     ##################
     # Install bashio #
     ##################
-    && mkdir -p /bashio/bashio \
-    && curl -J -L -o /bashio/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.13.0.tar.gz" \
-    && tar zxvf \
-    /bashio/bashio.tar.gz \
-    --strip 1 -C /bashio/bashio \
-    \
-    && mv /bashio/bashio/lib /usr/lib/bashio \
+    && mkdir -p /tmp/bashio \
+    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    | tar -xzf - --strip 1 -C /tmp/bashio \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /bashio \
+    && rm -rf /tmp/bashio \
     \
     ###############
     # Adapt image #
