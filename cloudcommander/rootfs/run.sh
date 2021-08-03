@@ -128,19 +128,22 @@ fi || true
 #################
 # NGINX SETTING #
 #################
-#
-#declare port
-#declare certfile
-#declare ingress_interface
-#declare ingress_port
-#declare keyfile
-#
-#port=$(bashio::addon.port 80)
-#ingress_port=$(bashio::addon.ingress_port)
-#ingress_interface=$(bashio::addon.ip_address)
-#sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
-#sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
-#mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
+
+declare port
+declare certfile
+declare ingress_interface
+declare ingress_port
+declare keyfile
+
+port=$(bashio::addon.port 80)
+ingress_port=$(bashio::addon.ingress_port)
+ingress_interface=$(bashio::addon.ip_address)
+sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
+sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
+mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
+
+CLOUDCMD_PREFIX=$(bashio::config 'do_not_use')
+export CLOUDCMD_PREFIX
 
 ###############
 # LAUNCH APPS #
@@ -148,8 +151,6 @@ fi || true
 
 bashio::log.info "The server will start. Please wait 30 seconds before the web UI is available. Enjoy !"
 
-./usr/src/app/bin/cloudcmd.mjs 
-#& bashio::net.wait_for 8080 localhost 900 || true
-#bashio::log.info "Nginx started for Ingress" 
-#exec nginx
-
+./usr/src/app/bin/cloudcmd.mjs & bashio::net.wait_for 8080 localhost 900 || true
+bashio::log.info "Nginx started for Ingress" 
+exec nginx
