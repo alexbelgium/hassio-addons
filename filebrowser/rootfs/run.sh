@@ -191,7 +191,7 @@ fi
 
 bashio::log.info "Starting..."
 
-/./filebrowser "$CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH" &
+/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
