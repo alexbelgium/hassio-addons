@@ -1,3 +1,4 @@
+- Ingress added
 
 ## 2.16.0 (29-07-2021)
 - Update to latest version from hurlenko/filebrowser-docker
