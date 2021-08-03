@@ -142,8 +142,10 @@ sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
-CLOUDCMD_PREFIX=$(bashio::config 'do_not_use')
-export CLOUDCMD_PREFIX
+if bashio::config.has_value 'do_not_use'; then
+    CLOUDCMD_PREFIX=$(bashio::config 'do_not_use')
+    export CLOUDCMD_PREFIX
+fi
 
 ###############
 # LAUNCH APPS #
