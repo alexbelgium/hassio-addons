@@ -135,6 +135,7 @@ declare ingress_interface
 declare ingress_port
 declare keyfile
 
+CLOUDCMD_PREFIX=""
 if bashio::config.has_value 'do_not_use'; then
     CLOUDCMD_PREFIX=$(bashio::config 'do_not_use')
     export CLOUDCMD_PREFIX
