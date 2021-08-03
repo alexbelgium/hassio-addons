@@ -153,8 +153,8 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 # LAUNCH APPS #
 ###############
 
-bashio::log.info "The server will start. Please wait 30 seconds before the web UI is available. Enjoy !"
+bashio::log.info "Starting..."
 
-./usr/src/app/bin/cloudcmd.mjs & bashio::net.wait_for 8080 localhost 900 || true
-bashio::log.info "Nginx started for Ingress" 
+./usr/src/app/bin/cloudcmd.mjs & bashio::net.wait_for 8000 localhost 900 || true
+bashio::log.info "Started !" 
 exec nginx
