@@ -36,7 +36,6 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
-    "smbv1": "bool?",
-    "do_not_use": "str?"
+    "smbv1": "bool?"
   }
 }
