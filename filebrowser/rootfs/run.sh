@@ -151,6 +151,8 @@ PGID=0
 # LAUNCH FILEBROWSER #
 ######################
 
+FB_BASEURL="/filebrowser"
+export $FB_BASEURL
 NOAUTH=""
 
 if bashio::config.true 'NoAuth'; then
