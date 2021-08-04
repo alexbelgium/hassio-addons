@@ -21,7 +21,14 @@ comparison to installing any other Hass.io add-on.
 
 Webui can be found at `<your-ip>:8000`.
 
-"CUSTOM_OPTIONS": "--name Homeassistant" # custom options from https://cloudcmd.io/
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?",
+    "smbv1": "bool?",
+    "CUSTOM_OPTIONS": "str?",
+    "DROPBOX_TOKEN": "str?"
+    "CUSTOM_OPTIONS": "--name Homeassistant" # custom options from https://cloudcmd.io/
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
