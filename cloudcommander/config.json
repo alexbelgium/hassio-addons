@@ -37,6 +37,7 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "smbv1": "bool?",
-    "CUSTOM_OPTIONS": "str?" 
+    "CUSTOM_OPTIONS": "str?",
+    "DROPBOX_TOKEN": "str?",
   }
 }
