@@ -156,8 +156,20 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 # LAUNCH APPS #
 ###############
 
+if bashio::config.has_value 'CUSTOM_OPTIONS'; then
+  CUSTOMOPTIONS=$(bashio::config 'CUSTOM_OPTIONS')
+else
+  CUSTOMOPTIONS=""
+fi
+
+if bashio::config.has_value 'DROPBOX_TOKEN'; then
+  DROPBOX_TOKEN="--dropbox --dropbox-token $(bashio::config 'DROPBOX_TOKEN')"
+else
+  DROPBOX_TOKEN=""
+fi
+
 bashio::log.info "Starting..."
 
-./usr/src/app/bin/cloudcmd.mjs & bashio::net.wait_for 8000 localhost 900 || true
+./usr/src/app/bin/cloudcmd.mjs '"'$CUSTOMOPTIONS'"' '"'$DROPBOX'"' & bashio::net.wait_for 8000 localhost 900 || true
 bashio::log.info "Started !" 
 exec nginx
