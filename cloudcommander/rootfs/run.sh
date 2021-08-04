@@ -170,6 +170,6 @@ fi
 
 bashio::log.info "Starting..."
 
-./usr/src/app/bin/cloudcmd.mjs '"'$CUSTOMOPTIONS'"' '"'$DROPBOX'"' & bashio::net.wait_for 8000 localhost 900 || true
+./usr/src/app/bin/cloudcmd.mjs '"'$DROPBOX_TOKEN $CUSTOMOPTIONS'"' & bashio::net.wait_for 8000 localhost 900 || true
 bashio::log.info "Started !" 
 exec nginx
