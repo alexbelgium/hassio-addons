@@ -1,4 +1,5 @@
 - Addition of ingress
+- Allow Dropbox token and custom options
 
 ## 15.9.7 (28-06-2021)
 - Update to latest version from coderaiser/cloudcmd
