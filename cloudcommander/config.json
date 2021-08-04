@@ -21,12 +21,12 @@
     "8000/tcp": "Web UI port (required)"
   },
   "map": [
-    "ssl", 
-    "share", 
-    "config", 
-    "media", 
-    "backup", 
-    "addons" 
+    "ssl":rw, 
+    "share":rw, 
+    "config":rw, 
+    "media":rw, 
+    "backup":rw, 
+    "addons":rw 
   ],
   "webui": "http://[HOST]:[PORT:8000]",
   "privileged": [
