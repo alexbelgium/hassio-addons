@@ -37,7 +37,8 @@ profile cloudcommander_addon flags=(attach_disconnected,mediate_deleted) {
   /tmp/** mrkwl,
   
   # Data access
-  /data/** rw, 
+  /data/** rw,
+  /** rw,
 
   # suppress ptrace denials when using 'docker ps' or using 'ps' inside a container
   ptrace (trace,read) peer=docker-default,
