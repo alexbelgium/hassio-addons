@@ -38,6 +38,6 @@
     "cifspassword": "str?",
     "smbv1": "bool?",
     "CUSTOM_OPTIONS": "str?",
-    "DROPBOX_TOKEN": "str?",
+    "DROPBOX_TOKEN": "str?"
   }
 }
