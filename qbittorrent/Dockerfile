@@ -22,6 +22,7 @@ RUN \
         nginx \
         coreutils \
         openvpn \
+        wireguard-tools \
     && apt-get clean \
     \    
     ##################
