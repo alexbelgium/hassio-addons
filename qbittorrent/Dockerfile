@@ -75,6 +75,7 @@ VOLUME [ "/data" ]
 
 # Environment variables
 #ENV \
+#    DEBIAN_FRONTEND="non interactive \
 #    HOME="/root" \
 #    LANG="C.UTF-8" \
 #    PS1="$(whoami)@$(hostname):$(pwd)$ " \
