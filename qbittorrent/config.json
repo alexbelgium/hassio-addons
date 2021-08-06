@@ -1,6 +1,6 @@
 {
   "name": "Qbittorrent",
-  "version": "14.3.7.99202108032349-7395-0415c0c6fubuntu20.04.1-ls149",
+  "version": "14.3.7.99202108032349-7395-0415c0c6fubuntu20.04.1-ls149-2",
   "upstream": "14.3.7.99202108032349-7395-0415c0c6fubuntu20.04.1-ls149",
   "slug": "qbittorrent",
   "description": "qBittorrent is a bittorrent client",
