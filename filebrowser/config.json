@@ -1,7 +1,7 @@
 {
   "name": "Filebrowser",
-  "version": "2.16.0-v3",
-  "upstream": "2.16.0",
+  "version": "2.16.1",
+  "upstream": "2.16.1",
   "slug": "filebrowser",
   "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -9,7 +9,12 @@
   "ingress": true,
   "ingress_port": 8099,
   "panel_icon": "mdi:file-search",
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
   "ports": {
     "8080/tcp": 8087
   },
@@ -17,9 +22,19 @@
     "8080/tcp": "Web UI port"
   },
   "apparmor": true,
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "full_access": true,
-  "map": ["media:rw", "config:rw", "addons:rw", "backup:rw", "share:rw", "ssl"],
+  "map": [
+    "media:rw",
+    "config:rw",
+    "addons:rw",
+    "backup:rw",
+    "share:rw",
+    "ssl"
+  ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "environment": {
     "FB_BASEURL": "/filebrowser"

@@ -1,3 +1,6 @@
+
+## 2.16.1 (07-08-2021)
+- Update to latest version from hurlenko/filebrowser-docker
 - Ingress added
 - No auth option made more apparent 
 
