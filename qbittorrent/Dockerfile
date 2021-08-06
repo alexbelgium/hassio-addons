@@ -73,6 +73,15 @@ COPY rootfs /
 
 VOLUME [ "/data" ]
 
+# Environment variables
+#ENV \
+#    HOME="/root" \
+#    LANG="C.UTF-8" \
+#    PS1="$(whoami)@$(hostname):$(pwd)$ " \
+#    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+#    S6_CMD_WAIT_FOR_SERVICES=1 \
+#    TERM="xterm-256color"
+
 ### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
