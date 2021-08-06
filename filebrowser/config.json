@@ -30,7 +30,8 @@
     "keyfile": "privkey.pem",
     "networkdisks": "//server/share",
     "cifsusername": "username",
-    "cifspassword": "password"
+    "cifspassword": "password",
+    "NoAuth": false
   },
   "schema": {
     "ssl": "bool",
@@ -41,6 +42,6 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "smbv1": "bool?",
-    "NoAuth": "bool?"
+    "NoAuth": "bool"
   }
 }
