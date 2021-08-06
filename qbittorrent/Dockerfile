@@ -75,7 +75,7 @@ VOLUME [ "/data" ]
 
 # Environment variables
 ENV \
-    DEBIAN_FRONTEND="non interactive \
+    DEBIAN_FRONTEND="noninteractive"\
     LANG="C.UTF-8" \
     PS1="$(whoami)@$(hostname):$(pwd)$ " \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
