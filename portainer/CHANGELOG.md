@@ -1,4 +1,7 @@
 
+## 2.6.3 (07-08-2021)
+- Update to latest version from lastversion-test-repos/portainer
+
 ## 2.6.2 (02-08-2021)
 - Update to latest version from portainer/portainer
 
