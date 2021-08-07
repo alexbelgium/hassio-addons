@@ -106,10 +106,10 @@ for addons in $(bashio::config "addon|keys"); do
 
   #Prepare tag flag
   if [ ${LASTTAG} = true ]; then
-    LOGINFO="... $SLUG : lastversion tag is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+    LOGINFO="... $SLUG : asset_only tag is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     LASTTAG="--having-asset"
   else
-    LOGINFO="... $SLUG : fulltag is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+    LOGINFO="... $SLUG : asset_only is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     LASTTAG=""
   fi
 
