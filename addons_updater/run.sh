@@ -69,7 +69,6 @@ for addons in $(bashio::config "addon|keys"); do
   REPOSITORY=$(bashio::config "addon[${addons}].repository")
   UPSTREAM=$(bashio::config "addon[${addons}].upstream")
   BETA=$(bashio::config "addon[${addons}].beta")
-  HAVEASSET=$(bashio::config "addon[${addons}].having-asset")
   FULLTAG=$(bashio::config "addon[${addons}].fulltag")
   BASENAME=$(basename "https://github.com/$REPOSITORY")
   DATE="$(date '+%d-%m-%Y')"
