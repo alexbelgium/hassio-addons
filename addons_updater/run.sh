@@ -41,7 +41,7 @@ fi
 # UPDATE #
 ##########
 
-bashio::log.info "Starting lastversion $(lastversion --version)"
+bashio::log.info "Starting $(lastversion --version)"
 
 bashio::log.info "Checking status of referenced repositoriess..."
 VERBOSE=$(bashio::config 'verbose')
