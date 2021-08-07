@@ -69,7 +69,7 @@ for addons in $(bashio::config "addon|keys"); do
   REPOSITORY=$(bashio::config "addon[${addons}].repository")
   UPSTREAM=$(bashio::config "addon[${addons}].upstream")
   BETA=$(bashio::config "addon[${addons}].beta")
-  HAVINGASSET=$(bashio::config "addon[${addons}].having-asset")
+  HAVEASSET=$(bashio::config "addon[${addons}].having-asset")
   FULLTAG=$(bashio::config "addon[${addons}].fulltag")
   BASENAME=$(basename "https://github.com/$REPOSITORY")
   DATE="$(date '+%d-%m-%Y')"
@@ -102,20 +102,13 @@ for addons in $(bashio::config "addon|keys"); do
     FULLTAG=""
   fi
 
-  #Prepare tag flag
-  if [ ${HAVEASSET} != null ]; then
-    HAVEASSET="--having-asset '"'$HAVEASSET'"'"
-  else
-    HAVEASSET=""
-  fi
-
   #If beta flag, select beta version
   if [ ${BETA} = true ]; then
     LOGINFO="... $SLUG : beta is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $Fulltag $HAVEASSET)
+    LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG)
   else
     LOGINFO="... $SLUG : beta is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG $HAVEASSET)
+    LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG)
   fi
 
   # Add brackets
