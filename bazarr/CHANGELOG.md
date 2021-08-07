@@ -1,4 +1,7 @@
 
+## 0.9.6 (07-08-2021)
+- Update to latest version from linuxserver/docker-bazarr
+
 ## 2.6.2 (07-08-2021)
 - Update to latest version from alexbelgium/portainer
 
