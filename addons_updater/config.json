@@ -25,7 +25,7 @@
   "verbose": true
   },
   "schema": {
-  "addon": [{ "slug": "str", "beta": "bool", "fulltag": "bool", "having_asset": "str?", "repository": "str", "upstream": "str"}],
+  "addon": [{ "slug": "str", "beta": "bool", "fulltag": "bool", "having_asset": "bool?", "repository": "str", "upstream": "str"}],
   "gituser": "str",
   "gitpass": "str",
   "gitmail": "str",
