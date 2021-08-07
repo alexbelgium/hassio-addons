@@ -1,4 +1,7 @@
 
+## 2.6.2 (07-08-2021)
+- Update to latest version from alexbelgium/portainer
+
 ## 0.9.6 (21-07-2021)
 - Update to latest version from linuxserver/docker-bazarr
 - Enable smb mounts
