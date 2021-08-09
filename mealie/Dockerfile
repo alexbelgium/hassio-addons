@@ -10,7 +10,7 @@ RUN \
     ################
     # Install apps #
     ################
-    apk add --no-cache jq curl bash \
+    apk add --no-cache jq curl bash || (apt-get update && apt-get install -y jq curl bash && apt-get clean) \
     \
     ##################
     # Install bashio #
