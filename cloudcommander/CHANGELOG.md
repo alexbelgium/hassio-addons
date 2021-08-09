@@ -1,3 +1,6 @@
+
+## 15.9.8 (10-08-2021)
+- Update to latest version from coderaiser/cloudcmd
 - Addition of ingress
 - Allow Dropbox token and custom options
 - Added access rw to HA folders

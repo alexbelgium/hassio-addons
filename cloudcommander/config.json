@@ -1,7 +1,7 @@
 {
   "name": "Cloudcommander",
-  "version": "15.9.7-3",
-  "upstream": "15.9.7",
+  "version": "15.9.8",
+  "upstream": "15.9.8",
   "slug": "cloudcommander",
   "description": "Cloud Commander a file manager for the web with console and editor",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander#readme",
@@ -21,10 +21,10 @@
     "8000/tcp": "Web UI port (required)"
   },
   "map": [
-    "ssl:rw", 
-    "share:rw", 
-    "config:rw", 
-    "media:rw", 
+    "ssl:rw",
+    "share:rw",
+    "config:rw",
+    "media:rw",
     "backup:rw",
     "addons:rw"
   ],
