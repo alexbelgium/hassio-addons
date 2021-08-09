@@ -1,6 +1,6 @@
 {
   "name": "Plex NAS",
-  "version": "1.23.6.4881-e2e58f321-ls65-2",
+  "version": "1.23.6.4881-e2e58f321-ls65-3",
   "upstream": "1.23.6.4881-e2e58f321-ls65",
   "slug": "plex_nas",
   "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
