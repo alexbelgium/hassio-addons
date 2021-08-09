@@ -1,12 +1,11 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BASHIO_VERSION=0.13.1
-
 FROM ${BUILD_FROM}
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+ARG BASHIO_VERSION=0.13.1 
 RUN \
     ################
     # Install apps #
