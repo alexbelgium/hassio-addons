@@ -8,13 +8,16 @@ RUN \
     # Install apps #
     ################
     apk add --no-cache \
+        # bashio
         curl \
         jq \
+        bash \
+        # smb mounts
         cifs-utils \
         keyutils \
         samba \
-        bash \
         bind-tools \
+        # nginx
         nginx \
         \
     ##################
