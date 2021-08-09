@@ -57,7 +57,7 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \
     # Correct permissions 
-    && sed -i 's|/config|-R /config/qBittorrent|g' /etc/cont-init.d/10-adduser \    
+    && sed -i 's=/config=/config/qBittorrent || true=g' /etc/cont-init.d/10-adduser \    
     && sed -i 's=	/config=/config/qBittorrent || true=g' /etc/cont-init.d/30-config \
     \
     # Set download folder to /share
