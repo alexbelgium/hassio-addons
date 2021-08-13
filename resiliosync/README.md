@@ -1,4 +1,4 @@
-# Home assistant add-on: Ombi
+# Home assistant add-on: Resilio Sync
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield] ![Supports openvpn][openvpn-shield] ![Supports ingress][ingress-shield] ![Supports ssl][ssl-shield]
 
