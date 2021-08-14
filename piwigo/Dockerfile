@@ -32,4 +32,5 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Use subfolder in config
     && files=$(grep -rl "/config" /defaults/*) && echo $files | xargs sed -i "s|/config|/config/piwigo|g" \
-    && files=$(grep -rl "/config" /etc/*) && echo $files | xargs sed -i "s|/config|/config/piwigo|g"
+    && files=$(grep -rl "/config" /etc/cont-init.d/*) && echo $files | xargs sed -i "s|/config|/config/piwigo|g" \
+    && files=$(grep -rl "/config" /etc/services.d/*) && echo $files | xargs sed -i "s|/config|/config/piwigo|g" 
