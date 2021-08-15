@@ -33,7 +33,7 @@ RUN \
     # Use subfolder in config
     && files=$(grep -rl "/config" /defaults/*) && echo $files | xargs sed -i "s|/config|/config/piwigo|g" \
     && files=$(grep -rl "/config" /etc/cont-init.d/*) && echo $files | xargs sed -i "s|/config|/config/piwigo|g" \
-    && files=$(grep -rl "/gallery/include/config/piwigo/piwigo_default.inc.php" /etc/cont-init.d/*) && echo $files | xargs sed -i "s|/gallery/include/config/piwigo/piwigo_default.inc.php|/gallery/include/config_default.inc.php|g" \
+    && files=$(grep -rl "/gallery/include/config/piwigo/piwigo_default.inc.php" /etc/*) && echo $files | xargs sed -i "s|/gallery/include/config/piwigo/piwigo_default.inc.php|/gallery/include/config_default.inc.php|g" \
     && files=$(grep -rl "/config" /etc/services.d/*) && echo $files | xargs sed -i "s|/config|/config/piwigo|g" 
 
 
