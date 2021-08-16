@@ -1,10 +1,10 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BASHIO_VERSION=0.13.1
 
 FROM ${BUILD_FROM}
 
 # Add bashio
+ARG BASHIO_VERSION=0.13.1 
 RUN \
     ################
     # Install apps #
