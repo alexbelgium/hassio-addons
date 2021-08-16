@@ -33,8 +33,10 @@ RUN \
     # Use subfolder in config
     && files=$(grep -rl '/config/' /defaults/*) && echo $files | xargs sed -i 's|/config/|/data/|g' \
     && files=$(grep -rl '/config/' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config/|/data/|g' \
-    && files=$(grep -rl "/config/" /etc/services.d/*) && echo $files | xargs sed -i "s|/config/|/data/|g" \
+ #   && files=$(grep -rl "/config/" /etc/services.d/*) && echo $files | xargs sed -i "s|/config/|/data/|g" \
     && files=$(grep -rl "    /config" /etc/cont-init.d/*) && echo $files | xargs sed -i "s=    /config=    /data=g" \
-    && sed -i '2i cp -vnpr /config/* /data || true' /etc/cont-init.d/00-banner.sh
+    && files=$(grep -rl '/data/config.inc.php' /defaults/*) && echo $files | xargs sed -i 's|/data/config.inc.php|/config/config.inc.php|g' || true \
+    && files=$(grep -rl '/data/config.inc.php' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/data/config.inc.php|/config/config.inc.php|g'
+  #  && sed -i '2i cp -vnpr /config/* /data || true' /etc/cont-init.d/00-banner.sh
   #  && cp -R /gallery/include/config_default.inc.php /gallery/include/data/piwigo_default.inc.php
 
