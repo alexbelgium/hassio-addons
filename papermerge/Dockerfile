@@ -25,7 +25,7 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    && rm -rf /tmp/bashio || true
 
 # Copy root filesystem
 COPY rootfs / 
@@ -37,6 +37,6 @@ RUN \
     # && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Change config path
     && sed -i "s| /config| /data/config|g" /etc/cont-init.d/* \
-    && sed -i "s| /config| /data/config|g" /defaults/*
+    && sed -i "s| /config| /data/config|g" /defaults/* || true
 
 VOLUME [ "/data" ] 
