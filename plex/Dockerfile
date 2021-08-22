@@ -17,6 +17,7 @@ RUN \
         cifs-utils \
         keyutils \
         samba \
+        plex \
     \ 
     ###################
     # Install bashio #
