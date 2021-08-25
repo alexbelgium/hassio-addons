@@ -1,4 +1,7 @@
 
+## 2.17.1 (26-08-2021)
+- Update to latest version from hurlenko/filebrowser-docker
+
 ## 2.17.0 (24-08-2021)
 - Update to latest version from hurlenko/filebrowser-docker
 
