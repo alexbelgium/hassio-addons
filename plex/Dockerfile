@@ -46,7 +46,7 @@ RUN \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/10-adduser \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/40-chown-files \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/45-plex-claim \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/60-plexupdate \
+    && sed -i "s|/config|/data|g" /etc/cont-init.d/60-plex-update \
     && sed -i "s|/config|/data|g" /defaults/plexmediaserver
 
 # copy local files
