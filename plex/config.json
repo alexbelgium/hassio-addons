@@ -63,6 +63,7 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
+    "claim": "Get_from_https://www.plex.tv/claim",
     "networkdisks": "//server/share",
     "cifsusername": "username",
     "cifspassword": "password"
@@ -70,6 +71,7 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
+    "claim": "str",
     "TZ": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
