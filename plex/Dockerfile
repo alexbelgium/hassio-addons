@@ -44,7 +44,6 @@ RUN \
     ###########
     \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/10-adduser \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/30-config \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/40-chown-files \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/45-plexclaim \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/60-plexupdate \
