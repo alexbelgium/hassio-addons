@@ -36,18 +36,18 @@ RUN \
     \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i "s|chown abc:abc /config||g" /etc/cont-init.d/10-adduser \
-    \
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+#    && sed -i "s|chown abc:abc /config||g" /etc/cont-init.d/10-adduser \
+#    \
     ###########
     # FOLDERS #
     ###########
-    \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/10-adduser \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/40-chown-files \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/45-plex-claim \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/60-plex-update \
-    && sed -i "s|/config|/data|g" /defaults/plexmediaserver
+#    \
+#    && sed -i "s|/config|/data|g" /etc/cont-init.d/10-adduser \
+#    && sed -i "s|/config|/data|g" /etc/cont-init.d/40-chown-files \
+#    && sed -i "s|/config|/data|g" /etc/cont-init.d/45-plex-claim \
+#    && sed -i "s|/config|/data|g" /etc/cont-init.d/60-plex-update \
+#    && sed -i "s|/config|/data|g" /defaults/plexmediaserver
 
 # copy local files
 COPY root/ /
