@@ -5,20 +5,19 @@ FROM ${BUILD_FROM}
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ARG BASHIO_VERSION=0.13.1 
+ARG BASHIO_VERSION=0.13.1
 RUN \
     ################
     # Install apps #
     ################
     apt-get update \
-    && apt-get install -y \
-        jq \
-        curl \
-        cifs-utils \
-        keyutils \
-        samba \
-    \ 
-    ###################
+    && apt-get install -y --no-install-recommends \
+    jq \
+    cifs-utils \
+    keyutils \
+    samba \
+    \
+    ##################
     # Install bashio #
     ##################
     && mkdir -p /tmp/bashio \
@@ -26,10 +25,27 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
-
-RUN grep -rl '/config' /etc/cont-init.d/ | xargs sed -i 's|/config|/config/plex|g'  #change config folder
-
+    && rm -rf /tmp/bashio \
+    \
+    /var/{cache,log}/* \
+    /var/lib/apt/lists/* \
+    \
+    #############################
+    # Allow UID and GID setting #
+    #############################
+    \
+    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    && sed -i "s|chown abc:abc /config||g" /etc/cont-init.d/10-adduser \
+    \
+    ###########
+    # FOLDERS #
+    ###########
+    \
+    && sed -i "s|/config|/data/plex|g" /etc/services.d/plex/run \
+    && sed -i "s|/config|/data/plex|g" /etc/cont-init.d/30-config
+ 
 # copy local files
 COPY root/ /
 
