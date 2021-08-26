@@ -1,6 +1,6 @@
 {
   "name": "Plex NAS",
-  "version": "1.24.1.4931-1a38e63c6-ls70-2",
+  "version": "1.24.1.4931-1a38e63c6-ls70-3",
   "upstream": "1.24.1.4931-1a38e63c6-ls70",
   "slug": "plex_nas",
   "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
