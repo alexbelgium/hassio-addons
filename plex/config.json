@@ -39,7 +39,6 @@
     "33443/tcp": "WebTools"
   },
   "map": [
-    "config:rw",
     "share:rw",
     "media:rw",
     "ssl"
