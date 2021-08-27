@@ -6,7 +6,7 @@ FROM florider89/joplin-server:master
 COPY rootfs / 
 
 RUN ps afx|grep dpkg \
-    && killall dpkg \
+    && kill dpkg \
     && rm /var/lib/dpkg/lock
 
 ARG BASHIO_VERSION=0.13.1 
