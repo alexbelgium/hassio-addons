@@ -44,6 +44,7 @@ RUN \
     # CORRECT PLEX CLAIM #
     ######################
     \
+    && sed -i 's/bash/bashio/g' /etc/cont-init.d/45-plex-claim \
     && sed -i 's/PLEX_CLAIM/(bashio::config "claim")/g' /etc/cont-init.d/45-plex-claim \
     ###########
     # FOLDERS #
