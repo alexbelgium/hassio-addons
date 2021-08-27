@@ -12,9 +12,9 @@ RUN \
     ################
     # Install apps #
     ################
-    sudo apt-get clean \
-    && sudo apt-get update \     
-    && sudo apt-get install -y \
+    apt-get clean \
+    && apt-get update \     
+    && apt-get install -y \
          jq \
          curl \
     \
