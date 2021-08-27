@@ -40,7 +40,7 @@ RUN \
     chmod +x /run.sh
 
 #ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/run.sh" ] 
+CMD [ "/run.sh" ] 
 
 ### LABELS
 ARG BUILD_ARCH
