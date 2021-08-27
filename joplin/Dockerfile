@@ -12,7 +12,9 @@ RUN \
     ################
     # Install apps #
     ################
-    apt-get clean \
+    apt-get autoremove \
+    && apt-get clean \
+    && apt-get autoclean \
     && apt-get update \     
     && apt-get install -y \
          jq \
