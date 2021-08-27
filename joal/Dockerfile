@@ -9,7 +9,8 @@ ARG BUILD_UPSTREAM="2.1.26"
 
 RUN \
 #Install bashio
-    apt-get update \
+    apt-get clean \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
     wget \
     jq \

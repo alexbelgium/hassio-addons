@@ -7,7 +7,8 @@ RUN \
      ################
     # Install apps #
     ################
-    apt-get update \
+    apt-get clean \
+    && apt-get update \
     && apt-get install -y \
         jq \
         curl \

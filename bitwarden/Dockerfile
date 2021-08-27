@@ -25,7 +25,8 @@ COPY --from=vaultwarden /web-vault /opt/web-vault
 # add Nginx
 # hadolint ignore=DL3009
 RUN \
-    apt-get update \
+    apt-get clean \
+    && apt-get update \
     \
     && apt-get install -y --no-install-recommends \
         libmariadb-dev-compat \
