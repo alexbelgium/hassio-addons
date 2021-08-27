@@ -18,7 +18,7 @@ RUN \
     && sudo apt-get update \     
     && sudo apt-get install -y \
          jq \
-         curl
+         curl \
     \
     ##################
     # Install bashio #
@@ -35,7 +35,7 @@ RUN \
     ###################
     \
     # Allow execution of run
-    chmod +x /run.sh
+    && chmod +x /run.sh
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/run.sh" ] 
