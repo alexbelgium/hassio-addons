@@ -19,24 +19,23 @@ RUN \
     && sudo apt-get install -y \
          jq \
          curl
-   
-#RUN \
+    \
     ##################
     # Install bashio #
     ##################
-#    mkdir -p /tmp/bashio \
-#    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-#    | tar -xzf - --strip 1 -C /tmp/bashio \
-#    && mv /tmp/bashio/lib /usr/lib/bashio \
-#    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-#    && rm -rf /tmp/bashio \
-#    \ 
+    && mkdir -p /tmp/bashio \
+    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    | tar -xzf - --strip 1 -C /tmp/bashio \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    && rm -rf /tmp/bashio \
+    \ 
     ###################
     # Configure image #
     ###################
     \
     # Allow execution of run
-#    chmod 777 /run.sh
+    chmod +x /run.sh
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/run.sh" ] 
