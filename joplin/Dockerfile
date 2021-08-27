@@ -7,21 +7,20 @@ ARG user=joplin
 USER $user
 COPY --chown=$user:$user rootfs / 
 
-ARG BASHIO_VERSION=0.13.1 
+#ARG BASHIO_VERSION=0.13.1 
 
 RUN \
     ################
     # Install apps #
     ################
-    #rm /var/lib/dpkg/lock \
-    #&& apt-get autoremove \
-    ##&& apt-get clean \
-    #&& apt-get autoclean \
-    #&& apt-get update \     
-    #&& apt-get install -y \
-    #     jq \
-    #     curl \
-    #\
+    npm install jq \
+    \
+    ###################
+    # Configure image #
+    ###################
+    # Allow execution of run
+    && chmod +x /run.sh
+    #
     ##################
     # Install bashio #
     ##################
@@ -32,12 +31,6 @@ RUN \
     #&& ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     #&& rm -rf /tmp/bashio \
     #\ 
-    ###################
-    # Configure image #
-    ###################
-    #\
-    # Allow execution of run
-    chmod +x /run.sh
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/run.sh" ] 
