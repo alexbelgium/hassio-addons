@@ -7,7 +7,7 @@ COPY rootfs /
 
 ARG BASHIO_VERSION=0.13.1 
 
-USER joplin
+#USER joplin
 RUN \
     ################
     # Install apps #
