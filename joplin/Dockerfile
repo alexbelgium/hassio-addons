@@ -12,7 +12,9 @@ RUN \
     ################
     # Install apps #
     ################
-    apt-get autoremove \
+    ps -e | grep -e apt -e adept | grep -v grep \
+    && rm /var/lib/dpkg/lock \
+    && apt-get autoremove \
     && apt-get clean \
     && apt-get autoclean \
     && apt-get update \     
