@@ -5,10 +5,6 @@ FROM florider89/joplin-server:master
 # Copy root filesystem
 COPY rootfs / 
 
-RUN ps afx|grep dpkg \
-    && kill dpkg \
-    && rm /var/lib/dpkg/lock
-
 ARG BASHIO_VERSION=0.13.1 
 
 #USER joplin
