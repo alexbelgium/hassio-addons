@@ -7,9 +7,7 @@ COPY rootfs /
 
 ARG BASHIO_VERSION=0.13.1 
 
-ARG user=joplin
-RUN useradd --create-home --shell /bin/bash $user
-USER $user
+USER joplin
 RUN \
     ################
     # Install apps #
