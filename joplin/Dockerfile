@@ -17,7 +17,7 @@ ARG BASHIO_VERSION=0.13.1
 #         jq \
 #         curl
         
-RUN \
+#RUN \
     ##################
     # Install bashio #
     ##################
@@ -33,10 +33,10 @@ RUN \
     ###################
     \
     # Allow execution of run
-    chmod 777 /run.sh
+#    chmod 777 /run.sh
 
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/run.sh" ] 
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/run.sh" ] 
 
 ### LABELS
 ARG BUILD_ARCH
