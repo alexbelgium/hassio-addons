@@ -11,7 +11,8 @@ RUN \
     ################
     # Install apps #
     ################
-    apt-get update \
+    apt-get clean \
+    && apt-get update \
     && apt-get install -y \
         jq \
         curl \
@@ -25,9 +26,6 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio \
-    \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/* \
     \ 
     ###################
     # Configure image #
