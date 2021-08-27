@@ -34,15 +34,6 @@ RUN \
     # Configure image #
     ###################
     \
-    # Create directories
-    && mkdir -m 777 -p \
-    /data/photoprism/originals \
-    /data/photoprism/import \
-    /data/photoprism/storage/config \
-    /data/photoprism/backup \
-    /data/photoprism/storage/cache && \
-    chown -Rf photoprism:photoprism /data/photoprism && \
-    chmod -Rf a+rwx /data/photoprism \
     # Allow execution of run
     && chmod 777 /run.sh
 
