@@ -7,16 +7,19 @@ COPY rootfs /
 
 ARG BASHIO_VERSION=0.13.1 
 
-#RUN \
+ARG user=joplin
+RUN useradd --create-home --shell /bin/bash $user
+USER $user
+RUN \
     ################
     # Install apps #
     ################
-#     sudo apt-get clean \
-#     && sudo apt-get update \
-#     && sudo apt-get install -y \
-#         jq \
-#         curl
-        
+    sudo apt-get clean \
+    && sudo apt-get update \     
+    && sudo apt-get install -y \
+         jq \
+         curl
+   
 #RUN \
     ##################
     # Install bashio #
