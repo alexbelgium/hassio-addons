@@ -1,6 +1,6 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM florider89/joplin-server:latest
+FROM florider89/joplin-server:master
 
 # Copy root filesystem
 COPY rootfs / 
