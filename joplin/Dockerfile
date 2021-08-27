@@ -3,40 +3,41 @@ ARG BUILD_VERSION
 FROM florider89/joplin-server:master
 
 # Copy root filesystem
-COPY rootfs / 
+ARG user=joplin
+USER $user
+COPY --chown=$user:$user rootfs / 
 
 ARG BASHIO_VERSION=0.13.1 
 
-#USER joplin
 RUN \
     ################
     # Install apps #
     ################
-    rm /var/lib/dpkg/lock \
-    && apt-get autoremove \
-    && apt-get clean \
-    && apt-get autoclean \
-    && apt-get update \     
-    && apt-get install -y \
-         jq \
-         curl \
-    \
+    #rm /var/lib/dpkg/lock \
+    #&& apt-get autoremove \
+    ##&& apt-get clean \
+    #&& apt-get autoclean \
+    #&& apt-get update \     
+    #&& apt-get install -y \
+    #     jq \
+    #     curl \
+    #\
     ##################
     # Install bashio #
     ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \ 
+    #&& mkdir -p /tmp/bashio \
+    #&& curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    #| tar -xzf - --strip 1 -C /tmp/bashio \
+    #&& mv /tmp/bashio/lib /usr/lib/bashio \
+    #&& ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    #&& rm -rf /tmp/bashio \
+    #\ 
     ###################
     # Configure image #
     ###################
-    \
+    #\
     # Allow execution of run
-    && chmod +x /run.sh
+    chmod +x /run.sh
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/run.sh" ] 
