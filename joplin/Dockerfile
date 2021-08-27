@@ -7,15 +7,15 @@ COPY rootfs /
 
 ARG BASHIO_VERSION=0.13.1 
 
-RUN \
+#RUN \
     ################
     # Install apps #
     ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y \
-        jq \
-        curl
+ #   apt-get clean \
+#    && apt-get update \
+#    && apt-get install -y \
+#        jq \
+#        curl
         
 RUN \
     ##################
