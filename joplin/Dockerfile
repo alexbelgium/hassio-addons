@@ -2,35 +2,35 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM florider89/joplin-server:master
 
-# Copy root filesystem
-ARG user=joplin
-USER $user
-COPY --chown=$user:$user rootfs / 
-
-#ARG BASHIO_VERSION=0.13.1 
-
+ARG BASHIO_VERSION=0.13.1 
+USER root
 RUN \
     ################
     # Install apps #
     ################
-    npm install jq \
+    apt-get clean \
+    && apt-get update \     
+    && apt-get install -y \
+         jq \
+         curl \
     \
-    ###################
-    # Configure image #
-    ###################
-    # Allow execution of run
-    && chmod +x /run.sh
-    #
     ##################
     # Install bashio #
     ##################
-    #&& mkdir -p /tmp/bashio \
-    #&& curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    #| tar -xzf - --strip 1 -C /tmp/bashio \
-    #&& mv /tmp/bashio/lib /usr/lib/bashio \
-    #&& ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    #&& rm -rf /tmp/bashio \
-    #\ 
+    && mkdir -p /tmp/bashio \
+    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    | tar -xzf - --strip 1 -C /tmp/bashio \
+    && mv /tmp/bashio/lib /usr/lib/bashio \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    && rm -rf /tmp/bashio
+    ###################
+    # Configure image #
+    ###################
+
+# Copy root filesystem
+USER joplin
+COPY --chown=$user:$user rootfs /
+RUN chmod +x /run.sh
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/run.sh" ] 
