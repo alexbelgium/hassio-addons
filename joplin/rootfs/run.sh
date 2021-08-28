@@ -46,13 +46,13 @@ fi
 ##############
 
 # Configure app
-bashio::config.has_value 'DB_CLIENT' && export DB_CLIENT=$(bashio::config 'DB_CLIENT')
+bashio::config.has_value 'DB_CLIENT' && export DB_CLIENT=$(bashio::config 'DB_CLIENT') && bashio::log.info 'Custom database set'
 bashio::config.has_value 'POSTGRES_PASSWORD' && export POSTGRES_PASSWORD=$(bashio::config 'POSTGRES_PASSWORD')
 bashio::config.has_value 'POSTGRES_USER' && export POSTGRES_USER=$(bashio::config 'POSTGRES_USER')
 bashio::config.has_value 'POSTGRES_PORT' && export POSTGRES_PORT=$(bashio::config 'POSTGRES_PORT')
 bashio::config.has_value 'POSTGRES_HOST' && export POSTGRES_HOST=$(bashio::config 'POSTGRES_HOST')
 export APP_BASE_URL=$(bashio::config 'APP_BASE_URL')
 
-bashio::log.info 'Starting Joplin. Default user is "admin@localhost" with password "admin"'
+bashio::log.info 'Starting Joplin. Initial user is "admin@localhost" with password "admin"'
 
 npm --prefix packages/server start
