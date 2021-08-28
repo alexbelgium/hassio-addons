@@ -4,7 +4,6 @@ FROM florider89/joplin-server:master
 
 ARG BASHIO_VERSION=0.13.1 
 USER root
-VOLUME [ data] 
 RUN \
     ################
     # Install apps #
@@ -23,12 +22,10 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio
     ###################
     # Configure image #
     ###################
-    && chmod u+r /data/options.json
 
 # Copy root filesystem
 ARG user=joplin
