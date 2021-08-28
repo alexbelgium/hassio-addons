@@ -53,6 +53,6 @@ bashio::config.has_value 'POSTGRES_PORT' && export POSTGRES_PORT=$(bashio::confi
 bashio::config.has_value 'POSTGRES_HOST' && export POSTGRES_HOST=$(bashio::config 'POSTGRES_HOST')
 export APP_BASE_URL=$(bashio::config 'APP_BASE_URL')
 
-bashio::log.info 'Starting Joplin'
+bashio::log.info 'Starting Joplin. Default user is "admin@localhost" with password "admin"'
 
 npm --prefix packages/server start
