@@ -22,17 +22,9 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    ###################
-    # Configure image #
-    ###################
-    && touch /data/options.json \
-    && chmod u+r /data/options.json || true
+    && rm -rf /tmp/bashio
 
-# Copy root filesystem
-ARG user=joplin
-USER $user
-COPY --chown=$user:$user rootfs /
+COPY rootfs /
 RUN chmod +x /run.sh
 
 ENTRYPOINT [ "/usr/bin/env" ]
