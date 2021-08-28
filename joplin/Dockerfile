@@ -28,7 +28,8 @@ RUN \
     ###################
 
 # Copy root filesystem
-USER joplin
+ARG user=joplin
+USER $user
 COPY --chown=$user:$user rootfs /
 RUN chmod +x /run.sh
 
