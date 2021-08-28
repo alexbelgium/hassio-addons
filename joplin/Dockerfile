@@ -2,7 +2,7 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM florider89/joplin-server:master
 
-ARG BASHIO_VERSION=0.13.1 
+#ARG BASHIO_VERSION=0.13.1 
 USER root
 RUN \
     ################
@@ -12,17 +12,17 @@ RUN \
     && apt-get update \     
     && apt-get install -y \
          jq \
-         curl \
-    \
+         curl
+    #\
     ##################
     # Install bashio #
     ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    #&& mkdir -p /tmp/bashio \
+    #&& curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    #| tar -xzf - --strip 1 -C /tmp/bashio \
+    #&& mv /tmp/bashio/lib /usr/lib/bashio \
+    #&& ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    #&& rm -rf /tmp/bashio
     ###################
     # Configure image #
     ###################
