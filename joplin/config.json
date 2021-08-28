@@ -1,6 +1,6 @@
 {
   "name": "Joplin",
-  "version": "2.4.1",
+  "version": "12.3.1",
   "slug": "joplin",
   "description": "Self-hosted open source note-taking application",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -26,5 +26,10 @@
     "POSTGRES_PORT": "int?",
     "POSTGRES_HOST": "str?"
   },
-  "arch": ["aarch64", "amd64", "armhf", "armv7"]
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf",
+    "armv7"
+  ]
 }
