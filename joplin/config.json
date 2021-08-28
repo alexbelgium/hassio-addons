@@ -1,6 +1,7 @@
 {
   "name": "Joplin",
   "version": "12.3.1",
+  "upstream": "12.3.1",
   "slug": "joplin",
   "description": "Self-hosted open source note-taking application",
   "url": "https://github.com/alexbelgium/hassio-addons",
