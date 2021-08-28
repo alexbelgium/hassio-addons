@@ -32,7 +32,7 @@ USER joplin
 COPY --chown=$user:$user rootfs /
 RUN chmod +x /run.sh
 
-#ENTRYPOINT [ "/usr/bin/env" ]
+ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/run.sh" ] 
 
 ### LABELS
