@@ -1,6 +1,6 @@
 {
   "name": "Piwigo",
-  "version": "11.5.0-3",
+  "version": "11.5.0-4",
   "upstream": "11.5.0",
   "slug": "piwigo",
   "stage": "experimental",
