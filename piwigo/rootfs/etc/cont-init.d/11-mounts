@@ -1,8 +1,5 @@
 #!/usr/bin/with-contenv bashio
 
-mkdir -p /config/piwigo
-sed -i 's|/config|/config/piwigo|g' /etc/cont-init.d/40-install
-
 bashio::log.info 'Mounting external hdd...'
 
 # Mount local Share if configured and if Protection Mode is active
