@@ -1,6 +1,6 @@
 ARG BUILD_FROM
 ARG BUILD_UPSTREAM="2.1.24"
-FROM anthonyraymond/joal:latest
+FROM anthonyraymond/joal:$BUILD_UPSTREAM
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
