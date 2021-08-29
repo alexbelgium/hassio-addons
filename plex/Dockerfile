@@ -51,12 +51,8 @@ RUN \
     # FOLDERS #
     ###########
     \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/10-adduser \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/40-chown-files \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/45-plex-claim \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/60-plex-update \
-    && sed -i "s|/config|/data|g" /defaults/plexmediaserver \
-    && sed -i '2i cp -vnpr /config/* /data || true' /etc/cont-init.d/00-banner.sh
+    && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/data|g' \
+    && sed -i "s|/config|/data|g" /defaults/plexmediaserver
 
 
 # copy local files
