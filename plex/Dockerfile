@@ -55,7 +55,9 @@ RUN \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/40-chown-files \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/45-plex-claim \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/60-plex-update \
-    && sed -i "s|/config|/data|g" /defaults/plexmediaserver
+    && sed -i "s|/config|/data|g" /defaults/plexmediaserver \
+    && sed -i '2i cp -vnpr /config/* /data || true' /etc/cont-init.d/00-banner.sh
+
 
 # copy local files
 COPY root/ /
