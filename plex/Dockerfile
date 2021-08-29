@@ -52,7 +52,8 @@ RUN \
     ###########
     \
     && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/data|g' \
-    && sed -i "s|/config|/data|g" /defaults/plexmediaserver
+    && sed -i "s|/config|/data|g" /defaults/plexmediaserver \
+    && sed -i '2i cp -vnpr /config/* /data || true' /etc/cont-init.d/00-banner.sh
 
 
 # copy local files
