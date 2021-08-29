@@ -12,6 +12,7 @@
     "armhf"
   ],
   "ingress": true,
+  "ingress_stream": true,
   "ingress_port": 8099,
   "panel_icon": "mdi:file-search",
   "ports": {
