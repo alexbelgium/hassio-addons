@@ -49,7 +49,7 @@ RUN \
     ######################
     \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/45-plex-claim \
-    && sed -i '1ibashio::log.info "Claim code (valid 4 minutes, use only for first boot) : $PLEX_CLAIM"' /etc/cont-init.d/45-plex-claim
+    && sed -i '1ibashio::log.info "Claim code (valid 4 minutes, use only for first boot) : $PLEX_CLAIM"' /etc/cont-init.d/45-plex-claim \
     && sed -i '1iexport PLEX_CLAIM=$(bashio::config "claim")' /etc/cont-init.d/45-plex-claim
     ###########
     # FOLDERS #
