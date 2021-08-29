@@ -1,12 +1,12 @@
 ARG BUILD_FROM
-ARG BUILD_UPSTREAM="2.1.24"
+ARG BUILD_UPSTREAM="2.1.26"
 FROM anthonyraymond/joal:$BUILD_UPSTREAM
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.1.24"
+ARG BUILD_UPSTREAM="2.1.26"
 
 RUN \
 #Install bashio
