@@ -1,7 +1,7 @@
 {
   "name": "Joal",
-  "version": "2.1.26",
-  "upstream": "2.1.26",
+  "version": "2.1.24",
+  "upstream": "2.1.24",
   "slug": "joal",
   "description": "An open source command line RatioMaster with WebUI",
   "url": "https://github.com/alexbelgium/hassio-addons",
