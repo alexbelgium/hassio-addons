@@ -31,6 +31,17 @@ Webui can be found at <http://your-ip:port>
 APP_BASE_URL: This is the base public URL where the service will be running. For example, if you want it to run from https://example.com/joplin, this is what you should set the URL to. The base URL can include the port.
 ```
 
+To use an existing PostgresSQL server, set the following variables in the config:
+Make sure that the provided database and user exist as the server will not create them.
+```
+DB_CLIENT=pg
+POSTGRES_PASSWORD=joplin
+POSTGRES_DATABASE=joplin
+POSTGRES_USER=joplin
+POSTGRES_PORT=5432
+POSTGRES_HOST=localhost
+```
+
 ## Support
 
 Create an issue on github
