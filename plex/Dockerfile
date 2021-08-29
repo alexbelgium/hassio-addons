@@ -5,6 +5,9 @@ FROM ${BUILD_FROM}
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# copy local files
+COPY root/ /
+
 ARG BASHIO_VERSION=0.13.1
 RUN \
     ################
@@ -54,10 +57,6 @@ RUN \
     && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/data|g' \
     && sed -i "s|/config|/data|g" /defaults/plexmediaserver \
     && sed -i '2i cp -vnpr /config/* /data || true' /etc/cont-init.d/00-banner.sh
-
-
-# copy local files
-COPY root/ /
 
 ### LABELS
 ARG BUILD_ARCH
