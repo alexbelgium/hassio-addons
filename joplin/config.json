@@ -25,7 +25,8 @@
     "POSTGRES_PASSWORD": "str?",
     "POSTGRES_USER": "str?",
     "POSTGRES_PORT": "int?",
-    "POSTGRES_HOST": "str?"
+    "POSTGRES_HOST": "str?", 
+    "POSTGRES_DATABASE": "str?"
   },
   "arch": [
     "aarch64",
