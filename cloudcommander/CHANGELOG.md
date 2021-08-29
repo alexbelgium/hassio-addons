@@ -1,3 +1,4 @@
+- Allow uploads >16mb
 
 ## 15.9.8 (10-08-2021)
 - Update to latest version from coderaiser/cloudcmd
