@@ -1,4 +1,7 @@
 
+## 14.3.8.99202108291924-7418-9392ce436ubuntu20.04.1-ls152 (31-08-2021)
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ## 14.3.7.99202108230857-7410-fefce0337ubuntu20.04.1-ls151 (24-08-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
 
