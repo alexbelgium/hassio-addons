@@ -26,7 +26,15 @@
     "POSTGRES_USER": "str?",
     "POSTGRES_PORT": "int?",
     "POSTGRES_HOST": "str?",
-    "POSTGRES_DATABASE": "str?"
+    "POSTGRES_DATABASE": "str?",
+    "MAILER_ENABLED": "int?",
+    "MAILER_HOST": "str?",
+    "MAILER_PORT": "int?",
+    "MAILER_SECURE": "int?",
+    "MAILER_AUTH_USER": "str?",
+    "MAILER_AUTH_PASSWORD": "str?",
+    "MAILER_NOREPLY_NAME": "str?",
+    "MAILER_NOREPLY_EMAIL": "str?"
   },
   "arch": [
     "aarch64",
