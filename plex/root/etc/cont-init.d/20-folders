@@ -1,82 +1,13 @@
 #!/usr/bin/with-contenv bash
 
-if [ ! -d /plex ]; then
-  echo "Creating /plex"
-  mkdir -p /plex
-  chown -R abc:abc /plex
-fi
-
-if [ ! -d /share/storage/tv ]; then
-  echo "Creating /share/storage/tv"
-  mkdir -p /share/storage/tv
-  chown -R abc:abc /share/storage/tv
-fi
-
-if [ ! -d /share/storage/movies ]; then
-  echo "Creating /share/storage/movies"
-  mkdir -p /share/storage/movies
-  chown -R abc:abc /share/storage/movies
-fi
-
 if [ ! -d /share/plex ]; then
   echo "Creating /share/plex"
   mkdir -p /share/plex
   chown -R abc:abc /share/plex
 fi
 
-if [ ! -d /config/plex ]; then
-  echo "Creating /config/plex"
-  mkdir -p /config/plex
-  chown -R abc:abc /config/plex
-fi
-
-# links
-
-if [ ! -d /plex/cache ]; then
-  echo "Creating link for /plex/cache"
-  mkdir -p /share/plex/cache
-  chown -R abc:abc /share/plex/cache
-  ln -s /share/plex/cache /plex/cache
-fi
-
-if [ ! -d /plex/config ]; then
-  echo "Creating link for /plex/config"
-  mkdir -p /config/plex
-  chown -R abc:abc /config/plex
-  ln -s /config/plex /plex/config
-fi
-
-if [ ! -d /plex/data ]; then
-  echo "Creating link for /plex/data"
-  mkdir -p /share/plex/data
-  chown -R abc:abc /share/plex/data
-  ln -s /share/plex/data /plex/data
-fi
-
-if [ ! -d /plex/logs ]; then
-  echo "Creating link for /plex/logs"
-  mkdir -p /share/plex/logs
-  chown -R abc:abc /share/plex/logs
-  ln -s /share/plex/logs /plex/logs
-fi
-
-if [ ! -d /plex/metadata ]; then
-  echo "Creating link for /plex/metadata"
-  mkdir -p /share/plex/metadata
-  chown -R abc:abc /share/plex/metadata
-  ln -s /share/plex/metadata /plex/metadata
-fi
-
-if [ ! -d /plex/plugins ]; then
-  echo "Creating link for /plex/plugins"
-  mkdir -p /share/plex/plugins
-  chown -R abc:abc /share/plex/plugins
-  ln -s /share/plex/plugins /plex/plugins
-fi
-
-if [ ! -d /plex/root ]; then
-  echo "Creating link for /plex/root"
-  mkdir -p /share/plex/root
-  chown -R abc:abc /share/plex/root
-  ln -s /share/plex/root /plex/root
+if [ ! -d /share/plex/Library ]; then
+  echo "Creating /share/plex/Library"
+  mkdir -p /share/plex/Library
+  chown -R abc:abc /share/plex/Library
 fi
