@@ -1,3 +1,6 @@
+
+## 2.4.2 (31-08-2021)
+- Update to latest version from laurent22/joplin
 - Allow custom mailer options thanks @Poudenes
 - Allow connecting external db thanks @Poudenes
 
