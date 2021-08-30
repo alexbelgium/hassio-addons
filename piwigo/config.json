@@ -30,7 +30,8 @@
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]",
   "boot": "auto",
-  "environment": {},
+  "environment": {
+    "PWG_LOCAL_DIR": "/data"},
   "options": {
     "PUID": 1000,
     "PGID": 1000
