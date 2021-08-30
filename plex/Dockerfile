@@ -49,7 +49,7 @@ RUN \
     ######################
     \
     && sed -i 's/with-contenv bash/with-contenv bashio/g' /etc/cont-init.d/45-plex-claim \
-    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' /etc/cont-init.d/45-plex-claim
+    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' /etc/cont-init.d/45-plex-claim \
     ###########
     # FOLDERS #
     ########### 
