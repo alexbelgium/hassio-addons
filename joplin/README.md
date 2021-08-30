@@ -42,6 +42,19 @@ POSTGRES_PORT=5432
 POSTGRES_HOST=localhost
 ```
 
+To use email service, set the follow variables in the config:
+```
+1 = true, 0 = false
+MAILER_HOST=mail.example.com
+MAILER_PORT=995
+MAILER_SECURE=1
+MAILER_AUTH_USER=info@example.com
+MAILER_AUTH_PASSWORD=your_password
+MAILER_NOREPLY_NAME=from_name
+MAILER_NOREPLY_EMAIL=from_email
+MAILER_ENABLED=1
+```
+
 ## Support
 
 Create an issue on github
