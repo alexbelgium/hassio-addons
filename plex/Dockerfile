@@ -53,9 +53,9 @@ RUN \
     ###########
     # FOLDERS #
     ########### 
-#    && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/data|g' \
-#    && sed -i "s|/config|/data|g" /defaults/plexmediaserver
-#    && sed -i '2i cp -vnpr /config/* /data || true' /etc/cont-init.d/00-banner.sh
+    && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/share/plex|g' \
+    && sed -i "s|/config|/share/plex|g" /defaults/plexmediaserver
+    && sed -i '2i cp -vnpr /config/* /share/plex || true' /etc/cont-init.d/00-banner.sh
 
 ### LABELS
 ARG BUILD_ARCH
