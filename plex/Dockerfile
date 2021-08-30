@@ -48,13 +48,13 @@ RUN \
     # CORRECT PLEX CLAIM #
     ######################
     \
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/45-plex-claim \
-    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' /etc/cont-init.d/45-plex-claim
+    && sed -i 's/with-contenv bash/with-contenv bashio/g' /etc/cont-init.d/45-plex-claim \
+    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' /etc/cont-init.d/45-plex-claim \
     ###########
     # FOLDERS #
     ########### 
-#    && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/data|g' \
-#    && sed -i "s|/config|/data|g" /defaults/plexmediaserver \
+    && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/data|g' \
+    && sed -i "s|/config|/data|g" /defaults/plexmediaserver
 #    && sed -i '2i cp -vnpr /config/* /data || true' /etc/cont-init.d/00-banner.sh
 
 ### LABELS
