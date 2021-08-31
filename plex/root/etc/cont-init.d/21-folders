@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+
+##################
+# SYMLINK CONFIG #
+##################
+
+if [ /share/plex/Library ]; then
+  echo "Using existing Library folder"
+  rm /config/Library
+  ln -s /share/plex/Library /config
+fi
