@@ -1,13 +1,10 @@
 #!/usr/bin/with-contenv bash
 
 ##################
-# CORRECT CONFIG #
-##################
-sed -i "s|$conf['show_php_errors'] = E_ALL;|$conf['show_php_errors'] = E_ALL & ~E_NOTICE & ~E_DEPRECATED;|g" /gallery/local/config/config.inc.php && echo "config corrected for php error" || true
-
-##################
 # SYMLINK CONFIG #
 ##################
+
+#Create folders
 
 if [ ! -d /share/piwigo ]; then
   echo "Creating /share/piwigo"
@@ -17,26 +14,21 @@ else
   chown -R abc:abc /share/piwigo
 fi
 
-# If config doesn't exist, create it
 if [ ! -d /share/piwigo/config ]; then
-  echo "moving config folder"
-  mv /gallery/local/config /share/piwigo
-  ln -s /share/piwigo/config /gallery/local
-  echo "links done"
-else
-  rm /gallery/local/config
-  ln -s /share/piwigo/config /gallery/local
-  echo "Using existing config"
+  echo "Creating /share/piwigo/config
+  mkdir -p /share/piwigo/config
+  chown -R abc:abc /share/piwigo/config
 fi
 
-# If keys don't exist, create it
 if [ ! -d /share/piwigo/keys ]; then
-  echo "moving keys folder"
-  mv /config/keys /share/piwigo
-  ln -s /share/piwigo/keys /config
-  echo "links done"
-else
-  rm /config/keys
-  ln -s /share/piwigo/keys /config
-  echo "Using existing keys folder"
+  echo "Creating /share/piwigo/keys
+  mkdir -p /share/piwigo/keys
+  chown -R abc:abc /share/piwigo/keys
 fi
+
+# Create symlinks
+
+echo "Symlink config"
+ln -s /share/piwigo/config /gallery/local || mkdir /gallery/local/config & ln -s /share/piwigo/config /gallery/local
+echo "Symlink keys"
+ln -s /share/piwigo/config /config/keys || mkdir /config/keys  & ln -s /share/piwigo/config /config/keys
