@@ -18,11 +18,15 @@ if [ ! -d /share/piwigo/config ]; then
   echo "Creating /share/piwigo/config
   mkdir -p /share/piwigo/config
   chown -R abc:abc /share/piwigo/config
+else
+  chown -R abc:abc /share/piwigo/config
 fi
 
 if [ ! -d /share/piwigo/keys ]; then
   echo "Creating /share/piwigo/keys
   mkdir -p /share/piwigo/keys
+  chown -R abc:abc /share/piwigo/keys
+else
   chown -R abc:abc /share/piwigo/keys
 fi
 
