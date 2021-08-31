@@ -12,3 +12,12 @@ if [ ! -d /data/config ]; then
   ln -s /data/config /gallery/local
   echo "links done"
 fi
+
+# If keys don't exist, create it
+if [ ! -d /data/keys ]; then
+  echo "moving keys folder"
+  mv /config/keys /data
+  mkdir -p /config/keys
+  ln -s /data/keys /config
+  echo "links done"
+fi
