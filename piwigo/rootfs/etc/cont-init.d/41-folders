@@ -6,7 +6,9 @@
 
 # If config doesn't exist, create it
 if [ ! -d /data/config ]; then
+  echo "moving config folder"
   mv /gallery/local/config /data
   mkdir -p /gallery/local/config
   ln -s /data/config /gallery/local/config
+  echo "links done"
 fi
