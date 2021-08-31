@@ -9,4 +9,6 @@ if [ /share/plex/Library ]; then
   rm /config/Library
   ln -s /share/plex/Library /config
   chown -R abc:abc /share/plex
+else
+  chown -R abc:abc /share/plex
 fi
