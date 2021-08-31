@@ -23,6 +23,10 @@ if [ ! -d /share/piwigo/config ]; then
   mv /gallery/local/config /share/piwigo
   ln -s /share/piwigo/config /gallery/local
   echo "links done"
+else
+  rm /gallery/local/config
+  ln -s /share/piwigo/config /gallery/local
+  echo "links done"
 fi
 
 # If keys don't exist, create it
@@ -31,4 +35,7 @@ if [ ! -d /share/piwigo/keys ]; then
   mv /config/keys /share/piwigo
   ln -s /share/piwigo/keys /config
   echo "links done"
+else
+  rm /config/keys
+  ln -s /share/piwigo/keys /config
 fi
