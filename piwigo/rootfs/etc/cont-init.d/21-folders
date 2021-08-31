@@ -26,7 +26,7 @@ if [ ! -d /share/piwigo/config ]; then
 else
   rm /gallery/local/config
   ln -s /share/piwigo/config /gallery/local
-  echo "links done"
+  echo "Using existing config"
 fi
 
 # If keys don't exist, create it
@@ -38,4 +38,5 @@ if [ ! -d /share/piwigo/keys ]; then
 else
   rm /config/keys
   ln -s /share/piwigo/keys /config
+  echo "Using existing keys folder"
 fi
