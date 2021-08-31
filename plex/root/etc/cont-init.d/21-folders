@@ -10,5 +10,6 @@ if [ /share/plex/Library ]; then
   ln -s /share/plex/Library /config
   chown -R abc:abc /share/plex
 else
+  mkdir /share/plex
   chown -R abc:abc /share/plex
 fi
