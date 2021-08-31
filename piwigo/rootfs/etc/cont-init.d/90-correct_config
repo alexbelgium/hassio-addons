@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-##################
-# CORRECT CONFIG #
-##################
-sed -i "s|$conf['show_php_errors'] = E_ALL;|$conf['show_php_errors'] = E_ALL & ~E_NOTICE & ~E_DEPRECATED;|g" /gallery/local/config/config.inc.php && echo "config corrected for php error" || true
