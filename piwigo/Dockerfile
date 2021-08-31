@@ -29,13 +29,13 @@ RUN \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
     # Use subfolder in config
     # Protect files starting by config.
-    && files=$(grep -rl '/config.' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config.|/temptemp.|g' \
-    && files=$(grep -rl '/config' /defaults/*) && echo $files | xargs sed -i 's|/config|/share/piwigo|g' \
-    && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/share/piwigo|g' \
-    && files=$(grep -rl '/temptemp.' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/temptemp.|/config.|g'
+#    && files=$(grep -rl '/config.' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config.|/temptemp.|g' \
+#    && files=$(grep -rl '/config' /defaults/*) && echo $files | xargs sed -i 's|/config|/share/piwigo|g' \
+#    && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/share/piwigo|g' \
+#    && files=$(grep -rl '/temptemp.' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/temptemp.|/config.|g'
 #    && files=$(grep -rl "/config/" /etc/services.d/*) && echo $files | xargs sed -i "s|/config/|/share/piwigo|g"
 #    && files=$(grep -rl "    /config" /etc/cont-init.d/*) && echo $files | xargs sed -i "s=    /config=    /config/piwigo=g"
 #    && files=$(grep -rl '/data/config.inc.php' /defaults/*) && echo $files | xargs sed -i 's|/data/config.inc.php|/config/config.inc.php|g' || true \
