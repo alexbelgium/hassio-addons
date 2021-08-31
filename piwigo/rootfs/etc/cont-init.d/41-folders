@@ -20,7 +20,7 @@ if [ ! -d /share/piwigo/config ]; then
   ln -s /share/piwigo/config /gallery/local
   echo "links done"
 else
-  rm /gallery/local/config
+  rm -r /gallery/local/config
   ln -s /share/piwigo/config /gallery/local
   echo "Using existing config"
 fi
@@ -31,7 +31,7 @@ if [ ! -d /share/piwigo/keys ]; then
   ln -s /share/piwigo/keys /config
   echo "links done"
 else
-  rm /config/keys
+  rm -r /config/keys
   ln -s /share/piwigo/keys /config
   echo "Using existing keys folder"
 fi
