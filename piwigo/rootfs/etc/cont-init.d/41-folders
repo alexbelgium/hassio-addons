@@ -4,18 +4,26 @@
 # SYMLINK CONFIG #
 ##################
 
+if [ ! -d /share/piwigo ]; then
+  echo "Creating /share/piwigo"
+  mkdir -p /share/piwigo
+  chown -R abc:abc /share/piwigo
+else
+  chown -R abc:abc /share/piwigo
+fi
+
 # If config doesn't exist, create it
-if [ ! -d /data/config ]; then
+if [ ! -d /share/piwigo/config ]; then
   echo "moving config folder"
-  mv /gallery/local/config /data
-  ln -s /data/config /gallery/local
+  mv /gallery/local/config /share/piwigo
+  ln -s /share/piwigo/config /gallery/local
   echo "links done"
 fi
 
 # If keys don't exist, create it
-if [ ! -d /data/keys ]; then
+if [ ! -d /share/piwigo/keys ]; then
   echo "moving keys folder"
-  mv /config/keys /data
-  ln -s /data/keys /config
+  mv /config/keys /share/piwigo
+  ln -s /share/piwigo/keys /config
   echo "links done"
 fi
