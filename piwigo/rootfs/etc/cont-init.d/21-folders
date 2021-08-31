@@ -35,4 +35,4 @@ fi
 echo "Symlink config"
 ln -s /share/piwigo/config /gallery/local || mkdir /gallery/local/config & ln -s /share/piwigo/config /gallery/local
 echo "Symlink keys"
-ln -s /share/piwigo/config /config/keys || mkdir /config/keys  & ln -s /share/piwigo/config /config/keys
+ln -s /share/piwigo/config/keys /config || mkdir /config/keys  & ln -s /share/piwigo/config/keys /config
