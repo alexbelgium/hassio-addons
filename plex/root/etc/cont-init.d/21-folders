@@ -4,12 +4,11 @@
 # SYMLINK CONFIG #
 ##################
 
-if [ /share/plex/Library ]; then
-  echo "Using existing Library folder"
-  rm /config/Library
+if [ ! -d /share/plex ]; then
+  mkdir /share/plex || true
+  echo "Copying Library folder"
+  mv /config/Library /share/plex
   ln -s /share/plex/Library /config
-  chown -R abc:abc /share/plex
 else
-  mkdir /share/plex
   chown -R abc:abc /share/plex
 fi
