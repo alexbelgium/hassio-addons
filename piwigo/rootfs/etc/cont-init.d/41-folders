@@ -39,5 +39,5 @@ fi
 ##################
 # CORRECT CONFIG #
 ##################
-sed -i "s|E_ALL|''|g" /gallery/local/config/config.inc.php && echo "config corrected for php error" || true
+sed -i 's|E_ALL|""|g' /share/piwigo/config/config.inc.php && echo "config corrected for php error" || true
 
