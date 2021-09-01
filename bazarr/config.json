@@ -1,7 +1,7 @@
 {
   "name": "Bazarr NAS",
-  "version": "0.9.7",
-  "upstream": "0.9.7",
+  "version": "0.9.8",
+  "upstream": "0.9.8",
   "slug": "bazarr_nas",
   "description": "Companion application to Sonarr and Radarr to download subtitles",
   "url": "https://github.com/alexbelgium/hassio-addons",
