@@ -4,7 +4,9 @@
 
 ## About
 
-Joplin is a free, open source note taking and to-do application, which can handle a large number of notes organised into notebooks.
+Joplin Server is a free, open source note taking and to-do Sync application, which can handle a large number of notes organised into notebooks.
+With this server you can sync all your notes over all your devices.
+
 Thanks to @poudenes for helping with the development! 
 
 Project homepage : https://github.com/laurent22/joplin
@@ -41,7 +43,6 @@ POSTGRES_USER=joplin
 POSTGRES_PORT=5432
 POSTGRES_HOST=localhost
 ```
-
 To use email service, set the follow variables in the config:
 ```
 1 = true, 0 = false
