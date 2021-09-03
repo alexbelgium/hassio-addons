@@ -49,7 +49,8 @@ RUN \
     ######################
     \
     && sed -i 's/with-contenv bash/with-contenv bashio/g' /etc/cont-init.d/45-plex-claim \
-    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' /etc/cont-init.d/45-plex-claim
+    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' /etc/cont-init.d/45-plex-claim \
+    && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true
     ###########
     # FOLDERS #
     ########### 
