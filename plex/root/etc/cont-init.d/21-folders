@@ -12,4 +12,6 @@ if [ ! -d "/share/plex/Plex Media Server" ]; then
   ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support/Plex Media Server"
 else
   chown -R abc:abc /share/plex
+  rm -r "/config/Library/Application Support/Plex Media Server"
+  ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support/Plex Media Server"
 fi
