@@ -5,13 +5,9 @@
 ##################
 
 if [ ! -d "/share/plex/Plex Media Server" ]; then
-  mkdir "/share/plex" || true
-  mkdir "/share/plex/Plex Media Server" || true
-  echo "Copying Library folder"
-  mv "/config/Library/Application Support/Plex Media Server" "/share/plex"
-  ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support/Plex Media Server"
-else
-  chown -R abc:abc /share/plex
-  rm -r "/config/Library/Application Support/Plex Media Server"
-  ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support/Plex Media Server"
+mkdir -p "/share/plex/Plex Media Server"
 fi
+
+chown -R abc:abc /share/plex
+mkdir -p "/config/Library/Application Support/Plex Media Server" 
+ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support"
