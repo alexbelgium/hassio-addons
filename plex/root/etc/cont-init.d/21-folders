@@ -9,5 +9,5 @@ mkdir -p "/share/plex/Plex Media Server"
 fi
 
 chown -R abc:abc /share/plex
-mkdir -p "/config/Library/Application Support/Plex Media Server" 
+rm -r "/config/Library/Application Support/Plex Media Server"
 ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support"
