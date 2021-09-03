@@ -8,6 +8,7 @@ if [ ! -d "/share/plex/Plex Media Server" ]; then
 mkdir -p "/share/plex/Plex Media Server"
 fi
 
+echo "Database stored in /share/plex"
 chown -R abc:abc /share/plex
 rm -r "/config/Library/Application Support/Plex Media Server"
 ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support"
