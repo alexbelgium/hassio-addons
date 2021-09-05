@@ -1,4 +1,5 @@
 - Allow uploads >16mb
+- Allow local mount in protected mode 
 
 ## 2.17.2 (28-08-2021)
 - Update to latest version from hurlenko/filebrowser-docker
