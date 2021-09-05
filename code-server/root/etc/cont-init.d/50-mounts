@@ -17,7 +17,7 @@ if bashio::config.has_value 'localdisks'; then
             mount /dev/$disk /share/$disk && \
             bashio::log.info "Success!"   
     done || \
-    bashio::log.warning "Protection mode is ON. Unable to mount local drives!"
+    bashio::log.warning "Unable to mount local drives!"
 fi
 
 # Mount CIFS Share if configured and if Protection Mode is active
