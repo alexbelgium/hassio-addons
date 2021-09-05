@@ -26,7 +26,12 @@
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
-  "full_access": true,
+  "devices":[
+    "/dev/sda1",
+    "/dev/sda2",
+    "/dev/sdb1",
+    "/dev/sdb2"
+  ],
   "webui": "http://[HOST]:[PORT:8443]",
   "boot": "auto",
   "environment": {},
