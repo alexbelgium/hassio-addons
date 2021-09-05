@@ -8,7 +8,7 @@ bashio::log.info 'Mounting external hdd...'
 
 # Mount local Share if configured and if Protection Mode is active
 if bashio::config.has_value 'localdisks'; then
-    bashio::require.unprotected
+    #bashio::require.unprotected
     MOREDISKS=$(bashio::config 'localdisks')
     bashio::log.info "Local Disks mounting.. ${MOREDISKS}" && \
     for disk in ${MOREDISKS//,/ }  # Separate comma separated values
