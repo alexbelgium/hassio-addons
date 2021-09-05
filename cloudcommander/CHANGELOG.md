@@ -1,4 +1,5 @@
 - Allow uploads >16mb
+- Allow mounting local drives in protected mode
 
 ## 15.9.8 (10-08-2021)
 - Update to latest version from coderaiser/cloudcmd
