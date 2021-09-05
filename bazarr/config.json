@@ -46,7 +46,7 @@
     "cifsusername": "str?",
     "cifspassword": "str?"
   },
-  "snapshot_exclude": [
+  "backup_exclude": [
     "**/Backups/*",
     "**/logs/*",
     "**/MediaCover/*"
