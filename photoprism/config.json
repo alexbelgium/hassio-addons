@@ -10,12 +10,20 @@
     "2342/tcp": 2342
   },
   "apparmor": "true",
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "ports_description": {
     "2342/tcp": "Web interface"
   },
   "map": ["media:rw", "share:rw"],
-  "full_access": true,
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
+  "devices":[
+    "/dev/sda1",
+    "/dev/sda2",
+    "/dev/sdb1",
+    "/dev/sdb2"
+  ],
   "environment": {
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password"
   },
