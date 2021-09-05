@@ -43,7 +43,6 @@
     "/dev/sdb1",
     "/dev/sdb2"
   ],
-  "full_access": true,
   "options": {
     "PUID": 0,
     "PGID": 0
