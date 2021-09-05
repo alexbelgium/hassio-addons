@@ -37,10 +37,11 @@
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
-  "devices": [
-    "/dev/ttyUSB0",
-    "/dev/*",
-    "/dev/sda1"
+  "devices":[
+    "/dev/sda1",
+    "/dev/sda2",
+    "/dev/sdb1",
+    "/dev/sdb2"
   ],
   "full_access": true,
   "options": {
