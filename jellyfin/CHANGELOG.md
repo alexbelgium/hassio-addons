@@ -1,4 +1,7 @@
 
+## 10.7.7-1-ls130 (06-09-2021)
+- Update to latest version from linuxserver/docker-jellyfin
+
 ## 10.7.6-1-ls118 (19-06-2021)
 - Update to latest version from linuxserver/docker-jellyfin
 
