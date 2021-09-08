@@ -4,10 +4,6 @@
 # BANNER #
 ##########
 
-bashio::log.info $(bashio::addon.ingress_url)
-bashio::log.info $(bashio::core.port)
-bashio::log.info $(bashio::supervisor.ip_address)
-
 if bashio::supervisor.ping; then
     bashio::log.blue \
         '-----------------------------------------------------------'
