@@ -1,9 +1,5 @@
 #!/usr/bin/with-contenv bashio
 
-bashio::log.info $(bashio::addon.ingress_url)
-bashio::log.info $(bashio::core.port)
-bashio::log.info $(bashio::supervisor.ip_address)
-
 ##########
 # BANNER #
 ##########
