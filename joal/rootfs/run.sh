@@ -39,6 +39,20 @@ if bashio::supervisor.ping; then
         '-----------------------------------------------------------'
 fi
 
+
+#####################
+# AUTOMATIC INGRESS #
+#####################
+
+if bashio::config.has_value 'local_ip_port'; then
+  INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::addon.ingress_url)
+  bashio::log.info $INGRESSURL
+  sed -i "s|/ui/|/ui?ui_credentials=%7B%22host%22%3A%22${INGRESSURL}%22%2C%22port%22%3A%228123%22%2C%22pathPrefix%22%3A%22${UIPATH}%22%2C%22secretToken%22%3A%22${TOKEN}%22%7D|g" /etc/nginx/servers/ingress.conf
+  bashio::log.info "Ingress url set. Auto connection activated."
+else
+  bashio::log.info "Ingress url not set. Connection must be done manually."
+fi
+
 #################
 # NGINX SETTING #
 #################
@@ -101,19 +115,6 @@ fi
 
 # Refresh symlink
 ln -sf /config/joal/config.json /data/joal/config.json
-
-#####################
-# AUTOMATIC INGRESS #
-#####################
-
-if bashio::config.has_value 'local_ip_port'; then
-  INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::addon.ingress_url)
-  bashio::log.info $INGRESSURL
-  sed -i "s|/ui/|/ui?ui_credentials=%7B%22host%22%3A%22${INGRESSURL}%22%2C%22port%22%3A%228123%22%2C%22pathPrefix%22%3A%22${UIPATH}%22%2C%22secretToken%22%3A%22${TOKEN}%22%7D|g" /etc/nginx/servers/ingress.conf
-  bashio::log.info "Ingress url set. Auto connection activated."
-else
-  bashio::log.info "Ingress url not set. Connection must be done manually."
-fi
 
 ###############
 # LAUNCH APPS #
