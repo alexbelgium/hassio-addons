@@ -39,38 +39,6 @@ if bashio::supervisor.ping; then
         '-----------------------------------------------------------'
 fi
 
-#################
-# NGINX SETTING #
-#################
-
-declare port
-declare certfile
-declare ingress_interface
-declare ingress_port
-declare keyfile
-# Set path
-UIPATH=$(bashio::config 'ui_path')
-
-port=$(bashio::addon.port 80)
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
-
-# AUTOMATIC INGRESS
-if bashio::config.has_value 'local_ip_port'; then
-  INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::addon.ingress_url)
-  bashio::log.info $INGRESSURL
-  sed -i "s|/ui/|/ui?ui_credentials=%7B%22host%22%3A%22${INGRESSURL}%22%2C%22port%22%3A%228123%22%2C%22pathPrefix%22%3A%22${UIPATH}%22%2C%22secretToken%22%3A%22${TOKEN}%22%7D|g" /etc/nginx/servers/ingress.conf
-  bashio::log.info "Ingress url set. Auto connection activated."
-else
-  bashio::log.info "Ingress url not set. Connection must be done manually."
-fi 
-
-# NGINX
-sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%path%%/${UIPATH}/g" /etc/nginx/servers/ingress.conf
-mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
-
 ################
 # JOAL SETTING #
 ################
@@ -113,6 +81,38 @@ fi
 
 # Refresh symlink
 ln -sf /config/joal/config.json /data/joal/config.json
+
+#################
+# NGINX SETTING #
+#################
+
+declare port
+declare certfile
+declare ingress_interface
+declare ingress_port
+declare keyfile
+# Set path
+UIPATH=$(bashio::config 'ui_path')
+
+port=$(bashio::addon.port 80)
+ingress_port=$(bashio::addon.ingress_port)
+ingress_interface=$(bashio::addon.ip_address)
+
+# AUTOMATIC INGRESS
+if bashio::config.has_value 'local_ip_port'; then
+  INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::addon.ingress_url)
+  bashio::log.info $INGRESSURL
+  sed -i "s|/ui/|/ui?ui_credentials=%7B%22host%22%3A%22${INGRESSURL}%22%2C%22port%22%3A%228123%22%2C%22pathPrefix%22%3A%22${UIPATH}%22%2C%22secretToken%22%3A%22${TOKEN}%22%7D|g" /etc/nginx/servers/ingress.conf
+  bashio::log.info "Ingress url set. Auto connection activated."
+else
+  bashio::log.info "Ingress url not set. Connection must be done manually."
+fi 
+
+# NGINX
+sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
+sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
+sed -i "s/%%path%%/${UIPATH}/g" /etc/nginx/servers/ingress.conf
+mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 ###############
 # LAUNCH APPS #
