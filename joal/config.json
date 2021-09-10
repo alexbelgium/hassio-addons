@@ -39,7 +39,6 @@
     "ui_path": "str",
     "secret_token": "str",
     "run_duration": "str?",
-    "verbose": "bool?",
-    "local_ip_port": "str?"
+    "verbose": "bool?"
   }
 }
