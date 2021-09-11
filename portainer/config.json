@@ -1,6 +1,6 @@
 {
   "name": "Portainer",
-  "version": "2.6.3",
+  "version": "2.6.3-2",
   "upstream": "2.6.3",
   "slug": "portainer",
   "description": "Manage your Docker environment with ease",
