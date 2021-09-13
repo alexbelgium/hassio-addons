@@ -9,6 +9,15 @@ cd /config/qBittorrent/
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$((LINE + 1))
 
+###########
+# TIMEOUT #
+###########
+
+if bashio::config.has_value 'run_duration'; then
+  rm /etc/services.d/qbittorrent/run
+  mv /etc/services.d/qbittorrent/timer /etc/services.d/qbittorrent/run
+fi 
+
 ##################
 # Default folder #
 ##################
