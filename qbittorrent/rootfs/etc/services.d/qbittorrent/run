@@ -3,23 +3,7 @@
 WEBUI_PORT=${WEBUI_PORT:-8080}
 
 if bashio::config.true 'openvpn_enabled'; then
-    exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh \
-    & bashio::log.info "Started" 
+    exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh
 else
-    exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" \
-    & bashio::log.info "Started"  
+    exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"
 fi
-
-###########
-# TIMEOUT #
-###########
-
-if bashio::config.has_value 'run_duration'; then
-  RUNTIME=$(bashio::config 'run_duration')
-  bashio::log.info "Addon will stop after $RUNTIME"
-  sleep $RUNTIME && \
-  bashio::log.info "Timeout achieved, addon will stop !" && \
-  exit 0
-else
-  bashio::log.info "run_duration option not defined, addon will run continuously"
-fi 
