@@ -7,3 +7,17 @@ if bashio::config.true 'openvpn_enabled'; then
 else
     exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"
 fi
+
+###########
+# TIMEOUT #
+###########
+
+if bashio::config.has_value 'run_duration'; then
+  RUNTIME=$(bashio::config 'run_duration')
+  bashio::log.info "Addon will stop after $RUNTIME"
+  sleep $RUNTIME && \
+  bashio::log.info "Timeout achieved, addon will stop !" && \
+  exit 0
+else
+  bashio::log.info "run_duration option not defined, addon will run continuously"
+fi 
