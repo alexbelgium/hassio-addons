@@ -56,6 +56,7 @@ openvpn_alternative_mode: true/false # if enabled, will tunnel only qbittorrent 
 openvpn_config": For example "config.ovpn" # name of the file located in /config/openvpn. 
 openvpn_username": USERNAME
 openvpn_password: YOURPASSWORD
+run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
 ```
 # Integration with HA
 Use the [qBittorrent integration](https://www.home-assistant.io/integrations/qbittorrent/)
