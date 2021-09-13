@@ -1,3 +1,4 @@
+- Added auto stop 
 
 ## 14.3.8.99202109100310-7422-338d9a084ubuntu20.04.1-ls154 (10-09-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
