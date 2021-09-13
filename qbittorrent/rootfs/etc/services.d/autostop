@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bashio
+
+###########
+# TIMEOUT #
+###########
+
+if bashio::config.has_value 'run_duration'; then
+  RUNTIME=$(bashio::config 'run_duration')
+  bashio::log.info "Addon will stop after $RUNTIME"
+  sleep $RUNTIME && \
+  bashio::log.info "Timeout achieved, addon will stop !" && \
+  if -n { s6-test $# -ne 0 }
+  if -n { s6-test ${1} -eq 256 }
+  s6-svscanctl -t /var/run/s6/services
+else
+  bashio::log.info "run_duration option not defined, addon will run continuously"
+fi 
