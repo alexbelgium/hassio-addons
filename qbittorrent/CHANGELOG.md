@@ -1,4 +1,4 @@
-- Added auto stop 
+- Added auto stop, just set the run_duration optional setting
 
 ## 14.3.8.99202109100310-7422-338d9a084ubuntu20.04.1-ls154 (10-09-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
