@@ -83,7 +83,7 @@
     "openvpn_config": "str?",
     "openvpn_username": "str?",
     "openvpn_password": "str?",
-    "run_duration": "match([0-9]+[d|h|m|s]/i)?",
+    "run_duration": "str?",
     "TZ": "str?"
   }
 }
