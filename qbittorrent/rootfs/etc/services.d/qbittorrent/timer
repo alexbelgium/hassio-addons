@@ -5,13 +5,13 @@ RUNTIME=$(bashio::config 'run_duration')
 
 if bashio::config.true 'openvpn_enabled'; then
     exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh \
-    & bashio::log.info "Addon will stop after $RUNTIME" && \
+    & bashio::log.warning "The run_duration option is set. The addon will stop after $RUNTIME" && \
     sleep $RUNTIME && \
     bashio::log.info "Timeout achieved, addon will stop !" && \
     bashio::addon.stop
 else
     exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" \
-    & bashio::log.info "Addon will stop after $RUNTIME" && \
+    & bashio::log.warning "The run_duration option is set. The addon will stop after $RUNTIME" && \
     sleep $RUNTIME && \
     bashio::log.info "Timeout achieved, addon will stop !" && \
     bashio::addon.stop
