@@ -5,14 +5,12 @@ RUNTIME=$(bashio::config 'run_duration')
 
 if bashio::config.true 'openvpn_enabled'; then
     exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh \
-    & bashio::log.warning "The run_duration option is set. The addon will stop after $RUNTIME" && \
-    sleep $RUNTIME && \
-    bashio::log.info "Timeout achieved, addon will stop !" && \
-    bashio::addon.stop || { bashio::log.fatal "run_duration format is not correct. Use 5d or 5h or 5m for example" ; bashio::addon.stop } 
+    & bashio::log.warning "The run_duration option is set. The addon will stop after $RUNTIME"
 else
     exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" \
-    & bashio::log.warning "The run_duration option is set. The addon will stop after $RUNTIME" && \
-    sleep $RUNTIME && \
-    bashio::log.info "Timeout achieved, addon will stop !" && \
-    bashio::addon.stop || { bashio::log.fatal "run_duration format is not correct. Use 5d or 5h or 5m for example" ; bashio::addon.stop } 
-fi
+    & bashio::log.warning "The run_duration option is set. The addon will stop after $RUNTIME"
+fi 
+
+sleep $RUNTIME || bashio::log.fatal "run_duration format is not correct. Use 5d or 5h or 5m for example"
+bashio::log.info "Timeout achieved, addon will stop !" 
+bashio::addon.stop
