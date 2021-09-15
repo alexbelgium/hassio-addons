@@ -1,4 +1,7 @@
 
+## 3.12.0 (16-09-2021)
+- Update to latest version from linuxserver/docker-code-server
+
 ## 3.11.1 (12-08-2021)
 - Update to latest version from linuxserver/docker-code-server
 
