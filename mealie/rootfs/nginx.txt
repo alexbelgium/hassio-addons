@@ -39,6 +39,17 @@ if bashio::supervisor.ping; then
         '-----------------------------------------------------------'
 fi
 
+################
+# SSL CONFIG   #
+################
+
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+  bashio::log.info "ssl enabled"
+  sed -i "s/:80/:443/g" /app/Caddyfile
+  sed -i "s/auto_https off/auto_https on/g" /app/Caddyfile 
+fi
+
 ###########
 # Ingress #
 ###########
