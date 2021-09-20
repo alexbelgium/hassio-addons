@@ -28,7 +28,7 @@
     "ssl": "bool?",
     "certfile": "str?",
     "keyfile": "str?"
-    "},
+    },
   "arch": [
     "aarch64",
     "amd64",
