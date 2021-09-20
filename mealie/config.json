@@ -24,7 +24,11 @@
     "DB_ENGINE": "sqlite"
   },
   "options": {},
-  "schema": {"ssl": "bool"},
+  "schema": {
+    "ssl": "bool?",
+    "certfile": "str?",
+    "keyfile": "str?"
+    "},
   "arch": [
     "aarch64",
     "amd64",
