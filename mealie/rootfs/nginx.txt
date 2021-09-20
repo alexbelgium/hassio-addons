@@ -43,7 +43,6 @@ fi
 # SSL CONFIG   #
 ################
 
-bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
   bashio::log.info "ssl enabled"
   sed -i "s/:80/:443/g" /app/Caddyfile
