@@ -2,8 +2,6 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
-COPY rootfs /
-
 ARG BASHIO_VERSION=0.13.1
 
 RUN \
@@ -20,13 +18,16 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio 
+
+COPY rootfs / 
+
+RUN \
     ###############
     # Adapt image #
     ###############
     # Correct data path
-    && grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g' \
+    grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g' \
     # Add custom instructions to run.sh
     && sed -i '1d' /app/mealie/run.sh \ 
     && cat /app/mealie/run.sh >> /run.txt \
