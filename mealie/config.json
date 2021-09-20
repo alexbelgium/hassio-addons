@@ -18,7 +18,8 @@
     "80/tcp": "Web interface"
   },
   "map": [
-    "share:rw"
+    "share:rw", 
+    "ssl:r"
   ],
   "environment": {
     "DB_ENGINE": "sqlite"
