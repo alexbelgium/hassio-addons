@@ -42,14 +42,10 @@ fi
 #################
 # NGINX SETTING #
 #################
-
     bashio::config.require.ssl
     if bashio::config.true 'ssl'; then
         bashio::log.info "Configuring ssl" 
-        sed -i "s/default_server/default_server ssl/g" /etc/nginx/servers/ingress.conf
-        sed '3 i include /etc/nginx/includes/ssl_params.conf;' /etc/nginx/servers/ingress.conf 
-        sed "3 i ssl_certificate $(bashio::config 'certfile');" /etc/nginx/servers/ingress.conf 
-        sed "3 i ssl_certificate_key $(bashio::config 'keyfile');" /etc/nginx/servers/ingress.conf 
+        sed "3 i tls $(bashio::config 'certfile') $(bashio::config 'keyfile')" /etc/nginx/servers/ingress.conf 
     fi
 
 
