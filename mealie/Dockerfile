@@ -33,6 +33,7 @@ RUN \
     && cat /nginx.txt > /app/mealie/run.sh \
     && chmod +x /app/mealie/run.sh \
     # Add custom caddy instructions for ingress
+    && sed -i '$ d' /app/Caddyfile \
     && cat /caddy.txt >> /app/Caddyfile
 
 VOLUME [ "/data" ]
