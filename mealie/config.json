@@ -19,7 +19,7 @@
   },
   "map": [
     "share:rw", 
-    "ssl:r"
+    "ssl:rw"
   ],
   "environment": {
     "DB_ENGINE": "sqlite"
