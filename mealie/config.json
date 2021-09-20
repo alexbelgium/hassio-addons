@@ -5,7 +5,7 @@
   "slug": "mealie",
   "description": "Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "webui": "http://[HOST]:[PORT:9925]",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:9925]",
   "startup": "services",
   "boot": "auto",
   "ingress": false,
@@ -24,7 +24,7 @@
     "DB_ENGINE": "sqlite"
   },
   "options": {},
-  "schema": {},
+  "schema": {"ssl": "bool"},
   "arch": [
     "aarch64",
     "amd64",
