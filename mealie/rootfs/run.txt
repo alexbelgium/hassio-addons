@@ -45,7 +45,7 @@ fi
 
 if bashio::config.true 'ssl'; then
   bashio::log.info "ssl enabled"
-  sed -i "s/auto_https off/auto_https on/g" /app/Caddyfile 
+  sed -i "s/auto_https off//g" /app/Caddyfile 
 fi
 
 ###########
