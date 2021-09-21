@@ -55,11 +55,5 @@ if bashio::config.true 'ssl'; then
    bashio::log.info "Configuring ssl"
    CERTFILE=$(bashio::config 'certfile')
    KEYFILE=$(bashio::config 'keyfile')
-   
-   #Check if files exist
-   [ ! -f /ssl/$CERTFILE ] && bashio::log.fatal "Certificate /ssl/$CERTFILE not found" && exit 1
-   [ ! -f /ssl/$KEYFILE ] && bashio::log.fatal "Certificate /ssl/$KEYFILE not found" && exit 1
-   
-   #Modifies caddyfile for tls
    sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/Caddyfile 
 fi
