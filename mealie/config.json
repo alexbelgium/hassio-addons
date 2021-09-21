@@ -23,7 +23,7 @@
   ],
   "environment": {
     "DB_ENGINE": "sqlite",
-    "APP_PORT": 9925
+    "APP_PORT": "9925"
   },
   "options": {},
   "schema": {
