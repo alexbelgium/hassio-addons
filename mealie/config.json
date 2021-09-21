@@ -27,8 +27,8 @@
   "options": {},
   "schema": {
     "ssl": "bool?",
-    "certfile": "match(^/ssl/.+)?",
-    "keyfile": "match(^/ssl/.+)?"
+    "certfile": "str?",
+    "keyfile": "str?"
     },
   "arch": [
     "aarch64",
