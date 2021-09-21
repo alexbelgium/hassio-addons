@@ -45,7 +45,7 @@ fi
     bashio::config.require.ssl
     if bashio::config.true 'ssl'; then
         bashio::log.info "Configuring ssl" 
-        sed "7 i tls /ssl/$(bashio::config 'certfile') /ssl/$(bashio::config 'keyfile')" /etc/nginx/servers/ingress.conf 
+        sed "7 i tls /ssl/$(bashio::config 'certfile') /ssl/$(bashio::config 'keyfile')" /app/Caddyfile 
     fi
 
 
