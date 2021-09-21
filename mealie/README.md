@@ -27,6 +27,12 @@ comparison to installing any other Hass.io add-on.
   - Username: changeme@email.com
   - Password: MyPassword
 
+```yaml
+ssl: true/false
+certfile: fullchain.pem #ssl certificate, must be located in /ssl
+keyfile: privkey.pem #sslkeyfile, must be located in /ssl
+```
+
 ## Support
 
 If you have in issue with your installation, please be sure to checkout github.
