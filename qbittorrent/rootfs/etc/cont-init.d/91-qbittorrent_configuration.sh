@@ -59,11 +59,7 @@ if bashio::config.true 'ssl'; then
   #set variables
   CERTFILE=$(bashio::config 'certfile')
   KEYFILE=$(bashio::config 'keyfile')
-  
-  #Check if files exist
-  [ ! -f /ssl/$CERTFILE ] && bashio::log.fatal "Certificate /ssl/$CERTFILE not found" && exit 1
-  [ ! -f /ssl/$KEYFILE ] && bashio::log.fatal "Certificate /ssl/$KEYFILE not found" && exit 1
-  
+   
   #Modify configuration
   sed -i "$LINE i\WebUI\\\HTTPS\\\Enabled=True" qBittorrent.conf
   sed -i "$LINE i\WebUI\\\HTTPS\\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
