@@ -12,7 +12,7 @@
   "ingress_port": 8099,
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
-    "80/tcp": 9925
+    "9925/tcp": 9925
   },
   "ports_description": {
     "80/tcp": "Web interface"
@@ -22,7 +22,8 @@
     "ssl:rw"
   ],
   "environment": {
-    "DB_ENGINE": "sqlite"
+    "DB_ENGINE": "sqlite",
+    "APP_PORT": 9925
   },
   "options": {},
   "schema": {
