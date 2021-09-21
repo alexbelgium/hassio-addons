@@ -42,14 +42,16 @@ fi
 #################
 # NGINX SETTING #
 #################
-    bashio::config.require.ssl
-    if bashio::config.true 'ssl'; then
-        bashio::log.info "Configuring ssl"
-        CERTFILE=$(bashio::config 'certfile')
-        KEYFILE=$(bashio::config 'keyfile')
-        sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/Caddyfile 
-    fi
 
+sed -i "s/80/9925/g" /app/Caddyfile
+
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+   bashio::log.info "Configuring ssl"
+   CERTFILE=$(bashio::config 'certfile')
+   KEYFILE=$(bashio::config 'keyfile')
+   sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/Caddyfile 
+fi
 
 ###########
 # Ingress #
