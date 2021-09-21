@@ -44,8 +44,10 @@ fi
 #################
     bashio::config.require.ssl
     if bashio::config.true 'ssl'; then
-        bashio::log.info "Configuring ssl" 
-        sed "7 i tls /ssl/$(bashio::config 'certfile') /ssl/$(bashio::config 'keyfile')" /app/Caddyfile 
+        bashio::log.info "Configuring ssl"
+        CERTFILE=$(bashio::config 'certfile')
+        KEYFILE=$(bashio::config 'keyfile')
+        sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/Caddyfile 
     fi
 
 
