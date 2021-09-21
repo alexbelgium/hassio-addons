@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv bashio
+/defaults/nextcloud-perms.sh
+
+   #Check if files exist
+if bashio::config.has_value 'certfile'; then
+   bashio::log.info "Using referenced ssl certificates..."
+   CERTFILE=$(bashio::config 'certfile')
+   KEYFILE=$(bashio::config 'keyfile')
+
+   #Check if files exist
+   [ ! -f /ssl/$CERTFILE ] && bashio::log.fatal "Certificate /ssl/$CERTFILE not found" && exit 1
+   [ ! -f /ssl/$KEYFILE ] && bashio::log.fatal "Certificate /ssl/$KEYFILE not found" && exit 1
+
+   #Sets certificates
+   sed -i "s|nextcloud/keys/cert.crt|$CERTFILE|g" /defaults/default
+   sed -i "s|nextcloud/keys/cert.key|$KEYFILE|g" /defaults/default
+else
+   bashio::log.info "No ssl certificates set. Auto generating ones."
+   SUBJECT="/C=US/ST=CA/L=Carlsbad/O=Linuxserver.io/OU=LSIO Server/CN=*"
+   if [[ -f /ssl/nextcloud/keys/cert.key && -f /ssl/nextcloud/keys/cert.crt ]]; then
+     bashio::log.info "using keys found in /ssl/nextcloud/keys"
+   else
+     bashio::log.info "generating self-signed keys in /ssl/nextcloud/keys, you can replace these with your own keys if required"
+     openssl req -new -x509 -days 3650 -nodes -out /ssl/nextcloud/keys/cert.crt -keyout /ssl/nextcloud/keys/cert.key -subj "$SUBJECT"
+   fi
+fi
+
+
