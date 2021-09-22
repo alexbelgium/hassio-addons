@@ -4,7 +4,7 @@
 if bashio::config.has_value 'OCR'; then
     if $(bashio::config 'OCR') = true; then
         bashio::log.info 'Installing OCR'
-        apk add --no-cache leptonica tesseract-ocr
+        apk add --no-cache tesseract-ocr-dev
         # Install additional language if requested
         if bashio::config.has_value 'OCRLANG'; then
             bashio::log.info 'Installing OCR language'
