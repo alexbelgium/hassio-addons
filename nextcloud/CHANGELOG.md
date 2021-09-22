@@ -1,4 +1,5 @@
 - Allow usage of own certificates 
+- OCR fixed
 
 ## 22.1.1 (31-08-2021)
 - Update to latest version from linuxserver/docker-nextcloud
