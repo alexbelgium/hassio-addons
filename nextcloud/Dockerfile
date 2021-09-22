@@ -6,8 +6,6 @@ FROM ${BUILD_FROM}
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
-RUN apk add --no-cache tesseract-ocr
-
 # Added repo to solve issues with some systems that cause error code 1 when fetching apk
 # Add bashio
 RUN echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/repositories \ 
