@@ -1,7 +1,6 @@
 - Allow usage of own certificates 
 - OCR fixed
 - glibc compatibility added
-- Elasticsearch addition for all architectures 
 
 ## 22.1.1 (31-08-2021)
 - Update to latest version from linuxserver/docker-nextcloud
