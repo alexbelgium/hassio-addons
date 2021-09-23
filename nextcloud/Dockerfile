@@ -5,7 +5,7 @@ ARG BUILD_UPSTREAM="22.1.1"
 FROM ${BUILD_FROM}
 
 #Install elasticsearch
-FROM elasticsearch/elasticsearch
+FROM elasticsearch/elasticsearch:latest
 RUN bin/elasticsearch-plugin install --batch ingest-attachment
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
