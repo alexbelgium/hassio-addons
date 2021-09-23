@@ -4,9 +4,6 @@ ARG BUILD_UPSTREAM="22.1.1"
 
 FROM ${BUILD_FROM}
 
-FROM diamol/elasticsearch:latest
-RUN bin/elasticsearch-plugin install --batch ingest-attachment
-
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
 # Added repo to solve issues with some systems that cause error code 1 when fetching apk
@@ -43,5 +40,8 @@ RUN \
 COPY root/ /
 
 RUN ["chmod", "+x", "/defaults/nextcloud-perms.sh"]
+
+FROM diamol/elasticsearch:latest
+RUN bin/elasticsearch-plugin install --batch ingest-attachment
 
 VOLUME ["/share", "/ssl", "/data", "/media"]
