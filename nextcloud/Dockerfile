@@ -4,6 +4,10 @@ ARG BUILD_UPSTREAM="22.1.1"
 
 FROM ${BUILD_FROM}
 
+#Install elasticsearch
+FROM elasticsearch
+RUN bin/elasticsearch-plugin install --batch ingest-attachment
+
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
 # Added repo to solve issues with some systems that cause error code 1 when fetching apk
@@ -29,10 +33,10 @@ RUN \
     && rm -fr /tmp/bashio.tar.gz \
     \
     #gclib compatibility 
-    && apk add --no-cache gcompat@community
-
-# modify/copy files
-RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
+    && apk add --no-cache gcompat@community \
+    \
+    # modify/copy files
+    && sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
     && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" /etc/services.d/nginx/*
