@@ -41,7 +41,4 @@ COPY root/ /
 
 RUN ["chmod", "+x", "/defaults/nextcloud-perms.sh"]
 
-FROM diamol/elasticsearch:latest
-RUN bin/elasticsearch-plugin install --batch ingest-attachment
-
 VOLUME ["/share", "/ssl", "/data", "/media"]
