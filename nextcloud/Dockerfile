@@ -29,7 +29,7 @@ RUN \
     && rm -fr /tmp/bashio.tar.gz \
     \
     #gclib compatibility 
-    && apk add --no-cache gcompat
+    && apk add --no-cache gcompat@community
 
 # modify/copy files
 RUN sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
