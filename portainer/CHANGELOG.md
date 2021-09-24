@@ -1,3 +1,6 @@
+
+## 2.9.0 (25-09-2021)
+- Update to latest version from portainer/portainer
 - Enable stream mode
 
 ## 2.6.3 (28-08-2021)
