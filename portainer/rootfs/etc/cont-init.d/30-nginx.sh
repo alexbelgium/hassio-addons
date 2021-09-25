@@ -11,7 +11,7 @@ declare portainer_protocol=http
 if bashio::config.true 'ssl'; then
 portainer_protocol=https
 sed -i "s|9000|9443|g" /etc/nginx/includes/upstream.conf
-sed -i "s|9000 default_server|9000 ssl|g" /etc/nginx/includes/upstream.conf
+sed -i "s|9099 default_server|9099 ssl|g" /etc/nginx/includes/upstream.conf
 bashio::log.info "Ssl enabled" 
 fi
 
