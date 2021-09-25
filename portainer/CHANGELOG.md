@@ -1,3 +1,4 @@
+- Added separate https port : 9443
 
 ## 2.9.0 (25-09-2021)
 - Update to latest version from portainer/portainer
