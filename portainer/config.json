@@ -30,7 +30,7 @@
     "9099/tcp": "Web UI port",
     "8000/tcp": "Edge Agent Api (Enable when managing remote edge agents)"
   },
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:9000]",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:9099]",
   "hassio_api": true,
   "docker_api": true,
   "options": {
