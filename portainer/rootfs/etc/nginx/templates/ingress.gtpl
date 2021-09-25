@@ -1,5 +1,6 @@
 server {
   listen {{ .interface }}:{{ .port }} default_server;
+  listen {{ .interface }}:9099 default_server;
   include /etc/nginx/includes/server_params.conf;
   include /etc/nginx/includes/proxy_params.conf;
   client_max_body_size 0;
