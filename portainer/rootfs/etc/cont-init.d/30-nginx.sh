@@ -11,6 +11,7 @@ declare portainer_protocol=http
 if bashio::config.true 'ssl'; then
 portainer_protocol=https
 sed -i "s|9000|9443|g" /etc/nginx/includes/upstream.conf
+sed '/listen/a listen {{ .interface }}:9000 default_server;' /etc/nginx/templates/ingress.gtpl
 fi
 
 bashio::var.json \
