@@ -24,11 +24,12 @@
   ],
   "ports": {
     "9000/tcp": 9000,
+    "9443/tcp": 9443,
     "8000/tcp": null
   },
   "ports_description": {
     "9000/tcp": "Web UI port http",
-    "9443/tcp": "Web UI port http",
+    "9443/tcp": "Web UI port https",
     "8000/tcp": "Edge Agent Api (Enable when managing remote edge agents)"
   },
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9000]",
