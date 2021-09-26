@@ -16,7 +16,7 @@ mkdir -p $ocpath/data
 mkdir -p $ocpath/themes
 mkdir -p /data/config/nextcloud/config
 mkdir -p /data/config/nextcloud/data
-mkdir -p /data/config/www/nextcloud/occ
+mkdir -p /data/config/www/nextcloud/occ 2>/dev/null
 mkdir -p /share/nextcloud
 mkdir -p /ssl/nextcloud/keys
 
