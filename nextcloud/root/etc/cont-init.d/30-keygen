@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bashio
+bashio::log.info "Updating permissions..."
 /defaults/nextcloud-perms.sh
+bashio::log.info "... done"
 
    #Check if files exist
 if bashio::config.true 'use_own_certs'; then
