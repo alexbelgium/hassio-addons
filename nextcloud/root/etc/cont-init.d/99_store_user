@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+
+#storing user id
+echo "$(bashio::config "PUID")" > "/data/puid"
+echo "$(bashio::config "GUID")" > "/data/guid"
