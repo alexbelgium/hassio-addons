@@ -20,7 +20,7 @@ mkdir -p /data/config/www/nextcloud/occ
 mkdir -p /share/nextcloud
 mkdir -p /ssl/nextcloud/keys
 
-printf "chmod Files and Directories\n"
+printf "chmod Files and Directories. This will take some time, please wait...\n"
 #chmod -R 777 ${ocpath}
 find ${ocpath}/ -type f -exec chmod 0640 {} \;
 find ${ocpath}/ -type d -exec chmod 0750 {} \;
