@@ -1,4 +1,7 @@
 
+## 2.4.10 (26-09-2021)
+- Update to latest version from laurent22/joplin
+
 ## 2.4.9 (23-09-2021)
 - Update to latest version from laurent22/joplin
 
