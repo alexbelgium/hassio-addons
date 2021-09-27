@@ -31,7 +31,8 @@ $LAUNCHER config:system:get trusted_domains || bashio::log.info "No trusted doma
     TRUSTEDDOMAINS=$(bashio::config 'trusted_domains')
     bashio::log.info "... alignement with trusted domains list : ${TRUSTEDDOMAINS}" && \
     i=2
-    for domain in $TRUSTEDDOMAINS
+
+    for domain in {$TRUSTEDDOMAINS//,/ } # Comma separated values
     do
         bashio::log.info "... adding ${domain}" && \
         $LAUNCHER config:system:set trusted_domains $i --value=${domain} && \
