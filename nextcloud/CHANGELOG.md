@@ -1,3 +1,4 @@
+- BREAKING CHANGE : comma separated domains instead of list 
 - Allow usage of own certificates 
 - OCR fixed
 - glibc compatibility added
