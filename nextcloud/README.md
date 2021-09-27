@@ -1,4 +1,4 @@
-BREAKING CHANGE : comma separated domains instead of list. You’ll need to go kn type addon options after updating, and click “save”. Or remove your previous domains list, and read it in the format : “newdomain1.com 1, newdomain2.com”
+BREAKING CHANGE : comma separated domains instead of list. You’ll need to go in addon options after updating, and click “save”. Or remove your previous domains list, and read it in the format : “newdomain1.com 1, newdomain2.com”
 
 # Home assistant add-on: Nextcloud with OCR
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
