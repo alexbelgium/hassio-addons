@@ -37,7 +37,7 @@ $LAUNCHER config:system:get trusted_domains || bashio::log.info "No trusted doma
     done
 
 bashio::log.info "Remaining configurated trusted domains :"
-bashio::log.info "$LAUNCHER config:system:get trusted_domains" || exit
+bashio::log.info "$($LAUNCHER config:system:get trusted_domains)" || exit
 
 fi
 
