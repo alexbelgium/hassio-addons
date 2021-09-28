@@ -1,1 +1,2 @@
+- Allow persistence
 - Initial release
