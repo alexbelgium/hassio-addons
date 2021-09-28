@@ -3,14 +3,14 @@ bashio::log.info "Checking permissions..."
 PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
 OLDPUID=""
-OLDGUID="" 
-if [ -f /data/puid ] && [ -f /data/guid ]; then
+OLDPGID="" 
+if [ -f /data/puid ] && [ -f /data/pgid ]; then
   OLDPUID=$(cat /data/puid)
-  OLDGUID=$(cat /data/guid)
+  OLDPGID=$(cat /data/pgid)
 fi
 
-if [ "$OLDPUID" != "$PUID" ] && [ "$OLDGUID" != "$GUID" ]; then
-bashio::log.info "... the user has changed from $OLDPUID to $PUID ..."
+if [ "$OLDPUID" != "$PUID" ] && [ "$OLDPGID" != "$PGID" ]; then
+bashio::log.info "... the user has changed from ${OLDPUID}:${OLDPGID} to ${PUID}:${PGID} ..."
 /defaults/nextcloud-perms.sh
 fi
 bashio::log.info "... done"
