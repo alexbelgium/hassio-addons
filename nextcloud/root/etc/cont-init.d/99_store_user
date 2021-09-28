@@ -2,4 +2,4 @@
 
 #storing user id
 echo "$(bashio::config "PUID")" > "/data/puid"
-echo "$(bashio::config "GUID")" > "/data/guid"
+echo "$(bashio::config "PGID")" > "/data/pgid"
