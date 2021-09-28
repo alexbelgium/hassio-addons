@@ -1,6 +1,18 @@
 #!/usr/bin/with-contenv bashio
-bashio::log.info "Updating permissions..."
+bashio::log.info "Checking permissions..."
+PUID=$(bashio::config "PUID")
+PGID=$(bashio::config "PGID")
+OLDPUID=""
+OLDGUID="" 
+if [ -f /data/puid ] && [ -f /data/guid ]; then
+  OLDPUID=$(cat /data/puid)
+  OLDGUID=$(cat /data/guid)
+fi
+
+if [ "$OLDPUID" != "$PUID" ] && [ "$OLDGUID" != "$GUID" ]; then
+bashio::log.info "... the user has changed from $OLDPUID to $PUID ..."
 /defaults/nextcloud-perms.sh
+fi
 bashio::log.info "... done"
 
    #Check if files exist
