@@ -5,7 +5,7 @@ FROM collelog/xteve:latest-alpine
 
 RUN cp -vnpr /etc/opt/xteve* /data || true
 
-CMD ["-config", "data", "-port", "34400"]
+CMD ["-config", "/data", "-port", "34400"]
 
 ### LABELS
 ARG BUILD_ARCH
