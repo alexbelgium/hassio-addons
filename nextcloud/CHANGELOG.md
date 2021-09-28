@@ -1,3 +1,4 @@
+- Faster reboot by only chowning files if user change
 - BREAKING CHANGE : comma separated domains instead of list 
 - Allow usage of own certificates 
 - OCR fixed
