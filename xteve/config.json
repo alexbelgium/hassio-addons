@@ -1,6 +1,6 @@
 {
   "name": "Xteve",
-  "version": "2.2.0",
+  "version": "2.2.0-2",
   "upstream": "2.2.0",
   "slug": "xteve",
   "description": "M3U Proxy for Plex DVR and Emby Live TV",
