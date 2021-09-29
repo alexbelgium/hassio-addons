@@ -1,6 +1,7 @@
 
 ## 0.3.12 (29-09-2021)
 - Update to latest version from AnalogJ/scrutiny
+- Aligned with AnalogJ namings
 
 ## fd4f0429
 - New ingress icon, thanks to @ElVit
