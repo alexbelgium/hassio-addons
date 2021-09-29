@@ -105,12 +105,12 @@ for addons in $(bashio::config "addon|keys"); do
   fi
 
   #Prepare tag flag
-  if [ ${HAVINGASSET} = false ]; then
-    LOGINFO="... $SLUG : asset_only is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    HAVINGASSET=""
-  else
+  if [ ${HAVINGASSET} = true ]; then
     LOGINFO="... $SLUG : asset_only tag is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     HAVINGASSET="--having-asset"
+  else
+    LOGINFO="... $SLUG : asset_only is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+    HAVINGASSET=""
   fi
 
   #If beta flag, select beta version
