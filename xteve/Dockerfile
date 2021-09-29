@@ -1,6 +1,6 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.2.0"
+ARG BUILD_UPSTREAM="2.2.0.200"
 FROM collelog/xteve:latest-alpine
 
 RUN cp -vnpr /etc/opt/xteve* /data || true
