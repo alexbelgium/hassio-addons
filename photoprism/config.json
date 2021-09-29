@@ -1,7 +1,7 @@
 {
   "name": "Photoprism",
-  "version": "0.3",
-  "upstream": "preview",
+  "version": "210217-49039368",
+  "upstream": "210217-49039368",
   "slug": "photoprism",
   "description": "A server-based application for browsing, organizing and sharing your personal photo collection",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
@@ -13,12 +13,15 @@
   "ports_description": {
     "2342/tcp": "Web interface"
   },
-  "map": ["media:rw", "share:rw"],
+  "map": [
+    "media:rw",
+    "share:rw"
+  ],
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
-  "devices":[
+  "devices": [
     "/dev/sda1",
     "/dev/sda2",
     "/dev/sdb1",
@@ -30,25 +33,30 @@
   "options": {
     "networkdisks": "//server/share",
     "cifsusername": "username",
-    "cifspassword": "password", 
+    "cifspassword": "password",
     "UPLOAD_NSFW": "true",
     "STORAGE_PATH": "/share/photoprism/storage",
     "ORIGINALS_PATH": "/share/photoprism/originals",
     "IMPORT_PATH": "/share/photoprism/import",
-    "BACKUP_PATH": "/share/photoprism/backup", 
-    "CUSTOM_OPTIONS": "--site-title HA_Photoprism" 
+    "BACKUP_PATH": "/share/photoprism/backup",
+    "CUSTOM_OPTIONS": "--site-title HA_Photoprism"
   },
   "schema": {
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?", 
+    "cifspassword": "str?",
     "UPLOAD_NSFW": "bool",
     "STORAGE_PATH": "str",
     "ORIGINALS_PATH": "str",
     "IMPORT_PATH": "str",
     "BACKUP_PATH": "str",
-    "CUSTOM_OPTIONS": "str?" 
+    "CUSTOM_OPTIONS": "str?"
   },
-  "arch": ["aarch64", "amd64", "armhf", "armv7"]
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf",
+    "armv7"
+  ]
 }

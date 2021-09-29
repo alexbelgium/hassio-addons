@@ -1,6 +1,6 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="preview"
+ARG BUILD_UPSTREAM="210217-49039368"
 FROM photoprism/photoprism:preview
 
 # Copy root filesystem
