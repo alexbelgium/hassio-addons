@@ -17,7 +17,7 @@
   "hassio_api": true,
   "hassio_role": "homeassistant",
   "homeassistant_api": true,
-  "backup_exclude":["*/image.tar"],
+  "backup_exclude":["image.tar"],
   "ports": {
     "8080/tcp": 8081,
     "6881/tcp": 6881,
