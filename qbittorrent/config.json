@@ -17,6 +17,7 @@
   "hassio_api": true,
   "hassio_role": "homeassistant",
   "homeassistant_api": true,
+  "snapshot_exclude":["*/image.tar"],
   "ports": {
     "8080/tcp": 8081,
     "6881/tcp": 6881,
@@ -85,6 +86,5 @@
     "openvpn_password": "str?",
     "run_duration": "str?",
     "TZ": "str?"
-  },
-  "snapshot_exclude":["*image.*"]
+  }
 }
