@@ -85,5 +85,6 @@
     "openvpn_password": "str?",
     "run_duration": "str?",
     "TZ": "str?"
-  }
+  },
+  "snapshot_exclude":["*image.*"]
 }
