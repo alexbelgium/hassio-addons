@@ -1,3 +1,4 @@
+- Allow mounting of devices up to sdg2
 
 ## 1.24.3.5033-757abe6b4-ls75 (21-09-2021)
 - Update to latest version from linuxserver/docker-plex
