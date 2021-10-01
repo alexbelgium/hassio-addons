@@ -1,3 +1,6 @@
+
+## 22.2.0 (02-10-2021)
+- Update to latest version from linuxserver/docker-nextcloud
 - Faster reboot by only chowning files if user change
 - BREAKING CHANGE : comma separated domains instead of list 
 - Allow usage of own certificates 
