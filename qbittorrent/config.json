@@ -74,6 +74,7 @@
     "Username": "str?",
     "customUI": "list(|vuetorrent|qbit-matUI|qb-web)?",
     "DNS_server": "str?",
+    "localdisks": "str?",
     "networkdisks": "str?",
     "smbv1": "bool?",
     "cifsusername": "str?",
