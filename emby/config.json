@@ -1,7 +1,7 @@
 {
   "name": "Emby NAS",
-  "version": "4.7.0.12-3",
-  "upstream": "4.7.0.12",
+  "version": "4.7.0.13",
+  "upstream": "4.7.0.13",
   "slug": "emby_nas",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -38,11 +38,32 @@
     "DAC_READ_SEARCH"
   ],
   "devices": [
-    "/dev/dri", "/dev/vchiq", "/dev/video10", "/dev/video11", "/dev/video12", 
-    "/dev/sda1", "/dev/sdb1", "/dev/sdc1", "/dev/sdd1", "/dev/sde1", "/dev/sdf1", "/dev/sdg1",
-    "/dev/sda2", "/dev/sdb2", "/dev/sdc2", "/dev/sdd2", "/dev/sde2", "/dev/sdf2", "/dev/sdg2"
+    "/dev/dri",
+    "/dev/vchiq",
+    "/dev/video10",
+    "/dev/video11",
+    "/dev/video12",
+    "/dev/sda1",
+    "/dev/sdb1",
+    "/dev/sdc1",
+    "/dev/sdd1",
+    "/dev/sde1",
+    "/dev/sdf1",
+    "/dev/sdg1",
+    "/dev/sda2",
+    "/dev/sdb2",
+    "/dev/sdc2",
+    "/dev/sdd2",
+    "/dev/sde2",
+    "/dev/sdf2",
+    "/dev/sdg2"
   ],
-  "backup_exclude":["*/cache/", "*/logs/", "*/transcoding-temp/", "*/metadata/"],
+  "backup_exclude": [
+    "*/cache/",
+    "*/logs/",
+    "*/transcoding-temp/",
+    "*/metadata/"
+  ],
   "options": {
     "PUID": 0,
     "PGID": 0,
