@@ -46,6 +46,7 @@ Username: "admin" #username to access webui. Please change it as the default is 
 customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start.
 DNS_servers : 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
 SavePath: "/share/qbittorrent" # Define the download directory
+localdisks: "sda1" # Optional, requires priviledged mode
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
