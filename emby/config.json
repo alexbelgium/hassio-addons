@@ -44,7 +44,8 @@
   ],
   "options": {
     "PUID": 0,
-    "PGID": 0
+    "PGID": 0, 
+    "verbose": false
   },
   "schema": {
     "PUID": "int",
@@ -54,6 +55,7 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
-    "smbv1": "bool?"
+    "smbv1": "bool?",
+    "verbose": "bool?"
   }
 }
