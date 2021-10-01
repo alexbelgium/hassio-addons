@@ -1,3 +1,4 @@
+- Allow mounting local drives. Set "localdisks" to your disk name such as sda1
 - Added auto stop, just set the run_duration optional setting
 
 ## 14.3.8.99202109100310-7422-338d9a084ubuntu20.04.1-ls154 (10-09-2021)
