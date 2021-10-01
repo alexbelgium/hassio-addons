@@ -44,7 +44,8 @@
   ],
   "options": {
     "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "silent": true
   },
   "schema": {
     "PUID": "int",
