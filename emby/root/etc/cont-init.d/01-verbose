@@ -1,11 +1,12 @@
 #!/usr/bin/with-contenv bashio
 
-######################
-# MOUNT LOCAL SHARES #
-######################
+###############
+# SILENT MODE #
+###############
 
 if bashio::config.true 'silent'; then
-sed -i '$s/$/ &> /dev/null' /etc/services.d/emby/run
+APPEND='&> /dev/null'
+sed -i "s|$|${APPEND}|" /etc/services.d/emby/run
 bashio::log.info 'Silent mode activated'
 fi
 
