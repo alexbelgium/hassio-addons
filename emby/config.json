@@ -42,6 +42,7 @@
     "/dev/sda1", "/dev/sdb1", "/dev/sdc1", "/dev/sdd1", "/dev/sde1", "/dev/sdf1", "/dev/sdg1",
     "/dev/sda2", "/dev/sdb2", "/dev/sdc2", "/dev/sdd2", "/dev/sde2", "/dev/sdf2", "/dev/sdg2"
   ],
+    "backup_exclude":["*/cache/", "*/logs/", "*/transcoding-temp/", "*/metadata/"],
   "options": {
     "PUID": 0,
     "PGID": 0,
