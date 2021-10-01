@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bashio
+
+######################
+# MOUNT LOCAL SHARES #
+######################
+
+bashio::log.info ''
+
