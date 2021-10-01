@@ -5,8 +5,7 @@
 ###############
 
 if bashio::config.true 'silent'; then
-APPEND='&> /dev/null'
-sed '$s/$/'"$APPEND"'/' /etc/services.d/emby/run
+APPEND=' > /dev/null'
+sed '$s|$|'"$APPEND"'|' /etc/services.d/emby/run
 bashio::log.info 'Silent mode activated'
 fi
-
