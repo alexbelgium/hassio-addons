@@ -1,6 +1,6 @@
 {
   "name": "Emby NAS",
-  "version": "4.7.0.12-2",
+  "version": "4.7.0.12-3",
   "upstream": "4.7.0.12",
   "slug": "emby_nas",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
