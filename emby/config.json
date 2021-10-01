@@ -1,6 +1,6 @@
 {
   "name": "Emby NAS",
-  "version": "4.7.0.12",
+  "version": "4.7.0.12-2",
   "upstream": "4.7.0.12",
   "slug": "emby_nas",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
@@ -41,7 +41,8 @@
     "/dev/sda1",
     "/dev/sda2",
     "/dev/sdb1",
-    "/dev/sdb2"
+    "/dev/sdb2",
+    "/dev/*"
   ],
   "options": {
     "PUID": 0,
