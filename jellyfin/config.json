@@ -39,8 +39,8 @@
   ],
   "devices": [
     "/dev/ttyUSB0",
-    "/dev/*",
-    "/dev/sda1"
+    "/dev/sda1", "/dev/sdb1", "/dev/sdc1", "/dev/sdd1", "/dev/sde1", "/dev/sdf1", "/dev/sdg1",
+    "/dev/sda2", "/dev/sdb2", "/dev/sdc2", "/dev/sdd2", "/dev/sde2", "/dev/sdf2", "/dev/sdg2"
   ],
   "options": {
     "PUID": 0,
