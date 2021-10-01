@@ -38,10 +38,6 @@
     "DAC_READ_SEARCH"
   ],
   "devices": [
-    "/dev/sda1",
-    "/dev/sda2",
-    "/dev/sdb1",
-    "/dev/sdb2",
     "/dev/*"
   ],
   "options": {
