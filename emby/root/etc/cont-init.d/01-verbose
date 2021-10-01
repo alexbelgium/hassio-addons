@@ -4,5 +4,8 @@
 # MOUNT LOCAL SHARES #
 ######################
 
-bashio::log.info ''
+if bashio::config.true 'silent'; then
+sed -i '$s/$/ &> /dev/null' /etc/services.d/emby/run
+bashio::log.info 'Silent mode activated'
+fi
 
