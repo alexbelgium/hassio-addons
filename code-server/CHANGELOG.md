@@ -1,3 +1,4 @@
+- Allow mounting of devices up to sdg2
 
 ## 3.12.0 (16-09-2021)
 - Update to latest version from linuxserver/docker-code-server
