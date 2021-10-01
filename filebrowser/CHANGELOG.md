@@ -1,3 +1,4 @@
+- Allow mounting of devices up to sdg2
 - Allow uploads >16mb
 - Allow local mount in protected mode 
 
