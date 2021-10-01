@@ -1,4 +1,7 @@
 
+## 3.0.6.1342 (02-10-2021)
+- Update to latest version from linuxserver/docker-sonarr
+
 ## 3.0.6.1335 (30-09-2021)
 - Update to latest version from linuxserver/docker-sonarr
 - Improved cifs mount code to make it universal
