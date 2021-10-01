@@ -1,3 +1,4 @@
+- Allow mounting of devices up to sdg2
 
 ## 10.7.7-1-ls130 (06-09-2021)
 - Update to latest version from linuxserver/docker-jellyfin
