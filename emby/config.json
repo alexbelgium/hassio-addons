@@ -55,6 +55,6 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "smbv1": "bool?",
-    "verbose": "bool?"
+    "silent": "bool?"
   }
 }
