@@ -1,6 +1,6 @@
 {
   "name": "VS code",
-  "version": "3.12.0",
+  "version": "3.12.0-2",
   "upstream": "3.12.0",
   "slug": "code-server",
   "description": "Code-server is VS Code running on a remote server, accessible through the browser.",
