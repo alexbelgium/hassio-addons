@@ -9,13 +9,8 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 # Added repo to solve issues with some systems that cause error code 1 when fetching apk
 # Add bashio
 RUN \
-    #Avoid issues with sources 
-    echo 'https://dl-3.alpinelinux.org/alpine/latest-stable/main' > /etc/apk/repositories \ 
-    && echo '@testing https://dl-3.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \ 
-    && echo '@community https://dl-3.alpinelinux.org/alpine/latest-stable/community' >> /etc/apk/repositories \
-    \
     #Install bashio
-    && apk add --no-cache \
+    apk add --no-cache \
     curl jq \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.13.1.tar.gz" \
@@ -29,10 +24,11 @@ RUN \
     && rm -fr /tmp/bashio.tar.gz \
     \
     #gclib compatibility 
-    && apk add --no-cache gcompat@community \
-    \
+    && apk add --no-cache gcompat@community || true
+    
+RUN \
     # modify/copy files
-    && sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
+    sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
     && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" /etc/services.d/nginx/*
