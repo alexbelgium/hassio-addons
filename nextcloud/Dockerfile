@@ -14,7 +14,8 @@ RUN \
     && echo '@testing https://dl-3.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \ 
     && echo '@community https://dl-3.alpinelinux.org/alpine/latest-stable/community' >> /etc/apk/repositories \
     \
-    #Install bashio 
+    #Install bashio
+    && apk cache clean \
     && apk add --no-cache \
     curl jq \
     && curl -J -L -o /tmp/bashio.tar.gz \
