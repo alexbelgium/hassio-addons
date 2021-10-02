@@ -3,6 +3,7 @@
 - Update to latest version from linuxserver/docker-emby
 - Allow optional silent emby output
 - Allow mounting disks > sdb1
+- Allow hardware acceleration
 
 ## 4.7.0.12 (21-09-2021)
 - Update to latest version from linuxserver/docker-emby
