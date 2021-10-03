@@ -5,12 +5,14 @@ ARG BUILD_UPSTREAM="22.2.0"
 FROM ${BUILD_FROM}
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
+ARG BUILD_ARCH
 
-# Added repo to solve issues with some systems that cause error code 1 when fetching apk
 # Add bashio
 RUN \
+    echo "Install version $BUILD_VERSION on $BUILD_ARCH" \
     #Install bashio
-    apk add --no-cache \
+    && echo "**** Install Bashio ****" \
+    && apk add --no-cache \
     curl jq \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.13.1.tar.gz" \
