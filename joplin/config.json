@@ -13,6 +13,9 @@
   "ports_description": {
     "22300/tcp": "Web interface"
   },
+  "map": [
+    "ssl"
+  ],
   "environment": {
     "APP_PORT": "22300"
   },
