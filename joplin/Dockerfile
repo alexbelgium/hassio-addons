@@ -13,7 +13,7 @@ RUN \
     && apt-get install -y \
          jq \
          curl \
-         nginx \
+#         nginx \
     \
     ##################
     # Install bashio #
