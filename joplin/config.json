@@ -5,7 +5,7 @@
   "slug": "joplin",
   "description": "Self-hosted open source note-taking application",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "webui": "http://[HOST]:[PORT:22300]",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:22300]",
   "ports": {
     "22300/tcp": 22300
   },
