@@ -5,31 +5,23 @@
   "slug": "teamspeak",
   "description": "voice communication for online gaming, education and training",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:9987]",
-  "startup": "services",
-  "boot": "auto",
-  "ingress": false,
-  "ingress_port": 8099,
-  "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
-    "9987/udp": "9987",
-	"10011/tcp": "10011",
-	"30033/tcp": "30033"
+  "9987/udp": "9987",
+  "10011/tcp": "10011",
+  "30033/tcp": "30033",
+  "41144/tcp": 41144
   },
   "ports_description": {
     "80/udp": "Voice",
     "10011/tcp": "ServerQuery (raw)",
-    "30033/tcp": "Filetransfer"
+    "30033/tcp": "Filetransfer",
+    "41144/tcp": "TSDNS" 
   },
-  "map": [
-  ],
   "environment": {
-     "TS3SERVER_LICENSE": "accept"
+     "TS3SERVER_LICENSE": "accept", 
+     "PUID": "503",
+     "GUID": "503"
   },
-  "options": {
-  },
-  "schema": {
-    },
   "arch": [
     "amd64"
   ]
