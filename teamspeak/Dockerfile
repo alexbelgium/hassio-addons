@@ -1,6 +1,6 @@
 FROM bartixxx32/teamspeak3:latest
 
-COPY /opt/ts3server/entrypoint.sh /data/
+#COPY /opt/ts3server/entrypoint.sh /data/
 
 #COPY rootfs / 
 #ARG BASHIO_VERSION=0.13.1
