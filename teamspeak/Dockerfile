@@ -1,5 +1,5 @@
 ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM alpine:3.1.4
 
 RUN apk add --no-cache ca-certificates libstdc++ su-exec libpq
 RUN set -eux; \
@@ -33,7 +33,6 @@ WORKDIR /var/ts3server/
 EXPOSE 9987/udp 10011 30033 
 
 COPY entrypoint.sh /opt/ts3server
-RUN chmod +x /opt/ts3server/entrypoint.sh
 
 ENTRYPOINT [ "entrypoint.sh" ]
 CMD [ "ts3server" ]
