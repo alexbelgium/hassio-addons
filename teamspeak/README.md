@@ -3,7 +3,6 @@
 
 ## About
 TeamSpeak offers the ideal voice communication for online gaming, education and training, internal business communication, and staying in touch with friends and family. Our primary focus is delivering a solution that is easy to use, with high security standards, excellent voice quality, and low system and bandwidth usage.
-This addon is based on the [docker image](https://hub.docker.com/r/bartixxx32/teamspeak3) from bartixxx32.
 
 ## Installation
 
