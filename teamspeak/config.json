@@ -19,7 +19,7 @@
   "ports_description": {
     "80/udp": "Voice",
     "10011/tcp": "ServerQuery (raw)",
-    "30033/tcp": "Filetransfer",
+    "30033/tcp": "Filetransfer"
   },
   "map": [
   ],
