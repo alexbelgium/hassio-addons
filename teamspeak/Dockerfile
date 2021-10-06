@@ -1,4 +1,4 @@
-FROM bartixxx32/teamspeak3:latest
+FROM ertagh/teamspeak3-server:latest
 
 #COPY /opt/ts3server/entrypoint.sh /data/
 
