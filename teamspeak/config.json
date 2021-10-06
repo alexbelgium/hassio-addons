@@ -23,7 +23,9 @@
      "GUID": "503"
   },
   "arch": [
-    "armv7", 
-    "amd64"
+    "aarch64",
+    "amd64",
+    "armhf",
+    "armv7"
   ]
 }
