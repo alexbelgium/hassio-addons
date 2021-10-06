@@ -1,4 +1,4 @@
-FROM alpine:3.1.3
+FROM alpine:3.13
 
 RUN apk add --no-cache ca-certificates libstdc++ su-exec libpq
 RUN set -eux; \
