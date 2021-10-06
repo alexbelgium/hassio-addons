@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:10.0.1
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 RUN apk add --no-cache ca-certificates libstdc++ su-exec libpq
