@@ -26,14 +26,8 @@
   "environment": {
   },
   "options": {
-    "ssl": false,
-    "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem"
   },
   "schema": {
-    "ssl": "bool",
-    "certfile": "str",
-    "keyfile": "str"
     },
   "arch": [
     "aarch64",
