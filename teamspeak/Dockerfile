@@ -1,23 +1,22 @@
 FROM bartixxx32/teamspeak3:latest
 
-COPY rootfs / 
-
-ARG BASHIO_VERSION=0.13.1
-RUN \
+#COPY rootfs / 
+#ARG BASHIO_VERSION=0.13.1
+#RUN \
     ################
     # Install apps #
     ################
-	apk add --no-cache curl jq \
-    \
+    #apk add --no-cache curl jq \
+    #\
     ##################
     # Install bashio #
     ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    #&& mkdir -p /tmp/bashio \
+    #&& curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    #| tar -xzf - --strip 1 -C /tmp/bashio \
+    #&& mv /tmp/bashio/lib /usr/lib/bashio \
+    #&& ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    #&& rm -rf /tmp/bashio
     ###############
     # Adapt image #
     ###############
