@@ -24,6 +24,7 @@
   "map": [
   ],
   "environment": {
+     "TS3SERVER_LICENSE": "accept"
   },
   "options": {
   },
