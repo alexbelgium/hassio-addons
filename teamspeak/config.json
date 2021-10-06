@@ -24,7 +24,6 @@
   "map": [
   ],
   "environment": {
-	"PATH": "${PATH}:/data" 
   },
   "options": {
     "ssl": false,
