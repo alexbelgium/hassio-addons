@@ -1,5 +1,5 @@
 ARG BUILD_FROM
-FROM alpine:3.1.4
+FROM alpine:3.1.3
 
 RUN apk add --no-cache ca-certificates libstdc++ su-exec libpq
 RUN set -eux; \
