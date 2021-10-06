@@ -1,5 +1,5 @@
-FROM alpine:3.1.3
-
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:10.0.1
+FROM ${BUILD_FROM}
 
 RUN apk add --no-cache ca-certificates libstdc++ su-exec libpq
 RUN set -eux; \
