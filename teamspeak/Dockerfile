@@ -1,5 +1,10 @@
 FROM mbentley/teamspeak:latest
 
+RUN mkdir -p /data/TEAMSPEAK \
+    && chown -R 503:503 /data/teamspeak
+
+VOLUME [ /data ] 
+
 ### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
