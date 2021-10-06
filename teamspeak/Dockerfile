@@ -1,38 +1,41 @@
-FROM ertagh/teamspeak3-server:latest
+FROM alpine:3.1.3
 
-#COPY /opt/ts3server/entrypoint.sh /data/
 
-#COPY rootfs / 
-#ARG BASHIO_VERSION=0.13.1
-#RUN \
-    ################
-    # Install apps #
-    ################
-    #apk add --no-cache curl jq \
-    #\
-    ##################
-    # Install bashio #
-    ##################
-    #&& mkdir -p /tmp/bashio \
-    #&& curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    #| tar -xzf - --strip 1 -C /tmp/bashio \
-    #&& mv /tmp/bashio/lib /usr/lib/bashio \
-    #&& ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    #&& rm -rf /tmp/bashio
-    ###############
-    # Adapt image #
-    ###############
-    # Correct data path
-    #&& grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g' \
-    # Add custom instructions to run.sh
-    #&& sed -i '1d' /app/mealie/run.sh \ 
-    #&& cat /app/mealie/run.sh >> /run.txt \
-    #&& cat /run.txt > /app/mealie/run.sh \
-    #&& chmod +x /app/mealie/run.sh
-    # Add custom caddy instructions for ingress
-    #&& cat /caddy.txt >> /app/Caddyfile
+RUN apk add --no-cache ca-certificates libstdc++ su-exec libpq
+RUN set -eux; \
+    addgroup -g 9987 ts3server; \
+    adduser -u 9987 -Hh /var/ts3server -G ts3server -s /sbin/nologin -D ts3server; \
+    install -d -o ts3server -g ts3server -m 775 /var/ts3server /var/run/ts3server /opt/ts3server
 
-VOLUME [ "/data" ]
+ENV PATH "${PATH}:/opt/ts3server"
+
+ARG TEAMSPEAK_CHECKSUM=f30a5366f12b0c5b00476652ebc06d9b5bc4754c4cb386c086758cceb620a8d0
+ARG TEAMSPEAK_URL=https://files.teamspeak-services.com/releases/server/3.13.6/teamspeak3-server_linux_alpine-3.13.6.tar.bz2
+
+RUN set -eux; \
+    apk add --no-cache --virtual .fetch-deps tar; \
+    wget "${TEAMSPEAK_URL}" -O server.tar.bz2; \
+    echo "${TEAMSPEAK_CHECKSUM} *server.tar.bz2" | sha256sum -c -; \
+    mkdir -p /opt/ts3server; \
+    tar -xf server.tar.bz2 --strip-components=1 -C /opt/ts3server; \
+    rm server.tar.bz2; \
+    apk del .fetch-deps; \
+    mv /opt/ts3server/*.so /opt/ts3server/redist/* /usr/local/lib; \
+    ldconfig /usr/local/lib
+
+# setup directory where user data is stored
+VOLUME /var/ts3server/
+WORKDIR /var/ts3server/
+
+#  9987 default voice
+# 10011 server query
+# 30033 file transport
+EXPOSE 9987/udp 10011 30033 
+
+COPY entrypoint.sh /opt/ts3server
+
+ENTRYPOINT [ "entrypoint.sh" ]
+CMD [ "ts3server" ]
 
 ### LABELS
 ARG BUILD_ARCH
