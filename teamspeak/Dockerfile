@@ -1,4 +1,5 @@
-FROM mbentley/teamspeak:latest
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
 RUN mkdir -p /data/TEAMSPEAK \
     && chown -R 503:503 /data/teamspeak
