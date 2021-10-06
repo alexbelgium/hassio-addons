@@ -1,6 +1,6 @@
 FROM bartixxx32/teamspeak3:latest
 
-COPY /opt/ts3server /data
+COPY /opt/ts3server/ /data/
 
 #COPY rootfs / 
 #ARG BASHIO_VERSION=0.13.1
