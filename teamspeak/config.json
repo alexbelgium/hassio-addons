@@ -20,7 +20,8 @@
   "environment": {
      "TS3SERVER_LICENSE": "accept", 
      "PUID": "503",
-     "GUID": "503"
+     "GUID": "503",
+     "PATH": "/data/teamspeak" 
   },
   "arch": [
     "aarch64",
