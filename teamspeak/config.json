@@ -11,7 +11,7 @@
   "30033/tcp": "30033",
   "41144/tcp": 41144
   },
-  "map": ["config:rw"],
+  "map": ["share:rw"],
   "ports_description": {
     "80/udp": "Voice",
     "10011/tcp": "ServerQuery (raw)",
