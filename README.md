@@ -164,6 +164,11 @@ https://github.com/alexbelgium/hassio-addons
 - Based on https://hub.docker.com/r/linuxserver/scrutiny
 - Support : [Home assistant addon : Scrutiny (SMART dashboard) - Home Assistant OS - Home Assistant Community (home-assistant.io)](https://community.home-assistant.io/t/home-assistant-addon-scrutiny-smart-dashboard/295747)
 
+### &#10003; [Teamspeak](teamspeak/)
+
+- Voice communication for online gaming, education and training.
+- Based on https://hub.docker.com/r/ertagh/teamspeak3-server (arm) and https://hub.docker.com/r/mbentley/teamspeak:latest (x64)
+
 ### &#10003; [Transmission](transmission/) ![smb][smb-shield]
 
 - The torrent client for Hass.io.
