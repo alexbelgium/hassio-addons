@@ -1,12 +1,12 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-RUN mkdir -p /data/teamspeak \
-    && chown -R 503:503 /data/teamspeak
+RUN mkdir -p /data \
+    && chown -R 503:503 /data
 
-ENV PATH "${PATH}:/data/teamspeak"
+ENV PATH "${PATH}:/data"
 
-VOLUME [ "/data" ] 
+VOLUME [ "/data:/var/ts3server/" ] 
 
 ### LABELS
 ARG BUILD_ARCH
