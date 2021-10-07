@@ -20,7 +20,8 @@
   "environment": {
      "TS3SERVER_LICENSE": "accept", 
      "PUID": "503",
-     "GUID": "503"
+     "GUID": "503", 
+     "INIFILE": "1"
   },
   "arch": [
     "aarch64",
