@@ -6,7 +6,7 @@ RUN mkdir -p /data/teamspeak \
 
 ENV PATH "${PATH}:/data/teamspeak"
 
-VOLUME [ /data ] 
+VOLUME [ "/data" ] 
 
 ### LABELS
 ARG BUILD_ARCH
