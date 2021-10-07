@@ -4,6 +4,8 @@
 ## About
 TeamSpeak offers the ideal voice communication for online gaming, education and training, internal business communication, and staying in touch with friends and family. Our primary focus is delivering a solution that is easy to use, with high security standards, excellent voice quality, and low system and bandwidth usage.
 
+Based on https://hub.docker.com/r/ertagh/teamspeak3-server (arm) and https://hub.docker.com/r/mbentley/teamspeak:latest (x64)
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in
