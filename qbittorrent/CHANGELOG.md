@@ -1,3 +1,6 @@
+
+## 14.3.8.99202110081405-7423-ac5c264e6ubuntu20.04.1-ls157 (08-10-2021)
+- Update to latest version from linuxserver/docker-qbittorrent
 - Allow mounting local drives. Set "localdisks" to your disk name such as sda1
 - Added auto stop, just set the run_duration optional setting
 

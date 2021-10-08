@@ -1,7 +1,7 @@
 {
   "name": "Qbittorrent",
-  "version": "14.3.8.99202109100310-7422-338d9a084ubuntu20.04.1-ls154-4",
-  "upstream": "14.3.8.99202109100310-7422-338d9a084ubuntu20.04.1-ls154",
+  "version": "14.3.8.99202110081405-7423-ac5c264e6ubuntu20.04.1-ls157",
+  "upstream": "14.3.8.99202110081405-7423-ac5c264e6ubuntu20.04.1-ls157",
   "slug": "qbittorrent",
   "description": "qBittorrent is a bittorrent client",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -17,7 +17,9 @@
   "hassio_api": true,
   "hassio_role": "homeassistant",
   "homeassistant_api": true,
-  "backup_exclude":["image.tar"],
+  "backup_exclude": [
+    "image.tar"
+  ],
   "ports": {
     "8080/tcp": 8081,
     "6881/tcp": 6881,
@@ -42,9 +44,21 @@
     "NET_ADMIN"
   ],
   "devices": [
-    "/dev/net/tun", 
-    "/dev/sda1", "/dev/sdb1", "/dev/sdc1", "/dev/sdd1", "/dev/sde1", "/dev/sdf1", "/dev/sdg1",
-    "/dev/sda2", "/dev/sdb2", "/dev/sdc2", "/dev/sdd2", "/dev/sde2", "/dev/sdf2", "/dev/sdg2"
+    "/dev/net/tun",
+    "/dev/sda1",
+    "/dev/sdb1",
+    "/dev/sdc1",
+    "/dev/sdd1",
+    "/dev/sde1",
+    "/dev/sdf1",
+    "/dev/sdg1",
+    "/dev/sda2",
+    "/dev/sdb2",
+    "/dev/sdc2",
+    "/dev/sdd2",
+    "/dev/sde2",
+    "/dev/sdf2",
+    "/dev/sdg2"
   ],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
   "boot": "auto",
