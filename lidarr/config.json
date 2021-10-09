@@ -20,7 +20,8 @@
   "map": [
     "config:rw",
     "share:rw",
-    "media:rw"
+    "media:rw", 
+    "config:rw" 
   ],
   "privileged": [
     "SYS_ADMIN",
