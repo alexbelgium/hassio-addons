@@ -4,7 +4,7 @@
 ## About
 
 An HTPC/Homelab services organizer that is written in PHP.
-This addon is based on the [docker image](https://github.com/linuxserver/organizr) from linuxserver.io.
+This addon is based on the [docker image](https://hub.docker.com/r/organizr/organizr) from linuxserver.io.
 
 ## Installation
 
