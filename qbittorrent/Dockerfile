@@ -68,34 +68,6 @@ RUN \
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
 
-# From https://github.com/DyonR/docker-qbittorrentvpn/blob/master/Dockerfile 
-# Install WireGuard and some other dependencies some of the scripts in the container rely on.
-RUN echo "deb http://deb.debian.org/debian/ unstable main" > /etc/apt/sources.list.d/unstable-wireguard.list \
-    && printf 'Package: *\nPin: release a=unstable\nPin-Priority: 150\n' > /etc/apt/preferences.d/limit-unstable \
-    && apt update \
-    && apt install -y --no-install-recommends \
-    ca-certificates \
-    dos2unix \
-    inetutils-ping \
-    ipcalc \
-    iptables \
-    kmod \
-    libqt5network5 \
-    libqt5xml5 \
-    libssl1.1 \
-    moreutils \
-    net-tools \
-    openresolv \
-    openvpn \
-    procps \
-    wireguard-tools \
-    && apt-get clean \
-    && apt autoremove -y \
-    && rm -rf \
-    /var/lib/apt/lists/* \
-    /tmp/* \
-    /var/tmp/*
-
 # Copy root filesystem
 COPY rootfs / 
 
