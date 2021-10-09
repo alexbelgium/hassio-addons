@@ -38,10 +38,6 @@ RUN \
 # copy local files
 COPY root/ / 
 
-VOLUME [ "/config/lidarr:/config" ] 
-VOLUME [ "/share/downloads:/downloads" ] 
-VOLUME [ "/media:/music" ] 
-
 ### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
