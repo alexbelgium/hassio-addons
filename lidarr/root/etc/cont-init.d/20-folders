@@ -12,7 +12,7 @@ if [ ! -d /share/downloads ]; then
   chown -R abc:abc /share/downloads
 fi
 
-if [ ! -d /config/radarr ]; then
+if [ ! -d /config/lidarr ]; then
   echo "Creating /config/lidarr"
   mkdir -p /config/lidarr
   chown -R abc:abc /config/lidarr
