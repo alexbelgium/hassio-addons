@@ -40,7 +40,7 @@ Create an issue on github
 
 # Illustration
 --------------
-![illustration](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/qbittorrent/illustration.png) 
+![illustration](https://www.geekzone.fr/wp-content/uploads/2018/05/lidarr_1.png) 
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
