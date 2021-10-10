@@ -29,7 +29,7 @@ Configurations can be done through the app webUI, except for the following optio
 GUID: user
 GPID: user
 TZ: timezone
-localdisks: "sda1" # Optional
+localdisks: "sda1, sdb1" # Optional
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
