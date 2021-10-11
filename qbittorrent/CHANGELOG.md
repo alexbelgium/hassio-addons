@@ -1,3 +1,4 @@
+- Added watchdog feature
 
 ## 14.3.8.99202110081405-7423-ac5c264e6ubuntu20.04.1-ls157 (08-10-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
