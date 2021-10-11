@@ -1,3 +1,6 @@
+
+## 2.9.1 (11-10-2021)
+- Update to latest version from portainer/portainer
 - Enabled https access on same port as http when activating ssl
 
 ## 2.9.0 (25-09-2021)
