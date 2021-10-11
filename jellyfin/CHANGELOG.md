@@ -1,3 +1,4 @@
+- Added watchdog feature
 - Allow mounting of devices up to sdg2
 
 ## 10.7.7-1-ls130 (06-09-2021)
