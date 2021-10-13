@@ -68,8 +68,6 @@ fi || true
 # MOUNT SMB SHARES #
 ####################
 if bashio::config.has_value 'networkdisks'; then
-    # Mount CIFS Share if configured and if Protection Mode is active
-    bashio::log.info 'Mounting smb share(s)...'
 
     # Define variables 
     MOREDISKS=$(bashio::config 'networkdisks')
@@ -78,6 +76,12 @@ if bashio::config.has_value 'networkdisks'; then
     MOUNTED=false
     SMBVERS=""
     SECVERS=""
+    
+    # Dont execute if still default
+   [ ${MOREDISKS::1} == "<" ] && exit 0
+
+    # Mount CIFS Share if configured and if Protection Mode is active
+    bashio::log.info 'Mounting smb share(s)...'
 
     if bashio::config.has_value 'cifsdomain'; then 
       DOMAIN=",domain=$(bashio::config 'cifsdomain')" 
