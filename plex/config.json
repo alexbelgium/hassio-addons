@@ -1,7 +1,7 @@
 {
   "name": "Plex NAS",
-  "version": "1.24.3.5033-757abe6b4-ls75-2",
-  "upstream": "1.24.3.5033-757abe6b4-ls75",
+  "version": "1.24.4.5081-e362dc1ee-ls79",
+  "upstream": "1.24.4.5081-e362dc1ee-ls79",
   "slug": "plex_nas",
   "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
   "url": "https://github.com/alexbelgium/hassio-addons",
@@ -52,8 +52,20 @@
   ],
   "devices": [
     "/dev/ttyUSB0",
-    "/dev/sda1", "/dev/sdb1", "/dev/sdc1", "/dev/sdd1", "/dev/sde1", "/dev/sdf1", "/dev/sdg1",
-    "/dev/sda2", "/dev/sdb2", "/dev/sdc2", "/dev/sdd2", "/dev/sde2", "/dev/sdf2", "/dev/sdg2"
+    "/dev/sda1",
+    "/dev/sdb1",
+    "/dev/sdc1",
+    "/dev/sdd1",
+    "/dev/sde1",
+    "/dev/sdf1",
+    "/dev/sdg1",
+    "/dev/sda2",
+    "/dev/sdb2",
+    "/dev/sdc2",
+    "/dev/sdd2",
+    "/dev/sde2",
+    "/dev/sdf2",
+    "/dev/sdg2"
   ],
   "environment": {
     "VERSION": "docker",
