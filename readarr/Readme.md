@@ -7,7 +7,7 @@
 
 ---
 
-[Readarr](https://github.com/Readarr/Readarr) is book Manager and Automation (Sonarr for Ebooks).
+[Readarr](https://github.com/Readarr/Readarr) is a ebook collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new books from your favorite authors and will interface with clients and indexers to grab, sort, and rename them.is book Manager and Automation (Sonarr for Ebooks).
 This addon is based on the docker image https://github.com/linuxserver/docker-readarr
 
 # Installation
