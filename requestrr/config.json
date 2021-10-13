@@ -1,0 +1,32 @@
+{
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
+  "description": "Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat",
+  "environment": {
+    "PUID": "0",
+    "PGID": "0"
+  },
+  "map": [],
+  "name": "requestrr",
+  "options": {
+    "PUID": 0,
+    "PGID": 0
+  },
+  "ports": {
+    "4545/tcp": 4545
+  },
+  "ports_description": {
+    "4545/tcp": "web interface"
+  },
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?"
+  },
+  "slug": "requestrr",
+  "upstream": "2.1.0",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "2.1.0",
+  "webui": "http://[HOST]:[PORT:4545]"
+}
