@@ -48,8 +48,8 @@
     "cifspassword": "str?"
   },
   "slug": "readarr_nas",
-  "upstream": "0.8.1.2135-ls63",
+  "upstream": "0.1.0.991-ls16",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.1.2135-ls63-2",
+  "version": "0.1.0.991-ls16",
   "webui": "http://[HOST]:[PORT:8787]"
 }
