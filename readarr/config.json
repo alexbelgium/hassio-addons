@@ -1,0 +1,55 @@
+{
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
+  "description": "Book Manager and Automation",
+  "devices": [
+    "/dev/sda1",
+    "/dev/sdb1",
+    "/dev/sdc1",
+    "/dev/sdd1",
+    "/dev/sde1",
+    "/dev/sdf1",
+    "/dev/sdg1",
+    "/dev/sda2",
+    "/dev/sdb2",
+    "/dev/sdc2",
+    "/dev/sdd2",
+    "/dev/sde2",
+    "/dev/sdf2",
+    "/dev/sdg2"
+  ],
+  "environment": {
+    "PUID": "0",
+    "PGID": "0"
+  },
+  "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
+  "name": "readarr NAS",
+  "options": {
+    "PUID": 0,
+    "PGID": 0,
+    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
+  },
+  "ports": {
+    "8787/tcp": 8787
+  },
+  "ports_description": {
+    "8787/tcp": "web interface"
+  },
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?"
+  },
+  "slug": "readarr_nas",
+  "upstream": "0.8.1.2135-ls63",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "0.8.1.2135-ls63-2",
+  "webui": "http://[HOST]:[PORT:8787]"
+}
