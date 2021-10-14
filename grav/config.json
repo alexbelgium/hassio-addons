@@ -24,8 +24,6 @@
     "/dev/sdg2"
   ],
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
   },
   "map": [
     "share:rw",
