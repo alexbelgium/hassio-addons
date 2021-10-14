@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "armhf": "linuxserver/grav:arm32v7-nightly",
-    "armv7": "linuxserver/grav:arm32v7-nightly",
-    "aarch64": "linuxserver/grav:arm64v8-nightly",
-    "amd64": "linuxserver/grav:amd64-nightly"
+    "armhf": "linuxserver/grav:arm32v7-latest",
+    "armv7": "linuxserver/grav:arm32v7-latest",
+    "aarch64": "linuxserver/grav:arm64v8-latest",
+    "amd64": "linuxserver/grav:amd64-latest"
   }
 }
