@@ -12,6 +12,8 @@ This addon is based on the docker image https://github.com/linuxserver/docker-re
 
 # Installation
 
+![illustration](https://readarr.com/img/slider/artistdetails.png)
+
 ---
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
