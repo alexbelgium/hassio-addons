@@ -147,6 +147,19 @@ https://github.com/alexbelgium/hassio-addons
 - A fork of Sonarr to work with movies like Couchpotato
 - Based on https://hub.docker.com/r/linuxserver/radarr
 
+
+### &#10003; [Readarr](readarr/) ![smb][smb-shield]
+
+- Book Manager and Automation
+- Based on https://hub.docker.com/r/linuxserver/readarr
+
+
+### &#10003; [Requestrr](requestrr/)
+
+- Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat
+- Based on https://hub.docker.com/r/linuxserver/requestrr
+
+
 ### &#10003; [Resioliosync](resiolosync/) ![smb][smb-shield]
 
 - Self-hosted file share and collaboration platform on the web
