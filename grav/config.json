@@ -8,20 +8,6 @@
   "boot": "auto",
   "description": "Fast, Simple, and Flexible, file-based Web-platform",
   "devices": [
-    "/dev/sda1",
-    "/dev/sdb1",
-    "/dev/sdc1",
-    "/dev/sdd1",
-    "/dev/sde1",
-    "/dev/sdf1",
-    "/dev/sdg1",
-    "/dev/sda2",
-    "/dev/sdb2",
-    "/dev/sdc2",
-    "/dev/sdd2",
-    "/dev/sde2",
-    "/dev/sdf2",
-    "/dev/sdg2"
   ],
   "environment": {
   },
@@ -30,13 +16,10 @@
     "media:rw",
     "config:rw"
   ],
-  "name": "Grav NAS",
+  "name": "Grav web server",
   "options": {
     "PUID": 1000,
-    "PGID": 1000,
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
-    "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "PGID": 1000
   },
   "ports": {
     "80/tcp": 9191
@@ -45,19 +28,13 @@
     "80/tcp": "web interface"
   },
   "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
   ],
   "schema": {
     "PUID": "int", 
     "PGID": "int",
-    "TZ": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?"
+    "TZ": "str?"
   },
-  "slug": "grav_nas",
+  "slug": "grav",
   "upstream": "1.7.23",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.7.23",
