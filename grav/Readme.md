@@ -7,7 +7,7 @@
 
 ---
 
-[Grav](https://github.com/grav/grav) is a free software, self-hosted content management system (CMS) written in the PHP programming language and based on the Symfony web application framework. It uses a flat file database for both backend and frontend.
+[Grav](https://getgrav.org) is a free software, self-hosted content management system (CMS) written in the PHP programming language and based on the Symfony web application framework. It uses a flat file database for both backend and frontend.
 This addon is based on the docker image https://github.com/linuxserver/docker-grav
 
 # Installation
