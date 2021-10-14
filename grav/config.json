@@ -1,0 +1,51 @@
+{
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
+  "description": "Fast, Simple, and Flexible, file-based Web-platform",
+  "devices": [
+    "/dev/sda1",
+    "/dev/sdb1",
+    "/dev/sdc1",
+    "/dev/sdd1",
+    "/dev/sde1",
+    "/dev/sdf1",
+    "/dev/sdg1",
+    "/dev/sda2",
+    "/dev/sdb2",
+    "/dev/sdc2",
+    "/dev/sdd2",
+    "/dev/sde2",
+    "/dev/sdf2",
+    "/dev/sdg2"
+  ],
+  "environment": {
+    "PUID": "0",
+    "PGID": "0"
+  },
+  "map": ["share:rw", "media:rw", "config:rw"],
+  "name": "grav NAS",
+  "options": {
+    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
+  },
+  "ports": {
+    "80/tcp": 9191
+  },
+  "ports_description": {
+    "80/tcp": "web interface"
+  },
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "schema": {
+    "TZ": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?"
+  },
+  "slug": "grav_nas",
+  "upstream": "nightly-0.1.0.991-ls16",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "nightly-0.1.0.991-ls16",
+  "webui": "http://[HOST]:[PORT:8787]"
+}

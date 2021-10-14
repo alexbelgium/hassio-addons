@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+if [ ! -d /share/grav ]; then
+  echo "Creating /share/grav"
+  mkdir -p /share/grav
+  chown -R abc:abc /share/grav
+fi
