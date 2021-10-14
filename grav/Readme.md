@@ -1,4 +1,4 @@
-# Home assistant add-on: grav
+# Home assistant add-on: Grav
 
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield]
@@ -7,7 +7,7 @@
 
 ---
 
-[grav](https://github.com/grav/grav) is a ebook collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new books from your favorite authors and will interface with clients and indexers to grab, sort, and rename them.is book Manager and Automation (Sonarr for Ebooks).
+[Grav](https://github.com/grav/grav) is a free software, self-hosted content management system (CMS) written in the PHP programming language and based on the Symfony web application framework. It uses a flat file database for both backend and frontend.
 This addon is based on the docker image https://github.com/linuxserver/docker-grav
 
 # Installation
