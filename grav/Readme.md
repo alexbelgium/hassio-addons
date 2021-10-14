@@ -51,7 +51,7 @@ Create an issue on github
 
 ---
 
-![illustration](https://www.geekzone.fr/wp-content/uploads/2018/05/grav_1.png)
+![illustration](https://getgrav.org/user/pages/01.tour/_easy-to-use/001-dashboard.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
