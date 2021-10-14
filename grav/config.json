@@ -61,5 +61,5 @@
   "upstream": "1.7.23",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.7.23",
-  "webui": "http://[HOST]:[PORT:8787]"
+  "webui": "http://[HOST]:[PORT:9191]"
 }
