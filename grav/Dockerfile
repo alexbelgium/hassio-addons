@@ -14,7 +14,12 @@ RUN \
     curl \
     cifs-utils \
     keyutils \
-    samba \
+    samba || apk add --no-cache \
+    jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba
     \ 
     ###################
     # Install bashio #
