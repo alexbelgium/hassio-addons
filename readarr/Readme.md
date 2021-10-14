@@ -50,9 +50,6 @@ Create an issue on github
 
 ---
 
-![illustration](https://www.geekzone.fr/wp-content/uploads/2018/05/readarr_1.png)
-
-
 ![illustration](https://readarr.com/img/slider/artistdetails.png)
 
 
