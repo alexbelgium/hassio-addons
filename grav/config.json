@@ -32,7 +32,7 @@
     "media:rw",
     "config:rw"
   ],
-  "name": "grav NAS",
+  "name": "Grav NAS",
   "options": {
     "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
     "cifsusername": "<username>",
