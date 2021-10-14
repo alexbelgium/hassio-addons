@@ -11,9 +11,6 @@
 This addon is based on the docker image https://github.com/linuxserver/docker-readarr
 
 # Installation
-
-![illustration](https://readarr.com/img/slider/artistdetails.png)
-
 ---
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
@@ -54,6 +51,10 @@ Create an issue on github
 ---
 
 ![illustration](https://www.geekzone.fr/wp-content/uploads/2018/05/readarr_1.png)
+
+
+![illustration](https://readarr.com/img/slider/artistdetails.png)
+
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
