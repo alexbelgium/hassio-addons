@@ -34,6 +34,8 @@
   ],
   "name": "Grav NAS",
   "options": {
+    "PUID": 0,
+    "PGID": 0,
     "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
     "cifsusername": "<username>",
     "cifspassword": "<password>"
@@ -49,6 +51,8 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
+    "PUID": "int", 
+    "PGID": "int",
     "TZ": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
