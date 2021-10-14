@@ -1,7 +1,10 @@
 #!/usr/bin/with-contenv bash
 
-if [ ! -d /share/grav ]; then
-  echo "Creating /share/grav"
-  mkdir -p /share/grav
-  chown -R abc:abc /share/grav
-fi
+echo "Updating folders..." 
+
+for FOLDERS in "/share/grav" "/app/grav-admin/backup"
+do
+  echo "... $FOLDERS
+  mkdir -p $FOLDERS
+  chown -R abc:abc $FOLDERS
+done
