@@ -1,3 +1,6 @@
+
+## 4.7.0.14 (15-10-2021)
+- Update to latest version from linuxserver/docker-emby
 - Added watchdog feature 
 
 ## 4.7.0.13 (02-10-2021)
