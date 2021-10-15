@@ -1,3 +1,4 @@
+- manual_override # Optional, when enabled will reset the database and circumvent all addon option, allowing a database reset
 
 ## 2.9.1 (11-10-2021)
 - Update to latest version from portainer/portainer
