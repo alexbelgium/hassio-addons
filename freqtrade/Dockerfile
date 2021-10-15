@@ -3,6 +3,7 @@ ARG BUILD_VERSION
 FROM freqtradeorg/freqtrade:latest
 ARG BASHIO_VERSION=0.13.1
 
+USER root
 RUN \
     ###################
     # Install bashio #
