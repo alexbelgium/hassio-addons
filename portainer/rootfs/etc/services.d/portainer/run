@@ -63,9 +63,15 @@ if bashio::fs.file_exists "/data/hidden"; then
 fi
 
 # Define option
-echo -n $PASSWORD > /data/portainer_password
-options+=(--admin-password-file /data/portainer_password)
-bashio::log.info "... password set to $PASSWORD"
+if [ ${#detect} -ge 2 ] then;
+  # More than 2 letters, set password
+  echo -n $PASSWORD > /data/portainer_password
+  options+=(--admin-password-file /data/portainer_password)
+  bashio::log.info "... password set to $PASSWORD"
+else
+  touch /data/hidden
+  bashio::log.info "... starting without predefined password"
+fi
 
 ###################
 # HIDE CONTAINERS #
@@ -83,7 +89,7 @@ if ! bashio::fs.file_exists "/data/hidden"; then
     options+=(--hide-label io.hass.type=dns)
     options+=(--hide-label io.hass.type=multicast)
     options+=(--hide-label io.hass.type=observer)
-	bashio::log.info "... non-addon containers hidden"
+    bashio::log.info "... non-addon containers hidden"
     touch /data/hidden
 fi
 
