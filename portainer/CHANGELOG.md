@@ -1,4 +1,4 @@
-- manual_override # Optional, when enabled will reset the database and circumvent all addon option, allowing a database reset
+- password: define admin password. If kept blank, will allow manual restore of previous backup
 
 ## 2.9.1 (11-10-2021)
 - Update to latest version from portainer/portainer
