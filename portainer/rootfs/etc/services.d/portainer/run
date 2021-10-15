@@ -27,22 +27,6 @@ if bashio::config.true 'ssl'; then
   bashio::log.info "... ssl activated"
 fi 
 
-###################
-# MANUAL OVERRIDE #
-###################
-
-if bashio::fs.file_exists "/data/manual_override" && bashio::config.true 'manual_override' ; then
-    bashio::log.warning '... "manual_override" option is checked, portainer launched in manual override mode with no configuration'
-    exec /opt/portainer/portainer "${options[@]}"
-elif ! bashio::fs.file_exists "/data/manual_override" && bashio::config.true 'manual_override' ; then
-    rm /data/portainer.db || true
-    touch "/data/manual_override"
-    bashio::log.warning '... "manual_override" option is checked, previous configuration removed, portainer launched in manual override mode with no configuration'
-    exec /opt/portainer/portainer "${options[@]}"
-elif bashio::fs.file_exists "/data/manual_override" && ! bashio::config.true 'manual_override' ; then 
-    rm /data/manual_override
-fi
-
 ################
 # SET PASSWORD #
 ################
