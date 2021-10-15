@@ -11,6 +11,22 @@ options+=(--bind 0.0.0.0:9000)
 #options+=(--templates /opt/portainer/templates.json)
 options+=(--host unix:///var/run/docker.sock)
 
+##############
+# SSL CONFIG #
+##############
+
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+  bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+  #set variables
+  CERTFILE="$(bashio::config 'certfile')"
+  KEYFILE="$(bashio::config 'keyfile')"
+  options+=(--ssl)
+  options+=(--sslcert /ssl/$CERTFILE)
+  options+=(--sslkey /ssl/$KEYFILE)
+  bashio::log.info "... ssl activated"
+fi 
+
 ###################
 # MANUAL OVERRIDE #
 ###################
@@ -50,22 +66,6 @@ fi
 echo -n $PASSWORD > /data/portainer_password
 options+=(--admin-password-file /data/portainer_password)
 bashio::log.info "... password set to $PASSWORD"
-
-##############
-# SSL CONFIG #
-##############
-
-bashio::config.require.ssl
-if bashio::config.true 'ssl'; then
-  bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
-  #set variables
-  CERTFILE="$(bashio::config 'certfile')"
-  KEYFILE="$(bashio::config 'keyfile')"
-  options+=(--ssl)
-  options+=(--sslcert /ssl/$CERTFILE)
-  options+=(--sslkey /ssl/$KEYFILE)
-  bashio::log.info "... ssl activated"
-fi 
 
 ###################
 # HIDE CONTAINERS #
