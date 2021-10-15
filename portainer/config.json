@@ -43,7 +43,6 @@
     "ssl": "bool",
     "certfile": "str",
     "keyfile": "str",
-    "password": "str?",
-    "manual_override": "bool?"
+    "password": "str?"
   }
 }
