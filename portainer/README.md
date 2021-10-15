@@ -14,6 +14,10 @@ It has never been so easy to manage Docker. Portainer provides a detailed
 overview of Docker and allows you to manage containers, images, networks and
 volumes.
 
+## RESTORE BACKUP
+
+Keep option password empty
+
 ## WARNING
 
 The Portainer add-on is really powerful and gives you virtually access to
