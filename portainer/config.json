@@ -43,6 +43,7 @@
     "ssl": "bool",
     "certfile": "str",
     "keyfile": "str",
-    "password": "str"
+    "password": "str",
+    "test": "str?"
   }
 }
