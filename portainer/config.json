@@ -44,6 +44,6 @@
     "certfile": "str",
     "keyfile": "str",
     "password": "str",
-    "test": "str?"
+    "manual_override": "bool?"
   }
 }
