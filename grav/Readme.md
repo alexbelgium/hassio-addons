@@ -27,12 +27,14 @@ The installation of this add-on is pretty straightforward and not different in c
 
 # Configuration
 
----
-
 Webui can be found at <http://your-ip:PORT>.
 The default username/password : described in the startup log.
 Configurations can be done through the app webUI, except for the following options
+ 
+## Add theme/squeleton
+You can place the user folder from the theme/skeleton in /share/grav/www/user,
 
+## Options
 ```yaml
 GUID: user
 GPID: user
