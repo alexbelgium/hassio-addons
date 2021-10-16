@@ -35,7 +35,7 @@ fi
 CURRENTPASSWORD=""
 PASSWORD=$(bashio::config 'password')
 if ! bashio::config.has_value 'password'; then
-  PASSWORD="a"
+  PASSWORD="empty"
 fi
 touch "/data/portainer_password"
 CURRENTPASSWORD=$( cat /data/portainer_password )
