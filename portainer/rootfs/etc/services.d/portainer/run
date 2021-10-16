@@ -34,6 +34,9 @@ fi
 # Set password
 CURRENTPASSWORD=""
 PASSWORD=$(bashio::config 'password')
+if [ ${#PASSWORD} -ge 2 ] ; then 
+  PASSWORD="a" 
+fi
 touch "/data/portainer_password"
 CURRENTPASSWORD=$( cat /data/portainer_password )
 
