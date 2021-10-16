@@ -33,7 +33,7 @@ fi
 
 # Set password
 CURRENTPASSWORD=""
-PASSWORD=${(bashio::config 'password'):="empty"}
+PASSWORD=$"{(bashio::config 'password'):=empty}"
 touch "/data/portainer_password"
 CURRENTPASSWORD=$( cat /data/portainer_password )
 
