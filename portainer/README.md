@@ -16,7 +16,7 @@ volumes.
 
 ## RESTORE BACKUP
 
-Keep option password empty
+Keep option password empty, and put your backup in the /share folder, this will be mounted in the addon
 
 ## WARNING
 
