@@ -1,4 +1,4 @@
-- password: define admin password. If kept blank, will allow manual restore of previous backup
+- password: define admin password. If kept blank, will allow manual restore of previous backup put in /share
 
 ## 2.9.1 (11-10-2021)
 - Update to latest version from portainer/portainer
