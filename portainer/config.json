@@ -20,6 +20,7 @@
   ],
   "init": false,
   "map": [
+    "share:rw",
     "ssl"
   ],
   "ports": {
