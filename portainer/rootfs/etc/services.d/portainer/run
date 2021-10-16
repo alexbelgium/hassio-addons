@@ -56,7 +56,7 @@ if [ ${#PASSWORD} -ge 2 ] ; then
   options+=(--admin-password-file /data/portainer_password)
   bashio::log.info "... password set to $PASSWORD"
 else
-  # touch /data/hidden
+  echo -n $PASSWORD > /data/portainer_password
   bashio::log.info "... starting without predefined password"
 fi
 
