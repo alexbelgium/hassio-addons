@@ -34,6 +34,9 @@ fi
 # Set password
 CURRENTPASSWORD=""
 PASSWORD=$(bashio::config 'password')
+if ! bashio::config.has_value 'password'; then
+  PASSWORD="a"
+fi
 touch "/data/portainer_password"
 CURRENTPASSWORD=$( cat /data/portainer_password )
 
@@ -47,8 +50,7 @@ if bashio::fs.file_exists "/data/hidden"; then
 fi
 
 # Define option
-if [ ${#PASSWORD} -ge 2 ] ; then
-  # More than 2 letters, set password
+if bashio::config.has_value 'password' ; then
   echo -n $PASSWORD > /data/portainer_password
   options+=(--admin-password-file /data/portainer_password)
   bashio::log.info "... password set to $PASSWORD"
