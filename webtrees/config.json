@@ -21,7 +21,7 @@
      "BASE_URL": "http://192.168.178.23:9999",
      "DB_HOST": ""
   },
-  "map": [],
+  "map": ["share:rw", "ssl:ro"],
   "name": "Webtrees DO NOT USE",
   "options": {},
   "ports": {
