@@ -5,13 +5,19 @@ VOLUME [ "/data" ]
 
 USER root
 
+RUN cp -n rootfs /data \
+    && touch /data/database.sqlite \
+    && ln -s /data/config.ini.php /var/www/webtrees/data \
+    && ln -s /data/database.sqlite /var/www/webtrees/data \
+    && ln -s /data/index.php /var/www/webtrees/data
+
 #RUN rm -R /var/www/webtrees/data \
 #   && ln -s /data /var/www/webtrees
 
-RUN touch /data/database.sqlite \
-    && ln -s /data/database.sqlite /var/www/webtrees/data \
-    && touch /data/config.ini.php \
-    && ln -s /data/config.ini.php /var/www/webtrees/data
+#RUN touch /data/database.sqlite \
+#    && ln -s /data/database.sqlite /var/www/webtrees/data \
+#    && touch /data/config.ini.php \
+#   && ln -s /data/config.ini.php /var/www/webtrees/data
 
 ### LABELS
 ARG BUILD_ARCH
