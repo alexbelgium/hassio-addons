@@ -10,8 +10,8 @@
      "WT_PASS": "pleasechange",
      "WT_EMAIL": "please@change.com",
      "DB_PASS": "pleasechange",
-     "BASE_URL": "http://192.168.178.23",
-     "DB_HOST": "http://192.168.178.23:9999"
+     "BASE_URL": "http://192.168.178.23:9999",
+     "DB_HOST": "http://127.0.0.1"
   },
   "map": [],
   "name": "Webtrees",
