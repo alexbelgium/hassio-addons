@@ -5,8 +5,8 @@ VOLUME [ "/data" ]
 
 USER root
 
-RUN rm -R /var/www/webtrees/data \
-    && ln -s /data /var/www/webtrees
+#RUN rm -R /var/www/webtrees/data \
+#   && ln -s /data /var/www/webtrees
 
 #RUN touch /data/database.sqlite \
 #    && chown webtrees /data/database.sqlite \
