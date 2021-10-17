@@ -1,0 +1,32 @@
+{
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
+  "description": "web's leading on-line collaborative genealogy application",
+  "environment": {
+    "DB_TYPE": "sqlite",
+    "DB_NAME": "/data/database",
+    "WT_USER": "admin",
+    "WT_NAME": "admin",
+    "WT_PASS": "pleasechange",
+    "WT_EMAIL": "please@change.com",
+    "DB_PASS": "pleasechange"
+  },
+  "map": [],
+  "name": "Webtrees",
+  "options": {},
+  "ports": {
+    "80/tcp": "9999",
+    "443/tcp": null
+  },
+  "ports_description": {
+    "80/tcp": "Web interface",
+    "443/tcp": "Https web interface"
+  },
+  "schema": {},
+  "slug": "webtrees",
+  "startup": "services",
+  "upstream": "2.0.17",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "2.1",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
+}
