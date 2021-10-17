@@ -9,9 +9,9 @@
      "WT_NAME": "admin",
      "WT_PASS": "pleasechange",
      "WT_EMAIL": "please@change.com",
-     "DB_PASS": "pleasechange",
+     "DB_PASS": "",
      "BASE_URL": "http://192.168.178.23:9999",
-     "DB_HOST": "http://127.0.0.1"
+     "DB_HOST": ""
   },
   "map": [],
   "name": "Webtrees DO NOT USE",
