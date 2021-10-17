@@ -9,7 +9,7 @@ USER root
 #   && ln -s /data /var/www/webtrees
 
 RUN touch /data/database.sqlite \
-    && chown webtrees /data/database.sqlite \
+   # && chown webtrees /data/database.sqlite \
     && ln -s /data/database.sqlite /var/www/webtrees/data
 
 ### LABELS
