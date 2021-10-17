@@ -5,7 +5,7 @@ VOLUME [ "/data" ]
 
 #USER root
 
-WORKDIR /data
+WORKDIR "/data"
 
 #RUN \
     ###############
