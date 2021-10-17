@@ -2,9 +2,10 @@ ARG BUILD_VERSION
 FROM wger/devel:latest
 
 VOLUME [ "/data" ]
-VOLUME [ "/share" ] 
 
-USER root
+#USER root
+
+WORKDIR /data
 
 #RUN \
     ###############
