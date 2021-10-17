@@ -1,16 +1,10 @@
 {
-  "arch": [
-    "amd64",
-    "aarch64"
-  ],
+  "arch": ["amd64", "aarch64"],
   "boot": "auto",
-  "description": "TEST DO NOT USE",
+  "description": "manage your personal workouts, weight and diet plans",
   "environment": {},
-  "map": [
-    "share:rw",
-    "ssl:ro"
-  ],
-  "name": "Wger DO NOT USE",
+  "map": ["share:rw", "ssl:ro"],
+  "name": "Wger",
   "options": {},
   "ports": {
     "8000/tcp": "9927"
