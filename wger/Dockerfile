@@ -1,10 +1,6 @@
 ARG BUILD_VERSION
 FROM wger/devel:latest
 
-#COPY rootfs / 
-
-ARG BASHIO_VERSION=0.13.1
-
 VOLUME [ "/data" ]
 VOLUME [ "/share" ] 
 
