@@ -5,19 +5,9 @@ VOLUME [ "/data" ]
 
 USER root
 
-RUN ln -s /home/wger /data
-
-#USER wger
-#COPY /home/wger/src /data
-#WORKDIR "/data"
-#RUN \
-    ###############
-    # Adapt image #
-    ###############
-    # Correct data path
-    #mkdir -p /share/wger \
-    #&& ln -s /share/wger /home
-
+RUN touch /data/database.sqlite \
+    && chown wger /data/database.sqlite \
+    && ln -s /data/database.sqlite /home/wger/db
 
 ### LABELS
 ARG BUILD_ARCH
