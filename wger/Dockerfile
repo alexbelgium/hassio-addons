@@ -1,26 +1,28 @@
+ARG BUILD_VERSION
 FROM wger/devel:latest
 
-COPY rootfs / 
+#COPY rootfs / 
 
 ARG BASHIO_VERSION=0.13.1
+
+VOLUME [ "/data" ] 
 
 RUN \
     ##################
     # Install bashio #
     ##################
-    mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
+    #mkdir -p /tmp/bashio \
+    #&& curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+    #| tar -xzf - --strip 1 -C /tmp/bashio \
+   # && mv /tmp/bashio/lib /usr/lib/bashio \
+    #&& ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+   # && rm -rf /tmp/bashio \
     ###############
     # Adapt image #
     ###############
     # Correct data path
-    && ln -s /data /home/wger/src
+    ln -s /data /home/wger/src
 
-VOLUME [ "/data" ] 
 
 ### LABELS
 ARG BUILD_ARCH
