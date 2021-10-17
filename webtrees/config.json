@@ -3,6 +3,15 @@
   "boot": "auto",
   "description": "web's leading on-line collaborative genealogy application",
   "environment": {
+    "DB_TYPE": "sqlite",
+    "DB_NAME": "database",
+    "WT_USER": "admin",
+     "WT_NAME": "admin",
+     "WT_PASS": "pleasechange",
+     "WT_EMAIL": "please@change.com",
+     "DB_PASS": "pleasechange",
+     "BASE_URL": "http://192.168.178.23",
+     "DB_HOST": "http://192.168.178.23:9999"
   },
   "map": [],
   "name": "Webtrees",
