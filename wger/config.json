@@ -1,7 +1,7 @@
 {
   "name": "Wger DO NOT USE",
-  "version": "0.5.2-4",
-  "upstream": "0.5.2",
+  "version": "2.1-dev",
+  "upstream": "2.1-dev",
   "slug": "wger",
   "description": "TEST DO NOT USE", 
   "url": "https://github.com/alexbelgium/hassio-addons",
