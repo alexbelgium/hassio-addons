@@ -13,7 +13,7 @@ RUN \
     # Correct data path
     mkdir -p /share/wger \
     mkdir -p /home/wger/src \
-    && ln -s /sharewger /home/wger/src
+    && ln -s /share/wger /home/wger/src
 
 
 ### LABELS
