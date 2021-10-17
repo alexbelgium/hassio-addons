@@ -10,7 +10,7 @@ USER root
 
 #RUN touch /data/database.sqlite \
 #    && chown webtrees /data/database.sqlite \
-#    && ln -s /data/database.sqlite /home/webtrees/db
+#    && ln -s /data/database.sqlite /var/www/webtrees/data
 
 ### LABELS
 ARG BUILD_ARCH
