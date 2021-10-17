@@ -33,8 +33,8 @@ RUN \
     \
     # use /data instead of /config for hass.io environment
 #    && sed -i "s|/config|/share/grav|g" /etc/services.d/grav/run \
-    && sed -i "s|/config|/share/grav|g" /etc/cont-init.d/50-config \
-    && sed -i "s|/share/grav/nginx|/config/nginx|g" /etc/cont-init.d/50-config \
+#    && sed -i "s|/config|/share/grav|g" /etc/cont-init.d/50-config \
+#    && sed -i "s|/share/grav/nginx|/config/nginx|g" /etc/cont-init.d/50-config \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
