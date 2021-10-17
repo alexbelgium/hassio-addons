@@ -9,8 +9,9 @@ USER root
 #   && ln -s /data /var/www/webtrees
 
 RUN touch /data/database.sqlite \
-   # && chown webtrees /data/database.sqlite \
-    && ln -s /data/database.sqlite /var/www/webtrees/data
+    && ln -s /data/database.sqlite /var/www/webtrees/data \
+    && touch /data/config.ini.php \
+    && ln -s /data/config.ini.php /var/www/webtrees/data
 
 ### LABELS
 ARG BUILD_ARCH
