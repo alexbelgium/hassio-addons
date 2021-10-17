@@ -11,7 +11,8 @@ RUN \
     # Adapt image #
     ###############
     # Correct data path
-    mkdir -p /share/wger /home/wger/src \
+    mkdir -p /share/wger \
+    mkdir -p /home/wger/src \
     && ln -s /sharewger /home/wger/src
 
 
