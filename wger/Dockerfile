@@ -3,7 +3,7 @@ FROM wger/devel:latest
 
 VOLUME [ "/data" ]
 
-#USER root
+COPY /home/wger/src /data
 
 WORKDIR "/data"
 
