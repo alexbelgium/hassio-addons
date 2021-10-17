@@ -4,7 +4,7 @@
   "description": "web's leading on-line collaborative genealogy application",
   "environment": {
     "DB_TYPE": "sqlite",
-    "DB_NAME": "/data/database",
+    "DB_NAME": "database",
     "WT_USER": "admin",
     "WT_NAME": "admin",
     "WT_PASS": "pleasechange",
