@@ -1,0 +1,30 @@
+{
+  "name": "Wger DO NOT USE",
+  "version": "0.5.2-4",
+  "upstream": "0.5.2",
+  "slug": "wger",
+  "description": "TEST DO NOT USE", 
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]",
+  "startup": "services",
+  "boot": "auto",
+  "ports": {
+    "8080/tcp": "9927"
+  },
+  "ports_description": {
+    "8080/tcp": "Web interface"
+  },
+  "map": [
+    "share:rw", 
+    "ssl:ro"
+  ],
+  "environment": {
+  },
+  "options": {
+  },
+  "schema": {
+    },
+  "arch": [
+    "amd64"
+  ]
+}
