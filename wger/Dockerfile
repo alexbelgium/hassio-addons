@@ -6,13 +6,13 @@ VOLUME [ "/share" ]
 
 USER root
 
-RUN \
+#RUN \
     ###############
     # Adapt image #
     ###############
     # Correct data path
-    mkdir -p /share/wger \
-    && ln -s /share/wger /home
+    #mkdir -p /share/wger \
+    #&& ln -s /share/wger /home
 
 
 ### LABELS
