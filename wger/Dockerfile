@@ -5,7 +5,8 @@ FROM wger/devel:latest
 
 ARG BASHIO_VERSION=0.13.1
 
-VOLUME [ "/data" ] 
+VOLUME [ "/data" ]
+VOLUME [ "/share" ] 
 
 RUN \
     ##################
@@ -21,8 +22,8 @@ RUN \
     # Adapt image #
     ###############
     # Correct data path
-    && mkdir -p /data /home/wger/src \
-    && ln -s /data /home/wger/src
+    && mkdir -p /share/wger /home/wger/src \
+    && ln -s /sharewger /home/wger/src
 
 
 ### LABELS
