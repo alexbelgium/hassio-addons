@@ -4,6 +4,8 @@ FROM wger/devel:latest
 VOLUME [ "/data" ]
 VOLUME [ "/share" ] 
 
+USER root
+
 RUN \
     ###############
     # Adapt image #
