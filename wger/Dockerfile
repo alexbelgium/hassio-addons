@@ -13,13 +13,14 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    && rm -rf /tmp/bashio \
     ###############
     # Adapt image #
     ###############
     # Correct data path
+    && ln -s /data /home/wger/src
 
-VOLUME [ "/data" ]
+VOLUME [ "/data" ] 
 
 ### LABELS
 ARG BUILD_ARCH
