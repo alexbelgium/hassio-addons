@@ -14,7 +14,7 @@
      "DB_HOST": "http://127.0.0.1"
   },
   "map": [],
-  "name": "Webtrees",
+  "name": "Webtrees DO NOT USE",
   "options": {},
   "ports": {
     "80/tcp": "9999",
