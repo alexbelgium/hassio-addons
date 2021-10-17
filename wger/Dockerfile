@@ -7,12 +7,9 @@ USER root
 
 RUN ln -s /home/wger /data
 
-USER wger
-
+#USER wger
 #COPY /home/wger/src /data
-
 #WORKDIR "/data"
-
 #RUN \
     ###############
     # Adapt image #
