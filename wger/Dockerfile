@@ -5,7 +5,7 @@ VOLUME [ "/data" ]
 
 #COPY /home/wger/src /data
 
-WORKDIR "/data"
+#WORKDIR "/data"
 
 #RUN \
     ###############
