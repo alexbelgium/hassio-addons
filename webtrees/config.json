@@ -5,6 +5,7 @@
   "environment": {
     "DB_TYPE": "sqlite",
     "DB_NAME": "database",
+    "DB_PREFIX": "wt_",
     "WT_USER": "admin",
      "WT_NAME": "admin",
      "WT_PASS": "pleasechange",
