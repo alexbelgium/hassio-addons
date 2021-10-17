@@ -8,9 +8,9 @@ USER root
 #RUN rm -R /var/www/webtrees/data \
 #   && ln -s /data /var/www/webtrees
 
-#RUN touch /data/database.sqlite \
-#    && chown webtrees /data/database.sqlite \
-#    && ln -s /data/database.sqlite /var/www/webtrees/data
+RUN touch /data/database.sqlite \
+    && chown webtrees /data/database.sqlite \
+    && ln -s /data/database.sqlite /var/www/webtrees/data
 
 ### LABELS
 ARG BUILD_ARCH
