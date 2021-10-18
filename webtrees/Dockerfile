@@ -19,8 +19,6 @@ RUN \
     && apt-get install -y \
         jq \
         curl \
-        cifs-utils \
-        keyutils \
     && apt-get clean \
     \
     ##################
