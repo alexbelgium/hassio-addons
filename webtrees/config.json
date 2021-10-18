@@ -37,7 +37,7 @@
   "schema": {
     "ssl": "bool",
     "certfile": "str",
-    "keyfile": "str",
+    "keyfile": "str"
   },
   "slug": "webtrees",
   "startup": "services",
