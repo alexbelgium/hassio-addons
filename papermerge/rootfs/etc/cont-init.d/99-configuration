@@ -7,7 +7,7 @@
   #Set media dir
   MEDIADIR=$(bashio::config 'storage_dir') 
   #clean data
-  sed -i 'MEDIA_DIR' /config/papermerge.conf.py
+  sed -i '/MEDIA_DIR/d' /config/papermerge.conf.py
   #add data
   sed -i "2 i\MEDIA_DIR = $MEDIADIR" /config/papermerge.conf.py
   bashio::log.info "Storage dir set to $MEDIADIR"
