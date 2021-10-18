@@ -12,6 +12,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
         curl \
         cifs-utils \
         keyutils \
+        smbclient \
         samba
 
     ###################
