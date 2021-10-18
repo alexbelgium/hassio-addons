@@ -1,0 +1,18 @@
+#!/usr/bin/with-contenv bashio
+
+##################
+# SELECT FOLDERS #
+##################
+
+  #Set media dir
+  MEDIADIR=$(bashio::config 'storage_dir') 
+  #clean data
+  sed -i 'MEDIA_DIR' /config/papermerge.conf.py
+  #add data
+  sed -i "2 i\MEDIA_DIR = $MEDIADIR" /config/papermerge.conf.py
+  bashio::log.info "Storage dir set to $MEDIADIR"
+
+  #Set import dir
+  IMPORTDIR="$(bashio::config 'import_dir')"
+  sed -i "2 i\export IMPORTER_DIR=$IMPORTDIR" /etc/services.d/papermerge/run
+  bashio::log.info "Import dir set to $IMPORTDIR"
