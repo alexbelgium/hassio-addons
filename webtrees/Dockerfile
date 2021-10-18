@@ -1,5 +1,5 @@
 ARG BUILD_VERSION
-FROM nathanvaughn/webtrees:latest
+FROM dtjs48jkt/webtrees:latest
 
 VOLUME [ "/data" ]
 
