@@ -6,7 +6,7 @@
     "PORT": "80",
     "PRETTY_URLS": "0",
     "LANG": "en-US",
-    "BASE_URL": "http://192.168.178.69",
+    "BASE_URL": "http://192.168.178.69:9999",
     "DB_TYPE": "sqlite",
     "DB_HOST": "http://127.0.0.1",
     "DB_PORT": "80",
