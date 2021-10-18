@@ -8,6 +8,10 @@
     "LANG": "en-US",
     "BASE_URL": "http://192.168.178.69",
     "DB_TYPE": "sqlite",
+    "DB_HOST": "http://127.0.0.1",
+    "DB_PORT": "80",
+    "DB_USER": "test",
+    "DB_PASS": "test",
     "DB_NAME": "webtrees.sqlite",
     "DB_PREFIX": "wt_",
     "WT_USER": "username",
@@ -17,7 +21,11 @@
   },
   "map": ["share:rw", "ssl:ro"],
   "name": "Webtrees DO NOT USE",
-  "options": {},
+  "options": {
+    "ssl": false,
+    "certfile": "fullchain.pem",
+    "keyfile": "privkey.pem",
+  },
   "ports": {
     "80/tcp": "9999",
     "443/tcp": null
@@ -26,7 +34,11 @@
     "80/tcp": "Web interface",
     "443/tcp": "Https web interface"
   },
-  "schema": {},
+  "schema": {
+    "ssl": "bool",
+    "certfile": "str",
+    "keyfile": "str",
+  },
   "slug": "webtrees",
   "startup": "services",
   "upstream": "2.0.17",
