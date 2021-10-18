@@ -3,6 +3,7 @@
   "boot": "auto",
   "description": "web's leading on-line collaborative genealogy application",
   "environment": {
+    "PORT": "80"
   },
   "map": ["share:rw", "ssl:ro"],
   "name": "Webtrees DO NOT USE",
