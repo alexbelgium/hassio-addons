@@ -16,3 +16,25 @@
   IMPORTDIR="$(bashio::config 'import_dir')"
   sed -i "2 i\export IMPORTER_DIR=$IMPORTDIR" /etc/services.d/papermerge/run
   bashio::log.info "Import dir set to $IMPORTDIR"
+
+##################
+# CREATE FOLDERS #
+##################
+
+if [ ! -d /config ]; then
+  echo "Creating /config"
+  mkdir -p /config
+  chown -R abc:abc /config
+fi
+
+if [ ! -d $MEDIADIR ]; then
+  echo "Creating $MEDIADIR"
+  mkdir -p $MEDIADIR
+  chown -R abc:abc $MEDIADIR
+fi
+
+if [ ! -d $IMPORTDIR ]; then
+  echo "Creating $IMPORTDIR"
+  mkdir -p $IMPORTDIR
+  chown -R abc:abc $IMPORTDIR
+fi 
