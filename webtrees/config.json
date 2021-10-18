@@ -3,7 +3,17 @@
   "boot": "auto",
   "description": "web's leading on-line collaborative genealogy application",
   "environment": {
-    "PORT": "80"
+    "PORT": "80",
+    "PRETTY_URLS": "0",
+    "LANG": "en-US",
+    "BASE_URL": "http://192.168.178.69",
+    "DB_TYPE": "sqlite",
+    "DB_NAME": "webtrees.sqlite",
+    "DB_PREFIX": "wt_",
+    "WT_USER": "username",
+    "WT_NAME": "Full Name",
+    "WT_PASS": "mybadpassword",
+    "WT_EMAIL": "me@example.com"
   },
   "map": ["share:rw", "ssl:ro"],
   "name": "Webtrees DO NOT USE",
