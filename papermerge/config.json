@@ -20,7 +20,9 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "ocrlang": "eng,fra"
+    "ocrlang": "eng,fra", 
+    "storage_folder": "/share/papermerge/storage", 
+    "import_folder": "/share/papermerge/import"
   },
   "apparmor": true,
   "schema": {
@@ -30,6 +32,8 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
+    "storage_folder": "str",
+    "import_folder": "str",
     "smbv1": "bool?",
     "TZ": "str?"
   }
