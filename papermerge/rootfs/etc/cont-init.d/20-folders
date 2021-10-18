@@ -1,7 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-if [ ! -d /config ]; then
-  echo "Creating /config"
-  mkdir -p /config
-  chown -R abc:abc /config
-fi
