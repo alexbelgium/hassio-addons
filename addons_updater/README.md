@@ -1,4 +1,5 @@
 # Home assistant add-on: addons updater
+
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 ## About
@@ -33,7 +34,6 @@ gituser: your github username
 gituser: your github email
 gitpass: add your github password here, or a specific key if you have two factor identification enabled
 ```
-
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg

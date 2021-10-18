@@ -5,36 +5,36 @@
 ##########
 
 if bashio::supervisor.ping; then
-    bashio::log.blue \
-        '-----------------------------------------------------------'
-    bashio::log.blue " Add-on: $(bashio::addon.name)"
-    bashio::log.blue " $(bashio::addon.description)"
-    bashio::log.blue \
-        '-----------------------------------------------------------'
+  bashio::log.blue \
+    '-----------------------------------------------------------'
+  bashio::log.blue " Add-on: $(bashio::addon.name)"
+  bashio::log.blue " $(bashio::addon.description)"
+  bashio::log.blue \
+    '-----------------------------------------------------------'
 
-    bashio::log.blue " Add-on version: $(bashio::addon.version)"
-    if bashio::var.true "$(bashio::addon.update_available)"; then
-        bashio::log.magenta ' There is an update available for this add-on!'
-        bashio::log.magenta \
-            " Latest add-on version: $(bashio::addon.version_latest)"
-        bashio::log.magenta ' Please consider upgrading as soon as possible.'
-    else
-        bashio::log.green ' You are running the latest version of this add-on.'
-    fi
+  bashio::log.blue " Add-on version: $(bashio::addon.version)"
+  if bashio::var.true "$(bashio::addon.update_available)"; then
+    bashio::log.magenta ' There is an update available for this add-on!'
+    bashio::log.magenta \
+      " Latest add-on version: $(bashio::addon.version_latest)"
+    bashio::log.magenta ' Please consider upgrading as soon as possible.'
+  else
+    bashio::log.green ' You are running the latest version of this add-on.'
+  fi
 
-    bashio::log.blue " System: $(bashio::info.operating_system)" \
-        " ($(bashio::info.arch) / $(bashio::info.machine))"
-    bashio::log.blue " Home Assistant Core: $(bashio::info.homeassistant)"
-    bashio::log.blue " Home Assistant Supervisor: $(bashio::info.supervisor)"
+  bashio::log.blue " System: $(bashio::info.operating_system)" \
+    " ($(bashio::info.arch) / $(bashio::info.machine))"
+  bashio::log.blue " Home Assistant Core: $(bashio::info.homeassistant)"
+  bashio::log.blue " Home Assistant Supervisor: $(bashio::info.supervisor)"
 
-    bashio::log.blue \
-        '-----------------------------------------------------------'
-    bashio::log.blue \
-        ' Please, share the above information when looking for help'
-    bashio::log.blue \
-        ' or support in, e.g., GitHub, forums or the Discord chat.'
-    bashio::log.blue \
-        '-----------------------------------------------------------'
+  bashio::log.blue \
+    '-----------------------------------------------------------'
+  bashio::log.blue \
+    ' Please, share the above information when looking for help'
+  bashio::log.blue \
+    ' or support in, e.g., GitHub, forums or the Discord chat.'
+  bashio::log.blue \
+    '-----------------------------------------------------------'
 fi
 
 ##########
@@ -84,7 +84,8 @@ for addons in $(bashio::config "addon|keys"); do
   else
     LOGINFO="... $SLUG : updating ${REPOSITORY}" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     cd "/data/$BASENAME"
-    git pull --rebase &>/dev/null || git reset --hard &>/dev/null; git pull --rebase &>/dev/null
+    git pull --rebase &>/dev/null || git reset --hard &>/dev/null
+    git pull --rebase &>/dev/null
   fi
 
   #Define the folder addon
@@ -119,7 +120,7 @@ for addons in $(bashio::config "addon|keys"); do
     LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET)
   else
     LOGINFO="... $SLUG : beta is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET) 
+    LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET)
   fi
 
   # Add brackets
@@ -136,12 +137,12 @@ for addons in $(bashio::config "addon|keys"); do
     #Change all instances of version
     LOGINFO="... $SLUG : updating files" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/config.json
-    sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/Dockerfile || true #Allow absence of Dockerfile
+    sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/Dockerfile || true                                                  #Allow absence of Dockerfile
     [ -f "/data/${BASENAME}/${SLUG}/build.json" ] && sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/build.json || true #Allow absence of build.json
 
     # Remove " and modify version
-    LASTVERSION=${LASTVERSION//\"}
-    CURRENT=${CURRENT//\"}
+    LASTVERSION=${LASTVERSION//\"/}
+    CURRENT=${CURRENT//\"/}
     jq --arg variable $LASTVERSION '.version = $variable' /data/${BASENAME}/${SLUG}/config.json | sponge /data/${BASENAME}/${SLUG}/config.json # Replace version tag
 
     #Update changelog
@@ -151,7 +152,7 @@ for addons in $(bashio::config "addon|keys"); do
     sed -i "1i " /data/${BASENAME}/${SLUG}/CHANGELOG.md
     LOGINFO="... $SLUG : files updated" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
 
-    #Git commit and push 
+    #Git commit and push
     git add -A # add all modified files
     git commit -m "Update to ${LASTVERSION}" >/dev/null
 
@@ -169,4 +170,3 @@ for addons in $(bashio::config "addon|keys"); do
 done
 
 bashio::log.info "Addons update completed"
-

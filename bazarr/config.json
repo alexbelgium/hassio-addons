@@ -1,15 +1,6 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
-  "backup_exclude": [
-    "**/Backups/*",
-    "**/logs/*",
-    "**/MediaCover/*"
-  ],
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "backup_exclude": ["**/Backups/*", "**/logs/*", "**/MediaCover/*"],
   "boot": "auto",
   "description": "Companion application to Sonarr and Radarr to download subtitles",
   "devices": [
@@ -32,12 +23,7 @@
     "PUID": "0",
     "PGID": "0"
   },
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Bazarr NAS",
   "options": {
     "PUID": 0,
@@ -49,10 +35,7 @@
   "ports_description": {
     "6767/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PUID": "int",
     "PGID": "int",

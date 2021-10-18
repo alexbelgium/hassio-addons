@@ -1,35 +1,45 @@
 {
-    "name": "Addons_Updater",
-    "version": "3.2",
-    "slug": "updater",
-    "description": "Automatic addons update by aligning version tag with upstream releases",
-    "url": "https://github.com/alexbelgium/hassio-addons",
-    "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
-   "ports": {
-    },
-   "ports_description": {
-    }, 
+  "name": "Addons_Updater",
+  "version": "3.2",
+  "slug": "updater",
+  "description": "Automatic addons update by aligning version tag with upstream releases",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "ports": {},
+  "ports_description": {},
   "startup": "once",
   "boot": "manual",
-  "environment": { "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1" }, 
+  "environment": { "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1" },
   "options": {
-  "addon": [{ "slug": "addon slug", "beta": false, "fulltag": false, "repository": "https://github.com/user/repo", "upstream": "github_user/repo_name" }],
-  "gituser": "gituser",
-  "gitpass": "gitpassword",
-  "gitmail": "youremail@gmail.com", 
-  "verbose": true
+    "addon": [
+      {
+        "slug": "addon slug",
+        "beta": false,
+        "fulltag": false,
+        "repository": "https://github.com/user/repo",
+        "upstream": "github_user/repo_name"
+      }
+    ],
+    "gituser": "gituser",
+    "gitpass": "gitpassword",
+    "gitmail": "youremail@gmail.com",
+    "verbose": true
   },
   "schema": {
-  "addon": [{ "slug": "str", "beta": "bool", "fulltag": "bool", "having_asset": "bool?", "repository": "str", "upstream": "str"}],
-  "gituser": "str",
-  "gitpass": "str",
-  "gitmail": "str",
-  "gitapi": "str?",
-  "verbose": "bool"
+    "addon": [
+      {
+        "slug": "str",
+        "beta": "bool",
+        "fulltag": "bool",
+        "having_asset": "bool?",
+        "repository": "str",
+        "upstream": "str"
+      }
+    ],
+    "gituser": "str",
+    "gitpass": "str",
+    "gitmail": "str",
+    "gitapi": "str?",
+    "verbose": "bool"
   }
 }

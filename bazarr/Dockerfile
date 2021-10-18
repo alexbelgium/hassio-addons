@@ -10,17 +10,17 @@ RUN \
     apt-get clean \
     && apt-get update \
     && apt-get install -y \
-        jq \
-        curl \
-        cifs-utils \
-        keyutils \
-        samba \
+    jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
     || apk add --no-cache \
-        jq \
-        curl \
-        cifs-utils \
-        keyutils \
-        samba \
+    jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
     \ 
     ##################
     # Install bashio #
