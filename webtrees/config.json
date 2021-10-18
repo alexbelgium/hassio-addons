@@ -24,7 +24,7 @@
   "options": {
     "ssl": false,
     "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem",
+    "keyfile": "privkey.pem"
   },
   "ports": {
     "80/tcp": "9999",
