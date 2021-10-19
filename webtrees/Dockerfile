@@ -31,10 +31,10 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
 
-#RUN cp -n rootfs /data \
-#    && touch /data/database.sqlite \
-#    && ln -s /data/config.ini.php /var/www/webtrees/data \
+RUN cp -n rootfs /data
+    && ln -s /data/config.ini.php /var/www/webtrees/data
 #    && ln -s /data/database.sqlite /var/www/webtrees/data \
+#    && touch /data/database.sqlite \
 #    && ln -s /data/index.php /var/www/webtrees/data
 
 #RUN rm -R /var/www/webtrees/data \
