@@ -20,6 +20,7 @@ RUN \
     cifs-utils \
     keyutils \
     samba \
+    smbclient \
     \ 
     ###################
     # Install bashio #
@@ -32,7 +33,7 @@ RUN \
     && rm -rf /tmp/bashio \
     \
     # use /data instead of /config for hass.io environment
-#    && sed -i "s|/config|/share/grav|g" /etc/services.d/grav/run \
+    #    && sed -i "s|/config|/share/grav|g" /etc/services.d/grav/run \
     && sed -i "s|/config|/share/grav|g" /etc/cont-init.d/50-config \
     && sed -i "s|/share/grav/nginx|/config/nginx|g" /etc/cont-init.d/50-config \
     \

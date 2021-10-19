@@ -11,6 +11,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     jq \
     samba \
+    smbclient \
     \
     && apt-get -y upgrade cifs-utils \
     \

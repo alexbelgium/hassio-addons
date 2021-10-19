@@ -11,11 +11,12 @@ RUN \
     apt-get clean \
     && apt-get update \
     && apt-get install -y \
-        jq \
-        curl \
-        cifs-utils \
-        keyutils \
-        samba \
+    jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
+    smbclient \
     \ 
     ###################
     # Install bashio #
@@ -35,11 +36,11 @@ RUN \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-	\
+    \
     # Correct permissions 
     && sed -i 's|/config|-R /config/prowlarr|g' /etc/cont-init.d/10-adduser \    
     && sed -i 's=	/config=/config/prowlarr || true=g' /etc/cont-init.d/30-config \
     && sed -i 's|/config|/config/prowlarr|g' /etc/services.d/prowlarr/run
-	
+
 # copy local files
 COPY root/ /

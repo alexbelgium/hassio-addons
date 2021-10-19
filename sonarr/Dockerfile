@@ -5,17 +5,18 @@ FROM ${BUILD_FROM}
 ARG BASHIO_VERSION=0.13.1
 
 RUN \
-     ################
+    ################
     # Install apps #
     ################
     apt-get clean \
     && apt-get update \
     && apt-get install -y \
-        jq \
-        curl \
-        cifs-utils \
-        keyutils \
-        samba \
+    jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
+    smbclient \
     \ 
     ##################
     # Install bashio #

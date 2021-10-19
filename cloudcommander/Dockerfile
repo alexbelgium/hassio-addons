@@ -9,11 +9,12 @@ RUN \
     apt-get clean \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        jq \
-        cifs-utils \    
-        keyutils \
-        samba \
-        nginx \
+    jq \
+    cifs-utils \    
+    keyutils \
+    samba \
+    smbclient \
+    nginx \
     && apt-get clean \
     \
     ##################

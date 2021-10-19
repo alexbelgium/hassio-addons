@@ -14,14 +14,15 @@ RUN \
     apt-get clean \
     && apt-get update \
     && apt-get install -y \
-        jq \
-        curl \
-        cifs-utils \
-        keyutils \
-        samba \
-        nginx \
-        coreutils \
-        openvpn \
+    jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
+    smbclient \
+    nginx \
+    coreutils \
+    openvpn \
     && apt-get clean \
     \    
     ##################
