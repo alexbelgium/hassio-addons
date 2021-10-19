@@ -10,6 +10,9 @@ ARG BASHIO_VERSION=0.13.1
 ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
+# Copy root filesystem
+COPY rootfs /
+
 RUN \
     ################
     # Install apps #
@@ -30,15 +33,15 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
-
-# Copy root filesystem
-COPY rootfs /
-
-RUN cp -n /config.ini.php /data \
+    \
+    ################
+    # Modify image #
+    ################
+    && cp -n /config.ini.php /data \
     && ln -s /data/config.ini.php /var/www/webtrees/data
-#    && ln -s /data/database.sqlite /var/www/webtrees/data \
-#    && touch /data/database.sqlite \
-#    && ln -s /data/index.php /var/www/webtrees/data
+    && touch /data/webtrees.sqlite \
+    && ln -s /data/webtrees.sqlite /var/www/webtrees/data
+
 
 #RUN rm -R /var/www/webtrees/data \
 #   && ln -s /data /var/www/webtrees
