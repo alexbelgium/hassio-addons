@@ -31,7 +31,10 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
 
-RUN cp -n rootfs /data \
+# Copy root filesystem
+COPY rootfs /
+
+RUN cp -n /config.ini.php /data \
     && ln -s /data/config.ini.php /var/www/webtrees/data
 #    && ln -s /data/database.sqlite /var/www/webtrees/data \
 #    && touch /data/database.sqlite \
