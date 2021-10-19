@@ -25,9 +25,8 @@ RUN apt-get update \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
-
-# MOFIFY DATA PATH
-RUN sed -i "s|config|data|g" /etc/services.d/code-server/run
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    # MOFIFY DATA PATH
+    && sed -i "s|config|data|g" /etc/services.d/code-server/run
 
 VOLUME [ "/data" ]

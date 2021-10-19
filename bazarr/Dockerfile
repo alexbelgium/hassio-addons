@@ -32,10 +32,11 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio
+
+RUN \
     # Correct config folder
-    && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/bazarr|g' \
+    grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/bazarr|g' \
     && grep -rl " /config" /etc/services.d | xargs sed -i 's| /config| /config/bazarr|g' \
     && sed -i 's=/config/flexget=/config/bazarr || true=g' /etc/cont-init.d/10-adduser \
     \
