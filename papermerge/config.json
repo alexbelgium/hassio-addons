@@ -21,7 +21,7 @@
     "PUID": 0,
     "PGID": 0,
     "ocrlang": "eng,fra", 
-    "storage_dir": "/share/papermerge/storage", 
+    "storage_dir": "/data/media", 
     "import_dir": "/share/papermerge/import"
   },
   "apparmor": true,
