@@ -37,7 +37,7 @@ RUN \
     ################
     # Modify image #
     ################
-    && cp -n /config.ini.php /data \
+    && cp -n /defaults/config.ini.php /data \
     && ln -s /data/config.ini.php /var/www/webtrees/data \
     && touch /data/webtrees.sqlite \
     && ln -s /data/webtrees.sqlite /var/www/webtrees/data
