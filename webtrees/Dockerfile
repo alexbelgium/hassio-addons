@@ -32,11 +32,11 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
+    && rm -rf /tmp/bashio
     ################
     # Modify image #
     ################
-    && chmod +x /run.sh
+   # && chmod +x /run.sh
     #&& sed -i 's!/bin/bash/bashio/g' /docker-entrypoint.sh
     # Add script
     #&& sed -i '1d' /docker-entrypoint.sh \
