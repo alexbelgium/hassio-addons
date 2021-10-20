@@ -41,7 +41,7 @@ RUN \
     # Add script
     && sed -i '1d' /docker-entrypoint.sh \
     && cat /newscript > /temporaryfile \
-    && cat /docker-entrypoint.sh >> /temporaryfile \#
+    && cat /docker-entrypoint.sh >> /temporaryfile \
     && cat /temporaryfile > /docker-entrypoint.sh \
     && chmod +x /docker-entrypoint.sh \
     && rm /temporaryfile
