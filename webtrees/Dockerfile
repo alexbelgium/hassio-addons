@@ -11,7 +11,7 @@ ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
 # Copy root filesystem
-COPY rootfs /
+# COPY rootfs /
 
 RUN \
     ################
