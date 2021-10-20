@@ -11,7 +11,7 @@ ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
 # Copy root filesystem
-# COPY rootfs /
+COPY rootfs /
 
 RUN \
     ################
@@ -32,7 +32,13 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    && rm -rf /tmp/bashio\
+    \
+    ################
+    # Modify image #
+    ################    
+    && chmod +x 775 /docker-entrypoint.sh
+    
     ################
     # Modify image #
     ################
