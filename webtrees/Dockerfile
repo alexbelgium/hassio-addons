@@ -32,15 +32,14 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio
     ################
     # Modify image #
     ################
-    && cp -n /defaults/config.ini.php /data \
-    && ln -s /data/config.ini.php /var/www/webtrees/data \
-    && touch /data/webtrees.sqlite \
-    && ln -s /data/webtrees.sqlite /var/www/webtrees/data
+    # && cp -n /defaults/config.ini.php /data \
+    #&& ln -s /data/config.ini.php /var/www/webtrees/data \
+    #&& touch /data/webtrees.sqlite \
+    #&& ln -s /data/webtrees.sqlite /var/www/webtrees/data
 
 
 #RUN rm -R /var/www/webtrees/data \
