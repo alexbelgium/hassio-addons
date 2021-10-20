@@ -32,17 +32,17 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio\
-    \
+    && rm -rf /tmp/bashio
+    
     ################
     # Modify image #
     ################
     # Add script
-    && cat /run > /temporaryfile \
-    && cat /docker-entrypoint.sh >> /temporaryfile \
-    && cat /temporaryfile > /docker-entrypoint.sh \
-    && chmod +x /docker-entrypoint.sh \
-    && rm /temporaryfile
+    #&& cat /run > /temporaryfile \
+    #&& cat /docker-entrypoint.sh >> /temporaryfile \#
+    #&& cat /temporaryfile > /docker-entrypoint.sh \
+   # && chmod +x /docker-entrypoint.sh \
+  #  && rm /temporaryfile
     # Add correct location
     #&& sed -i "s|CONFIG_FILE="data|CONFIG_FILE="/data|g" /etc/cont-init.d/
     ################
