@@ -56,7 +56,7 @@ RUN \
     
 ENV WEBTREES_HOME="/data"
 WORKDIR $WEBTREES_HOME
-COPY /var/www/webtrees/.htaccess $WEBTREES_HOME
+#COPY /var/www/webtrees/.htaccess $WEBTREES_HOME 
 
 
 #RUN rm - $WEBTREES_HOMER /var/www/webtrees/data \
