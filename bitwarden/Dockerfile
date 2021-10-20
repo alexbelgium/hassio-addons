@@ -3,7 +3,7 @@ ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base/amd64:4.0.0
 # Get prebuild containers from Bitwarden RS
 ###############################################################################
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="1.22.2"
+ARG BUILD_UPSTREAM="1.23.0"
 
 # hadolint ignore=DL3006
 FROM "vaultwarden/server:${BUILD_UPSTREAM}" as vaultwarden
