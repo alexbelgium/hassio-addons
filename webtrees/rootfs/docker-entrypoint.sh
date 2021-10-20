@@ -39,6 +39,29 @@ if bashio::supervisor.ping; then
   '-----------------------------------------------------------'
 fi
 
+##################
+# INITIAL CONFIG #
+##################
+
+export PRETTY_URLS=0
+export LANG="en-US"
+export BASE_URL="http://192.168.178.69:9999"
+export DB_TYPE="sqlite"
+export DB_HOST="http://127.0.0.1"
+export DB_PORT="80"
+export DB_USER="test"
+export DB_PASS="test"
+export DB_NAME="webtrees.sqlite"
+export DB_PREFIX="wt_"
+export WT_USER="username"
+export WT_NAME="Full Name"
+export WT_PASS= "mybadpassword"
+export WT_EMAIL="me@example.com"
+
+#############
+# START APP #
+#############
+
 CONFIG_FILE="/data/config.ini.php"
 PREFIX="[NV_INIT]"
 
