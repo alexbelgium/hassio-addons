@@ -36,8 +36,13 @@ RUN \
     \
     ################
     # Modify image #
-    ################    
-    && chmod +x 775 /docker-entrypoint.sh
+    ################
+    && cat /run > /temporaryfile \
+    && cat /docker-entrypoint.sh >> /temporaryfile \
+    && cat /temporaryfile > /docker-entrypoint.sh \
+    && chmod +x /docker-entrypoint.sh \
+    && rm /temporaryfile
+    
     
     ################
     # Modify image #
