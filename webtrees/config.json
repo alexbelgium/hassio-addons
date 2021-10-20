@@ -17,7 +17,7 @@
   },
   "ports": {
     "80/tcp": "9999",
-    "443/tcp": null
+    "443/tcp": "null"
   },
   "ports_description": {
     "80/tcp": "Web interface",
