@@ -33,18 +33,18 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio \
-    \
     ################
     # Modify image #
     ################
-    && sed -i 's/bash/bashio/g' /docker-entrypoint.sh
+    && chmod +x /run.sh
+    #&& sed -i 's!/bin/bash/bashio/g' /docker-entrypoint.sh
     # Add script
     #&& sed -i '1d' /docker-entrypoint.sh \
-    #&& cat /newscript > /temporaryfile \
-  #  && cat /docker-entrypoint.sh >> /temporaryfile \
- #   && cat /temporaryfile > /docker-entrypoint.sh \
- #   && chmod +x /docker-entrypoint.sh \
-#    && rm /temporaryfile
+   # && cat /newscript > /temporaryfile \
+    #&& cat /docker-entrypoint.sh >> /temporaryfile \
+   # && cat /temporaryfile > /docker-entrypoint.sh \
+   # && chmod +x /docker-entrypoint.sh \
+ #   && rm /temporaryfile
     # Add correct location
     #&& sed -i "s|CONFIG_FILE="data|CONFIG_FILE="/data|g" /etc/cont-init.d/
     ################
@@ -57,6 +57,7 @@ RUN \
     
 ENV WEBTREES_HOME="/data"
 WORKDIR $WEBTREES_HOME
+ENTRYPOINT ["/run.sh"]
 #COPY /var/www/webtrees/.htaccess $WEBTREES_HOME 
 
 
