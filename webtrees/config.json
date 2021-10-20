@@ -14,7 +14,21 @@
   "options": {
     "ssl": false,
     "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem"
+    "keyfile": "privkey.pem",
+    "PRETTY_URLS"="0",
+    "LANG"="en-US",
+    "BASE_URL"="http://192.168.178.69:9999",
+    "DB_TYPE"="sqlite",
+    "DB_HOST"="http://127.0.0.1",
+    "DB_PORT"="80",
+    "DB_USER"="test",
+    "DB_PASS"="test",
+    "DB_NAME"="webtrees.sqlite",
+    "DB_PREFIX"="wt_",
+    "WT_USER"="username",
+    "WT_NAME"="Full Name",
+    "WT_PASS"="mybadpassword",
+    "WT_EMAIL"="me@example.com"
   },
   "ports": {
     "80/tcp": "9999",
@@ -27,7 +41,21 @@
   "schema": {
     "ssl": "bool",
     "certfile": "str",
-    "keyfile": "str"
+    "keyfile": "str",
+    "PRETTY_URLS"="int",
+    "LANG"="str",
+    "BASE_URL"="url",
+    "DB_TYPE"="list(sqlite|pgsql|mysql)",
+    "DB_HOST"="url",
+    "DB_PORT"="int",
+    "DB_USER"="str",
+    "DB_PASS"="str",
+    "DB_NAME"="str",
+    "DB_PREFIX"="str",
+    "WT_USER"="str",
+    "WT_NAME"="str",
+    "WT_PASS"="str",
+    "WT_EMAIL"="str"
   },
   "slug": "webtrees",
   "startup": "services",
