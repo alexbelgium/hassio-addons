@@ -37,7 +37,7 @@ RUN \
     ################
     # Modify image #
     ################
-    && rm -R /var/lock
+    && rm -R /var/lock || true
     # Add script
     #&& cat /run > /temporaryfile \
     #&& cat /docker-entrypoint.sh >> /temporaryfile \#
@@ -53,9 +53,13 @@ RUN \
     #&& ln -s /data/config.ini.php /var/www/webtrees/data \
     #&& touch /data/webtrees.sqlite \
     #&& ln -s /data/webtrees.sqlite /var/www/webtrees/data
+    
+ENV WEBTREES_HOME="/data"
+WORKDIR $WEBTREES_HOME
+COPY /var/www/webtrees/.htaccess $WEBTREES_HOME
 
 
-#RUN rm -R /var/www/webtrees/data \
+#RUN rm - $WEBTREES_HOMER /var/www/webtrees/data \
 #   && ln -s /data /var/www/webtrees
 
 #RUN touch /data/database.sqlite \
