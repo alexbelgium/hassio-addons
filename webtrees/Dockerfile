@@ -57,7 +57,7 @@ RUN \
     
 ENV WEBTREES_HOME="/data"
 WORKDIR $WEBTREES_HOME
-ENTRYPOINT ["/run.sh"]
+#ENTRYPOINT ["/run.sh"]
 #COPY /var/www/webtrees/.htaccess $WEBTREES_HOME 
 
 
