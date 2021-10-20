@@ -37,13 +37,13 @@ RUN \
     ################
     # Modify image #
     ################
-    && rm -R /var/lock || true
+    && rm -R /var/lock || true \
     # Add script
-    #&& cat /run > /temporaryfile \
-    #&& cat /docker-entrypoint.sh >> /temporaryfile \#
-    #&& cat /temporaryfile > /docker-entrypoint.sh \
-   # && chmod +x /docker-entrypoint.sh \
-  #  && rm /temporaryfile
+    && cat /run > /temporaryfile \
+    && cat /docker-entrypoint.sh >> /temporaryfile \#
+    && cat /temporaryfile > /docker-entrypoint.sh \
+    && chmod +x /docker-entrypoint.sh \
+    && rm /temporaryfile
     # Add correct location
     #&& sed -i "s|CONFIG_FILE="data|CONFIG_FILE="/data|g" /etc/cont-init.d/
     ################
