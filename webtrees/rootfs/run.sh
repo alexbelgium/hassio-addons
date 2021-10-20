@@ -62,4 +62,4 @@ export WT_EMAIL="me@example.com"
 # START APP #
 #############
 
-exec /docker-entrypoint.sh
+sh /docker-entrypoint.sh
