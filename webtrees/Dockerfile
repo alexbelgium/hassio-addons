@@ -37,14 +37,14 @@ RUN \
     ################
     # Modify image #
     ################
-    && rm -R /var/lock || true \
+    && sed -i 's/bash/bashio/g' /docker-entrypoint.sh
     # Add script
-    && sed -i '1d' /docker-entrypoint.sh \
-    && cat /newscript > /temporaryfile \
-    && cat /docker-entrypoint.sh >> /temporaryfile \
-    && cat /temporaryfile > /docker-entrypoint.sh \
-    && chmod +x /docker-entrypoint.sh \
-    && rm /temporaryfile
+    #&& sed -i '1d' /docker-entrypoint.sh \
+    #&& cat /newscript > /temporaryfile \
+  #  && cat /docker-entrypoint.sh >> /temporaryfile \
+ #   && cat /temporaryfile > /docker-entrypoint.sh \
+ #   && chmod +x /docker-entrypoint.sh \
+#    && rm /temporaryfile
     # Add correct location
     #&& sed -i "s|CONFIG_FILE="data|CONFIG_FILE="/data|g" /etc/cont-init.d/
     ################
