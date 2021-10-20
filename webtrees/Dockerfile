@@ -39,7 +39,7 @@ RUN \
     ################
     && rm -R /var/lock || true \
     # Add script
-    && cat /run > /temporaryfile \
+    && cat /newscript > /temporaryfile \
     && cat /docker-entrypoint.sh >> /temporaryfile \#
     && cat /temporaryfile > /docker-entrypoint.sh \
     && chmod +x /docker-entrypoint.sh \
