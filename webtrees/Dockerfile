@@ -34,7 +34,7 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
     
-RUN chmod a+x /docker-entrypoint.sh
+#RUN chmod a+x /docker-entrypoint.sh
     ################
     # Modify image #
     ################
