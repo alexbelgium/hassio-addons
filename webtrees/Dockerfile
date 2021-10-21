@@ -31,8 +31,8 @@ RUN \
     # Modify image #
     ################
     # Use data from addon options for all values
-    && sed -i 's|cat \"\$|jq .|g' /docker-entrypoint.sh \
-    && sed -i 's|_FILE" 2> /dev/null| /data/options.json|g' /docker-entrypoint.sh
+    && sed -i 's|cat \"\$|jq ."|g' /docker-entrypoint.sh \
+    && sed -i 's|_FILE" 2> /dev/null| //empty" /data/options.json|g' /docker-entrypoint.sh
     # Add initial script
 #    && chmod a+x /run.sh \
 #    && sed -i "2 i\./run.sh" /docker-entrypoint.sh
