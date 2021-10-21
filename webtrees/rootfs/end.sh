@@ -7,7 +7,7 @@ else
 echo "error : config not found"
 fi
 
-if [ ! -f /data/$DB_NAME ] && [ -f /var/www/webtrees/data/$DB_NAME]; then
+if [ ! -f /data/$DB_NAME ] && [ -f /var/www/webtrees/data/$DB_NAME ]; then
 mv /var/www/webtrees/data/$DB_NAME /data
 ln -s /data/$DB_NAME /var/www/webtrees/data
 else
