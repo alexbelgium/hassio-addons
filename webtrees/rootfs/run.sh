@@ -43,6 +43,11 @@ fi
 # INITIAL CONFIG #
 ##################
 
+#SSL
+#    SSLEngine on
+#    SSLCertificateFile      /certs/webtrees.crt
+#    SSLCertificateKeyFile   /certs/webtrees.key
+
 export PRETTY_URLS=0
 export LANG="en-US"
 export BASE_URL="http://192.168.178.69:9999"
