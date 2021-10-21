@@ -1,38 +1,38 @@
 ARG BUILD_VERSION
 FROM nathanvaughn/webtrees:latest
 
-VOLUME [ "/data" ]
+#VOLUME [ "/data" ]
 
-USER root
+#USER root
 
 # Base system
-ARG BASHIO_VERSION=0.13.1
-ARG TEMPIO_VERSION=2021.01.0
-ARG BUILD_ARCH
+#ARG BASHIO_VERSION=0.13.1
+#ARG TEMPIO_VERSION=2021.01.0
+#ARG BUILD_ARCH
 
 # Copy root filesystem
 #COPY rootfs /
 
-RUN \
-    ################
-    # Install apps #
-    ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y \
-        jq \
-        curl \
-    && apt-get clean \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+#RUN \
+#    ################
+#    # Install apps #
+#    ################
+#    apt-get clean \
+#    && apt-get update \
+#    && apt-get install -y \
+#        jq \
+#        curl \
+#    && apt-get clean \
+#    \
+#    ##################
+#    # Install bashio #
+#    ##################
+#    && mkdir -p /tmp/bashio \
+#    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
+#    | tar -xzf - --strip 1 -C /tmp/bashio \
+#    && mv /tmp/bashio/lib /usr/lib/bashio \
+#    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+#    && rm -rf /tmp/bashio
     
 #RUN chmod a+x /docker-entrypoint.sh
     ################
