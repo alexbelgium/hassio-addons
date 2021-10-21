@@ -15,7 +15,6 @@ RUN \
     && apt-get install -y \
         jq \
         curl \
-        apt-utils \
     && apt-get clean \
     \
     ##################
