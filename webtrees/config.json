@@ -3,7 +3,9 @@
   "boot": "auto",
   "description": "web's leading on-line collaborative genealogy application",
   "environment": {
-        "PORT": "80"
+        "PORT": "80",
+    "DB_PREFIX": "wt_",
+    "PRETTY_URLS": "0"
   },
   "map": [
     "share:rw",
@@ -11,7 +13,6 @@
   ],
   "name": "Webtrees DO NOT USE",
   "options": {
-    "PRETTY_URLS": "0",
     "LANG": "en-US",
     "BASE_URL": "http://192.168.178.69:9999",
     "DB_TYPE": "sqlite",
@@ -20,7 +21,6 @@
     "DB_USER": "test",
     "DB_PASS": "test",
     "DB_NAME": "webtrees",
-    "DB_PREFIX": "wt_",
     "WT_USER": "username",
     "WT_NAME": "Full Name",
     "WT_PASS": "mybadpassword",
@@ -35,7 +35,6 @@
     "443/tcp": "Https web interface"
   },
   "schema": {
-    "PRETTY_URLS": "int",
     "HTTPS": "str?",
     "SSL": "str?",
     "HTTPS_REDIRECT": "str?",
@@ -51,7 +50,6 @@
     "MYSQL_PASSWORD": "str?",
     "DB_NAME": "str",
     "MYSQL_DATABASE": "str?",
-    "DB_PREFIX": "str",
     "WT_USER": "str",
     "WT_NAME": "str",
     "WT_PASS": "str",
