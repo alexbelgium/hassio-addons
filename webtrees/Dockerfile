@@ -40,7 +40,7 @@ RUN \
     && chown www-data:www-data /end.sh \
     && chmod a+x /end.sh \
     && sed -i '$ d' /docker-entrypoint.sh \
-    && sed -i '$ i\export DB_NAME=$DB_NAME && cd / && ./end.sh' /docker-entrypoint.sh
+    && sed -i '$ i\export DB_NAME=$DB_NAME && export WT_USER=$WT_USER && export WT_PASS=$WT_PASS && cd / && ./end.sh' /docker-entrypoint.sh
     
 #    
 # Add initial script
