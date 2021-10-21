@@ -34,11 +34,14 @@ RUN \
     && sed -i 's|cat \"\$|jq ."|g' /docker-entrypoint.sh \
     && sed -i 's|_FILE" 2> /dev/null| //empty" /data/options.json|g' /docker-entrypoint.sh \
     # Remove last line and add copy script
-    && sed -i '$ d' /docker-entrypoint.sh
-
+    && chmod a+x /run.sh \
+    && sed -i "2 i\./start.sh" /docker-entrypoint.sh \
+    && sed -i '$ d' /docker-entrypoint.sh \
+    && sed -i '$ i\./end.sh' /docker-entrypoint.sh
+    
+#    
 # Add initial script
-#    && chmod a+x /run.sh \
-#    && sed -i "2 i\./run.sh" /docker-entrypoint.sh
+
 
 #VOLUME [ "/data" ]
 #USER root
