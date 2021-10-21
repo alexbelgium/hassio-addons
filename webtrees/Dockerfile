@@ -34,14 +34,14 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
     
-RUN \
+#RUN \
     ################
     # Modify image #
     ################
-    chmod a+x /run.sh \
-    && sed -i "2 i\./run.sh || true" /docker-entrypoint.sh \
-    && cp -n /var/www/webtrees /data \
-    && grep -rlZ 'foo' . | xargs -0 sed -i.bak 's|/var/www/webtrees|/data|g'
+    #chmod a+x /run.sh \
+    #&& sed -i "2 i\./run.sh || true" /docker-entrypoint.sh \
+    #&& cp -n /var/www/webtrees /data \
+    #&& grep -rlZ 'foo' . | xargs -0 sed -i.bak 's|/var/www/webtrees|/data|g'
     #&& sed -i 's!/bin/bash/bashio/g' /docker-entrypoint.sh
     # Add script
     #&& sed -i '1d' /docker-entrypoint.sh \
@@ -60,8 +60,8 @@ RUN \
     #&& touch /data/webtrees.sqlite \
     #&& ln -s /data/webtrees.sqlite /var/www/webtrees/data
     
-ENV WEBTREES_HOME="/data"
-WORKDIR $WEBTREES_HOME
+#ENV WEBTREES_HOME="/data"
+#WORKDIR $WEBTREES_HOME
 #ENTRYPOINT ["/run.sh"]
 #COPY /var/www/webtrees/.htaccess $WEBTREES_HOME 
 
