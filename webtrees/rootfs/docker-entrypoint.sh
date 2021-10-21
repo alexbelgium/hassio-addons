@@ -27,7 +27,6 @@ if [ -f /data/webtrees.sqlite ]; then
 ln -s /data/webtrees.sqlite /var/www/webtrees/data
 fi
 
-
 #############
 # START APP #
 #############
@@ -217,3 +216,20 @@ https
 echo "$PREFIX Starting Apache"
 
 exec apache2-foreground
+
+#Create persistence
+if [ ! -f /data/config.ini.php ]; then
+mv /var/www/webtrees/data/config.ini.php /data
+ln -s /data/config.ini.php /var/www/webtrees/data
+fi
+
+if [ ! -f /data/webtrees.sqlite ]; then
+    sleep 5m
+    until [ -f /var/www/webtrees/data/webtrees.sqlite ]
+    do
+         sleep 5m
+    done
+        mv /var/www/webtrees/data/webtrees.sqlite /data
+        ln -s /data/webtrees.sqlite /var/www/webtrees/data
+    exit
+fi
