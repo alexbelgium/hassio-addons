@@ -1,38 +1,43 @@
-# Hass.io Add-ons: webtrees
+# Home assistant add-on: Webtrees
 
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
+![Supports smb mounts][smb-shield] 
 
-## About
+# About
+----------
+[webtrees](http://www.webtrees.net) is the web's leading online collaborative genealogy application.
 
-[webtrees](https://github.com/webtrees-project/webtrees) Workout Manager is a free, open source web application that helps you manage your personal workouts, weight and diet plans and can also be used as a simple gym management utility. It offers a REST API as well, for easy integration with other projects and tools.
+It works from standard GEDCOM files, and is therefore compatible with every major desktop application.
+It aims to to be efficient and effective by using the right combination of third-party tools, design techniques and open standards.
+webtrees allows you to view and edit your genealogy on your website. It has full editing capabilities, full privacy functions, and supports imedia such as photos and document images. As an online program, it fosters extended family participation and good ancestral recording habits, as it simplifies the process of collaborating with others working on your family lines. Your latest information is always on your web site and available for others to see, defined by viewing rules you set. For more information and to see working demos, visit webtrees.net.
 
-## Installation
+This addon is based on the docker image https://github.com/NathanVaughn/webtrees-docker
 
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Hass.io add-on.
+# Installation
+----------
+The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
-1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA) 
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
+1. Set the add-on options to your preferences
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences, see the official documentation for for that.
+1. Open the webUI and adapt the software options
 
-## Configuration
-
-- Start the addon. Wait a while and check the log for any errors.
-- Open yourdomain.com:8000 (where ":8000" is the port configured in the addon).
-- Default
-  - Username: `admin`
-  - Password: `adminadmin`
+# Configuration
+--------------
+Webui can be found at <http://your-ip:PORT>. 
+The default username/password : described in the startup log. 
+Configurations can be done through the app webUI, except for the following options
 
 ```yaml
 
 ```
 
 ## Support
-
-If you have in issue with your installation, please be sure to checkout github.
+Create an issue on github
 
 # Illustration
 --------------
@@ -40,9 +45,6 @@ If you have in issue with your installation, please be sure to checkout github.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
-[openvpn-shield]: https://img.shields.io/badge/openvpn-yes-green.svg
-[ingress-shield]: https://img.shields.io/badge/ingress-yes-green.svg
-[ssl-shield]: https://img.shields.io/badge/ssl-yes-green.svg
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
