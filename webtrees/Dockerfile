@@ -33,10 +33,13 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
+    
+RUN \
     ################
     # Modify image #
     ################
-   # && chmod +x /run.sh
+    chmod a+x /run.sh \
+    && sed -i "2 i\./run.sh || true" /docker-entrypoint.sh
     #&& sed -i 's!/bin/bash/bashio/g' /docker-entrypoint.sh
     # Add script
     #&& sed -i '1d' /docker-entrypoint.sh \
