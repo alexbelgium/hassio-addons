@@ -19,11 +19,20 @@ export WT_NAME="Full Name"
 export WT_PASS= "mybadpassword"
 export WT_EMAIL="me@example.com"
 
+if [ -f /data/config.ini.php ]; then
+ln -s /data/config.ini.php /var/www/webtrees/data
+fi
+
+if [ -f /data/webtrees.sqlite ]; then
+ln -s /data/webtrees.sqlite /var/www/webtrees/data
+fi
+
+
 #############
 # START APP #
 #############
 
-CONFIG_FILE="/data/config.ini.php"
+CONFIG_FILE="data/config.ini.php"
 PREFIX="[NV_INIT]"
 
 echo "$PREFIX Setting folder permissions for uploads"
