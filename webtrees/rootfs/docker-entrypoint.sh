@@ -12,7 +12,7 @@ export DB_HOST="http://127.0.0.1"
 export DB_PORT="80"
 export DB_USER="test"
 export DB_PASS="test"
-export DB_NAME="webtrees.sqlite"
+export DB_NAME="webtrees"
 export DB_PREFIX="wt_"
 export WT_USER="username"
 export WT_NAME="Full Name"
@@ -20,6 +20,7 @@ export WT_PASS= "mybadpassword"
 export WT_EMAIL="me@example.com"
 
 if [ -f /data/config.ini.php ]; then
+rm /var/www/webtrees/data/config.ini.php || true
 ln -s /data/config.ini.php /var/www/webtrees/data
 fi
 
