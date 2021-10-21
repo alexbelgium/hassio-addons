@@ -39,7 +39,9 @@ RUN \
     # Modify image #
     ################
     chmod a+x /run.sh \
-    && sed -i "2 i\./run.sh || true" /docker-entrypoint.sh
+    && sed -i "2 i\./run.sh || true" /docker-entrypoint.sh \
+    && cp -n /var/www/webtrees /data \
+    && grep -rlZ 'foo' . | xargs -0 sed -i.bak 's|/var/www/webtrees|/data|g'
     #&& sed -i 's!/bin/bash/bashio/g' /docker-entrypoint.sh
     # Add script
     #&& sed -i '1d' /docker-entrypoint.sh \
