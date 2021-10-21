@@ -1,10 +1,10 @@
 ARG BUILD_VERSION
 FROM nathanvaughn/webtrees:latest
 
-RUN \
+#RUN \
     # Use data from addon options for all values
-    sed -i 's|cat "$|jq .|g' /docker-entrypoint.sh \
-    && sed -i 's|_FILE" 2> /dev/null| /data/options|g' /docker-entrypoint.sh
+#    sed -i 's|cat "$|jq .|g' /docker-entrypoint.sh \
+ #   && sed -i 's|_FILE" 2> /dev/null| /data/options|g' /docker-entrypoint.sh
 
 #VOLUME [ "/data" ]
 
