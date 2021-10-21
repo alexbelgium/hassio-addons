@@ -3,6 +3,9 @@ FROM nathanvaughn/webtrees:latest
 
 ARG BASHIO_VERSION=0.13.1
 
+# Copy root filesystem
+COPY rootfs /
+
 RUN \
     ################
     # Install apps #
@@ -29,8 +32,7 @@ RUN \
 
 #ARG BUILD_ARCH
 
-# Copy root filesystem
-#COPY rootfs /
+
 
 #RUN \
 
