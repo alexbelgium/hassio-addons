@@ -1,6 +1,6 @@
 # Hass.io Add-ons: webtrees
 
-![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield]
+![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 ## About
 
@@ -33,6 +33,10 @@ comparison to installing any other Hass.io add-on.
 ## Support
 
 If you have in issue with your installation, please be sure to checkout github.
+
+# Illustration
+--------------
+![illustration](https://installatron.infomaniak.com/installatron//images/ss2_webtrees.jpg)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
