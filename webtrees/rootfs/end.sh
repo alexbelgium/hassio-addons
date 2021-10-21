@@ -7,9 +7,9 @@ else
 bashio::log.fatal "error : config not found"
 fi
 
-if [ ! -f /data/$DB_NAME ] && [ -f /var/www/webtrees/data/$DB_NAME ]; then
-mv /var/www/webtrees/data/$DB_NAME /data
-ln -s /data/$DB_NAME /var/www/webtrees/data
+if [ ! -f /data/$DB_NAME.sqlite ] && [ -f /var/www/webtrees/data/$DB_NAME.sqlite ]; then
+mv /var/www/webtrees/data/$DB_NAME.sqlite /data
+ln -s /data/$DB_NAME.sqlite /var/www/webtrees/data
 else
 bashio::log.fatal "error : database not found"
 fi
