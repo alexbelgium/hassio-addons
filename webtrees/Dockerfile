@@ -17,25 +17,6 @@ RUN \
         curl \
     && apt-get clean \
     \
-    ################
-    # Modify image #
-    ################
-    # Use data from addon options for all values
-    sed -i 's|cat \"\$|jq .|g' /docker-entrypoint.sh \
-    && sed -i 's|_FILE" 2> /dev/null| /data/options.json|g' /docker-entrypoint.sh
-
-#VOLUME [ "/data" ]
-
-#USER root
-
-# Base system
-
-#ARG BUILD_ARCH
-
-
-
-#RUN \
-
     ##################
     # Install bashio #
     ##################
@@ -45,7 +26,22 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
-    
+    \
+    ################
+    # Modify image #
+    ################
+    # Use data from addon options for all values
+    sed -i 's|cat \"\$|jq .|g' /docker-entrypoint.sh \
+    && sed -i 's|_FILE" 2> /dev/null| /data/options.json|g' /docker-entrypoint.sh \
+    \
+    # Add initial script
+    && chmod a+x /run.sh \
+    && sed -i "2 i\./run.sh" /docker-entrypoint.sh
+
+#VOLUME [ "/data" ]
+#USER root
+# Base system
+#ARG BUILD_ARCH
 #RUN chmod a+x /docker-entrypoint.sh
     ################
     # Modify image #
@@ -71,16 +67,12 @@ RUN \
     #&& ln -s /data/config.ini.php /var/www/webtrees/data \
     #&& touch /data/webtrees.sqlite \
     #&& ln -s /data/webtrees.sqlite /var/www/webtrees/data
-    
 #ENV WEBTREES_HOME="/data"
 #WORKDIR $WEBTREES_HOME
 #ENTRYPOINT ["/run.sh"]
 #COPY /var/www/webtrees/.htaccess $WEBTREES_HOME 
-
-
 #RUN rm - $WEBTREES_HOMER /var/www/webtrees/data \
 #   && ln -s /data /var/www/webtrees
-
 #RUN touch /data/database.sqlite \
 #    && ln -s /data/database.sqlite /var/www/webtrees/data \
 #    && touch /data/config.ini.php \
