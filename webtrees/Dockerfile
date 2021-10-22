@@ -36,25 +36,26 @@ RUN \
     # Modify image #
     ################
     # Change data location
-#    && cp -rn /var/www/webtrees /data \
-#    && mkdir -p /data/webtrees \
-#    && chown -R www-data:www-data /data/webtrees \
     && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \ 
-    \
-    # Use data from addon options for all values
-    #&& sed -i 's|cat \"\$|jq ."|g' /docker-entrypoint.sh \
-    #&& sed -i 's|_FILE" 2> /dev/null| //empty" /data/options.json|g' /docker-entrypoint.sh \
     \
     # Add entry script
     && chown root:root /start.sh \
     && chmod a+x /start.sh \
-    #&& sed -i "2 i\cd / && ./start.sh" /docker-entrypoint.sh \
     # Add end script
+    && sed -i '$ d' /docker-entrypoint.sh
+
+    # Change data location
+#    && cp -rn /var/www/webtrees /data \
+#    && mkdir -p /data/webtrees \
+#    && chown -R www-data:www-data /data/webtrees \
+    # Use data from addon options for all values
+#&& sed -i 's|cat \"\$|jq ."|g' /docker-entrypoint.sh \
+#&& sed -i 's|_FILE" 2> /dev/null| //empty" /data/options.json|g' /docker-entrypoint.sh \
     #&& chown root:root /end.sh \
     #&& chmod a+x /end.sh \
-    && sed -i '$ d' /docker-entrypoint.sh
+    #&& sed -i "2 i\cd / && ./start.sh" /docker-entrypoint.sh \
     #&& sed -i '$ i\export DB_NAME=$DB_NAME && export WT_USER=$WT_USER && export WT_PASS=$WT_PASS && cd / && ./end.sh' /docker-entrypoint.sh
-
+    
 ### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
