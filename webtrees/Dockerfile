@@ -8,7 +8,7 @@ COPY rootfs /
 ARG BASHIO_VERSION=0.13.1
 ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["/start.sh"]
 VOLUME ["/data"]
 
 RUN \
