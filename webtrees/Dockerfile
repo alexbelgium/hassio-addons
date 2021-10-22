@@ -55,47 +55,6 @@ RUN \
     && sed -i '$ d' /docker-entrypoint.sh \
     && sed -i '$ i\export DB_NAME=$DB_NAME && export WT_USER=$WT_USER && export WT_PASS=$WT_PASS && cd / && ./end.sh' /docker-entrypoint.sh
 
-
-#VOLUME [ "/data" ]
-#USER root
-# Base system
-#ARG BUILD_ARCH
-#RUN chmod a+x /docker-entrypoint.sh
-    ################
-    # Modify image #
-    ################
-    #chmod a+x /run.sh \
-    #&& sed -i "2 i\./run.sh || true" /docker-entrypoint.sh \
-    #&& cp -n /var/www/webtrees /data \
-    #&& grep -rlZ 'foo' . | xargs -0 sed -i.bak 's|/var/www/webtrees|/data|g'
-    #&& sed -i 's!/bin/bash/bashio/g' /docker-entrypoint.sh
-    # Add script
-    #&& sed -i '1d' /docker-entrypoint.sh \
-   # && cat /newscript > /temporaryfile \
-    #&& cat /docker-entrypoint.sh >> /temporaryfile \
-   # && cat /temporaryfile > /docker-entrypoint.sh \
-   # && chmod +x /docker-entrypoint.sh \
- #   && rm /temporaryfile
-    # Add correct location
-    #&& sed -i "s|CONFIG_FILE="data|CONFIG_FILE="/data|g" /etc/cont-init.d/
-    ################
-    # Modify image #
-    ################
-    # && cp -n /defaults/config.ini.php /data \
-    #&& ln -s /data/config.ini.php /var/www/webtrees/data \
-    #&& touch /data/webtrees.sqlite \
-    #&& ln -s /data/webtrees.sqlite /var/www/webtrees/data
-#ENV WEBTREES_HOME="/data"
-#WORKDIR $WEBTREES_HOME
-#ENTRYPOINT ["/run.sh"]
-#COPY /var/www/webtrees/.htaccess $WEBTREES_HOME 
-#RUN rm - $WEBTREES_HOMER /var/www/webtrees/data \
-#   && ln -s /data /var/www/webtrees
-#RUN touch /data/database.sqlite \
-#    && ln -s /data/database.sqlite /var/www/webtrees/data \
-#    && touch /data/config.ini.php \
-#   && ln -s /data/config.ini.php /var/www/webtrees/data
-
 ### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
