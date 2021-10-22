@@ -6,9 +6,7 @@
         "PORT": "80",
         "WEBTREES_HOME": "/data/webtrees",
     "DB_PREFIX": "wt_",
-    "PRETTY_URLS": "0",
-    "HTTPS_REDIRECT": "1",
-    "SSL_REDIRECT": "1"
+    "PRETTY_URLS": "0"
   },
   "map": [
     "share:rw",
@@ -38,8 +36,6 @@
     "443/tcp": "Https web interface"
   },
   "schema": {
-    "HTTPS": "str?",
-    "SSL": "str?",
     "LANG": "str",
     "BASE_URL": "url",
     "DB_TYPE": "list(sqlite|pgsql|mysql)",
