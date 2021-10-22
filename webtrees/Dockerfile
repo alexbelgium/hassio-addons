@@ -33,9 +33,9 @@ RUN \
     # Modify image #
     ################
     # Change data location
-    && cp -n /var/www/webtrees /data \
+    && cp -rn /var/www/webtrees /data \
     && chown -R www-data:www-data /data/webtrees \
-    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
+    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \ 
     \
     # Use data from addon options for all values
     && sed -i 's|cat \"\$|jq ."|g' /docker-entrypoint.sh \
