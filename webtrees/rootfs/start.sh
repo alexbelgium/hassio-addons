@@ -68,3 +68,5 @@ if bashio::config.true 'ssl'; then
   sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
   sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
 fi
+
+./docker-entrypoint.sh
