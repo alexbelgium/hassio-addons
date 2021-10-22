@@ -46,11 +46,11 @@ RUN \
     && sed -i 's|_FILE" 2> /dev/null| //empty" /data/options.json|g' /docker-entrypoint.sh \
     \
     # Add entry script
-    && chown www-data:www-data /start.sh \
+    && chown root:root /start.sh \
     && chmod a+x /start.sh \
     #&& sed -i "2 i\cd / && ./start.sh" /docker-entrypoint.sh \
     # Add end script
-    && chown www-data:www-data /end.sh \
+    && chown root:root /end.sh \
     && chmod a+x /end.sh \
     && sed -i '$ d' /docker-entrypoint.sh \
     && sed -i '$ i\export DB_NAME=$DB_NAME && export WT_USER=$WT_USER && export WT_PASS=$WT_PASS && cd / && ./end.sh' /docker-entrypoint.sh
