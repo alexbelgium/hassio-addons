@@ -43,15 +43,8 @@ fi
 # PERSISTENCE #
 ###############
 
-#if [ -f /data/config.ini.php ]; then
-#ln -s /data/config.ini.php /var/www/webtrees/data
-#fi
-
-bashio:log.info ""
-
-if [ -f /data/webtrees.sqlite ]; then
-bashio:log.info "Using existing database"
-ln -s /data/webtrees.sqlite /var/www/webtrees/data
-else
-bashio:log.warning "No existing database found with the name selected, creating a new one"
+DB_NAME=$(bashio::config 'DB_NAME')
+if [ -f "/data/$DB_NAME.sqlite" ]; then
+bashio:log.info "Using existing database $DB_NAME.sqlite"
+ln -s "/data/$DB_NAME.sqlite" /var/www/webtrees/data
 fi
