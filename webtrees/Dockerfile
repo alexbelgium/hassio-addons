@@ -1,14 +1,15 @@
 ARG BUILD_VERSION
 FROM nathanvaughn/webtrees:latest
 
-ARG BASHIO_VERSION=0.13.1
-
 # Copy root filesystem
 COPY rootfs /
 
+# Global variables
+ARG BASHIO_VERSION=0.13.1
 ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
 ENTRYPOINT ["/run.sh"]
+VOLUME ["/data"]
 
 RUN \
     ################
@@ -36,6 +37,7 @@ RUN \
     ################
     # Change data location
     && cp -rn /var/www/webtrees /data \
+    && mkdir -p /data/webtrees \
     && chown -R www-data:www-data /data/webtrees \
     && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \ 
     \
