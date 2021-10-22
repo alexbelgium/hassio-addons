@@ -79,8 +79,9 @@ if bashio::config.true 'ssl'; then
 
 fi
 
-#########
-# INFOS #
-#########
+##############
+# LAUNCH APP #
+##############
+
 cd/
 ./docker-entrypoint.sh
