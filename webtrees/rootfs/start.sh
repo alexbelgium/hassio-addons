@@ -43,7 +43,13 @@ fi
 # GLOBAL VARIABLES #
 ####################
 
-export BASE_URL=$BASE_URL:$(bashio::addon.port 80)
+export BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
+export LANG=$(bashio::config 'LANG')
+export DB_TYPE=$(bashio::config 'DB_TYPE')
+export WT_USER=$(bashio::config 'WT_USER')
+export WT_NAME=$(bashio::config 'WT_NAME')
+export WT_PASS=$(bashio::config 'WT_PASS')
+export WT_EMAIL=$(bashio::config 'WT_EMAIL')
 
 ################
 # SSL CONFIG   #
@@ -74,7 +80,5 @@ fi
 #########
 # INFOS #
 #########
-
-bashio::log.info "Defined base url : $BASE_URL"
 
 ./docker-entrypoint.sh
