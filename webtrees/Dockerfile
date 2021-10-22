@@ -36,9 +36,9 @@ RUN \
     # Remove last line and add copy script
     && chown www-data:www-data /start.sh \
     && chmod a+x /start.sh \
-    && sed -i "2 i\cd / && ./start.sh" /docker-entrypoint.sh \
-    && chown www-data:www-data /end.sh \
-    && chmod a+x /end.sh \
+#    && sed -i "2 i\cd / && ./start.sh" /docker-entrypoint.sh \
+#    && chown www-data:www-data /end.sh \
+#    && chmod a+x /end.sh \
     && sed -i '$ d' /docker-entrypoint.sh \
     && sed -i '$ i\export DB_NAME=$DB_NAME && export WT_USER=$WT_USER && export WT_PASS=$WT_PASS && cd / && ./end.sh' /docker-entrypoint.sh
     
