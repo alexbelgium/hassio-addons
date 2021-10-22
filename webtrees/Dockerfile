@@ -36,9 +36,9 @@ RUN \
     # Modify image #
     ################
     # Change data location
-    && cp -rn /var/www/webtrees /data \
-    && mkdir -p /data/webtrees \
-    && chown -R www-data:www-data /data/webtrees \
+#    && cp -rn /var/www/webtrees /data \
+#    && mkdir -p /data/webtrees \
+#    && chown -R www-data:www-data /data/webtrees \
     && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \ 
     \
     # Use data from addon options for all values
