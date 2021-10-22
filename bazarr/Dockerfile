@@ -22,7 +22,7 @@ RUN \
     cifs-utils \
     keyutils \
     samba \
-    smbclient \
+    samba-client \
     \ 
     ##################
     # Install bashio #
