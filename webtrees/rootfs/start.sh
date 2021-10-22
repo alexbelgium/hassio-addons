@@ -76,3 +76,5 @@ fi
 #########
 
 bashio::log.info "Defined base url : $BASE_URL"
+
+./docker-entrypoint.sh
