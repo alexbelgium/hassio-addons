@@ -39,15 +39,11 @@ if bashio::supervisor.ping; then
   '-----------------------------------------------------------'
 fi
 
-###############
-# PERSISTENCE #
-###############
+####################
+# GLOBAL VARIABLES #
+####################
 
-#DB_NAME=$(bashio::config 'DB_NAME')
-#if [ -f "/data/$DB_NAME.sqlite" ]; then
-#bashio::log.info "Using existing database $DB_NAME.sqlite"
-#ln -s "/data/$DB_NAME.sqlite" /var/www/webtrees/data
-#fi
+export BASE_URL=$BASE_URL:$(bashio::addon.port 80)
 
 ################
 # SSL CONFIG   #
@@ -69,8 +65,14 @@ if bashio::config.true 'ssl'; then
   sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
   
   #Send env variables
-  #export HTTPS_REDIRECT=true
-  #export SSL_REDIRECT=true
   export HTTPS=true
   export SSL=true
+  export BASE_URL=$BASE_URL:$(bashio::addon.port 443)
+
 fi
+
+#########
+# INFOS #
+#########
+
+bashio::log.info "Defined base url : $BASE_URL"
