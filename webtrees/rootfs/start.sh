@@ -57,8 +57,6 @@ export WT_EMAIL=$(bashio::config 'WT_EMAIL')
 
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
-
-  bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
   
   #set variables
   CERTFILE=$(bashio::config 'certfile')
@@ -73,12 +71,16 @@ if bashio::config.true 'ssl'; then
   #Send env variables
   export HTTPS=true
   export SSL=true
-  export BASE_URL=$BASE_URL:$(bashio::addon.port 443)
+  BASE_URL=$BASE_URL:$(bashio::addon.port 443)
+  export BASE_URL="${BASE_URL/http/https}"
+  
+  #Communication
+  bashio::log.info "Ssl enabled at path $BASE_URL. If webui don't work, disable ssl or check your certificate paths"
 
 fi
 
 #########
 # INFOS #
 #########
-
+cd/
 ./docker-entrypoint.sh
