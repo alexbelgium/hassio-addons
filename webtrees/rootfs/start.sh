@@ -84,6 +84,9 @@ fi
 # LAUNCH APP #
 ##############
 
+# Remove previous config to allow addon options to refresh
+rm /data/webtrees/data/config.php.ini
+
 # Change data location
 cp -rn /var/www/webtrees /data
 chown -R www-data:www-data /data/webtrees
