@@ -43,8 +43,8 @@ fi
 # PERSISTENCE #
 ###############
 
-DB_NAME=$(bashio::config 'DB_NAME')
-if [ -f "/data/$DB_NAME.sqlite" ]; then
-bashio::log.info "Using existing database $DB_NAME.sqlite"
-ln -s "/data/$DB_NAME.sqlite" /var/www/webtrees/data
-fi
+#DB_NAME=$(bashio::config 'DB_NAME')
+#if [ -f "/data/$DB_NAME.sqlite" ]; then
+#bashio::log.info "Using existing database $DB_NAME.sqlite"
+#ln -s "/data/$DB_NAME.sqlite" /var/www/webtrees/data
+#fi
