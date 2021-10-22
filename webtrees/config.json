@@ -41,8 +41,8 @@
     "DB_TYPE": "list(sqlite|external)",
     "WT_USER": "str",
     "WT_NAME": "str",
-    "WT_PASS": "str",
-    "WT_EMAIL": "str"
+    "WT_PASS": "password",
+    "WT_EMAIL": "email"
   },
   "slug": "webtrees",
   "startup": "services",
