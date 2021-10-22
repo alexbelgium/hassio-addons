@@ -75,8 +75,7 @@ if bashio::config.true 'ssl'; then
   export BASE_URL="${BASE_URL/http/https}"
   
   #Communication
-  bashio::log.info "Ssl enabled at path $BASE_URL. If webui don't work, disable ssl or check your certificate paths"
-
+  bashio::log.info "Ssl enabled. If webui don't work, disable ssl or check your certificate paths"
 fi
 
 ##############
