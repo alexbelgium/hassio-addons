@@ -82,6 +82,10 @@ fi
 # LAUNCH APP #
 ##############
 
+# Change data location
+cp -rn /var/www/webtrees /data \
+
+# Execute main script
 cd /
 ./docker-entrypoint.sh
 
