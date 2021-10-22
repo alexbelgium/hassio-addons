@@ -1,13 +1,5 @@
 #!/usr/bin/env bashio
 
-#if [ -f /data/config.ini.php ]; then
-#ln -s /data/config.ini.php /var/www/webtrees/data
-#fi
-
-if [ -f /data/webtrees.sqlite ]; then
-ln -s /data/webtrees.sqlite /var/www/webtrees/data
-fi
-
 ##########
 # BANNER #
 ##########
@@ -45,4 +37,21 @@ if bashio::supervisor.ping; then
   ' https://github.com/alexbelgium/hassio-addons'
   bashio::log.blue \
   '-----------------------------------------------------------'
+fi
+
+###############
+# PERSISTENCE #
+###############
+
+#if [ -f /data/config.ini.php ]; then
+#ln -s /data/config.ini.php /var/www/webtrees/data
+#fi
+
+bashio:log.info ""
+
+if [ -f /data/webtrees.sqlite ]; then
+bashio:log.info "Using existing database"
+ln -s /data/webtrees.sqlite /var/www/webtrees/data
+else
+bashio:log.warning "No existing database found with the name selected, creating a new one"
 fi
