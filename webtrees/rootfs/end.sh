@@ -7,7 +7,7 @@ mv /var/www/webtrees/data/config.ini.php /data || bashio::log.fatal "error : con
 ln -s /data/config.ini.php /var/www/webtrees/data
 fi
 
-if [ ! -h "/data/$DB_NAME.sqlite" ]; then
+if [ ! -f "/data/$DB_NAME.sqlite" ]; then
 mv "/var/www/webtrees/data/$DB_NAME.sqlite" /data || bashio::log.fatal "error : database /var/www/webtrees/data/$DB_NAME.sqlite not found"
 ln -s "/data/$DB_NAME.sqlite" /var/www/webtrees/data
 fi
