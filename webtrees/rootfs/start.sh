@@ -85,7 +85,8 @@ fi
 ##############
 
 # Change data location
-cp -rn /var/www/webtrees /data \
+cp -rn /var/www/webtrees /data
+chown -R www-data:www-data /data/webtrees
 
 # Execute main script
 cd /
