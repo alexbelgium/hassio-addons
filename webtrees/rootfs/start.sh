@@ -84,3 +84,4 @@ fi
 
 cd /
 ./docker-entrypoint.sh
+./end.sh
