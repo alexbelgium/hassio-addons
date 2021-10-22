@@ -94,7 +94,7 @@ chown -R www-data:www-data /data/webtrees
 
 # Execute main script
 cd /
-./docker-entrypoint.sh
+./docker-entrypoint.sh >/dev/null
 
 ############
 # END INFO #
