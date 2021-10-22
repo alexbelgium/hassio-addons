@@ -42,8 +42,8 @@ RUN \
     && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \ 
     \
     # Use data from addon options for all values
-    && sed -i 's|cat \"\$|jq ."|g' /docker-entrypoint.sh \
-    && sed -i 's|_FILE" 2> /dev/null| //empty" /data/options.json|g' /docker-entrypoint.sh \
+    #&& sed -i 's|cat \"\$|jq ."|g' /docker-entrypoint.sh \
+    #&& sed -i 's|_FILE" 2> /dev/null| //empty" /data/options.json|g' /docker-entrypoint.sh \
     \
     # Add entry script
     && chown root:root /start.sh \
