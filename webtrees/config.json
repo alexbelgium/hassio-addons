@@ -11,7 +11,7 @@
     "DB_PORT": "80",
     "DB_USER": "databaseuser",
     "DB_PASS": "databasepassword",
-    "DB_NAME": "webtrees"
+    "DB_NAME": "webtrees.sqlite"
   },
   "map": [
     "share:rw",
