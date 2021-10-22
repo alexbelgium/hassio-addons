@@ -69,8 +69,8 @@ if bashio::config.true 'ssl'; then
   sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
   
   #Send env variables
-  export HTTPS_REDIRECT=true
-  export SSL_REDIRECT=true
+  #export HTTPS_REDIRECT=true
+  #export SSL_REDIRECT=true
   export HTTPS=true
   export SSL=true
 fi
