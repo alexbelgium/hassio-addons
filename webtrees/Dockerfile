@@ -7,6 +7,8 @@ ARG BASHIO_VERSION=0.13.1
 COPY rootfs /
 
 ENV WEBTREES_HOME="/data/webtrees"
+WORKDIR $WEBTREES_HOME
+ENTRYPOINT ["/run.sh"]
 
 RUN \
     ################
@@ -44,7 +46,7 @@ RUN \
     # Add entry script
     && chown www-data:www-data /start.sh \
     && chmod a+x /start.sh \
-    && sed -i "2 i\cd / && ./start.sh" /docker-entrypoint.sh \
+    #&& sed -i "2 i\cd / && ./start.sh" /docker-entrypoint.sh \
     # Add end script
     && chown www-data:www-data /end.sh \
     && chmod a+x /end.sh \
