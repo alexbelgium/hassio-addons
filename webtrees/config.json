@@ -4,6 +4,7 @@
   "description": "web's leading on-line collaborative genealogy application",
   "environment": {
         "PORT": "80",
+        "WEBTREES_HOME": "/data"
     "DB_PREFIX": "wt_",
     "PRETTY_URLS": "0",
     "HTTPS_REDIRECT": "1",
