@@ -46,10 +46,12 @@ fi
 export BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
 export LANG=$(bashio::config 'LANG')
 export DB_TYPE=$(bashio::config 'DB_TYPE')
-export WT_USER=$(bashio::config 'WT_USER')
-export WT_NAME=$(bashio::config 'WT_NAME')
-export WT_PASS=$(bashio::config 'WT_PASS')
-export WT_EMAIL=$(bashio::config 'WT_EMAIL')
+if [ $DB_TYPE = "sqlite" ]; then
+  export WT_USER=$(bashio::config 'WT_USER')
+  export WT_NAME=$(bashio::config 'WT_NAME')
+  export WT_PASS=$(bashio::config 'WT_PASS')
+  export WT_EMAIL=$(bashio::config 'WT_EMAIL')
+fi
 
 ################
 # SSL CONFIG   #
