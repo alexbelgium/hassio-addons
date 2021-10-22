@@ -14,7 +14,7 @@ RUN \
     cifs-utils \
     keyutils \
     samba \
-    smbclient \
+    samba-client \
     bind-tools \
     nginx \
     \
