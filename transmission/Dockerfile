@@ -7,7 +7,6 @@ RUN apk add --no-cache \
     curl \
     jq \
     samba \
-    smbclient \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v0.13.1.tar.gz" \
     && mkdir /tmp/bashio \
