@@ -83,5 +83,5 @@ fi
 # LAUNCH APP #
 ##############
 
-cd/
+cd /
 ./docker-entrypoint.sh
