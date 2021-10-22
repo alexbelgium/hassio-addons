@@ -20,7 +20,7 @@
   "name": "Webtrees DO NOT USE",
   "options": {
     "LANG": "en-US",
-    "BASE_URL": "http://192.168.178.69:9999",
+    "BASE_URL": "http://192.168.178.69",
     "DB_TYPE": "sqlite",
     "WT_USER": "username",
     "WT_NAME": "Full Name",
