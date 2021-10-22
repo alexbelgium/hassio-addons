@@ -74,5 +74,3 @@ if bashio::config.true 'ssl'; then
   export HTTPS=true
   export SSL=true
 fi
-
-./docker-entrypoint.sh
