@@ -48,3 +48,23 @@ fi
 #bashio::log.info "Using existing database $DB_NAME.sqlite"
 #ln -s "/data/$DB_NAME.sqlite" /var/www/webtrees/data
 #fi
+
+################
+# SSL CONFIG   #
+################
+
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+
+  bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+  
+  #set variables
+  CERTFILE=$(bashio::config 'certfile')
+  KEYFILE=$(bashio::config 'keyfile')
+  
+  #Replace variables
+  sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/default-ssl.conf
+  sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/default-ssl.conf
+  sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
+  sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
+fi
