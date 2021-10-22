@@ -86,7 +86,7 @@ fi
 ##############
 
 # Remove previous config to allow addon options to refresh
-rm /data/webtrees/data/config.ini.php
+rm /data/webtrees/data/config.ini.php 2>/dev/null || true
 
 # Change data location
 cp -rn /var/www/webtrees /data
