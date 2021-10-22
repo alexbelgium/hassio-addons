@@ -38,7 +38,7 @@
   "schema": {
     "LANG": "str",
     "BASE_URL": "url",
-    "DB_TYPE": "list(sqlite|other)",
+    "DB_TYPE": "list(sqlite|external)",
     "WT_USER": "str",
     "WT_NAME": "str",
     "WT_PASS": "str",
