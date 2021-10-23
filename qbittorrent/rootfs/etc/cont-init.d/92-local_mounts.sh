@@ -19,9 +19,6 @@ if bashio::config.has_value 'localdisks'; then
     mkdir -p /$MOUNTPOINTS/$disk
     chown -R $(id -u):$(id -g) /$MOUNTPOINTS/$disk
     mount /dev/$disk /$MOUNTPOINTS/$disk
-    bashio::log.info "Success! $disk mounted to /$MOUNTPOINTS/$disk" ||
-      # Error message and clean remaining folder
-      (bashio::log.warning "Unable to mount local drives!" &&
-        rmdir /$MOUNTPOINTS/$disk)
+    bashio::log.info "Success! $disk mounted to /$MOUNTPOINTS/$disk" 
   done
-fi
+fi || (bashio::log.warning "Unable to mount local drives!" && rmdir /$MOUNTPOINTS/$disk)
