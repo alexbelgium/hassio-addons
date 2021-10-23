@@ -51,8 +51,8 @@ if bashio::config.has_value 'networkdisks'; then
     # Test smbclient if not mounted yet
     if [ $MOUNTED = false ]; then
       bashio::log.fatal "Error, could not mount disk. Here is some debugging info :"
-      smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD --option="client min protocol"="NT1"      
-      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD --option="client min protocol"="NT1"
+      smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD --option="client min protocol"="NT1" || true 
+      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD --option="client min protocol"="NT1" || true
     fi
 
     # Messages
