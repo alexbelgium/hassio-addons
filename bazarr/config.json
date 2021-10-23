@@ -1,4 +1,5 @@
 {
+  "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "backup_exclude": ["**/Backups/*", "**/logs/*", "**/MediaCover/*"],
   "boot": "auto",

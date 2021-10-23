@@ -1,23 +1,19 @@
 {
-  "name": "Joal",
-  "version": "2.1.26-2",
-  "upstream": "2.1.26",
-  "slug": "joal",
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
   "description": "An open source command line RatioMaster with WebUI",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "startup": "services",
+  "environment": {},
+  "host_network": false,
   "ingress": true,
   "ingress_port": 8099,
+  "map": ["config:rw"],
+  "name": "Joal",
+  "options": {
+    "ui_path": "joal",
+    "secret_token": "lrMY24Byhx",
+    "run_duration": "12h"
+  },
   "panel_icon": "mdi:owl",
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
-  "map": [
-    "config:rw"
-  ],
   "ports": {
     "49152/tcp": null,
     "8081/tcp": 8091
@@ -26,19 +22,16 @@
     "49152/tcp": "torrent port (not required)",
     "8081/tcp": "Web UI port (required)"
   },
-  "webui": "http://[HOST]:[PORT:8081]/joal/ui",
-  "boot": "auto",
-  "host_network": false,
-  "environment": {},
-  "options": {
-    "ui_path": "joal",
-    "secret_token": "lrMY24Byhx",
-    "run_duration": "12h"
-  },
   "schema": {
     "ui_path": "str",
     "secret_token": "str",
     "run_duration": "str?",
     "verbose": "bool?"
-  }
+  },
+  "slug": "joal",
+  "startup": "services",
+  "upstream": "2.1.26",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "2.1.26-2",
+  "webui": "http://[HOST]:[PORT:8081]/joal/ui"
 }

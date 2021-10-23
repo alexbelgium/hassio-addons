@@ -1,4 +1,5 @@
 {
+  "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
   "description": "Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. ",

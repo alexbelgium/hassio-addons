@@ -1,45 +1,48 @@
 {
-  "name": "Addons_Updater",
-  "version": "3.2",
-  "slug": "updater",
-  "description": "Automatic addons update by aligning version tag with upstream releases",
-  "url": "https://github.com/alexbelgium/hassio-addons",
+  "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
-  "ports": {},
-  "ports_description": {},
-  "startup": "once",
   "boot": "manual",
-  "environment": { "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1" },
+  "description": "Automatic addons update by aligning version tag with upstream releases",
+  "environment": {
+    "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
+  },
+  "name": "Addons_Updater",
   "options": {
     "addon": [
       {
-        "slug": "addon slug",
         "beta": false,
         "fulltag": false,
         "repository": "https://github.com/user/repo",
+        "slug": "addon slug",
         "upstream": "github_user/repo_name"
       }
     ],
-    "gituser": "gituser",
-    "gitpass": "gitpassword",
     "gitmail": "youremail@gmail.com",
+    "gitpass": "gitpassword",
+    "gituser": "gituser",
     "verbose": true
   },
+  "ports": {},
+  "ports_description": {},
   "schema": {
     "addon": [
       {
-        "slug": "str",
         "beta": "bool",
         "fulltag": "bool",
         "having_asset": "bool?",
         "repository": "str",
+        "slug": "str",
         "upstream": "str"
       }
     ],
-    "gituser": "str",
-    "gitpass": "str",
-    "gitmail": "str",
     "gitapi": "str?",
+    "gitmail": "str",
+    "gitpass": "str",
+    "gituser": "str",
     "verbose": "bool"
-  }
+  },
+  "slug": "updater",
+  "startup": "once",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "3.2"
 }

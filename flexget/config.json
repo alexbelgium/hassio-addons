@@ -1,28 +1,22 @@
 {
-  "name": "Flexget",
-  "version": "3.1.144",
-  "upstream": "3.1.144",
-  "slug": "flexget",
+  "apparmor": true,
+  "arch": ["aarch64", "amd64", "armhf", "armv7"],
   "description": "FlexGet is a multipurpose automation tool for all of your media",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "webui": "http://[HOST]:[PORT:5050]",
+  "environment": {
+    "FG_PLUGINS": "",
+    "FG_WEBUI_PASSWD": ""
+  },
+  "map": ["share:rw", "config:rw"],
+  "name": "Flexget",
+  "options": {
+    "PUID": 0,
+    "PGID": 0
+  },
   "ports": {
     "5050/tcp": 5050
   },
   "ports_description": {
     "5050/tcp": "Web interface"
-  },
-  "map": [
-    "share:rw",
-    "config:rw"
-  ],
-  "environment": {
-    "FG_PLUGINS": "",
-    "FG_WEBUI_PASSWD": ""
-  },
-  "options": {
-    "PUID": 0,
-    "PGID": 0
   },
   "schema": {
     "PUID": "int",
@@ -30,10 +24,9 @@
     "WebuiPass": "str?",
     "FG_PLUGINS": "str?"
   },
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armhf",
-    "armv7"
-  ]
+  "slug": "flexget",
+  "upstream": "3.1.144",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "3.1.144",
+  "webui": "http://[HOST]:[PORT:5050]"
 }

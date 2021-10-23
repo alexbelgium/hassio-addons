@@ -1,22 +1,10 @@
 {
-  "name": "Inadyn",
-  "version": "2.8.1",
-  "upstream": "2.8.1",
-  "slug": "inadyn",
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "description": "Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
-  "map": [
-    "ssl"
-  ],
+  "environment": {},
   "host_network": true,
-  "environment": {
-  },
+  "map": ["ssl"],
+  "name": "Inadyn",
   "options": {
     "providers": [
       {
@@ -55,5 +43,9 @@
         "append_myip": "bool?"
       }
     ]
-  }
+  },
+  "slug": "inadyn",
+  "upstream": "2.8.1",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "2.8.1"
 }
