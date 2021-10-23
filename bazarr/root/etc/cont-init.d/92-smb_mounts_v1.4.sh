@@ -80,7 +80,7 @@ if bashio::config.has_value 'networkdisks'; then
       disk="//192.168.178.23/NAS"
       CIFS_USERNAME="homeassistant"
       CIFS_PASSWORD="Bonjour01"
-      smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true 
+      #smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true 
       smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
 
       # Error code
