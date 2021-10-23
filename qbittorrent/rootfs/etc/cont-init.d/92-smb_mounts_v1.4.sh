@@ -55,7 +55,7 @@ if bashio::config.has_value 'networkdisks'; then
     fi
 
     # Messages
-    if [ $MOUNTED = true ] && [ mountpoint -q "/mnt/$diskname" ]; then
+    if [ $MOUNTED = true ] && [ (mountpoint -q "/mnt/$diskname") ]; then
       bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $SMBVERS$SECVERS"
       #Test write permissions
       touch /mnt/$diskname/testaze && rm /mnt/$diskname/testaze && bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $SMBVERS$SECVERS" || bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
