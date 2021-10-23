@@ -135,8 +135,8 @@ if bashio::config.has_value 'networkdisks'; then
 
       # Provide debugging info
       smbclient -V &>/dev/null || apt-get install smbclient || apk add --no-cache samba-client
-      smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD --option="client min protocol"="NT1" || true 
-      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD --option="client min protocol"="NT1" || true
+      smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true 
+      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
 
       # Error code
       bashio::log.fatal "Error read : $(<ERRORCODE)"

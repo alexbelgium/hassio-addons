@@ -39,6 +39,11 @@ if bashio::config.has_value 'networkdisks'; then
       exit 1
     fi
 
+    # Test if ip is available
+    if [ ping 127.0.0.1 -c 1 &>/dev/null ]; then
+
+    fi
+
     # Prepare mount point
     mkdir -p /mnt/$diskname
     chown -R root:root /mnt/$diskname
@@ -70,8 +75,13 @@ if bashio::config.has_value 'networkdisks'; then
 
       # Provide debugging info
       smbclient -V &>/dev/null || apt-get install smbclient || apk add --no-cache samba-client
-      smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD --option="client min protocol"="NT1" || true 
-      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD --option="client min protocol"="NT1" || true
+
+
+      disk="//192.168.178.23/NAS"
+      CIFS_USERNAME="homeassistant"
+      CIFS_PASSWORD="Bonjour01"
+      smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true 
+      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
 
       # Error code
       bashio::log.fatal "Error read : $(<ERRORCODE)"
