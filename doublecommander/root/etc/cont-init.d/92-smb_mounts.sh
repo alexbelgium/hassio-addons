@@ -14,7 +14,9 @@ if bashio::config.has_value 'networkdisks'; then
   SECVERS=""
 
   # Dont execute if still default
-  [ ${MOREDISKS::1} == "<" ] && exit 0
+  [ ${MOREDISKS::1} == "<" ] \
+  && bashio::log.warning 'The networkdisks option is set, but starts with the letter "<". IF you want to mount an SMB drive, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2' \ 
+  && exit 0
 
   # Mount CIFS Share if configured and if Protection Mode is active
   bashio::log.info 'Mounting smb share(s)...'
