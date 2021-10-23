@@ -1,10 +1,10 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
-
+ARG BASHIO_VERSION=0.13.1
 
 RUN curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.13.1.tar.gz" \
+    "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
     /tmp/bashio.tar.gz \

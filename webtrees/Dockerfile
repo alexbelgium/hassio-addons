@@ -10,6 +10,7 @@ ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
 ENTRYPOINT ["/start.sh"]
 VOLUME ["/data"]
+ARG BASHIO_VERSION=0.13.1
 
 RUN \
     ################
@@ -18,8 +19,8 @@ RUN \
     apt-get clean \
     && apt-get update \
     && apt-get install -y \
-        jq \
-        curl \
+    jq \
+    curl \
     && apt-get clean \
     \
     ##################
@@ -44,18 +45,18 @@ RUN \
     # Add end script
     && sed -i '$ d' /docker-entrypoint.sh
 
-    # Change data location
+# Change data location
 #    && cp -rn /var/www/webtrees /data \
 #    && mkdir -p /data/webtrees \
 #    && chown -R www-data:www-data /data/webtrees \
-    # Use data from addon options for all values
+# Use data from addon options for all values
 #&& sed -i 's|cat \"\$|jq ."|g' /docker-entrypoint.sh \
 #&& sed -i 's|_FILE" 2> /dev/null| //empty" /data/options.json|g' /docker-entrypoint.sh \
-    #&& chown root:root /end.sh \
-    #&& chmod a+x /end.sh \
-    #&& sed -i "2 i\cd / && ./start.sh" /docker-entrypoint.sh \
-    #&& sed -i '$ i\export DB_NAME=$DB_NAME && export WT_USER=$WT_USER && export WT_PASS=$WT_PASS && cd / && ./end.sh' /docker-entrypoint.sh
-    
+#&& chown root:root /end.sh \
+#&& chmod a+x /end.sh \
+#&& sed -i "2 i\cd / && ./start.sh" /docker-entrypoint.sh \
+#&& sed -i '$ i\export DB_NAME=$DB_NAME && export WT_USER=$WT_USER && export WT_PASS=$WT_PASS && cd / && ./end.sh' /docker-entrypoint.sh
+
 ### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE

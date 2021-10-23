@@ -1,6 +1,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
+ARG BASHIO_VERSION=0.13.1
 
 # Copy root filesystem
 COPY rootfs / 
@@ -15,7 +16,7 @@ RUN \
     cifs-utils \
     \
     && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.13.1.tar.gz" \
+    "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
     /tmp/bashio.tar.gz \
@@ -30,8 +31,8 @@ RUN \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
-    # Use subfolder in config
-    # Protect files starting by config.
+# Use subfolder in config
+# Protect files starting by config.
 #    && files=$(grep -rl '/config.' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config.|/temptemp.|g' \
 #    && files=$(grep -rl '/config' /defaults/*) && echo $files | xargs sed -i 's|/config|/share/piwigo|g' \
 #    && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/share/piwigo|g' \

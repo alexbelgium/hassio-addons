@@ -6,6 +6,7 @@ FROM ${BUILD_FROM}
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 ARG BUILD_ARCH
+ARG BASHIO_VERSION=0.13.1
 
 # Add bashio
 RUN \
@@ -15,7 +16,7 @@ RUN \
     && apk add --no-cache \
     curl jq \
     && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.13.1.tar.gz" \
+    "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
     /tmp/bashio.tar.gz \
@@ -27,7 +28,7 @@ RUN \
     \
     #gclib compatibility 
     && apk add --no-cache gcompat@community || true
-    
+
 RUN \
     # modify/copy files
     sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \

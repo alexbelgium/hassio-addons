@@ -2,6 +2,7 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.1.2"
 FROM ${BUILD_FROM}
+ARG BASHIO_VERSION=0.13.1
 
 # Copy root filesystem
 COPY rootfs / 
@@ -11,9 +12,9 @@ RUN apk add --no-cache \
     curl \
     jq \
     moreutils \
-	samba \
+    samba \
     && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v0.13.1.tar.gz" \
+    "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
     /tmp/bashio.tar.gz \
