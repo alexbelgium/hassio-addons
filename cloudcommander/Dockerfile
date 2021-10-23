@@ -25,10 +25,7 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/*
+    && rm -rf /tmp/bashio
 
 # Copy root filesystem
 COPY rootfs / 

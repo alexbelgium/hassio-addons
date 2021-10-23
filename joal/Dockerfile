@@ -17,7 +17,9 @@ RUN \
     wget \
     jq \
     nginx \
-    #Install bashio
+    ##################
+    # Install bashio #
+    ##################
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \

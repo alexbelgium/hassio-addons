@@ -30,9 +30,6 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio \
     \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/* \
-    \
     #############################
     # Allow UID and GID setting #
     #############################

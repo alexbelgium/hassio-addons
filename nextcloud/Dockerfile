@@ -11,7 +11,9 @@ ARG BASHIO_VERSION=0.13.1
 # Add bashio
 RUN \
     echo "Install version $BUILD_VERSION on $BUILD_ARCH" \
-    #Install bashio
+    ##################
+    # Install bashio #
+    ##################
     && echo "**** Install Bashio ****" \
     && apk add --no-cache \
     curl jq \

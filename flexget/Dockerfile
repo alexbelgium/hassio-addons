@@ -22,12 +22,6 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio \
     \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr \
-    /tmp/* \
-    /var/lib/apt/lists/* \
-    \
     ###############
     # Adapt image #
     ###############

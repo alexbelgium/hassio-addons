@@ -17,7 +17,7 @@ RUN \
     samba \
     smbclient \
     \ 
-    ###################
+    ##################
     # Install bashio #
     ##################
     && mkdir -p /tmp/bashio \
