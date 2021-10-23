@@ -63,9 +63,9 @@ if bashio::config.has_value 'localdisks'; then
   bashio::log.warning "Protection mode is ON. Unable to mount local drives!"
 fi || true
 
-#########################
-# MOUNT SMB SHARES v1.6 #
-#########################
+######################
+# EXECUTE SMB SCRIPT #
+######################
 chown $(id -u):$(id -g) /92-smb_mounts.sh
 chmod a+x /92-smb_mounts.sh
 /./92-smb_mounts.sh
