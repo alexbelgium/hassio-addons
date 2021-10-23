@@ -13,7 +13,7 @@ if [ -n "$OCRLANG" ]; then
     else
       echo "package tesseract-ocr-${i} not found in the repository, skipping"
     fi
-    sed "$LINE a \"${i}\": \"lang\"," products.txt
+    sed "$LINE a \"${i}\": \"${i}\"," products.txt
     LINE=$((LINE+1)) 
   done
 fi
