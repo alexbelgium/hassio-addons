@@ -4,7 +4,5 @@
     "armhf": "linuxserver/transmission:arm32v7-latest",
     "aarch64": "linuxserver/transmission:arm64v8-latest",
     "amd64": "linuxserver/transmission:amd64-latest"
-  },
-  "squash": false,
-  "args": {}
+  }
 }
