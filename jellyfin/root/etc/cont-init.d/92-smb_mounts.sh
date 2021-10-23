@@ -14,9 +14,8 @@ if bashio::config.has_value 'networkdisks'; then
   SECVERS=""
 
   # Dont execute if still default
-  [ ${MOREDISKS::1} == "<" ] \
-  && (bashio::log.warning 'The networkdisks option is set, but starts with the letter "<". IF you want to mount an SMB drive, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2' \ 
-  && exit 0)
+  [ ${MOREDISKS::1} == "<" ] &&
+    (bashio::log.warning 'The networkdisks option is set, but starts with the letter "<". IF you want to mount an SMB drive, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2' && exit 0)
 
   # Mount CIFS Share if configured and if Protection Mode is active
   bashio::log.info 'Mounting smb share(s)...'
@@ -61,9 +60,9 @@ if bashio::config.has_value 'networkdisks'; then
     # Messages
     if [ $MOUNTED = true ] && [ "mountpoint -q /mnt/$diskname" ]; then
       #Test write permissions
-      touch /mnt/$diskname/testaze && rm /mnt/$diskname/testaze \
-      && bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $SMBVERS$SECVERS" \
-      || bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
+      touch /mnt/$diskname/testaze && rm /mnt/$diskname/testaze &&
+        bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $SMBVERS$SECVERS" ||
+        bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
 
     else
       # Mounting failed messages
@@ -72,8 +71,8 @@ if bashio::config.has_value 'networkdisks'; then
 
       # Provide debugging info
       smbclient -V &>/dev/null || apt-get install smbclient || apk add --no-cache samba-client
-      #smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true 
-      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
+      #smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
+      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD || true
 
       # Error code
       bashio::log.fatal "Error read : $(<ERRORCODE)"
