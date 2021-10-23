@@ -23,6 +23,9 @@
   ],
   "name": "Webtrees",
   "options": {
+    "ssl": false,
+    "certfile": "fullchain.pem",
+    "keyfile": "privkey.pem",
     "LANG": "en-US",
     "BASE_URL": "http://192.168.178.69",
     "DB_TYPE": "sqlite"
@@ -36,6 +39,9 @@
     "443/tcp": "Https web interface"
   },
   "schema": {
+    "ssl": "bool",
+    "certfile": "str",
+    "keyfile": "str",
     "LANG": "str",
     "BASE_URL": "url",
     "DB_TYPE": "list(sqlite|external)"
