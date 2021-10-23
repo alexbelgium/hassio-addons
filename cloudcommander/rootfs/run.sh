@@ -134,7 +134,7 @@ if bashio::config.has_value 'networkdisks'; then
 
       # Provide debugging info
       smbclient -V &>/dev/null || apt-get install smbclient || apk add --no-cache samba-client
-      smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true 
+      #smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true 
       smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
 
       # Error code
