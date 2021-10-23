@@ -7,7 +7,7 @@ MOUNTPOINTS="share"
 
 bashio::log.info 'Mounting external hdd...'
 
-# Mount local Share if configured and if Protection Mode is active
+# Mount local Share if configured
 if bashio::config.has_value 'localdisks'; then
 
   MOREDISKS=$(bashio::config 'localdisks')
