@@ -68,6 +68,7 @@ fi || true
 ######################
 chown $(id -u):$(id -g) /92-smb_mounts.sh
 chmod a+x /92-smb_mounts.sh
+sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' /92-smb_mounts.sh
 /./92-smb_mounts.sh
 
 ###################
