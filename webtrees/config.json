@@ -6,7 +6,7 @@
     "PORT": "80",
     "WEBTREES_HOME": "/data/webtrees",
     "DB_PREFIX": "wt_",
-    "PRETTY_URLS": "0",
+    "PRETTY_URLS": "1",
     "DB_HOST": "http://127.0.0.1",
     "DB_PORT": "80",
     "DB_USER": "databaseuser",
