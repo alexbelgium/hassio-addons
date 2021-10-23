@@ -1,17 +1,21 @@
 {
-  "name": "Transmission NAS",
-  "version": "3.00-r2-ls87-2",
-  "upstream": "3.00-r2-ls87",
-  "slug": "transmission_ls",
+  "apparmor": "true",
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
   "description": "Bittorrent client based on linuxserver image",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "startup": "services",
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
+  "environment": {},
+  "full_access": true,
+  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "name": "Transmission NAS",
+  "options": {
+    "PUID": 0,
+    "PGID": 0,
+    "download_dir": "/share/downloads",
+    "incomplete_dir": "/share/incomplete",
+    "networkdisks": "//ADDRESS/SHARE",
+    "cifsusername": "username",
+    "cifspassword": "password"
+  },
   "ports": {
     "9091/tcp": 9091,
     "51413/tcp": 51413,
@@ -22,30 +26,7 @@
     "51413/tcp": "Peer port (setup router port forwarding to this port)",
     "51413/udp": "Peer port (setup router port forwarding to this port)"
   },
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl"
-  ],
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
-  "full_access": true,
-  "webui": "http://[HOST]:[PORT:9091]",
-  "boot": "auto",
-  "apparmor": "true",
-  "environment": {},
-  "options": {
-    "PUID": 0,
-    "PGID": 0,
-    "download_dir": "/share/downloads",
-    "incomplete_dir": "/share/incomplete",
-    "networkdisks": "//ADDRESS/SHARE",
-    "cifsusername": "username",
-    "cifspassword": "password"
-  },
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PUID": "int",
     "PGID": "int",
@@ -56,5 +37,11 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "smbv1": "bool?"
-  }
+  },
+  "slug": "transmission_ls",
+  "startup": "services",
+  "upstream": "3.00-r2-ls87",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "3.00-r2-ls87-3",
+  "webui": "http://[HOST]:[PORT:9091]"
 }

@@ -1,39 +1,11 @@
 {
-  "name": "Ubooquity",
-  "version": "2.1.2",
-  "upstream": "2.1.2",
-  "slug": "ubooquity",
-  "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "startup": "services",
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
-  "ports": {
-    "2202/tcp": 2202,
-    "2203/tcp": 2203
-  },
-  "ports_description": {
-    "2202/tcp": "Library page (to expose)",
-    "2203/tcp": "Admin page (local)"
-  },
   "apparmor": true,
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
-  "map": [
-    "media:rw",
-    "config:rw",
-    "share:rw",
-    "ssl"
-  ],
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:2203]/ubooquity/admin",
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
+  "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
   "environment": {},
+  "map": ["media:rw", "config:rw", "share:rw", "ssl"],
+  "name": "Ubooquity",
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -43,6 +15,15 @@
     "cifsusername": "username",
     "cifspassword": "folder"
   },
+  "ports": {
+    "2202/tcp": 2202,
+    "2203/tcp": 2203
+  },
+  "ports_description": {
+    "2202/tcp": "Library page (to expose)",
+    "2203/tcp": "Admin page (local)"
+  },
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PUID": "int",
     "PGID": "int",
@@ -53,5 +34,11 @@
     "cifspassword": "str?",
     "smbv1": "bool?",
     "TZ": "str?"
-  }
+  },
+  "slug": "ubooquity",
+  "startup": "services",
+  "upstream": "2.1.2",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "2.1.2-2",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:2203]/ubooquity/admin"
 }

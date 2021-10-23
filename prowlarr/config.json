@@ -1,39 +1,13 @@
 {
-  "name": "Prowlarr NAS",
-  "version": "nightly-0.1.1.1029-ls161",
-  "upstream": "nightly-0.1.1.1029-ls161",
-  "slug": "prowlarr",
-  "description": "Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "startup": "services",
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
-  "ports": {
-    "9696/tcp": 9696
-  },
-  "ports_description": {
-    "9696/tcp": "web interface"
-  },
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl"
-  ],
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
-  "webui": "http://[HOST]:[PORT:9696]",
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
+  "description": "Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required",
   "environment": {
     "PUID": "0",
     "PGID": "0"
   },
+  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "name": "Prowlarr NAS",
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -41,6 +15,13 @@
     "cifsusername": "<username>",
     "cifspassword": "<password>"
   },
+  "ports": {
+    "9696/tcp": 9696
+  },
+  "ports_description": {
+    "9696/tcp": "web interface"
+  },
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PUID": "int",
     "PGID": "int",
@@ -49,5 +30,11 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "smbv1": "bool?"
-  }
+  },
+  "slug": "prowlarr",
+  "startup": "services",
+  "upstream": "nightly-0.1.1.1029-ls161",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "nightly-0.1.1.1029-ls161-2",
+  "webui": "http://[HOST]:[PORT:9696]"
 }
