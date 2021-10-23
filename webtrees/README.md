@@ -29,11 +29,14 @@ The installation of this add-on is pretty straightforward and not different in c
 # Configuration
 --------------
 Webui can be found at <http://your-ip:PORT>. 
-The default username/password : described in the startup log. 
+The default username/password : described in the startup log.
+Please change it as soon as possible.
 Configurations can be done through the app webUI, except for the following options
 
 ```yaml
-
+    "LANG": "en-US" # Default language for webtrees
+    "BASE_URL": "http://192.168.178.69" # The url with which you access webtrees
+    "DB_TYPE": "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
 ```
 
 ## Support
