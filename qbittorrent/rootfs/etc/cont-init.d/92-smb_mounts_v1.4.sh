@@ -63,9 +63,10 @@ if bashio::config.has_value 'networkdisks'; then
       # message if still fail
       bashio::log.fatal "Unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD. Please check your remote share path, username, password, domain, try putting 0 in UID and GID" # Mount share
       bashio::log.fatal "Error read : $(<ERRORCODE)"
-      umount /mnt/$diskname 2>/dev/null || true # Remove folder
-      rm /mnt/$diskname # Remove folder
       rm ERRORCODE
+      # clean folder
+      umount /mnt/$diskname 2>/dev/null || true
+      rm /mnt/$diskname || true
     fi
 
   done
