@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 
 #########################
-# MOUNT SMB SHARES v1.5 #
+# MOUNT SMB SHARES v1.6 #
 #########################
 if bashio::config.has_value 'networkdisks'; then
 
@@ -27,10 +27,18 @@ if bashio::config.has_value 'networkdisks'; then
 
   # Mounting disks
   for disk in ${MOREDISKS//,/ }; do # Separate comma separated values
+
     # Clean name of network share
     disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
     diskname=${disk//\\//}            #replace \ with /
     diskname=${diskname##*/}          # Get only last part of the name
+
+    # Data validation
+    if [[ ! $ip =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
+      bashio::log.fatal "The structure of your <networkdisks> doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2"
+      exit 1
+    fi
+
     # Prepare mount point
     mkdir -p /mnt/$diskname
     chown -R root:root /mnt/$diskname
