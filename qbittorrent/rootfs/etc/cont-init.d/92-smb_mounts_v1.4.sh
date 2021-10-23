@@ -66,7 +66,7 @@ if bashio::config.has_value 'networkdisks'; then
       rm ERRORCODE
       # clean folder
       umount /mnt/$diskname 2>/dev/null || true
-      rm /mnt/$diskname || true
+      rmdir /mnt/$diskname || true
     fi
 
   done
