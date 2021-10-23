@@ -20,11 +20,7 @@
   "ports_description": {
     "8000/tcp": "Web UI port (required)"
   },
-"privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH",
-    "NET_ADMIN"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PUID": "int",
     "PGID": "int",
