@@ -1,6 +1,8 @@
 - Allow mounting of devices up to sdg2
+- Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
 
 ## 210217-49039368 (29-09-2021)
+
 - Update to latest version from photoprism/photoprism
 - Allow mounting smb and local disks
 - Allow custom paths from options
