@@ -39,11 +39,6 @@ if bashio::config.has_value 'networkdisks'; then
       exit 1
     fi
 
-    # Test if ip is available
-    if [ ping 127.0.0.1 -c 1 &>/dev/null ]; then
-
-    fi
-
     # Prepare mount point
     mkdir -p /mnt/$diskname
     chown -R root:root /mnt/$diskname
@@ -64,9 +59,9 @@ if bashio::config.has_value 'networkdisks'; then
     # Messages
     if [ $MOUNTED = true ] && [ "mountpoint -q /mnt/$diskname" ]; then
       #Test write permissions
-      touch /mnt/$diskname/testaze && rm /mnt/$diskname/testaze \
-      && bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $SMBVERS$SECVERS" \
-      || bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
+      touch /mnt/$diskname/testaze && rm /mnt/$diskname/testaze &&
+        bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $SMBVERS$SECVERS" ||
+        bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
 
     else
       # Mounting failed messages
@@ -76,12 +71,11 @@ if bashio::config.has_value 'networkdisks'; then
       # Provide debugging info
       smbclient -V &>/dev/null || apt-get install smbclient || apk add --no-cache samba-client
 
-
       disk="//192.168.178.23/NAS"
       CIFS_USERNAME="homeassistant"
       CIFS_PASSWORD="Bonjour01"
-      #smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true 
-      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
+      #smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
+      smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD || true
 
       # Error code
       bashio::log.fatal "Error read : $(<ERRORCODE)"

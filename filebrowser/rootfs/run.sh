@@ -6,62 +6,46 @@
 
 if bashio::supervisor.ping; then
   bashio::log.blue \
-  '-----------------------------------------------------------'
+    '-----------------------------------------------------------'
   bashio::log.blue " Add-on: $(bashio::addon.name)"
   bashio::log.blue " $(bashio::addon.description)"
   bashio::log.blue \
-  '-----------------------------------------------------------'
+    '-----------------------------------------------------------'
 
   bashio::log.blue " Add-on version: $(bashio::addon.version)"
   if bashio::var.true "$(bashio::addon.update_available)"; then
     bashio::log.magenta ' There is an update available for this add-on!'
     bashio::log.magenta \
-    " Latest add-on version: $(bashio::addon.version_latest)"
+      " Latest add-on version: $(bashio::addon.version_latest)"
     bashio::log.magenta ' Please consider upgrading as soon as possible.'
   else
     bashio::log.green ' You are running the latest version of this add-on.'
   fi
 
   bashio::log.blue " System: $(bashio::info.operating_system)" \
-  " ($(bashio::info.arch) / $(bashio::info.machine))"
+    " ($(bashio::info.arch) / $(bashio::info.machine))"
   bashio::log.blue " Home Assistant Core: $(bashio::info.homeassistant)"
   bashio::log.blue " Home Assistant Supervisor: $(bashio::info.supervisor)"
 
   bashio::log.blue \
-  '-----------------------------------------------------------'
+    '-----------------------------------------------------------'
   bashio::log.blue \
-  ' Please, share the above information when looking for help'
+    ' Please, share the above information when looking for help'
   bashio::log.blue \
-  ' or support in, e.g., GitHub, forums or the Discord chat.'
+    ' or support in, e.g., GitHub, forums or the Discord chat.'
   bashio::log.green \
-  ' https://github.com/alexbelgium/hassio-addons'
+    ' https://github.com/alexbelgium/hassio-addons'
   bashio::log.blue \
-  '-----------------------------------------------------------'
+    '-----------------------------------------------------------'
 fi
 
 ######################
-# MOUNT LOCAL SHARES #
+# MOUNT LOCAL SCRIPT #
 ######################
-
-# Mount local Share if configured and if Protection Mode is active
-if bashio::config.has_value 'localdisks'; then
-  bashio::log.info 'Mounting local hdd...'
-  #bashio::require.unprotected
-  MOREDISKS=$(bashio::config 'localdisks')
-  bashio::log.info "Local Disks mounting.. ${MOREDISKS}" && \
-  for disk in ${MOREDISKS//,/ }; do # Separate comma separated values
-    bashio::log.info "Mount ${disk}"
-    mkdir -p /share/$disk && \
-    if [ ! -d /share/$disk ]; then
-      echo "Creating /share/$disk"
-      mkdir -p /share/$disk
-      chown -R abc:abc /share/$disk
-    fi
-    mount /dev/$disk /share/$disk && \
-    bashio::log.info "Success!"
-  done || \
-  bashio::log.warning "Protection mode is ON. Unable to mount local drives!"
-fi || true
+chown $(id -u):$(id -g) /92-local_mounts.sh
+chmod a+x /92-local_mounts.sh
+sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' /92-local_mounts.sh
+/./92-local_mounts.sh
 
 ######################
 # EXECUTE SMB SCRIPT #
