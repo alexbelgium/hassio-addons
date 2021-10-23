@@ -3,7 +3,6 @@
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "description": "Open source document management system (DMS)",
   "environment": {
-    "DOCKER_MODS": "linuxserver/mods:papermerge-multilangocr"
   },
   "map": ["share:rw", "media:rw", "ssl"],
   "name": "Papermerge",
