@@ -3,7 +3,6 @@
 ######################
 # MOUNT LOCAL SHARES #
 ######################
-MOUNTPOINTS="share"
 
 bashio::log.info 'Mounting external hdd...'
 
@@ -16,9 +15,10 @@ if bashio::config.has_value 'localdisks'; then
   # Separate comma separated values
   for disk in ${MOREDISKS//,/ }; do
     # Mount each disk
-    mkdir -p /$MOUNTPOINTS/$disk
-    chown -R $(id -u):$(id -g) /$MOUNTPOINTS/$disk
-    mount /dev/$disk /$MOUNTPOINTS/$disk
-    bashio::log.info "Success! $disk mounted to /$MOUNTPOINTS/$disk" 
+    mkdir -p /mnt/$disk
+    chown -R $(id -u):$(id -g) /mnt/$disk
+    [ -d /share/$disk ] && mount /dev/$disk /share/$disk || true
+    mount /dev/$disk /mnt/$disk || (bashio::log.warning "Unable to mount local drives!" && rmdir /mnt/$disk)
+    bashio::log.info "Success! $disk mounted to /mnt/$disk"
   done
-fi || (bashio::log.warning "Unable to mount local drives!" && rmdir /$MOUNTPOINTS/$disk)
+fi
