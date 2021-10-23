@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bashio
 
-####################
-# MOUNT SMB SHARES #
-####################
+#########################
+# MOUNT SMB SHARES v1.5 #
+#########################
 if bashio::config.has_value 'networkdisks'; then
 
   # Define variables
