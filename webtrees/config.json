@@ -17,10 +17,7 @@
     "WT_PASS": "mybadpassword",
     "WT_EMAIL": "me@example.com"
   },
-  "map": [
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["share:rw", "ssl"],
   "name": "Webtrees",
   "options": {
     "ssl_under_dev": false,

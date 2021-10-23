@@ -51,6 +51,6 @@
   "slug": "lidarr_nas",
   "upstream": "0.8.1.2135-ls63",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.1.2135-ls63-3",
+  "version": "0.8.1.2135-ls63-4",
   "webui": "http://[HOST]:[PORT:8686]"
 }

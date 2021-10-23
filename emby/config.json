@@ -65,7 +65,7 @@
   "startup": "services",
   "upstream": "4.7.0.15",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.7.0.15-2",
+  "version": "4.7.0.15-3",
   "watchdog": "http://[HOST]:[PORT:8096]",
   "webui": "http://[HOST]:[PORT:8096]"
 }

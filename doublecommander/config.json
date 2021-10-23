@@ -33,7 +33,7 @@
   },
   "slug": "doublecommander",
   "startup": "services",
-  "upstream": "0.8.2-1-ls54-2",
+  "upstream": "0.8.2-1-ls54-3",
   "url": "https://hub.docker.com/r/linuxserver/doublecommander",
   "version": "0.8.2-1-ls54",
   "webui": "http://[HOST]:[PORT:3000]"
