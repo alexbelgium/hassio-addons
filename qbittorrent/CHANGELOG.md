@@ -1,3 +1,4 @@
+- Improve smb mount error reporting
 
 ## 14.3.8.99202110120741-7429-1bae770b2ubuntu20.04.1-ls158 (13-10-2021)
 - Update to latest version from linuxserver/docker-qbittorrent
