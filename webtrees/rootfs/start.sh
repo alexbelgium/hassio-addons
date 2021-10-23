@@ -47,10 +47,10 @@ export BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
 export LANG=$(bashio::config 'LANG')
 export DB_TYPE=$(bashio::config 'DB_TYPE')
 if [ $DB_TYPE = "sqlite" ]; then
-  export WT_USER=$(bashio::config 'WT_USER')
-  export WT_NAME=$(bashio::config 'WT_NAME')
-  export WT_PASS=$(bashio::config 'WT_PASS')
-  export WT_EMAIL=$(bashio::config 'WT_EMAIL')
+  #export WT_USER=$(bashio::config 'WT_USER')
+  #export WT_NAME=$(bashio::config 'WT_NAME')
+  #export WT_PASS=$(bashio::config 'WT_PASS')
+  #export WT_EMAIL=$(bashio::config 'WT_EMAIL')
   bashio::log.info "Using a local sqlite database $WEBTREES_HOME/$DB_NAME please wait then login with $WT_USER : $WT_PASS"
 fi
 
