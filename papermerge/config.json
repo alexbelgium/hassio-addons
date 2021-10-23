@@ -20,6 +20,11 @@
   "ports_description": {
     "8000/tcp": "Web UI port (required)"
   },
+"privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
@@ -35,6 +40,6 @@
   "slug": "papermerge",
   "upstream": "2.0.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.0.1-10",
+  "version": "2.0.1-11",
   "webui": "http://[HOST]:[PORT:8000]"
 }
