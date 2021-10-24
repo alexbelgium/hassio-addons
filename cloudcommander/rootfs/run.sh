@@ -45,7 +45,7 @@ fi
 chown $(id -u):$(id -g) /92-local_mounts.sh
 chmod a+x /92-local_mounts.sh
 sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' /92-local_mounts.sh
-/./92-local_mounts.sh || true # Prevents exiting main script on exit 1
+/./92-local_mounts.sh
 
 ######################
 # EXECUTE SMB SCRIPT #
@@ -53,7 +53,7 @@ sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' /92-local_mounts.s
 chown $(id -u):$(id -g) /92-smb_mounts.sh
 chmod a+x /92-smb_mounts.sh
 sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' /92-smb_mounts.sh
-/./92-smb_mounts.sh || true # Prevents exiting main script on exit 1
+/./92-smb_mounts.sh 
 
 #################
 # NGINX SETTING #
