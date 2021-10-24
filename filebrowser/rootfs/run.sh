@@ -9,7 +9,7 @@ for SCRIPTS in "/00-banner.sh" "/92-local_mounts.sh" "/92-smb_mounts.sh"; do
   chown $(id -u):$(id -g) $SCRIPTS
   chmod a+x $SCRIPTS
   sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' $SCRIPTS
-  /.$SCRIPTS &
+  /.$SCRIPTS &&
   true # Prevents script crash on failure
 done
 
