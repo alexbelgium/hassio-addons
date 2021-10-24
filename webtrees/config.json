@@ -41,7 +41,8 @@
     "keyfile": "str",
     "LANG": "str",
     "BASE_URL": "url",
-    "DB_TYPE": "list(sqlite|external)"
+    "DB_TYPE": "list(sqlite|external)", 
+    "database_in_share": "bool?"
   },
   "slug": "webtrees",
   "startup": "services",
