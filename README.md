@@ -1,6 +1,4 @@
-      bashio::log.fatal "The structure of your <networkdisks> doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2"
-            exit 1
-            # Home assistant add-on: alexbelgium
+# Home assistant add-on: alexbelgium
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 ![update-badge] 
 
