@@ -1,7 +1,9 @@
 # Home assistant add-on: alexbelgium
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+![update-badge] 
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
+[update-badge]: https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update
 
 ## About
 
