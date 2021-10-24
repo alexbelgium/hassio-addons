@@ -70,6 +70,14 @@ ln -s /share/webtrees/$VOL $WEBTREES_HOME
 done
 chown -R www-data:www-data /share/webtrees
 
+# Correct base url if needed
+if [ -f /share/webtrees/data/config.ini.php ]; then
+echo "Aligning base_url addon config"
+LINE=$(sed -n '/base_url/=' /share/webtrees/data/config.ini.php)
+sed -i "$LINE a "base_url=\"$BASE_URL\"" /share/webtrees/data/config.ini.php
+sed -i "$LINEd" /share/webtrees/data/config.ini.php
+fi
+
 # Execute main script
 cd /
 ./docker-entrypoint.sh >/dev/null
