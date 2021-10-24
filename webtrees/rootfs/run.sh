@@ -56,26 +56,29 @@ fi
 bashio::log.info "Launching app, please wait"
 
 # Change data location
-cp -rn /var/www/webtrees "$(dirname "$WEBTREES_HOME")"
-mkdir -p /share/webtrees
+
+OLD_WEBTREES_HOME=$WEBTREES_HOME
+export WEBTREES_HOME="/share/webtrees"
+cp -rn /var/www/webtrees "$(dirname "$OLD_WEBTREES_HOME")"
+mkdir -p $WEBTREES_HOME
+chown -R www-data:www-data $OLD_WEBTREES_HOME
 chown -R www-data:www-data $WEBTREES_HOME
-chown -R www-data:www-data /share/webtrees
 
 # Make links with share
 for VOL in "data" "media" "modules_v4"; do
-touch $WEBTREES_HOME/$VOL
-cp -rn $WEBTREES_HOME/$VOL /share/webtrees
-rm -r $WEBTREES_HOME/$VOL
-ln -s /share/webtrees/$VOL $WEBTREES_HOME
+touch $OLD_WEBTREES_HOME/$VOL
+cp -rn $OLD_WEBTREES_HOME/$VOL $WEBTREES_HOME
+rm -r $OLD_WEBTREES_HOME/$VOL
+ln -s $WEBTREES_HOME/$VOL $OLD_WEBTREES_HOME
 done
-chown -R www-data:www-data /share/webtrees
+chown -R www-data:www-data $WEBTREES_HOME
 
 # Correct base url if needed
-if [ -f /share/webtrees/data/config.ini.php ]; then
-echo "Aligning base_url addon config"
-LINE=$(sed -n '/base_url/=' /share/webtrees/data/config.ini.php)
-sed -i "$LINE a "base_url=\"$BASE_URL\"" /share/webtrees/data/config.ini.php
-sed -i "$LINEd" /share/webtrees/data/config.ini.php
+if [ -f $WEBTREES_HOME/data/config.ini.php ]; then
+  echo "Aligning base_url addon config"
+  LINE=$(sed -n '/base_url/=' $WEBTREES_HOME/data/config.ini.php)
+  sed -i "$LINE a "base_url=\"$BASE_URL\"" $WEBTREES_HOME/data/config.ini.php
+  sed -i "$LINEd" $WEBTREES_HOME/data/config.ini.php
 fi
 
 # Execute main script
@@ -88,6 +91,7 @@ cd /
 
 DB_NAME=$(echo $DB_NAME | tr -d '"')
 
+bashio::log.info "Data is stored in $WEBTREES_HOME"
 bashio::log.info "Webui can be accessed at : $BASE_URL"
 
 exec apache2-foreground
