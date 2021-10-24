@@ -1,16 +1,16 @@
 #!/usr/bin/env bashio
 
-bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores and 4 GB of memory"
-
 ###########
 # SCRIPTS #
 ###########
 
-for SCRIPTS in "00-banner.sh" "92-local_mounts.sh" "92-smb_mounts.sh"
-  chown $(id -u):$(id -g) /$SCRIPTS
-  chmod a+x /$SCRIPTS
-  sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' /$SCRIPTS
-  /./$SCRIPTS & true # Prevents script crash on failure
+for SCRIPTS in "/00-banner.sh" "/92-local_mounts.sh" "/92-smb_mounts.sh"; do
+  echo $SCRIPTS
+  chown $(id -u):$(id -g) $SCRIPTS
+  chmod a+x $SCRIPTS
+  sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' $SCRIPTS
+  /.$SCRIPTS &
+  true # Prevents script crash on failure
 done
 
 ##############
