@@ -13,10 +13,6 @@ if bashio::config.has_value 'networkdisks'; then
   SMBVERS=""
   SECVERS=""
 
-  # Dont execute if still default
-  [ ${MOREDISKS::1} == "<" ] &&
-    (bashio::log.warning 'The networkdisks option is set, but starts with the letter "<". IF you want to mount an SMB drive, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2' && exit 0)
-
   # Mount CIFS Share if configured and if Protection Mode is active
   bashio::log.info 'Mounting smb share(s)...'
 
@@ -36,7 +32,8 @@ if bashio::config.has_value 'networkdisks'; then
 
     # Data validation
     if [[ ! $disk =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
-bashio::log.fatal "The structure of your <networkdisks> doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2"
+      bashio::log.fatal "The structure of your \"networkdisks\" option : \"$disk\" doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2. If you don't use it, you can simply remove the text, this will avoid this error message in the future."
+      exit 0
     fi
 
     # Prepare mount point
@@ -70,10 +67,6 @@ bashio::log.fatal "The structure of your <networkdisks> doesn't seem correct, pl
 
       # Provide debugging info
       smbclient -V &>/dev/null || apt-get install smbclient || apk add --no-cache samba-client
-
-      disk="//192.168.178.23/NAS"
-      CIFS_USERNAME="homeassistant"
-      CIFS_PASSWORD="Bonjour01"
       #smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
       smbclient -L $disk -U $CIFS_USERNAME%$CIFS_PASSWORD || true
 
