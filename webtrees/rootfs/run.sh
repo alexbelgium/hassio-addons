@@ -18,7 +18,7 @@ done
 ####################
 
 export BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
-export LANG=$(bashio::config 'LANG')
+#export LANG=$(bashio::config 'LANG')
 export DB_TYPE=$(bashio::config 'DB_TYPE')
 [ $DB_TYPE = "sqlite" ] && bashio::log.info "Using a local sqlite database $WEBTREES_HOME/$DB_NAME please wait then login. Default credentials : $WT_USER : $WT_PASS"
 
@@ -81,8 +81,8 @@ echo "... align base url with latest addon value"
 if [ -f $WEBTREES_HOME/data/config.ini.php ]; then
   echo "Aligning base_url addon config"
   LINE=$(sed -n '/base_url/=' $WEBTREES_HOME/data/config.ini.php)
-  sed -i "$LINE a base_url=\"$BASE_URL\"" $WEBTREES_HOME/data/config.ini.php || true
-  sed -i "$LINE d" $WEBTREES_HOME/data/config.ini.php || true 
+  sed -i "$LINE a base_url=\"$BASE_URL\"" $WEBTREES_HOME/data/config.ini.php
+  sed -i "$LINE d" $WEBTREES_HOME/data/config.ini.php
 fi || true
 
 # Execute main script
