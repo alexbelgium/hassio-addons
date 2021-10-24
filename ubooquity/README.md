@@ -1,4 +1,13 @@
-# About
+# Home assistant add-on: Ubooquity
+
+[![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+
+[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
+
+![Supports 
+ Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
+
+## About
 ----------
 [Ubooquity by vaemendis](https://vaemendis.net/ubooquity/) is a free, lightweight and easy-to-use home server for your comics and ebooks developed . This addon is based on the [docker image](https://github.com/linuxserver/docker-ubooquity) from [linuxserver.io](https://www.linuxserver.io/).
 
