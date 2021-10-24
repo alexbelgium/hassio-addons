@@ -6,7 +6,7 @@ COPY rootfs /
 
 # Global variables
 ARG BASHIO_VERSION=0.13.1
-ENV WEBTREES_HOME="/share/webtrees"
+ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
 ENTRYPOINT ["/run.sh"]
 VOLUME ["/data"]
@@ -36,7 +36,7 @@ RUN \
     # Modify image #
     ################
     # Change data location
-    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/share/webtrees|g' \ 
+    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \ 
     \
     # Add entry script
     && chown root:root /run.sh \
