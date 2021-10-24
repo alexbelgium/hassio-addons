@@ -66,7 +66,7 @@ chown -R www-data:www-data $WEBTREES_HOME
 
 # Make links with share
 for VOL in "data" "media" "modules_v4"; do
-touch $OLD_WEBTREES_HOME/$VOL
+mkdir -p $OLD_WEBTREES_HOME/$VOL
 cp -rn $OLD_WEBTREES_HOME/$VOL $WEBTREES_HOME
 rm -r $OLD_WEBTREES_HOME/$VOL
 ln -s $WEBTREES_HOME/$VOL $OLD_WEBTREES_HOME
