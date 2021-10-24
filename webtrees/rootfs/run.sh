@@ -43,7 +43,7 @@ if bashio::config.true 'ssl'; then
   export HTTPS=true
   export SSL=true
   BASE_URL=$BASE_URL:$(bashio::addon.port 443)
-  export BASE_URL="${BASE_URL/http/https}"
+  export BASE_URL="${BASE_URL/http:/https:}"
   
   #Communication
   bashio::log.info "Ssl enabled. If webui don't work, disable ssl or check your certificate paths"
