@@ -55,7 +55,7 @@ fi
 
 bashio::log.info "Launching app, please wait"
 
-if bashio::config.true "database_in_share"; then
+if bashio::config.true 'database_in_share'; then
   export WEBTREES_HOME="/share/webtrees"
   grep -rl "/data/webtrees" /etc/ | xargs sed -i 's|/data/webtrees|$WEBTREES_HOME|g' \ 
 fi
