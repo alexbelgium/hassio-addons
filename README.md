@@ -11,7 +11,7 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![privileged][privileged-shield] : requires protection mode off to run
 - ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
 
-![Donate][donation-badge]: hello
+[![Donate][donation-badge]][donate-url]
 
 ## Installation
 
