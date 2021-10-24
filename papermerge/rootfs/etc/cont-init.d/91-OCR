@@ -14,7 +14,7 @@ if [ -n "$OCRLANG" ]; then
     else
       echo "package tesseract-ocr-${i} not found in the repository, skipping"
     fi
-    sed -i "$LINE a \  "${i}\": \"${i}\","  /data/config/papermerge.conf.py
+    sed -i "$LINE a   \"${i}\": \"${i}\","  /data/config/papermerge.conf.py
     bashio::log.info "... ${i} installed" 
   done
 fi
