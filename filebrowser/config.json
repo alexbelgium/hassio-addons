@@ -33,7 +33,7 @@
     "networkdisks": "//server/share",
     "cifsusername": "username",
     "cifspassword": "password",
-    "NoAuth": false
+    "NoAuth": true
   },
   "panel_icon": "mdi:file-search",
   "ports": {
