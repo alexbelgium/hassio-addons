@@ -48,20 +48,6 @@ export LANG=$(bashio::config 'LANG')
 export DB_TYPE=$(bashio::config 'DB_TYPE')
 [ $DB_TYPE = "sqlite" ] && bashio::log.info "Using a local sqlite database $WEBTREES_HOME/$DB_NAME please wait then login. Default credentials : $WT_USER : $WT_PASS"
 
-#####################
-# DATABASE LOCATION #
-#####################
-
-# Change data location
-NEW_WEBTREES_HOME=$(bashio::config 'WEBTREES_HOME')
-
-if [ ! -d $NEW_WEBTREES_HOME ]; then
-  export WEBTREES_HOME="/data/webtrees"
-  grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|$WEBTREES_HOME|g' \ 
-else
-  bashio::log.fatal "$WEBTREES_HOME not found, using internal addon data"
-fi
-
 ################
 # SSL CONFIG   #
 ################
@@ -94,12 +80,20 @@ fi
 ##############
 
 bashio::log.info "Launching app, please wait"
+
+if [ bashio::config.true "database_in_share" ]; then
+  export WEBTREES_HOME="/share/webtrees"
+  grep -rl "/data/webtrees" /etc/ | xargs sed -i 's|/data/webtrees|$WEBTREES_HOME|g' \ 
+fi
+
+bashio::log.info "Data stored in $WEBTREES_HOME"
+
 # Remove previous config to allow addon options to refresh
-rm /data/webtrees/data/config.ini.php 2>/dev/null || true
+rm $WEBTREES_HOME/data/config.ini.php 2>/dev/null || true
 
 # Change data location
-cp -rn /var/www/webtrees /data
-chown -R www-data:www-data /data/webtrees
+cp -rn /var/www/webtrees "$(dirname "$WEBTREES_HOME")"
+chown -R www-data:www-data $WEBTREES_HOME
 
 # Execute main script
 cd /
