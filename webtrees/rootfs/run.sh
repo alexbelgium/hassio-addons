@@ -55,17 +55,20 @@ fi
 
 bashio::log.info "Launching app, please wait"
 
-if bashio::config.true 'database_in_share'; then
-  export WEBTREES_HOME="/share/webtrees"
-  grep -rl "/data/webtrees" /etc/ | xargs sed -i 's|/data/webtrees|$WEBTREES_HOME|g' || true
-  grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|$WEBTREES_HOME|g' || true
-fi
-
-bashio::log.info "Data stored in $WEBTREES_HOME"
-
 # Change data location
 cp -rn /var/www/webtrees "$(dirname "$WEBTREES_HOME")"
+mkdir -p /share/webtrees
 chown -R www-data:www-data $WEBTREES_HOME
+chown -R www-data:www-data /share/webtrees
+
+# Make links with share
+for VOL in "data" "media" "modules_v4"; do
+touch $WEBTREES_HOME/$VOL
+cp -rn $WEBTREES_HOME/$VOL /share/webtrees
+rm -r $WEBTREES_HOME/$VOL
+ln -s /share/webtrees/$VOL $WEBTREES_HOME
+done
+chown -R www-data:www-data /share/webtrees
 
 # Execute main script
 cd /
