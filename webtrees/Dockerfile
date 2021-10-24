@@ -8,7 +8,7 @@ COPY rootfs /
 ARG BASHIO_VERSION=0.13.1
 ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
-ENTRYPOINT ["/start.sh"]
+ENTRYPOINT ["/run.sh"]
 VOLUME ["/data"]
 
 RUN \
@@ -39,8 +39,8 @@ RUN \
     && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \ 
     \
     # Add entry script
-    && chown root:root /start.sh \
-    && chmod a+x /start.sh \
+    && chown root:root /run.sh \
+    && chmod a+x /run.sh \
     # Add end script
     && sed -i '$ d' /docker-entrypoint.sh
 
