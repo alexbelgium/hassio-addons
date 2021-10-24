@@ -56,7 +56,7 @@ fi
 bashio::log.info "Launching app, please wait"
 
 # Change data location
-
+echo "... update data with image"
 OLD_WEBTREES_HOME=$WEBTREES_HOME
 export WEBTREES_HOME="/share/webtrees"
 cp -rn /var/www/webtrees "$(dirname "$OLD_WEBTREES_HOME")" &>/dev/null || true
@@ -65,6 +65,7 @@ chown -R www-data:www-data $OLD_WEBTREES_HOME
 chown -R www-data:www-data $WEBTREES_HOME
 
 # Make links with share
+echo "... make links with data in /share"
 for VOL in "data" "media" "modules_v4"; do
 mkdir -p $OLD_WEBTREES_HOME/$VOL
 cp -rn $OLD_WEBTREES_HOME/$VOL $WEBTREES_HOME
@@ -74,6 +75,7 @@ done
 chown -R www-data:www-data $WEBTREES_HOME
 
 # Correct base url if needed
+echo "... align base url with latest addon value"
 if [ -f $WEBTREES_HOME/data/config.ini.php ]; then
   echo "Aligning base_url addon config"
   LINE=$(sed -n '/base_url/=' $WEBTREES_HOME/data/config.ini.php)
