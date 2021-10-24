@@ -63,9 +63,6 @@ fi
 
 bashio::log.info "Data stored in $WEBTREES_HOME"
 
-# Remove previous config to allow addon options to refresh
-rm $WEBTREES_HOME/data/config.ini.php 2>/dev/null || true
-
 # Change data location
 cp -rn /var/www/webtrees "$(dirname "$WEBTREES_HOME")"
 chown -R www-data:www-data $WEBTREES_HOME
