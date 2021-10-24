@@ -37,7 +37,6 @@ if bashio::config.has_value 'networkdisks'; then
     # Data validation
     if [[ ! $disk =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
       bashio::log.fatal "The structure of your <networkdisks> doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2"
-      exit 1
     fi
 
     # Prepare mount point
