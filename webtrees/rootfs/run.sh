@@ -70,9 +70,9 @@ chown -R www-data:www-data $WEBTREES_HOME
 echo "... make links with data in /share"
 for VOL in "data" "media" "modules_v4"; do
 mkdir -p $OLD_WEBTREES_HOME/$VOL
-cp -rn $OLD_WEBTREES_HOME/$VOL $WEBTREES_HOME
-rm -r $OLD_WEBTREES_HOME/$VOL
-ln -s $WEBTREES_HOME/$VOL $OLD_WEBTREES_HOME
+cp -rn $OLD_WEBTREES_HOME/$VOL $WEBTREES_HOME || true
+rm -r $OLD_WEBTREES_HOME/$Vol || true
+ln -s $WEBTREES_HOME/$VOL $OLD_WEBTREES_HOME || true
 done
 chown -R www-data:www-data $WEBTREES_HOME
 
