@@ -13,6 +13,8 @@ In case of issue, create an issue in the repository and reference the full log f
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
+[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=for-the-badge&logoColor=white
+
 ## Installation
 
 Adding this add-ons repository to your Home Assistant instance is
@@ -212,4 +214,3 @@ https://github.com/alexbelgium/hassio-addons
 [ingress-shield]: https://img.shields.io/badge/ingress--green.svg
 [support-shield]: https://img.shields.io/badge/Support-thread-green.svg 
 [ram-shield]: https://img.shields.io/badge/RAM_min-4Gb-orange.svg 
-[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=for-the-badge&logoColor=white
