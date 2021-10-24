@@ -51,7 +51,7 @@ A Free Software Media System that puts you in control of managing and streaming 
 ### &#10003; [Grav](grav/) ![smb][smb-shield]
 Fast, Simple, and Flexible, file-based Web-platform
 
-### &#10003; [Filebrowser](filebrowser/)  ![support][support-shield]
+### &#10003; [Filebrowser](filebrowser/)  ![support][support-shield]![smb][smb-shield]
 A file manager for the web
 
 ### &#10003; [Flexget](flexget/)
