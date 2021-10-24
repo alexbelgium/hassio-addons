@@ -81,9 +81,9 @@ echo "... align base url with latest addon value"
 if [ -f $WEBTREES_HOME/data/config.ini.php ]; then
   echo "Aligning base_url addon config"
   LINE=$(sed -n '/base_url/=' $WEBTREES_HOME/data/config.ini.php)
-  sed -i "$LINE a "base_url=\"$BASE_URL\"" $WEBTREES_HOME/data/config.ini.php
-  sed -i "$LINE d "$WEBTREES_HOME/data/config.ini.php
-fi
+  sed -i "$LINE a base_url=\"$BASE_URL\"" $WEBTREES_HOME/data/config.ini.php || true
+  sed -i "$LINE d" $WEBTREES_HOME/data/config.ini.php || true 
+fi || true
 
 # Execute main script
 echo "/docker-entrypoint.sh"
