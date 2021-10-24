@@ -43,7 +43,6 @@ Create an issue on github
 --------------
 ![illustration](https://b0b.fr/wp-content/uploads/2016/02/Sonarr-1-1000x924.jpg)
 
-#links
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
