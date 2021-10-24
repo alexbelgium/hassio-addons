@@ -11,7 +11,7 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![privileged][privileged-shield] : requires protection mode off to run
 - ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
 
-[![Donate][donation-badge][donation-url] 
+[![Donate][donation-badge]][donation-url]
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=for-the-badge&logoColor=white
 [donation-url]: https://www.buymeacoffee.com/alexbelgium
 
