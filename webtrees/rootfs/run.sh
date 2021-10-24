@@ -88,7 +88,7 @@ fi || true
 # Execute main script
 echo "/docker-entrypoint.sh"
 cd /
-./docker-entrypoint.sh >/dev/null
+./docker-entrypoint.sh
 
 ############
 # END INFO #
