@@ -20,7 +20,7 @@
   "map": ["share:rw", "ssl"],
   "name": "Webtrees",
   "options": {
-    "ssl_under_dev": false,
+    "ssl_not_working": false,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "LANG": "en-US",
@@ -36,7 +36,7 @@
     "443/tcp": "Https web interface"
   },
   "schema": {
-    "ssl_under_dev": "bool",
+    "ssl_not_working": "bool",
     "certfile": "str",
     "keyfile": "str",
     "LANG": "str",
