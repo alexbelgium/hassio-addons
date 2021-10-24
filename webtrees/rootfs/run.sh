@@ -59,7 +59,7 @@ bashio::log.info "Launching app, please wait"
 
 OLD_WEBTREES_HOME=$WEBTREES_HOME
 export WEBTREES_HOME="/share/webtrees"
-cp -rn /var/www/webtrees "$(dirname "$OLD_WEBTREES_HOME")"
+cp -rn /var/www/webtrees "$(dirname "$OLD_WEBTREES_HOME")" &>/dev/null || true
 mkdir -p $WEBTREES_HOME
 chown -R www-data:www-data $OLD_WEBTREES_HOME
 chown -R www-data:www-data $WEBTREES_HOME
