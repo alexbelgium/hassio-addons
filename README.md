@@ -1,4 +1,7 @@
 # Home assistant add-on: alexbelgium
+[![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+
+[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=for-the-badge&logoColor=white
 
 ## About
 
@@ -10,10 +13,6 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![sql][sql-shield] : requires an external sql database server
 - ![privileged][privileged-shield] : requires protection mode off to run
 - ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
-
-[![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
-
-[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=for-the-badge&logoColor=white
 
 ## Installation
 
