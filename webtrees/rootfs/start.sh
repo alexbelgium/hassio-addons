@@ -46,12 +46,20 @@ fi
 export BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
 export LANG=$(bashio::config 'LANG')
 export DB_TYPE=$(bashio::config 'DB_TYPE')
-if [ $DB_TYPE = "sqlite" ]; then
-  #export WT_USER=$(bashio::config 'WT_USER')
-  #export WT_NAME=$(bashio::config 'WT_NAME')
-  #export WT_PASS=$(bashio::config 'WT_PASS')
-  #export WT_EMAIL=$(bashio::config 'WT_EMAIL')
-  bashio::log.info "Using a local sqlite database $WEBTREES_HOME/$DB_NAME please wait then login with $WT_USER : $WT_PASS"
+[ $DB_TYPE = "sqlite" ] && bashio::log.info "Using a local sqlite database $WEBTREES_HOME/$DB_NAME please wait then login. Default credentials : $WT_USER : $WT_PASS"
+
+#####################
+# DATABASE LOCATION #
+#####################
+
+# Change data location
+NEW_WEBTREES_HOME=$(bashio::config 'WEBTREES_HOME')
+
+if [ ! -d $NEW_WEBTREES_HOME ]; then
+  export WEBTREES_HOME="/data/webtrees"
+  grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|$WEBTREES_HOME|g' \ 
+else
+  bashio::log.fatal "$WEBTREES_HOME not found, using internal addon data"
 fi
 
 ################
@@ -95,7 +103,7 @@ chown -R www-data:www-data /data/webtrees
 
 # Execute main script
 cd /
-./docker-entrypoint.sh
+./docker-entrypoint.sh >/dev/null
 
 ############
 # END INFO #
