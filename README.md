@@ -12,7 +12,6 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
-
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=for-the-badge&logoColor=white
 
 ## Installation
