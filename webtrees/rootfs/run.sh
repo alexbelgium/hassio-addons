@@ -61,6 +61,8 @@ OLD_WEBTREES_HOME=$WEBTREES_HOME
 export WEBTREES_HOME="/share/webtrees"
 cp -rn /var/www/webtrees "$(dirname "$OLD_WEBTREES_HOME")" &>/dev/null || true
 mkdir -p $WEBTREES_HOME
+
+echo "... update permissions"
 chown -R www-data:www-data $OLD_WEBTREES_HOME
 chown -R www-data:www-data $WEBTREES_HOME
 
@@ -84,6 +86,7 @@ if [ -f $WEBTREES_HOME/data/config.ini.php ]; then
 fi
 
 # Execute main script
+echo "/docker-entrypoint.sh"
 cd /
 ./docker-entrypoint.sh >/dev/null
 
