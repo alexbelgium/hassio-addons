@@ -1,3 +1,6 @@
+
+## nightly-0.1.1.1030-ls162 (26-10-2021)
+- Update to latest version from linuxserver/docker-prowlarr
 - Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
 
 ## nightly-0.1.1.1029-ls161 (19-10-2021)
