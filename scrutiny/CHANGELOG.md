@@ -1,3 +1,6 @@
+
+## 0.3.13 (26-10-2021)
+- Update to latest version from analogj/scrutiny
 - Allow mounting of devices up to sdg2
 
 ## 0.3.12 (29-09-2021)
