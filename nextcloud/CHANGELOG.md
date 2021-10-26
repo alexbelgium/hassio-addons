@@ -1,4 +1,5 @@
 - Repaired use own certs
+- Repair increment of trusted domains
 
 ## 22.2.0 (02-10-2021)
 - Update to latest version from linuxserver/docker-nextcloud
