@@ -1,3 +1,4 @@
+- Repaired use own certs
 
 ## 22.2.0 (02-10-2021)
 - Update to latest version from linuxserver/docker-nextcloud
