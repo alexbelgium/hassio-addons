@@ -35,7 +35,7 @@ if [ -f $NGINXFILE ]; then
 fi || true 
 
   bashio::log.info "... done" 
-  rm /etc/cont-init.d/30-keygen
+  echo "#!/bin/bash" > /etc/cont-init.d/30-keygen
 else
    bashio::log.info "No ssl certificates set. Auto generating ones."
 fi
