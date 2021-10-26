@@ -20,14 +20,7 @@ if bashio::config.true 'use_own_certs'; then
   sed -i "$LINE d" /defaults/default
 
   bashio::log.info "... done" 
-
+  rm /etc/cont-init.d/30-keygen
 else
    bashio::log.info "No ssl certificates set. Auto generating ones."
-   SUBJECT="/C=US/ST=CA/L=Carlsbad/O=Linuxserver.io/OU=LSIO Server/CN=*"
-   if [[ -f /ssl/nextcloud/keys/cert.key && -f /ssl/nextcloud/keys/cert.crt ]]; then
-     bashio::log.info "using keys found in /ssl/nextcloud/keys"
-   else
-     bashio::log.info "generating self-signed keys in /ssl/nextcloud/keys, you can replace these with your own keys if required"
-     openssl req -new -x509 -days 3650 -nodes -out /ssl/nextcloud/keys/cert.crt -keyout /ssl/nextcloud/keys/cert.key -subj "$SUBJECT"
-   fi
 fi
