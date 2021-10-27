@@ -38,4 +38,6 @@ fi || true
   echo "#!/bin/bash" > /etc/cont-init.d/30-keygen
 else
    bashio::log.info "No ssl certificates set. Auto generating ones."
+   SUBJECT="/C=US/ST=CA/L=Carlsbad/O=Linuxserver.io/OU=LSIO Server/CN=*"
+   openssl req -new -x509 -days 3650 -nodes -out /ssl/nextcloud/keys/cert.crt -keyout /ssl/nextcloud/keys/cert.key -subj "$SUBJECT"
 fi
