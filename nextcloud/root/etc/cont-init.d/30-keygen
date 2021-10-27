@@ -23,15 +23,14 @@ fi
    #Sets certificates
   echo "... adding ssl certs in files" 
   #Sets certificates
-  for NGINXFILE in "/defaults/default" "/config/nginx/site-confs/default" "/data/config/nginx/site-confs/default"; do
-    if [ -f $NGINXFILE ]; then
-      LINE=$(sed -n '/cert.crt/=' $NGINXFILE) && \
-      sed -i "$LINE a ssl_certificate /ssl/${CERTFILE};" $NGINXFILE && \
+  for NGINXFILE in "/defaults/default" "/config/nginx/site-confs/default" "/data/config/nginx/site-confs/default"; do 
+   if [ -f $NGINXFILE ]; then
+      LINE=$(sed -n '/cert.crt/=' $NGINXFILE)
+      [ ! -z $LINE ] && sed -i "$LINE a ssl_certificate /ssl/${CERTFILE};" $NGINXFILE && \
       sed -i "$LINE d" $NGINXFILE && \
-      \
-      LINE=$(sed -n '/cert.key/=' $NGINXFILE) && \
       sed -i "$LINE a ssl_certificate_key /ssl/${KEYFILE};" $NGINXFILE && \ 
-      sed -i "$LINE d" $NGINXFILE || true
+      sed -i "$LINE d" $NGINXFILE
+      echo $NGINXFILE
     fi
   done
   bashio::log.info "... done" 
