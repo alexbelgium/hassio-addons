@@ -1,3 +1,6 @@
+
+## 2.9.2 (28-10-2021)
+- Update to latest version from portainer/portainer
 - password: define admin password. If kept blank, will allow manual restore of previous backup put in /share
 
 ## 2.9.1 (11-10-2021)
