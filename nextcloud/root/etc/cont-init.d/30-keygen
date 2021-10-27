@@ -15,24 +15,24 @@ if bashio::config.true 'use_own_certs'; then
    echo "... adding ssl certs in files" 
   NGINXFILE="/defaults/default"
   LINE=$(sed -n '/cert.crt/=' $NGINXFILE)
-  sed -i "$LINE a ssl_certificate ${CERTFILE};" $NGINXFILE
+  sed -i "$LINE a ssl_certificate /ssl/${CERTFILE};" $NGINXFILE
   sed -i "$LINE d" $NGINXFILE
 
   LINE=$(sed -n '/cert.key/=' $NGINXFILE)
-  sed -i "$LINE a ssl_certificate_key ${CERTFILE};" $NGINXFILE
+  sed -i "$LINE a ssl_certificate_key /ssl/${KEYFILE};" $NGINXFILE
   sed -i "$LINE d" $NGINXFILE
 
   #Sets certificates
 NGINXFILE="/config/nginx/site-confs/default"
 if [ -f $NGINXFILE ]; then
   LINE=$(sed -n '/cert.crt/=' $NGINXFILE) && \
-  sed -i "$LINE a ssl_certificate ${CERTFILE};" $NGINXFILE && \
+  sed -i "$LINE a ssl_certificate /ssl/${CERTFILE};" $NGINXFILE && \
   sed -i "$LINE d" $NGINXFILE
 fi
 
 if [ -f $NGINXFILE ]; then
   LINE=$(sed -n '/cert.key/=' $NGINXFILE) && \
-  sed -i "$LINE a ssl_certificate_key ${CERTFILE};" $NGINXFILE && \ 
+  sed -i "$LINE a ssl_certificate_key /ssl/${KEYFILE};" $NGINXFILE && \ 
   sed -i "$LINE d" $NGINXFILE
 fi
 
