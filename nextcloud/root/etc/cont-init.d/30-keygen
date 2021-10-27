@@ -7,11 +7,13 @@ if bashio::config.true 'use_own_certs'; then
    KEYFILE=$(bashio::config 'keyfile')
 
    #Check if files exist
-   [ ! -f /ssl/$CERTFILE ] && bashio::log.fatal "... Certificate /ssl/$CERTFILE not found" && exit 1
-   [ ! -f /ssl/$KEYFILE ] && bashio::log.fatal "... Certificate /ssl/$KEYFILE not found" && exit 1
+   echo "... checking if referenced files exist" 
+   [ ! -f /ssl/$CERTFILE ] && bashio::log.fatal "... Certificate /ssl/$CERTFILE not found" && exit 0
+   [ ! -f /ssl/$KEYFILE ] && bashio::log.fatal "... Certificate /ssl/$KEYFILE not found" && exit 0
 
    #Sets certificates
-NGINXFILE="/defaults/default"
+   echo "... adding ssl certs in files" 
+  NGINXFILE="/defaults/default"
   LINE=$(sed -n '/cert.crt/=' $NGINXFILE)
   sed -i "$LINE a ssl_certificate ${CERTFILE};" $NGINXFILE
   sed -i "$LINE d" $NGINXFILE
@@ -25,14 +27,14 @@ NGINXFILE="/config/nginx/site-confs/default"
 if [ -f $NGINXFILE ]; then
   LINE=$(sed -n '/cert.crt/=' $NGINXFILE) && \
   sed -i "$LINE a ssl_certificate ${CERTFILE};" $NGINXFILE && \
-  sed -i "$LINE d" $NGINXFILE || true 
-fi || true
+  sed -i "$LINE d" $NGINXFILE
+fi
 
 if [ -f $NGINXFILE ]; then
   LINE=$(sed -n '/cert.key/=' $NGINXFILE) && \
   sed -i "$LINE a ssl_certificate_key ${CERTFILE};" $NGINXFILE && \ 
-  sed -i "$LINE d" $NGINXFILE || true
-fi || true 
+  sed -i "$LINE d" $NGINXFILE
+fi
 
   bashio::log.info "... done" 
   echo "#!/bin/bash" > /etc/cont-init.d/30-keygen
