@@ -14,7 +14,7 @@ if bashio::config.has_value 'networkdisks'; then
   SECVERS=""
 
   # Mount CIFS Share if configured and if Protection Mode is active
-  bashio::log.info 'Mounting smb share(s)...'
+  echo 'Mounting smb share(s)...'
 
   if bashio::config.has_value 'cifsdomain'; then
     DOMAIN=",domain=$(bashio::config 'cifsdomain')"

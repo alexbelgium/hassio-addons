@@ -4,7 +4,7 @@
 # MOUNT LOCAL SHARES #
 ######################
 
-bashio::log.info 'Mounting external hdd...'
+echo 'Mounting external hdd...'
 
 # Mount local Share if configured
 if bashio::config.has_value 'localdisks'; then
