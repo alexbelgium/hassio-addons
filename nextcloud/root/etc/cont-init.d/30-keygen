@@ -25,13 +25,15 @@ fi
   #Sets certificates
   for NGINXFILE in "/defaults/default" "/config/nginx/site-confs/default" "/data/config/nginx/site-confs/default"; do 
    if [ -f $NGINXFILE ]; then
-      LINE=$(sed -n '/ssl_certificate_key/=' $NGINXFILE)
-      [ ! -z $LINE ] && sed -i "$LINE a ssl_certificate_key /ssl/${KEYFILE};" $NGINXFILE && \ 
-      sed -i "$LINE d" $NGINXFILE
-      LINE=$(sed -n '/ssl_certificate/=' $NGINXFILE)
-      [ ! -z $LINE ] && sed -i "$LINE a ssl_certificate /ssl/${CERTFILE};" $NGINXFILE && \
-      sed -i "$LINE d" $NGINXFILE
-      echo "$NGINXFILE modified"
+     LINE=$(sed -n "/ssl_certificate_key/=" $NGINXFILE)
+
+     [ ! -z $LINE ] && \
+     sed -i "$LINE a ssl_certificate_key /ssl/$KEYFILE;" $NGINXFILE && \
+     sed -i "$LINE d" $NGINXFILE
+
+     LINE=$(sed -n '/ssl_certificate/=' $NGINXFILE)
+     [ ! -z $LINE ] && sed -i "$LINE a ssl_certificate /ssl/${CERTFILE};" $NGINXFILE && \
+     sed -i "$LINE d" $NGINXFILE && echo "$NGINXFILE modified"
     fi
   done
   bashio::log.info "... done" 
