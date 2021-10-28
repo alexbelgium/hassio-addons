@@ -32,8 +32,9 @@ fi
      sed -i "$LINE d" $NGINXFILE
 
      LINE=$(sed -n '/ssl_certificate/=' $NGINXFILE)
-     [ ! -z $LINE ] && sed -i "$LINE a ssl_certificate /ssl/${CERTFILE};" $NGINXFILE && \
-     sed -i "$LINE d" $NGINXFILE && echo "$NGINXFILE modified"
+     [ ! -z $LINE ] && \
+     sed -i "$LINE a ssl_certificate_key /ssl/$CERTFILE;" $NGINXFILE && \
+     sed -i "$LINE d" $NGINXFILE
     fi
   done
   bashio::log.info "... done" 
