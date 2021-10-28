@@ -1,5 +1,3 @@
-BREAKING CHANGE : comma separated domains instead of list. You’ll need to go in addon options after updating, and click “save”. Or remove your previous domains list, and read it in the format : “newdomain1.com 1, newdomain2.com”
-
 # Home assistant add-on: Nextcloud with OCR
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
