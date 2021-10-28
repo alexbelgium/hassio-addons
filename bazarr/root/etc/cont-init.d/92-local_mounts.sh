@@ -4,13 +4,13 @@
 # MOUNT LOCAL SHARES #
 ######################
 
-echo 'Mounting external hdd...'
+
 
 # Mount local Share if configured
 if bashio::config.has_value 'localdisks'; then
 
   MOREDISKS=$(bashio::config 'localdisks')
-  bashio::log.info "Local Disks mounting..."
+  echo "Local Disks mounting..."
 
   # Separate comma separated values
   for disk in ${MOREDISKS//,/ }; do
