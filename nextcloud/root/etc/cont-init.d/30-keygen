@@ -15,8 +15,8 @@ else
   bashio::log.info "No ssl certificates set. Auto generating ones..."
   SUBJECT="/C=US/ST=CA/L=Carlsbad/O=Linuxserver.io/OU=LSIO Server/CN=*"
   openssl req -new -x509 -days 3650 -nodes -out /ssl/nextcloud/keys/cert.crt -keyout /ssl/nextcloud/keys/cert.key -subj "$SUBJECT"
-  CERTFILE="/ssl/nextcloud/keys/cert.crt"
-  KEYFILE="/ssl/nextcloud/keys/cert.key"
+  CERTFILE="nextcloud/keys/cert.crt"
+  KEYFILE="nextcloud/keys/cert.key"
 
 fi
 
