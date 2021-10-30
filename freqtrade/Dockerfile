@@ -20,7 +20,7 @@ RUN \
     ########################
     # Prepares environment #
     ########################
-    && chmod a+x run.sh
+    && chmod a+x /run.sh
 
  
 # use /data instead of /config for hass.io environment
