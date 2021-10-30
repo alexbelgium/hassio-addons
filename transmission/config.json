@@ -34,7 +34,8 @@
     "networkdisks": "//ADDRESS/SHARE",
     "cifsusername": "username",
     "cifspassword": "password",
-    "DNS_server": "8.8.8.8,1.1.1.1", 
+    "DNS_server": "8.8.8.8,1.1.1.1",
+    "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16",
     "localdisks": "sda1"
   },
   "ports": {
@@ -60,6 +61,9 @@
     "cifspassword": "str?",
     "DNS_server": "str?",
     "localdisks": "str?",
+    "whitelist": "str?",
+    "user": "str?",
+    "pass": "str?",  
     "smbv1": "bool?"
   },
   "slug": "transmission_ls",
