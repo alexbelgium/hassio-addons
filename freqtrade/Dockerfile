@@ -25,7 +25,7 @@ RUN \
 VOLUME [ "/data" ]
 WORKDIR /
 RUN chmod 777 /run.sh
-ENTRYPOINT [ "/usr/bin/env" ]
+ENTRYPOINT [ "/bin/bash" ]
 CMD [ "/run.sh" ] 
  
 # use /data instead of /config for hass.io environment
