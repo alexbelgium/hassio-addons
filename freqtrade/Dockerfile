@@ -13,7 +13,14 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    && rm -rf /tmp/bashio \
+    \
+    ########################
+    # Prepares environment #
+    ########################
+    && freqtrade create-userdir --userdir /data \
+    && freqtrade new-config --config /data/config.json
+    
     
  
 # use /data instead of /config for hass.io environment
