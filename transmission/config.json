@@ -48,7 +48,7 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "customUI": "list(combustion-release|transmission-web-control|kettu|flood-for-transmission), 
+    "customUI": "list(combustion-release|transmission-web-control|kettu|flood-for-transmission)", 
     "TZ": "str?",
     "download_dir": "str",
     "incomplete_dir": "str?",
