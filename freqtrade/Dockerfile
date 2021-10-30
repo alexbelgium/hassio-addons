@@ -3,9 +3,8 @@ ARG BUILD_VERSION
 FROM freqtradeorg/freqtrade:latest
 ARG BASHIO_VERSION=0.13.1
 
-COPY rootfs /
-
 USER root
+COPY rootfs /
 
 RUN \
     ###################
@@ -23,8 +22,11 @@ RUN \
     ########################
     && chmod a+x /run.sh
 
-ENTRYPOINT [ "/run.sh" ]
-WORKDIR [ "/" ] 
+VOLUME [ "/data" ]
+WORKDIR /
+RUN chmod 777 /run.sh
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/run.sh" ] 
  
 # use /data instead of /config for hass.io environment
 #    && sed -i "s|/config|/share/freqtrade|g" /etc/services.d/freqtrade/run \
