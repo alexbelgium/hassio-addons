@@ -35,7 +35,7 @@ fi
 # Variables 
 download_dir=$(bashio::config 'download_dir')
 incomplete_dir=$(bashio::config 'incomplete_dir')
-CONFIG=$(</config/transmission/settings.json)
+CONFIG=$(/config/transmission/settings.json)
 
 # Permissions
 mkdir -p $download_dir || true
