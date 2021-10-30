@@ -20,12 +20,13 @@ declare incomplete_dir
 # PERMISSIONS #
 ###############
 #Default folders
-
+echo "Updating folders" 
 mkdir -p /config/transmission
 chown -R abc:abc /config/transmission
 chown -R abc:abc /data
 
 if ! bashio::fs.file_exists '/config/transmission/settings.json'; then
+  echo "Creating default config" 
   cp "/defaults/settings.json" "/config/transmission/settings.json"
 fi
 
@@ -42,12 +43,13 @@ mkdir -p $download_dir || true
 chown abc:abc $download_dir || true
 
 # if incomplete dir > 2, to allow both null and '', set it as existing
-if [ ${#incomplete_dir} -ge 2 ]
-then
+if [ ${#incomplete_dir} -ge 2 ]; then
+        echo "Incomplete dir set: $incomplete_dir" 
         CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
         mkdir -p $incomplete_dir
         chown abc:abc $incomplete_dir
 else
+        echo "Incomplete dir disabled" 
         CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=false")
 fi
 
@@ -66,7 +68,8 @@ echo "${CONFIG}" > /config/transmission/settings.json
 
 if bashio::config.has_value 'customUI'; then
   ### Variables
+  echo "Setting custom UI"
   CUSTOMUI=$(bashio::config 'customUI')
   export TRANSMISSION_WEB_HOME=/$CUSTOMUI/
-  bashio::log.info "UK selected : $TRANSMISSION_WEB_HOME" 
+  bashio::log.info "UI selected : $TRANSMISSION_WEB_HOME" 
 fi
