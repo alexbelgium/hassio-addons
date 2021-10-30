@@ -5,6 +5,10 @@ declare CONFIG
 declare incomplete_bool
 declare download_dir
 declare incomplete_dir
+declare USER
+declare PASS
+declare WHITELIST
+declare HOST_WHITELIST
 
 ##########################
 # IMPORT PREVIOUS FOLDER #
@@ -75,7 +79,9 @@ if bashio::config.has_value 'customUI'; then
   bashio::log.info "UI selected : $TRANSMISSION_WEB_HOME" 
 fi
 
-# From linuxserver 
+####################
+# From linuxserver #
+####################
 
 if [ ! -z "$USER" ] && [ ! -z "$PASS" ]; then
 	sed -i '/rpc-authentication-required/c\    "rpc-authentication-required": true,' /config/settings.json
