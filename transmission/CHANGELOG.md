@@ -1,4 +1,5 @@
 - Addition of custom WebUI through addon options. Default : flood
+- Added local mounts
 - Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
 
 ## 3.00-r2-ls87 (14-05-2021)
