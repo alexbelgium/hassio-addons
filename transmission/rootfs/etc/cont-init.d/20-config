@@ -75,8 +75,8 @@ if bashio::config.has_value 'customUI'; then
   ### Variables
   echo "Setting custom UI"
   CUSTOMUI=$(bashio::config 'customUI')
-  export TRANSMISSION_WEB_HOME=/$CUSTOMUI/
-  bashio::log.info "UI selected : $TRANSMISSION_WEB_HOME" 
+  mv /$CUSTOMUI /flood-for-transmission
+  bashio::log.info "UI selected : $CUSTOMUI" 
 fi
 
 ####################
