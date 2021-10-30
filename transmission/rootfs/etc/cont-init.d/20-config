@@ -83,28 +83,28 @@ fi
 # From linuxserver #
 ####################
 
-if [ ! -z "$USER" ] && [ ! -z "$PASS" ]; then
-	sed -i '/rpc-authentication-required/c\    "rpc-authentication-required": true,' /config/settings.json
-	sed -i "/rpc-username/c\    \"rpc-username\": \"$USER\"," /config/settings.json
-	sed -i "/rpc-password/c\    \"rpc-password\": \"$PASS\"," /config/settings.json
-else
-	sed -i '/rpc-authentication-required/c\    "rpc-authentication-required": false,' /config/settings.json
-	sed -i "/rpc-username/c\    \"rpc-username\": \"$USER\"," /config/settings.json
-	sed -i "/rpc-password/c\    \"rpc-password\": \"$PASS\"," /config/settings.json
-fi
-
-if [ ! -z "$WHITELIST" ]; then
-	sed -i '/rpc-whitelist-enabled/c\    "rpc-whitelist-enabled": true,' /config/settings.json
-	sed -i "/\"rpc-whitelist\"/c\    \"rpc-whitelist\": \"$WHITELIST\"," /config/settings.json
-else
-	sed -i '/rpc-whitelist-enabled/c\    "rpc-whitelist-enabled": false,' /config/settings.json
-	sed -i "/\"rpc-whitelist\"/c\    \"rpc-whitelist\": \"$WHITELIST\"," /config/settings.json
-fi
-
-if [ ! -z "$HOST_WHITELIST" ]; then
-	sed -i '/rpc-host-whitelist-enabled/c\    "rpc-host-whitelist-enabled": true,' /config/settings.json
-	sed -i "/\"rpc-host-whitelist\"/c\    \"rpc-host-whitelist\": \"$HOST_WHITELIST\"," /config/settings.json
-else
-	sed -i '/rpc-host-whitelist-enabled/c\    "rpc-host-whitelist-enabled": false,' /config/settings.json
-	sed -i "/\"rpc-host-whitelist\"/c\    \"rpc-host-whitelist\": \"$HOST_WHITELIST\"," /config/settings.json
-fi
+#if [ ! -z "$USER" ] && [ ! -z "$PASS" ]; then
+#	sed -i '/rpc-authentication-required/c\    "rpc-authentication-required": true,' /config/transmission/settings.json
+#	sed -i "/rpc-username/c\    \"rpc-username\": \"$USER\"," /config/transmission/settings.json
+#	sed -i "/rpc-password/c\    \"rpc-password\": \"$PASS\"," /config/transmission/settings.json
+#else
+#	sed -i '/rpc-authentication-required/c\    "rpc-authentication-required": false,' /config/transmission/settings.json
+#	sed -i "/rpc-username/c\    \"rpc-username\": \"$USER\"," /config/transmission/settings.json
+#	sed -i "/rpc-password/c\    \"rpc-password\": \"$PASS\"," /config/transmission/settings.json
+#fi
+#
+#if [ ! -z "$WHITELIST" ]; then
+#	sed -i '/rpc-whitelist-enabled/c\    "rpc-whitelist-enabled": true,' /config/transmission/settings.json
+#	sed -i "/\"rpc-whitelist\"/c\    \"rpc-whitelist\": \"$WHITELIST\"," /config/transmission/settings.json
+#else
+#	sed -i '/rpc-whitelist-enabled/c\    "rpc-whitelist-enabled": false,' /config/transmission/settings.json
+#	sed -i "/\"rpc-whitelist\"/c\    \"rpc-whitelist\": \"$WHITELIST\"," /config/transmission/settings.json
+#fi
+#
+#if [ ! -z "$HOST_WHITELIST" ]; then
+#	sed -i '/rpc-host-whitelist-enabled/c\    "rpc-host-whitelist-enabled": true,' /config/transmission/settings.json
+#	sed -i "/\"rpc-host-whitelist\"/c\    \"rpc-host-whitelist\": \"$HOST_WHITELIST\"," /config/transmission/settings.json
+#else
+#	sed -i '/rpc-host-whitelist-enabled/c\    "rpc-host-whitelist-enabled": false,' /config/transmission/settings.json
+#	sed -i "/\"rpc-host-whitelist\"/c\    \"rpc-host-whitelist\": \"$HOST_WHITELIST\"," /config/transmission/settings.json
+#fi
