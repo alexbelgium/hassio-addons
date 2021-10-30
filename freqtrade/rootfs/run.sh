@@ -3,11 +3,11 @@
 echo "Starting"
 
 if [ ! -f /data/config.json ]; then
-echo "building userdir"
+  echo "building userdir"
   freqtrade create-userdir --userdir /data \
-echo "building initial config"
+  echo "building initial config"
   freqtrade new-config --config /data/config.json \
 fi
 
 echo "Starting app"
-freqtrade trade --logfile /data/logs/freqtrade.log --db-url sqlite://///data/tradesv3.sqlite --config /data/config.json --strategy SampleStrategy
+bash freqtrade trade --logfile /data/logs/freqtrade.log --db-url sqlite://///data/tradesv3.sqlite --config /data/config.json --strategy SampleStrategy
