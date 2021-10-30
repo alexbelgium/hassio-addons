@@ -23,6 +23,7 @@ declare incomplete_dir
 
 mkdir -p /config/transmission
 chown -R abc:abc /config/transmission
+chown -R abc:abc /data
 
 if ! bashio::fs.file_exists '/config/transmission/settings.json'; then
   cp "/defaults/settings.json" "/config/transmission/settings.json"
