@@ -34,7 +34,8 @@
     "networkdisks": "//ADDRESS/SHARE",
     "cifsusername": "username",
     "cifspassword": "password",
-    "DNS_server": "8.8.8.8,1.1.1.1"
+    "DNS_server": "8.8.8.8,1.1.1.1", 
+    "localdisks": "sda1"
   },
   "ports": {
     "9091/tcp": 9091,
@@ -58,6 +59,7 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "DNS_server": "str?",
+    "localdisks": "str?",
     "smbv1": "bool?"
   },
   "slug": "transmission_ls",
