@@ -14,7 +14,8 @@
     "incomplete_dir": "/share/incomplete",
     "networkdisks": "//ADDRESS/SHARE",
     "cifsusername": "username",
-    "cifspassword": "password"
+    "cifspassword": "password",
+    "DNS_server": "8.8.8.8,1.1.1.1"
   },
   "ports": {
     "9091/tcp": 9091,
@@ -36,6 +37,7 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
+    "DNS_server": "str?",
     "smbv1": "bool?"
   },
   "slug": "transmission_ls",
