@@ -23,7 +23,7 @@
   },
   "privileged": [],
   "schema": {},
-  "slug": "freqtrade with frequi",
+  "slug": "freqtrade",
   "upstream": "2021.10",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2021.10",
