@@ -21,9 +21,8 @@ declare incomplete_dir
 ###############
 #Default folders
 echo "Updating folders" 
-mkdir -p /config/transmission
-chown -R abc:abc /config/transmission
-chown -R abc:abc /data
+mkdir -p /config/transmission || true 
+chown -R abc:abc /config/transmission || true
 
 if ! bashio::fs.file_exists '/config/transmission/settings.json'; then
   echo "Creating default config" 
@@ -34,13 +33,15 @@ fi
 # CONFIGURATION #
 #################
 # Variables 
+echo "Creating config" 
 download_dir=$(bashio::config 'download_dir')
 incomplete_dir=$(bashio::config 'incomplete_dir')
-CONFIG=$(/config/transmission/settings.json)
+CONFIG=$(</config/transmission/settings.json)
 
 # Permissions
-mkdir -p $download_dir || true
-chown abc:abc $download_dir || true
+echo "Updating permissions" 
+mkdir -p $download_dir
+chown abc:abc $download_dir
 
 # if incomplete dir > 2, to allow both null and '', set it as existing
 if [ ${#incomplete_dir} -ge 2 ]; then
