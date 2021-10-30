@@ -7,12 +7,10 @@ USER root
 COPY rootfs /
 
 RUN \
-    apt-get update \
-    && apt-get install -y git \
     ###################
     # Install bashio #
     ##################
-    && mkdir -p /tmp/bashio \
+    mkdir -p /tmp/bashio \
     && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
@@ -22,9 +20,9 @@ RUN \
     ########################
     # Prepares environment #
     ########################
-    && git clone -b develop https://github.com/freqtrade/freqtrade.git \
-    && cd freqtrade \
-    && ./setup.sh --install \
+    # && git clone -b develop https://github.com/freqtrade/freqtrade.git \
+    # && cd freqtrade \
+    # && ./setup.sh --install \
     && chmod a+x /run.sh
 
 VOLUME [ "/data" ]
