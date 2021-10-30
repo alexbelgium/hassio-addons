@@ -58,3 +58,14 @@ CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-host-whitelist-enabled\"=false")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"bind-address-ipv4\"=\"0.0.0.0\"")
 
 echo "${CONFIG}" > /config/transmission/settings.json
+
+################
+# Alternate UI #
+################
+
+if bashio::config.has_value 'customUI'; then
+  ### Variables
+  CUSTOMUI=$(bashio::config 'customUI')
+  export TRANSMISSION_WEB_HOME=/$CUSTOMUI/"
+  bashio::log.info "UK selected : $TRANSMISSION_WEB_HOME" 
+fi
