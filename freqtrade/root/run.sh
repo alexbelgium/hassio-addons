@@ -1,5 +1,13 @@
 #!/bin/bah
 
-echo "starting"
+echo "Starting"
 
-trade --logfile /freqtrade/user_data/logs/freqtrade.log --db-url sqlite:////freqtrade/user_data/tradesv3.sqlite --config /freqtrade/user_data/config.json --strategy SampleStrategy
+if [ ! -f /data/config.json ]; then
+echo "building userdir"
+  freqtrade create-userdir --userdir /data \
+echo "building initial config"
+  freqtrade new-config --config /data/config.json \
+fi
+
+echo "Starting app"
+trade --logfile /data/logs/freqtrade.log --db-url sqlite://///data/tradesv3.sqlite --config /data/config.json --strategy SampleStrategy
