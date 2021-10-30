@@ -24,6 +24,7 @@ RUN \
     && chmod a+x /run.sh
 
 ENTRYPOINT [ "/run.sh" ]
+WORKDIR [ "/" ] 
  
 # use /data instead of /config for hass.io environment
 #    && sed -i "s|/config|/share/freqtrade|g" /etc/services.d/freqtrade/run \
