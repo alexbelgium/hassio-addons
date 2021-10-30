@@ -23,6 +23,7 @@ RUN apk add --no-cache \
     \
     # Install Flood
     && echo "Install Flood for Transmission" \
+    && mkdir -p /opt/transmission-ui \
     && wget -qO- https://github.com/johman10/flood-for-transmission/releases/download/latest/flood-for-transmission.tar.gz | tar xz -C /opt/transmission-ui
  
 
