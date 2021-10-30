@@ -6,6 +6,7 @@ ARG BASHIO_VERSION=0.13.1
 COPY rootfs /
 
 USER root
+
 RUN \
     ###################
     # Install bashio #
@@ -22,6 +23,7 @@ RUN \
     ########################
     && chmod a+x /run.sh
 
+ENTRYPOINT [ "/run.sh" ]
  
 # use /data instead of /config for hass.io environment
 #    && sed -i "s|/config|/share/freqtrade|g" /etc/services.d/freqtrade/run \
