@@ -26,7 +26,7 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
-    "customUI": "flood",
+    "customUI": "flood-for-transmission",
     "download_dir": "/share/downloads",
     "incomplete_dir": "/share/incomplete",
     "networkdisks": "//ADDRESS/SHARE",
