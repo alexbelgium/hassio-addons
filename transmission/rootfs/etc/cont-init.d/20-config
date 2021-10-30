@@ -73,11 +73,14 @@ echo "${CONFIG}" > /config/transmission/settings.json
 
 if bashio::config.has_value 'customUI'; then
   ### Variables
-  echo "Setting custom UI"
   CUSTOMUI=$(bashio::config 'customUI')
-  mv /$CUSTOMUI /flood-for-transmission
-  bashio::log.info "UI selected : $CUSTOMUI" 
+  if [ "$CUSTOMUI" != "flood-for-transmission" ]; then
+    echo "Setting custom UI"
+    mv /flood-for-transmission /a
+    mv /$CUSTOMUI /flood-for-transmission
+  fi
 fi
+bashio::log.info "UI selected : $CUSTOMUI" 
 
 ####################
 # From linuxserver #
