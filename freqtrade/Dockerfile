@@ -14,6 +14,8 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
+    
+ 
 # use /data instead of /config for hass.io environment
 #    && sed -i "s|/config|/share/freqtrade|g" /etc/services.d/freqtrade/run \
 #&& sed -i "s|/config|/share/freqtrade|g" /etc/cont-init.d/50-config \
