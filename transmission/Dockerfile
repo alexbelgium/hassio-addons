@@ -18,7 +18,12 @@ RUN apk add --no-cache \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz
+    && rm -fr /tmp/bashio.tar.gz \
+    \
+    # Install Flood
+    && echo "Install Flood for Transmission" \
+    && wget -qO- https://github.com/johman10/flood-for-transmission/releases/download/latest/flood-for-transmission.tar.gz | tar xz -C /opt/transmission-ui
+ 
 
 # Copy root filesystem
 COPY rootfs /
