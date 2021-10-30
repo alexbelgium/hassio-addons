@@ -20,8 +20,6 @@ RUN \
     ########################
     # Prepares environment #
     ########################
-    && freqtrade create-userdir --userdir /data \
-    && freqtrade new-config --config /data/config.json \
     && chmod a+x run.sh
 
  
