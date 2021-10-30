@@ -7,6 +7,7 @@ ARG BASHIO_VERSION=0.13.1
 RUN apk add --no-cache \
     curl \
     jq \
+    wget \
     samba \
     samba-client \
     && curl -J -L -o /tmp/bashio.tar.gz \
