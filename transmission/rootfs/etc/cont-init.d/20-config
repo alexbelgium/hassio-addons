@@ -86,29 +86,38 @@ bashio::log.info "UI selected : $CUSTOMUI"
 # From linuxserver #
 ####################
 
+# USER and PASS
+###############
+
+# Clean lines
+sed -i "/rpc-authentication-required/ d" /config/transmission/settings.json
+sed -i "/rpc-username/ d" /config/transmission/settings.json
+sed -i "/rpc-password/ d" /config/transmission/settings.json
+
+# Set lines
 if bashio::config.has_value 'user'; then
 	USER=$(bashio::config 'user')
 	PASS=$(bashio::config 'pass')
-	if [ ! -z "$USER" ] && [ ! -z "$PASS" ]; then
-		sed -i '/rpc-authentication-required/c\    "rpc-authentication-required": true,' /config/transmission/settings.json
-		sed -i "/rpc-username/c\    \"rpc-username\": \"$USER\"," /config/transmission/settings.json
-		sed -i "/rpc-password/c\    \"rpc-password\": \"$PASS\"," /config/transmission/settings.json
-	else
-		sed -i '/rpc-authentication-required/c\    "rpc-authentication-required": false,' /config/transmission/settings.json
-		sed -i "/rpc-username/c\    \"rpc-username\": \"$USER\"," /config/transmission/settings.json
-		sed -i "/rpc-password/c\    \"rpc-password\": \"$PASS\"," /config/transmission/settings.json
-	fi
+	sed -i "2 i\"rpc-authentication-required\": true," /config/transmission/settings.json
+	sed -i "2 i\"rpc-username\": \"$USER\"," /config/transmission/settings.json
+	sed -i "2 i\"rpc-password\": \"$PASS\"," /config/transmission/settings.json		 
+	bashio::log.info "User & Pass set, authentification will be with user : $USER and pass : $PASS"
+else
+	sed -i "2 i\"rpc-authentication-required\": false," /config/transmission/settings.json
+	bashio::log.warning "User & Pass not set, no authentification required"
 fi
 
+# WHITELIST
+###########
+
+sed -i "/whitelist/ d" /config/transmission/settings.json
 if bashio::config.has_value 'whitelist'; then
 	WHITELIST=$(bashio::config 'whitelist')
-	if [ ! -z "$WHITELIST" ]; then
-		sed -i '/rpc-whitelist-enabled/c\    "rpc-whitelist-enabled": true,' /config/transmission/settings.json
-		sed -i "/\"rpc-whitelist\"/c\    \"rpc-whitelist\": \"$WHITELIST\"," /config/transmission/settings.json
-	else
-		sed -i '/rpc-whitelist-enabled/c\    "rpc-whitelist-enabled": false,' /config/transmission/settings.json
-		sed -i "/\"rpc-whitelist\"/c\    \"rpc-whitelist\": \"$WHITELIST\"," /config/transmission/settings.json
-	fi
+	bashio::log.info "Whitelist set, no authentification from IP $WHITELIST"	
+	sed -i "2 i\"rpc-whitelist-enabled\": true," /config/transmission/settings.json
+	sed -i "2 i\"rpc-whitelist\": \"$WHITELIST\"," /config/transmission/settings.json
+else
+	sed -i "2 i\"rpc-whitelist-enabled\": false," /config/transmission/settings.json
 fi
 
 #if [ ! -z "$HOST_WHITELIST" ]; then
