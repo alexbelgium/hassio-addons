@@ -66,6 +66,6 @@ echo "${CONFIG}" > /config/transmission/settings.json
 if bashio::config.has_value 'customUI'; then
   ### Variables
   CUSTOMUI=$(bashio::config 'customUI')
-  export TRANSMISSION_WEB_HOME=/$CUSTOMUI/"
+  export TRANSMISSION_WEB_HOME=/$CUSTOMUI/
   bashio::log.info "UK selected : $TRANSMISSION_WEB_HOME" 
 fi
