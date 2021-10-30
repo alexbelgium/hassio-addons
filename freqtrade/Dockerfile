@@ -35,9 +35,6 @@ ENTRYPOINT [ "/run.sh" ]
 #&& sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
 #&& sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
 
-# copy local files
-COPY root/ / 
-
 ### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
