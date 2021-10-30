@@ -26,6 +26,7 @@
   "options": {
     "PUID": 0,
     "PGID": 0,
+    "customUI": "flood",
     "download_dir": "/share/downloads",
     "incomplete_dir": "/share/incomplete",
     "networkdisks": "//ADDRESS/SHARE",
@@ -47,6 +48,7 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
+    "customUI": "list(combustion|web-control|kettu|flood), 
     "TZ": "str?",
     "download_dir": "str",
     "incomplete_dir": "str?",
