@@ -9,7 +9,7 @@ if [ -f ${JSONTOCHECK} ]; then
     echo "Checking settings.json format"
 
     # Get the default keys from the original file
-    mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
+    mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE}) || (echo "structure is abnormal, restarting database from scratch" && cp ${JSONSOURCE} ${JSONTOCHECK})
 
     # Check if all keys are still there, or add them
     for KEYS in ${arr[@]}; do
