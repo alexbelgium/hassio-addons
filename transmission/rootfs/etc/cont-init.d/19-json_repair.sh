@@ -28,9 +28,9 @@ if [ -f ${JSONTOCHECK} ]; then
             #Fetch initial value
             JSONSOURCEVALUE=$(jq -r ".\"$KEYS\"" ${JSONSOURCE})
             #Add key
-            sed -i "3 i\"${KEYS}\": \"${JSONSOURCEVALUE}\"}," ${JSONTOCHECK}
+            sed -i "3 i\"${KEYS}\": \"${JSONSOURCEVALUE}\"," ${JSONTOCHECK}
             # Message
-            bashio::log.warning "$KEYS was missing from your settings.json, it was added with the default value ${JSONSOURCEVALUE}"
+            bashio::log.warning "${KEYS} was missing from your settings.json, it was added with the default value ${JSONSOURCEVALUE}"
         fi
     done
 
