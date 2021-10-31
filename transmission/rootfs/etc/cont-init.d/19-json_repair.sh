@@ -9,7 +9,7 @@ if [ -f ${JSONTOCHECK} ]; then
     echo "Checking settings.json format"
 
     # Check if json file valid or not
-    jq -reM '""' <<<${JSONTOCHECK} 1>/dev/null || ERROR=true
+    jq . -S ${JSONTOCHECK} || ERROR=true
     if [ $ERROR = true ]; then
         bashio::log.fatal "Settings.json structure is abnormal, restoring options from scratch. Your old file is renamed as settings.json_old"
         mv ${JSONSOURCE} ${JSONSOURCE}_old
