@@ -34,7 +34,7 @@ fi
 
 if bashio::config.has_value 'customUI'; then
   CUSTOMUI=$(bashio::config 'customUI')
-  sed -i "1a export TRANSMISSION_WEB_HOME=\"/$CUSTOMUI/\"" /etc/services.d/transmission/run
+  [ $CUSTOMUI != "standard" ] && sed -i "1a export TRANSMISSION_WEB_HOME=\"/$CUSTOMUI/\"" /etc/services.d/transmission/run
 fi
 bashio::log.info "UI selected : $CUSTOMUI"
 
