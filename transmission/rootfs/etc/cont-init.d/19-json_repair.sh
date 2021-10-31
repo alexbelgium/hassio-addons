@@ -21,7 +21,7 @@ if [ -f ${JSONTOCHECK} ]; then
             #Add key
             sed -i "3 i\"${KEYS}\": \"${JSONSOURCEVALUE}\"}," ${JSONTOCHECK}
             # Message
-            bashio::log.warning "$KEYS was missing from your settings.json, it was added"
+            bashio::log.warning "$KEYS was missing from your settings.json, it was added with the default value ${JSONSOURCEVALUE}"
         fi
     done
 
