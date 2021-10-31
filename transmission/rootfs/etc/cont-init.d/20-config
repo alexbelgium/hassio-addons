@@ -33,13 +33,8 @@ fi
 ##############
 
 if bashio::config.has_value 'customUI'; then
-  ### Variables
   CUSTOMUI=$(bashio::config 'customUI')
-  if [ "$CUSTOMUI" != "flood-for-transmission" ]; then
-    echo "Setting custom UI"
-    mv /flood-for-transmission /a
-    mv /$CUSTOMUI /flood-for-transmission
-  fi
+  sed -i "1a export TRANSMISSION_WEB_HOME=\"/$CUSTOMUI/\"" /etc/services.d/transmission/run
 fi
 bashio::log.info "UI selected : $CUSTOMUI"
 
