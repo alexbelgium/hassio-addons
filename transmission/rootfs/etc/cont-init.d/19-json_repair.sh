@@ -13,8 +13,16 @@ if [ -f ${JSONTOCHECK} ]; then
 
     # Check if all keys are still there, or add them
     for KEYS in ${arr[@]}; do
+        # Check if key exists
         KEYSTHERE=$(jq "has(\"${KEYS}\")" ${JSONTOCHECK})
-        [ $KEYSTHERE != "true" ] && sed -i "3 i\"${KEYS}\": null," ${JSONTOCHECK} && bashio::log.warning "$KEYS was missing from your settings.json, it was added"
+        if [ $KEYSTHERE != "true" ]; then
+            #Fetch initial value
+            JSONSOURCEVALUE=$(jq -r .${KEYS} ${JSONSOURCE})
+            #Add key
+            sed -i "3 i\"${KEYS}\": \"${JSONSOURCEVALUE}\"}," ${JSONTOCHECK}
+            # Message
+            bashio::log.warning "$KEYS was missing from your settings.json, it was added"
+        fi
     done
 
     # Show structure in a nice way
