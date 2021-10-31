@@ -7,6 +7,7 @@
   "host_network": false,
   "ingress": true,
   "ingress_port": 8099,
+  "ingress_url": "https://github.com/alexbelgium/hassio-addons",
   "map": ["config:rw"],
   "name": "Joal",
   "options": {
