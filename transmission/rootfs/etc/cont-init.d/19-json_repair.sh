@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 JSONTOCHECK='/config/transmission/settings.json'
 JSONSOURCE='/defaults/settings.json'
@@ -9,16 +9,19 @@ if [ -f ${JSONTOCHECK} ]; then
     echo "Checking settings.json format"
 
     # Get the default keys from the original file
-    mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE}) || (echo "structure is abnormal, restarting database from scratch" && cp ${JSONSOURCE} ${JSONTOCHECK})
+    mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE}) || (bashio::log.fatal "Settings.json structure is abnormal, restoring options from scratch" && cp ${JSONSOURCE} ${JSONTOCHECK})
 
     # Check if all keys are still there, or add them
     for KEYS in ${arr[@]}; do
         KEYSTHERE=$(jq "has(\"${KEYS}\")" ${JSONTOCHECK})
-        [ $KEYSTHERE != "true" ] && sed -i "3 i\"${KEYS}\": null," ${JSONTOCHECK} && echo "... $KEYS was missing, added"
+        [ $KEYSTHERE != "true" ] && sed -i "3 i\"${KEYS}\": null," ${JSONTOCHECK} && bashio::log.warning "$KEYS was missing from your settings.json, it was added"
     done
 
     # Show structure in a nice way
     jq . -S ${JSONTOCHECK} | cat >temp.json && mv temp.json ${JSONTOCHECK}
+
+    # Message
+    bashio::log.info "Your settings.json was checked and seems perfectly normal!"
 fi
 
 # Repair structure
