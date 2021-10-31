@@ -37,10 +37,12 @@ if bashio::config.has_value 'customUI'; then
   [ $CUSTOMUI != "standard" ] && sed -i "1a export TRANSMISSION_WEB_HOME=\"/$CUSTOMUI/\"" /etc/services.d/transmission/run
   
   # Enable transmission-web-control return to default UI
-  ln -s /usr/share/transmission/web/style /transmission-web-control
-  ln -s /usr/share/transmission/web/images /transmission-web-control
-  ln -s /usr/share/transmission/web/javascript /transmission-web-control
-  ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
+  if [ ! -f "/transmission-web-control/index.original.html" ]; then
+    ln -s /usr/share/transmission/web/style /transmission-web-control
+    ln -s /usr/share/transmission/web/images /transmission-web-control
+    ln -s /usr/share/transmission/web/javascript /transmission-web-control
+    ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
+  fi
 fi
 bashio::log.info "UI selected : $CUSTOMUI"
 
