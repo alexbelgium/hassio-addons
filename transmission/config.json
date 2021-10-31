@@ -21,7 +21,7 @@
     "/dev/sdg2"
   ],
   "environment": {
-  "TRANSMISSION_WEB_HOME": "/flood-for-transmission/"
+    "TRANSMISSION_WEB_HOME": "/flood-for-transmission/"
   },
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Transmission NAS",
@@ -35,7 +35,6 @@
     "cifsusername": "username",
     "cifspassword": "password",
     "DNS_server": "8.8.8.8,1.1.1.1",
-    "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16",
     "localdisks": "sda1"
   },
   "ports": {
@@ -52,7 +51,7 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "customUI": "list(|combustion-release|transmission-web-control|kettu|flood-for-transmission)?", 
+    "customUI": "list(|combustion-release|transmission-web-control|kettu|flood-for-transmission)?",
     "TZ": "str?",
     "download_dir": "str",
     "incomplete_dir": "str?",
@@ -63,7 +62,7 @@
     "localdisks": "str?",
     "whitelist": "str?",
     "user": "str?",
-    "pass": "str?",  
+    "pass": "str?",
     "smbv1": "bool?"
   },
   "slug": "transmission_ls",
