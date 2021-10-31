@@ -71,19 +71,6 @@ if bashio::config.has_value 'customUI'; then
 fi
 bashio::log.info "UI selected : $CUSTOMUI" 
 
-#####################
-# net.core.rmem_max #
-#####################
-
-SIZE="4194304" 
-  # If net.core.rmem_max present in /etc/sysctl.conf, change value to "$SIZE"
-  #	else, add "net.core.rmem_max = $SIZE" to /etc/sysctl.conf
-  if grep --silent ^net.core.rmem_max /etc/sysctl.conf; then
-    sed -i 's/^net.core.rmem_max.*/net.core.rmem_max = '$SIZE'/g' /etc/sysctl.conf
-  else
-    echo "" >> /etc/sysctl.conf
-    echo "net.core.rmem_max = $SIZE" >> /etc/sysctl.conf
-  fi
 
 ####################
 # From linuxserver #
