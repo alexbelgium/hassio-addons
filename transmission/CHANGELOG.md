@@ -1,9 +1,11 @@
-- Addition of custom WebUI through addon options. Default : flood
-- Added custom DNS option
-- Add option to define identification with USER and PASS options
-- Add option to define a whitelist to prevent need for identification
+- Removal of requirement for unprotected mode
+- Addition of local disks mount
+- Addition of repair capabilities for the json
+- Optional custom UI, with flood custom UI set by default
+- Optional custom DNS setting (to avoid flooding a local DNS filter such as adguard)
+- Optional whitelist
+- Optional identification with USER & PASS
 - Improve SMB mount code ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
-- Added local mounts option
 
 ## 3.00-r2-ls87 (14-05-2021)
 
