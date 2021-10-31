@@ -131,7 +131,6 @@ else
   nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${UIPATH} --joal.ui.secret-token=$TOKEN >/dev/null
 fi \
   &
-bashio::log.info "Joal started with path http://ip/${UIPATH}/ui secret token $TOKEN"
 bashio::log.info "Please wait, loading..."
 
 # Wait for transmission to become available
