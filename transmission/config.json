@@ -49,7 +49,7 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "customUI": "list(|combustion-release|transmission-web-control|kettu|flood-for-transmission)?",
+    "customUI": "list(|combustion-release|transmission-web-control|kettu|flood-for-transmission)",
     "TZ": "str?",
     "download_dir": "str",
     "incomplete_dir": "str?",
@@ -67,6 +67,6 @@
   "startup": "services",
   "upstream": "3.00-r2-ls87",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.00-r2-ls87-5",
+  "version": "3.00-r2-ls87-6",
   "webui": "http://[HOST]:[PORT:9091]"
 }
