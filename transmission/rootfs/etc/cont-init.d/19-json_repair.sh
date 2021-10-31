@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 JSONTOCHECK='/config/transmission/settings.json'
 JSONSOURCE='/defaults/settings.json'
