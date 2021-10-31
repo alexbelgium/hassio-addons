@@ -1,5 +1,4 @@
 #!/usr/bin/with-contenv bashio
-# ==============================================================================
 
 declare CONFIG
 declare incomplete_bool
@@ -9,16 +8,6 @@ declare USER
 declare PASS
 declare WHITELIST
 declare HOST_WHITELIST
-
-##########################
-# IMPORT PREVIOUS FOLDER #
-##########################
-#if [ -d '/share/transmission' ]; then
-#  mkdir -p /config/transmission
-#  chown -R abc:abc /config/transmission
-#  mv /config/transmission /share/transmission
-#  echo "Folder migrated to /config/transmission"
-#fi
 
 ###############
 # PERMISSIONS #
@@ -82,6 +71,20 @@ if bashio::config.has_value 'customUI'; then
 fi
 bashio::log.info "UI selected : $CUSTOMUI" 
 
+#####################
+# net.core.rmem_max #
+#####################
+
+SIZE="4194304" 
+  # If net.core.rmem_max present in /etc/sysctl.conf, change value to "$SIZE"
+  #	else, add "net.core.rmem_max = $SIZE" to /etc/sysctl.conf
+  if grep --silent ^net.core.rmem_max /etc/sysctl.conf; then
+    sed -i 's/^net.core.rmem_max.*/net.core.rmem_max = '$SIZE'/g' /etc/sysctl.conf
+  else
+    echo "" >> /etc/sysctl.conf
+    echo "net.core.rmem_max = $SIZE" >> /etc/sysctl.conf
+  fi
+
 ####################
 # From linuxserver #
 ####################
@@ -90,9 +93,9 @@ bashio::log.info "UI selected : $CUSTOMUI"
 ###############
 
 # Clean lines
-#sed -i "/rpc-authentication-required/ d" /config/transmission/settings.json
-#sed -i "/rpc-username/ d" /config/transmission/settings.json
-#sed -i "/rpc-password/ d" /config/transmission/settings.json
+#sed -i "/rpc-authentication-required/d" /config/transmission/settings.json
+#sed -i "/rpc-username/d" /config/transmission/settings.json
+#sed -i "/rpc-password/d" /config/transmission/settings.json
 
 # Set lines
 #if bashio::config.has_value 'user'; then
@@ -110,7 +113,7 @@ bashio::log.info "UI selected : $CUSTOMUI"
 # WHITELIST
 ###########
 
-#sed -i "/whitelist/ d" /config/transmission/settings.json
+#sed -i "/whitelist/d" /config/transmission/settings.json
 #if bashio::config.has_value 'whitelist'; then
 #	WHITELIST=$(bashio::config 'whitelist')
 #	bashio::log.info "Whitelist set, no authentification from IP $WHITELIST"	
