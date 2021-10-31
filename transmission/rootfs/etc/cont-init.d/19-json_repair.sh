@@ -26,7 +26,7 @@ if [ -f ${JSONTOCHECK} ]; then
         KEYSTHERE=$(jq "has(\"${KEYS}\")" ${JSONTOCHECK})
         if [ $KEYSTHERE != "true" ]; then
             #Fetch initial value
-            JSONSOURCEVALUE=$(jq -r .${KEYS} ${JSONSOURCE})
+            JSONSOURCEVALUE=$(jq -r ".\"$KEYS\"" ${JSONSOURCE})
             #Add key
             sed -i "3 i\"${KEYS}\": \"${JSONSOURCEVALUE}\"}," ${JSONTOCHECK}
             # Message
