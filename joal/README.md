@@ -27,7 +27,6 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at `<your-ip>:8081/joal/ui`, or through Ingress in the app
 You'll need to open the options and encode the secret token lrMY24Byhx (or modify it)
 ```yaml
 secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
@@ -35,11 +34,22 @@ ui_path: joal #the path where Joal will be accessible
 run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
 ```
 
-Ingress connection :
-Server Address : YOURIP/api/hassio_ingress/INGRESSURL/ (example : 192.168.178.23:8123/api/hassio_ingress/qG_eJSO51uoHqkxiZzgzi9s5ZeNn5CVxBJH7ymrhW6c/)
-Server port : 8123
-Path prefix : YOURPATH (see addon option)
-Secret token : YOURTOKEN (see addon option)
+Methods of connection:
+1. Via ingress (accessible from within the app)
+``` yaml
+Address : until I make it automatic, you need to get the Ingress URL from the addon log. #Example from my config : `192.168.178.69:8123/api/hassio_ingress/POVP6iOh67KUz_LQQJg4lOC-DJi7FNXutaz_7kNiFWM/`
+Port : your HA port #usually 8123)
+Prefix : defined in "ui_path" addon options #_(default : joal)_
+Secret token : defined in "secret_token" addon options #_(default : lrMY24Byhx)_
+```
+
+2. From the local network, by accessing directly accessing the url ("joal" must be replaced by whatever your "ui_path" is set to in the addon options): `http://homeassistant.local:8081/joal/ui`
+``` yaml
+Address : homeassistant.local #_(or your direct url, or your external url if you have opened the port on your router)_
+Port : defined in addon options #_(default : 8081)_
+Prefix : defined in "ui_path" addon options #_(default : joal)_
+Secret token : defined in "secret_token" addon options #_(default : lrMY24Byhx)_
+```
 
 ## Support
 For HA : create an issue on github
