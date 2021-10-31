@@ -1,4 +1,5 @@
 # Home assistant add-on: Joal
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
@@ -11,6 +12,21 @@
 An open source command line RatioMaster with WebUI.
 This addon is based on the [docker image](https://hub.docker.com/r/anthonyraymond/joal) from Anthony Raymond.
 All credits for the app go to Anthony Raymond, please visit his repository here : https://github.com/anthonyraymond/joal
+
+## Configuration
+
+To connect, you need to check the log : all informations are there tailored for your system
+
+1. Via ingress (accessible from within the app)
+2. From the local network, by accessing directly accessing the url ("joal" must be replaced by whatever your "ui_path" is set to in the addon options): `http://homeassistant.local:8081/joal/ui`
+
+Addon options :
+
+```yaml
+secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
+ui_path: joal #the path where Joal will be accessible
+run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
+```
 
 ## Installation
 
@@ -25,20 +41,8 @@ comparison to installing any other Hass.io add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
-## Configuration
-
-To connect, you need to check the log : all informations are there tailored for your system
-1. Via ingress (accessible from within the app)
-2. From the local network, by accessing directly accessing the url ("joal" must be replaced by whatever your "ui_path" is set to in the addon options): `http://homeassistant.local:8081/joal/ui`
-
-Addon options :
-```yaml
-secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
-ui_path: joal #the path where Joal will be accessible
-run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
-```
-
 ## Support
+
 For HA : create an issue on github
 For Joal : see the upstream repo here https://github.com/anthonyraymond/joal
 
