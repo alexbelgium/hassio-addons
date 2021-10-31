@@ -1,4 +1,7 @@
 
+## 0.19.108 (31-10-2021)
+- Update to latest version from linuxserver/docker-jackett
+
 ## 0.19.96 (30-10-2021)
 - Update to latest version from linuxserver/docker-jackett
 
