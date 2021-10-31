@@ -21,7 +21,6 @@
     "/dev/sdg2"
   ],
   "environment": {
-    "TRANSMISSION_WEB_HOME": "/flood-for-transmission/"
   },
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Transmission NAS",
