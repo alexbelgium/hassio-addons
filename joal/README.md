@@ -15,13 +15,12 @@ All credits for the app go to Anthony Raymond, please visit his repository here 
 
 ## Configuration
 
-Joal configuration :
-
+### Joal configuration
 Check the log : all informations are there tailored for your system.
 1. Via ingress (accessible from within the app)
 2. From the local network, by accessing directly accessing the url ("joal" must be replaced by whatever your "ui_path" is set to in the addon options): `http://homeassistant.local:8081/joal/ui`
 
-Addon options :
+### Addon options
 
 ```yaml
 secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
