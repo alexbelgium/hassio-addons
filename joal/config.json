@@ -3,6 +3,7 @@
   "boot": "auto",
   "description": "An open source command line RatioMaster with WebUI",
   "environment": {},
+  "hassio_api": true,
   "host_network": false,
   "ingress": true,
   "ingress_port": 8099,
