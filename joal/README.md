@@ -15,8 +15,8 @@ All credits for the app go to Anthony Raymond, please visit his repository here 
 
 ## Configuration
 
-**Check the log : all informations are there tailored for your system
-**
+Joal configuration :
+Check the log : all informations are there tailored for your system.
 1. Via ingress (accessible from within the app)
 2. From the local network, by accessing directly accessing the url ("joal" must be replaced by whatever your "ui_path" is set to in the addon options): `http://homeassistant.local:8081/joal/ui`
 
