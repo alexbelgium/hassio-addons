@@ -121,10 +121,9 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::addon.ingress_url)
 host_port=$(bashio::core.port)
 ingress_url=$(bashio::addon.ingress_entry)
-
-echo $INGRESSURL
-echo $host_port
-echo $ingress_url
+ADDONPORT=$(bashio::addon.port "8081")
+host_ip=$(bashio::network.ipv4_address)
+host_ip=${host_ip%/*}
 
 ###############
 # LAUNCH APPS #
@@ -139,8 +138,6 @@ fi \
 bashio::log.info "Joal started with path http://ip/${UIPATH}/ui secret token $TOKEN"
 bashio::log.info "Please wait, loading..."
 
-ADDONPORT=$(bashio::addon.port "8081")
-
 # Wait for transmission to become available
 bashio::net.wait_for 8081 localhost 900 || true
 bashio::log.warning "Configuration for direct access (in http://homeassistant.local:${ADDONPORT}/${UIPATH}/ui):"
@@ -149,7 +146,7 @@ bashio::log.info "... server port : ${ADDONPORT}"
 bashio::log.info "... Path prefix : ${UIPATH}"
 bashio::log.info "... Secret token : $TOKEN"
 bashio::log.warning "Configuration for Ingress (in app):"
-bashio::log.info "... address : homeassistant.local:$host_port$ingress_url/"
+bashio::log.info "... address : ${host_ip}:$host_port$ingress_url/"
 bashio::log.info "... server port : $host_port"
 bashio::log.info "... Path prefix : ${UIPATH}"
 bashio::log.info "... Secret token : $TOKEN"
