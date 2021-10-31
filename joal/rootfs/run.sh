@@ -110,10 +110,7 @@ ingress_interface=$(bashio::addon.ip_address)
 # AUTOMATIC INGRESS
 ###################
 #if bashio::config.has_value 'auto_connection'; then
-INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::addon.ingress_url)
-bashio::log.info $INGRESSURL
-sed -i "s|/ui/|/ui?ui_credentials=%7B%22host%22%3A%22"${host_ip}:$host_port$ingress_url/"%22%2C%22port%22%3A%22"$host_port"%22%2C%22pathPrefix%22%3A%22"${UIPATH}"%22%2C%22secretToken%22%3A%22"${TOKEN}"%22%7D|g" /etc/nginx/servers/ingress.conf
-bashio::log.info "Ingress url set. Auto connection activated."
+#sed -i "s|/ui/|/ui?ui_credentials=%7B%22host%22%3A%22"${host_ip}:$host_port$ingress_url/"%22%2C%22port%22%3A%22"$host_port"%22%2C%22pathPrefix%22%3A%22"${UIPATH}"%22%2C%22secretToken%22%3A%22"${TOKEN}"%22%7D|g" /etc/nginx/servers/ingress.conf
 #else
 #  bashio::log.info "Ingress url not set. Connection must be done manually."
 #fi
