@@ -27,16 +27,16 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-You'll need to open the options and encode the secret token lrMY24Byhx (or modify it)
+To connect, you need to check the log : all informations are there tailored for your system
+1. Via ingress (accessible from within the app)
+2. From the local network, by accessing directly accessing the url ("joal" must be replaced by whatever your "ui_path" is set to in the addon options): `http://homeassistant.local:8081/joal/ui`
+
+Addon options :
 ```yaml
 secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
 ui_path: joal #the path where Joal will be accessible
 run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
 ```
-
-To connect, you need to check the log : all informations are there tailored for your system
-1. Via ingress (accessible from within the app)
-2. From the local network, by accessing directly accessing the url ("joal" must be replaced by whatever your "ui_path" is set to in the addon options): `http://homeassistant.local:8081/joal/ui`
 
 ## Support
 For HA : create an issue on github
