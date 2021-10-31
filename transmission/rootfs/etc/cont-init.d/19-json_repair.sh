@@ -9,7 +9,7 @@ if [ -f ${JSONTOCHECK} ]; then
     echo "Checking settings.json format"
 
     # Check if json file valid or not
-    jq -reM '""' <<<${JSONTOCHECK} 1>/dev/null || (bashio::log.fatal "Settings.json structure is abnormal, restoring options from scratch" && cp ${JSONSOURCE} ${JSONTOCHECK})
+    jq -reM '""' <<<${JSONTOCHECK} 1>/dev/null || (bashio::log.fatal "Settings.json structure is abnormal, restoring options from scratch" && cp ${JSONSOURCE} ${JSONTOCHECK} && exit 0)
 
     # Get the default keys from the original file
     mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
