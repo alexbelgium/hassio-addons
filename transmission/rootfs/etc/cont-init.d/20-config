@@ -14,6 +14,7 @@ CONFIGDIR="/config/transmission"
 ###############
 # PERMISSIONS #
 ###############
+
 #Default folders
 echo "Updating folders"
 mkdir -p /config/transmission || true
@@ -24,9 +25,12 @@ if ! bashio::fs.file_exists "$CONFIGDIR/settings.json"; then
   cp "/defaults/settings.json" "$CONFIGDIR/settings.json"
 fi
 
-################
-# Alternate UI #
-################
+#################
+# CONFIGURATION #
+#################
+
+# Alternate UI
+##############
 
 if bashio::config.has_value 'customUI'; then
   ### Variables
@@ -38,20 +42,6 @@ if bashio::config.has_value 'customUI'; then
   fi
 fi
 bashio::log.info "UI selected : $CUSTOMUI"
-
-#################
-# CONFIGURATION #
-#################
-
-# Repair structure
-################
-jq . -S $CONFIGDIR/settings.json | cat >temp.json && mv temp.json $CONFIGDIR/settings.json
-echo "Making sure settings.json structure is good"
-for KEYS in "incomplete-dir" "download-dir" "rpc-host-whitelist-enabled" "rpc-authentication-required" "rpc-username" "rpc-password" "rpc-whitelist-enabled" "rpc-whitelist"; do
-  KEYSTHERE=$(jq "has(\"${KEYS}\")" $CONFIGDIR/settings.json)
-  [ $KEYSTHERE != "true" ] && sed -i "3 i\"${KEYS}\": null," $CONFIGDIR/settings.json && echo "... $KEYS was missing, added"
-done
-jq . -S $CONFIGDIR/settings.json | cat >temp.json && mv temp.json $CONFIGDIR/settings.json
 
 # INCOMPLETE DIR
 ################
