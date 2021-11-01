@@ -1,0 +1,34 @@
+{
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "description": "use Enedis Gateway API to send data in your MQTT Broker",
+  "name": "Enedisgateway2mqtt DO NOT USE",
+  "options": {
+    "ACCESS_TOKEN": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "PDL": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "MQTT_HOST": ""
+  },
+  "schema": {
+    "ACCESS_TOKEN": "str",
+    "PDL": "str",
+    "MQTT_HOST": "str",
+    "MQTT_PORT": "str?",
+    "MQTT_PREFIX": "str?",
+    "MQTT_CLIENT_ID": "str?",
+    "MQTT_USERNAME": "str?",
+    "MQTT_PASSWORD": "str?",
+    "RETAIN": "str?",
+    "QOS": "str?",
+    "GET_CONSUMPTION": "str?",
+    "GET_PRODUCTION": "str?",
+    "HA_AUTODISCOVERY": "str?",
+    "HA_AUTODISCOVERY_PREFIX": "str?",
+    "CONSUMPTION_PRICE_BASE": "str?",
+    "CONSUMPTION_PRICE_HC": "str?",
+    "CONSUMPTION_PRICE_HP": "str?",
+    "CARD_MYENEDIS": "str?"
+  },
+  "slug": "enedisgateway2mqtt",
+  "upstream": "0.5.6",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "0.5.6"
+}
