@@ -4,24 +4,14 @@
 if bashio::config.has_value 'OCR'; then
     if $(bashio::config 'OCR') = true; then
         bashio::log.info 'Installing OCR'
-        apk add --no-cache tesseract-ocr@community
+        apk add --no-cache tesseract-ocr || apk add --no-cache tesseract-ocr@community
         # Install additional language if requested
         if bashio::config.has_value 'OCRLANG'; then
             bashio::log.info 'Installing OCR language'
-            apk add --no-cache tesseract-ocr-data-$(bashio::config 'OCRLANG')@community
+            apk add --no-cache tesseract-ocr-data-$(bashio::config 'OCRLANG') || apk add --no-cache tesseract-ocr-data-$(bashio::config 'OCRLANG')@community 
         fi    
     elif $(bashio::config 'OCR') = false; then
         bashio::log.info 'Removing OCR'
         apk del tesseract-ocr.* || true
     fi
 fi
-
-# Add additional trusted domains
-
-# if bashio::config.has_value 'Trusted_Domains'; then
-# TRUSTEDDOMAINS=$(bashio::config 'Trusted_Domains')
-# for domains in $TRUSTEDDOMAINS
-# do
-# ./occ config:system:set trusted_domains 2 --value=$domains
-# done || \
-# fi
