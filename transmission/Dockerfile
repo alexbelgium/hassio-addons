@@ -18,7 +18,13 @@ RUN apk add --no-cache \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz 
+    && rm -fr /tmp/bashio.tar.gz \
+    \
+    && ln -s /usr/share/transmission/web/style /transmission-web-control && \
+    ln -s /usr/share/transmission/web/images /transmission-web-control && \
+    ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
+    ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
+ 
 
 # Copy root filesystem
 COPY rootfs /
