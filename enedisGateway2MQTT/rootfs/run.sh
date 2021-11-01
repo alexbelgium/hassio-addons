@@ -46,7 +46,10 @@ echo "Setting variables"
 echo "................."
 
 for VARIABLES in "ACCESS_TOKEN" "PDL" "MQTT_HOST" "MQTT_PORT" "MQTT_PREFIX" "MQTT_CLIENT_ID" "MQTT_USERNAME" "MQTT_PASSWORD" "RETAIN" "QOS" "GET_CONSUMPTION" "GET_PRODUCTION" "HA_AUTODISCOVERY" "HA_AUTODISCOVERY_PREFIX" "CONSUMPTION_PRICE_BASE" "CONSUMPTION_PRICE_HC" "CONSUMPTION_PRICE_HP" "CARD_MYENEDIS"; do
-    [ bashio::config.has_value "$VARIABLES" ] && export $VARIABLES=$(bashio::config "$VARIABLES") && echo "$VARIABLES set to $(bashio::config "$VARIABLES")"
+    if bashio::config.has_value $VARIABLES; then
+        export $VARIABLES=$(bashio::config $VARIABLES)
+        echo "$VARIABLES set to $(bashio::config $VARIABLES)"
+    fi
 done
 
 bashio::log.info "Starting the app"
