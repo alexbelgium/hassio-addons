@@ -8,14 +8,14 @@
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield]
 
-# About
+## About
 
 ---
 
 [Grav](https://getgrav.org) is a free software, self-hosted content management system (CMS) written in the PHP programming language and based on the Symfony web application framework. It uses a flat file database for both backend and frontend.
 This addon is based on the docker image https://github.com/linuxserver/docker-grav
 
-# Installation
+## Installation
 
 ---
 
@@ -30,16 +30,18 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-# Configuration
+## Configuration
 
 Webui can be found at <http://your-ip:PORT>.
 The default username/password : described in the startup log.
 Configurations can be done through the app webUI, except for the following options
- 
+
 ## Add theme/squeleton
+
 You can place the user folder from the theme/skeleton in /share/grav/www/user,
 
 ## Options
+
 ```yaml
 GUID: user
 GPID: user
@@ -54,7 +56,7 @@ cifspassword: "password" # optional, smb password
 
 Create an issue on github
 
-# Illustration
+## Illustration
 
 ---
 

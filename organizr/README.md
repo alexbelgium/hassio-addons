@@ -1,4 +1,5 @@
 # Home assistant add-on: Organizr
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
@@ -24,6 +25,7 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
+
 Webui can be found at <http://your-ip:80>.
 Create the db in /data/...
 
@@ -33,9 +35,11 @@ GPID: user, can't be 0
 ```
 
 ## Support
+
 Create an issue on github
 
 ## Illustration
+
 ![bjaSt3fTfdXhw5vyl-7Lqz1EOjJIyh8lrdqxA53qO6E](https://user-images.githubusercontent.com/44178713/123061812-43601b00-d40c-11eb-993c-2aed31072775.jpg)
 
 [repository]: https://github.com/alexbelgium/hassio-addons

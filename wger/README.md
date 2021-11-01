@@ -1,4 +1,5 @@
 # Hass.io Add-ons: Wger
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
@@ -7,6 +8,7 @@
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield]
 
 ## About
+
 [wger](https://github.com/wger-project/wger) Workout Manager is a free, open source web application that helps you manage your personal workouts, weight and diet plans and can also be used as a simple gym management utility. It offers a REST API as well, for easy integration with other projects and tools.
 
 ## Installation
@@ -25,11 +27,12 @@ comparison to installing any other Hass.io add-on.
 
 - Start the addon. Wait a while and check the log for any errors.
 - Open yourdomain.com:8000 (where ":8000" is the port configured in the addon).
-- Default 
-  - Username: ```admin```
-  - Password: ```adminadmin```
+- Default
+  - Username: `admin`
+  - Password: `adminadmin`
 
 ```yaml
+
 ```
 
 ## Support

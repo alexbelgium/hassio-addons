@@ -12,7 +12,7 @@
 Joplin Server is a free, open source note taking and to-do Sync application, which can handle a large number of notes organised into notebooks.
 With this server you can sync all your notes over all your devices.
 
-Thanks to @poudenes for helping with the development! 
+Thanks to @poudenes for helping with the development!
 
 Project homepage : https://github.com/laurent22/joplin
 
@@ -40,6 +40,7 @@ APP_BASE_URL: This is the base public URL where the service will be running. For
 
 To use an existing PostgresSQL server, set the following variables in the config:
 Make sure that the provided database and user exist as the server will not create them.
+
 ```
 DB_CLIENT=pg
 POSTGRES_PASSWORD=joplin
@@ -48,7 +49,9 @@ POSTGRES_USER=joplin
 POSTGRES_PORT=5432
 POSTGRES_HOST=localhost
 ```
+
 To use email service, set the follow variables in the config:
+
 ```
 1 = true, 0 = false
 MAILER_HOST=mail.example.com

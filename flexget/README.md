@@ -8,13 +8,14 @@
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 ## About
+
 FlexGet is a multipurpose automation tool for all of your media. See https://flexget.com/
 
 ## Requirements
 
 ## Config
-WebuiPass - Password to access webui
 
+WebuiPass - Password to access webui
 
 ## Start
 

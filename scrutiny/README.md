@@ -9,20 +9,24 @@
 
 Hi, I've create an addon for my use and wanted to share it if it can be useful to other people ;-)
 
+## About
 
-# About
-----------
+---
+
 [Scrutiny](https://github.com/AnalogJ/scrutiny) is a Hard Drive Health Dashboard & Monitoring solution, merging manufacturer provided S.M.A.R.T metrics with real-world failure rates. This addon is based on the [docker image](https://hub.docker.com/r/linuxserver/scrutiny) from [linuxserver.io](https://www.linuxserver.io/).
 
 Features :
+
 - SMART monitoring
 - Automatic addition of local drives
 - Hourly updates
 - Ingress with/without ssl
 - Automatic upstream updates
 
-# Installation
-----------
+## Installation
+
+---
+
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
 1. [Add my Hass.io add-ons repository][repository] to your home assistant instance.
@@ -33,9 +37,11 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI (Ingress based) and adapt the software options
 
-# Configuration
---------------
-Webui can be found at <http://your-ip:8080>, or through Ingress. 
+## Configuration
+
+---
+
+Webui can be found at <http://your-ip:8080>, or through Ingress.
 It automatically mounts all local drives.
 
 ```yaml
@@ -47,18 +53,21 @@ keyfile: privkey.pem #sslkeyfile
 ```
 
 # Integration in home assistant
---------------
-Integration with HA can be done with the [rest platform](https://www.home-assistant.io/integrations/rest) in configuration.yaml. 
+
+---
+
+Integration with HA can be done with the [rest platform](https://www.home-assistant.io/integrations/rest) in configuration.yaml.
 
 Two types of api endpoints are available:
+
 - Summary data : http://YOURIP:ADDONPORT/api/summary
 - Detailed data : http://YOURIP:ADDONPORT/api/WWN/details
 
 For the detailed data, wmn can be found for each hdd within the scrutiny app. For example for me : http://192.168.178.23:8086/api/device/0x50014ee606c14537/details
 
-Example to get data from the first hdd. 
+Example to get data from the first hdd.
 
-```yaml 
+```yaml
 rest:
   - verify_ssl: false
     scan_interval: 60
@@ -79,11 +88,14 @@ rest:
           - "scsi_attributes"
 ```
 
-# Illustration
---------------
+## Illustration
+
+---
+
 ![](https://github.com/AnalogJ/scrutiny/raw/master/docs/dashboard.png)
 
 ## Support
+
 Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-scrutiny-smart-dashboard/295747)
 
 https://github.com/alexbelgium/hassio-addons

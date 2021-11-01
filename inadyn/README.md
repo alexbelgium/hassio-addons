@@ -31,8 +31,6 @@ comparison to installing any other Hass.io add-on.
 To configure with addon options, no webUI.
 For configuration, see https://github.com/troglobit/inadyn
 
-### Configuration
-
 The available configuration options are as follows (this is filled in with some example data):
 
 ```
@@ -95,6 +93,7 @@ or:
 ```
 
 for a custom provider that is not supported by inadyn you can do:
+
 ```
 {
   "providers": [

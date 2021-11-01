@@ -18,6 +18,7 @@ All credits for the app go to Anthony Raymond, please visit his repository here 
 Joal configuration : in the addon log are all informations tailored for your system
 
 Addon options
+
 ```yaml
 secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
 ui_path: joal #the path where Joal will be accessible

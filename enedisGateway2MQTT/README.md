@@ -12,7 +12,7 @@
 Enedisgateway2mqtt use Enedis Gateway API to send data in your MQTT Broker.
 See its github for all informations : https://github.com/m4dm4rtig4n/enedisgateway2mqtt/blob/master/README.md
 
-### Configuration
+## Configuration
 
 Configure the addon through its options page.
 See this page for configuration : https://hub.docker.com/r/m4dm4rtig4n/enedisgateway2mqtt

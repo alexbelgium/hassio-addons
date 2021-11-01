@@ -6,10 +6,12 @@
 
 ![Supports 
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
-![Supports smb mounts][smb-shield] 
+![Supports smb mounts][smb-shield]
 
-# About
-----------
+## About
+
+---
+
 [webtrees](http://www.webtrees.net) is the web's leading online collaborative genealogy application.
 
 It works from standard GEDCOM files, and is therefore compatible with every major desktop application.
@@ -18,12 +20,14 @@ webtrees allows you to view and edit your genealogy on your website. It has full
 
 This addon is based on the docker image https://github.com/NathanVaughn/webtrees-docker
 
-# Installation
-----------
+## Installation
+
+---
+
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
-1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA) 
-[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
 1. Set the add-on options to your preferences
@@ -31,24 +35,29 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-# Configuration
---------------
-Webui can be found at <http://your-ip:PORT>. 
+## Configuration
+
+---
+
+Webui can be found at <http://your-ip:PORT>.
 The default username/password : described in the startup log.
 Please change it as soon as possible.
 Configurations can be done through the app webUI, except for the following options
 
 ```yaml
-    "LANG": "en-US" # Default language for webtrees
-    "BASE_URL": "http://192.168.178.69" # The url with which you access webtrees
-    "DB_TYPE": "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
+"LANG": "en-US" # Default language for webtrees
+"BASE_URL": "http://192.168.178.69" # The url with which you access webtrees
+"DB_TYPE": "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
 ```
 
 ## Support
+
 Create an issue on github
 
-# Illustration
---------------
+## Illustration
+
+---
+
 ![illustration](https://installatron.infomaniak.com/installatron//images/ss2_webtrees.jpg)
 
 [repository]: https://github.com/alexbelgium/hassio-addons

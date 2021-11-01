@@ -8,14 +8,14 @@
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield]
 
-# About
+## About
 
 ---
 
 [Requestrr](https://github.com/darkalfx/requestrr) is a chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat. Current platform is Discord only, but the bot was built around the ideology of quick adaptation for new features as well as new platforms.
 This addon is based on the docker image https://github.com/linuxserver/docker-requestrr
 
-# Installation
+## Installation
 
 ---
 
@@ -30,7 +30,7 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-# Configuration
+## Configuration
 
 ---
 
@@ -48,7 +48,7 @@ TZ: timezone
 
 Create an issue on github
 
-# Illustration
+## Illustration
 
 ![illustration](https://nashosted.com/wp-content/uploads/2020/04/requestrr-discord-nashosted.com_-1024x680.jpg)
 

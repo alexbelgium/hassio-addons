@@ -8,14 +8,15 @@
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield]
 
-# About
+## About
 
 ---
 
 [Readarr](https://github.com/Readarr/Readarr) is a ebook collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new books from your favorite authors and will interface with clients and indexers to grab, sort, and rename them.is book Manager and Automation (Sonarr for Ebooks).
 This addon is based on the docker image https://github.com/linuxserver/docker-readarr
 
-# Installation
+## Installation
+
 ---
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
@@ -29,7 +30,7 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-# Configuration
+## Configuration
 
 ---
 
@@ -51,12 +52,11 @@ cifspassword: "password" # optional, smb password
 
 Create an issue on github
 
-# Illustration
+## Illustration
 
 ---
 
 ![illustration](https://readarr.com/img/slider/artistdetails.png)
-
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg

@@ -1,4 +1,5 @@
 # Home assistant add-on: Resilio Sync
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
@@ -25,6 +26,7 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Configuration
+
 Webui can be found at <http://your-ip:8888>.
 
 ```yaml
@@ -33,6 +35,7 @@ GPID: user
 ```
 
 ## Support
+
 Create an issue on github
 
 [repository]: https://github.com/alexbelgium/hassio-addons

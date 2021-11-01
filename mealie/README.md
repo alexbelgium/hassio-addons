@@ -1,4 +1,5 @@
 # Hass.io Add-ons: Mealie
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
@@ -9,6 +10,7 @@
 Warning : armv7 only supported up to version 0.4.3! It won't be updated with later versions
 
 ## About
+
 Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family.
 This addon is based on the [docker image](https://hub.docker.com/r/hkotel/mealie) from hay-kot.
 
@@ -28,7 +30,7 @@ comparison to installing any other Hass.io add-on.
 
 - Start the addon. Wait a while and check the log for any errors.
 - Open yourdomain.com:9925 (where ":9925" is the port configured in the addon).
-- Default 
+- Default
   - Username: changeme@email.com
   - Password: MyPassword
 

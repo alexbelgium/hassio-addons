@@ -8,14 +8,14 @@
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield]
 
-# About
+## About
 
 ---
 
 [Bazarr](https://www.bazarr.media/) is a companion application to Sonarr and Radarr that manages and downloads subtitles based on your requirements.
 This addon is based on the docker image https://github.com/linuxserver/docker-bazarr
 
-# Configuration
+## Configuration
 
 ---
 
@@ -33,7 +33,7 @@ cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 ```
 
-# Installation
+## Installation
 
 ---
 
@@ -52,7 +52,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Create an issue on github
 
-# Illustration
+## Illustration
 
 ---
 
