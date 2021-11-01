@@ -57,4 +57,4 @@ bashio::log.info "Starting the app"
 ##############
 # Launch App #
 ##############
-python -u /app/main.py
+python -u /app/main.py || bashio::log.fatal "The app has crashed. Are you sure you entered the correct config options?"
