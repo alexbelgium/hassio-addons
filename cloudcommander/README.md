@@ -1,4 +1,5 @@
 # Home assistant add-on: Cloudcommander
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
@@ -10,17 +11,6 @@
 
 Cloud Commander a file manager for the web with console and editor.
 This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cloudcmd).
-
-## Installation
-
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Hass.io add-on.
-
-1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
-1. Install this add-on.
-1. Click the `Save` button to store your configuration.
-1. Start the add-on.
-1. Check the logs of the add-on to see if everything went well.
 
 ## Configuration
 
@@ -35,6 +25,17 @@ Webui can be found at `<your-ip>:8000`.
 "DROPBOX_TOKEN": "str?" # see https://cloudcmd.io/
 "CUSTOM_OPTIONS": "--name Homeassistant" # custom options from https://cloudcmd.io/
 ```
+
+## Installation
+
+The installation of this add-on is pretty straightforward and not different in
+comparison to installing any other Hass.io add-on.
+
+1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
+1. Install this add-on.
+1. Click the `Save` button to store your configuration.
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg

@@ -1,4 +1,5 @@
 # Home assistant add-on: Filebrowser
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
@@ -8,8 +9,27 @@
 
 ## About
 
-Web based files browser. 
+Web based files browser.
 This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/filebrowser) from hurlenko.
+
+## Configuration
+
+Webui can be found at <http://your-ip:8080>.
+Default username: "admin" and password: "admin"
+
+Network disk is mounted to /share/storagecifs
+
+```yaml
+ssl: true/false
+certfile: fullchain.pem #ssl certificate
+keyfile: privkey.pem #sslkeyfile
+NoAuth: true/false #Remove password. Resets database when changed.
+smbv1: false # Should smbv1 be used instead of 2.1+?
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas. Ex: sda1, sdb1...
+networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password, same for all smb shares)
+```
 
 ## Installation
 
@@ -23,26 +43,9 @@ comparison to installing any other Hass.io add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
-## Configuration
-Webui can be found at <http://your-ip:8080>.
-Default username: "admin" and password: "admin"
-
-Network disk is mounted to /share/storagecifs
-
-```yaml
-ssl: true/false
-certfile: fullchain.pem #ssl certificate
-keyfile: privkey.pem #sslkeyfile
-NoAuth: true/false #Remove password. Resets database when changed. 
-smbv1: false # Should smbv1 be used instead of 2.1+?
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas. Ex: sda1, sdb1... 
-networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password, same for all smb shares)
-```
-
 ## Support
-Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-filebrowser/282108/3) 
+
+Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-filebrowser/282108/3)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg

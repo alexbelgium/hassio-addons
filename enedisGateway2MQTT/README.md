@@ -12,6 +12,11 @@
 Enedisgateway2mqtt use Enedis Gateway API to send data in your MQTT Broker.
 See its github for all informations : https://github.com/m4dm4rtig4n/enedisgateway2mqtt/blob/master/README.md
 
+### Configuration
+
+Configure the addon through its options page.
+See this page for configuration : https://hub.docker.com/r/m4dm4rtig4n/enedisgateway2mqtt
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in
@@ -23,11 +28,6 @@ comparison to installing any other Hass.io add-on.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
-### Configuration
-
-Configure the addon through its options page.
-See this page for configuration : https://hub.docker.com/r/m4dm4rtig4n/enedisgateway2mqtt
 
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [repository]: https://github.com/alexbelgium/hassio-addons

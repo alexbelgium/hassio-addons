@@ -1,4 +1,5 @@
 # Home assistant add-on: emby
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
@@ -9,12 +10,17 @@
 ## About
 
 Forked to add latest beta versions, smb and local hdd mount.
+
 - Inital version : https://github.com/petersendev/hassio-addons
 - CIFS code : https://github.com/dianlight/hassio-addons
 
 [emby](https://emby.media/) organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone emby Media Server.
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-emby) from linuxserver.io.
+
+## Configuration
+
+Webui can be found at `<your-ip>:8096`.
 
 ## Installation
 
@@ -28,14 +34,7 @@ comparison to installing any other Hass.io add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
-
-## Configuration
-
-Webui can be found at `<your-ip>:8096`.
-
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
-
-
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
