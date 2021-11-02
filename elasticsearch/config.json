@@ -3,6 +3,7 @@
   "description": "elasticsearch server",
   "name": "Elasticsearch server DO NOT USE",
   "options": {},
+  "host_network": true,
   "ports": {
     "9200/tcp": 9200,
     "9300/tcp": 9300
