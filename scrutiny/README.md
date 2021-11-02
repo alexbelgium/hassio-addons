@@ -9,6 +9,10 @@
 
 Hi, I've create an addon for my use and wanted to share it if it can be useful to other people ;-)
 
+_Thanks to everyone having starred my repo!_
+
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+
 ## About
 
 ---

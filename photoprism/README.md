@@ -9,6 +9,10 @@
 
 MINIMUM CONFIG REQUIRED : 2 cores and 4 GB of memory
 
+_Thanks to everyone having starred my repo!_
+
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+
 ## About
 
 A server-based application for browsing, organizing and sharing your personal photo collection.

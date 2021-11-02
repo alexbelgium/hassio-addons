@@ -7,6 +7,10 @@
 ![Supports 
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
+_Thanks to everyone having starred my repo!_
+
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+
 ## About
 
 TeamSpeak offers the ideal voice communication for online gaming, education and training, internal business communication, and staying in touch with friends and family. Our primary focus is delivering a solution that is easy to use, with high security standards, excellent voice quality, and low system and bandwidth usage.

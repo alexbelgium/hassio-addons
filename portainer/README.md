@@ -11,6 +11,10 @@
 Forked from : https://github.com/hassio-addons/addon-portainer
 Implemented changes : update to latest versions ; ingress ; ssl ; password setting through addon option ; allow manual override
 
+_Thanks to everyone having starred my repo!_
+
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+
 ## About
 
 ---
