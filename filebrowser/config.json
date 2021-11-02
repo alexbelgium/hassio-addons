@@ -67,7 +67,8 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "smbv1": "bool?",
-    "NoAuth": "bool"
+    "NoAuth": "bool", 
+    "base_folder": "str?"
   },
   "slug": "filebrowser",
   "startup": "services",
