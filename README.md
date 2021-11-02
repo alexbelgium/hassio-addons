@@ -5,7 +5,7 @@
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-Thanks to everyone having starred it!
+*Thanks to everyone having starred it!*
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 [update-badge]: https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update
