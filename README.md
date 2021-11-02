@@ -3,8 +3,13 @@
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 ![update-badge]
 
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+
+Thanks to everyone having starred it!
+
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 [update-badge]: https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update
+
 
 ## About
 
@@ -17,9 +22,7 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![privileged][privileged-shield] : requires protection mode off to run
 - ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
 
-Thanks to everyone having starred it!
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 ## Installation
 
