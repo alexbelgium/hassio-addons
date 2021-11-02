@@ -1,3 +1,6 @@
+
+## 2.18.0 (02-11-2021)
+- Update to latest version from hurlenko/filebrowser-docker
 - Allow mounting of devices up to sdg2
 - Allow uploads >16mb
 - Allow local mount in protected mode
