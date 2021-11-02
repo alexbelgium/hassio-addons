@@ -1,7 +1,7 @@
 FROM elasticsearch:6.8.20
 
 # Increase ram available
-#RUN sed -i "1a sysctl -w vm.max_map_count=262144" /usr/local/bin/docker-entrypoint.sh
+RUN sed -i "1a sysctl -w vm.max_map_count=262144 || true" /usr/local/bin/docker-entrypoint.sh
 RUN echo "vm.max_map_count=262144" > /etc/sysctl.d/60-elasticsearch.conf
 
 ### LABELS
