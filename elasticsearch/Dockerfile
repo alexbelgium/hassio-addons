@@ -1,4 +1,4 @@
-FROM elasticsearch
+FROM elasticsearch:6.8.20
 
 ### LABELS
 ARG BUILD_ARCH
