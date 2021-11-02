@@ -88,9 +88,15 @@ else
   bashio::log.info "Default username/password : admin/admin"
 fi
 
+if bashio::config.has_value 'base_folder'; then
+  BASE_FOLDER=$(bashio::config 'base_folder')
+else
+  BASE_FOLDER=/
+fi
+
 bashio::log.info "Starting..."
 
-/./filebrowser $CERTFILE $KEYFILE --root=/ --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH &
+/./filebrowser $CERTFILE $KEYFILE --root=$BASE_FOLDER --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
