@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bashio
+
+# Install OCR if requested
+if bashio::config.has_value 'test'; then
+
+#apt-get install openjdk-8-jre
+apt install apt-transport-https
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | tee -a /etc/apt/sources.list.d/elasticsearch.list
+apt update
+apt install elasticsearch
+systemctl daemon-reload \
+&& systemctl enable elasticsearch\
+&& systemctl start elasticsearch
+/usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
+systemctl restart elasticsearch
+fi 
