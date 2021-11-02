@@ -1,7 +1,7 @@
 FROM elasticsearch:6.8.20
 
 # Increase ram available
-RUN echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+RUN sysctl -w vm.max_map_count=262144
 
 ### LABELS
 ARG BUILD_ARCH
