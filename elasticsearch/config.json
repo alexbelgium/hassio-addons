@@ -8,8 +8,8 @@
     "9300/tcp": 9300
   },
   "ports_description": {
-    "9200/tcp": "web interface",
-    "9300/tcp": "web interface"
+    "9200/tcp": "API calls over HTTP",
+    "9300/tcp": "custom binary protoco"
   },
   "schema": {},
   "slug": "elasticsearch",
