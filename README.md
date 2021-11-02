@@ -17,6 +17,9 @@ In case of issue, create an issue in the repository and reference the full log f
 - ![privileged][privileged-shield] : requires protection mode off to run
 - ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
 
+Thanks to everyone having starred it!
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+
 ## Installation
 
 Adding this add-ons repository to your Home Assistant instance is
