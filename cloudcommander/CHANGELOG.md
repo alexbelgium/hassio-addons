@@ -1,3 +1,4 @@
+- Allow mounting local drives by label. Just pust the label instead of sda1 for example
 - Allow uploads >16mb
 - Allow mounting local drives in protected mode
 - Allow mounting of devices up to sdg2

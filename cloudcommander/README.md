@@ -17,13 +17,13 @@ This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cl
 Webui can be found at `<your-ip>:8000`.
 
 ```yaml
-"localdisks": "sda1" # Optional, requires priviledged mode
-"networkdisks": "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-"cifsusername": "username" # optional, smb username, same for all smb shares
-"cifspassword": "password" # optional, smb password
-"smbv1": "bool?" # smb v1
-"DROPBOX_TOKEN": "str?" # see https://cloudcmd.io/
-"CUSTOM_OPTIONS": "--name Homeassistant" # custom options from https://cloudcmd.io/
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
+networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password
+smbv1: "bool?" # smb v1
+DROPBOX_TOKEN: "str?" # see https://cloudcmd.io/
+CUSTOM_OPTIONS: "--name Homeassistant" # custom options from https://cloudcmd.io/
 ```
 
 ## Installation

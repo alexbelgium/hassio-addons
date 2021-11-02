@@ -28,12 +28,14 @@ comparison to installing any other Hass.io add-on.
 
 Options :
 
-- "download_dir": "/share/downloads" # where the files will be saved after download
-- "incomplete_dir": "/share/incomplete" # where the files are saved during download
-- "localdisks": ["sda1"] # list of devices to mount, '' if none
-- "networkdisks": "<//SERVER/SHARE>" # list of smbv2/3 servers to mount, '' if none
-- "cifsusername": "<username>" # smb username
-- "cifspassword": "<password>" # smb password
+```yaml
+download_dir: "/share/downloads" # where the files will be saved after download
+incomplete_dir: "/share/incomplete" # where the files are saved during download
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
+networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount, '' if none
+cifsusername: "<username>" # smb username
+cifspassword: "<password>" # smb password
+```
 
 Complete transmission options are in /share/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
 

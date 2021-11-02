@@ -37,7 +37,7 @@ Webui can be found at <http://your-ip:81>.
 ```yaml
 GUID: user
 GPID: user
-localdisks: "sda1" # list of device to mount (optional)
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)

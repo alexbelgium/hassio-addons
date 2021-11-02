@@ -1,5 +1,7 @@
+- Allow mounting local drives by label. Just pust the label instead of sda1 for example
 
 ## 14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls159 (31-10-2021)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 - Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
 
