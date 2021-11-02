@@ -135,7 +135,7 @@ if bashio::config.has_value 'customUI'; then
   sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
   # Set nginx
   echo "ui set to $CUSTOMUIDIR" 
-  sed -i 's=/vuetorrent/public/=$CUSTOMUIDIR=g' /etc/nginx/servers/ingress.conf 
+  sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR=g" /etc/nginx/servers/ingress.conf 
 
 fi
 
