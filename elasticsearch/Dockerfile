@@ -1,7 +1,7 @@
 FROM elasticsearch:6.8.20
 
 # Increase ram available
-RUN sysctl -w vm.max_map_count=262144
+RUN sed -i "1a ysctl -w vm.max_map_count=262144" /usr/local/bin/docker-entrypoint.sh
 
 ### LABELS
 ARG BUILD_ARCH
