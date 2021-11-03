@@ -53,6 +53,10 @@ https://github.com/alexbelgium/hassio-addons
 - [Photoprism](photoprism/) ![smb][smb-shield] ![sql][sql-shield] ![ram][ram-shield] : server-based application for browsing, organizing and sharing your personal photo collection
 - [Piwigo](piwigo/) ![smb][smb-shield] ![sql][sql-shield] : photo gallery software for the web
 
+## &#10003; Home & family
+
+- [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
+
 ## &#10003; Genealogy
 
 - [Webtrees](webtrees/): web's leading online collaborative genealogy application
@@ -103,7 +107,6 @@ https://github.com/alexbelgium/hassio-addons
 ## &#10003; Web hosting
 
 - [Grav](grav/) ![smb][smb-shield] : Fast, Simple, and Flexible, file-based Web-platform
-- [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
 - [Resioliosync](resiolosync/) ![smb][smb-shield]: Self-hosted file share and collaboration platform on the Web (dev by @TyjTyj)
 
 [//]: # "ADDONLIST_END"
