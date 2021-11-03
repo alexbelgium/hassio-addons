@@ -3,7 +3,7 @@
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "22.2.0-5",
   "upstream": "22.2.0",
-  "slug": "nextcloud",
+  "slug": "nextcloud_ocr",
   "ingress": false,
   "ingress_port": 0,
   "arch": ["aarch64", "amd64", "armv7"],
