@@ -24,6 +24,7 @@
     "PUID": "0",
     "PGID": "0"
   },
+  "ingress": false,
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Bazarr NAS",
   "options": {
