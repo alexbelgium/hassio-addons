@@ -1,4 +1,4 @@
-FROM elasticsearch:6.8.20
+FROM bitnami/elasticsearch:latest 
 
 # Increase ram available
 RUN sed -i "1a sysctl -w vm.max_map_count=262144 || true" /usr/local/bin/docker-entrypoint.sh
