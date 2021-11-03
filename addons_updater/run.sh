@@ -41,8 +41,6 @@ fi
 # UPDATE #
 ##########
 
-set -e 
-
 bashio::log.info "Starting $(lastversion --version)"
 
 bashio::log.info "Checking status of referenced repositoriess..."
@@ -88,7 +86,7 @@ for addons in $(bashio::config "addon|keys"); do
     cd "/data/$BASENAME"
     git pull --rebase &>/dev/null || git reset --hard &>/dev/null
     git pull --rebase &>/dev/null
-  fi
+  fi 
 
   #Define the folder addon
   LOGINFO="... $SLUG : checking slug exists in repo" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
@@ -119,11 +117,11 @@ for addons in $(bashio::config "addon|keys"); do
   #If beta flag, select beta version
   if [ ${BETA} = true ]; then
     LOGINFO="... $SLUG : beta is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET)
+    LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET) || break
   else
     LOGINFO="... $SLUG : beta is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET)
-  fi
+    LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET) || break
+  fi 
 
   # Add brackets
   LASTVERSION='"'${LASTVERSION}'"'
