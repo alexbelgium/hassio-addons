@@ -9,7 +9,7 @@
 
 Warning : armv7 only supported up to version 0.4.3! It won't be updated with later versions
 
-_Thanks to everyone having starred my repo!_
+_Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
