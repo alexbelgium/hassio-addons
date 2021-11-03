@@ -1,4 +1,4 @@
-# Home assistant add-on: Nextcloud with OCR
+# Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
