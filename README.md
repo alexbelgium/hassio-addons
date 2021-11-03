@@ -56,6 +56,7 @@ https://github.com/alexbelgium/hassio-addons
 ## &#10003; Home & family
 
 - [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
+- [Enedisgateway2mqtt](enedisgateway2mqtt) : use Enedis Gateway API to send data in your MQTT Broker
 
 ## &#10003; Genealogy
 
