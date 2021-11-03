@@ -6,6 +6,7 @@
   "environment": {
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
+  "ingress": "false",
   "name": "Addons_Updater",
   "options": {
     "addon": [
