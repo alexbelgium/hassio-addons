@@ -1,3 +1,6 @@
+
+## 0.19.138 (03-11-2021)
+- Update to latest version from linuxserver/docker-jackett
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 
 ## 0.19.116 (02-11-2021)
