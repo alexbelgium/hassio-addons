@@ -1,4 +1,5 @@
-FROM m4dm4rtig4n/enedisgateway2mqtt:latest
+ARG UPSTREAM="0.5.7"
+FROM m4dm4rtig4n/enedisgateway2mqtt:$UPSTREAM
 
 # Base system
 ARG BASHIO_VERSION=0.13.1
