@@ -41,6 +41,8 @@ fi
 # UPDATE #
 ##########
 
+set -e 
+
 bashio::log.info "Starting $(lastversion --version)"
 
 bashio::log.info "Checking status of referenced repositoriess..."
