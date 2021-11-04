@@ -35,7 +35,9 @@ https://github.com/alexbelgium/hassio-addons
 
 ## &#10003; Comics management
 
-- [Ubooquity](ubooquity/) ![smb][smb-shield] ![support][support-shield] ![ram][ram-shield]: Free, lightweight and easy-to-use home server for your comics and ebooks
+- [Ubooquity](ubooquity/) ![smb][smb-shield] ![support][support-shield] ![ram][ram-shield]: Free, lightweight and easy-to-use home server for your comics and ebooks ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fubooquity%2Fconfig.json)
+  ![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fubooquity%2Fconfig.json)
+  ![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fubooquity%2Fconfig.json)
 
 ## &#10003; Documents management
 
