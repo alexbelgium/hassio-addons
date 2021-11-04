@@ -1,7 +1,7 @@
 FROM elasticsearch:6.8.20 
 
-# Increase ram available
-RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
+# Install plugins
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
 
 ### LABELS
 ARG BUILD_ARCH
