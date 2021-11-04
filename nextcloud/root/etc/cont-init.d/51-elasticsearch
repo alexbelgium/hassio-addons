@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-[ bashio::config.has_value 'test' ] || exit 0
+if bashio::config.has_value 'test'; then
 
 # https://raw.githubusercontent.com/nextcloud/vm/master/apps/fulltextsearch.sh 
 # T&M Hansson IT AB © - 2021, https://www.hanssonit.se/
@@ -66,4 +66,6 @@ countdown "Waiting for a few seconds before indexing starts..." "10"
 if nextcloud_occ fulltextsearch:index < /dev/null
 then
     msg_box "Full Text Search was successfully installed!"
+fi
+
 fi
