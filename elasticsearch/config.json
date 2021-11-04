@@ -18,7 +18,7 @@
     "9300/tcp": "custom binary protoco"
   },
   "schema": {},
-  "full_access": true,
+  "full_access": false,
   "slug": "elasticsearch",
   "upstream": "",
   "url": "https://github.com/alexbelgium/hassio-addons",
