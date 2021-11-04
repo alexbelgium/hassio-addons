@@ -41,6 +41,7 @@ https://github.com/alexbelgium/hassio-addons
 
 - [Nextcloud OCR](nextcloud/) ![smb][smb-shield] : A Nextcloud container, brought to you by LinuxServer.io.
 - [Papermerge](papermerge/) ![smb][smb-shield] : Open source document management system (DMS)
+- [Elasticsearch](elasticsearch/) : distributed, RESTful search and analytics engine capable of solving a growing number of use cases
 
 ## &#10003; File explorers
 
