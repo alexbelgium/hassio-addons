@@ -4,7 +4,8 @@
   "environment": {
     "ES_JAVA_OPTS": "-Xms1024M -Xmx1024M", 
     "bootstrap.memory_lock": "true", 
-    "discovery.type": "single-node"
+    "discovery.type": "single-node",
+    "WORKDIR": "/data"
   },
   "name": "Elasticsearch server DO NOT USE",
   "options": {},
