@@ -1,17 +1,69 @@
 #!/usr/bin/with-contenv bashio
 
-# Install OCR if requested
-if bashio::config.has_value 'test'; then
+[ bashio::config.has_value 'test' ] || exit 0
 
-#apt-get install openjdk-8-jre
-apt install apt-transport-https
-wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
-echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | tee -a /etc/apt/sources.list.d/elasticsearch.list
-apt update
-apt install elasticsearch
-systemctl daemon-reload \
-&& systemctl enable elasticsearch\
-&& systemctl start elasticsearch
-/usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
-systemctl restart elasticsearch
-fi 
+# https://raw.githubusercontent.com/nextcloud/vm/master/apps/fulltextsearch.sh 
+# T&M Hansson IT AB © - 2021, https://www.hanssonit.se/
+# SwITNet Ltd © - 2021, https://switnet.net/
+
+true
+SCRIPT_NAME="Full Text Search"
+SCRIPT_EXPLAINER="Full Text Search provides Elasticsearch for Nextcloud, which makes it possible to search for text inside files."
+
+# Install OCR if requested
+# Reset Full Text Search to be able to index again, and also remove the app to be able to install it again
+    nextcloud_occ_no_check fulltextsearch:reset
+    APPS=(fulltextsearch fulltextsearch_elasticsearch files_fulltextsearch)
+    for app in "${APPS[@]}"
+    do
+        if is_app_installed "$app"
+        then
+            nextcloud_occ app:remove "$app"
+        fi 
+
+# Make sure there is an Nextcloud installation
+if ! [ "$(nextcloud_occ -V)" ]
+then
+    msg_box "It seems there is no Nextcloud server installed, please check your installation."
+    exit 1
+fi
+
+# Disable and remove Nextant + Solr
+if is_app_installed nextant
+then
+    # Remove Nextant
+    msg_box "We will now remove Nextant + Solr and replace it with Full Text Search"
+    nextcloud_occ app:remove nextant
+
+    # Remove Solr
+    systemctl stop solr.service
+    rm -rf /var/solr
+    rm -rf /opt/solr*
+    rm /etc/init.d/solr
+    deluser --remove-home solr
+    deluser --group solr
+fi
+
+# Check if the app is compatible with the current Nextcloud version
+if ! install_and_enable_app fulltextsearch
+then
+    exit 1
+fi
+
+
+# Get Full Text Search app for nextcloud
+install_and_enable_app fulltextsearch
+install_and_enable_app fulltextsearch_elasticsearch
+install_and_enable_app files_fulltextsearch
+chown -R abc:abc $NC_APPS_PATH
+
+# Final setup
+nextcloud_occ fulltextsearch:configure '{"search_platform":"OCA\\FullTextSearch_Elasticsearch\\Platform\\ElasticSearchPlatform"}'
+nextcloud_occ fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"http://${INDEX_USER}:${ROREST}@localhost:9200\",\"elastic_index\":\"${INDEX_USER}-index\"}"
+nextcloud_occ files_fulltextsearch:configure "{\"files_pdf\":\"1\",\"files_office\":\"1\"}"
+# Wait further for cache for index to work
+countdown "Waiting for a few seconds before indexing starts..." "10"
+if nextcloud_occ fulltextsearch:index < /dev/null
+then
+    msg_box "Full Text Search was successfully installed!"
+fi
