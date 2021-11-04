@@ -55,8 +55,9 @@ https://github.com/alexbelgium/hassio-addons
 
 ## &#10003; Home & family
 
-- [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
 - [Enedisgateway2mqtt](enedisgateway2mqtt) : use Enedis Gateway API to send data in your MQTT Broker
+- [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
+- [Wger](wger/): manage your personal workouts, weight and diet plans
 
 ## &#10003; Genealogy
 
@@ -70,7 +71,6 @@ https://github.com/alexbelgium/hassio-addons
 - [Portainer](portainer/) ![privileged][privileged-shield] ![ingress][ingress-shield] : Manage your docker environment
 - [Scrutiny](scrutiny/) ![support][support-shield] ![ingress][ingress-shield]: Scrutiny WebUI for smartd S.M.A.R.T monitoring
 - [Teamspeak](teamspeak/): Voice communication for online gaming, education and training.
-- [Wger](wger/): manage your personal workouts, weight and diet plans
 
 ## &#10003; Multimedia distributors
 
