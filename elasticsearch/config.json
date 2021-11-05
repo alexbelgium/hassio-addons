@@ -10,6 +10,9 @@
     "discovery.type": "single-node",
     "TINI_SUBREAPER": "true"
   },
+    "map": [
+    "config:rw"
+  ],
   "name": "Elasticsearch server",
   "options": {},
   "host_network": true,
