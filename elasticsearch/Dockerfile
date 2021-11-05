@@ -1,7 +1,9 @@
 FROM elasticsearch:7.14.2
 
 # Install plugins
+#WORKDIR /data
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
+VOLUME [ "/data" ]
 
 ### LABELS
 ARG BUILD_ARCH
