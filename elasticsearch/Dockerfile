@@ -1,4 +1,5 @@
-FROM elasticsearch:7.14.2
+ARG BUILD_VERSION="7.14.2"
+FROM elasticsearch:$BUILD_VERSION
 
 # Install plugins
 #WORKDIR /data
