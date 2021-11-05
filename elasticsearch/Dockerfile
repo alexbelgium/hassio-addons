@@ -1,4 +1,4 @@
-FROM elasticsearch:6.8.20 
+FROM elasticsearch:7.14.2
 
 # Install plugins
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
