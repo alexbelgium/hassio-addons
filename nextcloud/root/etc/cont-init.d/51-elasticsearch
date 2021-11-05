@@ -1,8 +1,19 @@
 #!/usr/bin/with-contenv bashio
 
-# shellcheck source=lib.sh
-touch /var/scripts/fetch_lib.sh
-source /var/scripts/fetch_lib.sh || source <(curl -sL https://raw.githubusercontent.com/nextcloud/vm/master/lib.sh)
+############
+# BASED ON #
+############
+# https://raw.githubusercontent.com/nextcloud/vm/master/apps/fulltextsearch.sh
+# T&M Hansson IT AB © - 2021, https://www.hanssonit.se/
+# SwITNet Ltd © - 2021, https://switnet.net/
+
+# Download the script
+source /sbin/fetch_lib.sh || source <(curl -sL https://raw.githubusercontent.com/nextcloud/vm/master/lib.sh)
+
+# Correct the script
+sed -i "s|SCRIPTS=/var/scripts|SCRIPTS=/sbin|g" /sbin/fetch_lib.sh
+sed -i "s|NCPATH=/var/www/nextcloud|/data/config/www/nextcloud|g" /sbin/fetch_lib.sh
+sed -i "s|BACKUP=/mnt/NCBACKUP|BACKUP=/data/NCBACKUP|g" /sbin/fetch_lib.sh
 
 # Get all needed variables from the library
 ncdb
@@ -18,9 +29,6 @@ debug_mode
 # Must be root
 root_check
 
-# https://raw.githubusercontent.com/nextcloud/vm/master/apps/fulltextsearch.sh
-# T&M Hansson IT AB © - 2021, https://www.hanssonit.se/
-# SwITNet Ltd © - 2021, https://switnet.net/
 
 if [ bashio::config.is_true 'install_elasticsearch' ] && [ ! is_app_installed "fulltextsearch" ]; then
     echo "Installing Full Text Search"
