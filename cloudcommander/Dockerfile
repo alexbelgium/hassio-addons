@@ -34,10 +34,9 @@ RUN \
     ###############
     # Permissions #
     ###############
-    chmod 777 /run.sh \
-    && chmod 777 /entrypoint.sh
+    chmod 777 /run.sh
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/run.sh" ]
 
 VOLUME [ "/data" ]
 
