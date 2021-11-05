@@ -73,8 +73,11 @@ for addons in $(bashio::config "addon|keys"); do
   BETA=$(bashio::config "addon[${addons}].beta")
   FULLTAG=$(bashio::config "addon[${addons}].fulltag")
   HAVINGASSET=$(bashio::config "addon[${addons}].having_asset")
+  PAUSED=$(bashio::config "addon[${addons}].paused")
   BASENAME=$(basename "https://github.com/$REPOSITORY")
   DATE="$(date '+%d-%m-%Y')"
+
+  [ $PAUSED=true ] && break
 
   #Create or update local version
   if [ ! -d /data/$BASENAME ]; then
