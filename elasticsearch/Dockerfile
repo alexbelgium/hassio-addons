@@ -1,5 +1,5 @@
-ARG BUILD_VERSION="7.14.2"
-FROM elasticsearch:$BUILD_VERSION
+ARG BUILD_UPSTREAM="7.14.2"
+FROM elasticsearch:$BUILD_UPSTREAM
 
 # Install plugins
 #WORKDIR /data
