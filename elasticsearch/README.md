@@ -44,8 +44,9 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
-No webui, no configurable options. 
+No webui, no addon options. 
 Elasticsearch is using by calling it from another app, such as nextcloud. 
+However, you can still access the configuration to modify it, by going in /config/elasticsearch
 
 ## Integration with HA
 
