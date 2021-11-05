@@ -78,7 +78,7 @@ else
     echo "... settings apps"
     #occ fulltextsearch:configure '{"search_platform":"ElasticSearchPlatform"}'
     HOST=$(bashio::network.ipv4_address)
-    HOST=${host_ip%/*}
+    HOST=${HOST%/*}
     $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"http://$HOST:9200\"}"
     $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_index\":\"my_index\"}"
     $LAUNCHER fulltextsearch_elasticsearch:configure "{\"analyzer_tokenizer\":\"standard\"}"
