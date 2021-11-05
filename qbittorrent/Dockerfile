@@ -67,7 +67,7 @@ RUN \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \ 
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf || true
 
 # Copy root filesystem
 COPY rootfs / 
