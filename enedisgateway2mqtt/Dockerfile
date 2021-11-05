@@ -27,9 +27,10 @@ RUN \
 
 # Copy root filesystem
 COPY rootfs / 
-RUN chmod 777 /run.sh
+RUN chmod 777 /run.sh \
+    && chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
-CMD ["/run.sh"]
+CMD ["/entrypoint.sh"]
 VOLUME [ "/data" ]
 
 ### LABELS
