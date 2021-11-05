@@ -8,8 +8,8 @@ if bashio::config.has_value 'OCR'; then
         # Install additional language if requested
         if bashio::config.has_value 'OCRLANG'; then
             LANG=$(bashio::config 'OCRLANG')
-            apk add --quiet --no-cache tesseract-ocr-data-$LANG || apk add --quiet --no-cache tesseract-ocr-data-$LANG@community
-            bashio::log.info "OCR Language installed : $LANG"
+            apk add --quiet --no-cache tesseract-ocr-data-$LANG || apk add --quiet --no-cache tesseract-ocr-data-$LANG@community \
+            && bashio::log.info "OCR Language installed : $LANG" || bashio::log.fatal "Couldn't install OCR lang $LANG. Please check its format is conform"
         fi
     elif $(bashio::config 'OCR') = false; then
         bashio::log.info 'Removing OCR'
