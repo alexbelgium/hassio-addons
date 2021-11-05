@@ -26,6 +26,8 @@ You can use Elasticsearch to store, search, and manage data for:
 
 To learn more about Elasticsearch’s features and capabilities, see their [product page](https://www.elastic.co/fr/elasticsearch/) .
 
+Here, this addon is used to single node that can be called from other addons needing it. 
+
 ## Installation
 
 ---
