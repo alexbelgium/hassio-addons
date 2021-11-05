@@ -8,7 +8,8 @@
     "ES_JAVA_OPTS": "-Xms1024M -Xmx1024M",
     "bootstrap.memory_lock": "true",
     "discovery.type": "single-node",
-    "WORKDIR": "/data"
+    "WORKDIR": "/data",
+    "TINI_SUBREAPER": "true"
   },
   "name": "Elasticsearch server DO NOT USE",
   "options": {},
