@@ -2,10 +2,18 @@ ARG BUILD_UPSTREAM="6.8.20"
 FROM elasticsearch:$BUILD_UPSTREAM
 
 # Data persistence
+RUN sed '2a echo "Data location moved"' /usr/local/bin/docker-entrypoint.sh \
+&& sed '2a chown -R $(id -u):$(id -g) $HOME' /usr/local/bin/docker-entrypoint.sh \
+&& sed '2a done' /usr/local/bin/docker-entrypoint.sh \
+&& sed '2a ln -s $NEWHOME/$files /usr/share/elasticsearch' /usr/local/bin/docker-entrypoint.sh \
+&& sed '2a rm -r /usr/share/elasticsearch/$files' /usr/local/bin/docker-entrypoint.sh \
+&& sed '2a cp -rn /usr/share/elasticsearch/$files $NEWHOME' /usr/local/bin/docker-entrypoint.sh \
+&& sed '2a for files in "data" "config" "elasticsearch.yml"; do' /usr/local/bin/docker-entrypoint.sh \
+&& sed '2a mkdir -p $NEWHOME' /usr/local/bin/docker-entrypoint.sh \
+&& sed '2a NEWHOME="/share/elasticsearch"' /usr/local/bin/docker-entrypoint.sh
 
 # Install plugins 
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
-VOLUME [ "/data" ]
 
 ### LABELS
 ARG BUILD_ARCH
