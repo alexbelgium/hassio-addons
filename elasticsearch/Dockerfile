@@ -4,18 +4,13 @@ FROM elasticsearch:$BUILD_UPSTREAM
 # Data persistence
 RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts..."' /usr/local/bin/docker-entrypoint.sh \
 && sed -i '5a chown -R $(id -u):$(id -g) $HOME' /usr/local/bin/docker-entrypoint.sh \
-#&& sed -i '5a done' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a ln -s /config/elasticsearch/ /usr/share/elasticsearch/config || true' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a rm -r /usr/share/elasticsearch/config || true' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a cp -rn /usr/share/elasticsearch/config /config/elasticsearch/ || true' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a mkdir -p /config/elasticsearch' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a ln -s $NEWHOME/data /usr/share/elasticsearch || true' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a rm -r /usr/share/elasticsearch/data || true' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a cp -rn /usr/share/elasticsearch/data $NEWHOME || true' /usr/local/bin/docker-entrypoint.sh \
+&& sed -i '5a done' /usr/local/bin/docker-entrypoint.sh \
+&& sed -i '5a ln -s $NEWHOME/$files /usr/share/elasticsearch || true' /usr/local/bin/docker-entrypoint.sh \
+&& sed -i '5a rm -r /usr/share/elasticsearch/$files || true' /usr/local/bin/docker-entrypoint.sh \
+&& sed -i '5a cp -rn /usr/share/elasticsearch/$files $NEWHOME || true' /usr/local/bin/docker-entrypoint.sh \
+&& sed -i '5a for files in "data" "config"; do' /usr/local/bin/docker-entrypoint.sh \
 && sed -i '5a mkdir -p $NEWHOME' /usr/local/bin/docker-entrypoint.sh \
-#&& sed -i '5a for files in "data" "config"; do' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a NEWHOME="/data"' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a echo "Elasticsearch Server for Home Assistant addon"' /usr/local/bin/docker-entrypoint.sh
+&& sed -i '5a NEWHOME="/data"' /usr/local/bin/docker-entrypoint.sh
 
 # Install plugins 
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
