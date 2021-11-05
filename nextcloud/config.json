@@ -27,7 +27,7 @@
     "keyfile": "privkey.pem",
     "trusted_domains": "your-domain, your-domain2",
     "OCR": false,
-    "Full_Text_Search", true
+    "Full_Text_Search": true,
     "OCRLANG": "fra"
   },
   "schema": {
