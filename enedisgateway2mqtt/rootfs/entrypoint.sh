@@ -10,10 +10,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
         apt-get install -y --no-install-recommends \
             jq \
             curl
-        apk update &&
-        apk add --no-cache \
-            jq \
-            curl
 
     ###################
     # Install bashio #
