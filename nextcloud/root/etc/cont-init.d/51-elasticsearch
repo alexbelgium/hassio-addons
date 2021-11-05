@@ -49,7 +49,7 @@ else
     $LAUNCHER fulltextsearch_elasticsearch:configure "{\"analyzer_tokenizer\":\"standard\"}"
 
     # Is server detected
-    if [ curl $HOST:9100 ] &>/dev/null; then
+    if [ curl $HOST:9200 ] &>/dev/null; then
         # Wait further for cache for index to work
         countdown "Waiting for a few seconds before indexing starts..." "10"
         if $LAUNCHER fulltextsearch:index </dev/null; then
