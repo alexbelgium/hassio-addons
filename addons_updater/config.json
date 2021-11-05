@@ -45,5 +45,5 @@
   "slug": "updater",
   "startup": "once",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.2"
+  "version": "3.3"
 }
