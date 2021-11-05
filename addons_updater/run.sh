@@ -77,7 +77,7 @@ for addons in $(bashio::config "addon|keys"); do
   BASENAME=$(basename "https://github.com/$REPOSITORY")
   DATE="$(date '+%d-%m-%Y')"
 
-  [ $PAUSED=true ] && break
+  [ $PAUSED=true ] && continue
 
   #Create or update local version
   if [ ! -d /data/$BASENAME ]; then
