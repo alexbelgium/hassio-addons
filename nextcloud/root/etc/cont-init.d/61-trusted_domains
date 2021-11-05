@@ -1,10 +1,10 @@
 #!/usr/bin/with-contenv bashio
 
 # Make sure there is an Nextcloud installation
-if ! [ "$(nextcloud_occ -V)" ]; then
-    bashio::log.warning "It seems there is no Nextcloud server installed. Please restart the addon after initialization of the user."
-    exit 0
-fi
+#if ! [ "$(nextcloud_occ -V)" ]; then
+#    bashio::log.warning "It seems there is no Nextcloud server installed. Please restart the addon after initialization of the user."
+#    exit 0
+#fi
 
 ####################
 # Initialization   #
