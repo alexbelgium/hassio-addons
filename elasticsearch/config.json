@@ -10,7 +10,7 @@
     "discovery.type": "single-node",
     "TINI_SUBREAPER": "true"
   },
-  "name": "Elasticsearch server DO NOT USE",
+  "name": "Elasticsearch server",
   "options": {},
   "host_network": true,
   "ports": {
