@@ -1,3 +1,6 @@
+
+## 12.0.0 (05-11-2021)
+- Update to latest version from linuxserver/docker-piwigo
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 - Allow mounting of devices up to sdg2
 
