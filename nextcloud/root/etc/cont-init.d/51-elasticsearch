@@ -19,41 +19,6 @@ fi
 # SwITNet Ltd © - 2021, https://switnet.net/                                    #
 #################################################################################
 
-#######################
-# Download the script #
-#######################
-#SCRIPT="/sbin/fetch_lib"
-#wget -q -O $SCRIPT https://raw.githubusercontent.com/nextcloud/vm/master/lib.sh
-#source $SCRIPT
-
-######################
-# Correct the script #
-######################
-#sed -i "s|SCRIPTS=/var/scripts|SCRIPTS=/sbin|g" $SCRIPT
-#sed -i "s|NCPATH=/var/www/nextcloud|NCPATH=/data/config/www/nextcloud|g" $SCRIPT
-#sed -i "s|BACKUP=/mnt/NCBACKUP|BACKUP=/data/NCBACKUP|g" $SCRIPT
-
-# Test RAM size (2GB min) + CPUs (min 2)
-#ram_check 3 FullTextSearch
-#cpu_check 2 FullTextSearch
-
-# Get all needed variables from the library
-#ncdb
-#nc_update
-#es_install
-
-# Check for errors + debug code and abort if something isn't right
-# 1 = ON
-# 0 = OFF
-#DEBUG=0
-#debug_mode
-
-# Must be root
-#root_check
-
-# Nextcloud 18 is required.
-#lowest_compatible_nc 18
-
 if bashio::config.true 'Full_Text_Search' && [ occ fulltextsearch:index ] &>/dev/null; then
     echo "Full Text Search is already working"
 else
@@ -63,7 +28,7 @@ else
     APPS=(fulltextsearch fulltextsearch_elasticsearch files_fulltextsearch)
     for app in "${APPS[@]}"; do
         # If app exists, remove it
-        [ ! -z $($LAUNCHER app:getpath $app) ] && $LAUNCHER app:remove $app
+        [ ! -z $($LAUNCHER app:getpath $app) ] && $LAUNCHER app:remove $app &>/dev/null
     done
 
     # Get Full Text Search app for nextcloud
