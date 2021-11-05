@@ -1,96 +1,93 @@
 #!/usr/bin/with-contenv bashio
 
+# Make sure there is an Nextcloud installation
+if ! [ "$(occ -V)" ]; then
+    bashio::log.warning "It seems there is no Nextcloud server installed. Please restart the addon after initialization of the user."
+    exit 0
+fi
+
 ############
 # BASED ON #
-############
-# https://raw.githubusercontent.com/nextcloud/vm/master/apps/fulltextsearch.sh
-# T&M Hansson IT AB © - 2021, https://www.hanssonit.se/
-# SwITNet Ltd © - 2021, https://switnet.net/
+#################################################################################
+# https://raw.githubusercontent.com/nextcloud/vm/master/apps/fulltextsearch.sh  #
+# T&M Hansson IT AB © - 2021, https://www.hanssonit.se/                         #
+# SwITNet Ltd © - 2021, https://switnet.net/                                    #
+#################################################################################
 
-# Download the script
-source /sbin/fetch_lib.sh || source <(curl -sL https://raw.githubusercontent.com/nextcloud/vm/master/lib.sh)
+#######################
+# Download the script #
+#######################
+#SCRIPT="/sbin/fetch_lib"
+#wget -q -O $SCRIPT https://raw.githubusercontent.com/nextcloud/vm/master/lib.sh
+#source $SCRIPT
 
-# Correct the script
-sed -i "s|SCRIPTS=/var/scripts|SCRIPTS=/sbin|g" /sbin/fetch_lib.sh
-sed -i "s|NCPATH=/var/www/nextcloud|/data/config/www/nextcloud|g" /sbin/fetch_lib.sh
-sed -i "s|BACKUP=/mnt/NCBACKUP|BACKUP=/data/NCBACKUP|g" /sbin/fetch_lib.sh
+######################
+# Correct the script #
+######################
+#sed -i "s|SCRIPTS=/var/scripts|SCRIPTS=/sbin|g" $SCRIPT
+#sed -i "s|NCPATH=/var/www/nextcloud|NCPATH=/data/config/www/nextcloud|g" $SCRIPT
+#sed -i "s|BACKUP=/mnt/NCBACKUP|BACKUP=/data/NCBACKUP|g" $SCRIPT
+
+# Test RAM size (2GB min) + CPUs (min 2)
+#ram_check 3 FullTextSearch
+#cpu_check 2 FullTextSearch
 
 # Get all needed variables from the library
-ncdb
-nc_update
-es_install
+#ncdb
+#nc_update
+#es_install
 
 # Check for errors + debug code and abort if something isn't right
 # 1 = ON
 # 0 = OFF
-DEBUG=0
-debug_mode
+#DEBUG=0
+#debug_mode
 
 # Must be root
-root_check
+#root_check
 
+# Nextcloud 18 is required.
+#lowest_compatible_nc 18
 
-if [ bashio::config.is_true 'install_elasticsearch' ] && [ ! is_app_installed "fulltextsearch" ]; then
+if bashio::config.true 'Full_Text_Search' && [ occ fulltextsearch:index ] &>/dev/null; then
+    echo "Full Text Search is already working"
+else
     echo "Installing Full Text Search"
-
-    true
-    SCRIPT_NAME="Full Text Search"
-    SCRIPT_EXPLAINER="Full Text Search provides Elasticsearch for Nextcloud, which makes it possible to search for text inside files."
-    :
-    # Make sure there is an Nextcloud installation
-    if ! [ "$(nextcloud_occ -V)" ]; then
-        echo "It seems there is no Nextcloud server installed, please check your installation."
-        exit 1
-    fi
-
-    # Install OCR if requested
     # Reset Full Text Search to be able to index again, and also remove the app to be able to install it again
-    nextcloud_occ_no_check fulltextsearch:reset
+    occ fulltextsearch:reset &>/dev/null || true
     APPS=(fulltextsearch fulltextsearch_elasticsearch files_fulltextsearch)
     for app in "${APPS[@]}"; do
-        if is_app_installed "$app"; then
-            nextcloud_occ app:remove "$app"
-        fi
+        # If app exists, remove it
+        [ ! -z $(occ app:getpath $app) ] && occ app:remove $app
     done
 
-    # Disable and remove Nextant + Solr
-    if is_app_installed nextant; then
-        # Remove Nextant
-        echo "We will now remove Nextant + Solr and replace it with Full Text Search"
-        nextcloud_occ app:remove nextant
-
-        # Remove Solr
-        systemctl stop solr.service
-        rm -rf /var/solr
-        rm -rf /opt/solr*
-        rm /etc/init.d/solr
-        deluser --remove-home solr
-        deluser --group solr
-    fi
-
-    # Check if the app is compatible with the current Nextcloud version
-    if ! install_and_enable_app fulltextsearch; then
-        exit 1
-    fi
-
     # Get Full Text Search app for nextcloud
-    echo "... installing apps : fulltextsearch"
-    install_and_enable_app fulltextsearch
-    echo "... installing apps : fulltextsearch_elasticsearch"
-    install_and_enable_app fulltextsearch_elasticsearch
-    echo "... installing apps : files_fulltextsearch"
-    install_and_enable_app files_fulltextsearch
-    echo "... updating permissions"
-    chown -R abc:abc $NC_APPS_PATH
+    for app in "${APPS[@]}"; do
+        echo "... installing apps : $app"
+        occ app:install $app >/dev/null
+        occ app:enable $app >/dev/null
+    done
+    chown -R abc:abc $NEXTCLOUD_PATH/apps
 
     # Final setup
-    echo "... creating base_config"
-    nextcloud_occ fulltextsearch:configure '{"search_platform":"OCA\\FullTextSearch_Elasticsearch\\Platform\\ElasticSearchPlatform"}'
-    nextcloud_occ fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"http://${INDEX_USER}:${ROREST}@localhost:9200\",\"elastic_index\":\"${INDEX_USER}-index\"}"
-    nextcloud_occ files_fulltextsearch:configure "{\"files_pdf\":\"1\",\"files_office\":\"1\"}"
-    # Wait further for cache for index to work
-    countdown "Waiting for a few seconds before indexing starts..." "10"
-    if nextcloud_occ fulltextsearch:index </dev/null; then
-        bashio::log.info "Full Text Search was successfully installed!"
+    echo "... settings apps"
+    #occ fulltextsearch:configure '{"search_platform":"ElasticSearchPlatform"}'
+    HOST=$(bashio::network.ipv4_address)
+    HOST=${host_ip%/*}
+    occ fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"http://$HOST:9200\"}"
+    occ fulltextsearch_elasticsearch:configure "{\"elastic_index\":\"my_index\"}"
+    occ fulltextsearch_elasticsearch:configure "{\"analyzer_tokenizer\":\"standard\"}"
+
+    # Is server detected
+    if [ curl $HOST:9100 ] &>/dev/null; then
+        # Wait further for cache for index to work
+        countdown "Waiting for a few seconds before indexing starts..." "10"
+        if occ fulltextsearch:index </dev/null; then
+            bashio::log.info "Full Text Search was successfully installed!"
+        fi
+
+    else
+        bashio::log.warning "Elasticsearch can't connect. Please manually define its server in the options"
     fi
+
 fi
