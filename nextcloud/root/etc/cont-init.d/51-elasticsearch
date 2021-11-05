@@ -1,9 +1,12 @@
 #!/usr/bin/with-contenv bashio
 
-cd /data/config/www/nextcloud
+LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ" || bashio::log.info "/data/config/www/nextcloud/occ not found"
+    if ! bashio::fs.file_exists '/data/config/www/nextcloud/occ'; then
+        LAUNCHER=$(find / -name "occ" -print -quit)
+    fi || bashio::log.info "occ not found"
 
 # Make sure there is an Nextcloud installation
-if ! [ "$(occ -V)" ]; then
+if ! [ "$($LAUNCHER -V)" ]; then
     bashio::log.warning "It seems there is no Nextcloud server installed. Please restart the addon after initialization of the user."
     exit 0
 fi
@@ -60,14 +63,14 @@ else
     APPS=(fulltextsearch fulltextsearch_elasticsearch files_fulltextsearch)
     for app in "${APPS[@]}"; do
         # If app exists, remove it
-        [ ! -z $(occ app:getpath $app) ] && occ app:remove $app
+        [ ! -z $($LAUNCHER app:getpath $app) ] && $LAUNCHER app:remove $app
     done
 
     # Get Full Text Search app for nextcloud
     for app in "${APPS[@]}"; do
         echo "... installing apps : $app"
-        occ app:install $app >/dev/null
-        occ app:enable $app >/dev/null
+        $LAUNCHER app:install $app >/dev/null
+        $LAUNCHER app:enable $app >/dev/null
     done
     chown -R abc:abc $NEXTCLOUD_PATH/apps
 
@@ -76,15 +79,15 @@ else
     #occ fulltextsearch:configure '{"search_platform":"ElasticSearchPlatform"}'
     HOST=$(bashio::network.ipv4_address)
     HOST=${host_ip%/*}
-    occ fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"http://$HOST:9200\"}"
-    occ fulltextsearch_elasticsearch:configure "{\"elastic_index\":\"my_index\"}"
-    occ fulltextsearch_elasticsearch:configure "{\"analyzer_tokenizer\":\"standard\"}"
+    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"http://$HOST:9200\"}"
+    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_index\":\"my_index\"}"
+    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"analyzer_tokenizer\":\"standard\"}"
 
     # Is server detected
     if [ curl $HOST:9100 ] &>/dev/null; then
         # Wait further for cache for index to work
         countdown "Waiting for a few seconds before indexing starts..." "10"
-        if occ fulltextsearch:index </dev/null; then
+        if $LAUNCHER fulltextsearch:index </dev/null; then
             bashio::log.info "Full Text Search was successfully installed!"
         fi
 
