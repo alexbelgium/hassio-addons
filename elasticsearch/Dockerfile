@@ -1,8 +1,16 @@
 ARG BUILD_UPSTREAM="7.14.2"
 FROM elasticsearch:$BUILD_UPSTREAM
 
-# Install plugins
+# Data persistence
 #WORKDIR /data
+#sed "2a mkdir -p /share/elasticsearch"
+#for files in "data" "config" "elasticsearch.yml"; do
+#cp -rn /usr/share/elasticsearch/$files /share/elasticsearch
+#rm -r /usr/share/elasticsearch/$files
+#ln -s /share/elasticsearch/$files /share/elasticsearch
+#done
+
+# Install plugins 
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
 VOLUME [ "/data" ]
 
