@@ -55,10 +55,10 @@ else
         sleep 10s
         if $LAUNCHER fulltextsearch:index </dev/null; then
             bashio::log.info "Full Text Search was successfully installed!"
-        fi
+        
 
-   # else
-  #      bashio::log.warning "Elasticsearch can't connect. Please manually define its server in the options"
-   # fi
+   else
+       bashio::log.warning "Elasticsearch can't connect. Please manually define its server in the options"
+   fi
 
 fi
