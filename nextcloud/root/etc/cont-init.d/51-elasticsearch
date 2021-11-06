@@ -19,7 +19,7 @@ fi
 # SwITNet Ltd © - 2021, https://switnet.net/                                    #
 #################################################################################
 
-if bashio::config.true 'Full_Text_Search' && [ occ fulltextsearch:index ] &>/dev/null; then
+if bashio::config.true 'Full_Text_Search' && [ $LAUNCHER fulltextsearch:index &>/dev/null ] ; then
     echo "Full Text Search is already working"
 else
     echo "Installing Full Text Search"
