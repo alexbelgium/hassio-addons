@@ -51,7 +51,8 @@ else
     # Is server detected
    # if [ curl $HOST:9200 ] &>/dev/null; then
         # Wait further for cache for index to work
-        countdown "Waiting for a few seconds before indexing starts..." "10"
+        echo "Waiting for a few seconds before indexing starts..." 
+        pause 10s
         if $LAUNCHER fulltextsearch:index </dev/null; then
             bashio::log.info "Full Text Search was successfully installed!"
         fi
