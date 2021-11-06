@@ -44,9 +44,11 @@ else
     #occ fulltextsearch:configure '{"search_platform":"ElasticSearchPlatform"}'
     HOST=$(bashio::network.ipv4_address)
     HOST=${HOST%/*}
-    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"http://$HOST:9200\"}"
-    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_index\":\"my_index\"}"
-    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"analyzer_tokenizer\":\"standard\"}"
+    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"http://$HOST:9200\"}" &>/dev/null
+    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_index\":\"my_index\"}" &>/dev/null 
+    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"analyzer_tokenizer\":\"standard\"}" &>/dev/null
+    $LAUNCHER fulltextsearch:configure '{"search_platform":"OCA\\FullTextSearch_Elasticsearch\\Platform\\ElasticSearchPlatform"}' &>/dev/null || true
+    $LAUNCHER files_fulltextsearch:configure "{\"files_pdf\":\"1\",\"files_office\":\"1\"}" &>/dev/null || true 
 
     # Is server detected
    # if [ curl $HOST:9200 ] &>/dev/null; then
