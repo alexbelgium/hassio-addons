@@ -40,7 +40,7 @@
     "OCR": "bool?",
     "OCRLANG": "list(afr|amh|ara|asm|aze|bel|ben|bih|bod|bos|bul|cat|ceb|ces|chr|cym|dan|deu|div|dzo|ell|eng|enm|epo|est|eus|fas|fin|fra|frk|frm|gle|glg|grc|guj|hat|heb|hin|hrv|hun|iku|ind|isl|ita|jav|jpn|kan|kat|kaz|khm|kir|kmr|kor|lao|lat|lav|lit|mal|mar|mkd|mlt|mri|msa|mya|nep|nld|nor|ori|pan|pol|por|pus|ron|rus|san|sin|slk|slv|snd|spa|sqi|srp|swa|swe|syr|tam|tel|tgk|tgl|tha|tir|tur|tyv|uig|ukr|urd|uzb|vie|yid|zlm)?",
     "Full_Text_Search": "bool?", 
-    "elasticsearch_Server": "str?",
+    "elasticsearch_server": "str?",
     "trusted_domains": "str?",
     "TZ": "str?"
   }
