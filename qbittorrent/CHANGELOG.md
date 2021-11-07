@@ -1,4 +1,3 @@
-- Aligns ingress UI with external UI (requires browser cache clear)
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 
 ## 14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls159 (31-10-2021)
