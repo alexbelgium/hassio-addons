@@ -1,4 +1,4 @@
-ARG BUILD_UPSTREAM="7.15.1"
+ARG BUILD_UPSTREAM="7.14.2"
 FROM elasticsearch:$BUILD_UPSTREAM
 
 # Data persistence
