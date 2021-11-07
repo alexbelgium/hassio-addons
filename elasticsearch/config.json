@@ -10,7 +10,7 @@
     "discovery.type": "single-node",
     "TINI_SUBREAPER": "true"
   },
-    "map": [
+  "map": [
     "config:rw"
   ],
   "name": "Elasticsearch server",
@@ -26,7 +26,7 @@
   },
   "schema": {},
   "slug": "elasticsearch",
-  "upstream": "7.14.2",
+  "upstream": "7.15.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "7.14.2"
+  "version": "7.15.1"
 }
