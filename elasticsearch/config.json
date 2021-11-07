@@ -26,7 +26,7 @@
   },
   "schema": {},
   "slug": "elasticsearch",
-  "upstream": "7.15.1",
+  "upstream": "7.14.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "7.15.1"
+  "version": "7.14.2"
 }
