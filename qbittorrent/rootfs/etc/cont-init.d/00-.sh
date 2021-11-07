@@ -18,21 +18,15 @@ if [ ! -f "/usr/bin/bashio" ]; then
     nginx \
     coreutils \
     openvpn \
-    && apt-get clean \
-    \    
+    && apt-get clean
+    
     ##################
     # Install tempio #
     ##################
-    && curl -L -f -s -o /usr/bin/tempio \
+    curl -L -f -s -o /usr/bin/tempio \
     "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
-    && chmod a+x /usr/bin/tempio \
-    \
-    ##############
-    # STATISTICS #
-    ##############
-    && curl -L -f -s -o /tmp/tmp \
-    "https://github.com/alexbelgium/downloads-tracker/archive/refs/tags/Qbittorrent.zip" \
-    \
+    && chmod a+x /usr/bin/tempio
+
     ##################
     # Install bashio #
     ##################
@@ -42,13 +36,12 @@ if [ ! -f "/usr/bin/bashio" ]; then
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio \
-    \
+
     ########################################
     # Correct upstream image folders links #
     ########################################
-    \
     # Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \
