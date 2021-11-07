@@ -30,7 +30,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
     ##################
     # Install bashio #
     ##################
-    && mkdir -p /tmp/bashio \
+    mkdir -p /tmp/bashio \
     && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
