@@ -14,14 +14,14 @@ if [ ! -f "/usr/bin/bashio" ]; then
             keyutils \
             smbclient \
             samba ||
-        apk update &&
+        ( apk update &&
         apk add --no-cache \
             jq \
             curl \
             cifs-utils \
             keyutils \
             samba-client \
-            samba
+            samba )
 
     ###################
     # Install bashio #
