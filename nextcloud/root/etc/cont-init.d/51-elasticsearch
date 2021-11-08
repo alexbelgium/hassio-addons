@@ -71,5 +71,6 @@ fi
    else
        bashio::log.warning "Elasticsearch can't connect. Please manually define its server in the options"
    fi
-
+else
+echo "Full_Text_Search option not set"
 fi
