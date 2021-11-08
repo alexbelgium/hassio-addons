@@ -1,7 +1,7 @@
 {
   "name": "Joplin Server",
-  "version": "2.5.10",
-  "upstream": "2.5.10",
+  "version": "2.5.12",
+  "upstream": "2.5.12",
   "slug": "joplin",
   "description": "Self-hosted open source note-taking application",
   "url": "https://github.com/alexbelgium/hassio-addons",
