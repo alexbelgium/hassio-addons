@@ -8,6 +8,8 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 ARG BUILD_ARCH
 ARG BASHIO_VERSION=0.13.1
 
+COPY root/ /
+
 # Add bashio
 RUN \
     echo "Install version $BUILD_VERSION on $BUILD_ARCH" \
@@ -37,8 +39,6 @@ RUN \
     && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" /etc/services.d/nginx/*
-
-COPY root/ /
 
 RUN ["chmod", "+x", "/defaults/nextcloud-perms.sh"]
 
