@@ -6,22 +6,24 @@ if [ ! -f "/usr/bin/bashio" ]; then
     # Install apps #
     ################
     apk update &&
-    apk add --no-cache \
-            jq \
-            curl \
-            cifs-utils \
-            keyutils \
-            samba-client \
-            samba || \
-    (apt-get clean && \
+        apk add --no-cache \
+    jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba-client \
+    samba || \
+    (
+        apt-get clean && \
         apt-get update && \
         apt-get install -y --no-install-recommends \
-            jq \
-            curl \
-            cifs-utils \
-            keyutils \
-            smbclient \
-            samba)
+        jq \
+        curl \
+        cifs-utils \
+        keyutils \
+        smbclient \
+        samba
+    )
 
     ###################
     # Install bashio #
