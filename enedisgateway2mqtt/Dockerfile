@@ -1,4 +1,4 @@
-ARG BUILD_UPSTREAM="0.5.7"
+ARG BUILD_UPSTREAM="0.6.0"
 FROM m4dm4rtig4n/enedisgateway2mqtt:$BUILD_UPSTREAM
 
 # Base system
