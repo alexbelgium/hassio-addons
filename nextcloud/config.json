@@ -1,7 +1,7 @@
 {
   "name": "Nextcloud",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "22.2.0-7",
+  "version": "22.2.0-8",
   "upstream": "22.2.0",
   "slug": "nextcloud_ocr",
   "ingress": false,
