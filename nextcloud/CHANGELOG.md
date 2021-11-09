@@ -2,6 +2,7 @@
 - Repaired increment of trusted domains
 - Repaired setting OCR language
 - New optional config : enable elasticsearch (requires to run in parallel elasticsearch addon)
+- Repaired default data setting in /share/nextcloud
 
 ## 22.2.0 (02-10-2021)
 - Update to latest version from linuxserver/docker-nextcloud
