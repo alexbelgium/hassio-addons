@@ -37,4 +37,3 @@ User gid:    $(id -g abc)
 chown abc:abc /app
 chown abc:abc /data/config
 chown abc:abc /defaults
-echo "$PUID" > "/data/user"
