@@ -33,7 +33,8 @@
         "having_asset": "bool?",
         "repository": "str",
         "slug": "str",
-        "upstream": "str"
+        "upstream": "str",
+        "source": "str?"
       }
     ],
     "gitapi": "str?",
@@ -45,5 +46,5 @@
   "slug": "updater",
   "startup": "once",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.3"
+  "version": "3.5"
 }
