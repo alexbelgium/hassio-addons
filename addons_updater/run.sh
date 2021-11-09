@@ -136,9 +136,10 @@ else
     LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET) || break
   fi 
 
+fi
+
   # Add brackets
   LASTVERSION='"'${LASTVERSION}'"'
-fi
 
   # Do not compare with ls tag for linuxserver images (to avoid updating only for dependencies)
   LASTVERSION2=${LASTVERSION%-ls*}
