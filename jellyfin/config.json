@@ -18,7 +18,8 @@
     "/dev/sdd2",
     "/dev/sde2",
     "/dev/sdf2",
-    "/dev/sdg2"
+    "/dev/sdg2",
+    "/dev/vchiq"
   ],
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Jellyfin NAS",
@@ -27,17 +28,20 @@
     "PGID": 0
   },
   "ports": {
-    "8096/tcp": 8096,
-    "8920/tcp": 8920,
+    "8096/tcp": null,
+    "8920/tcp": null,
     "7359/udp": null,
     "1900/udp": null
   },
   "ports_description": {
-    "8096/tcp": "web interface",
-    "8920/tcp": "https web interface (optional)",
+    "8096/tcp": "web interface (not needed with ingress)",
+    "8920/tcp": "https web interface (not needed with ingress)",
     "7359/udp": "udp server discover (optional)",
     "1900/udp": "dlna (optional)"
   },
+  "ingress": true,
+  "ingress_port": 8096,
+  "host_network": true,
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PUID": "int",
