@@ -73,6 +73,7 @@ for addons in $(bashio::config "addon|keys"); do
   BETA=$(bashio::config "addon[${addons}].beta")
   FULLTAG=$(bashio::config "addon[${addons}].fulltag")
   HAVINGASSET=$(bashio::config "addon[${addons}].having_asset")
+  SOURCE=$(bashio::config "addon[${addons}].source")
   BASENAME=$(basename "https://github.com/$REPOSITORY")
   DATE="$(date '+%d-%m-%Y')"
 
@@ -96,6 +97,18 @@ for addons in $(bashio::config "addon|keys"); do
   LOGINFO="... $SLUG : get current version" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
   CURRENT=$(jq .upstream config.json) || bashio::log.error "$SLUG addon upstream tag not found in config.json. Exiting." exit
 
+if [ $SOURCE = "dockerhub" ]; then
+# Use dockerhub as upstream
+DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}") 
+DOCKERHUB_IMAGE=$(echo $UPSTREAM | cut -d "/" -f2) 
+LASTVERSION=$(curl -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=1000" | \
+	jq '.results | .[] | .name' -r | \
+	sed 's/latest//' | \
+	sort -V | \
+	tail -n 1) 
+
+else
+# Use github as upstream
   #Prepare tag flag
   if [ ${FULLTAG} = true ]; then
     LOGINFO="... $SLUG : fulltag is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
@@ -125,6 +138,7 @@ for addons in $(bashio::config "addon|keys"); do
 
   # Add brackets
   LASTVERSION='"'${LASTVERSION}'"'
+fi
 
   # Do not compare with ls tag for linuxserver images (to avoid updating only for dependencies)
   LASTVERSION2=${LASTVERSION%-ls*}
