@@ -41,6 +41,7 @@ addon:
     fulltag: true is for example "v3.0.1-ls67" false is "3.0.1"
     repository: 'name/repo' coming from github
     upstream: name/repo, example is 'linuxserver/docker-emby'
+    source : github or dockerhub
 gituser: your github username
 gituser: your github email
 gitpass: add your github password here, or a specific key if you have two factor identification enabled
