@@ -42,7 +42,7 @@
   "slug": "portainer",
   "startup": "services",
   "upstream": "2.9.2",
-  "url": "https://github.com/hassio-addons/addon-portainer",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.9.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9099]"
 }
