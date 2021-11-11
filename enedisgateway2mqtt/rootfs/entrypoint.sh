@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #for SCRIPTS in "/00-.sh" "/00-banner.sh" "/99-run.sh"; do
+cd /scripts
 for SCRIPTS in /scripts/*; do
   [ -e "$SCRIPTS" ] || continue 
   echo $SCRIPTS
