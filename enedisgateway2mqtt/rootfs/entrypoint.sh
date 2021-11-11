@@ -4,8 +4,10 @@
 # SCRIPTS #
 ###########
 
+#for SCRIPTS in /scripts/*.sh; do
+ 
 for SCRIPTS in "/00-.sh" "/00-banner.sh" "/run.sh"; do
-  [ -e "$SCRIPTS" ] || continue
+  [ -e "$SCRIPTS" ] || continue 
   echo $SCRIPTS
   chown $(id -u):$(id -g) $SCRIPTS
   chmod a+x $SCRIPTS
