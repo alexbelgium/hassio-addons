@@ -6,7 +6,7 @@
 
 #for SCRIPTS in /scripts/*.sh; do
  
-for SCRIPTS in "/00-.sh" "/00-banner.sh" "/run.sh"; do
+for SCRIPTS in "/00-.sh" "/00-banner.sh" "/99-run.sh"; do
   [ -e "$SCRIPTS" ] || continue 
   echo $SCRIPTS
   chown $(id -u):$(id -g) $SCRIPTS
