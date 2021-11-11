@@ -1,4 +1,7 @@
 
+## nightly-0.1.0.1011-ls25 (11-11-2021)
+- Update to latest version from linuxserver/docker-readarr
+
 ## nightly-0.1.0.1006-ls24 (07-11-2021)
 - Update to latest version from linuxserver/docker-readarr
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
