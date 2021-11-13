@@ -5,10 +5,14 @@
 ###############
 
 if bashio::config.true 'ssl'; then
-    bashio::config.require.ssl
     protocol=https
     certfile=$(bashio::config 'certfile')
     keyfile=$(bashio::config 'keyfile')
+    if [ ! -f /ssl/$certfile ] && [ ! -f /ssl/$keyfile ]; then
+      bashio::log.info "No ssl certificates found. Auto generating ones..."
+      SUBJECT="/C=US/ST=CA/L=Carlsbad/O=Linuxserver.io/OU=LSIO Server/CN=*"
+      openssl req -new -x509 -days 3650 -nodes -out /ssl/$certfile -keyout /ssl/$keyfile -subj "$SUBJECT"
+    fi
     address=$(bashio::addon.ip_address)
     sed -i "s|%%interface%%|$address|g" /etc/nginx/templates/ssl.gtpl
     sed -i "s|%%certfile%%|/ssl/$certfile|g" /etc/nginx/templates/ssl.gtpl
