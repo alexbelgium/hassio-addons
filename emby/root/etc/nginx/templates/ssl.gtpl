@@ -4,8 +4,8 @@ server {
   include /etc/nginx/includes/server_params.conf;
   include /etc/nginx/includes/proxy_params.conf;
   include /etc/nginx/includes/ssl_params.conf;
-  ssl_certificate %%certfile%%
-  ssl_certificate_key %%certkey%%
+  ssl_certificate %%certfile%%;
+  ssl_certificate_key %%certkey%%;
 
 location ^~ / {
     include /config/nginx/proxy.conf;
