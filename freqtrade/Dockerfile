@@ -11,9 +11,7 @@ RUN \
     # Install apps #
     ################
     apt-get update \
-    && apt-get install -y --no-install-recommends \
-    jq \
-    git \
+    && apt-get install -y --no-install-recommends jq git \
     \    
     ###################
     # Install bashio #
