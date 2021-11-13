@@ -4,10 +4,6 @@
 # SSL SETTING #
 ###############
 
-declare admin_port
-declare protocol=http
-
-# Generate Ingress configuration
 if bashio::config.true 'ssl'; then
     bashio::config.require.ssl
     protocol=https
