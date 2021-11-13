@@ -1,18 +1,5 @@
 #!/usr/bin/env bashio
 
-###########
-# SCRIPTS #
-###########
-
-for SCRIPTS in "/00-banner.sh"; do
-  echo $SCRIPTS
-  chown $(id -u):$(id -g) $SCRIPTS
-  chmod a+x $SCRIPTS
-  sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' $SCRIPTS
-  /.$SCRIPTS &&
-  true # Prevents script crash on failure
-done
-
 ####################
 # GLOBAL VARIABLES #
 ####################
@@ -28,25 +15,25 @@ export DB_TYPE=$(bashio::config 'DB_TYPE')
 
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
-  
-  #set variables
-  CERTFILE=$(bashio::config 'certfile')
-  KEYFILE=$(bashio::config 'keyfile')
-  
-  #Replace variables
-  sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/default-ssl.conf
-  sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/default-ssl.conf
-  sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
-  sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
-  
-  #Send env variables
-  export HTTPS=true
-  export SSL=true
-  BASE_URL=$BASE_URL:$(bashio::addon.port 443)
-  export BASE_URL="${BASE_URL/http:/https:}"
-  
-  #Communication
-  bashio::log.info "Ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+
+    #set variables
+    CERTFILE=$(bashio::config 'certfile')
+    KEYFILE=$(bashio::config 'keyfile')
+
+    #Replace variables
+    sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/default-ssl.conf
+    sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/default-ssl.conf
+    sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
+    sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
+
+    #Send env variables
+    export HTTPS=true
+    export SSL=true
+    BASE_URL=$BASE_URL:$(bashio::addon.port 443)
+    export BASE_URL="${BASE_URL/http:/https:}"
+
+    #Communication
+    bashio::log.info "Ssl enabled. If webui don't work, disable ssl or check your certificate paths"
 fi
 
 ##############
@@ -69,20 +56,20 @@ chown -R www-data:www-data $WEBTREES_HOME
 # Make links with share
 echo "... make links with data in /share"
 for VOL in "data" "media" "modules_v4"; do
-mkdir -p $OLD_WEBTREES_HOME/$VOL
-cp -rn $OLD_WEBTREES_HOME/$VOL $WEBTREES_HOME || true
-rm -r $OLD_WEBTREES_HOME/$VOL || true
-ln -s $WEBTREES_HOME/$VOL $OLD_WEBTREES_HOME || true
+    mkdir -p $OLD_WEBTREES_HOME/$VOL
+    cp -rn $OLD_WEBTREES_HOME/$VOL $WEBTREES_HOME || true
+    rm -r $OLD_WEBTREES_HOME/$VOL || true
+    ln -s $WEBTREES_HOME/$VOL $OLD_WEBTREES_HOME || true
 done
 chown -R www-data:www-data $WEBTREES_HOME
 
 # Correct base url if needed
 echo "... align base url with latest addon value"
 if [ -f $WEBTREES_HOME/data/config.ini.php ]; then
-  echo "Aligning base_url addon config"
-  LINE=$(sed -n '/base_url/=' $WEBTREES_HOME/data/config.ini.php)
-  sed -i "$LINE a base_url=\"$BASE_URL\"" $WEBTREES_HOME/data/config.ini.php
-  sed -i "$LINE d" $WEBTREES_HOME/data/config.ini.php
+    echo "Aligning base_url addon config"
+    LINE=$(sed -n '/base_url/=' $WEBTREES_HOME/data/config.ini.php)
+    sed -i "$LINE a base_url=\"$BASE_URL\"" $WEBTREES_HOME/data/config.ini.php
+    sed -i "$LINE d" $WEBTREES_HOME/data/config.ini.php
 fi || true
 
 # Execute main script

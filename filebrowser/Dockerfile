@@ -31,16 +31,16 @@ RUN \
     ########################################
     # Correct upstream image folders links #
     ########################################
-    && mkdir -p -m 777 /config/filebrowser	
+    && mkdir -p -m 777 /config/filebrowser	|| true
 
 # Copy root filesystem
 COPY rootfs / 
 
 VOLUME [ "/data" ]
 WORKDIR /
-RUN chmod 777 /run.sh
+RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/run.sh" ] 
+CMD [ "/entrypoint.sh" ] 
 
 
 ### LABELS

@@ -8,7 +8,6 @@ COPY rootfs /
 ARG BASHIO_VERSION=0.13.1
 ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
-ENTRYPOINT ["/run.sh"]
 VOLUME ["/data"]
 
 RUN \
@@ -36,13 +35,15 @@ RUN \
     # Modify image #
     ################
     # Change data location
-    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \ 
-    \
-    # Add entry script
-    && chown root:root /run.sh \
-    && chmod a+x /run.sh \
+    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' || true
+
+# Add entry script
+RUN chown root:root /entrypoint.sh \
+    && chmod 777 /entrypoint.sh \
     # Add end script
     && sed -i '$ d' /docker-entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 ### LABELS
 ARG BUILD_ARCH

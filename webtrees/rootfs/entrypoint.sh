@@ -1,4 +1,4 @@
-#!/bin/bah
+#!/bin/bash
 
 echo "Starting"
 

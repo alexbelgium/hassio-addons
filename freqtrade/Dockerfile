@@ -27,9 +27,9 @@ RUN \
 
 VOLUME [ "/data" ]
 WORKDIR /
-RUN chmod 777 /run.sh
+RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/bin/bash" ]
-CMD [ "/run.sh" ] 
+CMD [ "/entrypoint.sh" ] 
 
 # use /data instead of /config for hass.io environment
 #    && sed -i "s|/config|/share/freqtrade|g" /etc/services.d/freqtrade/run \
