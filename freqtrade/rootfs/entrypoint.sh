@@ -9,5 +9,7 @@ if [ ! -f /data/config.json ]; then
   freqtrade new-config --config /data/config.json
 fi
 
+sleep 5000000
+
 echo "Starting app"
 freqtrade trade --logfile /data/logs/freqtrade.log --db-url sqlite://///data/tradesv3.sqlite --config /data/config.json --strategy SampleStrategy
