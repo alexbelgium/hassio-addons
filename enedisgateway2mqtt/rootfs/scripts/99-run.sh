@@ -20,7 +20,7 @@ mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
 # For all keys in options.json
 for KEYS in ${arr[@]}; do
     # if the custom_var field is used
-    if ${KEYS} ="custom_var"; then
+    if [ "${KEYS}" = "custom_var" ]; then
         VALUES=$(jq .$KEYS ${JSONSOURCE})
         for SUBKEYS in ${VALUES//,/ }; do
             [[ ! $SUBKEYS =~ ^.+[=].+$ ]] && bashio::log.fatal "Your custom_var field does not follow the structure KEY=\"text\",KEY2=\"text2\" it will be ignored" && continue || true
