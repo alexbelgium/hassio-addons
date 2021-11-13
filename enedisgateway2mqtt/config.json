@@ -1,11 +1,7 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "description": "use Enedis Gateway API to send data in your MQTT Broker",
+  "map": ["config"],
   "name": "Enedisgateway2mqtt",
   "options": {
     "ACCESS_TOKEN": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
