@@ -26,7 +26,8 @@
     "CONSUMPTION_PRICE_BASE": "str?",
     "CONSUMPTION_PRICE_HC": "str?",
     "CONSUMPTION_PRICE_HP": "str?",
-    "CARD_MYENEDIS": "str?"
+    "CARD_MYENEDIS": "str?",
+    "custom_var": "str?"
   },
   "slug": "enedisgateway2mqtt",
   "upstream": "0.6.0",
