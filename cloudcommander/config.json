@@ -3,7 +3,9 @@
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "description": "Cloud Commander a file manager for the web with console and editor",
   "devices": [
-    "/dev/disk/by-label/hassos-data", 
+    "/dev/*", 
+    "/dev/",
+    "/dev", 
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
