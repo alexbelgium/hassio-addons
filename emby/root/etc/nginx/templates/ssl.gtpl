@@ -8,16 +8,11 @@ server {
   ssl_certificate_key %%certkey%%;
 
 location ^~ / {
-    include /config/nginx/proxy.conf;
-    include /config/nginx/resolver.conf;
     proxy_pass http://backend;
 }
 
 location ^~ /embywebsocket {
-    include /config/nginx/proxy.conf;
-    include /config/nginx/resolver.conf;
     proxy_pass http://backend;
 }
-
 
 }
