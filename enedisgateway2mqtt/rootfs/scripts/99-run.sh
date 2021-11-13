@@ -21,7 +21,8 @@ mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
 for KEYS in ${arr[@]}; do
     # if the custom_var field is used
     if [ "${KEYS}" = "custom_var" ]; then
-        VALUES=$(jq .$KEYS ${JSONSOURCE})
+        VALUES=$(jq .$KEYS ${JSONSOURCE}) # Get list of custom elements
+        VALUES=${VALUES:1:-1}             # Remove first and last ""
         for SUBKEYS in ${VALUES//,/ }; do
             [[ ! $SUBKEYS =~ ^.+[=].+$ ]] && bashio::log.fatal "Your custom_var field does not follow the structure KEY=\"text\",KEY2=\"text2\" it will be ignored" && continue || true
             # Remove the key if already existing
@@ -51,9 +52,14 @@ sed -i 's|"|'\''|g' $CONFIGSOURCE
 
 # For all keys in config file
 for word in $(cat $CONFIGSOURCE); do
-    [[ ! $word =~ ^.+[=].+$ ]] && bashio::log.fatal "$word does not follow the structure KEY=\'text\', it will be ignored" || true
-    export "$word" # Export the variable
-    echo "$word"
+    # Data validation
+    if [[ $word =~ ^.+[=].+$ ]]; then
+        export "$word" # Export the variable
+        echo "$word"
+    else
+        bashio::log.fatal "$word does not follow the structure KEY=\'text\', it will be ignored and removed from the config"
+        sed -i "/$word/ d" ${CONFIGSOURCE}
+    fi
 done
 
 ##############
