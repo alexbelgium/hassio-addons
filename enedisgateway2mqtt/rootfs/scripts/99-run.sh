@@ -60,7 +60,7 @@ for word in $(cat $CONFIGSOURCE); do
         export "$word" # Export the variable
         bashio::log.info "... $word"
     else
-        bashio::log.fatal "$word does not follow the structure KEY=\'text\', it will be ignored and removed from the config"
+        bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
         sed -i "/$word/ d" ${CONFIGSOURCE}
     fi
 done
