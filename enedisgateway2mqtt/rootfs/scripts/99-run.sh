@@ -24,7 +24,7 @@ for KEYS in ${arr[@]}; do
         VALUES=$(jq .$KEYS ${JSONSOURCE}) # Get list of custom elements
         VALUES=${VALUES:1:-1}             # Remove first and last ""
         for SUBKEYS in ${VALUES//,/ }; do
-            [[ ! $SUBKEYS =~ ^.+[=].+$ ]] && bashio::log.fatal "Your custom_var field does not follow the structure KEY=\"text\",KEY2=\"text2\" it will be ignored" && continue || true
+            [[ ! $SUBKEYS =~ ^.+[=].+$ ]] && bashio::log.warning "Your custom_var field $SUBKEYS does not follow the structure KEY=\"text\",KEY2=\"text2\" it will be ignored" && continue || true
             # Remove the key if already existing
             sed -i "/$(echo "${SUBKEYS%%=*}")/ d" ${CONFIGSOURCE} &>/dev/null || true
             # Write it in the config file
