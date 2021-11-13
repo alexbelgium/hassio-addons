@@ -62,8 +62,8 @@
     "cifspassword": "str?"
   },
   "slug": "readarr_nas",
-  "upstream": "nightly-0.1.0.1011-ls25",
+  "upstream": "nightly-0.1.0.1019-ls28",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "nightly-0.1.0.1011-ls25",
+  "version": "nightly-0.1.0.1019-ls28",
   "webui": "http://[HOST]:[PORT:8787]"
 }
