@@ -1,3 +1,6 @@
+
+## 22.2.2 (13-11-2021)
+- Update to latest version from linuxserver/docker-nextcloud
 - Repaired use own certs
 - Repaired increment of trusted domains
 - Repaired setting OCR language

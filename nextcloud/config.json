@@ -1,17 +1,25 @@
 {
   "name": "Nextcloud",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "22.2.0-8",
-  "upstream": "22.2.0",
+  "version": "22.2.2",
+  "upstream": "22.2.2",
   "slug": "nextcloud_ocr",
   "ingress": false,
   "hassio_api": true,
   "ingress_port": 0,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "description": "Nextcloud for Home Assistant",
   "boot": "manual",
   "uart": true,
-  "map": ["share:rw", "media:rw", "ssl:rw"],
+  "map": [
+    "share:rw",
+    "media:rw",
+    "ssl:rw"
+  ],
   "ports": {
     "443/tcp": 8099,
     "80/tcp": null
@@ -39,7 +47,7 @@
     "keyfile": "str",
     "OCR": "bool?",
     "OCRLANG": "list(afr|amh|ara|asm|aze|bel|ben|bih|bod|bos|bul|cat|ceb|ces|chr|cym|dan|deu|div|dzo|ell|eng|enm|epo|est|eus|fas|fin|fra|frk|frm|gle|glg|grc|guj|hat|heb|hin|hrv|hun|iku|ind|isl|ita|jav|jpn|kan|kat|kaz|khm|kir|kmr|kor|lao|lat|lav|lit|mal|mar|mkd|mlt|mri|msa|mya|nep|nld|nor|ori|pan|pol|por|pus|ron|rus|san|sin|slk|slv|snd|spa|sqi|srp|swa|swe|syr|tam|tel|tgk|tgl|tha|tir|tur|tyv|uig|ukr|urd|uzb|vie|yid|zlm)?",
-    "Full_Text_Search": "bool?", 
+    "Full_Text_Search": "bool?",
     "elasticsearch_server": "str?",
     "trusted_domains": "str?",
     "TZ": "str?"
