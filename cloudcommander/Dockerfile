@@ -25,7 +25,7 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    && rm -rf /tmp/bashio || true
 
 # Copy root filesystem
 COPY rootfs / 
@@ -34,9 +34,9 @@ RUN \
     ###############
     # Permissions #
     ###############
-    chmod 777 /run.sh
+    chmod 777 /entrypoint.sh
 
-ENTRYPOINT [ "/run.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 VOLUME [ "/data" ]
 
