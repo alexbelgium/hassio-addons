@@ -58,8 +58,8 @@
   "slug": "piwigo",
   "stage": "experimental",
   "startup": "services",
-  "upstream": "12.0.0",
+  "upstream": "12.1.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "12.0.0",
+  "version": "12.1.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
