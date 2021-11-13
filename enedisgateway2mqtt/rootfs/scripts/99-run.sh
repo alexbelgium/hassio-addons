@@ -30,7 +30,7 @@ for KEYS in ${arr[@]}; do
             # Write it in the config file
             echo ${SUBKEYS} >>${CONFIGSOURCE}
             # Say it loud
-            echo "... ${SUBKEYS}"
+            # echo "... ${SUBKEYS}"
         done
     # If it is a normal field
     else
@@ -39,13 +39,15 @@ for KEYS in ${arr[@]}; do
         # Write it in the config file
         echo "${KEYS}=$(jq .$KEYS ${JSONSOURCE})" >>${CONFIGSOURCE}
         # Say it loud
-        echo "... ${KEYS}=$(jq .$KEYS ${JSONSOURCE})"
+        # echo "... ${KEYS}=$(jq .$KEYS ${JSONSOURCE})"
     fi
 done
 
 ###########################
 # Read all config options #
 ###########################
+
+bashio::log.info "Starting the app with the variables in /config/enedisgateway2mqtt"
 
 # Replace all "" with ''
 sed -i 's|"|'\''|g' $CONFIGSOURCE
@@ -55,7 +57,7 @@ for word in $(cat $CONFIGSOURCE); do
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
         export "$word" # Export the variable
-        echo "$word"
+        bashio::log.info "... $word"
     else
         bashio::log.fatal "$word does not follow the structure KEY=\'text\', it will be ignored and removed from the config"
         sed -i "/$word/ d" ${CONFIGSOURCE}
