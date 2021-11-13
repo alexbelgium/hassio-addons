@@ -30,7 +30,7 @@
     "/dev/sdf2",
     "/dev/sdg2"
   ],
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": ["config:rw", "share:rw", "media:rw", "ssl:rw"],
   "name": "Emby NAS",
   "options": {
     "ssl": false,
