@@ -19,7 +19,7 @@
     "MQTT_USERNAME": "str?",
     "MQTT_PASSWORD": "str?",
     "RETAIN": "bool?",
-    "QOS": "str?",
+    "QOS": "int?",
     "GET_CONSUMPTION": "bool?",
     "GET_CONSUMPTION_DETAIL": "bool?",
     "GET_PRODUCTION": "bool?",
