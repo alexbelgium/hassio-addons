@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Runs the Nginx daemon
+# ==============================================================================
+bashio::net.wait_for 8096
+bashio::log.info "Starting NGinx..."
+
+exec nginx
