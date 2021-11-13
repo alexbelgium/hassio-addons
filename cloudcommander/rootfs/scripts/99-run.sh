@@ -45,6 +45,7 @@ fi
 
 bashio::log.info "Starting..."
 
+cd /
 ./usr/src/app/bin/cloudcmd.mjs '"'$DROPBOX_TOKEN$CUSTOMOPTIONS'"' &
 bashio::net.wait_for 8000 localhost 900 || true
 bashio::log.info "Started !"
