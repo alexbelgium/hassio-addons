@@ -18,4 +18,6 @@ if bashio::config.true 'ssl'; then
     sed -i "s|%%certfile%%|/ssl/$certfile|g" /etc/nginx/templates/ssl.gtpl
     sed -i "s|%%certkey%%|/ssl/$keyfile|g" /etc/nginx/templates/ssl.gtpl
     mv /etc/nginx/templates/ssl.gtpl /etc/nginx/servers/ssl.conf
+else
+    rm -r /etc/services.d/nginx
 fi
