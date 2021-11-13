@@ -15,15 +15,7 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
-    ########################
-    # Prepares environment #
-    ########################
-    # && git clone -b develop https://github.com/freqtrade/freqtrade.git \
-    # && cd freqtrade \
-    # && ./setup.sh --install \
-    && chmod a+x /run.sh
+    && rm -rf /tmp/bashio
 
 VOLUME [ "/data" ]
 WORKDIR /
