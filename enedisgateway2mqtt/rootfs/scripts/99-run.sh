@@ -49,9 +49,8 @@ done
 
 bashio::log.info "Starting the app with the variables in /config/enedisgateway2mqtt"
 
-# Replace all "" with ''
-#sed -i 's|"||g' $CONFIGSOURCE
-#sed -i 's|\'|"|g' $CONFIGSOURCE
+# Remove '
+sed -i 's|\x27||g' $CONFIGSOURCE
 
 # For all keys in config file
 for word in $(cat $CONFIGSOURCE); do
