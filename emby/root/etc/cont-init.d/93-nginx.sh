@@ -8,6 +8,7 @@ if bashio::config.true 'ssl'; then
     protocol=https
     certfile=$(bashio::config 'certfile')
     keyfile=$(bashio::config 'keyfile')
+    # Self generate if not found
     if [ ! -f /ssl/$certfile ] && [ ! -f /ssl/$keyfile ]; then
       bashio::log.info "No ssl certificates found. Auto generating ones..."
       SUBJECT="/C=US/ST=CA/L=Carlsbad/O=Linuxserver.io/OU=LSIO Server/CN=*"
