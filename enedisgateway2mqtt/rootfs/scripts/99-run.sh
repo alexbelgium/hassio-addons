@@ -57,7 +57,7 @@ sed -i 's|"||g' $CONFIGSOURCE
 for word in $(cat $CONFIGSOURCE); do
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
-        export "$word" # Export the variable
+        export $word # Export the variable
         bashio::log.info "... $word"
     else
         bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
