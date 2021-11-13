@@ -24,12 +24,12 @@ for KEYS in ${arr[@]}; do
         VALUES=$(jq .$KEYS ${JSONSOURCE})
         for SUBKEYS in ${VALUES//,/ }; do
             [[ ! $SUBKEYS =~ ^.+[=].+$ ]] && bashio::log.fatal "Your custom_var field does not follow the structure KEY=\"text\",KEY2=\"text2\" it will be ignored" && continue || true
-            # Remove if already existing
-            sed -i "/$KEYS/ d" ${CONFIGSOURCE} &>/dev/null || true
+            # Remove the key if already existing
+            sed -i "/$(echo "${SUBKEYS%%=*}")/ d" ${CONFIGSOURCE} &>/dev/null || true
             # Write it in the config file
-            echo "${KEYS}=$(jq .$KEYS ${JSONSOURCE})" >>${CONFIGSOURCE}
+            echo ${SUBKEYS} >>${CONFIGSOURCE}
             # Say it loud
-            echo "... ${KEYS}=$(jq .$KEYS ${JSONSOURCE})"
+            echo "... ${SUBKEYS}"
         done
     # If it is a normal field
     else
