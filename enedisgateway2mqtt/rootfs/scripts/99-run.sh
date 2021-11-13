@@ -51,6 +51,7 @@ bashio::log.info "Starting the app with the variables in /config/enedisgateway2m
 
 # Remove '
 sed -i 's|\x27||g' $CONFIGSOURCE
+sed -i 's|"||g' $CONFIGSOURCE
 
 # For all keys in config file
 for word in $(cat $CONFIGSOURCE); do
