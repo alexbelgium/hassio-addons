@@ -19,7 +19,6 @@ RUN \
     keyutils \
     samba \
     smbclient \
-    nginx \
     \
     ##################
     # Install bashio #

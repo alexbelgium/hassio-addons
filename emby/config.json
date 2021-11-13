@@ -33,9 +33,6 @@
   "map": ["config:rw", "share:rw", "media:rw", "ssl:rw"],
   "name": "Emby NAS",
   "options": {
-    "ssl": false,
-    "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem",
     "PUID": 0,
     "PGID": 0,
     "silent": true
@@ -54,9 +51,6 @@
   },
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
-    "ssl": "bool",
-    "certfile": "str",
-    "keyfile": "str",
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
