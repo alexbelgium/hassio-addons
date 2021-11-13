@@ -3,6 +3,16 @@
 #################
 # Create config #
 #################
+
+# Create the config file
+mkdir -p /config/enedisgateway2mqtt
+touch /config/enedisgateway2mqtt/enedisgateway2mqtt.conf
+
+# Read the config file
+
+#################
+# Create config #
+#################
 echo " "
 bashio::log.info "Setting variables"
 echo " "
@@ -15,6 +25,7 @@ done
 echo " "
 bashio::log.info "Starting the app"
 echo " "
+
 ##############
 # Launch App #
 ##############
