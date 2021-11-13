@@ -66,5 +66,5 @@
   "upstream": "4.7.0.17",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.7.0.17",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8096]"
+  "webui": "http://[HOST]:[PORT:8096]"
 }
