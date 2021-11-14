@@ -1,0 +1,2 @@
+- Allows setting options through 3 ways, see addon readme
+- Data validation
