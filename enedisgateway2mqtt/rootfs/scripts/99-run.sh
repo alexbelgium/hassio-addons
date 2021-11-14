@@ -55,9 +55,6 @@ done
 
 bashio::log.info "Starting the app with the variables in /config/enedisgateway2mqtt"
 
-# Force asset token string 
-ASSET_TOKEN="string"
-
 # For all keys in config file
 for word in $(cat $CONFIGSOURCE); do
     # Data validation
@@ -69,6 +66,11 @@ for word in $(cat $CONFIGSOURCE); do
         sed -i "/$word/ d" ${CONFIGSOURCE}
     fi
 done
+
+# Force asset token string 
+export ACCESS_TOKEN=$(bashio::config 'ACCESS_TOKEN')
+export PDL=$(bashio::config 'PDL')
+export MQTT_HOST=$(bashio::config 'MQTT_HOST')
 
 ##############
 # Launch App #
