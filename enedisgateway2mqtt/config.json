@@ -43,11 +43,10 @@
     "INFLUXDB_PORT": "int?",
     "INFLUXDB_TOKEN": "str?",
     "INFLUXDB_ORG": "str?",
-    "INFLUXDB_BUCKET": "str?", 
-    "test": "bool?" 
+    "INFLUXDB_BUCKET": "str?"
   },
   "slug": "enedisgateway2mqtt",
   "upstream": "0.6.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.6.0-7"
+  "version": "0.6.0-8"
 }
