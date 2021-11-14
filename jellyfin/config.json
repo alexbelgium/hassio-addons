@@ -22,6 +22,7 @@
   ],
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Jellyfin NAS",
+  "host_dbus": true,
   "options": {
     "PUID": 0,
     "PGID": 0
@@ -38,7 +39,7 @@
     "7359/udp": "udp server discover (optional)",
     "1900/udp": "dlna (optional)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "schema": {
     "PUID": "int",
     "PGID": "int",
