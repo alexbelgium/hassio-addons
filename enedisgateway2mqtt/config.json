@@ -9,9 +9,9 @@
     "MQTT_HOST": ""
   },
   "schema": {
-    "ACCESS_TOKEN": "str",
-    "PDL": "str",
-    "MQTT_HOST": "str",
+    "ACCESS_TOKEN": "str?",
+    "PDL": "str?",
+    "MQTT_HOST": "str?",
     "custom_var": "str?",
     "MQTT_PORT": "int?",
     "MQTT_PREFIX": "str?",
