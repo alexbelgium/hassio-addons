@@ -4,9 +4,9 @@
   "map": ["config:rw"],
   "name": "Enedisgateway2mqtt",
   "options": {
-    "ACCESS_TOKEN": XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,
-    "PDL": XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,
-    "MQTT_HOST": 127.0.0.1
+    "ACCESS_TOKEN": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "PDL": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "MQTT_HOST": "127.0.0.1"
   },
   "schema": {
     "ACCESS_TOKEN": "str?",
