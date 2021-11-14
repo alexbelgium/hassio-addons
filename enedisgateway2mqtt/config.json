@@ -43,7 +43,8 @@
     "INFLUXDB_PORT": "int?",
     "INFLUXDB_TOKEN": "str?",
     "INFLUXDB_ORG": "str?",
-    "INFLUXDB_BUCKET": "str?"
+    "INFLUXDB_BUCKET": "str?", 
+    "test": "bool?" 
   },
   "slug": "enedisgateway2mqtt",
   "upstream": "0.6.0",
