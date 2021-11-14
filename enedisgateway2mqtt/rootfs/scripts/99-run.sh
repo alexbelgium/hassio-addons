@@ -26,7 +26,9 @@ for KEYS in ${arr[@]}; do
         for SUBKEYS in ${VALUES//,/ }; do
             [[ ! $SUBKEYS =~ ^.+[=].+$ ]] && bashio::log.warning "Your custom_var field $SUBKEYS does not follow the structure KEY=\"text\",KEY2=\"text2\" it will be ignored" && continue || true
             # Remove the key if already existing
-            sed -i "/$(echo "${SUBKEYS%%=*}")/ d" ${CONFIGSOURCE} &>/dev/null || true
+            sed -i "/$(echo "${SUBKEYS%%=*}")/ d" ${CONFIGSOURCE}
+            # Remove apostrophes
+            SUBKEYS=${SUBKEYS//[\"\']/}
             # Write it in the config file
             echo ${SUBKEYS} >>${CONFIGSOURCE}
             # Say it loud
@@ -35,9 +37,13 @@ for KEYS in ${arr[@]}; do
     # If it is a normal field
     else
         # Remove if already existing
-        sed -i "/$KEYS/ d" ${CONFIGSOURCE} &>/dev/null || true
+        sed -i "/$KEYS/ d" ${CONFIGSOURCE}
+        # Store key
+        KEYS=$(echo "${KEYS}=$(jq .$KEYS ${JSONSOURCE})")
+        # Remove apostrophes
+        KEYS=${KEYS//[\"\']/}
         # Write it in the config file
-        echo "${KEYS}=$(jq .$KEYS ${JSONSOURCE})" >>${CONFIGSOURCE}
+        echo $KEYS >>${CONFIGSOURCE}
         # Say it loud
         # echo "... ${KEYS}=$(jq .$KEYS ${JSONSOURCE})"
     fi
@@ -51,7 +57,7 @@ bashio::log.info "Starting the app with the variables in /config/enedisgateway2m
 
 # Remove '
 # sed -i 's|\x27||g' $CONFIGSOURCE
-sed -i 's|"||g' $CONFIGSOURCE
+#sed -i 's|"||g' $CONFIGSOURCE
 
 # For all keys in config file
 for word in $(cat $CONFIGSOURCE); do
