@@ -9,4 +9,5 @@ for SCRIPTS in *; do
   sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' $SCRIPTS || true
   ./$SCRIPTS &&
   true || true # Prevents script crash on failure
+  echo "exit $?"
 done
