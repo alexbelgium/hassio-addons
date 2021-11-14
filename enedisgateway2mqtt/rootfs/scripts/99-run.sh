@@ -30,7 +30,7 @@ for KEYS in ${arr[@]}; do
             # Write it in the config file
             echo ${SUBKEYS} >>${CONFIGSOURCE}
             # Say it loud
-            # echo "... ${SUBKEYS}"
+            echo "... ${SUBKEYS}"
         done
     # If it is a normal field
     else
@@ -39,7 +39,7 @@ for KEYS in ${arr[@]}; do
         # Write it in the config file
         echo "${KEYS}=$(jq .$KEYS ${JSONSOURCE})" >>${CONFIGSOURCE}
         # Say it loud
-        # echo "... ${KEYS}=$(jq .$KEYS ${JSONSOURCE})"
+        echo "... ${KEYS}=$(jq .$KEYS ${JSONSOURCE})"
     fi
 done
 
