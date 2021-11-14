@@ -68,9 +68,9 @@ for word in $(cat $CONFIGSOURCE); do
 done
 
 # Force asset token string 
-export ACCESS_TOKEN=$(bashio::config 'ACCESS_TOKEN')
-export PDL=$(bashio::config 'PDL')
-export MQTT_HOST=$(bashio::config 'MQTT_HOST')
+export ACCESS_TOKEN=$(bashio::config "ACCESS_TOKEN")
+export PDL=$(bashio::config "PDL")
+export MQTT_HOST=$(bashio::config "MQTT_HOST")
 
 ##############
 # Launch App #
