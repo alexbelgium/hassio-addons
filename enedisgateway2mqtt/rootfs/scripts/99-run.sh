@@ -60,7 +60,7 @@ if bashio::config.true "test"; then
    
     # Get variables and export
     bashio::log.info "Starting the app with the variables in /config/enedisgateway2mqtt"
-    for word in $(parse_yaml $CONFIGSOURCE); do
+    for word in $(parse_yaml $CONFIGSOURCE conf); do
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
         export $word # Export the variable
