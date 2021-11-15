@@ -95,7 +95,7 @@ for addons in $(bashio::config "addon|keys"); do
 
   #Find current version
   LOGINFO="... $SLUG : get current version" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-  CURRENT=$(jq .upstream config.json) || bashio::log.error "$SLUG addon upstream tag not found in config.json. Exiting." exit
+  CURRENT=$(jq .upstream config.json) || ( bashio::log.error "$SLUG addon upstream tag not found in config.json. Exiting." && continue )
 
 if [ $SOURCE = "dockerhub" ]; then
 # Use dockerhub as upstream
