@@ -9,7 +9,8 @@ if [ ! -f "/usr/bin/bashio" ]; then
         apt-get update &&
         apt-get install -y --no-install-recommends \
             jq \
-            curl
+            curl \
+            yamllint
 
     ###################
     # Install bashio #
