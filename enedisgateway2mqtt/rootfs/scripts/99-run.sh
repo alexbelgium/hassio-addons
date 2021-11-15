@@ -1,5 +1,33 @@
 #!/usr/bin/env bashio
 
+############################
+# Check if config is there #
+############################
+
+#CONFIGSOURCE="/config/enedisgateway2mqtt/config.yaml"
+ 
+# Check if config file is there, or create template
+#if [ -f $CONFIGSOURCE ]; then
+#    echo "Using config file found in $CONFIGSOURCE"
+#else
+#    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE"
+#    mkdir -p "$(dirname "${CONFIGSOURCE}")"
+#    cp /template/config.yaml "$(dirname "${CONFIGSOURCE}")"
+#    bashio::exit.nok
+#fi
+#
+# Check if yaml is valid
+#if [ yamllint $CONFIGSOURCE ]; then
+#    echo "Config file is a valid yaml"
+#else
+#    bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE"
+#    bashio::exit.nok
+#fi
+
+
+
+
+
 #################
 # Create config #
 #################
@@ -66,11 +94,6 @@ for word in $(cat $CONFIGSOURCE); do
         sed -i "/$word/ d" ${CONFIGSOURCE}
     fi
 done
-
-# Force asset token string 
-export ACCESS_TOKEN=$(bashio::config "ACCESS_TOKEN")
-export PDL=$(bashio::config "PDL")
-export MQTT_HOST=$(bashio::config "MQTT_HOST")
 
 ##############
 # Launch App #
