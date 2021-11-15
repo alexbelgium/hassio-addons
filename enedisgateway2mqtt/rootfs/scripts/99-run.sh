@@ -27,7 +27,6 @@ if bashio::config.true "test"; then
     # Check if yaml is valid
     yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR  
     if [ $? = 0 ]; then
-    then
         echo "Config file is a valid yaml"
     else
         bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list :"
