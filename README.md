@@ -75,6 +75,7 @@ https://github.com/alexbelgium/hassio-addons
 
 ## &#10003; Multimedia distributors
 
+- [Booksonic-air](booksonc_air/) ![smb][smb-shield]: platform for accessing the audibooks you own wherever you are
 - [Emby](emby/) ![smb][smb-shield]: A Free Software Media System that puts you in control of managing and streaming your media.
 - [Flexget](flexget/) : FlexGet is a multipurpose automation tool for all of your media (Developed for @TyjTyj)
 - [Jellyfin](jellyfin/) ![smb][smb-shield] : A Free Software Media System that puts you in control of managing and streaming your media.
