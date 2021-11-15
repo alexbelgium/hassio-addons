@@ -25,21 +25,20 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio
+
     #################
     # Correct image #
     #################
-    # && sed -i "s|/config|/config/booksonic-air|g" /etc/cont-init.d/* \
+RUN \
     # Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser || true
 
 # copy local files
 COPY root/ / 
 ENV BOOKSONIC_AIR_SETTINGS="/data"
-
 
 ### LABELS
 ARG BUILD_ARCH
