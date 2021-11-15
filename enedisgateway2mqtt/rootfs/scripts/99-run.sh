@@ -13,12 +13,13 @@ if bashio::config.true "test"; then
         echo "Using config file found in $CONFIGSOURCE"
     else
         echo "No config file, creating one from template"
+        # Create folder
+        mkdir -p "$(dirname "${CONFIGSOURCE}")"
         # Downloading template
         TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/enedisgateway2mqtt/rootfs/templates/config.yaml"
-        curl -L -f -s $TEMPLATESOURCE
+        curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
         # Placing template in config
-        mkdir -p "$(dirname "${CONFIGSOURCE}")"
-        cp config.yaml "$(dirname "${CONFIGSOURCE}")"
+        #cp config.yaml "$(dirname "${CONFIGSOURCE}")"
         # Need to restart
         bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
         bashio::exit.nok
