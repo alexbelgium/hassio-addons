@@ -91,7 +91,7 @@ for addons in $(bashio::config "addon|keys"); do
 
   #Define the folder addon
   LOGINFO="... $SLUG : checking slug exists in repo" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-  cd /data/${BASENAME}/${SLUG} || bashio::log.error "$SLUG addon not found in this repository. Exiting." exit
+  cd /data/${BASENAME}/${SLUG} || ( bashio::log.error "$SLUG addon not found in this repository. Exiting. Exiting." && continue ) 
 
   #Find current version
   LOGINFO="... $SLUG : get current version" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
