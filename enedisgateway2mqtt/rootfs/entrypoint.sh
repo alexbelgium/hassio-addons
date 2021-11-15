@@ -1,13 +1,13 @@
 #!/bin/bash
 
-cd /scripts
-for SCRIPTS in *; do
-  [ -e "$SCRIPTS" ] || continue 
-  echo $SCRIPTS
+#!/bin/bash
+
+echo "Starting scripts :"
+for SCRIPTS in scripts/*; do
+  [ -e "$SCRIPTS" ] || continue
+  echo "$SCRIPTS: executing"
   chown $(id -u):$(id -g) $SCRIPTS
   chmod a+x $SCRIPTS
   sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' $SCRIPTS || true
-  ./$SCRIPTS &&
-  true || true # Prevents script crash on failure
-  echo "exit $?"
+  ./$SCRIPTS || echo "$SCRIPTS: exiting $?"
 done
