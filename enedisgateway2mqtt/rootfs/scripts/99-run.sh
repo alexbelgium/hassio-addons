@@ -10,15 +10,18 @@ if bashio::config.true "test"; then
     if [ -f $CONFIGSOURCE ]; then
         echo "Using config file found in $CONFIGSOURCE"
     else
+        echo "No config file, creating one from template"
+        # Downloading template
+        TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/enedisgateway2mqtt/rootfs/templates/config.yaml"
+        curl -L -f -s $TEMPLATESOURCE
+        # Placing template in config
         mkdir -p "$(dirname "${CONFIGSOURCE}")"
-        cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
-        bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE"
-        sleep 10
-        bashio::exit.nok
+        cp config.yaml "$(dirname "${CONFIGSOURCE}")"
+        bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
     fi
 
     # Check if yaml is valid
-    if [ yamllint $CONFIGSOURCE ]; then
+    if [[ yamllint $CONFIGSOURCE ]]; then
         echo "Config file is a valid yaml"
     else
         bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE"
