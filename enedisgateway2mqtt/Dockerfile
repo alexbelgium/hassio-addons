@@ -6,6 +6,7 @@ ARG BASHIO_VERSION=0.13.1
 
 # Copy root filesystem
 COPY rootfs / 
+VOLUME [ "/config" ]
 
 RUN \
     ################
@@ -39,7 +40,6 @@ RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD ["/entrypoint.sh"]
 VOLUME [ "/data" ]
-VOLUME [ "/config" ]
 
 ### LABELS
 ARG BUILD_ARCH
