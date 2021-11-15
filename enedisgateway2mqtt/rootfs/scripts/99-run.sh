@@ -5,8 +5,10 @@
 ############################
 
 if bashio::config.true "test"; then
+    # Where is the config
     CONFIGSOURCE="/config/enedisgateway2mqtt/config.yaml"
-    # Check if config file is there, or create template
+    
+    # Check if config file is there, or create one from template
     if [ -f $CONFIGSOURCE ]; then
         echo "Using config file found in $CONFIGSOURCE"
     else
@@ -17,7 +19,9 @@ if bashio::config.true "test"; then
         # Placing template in config
         mkdir -p "$(dirname "${CONFIGSOURCE}")"
         cp config.yaml "$(dirname "${CONFIGSOURCE}")"
+        # Need to restart
         bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
+        bashio::exit.nok
     fi
 
     # Check if yaml is valid
