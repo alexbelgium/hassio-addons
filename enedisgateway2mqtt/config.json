@@ -14,6 +14,7 @@
     "PDL": "str?",
     "MQTT_HOST": "str?",
     "custom_var": "str?",
+    "test": "bool?",
     "MQTT_PORT": "int?",
     "MQTT_PREFIX": "str?",
     "MQTT_CLIENT_ID": "str?",
