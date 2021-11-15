@@ -4,30 +4,33 @@
 # Check if config is there #
 ############################
 
-CONFIGSOURCE="/config/enedisgateway2mqtt/config.yaml"
+if bashio::config.true "test"; then
+    CONFIGSOURCE="/config/enedisgateway2mqtt/config.yaml"
+    # Check if config file is there, or create template
+    if [ -f $CONFIGSOURCE ]; then
+        echo "Using config file found in $CONFIGSOURCE"
+    else
+        mkdir -p "$(dirname "${CONFIGSOURCE}")"
+        cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
+        bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE"
+        sleep 10
+        bashio::exit.nok
+    fi
 
-if false; then
-# Check if config file is there, or create template
-if [ -f $CONFIGSOURCE ]; then
-    echo "Using config file found in $CONFIGSOURCE"
-else
-    mkdir -p "$(dirname "${CONFIGSOURCE}")"
-    cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
-    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE"
-    sleep 10
-    bashio::exit.nok
+    # Check if yaml is valid
+    if [ yamllint $CONFIGSOURCE ]; then
+        echo "Config file is a valid yaml"
+    else
+        bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE"
+        bashio::exit.nok
+    fi
+
+    # Symlink
+    rm /data/config.yaml
+    ln -s $CONFIGSOURCE /data
+    echo "Symlink created"
+    
 fi
-
-# Check if yaml is valid
-if [ yamllint $CONFIGSOURCE ]; then
-    echo "Config file is a valid yaml"
-else
-    bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE"
-    bashio::exit.nok
-fi
-fi
-
-
 
 #################
 # Create config #
