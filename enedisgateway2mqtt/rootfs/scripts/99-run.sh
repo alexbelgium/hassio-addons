@@ -21,14 +21,16 @@ if bashio::config.true "test"; then
     fi
 
     # Check if yaml is valid
-    if [[ yamllint $CONFIGSOURCE ]]; then
+    yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR  
+    if [ $? = 0 ]; then
+    then
         echo "Config file is a valid yaml"
     else
-        bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE"
-        bashio::exit.nok
+        bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list :"
+        cat ERROR
     fi
 
-    # Symlink
+    # Create symlink
     rm /data/config.yaml
     ln -s $CONFIGSOURCE /data
     echo "Symlink created"
