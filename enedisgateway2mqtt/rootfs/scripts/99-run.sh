@@ -6,6 +6,7 @@
 
 CONFIGSOURCE="/config/enedisgateway2mqtt/config.yaml"
 
+if false; then
 # Check if config file is there, or create template
 if [ -f $CONFIGSOURCE ]; then
     echo "Using config file found in $CONFIGSOURCE"
@@ -24,7 +25,7 @@ else
     bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE"
     bashio::exit.nok
 fi
-
+fi
 
 
 
