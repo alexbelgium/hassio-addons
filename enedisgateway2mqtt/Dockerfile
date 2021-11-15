@@ -4,6 +4,9 @@ FROM m4dm4rtig4n/enedisgateway2mqtt:$BUILD_UPSTREAM
 # Base system
 ARG BASHIO_VERSION=0.13.1
 
+# Copy root filesystem
+COPY rootfs / 
+
 RUN \
     ################
     # Install apps #
@@ -13,6 +16,7 @@ RUN \
     && apt-get install -y \
     jq \
     curl \
+    yamllint \
     && apt-get clean \
     \    
     ##################
@@ -23,14 +27,19 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio || true
+    && rm -rf /tmp/bashio \
+    ##################
+    # Install config #
+    ##################
+    && mkdir -p /config/enedisgateway2mqtt \
+    && cp -n /templates/* /config/enedisgateway2mqtt/ \
+    || true
 
-# Copy root filesystem
-COPY rootfs / 
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD ["/entrypoint.sh"]
 VOLUME [ "/data" ]
+VOLUME [ "/config" ]
 
 ### LABELS
 ARG BUILD_ARCH
