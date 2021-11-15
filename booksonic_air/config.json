@@ -23,7 +23,7 @@
     "PUID": "0",
     "PGID": "0"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
+  "map": ["share:rw", "media:rw"],
   "name": "Booksonic-air",
   "options": {
     "PUID": 0,
