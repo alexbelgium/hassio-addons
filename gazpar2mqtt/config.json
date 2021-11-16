@@ -4,7 +4,7 @@
   "map": ["config:rw", "share:rw"],
   "name": "gazpar2mqtt",
   "options": {
-    "CONFIG_LOCATION": "/share/gazpar2mqtt/config.yaml"
+    "CONFIG_LOCATION": "/config/gazpar2mqtt/config.yaml"
   },
   "schema": {
     "CONFIG_LOCATION": "str"
