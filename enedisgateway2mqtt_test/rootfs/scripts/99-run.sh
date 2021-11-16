@@ -11,7 +11,8 @@ else
     # Create folder
     mkdir -p "$(dirname "${CONFIGSOURCE}")"
     # Placing template in config
-    cp /data/config.yaml "$(dirname "${CONFIGSOURCE}")" || cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
+    cp /data/config.yaml "$(dirname "${CONFIGSOURCE}")" &>/dev/null \
+    || cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
     # Need to restart
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
     bashio::exit.nok
