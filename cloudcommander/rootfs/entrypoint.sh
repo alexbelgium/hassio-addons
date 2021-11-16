@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 echo "Starting scripts :"
 for SCRIPTS in scripts/*; do
   [ -e "$SCRIPTS" ] || continue
