@@ -1,5 +1,6 @@
 #!/bin/bash
-if [ ! -f "/usr/bin/bashio" ]; then
+# If dockerfile failed install manually 
+[ ! -f "/usr/bin/bashio" ]; then
     echo "Bashio does not exist, executing script"
 
     ################
