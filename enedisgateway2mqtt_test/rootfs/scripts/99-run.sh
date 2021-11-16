@@ -23,8 +23,8 @@ yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR || EXIT_CODE=$?
 if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
 else
-    bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list :"
-    cat ERROR
+    cat ERROR 
+    bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
     bashio::exit.nok
 fi
 
