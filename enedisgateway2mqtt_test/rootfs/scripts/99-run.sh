@@ -25,6 +25,7 @@ if [ $EXIT_CODE = 0 ]; then
 else
     bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list :"
     cat ERROR
+    bashio::exit.nok
 fi
 
 # Create symlink
