@@ -33,6 +33,11 @@ https://github.com/alexbelgium/hassio-addons
 
 [//]: # "ADDONLIST_START"
 
+## &#10003; Connectors
+
+- [enedisgateway2mqtt](enedisgateway2mqtt/) : use Enedis Gateway API to send data in your MQTT Broker
+- [gazpar2mqtt](gazpar2mqtt/) : Python script to fetch GRDF data and publish data to a mqtt broker
+
 ## &#10003; Comics management
 
 - [Ubooquity](ubooquity/) ![smb][smb-shield] ![support][support-shield] ![ram][ram-shield]: Free, lightweight and easy-to-use home server for your comics and ebooks !
