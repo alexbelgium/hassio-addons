@@ -1,0 +1,4 @@
+GRDF_USERNAME: username #your GRDF login (ex : myemail@email.com)
+GRDF_PASSWORD: password #your GRDF password
+MQTT_HOST: 127.0.0.1 #hostname or ip adress of the MQTT broker.
+# OPTIONAL VARIABLES : see https://github.com/yukulehe/gazpar2mqtt
