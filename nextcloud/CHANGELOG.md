@@ -1,4 +1,7 @@
 
+## 22.2.3 (16-11-2021)
+- Update to latest version from linuxserver/docker-nextcloud
+
 ## 22.2.2 (13-11-2021)
 - Update to latest version from linuxserver/docker-nextcloud
 - Repaired use own certs
