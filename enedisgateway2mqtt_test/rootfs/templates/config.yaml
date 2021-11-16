@@ -1,11 +1,63 @@
----
- doe: "a deer, a female deer"
- ray: "a drop of golden sun"
- pi: 3.14159
- xmas: true
- french-hens: 3
- calling-birds:
-   - huey
-   - dewey
-   - louie
-   - fred
+##########
+# GLOBAL #
+##########
+debug: false
+
+####################
+##      MQTT      ##
+####################
+mqtt:
+  host: MOSQUITO_SERVER       # MANDATORY
+  port: 1883
+  username: ""
+  password: ""
+  prefix: enedis_gateway
+  client_id: enedis_gateway
+  retain: true
+  qos: 0
+
+####################
+## Home assistant ##
+####################
+home_assistant:
+  discovery: false
+  discovery_prefix: homeassistant
+  card_myenedis: false
+
+###############
+## Influx DB ##
+###############
+#influxdb: 
+#  host: MY_INFLUXDB_SERVER
+#  port: 8086
+#  token: MY_TOKEN
+#  org: MY_ORG
+#  bucket: MY_BUCKET
+
+####################
+## ENEDIS GATEWAY ##
+####################
+enedis_gateway:  
+  PDL_1:                       # MANDATORY
+    token: PDL_1_TOKEN         # MANDATORY
+    plan: BASE                 # BASE or HP/HC
+    consumption: true                 
+    consumption_detail: true         
+    consumption_price_hc: 0           
+    consumption_price_hp: 0           
+    consumption_price_base: 0         
+    production: false                 
+    production_detail: false          
+#    offpeak_hours: ""        # USE ONLY IF YOU WANT OVERLOAD DEFAULT VALUE, Format : 22h36-00h10;01h00-06h00
+    addresses: true
+#  PDL_2:
+#    token: PDL_2_TOKEN
+#    plan: HP/HC
+#    consumption: true
+#    consumption_detail: true
+#    consumption_price_hc: 0.1781
+#    consumption_price_hp: 0.1337
+#    consumption_price_base: 0.1781
+#    production: false
+#    production_detail: false
+#    addresses: true
