@@ -4,19 +4,19 @@
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 
 # Check if config file is there, or create one from template
-#if [ -f $CONFIGSOURCE ]; then
-#    echo "Using config file found in $CONFIGSOURCE"
-#else
-#    echo "No config file, creating one from template"
-#    # Create folder
-#    mkdir -p "$(dirname "${CONFIGSOURCE}")"
-#    # Placing template in config
-#    cp /data/config.yaml "$(dirname "${CONFIGSOURCE}")" &>/dev/null \
-#    || cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
-#    # Need to restart
-#    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
-#    bashio::exit.nok
-#fi
+if [ -f $CONFIGSOURCE ]; then
+    echo "Using config file found in $CONFIGSOURCE"
+else
+    echo "No config file, creating one from template"
+    # Create folder
+    mkdir -p "$(dirname "${CONFIGSOURCE}")"
+    # Placing template in config
+    cp /data/config.yaml "$(dirname "${CONFIGSOURCE}")" &>/dev/null \
+    || cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
+    # Need to restart
+    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
+    bashio::exit.nok
+fi
 
 # Check if yaml is valid
 #yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR || EXIT_CODE=$?
@@ -29,9 +29,9 @@ CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 #fi
 
 # Create symlink
-#[ -f /data/config.yaml ] && rm /data/config.yaml
-#ln -s $CONFIGSOURCE /data
-#echo "Symlink created"
+[ -f /data/config.yaml ] && rm /data/config.yaml
+ln -s $CONFIGSOURCE /data
+echo "Symlink created"
 
 ##############
 # Launch App #
