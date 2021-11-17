@@ -12,7 +12,7 @@ mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
 for KEYS in ${arr[@]}; do
         # export key
         export $(echo "${KEYS}=$(jq .$KEYS ${JSONSOURCE})")
-        echo "All addon configs exported as env variables"
+        echo "${KEYS}=$(jq .$KEYS ${JSONSOURCE})"
 done 
 
 ####################
