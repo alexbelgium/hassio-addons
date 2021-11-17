@@ -7,7 +7,7 @@ debug: false
 ##      MQTT      ##
 ####################
 mqtt:
-  host: MOSQUITO_SERVER       # MANDATORY
+  host: MOSQUITO_SERVER # MANDATORY
   port: 1883
   username: ""
   password: ""
@@ -27,7 +27,7 @@ home_assistant:
 ###############
 ## Influx DB ##
 ###############
-#influxdb: 
+#influxdb:
 #  host: MY_INFLUXDB_SERVER
 #  port: 8086
 #  token: MY_TOKEN
@@ -37,18 +37,18 @@ home_assistant:
 ####################
 ## ENEDIS GATEWAY ##
 ####################
-enedis_gateway:  
-  PDL_1:                       # MANDATORY
-    token: PDL_1_TOKEN         # MANDATORY
-    plan: BASE                 # BASE or HP/HC
-    consumption: true                 
-    consumption_detail: true         
-    consumption_price_hc: 0           
-    consumption_price_hp: 0           
-    consumption_price_base: 0         
-    production: false                 
-    production_detail: false          
-#    offpeak_hours: ""        # USE ONLY IF YOU WANT OVERLOAD DEFAULT VALUE, Format : 22h36-00h10;01h00-06h00
+enedis_gateway:
+  PDL_1: # MANDATORY
+    token: PDL_1_TOKEN # MANDATORY
+    plan: BASE # BASE or HP/HC
+    consumption: true
+    consumption_detail: true
+    consumption_price_hc: 0
+    consumption_price_hp: 0
+    consumption_price_base: 0
+    production: false
+    production_detail: false
+    #    offpeak_hours: ""        # USE ONLY IF YOU WANT OVERLOAD DEFAULT VALUE, Format : 22h36-00h10;01h00-06h00
     addresses: true
 #  PDL_2:
 #    token: PDL_2_TOKEN
