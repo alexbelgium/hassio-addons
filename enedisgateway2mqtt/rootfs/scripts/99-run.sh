@@ -13,8 +13,9 @@ mkdir -p "$(dirname "${CONFIGSOURCE}")"
 mkdir -p "$(dirname "${DATABASESOURCE}")"
 
 # Use existing config if present
-if [ -f /data/config.yaml ]; then
-mv /data/config.yaml $(dirname "${CONFIGSOURCE}")
+if [ -e /data/config.yaml ]; then
+[ ! -f $CONFIGSOURCE ] && mv /data/config.yaml $(dirname "${CONFIGSOURCE}") \
+|| mv /data/config.yaml /data/config2.yaml
 fi
 
 # Check if config file is there, or create one from template
@@ -41,8 +42,9 @@ else
 fi
 
 # Use existing database if present
-if [ -f /data/database.sqlite ]; then
-mv /data/database.sqlite $(dirname "${DATABASESOURCE}")
+if [ -e /data/database.sqlite ]; then
+[ ! -f $DATABASESOURCE ] && mv /data/database.sqlite $(dirname "${DATABASESOURCE}") \
+|| mv /data/database.sqlite /data/database2.sqlite
 fi
 
 # Check if database is here or create symlink
