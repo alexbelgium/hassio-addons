@@ -3,6 +3,7 @@
 ##################
 # INITIALIZATION #
 ##################
+EXIT_CODE=0
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
