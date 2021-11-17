@@ -43,21 +43,21 @@ else
 fi
 
 # Use existing database if present
-if [ -e /data/database.sqlite ]; then
-[ ! -f $DATABASESOURCE ] && mv /data/database.sqlite $(dirname "${DATABASESOURCE}") \
-|| mv /data/database.sqlite /data/database2.sqlite
-fi
+#if [ -e /data/database.sqlite ]; then
+#[ ! -f $DATABASESOURCE ] && mv /data/database.sqlite $(dirname "${DATABASESOURCE}") \
+#|| mv /data/database.sqlite /data/database2.sqlite
+#fi
 
 # Check if database is here or create symlink
-if [ -f $DATABASESOURCE ]; then
-    ln -s ${DATABASESOURCE} /data
-    bashio::log.info "Using database file found in $DATABASESOURCE"
-else
-    # Create symlink for addon to create database
-    touch ${DATABASESOURCE}
-    ln -s $DATABASESOURCE /data
-    rm $DATABASESOURCE
-fi
+#if [ -f $DATABASESOURCE ]; then
+#    ln -s ${DATABASESOURCE} /data
+#    bashio::log.info "Using database file found in $DATABASESOURCE"
+#else
+ #   # Create symlink for addon to create database
+ #   touch ${DATABASESOURCE}
+ #   ln -s $DATABASESOURCE /data
+#    rm $DATABASESOURCE
+#fi
 
 ##############
 # Launch App #
