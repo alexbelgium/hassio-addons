@@ -50,7 +50,7 @@ fi
 
 # Check if database is here or create symlink
 if [ -f $DATABASESOURCE ]; then
-    ln -s $CONFIGSOURCE /data
+    ln -s ${DATABASESOURCE} /data
     bashio::log.info "Using database file found in $DATABASESOURCE"
 else
     # Create symlink for addon to create database
