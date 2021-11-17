@@ -4,7 +4,7 @@
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 
 # Check if config file is there, or create one from template
-if [ -f $CONFIGSOURCE ]; then
+if [ ! -f $CONFIGSOURCE ]; then
     echo "Using config file found in $CONFIGSOURCE"
 else
     echo "No config file, creating one from template"
