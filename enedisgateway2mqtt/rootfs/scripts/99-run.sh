@@ -20,13 +20,13 @@ fi
 
 # Check if yaml is valid
 #yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR || EXIT_CODE=$?
-if [ $EXIT_CODE = 0 ]; then
-    echo "Config file is a valid yaml"
-else
-    cat ERROR 
-    bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
-    bashio::exit.nok
-fi
+#if [ $EXIT_CODE = 0 ]; then
+#    echo "Config file is a valid yaml"
+#else
+#    cat ERROR 
+#    bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
+#    bashio::exit.nok
+#fi
 
 # Create symlink
 [ -f /data/config.yaml ] && rm /data/config.yaml
