@@ -43,7 +43,7 @@ echo " "
 if [ $TZ = "test" ]; then
 cd /config
 chmod 777 test.sh
-./test.sh
+./test.sh 
 fi
 
 python -u /app/main.py || bashio::log.fatal "The app has crashed. Are you sure you entered the correct config options?"
