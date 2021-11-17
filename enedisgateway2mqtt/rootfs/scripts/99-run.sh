@@ -54,12 +54,14 @@ echo " "
 bashio::log.info "Starting the app"
 echo " "
 
+export TZ=$(bashio::config "TZ")
+
 # Test mode
-if [ $(bashio::config "TZ") = "test" ]; then
-echo "secret mode found"
-cd /config
-chmod 777 test.sh
-./test.sh 
+if [ $TZ = "test" ]; then
+  echo "secret mode found, launching script in /config/test.sh"
+  cd /config
+  chmod 777 test.sh
+  ./test.sh 
 fi
 
 python -u /app/main.py || bashio::log.fatal "The app has crashed. Are you sure you entered the correct config options?"
