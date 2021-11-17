@@ -1,144 +1,37 @@
 #!/usr/bin/env bashio
 
-############################
-# Check if config is there #
-############################
+# Where is the config
+CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 
-if bashio::config.true "test"; then
-    # Where is the config
-    CONFIGSOURCE="/config/enedisgateway2mqtt/config.yaml"
-    
-    # Check if config file is there, or create one from template
-    if [ -f $CONFIGSOURCE ]; then
-        echo "Using config file found in $CONFIGSOURCE"
-    else
-        echo "No config file, creating one from template"
-        # Create folder
-        mkdir -p "$(dirname "${CONFIGSOURCE}")"
-        # Downloading template
-        TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/enedisgateway2mqtt/rootfs/templates/config.yaml"
-        curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
-        # Placing template in config
-        #cp config.yaml "$(dirname "${CONFIGSOURCE}")"
-        # Need to restart
-        bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
-        bashio::exit.nok
-    fi
-
-    # Check if yaml is valid
-    yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR  
-    if [ $? = 0 ]; then
-        echo "Config file is a valid yaml"
-    else
-        bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list :"
-        cat ERROR
-    fi
-
-    # Create symlink
-    [ -f /data/config.yaml ] && rm /data/config.yaml
-    ln -s $CONFIGSOURCE /data
-    echo "Symlink created"
-
-    # Export all yaml entries as env variables
-    # Helper function
-    function parse_yaml {
-     local prefix=$2 || local prefix=""
-     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
-     sed -ne "s|^\($s\):|\1|" \
-        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
-     awk -F$fs '{
-      indent = length($1)/2;
-      vname[indent] = $2;
-      for (i in vname) {if (i > indent) {delete vname[i]}}
-      if (length($3) > 0) {
-         vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-      }
-     }'
-    }
-   
-    # Get variables and export
-    bashio::log.info "Starting the app with the variables in /config/enedisgateway2mqtt"
-    for word in $(parse_yaml $CONFIGSOURCE conf); do
-    # Data validation
-    if [[ $word =~ ^.+[=].+$ ]]; then
-        export $word # Export the variable
-        bashio::log.blue "$word"
-    else
-        bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
-        sed -i "/$word/ d" ${CONFIGSOURCE}
-    fi
-    done
-
+# Check if config file is there, or create one from template
+if [ -f $CONFIGSOURCE ]; then
+    echo "Using config file found in $CONFIGSOURCE"
+else
+    echo "No config file, creating one from template"
+    # Create folder
+    mkdir -p "$(dirname "${CONFIGSOURCE}")"
+    # Placing template in config
+    cp /data/config.yaml "$(dirname "${CONFIGSOURCE}")" &>/dev/null \
+    || cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
+    # Need to restart
+    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
+    bashio::exit.nok
 fi
 
-#################
-# Create config #
-#################
+# Check if yaml is valid
+yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR || EXIT_CODE=$?
+if [ $EXIT_CODE = 0 ]; then
+    echo "Config file is a valid yaml"
+else
+    cat ERROR 
+    bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
+    bashio::exit.nok
+fi
 
-# Create the config file
-CONFIGSOURCE="/config/enedisgateway2mqtt/enedisgateway2mqtt.conf" #file
-mkdir -p "$(dirname "${CONFIGSOURCE}")"                           #create dir
-touch ${CONFIGSOURCE}                                             #create file
-
-##########################
-# Read all addon options #
-##########################
-bashio::log.info "All variables defined in the addon will be exported to the config file located in /config/enedisgateway2mqtt"
-
-# Get the default keys from the original file
-JSONSOURCE="/data/options.json"
-mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
-# For all keys in options.json
-for KEYS in ${arr[@]}; do
-    # if the custom_var field is used
-    if [ "${KEYS}" = "custom_var" ]; then
-        VALUES=$(jq .$KEYS ${JSONSOURCE}) # Get list of custom elements
-        VALUES=${VALUES:1:-1}             # Remove first and last ""
-        for SUBKEYS in ${VALUES//,/ }; do
-            [[ ! $SUBKEYS =~ ^.+[=].+$ ]] && bashio::log.warning "Your custom_var field $SUBKEYS does not follow the structure KEY=\"text\",KEY2=\"text2\" it will be ignored" && continue || true
-            # Remove the key if already existing
-            sed -i "/$(echo "${SUBKEYS%%=*}")/ d" ${CONFIGSOURCE}
-            # Remove apostrophes
-            SUBKEYS=${SUBKEYS//[\"\']/}
-            # Write it in the config file
-            echo ${SUBKEYS} >>${CONFIGSOURCE}
-            # Say it loud
-            # echo "... ${SUBKEYS}"
-        done
-    # If it is a normal field
-    else
-        # Remove if already existing
-        sed -i "/$KEYS/ d" ${CONFIGSOURCE}
-        # Store key
-        KEYS=$(echo "${KEYS}=$(jq .$KEYS ${JSONSOURCE})")
-        # Remove apostrophes
-        KEYS=${KEYS//[\"\']/}
-        # Write it in the config file
-        echo $KEYS >>${CONFIGSOURCE}
-        # Say it loud
-        # echo "... ${KEYS}=$(jq .$KEYS ${JSONSOURCE})"
-    fi
-done
-
-###########################
-# Read all config options #
-###########################
-
-bashio::log.info "Starting the app with the variables in /config/enedisgateway2mqtt"
-
-# For all keys in config file
-for word in $(cat $CONFIGSOURCE); do
-    # Data validation
-    if [[ $word =~ ^.+[=].+$ ]]; then
-        export $word # Export the variable
-        bashio::log.blue "$word"
-    else
-        bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
-        sed -i "/$word/ d" ${CONFIGSOURCE}
-    fi
-done
+# Create symlink
+[ -f /data/config.yaml ] && rm /data/config.yaml
+ln -s $CONFIGSOURCE /data
+echo "Symlink created"
 
 ##############
 # Launch App #
