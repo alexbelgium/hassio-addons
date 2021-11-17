@@ -8,8 +8,14 @@
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 DATABASESOURCE=$(dirname "${CONFIGSOURCE}")/database.sqlite
 
-# Remoce config in data if existing 
-[ -f /data/config.yaml ] && rm /data/config.yaml
+# Make sure folder exist
+mkdir -p "$(dirname "${CONFIGSOURCE}")"
+mkdir -p "$(dirname "${DATABASESOURCE}")"
+
+# Use existing config if present
+if [ -f /data/config.yaml ]; then
+mv /data/config.yaml $(dirname "${CONFIGSOURCE}")
+fi
 
 # Check if config file is there, or create one from template
 if [ -f $CONFIGSOURCE ]; then
@@ -27,12 +33,16 @@ if [ -f $CONFIGSOURCE ]; then
     fi
 else
     # Create symlink for addon to create config
-    mkdir -p "$(dirname "${CONFIGSOURCE}")"
     touch ${CONFIGSOURCE}
     ln -s $CONFIGSOURCE /data
     rm $CONFIGSOURCE
     # Need to restart
     bashio::log.fatal "Config file not found. The addon will create a new one, then stop. Please customize the file in $CONFIGSOURCE before restarting."
+fi
+
+# Use existing database if present
+if [ -f /data/database.sqlite ]; then
+mv /data/database.sqlite $(dirname "${DATABASESOURCE}")
 fi
 
 # Check if database is here or create symlink
@@ -41,7 +51,6 @@ if [ -f $DATABASESOURCE ]; then
     bashio::log.info "Using database file found in $DATABASESOURCE"
 else
     # Create symlink for addon to create database
-    mkdir -p "$(dirname "${DATABASESOURCE}")"
     touch ${DATABASESOURCE}
     ln -s $DATABASESOURCE /data
     rm $DATABASESOURCE
