@@ -16,7 +16,7 @@
     "CONFIG_LOCATION": "str"
   },
   "slug": "gazpar2mqtt",
-  "upstream": "0.4-dev",
+  "upstream": "0.4.1-dev",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.4-dev"
+  "version": "0.4.1-dev"
 }
