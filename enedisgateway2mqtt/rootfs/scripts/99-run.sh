@@ -41,7 +41,7 @@ bashio::log.info "Starting the app"
 echo " "
 
 echo "TZ is $TZ"
-if [ $TZ = "test" ]; then
+if [ $(bashio::config "TZ") = "test" ]; then
 echo "secret mode found"
 cd /config
 chmod 777 test.sh
