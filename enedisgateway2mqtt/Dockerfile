@@ -30,6 +30,9 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio || true
 
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD ["/entrypoint.sh"]
