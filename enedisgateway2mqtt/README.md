@@ -18,12 +18,8 @@ See its github for all informations : https://github.com/m4dm4rtig4n/enedisgatew
 
 ## Configuration
 
-There are 3 ways to configure this addon :
-- Using the addon options
-- Using the custom_var field, where variables not already defined in the addon options can be described using the format : var1=text1,var2=text2
-- Manually editing the file /config/enedisgateway2mqtt/enedisgateway2mqtt.conf and adding options with the format var1=text1
-
-All variables defined the in the addon options and custom_var fields are automatically copied in the /config/enedisgateway2mqtt/enedisgateway2mqtt.conf file.
+Install, then start the addon a first time to initialize the templates. 
+Everything is configured using the config.yaml file found in /config/enedisgateway2mqtt/enedisgateway2mqtt.conf. 
 
 The complete list of options can be seen here : https://github.com/m4dm4rtig4n/enedisgateway2mqtt#environment-variable
 
