@@ -16,7 +16,6 @@ for KEYS in ${arr[@]}; do
         # export key
         VALUE=$(jq .$KEYS ${JSONSOURCE})
         export ${KEYS}=${VALUE:1:-1}
-        export $(echo "${KEYS}=$(jq .$KEYS ${JSONSOURCE})")
 done 
 
 ################
