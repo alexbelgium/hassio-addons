@@ -20,8 +20,8 @@ fi
 
 # Check if config file is there, or create one from template
 if [ -f $CONFIGSOURCE ]; then
-    # Create symlink kg not existing yet
-    [ ! -f /data/config.yaml ] && ln -s $CONFIGSOURCE /data
+    # Create symlink if not existing yet
+    [ ! -L /data/config.yaml ] && ln -s $CONFIGSOURCE /data
     bashio::log.info "Using config file found in $CONFIGSOURCE"
     
     # Check if yaml is valid
@@ -51,8 +51,8 @@ fi
 
 # Check if database is here or create symlink
 if [ -f $DATABASESOURCE ]; then
-    # Create symlink kg not existing yet
-    [ ! -f /data/enedisgateway.db ] && ln -s ${DATABASESOURCE} /data
+    # Create symlink if not existing yet
+    [ ! -L /data/enedisgateway.db ] && ln -s ${DATABASESOURCE} /data
     bashio::log.info "Using database file found in $DATABASESOURCE"
 else
    # Create symlink for addon to create database
