@@ -13,7 +13,7 @@ mkdir -p "$(dirname "${CONFIGSOURCE}")"
 mkdir -p "$(dirname "${DATABASESOURCE}")"
 
 # Use existing config if present
-if [ -e /data/config.yaml ]; then
+if [ -f /data/config.yaml ] && [ ! -L /data/config.yaml ]; then
 [ ! -f $CONFIGSOURCE ] && mv /data/config.yaml $(dirname "${CONFIGSOURCE}") \
 || mv /data/config.yaml /data/config2.yaml
 fi
@@ -43,7 +43,7 @@ else
 fi
 
 # Use existing database if present
-if [ -e /data/enedisgateway.db ]; then
+if [ -f /data/enedisgateway.db ] && [ ! -L /data/enedisgateway.db ]; then
 [ ! -f $DATABASESOURCE ] && mv /data/enedisgateway.db $(dirname "${DATABASESOURCE}")
 [ -f $DATABASESOURCE ] && mv /data/enedisgateway.db /data/enedisgateway2.db
 fi
