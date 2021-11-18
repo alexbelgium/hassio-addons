@@ -71,6 +71,7 @@ if bashio::config.has_value "TZ"; then
         ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
     else
     bashio::log.warning "Timezone $TZ is invalid, it will be kept to default value of $(cat /etc/timezone)"
+    fi
 fi
 
 ##############
