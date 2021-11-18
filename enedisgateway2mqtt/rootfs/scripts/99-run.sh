@@ -52,7 +52,7 @@ fi
 # Check if database is here or create symlink
 if [ -f $DATABASESOURCE ]; then
     # Create symlink if not existing yet
-    [ ! -L /data/enedisgateway.db ] && ln -sf ${DATABASESOURCE} /data
+    [ ! -L /data/enedisgateway.db ] && ln -sf ${DATABASESOURCE} /data && echo "creating symlink"
     bashio::log.info "Using database file found in $DATABASESOURCE"
 else
    # Create symlink for addon to create database
