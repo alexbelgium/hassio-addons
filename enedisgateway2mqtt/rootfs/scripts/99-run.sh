@@ -44,8 +44,8 @@ fi
 
 # Use existing database if present
 if [ -e /data/enedisgateway.db ]; then
-[ ! -f $DATABASESOURCE ] && mv /data/enedisgateway.db $(dirname "${DATABASESOURCE}") \
-|| mv /data/enedisgateway.db /data/enedisgateway2.db
+[ ! -f $DATABASESOURCE ] && mv /data/enedisgateway.db $(dirname "${DATABASESOURCE}")
+[ -f $DATABASESOURCE ] && mv /data/enedisgateway.db /data/enedisgateway2.db
 fi
 
 # Check if database is here or create symlink
