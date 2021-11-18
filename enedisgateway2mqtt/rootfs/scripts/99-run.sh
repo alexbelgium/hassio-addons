@@ -61,14 +61,21 @@ else
    rm $DATABASESOURCE
 fi
 
+################
+# Set timezone #
+################
+if bashio::config.has_value "TZ"; then
+    TZ=$(bashio::config "TZ")
+    bashio::log.info "Timezone set to $TZ"
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+fi
+
 ##############
 # Launch App #
 ##############
 echo " "
 bashio::log.info "Starting the app"
 echo " "
-
-export TZ=$(bashio::config "TZ")
 
 # Test mode
 if [ $TZ = "test" ]; then
