@@ -12,10 +12,10 @@ DATABASESOURCE="$(dirname "${CONFIGSOURCE}")/enedisgateway.db"
 mkdir -p "$(dirname "${CONFIGSOURCE}")"
 mkdir -p "$(dirname "${DATABASESOURCE}")"
 
-# Use existing config if present
+# Check absence of config file
 if [ -f /data/config.yaml ] && [ ! -L /data/config.yaml ]; then
-[ ! -f $CONFIGSOURCE ] && mv /data/config.yaml $(dirname "${CONFIGSOURCE}") \
-|| mv /data/config.yaml /data/config2.yaml
+    bashio::log.warning "A current config was found in /data, it is backuped to $(dirname ${CONFIGSOURCE}).bak"
+    mv /data/config.yaml $CONFIGSOURCE.bak
 fi
 
 # Check if config file is there, or create one from template
@@ -43,10 +43,10 @@ else
     bashio::log.fatal "Config file not found. The addon will create a new one, then stop. Please customize the file in $CONFIGSOURCE before restarting."
 fi
 
-# Use existing database if present
+# Check absence of database file
 if [ -f /data/enedisgateway.db ] && [ ! -L /data/enedisgateway.db ]; then
-[ ! -f $DATABASESOURCE ] && mv /data/enedisgateway.db $(dirname "${DATABASESOURCE}")
-[ -f $DATABASESOURCE ] && mv /data/enedisgateway.db /data/enedisgateway2.db
+    bashio::log.warning "A current database was found in /data, it is backuped to $(dirname "${DATABASESOURCE}").bak"
+    mv /data/enedisgateway.db $DATABASESOURCE.bak
 fi
 
 # Check if database is here or create symlink
