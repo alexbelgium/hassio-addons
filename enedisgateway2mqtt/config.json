@@ -13,5 +13,5 @@
   "slug": "enedisgateway2mqtt",
   "upstream": "0.7.3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.7.3"
+  "version": "0.7.3-2"
 }
