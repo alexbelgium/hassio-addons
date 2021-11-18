@@ -11,7 +11,8 @@
   ],
   "name": "Enedisgateway2mqtt",
   "options": {
-    "CONFIG_LOCATION": "/config/enedisgateway2mqtt/config.yaml"
+    "CONFIG_LOCATION": "/config/enedisgateway2mqtt/config.yaml",
+    "TZ": "Europe/Paris"
   },
   "schema": {
     "CONFIG_LOCATION": "str",
