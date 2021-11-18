@@ -25,14 +25,14 @@ if [ -f $CONFIGSOURCE ]; then
     bashio::log.info "Using config file found in $CONFIGSOURCE"
     
     # Check if yaml is valid
-    yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR || EXIT_CODE=$?
-    if [ $EXIT_CODE = 0 ]; then
-      echo "Config file is a valid yaml"
-    else
-      cat ERROR 
-      bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
-      bashio::exit.nok
-    fi
+#    yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR || EXIT_CODE=$?
+#    if [ $EXIT_CODE = 0 ]; then
+ #     echo "Config file is a valid yaml"
+ #   else
+#      cat ERROR 
+#      bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
+#      bashio::exit.nok
+#    fi
 else
     # Create symlink for addon to create config
     touch ${CONFIGSOURCE}
