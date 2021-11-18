@@ -43,16 +43,13 @@ else
     bashio::log.fatal "Config file not found. The addon will create a new one, then stop. Please customize the file in $CONFIGSOURCE before restarting."
 fi
 
-# Check absence of database file
-if [ -f /data/enedisgateway.db ] && [ ! -L /data/enedisgateway.db ]; then
-    bashio::log.warning "A current database was found in /data, it is backuped to ${DATABASESOURCE}.bak"
-    mv /data/enedisgateway.db $DATABASESOURCE.bak
-fi
+# Remove previous link or file
+[ -f /data/enedisgateway.db ] && rm /data/enedisgateway.db
 
 # Check if database is here or create symlink
 if [ -f $DATABASESOURCE ]; then
     # Create symlink if not existing yet
-    [ ! -L /data/enedisgateway.db ] && ln -sf ${DATABASESOURCE} /data && echo "creating symlink"
+    ln -sf ${DATABASESOURCE} /data && echo "creating symlink"
     bashio::log.info "Using database file found in $DATABASESOURCE"
 else
    # Create symlink for addon to create database
