@@ -1,13 +1,13 @@
 #!/usr/bin/with-contenv bash
 
 #create folders
-mkdir -p
+mkdir -p \
 	/share/nextcloud \
 	/data/config/nextcloud/config \
 	/data/config/nextcloud/data
 	
 #permissions
-chown abc:abc
+chown abc:abc \
 	/share/nextcloud \
 	/data/config/nextcloud/config \
 	/data/config/nextcloud/data
@@ -15,5 +15,5 @@ chown abc:abc
 chown -R abc:abc  \
 	/var/lib/nginx
 	
-rm -r /data/config/www/nextcloud/assets
+rm -r /data/config/www/nextcloud/assets &>/dev/null
 chmod -R 777 /data/config
