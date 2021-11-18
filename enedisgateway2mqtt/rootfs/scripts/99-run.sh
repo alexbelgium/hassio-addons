@@ -7,7 +7,7 @@ EXIT_CODE=0
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-DATABASESOURCE=$(dirname "${CONFIGSOURCE}")/database.sqlite
+DATABASESOURCE="$(dirname "${CONFIGSOURCE}")/enedisgateway.db"
 
 # Make sure folder exist
 mkdir -p "$(dirname "${CONFIGSOURCE}")"
@@ -43,21 +43,21 @@ else
 fi
 
 # Use existing database if present
-#if [ -e /data/database.sqlite ]; then
-#[ ! -f $DATABASESOURCE ] && mv /data/database.sqlite $(dirname "${DATABASESOURCE}") \
-#|| mv /data/database.sqlite /data/database2.sqlite
-#fi
+if [ -e /data/enedisgateway.db ]; then
+[ ! -f $DATABASESOURCE ] && mv /data/enedisgateway.db $(dirname "${DATABASESOURCE}") \
+|| mv /data/enedisgateway.db /data/enedisgateway2.db
+fi
 
 # Check if database is here or create symlink
-#if [ -f $DATABASESOURCE ]; then
-#    ln -s ${DATABASESOURCE} /data
-#    bashio::log.info "Using database file found in $DATABASESOURCE"
-#else
- #   # Create symlink for addon to create database
- #   touch ${DATABASESOURCE}
- #   ln -s $DATABASESOURCE /data
-#    rm $DATABASESOURCE
-#fi
+if [ -f $DATABASESOURCE ]; then
+    ln -s ${DATABASESOURCE} /data
+    bashio::log.info "Using database file found in $DATABASESOURCE"
+else
+   # Create symlink for addon to create database
+   touch ${DATABASESOURCE}
+   ln -s $DATABASESOURCE /data
+   rm $DATABASESOURCE
+fi
 
 ##############
 # Launch App #
