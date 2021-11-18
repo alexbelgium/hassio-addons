@@ -7,7 +7,6 @@ ARG BASHIO_VERSION=0.13.1
 # Copy root filesystem
 COPY rootfs /
 VOLUME [ "/config" ]
-ENV TZ=Europe/Paris
 
 RUN \
     ################
