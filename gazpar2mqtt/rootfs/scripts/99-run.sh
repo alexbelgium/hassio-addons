@@ -21,6 +21,7 @@ else
 fi
 
 # Check if yaml is valid
+EXIT_CODE=0
 yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR || EXIT_CODE=$?
 if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
