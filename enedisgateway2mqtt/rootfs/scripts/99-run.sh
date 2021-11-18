@@ -61,19 +61,6 @@ else
    rm $DATABASESOURCE
 fi
 
-################
-# Set timezone #
-################
-if bashio::config.has_value "TZ"; then
-    TZ=$(bashio::config "TZ")
-    if [ -f /usr/share/zoneinfo/$TZ ]; then
-        bashio::log.info "Timezone set from $(cat /etc/timezone) to $TZ"
-        ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-    else
-    bashio::log.warning "Timezone $TZ is invalid, it will be kept to default value of $(cat /etc/timezone)"
-    fi
-fi
-
 ##############
 # Launch App #
 ##############
