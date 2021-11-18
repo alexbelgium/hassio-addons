@@ -3,7 +3,6 @@
 ##################
 # INITIALIZATION #
 ##################
-EXIT_CODE=0
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
@@ -25,6 +24,7 @@ if [ -f $CONFIGSOURCE ]; then
     bashio::log.info "Using config file found in $CONFIGSOURCE"
     
     # Check if yaml is valid
+    EXIT_CODE=0 
     yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR || EXIT_CODE=$?
     if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
