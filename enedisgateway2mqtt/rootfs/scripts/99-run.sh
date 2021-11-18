@@ -14,7 +14,7 @@ mkdir -p "$(dirname "${DATABASESOURCE}")"
 
 # Check absence of config file
 if [ -f /data/config.yaml ] && [ ! -L /data/config.yaml ]; then
-    bashio::log.warning "A current config was found in /data, it is backuped to $(dirname ${CONFIGSOURCE}).bak"
+    bashio::log.warning "A current config was found in /data, it is backuped to ${CONFIGSOURCE}.bak"
     mv /data/config.yaml $CONFIGSOURCE.bak
 fi
 
@@ -45,7 +45,7 @@ fi
 
 # Check absence of database file
 if [ -f /data/enedisgateway.db ] && [ ! -L /data/enedisgateway.db ]; then
-    bashio::log.warning "A current database was found in /data, it is backuped to $(dirname "${DATABASESOURCE}").bak"
+    bashio::log.warning "A current database was found in /data, it is backuped to ${DATABASESOURCE}.bak"
     mv /data/enedisgateway.db $DATABASESOURCE.bak
 fi
 
