@@ -21,7 +21,7 @@ fi
 # Check if config file is there, or create one from template
 if [ -f $CONFIGSOURCE ]; then
     # Create symlink if not existing yet
-    [ ! -L /data/config.yaml ] && ln -s $CONFIGSOURCE /data
+    [ ! -L /data/config.yaml ] && ln -sf $CONFIGSOURCE /data
     bashio::log.info "Using config file found in $CONFIGSOURCE"
     
     # Check if yaml is valid
@@ -37,7 +37,7 @@ if [ -f $CONFIGSOURCE ]; then
 else
     # Create symlink for addon to create config
     touch ${CONFIGSOURCE}
-    ln -s $CONFIGSOURCE /data
+    ln -sf $CONFIGSOURCE /data
     rm $CONFIGSOURCE
     # Need to restart
     bashio::log.fatal "Config file not found. The addon will create a new one, then stop. Please customize the file in $CONFIGSOURCE before restarting."
@@ -52,12 +52,12 @@ fi
 # Check if database is here or create symlink
 if [ -f $DATABASESOURCE ]; then
     # Create symlink if not existing yet
-    [ ! -L /data/enedisgateway.db ] && ln -s ${DATABASESOURCE} /data
+    [ ! -L /data/enedisgateway.db ] && ln -sf ${DATABASESOURCE} /data
     bashio::log.info "Using database file found in $DATABASESOURCE"
 else
    # Create symlink for addon to create database
    touch ${DATABASESOURCE}
-   ln -s $DATABASESOURCE /data
+   ln -sf $DATABASESOURCE /data
    rm $DATABASESOURCE
 fi
 
