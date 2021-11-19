@@ -64,9 +64,10 @@ function parse_yaml {
 # Get variables and export
 bashio::log.info "Starting the app with the variables in /config/gazpar2mqtt"
 for word in $(parse_yaml "$CONFIGSOURCE" ""); do
+    # Clean output
+    word=${word//[\"\']/}
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
-        word=${word//[\"\']/}
         export $word # Export the variable
         bashio::log.blue "$word"
     else
