@@ -32,7 +32,9 @@ RUN apt-get update \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     && sed -i "s|/config|/config/jellyfin|g" /etc/services.d/jellyfin/run \
     && sed -i "s|/config|/config/jellyfin|g" /etc/cont-init.d/10-adduser \
-    && sed -i "s|/config|/config/jellyfin|g" /etc/cont-init.d/30-config || true
+    && sed -i "s|/config|/config/jellyfin|g" /etc/cont-init.d/30-config \
+    && chmod g+rw /dev/video10 /dev/video11 /dev/video12 /dev/video13 /dev/video14 /dev/video15 /dev/video16 \
+    || true
 
 # copy local files
 COPY root/ /
