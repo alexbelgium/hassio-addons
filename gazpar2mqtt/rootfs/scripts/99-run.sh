@@ -26,11 +26,11 @@ fi
 
 # Check if yaml is valid
 EXIT_CODE=0
-yamllint -d relaxed --no-warnings $CONFIGSOURCE &> ERROR || EXIT_CODE=$?
+yamllint -d relaxed --no-warnings $CONFIGSOURCE &>ERROR || EXIT_CODE=$?
 if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
 else
-    cat ERROR 
+    cat ERROR
     bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
     bashio::exit.nok
 fi
@@ -66,7 +66,7 @@ bashio::log.info "Starting the app with the variables in /config/gazpar2mqtt"
 for word in $(parse_yaml "$CONFIGSOURCE" ""); do
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
-        $word=${word//\"}
+        $word=${word//[\"\']/}
         export $word # Export the variable
         bashio::log.blue "$word"
     else
