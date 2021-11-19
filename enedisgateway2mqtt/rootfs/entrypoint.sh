@@ -15,13 +15,13 @@ mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
 for KEYS in ${arr[@]}; do
   # export key
   VALUE=$(jq .$KEYS ${JSONSOURCE})
-  export ${KEYS}=${VALUE//[\"\']/}
+  export ${KEYS}=${VALUE//[\"\']/} &>/dev/null
 done
 
 ################
 # Set timezone #
 ################
-if [ ! -z "TZ" ]; then
+if [ ! -z "TZ" ] && [ -f /etc/localtime ]; then
   if [ -f /usr/share/zoneinfo/$TZ ]; then
     echo "Timezone set from $(cat /etc/timezone) to $TZ"
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ >/etc/timezone
