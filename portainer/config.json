@@ -1,10 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armhf",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armhf", "armv7"],
   "description": "Manage your Docker environment with ease",
   "docker_api": true,
   "hassio_api": true,
@@ -13,10 +8,7 @@
   "ingress_port": 1337,
   "ingress_stream": true,
   "init": false,
-  "map": [
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["share:rw", "ssl"],
   "name": "Portainer",
   "options": {
     "ssl": false,
@@ -24,7 +16,7 @@
     "keyfile": "privkey.pem",
     "password": "default"
   },
-  "panel_icon": "mdi:docker",
+  "panel_icon": "mdi:portainer",
   "ports": {
     "9099/tcp": 9000,
     "8000/tcp": null
