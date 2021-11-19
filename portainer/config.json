@@ -16,7 +16,7 @@
     "keyfile": "privkey.pem",
     "password": "default"
   },
-  "panel_icon": "mdi:portainer",
+  "panel_icon": "mdi:docker",
   "ports": {
     "9099/tcp": 9000,
     "8000/tcp": null
