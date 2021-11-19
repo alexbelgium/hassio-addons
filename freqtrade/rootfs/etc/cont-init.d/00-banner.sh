@@ -3,9 +3,9 @@
 bashio::log.warning "Minimal (advised) system requirements: 2GB RAM, 1GB disk space, 2vCPU"
 
 # ==============================================================================
-# Home Assistant Community Add-on: Base Images
 # Displays a simple add-on banner on startup
 # ==============================================================================
+
 if bashio::supervisor.ping; then
     bashio::log.blue \
     '-----------------------------------------------------------'
@@ -34,7 +34,7 @@ if bashio::supervisor.ping; then
     bashio::log.blue \
     ' Please, share the above information when looking for help'
     bashio::log.blue \
-    ' or support in, e.g., GitHub, forums or the Discord chat.'
+    ' or support in, e.g., GitHub, forums'
     bashio::log.green \
     ' https://github.com/alexbelgium/hassio-addons'
     bashio::log.blue \

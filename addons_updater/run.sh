@@ -6,35 +6,35 @@
 
 if bashio::supervisor.ping; then
   bashio::log.blue \
-    '-----------------------------------------------------------'
+  '-----------------------------------------------------------'
   bashio::log.blue " Add-on: $(bashio::addon.name)"
   bashio::log.blue " $(bashio::addon.description)"
   bashio::log.blue \
-    '-----------------------------------------------------------'
+  '-----------------------------------------------------------'
 
   bashio::log.blue " Add-on version: $(bashio::addon.version)"
   if bashio::var.true "$(bashio::addon.update_available)"; then
     bashio::log.magenta ' There is an update available for this add-on!'
     bashio::log.magenta \
-      " Latest add-on version: $(bashio::addon.version_latest)"
+    " Latest add-on version: $(bashio::addon.version_latest)"
     bashio::log.magenta ' Please consider upgrading as soon as possible.'
   else
     bashio::log.green ' You are running the latest version of this add-on.'
   fi
 
   bashio::log.blue " System: $(bashio::info.operating_system)" \
-    " ($(bashio::info.arch) / $(bashio::info.machine))"
+  " ($(bashio::info.arch) / $(bashio::info.machine))"
   bashio::log.blue " Home Assistant Core: $(bashio::info.homeassistant)"
   bashio::log.blue " Home Assistant Supervisor: $(bashio::info.supervisor)"
 
   bashio::log.blue \
-    '-----------------------------------------------------------'
+  '-----------------------------------------------------------'
   bashio::log.blue \
-    ' Please, share the above information when looking for help'
+  ' Please, share the above information when looking for help'
   bashio::log.blue \
-    ' or support in, e.g., GitHub, forums or the Discord chat.'
+  ' or support in, e.g., GitHub, forums'
   bashio::log.blue \
-    '-----------------------------------------------------------'
+  '-----------------------------------------------------------'
 fi
 
 ##########
@@ -87,7 +87,7 @@ for addons in $(bashio::config "addon|keys"); do
     cd "/data/$BASENAME"
     git pull --rebase &>/dev/null || git reset --hard &>/dev/null
     git pull --rebase &>/dev/null
-  fi 
+  fi
 
   #Define the folder addon
   LOGINFO="... $SLUG : checking slug exists in repo" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
@@ -97,46 +97,48 @@ for addons in $(bashio::config "addon|keys"); do
   LOGINFO="... $SLUG : get current version" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
   CURRENT=$(jq .upstream config.json) || bashio::log.error "$SLUG addon upstream tag not found in config.json. Exiting."
 
-if [ $SOURCE = "dockerhub" ]; then
-# Use dockerhub as upstream
-DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}") 
-DOCKERHUB_IMAGE=$(echo $UPSTREAM | cut -d "/" -f2) 
-LASTVERSION=$(curl -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=1000" | \
-	jq '.results | .[] | .name' -r | \
-	sed 's/latest//' | \
-	sort -V | \
-	tail -n 1) 
+  if [ $SOURCE = "dockerhub" ]; then
+    # Use dockerhub as upstream
+    DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
+    DOCKERHUB_IMAGE=$(echo $UPSTREAM | cut -d "/" -f2)
+    LASTVERSION=$(
+      curl -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=1000" | \
+      jq '.results | .[] | .name' -r | \
+      sed 's/latest//' | \
+      sort -V | \
+      tail -n 1
+    )
 
-else
-# Use github as upstream
-  #Prepare tag flag
-  if [ ${FULLTAG} = true ]; then
-    LOGINFO="... $SLUG : fulltag is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    FULLTAG="--format tag"
   else
-    LOGINFO="... $SLUG : fulltag is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    FULLTAG=""
+    # Use github as upstream
+    #Prepare tag flag
+    if [ ${FULLTAG} = true ]; then
+      LOGINFO="... $SLUG : fulltag is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+      FULLTAG="--format tag"
+    else
+      LOGINFO="... $SLUG : fulltag is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+      FULLTAG=""
+    fi
+
+    #Prepare tag flag
+    if [ ${HAVINGASSET} = true ]; then
+      LOGINFO="... $SLUG : asset_only tag is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+      HAVINGASSET="--having-asset"
+    else
+      LOGINFO="... $SLUG : asset_only is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+      HAVINGASSET=""
+    fi
+
+    #If beta flag, select beta version
+    if [ ${BETA} = true ]; then
+      LOGINFO="... $SLUG : beta is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+      LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET) || break
+    else
+      LOGINFO="... $SLUG : beta is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
+      LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET) || break
+    fi
+
   fi
-
-  #Prepare tag flag
-  if [ ${HAVINGASSET} = true ]; then
-    LOGINFO="... $SLUG : asset_only tag is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    HAVINGASSET="--having-asset"
-  else
-    LOGINFO="... $SLUG : asset_only is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    HAVINGASSET=""
-  fi
-
-  #If beta flag, select beta version
-  if [ ${BETA} = true ]; then
-    LOGINFO="... $SLUG : beta is on" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET) || break
-  else
-    LOGINFO="... $SLUG : beta is off" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $FULLTAG $HAVINGASSET) || break
-  fi 
-
-fi
 
   # Add brackets
   LASTVERSION='"'${LASTVERSION}'"'
