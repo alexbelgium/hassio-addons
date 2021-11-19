@@ -23,6 +23,9 @@
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Jellyfin_test DO NOT USE",
   "host_dbus": true,
+  "ingress": true,
+  "ingress_port": 8099,
+  "panel_icon": "mdi:jellyfin",
   "options": {
     "PUID": 0,
     "PGID": 0
