@@ -1,5 +1,9 @@
 #!/usr/bin/with-contenv bash
 
+echo "chmod of devices"
+chmod g+rw /dev/video10 /dev/video11 /dev/video12 /dev/video13 /dev/video14 /dev/video15 /dev/video16
+
+
 if [ ! -d /jellyfin ]; then
   echo "Creating /jellyfin"
   mkdir -p /jellyfin
