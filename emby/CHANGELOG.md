@@ -1,4 +1,7 @@
 
+## 4.7.0.18 (20-11-2021)
+- Update to latest version from linuxserver/docker-emby
+
 ## 4.7.0.17 (08-11-2021)
 - Update to latest version from linuxserver/docker-emby
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example

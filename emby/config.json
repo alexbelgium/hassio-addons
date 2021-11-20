@@ -1,6 +1,11 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
   "backup_exclude": [
     "*/cache/",
     "*/logs/",
@@ -34,7 +39,12 @@
     "/dev/sdf2",
     "/dev/sdg2"
   ],
-  "map": ["config:rw", "share:rw", "media:rw", "ssl:rw"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl:rw"
+  ],
   "name": "Emby NAS",
   "options": {
     "PUID": 0,
@@ -53,7 +63,10 @@
     "7359/udp": "udp server discover (optional)",
     "1900/udp": "dlna (optional)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
@@ -67,8 +80,8 @@
   },
   "slug": "emby_nas",
   "startup": "services",
-  "upstream": "4.7.0.17",
+  "upstream": "4.7.0.18",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.7.0.17",
+  "version": "4.7.0.18",
   "webui": "http://[HOST]:[PORT:8096]"
 }
