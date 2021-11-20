@@ -20,7 +20,7 @@
     "TZ": "str?"
   },
   "slug": "gazpar2mqtt",
-  "upstream": "0.4.3",
+  "upstream": "0.4.4-dev",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.4.3"
+  "version": "0.4.4-dev"
 }
