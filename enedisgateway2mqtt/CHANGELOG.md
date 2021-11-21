@@ -1,4 +1,7 @@
 
+## 0.7.7-dev (21-11-2021)
+- Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
+
 ## 0.7.5 (18-11-2021)
 - Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
 - Allows setting TZ
