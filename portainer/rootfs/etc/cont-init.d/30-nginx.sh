@@ -9,6 +9,7 @@ declare portainer_protocol=http
 
 # Generate Ingress configuration
 if bashio::config.true 'ssl'; then
+bashio::config.require.ssl
 portainer_protocol=https
 sed -i "s|9000|9443|g" /etc/nginx/includes/upstream.conf
 sed -i "s|9099 default_server|9099 ssl|g" /etc/nginx/templates/ingress.gtpl
