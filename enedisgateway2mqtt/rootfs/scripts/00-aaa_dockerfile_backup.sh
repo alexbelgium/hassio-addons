@@ -3,12 +3,14 @@
 if [ ! -f "/usr/bin/bashio" ]; then
     echo "Bashio does not exist, executing script"
     (
+   # Remove errors on apt-get
+    export DEBIAN_FRONTEND=noninteractive 
     ################
     # Install apps #
     ################
     apt-get clean &&
         apt-get update &&
-        apt-get install -y --no-install-recommends \
+        apt-get install -yq --no-install-recommends \
             jq \
             curl \
             yamllint
