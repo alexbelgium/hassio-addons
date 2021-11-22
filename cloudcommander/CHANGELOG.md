@@ -1,3 +1,6 @@
+
+## 15.9.9 (22-11-2021)
+- Update to latest version from coderaiser/cloudcmd
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 - Allow uploads >16mb
 - Allow mounting local drives in protected mode
