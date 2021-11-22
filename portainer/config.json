@@ -1,5 +1,10 @@
 {
-  "arch": ["aarch64", "amd64", "armhf", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf",
+    "armv7"
+  ],
   "description": "Manage your Docker environment with ease",
   "docker_api": true,
   "hassio_api": true,
@@ -8,7 +13,10 @@
   "ingress_port": 1337,
   "ingress_stream": true,
   "init": false,
-  "map": ["share:rw", "ssl"],
+  "map": [
+    "share:rw",
+    "ssl"
+  ],
   "name": "Portainer",
   "options": {
     "ssl": false,
@@ -33,8 +41,8 @@
   },
   "slug": "portainer",
   "startup": "services",
-  "upstream": "2.9.2",
+  "upstream": "2.9.3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.9.2",
+  "version": "2.9.3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9099]"
 }
