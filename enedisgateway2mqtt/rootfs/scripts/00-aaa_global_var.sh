@@ -32,7 +32,7 @@ fi
 # Set user #
 ############
 
-if [ ! -z "PUID" ] && [ ! -z "GUID"]; then
+if [ ! -z "PUID" ] && [ ! -z "GUID" ]; then
     echo "Custom user defined : $PUID:$GUID"
 PUID=${PUID:-911}
 PGID=${PGID:-911}
