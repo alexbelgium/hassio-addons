@@ -2,7 +2,7 @@
 # If dockerfile failed install manually 
 if [ ! -f "/usr/bin/bashio" ]; then
     echo "Bashio does not exist, executing script"
-
+    (
     ################
     # Install apps #
     ################
@@ -22,7 +22,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
         tar -xzf - --strip 1 -C /tmp/bashio
     mv /tmp/bashio/lib /usr/lib/bashio
     ln -s /usr/lib/bashio/bashio /usr/bin/bashio
-    rm -rf /tmp/bashio
-
+    rm -rf /tmp/bashio 
+   ) >/dev/null
     echo "Bashio installed"
 fi
