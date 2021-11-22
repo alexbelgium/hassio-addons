@@ -16,6 +16,7 @@ export CLOUDCMD_PREFIX
 declare ADDON_PROTOCOL=http
 if bashio::config.true 'ssl'; then
   ADDON_PROTOCOL=https
+  bashio::config.require.ssl
 fi
 
 port=$(bashio::addon.port 80)
