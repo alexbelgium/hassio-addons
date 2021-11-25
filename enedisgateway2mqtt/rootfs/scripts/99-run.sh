@@ -66,6 +66,7 @@ bashio::log.info "Starting the app"
 echo " "
 
 # Test mode
+TZ=$(bashio::config "TZ")
 if [ $TZ = "test" ]; then
   echo "secret mode found, launching script in /config/test.sh"
   cd /config
