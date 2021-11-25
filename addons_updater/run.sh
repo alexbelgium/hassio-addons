@@ -101,7 +101,6 @@ for addons in $(bashio::config "addon|keys"); do
     # Use dockerhub as upstream
     DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
     DOCKERHUB_IMAGE=$(echo $UPSTREAM | cut -d "/" -f2)
-    DOCKERHUBFILTER
     LASTVERSION=$(
       curl -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=1000" | \
       jq '.results | .[] | .name' -r | \
