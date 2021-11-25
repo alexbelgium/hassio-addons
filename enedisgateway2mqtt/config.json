@@ -19,7 +19,7 @@
     "TZ": "str?"
   },
   "slug": "enedisgateway2mqtt",
-  "upstream": "0.7.8-dev",
+  "upstream": "0.7.7",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.7.8-dev"
+  "version": "0.7.7"
 }
