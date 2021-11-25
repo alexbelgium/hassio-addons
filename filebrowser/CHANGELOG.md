@@ -1,3 +1,6 @@
+
+## 2.19.0 (25-11-2021)
+- Update to latest version from hurlenko/filebrowser-docker
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 
 ## 2.18.0 (02-11-2021)
