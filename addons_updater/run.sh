@@ -104,7 +104,7 @@ for addons in $(bashio::config "addon|keys"); do
     LASTVERSION=$(
       curl -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=1000" | \
       jq '.results | .[] | .name' -r | \
-      sed 's/latest//' | \
+      sed 's/latest.*//' | \
       sort -V | \
       tail -n 1
     )
