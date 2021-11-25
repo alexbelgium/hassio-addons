@@ -5,20 +5,20 @@
     "armv7",
     "armhf"
   ],
-  "description": "use Enedis Gateway API to send data in your MQTT Broker (latest channel)",
+  "description": "use Enedis Gateway API to send data in your MQTT Broker (latest-dev channel)",
   "map": [
     "config:rw"
   ],
-  "name": "Enedisgateway2mqtt",
+  "name": "Enedisgateway2mqtt Dev",
   "options": {
-    "CONFIG_LOCATION": "/config/enedisgateway2mqtt/config.yaml",
+    "CONFIG_LOCATION": "/config/enedisgateway2mqtt_dev/config.yaml",
     "TZ": "Europe/Paris"
   },
   "schema": {
     "CONFIG_LOCATION": "str",
     "TZ": "str?"
   },
-  "slug": "enedisgateway2mqtt",
+  "slug": "enedisgateway2mqtt_dev",
   "upstream": "0.7.8-dev",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "0.7.8-dev"
