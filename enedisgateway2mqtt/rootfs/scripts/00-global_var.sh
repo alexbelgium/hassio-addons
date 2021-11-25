@@ -27,15 +27,3 @@ if [ ! -z "TZ" ] && [ -f /etc/localtime ]; then
     echo "WARNING : Timezone $TZ is invalid, it will be kept to default value of $(cat /etc/timezone)"
   fi
 fi
-
-############
-# Set user #
-############
-
-if [ ! -z "PUID" ] && [ ! -z "GUID" ]; then
-    echo "Custom user defined : $PUID:$GUID"
-PUID=${PUID:-911}
-PGID=${PGID:-911}
-groupmod -o -g "$PGID" abc
-usermod -o -u "$PUID" abc
-fi
