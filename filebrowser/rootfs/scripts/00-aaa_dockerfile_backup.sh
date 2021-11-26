@@ -33,6 +33,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ########################################
         mkdir -p -m 777 /config/filebrowser || true
 
-    ) &>/dev/null
-    echo "Bashio installed"
+    ) >/dev/null 2>/aaa && \
+    echo "Bashio installed" | cat /aaa
+
 fi

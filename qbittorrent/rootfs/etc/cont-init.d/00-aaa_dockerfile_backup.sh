@@ -59,6 +59,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
             echo 'WebUI\LocalHostAuth=false' >>/defaults/qBittorrent.conf \
             >>/defaults/qBittorrent.conf
 
-    ) &>/dev/null
-    echo "Bashio installed"
+    ) >/dev/null 2>/aaa && \
+    echo "Bashio installed" | cat /aaa
+
 fi
