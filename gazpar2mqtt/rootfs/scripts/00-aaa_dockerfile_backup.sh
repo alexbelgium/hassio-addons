@@ -9,9 +9,9 @@ if [ ! -f "/usr/bin/bashio" ]; then
         apt-get clean &&
             apt-get update &&
             apt-get install -y --no-install-recommends \
-                jq \
-                curl \
-                yamllint
+        jq \
+        curl \
+        yamllint
 
         ###################
         # Install bashio #
@@ -23,7 +23,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
         mv /tmp/bashio/lib /usr/lib/bashio
         ln -s /usr/lib/bashio/bashio /usr/bin/bashio
         rm -rf /tmp/bashio
-    ) >/dev/null 2>/aaa && \
-    echo "Bashio installed" | cat /aaa
+    ) >/dev/null
 
 fi

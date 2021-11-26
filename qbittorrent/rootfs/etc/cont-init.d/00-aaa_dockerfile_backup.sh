@@ -8,31 +8,31 @@ if [ ! -f "/usr/bin/bashio" ]; then
         # Install apps #
         ################
         apt-get clean \
-            apt-get update \
-            apt-get install -y \
-            jq \
-            curl \
-            cifs-utils \
-            keyutils \
-            samba \
-            smbclient \
-            nginx \
-            coreutils \
-            openvpn
+        apt-get update \
+        apt-get install -y \
+        jq \
+        curl \
+        cifs-utils \
+        keyutils \
+        samba \
+        smbclient \
+        nginx \
+        coreutils \
+        openvpn
         apt-get clean
 
         ##################
         # Install tempio #
         ##################
         curl -L -f -s -o /usr/bin/tempio \
-            "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
-            chmod a+x /usr/bin/tempio
+        "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
+        chmod a+x /usr/bin/tempio
 
         ##################
         # Install bashio #
         ##################
         mkdir -p /tmp/bashio \
-            curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" |
+        curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" |
             tar -xzf - --strip 1 -C /tmp/bashio
         mv /tmp/bashio/lib /usr/lib/bashio
         ln -s /usr/lib/bashio/bashio /usr/bin/bashio
@@ -54,12 +54,10 @@ if [ ! -f "/usr/bin/bashio" ]; then
         sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf
 
         # Remove fixed folders, allows connection to webUI
-        sed '11,13d' /defaults/qBittorrent.conf \ 
-        echo 'WebUI\HostHeaderValidation=false' \
-            echo 'WebUI\LocalHostAuth=false' >>/defaults/qBittorrent.conf \
-            >>/defaults/qBittorrent.conf
+        sed '11,13d' /defaults/qBittorrent.conf
+        echo 'WebUI\HostHeaderValidation=false' >>/defaults/qBittorrent.conf
+        echo 'WebUI\LocalHostAuth=false' >>/defaults/qBittorrent.conf
 
-    ) >/dev/null 2>/aaa && \
-    echo "Bashio installed" | cat /aaa
+    ) >/dev/null
 
 fi

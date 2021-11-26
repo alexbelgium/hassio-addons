@@ -8,10 +8,10 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ################
         apt-get update
         apt-get install -y --no-install-recommends \
-            jq \
-            samba \
-            smbclient \
-            nginx
+        jq \
+        samba \
+        smbclient \
+        nginx
         apt-get -y upgrade cifs-utils
 
         # Allow UID and GID setting
@@ -32,7 +32,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
         mv /tmp/bashio/lib /usr/lib/bashio
         ln -s /usr/lib/bashio/bashio /usr/bin/bashio
         rm -rf /tmp/bashio
-    ) >/dev/null 2>/aaa && \
-    echo "Bashio installed" | cat /aaa
+    ) >/dev/null
 
 fi

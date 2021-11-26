@@ -7,15 +7,15 @@ if [ ! -f "/usr/bin/bashio" ]; then
         # Install apps #
         ################
         apk add --no-cache \
-            curl \
-            jq \
-            bash \
-            cifs-utils \
-            keyutils \
-            samba \
-            samba-client \
-            bind-tools \
-            nginx
+        curl \
+        jq \
+        bash \
+        cifs-utils \
+        keyutils \
+        samba \
+        samba-client \
+        bind-tools \
+        nginx
 
         ###################
         # Install bashio #
@@ -33,7 +33,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ########################################
         mkdir -p -m 777 /config/filebrowser || true
 
-    ) >/dev/null 2>/aaa && \
-    echo "Bashio installed" | cat /aaa
+    ) >/dev/null
 
 fi
