@@ -25,6 +25,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
     mv /tmp/bashio/lib /usr/lib/bashio
     ln -s /usr/lib/bashio/bashio /usr/bin/bashio
     rm -rf /tmp/bashio 
-   ) >/dev/null
+   ) &>/dev/null
     echo "Bashio installed"
 fi
