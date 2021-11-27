@@ -29,7 +29,7 @@ RUN apt-get update \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio l
 
-RUN 
+RUN \
     #################
     # Correct image #
     #################
