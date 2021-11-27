@@ -44,8 +44,7 @@ RUN \
     #&& sed -i '3 a\ export PAPERLESS_OCR_LANGUAGE=$(bashio::config "PAPERLESS_OCR_LANGUAGE")' /etc/services.d/paperless/run \
     #&& sed -i '3 a\ export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE")' /etc/services.d/paperless/run \
     # Change config location
-    && sed -i "s|/config|$PAPERLESS_DATA_DIR|g" /etc/cont-init.d/* \
-    || true
+    && sed -i "s|/config|$PAPERLESS_DATA_DIR|g" /etc/cont-init.d/*
 
 # copy local files
 COPY rootfs/ /
