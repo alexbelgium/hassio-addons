@@ -27,9 +27,9 @@ RUN apt-get update \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio || true
+    && rm -rf /tmp/bashio l
 
-RUN \
+RUN 
     #################
     # Correct image #
     #################
