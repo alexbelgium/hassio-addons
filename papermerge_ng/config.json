@@ -1,0 +1,69 @@
+{
+  "apparmor": true,
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "boot": "auto",
+  "description": "indexes your scanned documents and allows you to easily search for documents and store metadata",
+  "devices": [
+    "/dev/sda1",
+    "/dev/sdb1",
+    "/dev/sdc1",
+    "/dev/sdd1",
+    "/dev/sde1",
+    "/dev/sdf1",
+    "/dev/sdg1",
+    "/dev/sda2",
+    "/dev/sdb2",
+    "/dev/sdc2",
+    "/dev/sdd2",
+    "/dev/sde2",
+    "/dev/sdf2",
+    "/dev/sdg2"
+  ],
+  "environment": {
+    "PUID": "0",
+    "PGID": "0"
+  },
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "config:rw"
+  ],
+  "name": "Paperless NG",
+  "options": {
+    "PUID": 0,
+    "PGID": 0,
+    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
+    "cifsusername": "<username>",
+    "cifspassword": "<password>"
+  },
+  "ports": {
+    "8000/tcp": 8000
+  },
+  "ports_description": {
+    "8000/tcp": "web interface"
+  },
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
+  "schema": {
+    "PUID": "int",
+    "PGID": "int",
+    "TZ": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?"
+  },
+  "slug": "paperless_ng",
+  "upstream": "1.5",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "1.5",
+  "webui": "http://[HOST]:[PORT:8000]"
+} 
