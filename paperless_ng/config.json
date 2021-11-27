@@ -37,10 +37,7 @@
   "name": "Paperless NG",
   "options": {
     "PUID": 0,
-    "PGID": 0,
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
-    "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "PGID": 0
   },
   "ports": {
     "8000/tcp": 8011
