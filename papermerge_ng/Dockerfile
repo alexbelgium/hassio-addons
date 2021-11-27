@@ -33,7 +33,7 @@ RUN apt-get update \
     || true
 
 # copy local files
-COPY root/ /
+COPY rootfs/ /
 
 ### LABELS
 ARG BUILD_ARCH
