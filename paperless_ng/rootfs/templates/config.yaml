@@ -1,1 +1,3 @@
-
+# All env variables that you want to enable, full list in
+PAPERLESS_OCR_LANGUAGE: eng
+PAPERLESS_OCR_MODE: skip
