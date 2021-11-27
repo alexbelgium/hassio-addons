@@ -43,7 +43,7 @@
     "cifspassword": "<password>"
   },
   "ports": {
-    "8000/tcp": 8000
+    "8000/tcp": 8011
   },
   "ports_description": {
     "8000/tcp": "web interface"
