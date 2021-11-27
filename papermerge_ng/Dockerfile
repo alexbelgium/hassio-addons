@@ -5,6 +5,7 @@ FROM ${BUILD_FROM}
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BASHIO_VERSION=0.13.1
+ENV PAPERLESS_DATA_DIR=/config/paperless_ng 
 
 RUN apt-get update \
     \
@@ -23,11 +24,16 @@ RUN apt-get update \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio || true
+    && rm -rf /tmp/bashio \
+    \
+    #################
+    # Correct image #
+    #################
+    && sed -i "s|/config|$PAPERLESS_DATA_DIR|g" /etc/cont-init.d/* \
+    || true
 
 # copy local files
 COPY root/ /
-ENV PAPERLESS_DATA_DIR=/config/paperless_ng
 
 ### LABELS
 ARG BUILD_ARCH
