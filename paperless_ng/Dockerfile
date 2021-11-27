@@ -27,11 +27,21 @@ RUN apt-get update \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio || true
+
+RUN \
     #################
     # Correct image #
     #################
+    # Allow UID and GID setting
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    # Allow external options
+    #&& sed -i 's/bash/bashio/g' /etc/services.d/paperless/run \
+    #&& sed -i '3 a\ export PAPERLESS_OCR_LANGUAGE=$(bashio::config "PAPERLESS_OCR_LANGUAGE")' /etc/services.d/paperless/run \
+    #&& sed -i '3 a\ export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE")' /etc/services.d/paperless/run \
+    # Change config location
     && sed -i "s|/config|$PAPERLESS_DATA_DIR|g" /etc/cont-init.d/* \
     || true
 
