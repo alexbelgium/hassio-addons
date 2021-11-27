@@ -29,6 +29,9 @@ RUN apt-get update \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio l
 
+# copy local files
+COPY rootfs/ /
+
 RUN \
     #################
     # Correct image #
@@ -45,9 +48,6 @@ RUN \
     #&& sed -i '3 a\ export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE")' /etc/services.d/paperless/run \
     # Change config location
     && sed -i "s|/config|$PAPERLESS_DATA_DIR|g" /etc/cont-init.d/* 
-
-# copy local files
-COPY rootfs/ /
 
 ### LABELS
 ARG BUILD_ARCH
