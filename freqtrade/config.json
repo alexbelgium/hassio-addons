@@ -24,8 +24,8 @@
   "privileged": [],
   "schema": {},
   "slug": "freqtrade",
-  "upstream": "2021.10",
+  "upstream": "2021.11",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2021.10",
+  "version": "2021.11",
   "webui": "http://[HOST]:[PORT:80]"
 }
