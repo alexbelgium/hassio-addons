@@ -17,6 +17,7 @@ RUN apt-get update && \
                 keyutils \
                 smbclient \
                 samba \
+                yamllint \
     \
     ##################
     # Install bashio #
