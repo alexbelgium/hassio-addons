@@ -1,0 +1,8 @@
+#Define colors
+red=1
+green=2
+yellow=3
+blue=4
+violet=5
+teal=6
+echo "$(tput setaf $red)ENV exported : $word$(tput sgr0)"

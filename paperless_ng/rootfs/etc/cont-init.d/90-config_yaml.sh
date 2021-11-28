@@ -41,10 +41,10 @@ function parse_yaml {
     local prefix=$2 || local prefix=""
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
-    -e "s| #.*$||g" \
-    -e "s|#.*$||g" \
-    -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+        -e "s| #.*$||g" \
+        -e "s|#.*$||g" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
         awk -F$fs '{
       indent = length($1)/2;
       vname[indent] = $2;
@@ -63,7 +63,8 @@ for word in $(parse_yaml "$CONFIGSOURCE" ""); do
     word=${word//[\"\']/}
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
-        sed -i "1a export $word" /etc/services.d/*/run # Export the variable
+        sed -i "1a export $word" /etc/services.d/*/run                                         # Export the variable
+        blue=4 && sed -i "1a echo \"$(tput setaf $blue)ENV exported : $word$(tput sgr0)\"" aze # Show text in blue
         bashio::log.blue "$word"
     else
         bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
