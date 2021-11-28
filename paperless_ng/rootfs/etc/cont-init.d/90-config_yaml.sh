@@ -21,7 +21,7 @@ else
     cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
     # Need to restart
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
-    bashio::exit.nok
+    # bashio::exit.nok
 fi
 
 # Check if yaml is valid
@@ -32,7 +32,7 @@ if [ $EXIT_CODE = 0 ]; then
 else
     cat ERROR
     bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
-    bashio::exit.nok
+    # bashio::exit.nok
 fi
 
 # Export all yaml entries as env variables
