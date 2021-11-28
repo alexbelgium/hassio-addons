@@ -1,8 +1,5 @@
 #!/usr/bin/env bashio
 
-set +u
-set +e
-
 ##################
 # INITIALIZATION #
 ##################
@@ -66,17 +63,10 @@ for word in $(parse_yaml "$CONFIGSOURCE" ""); do
     word=${word//[\"\']/}
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
-        export $word # Export the variable
+        sed -i "1a export $word" /etc/services.d/*/run # Export the variable
         bashio::log.blue "$word"
     else
         bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
         sed -i "/$word/ d" ${CONFIGSOURCE}
     fi
 done
-
-##############
-# Launch App #
-##############
-echo " "
-bashio::log.info "Starting the app"
-echo " "
