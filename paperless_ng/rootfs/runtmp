@@ -1,7 +1,7 @@
 #!/usr/bin/env bashio
 
-set -e
-set -o pipefail
+set +u
+set +e
 
 ##################
 # INITIALIZATION #
