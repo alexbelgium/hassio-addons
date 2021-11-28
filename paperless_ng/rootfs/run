@@ -15,10 +15,10 @@ else
     # Create folder
     mkdir -p "$(dirname "${CONFIGSOURCE}")"
     # Downloading template
-    TEMPLATESOURCE="/templates/config.yaml"
-    curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
+    #TEMPLATESOURCE="/templates/config.yaml"
+    #curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
     # Placing template in config
-    #cp config.yaml "$(dirname "${CONFIGSOURCE}")"
+    cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
     # Need to restart
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
     bashio::exit.nok
