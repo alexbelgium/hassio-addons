@@ -3,15 +3,14 @@ ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
 # Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BASHIO_VERSION=0.13.1
 ENV PAPERLESS_DATA_DIR=/config/paperless_ng 
 
-RUN apt-get update \
+RUN apt-get update && \
     \
-    && apt-get clean && \
-                    apt-get update && \
-                    apt-get install -y --no-install-recommends \
+       apt-get clean && \
+       apt-get update && \
+       apt-get install -y --no-install-recommends \
                 jq \
                 curl \
                 cifs-utils \
