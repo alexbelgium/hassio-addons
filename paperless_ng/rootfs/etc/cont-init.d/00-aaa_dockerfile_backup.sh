@@ -15,7 +15,8 @@ if [ ! -f "/usr/bin/bashio" ]; then
                 cifs-utils \
                 keyutils \
                 smbclient \
-                samba
+                samba \
+                yamllint
            
 
         ###################
