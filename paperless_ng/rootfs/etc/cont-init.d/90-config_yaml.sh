@@ -64,7 +64,7 @@ for word in $(parse_yaml "$CONFIGSOURCE" ""); do
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
         sed -i "1a export $word" /etc/services.d/*/run                                         # Export the variable
-        blue=4 && sed -i "1a echo \"$(tput setaf $blue)ENV exported : $word$(tput sgr0)\"" aze # Show text in blue
+        sed -i "1a echo \"$(tput setaf 2)... ENV exported : $word$(tput sgr0)\"" /etc/services.d/*/run # Show text in colour
         bashio::log.blue "$word"
     else
         bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
