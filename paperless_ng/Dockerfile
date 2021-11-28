@@ -41,8 +41,8 @@ RUN \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Allow external options
-    && cat /etc/services.d/paperless/run > /runtmp \
-    && cat /runtmp >> /etc/services.d/paperless/run \
+    && cat /etc/services.d/paperless/run >> /runtmp \
+    && cat /runtmp > /etc/services.d/paperless/run \
     #&& sed -i 's/bash/bashio/g' /etc/services.d/paperless/run \
     #&& sed -i '3 a\ export PAPERLESS_OCR_LANGUAGE=$(bashio::config "PAPERLESS_OCR_LANGUAGE")' /etc/services.d/paperless/run \
     #&& sed -i '3 a\ export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE")' /etc/services.d/paperless/run \
