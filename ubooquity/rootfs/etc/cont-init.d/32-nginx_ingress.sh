@@ -13,3 +13,4 @@ declare keyfile
 port=$(bashio::addon.ingress_port)
 sed -i "s|%%port%%|$port|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%interface%%|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ingress.conf
+bashio::log.info "Ingress enabled"
