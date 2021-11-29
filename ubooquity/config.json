@@ -60,6 +60,6 @@
   "startup": "services",
   "upstream": "2.1.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.2-3",
+  "version": "2.1.2-5",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:2206]/ubooquity/admin"
 }
