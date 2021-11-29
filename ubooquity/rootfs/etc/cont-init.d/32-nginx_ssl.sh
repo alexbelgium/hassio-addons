@@ -9,24 +9,19 @@ declare ingress_interface
 declare ingress_port
 declare keyfile
 
-port=$(bashio::addon.port 80)
-if bashio::var.has_value "${port}"; then
-    bashio::config.require.ssl
+# General values
+port=2205 
+sed -i "s|%%port%%|$port|g" /etc/nginx/servers/ssl.conf
+sed -i "s|%%interface%%|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ssl.conf
 
-    if bashio::config.true 'ssl'; then
+# Ssl values
+if bashio::config.true 'ssl'; then
+        bashio::config.require.ssl
         certfile=$(bashio::config 'certfile')
         keyfile=$(bashio::config 'keyfile')
-
-        mv /etc/nginx/servers/direct-ssl.disabled /etc/nginx/servers/direct.conf
-        sed -i "s/%%certfile%%/${certfile}/g" /etc/nginx/servers/direct.conf
-        sed -i "s/%%keyfile%%/${keyfile}/g" /etc/nginx/servers/direct.conf
-
-    else
-        mv /etc/nginx/servers/direct.disabled /etc/nginx/servers/direct.conf
-    fi
+        sed -i "s|default_server|ssl|g" /etc/nginx/servers/ssl.conf
+        sed -i "7 i ssl_certificate /ssl/$certfile;" /etc/nginx/servers/ssl.conf 
+        sed -i "7 i ssl_certificate_key /ssl/$keyfile;" /etc/nginx/servers/ssl.conf
+        bashio::log.info "Ssl enabled, please use https for connection" 
 fi
 
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
-sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
