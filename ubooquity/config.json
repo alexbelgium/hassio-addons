@@ -30,10 +30,7 @@
     "ssl": false,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "theme": "default",
-    "networkdisks": "//IP/SHARE",
-    "cifsusername": "username",
-    "cifspassword": "folder"
+    "theme": "default"
   },
   "ports": {
     "2205/tcp": 2202,
