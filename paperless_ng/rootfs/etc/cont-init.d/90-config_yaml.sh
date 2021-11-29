@@ -61,17 +61,19 @@ function parse_yaml {
 }
 
 # Get variables and export
-bashio::log.info "Starting the app with the variables in /config/gazpar2mqtt"
+bashio::log.info "Starting the app with the variables in $CONFIGSOURCE"
 for word in $(parse_yaml "$CONFIGSOURCE" ""); do
     # Clean output
     word=${word//[\"\']/}
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
-        sed -i "1a export $word" /etc/services.d/*/run                                                   # Export the variable
-        sed -i "1a echo \"\$(tput setaf 2)... ENV exported : $word\$(tput sgr0)\"" /etc/services.d/*/run # Show text in colour
+        sed -i "1a export $word" /etc/services.d/*/run                                   # Export the variable
+        sed -i "1a echo \$(tput setaf 2)... $word\$(tput setaf 0)" /etc/services.d/*/run # Show text in colour
         bashio::log.blue "$word"
     else
         bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
         sed -i "/$word/ d" ${CONFIGSOURCE}
     fi
+    # Color text
+    sed -i "1a echo \$(tput setaf 2)Exporting ENV variables :\$(tput setaf 0)" /etc/services.d/*/run # Show text in colour
 done
