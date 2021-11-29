@@ -14,11 +14,15 @@ else
     echo "No config file, creating one from template"
     # Create folder
     mkdir -p "$(dirname "${CONFIGSOURCE}")"
-    # Downloading template
-    #TEMPLATESOURCE="/templates/config.yaml"
-    #curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
     # Placing template in config
-    cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
+    if [ -f /templates/config.yaml ]; then
+        # Use available template
+        cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
+    else
+        # Download template
+        TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/config.yaml"
+        curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
+    fi
     # Need to restart
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
     # bashio::exit.nok
@@ -41,10 +45,10 @@ function parse_yaml {
     local prefix=$2 || local prefix=""
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
-        -e "s| #.*$||g" \
-        -e "s|#.*$||g" \
-        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+    -e "s| #.*$||g" \
+    -e "s|#.*$||g" \
+    -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
         awk -F$fs '{
       indent = length($1)/2;
       vname[indent] = $2;
@@ -63,9 +67,9 @@ for word in $(parse_yaml "$CONFIGSOURCE" ""); do
     word=${word//[\"\']/}
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
-        sed -i "1a export $word" /etc/services.d/*/run                                         # Export the variable
-        #sed -i "1a echo "... ENV exported : $word" /etc/services.d/*/run # Show text in colour
-        sed -i "1a echo \"\$(tput setaf 2)... ENV exported : $word \$(tput sgr0)\"" /etc/services.d/*/run # Show text in colour
+        sed -i "1a export $word" /etc/services.d/*/run                                    # Export the variable
+        sed -i "1a echo \"\$(tput sgr0)\"" /etc/services.d/*/run                          # Revert normal color
+        sed -i "1a echo \"\$(tput setaf 2)... ENV exported : $word" /etc/services.d/*/run # Show text in colour
         bashio::log.blue "$word"
     else
         bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"

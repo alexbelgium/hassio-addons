@@ -8,5 +8,3 @@
 
 # EXAMPLE of the format (you need to remove the # for it to become active)
 # TZ: Europe/Paris
-PAPERLESS_OCR_LANGUAGE: eng
-PAPERLESS_OCR_MODE: skip
