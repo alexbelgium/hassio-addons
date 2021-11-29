@@ -38,7 +38,7 @@
   "options": {
     "PUID": 0,
     "PGID": 0, 
-    "CONFIG_LOCATION": "/config/paperless_ng/config.yaml"
+    "CONFIG_LOCATION": "/config/addons_config/paperless_ng/config.yaml"
   },
   "ports": {
     "8000/tcp": 8011
