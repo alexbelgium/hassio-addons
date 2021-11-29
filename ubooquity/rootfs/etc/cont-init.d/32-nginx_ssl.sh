@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bashio
 
-#################
-# NGINX SETTING #
-#################
+###############
+# SSL SETTING #
+###############
 declare port
 declare certfile
 declare ingress_interface
@@ -10,7 +10,7 @@ declare ingress_port
 declare keyfile
 
 # General values
-port=2205 
+port=2205
 sed -i "s|%%port%%|$port|g" /etc/nginx/servers/ssl.conf
 sed -i "s|%%interface%%|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ssl.conf
 
@@ -20,8 +20,7 @@ if bashio::config.true 'ssl'; then
         certfile=$(bashio::config 'certfile')
         keyfile=$(bashio::config 'keyfile')
         sed -i "s|default_server|ssl|g" /etc/nginx/servers/ssl.conf
-        sed -i "7 i ssl_certificate /ssl/$certfile;" /etc/nginx/servers/ssl.conf 
+        sed -i "7 i ssl_certificate /ssl/$certfile;" /etc/nginx/servers/ssl.conf
         sed -i "7 i ssl_certificate_key /ssl/$keyfile;" /etc/nginx/servers/ssl.conf
-        bashio::log.info "Ssl enabled, please use https for connection" 
+        bashio::log.info "Ssl enabled, please use https for connection"
 fi
-

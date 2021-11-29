@@ -4,6 +4,9 @@
   "boot": "auto",
   "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
   "environment": {},
+  "ingress": true,
+  "ingress_stream": true,
+  "panel_icon": "mdi:library",
   "map": ["media:rw", "config:rw", "share:rw", "ssl"],
   "name": "Ubooquity",
   "options": {
