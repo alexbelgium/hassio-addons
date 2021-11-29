@@ -2,6 +2,7 @@
 - Add local drives mounts : used localdisks with the text "sda1, sdb1" according to your needs
 - Add ssl
 - Add ingress
+- Correct custom ui
 
 ## 2.1.2-ls63
 

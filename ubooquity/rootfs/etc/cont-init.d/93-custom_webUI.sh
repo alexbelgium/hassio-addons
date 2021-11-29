@@ -12,15 +12,14 @@ if bashio::config.has_value 'theme'; then
   ### Download WebUI
   case $CUSTOMUI in
   "comixology2")
-    curl -s -S -J -L -o /data/release.zip https://github.com/scooterpsu/Comixology_Ubooquity_2/releases/download/v3.4/comixology2.zip >/dev/null \
-    && unzip -o -q /data/release.zip -d /config/ubooquity/themes/
+    curl -s -S -J -L -o /data/release.zip https://github.com/scooterpsu/Comixology_Ubooquity_2/releases/download/v3.4/comixology2.zip >/dev/null &&
+      unzip -o -q /data/release.zip -d /config/ubooquity/themes/
     ;;
 
-  case $CUSTOMUI in
   "plextheme-master")
-    curl -s -S -J -L -o /data/release.zip https://github.com/FinalAngel/plextheme/archive/master.zip >/dev/null \
-    && unzip -q /data/release.zip -d /config/ubooquity/themes/ \
-#    && mv /config/ubooquity/themes/plextheme-master/ /config/ubooquity/themes/
+    curl -s -S -J -L -o /data/release.zip https://github.com/FinalAngel/plextheme/archive/master.zip >/dev/null &&
+      unzip -q /data/release.zip -d /config/ubooquity/themes/
+    #    && mv /config/ubooquity/themes/plextheme-master/ /config/ubooquity/themes/
     ;;
 
   esac
@@ -30,5 +29,5 @@ if bashio::config.has_value 'theme'; then
 
   ### Set preference
   jq --arg variable $CUSTOMUI '.theme = $variable' /config/ubooquity/preferences.json | sponge /config/ubooquity/preferences.json
-  
+
 fi
