@@ -14,14 +14,10 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
----
-
 [Paperless NG](https://github.com/qbittorrent/qBittorrent) is a cross-platform free and open-source BitTorrent client.
 This addon is based on the docker image from [linuxserver.io](https://www.linuxserver.io/).
 
 ## Configuration
-
----
 
 Options can be configured through two ways :
 - Addon options
@@ -39,8 +35,6 @@ CONFIG_LOCATION : Location of the config.yaml (see below)
 Custom env variables can be added to the config.yaml file referenced in the addon options. Full env variables can be found here : https://github.com/linuxserver/docker-paperless-ng. It must be entered in a valid yaml format, that is verified at launch of the addon.
 
 ## Installation
-
----
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
