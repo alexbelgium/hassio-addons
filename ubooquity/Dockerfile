@@ -4,9 +4,6 @@ ARG BUILD_UPSTREAM="2.1.2"
 FROM ${BUILD_FROM}
 ARG BASHIO_VERSION=0.13.1
 
-# Copy root filesystem
-COPY rootfs / 
-
 # Add bashio
 RUN apk add --no-cache \
     curl \
@@ -23,10 +20,14 @@ RUN apk add --no-cache \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz \
-    \
+    && rm -fr /tmp/bashio.tar.gz
+
+# Copy root filesystem
+COPY rootfs / 
+
+RUN \
     # Set config directory
-    && sed -i 's|config|config/ubooquity|g' /etc/cont-init.d/10-adduser \
+    sed -i 's|config|config/ubooquity|g' /etc/cont-init.d/10-adduser \
     && sed -i 's|config|config/ubooquity|g' /etc/cont-init.d/30-config \
     && sed -i 's|config|config/ubooquity|g' /etc/services.d/ubooquity/run \
     # Allow UID and GID setting
