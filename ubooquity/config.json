@@ -20,11 +20,13 @@
   },
   "ports": {
     "2202/tcp": 2202,
-    "2203/tcp": 2203
+    "2203/tcp": 2203,
+    "2205/tcp": 2205    
   },
   "ports_description": {
     "2202/tcp": "Library page (to expose)",
-    "2203/tcp": "Admin page (local)"
+    "2203/tcp": "Admin page (local)",
+    "2205/tcp": "nginx test"
   },
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
