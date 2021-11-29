@@ -36,7 +36,7 @@
     "addons:rw",
     "backup:rw",
     "share:rw",
-    "ssl"
+    "ssl:rw"
   ],
   "name": "Filebrowser",
   "options": {
