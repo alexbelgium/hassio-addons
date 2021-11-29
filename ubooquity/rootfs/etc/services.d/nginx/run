@@ -2,7 +2,7 @@
 # ==============================================================================
 
 # Wait for transmission to become available
-bashio::net.wait_for 8080 localhost 900
+bashio::net.wait_for 2202 localhost 900
 
 bashio::log.info "Starting NGinx..."
 
