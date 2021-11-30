@@ -6,7 +6,7 @@ echo "Starting..."
 # Starting scripts #
 ####################
 
-for SCRIPTS in scripts/*; do
+for SCRIPTS in /scripts/*; do
   [ -e "$SCRIPTS" ] || continue
   echo "$SCRIPTS: executing"
   chown $(id -u):$(id -g) $SCRIPTS
