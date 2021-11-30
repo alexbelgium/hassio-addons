@@ -18,7 +18,7 @@
     "WT_PASS": "mybadpassword",
     "WT_EMAIL": "me@example.com"
   },
-  "map": ["share:rw", "ssl"],
+  "map": ["config:rw", "share:rw", "ssl"],
   "name": "Webtrees",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/webtrees/config.yaml",
