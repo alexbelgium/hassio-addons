@@ -1,9 +1,6 @@
 ARG BUILD_VERSION
 FROM nathanvaughn/webtrees:latest
 
-# Copy root filesystem
-COPY rootfs /
-
 # Global variables
 ARG BASHIO_VERSION=0.13.1
 ENV WEBTREES_HOME="/data/webtrees"
@@ -31,12 +28,15 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio  || true
 
+# Copy root filesystem
+COPY rootfs /
+
 RUN \
     ################
     # Modify image #
     ################
     # Change data location
-    && sed -i 's|/etc/services.d/*/run|/scripts/99-run.sh|g' /scripts/90-config_yaml.sh \
+    sed -i 's|/etc/services.d/*/run|/scripts/99-run.sh|g' /scripts/90-config_yaml.sh \
     && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
     # Add entry script
     && chown root:root /entrypoint.sh \
