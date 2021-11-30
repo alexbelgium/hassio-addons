@@ -32,6 +32,7 @@ Options can be configured through two ways :
 "LANG": "en-US" # Default language for webtrees
 "BASE_URL": "http://192.168.178.69" # The url with which you access webtrees
 "DB_TYPE": "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
+"CONFIG_LOCATION": location of the config.yaml (see below) 
 ```
 
 - Config.yaml
