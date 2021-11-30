@@ -20,9 +20,6 @@
     "/dev/sdg2"
   ],
   "environment": {},
-  "ingress": false,
-  "ingress_stream": true,
-  "panel_icon": "mdi:library",
   "map": ["media:rw", "config:rw", "share:rw", "ssl"],
   "name": "Ubooquity",
   "options": {
