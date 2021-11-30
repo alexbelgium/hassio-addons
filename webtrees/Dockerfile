@@ -16,6 +16,7 @@ RUN \
     && apt-get install -y \
     jq \
     curl \
+    yamllint \
     && apt-get clean \
     \
     ##################
