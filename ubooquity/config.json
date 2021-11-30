@@ -4,7 +4,6 @@
   "boot": "auto",
   "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
   "devices": [
-    "/dev/mmcblk0p8",
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
@@ -60,6 +59,6 @@
   "startup": "services",
   "upstream": "2.1.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.2-5",
+  "version": "2.1.2-6",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:2206]/ubooquity/admin"
 }
