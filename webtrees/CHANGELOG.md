@@ -1,0 +1,1 @@
+- Add config.yaml configurable options (see readme)
