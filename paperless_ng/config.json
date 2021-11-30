@@ -7,7 +7,7 @@
     "armhf"
   ],
   "boot": "auto",
-  "description": "indexes your scanned documents and allows you to easily search for documents and store metadata",
+  "description": "scan, index and archive all your physical documents", 
   "devices": [
     "/dev/sda1",
     "/dev/sdb1",
