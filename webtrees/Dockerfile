@@ -29,16 +29,17 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio  || true
+
+RUN \
     ################
     # Modify image #
     ################
     # Change data location
-    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' || true
-
-# Add entry script
-RUN chown root:root /entrypoint.sh \
+    && sed -i 's|/etc/services.d/*/run|/scripts/99-run.sh|g' /scripts/90-config_yaml.sh \
+    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
+    # Add entry script
+    && chown root:root /entrypoint.sh \
     && chmod 777 /entrypoint.sh \
     # Add end script
     && sed -i '$ d' /docker-entrypoint.sh

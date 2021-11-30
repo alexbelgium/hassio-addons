@@ -13,12 +13,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
         curl &&
             apt-get clean
 
-        ################
-        # Modify image #
-        ################
-        # Change data location
-        grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g'
-
         ###################
         # Install bashio #
         ##################
