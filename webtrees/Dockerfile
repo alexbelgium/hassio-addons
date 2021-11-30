@@ -29,7 +29,7 @@ RUN \
     && rm -rf /tmp/bashio  || true
 
 # Copy root filesystem
-COPY rootfs /
+COPY rootfs/ /
 
 RUN \
     ################
