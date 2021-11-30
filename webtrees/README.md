@@ -14,8 +14,6 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
----
-
 [webtrees](http://www.webtrees.net) is the web's leading online collaborative genealogy application.
 
 It works from standard GEDCOM files, and is therefore compatible with every major desktop application.
@@ -24,9 +22,27 @@ webtrees allows you to view and edit your genealogy on your website. It has full
 
 This addon is based on the docker image https://github.com/NathanVaughn/webtrees-docker
 
-## Installation
+## Configuration
 
----
+Webui can be found at <http://your-ip:PORT>.
+The default username/password : described in the startup log.
+Please change it as soon as possible.
+
+Options can be configured through two ways :
+
+- Addon options
+
+```yaml
+"LANG": "en-US" # Default language for webtrees
+"BASE_URL": "http://192.168.178.69" # The url with which you access webtrees
+"DB_TYPE": "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
+```
+
+- Config.yaml
+
+Custom env variables can be added to the config.yaml file referenced in the addon options. Full env variables can be found here : https://github.com/linuxserver/docker-paperless-ng. It must be entered in a valid yaml format, that is verified at launch of the addon.
+
+## Installation
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
@@ -39,28 +55,11 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-## Configuration
-
----
-
-Webui can be found at <http://your-ip:PORT>.
-The default username/password : described in the startup log.
-Please change it as soon as possible.
-Configurations can be done through the app webUI, except for the following options
-
-```yaml
-"LANG": "en-US" # Default language for webtrees
-"BASE_URL": "http://192.168.178.69" # The url with which you access webtrees
-"DB_TYPE": "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
-```
-
 ## Support
 
 Create an issue on github
 
 ## Illustration
-
----
 
 ![illustration](https://installatron.infomaniak.com/installatron//images/ss2_webtrees.jpg)
 
