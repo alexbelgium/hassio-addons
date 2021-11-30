@@ -1,17 +1,25 @@
 {
   "name": "Nextcloud",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "22.2.3-3",
-  "upstream": "22.2.3",
+  "version": "23.0.0",
+  "upstream": "23.0.0",
   "slug": "nextcloud_ocr",
   "ingress": false,
   "hassio_api": true,
   "ingress_port": 0,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "description": "Nextcloud for Home Assistant",
   "boot": "manual",
   "uart": true,
-  "map": ["share:rw", "media:rw", "ssl:rw"],
+  "map": [
+    "share:rw",
+    "media:rw",
+    "ssl:rw"
+  ],
   "ports": {
     "443/tcp": 8099,
     "80/tcp": null
