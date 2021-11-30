@@ -21,10 +21,8 @@
   "map": ["share:rw", "ssl"],
   "name": "Webtrees",
   "options": {
-    "ssl_not_working": false,
-    "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem",
-    "BASE_URL": "http://192.168.178.69",
+    "CONFIG_LOCATION": "/config/addons_config/webtrees/config.yaml",
+    "BASE_URL": "http://192.168.178.23",
     "DB_TYPE": "sqlite"
   },
   "ports": {
@@ -36,9 +34,7 @@
     "443/tcp": "Https web interface"
   },
   "schema": {
-    "ssl_not_working": "bool",
-    "certfile": "str",
-    "keyfile": "str",
+    "CONFIG_LOCATION": "str",
     "BASE_URL": "url",
     "DB_TYPE": "list(sqlite|external)"
   },
