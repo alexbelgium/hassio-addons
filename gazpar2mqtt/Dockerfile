@@ -17,7 +17,7 @@ RUN \
     jq \
     curl \
     yamllint \
-    snap \
+    snapd \
     && apt-get clean \
     \
     && snap install yq \
