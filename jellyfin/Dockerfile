@@ -4,7 +4,7 @@ FROM ${BUILD_FROM}
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ARG BASHIO_VERSION=0.13.1
+ARG BASHIO_VERSION=0.14.3
 
 RUN apt-get update \
     \

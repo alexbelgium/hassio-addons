@@ -4,7 +4,7 @@ FROM ${BUILD_FROM}
 
 COPY rootfs / 
 
-ARG BASHIO_VERSION=0.13.1
+ARG BASHIO_VERSION=0.14.3
 
 RUN \
     ################
@@ -31,8 +31,8 @@ RUN \
     && cat /app/mealie/run.sh >> /run.txt \
     && cat /run.txt > /app/mealie/run.sh \
     && chmod +x /app/mealie/run.sh
-    # Add custom caddy instructions for ingress
-    #&& cat /caddy.txt >> /app/Caddyfile
+# Add custom caddy instructions for ingress
+#&& cat /caddy.txt >> /app/Caddyfile
 
 VOLUME [ "/data" ]
 

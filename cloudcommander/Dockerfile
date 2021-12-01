@@ -1,6 +1,6 @@
 ARG BUILD_VERSION
 FROM coderaiser/cloudcmd:latest
-ARG BASHIO_VERSION=0.13.1
+ARG BASHIO_VERSION=0.14.3
 
 RUN \
     ################

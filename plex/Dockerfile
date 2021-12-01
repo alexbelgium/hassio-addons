@@ -8,7 +8,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # copy local files
 COPY root/ /
 
-ARG BASHIO_VERSION=0.13.1
+ARG BASHIO_VERSION=0.14.3
 RUN \
     ################
     # Install apps #
