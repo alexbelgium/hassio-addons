@@ -11,7 +11,8 @@ if [ ! -f "/usr/bin/bashio" ]; then
             apt-get install -y \
         jq \
         curl \
-        yamllint
+        yamllint \
+        snap
 
         snap install yq
 
