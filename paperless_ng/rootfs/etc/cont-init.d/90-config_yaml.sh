@@ -43,7 +43,7 @@ fi
 # Helper function
 function parse_yaml {
     local prefix=$2 || local prefix=""
-    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
+    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034' | tr -d '\015')
     sed -ne "s|^\($s\):|\1|" \
     -e "s| #.*$||g" \
     -e "s|#.*$||g" \
