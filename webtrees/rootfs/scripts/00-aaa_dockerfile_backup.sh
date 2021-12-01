@@ -6,10 +6,11 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ################
         # Install apps #
         ################
-        apt-get clean &&
-            apt-get update &&
-            apt-get install -y \
+        apt-get clean
+        apt-get update
+        apt-get install -y \
         jq \
+           yamllint \
         curl &&
             apt-get clean
 
