@@ -13,6 +13,8 @@ if [ ! -f "/usr/bin/bashio" ]; then
         curl \
         yamllint
 
+        snap install yq
+
         ###################
         # Install bashio #
         ##################
