@@ -27,12 +27,13 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio || true
+
+RUN \
     ########################################
     # Correct upstream image folders links #
     ########################################
-    && mkdir -p -m 777 /config/filebrowser	|| true
+    mkdir -p -m 777 /config/filebrowser
 
 # Copy root filesystem
 COPY rootfs / 
