@@ -12,7 +12,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
         jq \
         curl \
         yamllint \
-        snap
+        snapd
 
         snap install yq
 
