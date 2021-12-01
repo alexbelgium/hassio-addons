@@ -29,11 +29,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ln -s /usr/lib/bashio/bashio /usr/bin/bashio
         rm -rf /tmp/bashio
 
-        ########################################
-        # Correct upstream image folders links #
-        ########################################
-        mkdir -p -m 777 /config/filebrowser || true
-
     ) >/dev/null
 
 fi
