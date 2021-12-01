@@ -73,7 +73,11 @@ cat listtmp | while read word || [[ -n $word ]]; do
         key="${word#*=}"
         secret=${word#*\!secret }
         # Get secret password
-        secret=$(yq read "/config/secrets.yaml" "${secret}" 2>/dev/null || yq eval .${secret} "/config/secrets.yaml")
+        #secret=$(yq read "/config/secrets.yaml" "${secret}" 2>/dev/null || yq eval .${secret} "/config/secrets.yaml")
+        eval parse_yaml "/config/secrets.yaml" "" >secrettmp
+        secret=$(sed "/$secret/!d" secrettmp)
+        secret=${secret#*\=}
+        rm secrettmp
         word="$key=$secret"
     fi
     # Data validation
