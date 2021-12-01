@@ -9,7 +9,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
         apk update &&
             apk add --no-cache \
         jq \
-        yq \
         curl \
         cifs-utils \
         keyutils \
