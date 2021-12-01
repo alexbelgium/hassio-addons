@@ -44,12 +44,12 @@ echo "Symlink created"
 # Helper function
 function parse_yaml {
     local prefix=$2 || local prefix=""
-    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
+    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034' | tr -d '\015')
     sed -ne "s|^\($s\):|\1|" \
-    -e "s| #.*$||g" \
-    -e "s|#.*$||g" \
-    -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+        -e "s| #.*$||g" \
+        -e "s|#.*$||g" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
         awk -F$fs '{
       indent = length($1)/2;
       vname[indent] = $2;
@@ -63,9 +63,18 @@ function parse_yaml {
 
 # Get variables and export
 bashio::log.info "Starting the app with the variables in /config/gazpar2mqtt"
-for word in $(parse_yaml "$CONFIGSOURCE" ""); do
+eval parse_yaml "$CONFIGSOURCE" "" >listtmp
+cat listtmp | while read word || [[ -n $word ]]; do
     # Clean output
-    word=${word//[\"\']/}
+    # word="${word//[\"\']/}"
+    # If secret, replace secret by text
+    if [[ "${word}" == *'!secret '* ]]; then
+        key="${word#*=}"
+        secret=${word#*\!secret }
+        # Get secret password
+        secret=$(yq read "/config/secrets.yaml" "${secret}" 2>/dev/null || yq eval .${secret} "/config/secrets.yaml")
+        word="$key=$secret"
+    fi
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
         export $word # Export the variable
@@ -74,7 +83,7 @@ for word in $(parse_yaml "$CONFIGSOURCE" ""); do
         bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
         sed -i "/$word/ d" ${CONFIGSOURCE}
     fi
-done
+done && rm listtmp
 
 ##############
 # Launch App #
