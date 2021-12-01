@@ -63,7 +63,8 @@ function parse_yaml {
 
 # Get variables and export
 bashio::log.info "Starting the app with the variables in $CONFIGSOURCE"
-for word in $(parse_yaml "$CONFIGSOURCE" ""); do
+eval parse_yaml "$CONFIGSOURCE" "" >listtmp
+cat listtmp | while read word || [[ -n $word ]]; do
     # Clean output
     word=${word//[\"\']/}
     # Data validation
@@ -77,4 +78,4 @@ for word in $(parse_yaml "$CONFIGSOURCE" ""); do
     fi
     # Color text
     sed -i "1a echo \$(tput setaf 2)Exporting ENV variables :\$(tput setaf 0)" /etc/services.d/*/run # Show text in colour
-done
+done && rm listtmp
