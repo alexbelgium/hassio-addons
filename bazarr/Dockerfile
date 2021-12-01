@@ -11,7 +11,6 @@ RUN \
     && apt-get update \
     && apt-get install -y \
     jq \
-    yq \
     curl \
     cifs-utils \
     keyutils \
@@ -19,7 +18,6 @@ RUN \
     smbclient \
     || apk add --no-cache \
     jq \
-    yq \
     curl \
     cifs-utils \
     keyutils \

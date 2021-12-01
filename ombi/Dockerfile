@@ -11,7 +11,6 @@ RUN \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
     jq \
-    yq \
     curl \
     # Backup if change
     || apk add --no-cache jq curl \

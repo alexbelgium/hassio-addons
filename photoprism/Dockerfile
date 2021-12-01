@@ -16,7 +16,6 @@ RUN \
     && apt-get update \
     && apt-get install -y \
     jq \
-    yq \
     curl \
     cifs-utils \
     keyutils \

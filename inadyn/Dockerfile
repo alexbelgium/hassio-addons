@@ -16,7 +16,6 @@ RUN \
     apk add --no-cache \
     curl \
     jq \
-    yq \
     bash \
     xz build-base libressl-dev ca-certificates npm \
     \

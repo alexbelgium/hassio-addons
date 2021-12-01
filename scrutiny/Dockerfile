@@ -17,7 +17,6 @@ RUN \
     # Add apps
     && apk add --no-cache \
     jq \
-    yq \
     curl \
     cifs-utils \
     nginx \

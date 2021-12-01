@@ -8,7 +8,6 @@ ARG BASHIO_VERSION=0.14.3
 RUN apk add --no-cache \
     curl \
     jq \
-    yq \
     moreutils \
     samba \
     nginx \

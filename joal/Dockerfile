@@ -16,7 +16,6 @@ RUN \
     && apt-get install -y --no-install-recommends \
     wget \
     jq \
-    yq \
     nginx \
     ##################
     # Install bashio #
