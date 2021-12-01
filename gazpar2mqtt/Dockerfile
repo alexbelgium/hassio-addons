@@ -28,13 +28,14 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \    
+    && rm -rf /tmp/bashio || true
+
+RUN \    
     #################
     # Copy template #
     #################
-    && mkdir -p /share/gazpar2mqtt \
-    && cp -n /templates/config.yaml /share/gazpar2mqtt/ || true
+    mkdir -p /share/gazpar2mqtt \
+    && cp -n /templates/config.yaml /share/gazpar2mqtt/ 
 
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
