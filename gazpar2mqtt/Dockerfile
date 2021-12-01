@@ -18,7 +18,9 @@ RUN \
     curl \
     yamllint \
     && apt-get clean \
-    \    
+    \
+    && snap install yq \
+    \
     ##################
     # Install bashio #
     ##################
