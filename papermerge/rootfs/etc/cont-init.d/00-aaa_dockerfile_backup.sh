@@ -10,6 +10,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
             apt-get update &&
             apt-get install -y --no-install-recommends \
         jq \
+        yq \
         curl \
         cifs-utils \
         keyutils \
@@ -18,6 +19,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
             apk update &&
             apk add --no-cache \
         jq \
+        yq \
         curl \
         cifs-utils \
         keyutils \

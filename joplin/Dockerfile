@@ -11,9 +11,10 @@ RUN \
     apt-get clean \
     && apt-get update \     
     && apt-get install -y \
-         jq \
-         curl \
-#         nginx \
+    jq \
+    yq \
+    curl \
+    #         nginx \
     \
     ##################
     # Install bashio #

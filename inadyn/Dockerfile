@@ -14,10 +14,11 @@ RUN \
     # Install apps #
     ################
     apk add --no-cache \
-      curl \
-      jq \
-      bash \
-      xz build-base libressl-dev ca-certificates npm \
+    curl \
+    jq \
+    yq \
+    bash \
+    xz build-base libressl-dev ca-certificates npm \
     \
     ##################
     # Install bashio #
@@ -33,9 +34,9 @@ RUN \
     # Install mustache #
     ####################
     && apk add --no-cache \
-        go \
-        npm \
-#    && npm install mustache-cli --global        
+    go \
+    npm \
+    #    && npm install mustache-cli --global        
     && apk upgrade --no-cache &&\
     apk add --no-cache --virtual .build-deps\
     build-base\

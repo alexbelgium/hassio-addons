@@ -10,6 +10,7 @@ RUN \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
     jq \
+    yq \
     cifs-utils \    
     keyutils \
     samba \

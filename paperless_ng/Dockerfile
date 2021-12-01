@@ -8,16 +8,17 @@ ENV PAPERLESS_DATA_DIR=/config/paperless_ng
 
 RUN apt-get update && \
     \
-       apt-get clean && \
-       apt-get update && \
-       apt-get install -y --no-install-recommends \
-                jq \
-                curl \
-                cifs-utils \
-                keyutils \
-                smbclient \
-                samba \
-                yamllint \
+    apt-get clean && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    jq \
+    yq \
+    curl \
+    cifs-utils \
+    keyutils \
+    smbclient \
+    samba \
+    yamllint \
     \
     ##################
     # Install bashio #

@@ -7,6 +7,7 @@ ARG BASHIO_VERSION=0.13.1
 RUN apk add --no-cache \
     curl \
     jq \
+    yq \
     samba \
     samba-client \
     && curl -J -L -o /tmp/bashio.tar.gz \
@@ -24,7 +25,7 @@ RUN apk add --no-cache \
     ln -s /usr/share/transmission/web/images /transmission-web-control && \
     ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
     ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
- 
+
 
 # Copy root filesystem
 COPY rootfs /

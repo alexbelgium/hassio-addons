@@ -12,6 +12,7 @@ RUN \
     # Install bashio
     apk add --no-cache \
     jq \
+    yq \
     curl \
     cifs-utils \
     \

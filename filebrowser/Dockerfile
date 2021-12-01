@@ -10,6 +10,7 @@ RUN \
     apk add --no-cache \
     curl \
     jq \
+    yq \
     bash \
     cifs-utils \
     keyutils \

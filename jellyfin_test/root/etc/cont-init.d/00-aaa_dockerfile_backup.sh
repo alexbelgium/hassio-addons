@@ -9,6 +9,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
         apt-get update
         apt-get install -y --no-install-recommends \
         jq \
+        yq \
         samba \
         smbclient \
         nginx

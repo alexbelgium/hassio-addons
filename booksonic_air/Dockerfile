@@ -11,6 +11,7 @@ RUN \
     && apt-get update \
     && apt-get install -y \
     jq \
+    yq \
     curl \
     cifs-utils \
     keyutils \
@@ -27,9 +28,9 @@ RUN \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /tmp/bashio
 
-    #################
-    # Correct image #
-    #################
+#################
+# Correct image #
+#################
 RUN \
     # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \

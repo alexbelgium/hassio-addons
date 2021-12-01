@@ -9,6 +9,7 @@ RUN \
     ##################
     apk add --no-cache \
     jq \
+    yq \
     curl \
     cifs-utils \
     \

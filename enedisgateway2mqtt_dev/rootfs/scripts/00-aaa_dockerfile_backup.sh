@@ -10,8 +10,9 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ################
         apt-get clean &&
             apt-get update &&
-            apt-get install -yq --no-install-recommends \
+            apt-get install --no-install-recommends \
         jq \
+        yq \
         curl \
         yamllint
 
