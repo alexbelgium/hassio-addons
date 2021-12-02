@@ -71,10 +71,15 @@ do
     line=${line//[\"\']/}
     # Check if secret
     if [[ "${line}" == *'!secret '* ]]; then
+        echo "line : $line"
         secret=${line#*secret }
+        echo "secret : $secret"
         secret=$(sed -n "/$secret/p" /config/secrets.yaml)
+        echo "secret : $secret"
         secret=${secret#*: }
+        echo "secret : $secret"
         line="${line%%=*}=$secret"
+        echo "line : $line"
     fi
     # Data validation
     if [[ $line =~ ^.+[=].+$ ]]; then
