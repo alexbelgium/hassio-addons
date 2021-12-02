@@ -72,15 +72,17 @@ do
     word=${word//[\"\']/}
     # Check if secret
     if [[ "${word}" == *'!secret '* ]]; then
-        echo "Secret detected $word" 
-        key="${word%%=*}"
-        echo "word: $word"
         secret=${word#*secret }
         echo "secret : $secret"
+        # Extract value from secrets file
         eval parse_yaml "/config/secrets.yaml" "" >/secrettmp
         secret=$(sed "/$secret/!d" /secrettmp)
+        echo "secret : $secret"
+        secret=${secret#*=}
+        echo "secret : $secret"
         rm /secrettmp
-        word="$key=$secret"
+        #secretvalue=${secretvalue//[\"\']/}
+        word="${word%%=*}=$secret"
     fi
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
