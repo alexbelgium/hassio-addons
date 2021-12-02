@@ -74,7 +74,8 @@ do
         echo "secret detected"
         secret=${line#*secret }
         # Check if single match
-        [[ "$(sed -n "/$secret:/=" /config/secrets.yaml)" == *' '* ]] && bashio::log.fatal "There are multiple matches for your password name. Please check your secrets.yaml file" && bashio::addon.stop
+        secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
+        [[ $(echo $secretnum) == *' '* ]] && bashio::log.fatal "There are multiple matches for your password name. Please check your secrets.yaml file" && bashio::addon.stop
         # Get text
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
