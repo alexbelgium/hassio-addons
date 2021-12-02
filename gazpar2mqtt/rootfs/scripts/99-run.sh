@@ -42,7 +42,6 @@ echo "Symlink created"
 
 # Export all yaml entries as env variables
 # Helper function
-set +u
 function parse_yaml {
     local prefix=$2 || local prefix=""
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
@@ -65,7 +64,7 @@ function parse_yaml {
 # Get variables and export
 bashio::log.info "Starting the app with the variables in /config/gazpar2mqtt"
 # Get list of parameters in a file
-eval parse_yaml "$CONFIGSOURCE" "" >/tmpfile
+(eval parse_yaml "$CONFIGSOURCE" "") >/tmpfile
 while IFS= read -r line
 do
     # Clean output
@@ -75,7 +74,7 @@ do
         secret=${word#*secret }
         echo "secret : $secret"
         # Extract value from secrets file
-        eval parse_yaml "/config/secrets.yaml" "" >/secrettmp
+        (eval parse_yaml "/config/secrets.yaml" "") >/secrettmp
         secret=$(sed "/$secret/!d" /secrettmp)
         echo "secret : $secret"
         secret=${secret#*=}
