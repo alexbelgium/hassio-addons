@@ -63,9 +63,24 @@ function parse_yaml {
 
 # Get variables and export
 bashio::log.info "Starting the app with the variables in /config/gazpar2mqtt"
-for word in $(parse_yaml "$CONFIGSOURCE" ""); do
+# Get list of parameters in a file
+eval parse_yaml "$CONFIGSOURCE" "" >/tmpfile
+while IFS= read -r line
+do
     # Clean output
     word=${word//[\"\']/}
+    # Check if secret
+    if [[ "${word}" == *'!secret '* ]]; then
+        echo "Secret detected $word" 
+        key="${word%%=*}"
+        echo "word: $word"
+        secret=${word#*secret }
+        echo "secret : $secret"
+        eval parse_yaml "/config/secrets.yaml" "" >/secrettmp
+        secret=$(sed "/$secret/!d" /secrettmp)
+        rm /secrettmp
+        word="$key=$secret"
+    fi
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
         export $word # Export the variable
@@ -74,7 +89,7 @@ for word in $(parse_yaml "$CONFIGSOURCE" ""); do
         bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
         sed -i "/$word/ d" ${CONFIGSOURCE}
     fi
-done
+done < "/tmpfile"
 
 ##############
 # Launch App #
