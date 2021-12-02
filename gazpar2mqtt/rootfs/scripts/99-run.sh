@@ -73,7 +73,7 @@ do
     if [[ "${word}" == *'!secret '* ]]; then
         secret=${word#*secret }
         secret=$(sed "/$secret/!d" /config/secrets.yaml)
-        secret==${secret#*: }
+        secret=${secret#*: }
         #echo "secret : $secret"
         # Extract value from secrets file
         #(eval parse_yaml "/config/secrets.yaml" "") >/secrettmp
