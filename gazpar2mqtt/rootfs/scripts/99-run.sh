@@ -68,21 +68,21 @@ parse_yaml "$CONFIGSOURCE" "" >/tmpfile
 while IFS= read -r line
 do
     # Clean output
-    word=${word//[\"\']/}
+    line=${line//[\"\']/}
     # Check if secret
-    if [[ "${word}" == *'!secret '* ]]; then
-        secret=${word#*secret }
+    if [[ "${line}" == *'!secret '* ]]; then
+        secret=${line#*secret }
         secret=$(sed "/$secret/!d" /config/secrets.yaml)
         secret=${secret#*: }
-        word="${word%%=*}=$secret"
+        word="${line%%=*}=$secret"
     fi
     # Data validation
-    if [[ $word =~ ^.+[=].+$ ]]; then
-        export $word # Export the variable
-        bashio::log.blue "$word"
+    if [[ $line =~ ^.+[=].+$ ]]; then
+        export $line # Export the variable
+        bashio::log.blue "$line"
     else
-        bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
-        sed -i "/$word/ d" ${CONFIGSOURCE}
+        bashio::log.fatal "$line does not follow the structure KEY=text, it will be ignored and removed from the config"
+        sed -i "/$line/ d" ${CONFIGSOURCE}
     fi
 done < "/tmpfile"
 
