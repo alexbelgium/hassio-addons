@@ -74,7 +74,7 @@ do
         secret=${line#*secret }
         secret=$(sed "/$secret/!d" /config/secrets.yaml)
         secret=${secret#*: }
-        word="${line%%=*}=$secret"
+        line="${line%%=*}=$secret"
     fi
     # Data validation
     if [[ $line =~ ^.+[=].+$ ]]; then
