@@ -86,8 +86,8 @@
   },
   "slug": "plex_nas",
   "startup": "services",
-  "upstream": "1.24.5.5173-8dcc73a59-ls83",
+  "upstream": "1.25.0.5282-2edd3c44d-ls89",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.24.5.5173-8dcc73a59-ls83",
+  "version": "1.25.0.5282-2edd3c44d-ls89",
   "webui": "http://[HOST]:[PORT:32400]/web"
 }

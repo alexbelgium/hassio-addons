@@ -1,3 +1,6 @@
+
+## 1.25.0.5282-2edd3c44d-ls89 (02-12-2021)
+- Update to latest version from linuxserver/docker-plex
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 
 ## 1.24.5.5173-8dcc73a59-ls83 (28-10-2021)
