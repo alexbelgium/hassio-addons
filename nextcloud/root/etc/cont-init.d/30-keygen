@@ -8,8 +8,8 @@ if bashio::config.true 'use_own_certs'; then
 
   #Check if files exist
   echo "... checking if referenced files exist"
-  [ ! -f /ssl/$CERTFILE ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$CERTFILE not found" && bashio::addon.stop
-  [ ! -f /ssl/$KEYFILE ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$KEYFILE not found" && bashio::addon.stop
+  [ ! -f /ssl/$CERTFILE ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$CERTFILE not found" && bashio::exit.nok
+  [ ! -f /ssl/$KEYFILE ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$KEYFILE not found" && bashio::exit.nok
 
 else
   bashio::log.info "No ssl certificates set. Auto generating ones..."
