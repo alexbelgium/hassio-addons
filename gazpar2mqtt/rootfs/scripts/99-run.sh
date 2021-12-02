@@ -71,6 +71,7 @@ do
     line=${line//[\"\']/}
     # Check if secret
     if [[ "${line}" == *'!secret '* ]]; then
+        echo "secret detected"
         secret=${line#*secret }
         # Check if single match
         [[ "$(sed -n "/$secret:/=" /config/secrets.yaml)" == *' '* ]] && bashio::log.fatal "There are multiple matches for your password name. Please check your secrets.yaml file" && continue
