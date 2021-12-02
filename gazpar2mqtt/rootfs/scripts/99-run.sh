@@ -70,9 +70,11 @@ cat listtmp | while read word || [[ -n $word ]]; do
     # word="${word//[\"\']/}"
     # If secret, replace secret by text
     if [[ "${word}" == *'!secret '* ]]; then
-        echo "Secret detected" 
+        echo "Secret detected $word" 
         key="${word%%=*}"
+        echo "word: $word"
         secret=${word#*secret }
+        echo "secret : $secret"
         # Get secret password
         #secret=$(yq read "/config/secrets.yaml" "${secret}" 2>/dev/null || yq eval .${secret} "/config/secrets.yaml")
         eval parse_yaml "/config/secrets.yaml" "" >/secrettmp
