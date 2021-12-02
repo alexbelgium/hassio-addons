@@ -7,9 +7,6 @@ ARG BUILD_UPSTREAM="2.9.3"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-RUN \
-    apk add --no-cache \
-    nginx || true
 
 ARG BUILD_ARCH
 RUN \
@@ -21,6 +18,10 @@ RUN \
     && curl -L -s \
         "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
         | tar zxvf - -C /opt/
+
+RUN \
+    apk add --no-cache \
+    nginx || true
 
 # Copy root filesystem
 COPY rootfs /
