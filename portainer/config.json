@@ -8,7 +8,6 @@
   "description": "Manage your Docker environment with ease",
   "docker_api": true,
   "hassio_api": true,
-  "homeassistant": "0.92.0b2",
   "ingress": true,
   "ingress_port": 1337,
   "ingress_stream": true,
@@ -43,6 +42,6 @@
   "startup": "services",
   "upstream": "2.9.3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.9.2",
+  "version": "2.9.2-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9099]"
 }
