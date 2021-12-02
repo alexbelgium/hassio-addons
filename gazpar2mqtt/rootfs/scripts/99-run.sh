@@ -67,7 +67,7 @@ bashio::log.info "Starting the app with the variables in /config/gazpar2mqtt"
 eval parse_yaml "$CONFIGSOURCE" "" >listtmp
 cat listtmp | while read word || [[ -n $word ]]; do
     # Clean output
-    # word="${word//[\"\']/}"
+    word="${word//[\"\']/}"
     # If secret, replace secret by text
     if [[ "${word}" == *'!secret '* ]]; then
         echo "Secret detected $word" 
