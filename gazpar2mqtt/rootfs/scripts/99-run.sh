@@ -42,6 +42,7 @@ echo "Symlink created"
 
 # Export all yaml entries as env variables
 # Helper function
+set +u
 function parse_yaml {
     local prefix=$2 || local prefix=""
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
