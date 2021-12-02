@@ -72,7 +72,7 @@ do
     # Check if secret
     if [[ "${line}" == *'!secret '* ]]; then
         secret=${line#*secret }
-        secret=$(sed "/$secret/"\!"d" /config/secrets.yaml)
+        secret=$(sed -n "/$secret/p" /config/secrets.yaml)
         secret=${secret#*: }
         line="${line%%=*}=$secret"
     fi
