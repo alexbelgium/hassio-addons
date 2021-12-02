@@ -64,7 +64,7 @@ function parse_yaml {
 # Get variables and export
 bashio::log.info "Starting the app with the variables in /config/gazpar2mqtt"
 # Get list of parameters in a file
-(eval parse_yaml "$CONFIGSOURCE" "") >/tmpfile
+parse_yaml "$CONFIGSOURCE" "" >/tmpfile
 while IFS= read -r line
 do
     # Clean output
