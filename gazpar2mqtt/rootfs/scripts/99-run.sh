@@ -42,10 +42,9 @@ echo "Symlink created"
 
 # Export all yaml entries as env variables
 # Helper function
-set +u
 function parse_yaml {
     local prefix=$2 || local prefix=""
-    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034' | tr -d '\015')
+    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
     -e "s| #.*$||g" \
     -e "s|#.*$||g" \
@@ -64,25 +63,9 @@ function parse_yaml {
 
 # Get variables and export
 bashio::log.info "Starting the app with the variables in /config/gazpar2mqtt"
-eval parse_yaml "$CONFIGSOURCE" "" >listtmp
-cat listtmp | while read word || [[ -n $word ]]; do
+for word in $(parse_yaml "$CONFIGSOURCE" ""); do
     # Clean output
-    word="${word//[\"\']/}"
-    # If secret, replace secret by text
-    if [[ "${word}" == *'!secret '* ]]; then
-        echo "Secret detected $word" 
-        key="${word%%=*}"
-        echo "word: $word"
-        secret=${word#*secret }
-        echo "secret : $secret"
-        # Get secret password
-        #secret=$(yq read "/config/secrets.yaml" "${secret}" 2>/dev/null || yq eval .${secret} "/config/secrets.yaml")
-        eval parse_yaml "/config/secrets.yaml" "" >/secrettmp
-        secret=$(sed "/$secret/!d" /secrettmp)
-        #secret=${secret#*\=}
-        rm /secrettmp
-        word="$key=$secret"
-    fi
+    word=${word//[\"\']/}
     # Data validation
     if [[ $word =~ ^.+[=].+$ ]]; then
         export $word # Export the variable
@@ -91,7 +74,7 @@ cat listtmp | while read word || [[ -n $word ]]; do
         bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
         sed -i "/$word/ d" ${CONFIGSOURCE}
     fi
-done && rm listtmp
+done
 
 ##############
 # Launch App #
