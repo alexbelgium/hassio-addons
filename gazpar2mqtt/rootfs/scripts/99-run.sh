@@ -75,7 +75,7 @@ do
         secret=${line#*secret }
         # Check if single match
         secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
-        [[ $(echo $secretnum) == *' '* ]] && bashio::log.fatal "There are multiple matches for your password name. Please check your secrets.yaml file" && bashio::addon.stop
+        [[ $(echo $secretnum) == *' '* ]] && bashio::log.fatal "There are multiple matches for your password name. Please check your secrets.yaml file" && bashio::exit.nok
         # Get text
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
@@ -87,7 +87,7 @@ do
         bashio::log.blue "$line"
     else
         bashio::log.fatal "$line does not follow the structure KEY=text"
-        bashio::addon.stop
+        bashio::exit.nok
     fi
 done < "/tmpfile"
 
