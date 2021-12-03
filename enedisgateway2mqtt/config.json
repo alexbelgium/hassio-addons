@@ -5,7 +5,7 @@
   "name": "Enedisgateway2mqtt",
   "options": {
     "CONFIG_LOCATION": "/config/enedisgateway2mqtt/config.yaml",
-    "mqtt_autodiscover": false,
+    "mqtt_autodiscover": true,
     "TZ": "Europe/Paris"
   },
   "services": ["mqtt:want"],
