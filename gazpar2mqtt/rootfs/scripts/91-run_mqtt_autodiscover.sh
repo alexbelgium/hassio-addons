@@ -20,6 +20,6 @@ if bashio::config.true 'mqtt_autodiscover'; then
         sed -i "1a export $variables" /etc/services.d/*/*run*
         sed -i "1a export $variables" /scripts/*run*
         # Log
-        bashio::log.blue "... $variables"
+        bashio::log.blue "$variables"
     done
 fi
