@@ -85,11 +85,11 @@ while IFS= read -r line; do
         logmsg="Variable set : $line"
         if [ -f /etc/services.d/*/*run* ]; then
             sed -i "1a export $line" /etc/services.d/*/run                                              # Export the variable
-            sed -i "1a bashio::log.blue $logmsg || echo \$(tput -T xterm setaf 2)$logmsg\$(tput -T xterm setaf 0)" /etc/services.d/*/run # Show text in colour
+            sed -i "1a bashio::log.blue $logmsg || echo \$(tput -T xterm setaf 2)$logmsg\$(tput -T xterm setaf 0) || echo $logmsg" /etc/services.d/*/run # Show text in colour
         fi
         if [ -f /scripts/*run* ]; then
             sed -i "1a export $line" /scripts/*run*                                              # Export the variable
-            sed -i "1a bashio::log.blue $logmsg || echo \$(tput -T xterm setaf 2)$logmsg\$(tput -T xterm setaf 0)" /scripts/*run* # Show text in colour
+            sed -i "1a bashio::log.blue $logmsg || echo \$(tput -T xterm setaf 2)$logmsg\$(tput -T xterm setaf 0) || echo $logmsg" /scripts/*run* # Show text in colour
         fi
         bashio::log.blue "$line"
     else
