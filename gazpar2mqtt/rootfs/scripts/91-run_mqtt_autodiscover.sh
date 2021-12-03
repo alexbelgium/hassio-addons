@@ -7,7 +7,7 @@
 if bashio::config.true 'mqtt_autodiscover'; then
     bashio::log.info "mqtt_autodiscover is defined in options, attemption autodiscovery..."
     # Check if available
-    [[ ! bashio::services.available "mqtt" ]] && bashio::exit.nok "No internal MQTT service found. Please install Mosquitto broker"
+    if ! bashio::services.available "mqtt"; then bashio::exit.nok "No internal MQTT service found. Please install Mosquitto broker"; fi
     # Get variables
     bashio::log.info "... MQTT service found, fetching server detail ..."
     export MQTT_HOST=$(bashio::services mqtt "host")
