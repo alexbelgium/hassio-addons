@@ -13,7 +13,7 @@
     "mqtt_autodiscover": "bool",
     "TZ": "str?"
   },
-  "services": ["mqtt:need"],
+  "services": ["mqtt:want"],
   "slug": "gazpar2mqtt",
   "upstream": "0.5.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
