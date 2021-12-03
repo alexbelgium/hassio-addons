@@ -1,14 +1,13 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:9.2.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
-ARG BUILD_UPSTREAM=2.9.2
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-
-ARG BUILD_ARCH=amd64 
+ARG BUILD_ARCH=amd64
+ARG BUILD_UPSTREAM="2.9.3"
 RUN \
     if [ "${BUILD_ARCH}" = "aarch64" ]; then ARCH="arm64"; fi \
     && if [ "${BUILD_ARCH}" = "armhf" ]; then ARCH="arm"; fi \
@@ -16,8 +15,8 @@ RUN \
     && if [ "${BUILD_ARCH}" = "amd64" ]; then ARCH="amd64"; fi \
     \
     && curl -L -s \
-        "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
-        | tar zxvf - -C /opt/
+    "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
+    | tar zxvf - -C /opt/
 
 RUN \
     apk add --no-cache \
