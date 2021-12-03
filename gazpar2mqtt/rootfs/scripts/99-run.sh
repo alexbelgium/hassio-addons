@@ -1,10 +1,10 @@
-#!/usr/bin/env bashio
+#!/bin/bash
 
 ##############
 # Launch App #
 ##############
 echo " "
-bashio::log.info "Starting the app"
+echo "Starting the app"
 echo " "
 
-python -u /app/gazpar2mqtt.py || bashio::log.fatal "The app has crashed. Are you sure you entered the correct config options?"
+python -u /app/gazpar2mqtt.py || echo "The app has crashed. Are you sure you entered the correct config options?"
