@@ -84,11 +84,11 @@ while IFS= read -r line; do
         export $line # Export the variable
         if [ -f /etc/services.d/*/*run* ]; then
             sed -i "1a export $line" /etc/services.d/*/run                                              # Export the variable
-            sed -i "1a echo \$(tput setaf 2)Variable set : $line\$(tput setaf 0)" /etc/services.d/*/run # Show text in colour
+            sed -i "1a TERM=dumb && echo \$(tput setaf 2)Variable set : $line\$(tput setaf 0)" /etc/services.d/*/run # Show text in colour
         fi
         if [ -f /scripts/*run* ]; then
             sed -i "1a export $line" /scripts/*run*                                              # Export the variable
-            sed -i "1a echo \$(tput setaf 2)Variable set : $line\$(tput setaf 0)" /scripts/*run* # Show text in colour
+            sed -i "1a TERM=dumb && echo \$(tput setaf 2)Variable set : $line\$(tput setaf 0)" /scripts/*run* # Show text in colour
         fi
         bashio::log.blue "$line"
     else
