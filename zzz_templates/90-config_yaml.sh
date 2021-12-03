@@ -45,10 +45,10 @@ function parse_yaml {
     local prefix=$2 || local prefix=""
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
-    -e "s| #.*$||g" \
-    -e "s|#.*$||g" \
-    -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+        -e "s| #.*$||g" \
+        -e "s|#.*$||g" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
         awk -F$fs '{
       indent = length($1)/2;
       vname[indent] = $2;
@@ -73,7 +73,7 @@ while IFS= read -r line; do
         secret=${line#*secret }
         # Check if single match
         secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
-        [[ $(echo $secretnum) == *' '* ]] && bashio::log.fatal "There are multiple matches for your password name. Please check your secrets.yaml file" && bashio::exit.nok
+        [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
@@ -81,28 +81,22 @@ while IFS= read -r line; do
     fi
     # Data validation
     if [[ $line =~ ^.+[=].+$ ]]; then
-        export $line # Export the variable
-        logmsg="Variable set : $line"
-        if [ -f /etc/services.d/*/*run* ]; then
-            sed -i "1a export $line" /etc/services.d/*/run                                              # Export the variable
-            sed -i "1a bashio::log.blue $logmsg || echo \$(tput -T xterm setaf 2)$logmsg\$(tput -T xterm setaf 0) || echo $logmsg" /etc/services.d/*/run # Show text in colour
-        fi
-        if [ -f /scripts/*run* ]; then
-            sed -i "1a export $line" /scripts/*run*                                              # Export the variable
-            sed -i "1a bashio::log.blue $logmsg || echo \$(tput -T xterm setaf 2)$logmsg\$(tput -T xterm setaf 0) || echo $logmsg" /scripts/*run* # Show text in colour
-        fi
+        export $line
+        # Export the variable
+        [ -f /etc/services.d/*/*run* ] && sed -i "1a export $line" /etc/services.d/*/*run*
+        [ -f /scripts/*run* ] && sed -i "1a export $line" /scripts/*run*
+        # Show in log
         bashio::log.blue "$line"
     else
-        bashio::log.fatal "$line does not follow the structure KEY=text"
-        bashio::exit.nok
+        bashio::exit.nok "$line does not follow the correct structure. Please check your yaml file."
     fi
 done <"/tmpfile"
 
 # Test mode
 TZ=$(bashio::config "TZ")
 if [ $TZ = "test" ]; then
-  echo "secret mode found, launching script in /config/test.sh"
-  cd /config
-  chmod 777 test.sh
-  ./test.sh 
+    echo "secret mode found, launching script in /config/test.sh"
+    cd /config
+    chmod 777 test.sh
+    ./test.sh
 fi
