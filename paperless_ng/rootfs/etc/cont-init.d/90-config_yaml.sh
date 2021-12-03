@@ -41,10 +41,9 @@ fi
 
 # Export all yaml entries as env variables
 # Helper function
-set +u
 function parse_yaml {
     local prefix=$2 || local prefix=""
-    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034' | tr -d '\015')
+    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
     -e "s| #.*$||g" \
     -e "s|#.*$||g" \
@@ -62,20 +61,38 @@ function parse_yaml {
 }
 
 # Get variables and export
-bashio::log.info "Starting the app with the variables in $CONFIGSOURCE"
-eval parse_yaml "$CONFIGSOURCE" "" >listtmp
-cat listtmp | while read word || [[ -n $word ]]; do
+bashio::log.info "Starting the app with the variables in in $CONFIGSOURCE"
+# Get list of parameters in a file
+parse_yaml "$CONFIGSOURCE" "" >/tmpfile
+while IFS= read -r line; do
     # Clean output
-    word=${word//[\"\']/}
-    # Data validation
-    if [[ $word =~ ^.+[=].+$ ]]; then
-        sed -i "1a export $word" /etc/services.d/*/run                                   # Export the variable
-        sed -i "1a echo \$(tput setaf 2)... $word\$(tput setaf 0)" /etc/services.d/*/run # Show text in colour
-        bashio::log.blue "$word"
-    else
-        bashio::log.fatal "$word does not follow the structure KEY=text, it will be ignored and removed from the config"
-        sed -i "/$word/ d" ${CONFIGSOURCE}
+    line=${line//[\"\']/}
+    # Check if secret
+    if [[ "${line}" == *'!secret '* ]]; then
+        echo "secret detected"
+        secret=${line#*secret }
+        # Check if single match
+        secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
+        [[ $(echo $secretnum) == *' '* ]] && bashio::log.fatal "There are multiple matches for your password name. Please check your secrets.yaml file" && bashio::exit.nok
+        # Get text
+        secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
+        secret=${secret#*: }
+        line="${line%%=*}=$secret"
     fi
-    # Color text
-    sed -i "1a echo \$(tput setaf 2)Exporting ENV variables :\$(tput setaf 0)" /etc/services.d/*/run # Show text in colour
-done && rm listtmp
+    # Data validation
+    if [[ $line =~ ^.+[=].+$ ]]; then
+        export $line # Export the variable
+        if [ -f /etc/services.d/*/*run* ]; then
+            sed -i "1a export $line" /etc/services.d/*/run                                              # Export the variable
+            sed -i "1a echo \$(tput setaf 2)Variable set : $line\$(tput setaf 0)" /etc/services.d/*/run # Show text in colour
+        fi
+        if [ -f /scripts/*run* ]; then
+            sed -i "1a export $line" /scripts/*run*                                              # Export the variable
+            sed -i "1a echo \$(tput setaf 2)Variable set : $line\$(tput setaf 0)" /scripts/*run* # Show text in colour
+        fi
+        bashio::log.blue "$line"
+    else
+        bashio::log.fatal "$line does not follow the structure KEY=text"
+        bashio::exit.nok
+    fi
+done <"/tmpfile"
