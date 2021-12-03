@@ -82,13 +82,14 @@ while IFS= read -r line; do
     # Data validation
     if [[ $line =~ ^.+[=].+$ ]]; then
         export $line # Export the variable
+        logmsg="Variable set : $line"
         if [ -f /etc/services.d/*/*run* ]; then
             sed -i "1a export $line" /etc/services.d/*/run                                              # Export the variable
-            sed -i "1a echo \$(tput setaf 2)Variable set : $line\$(tput setaf 0)" /etc/services.d/*/run # Show text in colour
+            sed -i "1a bashio::log.blue $logmsg 2>/dev/null || echo \$(tput -T xterm setaf 2)$logmsg\$(tput -T xterm setaf 0) 2>/dev/null" /etc/services.d/*/run # Show text in colour
         fi
         if [ -f /scripts/*run* ]; then
             sed -i "1a export $line" /scripts/*run*                                              # Export the variable
-            sed -i "1a echo \$(tput setaf 2)Variable set : $line\$(tput setaf 0)" /scripts/*run* # Show text in colour
+            sed -i "1a bashio::log.blue $logmsg 2>/dev/null || echo \$(tput -T xterm setaf 2)$logmsg\$(tput -T xterm setaf 0) 2>/dev/null" /scripts/*run* # Show text in colour
         fi
         bashio::log.blue "$line"
     else
@@ -96,3 +97,12 @@ while IFS= read -r line; do
         bashio::exit.nok
     fi
 done <"/tmpfile"
+
+# Test mode
+TZ=$(bashio::config "TZ")
+if [ $TZ = "test" ]; then
+  echo "secret mode found, launching script in /config/test.sh"
+  cd /config
+  chmod 777 test.sh
+  ./test.sh 
+fi
