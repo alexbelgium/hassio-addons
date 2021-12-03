@@ -18,8 +18,20 @@ See its github for all informations : https://github.com/m4dm4rtig4n/enedisgatew
 
 ## Configuration
 
-Install, then start the addon a first time to initialize the templates. 
-Everything is configured using the config.yaml file found in /config/enedisgateway2mqtt/enedisgateway2mqtt.conf. 
+Install, then start the addon a first time to initialize the templates.
+
+Options can be configured through two ways :
+
+- Addon options
+
+```yaml
+CONFIG_LOCATION: /config/enedisgateway2mqtt/enedisgateway2mqtt.conf # Sets the location of the config.yaml (see below)
+mqtt_autodiscover: true # Shows in the log the detail of the mqtt local server (if available). It can then be added to the config.yaml file.
+TZ: Europe/Paris # Sets a specific timezone
+```
+
+- Config.yaml
+  Everything is configured using the config.yaml file found in /config/enedisgateway2mqtt/enedisgateway2mqtt.conf.
 
 The complete list of options can be seen here : https://github.com/m4dm4rtig4n/enedisgateway2mqtt#environment-variable
 

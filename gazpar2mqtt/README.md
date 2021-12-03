@@ -18,6 +18,18 @@ See its github for all informations : https://github.com/yukulehe/gazpar2mqtt
 
 ## Configuration
 
+Options can be configured through two ways :
+
+- Addon options
+
+```yaml
+CONFIG_LOCATION: /config/gazpar2mqtt/config.yaml # Sets the location of the config.yaml (see below)
+mqtt_autodiscover: true # Shows in the log the detail of the mqtt local server (if available). It can then be added to the config.yaml file.
+TZ: Europe/Paris # Sets a specific timezone
+```
+
+- Config.yaml
+
 Configuration is done by customizing the config.yaml that can be found in /config/gazpar2mqtt/config.yaml
 
 The complete list of options can be seen here : https://github.com/yukulehe/gazpar2mqtt
