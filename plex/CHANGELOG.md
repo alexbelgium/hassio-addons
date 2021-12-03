@@ -1,3 +1,4 @@
+- localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
 
 ## 1.25.0.5282-2edd3c44d-ls89 (02-12-2021)
 - Update to latest version from linuxserver/docker-plex
