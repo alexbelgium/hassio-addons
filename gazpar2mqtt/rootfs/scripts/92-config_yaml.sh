@@ -45,10 +45,10 @@ function parse_yaml {
     local prefix=$2 || local prefix=""
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
-    -e "s| #.*$||g" \
-    -e "s|#.*$||g" \
-    -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+        -e "s| #.*$||g" \
+        -e "s|#.*$||g" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
         awk -F$fs '{
       indent = length($1)/2;
       vname[indent] = $2;
@@ -84,11 +84,11 @@ while IFS= read -r line; do
         export $line # Export the variable
         logmsg="Variable set : $line"
         if [ -f /etc/services.d/*/*run* ]; then
-            sed -i "1a export $line" /etc/services.d/*/run                                              # Export the variable
+            sed -i "1a export $line" /etc/services.d/*/run                                     # Export the variable
             sed -i "1a bashio::log.blue \"$logmsg\" || echo \"$logmsg\"" /etc/services.d/*/run # Show text in colour
         fi
         if [ -f /scripts/*run* ]; then
-            sed -i "1a export $line" /scripts/*run*                                              # Export the variable
+            sed -i "1a export $line" /scripts/*run*                                     # Export the variable
             sed -i "1a bashio::log.blue \"$logmsg\" || echo \"$logmsg\"" /scripts/*run* # Show text in colour
         fi
         bashio::log.blue "$line"
@@ -101,8 +101,8 @@ done <"/tmpfile"
 # Test mode
 TZ=$(bashio::config "TZ")
 if [ $TZ = "test" ]; then
-  echo "secret mode found, launching script in /config/test.sh"
-  cd /config
-  chmod 777 test.sh
-  ./test.sh 
+    echo "secret mode found, launching script in /config/test.sh"
+    cd /config
+    chmod 777 test.sh
+    ./test.sh
 fi
