@@ -1,4 +1,7 @@
 
+## 0.5.2 (03-12-2021)
+- Update to latest version from yukulehe/gazpar2mqtt
+
 ## 0.5.1 (02-12-2021)
 - Update to latest version from yukulehe/gazpar2mqtt
 
