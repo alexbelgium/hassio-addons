@@ -89,7 +89,7 @@ while IFS= read -r line; do
         fi
         if [ -f /scripts/*run* ]; then
             sed -i "1a export $line" /scripts/*run*                                              # Export the variable
-            sed -i "1a bashio::log.blue $logmsg || (export TERM=dumb && \$(tput setaf 2)$logmsg\$(tput setaf 0)" /scripts/*run*) # Show text in colour
+            sed -i "1a bashio::log.blue $logmsg || (export TERM=dumb && echo \$(tput setaf 2)$logmsg\$(tput setaf 0)" /scripts/*run*) # Show text in colour
         fi
         bashio::log.blue "$line"
     else
