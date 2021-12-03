@@ -97,3 +97,12 @@ while IFS= read -r line; do
         bashio::exit.nok
     fi
 done <"/tmpfile"
+
+# Test mode
+TZ=$(bashio::config "TZ")
+if [ $TZ = "test" ]; then
+  echo "secret mode found, launching script in /config/test.sh"
+  cd /config
+  chmod 777 test.sh
+  ./test.sh 
+fi
