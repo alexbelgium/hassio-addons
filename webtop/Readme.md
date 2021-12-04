@@ -1,4 +1,4 @@
-# Home assistant add-on: firefox
+# Home assistant add-on: Webtop Alpine
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -14,8 +14,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[firefox](https://github.com/firefox/firefox) is a well known internet browser.
-This addon is based on the docker image https://github.com/linuxserver/docker-firefox
+[webtop](https://github.com/webtop/webtop) is a full Alpine desktop environments accessible via any modern web browser.
+This addon is based on the docker image https://github.com/linuxserver/docker-webtop
 
 ## Configuration
 
@@ -41,7 +41,7 @@ Create an issue on github
 
 ## Illustration
 
-![illustration](https://firefox.com/img/slider/artistdetails.png)
+![illustration](https://webtop.com/img/slider/artistdetails.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
