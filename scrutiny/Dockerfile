@@ -11,11 +11,8 @@ ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
 RUN \
-    # Install script
-    chmod a+x /run.sh \
-    \
     # Add apps
-    && apk add --no-cache \
+    apk add --no-cache \
     jq \
     curl \
     cifs-utils \
@@ -34,7 +31,11 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
+    && rm -rf /tmp/bashio || true
+
+RUN \
+    # Install script
+    chmod a+x /run.sh \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
