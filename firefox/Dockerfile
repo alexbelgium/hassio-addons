@@ -15,10 +15,6 @@ RUN \
     && rm -rf /tmp/bashio || true
 
 RUN \
-    # use /data instead of /config for hass.io environment
-    sed -i "s|/config|/config/firefox|g" /etc/services.d/firefox/run \
-    && sed -i "s|/config|/config/firefox|g" /etc/cont-init.d/30-config \
-    \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
