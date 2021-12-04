@@ -42,7 +42,8 @@
     "/dev/sdd2",
     "/dev/sde2",
     "/dev/sdf2",
-    "/dev/sdg2"
+    "/dev/sdg2", 
+    "/dev/nvme0"
   ],
   "privileged": [
     "SYS_ADMIN",
