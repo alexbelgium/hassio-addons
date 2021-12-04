@@ -1,0 +1,8 @@
+{
+  "build_from": {
+    "armhf": "linuxserver/firefox:arm32v7-latest",
+    "armv7": "linuxserver/firefox:arm32v7-latest",
+    "aarch64": "linuxserver/firefox:arm64v8-latest",
+    "amd64": "linuxserver/firefox:amd64-latest"
+  }
+}
