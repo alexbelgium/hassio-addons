@@ -94,6 +94,7 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
+    "cifsdomain": "str?",
     "smbv1": "bool?"
   },
   "slug": "plex_nas",

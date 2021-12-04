@@ -67,9 +67,11 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
+    "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?",
+    "cifsdomain": "str?",
     "smbv1": "bool?"
   },
   "slug": "jellyfin",

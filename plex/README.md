@@ -22,6 +22,22 @@ Forked to add latest beta versions, smb and local hdd mount.
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-plex) from linuxserver.io.
 
+## Configuration
+
+Webui can be found at `<your-ip>:8096`.
+
+```yaml
+GUID: user
+GPID: user
+TZ: timezone
+claim: claim code for plex server # see https://github.com/linuxserver/docker-plex
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
+networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password
+cifsdomain: "domain" # optional, allow setting the domain for the smb share
+```
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in
@@ -33,10 +49,6 @@ comparison to installing any other Hass.io add-on.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
-## Configuration
-
-Webui can be found at `<your-ip>:8096`.
 
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [repository]: https://github.com/alexbelgium/hassio-addons

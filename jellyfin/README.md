@@ -13,14 +13,24 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-Forked to add latest beta versions, smb and local hdd mount.
-
-- Inital version : https://github.com/petersendev/hassio-addons
-- CIFS code : https://github.com/dianlight/hassio-addons
-
 [jellyfin](https://jellyfin.media/) organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone jellyfin Media Server.
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-jellyfin) from linuxserver.io.
+
+## Configuration
+
+Webui can be found at `<your-ip>:8096`.
+
+```yaml
+GUID: user
+GPID: user
+TZ: timezone
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
+networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password
+cifsdomain: "domain" # optional, allow setting the domain for the smb share
+```
 
 ## Installation
 
@@ -33,10 +43,6 @@ comparison to installing any other Hass.io add-on.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
-## Configuration
-
-Webui can be found at `<your-ip>:8096`.
 
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [repository]: https://github.com/alexbelgium/hassio-addons
