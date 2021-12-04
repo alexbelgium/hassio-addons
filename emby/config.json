@@ -1,11 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "backup_exclude": [
     "*/cache/",
     "*/logs/",
@@ -24,6 +19,16 @@
     "/dev/video14",
     "/dev/video15",
     "/dev/video16",
+    "/dev/ttyUSB0",
+    "/dev/sda",
+    "/dev/sdb",
+    "/dev/sdc",
+    "/dev/sdd",
+    "/dev/sde",
+    "/dev/sdf",
+    "/dev/sdg",
+    "/dev/nvme",
+    "/dev/mmcblk",
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
@@ -37,14 +42,14 @@
     "/dev/sdd2",
     "/dev/sde2",
     "/dev/sdf2",
-    "/dev/sdg2"
+    "/dev/sdg2",
+    "/dev/nvme0",
+    "/dev/nvme1",
+    "/dev/nvme2",
+    "/dev/mmcblk0",
+    "/dev/mmcblk0p1"
   ],
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl:rw"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw", "ssl:rw"],
   "name": "Emby NAS",
   "options": {
     "PUID": 0,
@@ -63,10 +68,7 @@
     "7359/udp": "udp server discover (optional)",
     "1900/udp": "dlna (optional)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PUID": "int",
     "PGID": "int",

@@ -1,14 +1,18 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "description": "Cloud Commander a file manager for the web with console and editor",
   "devices": [
     "/dev/mmcblk0p8",
+    "/dev/sda",
+    "/dev/sdb",
+    "/dev/sdc",
+    "/dev/sdd",
+    "/dev/sde",
+    "/dev/sdf",
+    "/dev/sdg",
+    "/dev/nvme",
+    "/dev/mmcblk",
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
@@ -22,7 +26,12 @@
     "/dev/sdd2",
     "/dev/sde2",
     "/dev/sdf2",
-    "/dev/sdg2"
+    "/dev/sdg2",
+    "/dev/nvme0",
+    "/dev/nvme1",
+    "/dev/nvme2",
+    "/dev/mmcblk0",
+    "/dev/mmcblk0p1"
   ],
   "environment": {},
   "ingress": true,
@@ -45,10 +54,7 @@
   "ports_description": {
     "8000/tcp": "Web UI port (required)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "localdisks": "str?",
     "networkdisks": "str?",

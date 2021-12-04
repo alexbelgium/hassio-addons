@@ -3,6 +3,15 @@
   "arch": ["aarch64", "amd64", "armhf", "armv7"],
   "description": "A server-based application for browsing, organizing and sharing your personal photo collection",
   "devices": [
+    "/dev/sda",
+    "/dev/sdb",
+    "/dev/sdc",
+    "/dev/sdd",
+    "/dev/sde",
+    "/dev/sdf",
+    "/dev/sdg",
+    "/dev/nvme",
+    "/dev/mmcblk",
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
@@ -16,7 +25,12 @@
     "/dev/sdd2",
     "/dev/sde2",
     "/dev/sdf2",
-    "/dev/sdg2"
+    "/dev/sdg2",
+    "/dev/nvme0",
+    "/dev/nvme1",
+    "/dev/nvme2",
+    "/dev/mmcblk0",
+    "/dev/mmcblk0p1"
   ],
   "environment": {
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password"

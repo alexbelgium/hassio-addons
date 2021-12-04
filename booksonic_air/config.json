@@ -4,6 +4,15 @@
   "boot": "auto",
   "description": "platform for accessing the audibooks you own wherever you are",
   "devices": [
+    "/dev/sda",
+    "/dev/sdb",
+    "/dev/sdc",
+    "/dev/sdd",
+    "/dev/sde",
+    "/dev/sdf",
+    "/dev/sdg",
+    "/dev/nvme",
+    "/dev/mmcblk",
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
@@ -17,7 +26,12 @@
     "/dev/sdd2",
     "/dev/sde2",
     "/dev/sdf2",
-    "/dev/sdg2"
+    "/dev/sdg2",
+    "/dev/nvme0",
+    "/dev/nvme1",
+    "/dev/nvme2",
+    "/dev/mmcblk0",
+    "/dev/mmcblk0p1"
   ],
   "environment": {
     "PUID": "0",
