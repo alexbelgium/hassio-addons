@@ -56,7 +56,7 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "TZ": "str",
+    "TZ": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
