@@ -1,4 +1,7 @@
 
+## 15.9.10 (04-12-2021)
+- Update to latest version from coderaiser/cloudcmd
+
 ## 15.9.9 (22-11-2021)
 - Update to latest version from coderaiser/cloudcmd
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
