@@ -1,8 +1,0 @@
-{
-  "build_from": {
-    "armv7": "linuxserver/jellyfin:arm32v7-latest",
-    "armhf": "linuxserver/jellyfin:arm32v7-latest",
-    "aarch64": "linuxserver/jellyfin:arm64v8-latest",
-    "amd64": "linuxserver/jellyfin:amd64-latest"
-  }
-}
