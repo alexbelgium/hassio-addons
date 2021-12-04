@@ -29,6 +29,7 @@
     "/dev/sde",
     "/dev/sdf",
     "/dev/sdg",
+    "/dev/nvme", 
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
