@@ -1,3 +1,4 @@
+- Added : "/dev/nvme0"
 
 ## 0.3.13 (26-10-2021)
 - Update to latest version from analogj/scrutiny
