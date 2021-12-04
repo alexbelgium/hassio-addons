@@ -48,6 +48,6 @@
   "slug": "resiliosync",
   "upstream": "2.7.2.1375",
   "url": "https://github.com/tyjtyj/hassio-addons",
-  "version": "2.7.2.1375-5",
+  "version": "2.7.2.1375-6",
   "webui": "http://[HOST]:[PORT:8888]"
 }
