@@ -1,5 +1,10 @@
 {
-  "arch": ["aarch64", "amd64", "armhf", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf",
+    "armv7"
+  ],
   "description": "voice communication for online gaming, education and training",
   "environment": {
     "TS3SERVER_LICENSE": "accept",
@@ -9,7 +14,9 @@
     "DIST_UPDATE": "1",
     "TS_UPDATE": "1"
   },
-  "map": ["share:rw"],
+  "map": [
+    "share:rw"
+  ],
   "name": "Teamspeak server",
   "ports": {
     "9987/udp": "9987",
@@ -24,7 +31,7 @@
     "41144/tcp": "TSDNS"
   },
   "slug": "teamspeak",
-  "upstream": "3.13.6",
+  "upstream": "debian",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.13.6"
+  "version": "debian"
 }
