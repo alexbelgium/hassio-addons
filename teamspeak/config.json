@@ -31,7 +31,7 @@
     "41144/tcp": "TSDNS"
   },
   "slug": "teamspeak",
-  "upstream": "debian",
+  "upstream": "3.13.6",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "debian"
+  "version": "3.13.6"
 }
