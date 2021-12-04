@@ -30,13 +30,14 @@ RUN \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -fr \
-    /tmp/* \
-    \
+    /tmp/*
+
+RUN \
     ###############
     # Adapt image #
     ###############
     # Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \
@@ -48,7 +49,10 @@ RUN \
     # Correct sync folder
     && grep -rl "/sync/" /etc/cont-init.d | xargs sed -i 's|/sync/|/share/resiliosync|g' || true \
     && grep -rl " /sync" /etc/cont-init.d | xargs sed -i 's| /sync| /share/resiliosync|g' || true \
-    && sed -i 's=/sync/=/share/resiliosync/=g' /defaults || true
+    && sed -i 's=/sync/=/share/resiliosync/=g' /defaults
+
+# Copy root filesystem
+COPY rootfs / 
 
 VOLUME [ "/data" ]
 
