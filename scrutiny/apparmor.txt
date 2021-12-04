@@ -42,6 +42,7 @@ profile db21ed7f_scrutiny flags=(attach_disconnected,mediate_deleted) {
   /dev/sde mrwkl,
   /dev/sdf mrwkl,
   /dev/sdg mrwkl,
+  /dev/nvme0 mrwkl,
   
   # Data access
   /data/** rw, 
