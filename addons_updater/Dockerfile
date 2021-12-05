@@ -4,8 +4,9 @@ FROM $BUILD_FROM
 VOLUME [ "/data" ]
 
 #Install last version https://github.com/dvershinin/lastversion
+ENV PACKAGES="git moreutils"
 RUN \
-    apk add --no-cache git moreutils \
+    apk add --no-cache $PACKAGES \
     && pip install --upgrade pip \
     && pip install lastversion
 
