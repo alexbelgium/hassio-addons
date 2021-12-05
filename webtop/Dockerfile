@@ -7,13 +7,13 @@ RUN \
     ################
     # Install apps #
     ################
-    apk add --no-cache \
-    curl \
-    jq \
-    cifs-utils \
-    keyutils \
-    smbclient \
-    samba \
+      apk add --no-cache \
+      curl \
+      jq \
+      cifs-utils \
+      keyutils \
+      smbclient \
+      samba \
 ###################
 # Install bashio #
 ##################
@@ -22,18 +22,16 @@ RUN \
     tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    rm -rf /tmp/bashio || true
+    rm -rf /tmp/bashio
 
 # Allow UID and GID setting
 RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \ 
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+  && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \ 
+  && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
   # Allow custom config folder
-  && grep -rl '/config' /defaults/ | xargs sed -i 's|/config|/config/webtop|g' \
-  && grep -rl '/config' /etc/cont-init.d/ | xargs sed -i 's|/config|/data/webtop|g' \
-  && grep -rl '/config' /etc/logrotate.d/ | xargs sed -i 's|/config|/data/webtop|g' \
-  && grep -rl '/config' /etc/services.d/ | xargs sed -i 's|/config|/data/webtop|g'
- 
+  && sed -i 's|/config|/config/webtop|g' /defaults/* \
+  && sed -i 's|/config|/data/webtop|g' /etc/cont-init.d/* \
+  && sed -i 's|/config|/data/webtop|g' /etc/services.d/*/run
 
 # copy local files
 COPY root/ /
