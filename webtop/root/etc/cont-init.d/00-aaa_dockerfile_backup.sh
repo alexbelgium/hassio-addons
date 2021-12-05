@@ -11,7 +11,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
     jq \
     cifs-utils \
     keyutils \
-    smbclient \
     samba
     
         ###################
