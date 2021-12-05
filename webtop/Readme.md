@@ -51,7 +51,7 @@ Create an issue on github
 
 ## Illustration
 
-![illustration](https://webtop.com/img/slider/artistdetails.png)
+![illustration](https://images.app.goo.gl/BqftyQU62Xm81u5fA)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
