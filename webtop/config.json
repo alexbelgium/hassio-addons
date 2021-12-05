@@ -50,12 +50,8 @@
     "3000/tcp": "web interface"
   },
   "options": {
-    "PUID": 0,
-    "PGID": 0
   },
   "schema": {
-    "PUID": "int",
-    "PGID": "int",
     "TZ": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
