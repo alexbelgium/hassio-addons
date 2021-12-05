@@ -31,8 +31,8 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
   && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
   # Allow custom config folder
   && sed -i 's|/config|/config/webtop|g' /defaults/* \
-  && sed -i 's|/config|/data/webtop|g' /etc/cont-init.d/* \
-  && sed -i 's|/config|/data/webtop|g' /etc/services.d/*/run
+  && sed -i 's|/config|/config/webtop|g' /etc/cont-init.d/* \
+  && sed -i 's|/config|/config/webtop|g' /etc/services.d/*/run
 
 # copy local files
 COPY root/ /
