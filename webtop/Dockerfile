@@ -32,7 +32,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
   && grep -rl '/config' /defaults/ | xargs sed -i 's|/config|/config/webtop|g' \
   && grep -rl '/config' /etc/cont-init.d/ | xargs sed -i 's|/config|/data/webtop|g' \
   && grep -rl '/config' /etc/logrotate.d/ | xargs sed -i 's|/config|/data/webtop|g' \
-  && grep -rl '/config' /etc/services.d/ | xargs sed -i 's|/config|/data/webtop|g' || true
+  && grep -rl '/config' /etc/services.d/ | xargs sed -i 's|/config|/data/webtop|g'
  
 
 # copy local files
