@@ -13,7 +13,11 @@ mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
 for KEYS in ${arr[@]}; do
   # export key
   VALUE=$(jq .$KEYS ${JSONSOURCE})
-  export ${KEYS}=${VALUE//[\"\']/} &>/dev/null
+  line="${KEYS}=${VALUE//[\"\']/} &>/dev/null"
+  # Use locally
+  export $line
+  # Export the variable to run scripts
+  sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || sed -i "1a export $line" /scripts/*run*
 done
 
 ################
@@ -23,7 +27,5 @@ if [ ! -z "TZ" ] && [ -f /etc/localtime ]; then
   if [ -f /usr/share/zoneinfo/$TZ ]; then
     echo "Timezone set from $(cat /etc/timezone) to $TZ"
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ >/etc/timezone
-  else
-    echo "WARNING : Timezone $TZ is invalid, it will be kept to default value of $(cat /etc/timezone)"
   fi
 fi
