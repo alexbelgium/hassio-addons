@@ -20,7 +20,10 @@ This addon is based on the docker image https://github.com/linuxserver/docker-we
 ## Configuration
 
 Webui can be found at <http://your-ip:PORT>.
-The default username/password : abc/abc
+
+By default the image is based around the abc user and we recommend using this user as all of the init/config is based around it. The default password is also abc . If you want to change this password and require authentication when accessing the interface simply issue passwd inside a gui terminal in the webtop. Then when accessing the web interface use the path:
+
+http://localhost:3000/?login=true
 
 ```yaml
 TZ: timezone
@@ -51,7 +54,7 @@ Create an issue on github
 
 ## Illustration
 
-![illustration](https://images.app.goo.gl/BqftyQU62Xm81u5fA)
+![illustration](https://www.linuxserver.io/user/pages/content/images/2021/05/menu.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
