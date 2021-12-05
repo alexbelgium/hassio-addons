@@ -55,7 +55,7 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "cifsdomain": "str?",
-    "DNS_server": "str?"
+    "DNS_server": "str?",
     "silent": "bool?"
   },
   "slug": "webtop_alpine",
