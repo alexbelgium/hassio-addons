@@ -39,7 +39,6 @@
     "PGID": "0",
     "shm_size": "1gb"
   },
-  "full_access": true,
   "map": ["media:rw", "config:rw", "share:rw", "ssl"],
   "name": "Webtop Alpine",
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
