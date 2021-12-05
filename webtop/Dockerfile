@@ -3,16 +3,18 @@ ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 ARG BASHIO_VERSION=0.14.3
 
+ENV PACKAGES="curl \
+      jq \
+      cifs-utils \
+      keyutils \
+      samba" 
+
 RUN \
     ################
     # Install apps #
     ################
-      apk add --no-cache \
-      curl \
-      jq \
-      cifs-utils \
-      keyutils \
-      samba \
+      apk add --no-cache $PACKAGES \
+      \
 ###################
 # Install bashio #
 ##################
