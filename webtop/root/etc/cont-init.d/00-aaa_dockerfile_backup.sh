@@ -6,7 +6,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ################
         # Install apps #
         ################
-    apk add --no-cache $PACKAGES
+        apk add --no-cache $PACKAGES
     
         ###################
         # Install bashio #
