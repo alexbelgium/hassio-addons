@@ -18,7 +18,7 @@ RUN \
     ################
     # Install apps #
     ################
-    apk add --no-cache $PACKAGES
+    apk add --no-cache $PACKAGES \
     \
     ##################
     # Install bashio #
