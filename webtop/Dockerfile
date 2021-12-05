@@ -27,7 +27,13 @@ RUN \
 # Allow UID and GID setting
 RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \ 
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+  # Allow custom config folder
+  && grep -rl '/config' /defaults/ | xargs sed -i 's|/config|/config/webtop|g' \
+  && grep -rl '/config' /etc/cont-init.d/ | xargs sed -i 's|/config|/data/webtop|g' \
+  && grep -rl '/config' /etc/logrotate.d/ | xargs sed -i 's|/config|/data/webtop|g' \
+  && grep -rl '/config' /etc/services.d/ | xargs sed -i 's|/config|/data/webtop|g' || true
+ 
 
 # copy local files
 COPY root/ /
