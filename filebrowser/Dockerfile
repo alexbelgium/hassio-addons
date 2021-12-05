@@ -3,12 +3,8 @@ ARG BUILD_UPSTREAM="2.19.0"
 FROM hurlenko/filebrowser:v${BUILD_UPSTREAM}
 ARG BASHIO_VERSION=0.14.3
 
-RUN \
-    ################
-    # Install apps #
-    ################
-    apk add --no-cache \
-    curl \
+
+ENV PACKAGES="curl \
     jq \
     bash \
     cifs-utils \
@@ -16,7 +12,13 @@ RUN \
     samba \
     samba-client \
     bind-tools \
-    nginx \
+    nginx"
+
+RUN \
+    ################
+    # Install apps #
+    ################
+    apk add --no-cache $PACKAGES
     \
     ##################
     # Install bashio #
