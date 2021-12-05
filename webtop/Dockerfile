@@ -23,7 +23,7 @@ RUN \
     tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    rm -rf /tmp/bashio
+    rm -rf /tmp/bashio || true
 
 # Allow UID and GID setting
 RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
