@@ -12,7 +12,6 @@ RUN \
       jq \
       cifs-utils \
       keyutils \
-      smbclient \
       samba \
 ###################
 # Install bashio #
