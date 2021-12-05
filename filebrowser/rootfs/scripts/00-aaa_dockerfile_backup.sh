@@ -6,16 +6,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ################
         # Install apps #
         ################
-        apk add --no-cache \
-        curl \
-        jq \
-        bash \
-        cifs-utils \
-        keyutils \
-        samba \
-        samba-client \
-        bind-tools \
-        nginx
+        apk add --no-cache $PACKAGES
 
         ###################
         # Install bashio #
