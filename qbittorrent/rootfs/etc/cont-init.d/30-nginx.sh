@@ -12,17 +12,15 @@ if bashio::config.true 'ssl'; then
 qbittorrent_protocol=https
 fi
 
-bashio::var.json \
-    interface "$(bashio::addon.ip_address)" \
-    port "^$(bashio::addon.ingress_port)" \
-    protocol "${qbittorrent_protocol}" \
-    certfile "$(bashio::config 'certfile')" \
-    keyfile "$(bashio::config 'keyfile')" \
-    ssl "^$(bashio::config 'ssl')" \
-    | tempio \
-        -template /etc/nginx/templates/ingress.gtpl \
-        -out /etc/nginx/servers/ingress.conf
-        
+cp /etc/nginx/templates/ingress.gtpl /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .interface }}|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .port }}|$(bashio::addon.ingress_port)|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .protocol }}|${qbittorrent_protocol}|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .certfile }}|$(bashio::config 'certfile')|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .keyfile }}|$(bashio::config 'keyfile')|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .ssl }}|$(bashio::config 'ssl')|g" /etc/nginx/servers/ingress.conf
+
+       
 ######################
 # VUETORRENT INSTALL #
 ######################
