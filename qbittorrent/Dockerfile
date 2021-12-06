@@ -4,17 +4,9 @@ FROM ${BUILD_FROM}
 
 # Base system
 ENV BASHIO_VERSION=0.14.3
-ARG TEMPIO_VERSION=2021.01.0
+ENV BUILD_ARCH=$BUILD_ARCH
 ARG BUILD_ARCH
-
-RUN \
-    ################
-    # Install apps #
-    ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y \
-    jq \
+ENV PACKAGES="jq \
     curl \
     cifs-utils \
     keyutils \
@@ -22,15 +14,16 @@ RUN \
     smbclient \
     nginx \
     coreutils \
-    openvpn \
+    openvpn"
+
+RUN \
+    ################
+    # Install apps #
+    ################
+    apt-get clean \
+    && apt-get update \
+    && apt-get install -y ${PACKAGES} \
     && apt-get clean \
-    \    
-    ##################
-    # Install tempio #
-    ##################
-    && curl -L -f -s -o /usr/bin/tempio \
-    "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
-    && chmod a+x /usr/bin/tempio \
     \
     ##############
     # STATISTICS #
@@ -46,14 +39,14 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio || true
+
+RUN \
     ########################################
     # Correct upstream image folders links #
     ########################################
-    \
     # Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \

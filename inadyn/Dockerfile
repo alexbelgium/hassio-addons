@@ -2,7 +2,6 @@ FROM troglobit/inadyn:latest
 
 # Base system
 ENV BASHIO_VERSION=0.14.3
-ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
 
 ENV LANG='C.UTF-8'\
