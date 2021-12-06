@@ -52,13 +52,9 @@
     "/dev/nvme0",
     "/dev/nvme1",
     "/dev/nvme2",
-    "/dev/mmcblk0",
-    "/dev/mmcblk0p1",
     "/dev/nvme0",
     "/dev/nvme1",
-    "/dev/nvme2",
-    "/dev/mmcblk0",
-    "/dev/mmcblk0p1"
+    "/dev/nvme2"
   ],
   "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
   "udev": "true",

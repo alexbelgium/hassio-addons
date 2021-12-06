@@ -29,9 +29,7 @@
     "/dev/sdg2",
     "/dev/nvme0",
     "/dev/nvme1",
-    "/dev/nvme2",
-    "/dev/mmcblk0",
-    "/dev/mmcblk0p1"
+    "/dev/nvme2"
   ],
   "environment": {},
   "map": ["backup:rw", "config:rw", "share:rw", "media:rw", "ssl"],
