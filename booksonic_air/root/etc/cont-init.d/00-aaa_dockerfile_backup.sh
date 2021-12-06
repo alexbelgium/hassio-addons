@@ -19,7 +19,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ###################
         # Install bashio #
         ##################
-        BASHIO_VERSION=0.14.3
+        
         mkdir -p /tmp/bashio
         curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" |
             tar -xzf - --strip 1 -C /tmp/bashio
