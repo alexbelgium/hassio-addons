@@ -1,7 +1,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM freqtradeorg/freqtrade:latest
-ARG BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.14.3
 
 USER root
 COPY rootfs /

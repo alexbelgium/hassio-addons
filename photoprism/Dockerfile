@@ -6,7 +6,7 @@ FROM photoprism/photoprism:preview
 # Copy root filesystem
 COPY rootfs / 
 
-ARG BASHIO_VERSION=0.14.3 
+ENV BASHIO_VERSION=0.14.3 
 
 RUN \
     ################

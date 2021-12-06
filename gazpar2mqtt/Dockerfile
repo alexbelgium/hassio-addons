@@ -1,7 +1,7 @@
 FROM yukulehe/gazpar2mqtt:latest
 
 # Base system
-ARG BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.14.3
 ENV TZ=Europe/Paris
 
 # Copy root filesystem

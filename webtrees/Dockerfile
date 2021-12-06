@@ -2,7 +2,7 @@ ARG BUILD_VERSION
 FROM nathanvaughn/webtrees:latest
 
 # Global variables
-ARG BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.14.3
 ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
 VOLUME ["/data"]

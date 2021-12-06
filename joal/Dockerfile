@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.1.27"
-ARG BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.14.3
 
 RUN \
     #Install bashio

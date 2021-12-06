@@ -2,7 +2,7 @@ ARG BUILD_UPSTREAM="0.7.7"
 FROM m4dm4rtig4n/enedisgateway2mqtt:$BUILD_UPSTREAM
 
 # Base system
-ARG BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.14.3
 
 # Copy root filesystem
 COPY rootfs /

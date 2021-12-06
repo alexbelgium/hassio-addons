@@ -3,7 +3,7 @@ ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
 # Set shell
-ARG BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.14.3
 ENV PAPERLESS_DATA_DIR=/config/paperless_ng 
 
 RUN apt-get update && \

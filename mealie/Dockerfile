@@ -4,7 +4,7 @@ FROM ${BUILD_FROM}
 
 COPY rootfs / 
 
-ARG BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.14.3
 
 RUN \
     ################

@@ -2,7 +2,7 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM florider89/joplin-server:master
 
-ARG BASHIO_VERSION=0.14.3 
+ENV BASHIO_VERSION=0.14.3 
 USER root
 RUN \
     ################

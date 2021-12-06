@@ -6,7 +6,7 @@ FROM ${BUILD_FROM}
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 ARG BUILD_ARCH
-ARG BASHIO_VERSION=0.14.3
+ENV BASHIO_VERSION=0.14.3
 
 # Add bashio
 RUN \
