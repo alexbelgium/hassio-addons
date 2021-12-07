@@ -7,6 +7,13 @@ FROM photoprism/photoprism:preview
 COPY rootfs / 
 
 ENV BASHIO_VERSION=0.14.3 
+ENV PACKAGES="jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
+    smbclient \
+    coreutils"
 
 RUN \
     ################
@@ -14,14 +21,7 @@ RUN \
     ################
     apt-get clean \
     && apt-get update \
-    && apt-get install -y \
-    jq \
-    curl \
-    cifs-utils \
-    keyutils \
-    samba \
-    smbclient \
-    coreutils \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     \
     ##################
     # Install bashio #
@@ -31,14 +31,15 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio || true
+
+RUN \
     ###################
     # Configure image #
     ###################
     \
     # Create directories
-    && mkdir -m 777 -p \
+    mkdir -m 777 -p \
     /data/photoprism/originals \
     /data/photoprism/import \
     /data/photoprism/storage/config \

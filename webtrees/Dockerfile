@@ -6,6 +6,9 @@ ENV BASHIO_VERSION=0.14.3
 ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
 VOLUME ["/data"]
+ENV PACKAGES="jq \
+    curl \
+    yamllint"
 
 RUN \
     ################
@@ -13,10 +16,7 @@ RUN \
     ################
     apt-get clean \
     && apt-get update \
-    && apt-get install -y \
-    jq \
-    curl \
-    yamllint \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     && apt-get clean \
     \
     ##################

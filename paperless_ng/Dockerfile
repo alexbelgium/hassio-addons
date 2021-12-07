@@ -5,19 +5,17 @@ FROM ${BUILD_FROM}
 # Set shell
 ENV BASHIO_VERSION=0.14.3
 ENV PAPERLESS_DATA_DIR=/config/paperless_ng 
-
-RUN apt-get update && \
-    \
-    apt-get clean && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-    jq \
+ENV PACKAGES="jq \
     curl \
     cifs-utils \
     keyutils \
     smbclient \
     samba \
-    yamllint \
+    yamllint"
+
+RUN apt-get clean && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends ${PACKAGES} \
     \
     ##################
     # Install bashio #
@@ -27,7 +25,7 @@ RUN apt-get update && \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    && rm -rf /tmp/bashio || true
 
 # copy local files
 COPY rootfs/ /

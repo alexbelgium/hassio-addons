@@ -4,20 +4,21 @@ ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
 # Add bashio
-ENV BASHIO_VERSION=0.14.3 
+ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
+    smbclient" 
+
 RUN \
     ################
     # Install apps #
     ################
     apt-get clean \
     && apt-get update \
-    && apt-get install -y --no-install-recommends \
-    jq \
-    curl \
-    cifs-utils \
-    keyutils \
-    samba \
-    smbclient \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     \ 
     ##################
     # Install bashio #

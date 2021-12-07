@@ -2,11 +2,11 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="jq"
 
 # Install bashio
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    jq \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     ##################
     # Install bashio #
     ##################

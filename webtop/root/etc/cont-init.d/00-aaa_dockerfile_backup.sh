@@ -6,8 +6,13 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ################
         # Install apps #
         ################
-        apk add --no-cache $PACKAGES
-    
+        PACKAGES="${PACKAGES:="curl"}"
+        
+        apt-get clean \
+        && apt-get update \
+        && apt-get install -y --no-install-recommends ${PACKAGES} 2>/dev/null \
+        || apk add --no-cache ${PACKAGES}
+
         ###################
         # Install bashio #
         ##################
@@ -18,6 +23,7 @@ if [ ! -f "/usr/bin/bashio" ]; then
         mv /tmp/bashio/lib /usr/lib/bashio
         ln -s /usr/lib/bashio/bashio /usr/bin/bashio
         rm -rf /tmp/bashio
+
     ) >/dev/null
 
 fi

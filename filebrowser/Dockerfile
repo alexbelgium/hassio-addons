@@ -3,7 +3,6 @@ ARG BUILD_UPSTREAM="2.19.0"
 FROM hurlenko/filebrowser:v${BUILD_UPSTREAM}
 ENV BASHIO_VERSION=0.14.3
 
-
 ENV PACKAGES="curl \
     jq \
     bash \
@@ -18,7 +17,7 @@ RUN \
     ################
     # Install apps #
     ################
-    apk add --no-cache $PACKAGES \
+    apk add --no-cache ${PACKAGES} \
     \
     ##################
     # Install bashio #

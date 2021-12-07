@@ -3,6 +3,9 @@ FROM yukulehe/gazpar2mqtt:latest
 # Base system
 ENV BASHIO_VERSION=0.14.3
 ENV TZ=Europe/Paris
+ENV PACKAGES="jq \
+    curl \
+    yamllint"
 
 # Copy root filesystem
 COPY rootfs /
@@ -13,10 +16,7 @@ RUN \
     ################
     apt-get clean \
     && apt-get update \
-    && apt-get install -y \
-    jq \
-    curl \
-    yamllint \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     && apt-get clean \
     \
     ##################

@@ -7,21 +7,15 @@ COPY rootfs /
 
 # Base system
 ENV BASHIO_VERSION=0.14.3
-ARG TEMPIO_VERSION=2021.01.0
 ARG BUILD_ARCH
+ENV PACKAGES="jq \
+    curl \
+    cifs-utils \
+    nginx"
 
 RUN \
     # Add apps
-    apk add --no-cache \
-    jq \
-    curl \
-    cifs-utils \
-    nginx \
-    \
-    # Install tempio
-    && curl -L -f -s -o /usr/bin/tempio \
-    "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
-    && chmod a+x /usr/bin/tempio \
+    apk add --no-cache ${PACKAGES} \
     \
     ##################
     # Install bashio #

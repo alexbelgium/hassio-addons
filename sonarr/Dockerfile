@@ -3,6 +3,12 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="3.0.6.1342"
 FROM ${BUILD_FROM}
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
+    smbclient"
 
 RUN \
     ################
@@ -10,13 +16,7 @@ RUN \
     ################
     apt-get clean \
     && apt-get update \
-    && apt-get install -y \
-    jq \
-    curl \
-    cifs-utils \
-    keyutils \
-    samba \
-    smbclient \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     \ 
     ##################
     # Install bashio #

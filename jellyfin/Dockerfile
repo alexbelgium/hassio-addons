@@ -5,15 +5,13 @@ FROM ${BUILD_FROM}
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="jq \
+    samba \
+    cifs-utils \
+    smbclient"
 
 RUN apt-get update \
-    \
-    && apt-get install -y --no-install-recommends \
-    jq \
-    samba \
-    smbclient \
-    \
-    && apt-get -y upgrade cifs-utils \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     \
     ##################
     # Install bashio #

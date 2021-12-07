@@ -7,16 +7,16 @@ FROM ${BUILD_FROM}
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 ARG BUILD_ARCH
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="curl jq wget gcompat@community"
 
 # Add bashio
 RUN \
     echo "Install version $BUILD_VERSION on $BUILD_ARCH" \
+    && apk add --no-cache ${PACKAGES} \
     ##################
     # Install bashio #
     ##################
     && echo "**** Install Bashio ****" \
-    && apk add --no-cache \
-    curl jq wget \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
@@ -26,10 +26,7 @@ RUN \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz \
-    \
-    #gclib compatibility 
-    && apk add --no-cache gcompat@community || true
+    && rm -fr /tmp/bashio.tar.gz || true
 
 RUN \
     # modify/copy files

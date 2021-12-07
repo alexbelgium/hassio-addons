@@ -2,6 +2,12 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
+    smbclient"
 
 RUN \
     ################
@@ -9,13 +15,7 @@ RUN \
     ################
     apt-get clean \
     && apt-get update \
-    && apt-get install -y \
-    jq \
-    curl \
-    cifs-utils \
-    keyutils \
-    samba \
-    smbclient \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     \ 
     ###################
     # Install bashio #
@@ -25,10 +25,11 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
+    && rm -rf /tmp/bashio || true
+
+RUN \
     # use /data instead of /config for hass.io environment
-    && sed -i "s|/config|/config/radarr|g" /etc/services.d/radarr/run \
+    sed -i "s|/config|/config/radarr|g" /etc/services.d/radarr/run \
     && sed -i "s|/config|/config/radarr|g" /etc/cont-init.d/30-config \
     \
     # Allow UID and GID setting

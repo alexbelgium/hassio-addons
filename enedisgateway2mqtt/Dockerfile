@@ -3,6 +3,9 @@ FROM m4dm4rtig4n/enedisgateway2mqtt:$BUILD_UPSTREAM
 
 # Base system
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="jq \
+    curl \
+    yamllin"
 
 # Copy root filesystem
 COPY rootfs /
@@ -14,10 +17,7 @@ RUN \
     ################
     apt-get clean \
     && apt-get update \
-    && apt-get install -y \
-    jq \
-    curl \
-    yamllint \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     && apt-get clean \
     \    
     ##################

@@ -5,12 +5,13 @@ FROM ${BUILD_FROM}
 COPY rootfs / 
 
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="jq curl bash"
 
 RUN \
     ################
     # Install apps #
     ################
-    apt-get update && apt-get install -y jq curl bash && apt-get clean || apk add --no-cache jq curl bash \
+    apt-get update && apt-get install -y --no-install-recommends ${PACKAGES} && apt-get clean || apk add --no-cache ${PACKAGES} \
     \
     ##################
     # Install bashio #

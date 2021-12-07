@@ -2,6 +2,7 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM freqtradeorg/freqtrade:latest
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="jq git"
 
 USER root
 COPY rootfs /
@@ -11,7 +12,7 @@ RUN \
     # Install apps #
     ################
     apt-get update \
-    && apt-get install -y --no-install-recommends jq git \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     \    
     ###################
     # Install bashio #
@@ -21,7 +22,7 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    && rm -rf /tmp/bashio || true
 
 VOLUME [ "/data" ]
 WORKDIR /

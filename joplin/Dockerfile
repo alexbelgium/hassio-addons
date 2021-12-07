@@ -3,6 +3,8 @@ ARG BUILD_VERSION
 FROM florider89/joplin-server:master
 
 ENV BASHIO_VERSION=0.14.3 
+ENV PACKAGES="jq \
+    curl"
 USER root
 RUN \
     ################
@@ -10,10 +12,7 @@ RUN \
     ################
     apt-get clean \
     && apt-get update \     
-    && apt-get install -y \
-    jq \
-    curl \
-    #         nginx \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     \
     ##################
     # Install bashio #

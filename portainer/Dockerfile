@@ -8,6 +8,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 ARG BUILD_ARCH=amd64
 ARG BUILD_UPSTREAM="2.9.3"
+ENV PACKAGES="nginx"
+
 RUN \
     if [ "${BUILD_ARCH}" = "aarch64" ]; then ARCH="arm64"; fi \
     && if [ "${BUILD_ARCH}" = "armhf" ]; then ARCH="arm"; fi \
@@ -19,8 +21,7 @@ RUN \
     | tar zxvf - -C /opt/
 
 RUN \
-    apk add --no-cache \
-    nginx || true
+    apk add --no-cache ${PACKAGES} || true
 
 # Copy root filesystem
 COPY rootfs /

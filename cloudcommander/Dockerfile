@@ -1,6 +1,12 @@
 ARG BUILD_VERSION
 FROM coderaiser/cloudcmd:latest
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="jq \
+    cifs-utils \    
+    keyutils \
+    samba \
+    smbclient \
+    nginx"
 
 RUN \
     ################
@@ -8,13 +14,7 @@ RUN \
     ################
     apt-get clean \
     && apt-get update \
-    && apt-get install -y --no-install-recommends \
-    jq \
-    cifs-utils \    
-    keyutils \
-    samba \
-    smbclient \
-    nginx \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     && apt-get clean \
     \
     ##################

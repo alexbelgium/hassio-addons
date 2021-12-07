@@ -10,8 +10,8 @@ if [ ! -f "/usr/bin/bashio" ]; then
         
         apt-get clean \
         && apt-get update \
-        && apt-get install -y $PACKAGES 2>/dev/null \
-        || apk add --no-cache $PACKAGES
+        && apt-get install -y --no-install-recommends ${PACKAGES} 2>/dev/null \
+        || apk add --no-cache ${PACKAGES}
 
         ###################
         # Install bashio #

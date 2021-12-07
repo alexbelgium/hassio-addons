@@ -3,14 +3,15 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.1.2"
 FROM ${BUILD_FROM}
 ENV BASHIO_VERSION=0.14.3
-
-# Add bashio
-RUN apk add --no-cache \
-    curl \
+ENV PACKAGES="curl \
     jq \
     moreutils \
     samba \
-    nginx \
+    nginx"
+
+# Add bashio
+RUN apk add --no-cache ${PACKAGES} \
+    \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
@@ -20,7 +21,7 @@ RUN apk add --no-cache \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz
+    && rm -fr /tmp/bashio.tar.gz || true
 
 # Copy root filesystem
 COPY rootfs / 

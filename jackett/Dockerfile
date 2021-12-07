@@ -2,12 +2,18 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="curl"
 
 RUN \
+    ################
+    # Install apps #
+    ################
+    apk add --no-cache ${PACKAGES} \
+    \ 
     ##################
     # Install bashio #
     ##################
-    curl -J -L -o /tmp/bashio.tar.gz \
+    && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
     && tar zxvf \
@@ -16,7 +22,7 @@ RUN \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz 
+    && rm -fr /tmp/bashio.tar.gz || true
 
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/jackett|g" /etc/services.d/jackett/run \

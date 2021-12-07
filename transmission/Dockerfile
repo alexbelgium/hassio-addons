@@ -2,13 +2,14 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 ENV BASHIO_VERSION=0.14.3
-
-# Add bashio
-RUN apk add --no-cache \
-    curl \
+ENV PACKAGES="curl \
     jq \
     samba \
-    samba-client \
+    samba-client"
+
+# Add bashio
+RUN apk add --no-cache ${PACKAGES} \
+    \
     && curl -J -L -o /tmp/bashio.tar.gz \
     "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
     && mkdir /tmp/bashio \
@@ -18,9 +19,10 @@ RUN apk add --no-cache \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz \
-    \
-    && ln -s /usr/share/transmission/web/style /transmission-web-control && \
+    && rm -fr /tmp/bashio.tar.gz  || true
+
+RUN \
+    ln -s /usr/share/transmission/web/style /transmission-web-control && \
     ln -s /usr/share/transmission/web/images /transmission-web-control && \
     ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
     ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html

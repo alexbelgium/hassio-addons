@@ -6,11 +6,12 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ################
         # Install apps #
         ################
-        apk add --no-cache \
-    jq \
-    curl \
-    cifs-utils \
-    nginx 
+        PACKAGES="${PACKAGES:="curl"}"
+        
+        apt-get clean \
+        && apt-get update \
+        && apt-get install -y --no-install-recommends ${PACKAGES} 2>/dev/null \
+        || apk add --no-cache ${PACKAGES}
 
         ###################
         # Install bashio #
@@ -22,13 +23,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
         mv /tmp/bashio/lib /usr/lib/bashio
         ln -s /usr/lib/bashio/bashio /usr/bin/bashio
         rm -rf /tmp/bashio
-
-        ###################
-        # Install tempio #
-        ##################
-        curl -L -f -s -o /usr/bin/tempio \
-    "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" \
-    && chmod a+x /usr/bin/tempio
 
     ) >/dev/null
 

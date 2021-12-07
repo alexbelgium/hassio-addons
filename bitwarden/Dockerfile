@@ -24,15 +24,15 @@ COPY --from=vaultwarden /web-vault /opt/web-vault
 
 # add Nginx
 # hadolint ignore=DL3009
+ENV PACKAGES="libmariadb-dev-compat \
+        libpq5 \
+        nginx \
+        sqlite3"
+
 RUN \
     apt-get clean \
     && apt-get update \
-    \
-    && apt-get install -y --no-install-recommends \
-        libmariadb-dev-compat \
-        libpq5 \
-        nginx \
-        sqlite3 \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
     && apt-get clean \
     && rm -f -r \
         /etc/nginx \
