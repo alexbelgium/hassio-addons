@@ -13,10 +13,11 @@ mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
 for KEYS in ${arr[@]}; do
   # export key
   VALUE=$(jq .$KEYS ${JSONSOURCE})
-  line="${KEYS}=${VALUE//[\"\']/} &>/dev/null"
+  line="${KEYS}=${VALUE//[\"\']/}"
   # Use locally
   export $line
   # Export the variable to run scripts
+  line="${KEYS}=${VALUE//[\"\']/} &>/dev/null"
   sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || sed -i "1a export $line" /scripts/*run*
 done
 
