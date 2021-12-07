@@ -1,5 +1,10 @@
 {
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
   "boot": "auto",
   "description": "web's leading on-line collaborative genealogy application",
   "environment": {
@@ -18,7 +23,11 @@
     "WT_PASS": "mybadpassword",
     "WT_EMAIL": "me@example.com"
   },
-  "map": ["config:rw", "share:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
   "name": "Webtrees",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/webtrees/config.yaml",
@@ -40,8 +49,8 @@
   },
   "slug": "webtrees",
   "startup": "services",
-  "upstream": "2.0.17",
+  "upstream": "2.0.19",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1-3",
+  "version": "2.0.19",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
