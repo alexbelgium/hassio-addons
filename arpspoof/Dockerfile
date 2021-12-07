@@ -3,7 +3,8 @@ ARG BUILD_VERSION
 FROM techblog/arpspoof-docker:latest
 ENV BASHIO_VERSION=0.14.3
 ENV PACKAGES="jq \
-    curl"
+    curl \
+    iproute2"
 
 RUN \
     ################
