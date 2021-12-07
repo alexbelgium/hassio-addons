@@ -10,10 +10,12 @@ RUN \
     && pip install --upgrade pip \
     && pip install lastversion
 
-# Copy script
-COPY run.sh /
-RUN chmod a+x /run.sh
-CMD [ "/run.sh"] 
+# copy local files
+COPY rootfs/ /
+#WORKDIR /
+RUN chmod 777 /entrypoint.sh
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ] 
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
