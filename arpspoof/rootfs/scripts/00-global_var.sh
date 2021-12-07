@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 ###################################
 # Export all addon options as env #
@@ -15,6 +15,7 @@ for KEYS in ${arr[@]}; do
   VALUE=$(jq .$KEYS ${JSONSOURCE})
   line="${KEYS}=${VALUE//[\"\']/}"
   # Use locally
+  bashio::log.blue "$line" 2>/dev/null || echo "$line"
   export $line
   # Export the variable to run scripts
   line="${KEYS}=${VALUE//[\"\']/} &>/dev/null"
