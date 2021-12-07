@@ -1,12 +1,15 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
   "boot": "auto",
   "description": "block internet connection for local network devices",
-  "devices": [
-  ],
-  "environment": {
-  },
+  "devices": [],
+  "environment": {},
   "map": [],
   "host_network": true,
   "name": "Arpspoof",
@@ -19,14 +22,17 @@
   "ports_description": {
     "7022/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "ROUTER_IP": "str",
     "INTERFACE_NAME": "str?"
   },
   "slug": "arpspoof",
-  "upstream": "1.0",
+  "upstream": "1.0.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0",
+  "version": "1.0.0",
   "webui": "http://[HOST]:[PORT:7022]"
 }

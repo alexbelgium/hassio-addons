@@ -42,6 +42,23 @@ ROUTER_IP: 127.0.0.1 #Required Router IP
 INTERFACE_NAME: name #Required Interface name. Autofilled if empty.
 ```
 
+## Home-Assistant configuration
+
+You can use a `command_line` switch to temporary disable a internet device in your network.
+
+
+```yaml
+- platform: command_line
+  switches:
+    iphone_internet:
+      friendly_name: "iPhone internet"
+      command_off: "/usr/bin/curl -X GET http://{HA-IP}:7022/disconnect?ip={iPhoneIP}"
+      command_on: "/usr/bin/curl -X GET http://{HA-IP}:7022/reconnect?ip={iPhoneIP}"
+      command_state: "/usr/bin/curl -X GET http://{HA-IP}:7022/status?ip={iPhoneIP}"
+      value_template: >
+        {{ value != "1" }}
+```
+
 ## Support
 
 Create an issue on github
