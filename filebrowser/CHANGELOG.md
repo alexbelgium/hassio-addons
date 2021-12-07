@@ -1,4 +1,5 @@
 - Mount ssl in write
+- Mount nvme drives
 
 ## 2.19.0 (25-11-2021)
 - Update to latest version from hurlenko/filebrowser-docker
