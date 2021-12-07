@@ -8,15 +8,16 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.1.27"
 ENV BASHIO_VERSION=0.14.3
+ENV PACKAGES="wget \
+    jq \
+    nginx"
 
 RUN \
     #Install bashio
     apt-get clean \
     && apt-get update \
-    && apt-get install -y --no-install-recommends \
-    wget \
-    jq \
-    nginx \
+    && apt-get install -y --no-install-recommends ${PACKAGES} \
+    \
     ##################
     # Install bashio #
     ##################
@@ -28,10 +29,11 @@ RUN \
     --strip 1 -C /tmp/bashio \
     \
     && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    \
+    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio || true
+
+RUN \
     #Install Joal
-    && wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$BUILD_UPSTREAM/joal.tar.gz" \
+    wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$BUILD_UPSTREAM/joal.tar.gz" \
     && mkdir -p /data/joal \
     && tar zxvf /tmp/joal.tar.gz -C /data/joal \
     && rm /data/joal/jack-of* \
@@ -43,11 +45,12 @@ RUN \
 
 VOLUME [ "/data" ]
 
-# Copy root filesystem
-COPY rootfs / 
-RUN chmod 777 /run.sh
-
-ENTRYPOINT [ "/run.sh" ]
+# copy local files
+COPY rootfs/ /
+#WORKDIR /
+RUN chmod 777 /entrypoint.sh
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ] 
 
 ### LABELS
 ARG BUILD_ARCH
