@@ -39,7 +39,7 @@ Webui can be found at <http://your-ip:PORT>.
 
 ```yaml
 ROUTER_IP: 127.0.0.1 #Required Router IP
-INTERFACE_NAME: name #Required Interface name, can use this command to get it: ip route get 8.8.8.8 | sed -nr 's/.*dev ([^\ ]+).*/\1/p'
+INTERFACE_NAME: name #Required Interface name. Autofilled if empty.
 ```
 
 ## Support
