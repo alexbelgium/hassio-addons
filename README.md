@@ -73,6 +73,7 @@ https://github.com/alexbelgium/hassio-addons
 ## &#10003; Misc tools
 
 - [Addons Updater](addons_updater/) ![support][support-shield] : Automatic addons update by aligning version tag with github upstream releases
+- [Arpspoof](arpspoof/): adds ability to block internet connection for local network devices
 - [Code-server](code-server/) : Code-server is VS Code running on a remote server, accessible through the browser.
 - [Inadyn](inadyn/) : Inadyn, or In-a-Dyn, is a small and simple Dynamic DNS, DDNS, client with HTTPS support. Commonly available in many GNU/Linux distributions, used in off the shelf routers and Internet gateways to automate the task of keeping your Internet name in sync with your public¹ IP address. It can also be used in installations with redundant (backup) connections to the Internet.
 - [Portainer](portainer/) ![privileged][privileged-shield] ![ingress][ingress-shield] : Manage your docker environment
