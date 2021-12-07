@@ -6,6 +6,7 @@ echo "Starting..."
 # Starting scripts #
 ####################
 
+cd /
 for SCRIPTS in scripts/*; do
   [ -e "$SCRIPTS" ] || continue
   echo "$SCRIPTS: executing"

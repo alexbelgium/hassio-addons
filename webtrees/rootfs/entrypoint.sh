@@ -33,6 +33,7 @@ fi
 ####################
 # Starting scripts #
 ####################
+
 cd /
 for SCRIPTS in scripts/*; do
   [ -e "$SCRIPTS" ] || continue
