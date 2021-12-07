@@ -11,8 +11,7 @@
   "host_network": true,
   "name": "Arpspoof",
   "options": {
-    "ROUTER_IP": "yourip",
-    "INTERFACE_NAME": "interface name"
+    "ROUTER_IP": "yourip"
   },
   "ports": {
     "7022/tcp": 7022
@@ -23,7 +22,7 @@
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "ROUTER_IP": "str",
-    "INTERFACE_NAME": "str"
+    "INTERFACE_NAME": "str?"
   },
   "slug": "arpspoof",
   "upstream": "1.0",
