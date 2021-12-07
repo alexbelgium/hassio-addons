@@ -1,3 +1,6 @@
+
+## 0.5.3 (07-12-2021)
+- Update to latest version from yukulehe/gazpar2mqtt
 - mqtt autodiscover added
 - allow !secrets in config.yaml (see Home Assistant documentation)
 
