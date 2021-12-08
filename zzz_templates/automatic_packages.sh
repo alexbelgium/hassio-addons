@@ -45,7 +45,7 @@ fi
 
 # Scripts
 for files in "/scripts" "/etc/cont-init.d"; do
-echo "Looking in $files"
+
     if ls $files/*smb* 1> /dev/null 2>&1; then
     [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES cifs-utils keyutils samba samba-client"
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES cifs-utils keyutils samba smbclient"
@@ -77,7 +77,6 @@ echo "Looking in $files"
     fi
 
     if [[ $(grep -rnw "$files/" -e 'lastversion') ]]; then
-    echo "found last version"
     [ $PACKMANAGER = "apk" ] && pip install lastversion
     [ $PACKMANAGER = "apt" ] && apt-get install -y python-pip && pip install --upgrade pip \
     && pip install lastversion
@@ -89,6 +88,7 @@ done
 # INSTALL ELEMENTS #
 ####################
 
+echo "installing packages $PACKAGES" 
 eval "$PACKAGES" 
 
 # Replace nginx if installed
