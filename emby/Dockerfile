@@ -8,18 +8,6 @@ ENV PACKAGES=""
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ################
-# Install apps #
-################
-# Copy local files
-COPY root/ /
-# Automatic apps & bashio
-RUN $(curl --help &>/dev/null) && (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
-    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
-    chmod 777 /automatic_packages.sh && \
-    /automatic_packages.sh && \
-    rm /automatic_packages.sh || true
-
-################
 # Modify Image #
 ################
 RUN \
@@ -32,6 +20,19 @@ RUN \
     # FOLDERS
     && sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config
+
+################
+# Install apps #
+################
+# Copy local files
+COPY root/ /
+
+# Automatic apps & bashio
+RUN $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh && \
+    rm /automatic_packages.sh || true
 
 ### LABELS
 ARG BUILD_ARCH
