@@ -2,11 +2,7 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 ENV BASHIO_VERSION=0.14.3
-ENV PACKAGES="jq \
-    cifs-utils \
-    keyutils \
-    samba \
-    smbclient"
+ENV PACKAGES=""
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -15,9 +11,10 @@ RUN \
     ################
     # Install apps #
     ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends ${PACKAGES} \
+    cd / && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output automatic_packages.sh && \
+    chmod 777 automatic_packages.sh && \
+    $(./automatic_packages.sh) \
     \
     ##################
     # Install bashio #
