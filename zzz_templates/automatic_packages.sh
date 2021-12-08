@@ -36,41 +36,44 @@ PACKAGES="$PACKAGES jq curl"
 # FOR EACH SCRIPT, SELECT PACKAGES
 ##################################
 
+# In etc
+if ls /etc/nginx 1> /dev/null 2>&1; then
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES nginx"
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES nginx"
+    mv /etc/nginx /etc/ngin2
+fi
+
+# Scripts
 for files in "/scripts" "/etc/cont-init.d" "/etc"; do
-if ls $files/*smb* 1> /dev/null 2>&1; then
-[ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES cifs-utils keyutils samba samba-client"
-[ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES cifs-utils keyutils samba smbclient"
-fi
+    if ls $files/*smb* 1> /dev/null 2>&1; then
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES cifs-utils keyutils samba samba-client"
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES cifs-utils keyutils samba smbclient"
+    fi
 
-if ls $files/*vpn* 1> /dev/null 2>&1; then
-[ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES coreutils openvpn"
-[ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES coreutils openvpn"
-fi
+    if ls $files/*vpn* 1> /dev/null 2>&1; then
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES coreutils openvpn"
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES coreutils openvpn"
+    fi
 
-if ls $files/*global_var* 1> /dev/null 2>&1; then
-[ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES jq"
-[ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES jq"
-fi
+    if ls $files/*global_var* 1> /dev/null 2>&1; then
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES jq"
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES jq"
+    fi
 
-if ls $files/*yaml* 1> /dev/null 2>&1; then
-[ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES yamllint"
-[ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES yamllint"
-fi
+    if ls $files/*yaml* 1> /dev/null 2>&1; then
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES yamllint"
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES yamllint"
+    fi
 
-if ls $files/*nginx* 1> /dev/null 2>&1; then
-[ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES nginx"
-[ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES nginx"
-fi
+    if [ $(grep -rnw "$files" -e 'git' &>/dev/null) ]; then
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES git"
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES git"
+    fi
 
-if [ $(grep -rnw "$files" -e 'git' &>/dev/null) ]; then
-[ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES git"
-[ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES git"
-fi
-
-if [ $(grep -rnw "$files" -e 'sponge' &>/dev/null) ]; then
-[ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES moreutils"
-[ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES moreutils"
-fi
+    if [ $(grep -rnw "$files" -e 'sponge' &>/dev/null) ]; then
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES moreutils"
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES moreutils"
+    fi
 done
 
 ####################
@@ -78,6 +81,11 @@ done
 ####################
 
 eval "$PACKAGES" 
+
+# Replace nginx if installed
+if [ -d /etc/nginx2 ]; then
+    cp -rlf /etc/nginx2 /etc/nginx && rm -r /etc/nginx2
+fi
 
 ##################
 # INSTALL BASHIO #
