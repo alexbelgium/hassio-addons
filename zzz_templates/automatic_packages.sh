@@ -64,5 +64,4 @@ fi
 done
 
 # Create file containing all packages to install
-echo "$PACKAGES" >> /packages
-echo "$PACKAGES"
+eval "$PACKAGES" 
