@@ -26,7 +26,7 @@ RUN apt-get update \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
 
 # copy local files
-COPY root/ /
+COPY rootfs/ /
 
 # MOFIFY DATA PATH
 RUN sed -i "s|config|data|g" /defaults/autostart
