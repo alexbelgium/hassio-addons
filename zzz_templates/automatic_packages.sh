@@ -61,7 +61,16 @@ if ls $files/*nginx* 1> /dev/null 2>&1; then
 [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES nginx"
 [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES nginx"
 fi
-done
+
+if [ $(grep -rnw "$files" -e 'git' &>/dev/null) ]; then
+[ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES git"
+[ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES git"
+fi
+
+if [ $(grep -rnw "$files" -e 'sponge' &>/dev/null) ]; then
+[ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES moreutils"
+[ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES moreutils"
+fi
 
 ####################
 # INSTALL ELEMENTS #
