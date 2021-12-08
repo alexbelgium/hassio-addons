@@ -65,17 +65,17 @@ for files in "/scripts" "/etc/cont-init.d" "/etc"; do
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES yamllint"
     fi
 
-    if [ $(grep -rnw "$files" -e 'git') ]; then
+    if [ $(grep -rnw "$files/" -e 'git') ]; then
     [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES git"
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES git"
     fi
 
-    if [ $(grep -rnw "$files" -e 'sponge') ]; then
+    if [ $(grep -rnw "$files/" -e 'sponge') ]; then
     [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES moreutils"
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES moreutils"
     fi
 
-    if [ $(grep -rnw "$files" -e 'lastversion') ]; then
+    if [ $(grep -rnw "$files/" -e 'lastversion') ]; then
     [ $PACKMANAGER = "apk" ] && apk add --no-cache pip \
     && pip install --upgrade pip \
     && pip install lastversion
