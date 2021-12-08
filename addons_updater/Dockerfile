@@ -4,7 +4,7 @@ FROM $BUILD_FROM
 VOLUME [ "/data" ]
 
 #Install last version https://github.com/dvershinin/lastversion
-ENV PACKAGES="git moreutils"
+#ENV PACKAGES="git moreutils"
 
 ################
 # Install apps #
