@@ -2,7 +2,7 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 ENV BASHIO_VERSION=0.14.3
-ENV PACKAGES="jq"
+ENV PACKAGES=""
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -24,7 +24,7 @@ RUN \
     | tar -xzf - --strip 1 -C /tmp/bashio \
     && mv /tmp/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
+    && rm -rf /tmp/bashio || true
 
 RUN \
     #############################
