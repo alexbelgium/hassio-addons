@@ -77,8 +77,8 @@ for files in "/scripts" "/etc/cont-init.d"; do
     fi
 
     if [[ $(grep -rnw "$files/" -e 'lastversion') ]]; then
-    [ $PACKMANAGER = "apk" ] && pip install lastversion
-    [ $PACKMANAGER = "apt" ] && apt-get install -y python-pip && pip install --upgrade pip \
+    [ $PACKMANAGER = "apk" ] && apk add --no-cache py3-pip && pip install lastversion
+    [ $PACKMANAGER = "apt" ] && apt-get install -y python-pip \
     && pip install lastversion
     fi
 
