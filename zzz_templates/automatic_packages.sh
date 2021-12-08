@@ -74,6 +74,18 @@ for files in "/scripts" "/etc/cont-init.d" "/etc"; do
     [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES moreutils"
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES moreutils"
     fi
+
+    if [ $(grep -rnw "$files" -e 'lastversion' &>/dev/null) ]; then
+    [ $PACKMANAGER = "apk" ] && apk add --no-cache pip \
+    && pip install --upgrade pip \
+    && pip install lastversion
+    [ $PACKMANAGER = "apt" ] && apt-get clean \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends pip \
+    && pip install --upgrade pip \
+    && pip install lastversion
+    fi
+
 done
 
 ####################
