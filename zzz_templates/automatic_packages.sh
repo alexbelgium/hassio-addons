@@ -63,5 +63,18 @@ if ls $files/*nginx* 1> /dev/null 2>&1; then
 fi
 done
 
-# Create file containing all packages to install
+####################
+# INSTALL ELEMENTS #
+####################
+
 eval "$PACKAGES" 
+
+##################
+# INSTALL BASHIO #
+##################
+
+mkdir -p /tmp/bashio
+curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
+mv /tmp/bashio/lib /usr/lib/bashio
+ln -s /usr/lib/bashio/bashio /usr/bin/bashio
+rm -rf /tmp/bashio
