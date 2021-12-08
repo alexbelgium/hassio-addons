@@ -14,7 +14,7 @@ RUN $(curl --help &>/dev/null) && (apt-get install -y --no-install-recommends cu
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh && \
-    rm /automatic_packages.sh
+    rm /automatic_packages.sh || true
 
 RUN \
     #############################
