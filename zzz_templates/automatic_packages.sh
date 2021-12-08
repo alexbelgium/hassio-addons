@@ -78,13 +78,9 @@ echo "Looking in $files"
 
     if [[ $(grep -rnw "$files/" -e 'lastversion') ]]; then
     echo "found last version"
-    [ $PACKMANAGER = "apk" ] && apk add --no-cache pip \
-    && pip install --upgrade pip \
+    [ $PACKMANAGER = "apk" ] && apk add --no-cache py2-pip && pip install --upgrade pip \
     && pip install lastversion
-    [ $PACKMANAGER = "apt" ] && apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends pip \
-    && pip install --upgrade pip \
+    [ $PACKMANAGER = "apt" ] && apt-get install -y python-pip && pip install --upgrade pip \
     && pip install lastversion
     fi
 
