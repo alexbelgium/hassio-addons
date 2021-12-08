@@ -25,7 +25,7 @@ RUN \
 # Install apps #
 ################
 # Copy local files
-COPY root/ /
+COPY rootfs/ /
 
 # Automatic apps & bashio
 RUN $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
