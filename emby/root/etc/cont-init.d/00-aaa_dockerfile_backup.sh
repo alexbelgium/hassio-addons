@@ -6,12 +6,10 @@ if [ ! -f "/usr/bin/bashio" ]; then
         ################
         # Install apps #
         ################
-        PACKAGES="${PACKAGES:="curl"}"
-        
-        apt-get clean \
-        && apt-get update \
-        && apt-get install -y --no-install-recommends ${PACKAGES} 2>/dev/null \
-        || apk add --no-cache ${PACKAGES}
+        cd /
+        curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output automatic_packages.sh
+        chmod 777 automatic_packages.sh
+        $(./automatic_packages.sh)
 
         ###################
         # Install bashio #
