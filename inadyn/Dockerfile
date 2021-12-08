@@ -7,16 +7,16 @@ ARG BUILD_ARCH
 ENV LANG='C.UTF-8'\
     TERM='xterm-256color'\
     GOPATH='/opt/go'
+ENV PACKAGES="curl \
+    jq \
+    bash \
+    xz build-base libressl-dev ca-certificates npm"
 
 RUN \
     ################
     # Install apps #
     ################
-    apk add --no-cache \
-    curl \
-    jq \
-    bash \
-    xz build-base libressl-dev ca-certificates npm \
+    apk add --no-cache ${PACKAGES} \
     \
     ##################
     # Install bashio #

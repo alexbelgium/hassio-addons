@@ -5,7 +5,7 @@ FROM m4dm4rtig4n/enedisgateway2mqtt:$BUILD_UPSTREAM
 ENV BASHIO_VERSION=0.14.3
 ENV PACKAGES="jq \
     curl \
-    yamllin"
+    yamllint"
 
 # Copy root filesystem
 COPY rootfs /
