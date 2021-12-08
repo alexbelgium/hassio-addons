@@ -10,31 +10,28 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ################
 # Install apps #
 ################
+# Copy local files
+COPY root/ /
+# Automatic apps & bashio
 RUN $(curl --help &>/dev/null) && (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh && \
     rm /automatic_packages.sh || true
 
+################
+# Modify Image #
+################
 RUN \
-    #############################
-    # Allow UID and GID setting #
-    #############################
-    \
+    # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     && sed -i "s|chown abc:abc /config||g" /etc/cont-init.d/10-adduser \
     \
-    ###########
-    # FOLDERS #
-    ###########
-    \
+    # FOLDERS
     && sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config
-
-# copy local files
-COPY root/ /
 
 ### LABELS
 ARG BUILD_ARCH
