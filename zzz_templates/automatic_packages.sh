@@ -44,7 +44,7 @@ if ls /etc/nginx 1> /dev/null 2>&1; then
 fi
 
 # Scripts
-for files in "/scripts" "/etc/cont-init.d" "/etc"; do
+for files in "/scripts" "/etc/cont-init.d"; do
     if ls $files/*smb* 1> /dev/null 2>&1; then
     [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES cifs-utils keyutils samba samba-client"
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES cifs-utils keyutils samba smbclient"
