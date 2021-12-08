@@ -9,15 +9,15 @@ VOLUME [ "/data" ]
 ################
 # Install apps #
 ################
+# Add rootfs
+COPY rootfs/ /
+# Automatic apps & bashio
 RUN $(curl --help &>/dev/null) && (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh && \
     rm /automatic_packages.sh || true
-
-# copy local files
-COPY rootfs/ /
-#WORKDIR /
+# Entrypoint logic
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/entrypoint.sh" ] 
