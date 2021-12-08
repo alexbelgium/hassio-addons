@@ -1,6 +1,6 @@
 #!/bin/bash
 # If dockerfile failed install manually
-if [ ! -f "/usr/bin/bashio" ]; then
+#if [ ! -f "/usr/bin/bashio" ]; then
     echo "Executing script"
     (
         #######################
@@ -14,4 +14,4 @@ if [ ! -f "/usr/bin/bashio" ]; then
 
     ) #>/dev/null
 
-fi
+#fi
