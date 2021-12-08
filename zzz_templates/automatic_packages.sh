@@ -71,6 +71,7 @@ if [ $(grep -rnw "$files" -e 'sponge' &>/dev/null) ]; then
 [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES moreutils"
 [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES moreutils"
 fi
+done
 
 ####################
 # INSTALL ELEMENTS #
