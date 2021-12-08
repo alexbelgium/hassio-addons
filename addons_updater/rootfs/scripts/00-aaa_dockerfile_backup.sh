@@ -12,6 +12,6 @@ if [ ! -f "/usr/bin/bashio" ]; then
         eval /./automatic_packages.sh
         rm /automatic_packages.sh
 
-    ) >/dev/null
+    ) #>/dev/null
 
 fi
