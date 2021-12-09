@@ -8,13 +8,6 @@ set +u 2>/dev/null
 PACKAGES="${@:-}"
 VERBOSE=true
 
-################################
-# CHECK WHICH STRATEGY IS USED #
-################################
-
-if ls /etc/cont-init.d 1> /dev/null 2>&1; then SCRIPTSTRATEGY="/etc/cont-init.d"; fi
-if ls /scripts 1> /dev/null 2>&1; then SCRIPTSTRATEGY="/scripts"; fi
-
 ############################
 # CHECK WHICH BASE IS USED #
 ############################
@@ -54,7 +47,9 @@ if ls /etc/nginx 1> /dev/null 2>&1; then
 fi
 
 # Scripts
-for files in "$SCRIPTSTRATEGY"; do
+for files in "/etc/cont-init.d" "/scripts"; do
+    # Next directory if does not exists
+    if ! ls $files 1> /dev/null 2>&1; then continue; fi
 
     if ls $files/*smb* 1> /dev/null 2>&1; then
     [ $VERBOSE = true ] && echo "smb found" 
