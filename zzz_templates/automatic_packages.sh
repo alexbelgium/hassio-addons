@@ -81,13 +81,9 @@ for files in "/scripts" "/etc/cont-init.d"; do
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES sqlite3"
     fi
 
-    if [[ $(grep -rnw "$files/" -e 'lastversion') ]]; then
-    [ $PACKMANAGER = "apk" ] && [[ $(pip -V) ]] \
-      || apk add --no-cache py3-pip \
-      && pip install lastversion
-    [ $PACKMANAGER = "apt" ] && [[ $(pip -V) ]] \
-      || apt-get install -y python-pip \
-      && pip install lastversion
+    if [[ $(grep -rnw "$files/" -e 'pip') ]] && [[ ! $(pip -V) ]]; then
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES py3-pip" 
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES python-pip" 
     fi
 
 done
@@ -106,12 +102,29 @@ if [ -d /etc/nginx2 ]; then
     touch /var/log/nginx/error.log
 fi
 
-##################
-# INSTALL BASHIO #
-##################
+#######################
+# INSTALL MANUAL APPS #
+#######################
 
+for files in "/scripts" "/etc/cont-init.d"; do
+
+# Bashio
+    if [[ $(grep -rnw "$files/" -e 'bashio') ]]; then
 mkdir -p /tmp/bashio
 curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
 mv /tmp/bashio/lib /usr/lib/bashio
 ln -s /usr/lib/bashio/bashio /usr/bin/bashio
 rm -rf /tmp/bashio
+    fi
+
+# Lastversion
+    if [[ $(grep -rnw "$files/" -e 'lastversion') ]]; then
+    [ $PACKMANAGER = "apk" ] && [[ $(pip -V) ]] \
+      || apk add --no-cache py3-pip \
+      && pip install lastversion
+    [ $PACKMANAGER = "apt" ] && [[ $(pip -V) ]] \
+      || apt-get install -y python-pip \
+      && pip install lastversion
+    fi
+
+fi
