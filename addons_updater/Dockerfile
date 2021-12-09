@@ -19,7 +19,7 @@ ENV PACKAGES=""
 RUN $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
-    /automatic_packages.sh && \
+    /automatic_packages.sh "$PACKAGES" && \
     rm /automatic_packages.sh || true
 
 # Entrypoint logic
