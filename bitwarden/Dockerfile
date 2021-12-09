@@ -22,26 +22,24 @@ COPY --from=vaultwarden /vaultwarden /opt/vaultwarden
 COPY --from=vaultwarden /Rocket.toml /opt/Rocket.toml
 COPY --from=vaultwarden /web-vault /opt/web-vault
 
-# add Nginx
-# hadolint ignore=DL3009
+################
+# Install apps #
+################
+# Add rootfs
+COPY rootfs/ / 
+
+# Manual apps
 ENV PACKAGES="libmariadb-dev-compat \
         libpq5 \
         nginx \
         sqlite3"
 
-RUN \
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends ${PACKAGES} \
-    && apt-get clean \
-    && rm -f -r \
-        /etc/nginx \
-    \
-    && mkdir -p /var/log/nginx \
-    && touch /var/log/nginx/error.log
-
-# Copy root filesystem
-COPY rootfs /
+# Automatic apps & bashio
+RUN $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh && \
+    rm /automatic_packages.sh || true
 
 ### LABELS
 ARG BUILD_ARCH
