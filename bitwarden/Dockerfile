@@ -43,7 +43,7 @@ RUN $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends cu
 
 # Entrypoint logic
 #RUN chmod 777 /entrypoint.sh
-#WORKDIR [ "/" ] 
+#WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/entrypoint.sh" ] 
 
