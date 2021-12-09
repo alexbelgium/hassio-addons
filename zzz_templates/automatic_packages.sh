@@ -4,9 +4,10 @@
 # INIT #
 ########
 
+VERBOSE=true
 set +u 2>/dev/null
 PACKAGES="${@:-}"
-VERBOSE=true
+[ $VERBOSE = true ] && echo "ENV : $PACKAGES"
 
 ############################
 # CHECK WHICH BASE IS USED #
