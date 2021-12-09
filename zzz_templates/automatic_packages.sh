@@ -1,13 +1,19 @@
 #!/bin/bash
-set +u 2>/dev/null
 
+########
+# INIT #
+########
+
+PACKAGES="${PACKAGES:-}"
+set +u 2>/dev/null
 VERBOSE=true
 
-##################
-# INIT VARIABLES #
-##################
+################################
+# CHECK WHICH STRATEGY IS USED #
+################################
 
-PACKMANAGER="apk"
+if ls /etc/cont-init.d 1> /dev/null 2>&1; then SCRIPTSTRATEGY="/etc/cont-init.d"; fi
+if ls /scripts 1> /dev/null 2>&1; then SCRIPTSTRATEGY="/scripts"; fi
 
 ############################
 # CHECK WHICH BASE IS USED #
@@ -48,7 +54,7 @@ if ls /etc/nginx 1> /dev/null 2>&1; then
 fi
 
 # Scripts
-for files in "/scripts" "/etc/cont-init.d"; do
+for files in "$SCRIPTSTRATEGY"; do
 
     if ls $files/*smb* 1> /dev/null 2>&1; then
     [ $VERBOSE = true ] && echo "smb found" 
@@ -123,7 +129,7 @@ fi
 for files in "/scripts" "/etc/cont-init.d"; do
 
 # Bashio
-    if [[ $(grep -rnw "$files/" -e 'bashio') ]]; then
+    if [[ $(grep -rnw "$files/" -e 'bashio') ]] && [ ! -f "/usr/bin/bashio" ]; then
     [ $VERBOSE = true ] && echo "install bashio"
     mkdir -p /tmp/bashio
     curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
@@ -133,13 +139,13 @@ for files in "/scripts" "/etc/cont-init.d"; do
     fi
 
 # Lastversion
-    if [[ $(grep -rnw "$files/" -e 'lastversion') ]]; then
+    if [[ $(grep -rnw "$files/" -e 'lastversion') ]] && [[ $(lastversion --version) ]]; then
     [ $VERBOSE = true ] && echo "install lastversion"
     pip install lastversion
     fi
 
 # Tempio
-    if [[ $(grep -rnw "$files/" -e 'tempio') ]]; then
+    if [[ $(grep -rnw "$files/" -e 'tempio') ]] && [ ! -f "/usr/bin/tempio" ]; then
     [ $VERBOSE = true ] && echo "install tempio"
     TEMPIO_VERSION="2021.09.0"
     BUILD_ARCH="$(bashio::info.arch)"
