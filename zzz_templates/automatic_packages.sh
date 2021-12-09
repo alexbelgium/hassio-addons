@@ -76,6 +76,11 @@ for files in "/scripts" "/etc/cont-init.d"; do
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES moreutils"
     fi
 
+    if [[ $(grep -rnw "$files/" -e 'sqlite') ]]; then
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES sqlite"
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES sqlite3"
+    fi
+
     if [[ $(grep -rnw "$files/" -e 'lastversion') ]]; then
     [ $PACKMANAGER = "apk" ] && [[ $(pip -V) ]] \
       || apk add --no-cache py3-pip \
@@ -97,6 +102,8 @@ eval "$PACKAGES"
 # Replace nginx if installed
 if [ -d /etc/nginx2 ]; then
     cp -rlf /etc/nginx2 /etc/nginx && rm -r /etc/nginx2
+    mkdir -p /var/log/nginx 
+    touch /var/log/nginx/error.log
 fi
 
 ##################
