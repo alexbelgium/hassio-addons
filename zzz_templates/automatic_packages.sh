@@ -44,7 +44,7 @@ if ls /etc/nginx 1> /dev/null 2>&1; then
     [ $VERBOSE = true ] && echo "nginx found" 
     [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES nginx"
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES nginx"
-   # mv /etc/nginx /etc/nginx2
+    mv /etc/nginx /etc/nginx2
 fi
 
 # Scripts
@@ -110,13 +110,13 @@ done
 eval "$PACKAGES" 
 
 # Replace nginx if installed
-#if ls /etc/nginx2 1> /dev/null 2>&1; then
-#    [ $VERBOSE = true ] && echo "replace nginx2"
-#    cp -rlf /etc/nginx2/ /etc/nginx/
-#    rm -r /etc/nginx2
-#    mkdir -p /var/log/nginx 
-#    touch /var/log/nginx/error.log
-#fi
+if ls /etc/nginx2 1> /dev/null 2>&1; then
+    [ $VERBOSE = true ] && echo "replace nginx2"
+    rm -r /etc/nginx
+    mv /etc/nginx2 /etc/nginx
+    mkdir -p /var/log/nginx 
+    touch /var/log/nginx/error.log
+fi
 
 #######################
 # INSTALL MANUAL APPS #
