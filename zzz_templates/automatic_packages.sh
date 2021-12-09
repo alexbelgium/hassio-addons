@@ -110,11 +110,11 @@ for files in "/scripts" "/etc/cont-init.d"; do
 
 # Bashio
     if [[ $(grep -rnw "$files/" -e 'bashio') ]]; then
-mkdir -p /tmp/bashio
-curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
-mv /tmp/bashio/lib /usr/lib/bashio
-ln -s /usr/lib/bashio/bashio /usr/bin/bashio
-rm -rf /tmp/bashio
+    mkdir -p /tmp/bashio
+    curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
+    mv /tmp/bashio/lib /usr/lib/bashio
+    ln -s /usr/lib/bashio/bashio /usr/bin/bashio
+    rm -rf /tmp/bashio
     fi
 
 # Lastversion
@@ -122,4 +122,12 @@ rm -rf /tmp/bashio
     pip install lastversion
     fi
 
-fi
+# Tempio
+    if [[ $(grep -rnw "$files/" -e 'tempio') ]]; then
+    TEMPIO_VERSION="2021.09.0"
+    BUILD_ARCH="$(bashio::info.arch)"
+    curl -L -f -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" 
+    chmod a+x /usr/bin/tempio
+    fi
+    
+done
