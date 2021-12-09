@@ -5,6 +5,7 @@
 ########
 
 PACKAGES="${$1:-}"
+echo $PACKAGES
 set +u 2>/dev/null
 VERBOSE=true
 
