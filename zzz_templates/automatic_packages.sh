@@ -4,9 +4,8 @@
 # INIT #
 ########
 
-PACKAGES="$@"
-echo $PACKAGES
 set +u 2>/dev/null
+PACKAGES="${@:-}"
 VERBOSE=true
 
 ################################
