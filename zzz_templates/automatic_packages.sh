@@ -40,7 +40,7 @@ PACKAGES="$PACKAGES jq curl"
 if ls /etc/nginx 1> /dev/null 2>&1; then
     [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES nginx"
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES nginx"
-    mv /etc/nginx /etc/ngin2
+    mv /etc/nginx /etc/nginx2
 fi
 
 # Scripts
