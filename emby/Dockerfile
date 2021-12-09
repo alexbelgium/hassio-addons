@@ -1,8 +1,6 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
-ENV BASHIO_VERSION=0.14.3
-ENV PACKAGES=""
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -27,12 +25,15 @@ RUN \
 # Copy local files
 COPY rootfs/ /
 
+# Manual apps
+ENV PACKAGES=""
+
 # Automatic apps & bashio
 RUN $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
-    /automatic_packages.sh && \
-    rm /automatic_packages.sh || true
+    /automatic_packages.sh "$PACKAGES" && \
+    rm /automatic_packages.sh
 
 ### LABELS
 ARG BUILD_ARCH
