@@ -94,10 +94,16 @@ for files in "/etc/cont-init.d" "/scripts"; do
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES sqlite3"
     fi
 
-    if [[ $(grep -rnw "$files/" -e 'pip') ]]; then
+    if [[ $(grep -rnw "$files/" -e 'pip') ]] && [[ ! $(pip -V &>/dev/null) ]]; then
     [ $VERBOSE = true ] && echo "pip found" 
-    [ $PACKMANAGER = "apk" ] && [[ $(pip -V) ]] || PACKAGES="$PACKAGES py3-pip" 
-    [ $PACKMANAGER = "apt" ] && [[ $(pip -V) ]] || PACKAGES="$PACKAGES python-pip" 
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES py3-pip" 
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES python-pip" 
+    fi
+
+    if [[ $(grep -rnw "$files/" -e 'wget') ]]; then
+    [ $VERBOSE = true ] && echo "wget found" 
+    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES wget" 
+    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES wget" 
     fi
 
 done
