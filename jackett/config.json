@@ -44,8 +44,8 @@
   },
   "slug": "jackett_nas",
   "startup": "services",
-  "upstream": "0.20.105",
+  "upstream": "0.20.123",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.20.105",
+  "version": "0.20.123",
   "webui": "http://[HOST]:[PORT:9117]"
 }
