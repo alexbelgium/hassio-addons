@@ -81,9 +81,9 @@ for files in "/scripts" "/etc/cont-init.d"; do
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES sqlite3"
     fi
 
-    if [[ $(grep -rnw "$files/" -e 'pip') ]] && [[ ! $(pip -V) ]]; then
-    [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES py3-pip" 
-    [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES python-pip" 
+    if [[ $(grep -rnw "$files/" -e 'pip') ]]; then
+    [ $PACKMANAGER = "apk" ] && [[ $(pip -V) ]] || PACKAGES="$PACKAGES py3-pip" 
+    [ $PACKMANAGER = "apt" ] && [[ $(pip -V) ]] || PACKAGES="$PACKAGES python-pip" 
     fi
 
 done
