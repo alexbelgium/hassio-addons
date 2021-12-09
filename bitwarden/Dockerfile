@@ -41,6 +41,12 @@ RUN $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends cu
     /automatic_packages.sh && \
     rm /automatic_packages.sh || true
 
+# Entrypoint logic
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR [ "/" ] 
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+
 ### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
