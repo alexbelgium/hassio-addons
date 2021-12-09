@@ -127,6 +127,7 @@ for files in "/scripts" "/etc/cont-init.d"; do
 # Bashio
     if [[ $(grep -rnw "$files/" -e 'bashio') ]] && [ ! -f "/usr/bin/bashio" ]; then
     [ $VERBOSE = true ] && echo "install bashio"
+    BASHIO_VERSION="${BASHIO_VERSION:-0.14.3}"
     mkdir -p /tmp/bashio
     curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
     mv /tmp/bashio/lib /usr/lib/bashio
@@ -143,7 +144,7 @@ for files in "/scripts" "/etc/cont-init.d"; do
 # Tempio
     if [[ $(grep -rnw "$files/" -e 'tempio') ]] && [ ! -f "/usr/bin/tempio" ]; then
     [ $VERBOSE = true ] && echo "install tempio"
-    TEMPIO_VERSION="2021.09.0"
+    TEMPIO_VERSION="${TEMPIO_VERSION:-2021.09.0}"
     BUILD_ARCH="$(bashio::info.arch)"
     curl -L -f -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}" 
     chmod a+x /usr/bin/tempio
