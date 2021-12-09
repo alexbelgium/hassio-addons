@@ -119,12 +119,7 @@ rm -rf /tmp/bashio
 
 # Lastversion
     if [[ $(grep -rnw "$files/" -e 'lastversion') ]]; then
-    [ $PACKMANAGER = "apk" ] && [[ $(pip -V) ]] \
-      || apk add --no-cache py3-pip \
-      && pip install lastversion
-    [ $PACKMANAGER = "apt" ] && [[ $(pip -V) ]] \
-      || apt-get install -y python-pip \
-      && pip install lastversion
+    pip install lastversion
     fi
 
 fi
