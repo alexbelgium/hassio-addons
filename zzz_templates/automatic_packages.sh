@@ -39,7 +39,7 @@ PACKAGES="$PACKAGES jq curl"
 # FOR EACH SCRIPT, SELECT PACKAGES
 ##################################
 
-# In etc
+# Nginx
 if ls /etc/nginx 1> /dev/null 2>&1; then
     [ $VERBOSE = true ] && echo "nginx found" 
     [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES nginx"
