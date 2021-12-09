@@ -96,7 +96,7 @@ echo "installing packages $PACKAGES"
 eval "$PACKAGES" 
 
 # Replace nginx if installed
-if [ -d /etc/nginx2 ]; then
+if ls /etc/nginx2 1> /dev/null 2>&1; then
     cp -rlf /etc/nginx2 /etc/nginx && rm -r /etc/nginx2
     mkdir -p /var/log/nginx 
     touch /var/log/nginx/error.log
