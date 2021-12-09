@@ -4,7 +4,7 @@
 # INIT #
 ########
 
-PACKAGES="${$1:-}"
+PACKAGES="$@"
 echo $PACKAGES
 set +u 2>/dev/null
 VERBOSE=true
