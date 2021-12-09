@@ -4,8 +4,7 @@ set +e 2>/dev/null
 ##################
 # INIT VARIABLES #
 ##################
-echo "env : $PACKAGES"
-PACKAGES=${PACKAGES:-""}
+
 PACKMANAGER="apk"
 
 ############################
