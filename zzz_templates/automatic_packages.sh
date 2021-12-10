@@ -4,8 +4,13 @@
 # INIT #
 ########
 
+# Messages ? 
 VERBOSE=false
+# Non interactive
+export DEBIAN_FRONTEND="noninteractive"
+# Allow undefined variables
 set +u 2>/dev/null
+# Get env variables
 PACKAGES="${@:-}"
 [ $VERBOSE = true ] && echo "ENV : $PACKAGES"
 
@@ -114,6 +119,10 @@ done
 
 [ $VERBOSE = true ] && echo "installing packages $PACKAGES" 
 eval "$PACKAGES" 
+
+##########################
+# CORRECT INSTALLED APPS #
+##########################
 
 # Replace nginx if installed
 if ls /etc/nginx2 1> /dev/null 2>&1; then
