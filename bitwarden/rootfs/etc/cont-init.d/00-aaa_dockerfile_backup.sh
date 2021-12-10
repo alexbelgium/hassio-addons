@@ -14,6 +14,6 @@ if [ -e "/ENVFILE" ]; then
         eval /./automatic_packages.sh "$PACKAGES" && \
         rm /automatic_packages.sh
 
-    ) >/dev/null
+    ) # >/dev/null
 
 fi
