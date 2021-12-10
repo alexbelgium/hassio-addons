@@ -44,6 +44,7 @@ for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
     # Next directory if does not exists
     if ! ls $files 1> /dev/null 2>&1; then continue; fi
 
+    # Test each possible command
     COMMAND="nginx"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &> /dev/null; then
     [ "$VERBOSE" = true ] && echo "$COMMAND required"
@@ -66,9 +67,8 @@ for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
     [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES samba smbclient"
     fi
 
-
     COMMAND="openvpn"
-    if grep -q -rn "$files/" -e "$COMMAND" && ! command -v $COMMAND &> /dev/null; then
+    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &> /dev/null; then
     [ "$VERBOSE" = true ] && echo "$COMMAND required"
     [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES coreutils openvpn"
     [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES coreutils openvpn"
@@ -149,7 +149,7 @@ fi
 for files in "/scripts" "/etc/services.d" "/etc/cont-init.d"; do
 
 # Next directory if does not exists
-if ! ls $files 1> /dev/null 2>&1; then continue; fi
+    if ! ls $files 1> /dev/null 2>&1; then continue; fi
 
 # Bashio
     if grep -q -rnw "$files/" -e 'bashio' && [ ! -f "/usr/bin/bashio" ]; then
