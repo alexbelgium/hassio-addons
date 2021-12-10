@@ -41,7 +41,14 @@ RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends b
     /automatic_packages.sh "$PACKAGES" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-### LABELS
+##############
+# Entrypoint #
+##############
+
+##########
+# Labels #
+##########
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
