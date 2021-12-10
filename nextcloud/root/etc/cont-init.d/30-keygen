@@ -12,6 +12,7 @@ if bashio::config.true 'use_own_certs'; then
   [ ! -f /ssl/$KEYFILE ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$KEYFILE not found" && bashio::exit.nok
 
 else
+  mkdir -p /ssl/nextcloud/keys
   bashio::log.info "No ssl certificates set. Auto generating ones..."
   SUBJECT="/C=US/ST=CA/L=Carlsbad/O=Linuxserver.io/OU=LSIO Server/CN=*"
   openssl req -new -x509 -days 3650 -nodes -out /ssl/nextcloud/keys/cert.crt -keyout /ssl/nextcloud/keys/cert.key -subj "$SUBJECT"
