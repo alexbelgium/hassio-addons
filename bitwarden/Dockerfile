@@ -40,7 +40,7 @@ RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends b
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packagesaa.sh "$PACKAGES" && \
-    rm /automatic_packages.sh || echo "${PACKAGES:-}" >> /ENV
+    rm /automatic_packages.sh || echo "${PACKAGES:-}" >> /ENVFILE
 
 # Entrypoint logic
 #RUN chmod 777 /entrypoint.sh
