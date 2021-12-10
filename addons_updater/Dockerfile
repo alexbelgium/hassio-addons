@@ -1,14 +1,19 @@
+###############
+# Build Image #
+###############
+
 ARG BUILD_FROM
 FROM $BUILD_FROM
-
 VOLUME [ "/data" ]
 
-#Install last version https://github.com/dvershinin/lastversion
-#ENV PACKAGES="git moreutils"
+################
+# Modify Image #
+################
 
 ################
 # Install apps #
 ################
+
 # Add rootfs
 COPY rootfs/ /
 
@@ -23,15 +28,22 @@ RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends b
     /automatic_packages.sh "$PACKAGES" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
+##############
+# Entrypoint #
+##############
+  
 # Entrypoint logic
 RUN chmod 777 /entrypoint.sh
+#WORKDIR /
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/entrypoint.sh" ] 
-
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-### LABELS
+##########
+# Labels #
+##########
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
