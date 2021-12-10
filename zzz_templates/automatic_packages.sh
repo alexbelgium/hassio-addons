@@ -130,6 +130,9 @@ fi
 
 for files in "/scripts" "/etc/cont-init.d"; do
 
+# Next directory if does not exists
+if ! ls $files 1> /dev/null 2>&1; then continue; fi
+
 # Bashio
     if [[ $(grep -rnw "$files/" -e 'bashio') ]] && [ ! -f "/usr/bin/bashio" ]; then
     [ $VERBOSE = true ] && echo "install bashio"
