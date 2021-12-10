@@ -6,38 +6,32 @@ FROM ${BUILD_FROM}
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 ARG BUILD_ARCH
-ENV BASHIO_VERSION=0.14.3
-ENV PACKAGES="curl jq wget gcompat@community"
-
-# Add bashio
-RUN \
-    echo "Install version $BUILD_VERSION on $BUILD_ARCH" \
-    && apk add --no-cache ${PACKAGES} \
-    ##################
-    # Install bashio #
-    ##################
-    && echo "**** Install Bashio ****" \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-    /tmp/bashio.tar.gz \
-    --strip 1 -C /tmp/bashio \
-    \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz || true
 
 RUN \
+    chmod +x /defaults/nextcloud-perms.sh \
     # modify/copy files
-    sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
+    && sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
     && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" /etc/services.d/nginx/*
 
-COPY root/ /
+################
+# Install apps #
+################
 
-RUN ["chmod", "+x", "/defaults/nextcloud-perms.sh"]
+# Add rootfs
+COPY root/ / 
+
+# Manual apps
+ENV PACKAGES="curl jq wget gcompat@community"
+
+# Automatic apps & bashio
+RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
+    $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packagesaa.sh "$PACKAGES" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
 VOLUME ["/share", "/ssl", "/data", "/media"]
 
