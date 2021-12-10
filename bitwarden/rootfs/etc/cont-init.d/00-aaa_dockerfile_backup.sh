@@ -2,8 +2,7 @@
 # If dockerfile failed install manually
 if [ -e "/ENVFILE" ]; then
     echo "Executing script"
-    PACKAGES=$(cat /ENVFILE)
-    rm /ENVFILE
+    PACKAGES=$(< /ENVFILE)
     (
         #######################
         # Automatic installer #
