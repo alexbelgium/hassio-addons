@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-CONFIG_LOCATION=$(bashio::config 'config_location')
+CONFIG_LOCATION=$(bashio::config 'CONFIG_LOCATION')
 bashio::log.info "Config stored in $CONFIG_LOCATION"
 
 mkdir -p $CONFIG_LOCATION
