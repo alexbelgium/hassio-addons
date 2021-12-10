@@ -145,7 +145,7 @@ if ! ls $files 1> /dev/null 2>&1; then continue; fi
     fi
 
 # Lastversion
-    if [[ $(grep -rnw "$files/" -e 'lastversion') ]] && [[ $(lastversion --version) ]]; then
+    if [[ $(grep -rnw "$files/" -e 'lastversion') ]]; then
     [ $VERBOSE = true ] && echo "install lastversion"
     pip install lastversion
     fi
