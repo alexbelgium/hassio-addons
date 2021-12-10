@@ -1,11 +1,18 @@
+###############
+# Build Image #
+###############
+
 ARG BUILD_FROM
 ARG BUILD_VERSION
+ARG BUILD_ARCH
 ARG BUILD_UPSTREAM="23.0.0"
-
 FROM ${BUILD_FROM}
 
+################
+# Modify Image #
+################
+
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
-ARG BUILD_ARCH
 
 RUN \
     chmod +x /defaults/nextcloud-perms.sh \
@@ -19,13 +26,10 @@ RUN \
 # Install apps #
 ################
 
-# Add rootfs
 COPY root/ / 
 
-# Manual apps
 ENV PACKAGES="curl jq wget gcompat@community"
 
-# Automatic apps & bashio
 RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
     $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
