@@ -94,7 +94,7 @@ for files in "/etc/cont-init.d" "/scripts"; do
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES sqlite3"
     fi
 
-    if [[ $(grep -rnw "$files/" -e 'pip') ]] && [[ ! $(pip -V &>/dev/null) ]]; then
+    if [[ $(grep -rnw "$files/" -e 'pip') ]]; then
     [ $VERBOSE = true ] && echo "pip found" 
     [ $PACKMANAGER = "apk" ] && PACKAGES="$PACKAGES py3-pip" 
     [ $PACKMANAGER = "apt" ] && PACKAGES="$PACKAGES python-pip" 
