@@ -3,7 +3,7 @@
 if [ -f "/ENVFILE" ]; then
     echo "Executing script"
     PACKAGES=$(cat /ENVFILE)
-    rm /ENV
+    rm /ENVFILE
     (
         #######################
         # Automatic installer #
