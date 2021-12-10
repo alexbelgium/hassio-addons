@@ -1,6 +1,6 @@
 #!/bin/bash
 # If dockerfile failed install manually
-if -f "/ENVFILE" ; then
+if [ -e "/ENVFILE" ]; then
     echo "Executing script"
     PACKAGES=$(cat /ENVFILE)
     rm /ENVFILE
