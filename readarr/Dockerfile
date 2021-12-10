@@ -40,6 +40,7 @@ RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends b
 ##############
 # Entrypoint #
 ##############
+
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
