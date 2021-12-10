@@ -1,6 +1,7 @@
 #!/bin/bash
+echo "jq" > /ENVFILE
 # If dockerfile failed install manually
-if [ -e "/ENVFILE" ]; then
+#if [ -e "/ENVFILE" ]; then
     echo "Executing script"
     PACKAGES=$(< /ENVFILE)
     (
@@ -16,4 +17,4 @@ if [ -e "/ENVFILE" ]; then
 
     ) >/dev/null
 
-fi
+#fi
