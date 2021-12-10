@@ -52,7 +52,8 @@
     "PGID": 0,
     "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
     "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "cifspassword": "<password>",
+    "CONFIG_LOCATION": "/config/readarr"
   },
   "ports": {
     "8787/tcp": 8787
@@ -71,7 +72,8 @@
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
+    "cifspassword": "str?",
+    "CONFIG_LOCATION": "str?"
   },
   "slug": "readarr_nas",
   "upstream": "nightly-0.1.0.1095-ls51",
