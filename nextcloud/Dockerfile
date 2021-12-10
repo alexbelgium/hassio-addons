@@ -28,7 +28,7 @@ RUN \
 
 COPY root/ / 
 
-ENV PACKAGES="curl jq wget gcompat@community"
+ENV PACKAGES="curl jq wget"
 
 RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
     $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
