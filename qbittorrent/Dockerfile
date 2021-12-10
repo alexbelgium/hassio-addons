@@ -1,45 +1,23 @@
+###############
+# Build Image #
+###############
+
 ARG BUILD_FROM
 ARG BUILD_VERSION 
 FROM ${BUILD_FROM}
 
-# Base system
-ENV BASHIO_VERSION=0.14.3
-ENV BUILD_ARCH=$BUILD_ARCH
-ARG BUILD_ARCH
-ENV PACKAGES="jq \
-    curl \
-    cifs-utils \
-    keyutils \
-    samba \
-    smbclient \
-    nginx \
-    coreutils \
-    openvpn"
+################
+# Modify Image #
+################
 
-RUN \
-    ################
-    # Install apps #
-    ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends ${PACKAGES} \
-    && apt-get clean \
-    \
-    ##############
-    # STATISTICS #
-    ##############
-    && curl -L -f -s -o /tmp/tmp \
-    "https://github.com/alexbelgium/downloads-tracker/archive/refs/tags/Qbittorrent.zip" \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio || true
+# Environment variables
+ENV \
+    DEBIAN_FRONTEND="noninteractive"\
+    LANG="C.UTF-8" \
+    PS1="$(whoami)@$(hostname):$(pwd)$ " \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    S6_CMD_WAIT_FOR_SERVICES=1 \
+    TERM="xterm-256color"
 
 RUN \
     ########################################
@@ -62,21 +40,39 @@ RUN \
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf || true
 
-# Copy root filesystem
-COPY rootfs / 
+################
+# Install apps #
+################
+# Copy local files
+COPY rootfs/ /
 
-VOLUME [ "/data" ]
+# Manual apps 
+ENV PACKAGES="jq \
+    curl \
+    cifs-utils \
+    keyutils \
+    samba \
+    smbclient \
+    nginx \
+    coreutils \
+    openvpn"
 
-# Environment variables
-ENV \
-    DEBIAN_FRONTEND="noninteractive"\
-    LANG="C.UTF-8" \
-    PS1="$(whoami)@$(hostname):$(pwd)$ " \
-    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
-    S6_CMD_WAIT_FOR_SERVICES=1 \
-    TERM="xterm-256color"
+# Automatic apps & bashio
+RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
+    $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "$PACKAGES" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-### LABELS
+##############
+# Entrypoint #
+##############
+
+##########
+# Labels #
+##########
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
