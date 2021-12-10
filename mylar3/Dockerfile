@@ -10,7 +10,7 @@ FROM ${BUILD_FROM}
 # Modify Image #
 ################
 
-RUN sed -i "s|/config|/data|g" /etc/services.d/* \
+RUN sed -i "s|/config|/data|g" /etc/services.d/*/run \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/* \
     \
     # Allow UID and GID setting
