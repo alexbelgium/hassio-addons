@@ -35,12 +35,13 @@ ENV PACKAGES="libmariadb-dev-compat \
         sqlite3"
 
 # Automatic apps & bashio
-RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
+RUN echo "${PACKAGES:-}" >> /ENVFILE && \
+    $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
     $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packagesaa.sh "$PACKAGES" && \
-    rm /automatic_packages.sh || echo "${PACKAGES:-}" >> /ENVFILE
+    rm /automatic_packages.sh
 
 # Entrypoint logic
 #RUN chmod 777 /entrypoint.sh
