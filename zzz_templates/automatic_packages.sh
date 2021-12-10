@@ -4,9 +4,9 @@
 # INIT #
 ########
 
-VERBOSE=false
 set +u 2>/dev/null
-PACKAGES="${*:-}"
+PACKAGES="${1:-}"
+VERBOSE="${2:-}"
 [ "$VERBOSE" = true ] && echo "ENV : $PACKAGES"
 
 ############################
