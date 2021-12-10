@@ -8,6 +8,7 @@
 VERBOSE=false
 # Non interactive
 export DEBIAN_FRONTEND="noninteractive"
+export LANG="C.UTF-8"
 # Allow undefined variables
 set +u 2>/dev/null
 # Get env variables
