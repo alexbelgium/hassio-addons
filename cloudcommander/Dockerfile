@@ -1,6 +1,22 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_VERSION
 FROM coderaiser/cloudcmd:latest
-ENV BASHIO_VERSION=0.14.3
+
+##################
+# 2 Modify Image #
+##################
+
+##################
+# 3 Install apps #
+##################
+
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
 ENV PACKAGES="jq \
     cifs-utils \    
     keyutils \
@@ -8,39 +24,25 @@ ENV PACKAGES="jq \
     smbclient \
     nginx"
 
-RUN \
-    ################
-    # Install apps #
-    ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends ${PACKAGES} \
-    && apt-get clean \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio || true
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-# Copy root filesystem
-COPY rootfs / 
-
-RUN \
-    ###############
-    # Permissions #
-    ###############
-    chmod 777 /entrypoint.sh
+################
+# 4 Entrypoint #
+################
 
 ENTRYPOINT [ "/entrypoint.sh" ]
+RUN chmod 777 /entrypoint.sh
 
-VOLUME [ "/data" ]
+############
+# 5 Labels #
+############
 
-### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

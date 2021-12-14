@@ -1,4 +1,11 @@
 
+## 0.6.1 (14-12-2021)
+- Update to latest version from yukulehe/gazpar2mqtt
+- New standardized logic for Dockerfile build and packages installation
+
+## 0.6 (11-12-2021)
+- Update to latest version from yukulehe/gazpar2mqtt
+
 ## 0.5.3 (07-12-2021)
 - Update to latest version from yukulehe/gazpar2mqtt
 - mqtt autodiscover added

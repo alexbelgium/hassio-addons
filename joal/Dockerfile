@@ -1,58 +1,60 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM
-ARG BUILD_UPSTREAM="2.1.27"
+ARG BUILD_UPSTREAM="2.1.28"
 FROM anthonyraymond/joal:$BUILD_UPSTREAM
 
-# Set shell
+##################
+# 2 Modify Image #
+##################
+
+#Install Joal 
+RUN \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -s -S -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz") >/dev/null &&\
+    mkdir -p /data/joal &&\
+    tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null &&\
+    chown -R $(id -u):$(id -g) /data/joal &&\
+    rm /data/joal/jack-of* || true
+
+##################
+# 3 Install apps #
+##################
+
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
+ENV PACKAGES="jq \
+    nginx"
+
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.1.27"
-ENV BASHIO_VERSION=0.14.3
-ENV PACKAGES="wget \
-    jq \
-    nginx"
+ARG BUILD_UPSTREAM="2.1.28"
 
-RUN \
-    #Install bashio
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends ${PACKAGES} \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-    /tmp/bashio.tar.gz \
-    --strip 1 -C /tmp/bashio \
-    \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio || true
+################
+# 4 Entrypoint #
+################
 
-RUN \
-    #Install Joal
-    wget -O /tmp/joal.tar.gz "https://github.com/anthonyraymond/joal/releases/download/$BUILD_UPSTREAM/joal.tar.gz" \
-    && mkdir -p /data/joal \
-    && tar zxvf /tmp/joal.tar.gz -C /data/joal \
-    && rm /data/joal/jack-of* \
-    #Clean
-    && rm -fr \
-    /tmp/* \
-    /var/{cache,log}/* \
-    /var/lib/apt/lists/*
-
-VOLUME [ "/data" ]
-
-# copy local files
-COPY rootfs/ /
-#WORKDIR /
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/entrypoint.sh" ] 
 
-### LABELS
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

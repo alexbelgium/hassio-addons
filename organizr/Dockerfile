@@ -1,25 +1,13 @@
+#################
+# 1 Build Image #
+#################
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
-ENV BASHIO_VERSION=0.14.3
-ENV PACKAGES="curl \
-  jq"
 
-RUN \
-  ################
-  # Install apps #
-  ################
-  apk add --no-cache ${PACKAGES} \
-  \
-  ###################
-  # Install bashio #
-  ##################
-  && mkdir -p /tmp/bashio \
-  && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-  | tar -xzf - --strip 1 -C /tmp/bashio \
-  && mv /tmp/bashio/lib /usr/lib/bashio \
-  && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-  && rm -rf /tmp/bashio || true
+##################
+# 2 Modify Image #
+##################
 
 RUN \
   ########################################
@@ -36,10 +24,33 @@ RUN \
   && grep -rl '/config' /etc/logrotate.d/ | xargs sed -i 's|/config|/data/organizr|g' \
   && grep -rl '/config' /etc/services.d/ | xargs sed -i 's|/config|/data/organizr|g'
 
-# copy local files
-COPY root/ /
+##################
+# 3 Install apps #
+##################
 
-### LABELS
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
+ENV PACKAGES="curl \
+  jq"
+
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+  if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+  curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+  chmod 777 /automatic_packages.sh && \
+  /automatic_packages.sh "${PACKAGES:-}" && \
+  rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+
+################
+# 4 Entrypoint #
+################
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

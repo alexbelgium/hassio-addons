@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 
 ## 0.7.7 (25-11-2021)
 - Update to latest version from m4dm4rtig4n/enedisgateway2mqtt

@@ -83,8 +83,8 @@ while IFS= read -r line; do
     if [[ $line =~ ^.+[=].+$ ]]; then
         export $line
         # Export the variable
-        sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || sed -i "1a export $line" /scripts/*run*
-
+        sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
+        sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
         # Show in log
         bashio::log.blue "$line"
     else

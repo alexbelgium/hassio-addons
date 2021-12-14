@@ -1,38 +1,16 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
-ENV BASHIO_VERSION=0.14.3
+
+##################
+# 2 Modify Image #
+##################
 
 RUN \
-    ################
-    # Install apps #
-    ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-    jq \
-    curl \
-    # Backup if change
-    || apk add --no-cache jq curl \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-    /tmp/bashio.tar.gz \
-    --strip 1 -C /tmp/bashio \
-    \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr \
-    /tmp/* \
-    \
-    ###############
-    # Adapt image #
-    ###############
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
@@ -43,9 +21,38 @@ RUN \
     && grep -rl "/config" /etc/services.d | xargs sed -i 's|/config|/config/ombi|g' || true \
     && sed -i 's=/config/ombi=/config/ombi || true=g' /etc/cont-init.d/10-adduser || true
 
-VOLUME [ "/data" ]
+##################
+# 3 Install apps #
+##################
 
-### LABELS
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
+ENV PACKAGES="jq curl"
+
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+
+################
+# 4 Entrypoint #
+################
+
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

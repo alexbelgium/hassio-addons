@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 - Removal of requirement for unprotected mode
 - Addition of local disks mount
 - Addition of repair capabilities for the json

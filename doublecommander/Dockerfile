@@ -1,39 +1,57 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
-ENV BASHIO_VERSION=0.14.3
+
+##################
+# 2 Modify Image #
+##################
+
+RUN \
+    # Allow UID and GID setting
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    # MOFIFY DATA PATH
+    && sed -i "s|config|data|g" /defaults/autostart
+
+##################
+# 3 Install apps #
+##################
+
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
 ENV PACKAGES="jq \
     samba \
     smbclient"
 
-# Install bashio
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ${PACKAGES} \
-     \
-    ##################
-    # Install bashio #
-    ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio \
-    \
-    # Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-# copy local files
-COPY rootfs/ /
+################
+# 4 Entrypoint #
+################
 
-# MOFIFY DATA PATH
-RUN sed -i "s|config|data|g" /defaults/autostart
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-VOLUME [ "/data" ]
+############
+# 5 Labels #
+###########
 
-### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

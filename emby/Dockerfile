@@ -1,18 +1,18 @@
-###############
-# Build Image #
-###############
+#################
+# 1 Build Image #
+#################
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
-################
-# Modify Image #
-################
+##################
+# 2 Modify Image #
+##################
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
- 
+
 RUN \
     # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
@@ -24,9 +24,9 @@ RUN \
     && sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config
 
-################
-# Install apps #
-################
+##################
+# 3 Install apps #
+##################
 # Copy local files
 COPY rootfs/ /
 
@@ -34,20 +34,20 @@ COPY rootfs/ /
 ENV PACKAGES=""
 
 # Automatic apps & bashio
-RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
-    $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh "${PACKAGES:-}" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-##############
-# Entrypoint #
-##############
+################
+# 4 Entrypoint #
+################
 
-##########
-# Labels #
-##########
+############
+# 5 Labels #
+############
 
 ARG BUILD_ARCH
 ARG BUILD_DATE

@@ -38,8 +38,8 @@
   },
   "slug": "joal",
   "startup": "services",
-  "upstream": "2.1.27",
+  "upstream": "2.1.28",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.27",
+  "version": "2.1.28",
   "webui": "http://[HOST]:[PORT:8081]/joal/ui?ui_credentials=%7B%22host%22%3A%22[HOST]%22%2C%22port%22%3A%22[PORT:8081]%22%2C%22pathPrefix%22%3A%22joal%22%2C%22secretToken%22%3A%22lrMY24Byhx%22%7D"
 }

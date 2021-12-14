@@ -1,13 +1,34 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.2.0.200"
 FROM collelog/xteve:latest-alpine
 
+##################
+# 2 Modify Image #
+##################
+
 RUN cp -vnpr /etc/opt/xteve* /data || true
 
 CMD ["-config", "/data", "-port", "34400"]
 
-### LABELS
+################
+# 4 Entrypoint #
+################
+
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 
 ## 2.5.12 (08-11-2021)
 - Update to latest version from laurent22/joplin

@@ -1,15 +1,39 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_VERSION
 FROM wger/devel:latest
 
-VOLUME [ "/data" ]
+##################
+# 2 Modify Image #
+##################
 
+VOLUME [ "/data" ]
 USER root
 
 RUN touch /data/database.sqlite \
     && chown wger /data/database.sqlite \
     && ln -s /data/database.sqlite /home/wger/db
 
-### LABELS
+##################
+# 3 Install apps #
+##################
+
+################
+# 4 Entrypoint #
+################
+
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

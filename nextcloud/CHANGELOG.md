@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 
 ## 23.0.0 (30-11-2021)
 - Update to latest version from linuxserver/docker-nextcloud

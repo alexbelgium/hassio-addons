@@ -78,6 +78,5 @@
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "10.7.7-1-ls130-4",
   "video": true,
-  "watchdog": "http://[HOST]:[PORT:8096]",
   "webui": "http://[HOST]:[PORT:8096]"
 }

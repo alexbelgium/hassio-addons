@@ -1,35 +1,14 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
-ENV BASHIO_VERSION=0.14.3
-ENV PACKAGES="curl \
-    jq \
-    samba \
-    samba-client"
 
-# Add bashio
-RUN apk add --no-cache ${PACKAGES} \
-    \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-    /tmp/bashio.tar.gz \
-    --strip 1 -C /tmp/bashio \
-    \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr /tmp/bashio.tar.gz  || true
-
-RUN \
-    ln -s /usr/share/transmission/web/style /transmission-web-control && \
-    ln -s /usr/share/transmission/web/images /transmission-web-control && \
-    ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
-    ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
-
-
-# Copy root filesystem
-COPY rootfs /
+##################
+# 2 Modify Image #
+##################
 
 # MOFIFY DATA PATH
 RUN sed -i "s|config|config/transmission|g" /etc/services.d/transmission/run \
@@ -37,11 +16,45 @@ RUN sed -i "s|config|config/transmission|g" /etc/services.d/transmission/run \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
+    # Allow return to original UI
+    && ln -s /usr/share/transmission/web/style /transmission-web-control && \
+    ln -s /usr/share/transmission/web/images /transmission-web-control && \
+    ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
+    ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
 
-VOLUME [ "/data" ]
+##################
+# 3 Install apps #
+##################
 
-### LABELS
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
+ENV PACKAGES=""
+
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+
+################
+# 4 Entrypoint #
+################
+
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

@@ -1,6 +1,13 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:9.2.0
-# hadolint ignore=DL3006
 FROM ${BUILD_FROM}
+
+##################
+# 2 Modify Image #
+##################
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -8,7 +15,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 ARG BUILD_ARCH=amd64
 ARG BUILD_UPSTREAM="2.11.0"
-ENV PACKAGES="nginx"
 
 RUN \
     if [ "${BUILD_ARCH}" = "aarch64" ]; then ARCH="arm64"; fi \
@@ -20,13 +26,38 @@ RUN \
     "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
     | tar zxvf - -C /opt/
 
-RUN \
-    apk add --no-cache ${PACKAGES} || true
+##################
+# 3 Install apps #
+##################
 
-# Copy root filesystem
-COPY rootfs /
+# Add rootfs
+COPY rootfs/ /
 
-### LABELS
+# Manual apps
+ENV PACKAGES="nginx"
+
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+
+################
+# 4 Entrypoint #
+################
+
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

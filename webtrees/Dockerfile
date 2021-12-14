@@ -1,53 +1,55 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_VERSION
 FROM nathanvaughn/webtrees:latest
 
+##################
+# 2 Modify Image #
+##################
+
 # Global variables
-ENV BASHIO_VERSION=0.14.3
 ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
-VOLUME ["/data"]
+RUN \
+    # Change data location
+    grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
+    # Add end script
+    && sed -i '$ d' /docker-entrypoint.sh
+
+##################
+# 3 Install apps #
+##################
+
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
 ENV PACKAGES="jq \
     curl \
     yamllint"
 
-RUN \
-    ################
-    # Install apps #
-    ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends ${PACKAGES} \
-    && apt-get clean \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio  || true
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-# Copy root filesystem
-COPY rootfs/ /
+################
+# 4 Entrypoint #
+################
 
-RUN \
-    ################
-    # Modify image #
-    ################
-    # Change data location
-    sed -i 's|/etc/services.d/*/run|/scripts/99-run.sh|g' /scripts/90-config_yaml.sh \
-    && grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
-    # Add entry script
-    && chown root:root /entrypoint.sh \
-    && chmod 777 /entrypoint.sh \
-    # Add end script
-    && sed -i '$ d' /docker-entrypoint.sh
+RUN chmod 777 /entrypoint.sh
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ] 
 
-ENTRYPOINT ["/entrypoint.sh"]
+############
+# 5 Labels #
+############
 
-### LABELS
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

@@ -1,18 +1,18 @@
-###############
-# Build Image #
-###############
+#################
+# 1 Build Image #
+#################
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM techblog/arpspoof-docker:latest
 
-################
-# Modify Image #
-################
+##################
+# 2 Modify Image #
+##################
 
-################
-# Install apps #
-################
+##################
+# 3 Install apps #
+##################
 
 # Add rootfs
 COPY rootfs/ /
@@ -21,24 +21,24 @@ COPY rootfs/ /
 ENV PACKAGES="jq curl iproute2"
 
 # Automatic apps & bashio
-RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
-    $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh "${PACKAGES:-}" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-##############
-# Entrypoint #
-##############
+################
+# 4 Entrypoint #
+################
 
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/entrypoint.sh" ] 
 
-##########
-# Labels #
-##########
+############
+# 5 Labels #
+############
 
 ARG BUILD_ARCH
 ARG BUILD_DATE

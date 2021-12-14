@@ -1,6 +1,6 @@
-###############
-# Build Image #
-###############
+#################
+# 1 Build Image #
+#################
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
@@ -8,9 +8,9 @@ ARG BUILD_ARCH
 ARG BUILD_UPSTREAM="23.0.0"
 FROM ${BUILD_FROM}
 
-################
-# Modify Image #
-################
+##################
+# 2 Modify Image #
+##################
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
@@ -22,24 +22,40 @@ RUN \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" /etc/services.d/nginx/*
 
-################
-# Install apps #
-################
+##################
+# 3 Install apps #
+##################
 
-COPY root/ / 
+# Add rootfs
+COPY rootfs/ /
 
+# Manual apps
 ENV PACKAGES="curl jq wget"
 
-RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
-    $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
-    /automatic_packagesaa.sh "$PACKAGES" && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
 VOLUME ["/share", "/ssl", "/data", "/media"]
 
-### LABELS
+################
+# 4 Entrypoint #
+################
+
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

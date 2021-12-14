@@ -1,5 +1,13 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
+
+##################
+# 2 Modify Image #
+##################
 
 RUN mkdir -p /data \
     && chown -R 503:503 /data
@@ -8,7 +16,24 @@ ENV PATH "${PATH}:/data"
 
 VOLUME [ "/data:/var/ts3server/" ] 
 
-### LABELS
+##################
+# 3 Install apps #
+##################
+
+################
+# 4 Entrypoint #
+################
+
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

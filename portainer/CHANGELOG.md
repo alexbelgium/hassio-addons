@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 
 ## 2.11.0 (09-12-2021)
 - Update to latest version from portainer/portainer

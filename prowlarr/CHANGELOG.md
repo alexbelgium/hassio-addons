@@ -1,4 +1,11 @@
 
+## nightly-0.1.8.1253-ls229 (14-12-2021)
+- Update to latest version from linuxserver/docker-prowlarr
+
+## nightly-0.1.8.1238-ls228 (12-12-2021)
+- Update to latest version from linuxserver/docker-prowlarr
+- New standardized logic for Dockerfile build and packages installation
+
 ## nightly-0.1.8.1232-ls226 (10-12-2021)
 - Update to latest version from linuxserver/docker-prowlarr
 

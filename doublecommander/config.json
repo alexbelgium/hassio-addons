@@ -7,8 +7,6 @@
     "PUID": "0",
     "PGID": "0"
   },
-  "full_access": true,
-  "host_network": true,
   "map": ["backup:rw", "config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Double commander",
   "options": {

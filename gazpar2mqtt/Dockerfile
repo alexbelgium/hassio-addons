@@ -1,40 +1,38 @@
+#################
+# 1 Build Image #
+#################
+
 FROM yukulehe/gazpar2mqtt:latest
 
-# Base system
-ENV BASHIO_VERSION=0.14.3
+##################
+# 2 Modify Image #
+##################
+
 ENV TZ=Europe/Paris
+
+##################
+# 3 Install apps #
+##################
+
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
 ENV PACKAGES="jq \
     curl \
     yamllint"
 
-# Copy root filesystem
-COPY rootfs /
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-RUN \
-    ################
-    # Install apps #
-    ################
-    apt-get clean \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends ${PACKAGES} \
-    && apt-get clean \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio || true
-
-RUN \    
-    #################
-    # Copy template #
-    #################
-    mkdir -p /share/gazpar2mqtt \
-    && cp -n /templates/config.yaml /share/gazpar2mqtt/ 
+################
+# 4 Entrypoint #
+################
 
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
@@ -42,7 +40,10 @@ CMD ["/entrypoint.sh"]
 VOLUME [ "/data" ]
 VOLUME [ "/share" ]
 
-### LABELS
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

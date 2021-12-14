@@ -1,4 +1,5 @@
 - Mount ssl in write
+- New standardized logic for Dockerfile build and packages installation
 - Mount nvme drives
 
 ## 2.19.0 (25-11-2021)

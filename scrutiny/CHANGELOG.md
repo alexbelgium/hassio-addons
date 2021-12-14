@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 - Added : "/dev/nvme0"
 
 ## 0.3.13 (26-10-2021)

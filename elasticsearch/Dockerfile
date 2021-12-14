@@ -1,21 +1,39 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_UPSTREAM="7.14.2"
 FROM elasticsearch:$BUILD_UPSTREAM
 
+##################
+# 2 Modify Image #
+##################
+
 # Data persistence
 RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts..."' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a chown -R $(id -u):$(id -g) $HOME' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a done' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a ln -s $NEWHOME/$files /usr/share/elasticsearch || true' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a rm -r /usr/share/elasticsearch/$files || true' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a cp -rn /usr/share/elasticsearch/$files $NEWHOME || true' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a for files in "data" "config"; do' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a mkdir -p $NEWHOME' /usr/local/bin/docker-entrypoint.sh \
-&& sed -i '5a NEWHOME="/data"' /usr/local/bin/docker-entrypoint.sh
+    && sed -i '5a chown -R $(id -u):$(id -g) $HOME' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a done' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a ln -s $NEWHOME/$files /usr/share/elasticsearch || true' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a rm -r /usr/share/elasticsearch/$files || true' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a cp -rn /usr/share/elasticsearch/$files $NEWHOME || true' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a for files in "data" "config"; do' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a mkdir -p $NEWHOME' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a NEWHOME="/data"' /usr/local/bin/docker-entrypoint.sh \
+    # Install plugins     
+    && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
 
-# Install plugins 
-RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
+##################
+# 3 Install apps #
+##################
 
-### LABELS
+################
+# 4 Entrypoint #
+################
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

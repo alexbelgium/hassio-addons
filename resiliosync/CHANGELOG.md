@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 - Add local & smb mounts (see readme)
 - Config changed from /config/resiliosync to /share/resiliosync_config
 

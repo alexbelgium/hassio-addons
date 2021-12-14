@@ -1,20 +1,12 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base/amd64:4.0.0
-###############################################################################
-# Get prebuild containers from Bitwarden RS
-###############################################################################
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.23.0"
-
-# hadolint ignore=DL3006
 FROM "vaultwarden/server:${BUILD_UPSTREAM}" as vaultwarden
-
-###############################################################################
-# Build the actual add-on.
-###############################################################################
-# hadolint ignore=DL3006
 FROM ${BUILD_FROM}
-
-# Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Get the Bitwarden from official images
@@ -22,33 +14,45 @@ COPY --from=vaultwarden /vaultwarden /opt/vaultwarden
 COPY --from=vaultwarden /Rocket.toml /opt/Rocket.toml
 COPY --from=vaultwarden /web-vault /opt/web-vault
 
-################
-# Install apps #
-################
+##################
+# 2 Modify Image #
+##################
+
+##################
+# 3 Install apps #
+##################
+
 # Add rootfs
 COPY rootfs/ / 
 
 # Manual apps
 ENV PACKAGES="libmariadb-dev-compat \
-        libpq5 \
-        nginx \
-        sqlite3"
+    libpq5 \
+    nginx \
+    sqlite3"
 
 # Automatic apps & bashio
-RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
-    $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh "${PACKAGES:-}" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
-# Entrypoint logic
+################
+# 4 Entrypoint #
+################
+
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-### LABELS
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

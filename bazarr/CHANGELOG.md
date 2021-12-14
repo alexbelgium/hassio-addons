@@ -1,3 +1,4 @@
+- New standardized logic for Dockerfile build and packages installation
 
 ## 1.0.1 (20-11-2021)
 - Update to latest version from linuxserver/docker-bazarr

@@ -1,15 +1,15 @@
-###############
-# Build Image #
-###############
+#################
+# 1 Build Image #
+#################
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 ENV BASHIO_VERSION=0.14.3
 
-################
-# Modify Image #
-################
+##################
+# 2 Modify Image #
+##################
 
 RUN sed -i "s|/config|/config/readarr|g" /etc/services.d/readarr/run \
     && sed -i "s|/config|/config/readarr|g" /etc/cont-init.d/30-config \
@@ -19,9 +19,9 @@ RUN sed -i "s|/config|/config/readarr|g" /etc/services.d/readarr/run \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
 
-################
-# Install apps #
-################
+##################
+# 3 Install apps #
+##################
 
 # Copy local files
 COPY rootfs/ /
@@ -30,25 +30,25 @@ COPY rootfs/ /
 ENV PACKAGES=""
 
 # Automatic apps & bashio
-RUN $(ls /bin/bash &>/dev/null) || (apt-get install -y --no-install-recommends bash || apk add --no-cache bash) && \
-    $(curl --help &>/dev/null) || (apt-get install -y --no-install-recommends curl || apk add --no-cache curl) && \
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh "${PACKAGES:-}" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
-    
-##############
-# Entrypoint #
-##############
+
+################
+# 4 Entrypoint #
+################
 
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/entrypoint.sh" ] 
-    
-##########
-# Labels #
-##########
+
+############
+# 5 Labels #
+############
 
 ARG BUILD_ARCH
 ARG BUILD_DATE

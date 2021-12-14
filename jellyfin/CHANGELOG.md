@@ -1,4 +1,5 @@
-- Add local mount (see readmeà
+- New standardized logic for Dockerfile build and packages installation
+- Add local mount (see readme)
 - Added watchdog feature
 - Allow mounting of devices up to sdg2
 - Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename

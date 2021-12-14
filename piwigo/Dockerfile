@@ -1,50 +1,56 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
-ENV BASHIO_VERSION=0.14.3
-ENV PACKAGES="jq \
-    curl \
-    cifs-utils"
 
-# Copy root filesystem
-COPY rootfs / 
-
-VOLUME [ "/data" ]
-
-RUN \
-    # Install bashio
-    apk add --no-cache ${PACKAGES} \
-    \
-    && curl -J -L -o /tmp/bashio.tar.gz \
-    "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    && mkdir /tmp/bashio \
-    && tar zxvf \
-    /tmp/bashio.tar.gz \
-    --strip 1 -C /tmp/bashio \
-    \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -fr \
-    /tmp/* || true
+##################
+# 2 Modify Image #
+##################
 
 RUN \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
-# Use subfolder in config
-# Protect files starting by config.
-#    && files=$(grep -rl '/config.' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config.|/temptemp.|g' \
-#    && files=$(grep -rl '/config' /defaults/*) && echo $files | xargs sed -i 's|/config|/share/piwigo|g' \
-#    && files=$(grep -rl '/config' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/config|/share/piwigo|g' \
-#    && files=$(grep -rl '/temptemp.' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/temptemp.|/config.|g'
-#    && files=$(grep -rl "/config/" /etc/services.d/*) && echo $files | xargs sed -i "s|/config/|/share/piwigo|g"
-#    && files=$(grep -rl "    /config" /etc/cont-init.d/*) && echo $files | xargs sed -i "s=    /config=    /config/piwigo=g"
-#    && files=$(grep -rl '/data/config.inc.php' /defaults/*) && echo $files | xargs sed -i 's|/data/config.inc.php|/config/config.inc.php|g' || true \
-#    && files=$(grep -rl '/data/config.inc.php' /etc/cont-init.d/*) && echo $files | xargs sed -i 's|/data/config.inc.php|/config/config.inc.php|g' \
-#    && sed -i '2i cp -vnpr /config/* /data || true' /etc/cont-init.d/00-banner.sh
 
-### LABELS
+
+##################
+# 3 Install apps #
+##################
+
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
+ENV PACKAGES="jq \
+    curl \
+    cifs-utils"
+
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+
+################
+# 4 Entrypoint #
+################
+
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

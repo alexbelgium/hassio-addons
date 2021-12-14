@@ -1,36 +1,50 @@
+#################
+# 1 Build Image #
+#################
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM florider89/joplin-server:master
 
-ENV BASHIO_VERSION=0.14.3 
+##################
+# 2 Modify Image #
+##################
+
+USER root
+
+##################
+# 3 Install apps #
+##################
+
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
 ENV PACKAGES="jq \
     curl"
-USER root
-RUN \
-    ################
-    # Install apps #
-    ################
-    apt-get clean \
-    && apt-get update \     
-    && apt-get install -y --no-install-recommends ${PACKAGES} \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio
 
-COPY rootfs /
-RUN chmod +x /run.sh
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
+
+################
+# 4 Entrypoint #
+################
+
+RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/run.sh" ] 
+CMD [ "/entrypoint.sh" ] 
+#WORKDIR /
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-### LABELS
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

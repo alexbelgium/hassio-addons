@@ -1,31 +1,14 @@
+#################
+# 1 Build Image #
+#################
+
 ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
 
-# Copy root filesystem
-COPY rootfs /
-
-# Base system
-ENV BASHIO_VERSION=0.14.3
-ARG BUILD_ARCH
-ENV PACKAGES="jq \
-    curl \
-    cifs-utils \
-    nginx"
-
-RUN \
-    # Add apps
-    apk add --no-cache ${PACKAGES} \
-    \
-    ##################
-    # Install bashio #
-    ##################
-    && mkdir -p /tmp/bashio \
-    && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
-    | tar -xzf - --strip 1 -C /tmp/bashio \
-    && mv /tmp/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /tmp/bashio || true
+##################
+# 2 Modify Image #
+##################
 
 RUN \
     # Install script
@@ -35,23 +18,49 @@ RUN \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    # Correct visualization bug on mobile
-    #    && sed -i 's|content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"|content="width=980, initial-scale=1.0"|g' /app/scrutiny-web/index.html \
     # use /data instead of /config for database
     && sed -i 's| /config| /data|g' /defaults/scrutiny.yaml \
     && sed -i 's| /config| /data|g' /etc/cont-init.d/* \
     && sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
     && sed -i 's| /config| /data|g' /etc/crontabs/root \
-    # analyse local devices at reboot
-    #   && sed -i '$d' /etc/crontabs/root \
-    #   && sed -i -e '$a @reboot /run.sh' /etc/crontabs/root \
-    #   && sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root \
     # correct url paths  
     && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
 
-VOLUME [ "/data" ]
+##################
+# 3 Install apps #
+##################
 
-### LABELS
+# Add rootfs
+COPY rootfs/ /
+
+# Manual apps
+ENV PACKAGES="jq \
+    curl \
+    cifs-utils \
+    nginx"
+
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+
+################
+# 4 Entrypoint #
+################
+
+#RUN chmod 777 /entrypoint.sh
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ] 
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+############
+# 5 Labels #
+############
+
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION

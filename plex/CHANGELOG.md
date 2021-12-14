@@ -1,4 +1,8 @@
 
+## 1.25.2.5319-c43dc0277-ls92 (14-12-2021)
+- Update to latest version from linuxserver/docker-plex
+- New standardized logic for Dockerfile build and packages installation
+
 ## 1.25.1.5286-34f965be8-ls91 (07-12-2021)
 - Update to latest version from linuxserver/docker-plex
 - localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
