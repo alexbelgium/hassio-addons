@@ -27,6 +27,10 @@
     "/dev/sde2",
     "/dev/sdf2",
     "/dev/sdg2",
+    "/dev/sda3",
+    "/dev/sdb3",
+    "/dev/sda4",
+    "/dev/sdb4",
     "/dev/nvme0",
     "/dev/nvme1",
     "/dev/nvme2"
@@ -65,6 +69,6 @@
   "startup": "services",
   "upstream": "3.0.6.1342",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.0.6.1342-3",
+  "version": "3.0.6.1342-4",
   "webui": "http://[HOST]:[PORT:8989]"
 }
