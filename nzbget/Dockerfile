@@ -29,7 +29,7 @@ RUN sed -i "s|/config|/config/nzbget|g" /etc/services.d/nzbget/run \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Create folder
-    && sed -a '1a mkdir -p /config/nzbget' /etc/cont-init.d/10-adduser
+    && sed -i '1a mkdir -p /config/nzbget' /etc/cont-init.d/10-adduser
 
 ##################
 # 3 Install apps #
