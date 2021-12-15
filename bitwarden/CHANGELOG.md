@@ -1,3 +1,6 @@
+
+## 1.23.1 (15-12-2021)
+- Update to latest version from dani-garcia/bitwarden_rs
 - New standardized logic for Dockerfile build and packages installation
 
 ## 1.23.0 (21-10-2021)

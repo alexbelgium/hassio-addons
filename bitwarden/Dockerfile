@@ -15,7 +15,7 @@
 
 ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base/amd64:4.0.0
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="1.23.0"
+ARG BUILD_UPSTREAM="1.23.1"
 FROM "vaultwarden/server:${BUILD_UPSTREAM}" as vaultwarden
 FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
