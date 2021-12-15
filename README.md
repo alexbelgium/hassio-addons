@@ -52,7 +52,6 @@ https://github.com/alexbelgium/hassio-addons
 ## &#10003; File explorers
 
 - [Cloudcommander](cloudcommander/) ![smb][smb-shield] : File manager
-- [Doublecommander](doublecommander/) ![smb][smb-shield] : A free cross platform open source file manager with two panels side by side.
 - [Filebrowser](filebrowser/) ![support][support-shield]![smb][smb-shield] : A file manager for the web
 
 ## &#10003; Images management
