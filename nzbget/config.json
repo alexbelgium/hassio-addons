@@ -1,6 +1,11 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
   "boot": "auto",
   "description": "usenet downloader",
   "devices": [
@@ -39,7 +44,12 @@
     "PUID": "0",
     "PGID": "0"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "config:rw"
+  ],
   "name": "Nzbget",
   "options": {
     "PUID": 0,
@@ -51,7 +61,10 @@
   "ports_description": {
     "6789/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
@@ -62,8 +75,8 @@
     "cifspassword": "str?"
   },
   "slug": "nzbget",
-  "upstream": "latest",
+  "upstream": "21.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "latest",
+  "version": "21.1",
   "webui": "http://[HOST]:[PORT:6789]"
 }
