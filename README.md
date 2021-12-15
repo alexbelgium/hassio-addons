@@ -95,6 +95,7 @@ https://github.com/alexbelgium/hassio-addons
 
 - [Bazarr](bazarr/) ![smb][smb-shield] : Companion application to Sonarr and Radarr to download subtitles
 - [Jackett](jackett/) ![smb][smb-shield] : Translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
+- [Nzbget](nzbget/) is a usenet downloader, written in C++ and designed with performance in mind to achieve maximum download speed by using very little system resources
 - [Prowlarr](prowlarr/) ![smb][smb-shield] : Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
 - [Radarr](radarr/) ![smb][smb-shield] : A fork of Sonarr to work with movies like Couchpotato
 - [Readarr](readarr/) ![smb][smb-shield] : Book Manager and Automation
