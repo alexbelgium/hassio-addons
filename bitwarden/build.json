@@ -1,11 +1,8 @@
 { 
 "build_from": 
 { 
-    "aarch64": "ghcr.io/hassio-addons/debian-base/aarch64:4.0.0",
-    "amd64": "ghcr.io/hassio-addons/debian-base/amd64:4.0.0",
-    "armv7": "ghcr.io/hassio-addons/debian-base/armv7:4.0.0"
+    "aarch64": "ghcr.io/hassio-addons/debian-base/aarch64:5.2.2",
+    "amd64": "ghcr.io/hassio-addons/debian-base/amd64:5.2.2",
+    "armv7": "ghcr.io/hassio-addons/debian-base/armv7:5.2.2"
 }
 }
-
-
- 
