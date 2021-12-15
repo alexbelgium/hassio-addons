@@ -1,0 +1,8 @@
+{
+  "build_from": {
+    "armhf": "linuxserver/nzbget:arm32v7-latest",
+    "armv7": "linuxserver/nzbget:arm32v7-latest",
+    "aarch64": "linuxserver/nzbget:arm64v8-latest",
+    "amd64": "linuxserver/nzbget:amd64-latest"
+  }
+}
