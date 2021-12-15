@@ -1,3 +1,6 @@
+
+## 0.9.8-1-ls81 (15-12-2021)
+- Update to latest version from linuxserver/docker-doublecommander
 - New standardized logic for Dockerfile build and packages installation
 - Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
 - Removed full_access and host_network
