@@ -1,3 +1,6 @@
+
+## 3.2.5 (16-12-2021)
+- Update to latest version from flexget/flexget
 - New standardized logic for Dockerfile build and packages installation
 
 ## 3.2.4 (08-12-2021)
