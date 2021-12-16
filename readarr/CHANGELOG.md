@@ -1,4 +1,7 @@
 
+## nightly-0.1.0.1126-ls53 (16-12-2021)
+- Update to latest version from linuxserver/docker-readarr
+
 ## nightly-0.1.0.1117-ls52 (12-12-2021)
 - Update to latest version from linuxserver/docker-readarr
 - New standardized logic for Dockerfile build and packages installation
