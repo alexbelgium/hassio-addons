@@ -1,4 +1,7 @@
 
+## 20211215 (16-12-2021)
+- Update to latest version from photoprism/photoprism
+
 ## 20211210 (12-12-2021)
 - Update to latest version from photoprism/photoprism
 - New standardized logic for Dockerfile build and packages installation
