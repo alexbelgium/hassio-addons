@@ -24,7 +24,7 @@ server {
     # will add the domain to a hardcoded list that is shipped
     # in all major browsers and getting removed from this list
     # could take several months.
-
+    client_max_body_size 10G;
     add_header X-Content-Type-Options nosniff;
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Robots-Tag none;
