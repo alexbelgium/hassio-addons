@@ -33,17 +33,11 @@ RUN \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" /etc/services.d/nginx/* \
     # modify data limits files
+    # -e 's/memory_limit=512M/memory_limit=1024M/g' \
     && sed -i \
-	-e 's/memory_limit=512M/memory_limit=1024M/g' \
-	-e 's/upload_max_filesize=1024M/upload_max_filesize=4096M/g' \
-	-e 's/post_max_size=1024M/post_max_size=4096M/g' \
-    /etc/php7/php.ini
-    
-    
-	&& sed-i 's/memory_limit.*=.*128M/memory_limit=512M/g' \
-	&& sed-i 's/max_execution_time.*=.*30/max_execution_time=120/g' \
-	&& sed-i 's/upload_max_filesize.*=.*2M/upload_max_filesize=1024M/g' \
-	&& sed-i 's/post_max_size.*=.*8M/post_max_size=1024M/g' \
+	-e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
+	-e 's/post_max_size=10240M/post_max_size=4096M/g' \
+    	/etc/php7/php.ini
 
 ##################
 # 3 Install apps #
