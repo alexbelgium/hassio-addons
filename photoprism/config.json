@@ -36,6 +36,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "homeassistant": "0.92.0b2",
   "environment": {
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password"
   },
