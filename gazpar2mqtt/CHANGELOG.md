@@ -1,4 +1,7 @@
 
+## 0.6.2 (18-12-2021)
+- Update to latest version from yukulehe/gazpar2mqtt
+
 ## 0.6.1 (14-12-2021)
 - Update to latest version from yukulehe/gazpar2mqtt
 - New standardized logic for Dockerfile build and packages installation
