@@ -33,12 +33,9 @@ echo "
 User uid:    $(id -u abc)
 User gid:    $(id -g abc)
 -------------------------------------
-
-
-
-
-rm /config/nginx/site-confs/default || true
 "
 chown abc:abc /app
 chown abc:abc /data/config
 chown abc:abc /defaults
+
+rm /config/nginx/site-confs/default || true
