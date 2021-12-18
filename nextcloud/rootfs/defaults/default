@@ -57,7 +57,6 @@ server {
     location = /.well-known/host-meta.json {
       return 301 $scheme://$host:$server_port/public.php?service=host-meta-json;
     }
-    client_max_body_size 10G;
     fastcgi_buffers 64 4K;
     gzip on;
     gzip_vary on;
