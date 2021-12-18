@@ -54,9 +54,6 @@
     "ssl": false,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "networkdisks": "//server/share",
-    "cifsusername": "username",
-    "cifspassword": "password",
     "NoAuth": true
   },
   "panel_icon": "mdi:file-search",
