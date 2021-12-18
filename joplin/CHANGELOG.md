@@ -1,3 +1,6 @@
+
+## 2.6.9 (18-12-2021)
+- Update to latest version from laurent22/joplin
 - New standardized logic for Dockerfile build and packages installation
 
 ## 2.5.12 (08-11-2021)
