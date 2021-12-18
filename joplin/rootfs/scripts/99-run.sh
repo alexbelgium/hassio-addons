@@ -25,4 +25,5 @@ export APP_BASE_URL=$(bashio::config 'APP_BASE_URL')
 
 bashio::log.info 'Starting Joplin. Initial user is "admin@localhost" with password "admin"'
 
+cd /home/joplin
 npm --prefix packages/server start
