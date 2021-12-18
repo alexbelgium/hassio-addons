@@ -36,7 +36,7 @@ RUN \
     # -e 's/memory_limit=512M/memory_limit=1024M/g' \
     && sed -i \
 	-e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
-	-e 's/post_max_size=10240M/post_max_size=4096M/g' \
+	-e 's/post_max_size=1024M/post_max_size=10240M/g' \
     	/etc/php7/php.ini
 
 ##################
