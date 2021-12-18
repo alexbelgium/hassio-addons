@@ -1,7 +1,10 @@
 {
   "apparmor": true,
   "arch": [
-    "amd64"
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
   ],
   "description": "A server-based application for browsing, organizing and sharing your personal photo collection",
   "devices": [
