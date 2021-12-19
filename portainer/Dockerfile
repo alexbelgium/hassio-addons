@@ -28,8 +28,8 @@ ARG BUILD_UPSTREAM="2.11.0"
 
 RUN \
     BUILD_ARCH=$(uname -m) \
-    && BUILD_ARCH=${BUILD_ARCH:-x86} \
     && echo "${BUILD_ARCH}" \
+    && BUILD_ARCH=${BUILD_ARCH:-x86} \
     && if [[ "${BUILD_ARCH}" == *aarch64* ]]; then ARCH="arm64"; fi \
     && if [[ "${BUILD_ARCH}" == *armv8* ]]; then ARCH="arm64"; fi \
     && if [[ "${BUILD_ARCH}" == *arm64* ]]; then ARCH="arm64"; fi \
