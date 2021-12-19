@@ -14,12 +14,14 @@
   "options": {
     "CONFIG_LOCATION": "/config/gazpar2mqtt/config.yaml",
     "mqtt_autodiscover": true,
-    "TZ": "Europe/Paris"
+    "TZ": "Europe/Paris", 
+    "verbose": true
   },
   "schema": {
     "CONFIG_LOCATION": "str",
     "mqtt_autodiscover": "bool",
-    "TZ": "str?"
+    "TZ": "str?",
+    "verbose": "bool"
   },
   "services": [
     "mqtt:want"
