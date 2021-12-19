@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ -e "/PORTFILE" ]; then
     echo "Installing portainer..." 
-    BUILD_UPSTREAM=$(cat /PORTFILE)
+    BUILD_UPSTREAM=$(</PORTFILE)
     BUILD_ARCH=$(uname -m)
 
     echo "${BUILD_ARCH}"
