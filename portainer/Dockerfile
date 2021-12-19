@@ -27,7 +27,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BUILD_UPSTREAM="2.11.0"
 
 RUN \
-    BUILD_UPSTREAM="2.11.0"
     BUILD_ARCH=$(uname -m) \
     && echo "${BUILD_ARCH}" \
     && if [[ "${BUILD_ARCH}" == *aarch64* ]]; then ARCH="arm64"; fi \
