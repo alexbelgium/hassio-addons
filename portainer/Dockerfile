@@ -28,10 +28,13 @@ ARG BUILD_ARCH=amd64
 ARG BUILD_UPSTREAM="2.11.0"
 
 RUN \
-    if [ "${BUILD_ARCH}" = "aarch64" ]; then ARCH="arm64"; fi \
-    && if [ "${BUILD_ARCH}" = "armhf" ]; then ARCH="arm"; fi \
-    && if [ "${BUILD_ARCH}" = "armv7" ]; then ARCH="arm"; fi \
-    && if [ "${BUILD_ARCH}" = "amd64" ]; then ARCH="amd64"; fi \
+    BUILD_ARCH=$(uname -m) \
+    && echo "${BUILD_ARCH}" \
+    && if [ "${BUILD_ARCH}" = "*aarch64*" ]; then ARCH="arm64"; fi \
+    && if [ "${BUILD_ARCH}" = "*armv8*" ]; then ARCH="arm64"; fi \
+    && if [ "${BUILD_ARCH}" = "*armhf*" ]; then ARCH="arm"; fi \
+    && if [ "${BUILD_ARCH}" = "*armv7*" ]; then ARCH="arm"; fi \
+    && if [ "${BUILD_ARCH}" = "*x86*" ]; then ARCH="amd64"; fi \
     \
     && curl -L -s \
     "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
