@@ -40,7 +40,8 @@ RUN \
     \
     && curl -L -s \
     "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
-    | tar zxvf - -C /opt/
+    | tar zxvf - -C /opt/ || printf '%s\n' "${BUILD_UPSTREAM}" > /PORTFILE
+
 
 ##################
 # 3 Install apps #
