@@ -27,14 +27,15 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BUILD_UPSTREAM="2.11.0"
 
 RUN \
+    BUILD_UPSTREAM="2.11.0"
     BUILD_ARCH=$(uname -m) \
     && echo "${BUILD_ARCH}" \
     && if [[ "${BUILD_ARCH}" == *aarch64* ]]; then ARCH="arm64"; fi \
     && if [[ "${BUILD_ARCH}" == *armv8* ]]; then ARCH="arm64"; fi \
     && if [[ "${BUILD_ARCH}" == *arm64* ]]; then ARCH="arm64"; fi \
     && if [[ "${BUILD_ARCH}" == *armhf* ]]; then ARCH="arm"; fi \
-    && if [[ "${BUILD_ARCH}" == *armv7* ]]; then echo ARCH="arm"; fi \
-    && if [[ "${BUILD_ARCH}" == arm ]]; then echo ARCH="arm"; fi \
+    && if [[ "${BUILD_ARCH}" == *armv7* ]]; then ARCH="arm"; fi \
+    && if [[ "${BUILD_ARCH}" == arm ]]; then ARCH="arm"; fi \
     && if [[ "${BUILD_ARCH}" == *x86* ]]; then ARCH="amd64"; fi \
     \
     && curl -L -s \
