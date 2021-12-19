@@ -14,7 +14,7 @@
 #################
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM florider89/joplin-server:master
+FROM florider89/joplin-server:latest
 
 ##################
 # 2 Modify Image #
