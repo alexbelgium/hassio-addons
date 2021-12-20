@@ -1,0 +1,29 @@
+{
+  "apparmor": true,
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
+  "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
+  "devices": [],
+  "environment": {
+    "CONFIG_VOLUME": "/data"
+  },
+  "map": ["config:rw"],
+  "name": "Whoogle Search",
+  "options": {
+    "CONFIG_LOCATION": "/config/addons_config/whoogle_search/config.yaml"
+  },
+  "ports": {
+    "5000/tcp": 5000
+  },
+  "ports_description": {
+    "5000/tcp": "web interface"
+  },
+  "schema": {
+    "CONFIG_LOCATION": "str"
+  },
+  "slug": "whoogle-search",
+  "upstream": "0.7.0",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "0.7.0",
+  "webui": "http://[HOST]:[PORT:5000]"
+}

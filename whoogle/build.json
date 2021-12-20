@@ -1,0 +1,8 @@
+{
+  "build_from": {
+    "armhf": "benbusby/whoogle-search:latest",
+    "armv7": "benbusby/whoogle-search:latest",
+    "aarch64": "benbusby/whoogle-search:latest",
+    "amd64": "benbusby/whoogle-search:latest"
+  }
+}
