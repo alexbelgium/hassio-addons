@@ -108,7 +108,7 @@ https://github.com/alexbelgium/hassio-addons
 ## &#10003; Security tools
 
 - [Bitwarden](bitwarden/) : Open source password management solution
-- [whoogle-search](whoogle/) is a Self-hosted, ad-free, privacy-respecting metasearch engine
+- [whoogle-search](whoogle/) : Self-hosted, ad-free, privacy-respecting metasearch engine
 
 ## &#10003; Torrent tools
 
