@@ -16,7 +16,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="20211215"
-FROM photoprism/photoprism:20211215
+FROM photoprism/photoprism:latest
 
 ##################
 # 2 Modify Image #
