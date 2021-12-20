@@ -86,7 +86,7 @@ while IFS= read -r line; do
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
         sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
         # Show in log
-        bashio::log.blue "$line"
+        if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
     else
         bashio::exit.nok "$line does not follow the correct structure. Please check your yaml file."
     fi
