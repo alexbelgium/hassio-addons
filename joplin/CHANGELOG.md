@@ -1,3 +1,6 @@
+
+## 2.6.10 (20-12-2021)
+- Update to latest version from laurent22/joplin
 - Switch from "master" to "latest"
  
 ## 2.6.9 (18-12-2021)
