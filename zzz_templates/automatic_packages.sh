@@ -113,7 +113,7 @@ for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES py3-pip"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES python-pip"
+        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES pip"
     fi
 
     COMMAND="wget"
