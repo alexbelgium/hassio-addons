@@ -14,7 +14,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[Paperless NG](https://github.com/qbittorrent/qBittorrent) is a cross-platform free and open-source BitTorrent client.
+[Paperless NG](https://github.com/jonaswinkler/paperless-ng) is a cross-platform free and open-source BitTorrent client.
 This addon is based on the docker image from [linuxserver.io](https://www.linuxserver.io/).
 
 ## Configuration
