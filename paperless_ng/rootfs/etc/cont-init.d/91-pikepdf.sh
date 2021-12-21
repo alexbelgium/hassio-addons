@@ -1,11 +1,7 @@
 #!/bin/bash
 
 echo "Installing pikepdf..." 
-apt-get install libxml2-dev libxslt-dev python-dev
-
-apt-get install libjpeg-dev zlib1g-dev
-
-apt-get install python3-dev build-essential -y && \
-pip install pikepdf==2.16.1 --force-reinstall
-
+(apt-get update
+apt-get install -yqq libxml2-dev libxslt-dev python-dev libjpeg-dev zlib1g-dev python3-dev build-essential
+pip install pikepdf --force-reinstall) >/dev/null
 echo "... success!" 
