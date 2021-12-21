@@ -1,5 +1,6 @@
+- Manual install pikepdf
 - New standardized logic for Dockerfile build and packages installation
-- allow !secrets in config.yaml (see Home Assistant documentation)
+- Allow !secrets in config.yaml (see Home Assistant documentation)
 
 ## 1.5.0 (27-11-2021)
 
