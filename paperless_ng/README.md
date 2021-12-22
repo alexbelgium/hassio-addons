@@ -29,6 +29,7 @@ networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
 CONFIG_LOCATION : Location of the config.yaml (see below)
+TZ: Europe/Paris # Sets a specific timezone
 ```
 - Config.yaml
 
