@@ -61,7 +61,8 @@
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
+    "cifspassword": "str?", 
+    "OCRLANG": "str?"
   },
   "slug": "paperless_ng",
   "upstream": "1.5.0",
