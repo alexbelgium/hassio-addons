@@ -1,3 +1,4 @@
+- MultiOCR: in OCRLANG field use comma separated value. Ex: fra,deu
 - Manual install pikepdf
 - New standardized logic for Dockerfile build and packages installation
 - Allow !secrets in config.yaml (see Home Assistant documentation)
