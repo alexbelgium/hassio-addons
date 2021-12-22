@@ -1,7 +1,10 @@
 #!/bin/bash
 
 echo "Installing pikepdf..."
-(apt-get update
+(
+export DEBIAN_FRONTEND="noninteractive"
+export TERM="xterm-256color"
+apt-get update
 apt-get install -yq libxml2-dev libxslt-dev python-dev
 apt-get install -yq libjpeg-dev zlib1g-dev
 apt-get install -yq python3-dev build-essential -y && \
