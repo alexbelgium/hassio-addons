@@ -25,7 +25,9 @@ if bashio::config.has_value 'OCR'; then
         apk add --quiet --no-cache tesseract-ocr || apk add --quiet --no-cache tesseract-ocr@community
         # Install additional language if requested
         if bashio::config.has_value 'OCRLANG'; then
-            LANG=$(bashio::config 'OCRLANG')
+            OCRLANG=$(bashio::config 'OCRLANG')
+  for LANG in $(echo "$OCRLANG" | tr "," " "); do
+
             apk add --quiet --no-cache tesseract-ocr-data-$LANG || apk add --quiet --no-cache tesseract-ocr-data-$LANG@community && \
             bashio::log.info "OCR Language installed : $LANG" || bashio::log.fatal "Couldn't install OCR lang $LANG. Please check its format is conform"
 
@@ -33,7 +35,7 @@ if bashio::config.has_value 'OCR'; then
             cd /usr/share/tessdata
             sudo rm -r $LANG.traineddata &>/dev/null || true
             wget https://github.com/tesseract-ocr/tessdata/raw/main/$LANG.traineddata &>/dev/null
-
+done
         fi
     elif $(bashio::config 'OCR') = false; then
         bashio::log.info 'Removing OCR'
