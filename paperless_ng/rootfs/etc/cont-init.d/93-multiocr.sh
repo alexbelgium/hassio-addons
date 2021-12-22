@@ -1,4 +1,5 @@
-!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
+
 OCRLANG=$(bashio::config 'OCRLANG')
 if [ -n "$OCRLANG" ]; then
   apt-get update &>/dev/null
