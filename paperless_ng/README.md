@@ -32,7 +32,7 @@ CONFIG_LOCATION : Location of the config.yaml (see below)
 ```
 - Config.yaml
 
-Custom env variables can be added to the config.yaml file referenced in the addon options. Full env variables can be found here : https://github.com/linuxserver/docker-paperless-ng. It must be entered in a valid yaml format, that is verified at launch of the addon.
+Custom env variables can be added to the config.yaml file referenced in the addon options. Full env variables can be found here : https://paperless-ng.readthedocs.io/en/latest/configuration.html. It must be entered in a valid yaml format, that is verified at launch of the addon.
 
 ## Installation
 
