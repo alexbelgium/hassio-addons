@@ -1,3 +1,4 @@
+- MultiOCR: in OCRLANG field use comma separated value. Ex: fra,deu
 - Max file size increased to 10Go
 - New standardized logic for Dockerfile build and packages installation
 
