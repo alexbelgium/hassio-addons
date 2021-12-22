@@ -49,7 +49,8 @@ ENV PACKAGES="jq \
     smbclient \
     samba \
     yamllint \
-    pip"
+    pip \
+    libxml2-dev libxslt-dev python-dev libjpeg-dev zlib1g-dev python3-dev build-essential"
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
