@@ -1,3 +1,6 @@
+
+## 2.20.1 (23-12-2021)
+- Update to latest version from hurlenko/filebrowser-docker
 - Mount ssl in write
 - New standardized logic for Dockerfile build and packages installation
 - Mount nvme drives
