@@ -1,4 +1,7 @@
 
+## 2.1.29 (23-12-2021)
+- Update to latest version from anthonyraymond/joal
+
 ## 2.1.28 (14-12-2021)
 - Update to latest version from anthonyraymond/joal
 - New standardized logic for Dockerfile build and packages installation

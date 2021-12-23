@@ -14,7 +14,7 @@
 #################
 
 ARG BUILD_FROM
-ARG BUILD_UPSTREAM="2.1.28"
+ARG BUILD_UPSTREAM="2.1.29"
 FROM anthonyraymond/joal:$BUILD_UPSTREAM
 
 ##################
@@ -52,7 +52,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.1.28"
+ARG BUILD_UPSTREAM="2.1.29"
 
 ################
 # 4 Entrypoint #
