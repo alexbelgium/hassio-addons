@@ -1,3 +1,6 @@
+
+## 0.6.3 (24-12-2021)
+- Update to latest version from yukulehe/gazpar2mqtt
 - Add verbose mode : disabling it removes messages
 
 ## 0.6.2 (18-12-2021)

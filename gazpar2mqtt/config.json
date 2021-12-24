@@ -14,7 +14,7 @@
   "options": {
     "CONFIG_LOCATION": "/config/gazpar2mqtt/config.yaml",
     "mqtt_autodiscover": true,
-    "TZ": "Europe/Paris", 
+    "TZ": "Europe/Paris",
     "verbose": true
   },
   "schema": {
@@ -27,7 +27,7 @@
     "mqtt:want"
   ],
   "slug": "gazpar2mqtt",
-  "upstream": "0.6.2",
+  "upstream": "0.6.3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.6.2-2"
+  "version": "0.6.3"
 }
