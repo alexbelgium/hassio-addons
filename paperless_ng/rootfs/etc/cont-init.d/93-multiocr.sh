@@ -8,13 +8,6 @@ if [ -n "$OCRLANG" ]; then
     if apt-cache show tesseract-ocr-"${i}" > /dev/null 2>&1; then
       echo "installing tesseract-ocr-${i}"
       apt-get install -y tesseract-ocr-"${i}"
-
-            # Downloading trainer data
-            # Downloading trainer data
-        cd "$(find / -name "tessdata")"
-        #    cd /usr/share/tessdata
-        rm -r $LANG.traineddata &>/dev/null || true
-        wget https://github.com/tesseract-ocr/tessdata/raw/main/$LANG.traineddata &>/dev/null
     else
       echo "package tesseract-ocr-${i} not found in the repository, skipping"
     fi
