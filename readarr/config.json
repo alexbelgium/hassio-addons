@@ -77,8 +77,8 @@
     "CONFIG_LOCATION": "str"
   },
   "slug": "readarr_nas",
-  "upstream": "nightly-0.1.0.1142-ls56",
+  "upstream": "nightly-0.1.0.1144-ls58",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "nightly-0.1.0.1142-ls56",
+  "version": "nightly-0.1.0.1144-ls58",
   "webui": "http://[HOST]:[PORT:8787]"
 }
