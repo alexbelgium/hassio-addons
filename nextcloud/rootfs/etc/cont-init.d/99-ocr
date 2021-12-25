@@ -33,7 +33,7 @@ if bashio::config.has_value 'OCR'; then
 
             # Downloading trainer data
             cd /usr/share/tessdata
-            sudo rm -r $LANG.traineddata &>/dev/null || true
+            rm -r $LANG.traineddata &>/dev/null || true
             wget https://github.com/tesseract-ocr/tessdata/raw/main/$LANG.traineddata &>/dev/null
 done
         fi
