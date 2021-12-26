@@ -1,4 +1,3 @@
-- Relocate config in /config/addons_config/Jackett to avoid double config folders
 
 ## 0.20.197 (24-12-2021)
 - Update to latest version from linuxserver/docker-jackett
