@@ -24,7 +24,7 @@ FROM ${BUILD_FROM}
 # use /data instead of /config for hass.io environment
 RUN sed -i "s|/config|/config/addons_config/Jackett|g" /etc/services.d/jackett/run \
     && sed -i "s|/config|/config/addons_config/Jackett|g" /etc/cont-init.d/30-config \
-    && sed -i "1a if [ -f /config/Jackett ]; then mkdir -p /config/addons_config/Jackett && cp -r /config/Jackett/ /config/addons_config/Jackett/ && rm -r /config/Jackett; fi" /etc/cont-init.d/30-config \
+    && sed -i "1a mkdir -p /config/addons_config/Jackett && if [ -d /config/Jackett ]; then cp -r /config/Jackett/ /config/addons_config/Jackett/ && rm -r /config/Jackett; fi" /etc/cont-init.d/30-config \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
