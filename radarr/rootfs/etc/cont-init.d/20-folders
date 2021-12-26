@@ -13,7 +13,7 @@ if [ ! -d /share/downloads ]; then
 fi
 
 if [ ! -d /config/radarr ]; then
-  echo "Creating /config/radarr"
-  mkdir -p /config/radarr
-  chown -R abc:abc /config/radarr
+  echo "Creating /config/addons_config/radarr"
+  mkdir -p /config/addons_config/radarr
+  chown -R abc:abc /config/addons_config/radarr
 fi
