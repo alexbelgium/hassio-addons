@@ -8,7 +8,7 @@
     "TRUSTED_PROXIES": "**"
   },
   "map": ["config:rw", "share:rw", "ssl"],
-  "name": "fireflyiii",
+  "name": "Firefly iii",
   "options": {
     "DB_CONNECTION": "sqlite",
     "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml"
