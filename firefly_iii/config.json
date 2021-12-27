@@ -32,8 +32,8 @@
   },
   "slug": "fireflyiii",
   "services": ["mysql:want"],
-  "upstream": "1.5",
+  "upstream": "1.6",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.5",
+  "version": "1.6",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
