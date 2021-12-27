@@ -7,7 +7,7 @@
 # Change data location
 echo "Update data location"
 mkdir -p /data/fireflyiii
-cp -rn /var/www/html /data/fireflyiii
+cp -r /var/www/html /data/fireflyiii
 
 # Backup APP_KEY file
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
