@@ -25,9 +25,10 @@ sqlite_internal)
     # Creating database
     mkdir -p /config/addons_config/fireflyiii/database
     touch /config/addons_config/fireflyiii/database/database.sqlite
+    chmod 777 /config/addons_config/fireflyiii/database/database.sqlite
     # Symlink
     rm -r /var/www/html/storage/database
-    ln -sf /config/addons_config/fireflyiii/database /var/www/html/storage
+    ln -snf /config/addons_config/fireflyiii/database /var/www/html/storage
     ;;
 
 # Use MariaDB
