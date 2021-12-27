@@ -2,23 +2,32 @@
 
 bashio::log.info "Launching app"
 
-# Backup APP_KEY file
+#######################
+# Backup APP_KEY file #
+#######################
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
 APP_KEY="$(bashio::config 'APP_KEY')"
 echo "$APP_KEY" >/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
 if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} instead of 32 characters"; fi
 
-# Define database
+###################
+# Define database #
+###################
+
 bashio::log.info "Defining database"
 case $(bashio::config 'DB_CONNECTION') in
 
 # Use sqlite
 sqlite_internal)
     bashio::log.info "Using built in sqlite"
+    # Set variable
     export DB_CONNECTION=sqlite
-    touch ./storage/database/database.sqlite
-    php artisan migrate --seed
-    php artisan firefly-iii:upgrade-database
+    # Creating database
+    mkdir -p /config/addons_config/fireflyiii/database
+    touch /config/addons_config/fireflyiii/database/database.sqlite
+    # Symlink
+    rm -r /var/www/html/storage/database
+    ln -sf /config/addons_config/fireflyiii/database /var/www/html/storage
     ;;
 
 # Use MariaDB
