@@ -58,11 +58,15 @@ mariadb_addon)
     bashio::log.warning "Please ensure this is included in your backups"
     bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
-    #bashio::log.info "Creating database for Firefly-iii if required"
-    #mysql3 \
-    #    -u "${username}" -p"${password}" \
-    #    -h "${host}" -P "${port}" \
-    #    -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
+    bashio::log.info "Installing mysql to configure the database"
+    apt-get update
+    apt-get install -yq --no-install-recommends mysql
+    apt-get clean
+    bashio::log.info "Creating database for Firefly-iii if required"
+    mysql \
+        -u "${username}" -p"${password}" \
+        -h "${host}" -P "${port}" \
+        -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
     ;;
 
 # Use remote
@@ -84,5 +88,7 @@ php artisan firefly-iii:upgrade-database
 ##############
 # LAUNCH APP #
 ##############
+
+bashio::log.info "Please wait while the app is loading !"
 
 /./usr/local/bin/entrypoint.sh
