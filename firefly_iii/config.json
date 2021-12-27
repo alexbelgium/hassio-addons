@@ -12,7 +12,8 @@
   "options": {
     "DB_CONNECTION": "sqlite",
     "APP_KEY": "CHANGEME_32_CHARS_EuC5dfn3LAPzeO",
-    "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml"
+    "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml",
+    "silent": true
   },
   "ports": {
     "8080/tcp": 3473
@@ -28,7 +29,8 @@
     "DB_PORT": "str?",
     "DB_DATABASE": "str?",
     "DB_USERNAME": "str?",
-    "DB_PASSWORD": "str?"
+    "DB_PASSWORD": "str?",
+    "silent": "bool"
   },
   "slug": "fireflyiii",
   "services": ["mysql:want"],

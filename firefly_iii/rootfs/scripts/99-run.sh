@@ -68,4 +68,8 @@ php artisan firefly-iii:upgrade-database
 # LAUNCH APP #
 ##############
 
-/./usr/local/bin/entrypoint.sh
+if bashio::config.true "silent"; then
+    /./usr/local/bin/entrypoint.sh >/dev/null
+else
+    /./usr/local/bin/entrypoint.sh
+fi
