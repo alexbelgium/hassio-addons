@@ -2,17 +2,12 @@
 
 bashio::log.info "Launching app"
 
-# Create API key if needed
-if ! bashio::fs.file_exists "/data/firefly/appkey.txt"; then
-    #Command fails without appkey set, this won't be used again
-    export APP_KEY=SomeRandomStringOf32CharsExactly
-    bashio::log.info "Generating app key"
-    key=$(php /var/www/firefly/artisan key:generate --show)
-    echo "${key}" >/data/firefly/appkey.txt
-    bashio::log.info "App Key generated: ${key}"
-fi
+# Backup API_KEY file
+bashio::log.info "Backuping API_KEY to /config/addons_config/fireflyiii/API_KEY_BACKUP.txt"
+echo "$(bashio::config 'API_KEY')" >/config/addons_config/fireflyiii/API_KEY_BACKUP.txt
 
 # Define database
+bashio::log.info "Defining database"
 case $(bashio::config 'DB_CONNECTION') in
 
 # Use sqlite

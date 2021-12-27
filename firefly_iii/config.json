@@ -11,6 +11,7 @@
   "name": "Firefly iii",
   "options": {
     "DB_CONNECTION": "sqlite",
+    "API_KEY": "CHANGEME_32_CHARS_EuC5dfn3LAPzeO",
     "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml"
   },
   "ports": {
@@ -21,6 +22,7 @@
   },
   "schema": {
     "CONFIG_LOCATION": "str",
+    "API_KEY": "str(32,32)",
     "DB_CONNECTION": "list(sqlite|mariadb_addon|remotedb)",
     "DB_HOST": "str?",
     "DB_PORT": "str?",
