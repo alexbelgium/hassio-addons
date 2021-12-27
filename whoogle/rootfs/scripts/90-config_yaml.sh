@@ -8,7 +8,7 @@
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 
 # Check if config file is there, or create one from template
-if [ -f $CONFIGSOURCE ]; then
+if [ -f "$CONFIGSOURCE" ]; then
     echo "Using config file found in $CONFIGSOURCE"
 else
     echo "No config file, creating one from template"
@@ -21,7 +21,7 @@ else
     else
         # Download template
         TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/config.template"
-        curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
+        curl -L -f -s $TEMPLATESOURCE --output "$CONFIGSOURCE"
     fi
     # Need to restart
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
@@ -30,7 +30,7 @@ fi
 
 # Check if yaml is valid
 EXIT_CODE=0
-yamllint -d relaxed --no-warnings $CONFIGSOURCE &>ERROR || EXIT_CODE=$?
+yamllint -d relaxed --no-warnings "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
 if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
 else
@@ -55,7 +55,7 @@ function parse_yaml {
       for (i in vname) {if (i > indent) {delete vname[i]}}
       if (length($3) > 0) {
          vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+         printf("%s%s%s=\"%s\"\n", "'"$prefix"'",vn, $2, $3);
       }
      }'
 }
@@ -81,7 +81,7 @@ while IFS= read -r line; do
     fi
     # Data validation
     if [[ $line =~ ^.+[=].+$ ]]; then
-        export $line
+        export "$line"
         # Export the variable
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
         sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
@@ -94,9 +94,9 @@ done <"/tmpfile"
 
 # Test mode
 TZ=$(bashio::config "TZ")
-if [ $TZ = "test" ]; then
+if [ "$TZ" = "test" ]; then
     echo "secret mode found, launching script in /config/test.sh"
-    cd /config
+    cd /config || exit
     chmod 777 test.sh
     ./test.sh
 fi

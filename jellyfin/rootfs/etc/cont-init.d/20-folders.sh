@@ -39,12 +39,19 @@ if [ ! -d /jellyfin/cache ]; then
   ln -s /share/jellyfin/cache /jellyfin/cache
 fi
 
-if [ ! -d /jellyfin/config ]; then
-  echo "Creating link for /jellyfin/config"
-  mkdir -p /config/jellyfin
-  chown -R abc:abc /config/jellyfin
-  ln -s /config/jellyfin /jellyfin/config
+if [ -d /config/jellyfin ]; then
+  echo "Moving to new location /config/addons_config/jellyfin"
+  mkdir -p /config/addons_config/jellyfin
+  chown -R abc:abc /config/addons_config/jellyfin
+  mv /config/jellyfin/* /config/addons_config/jellyfin/
 fi
+
+if [ ! -d /config/addons_config/jellyfin ]; then
+  echo "Creating /config/addons_config/jellyfin"
+  mkdir -p /config/addons_config/jellyfin
+  chown -R abc:abc /config/addons_config/jellyfin
+fi
+
 
 if [ ! -d /jellyfin/data ]; then
   echo "Creating link for /jellyfin/data"
