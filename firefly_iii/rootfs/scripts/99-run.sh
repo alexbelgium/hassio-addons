@@ -60,7 +60,7 @@ mariadb_addon)
 
     bashio::log.info "Installing mysql to configure the database"
     apt-get update
-    apt-get install -yq --no-install-recommends mysql
+    apt-get install -yq --no-install-recommends mysql-client
     apt-get clean
     bashio::log.info "Creating database for Firefly-iii if required"
     mysql \
