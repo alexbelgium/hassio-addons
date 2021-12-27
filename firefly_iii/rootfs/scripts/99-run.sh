@@ -26,9 +26,9 @@ mariadb_addon)
     bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon"
     if ! bashio::services.available 'mysql'; then
         bashio::log.fatal \
-        "Local database access should be provided by the MariaDB addon"
+            "Local database access should be provided by the MariaDB addon"
         bashio::exit.nok \
-        "Please ensure it is installed and started"
+            "Please ensure it is installed and started"
     fi
 
     export DB_CONNECTION=mysql
@@ -43,9 +43,9 @@ mariadb_addon)
 
     bashio::log.info "Creating database for Firefly-iii if required"
     mysql \
-    -u "${username}" -p"${password}" \
-    -h "${host}" -P "${port}" \
-    -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
+        -u "${username}" -p"${password}" \
+        -h "${host}" -P "${port}" \
+        -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
     ;;
 
 # Use remote
@@ -68,8 +68,4 @@ php artisan firefly-iii:upgrade-database
 # LAUNCH APP #
 ##############
 
-if bashio::config.true "silent"; then
-    /./usr/local/bin/entrypoint.sh >/dev/null
-else
-    /./usr/local/bin/entrypoint.sh
-fi
+/./usr/local/bin/entrypoint.sh
