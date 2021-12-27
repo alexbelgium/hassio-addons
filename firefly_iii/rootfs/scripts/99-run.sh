@@ -71,7 +71,7 @@ mariadb_addon)
 
 # Use remote
 *)
-    bashio::log.info "Using remote database. Requirement : filling all addon options fields"
+    bashio::log.info "Using remote database. Requirement : filling all addon options fields, and making sure the database already exists"
     for conditions in "DB_HOST" "DB_PORT" "DB_DATABASE" "DB_USERNAME" "DB_PASSWORD"; do
         if ! bashio::config.has_value "$conditions"; then
             bashio::exit.nok "Remote database has been specified but $conditions is not defined in addon options"
