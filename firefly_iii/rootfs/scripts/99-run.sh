@@ -15,6 +15,7 @@ case $(bashio::config 'DB_CONNECTION') in
 # Use sqlite
 sqlite_internal)
     bashio::log.info "Using built in sqlite"
+    export DB_CONNECTION=sqlite
     touch ./storage/database/database.sqlite
     php artisan migrate --seed
     php artisan firefly-iii:upgrade-database
@@ -30,6 +31,7 @@ mariadb_addon)
         "Please ensure it is installed and started"
     fi
 
+    export DB_CONNECTION=mysql
     host=$(bashio::services "mysql" "host")
     password=$(bashio::services "mysql" "password")
     port=$(bashio::services "mysql" "port")
