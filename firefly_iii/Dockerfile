@@ -22,7 +22,7 @@ FROM ${BUILD_FROM}
 ##################
 
 ENV FIREFLY_III_PATH="/data/firefly"
-WORKDIR $FIREFLY_III_PATH
+#WORKDIR $FIREFLY_III_PATH
 RUN \
     # Change data location
     grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
