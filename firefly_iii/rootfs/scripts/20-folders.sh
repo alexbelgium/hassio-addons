@@ -9,4 +9,4 @@ mkdir -p /config/addons_config/fireflyiii
 chown $(id -u):$(id -g) /config/addons_config/fireflyiii
 
 # Make symlink
-ln -snf /var/www/html/storage /config/addons_config/fireflyiii
+ln -snf /config/addons_config/fireflyiii /var/www/html/storage
