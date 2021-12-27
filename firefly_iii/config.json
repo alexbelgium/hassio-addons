@@ -15,10 +15,10 @@
     "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml"
   },
   "ports": {
-    "80/tcp": 3473
+    "8080/tcp": 3473
   },
   "ports_description": {
-    "80/tcp": "web interface"
+    "8080/tcp": "web interface"
   },
   "schema": {
     "CONFIG_LOCATION": "str",
@@ -35,5 +35,5 @@
   "upstream": "1.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.1",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
