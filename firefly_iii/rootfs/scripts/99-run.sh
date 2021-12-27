@@ -1,10 +1,15 @@
 #!/usr/bin/env bashio
 
-bashio::log.info "Launching app"
+########
+# Init #
+########
 
-#######################
-# Backup APP_KEY file #
-#######################
+# Change data location
+echo "Update data location"
+mkdir -p /data/fireflyiii
+cp -rn /var/www/html /data/fireflyiii
+
+# Backup APP_KEY file
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
 APP_KEY="$(bashio::config 'APP_KEY')"
 echo "$APP_KEY" >/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt

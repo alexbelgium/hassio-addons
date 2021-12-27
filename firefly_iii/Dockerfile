@@ -21,7 +21,12 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-#ENV FIREFLY_III_PATH=/data/firefly
+ENV FIREFLY_III_PATH="/data/firefly"
+WORKDIR $FIREFLY_III_PATH
+RUN \
+    # Change data location
+    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
+
 
 ##################
 # 3 Install apps #
