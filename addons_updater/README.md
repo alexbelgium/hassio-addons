@@ -54,6 +54,7 @@ gitapi: optional, it is the API key from your github repo
 
 Example:
 ```yaml
+addon:
   - slug: sonarr
     beta: false
     fulltag: false
@@ -69,6 +70,10 @@ Example:
     fulltag: false
     repository: alexbelgium/hassio-addons
     upstream: linuxserver/docker-ubooquity
+gituser: your github username
+gitpass: your github password 
+gitmail: your github email
+verbose: 'false'
 ```
 
 [repository]: https://github.com/alexbelgium/hassio-addons
