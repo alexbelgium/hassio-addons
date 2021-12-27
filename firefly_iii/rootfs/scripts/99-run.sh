@@ -4,7 +4,9 @@ bashio::log.info "Launching app"
 
 # Backup API_KEY file
 bashio::log.info "Backuping API_KEY to /config/addons_config/fireflyiii/API_KEY_BACKUP.txt"
-echo "$(bashio::config 'API_KEY')" >/config/addons_config/fireflyiii/API_KEY_BACKUP.txt
+API_KEY="$(bashio::config 'API_KEY')"
+echo "$API_KEY" >/config/addons_config/fireflyiii/API_KEY_BACKUP.txt
+if [ ! ${#API_KEY} = 32 ]; then bashio::exit.nok "Your API_KEY has ${#API_KEY} instead of 32 characters"; fi
 
 # Define database
 bashio::log.info "Defining database"
