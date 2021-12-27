@@ -1,3 +1,6 @@
+
+## 2.1.0a1 (27-12-2021)
+- Update to latest version from nathanvaughn/webtrees-docker
 - New standardized logic for Dockerfile build and packages installation
 
 ## 2.0.19 (07-12-2021)
