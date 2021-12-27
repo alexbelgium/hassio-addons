@@ -58,6 +58,10 @@ mariadb_addon)
 
 esac
 
+# Install database
+php artisan migrate --seed
+php artisan firefly-iii:upgrade-database
+
 ##############
 # LAUNCH APP #
 ##############

@@ -23,7 +23,7 @@
   "schema": {
     "CONFIG_LOCATION": "str",
     "API_KEY": "str",
-    "DB_CONNECTION": "list(sqlite|mariadb_addon|remotedb)",
+    "DB_CONNECTION": "list(sqlite_internal|mariadb_addon|mysql|pgsql)",
     "DB_HOST": "str?",
     "DB_PORT": "str?",
     "DB_DATABASE": "str?",
