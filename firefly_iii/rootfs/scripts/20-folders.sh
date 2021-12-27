@@ -10,5 +10,6 @@ mkdir -p /config/addons_config/fireflyiii/storage
 chown -R $(id -u):$(id -g) /config/addons_config/fireflyiii
 
 # Make symlink
-rm -r /data/firefly/storage &>/dev/null
-ln -sn /config/addons_config/fireflyiii/storage /data/firefly
+cp -r /var/www/html/storage /config/addons_config/fireflyiii/storage
+rm -r /data/firefly/storage
+ln -sf /config/addons_config/fireflyiii/storage /data/firefly/storage
