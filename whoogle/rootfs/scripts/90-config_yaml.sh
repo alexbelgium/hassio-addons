@@ -73,7 +73,7 @@ while IFS= read -r line; do
         secret=${line#*secret }
         # Check if single match
         secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
-        [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+        [[ $(echo "$secretnum") == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
@@ -81,7 +81,7 @@ while IFS= read -r line; do
     fi
     # Data validation
     if [[ $line =~ ^.+[=].+$ ]]; then
-        export "$line"
+        export "{$line}"
         # Export the variable
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
         sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
