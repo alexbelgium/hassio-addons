@@ -21,7 +21,7 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-ENV DB_CONNECTION=sqlite
+ENV FIREFLY_III_PATH=/data/firefly
 
 ##################
 # 3 Install apps #
