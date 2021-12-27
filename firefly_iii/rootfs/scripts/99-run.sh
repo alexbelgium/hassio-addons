@@ -64,8 +64,8 @@ mariadb_addon)
     apt-get clean
     bashio::log.info "Creating database for Firefly-iii if required"
     mysql \
-        -u "${username}" -p"${password}" \
-        -h "${host}" -P "${port}" \
+        -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
+        -h "${DB_HOST}" -P "${DB_PORT}" \
         -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
     ;;
 
