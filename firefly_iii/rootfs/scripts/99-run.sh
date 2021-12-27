@@ -29,11 +29,11 @@ sqlite_internal)
     export DB_CONNECTION=sqlite
     # Creating database
     mkdir -p /config/addons_config/fireflyiii/database
-    touch /config/addons_config/fireflyiii/database/database.sqlite
-    chmod 777 /config/addons_config/fireflyiii/database/database.sqlite
-    # Symlink
     rm -r /var/www/html/storage/database
     ln -snf /config/addons_config/fireflyiii/database /var/www/html/storage
+    chown -R $(id -u):$(id -g) /var/www/html/storage/database
+    chmod 755 /var/www/html/storage/database
+    touch /var/www/html/storage/database/database.sqlite
     ;;
 
 # Use MariaDB

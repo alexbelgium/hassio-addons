@@ -21,7 +21,7 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-ENV FIREFLY_III_PATH="/data/firefly"
+#ENV FIREFLY_III_PATH="/data/firefly"
 #WORKDIR $FIREFLY_III_PATH
 #RUN \
 #    # Change data location
