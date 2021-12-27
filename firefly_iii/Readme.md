@@ -37,8 +37,8 @@ Options can be configured through two ways :
 - Addon options
 
 ```yaml
-"CONFIG_LOCATION": location of the config.yaml file that allows setting additional environment variables (see below)
-"DB_CONNECTION": "list(sqlite_internal|mariadb_addon|mysql|pgsql)" # Defines if you are using the built in sqlite ; the mariadb addon ; or a remote database
+"CONFIG_LOCATION": location of the config.yaml # Sets the location of the config.yaml (see below)
+"DB_CONNECTION": "list(sqlite_internal|mariadb_addon|mysql|pgsql)" # Defines the type of database to use : sqlite (default, embedded in the addon) ; MariaDB (auto-detection if the MariaDB addon is installed and runs), and external databases that requires that the other DB_ fields are set (mysql and pgsql)
 "API_KEY": 12 characters # This is your encryption key, don't lose it!
 "DB_HOST": "CHANGEME" # only needed if using a remote database
 "DB_PORT": "CHANGEME" # only needed if using a remote database
