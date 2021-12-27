@@ -14,7 +14,7 @@
 #################
 
 ARG BUILD_VERSION
-FROM nathanvaughn/webtrees:latest
+FROM nathanvaughn/webtrees:latest-alpha
 
 ##################
 # 2 Modify Image #
