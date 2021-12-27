@@ -1,3 +1,4 @@
+
 # Home assistant add-on: Lidarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

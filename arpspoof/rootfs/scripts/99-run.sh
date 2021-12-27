@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bashio
 
 # Autodefine if not defined
