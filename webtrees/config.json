@@ -47,6 +47,7 @@
     "BASE_URL": "url",
     "DB_TYPE": "list(sqlite|external|mariadb_addon)"
   },
+  "services": ["mysql:want"],
   "slug": "webtrees",
   "startup": "services",
   "upstream": "2.1.0-alpha.1",
