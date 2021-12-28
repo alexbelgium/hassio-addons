@@ -30,7 +30,7 @@ fi
 
 # Check if yaml is valid
 EXIT_CODE=0
-yamllint -d relaxed --no-warnings "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
+yamllint -d relaxed $CONFIGSOURCE &>ERROR || EXIT_CODE=$?
 if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
 else
@@ -45,10 +45,10 @@ function parse_yaml {
     local prefix=$2 || local prefix=""
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
-        -e "s| #.*$||g" \
-        -e "s|#.*$||g" \
-        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+    -e "s| #.*$||g" \
+    -e "s|#.*$||g" \
+    -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
         awk -F$fs '{
       indent = length($1)/2;
       vname[indent] = $2;

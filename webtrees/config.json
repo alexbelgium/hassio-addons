@@ -45,12 +45,13 @@
   "schema": {
     "CONFIG_LOCATION": "str",
     "BASE_URL": "url",
-    "DB_TYPE": "list(sqlite|external)"
+    "DB_TYPE": "list(sqlite|external|mariadb_addon)"
   },
+  "services": ["mysql:want"],
   "slug": "webtrees",
   "startup": "services",
-  "upstream": "2.0.19",
+  "upstream": "2.1.0-alpha.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.0.19",
+  "version": "2.1.0-alpha.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }

@@ -13,34 +13,29 @@
 # 1 Build Image #
 #################
 
+ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.1.0-alpha.1"
-FROM nathanvaughn/webtrees:$BUILD_UPSTREAM
+FROM ${BUILD_FROM}
 
 ##################
 # 2 Modify Image #
 ##################
 
-# Global variables
-ENV WEBTREES_HOME="/data/webtrees"
-WORKDIR $WEBTREES_HOME
-RUN \
-    # Change data location
-    grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
-    # Add end script
-    && sed -i '$ d' /docker-entrypoint.sh
+#ENV FIREFLY_III_PATH="/data/firefly"
+#WORKDIR $FIREFLY_III_PATH
+#RUN \
+#    # Change data location
+#    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
 
 ##################
 # 3 Install apps #
 ##################
 
-# Add rootfs
+# Copy local files
 COPY rootfs/ /
 
 # Manual apps
-ENV PACKAGES="jq \
-    curl \
-    yamllint"
+ENV PACKAGES=""
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
