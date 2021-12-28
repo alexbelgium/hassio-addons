@@ -21,8 +21,7 @@ This addon is based on the docker image https://github.com/NathanVaughn/webtrees
 ## Configuration
 
 Webui can be found at <http://your-ip:PORT>.
-The default username/password : described in the startup log.
-Please change it as soon as possible.
+The default username/password : described in the startup log (admin:mybadpassword), please change it as soon as possible.
 
 Options can be configured through two ways :
 
