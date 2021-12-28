@@ -10,7 +10,7 @@
   "map": ["config:rw", "share:rw", "ssl"],
   "name": "Firefly iii",
   "options": {
-    "DB_CONNECTION": "sqlite",
+    "DB_CONNECTION": "sqlite_internal",
     "APP_KEY": "CHANGEME_32_CHARS_EuC5dfn3LAPzeO",
     "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml"
   },
