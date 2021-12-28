@@ -21,7 +21,7 @@ This addon is based on the docker image https://github.com/NathanVaughn/webtrees
 ## Configuration
 
 Webui can be found at <http://your-ip:PORT>.
-The default username/password : described in the startup log (admin:mybadpassword), please change it as soon as possible.
+The default username/password : described in the startup log (admin:mybadpassword), please change it as soon as possible from the users admin page (yoursite:yourport/index.php?route=%2Fadmin%2Fadmin-users).
 
 Options can be configured through two ways :
 
@@ -31,7 +31,7 @@ Options can be configured through two ways :
 "LANG": "en-US" # Default language for webtrees
 "BASE_URL": "http://192.168.178.69" # The url with which you access webtrees
 "DB_TYPE": "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
-"CONFIG_LOCATION": location of the config.yaml (see below) 
+"CONFIG_LOCATION": location of the config.yaml (see below)
 ```
 
 - Config.yaml
