@@ -45,7 +45,7 @@
   "schema": {
     "CONFIG_LOCATION": "str",
     "BASE_URL": "url",
-    "DB_TYPE": "list(sqlite|external)"
+    "DB_TYPE": "list(sqlite|external|mariadb_addon)"
   },
   "slug": "webtrees",
   "startup": "services",
