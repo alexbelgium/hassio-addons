@@ -10,7 +10,5 @@ if [ $TZ = "test" ]; then
     ./test.sh
   fi
   echo "... launching specific test"
-  AVAHI_CONFIG='/etc/avahi/avahi-daemon.conf
-  hostname=hassio
-  sed -i "s/host-name=.*/host-name=${hostname}/" "${AVAHI_CONFIG}"
+  cat /etc/hosts
 fi
