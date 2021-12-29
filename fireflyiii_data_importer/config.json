@@ -1,0 +1,33 @@
+{
+  "apparmor": true,
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
+  "description": "Data importer for Firefly III (separate addon)",
+  "devices": [],
+  "environment": {
+    "TRUSTED_PROXIES": "**"
+  },
+  "map": ["config:rw", "share:rw", "ssl"],
+  "name": "Firefly iii Data Importer",
+  "options": {},
+  "ports": {
+    "8080/tcp": 3474
+  },
+  "ports_description": {
+    "8080/tcp": "web interface"
+  },
+  "schema": {
+    "FIREFLY_III_ACCESS_TOKEN": "str",
+    "FIREFLY_III_URL": "str",
+    "FIREFLY_III_CLIENT_ID": "str?",
+    "NORDIGEN_ID": "str?",
+    "NORDIGEN_KEY": "str?",
+    "SPECTRE_APP_ID": "str?",
+    "SPECTRE_SECRET": "str?"
+  },
+  "slug": "fireflyiii_data_importer",
+  "upstream": "0.4.1",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "0.4.1",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
+}

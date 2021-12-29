@@ -1,4 +1,4 @@
-# Home assistant add-on: fireflyiii
+# Home assistant add-on: Fireflyiii data importer
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -14,8 +14,23 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[fireflyiii](https://www.firefly-iii.org) a personal finances manager.
-This addon is based on the docker image https://hub.docker.com/r/fireflyiii/core
+["Firefly III"](https://www.firefly-iii.org) is a (self-hosted) manager for your personal finances. It can help you keep track of your expenses and income, so you can spend less and save more. The data importer is built to help you import transactions into Firefly III. It is separated from Firefly III for security and maintenance reasons.
+
+This addon is based on the docker image https://hub.docker.com/r/fireflyiii/data-importer
+
+## Configuration
+
+Read official documentation for more information : https://docs.firefly-iii.org/data-importer
+
+```yaml
+"FIREFLY_III_ACCESS_TOKEN": required to access Firefly
+"FIREFLY_III_CLIENT_ID": alternative way to access Firefly
+"FIREFLY_III_URL": your url, either local (docker IP), or external (public IP)
+"NORDIGEN_ID": your Nordigen Client ID
+"NORDIGEN_KEY": your Nordigen Client Secret
+"SPECTRE_APP_ID": your Spectre / Salt Edge Client ID
+"SPECTRE_SECRET": your Spectre / Salt Edge Client secret
+```
 
 ## Installation
 
@@ -30,36 +45,11 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-## Configuration
-
-Options can be configured through two ways :
-
-- Addon options
-
-```yaml
-"CONFIG_LOCATION": location of the config.yaml # Sets the location of the config.yaml (see below)
-"DB_CONNECTION": "list(sqlite_internal|mariadb_addon|mysql|pgsql)" # Defines the type of database to use : sqlite (default, embedded in the addon) ; MariaDB (auto-detection if the MariaDB addon is installed and runs), and external databases that requires that the other DB_ fields are set (mysql and pgsql)
-"APP_KEY": 12 characters # This is your encryption key, don't lose it!
-"DB_HOST": "CHANGEME" # only needed if using a remote database
-"DB_PORT": "CHANGEME" # only needed if using a remote database
-"DB_DATABASE": "CHANGEME" # only needed if using a remote database
-"DB_USERNAME": "CHANGEME" # only needed if using a remote database
-"DB_PASSWORD": "CHANGEME" # only needed if using a remote database
-```
-
-- Config.yaml
-
-Configuration is done by customizing the config.yaml in the location defined in your addon options
-
-The complete list of options can be seen here : https://raw.githubusercontent.com/firefly-iii/firefly-iii/main/.env.example
-
 ## Support
 
 Create an issue on github
 
 ## Illustration
-
-![illustration](https://raw.githubusercontent.com/firefly-iii/firefly-iii/develop/.github/assets/img/imac-complete.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
