@@ -14,7 +14,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[fireflyiii](https://www.firefly-iii.org) a personal finances manager.
+["Firefly III"](https://www.firefly-iii.org) is a (self-hosted) manager for your personal finances. It can help you keep track of your expenses and income, so you can spend less and save more.
 This addon is based on the docker image https://hub.docker.com/r/fireflyiii/core
 
 ## Installation
