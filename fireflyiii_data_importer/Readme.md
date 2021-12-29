@@ -20,7 +20,7 @@ This addon is based on the docker image https://hub.docker.com/r/fireflyiii/data
 
 ## Configuration
 
-Read official documentation for more information : https://docs.firefly-iii.org/data-importer
+Read official documentation for information how to set the variables: https://docs.firefly-iii.org/data-importer
 
 ```yaml
 "FIREFLY_III_ACCESS_TOKEN": required to access Firefly
