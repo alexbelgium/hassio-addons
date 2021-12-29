@@ -1,3 +1,4 @@
+- Cleanup: config base folder changed to /config/addons_config
 - New standardized logic for Dockerfile build and packages installation
 - Add local mount (see readme)
 - Added watchdog feature
