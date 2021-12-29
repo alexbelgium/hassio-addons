@@ -1,4 +1,3 @@
-- Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - Removed watchdog
 - New standardized logic for Dockerfile build and packages installation
 - Allow mounting nvme

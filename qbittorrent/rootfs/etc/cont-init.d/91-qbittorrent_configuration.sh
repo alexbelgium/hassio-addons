@@ -5,7 +5,7 @@
 ##########
 
 # Define preferences line
-cd /config/addons_config/qBittorrent/
+cd /config/qBittorrent/
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$((LINE + 1))
 
@@ -70,7 +70,7 @@ fi
 # WHITELIST    #
 ################
 
-cd /config/addons_config/qBittorrent/
+cd /config/qBittorrent/
 if bashio::config.has_value 'whitelist'; then
   WHITELIST=$(bashio::config 'whitelist')
   #clean data
@@ -84,7 +84,7 @@ fi
 # USERNAME    #
 ###############
 
-cd /config/addons_config/qBittorrent/
+cd /config/qBittorrent/
 if bashio::config.has_value 'Username'; then
   USERNAME=$(bashio::config 'Username')
   #clean data
@@ -131,8 +131,8 @@ if bashio::config.has_value 'customUI'; then
   rm /webui/*.zip
   CUSTOMUIDIR="$(dirname "$(find /webui/$CUSTOMUI -iname "public" -type d)")"
   # Set qbittorrent
-  sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/addons_config/qBittorrent/qBittorrent.conf
-  sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/addons_config/qBittorrent/qBittorrent.conf
+  sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
+  sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
   # Set nginx
   #sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
   #sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf
@@ -144,4 +144,4 @@ fi
 ##########
 
 bashio::log.info "Default username/password : admin/adminadmin"
-bashio::log.info "Configuration can be found in /config/addons_config/qBittorrent"
+bashio::log.info "Configuration can be found in /config/qBittorrent"

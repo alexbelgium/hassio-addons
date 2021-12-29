@@ -37,9 +37,9 @@ if bashio::config.true 'openvpn_enabled'; then
   # CONFIGURE QBITTORRENT #
   #########################
 
-  QBT_CONFIG_FILE="/config/addons_config/qBittorrent/qBittorrent.conf"
+  QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
   # Define preferences line
-  cd /config/addons_config/qBittorrent/
+  cd /config/qBittorrent/
   LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
   LINE=$((LINE + 1))
 
@@ -76,7 +76,7 @@ else
   # REMOVE OPENVPN #
   ##################
   # Ensure no redirection by removing the direction tag
-  cd /config/addons_config/qBittorrent/
+  cd /config/qBittorrent/
   sed -i '/Interface/d' qBittorrent.conf
   bashio::log.info "Direct connection without VPN enabled"
 
