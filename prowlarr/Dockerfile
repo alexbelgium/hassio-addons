@@ -28,9 +28,9 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \
     # Correct permissions 
-    && sed -i 's|/config|-R /config/prowlarr|g' /etc/cont-init.d/10-adduser \    
-    && sed -i 's=	/config=/config/prowlarr || true=g' /etc/cont-init.d/30-config \
-    && sed -i 's|/config|/config/prowlarr|g' /etc/services.d/prowlarr/run
+    && sed -i 's|/config|-R /config/addons_config/prowlarr|g' /etc/cont-init.d/10-adduser \    
+    && sed -i 's=	/config=/config/addons_config/prowlarr || true=g' /etc/cont-init.d/30-config \
+    && sed -i 's|/config|/config/addons_config/prowlarr|g' /etc/services.d/prowlarr/run
 
 ##################
 # 3 Install apps #
