@@ -63,6 +63,8 @@ https://github.com/alexbelgium/hassio-addons
 ## &#10003; Home & family
 
 - [Enedisgateway2mqtt](enedisgateway2mqtt) : use Enedis Gateway API to send data in your MQTT Broker
+- [Firefly III](fireflyiii/) : A free and open source personal finance manager
+- [Firefly III Data Importet](fireflyiii_data_importer/) : Data importer for Firefly III
 - [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
 - [Wger](wger/): manage your personal workouts, weight and diet plans
 
@@ -94,6 +96,7 @@ https://github.com/alexbelgium/hassio-addons
 ## &#10003; Multimedia downloaders
 
 - [Bazarr](bazarr/) ![smb][smb-shield] : Companion application to Sonarr and Radarr to download subtitles
+- [FlareSolverr](flaresolverr/) : Proxy server to bypass Cloudflare protection
 - [Jackett](jackett/) ![smb][smb-shield] : Translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
 - [Nzbget](nzbget/) is a usenet downloader, written in C++ and designed with performance in mind to achieve maximum download speed by using very little system resources
 - [Prowlarr](prowlarr/) ![smb][smb-shield] : Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
