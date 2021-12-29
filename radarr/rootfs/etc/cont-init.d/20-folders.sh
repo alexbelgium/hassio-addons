@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
 if [ ! -d /share/storage/movies ]; then
   echo "Creating /share/storage/movies"
@@ -24,4 +24,3 @@ if [ ! -d /config/addons_config/radarr ]; then
   mkdir -p /config/addons_config/radarr
   chown -R abc:abc /config/addons_config/radarr
 fi
-

@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
 ##################
 # SYMLINK CONFIG #
@@ -7,8 +7,8 @@
 echo "Database stored in /share/plex"
 
 if [ ! -d "/share/plex/Plex Media Server" ]; then
-echo "... creating /share/plex/Plex Media Server"
-mkdir -p "/share/plex/Plex Media Server"
+  echo "... creating /share/plex/Plex Media Server"
+  mkdir -p "/share/plex/Plex Media Server"
 fi
 
 if [ -d "/config/Library/Application Support/Plex Media Server" ]; then

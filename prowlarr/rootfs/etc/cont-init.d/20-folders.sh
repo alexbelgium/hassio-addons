@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
 if [ -d /config/prowlarr ]; then
   echo "Moving to new location /config/addons_config/prowlarr"

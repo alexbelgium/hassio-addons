@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
 ##################
 # SYMLINK CONFIG #
@@ -40,4 +40,3 @@ fi
 # CORRECT CONFIG #
 ##################
 sed -i 's|E_ALL|""|g' /share/piwigo/config/config.inc.php && echo "config corrected for php error" || true
-

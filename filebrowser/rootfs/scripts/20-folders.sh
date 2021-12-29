@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
 if [ -d /config/filebrowser ]; then
   echo "Moving to new location /config/addons_config/filebrowser"

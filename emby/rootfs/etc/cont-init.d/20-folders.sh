@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
 if [ ! -d /emby ]; then
   echo "Creating /emby"
