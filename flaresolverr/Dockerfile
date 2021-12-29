@@ -20,7 +20,7 @@ FROM flaresolverr/flaresolverr:latest
 # 2 Modify Image #
 ##################
 
-
+USER root
 
 ##################
 # 3 Install apps #
@@ -39,7 +39,6 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh "${PACKAGES:-}" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
-
 
 ################
 # 4 Entrypoint #
