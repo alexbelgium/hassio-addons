@@ -64,7 +64,7 @@ https://github.com/alexbelgium/hassio-addons
 
 - [Enedisgateway2mqtt](enedisgateway2mqtt) : use Enedis Gateway API to send data in your MQTT Broker
 - [Firefly III](fireflyiii/) : A free and open source personal finance manager
-- [Firefly III Data Importet](fireflyiii_data_importer/) : Data importer for Firefly III
+- [Firefly III Data Importer](fireflyiii_data_importer/) : Data importer for Firefly III
 - [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
 - [Wger](wger/): manage your personal workouts, weight and diet plans
 
