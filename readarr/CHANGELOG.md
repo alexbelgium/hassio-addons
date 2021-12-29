@@ -1,3 +1,4 @@
+- Cleanup: config base folder changed to /config/addons_config
 
 ## nightly-0.1.0.1149-ls59 (28-12-2021)
 - Update to latest version from linuxserver/docker-readarr
