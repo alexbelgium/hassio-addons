@@ -1,4 +1,4 @@
-- Config location changed to /config/addons_config/bazarr
+- Cleanup: config base folder changed to /config/addons_config
 - New standardized logic for Dockerfile build and packages installation
 
 ## 1.0.1 (20-11-2021)
