@@ -1,4 +1,3 @@
-- Cleanup: config base folder changed to /config/addons_config
 
 ## 15.9.13 (24-12-2021)
 - Update to latest version from coderaiser/cloudcmd
