@@ -1,0 +1,20 @@
+{
+  "name": "FlareSolverr",
+  "version": "2.1.0",
+  "upstream": "2.1.0",
+  "slug": "flaresolverr",
+  "description": "Proxy server to bypass Cloudflare protection ",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8191]",
+  "ports": {
+    "8191/tcp": 8191
+  },
+  "apparmor": true,
+  "ports_description": {
+    "8191/tcp": "Web interface"
+  },
+  "environment": {},
+  "options": {},
+  "schema": {},
+  "arch": ["aarch64", "amd64", "armhf", "armv7"]
+}
