@@ -37,6 +37,7 @@ PGID/PUID : 1000 #allows setting user.
 trusted_domains : your-domain.com #allows to select the trusted domains. Domains not in this lis will be removed, except for the first one used in the initial configuration.
 OCR : false #set to true to install tesseract-ocr capability.
 OCRLANG : fra,eng #Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
+data_directory: path for the main data directory. Defaults to `/share/nextcloud`.
 use_own_certs : true/false #if true, use the certfile and keyfile specified
 certfile: fullchain.pem #ssl certificate, must be located in /ssl
 keyfile: privkey.pem #sslkeyfile, must be located in /ssl
