@@ -5,6 +5,7 @@ if [ -d /config/filebrowser ]; then
   mkdir -p /config/addons_config/filebrowser
   chmod 777 /config/addons_config/filebrowser
   mv /config/filebrowser/* /config/addons_config/filebrowser/
+  rm -r /config/filebrowser
 fi
 
 if [ ! -d /config/addons_config/filebrowser ]; then

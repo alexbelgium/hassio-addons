@@ -17,6 +17,7 @@ if [ -d /config/radarr ]; then
   mkdir -p /config/addons_config/radarr
   chown -R abc:abc /config/addons_config/radarr
   mv /config/radarr/* /config/addons_config/radarr/
+  rm -r /config/radarr
 fi
 
 if [ ! -d /config/addons_config/radarr ]; then

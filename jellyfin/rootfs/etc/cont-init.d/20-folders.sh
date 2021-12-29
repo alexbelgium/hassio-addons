@@ -33,11 +33,13 @@ if [ ! -d /jellyfin/cache ]; then
   ln -s /share/jellyfin/cache /jellyfin/cache
 fi
 
+
 if [ -d /config/jellyfin ]; then
   echo "Moving to new location /config/addons_config/jellyfin"
   mkdir -p /config/addons_config/jellyfin
   chown -R abc:abc /config/addons_config/jellyfin
   mv /config/jellyfin/* /config/addons_config/jellyfin/
+  rm /config/jellyfin
 fi
 
 if [ ! -d /config/addons_config/jellyfin ]; then

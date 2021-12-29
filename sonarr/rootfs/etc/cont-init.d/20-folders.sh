@@ -17,6 +17,7 @@ if [ -d /config/sonarr ]; then
   mkdir -p /config/addons_config/sonarr
   chown -R abc:abc /config/addons_config/sonarr
   mv /config/sonarr/* /config/addons_config/sonarr/
+  rm -r /config/sonarr
 fi
 
 if [ ! -d /config/addons_config/sonarr ]; then

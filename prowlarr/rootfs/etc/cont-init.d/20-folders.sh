@@ -5,6 +5,7 @@ if [ -d /config/prowlarr ]; then
   mkdir -p /config/addons_config/prowlarr
   chown -R abc:abc /config/addons_config/prowlarr
   mv /config/prowlarr/* /config/addons_config/prowlarr/
+  rm -r /config/prowlarr
 fi
 
 if [ ! -d /config/addons_config/prowlarr ]; then

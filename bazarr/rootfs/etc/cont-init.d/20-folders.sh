@@ -17,6 +17,7 @@ if [ -d /config/bazarr ]; then
   mkdir -p /config/addons_config/bazarr
   chown -R abc:abc /config/addons_config/bazarr
   mv /config/bazarr/* /config/addons_config/bazarr/
+  rm -r /config/bazarr
 fi
 
 if [ ! -d /config/addons_config/bazarr ]; then

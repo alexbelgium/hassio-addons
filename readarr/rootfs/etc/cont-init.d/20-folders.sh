@@ -17,6 +17,7 @@ if [ -d /config/readarr ]; then
   mkdir -p /config/addons_config/readarr
   chown -R abc:abc /config/addons_config/readarr
   mv /config/readarr/* /config/addons_config/readarr/
+  rm -r /config/readarr
 fi
 
 if [ ! -d /config/addons_config/readarr ]; then

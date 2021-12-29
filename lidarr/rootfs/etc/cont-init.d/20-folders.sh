@@ -17,6 +17,7 @@ if [ -d /config/lidarr ]; then
   mkdir -p /config/addons_config/lidarr
   chmod 777 /config/addons_config/lidarr
   mv /config/lidarr/* /config/addons_config/lidarr/
+  rm -r /config/lidarr
 fi
 
 if [ ! -d /config/addons_config/lidarr ]; then
