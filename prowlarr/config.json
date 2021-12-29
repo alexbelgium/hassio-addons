@@ -49,6 +49,6 @@
   "startup": "services",
   "upstream": "nightly-alpine-0.1.9.1313-ls2",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "nightly-alpine-0.1.9.1313-ls2",
+  "version": "nightly-alpine-0.1.9.1313-ls2-2",
   "webui": "http://[HOST]:[PORT:9696]"
 }
