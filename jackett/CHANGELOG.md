@@ -1,3 +1,4 @@
+- Cleanup: config base folder changed to /config/addons_config
 
 ## 0.20.200 (28-12-2021)
 - Update to latest version from linuxserver/docker-jackett

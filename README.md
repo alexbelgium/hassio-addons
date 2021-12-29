@@ -5,6 +5,7 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 [update-badge]: https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update
+[support-badge]: https://camo.githubusercontent.com/f4dbb995049f512fdc97fcc9e022ac243fa38c408510df9d46c7467d0970d959/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f537570706f72742d7468726561642d677265656e2e737667
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
@@ -71,7 +72,7 @@ https://github.com/alexbelgium/hassio-addons
 
 ## &#10003; Misc tools
 
-- [Addons Updater](addons_updater/) ![support][support-shield] : Automatic addons update by aligning version tag with github upstream releases
+- [Addons Updater](addons_updater/) [![Support Thread][support-badge]](https://community.home-assistant.io/t/new-addon-automatically-update-addons-based-on-github-upstream-new-releases/) : Automatic addons update by aligning version tag with github upstream releases
 - [Arpspoof](arpspoof/): adds ability to block internet connection for local network devices
 - [Code-server](code-server/) : Code-server is VS Code running on a remote server, accessible through the browser.
 - [Inadyn](inadyn/) : Inadyn, or In-a-Dyn, is a small and simple Dynamic DNS, DDNS, client with HTTPS support. Commonly available in many GNU/Linux distributions, used in off the shelf routers and Internet gateways to automate the task of keeping your Internet name in sync with your public¹ IP address. It can also be used in installations with redundant (backup) connections to the Internet.

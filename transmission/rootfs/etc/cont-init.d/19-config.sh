@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bashio
 
+rm -rf /etc/cont-init.d/20-config || true
+
 declare CONFIG
 declare incomplete_bool
 declare download_dir

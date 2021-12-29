@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/with-contenv bash
 
 if [ ! -d /share/music ]; then
   echo "Creating /share/music"
@@ -11,9 +11,3 @@ if [ ! -d /share/downloads ]; then
   mkdir -p /share/downloads
   chown -R abc:abc /share/downloads
 fi
-
-if [ ! -d /config/readarr ]; then
-  echo "Creating /config/readarr"
-  mkdir -p /config/readarr
-  chown -R abc:abc /config/readarr
-fi 

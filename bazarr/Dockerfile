@@ -23,9 +23,8 @@ FROM ${BUILD_FROM}
 
 RUN \
     # Correct config folder
-    grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/bazarr|g' \
-    && grep -rl " /config" /etc/services.d | xargs sed -i 's| /config| /config/bazarr|g' \
-    && sed -i 's=/config/flexget=/config/bazarr || true=g' /etc/cont-init.d/10-adduser \
+    grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/addons_config/bazarr|g' \
+    && grep -rl " /config" /etc/services.d | xargs sed -i 's| /config| /config/addons_config/bazarr|g' \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \

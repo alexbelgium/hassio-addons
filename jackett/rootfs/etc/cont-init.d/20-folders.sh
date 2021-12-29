@@ -12,6 +12,13 @@ if [ ! -d /share/downloads ]; then
   chown -R abc:abc /share/downloads
 fi
 
+if [ -d /config/Jackett ]; then
+  echo "Moving to new location /config/addons_config/Jackett"
+  mkdir -p /config/addons_config/Jackett
+  chown -R abc:abc /config/addons_config/Jackett
+  mv /config/jackett/* /config/addons_config/Jackett/
+fi
+
 if [ ! -d /config/addons_config/Jackett ]; then
   echo "Creating /config/addons_config/Jackett"
   mkdir -p /config/addons_config/Jackett
