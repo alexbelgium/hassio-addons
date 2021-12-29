@@ -1,122 +1,161 @@
-- Cleanup: config base folder changed to /config/addons_config
+- Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 
 ## 0.20.200 (28-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.197 (24-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.193 (23-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.184 (20-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.173 (18-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.172 (15-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.162 (14-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.159 (12-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 - New standardized logic for Dockerfile build and packages installation
 - Removed full access (not used anymore)
 
 ## 0.20.147 (11-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.141 (10-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.136 (09-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.123 (09-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.105 (07-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.95 (07-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.83 (03-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.79 (02-12-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.78 (30-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.74 (30-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.68 (27-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.65 (26-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.64 (25-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.63 (24-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.53 (22-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.44 (21-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.43 (20-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.41 (20-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.36 (18-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.10 (17-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.275 (16-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.266 (15-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.260 (14-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.229 (13-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.225 (11-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.215 (09-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.210 (08-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.207 (07-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.162 (05-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.147 (05-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.19.138 (03-11-2021)
+
 - Update to latest version from linuxserver/docker-jackett
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 

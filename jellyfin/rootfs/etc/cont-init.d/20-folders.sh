@@ -24,12 +24,6 @@ if [ ! -d /share/jellyfin ]; then
   chown -R abc:abc /share/jellyfin
 fi
 
-if [ ! -d /config/jellyfin ]; then
-  echo "Creating /config/jellyfin"
-  mkdir -p /config/jellyfin
-  chown -R abc:abc /config/jellyfin
-fi
-
 # links
 
 if [ ! -d /jellyfin/cache ]; then
@@ -51,7 +45,6 @@ if [ ! -d /config/addons_config/jellyfin ]; then
   mkdir -p /config/addons_config/jellyfin
   chown -R abc:abc /config/addons_config/jellyfin
 fi
-
 
 if [ ! -d /jellyfin/data ]; then
   echo "Creating link for /jellyfin/data"

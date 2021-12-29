@@ -1,115 +1,152 @@
-- Cleanup: config base folder changed to /config/addons_config
+- Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 
 ## nightly-alpine-0.1.9.1313-ls2 (29-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.9.1276-ls237 (25-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.8.1269-ls234 (24-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.8.1265-ls233 (20-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.8.1259-ls230 (16-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.8.1253-ls229 (14-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.8.1238-ls228 (12-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 - New standardized logic for Dockerfile build and packages installation
 
 ## nightly-0.1.8.1232-ls226 (10-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.8.1223-ls224 (09-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.8.1212-ls220 (07-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.8.1210-ls218 (07-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## develop-0.1.6.1184-ls30 (03-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.6.1177-ls210 (02-12-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.6.1176-ls209 (30-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.6.1165-ls205 (30-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.4.1147-ls196 (27-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.4.1145-ls195 (26-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.4.1143-ls194 (25-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.4.1139-ls192 (24-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.4.1133-ls190 (23-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.4.1130-ls189 (23-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.4.1126-ls187 (22-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.4.1120-ls186 (21-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.4.1117-ls184 (20-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.3.1113-ls183 (20-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.3.1102-ls178 (18-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.3.1089-ls176 (17-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.3.1077-ls175 (15-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## develop-0.1.2.1060-ls24 (13-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.2.1058-ls173 (11-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.2.1054-ls170 (09-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.2.1046-ls168 (07-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.2.1045-ls167 (05-11-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.2.1042-ls166 (31-10-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.2.1039-ls164 (29-10-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.2.1037-ls163 (28-10-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.1.1030-ls162 (26-10-2021)
+
 - Update to latest version from linuxserver/docker-prowlarr
 - Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
 

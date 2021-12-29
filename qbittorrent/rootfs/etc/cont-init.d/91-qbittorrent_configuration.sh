@@ -5,7 +5,7 @@
 ##########
 
 # Define preferences line
-cd /config/qBittorrent/
+cd /config/addon_config/qBittorrent/
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$((LINE + 1))
 
@@ -19,7 +19,7 @@ if bashio::config.has_value 'run_duration'; then
   chmod +x /etc/services.d/qbittorrent/run
 else
   rm /etc/services.d/qbittorrent/timer
-fi 
+fi
 
 ##################
 # Default folder #
@@ -59,7 +59,7 @@ if bashio::config.true 'ssl'; then
   #set variables
   CERTFILE=$(bashio::config 'certfile')
   KEYFILE=$(bashio::config 'keyfile')
-   
+
   #Modify configuration
   sed -i "$LINE i\WebUI\\\HTTPS\\\Enabled=True" qBittorrent.conf
   sed -i "$LINE i\WebUI\\\HTTPS\\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
@@ -70,7 +70,7 @@ fi
 # WHITELIST    #
 ################
 
-cd /config/qBittorrent/
+cd /config/addon_config/qBittorrent/
 if bashio::config.has_value 'whitelist'; then
   WHITELIST=$(bashio::config 'whitelist')
   #clean data
@@ -84,7 +84,7 @@ fi
 # USERNAME    #
 ###############
 
-cd /config/qBittorrent/
+cd /config/addon_config/qBittorrent/
 if bashio::config.has_value 'Username'; then
   USERNAME=$(bashio::config 'Username')
   #clean data
@@ -112,7 +112,7 @@ if bashio::config.has_value 'customUI'; then
 
   ### Download WebUI
   case $CUSTOMUI in
-  "vuetorrent") 
+  "vuetorrent")
     curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip") >/dev/null
     ;;
 
@@ -131,11 +131,11 @@ if bashio::config.has_value 'customUI'; then
   rm /webui/*.zip
   CUSTOMUIDIR="$(dirname "$(find /webui/$CUSTOMUI -iname "public" -type d)")"
   # Set qbittorrent
-  sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
-  sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
+  sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/addon_config/qBittorrent/qBittorrent.conf
+  sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/addon_config/qBittorrent/qBittorrent.conf
   # Set nginx
-  #sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf 
-  #sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf 
+  #sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
+  #sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf
 
 fi
 
@@ -144,4 +144,4 @@ fi
 ##########
 
 bashio::log.info "Default username/password : admin/adminadmin"
-bashio::log.info "Configuration can be found in /config/qBittorrent"
+bashio::log.info "Configuration can be found in /config/addon_config/qBittorrent"

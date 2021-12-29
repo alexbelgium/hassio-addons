@@ -1,3 +1,4 @@
+- Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - MultiOCR: in OCRLANG field use comma separated value. Ex: fra,deu (working)
 - Manual install pikepdf
 - New standardized logic for Dockerfile build and packages installation

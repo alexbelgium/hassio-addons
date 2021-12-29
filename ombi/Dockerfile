@@ -28,9 +28,9 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \
     # Correct config folder
-    && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/ombi|g' || true \
-    && grep -rl "/config" /etc/services.d | xargs sed -i 's|/config|/config/ombi|g' || true \
-    && sed -i 's=/config/ombi=/config/ombi || true=g' /etc/cont-init.d/10-adduser || true
+    && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/addons_config/ombi|g' || true \
+    && grep -rl "/config" /etc/services.d | xargs sed -i 's|/config|/config/addons_config/ombi|g' || true \
+    && sed -i 's=/config/ombi=/config/addons_config/ombi || true=g' /etc/cont-init.d/10-adduser || true
 
 ##################
 # 3 Install apps #

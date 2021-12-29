@@ -28,9 +28,9 @@ RUN \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \
     # Correct config folder
-    && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/flexget|g' \
-    && grep -rl " /config" /etc/services.d | xargs sed -i 's| /config| /config/flexget|g' \
-    && sed -i 's=/config/flexget=/config/flexget || true=g' /etc/cont-init.d/10-adduser \
+    && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/addons_config/flexget|g' \
+    && grep -rl " /config" /etc/services.d | xargs sed -i 's| /config| /config/addons_config/flexget|g' \
+    && sed -i 's=/config/flexget=/config/addons_config/flexget || true=g' /etc/cont-init.d/10-adduser \
     \
     # Set password
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/20-config \

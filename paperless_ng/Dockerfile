@@ -21,7 +21,7 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-ENV PAPERLESS_DATA_DIR=/config/paperless_ng
+ENV PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng
 RUN \
     #################
     # Correct image #

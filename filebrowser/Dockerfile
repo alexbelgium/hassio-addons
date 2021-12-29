@@ -21,9 +21,6 @@ FROM hurlenko/filebrowser:v${BUILD_UPSTREAM}
 # 2 Modify Image #
 ##################
 
-RUN \
-    # Correct upstream image folders links
-    mkdir -p -m 777 /config/filebrowser
 
 ##################
 # 3 Install apps #

@@ -23,8 +23,8 @@ FROM ${BUILD_FROM}
 
 RUN \
     # use /data instead of /config for hass.io environment
-    sed -i "s|/config|/config/lidarr|g" /etc/services.d/lidarr/run \
-    && sed -i "s|/config|/config/lidarr|g" /etc/cont-init.d/30-config \
+    sed -i "s|/config|/config/addons_config/lidarr|g" /etc/services.d/lidarr/run \
+    && sed -i "s|/config|/config/addons_config/lidarr|g" /etc/cont-init.d/30-config \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \

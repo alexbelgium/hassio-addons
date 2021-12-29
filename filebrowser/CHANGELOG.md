@@ -1,11 +1,14 @@
+- Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 
 ## 2.20.1 (23-12-2021)
+
 - Update to latest version from hurlenko/filebrowser-docker
 - Mount ssl in write
 - New standardized logic for Dockerfile build and packages installation
 - Mount nvme drives
 
 ## 2.19.0 (25-11-2021)
+
 - Update to latest version from hurlenko/filebrowser-docker
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 

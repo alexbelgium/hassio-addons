@@ -59,7 +59,7 @@ NOAUTH=""
 if bashio::config.true 'NoAuth'; then
   if ! bashio::fs.file_exists "/data/noauth"; then
     rm /data/auth &>/dev/null || true
-    rm /config/filebrowser/filebrowser.dB &>/dev/null || true
+    rm /config/addons_config/filebrowser/filebrowser.dB &>/dev/null || true
     touch /data/noauth
     NOAUTH="--noauth"
     bashio::log.warning "Auth method change, database reset"
@@ -68,7 +68,7 @@ if bashio::config.true 'NoAuth'; then
 else
   if ! bashio::fs.file_exists "/data/auth"; then
     rm /data/noauth &>/dev/null || true
-    rm /config/filebrowser/filebrowser.dB &>/dev/null || true
+    rm /config/addons_config/filebrowser/filebrowser.dB &>/dev/null || true
     touch /data/auth
     bashio::log.warning "Auth method change, database reset"
   fi
@@ -83,7 +83,7 @@ fi
 
 bashio::log.info "Starting..."
 
-/./filebrowser $CERTFILE $KEYFILE --root=$BASE_FOLDER --address=0.0.0.0 --database=/config/filebrowser/filebrowser.dB $NOAUTH &
+/./filebrowser $CERTFILE $KEYFILE --root=$BASE_FOLDER --address=0.0.0.0 --database=/config/addons_config/filebrowser/filebrowser.dB $NOAUTH &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
