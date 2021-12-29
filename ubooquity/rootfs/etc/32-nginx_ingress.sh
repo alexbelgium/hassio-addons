@@ -16,7 +16,7 @@ if [ $port > 1 ]; then
   sed -i "s|%%port%%|$port|g" /etc/nginx/servers/ingress.conf
   sed -i "s|%%interface%%|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ingress.conf
   # Removebaseurl
-  jq '.reverseProxyPrefix = ""' /config/addon_config/ubooquity/preferences.json | sponge /config/addon_config/ubooquity/preferences.json
+  jq '.reverseProxyPrefix = ""' /config/addons_config/ubooquity/preferences.json | sponge /config/addons_config/ubooquity/preferences.json
   # Log
   bashio::log.info "Ingress enabled"
 else
