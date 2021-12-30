@@ -28,10 +28,14 @@ Options can be configured through two ways :
 - Addon options
 
 ```yaml
-"LANG": "en-US" # Default language for webtrees
-"BASE_URL": "http://192.168.178.69" # The url with which you access webtrees
-"DB_TYPE": "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
-"CONFIG_LOCATION": location of the config.yaml (see below)
+LANG: "en-US" # Default language for webtrees
+BASE_URL: "http://192.168.178.69" # The url with which you access webtrees
+DB_TYPE: "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
+CONFIG_LOCATION: location of the config.yaml (see below)
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
+networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password
 ```
 
 - Config.yaml
