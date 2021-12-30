@@ -11,7 +11,7 @@ mkdir -p /data/fireflyiii
 # Backup APP_KEY file
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
 APP_KEY="$(bashio::config 'APP_KEY')"
-echo "$APP_KEY" >/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
+echo "$(date): $APP_KEY" >>/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
 if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} instead of 32 characters"; fi
 
 ###################
