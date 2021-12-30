@@ -1,14 +1,15 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 
 #create folders
+datadirectory=$(bashio::config 'data_directory')
 mkdir -p \
-	/share/nextcloud \
+	$datadirectory \
 	/data/config/nextcloud/config \
 	/data/config/nextcloud/data
 	
 #permissions
 chown abc:abc \
-	/share/nextcloud \
+	$datadirectory \
 	/data/config/nextcloud/config \
 	/data/config/nextcloud/data
 	

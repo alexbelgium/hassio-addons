@@ -2,11 +2,12 @@
 
 PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
+datadirectory=$(bashio::config 'data_directory')
 
 groupmod -o -g "$PGID" abc
 usermod -o -u "$PUID" abc
 mkdir -p /data/config
-mkdir -p /share/nextcloud
+mkdir -p $datadirectory
 echo '
 -------------------------------------
           _         ()

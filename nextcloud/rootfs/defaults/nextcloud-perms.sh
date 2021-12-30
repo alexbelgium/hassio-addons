@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 ocpath="${NEXTCLOUD_PATH}"
 htuser='abc'
 htgroup='abc'
 rootuser='root'
+
+datadirectory=$(bashio::config 'data_directory')
 
 printf "Creating possible missing Directories\n"
 mkdir -p $ocpath/data
@@ -17,7 +19,7 @@ mkdir -p $ocpath/themes
 mkdir -p /data/config/nextcloud/config
 mkdir -p /data/config/nextcloud/data
 mkdir -p /data/config/www/nextcloud/occ 2>/dev/null
-mkdir -p /share/nextcloud
+mkdir -p $datadirectory
 mkdir -p /ssl/nextcloud/keys
 
 printf "chmod Files and Directories.  This could take some time, please wait...\n"
@@ -36,7 +38,7 @@ chown -R ${htuser}:${htgroup} ${ocpath}/config/
 chown -R ${htuser}:${htgroup} ${ocpath}/data/
 chown -R ${htuser}:${htgroup} ${ocpath}/themes/
 chown -R ${htuser}:${htgroup} ${ocpath}/updater/
-chown -R ${htuser}:${htgroup} /share/nextcloud
+chown -R ${htuser}:${htgroup} ${datadirectory}
 chown -R ${htuser}:${htgroup} /ssl/nextcloud/keys || true
 
 chmod +x ${ocpath}/occ

@@ -1,4 +1,9 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
+
+# Change data directory
+datadirectory=$(bashio::config 'data_directory')
+bashio::log.info "Setting data diretory: ${datadirectory}"
+sed -i "s|%%datadirectory%%|$datadirectory|g" /defaults/config.php
 
 # copy config
 [[ ! -f /data/config/www/nextcloud/config/config.php ]] && \
