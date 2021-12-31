@@ -8,11 +8,23 @@
 echo "Update data location"
 mkdir -p /data/fireflyiii
 
+# Check APP_KEY format
+if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} instead of 32 characters"; fi
+
 # Backup APP_KEY file
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
+bashio::log.warning "Changing this value will require to reset your database" 
 APP_KEY="$(bashio::config 'APP_KEY')"
-echo "$(date): $APP_KEY" >>/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
-if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} instead of 32 characters"; fi
+
+# Get current app_key
+mkdir -p /config/addons_config/fireflyiii
+touch /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
+CURRENT=$(sed -e '/^[<blank><tab>]*$/d' /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt | sed -n -e '$p')
+
+# Save if new
+if [ "$CURRENT" != "$APP_KEY" ]; then
+echo "$APP_KEY" >>/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
+fi
 
 ###################
 # Define database #
