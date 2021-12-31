@@ -19,6 +19,8 @@ This addon is based on the docker image https://hub.docker.com/r/fireflyiii/core
 
 ## Configuration
 
+PLEASE CHANGE YOUR APP_KEY BEFORE FIRST LAUNCH! YOU WON'T BE ABLE AFTERWRADS WITHOUT RESETTING YOUR DATABASE. 
+
 Options can be configured through two ways :
 
 - Addon options
