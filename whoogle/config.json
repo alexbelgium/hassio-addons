@@ -1,6 +1,6 @@
 {
   "name": "Whoogle Search Test",
-  "version": "0.7.1",
+  "version": "0.7.1.1",
   "slug": "whoogle-search",
   "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/whoogle/Readme.md",
@@ -16,7 +16,8 @@
   "map": ["config:rw"],
   "options": {
     "TZ":"Europe/Amsterdam",
-    "WHOOGLE_CONFIG_URL": "https://website.com"
+    "WHOOGLE_CONFIG_URL": "https://website.com",
+    "WHOOGLE_CONFIG_LANGUAGE": "lang_en"
   },
   "ports": {
     "5000/tcp": 5000
