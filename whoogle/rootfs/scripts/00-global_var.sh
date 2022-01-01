@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv bashio
-# shellcheck shell=bash
+
 ###################################
 # Export all addon options as env #
 ###################################
