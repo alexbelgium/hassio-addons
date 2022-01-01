@@ -12,7 +12,7 @@ if [ ! -d /share/downloads ]; then
   chown -R abc:abc /share/downloads
 fi
 
-if [ -d /config/bazarr ]; then
+if [ -d /config/bazarr ] && [ ! -d /config/addons_config/bazarr ]; then
   echo "Moving to new location /config/addons_config/bazarr"
   mkdir -p /config/addons_config/bazarr
   chown -R abc:abc /config/addons_config/bazarr
