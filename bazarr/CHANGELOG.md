@@ -1,3 +1,6 @@
+
+## 1.0.2 (01-01-2022)
+- Update to latest version from linuxserver/docker-bazarr
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - New standardized logic for Dockerfile build and packages installation
 
