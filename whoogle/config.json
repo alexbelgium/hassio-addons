@@ -10,7 +10,14 @@
   "map": ["config:rw"],
   "name": "Whoogle Search",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/whoogle_search/config.yaml"
+    "TZ":"Europe/Amsterdam",
+    "HTTPS_ONLY":"1",
+    "WHOOGLE_AUTOCOMPLETE": "1",
+    "WHOOGLE_CONFIG_NEAR": "City",
+    "WHOOGLE_CONFIG_NEW_TAB": "1",
+    "WHOOGLE_CONFIG_THEME": "",
+    "WHOOGLE_CONFIG_URL": "https://website.com",
+    "WHOOGLE_CONFIG_VIEW_IMAGE": "int"
   },
   "ports": {
     "5000/tcp": 5000
@@ -19,7 +26,21 @@
     "5000/tcp": "web interface"
   },
   "schema": {
-    "CONFIG_LOCATION": "str"
+    "TZ": "str",
+    "HTTPS_ONLY": "int",
+    "WHOOGLE_AUTOCOMPLETE": "int",
+    "WHOOGLE_CONFIG_DISABLE": "int",
+    "WHOOGLE_CONFIG_VIEW_IMAGE": "int",
+    "WHOOGLE_CSP": "int",
+    "WHOOGLE_CONFIG_SAFE": "int",
+    "WHOOGLE_CONFIG_ALTS": "int",
+    "WHOOGLE_CONFIG_NEAR": "str",
+    "WHOOGLE_CONFIG_NEW_TAB": "int",
+    "WHOOGLE_CONFIG_THEME": "list(light|dark|system)",
+    "WHOOGLE_CONFIG_URL": "str",
+    "WHOOGLE_CONFIG_GET_ONLY": "int",
+    "WHOOGLE_MINIMAL": "int",
+    "WHOOGLE_RESULTS_PER_PAGE": "int"
   },
   "slug": "whoogle-search",
   "upstream": "0.7.0",
