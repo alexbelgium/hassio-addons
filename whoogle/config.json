@@ -27,8 +27,8 @@
   },
   "schema": {
     "TZ": "str",
-    "HTTPS_ONLY": "int(,1)?",
-    "WHOOGLE_AUTOCOMPLETE": "int(0,1)?",
+    "HTTPS_ONLY": "list(0|1)?",
+    "WHOOGLE_AUTOCOMPLETE": "float(0,1)?",
     "WHOOGLE_CONFIG_DISABLE": "int(0,1)?",
     "WHOOGLE_CONFIG_VIEW_IMAGE": "int(0,1)?",
     "WHOOGLE_CSP": "int(0,1)?",
