@@ -1,4 +1,10 @@
-{
+{  
+  "name": "Jackett NAS",
+  "version": "0.20.222",
+  "slug": "jackett_nas",
+  "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jackett",
+  "apparmor": true,
   "arch": [
     "aarch64",
     "amd64",
@@ -6,7 +12,9 @@
     "armhf"
   ],
   "boot": "auto",
-  "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
+  "upstream": "0.20.222",
+  "startup": "services",
+  "webui": "http://[HOST]:[PORT:9117]",
   "environment": {
     "PUID": "0",
     "PGID": "0"
@@ -17,7 +25,6 @@
     "media:rw",
     "ssl"
   ],
-  "name": "Jackett NAS",
   "options": {
     "PUID": 0,
     "PGID": 0
@@ -41,10 +48,4 @@
     "cifsusername": "str?",
     "cifspassword": "str?"
   },
-  "slug": "jackett_nas",
-  "startup": "services",
-  "upstream": "0.20.216",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.20.216-2",
-  "webui": "http://[HOST]:[PORT:9117]"
 }
