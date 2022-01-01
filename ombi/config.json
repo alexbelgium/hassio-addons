@@ -1,16 +1,19 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armhf",
-    "armv7"
-  ],
+  "name": "Ombi",
+  "version": "4.3.3-2",
+  "slug": "ombi",
   "description": "Self-hosted Plex Request and user management system",
+  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/ombi/Readme.md",
+  "apparmor": true,
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
+  "upstream": "4.3.3",
+  "webui": "http://[HOST]:[PORT:3579]",
+  "startup": "services",
   "environment": {},
   "map": [
     "config:rw"
   ],
-  "name": "Ombi",
   "options": {
     "PUID": 0,
     "PGID": 0
@@ -24,10 +27,5 @@
   "schema": {
     "PUID": "int",
     "PGID": "int"
-  },
-  "slug": "ombi",
-  "upstream": "4.3.3",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.3.3-2",
-  "webui": "http://[HOST]:[PORT:3579]"
+  }
 }
