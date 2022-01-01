@@ -1,4 +1,9 @@
 {
+  "name": "Bazarr NAS",
+  "version": "1.0.2",
+  "slug": "bazarr_nas",
+  "description": "Companion application to Sonarr and Radarr to download subtitles",
+  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/bazarr/Readme.md",
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -6,13 +11,15 @@
     "armv7",
     "armhf"
   ],
+  "boot": "auto",
+  "upstream": "1.0.2",
+  "webui": "http://[HOST]:[PORT:6767]",
+  "startup": "services",
   "backup_exclude": [
     "**/Backups/*",
     "**/logs/*",
     "**/MediaCover/*"
   ],
-  "boot": "auto",
-  "description": "Companion application to Sonarr and Radarr to download subtitles",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -56,7 +63,6 @@
     "media:rw",
     "ssl"
   ],
-  "name": "Bazarr NAS",
   "options": {
     "PUID": 0,
     "PGID": 0
@@ -78,11 +84,5 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?"
-  },
-  "slug": "bazarr_nas",
-  "startup": "services",
-  "upstream": "1.0.2",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.2",
-  "webui": "http://[HOST]:[PORT:6767]"
+  }
 }
