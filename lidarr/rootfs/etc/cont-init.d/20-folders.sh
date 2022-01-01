@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 if [ ! -d /share/music ]; then
   echo "Creating /share/music"

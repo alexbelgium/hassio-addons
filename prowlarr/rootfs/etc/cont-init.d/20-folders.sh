@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 if [ -d /config/prowlarr ]; then
   echo "Moving to new location /config/addons_config/prowlarr"
