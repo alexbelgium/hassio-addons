@@ -10,8 +10,7 @@
   "upstream": "0.7.0",
   "webui": "http://[HOST]:[PORT:5000]",
   "devices": [],
-  "environment": {
-  },
+  "environment": {},
   "map": ["config:rw"],
   "options": {
     "TZ":"Europe/Amsterdam",
@@ -55,7 +54,6 @@
     "WHOOGLE_CONFIG_COUNTRY": "str?",
     "WHOOGLE_CONFIG_SEARCH_LANGUAGE": "str?",
     "WHOOGLE_CONFIG_BLOCK": "str?",
-    "WHOOGLE_CONFIG_STYLE": "str?",
     "WHOOGLE_RESULTS_PER_PAGE": "int(5,100)?"
   }
 }
