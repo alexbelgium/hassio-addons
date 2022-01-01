@@ -1,6 +1,6 @@
 {
   "name": "Whoogle Search Test",
-  "version": "0.7.1.1",
+  "version": "0.7.1",
   "slug": "whoogle-search",
   "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/whoogle/Readme.md",
@@ -27,7 +27,7 @@
   },
   "schema": {
     "TZ": "str",
-    "HTTPS_ONLY": "int(0,1)?",
+    "HTTPS_ONLY": "int(,1)?",
     "WHOOGLE_AUTOCOMPLETE": "int(0,1)?",
     "WHOOGLE_CONFIG_DISABLE": "int(0,1)?",
     "WHOOGLE_CONFIG_VIEW_IMAGE": "int(0,1)?",
