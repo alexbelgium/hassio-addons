@@ -31,8 +31,8 @@ RUN sed -i "s|/config|/config/addons_config/Jackett|g" /etc/services.d/jackett/r
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
 
 # Changes config directory
-ENV XDG_DATA_HOME="/config" \
-    XDG_CONFIG_HOME="/config"
+ENV XDG_DATA_HOME="/config/addons_config" \
+    XDG_CONFIG_HOME="/config/addons_config"
 
 ##################
 # 3 Install apps #
