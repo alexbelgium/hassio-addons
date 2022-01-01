@@ -8,7 +8,7 @@
     "CONFIG_VOLUME": "/data"
   },
   "map": ["config:rw"],
-  "name": "Whoogle Search",
+  "name": "Whoogle Search Test",
   "options": {
     "TZ":"Europe/Amsterdam",
     "HTTPS_ONLY":"1",
