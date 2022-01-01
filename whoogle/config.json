@@ -28,18 +28,18 @@
   "schema": {
     "TZ": "str",
     "HTTPS_ONLY": "list(0|1)?",
-    "WHOOGLE_AUTOCOMPLETE": "float(0,1)?",
-    "WHOOGLE_CONFIG_DISABLE": "int(0,1)?",
-    "WHOOGLE_CONFIG_VIEW_IMAGE": "int(0,1)?",
-    "WHOOGLE_CSP": "int(0,1)?",
-    "WHOOGLE_CONFIG_SAFE": "int(0,1)?",
-    "WHOOGLE_CONFIG_ALTS": "int(0,1)?",
+    "WHOOGLE_AUTOCOMPLETE": "list(0|1)?",
+    "WHOOGLE_CONFIG_DISABLE": "list(0|1)?",
+    "WHOOGLE_CONFIG_VIEW_IMAGE": "list(0|1)?",
+    "WHOOGLE_CSP": "list(0|1)?",
+    "WHOOGLE_CONFIG_SAFE": "list(0|1)?",
+    "WHOOGLE_CONFIG_ALTS": "list(0|1)?",
     "WHOOGLE_CONFIG_NEAR": "str?",
-    "WHOOGLE_CONFIG_NEW_TAB": "int(0,1)?",
+    "WHOOGLE_CONFIG_NEW_TAB": "list(0|1)?",
     "WHOOGLE_CONFIG_THEME": "list(system|light|dark)?",
     "WHOOGLE_CONFIG_URL": "str",
-    "WHOOGLE_CONFIG_GET_ONLY": "int(0,1)?",
-    "WHOOGLE_MINIMAL": "int(0,1)?",
+    "WHOOGLE_CONFIG_GET_ONLY": "list(0|1)?",
+    "WHOOGLE_MINIMAL": "list(0|1)?",
     "WHOOGLE_ALT_TW": "str?",
     "WHOOGLE_ALT_YT": "str?",
     "WHOOGLE_ALT_IG": "str?",
@@ -57,6 +57,6 @@
     "WHOOGLE_CONFIG_SEARCH_LANGUAGE": "str?",
     "WHOOGLE_CONFIG_BLOCK": "str?",
     "WHOOGLE_CONFIG_STYLE": "str?",
-    "WHOOGLE_RESULTS_PER_PAGE": "int(0,1)?"
+    "WHOOGLE_RESULTS_PER_PAGE": "list(0|1)?"
   }
 }
