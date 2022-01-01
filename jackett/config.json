@@ -47,5 +47,5 @@
     "networkdisks": "str?",
     "cifsusername": "str?",
     "cifspassword": "str?"
-  },
+  }
 }
