@@ -31,4 +31,3 @@ if [ ! -z "TZ" ] && [ -f /etc/localtime ]; then
     ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" >/etc/timezone
   fi
 fi
-
