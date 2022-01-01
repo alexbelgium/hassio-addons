@@ -1,10 +1,4 @@
-#!/bin/bash
-
-if [ ! -d /share/storage/movies ]; then
-  echo "Creating /share/storage/movies"
-  mkdir -p /share/storage/movies
-  chown -R abc:abc /share/storage/movies
-fi
+#!/usr/bin/with-contenv bashio
 
 if [ ! -d /share/downloads ]; then
   echo "Creating /share/downloads"
@@ -18,6 +12,7 @@ if [ -d /config/Jackett ] && [ ! -d /config/addons_config/Jackett ]; then
   chown -R abc:abc /config/addons_config/Jackett
   mv /config/Jackett/* /config/addons_config/Jackett/
   rm -r /config/Jackett
+  rm -r /config/jackett
 fi
 
 if [ ! -d /config/addons_config/Jackett ]; then

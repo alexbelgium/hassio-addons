@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 if [ ! -d /jellyfin ]; then
   echo "Creating /jellyfin"

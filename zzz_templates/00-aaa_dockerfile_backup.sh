@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 # If dockerfile failed install manually
 if [ -e "/ENVFILE" ]; then
     echo "Executing script"

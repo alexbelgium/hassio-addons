@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 if [ ! -d /share/storage/movies ]; then
   echo "Creating /share/storage/movies"
