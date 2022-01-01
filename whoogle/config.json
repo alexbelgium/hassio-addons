@@ -1,21 +1,22 @@
 {
+  "name": "Whoogle Search Test",
+  "version": "0.7.1",
+  "slug": "whoogle-search",
+  "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
+  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/whoogle/Readme.md",
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
-  "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
+  "upstream": "0.7.0",
+  "webui": "http://[HOST]:[PORT:5000]",
   "devices": [],
   "environment": {
     "CONFIG_VOLUME": "/data"
   },
   "map": ["config:rw"],
-  "name": "Whoogle Search Test",
   "options": {
     "TZ":"Europe/Amsterdam",
     "HTTPS_ONLY":"1",
-    "WHOOGLE_AUTOCOMPLETE": "1",
-    "WHOOGLE_CONFIG_NEAR": "City",
-    "WHOOGLE_CONFIG_NEW_TAB": "1",
-    "WHOOGLE_CONFIG_THEME": "",
     "WHOOGLE_CONFIG_URL": "https://website.com",
     "WHOOGLE_CONFIG_VIEW_IMAGE": "int"
   },
@@ -27,24 +28,19 @@
   },
   "schema": {
     "TZ": "str",
-    "HTTPS_ONLY": "int",
-    "WHOOGLE_AUTOCOMPLETE": "int",
-    "WHOOGLE_CONFIG_DISABLE": "int",
-    "WHOOGLE_CONFIG_VIEW_IMAGE": "int",
-    "WHOOGLE_CSP": "int",
-    "WHOOGLE_CONFIG_SAFE": "int",
-    "WHOOGLE_CONFIG_ALTS": "int",
+    "HTTPS_ONLY": "int(0,1)",
+    "WHOOGLE_AUTOCOMPLETE": "int(0,1)",
+    "WHOOGLE_CONFIG_DISABLE": "int(0,1)",
+    "WHOOGLE_CONFIG_VIEW_IMAGE": "int(0,1)",
+    "WHOOGLE_CSP": "int(0,1)",
+    "WHOOGLE_CONFIG_SAFE": "int(0,1)",
+    "WHOOGLE_CONFIG_ALTS": "int(0,1)",
     "WHOOGLE_CONFIG_NEAR": "str",
-    "WHOOGLE_CONFIG_NEW_TAB": "int",
-    "WHOOGLE_CONFIG_THEME": "list(light|dark|system)",
+    "WHOOGLE_CONFIG_NEW_TAB": "int(0,1)",
+    "WHOOGLE_CONFIG_THEME": "list(system|light|dark)?",
     "WHOOGLE_CONFIG_URL": "str",
-    "WHOOGLE_CONFIG_GET_ONLY": "int",
-    "WHOOGLE_MINIMAL": "int",
-    "WHOOGLE_RESULTS_PER_PAGE": "int"
-  },
-  "slug": "whoogle-search",
-  "upstream": "0.7.0",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.7.0",
-  "webui": "http://[HOST]:[PORT:5000]"
+    "WHOOGLE_CONFIG_GET_ONLY": "int(0,1)",
+    "WHOOGLE_MINIMAL": "int(0,1)",
+    "WHOOGLE_RESULTS_PER_PAGE": "int(0,1)"
+  }
 }
