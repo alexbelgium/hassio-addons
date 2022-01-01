@@ -30,7 +30,7 @@ fi
 
 # Check if yaml is valid
 EXIT_CODE=0
-yamllint -d relaxed $CONFIGSOURCE &>ERROR || EXIT_CODE=$?
+yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
 if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
 else
@@ -73,7 +73,7 @@ while IFS= read -r line; do
         secret=${line#*secret }
         # Check if single match
         secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
-        [[ $(echo "$secretnum") == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+        [[ $("$secretnum") == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
