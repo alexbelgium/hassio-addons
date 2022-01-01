@@ -49,11 +49,6 @@ RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/entrypoint.sh" ] 
 
-#RUN chmod 777 /entrypoint.sh
-#WORKDIR /
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ] 
-
 ############
 # 5 Labels #
 ############
