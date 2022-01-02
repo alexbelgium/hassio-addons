@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ ! -d /share/storage/movies ]; then
-  echo "Creating /share/storage/movies"
-  mkdir -p /share/storage/movies
-  chown -R abc:abc /share/storage/movies
+if [ ! -d /share/storage/tv ]; then
+  echo "Creating /share/storage/tv"
+  mkdir -p /share/storage/tv
+  chown -R abc:abc /share/storage/tv
 fi
 
 if [ ! -d /share/downloads ]; then
@@ -12,7 +12,7 @@ if [ ! -d /share/downloads ]; then
   chown -R abc:abc /share/downloads
 fi
 
-if [ -d /config/sonarr ]; then
+if [ -d /config/sonarr ] && [ ! -d /config/addons_config/sonarr ]; then
   echo "Moving to new location /config/addons_config/sonarr"
   mkdir -p /config/addons_config/sonarr
   chown -R abc:abc /config/addons_config/sonarr

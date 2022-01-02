@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -d /config/prowlarr ]; then
+if [ -d /config/prowlarr ] && [ ! -d /config/addons_config/prowlarr ]; then
   echo "Moving to new location /config/addons_config/prowlarr"
   mkdir -p /config/addons_config/prowlarr
   chown -R abc:abc /config/addons_config/prowlarr

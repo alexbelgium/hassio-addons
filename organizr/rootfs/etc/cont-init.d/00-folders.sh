@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 if [ ! -d /data/organizr ]; then
   echo "Creating /data/organizr"

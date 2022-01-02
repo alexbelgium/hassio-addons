@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 if [ -e "/PORTFILE" ]; then
     echo "Installing portainer..." 
     BUILD_UPSTREAM=$(</PORTFILE)

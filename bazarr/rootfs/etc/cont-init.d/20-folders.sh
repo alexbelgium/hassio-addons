@@ -6,6 +6,12 @@ if [ ! -d /share/storage/movies ]; then
   chown -R abc:abc /share/storage/movies
 fi
 
+if [ ! -d /share/storage/tv ]; then
+  echo "Creating /share/storage/tv"
+  mkdir -p /share/storage/tv
+  chown -R abc:abc /share/storage/tv
+fi
+
 if [ ! -d /share/downloads ]; then
   echo "Creating /share/downloads"
   mkdir -p /share/downloads
