@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/bin/bash
 
 if [ ! -d /emby ]; then
   echo "Creating /emby"
@@ -24,10 +24,18 @@ if [ ! -d /share/emby ]; then
   chown -R abc:abc /share/emby
 fi
 
-if [ ! -d /config/emby ]; then
-  echo "Creating /config/emby"
-  mkdir -p /config/emby
-  chown -R abc:abc /config/emby
+if [ -d /config/emby ] && [ ! -d /config/addons_config/emby ]; then
+  echo "Moving to new location /config/addons_config/emby"
+  mkdir -p /config/addons_config/emby
+  chown -R abc:abc /config/addons_config/emby
+  mv /config/emby/* /config/addons_config/emby/
+  rm -r /config/emby
+fi
+
+if [ ! -d /config/addons_config/emby ]; then
+  echo "Creating /config/addons_config/emby"
+  mkdir -p /config/addons_config/emby
+  chown -R abc:abc /config/addons_config/emby
 fi
 
 # links
