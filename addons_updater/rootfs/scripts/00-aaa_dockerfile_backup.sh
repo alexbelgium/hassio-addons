@@ -1,6 +1,5 @@
 #!/bin/bash 
 # If dockerfile failed install manually
-
 if [ -e "/ENVFILE" ]; then
     echo "Executing script"
     PACKAGES=$(</ENVFILE)
