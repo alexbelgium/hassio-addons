@@ -1,4 +1,4 @@
-## v1.0.2-ls140
+## v1.0.2-ls140-1
 - Fixed local config
 - updated to v1.0.2-ls140
 
