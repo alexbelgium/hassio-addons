@@ -3,7 +3,7 @@
   "version": "v1.0.2-ls140-1",
   "slug": "bazarr_nas",
   "description": "Companion application to Sonarr and Radarr to download subtitles",
-  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/bazarr/Readme.md",
+  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/bazarr/README.md",
   "apparmor": true,
   "arch": [
     "aarch64",
