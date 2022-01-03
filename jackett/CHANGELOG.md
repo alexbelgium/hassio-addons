@@ -1,3 +1,6 @@
+## 0.20.222-1
+- Fixed local config
+
 ## 0.20.222 (01-01-2022)
 - Update to latest version from linuxserver/docker-jackett
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)

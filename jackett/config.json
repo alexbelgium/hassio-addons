@@ -12,7 +12,7 @@
     "armhf"
   ],
   "boot": "auto",
-  "upstream": "0.20.222",
+  "upstream": "0.20.222-1",
   "startup": "services",
   "webui": "http://[HOST]:[PORT:9117]",
   "environment": {

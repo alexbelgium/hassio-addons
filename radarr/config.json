@@ -1,8 +1,15 @@
 {
+  "name": "Radarr NAS",
+  "version": "3.2.2.5080-7",
+  "slug": "radarr_nas",
+  "description": "A fork of Sonarr to work with movies like Couchpotato",
+  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/radarr/Readme.md",
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
-  "description": "A fork of Sonarr to work with movies like Couchpotato",
+  "upstream": "3.2.2.5080",
+  "webui": "http://[HOST]:[PORT:7878]",
+  "startup": "services",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -40,7 +47,6 @@
     "PGID": "0"
   },
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
-  "name": "Radarr NAS",
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -64,11 +70,5 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "smbv1": "bool?"
-  },
-  "slug": "radarr_nas",
-  "startup": "services",
-  "upstream": "3.2.2.5080",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.2.2.5080-6",
-  "webui": "http://[HOST]:[PORT:7878]"
+  }
 }

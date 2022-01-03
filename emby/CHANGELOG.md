@@ -1,3 +1,5 @@
+## 4.7.0.19-1
+- Changed local config location
 
 ## 4.7.0.19 (14-12-2021)
 - Update to latest version from linuxserver/docker-emby
