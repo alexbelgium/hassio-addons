@@ -138,7 +138,7 @@ for addons in $(bashio::config "addon|keys"); do
     #Update changelog
     touch /data/${BASENAME}/${SLUG}/CHANGELOG.md
     sed -i "1i - Update to latest version from $UPSTREAM" /data/${BASENAME}/${SLUG}/CHANGELOG.md
-    sed -i "1i ## ${LASTVERSION} (${DATE})" /data/${BASENAME}/${SLUG}/CHANGELOG.md
+    sed -i "1i ## ${LASTVERSION}" /data/${BASENAME}/${SLUG}/CHANGELOG.md
     sed -i "1i " /data/${BASENAME}/${SLUG}/CHANGELOG.md
     LOGINFO="... $SLUG : files updated" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
 
