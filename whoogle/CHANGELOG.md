@@ -1,3 +1,4 @@
+
 ## 0.7.1 (03-01-2022)
 - Breaking change
 - Changed the config handeling
