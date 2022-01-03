@@ -1,5 +1,5 @@
 ## v1.0.2-ls140
-- Fixed local config-
+- Fixed local config
 - updated to v1.0.2-ls140
 
 ## 1.0.2 (01-01-2022)
