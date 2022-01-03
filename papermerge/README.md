@@ -31,9 +31,11 @@ comparison to installing any other Hass.io add-on.
 ## Configuration
 
 Default login is admin:admin via the webui, accessible at http://SERVERIP:PORT
-
 Webui can be found at `<your-ip>:8000`.
 
+Options can be configured through two ways :
+
+- Addon options
 ```yaml
 GUID: user
 GPID: user
@@ -43,6 +45,11 @@ networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
 ```
+
+- Config.yaml
+Custom env variables can be added to the config.yaml file referenced in the addon options.
+Full env variables can be found here : https://papermerge.readthedocs.io/en/v1.4.2/settings.html. 
+It must be entered in a valid yaml format, that will be verified at launch of the addon.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
