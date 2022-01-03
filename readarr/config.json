@@ -1,13 +1,15 @@
 {
-  "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
-  "boot": "auto",
+  "name": "Readarr NAS",
+  "version": "nightly-alpine-0.1.0.1154-ls4",
+  "slug": "readarr_nas",
   "description": "Book Manager and Automation",
+  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/readarr/Readme.md",
+  "apparmor": true,
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "boot": "auto",
+  "upstream": "nightly-alpine-0.1.0.1154-ls4 ",
+  "webui": "http://[HOST]:[PORT:8787]",
+  "startup": "services",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -50,7 +52,6 @@
     "media:rw",
     "config:rw"
   ],
-  "name": "readarr NAS",
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -75,10 +76,5 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "CONFIG_LOCATION": "str"
-  },
-  "slug": "readarr_nas",
-  "upstream": "nightly-alpine-0.1.0.1154-ls3",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "nightly-alpine-0.1.0.1154-ls3",
-  "webui": "http://[HOST]:[PORT:8787]"
+  }
 }

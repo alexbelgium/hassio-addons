@@ -1,3 +1,5 @@
+## 1.0.2-1
+- Fixed local config
 
 ## 1.0.2 (01-01-2022)
 - Update to latest version from linuxserver/docker-bazarr

@@ -1,6 +1,6 @@
 {
   "name": "Radarr NAS",
-  "version": "3.2.2.5080-6",
+  "version": "3.2.2.5080-7",
   "slug": "radarr_nas",
   "description": "A fork of Sonarr to work with movies like Couchpotato",
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/radarr/Readme.md",

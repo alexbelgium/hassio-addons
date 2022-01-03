@@ -1,4 +1,9 @@
 {
+  "name": "Emby NAS",
+  "version": "4.7.0.19-1",
+  "slug": "emby_nas",
+  "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
+  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/emby/Readme.md",
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -6,14 +11,17 @@
     "armv7",
     "armhf"
   ],
+  "boot": "auto",
+  "upstream": "4.7.0.19",
+  "webui": "http://[HOST]:[PORT:8096]",
+  "startup": "services",
+  "video": true,
   "backup_exclude": [
     "*/cache/",
     "*/logs/",
     "*/transcoding-temp/",
     "*/metadata/"
   ],
-  "boot": "auto",
-  "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "devices": [
     "/dev/dri",
     "/dev/vchiq",
@@ -62,7 +70,6 @@
     "media:rw",
     "ssl:rw"
   ],
-  "name": "Emby NAS",
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -95,12 +102,5 @@
     "cifsdomain": "str?",
     "smbv1": "bool?",
     "silent": "bool?"
-  },
-  "slug": "emby_nas",
-  "startup": "services",
-  "upstream": "4.7.0.19",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.7.0.19",
-  "video": true,
-  "webui": "http://[HOST]:[PORT:8096]"
+  }
 }

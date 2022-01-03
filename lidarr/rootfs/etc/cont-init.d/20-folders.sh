@@ -12,7 +12,7 @@ if [ ! -d /share/downloads ]; then
   chown -R abc:abc /share/downloads
 fi
 
-if [ -d /config/lidarr ]; then
+if [ -d /config/lidarr ] && [ ! -d /config/addons_config/lidarr ]; then
   echo "Moving to new location /config/addons_config/lidarr"
   mkdir -p /config/addons_config/lidarr
   chmod 777 /config/addons_config/lidarr

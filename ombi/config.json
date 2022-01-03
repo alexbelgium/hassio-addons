@@ -1,6 +1,6 @@
 {
   "name": "Ombi",
-  "version": "4.3.3-2",
+  "version": "4.3.3-3",
   "slug": "ombi",
   "description": "Self-hosted Plex Request and user management system",
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/ombi/Readme.md",
