@@ -1,4 +1,4 @@
-## 3.0.6.1342-6 (03-01-2022)
+## 3.0.6.1342-6
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - New standardized logic for Dockerfile build and packages installation
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
