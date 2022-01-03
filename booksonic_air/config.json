@@ -77,7 +77,7 @@
   },
   "slug": "booksonic-air_nas",
   "upstream": "v2112.2.0-ls39",
-  "url": "https://github.com/alexbelgium/hassio-addons",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/booksonic_air",
   "version": "v2112.2.0-ls39",
   "webui": "http://[HOST]:[PORT:4040]"
 }
