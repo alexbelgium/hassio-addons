@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/bin/bash
 
 if [ ! -d /share/downloads ]; then
   echo "Creating /share/downloads"

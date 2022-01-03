@@ -1,9 +1,15 @@
-#!/usr/bin/with-contenv bashio
+#!/bin/bash
 
 if [ ! -d /share/storage/movies ]; then
   echo "Creating /share/storage/movies"
   mkdir -p /share/storage/movies
   chown -R abc:abc /share/storage/movies
+fi
+
+if [ ! -d /share/storage/tv ]; then
+  echo "Creating /share/storage/tv"
+  mkdir -p /share/storage/tv
+  chown -R abc:abc /share/storage/tv
 fi
 
 if [ ! -d /share/downloads ]; then
