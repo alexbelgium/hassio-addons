@@ -1,4 +1,4 @@
-## 0.7.1 (03-01-2022)
+## 0.7.0-1
 - Breaking change
 - Changed the config handeling
 - Added a docs with the config explaination.
