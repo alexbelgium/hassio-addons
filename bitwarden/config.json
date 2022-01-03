@@ -32,7 +32,7 @@
   "slug": "bitwarden",
   "startup": "services",
   "upstream": "1.23.1",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bitwarden#readme",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bitwarden",
   "version": "1.23.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7277]"
 }
