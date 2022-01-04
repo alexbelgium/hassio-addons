@@ -144,7 +144,7 @@ for addons in $(bashio::config "addon|keys"); do
 
     #Git commit and push
     git add -A # add all modified files
-    git commit -m "Update to ${LASTVERSION}" >/dev/null
+    git commit -m "Updater bot : $SLUG updated to ${LASTVERSION}" >/dev/null
 
     LOGINFO="... $SLUG : push to github" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
     git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" &>/dev/null
