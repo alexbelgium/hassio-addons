@@ -1,4 +1,7 @@
 
+## nightly-alpine-0.1.10.1352-ls17 (04-01-2022)
+- Update to latest version from linuxserver/docker-prowlarr
+
 ## nightly-alpine-0.1.10.1341-ls11 (01-01-2022)
 - Update to latest version from linuxserver/docker-prowlarr
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
