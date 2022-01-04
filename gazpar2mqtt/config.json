@@ -27,7 +27,7 @@
     "mqtt:want"
   ],
   "slug": "gazpar2mqtt",
-  "upstream": "0.6.5",
+  "upstream": "0.6.6",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.6.5"
+  "version": "0.6.6"
 }
