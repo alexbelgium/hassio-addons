@@ -1,3 +1,6 @@
+
+## 12.2.0 (04-01-2022)
+- Update to latest version from linuxserver/docker-piwigo
 - New standardized logic for Dockerfile build and packages installation
 
 ## 12.1.0 (13-11-2021)
