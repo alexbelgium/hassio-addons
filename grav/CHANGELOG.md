@@ -1,4 +1,7 @@
 
+## 1.7.26.1 (04-01-2022)
+- Update to latest version from linuxserver/docker-grav
+
 ## 1.7.26 (04-01-2022)
 - Update to latest version from linuxserver/docker-grav
 - New standardized logic for Dockerfile build and packages installation
