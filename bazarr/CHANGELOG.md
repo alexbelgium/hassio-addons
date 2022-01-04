@@ -1,4 +1,7 @@
 
+## 1.0.2 (04-01-2022)
+- Update to latest version from linuxserver/docker-bazarr
+
 ## v1.0.2-ls140
 - Fixed local config
 - updated to v1.0.2-ls140
