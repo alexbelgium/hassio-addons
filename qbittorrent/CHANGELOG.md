@@ -1,3 +1,6 @@
+
+## 14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls165 (04-01-2022)
+- Update to latest version from linuxserver/docker-qbittorrent
 - Removed watchdog
 - New standardized logic for Dockerfile build and packages installation
 - Allow mounting nvme

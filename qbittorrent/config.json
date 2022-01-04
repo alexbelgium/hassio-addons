@@ -1,7 +1,14 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
-  "backup_exclude": ["image.tar"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
+  "backup_exclude": [
+    "image.tar"
+  ],
   "boot": "auto",
   "description": "qBittorrent is a bittorrent client",
   "devices": [
@@ -48,7 +55,12 @@
   "host_network": false,
   "ingress": true,
   "ingress_port": 8099,
-  "map": ["media:rw", "config:rw", "share:rw", "ssl"],
+  "map": [
+    "media:rw",
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
   "name": "Qbittorrent",
   "options": {
     "ssl": false,
@@ -73,7 +85,11 @@
     "6881/tcp": "Peer port",
     "6881/udp": "Peer port"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
+  ],
   "schema": {
     "ssl": "bool",
     "certfile": "str",
@@ -100,8 +116,8 @@
     "TZ": "str?"
   },
   "slug": "qbittorrent",
-  "upstream": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls159",
+  "upstream": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls165",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls160-3",
+  "version": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls165",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
