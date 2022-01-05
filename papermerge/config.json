@@ -11,8 +11,7 @@
     "PGID": 0,
     "ocrlang": "eng,fra",
     "storage_dir": "/data/media",
-    "import_dir": "/share/papermerge/import",
-    "CONFIG_LOCATION": "/config/addons_config/papermerge/config.yaml"
+    "import_dir": "/share/papermerge/import"
   },
   "ports": {
     "8000/tcp": 8000
@@ -31,7 +30,6 @@
     "storage_dir": "str",
     "import_dir": "str",
     "smbv1": "bool?",
-    "CONFIG_LOCATION": "str",
     "TZ": "str?"
   },
   "slug": "papermerge",
