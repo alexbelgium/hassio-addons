@@ -46,10 +46,9 @@ cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
 ```
 
-- Config.yaml
-Custom env variables can be added to the config.yaml file referenced in the addon options.
-Full env variables can be found here : https://papermerge.readthedocs.io/en/v1.4.2/settings.html. 
-It must be entered in a valid yaml format, that will be verified at launch of the addon.
+- papermerge.conf.py
+Custom env variables can be added to the /config/addons_config/papermerge/papermerge.conf.py.
+Full variables can be found here : https://papermerge.readthedocs.io/en/v2.0.1/settings.html. 
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
