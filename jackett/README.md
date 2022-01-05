@@ -13,13 +13,23 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-Forked to add latest version, addition of OCR
-
-- Inital version : https://github.com/petersendev/hassio-addons
-
 [jackett](https://github.com/jackett/jackett) - A fork of jackett to work with movies like Couchpotato.
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-jackett) from linuxserver.io.
+
+## Configuration
+
+Configurations can be done through the app webUI, except for the following options :
+
+```yaml
+GUID: user
+GPID: user
+TZ: timezone
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
+networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password
+```
 
 ## Installation
 
@@ -32,10 +42,6 @@ comparison to installing any other Hass.io add-on.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
-## Configuration
-
-Webui can be found at `<your-ip>:7878`.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
