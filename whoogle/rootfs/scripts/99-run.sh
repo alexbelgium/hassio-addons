@@ -1,4 +1,3 @@
 #!/bin/sh
 
-exec misc/tor/start-tor.sh &
-./run
+exec misc/tor/start-tor.sh & ./run
