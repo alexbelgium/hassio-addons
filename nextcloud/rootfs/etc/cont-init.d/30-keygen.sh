@@ -29,8 +29,8 @@ for NGINXFILE in "/defaults/default" "/config/nginx/site-confs/default" "/data/c
       LINE=$(sed -n "/ssl_certificate /=" $NGINXFILE)
     if [ ! -z $LINE ]; then
       sed -i "/ssl_certificate/ d" $NGINXFILE
-      sed -i "$LINE a ssl_certificate_key /ssl/$KEYFILE;" $NGINXFILE
-      sed -i "$LINE a ssl_certificate /ssl/$CERTFILE;" $NGINXFILE
+      sed -i "$LINE i ssl_certificate_key /ssl/$KEYFILE;" $NGINXFILE
+      sed -i "$LINE i ssl_certificate /ssl/$CERTFILE;" $NGINXFILE
     fi
   fi
 done
