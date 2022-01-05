@@ -28,7 +28,7 @@ if bashio::config.has_value 'OCR'; then
             OCRLANG=$(bashio::config 'OCRLANG')
   for LANG in $(echo "$OCRLANG" | tr "," " "); do
 
-            apk add --quiet --no-cache tesseract-ocr-data-$LANG || apk add --quiet --no-cache tesseract-ocr-data-$LANG@community && \
+            apk add --quiet --no-cache tesseract-ocr-$LANG || apk add --quiet --no-cache tesseract-ocr-$LANG@community && \
             bashio::log.info "OCR Language installed : $LANG" || bashio::log.fatal "Couldn't install OCR lang $LANG. Please check its format is conform"
 
             # Downloading trainer data
