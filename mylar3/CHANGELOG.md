@@ -1,4 +1,7 @@
 
+## 0.6.3 (06-01-2022)
+- Update to latest version from linuxserver/docker-mylar3
+
 ## 0.6.2 (20-12-2021)
 - Update to latest version from linuxserver/docker-mylar3
 - New standardized logic for Dockerfile build and packages installation
