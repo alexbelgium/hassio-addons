@@ -34,7 +34,7 @@ if [ ! -d /jellyfin/cache ]; then
 fi
 
 
-if [ -d /config/jellyfin ] && [ ! -d /config/addons_config/bazarr ]; then
+if [ -d /config/jellyfin ] && [ ! -d /config/addons_config/jellyfin ]; then
   echo "Moving to new location /config/addons_config/jellyfin"
   mkdir -p /config/addons_config/jellyfin
   chown -R abc:abc /config/addons_config/jellyfin
