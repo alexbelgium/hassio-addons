@@ -27,8 +27,8 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
   && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \ 
   && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
   # Allow custom config folder
-  && sed -i 's|/config|/share/webtop-alpine|g' /defaults/* \
-  && sed -i 's|/config|/share/webtop-alpine|g' /etc/cont-init.d/* \
+  #&& sed -i 's|/config|/share/webtop-alpine|g' /defaults/* \
+  #&& sed -i 's|/config|/share/webtop-alpine|g' /etc/cont-init.d/* \
   && sed -i 's|/config|/share/webtop-alpine|g' /etc/services.d/*/run
 
 ##################
