@@ -1,3 +1,6 @@
+
+## 4.0.1 (06-01-2022)
+- Update to latest version from linuxserver/docker-code-server
 - New standardized logic for Dockerfile build and packages installation
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 - Allow mounting of devices up to sdg2
