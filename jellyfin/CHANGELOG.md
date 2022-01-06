@@ -1,3 +1,6 @@
+
+## 10.7.7-1-ls148 (06-01-2022)
+- Update to latest version from linuxserver/docker-jellyfin
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - New standardized logic for Dockerfile build and packages installation
 - Add local mount (see readme)
