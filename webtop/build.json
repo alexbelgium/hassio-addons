@@ -2,7 +2,7 @@
   "build_from": {
     "armhf": "linuxserver/webtop:arm32v7-latest",
     "armv7": "linuxserver/webtop:arm32v7-latest",
-    "aarch64": "linuxserver/ubuntu-kde:arm64v8-latest",
+    "aarch64": "linuxserver/webtop:arm64v8-ubuntu-kde",
     "amd64": "linuxserver/webtop:amd64-latest"
   }
 }
