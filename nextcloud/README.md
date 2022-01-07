@@ -18,18 +18,6 @@ Various tweaks and configuration options addition.
 Inital fork from version : https://github.com/haberda/hassio_addons
 This addon is based on the [docker image](https://github.com/linuxserver/docker-nextcloud) from linuxserver.io.
 
-## Installation
-
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Hass.io add-on.
-
-1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
-1. Install this add-on.
-1. Click the `Save` button to store your configuration.
-1. Start the add-on.
-1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
 ## Configuration
 
 ```
@@ -48,6 +36,18 @@ cifspassword: "password" # optional, smb password, same for all smb shares)
 ```
 
 Webui can be found at `<your-ip>:port`.
+
+## Installation
+
+The installation of this add-on is pretty straightforward and not different in
+comparison to installing any other Hass.io add-on.
+
+1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
+1. Install this add-on.
+1. Click the `Save` button to store your configuration.
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
