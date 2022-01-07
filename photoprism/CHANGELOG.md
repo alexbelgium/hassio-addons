@@ -1,4 +1,7 @@
 
+## 20220107 (07-01-2022)
+- Update to latest version from photoprism/photoprism
+
 ## 20211215 (16-12-2021)
 - Update to latest version from photoprism/photoprism
 
