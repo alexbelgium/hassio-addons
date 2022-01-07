@@ -20,7 +20,7 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
-```
+```yaml
 PGID/PUID : 1000 #allows setting user.
 trusted_domains : your-domain.com #allows to select the trusted domains. Domains not in this lis will be removed, except for the first one used in the initial configuration.
 OCR : false #set to true to install tesseract-ocr capability.
