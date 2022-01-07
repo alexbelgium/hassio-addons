@@ -5,7 +5,6 @@
   "upstream": "23.0.0",
   "slug": "nextcloud_ocr",
   "devices": [
-    "/dev/mmcblk0p8",
     "/dev/sda",
     "/dev/sdb",
     "/dev/sdc",
