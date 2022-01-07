@@ -1,9 +1,13 @@
 #!/bin/bash
 
-mkdir -p /share/webtop-alpine
-chown -R abc:abc /share/webtop-alpine
-if [ ! -f /config/configuration.yaml ]; then
-  rm -r /config
-ln -s /share/webtop-alpine /config
-echo "Data folder set to /share/webtop-alpine"
+for FOLDERS in "Desktop" "thinclients_drives" ".config"; do
+mkdir -p /share/webtop-alpine/$FOLDERS
+if [ -d /config/$FOLDERS ]; then
+  cp /config/$FOLDERS/* /share/webtop-alpine/$FOLDERS
+  rm -r /config/$FOLDERS
 fi
+ln -s /share/webtop-alpine/$FOLDERS /config
+done
+
+echo "Data folder set to /share/webtop-alpine"
+chown -R abc:abc /share/webtop-alpine
