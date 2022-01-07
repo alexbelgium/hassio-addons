@@ -5,13 +5,15 @@ datadirectory=$(bashio::config 'data_directory')
 mkdir -p \
 	$datadirectory \
 	/data/config/nextcloud/config \
-	/data/config/nextcloud/data
-	
+	/data/config/nextcloud/data \
+        /data/config/www/nextcloud/config
+
 #permissions
 chown abc:abc \
 	$datadirectory \
 	/data/config/nextcloud/config \
-	/data/config/nextcloud/data
+	/data/config/nextcloud/data \
+        /data/config/www/nextcloud/config
 	
 chown -R abc:abc  \
 	/var/lib/nginx
