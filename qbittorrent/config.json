@@ -116,8 +116,8 @@
     "TZ": "str?"
   },
   "slug": "qbittorrent",
-  "upstream": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls165",
+  "upstream": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls166",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls165",
+  "version": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls166",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
