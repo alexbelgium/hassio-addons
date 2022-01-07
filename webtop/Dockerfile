@@ -15,7 +15,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}latest
+FROM ${BUILD_FROM}ubuntu-xfce
 
 
 ##################
