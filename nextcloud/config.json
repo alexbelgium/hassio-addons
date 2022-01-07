@@ -82,6 +82,10 @@
     "Full_Text_Search": "bool?",
     "elasticsearch_server": "str?",
     "trusted_domains": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?",
     "TZ": "str?"
   }
 }
