@@ -33,8 +33,8 @@
     "FG_PLUGINS": "str?"
   },
   "slug": "flexget",
-  "upstream": "3.2.7",
+  "upstream": "3.2.8",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.2.7",
+  "version": "3.2.8",
   "webui": "http://[HOST]:[PORT:5050]"
 }
