@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for FOLDERS in "Desktop" "thinclients_drives" ".config"; do
+for FOLDERS in "Desktop" "thinclient_drives" ".config"; do
 mkdir -p /share/webtop-alpine/$FOLDERS
 if [ -d /config/$FOLDERS ]; then
   cp /config/$FOLDERS/* /share/webtop-alpine/$FOLDERS
