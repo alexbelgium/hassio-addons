@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p /share/webtop-alpine
-chown abc:abc /share/webtop-alpine
+chown -R abc:abc /share/webtop-alpine
 if [ ! -f /config/configuration.yaml ]; then
   rm -r /config
 ln -s /share/webtop-alpine /config
