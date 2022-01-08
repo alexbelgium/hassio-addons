@@ -7,6 +7,11 @@
     "armhf"
   ],
   "boot": "auto",
+  "environment": {
+    "PUID": "0",
+    "PGID": "0",
+    "HOME": "/share/webtop"
+  },
   "description": "Full Alpine desktop environments accessible via any modern web browser",
   "devices": [
     "/dev/dri",
