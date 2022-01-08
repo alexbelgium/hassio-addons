@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 
-HOME=${HOME:-/share/webtop}
+HOME="/share/webtop"
 mkdir -p $HOME
 chown -R abc:abc $HOME
 bashio::log.info "Your files are located in $HOME"
