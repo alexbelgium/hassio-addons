@@ -86,8 +86,7 @@
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?", 
-    "images_location": "str?"
+    "cifspassword": "str?"
   },
   "services": ["mysql:want"],
   "slug": "webtrees",
