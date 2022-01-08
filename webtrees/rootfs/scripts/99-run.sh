@@ -100,9 +100,6 @@ for VOL in "data" "media" "modules_v4"; do
     mkdir -p $OLD_WEBTREES_HOME/$VOL
     cp -rn $OLD_WEBTREES_HOME/$VOL $WEBTREES_HOME || true
     rm -r $OLD_WEBTREES_HOME/$VOL || true
-done
-
-for VOL in $(ls -d */ | cut -f1 -d'/'); do
     echo "... linking $VOL"
     ln -s $WEBTREES_HOME/$VOL $OLD_WEBTREES_HOME
 done
