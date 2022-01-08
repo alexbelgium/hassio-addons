@@ -80,7 +80,9 @@
   "ports_description": {
     "3000/tcp": "web interface"
   },
-  "options": {},
+  "options": {
+    "additional_apps": "engrampa,vlc"
+},
   "schema": {
     "TZ": "str?",
     "localdisks": "str?",
@@ -88,7 +90,8 @@
     "cifsusername": "str?",
     "cifspassword": "str?",
     "cifsdomain": "str?",
-    "DNS_server": "str?"
+    "DNS_server": "str?",
+    "additional_apps": "str?"
   },
   "slug": "webtop_alpine",
   "upstream": "4.16",
