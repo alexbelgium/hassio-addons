@@ -36,7 +36,6 @@ localdisks: sda1 #put the hardware name of your drive to mount separated by comm
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
-images_location: "/mnt/sda1/Genealogy/Images" # Optional, will be mapped to Images/* folder
 ```
 
 - Config.yaml
