@@ -31,7 +31,8 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
   && sed -i 's|/config|/share/webtop|g' /etc/services.d/*/run \
   && usermod --home /share/webtop abc \
   # Fix mate software center
-  && sudo chmod u+s /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+  && if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then \
+  chmod u+s /usr/lib/dbus-1.0/dbus-daemon-launch-helper; fi
   
 
 # Graphic drivers for rpi4
