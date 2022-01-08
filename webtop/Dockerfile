@@ -28,7 +28,8 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
   # Allow custom config folder
   #&& sed -i 's|/config|/share/webtop-alpine|g' /defaults/* \
   #&& sed -i 's|/config|/share/webtop-alpine|g' /etc/cont-init.d/* \
-  && sed -i 's|HOME="/config"|export HOME="/share/webtop"|g' /etc/services.d/web/run
+  && sed -i 's|HOME="/config"|HOME="/share/webtop"|g' /etc/services.d/web/run \
+  && sed -i '1a export HOME="/share/webtop"' /etc/services.d/web/run
 
 # Graphic drivers for rpi4
 RUN apt-get update && apt-get dist-upgrade && apt-get install -yqq libgles2-mesa libgles2-mesa-dev xorg-dev || true
