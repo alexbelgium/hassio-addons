@@ -3,6 +3,7 @@
 HOME="/share/webtop"
 mkdir -p $HOME
 chown -R abc:abc $HOME
+cp -rn /config/* $HOME/
 bashio::log.info "Your files are located in $HOME"
 
 #for FOLDERS in "Desktop" "thinclient_drives" ".config"; do
