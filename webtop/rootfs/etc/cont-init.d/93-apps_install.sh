@@ -6,7 +6,7 @@ if bashio::config.has_value 'additional_apps'; then
     # Install apps
             for APP in $(echo "$(bashio::config 'additional_apps')" | tr "," " "); do
               bashio::log.green "... $APP"
-              apt-get install -yqq $APP \
+              apt-get install -yqq $APP &>/dev/null \
               && bashio::log.green "... done" \
               || bashio::log.red "... not successful"
             done
