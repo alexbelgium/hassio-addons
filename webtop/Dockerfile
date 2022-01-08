@@ -15,7 +15,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}ubuntu-kde
+FROM ${BUILD_FROM}alpine-kde
 
 ##################
 # 2 Modify Image #
