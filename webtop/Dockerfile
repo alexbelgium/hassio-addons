@@ -29,11 +29,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
   && sed -i 's|/config|/share/webtop|g' /defaults/* \
   && sed -i 's|/config|/share/webtop|g' /etc/cont-init.d/* \
   && sed -i 's|/config|/share/webtop|g' /etc/services.d/*/run \
-  && usermod --home /share/webtop abc \
-  # Fix mate software center
-  && if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then \
-  chmod u+s /usr/lib/dbus-1.0/dbus-daemon-launch-helper; fi
-  
+  && usermod --home /share/webtop abc
 
 # Graphic drivers for rpi4
 RUN apt-get update && apt-get dist-upgrade && apt-get install -yqq libgles2-mesa libgles2-mesa-dev xorg-dev || true
