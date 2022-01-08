@@ -81,7 +81,7 @@
     "3000/tcp": "web interface"
   },
   "options": {
-    "additional_apps": "engrampa,geary"
+    "additional_apps": "engrampa,thunderbird"
 },
   "schema": {
     "TZ": "str?",
