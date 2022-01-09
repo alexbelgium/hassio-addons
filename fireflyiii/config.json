@@ -43,8 +43,8 @@
   "services": [
     "mysql:want"
   ],
-  "upstream": "5.6.9",
+  "upstream": "5.6.10",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.6.9",
+  "version": "5.6.10",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
