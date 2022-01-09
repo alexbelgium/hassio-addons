@@ -30,14 +30,7 @@ FROM hurlenko/filebrowser:v${BUILD_UPSTREAM}
 COPY rootfs/ /
 
 # Manual apps
-ENV PACKAGES="curl \
-    jq \
-    bash \
-    cifs-utils \
-    keyutils \
-    samba \
-    samba-client \
-    bind-tools \
+ENV PACKAGES="bind-tools \
     nginx"
 
 # Automatic apps & bashio
