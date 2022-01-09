@@ -1,6 +1,6 @@
 {
   "name": "Scrutiny",
-  "version": "0.3.13-5",
+  "version": "0.3.13-6",
   "upstream": "0.3.13",
   "slug": "scrutiny",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
