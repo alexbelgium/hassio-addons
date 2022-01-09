@@ -32,9 +32,8 @@ RUN \
     && sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
     && sed -i 's| /config| /data|g' /etc/crontabs/root \
     # correct url paths  
-    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g' \
-    && if [ -f /run.sh ]; then chmod 777 /run.sh; fi
-
+    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
+    
 ##################
 # 3 Install apps #
 ##################
@@ -60,11 +59,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-#RUN chmod 777 /entrypoint.sh
-#WORKDIR /
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ] 
-#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# Collector
+RUN chmod 777 /run.sh
 
 ############
 # 5 Labels #
