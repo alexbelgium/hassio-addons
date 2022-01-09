@@ -32,7 +32,8 @@ RUN \
     && sed -i 's| /config| /data|g' /etc/logrotate.d/scrutiny \
     && sed -i 's| /config| /data|g' /etc/crontabs/root \
     # correct url paths  
-    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g'
+    && grep -rl '/web/' /app/scrutiny-web/ | xargs sed -i 's|/web/|./|g' \
+    && if [ -f /run.sh ]; then chmod 777 /run.sh; fi
 
 ##################
 # 3 Install apps #
