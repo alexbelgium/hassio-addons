@@ -1,4 +1,4 @@
-# Home assistant add-on: Webtop Alpine
+# Home assistant add-on: Webtop
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -14,7 +14,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[webtop](https://github.com/webtop/webtop) is a full Alpine desktop environments accessible via any modern web browser.
+[webtop](https://github.com/webtop/webtop) is a full desktop environments accessible via any modern web browser.
 This addon is based on the docker image https://github.com/linuxserver/docker-webtop
 
 ## Configuration
@@ -25,9 +25,12 @@ By default the image is based around the abc user and we recommend using this us
 
 http://localhost:3000/?login=true
 
+Apps installations are not remanent, you need to do it via addon options. Their config, however, is.
+
 ```yaml
 TZ: timezone
-DNS_servers : 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
+additional_apps: engrampa,thunderbird # Allows installation of apps, as they are not persistent
+DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
