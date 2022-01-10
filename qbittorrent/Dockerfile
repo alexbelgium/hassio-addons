@@ -66,7 +66,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
 # Modules
-ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh"
+ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh 90-dns_set.sh"
 
 # Automatic modules download
 RUN mkdir -p /tmpscripts /etc/cont-init.d && \
