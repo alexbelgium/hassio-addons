@@ -55,7 +55,7 @@ RUN \
 COPY rootfs/ /
 
 # Manual apps 
-ENV PACKAGES=""
+ARG PACKAGES=""
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
@@ -64,6 +64,16 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh "${PACKAGES:-}" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+
+# Modules
+ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh"
+
+# Automatic modules download
+RUN mkdir -p /tmpscripts /scripts /etc/cont-init.d && \
+    for scripts in $MODULES; do curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/$scripts" -o /tmpscripts/"$scripts"; done  && \
+    /bin/cp -rf /tmpscripts/* {/scripts/, /etc/cont-init.d/}  && \
+    chmod -R 777 {/scripts, /etc/cont-init.d}  && \
+    rm -rf /tmpscripts || printf '%s\n' "${MODULES:-}" > /MODULESFILE
 
 ################
 # 4 Entrypoint #
