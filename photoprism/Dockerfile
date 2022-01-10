@@ -34,7 +34,7 @@ RUN \
     chmod -Rf a+rwx /data/photoprism && \
     # rename entrypoint
     mv /entrypoint.sh /entrypoint_photoprism.sh
-    
+
 
 ##################
 # 3 Install apps #
@@ -48,8 +48,6 @@ ENV PACKAGES="jq \
     curl \
     cifs-utils \
     keyutils \
-    samba \
-    smbclient \
     coreutils"
 
 # Automatic apps & bashio

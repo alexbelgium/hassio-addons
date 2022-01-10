@@ -50,7 +50,6 @@ COPY rootfs/ /
 ENV PACKAGES="curl \
     jq \
     moreutils \
-    samba \
     nginx"
 
 # Automatic apps & bashio

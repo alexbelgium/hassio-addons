@@ -42,11 +42,7 @@ RUN apt-get update && apt-get dist-upgrade && apt-get install -yqq libgles2-mesa
 COPY rootfs/ /
 
 # Manual apps
-ENV PACKAGES="curl \
-  jq \
-  cifs-utils \
-  keyutils \
-  samba" 
+ENV PACKAGES="" 
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \

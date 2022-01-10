@@ -42,13 +42,7 @@ RUN \
 COPY rootfs/ /
 
 # Manual apps
-ENV PACKAGES="jq \
-    curl \
-    cifs-utils \
-    keyutils \
-    smbclient \
-    samba \
-    yamllint \
+ENV PACKAGES="yamllint \
     pip \
     libxml2-dev libxslt-dev python-dev libjpeg-dev zlib1g-dev python3-dev build-essential"
 

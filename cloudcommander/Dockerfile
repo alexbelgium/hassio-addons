@@ -31,8 +31,6 @@ COPY rootfs/ /
 ENV PACKAGES="jq \
     cifs-utils \    
     keyutils \
-    samba \
-    smbclient \
     nginx"
 
 # Automatic apps & bashio

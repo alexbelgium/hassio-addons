@@ -53,9 +53,7 @@ COPY rootfs/ /
 # Manual apps
 ENV PACKAGES="jq \
     cifs-utils \
-    keyutils \
-    samba \
-    smbclient"
+    keyutils"
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
