@@ -38,9 +38,9 @@ RUN \
     # modify data limits files
     # -e 's/memory_limit=512M/memory_limit=1024M/g' \
     && sed -i \
-	-e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
-	-e 's/post_max_size=1024M/post_max_size=10240M/g' \
-    	/etc/php7/php.ini \
+    -e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
+    -e 's/post_max_size=1024M/post_max_size=10240M/g' \
+    /etc/php7/php.ini \
     && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/default
 
 ##################
@@ -62,6 +62,16 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
 VOLUME ["/share", "/ssl", "/data", "/media"]
+
+# Modules
+ARG MODULES="00-banner.sh"
+
+# Automatic modules download
+RUN mkdir -p /tmpscripts /etc/cont-init.d && \
+    for scripts in $MODULES; do curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/$scripts" -o /tmpscripts/"$scripts"; done  && \
+    if [ -d /etc/cont-init.d ]; then /bin/cp -rf /tmpscripts/* /etc/cont-init.d/ && chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /scripts ]; then /bin/cp -rf /tmpscripts/* /scripts/ && chmod -R 755 /scripts; fi && \
+    rm -rf /tmpscripts || printf '%s\n' "${MODULES:-}" > /MODULESFILE
 
 ################
 # 4 Entrypoint #

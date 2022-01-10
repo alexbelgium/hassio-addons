@@ -71,8 +71,8 @@ ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh 90-dns_set.sh"
 # Automatic modules download
 RUN mkdir -p /tmpscripts /etc/cont-init.d && \
     for scripts in $MODULES; do curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/$scripts" -o /tmpscripts/"$scripts"; done  && \
-    /bin/cp -rf /tmpscripts/* /etc/cont-init.d/  && \
-    chmod -R 755 /etc/cont-init.d  && \
+    if [ -d /etc/cont-init.d ]; then /bin/cp -rf /tmpscripts/* /etc/cont-init.d/ && chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /scripts ]; then /bin/cp -rf /tmpscripts/* /scripts/ && chmod -R 755 /scripts; fi && \
     rm -rf /tmpscripts || printf '%s\n' "${MODULES:-}" > /MODULESFILE
 
 ################
