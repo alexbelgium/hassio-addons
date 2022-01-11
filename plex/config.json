@@ -1,4 +1,5 @@
 {
+  "host_network": true,
   "apparmor": true,
   "arch": [
     "aarch64",
