@@ -1,3 +1,4 @@
+- "host_network": true to enable UPNP, chromecast, ...
 
 ## 4.7.0.19-1
 - Changed local config location
