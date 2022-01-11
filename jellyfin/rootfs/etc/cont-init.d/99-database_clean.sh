@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Set variable
-db=/config/addons_config/jellyfin/library.db
+db=/config/addons_config/jellyfin/data/data/library.db
 
 #Modify base
 if [ -f $db ]; then
