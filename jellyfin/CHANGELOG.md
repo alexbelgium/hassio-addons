@@ -1,3 +1,4 @@
+- "host_network": true to enable UPNP, chromecast, ...
 - Code to repair database due to a bug that occured when the config location changed
 
 ## 10.7.7-1-ls148 (06-01-2022)
