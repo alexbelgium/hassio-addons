@@ -1,4 +1,5 @@
-
+- "host_network": true to enable UPNP, chromecast, ...
+  
 ## 1.25.2.5319-c43dc0277-ls95 (11-01-2022)
 - Update to latest version from linuxserver/docker-plex
 
