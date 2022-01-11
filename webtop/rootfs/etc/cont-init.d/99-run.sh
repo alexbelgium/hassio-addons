@@ -20,8 +20,8 @@ if bashio::config.has_value 'additional_apps'; then
             for APP in $(echo "$(bashio::config 'additional_apps')" | tr "," " "); do
               bashio::log.green "... $APP"
               # Test install with both apt-get and snap
-              apt-get install -yqq $APP &>/dev/null || snap install $APP \
+              apt-get install -yqq $APP &>/dev/null || snap install $APP &>/dev/null \
               && bashio::log.green "... done" \
-              || bashio::log.red "... not successful"
+              || bashio::log.red "... not successful, please check package name"
             done
 fi
