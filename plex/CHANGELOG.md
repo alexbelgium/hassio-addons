@@ -1,4 +1,7 @@
 
+## 1.25.2.5319-c43dc0277-ls95 (11-01-2022)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.25.2.5319-c43dc0277-ls94 (04-01-2022)
 - Update to latest version from linuxserver/docker-plex
 
