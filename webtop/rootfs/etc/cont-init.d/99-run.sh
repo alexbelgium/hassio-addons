@@ -1,10 +1,13 @@
 #!/usr/bin/with-contenv bashio
 
 # Uprade
-apt-get dist-upgrade &>/dev/null
+echo "Updating distribution"
+apt-get update &>/dev/null
+apt-get upgrade &>/dev/null
 
 # Fix mate software center
 if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
+echo "Allow software center"
 chmod u+s /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 service dbus restart
 fi
