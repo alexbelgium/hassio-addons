@@ -130,6 +130,13 @@ for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES wget"
     fi
 
+    COMMAND="snap"
+    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
+        [ "$VERBOSE" = true ] && echo "$COMMAND required"
+        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES"
+        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES snapd"
+    fi
+
 done
 
 ####################
