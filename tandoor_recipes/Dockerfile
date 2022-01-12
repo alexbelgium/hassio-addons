@@ -55,7 +55,7 @@ RUN mkdir -p /tmpscripts /etc/cont-init.d && \
 ################
 
 RUN chmod 777 /entrypoint.sh 
-#WORKDIR /data/recipes
+WORKDIR /data/recipes
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/entrypoint.sh" ]
 
