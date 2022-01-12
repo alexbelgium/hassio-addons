@@ -1,12 +1,20 @@
 {
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
   "boot": "auto",
   "description": "recipe manager",
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
     "POSTGRES_DB": "/data/recipes.db"
-},
-  "map": ["share:rw", "ssl:ro"],
+  },
+  "map": [
+    "share:rw",
+    "ssl:ro"
+  ],
   "name": "Tandoor recipes",
   "options": {
     "SECRET_KEY": "YOUR_SECRET_KEY",
@@ -19,7 +27,9 @@
   "ports_description": {
     "8080/tcp": "Web interface"
   },
-  "services": ["mysql:want"],
+  "services": [
+    "mysql:want"
+  ],
   "schema": {
     "SECRET_KEY": "str",
     "DB_TYPE": "list(sqlite|postgresql_external|mariadb_addon)",
@@ -31,8 +41,8 @@
     "POSTGRES_DB": "str?"
   },
   "slug": "tandoor_recipes",
-  "upstream": "1.9",
+  "upstream": "1.0.4",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.9",
+  "version": "1.0.4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
