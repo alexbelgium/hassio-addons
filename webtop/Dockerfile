@@ -34,10 +34,6 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
 # Graphic drivers for rpi4
 RUN apt-get update && apt-get dist-upgrade && apt-get install -yqq libgles2-mesa libgles2-mesa-dev xorg-dev || true
 
-# Spotify
-RUN curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo apt-key add - 
-echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/SPOTIFY.LIST
-
 ##################
 # 3 Install apps #
 ##################
@@ -46,7 +42,7 @@ echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sou
 COPY rootfs/ /
 
 # Manual apps
-ENV PACKAGES="spotify-client" 
+ENV PACKAGES="" 
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
