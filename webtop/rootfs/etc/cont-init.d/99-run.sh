@@ -18,7 +18,6 @@ curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo 
 # Install specific apps
 if bashio::config.has_value 'additional_apps'; then
     bashio::log.info "Installing additional apps :" 
-    apt-get update &>/dev/null
     # Install apps
             for APP in $(echo "$(bashio::config 'additional_apps')" | tr "," " "); do
               bashio::log.green "... $APP"
