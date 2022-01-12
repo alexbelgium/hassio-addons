@@ -31,6 +31,9 @@ RUN touch /data/database.sqlite \
 # 3 Install apps #
 ##################
 
+# Add rootfs
+COPY rootfs/ /
+
 # Modules
 ARG MODULES="00-banner.sh"
 
