@@ -3,7 +3,7 @@
 # Uprade
 echo "Updating distribution"
 apt-get update >/dev/null
-apt-get -y upgrade >/dev/null
+apt-get -y upgrade >/dev/null || true
 
 # Fix mate software center
 if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
