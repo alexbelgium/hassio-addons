@@ -59,7 +59,7 @@ esac
 # Launch app #
 ##############
 echo "Moving data directory"
-cp -r /opt/recipes /data/
+#cp -r /opt/recipes /data/
 mkdir -p /data/recipes/media
 mkdir -p /data/recipes/static
 chmod -R 755 /data/recipes
