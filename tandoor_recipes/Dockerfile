@@ -43,11 +43,11 @@ RUN mkdir -p /tmpscripts /etc/cont-init.d && \
 # 4 Entrypoint #
 ################
 
-WORKDIR /data/recipes
-RUN chmod 777 /entrypoint.sh
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/entrypoint.sh" ]
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN chmod 777 /entrypoint.sh 
+#WORKDIR /data/recipes
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ]
+#SHELL ["/bin/sh"]
 
 ############
 # 5 Labels #
