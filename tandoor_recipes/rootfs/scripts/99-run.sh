@@ -58,5 +58,8 @@ esac
 ##############
 # Launch app #
 ##############
-
-/./opt/recipes/boot.sh
+cp -r /opt/recipes /data/recipes
+chmod -R 755 /data/recipes
+mkdir -p /data/recipes/media
+mkdir -p /data/recipes/static
+/./data/recipes/boot.sh || /./opt/recipes/boot.sh 
