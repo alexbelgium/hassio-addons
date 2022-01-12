@@ -35,8 +35,8 @@
     "SPECTRE_SECRET": "str?"
   },
   "slug": "fireflyiii_data_importer",
-  "upstream": "0.6.3",
+  "upstream": "0.6.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.6.3",
+  "version": "0.6.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
