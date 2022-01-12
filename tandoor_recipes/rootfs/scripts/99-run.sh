@@ -62,7 +62,6 @@ echo "Moving data directory"
 cp -r /opt/recipes /data/
 mkdir -p /data/recipes/media
 mkdir -p /data/recipes/static
-rm -r /opt/recipes/media
 rm -r /opt/recipes/static
 ln -s /data/recipes/media opt/recipes/media
 ln -s /data/recipes/static opt/recipes/static
