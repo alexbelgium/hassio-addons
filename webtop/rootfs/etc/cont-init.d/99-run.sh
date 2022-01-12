@@ -13,10 +13,6 @@ chmod u+s /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 service dbus restart
 fi
 
-# Spotify source
-curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-
 # Install specific apps
 if bashio::config.has_value 'additional_apps'; then
     bashio::log.info "Installing additional apps :" 
