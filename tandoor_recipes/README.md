@@ -16,6 +16,21 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [Tandoor recipes](https://github.com/TandoorRecipes/recipes) is meant for people with a collection of recipes they want to share with family and friends or simply store them in a nicely organized way. A basic permission system exists but this application is not meant to be run as a public page.
 
+## Configuration
+
+Please check Tandoor Recipes documentation : https://docs.tandoor.dev/install/docker/
+
+```yaml
+    "SECRET_KEY": "str",
+    "DB_TYPE": "list(sqlite|postgresql_external|mariadb_addon)" # Mariadb is automatically configured is the addon is installed, sqlite does not need configuration
+    "ALLOWED_HOSTS": "str?",
+    "POSTGRES_HOST": "str?", # Needed for postgresql_external
+    "POSTGRES_PORT": "str?", # Needed for postgresql_external
+    "POSTGRES_USER": "str?", # Needed for postgresql_external
+    "POSTGRES_PASSWORD": "str?", # Needed for postgresql_external
+    "POSTGRES_DB": "str?" # Needed for postgresql_external
+```
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in
@@ -28,21 +43,12 @@ comparison to installing any other Hass.io add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
-## Configuration
-
-- Start the addon. Wait a while and check the log for any errors.
-- Open yourdomain.com:8000 (where ":8000" is the port configured in the addon).
-- Default
-  - Username: `admin`
-  - Password: `adminadmin`
-
-```yaml
-
-```
-
 ## Support
 
 If you have in issue with your installation, please be sure to checkout github.
+
+## Screenshot
+![image](https://github.com/TandoorRecipes/recipes/raw/develop/docs/preview.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
