@@ -58,7 +58,6 @@ RUN chmod 777 /entrypoint.sh
 #WORKDIR /data/recipes
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/entrypoint.sh" ]
-#SHELL ["/bin/sh"]
 
 ############
 # 5 Labels #
