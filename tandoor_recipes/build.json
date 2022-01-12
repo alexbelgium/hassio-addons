@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "armhf": "vabene1111/recipes:arm32v7-latest",
-    "armv7": "vabene1111/recipes:arm32v7-latest",
-    "aarch64": "vabene1111/recipes:arm64v8-latest",
-    "amd64": "vabene1111/recipes:amd64-latest"
+    "armhf": "vabene1111/recipes:latest",
+    "armv7": "vabene1111/recipes:latest",
+    "aarch64": "vabene1111/recipes:latest",
+    "amd64": "vabene1111/recipes:latest"
   }
 }
