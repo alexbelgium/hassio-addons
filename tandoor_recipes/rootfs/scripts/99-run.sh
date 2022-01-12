@@ -58,9 +58,12 @@ esac
 ##############
 # Launch app #
 ##############
+echo "Moving data directory"
 cp -r /opt/recipes /data/recipes
 chmod -R 755 /data/recipes
 mkdir -p /data/recipes/media
 mkdir -p /data/recipes/static
+
+bashio::log.info "Launching app"
 cd /opt/recipes
 ./boot.sh 
