@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "armhf": "fireflyiii/data-importer:",
-    "armv7": "fireflyiii/data-importer:",
-    "aarch64": "fireflyiii/data-importer:",
-    "amd64": "fireflyiii/data-importer:"
+    "armhf": "fireflyiii/data-importer:version-",
+    "armv7": "fireflyiii/data-importer:version-",
+    "aarch64": "fireflyiii/data-importer:version-",
+    "amd64": "fireflyiii/data-importer:version-"
   }
 }
