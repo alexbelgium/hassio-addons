@@ -1,3 +1,6 @@
+
+## 4.7.0.20 (12-01-2022)
+- Update to latest version from linuxserver/docker-emby
 - "host_network": true to enable UPNP, chromecast, ...
 
 ## 4.7.0.19-1
