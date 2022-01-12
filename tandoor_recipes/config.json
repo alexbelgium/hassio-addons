@@ -2,7 +2,10 @@
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
   "description": "recipe manager",
-  "environment": {},
+  "environment": {
+    "DB_ENGINE": "django.db.backends.sqlite3",
+    "POSTGRES_DB": "/data/recipes.db"
+},
   "map": ["share:rw", "ssl:ro"],
   "name": "Tandoor recipes",
   "options": {
