@@ -2,7 +2,8 @@
 
 # Uprade
 echo "Updating distribution"
-apt-get update >/dev/null
+export DEBIAN_FRONTEND=noninteractive
+apt-get update &>/dev/null
 apt-get -y upgrade >/dev/null || true
 
 # Fix mate software center
