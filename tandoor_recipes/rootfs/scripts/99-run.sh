@@ -18,7 +18,7 @@ case $(bashio::config 'DB_TYPE') in
 sqlite)
     bashio::log.info "Using a local sqlite database"
     export DB_ENGINE="django.db.backends.sqlite3"
-    export POSTGRES_DB="/data/recipes.db"
+    export POSTGRES_DB="/config/addons_config/tandoor_recipes/recipes.db"
     ;;
 
 mariadb_addon)
@@ -34,7 +34,9 @@ mariadb_addon)
     export DB_ENGINE=django.db.backends.postgresql
     export POSTGRES_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
     export POSTGRES_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
-    export POSTGRES_DB=/data/recipes.db && bashio::log.blue "POSTGRES_DB=$POSTGRES_DB"
+    export POSTGRES_DB=/data/
+    
+    .db && bashio::log.blue "POSTGRES_DB=$POSTGRES_DB"
     export POSTGRES_USER=$(bashio::services "mysql" "username") && bashio::log.blue "POSTGRES_USER=$POSTGRES_USER"
     export POSTGRES_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
 
@@ -59,11 +61,12 @@ esac
 # Launch app #
 ##############
 echo "Moving data directory"
-cp -r /opt/recipes /data/
-mkdir -p /data/recipes/media
-mkdir -p /data/recipes/static
-ln -s /data/recipes/media /opt/recipes
-ln -s /data/recipes/static /opt/recipes
+mkdir -p /config/addons_config/tandoor_recipes/mediafiles
+chmod -R 755 /config/addons_config/tandoor_recipes
+mkdir -p /data/recipes/staticfiles
+chmod 755 /data/recipes/staticfiles
+ln -s /config/addons_config/tandoor_recipes/mediafiles /opt
+ln -s /data/recipes/staticfiles /opt
 
 bashio::log.info "Launching app"
 cd /opt/recipes
