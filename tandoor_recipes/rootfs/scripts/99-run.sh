@@ -62,8 +62,8 @@ echo "Moving data directory"
 cp -r /opt/recipes /data/
 mkdir -p /data/recipes/media
 mkdir -p /data/recipes/static
-ln -s /data/recipes/media /opt/recipes/media
-ln -s /data/recipes/static /opt/recipes/static
+ln -s /data/recipes/media /opt/recipes
+ln -s /data/recipes/static /opt/recipes
 
 bashio::log.info "Launching app"
 cd /opt/recipes
