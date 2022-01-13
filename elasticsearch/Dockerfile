@@ -30,7 +30,7 @@ RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts
     && sed -i '5a for files in "data" "config"; do' /usr/local/bin/docker-entrypoint.sh \
     && sed -i '5a mkdir -p $NEWHOME' /usr/local/bin/docker-entrypoint.sh \
     && sed -i '5a NEWHOME="/data"' /usr/local/bin/docker-entrypoint.sh \
-    # Install plugins     
+    # Install plugins
     && /usr/share/elasticsearch/bin/elasticsearch-plugin install --batch ingest-attachment
 
 ##################
@@ -41,11 +41,13 @@ RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts
 ARG MODULES="00-banner.sh"
 
 # Automatic modules download
-RUN mkdir -p /tmpscripts /etc/cont-init.d && \
-    for scripts in $MODULES; do curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/$scripts" -o /tmpscripts/"$scripts"; done  && \
-    if [ -d /etc/cont-init.d ]; then /bin/cp -rf /tmpscripts/* /etc/cont-init.d/ && chmod -R 755 /etc/cont-init.d; fi && \
-    if [ -d /scripts ]; then /bin/cp -rf /tmpscripts/* /scripts/ && chmod -R 755 /scripts; fi && \
-    rm -rf /tmpscripts || printf '%s\n' "${MODULES:-}" > /MODULESFILE
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    mkdir -p /tmpscripts /etc/cont-init.d && \
+    for scripts in $MODULES; do curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/$scripts" -o /tmpscripts/"$scripts"; done  && \
+    if [ -d /etc/cont-init.d ]; then /bin/cp -rf /tmpscripts/* /etc/cont-init.d/ && chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /scripts ]; then /bin/cp -rf /tmpscripts/* /scripts/ && chmod -R 755 /scripts; fi && \
+    rm -rf /tmpscripts || printf '%s\n' "${MODULES:-}" > /MODULESFILE
 
 ################
 # 4 Entrypoint #
