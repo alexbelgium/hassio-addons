@@ -1,3 +1,52 @@
 # Those are the addon path filters used in the workflows to determine which addon needs to be build.
 #
-bazarr: bazarr/**
+addons updater: addons updater/**
+arpspoof: arpspoof/**
+#bazarr: bazarr/**
+#bitwarden: bitwarden/**
+#booksonic-air: booksonic-air/**
+#cloudcommander: cloudcommander/**
+#code-server: code-server/**
+#elasticsearch: elasticsearch/**
+#emby: emby/**
+#enedisgateway2mqtt: enedisgateway2mqtt/**
+#enedisgateway2mqtt: enedisgateway2mqtt/**
+#filebrowser: filebrowser/**
+#firefly iii: firefly iii/**
+#firefly iii data importer: firefly iii data importer/**
+#flaresolverr: flaresolverr/**
+#flexget: flexget/**
+#gazpar2mqtt: gazpar2mqtt/**
+#grav: grav/**
+#inadyn: inadyn/**
+#jackett: jackett/**
+#jellyfin: jellyfin/**
+#joal: joal/**
+#mealie: mealie/**
+#mylar3: mylar3/**
+#nextcloud ocr: nextcloud ocr/**
+#nzbget: nzbget/**
+#ombi: ombi/**
+#organizr: organizr/**
+#paperless ng: paperless ng/**
+#papermerge: papermerge/**
+#photoprism: photoprism/**
+#piwigo: piwigo/**
+#plex: plex/**
+#portainer: portainer/**
+#prowlarr: prowlarr/**
+#qbittorrent: qbittorrent/**
+#radarr: radarr/**
+#readarr: readarr/**
+#requestrr: requestrr/**
+#resioliosync: resioliosync/**
+#scrutiny: scrutiny/**
+#sonarr: sonarr/**
+#tandoor recipes: tandoor recipes/**
+#teamspeak: teamspeak/**
+#transmission: transmission/**
+#ubooquity: ubooquity/**
+#webtrees: webtrees/**
+#wger: wger/**
+#whoogle-search: whoogle-search/**
+#xteve: xteve/**
