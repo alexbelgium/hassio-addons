@@ -42,7 +42,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES="00-banner.sh 00-global_var.sh"
 
 # Automatic modules download
 RUN mkdir -p /tmpscripts /etc/cont-init.d && \
