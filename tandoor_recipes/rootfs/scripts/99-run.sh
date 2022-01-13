@@ -60,7 +60,7 @@ esac
 ##############
 # Launch app #
 ##############
-echo "Moving data directory"
+echo "Creating symlinks"
 mkdir -p /config/addons_config/tandoor_recipes/mediafiles
 chmod -R 755 /config/addons_config/tandoor_recipes
 mkdir -p /data/recipes/staticfiles
