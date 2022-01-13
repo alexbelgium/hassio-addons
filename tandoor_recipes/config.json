@@ -9,7 +9,7 @@
   "description": "recipe manager",
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
-    "POSTGRES_DB": "/data/recipes.db"
+    "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db"
   },
   "map": [
     "share:rw",
