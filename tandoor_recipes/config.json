@@ -1,19 +1,12 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
   "description": "recipe manager",
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db"
   },
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Tandoor recipes",
   "options": {
     "SECRET_KEY": "YOUR_SECRET_KEY",
@@ -26,9 +19,7 @@
   "ports_description": {
     "8080/tcp": "Web interface"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "schema": {
     "SECRET_KEY": "str",
     "DB_TYPE": "list(sqlite|postgresql_external|mariadb_addon)",

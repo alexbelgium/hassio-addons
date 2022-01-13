@@ -30,7 +30,7 @@ FROM ${BUILD_FROM}
 COPY rootfs/ /
 
 # Manual apps
-ENV PACKAGES="" 
+ENV PACKAGES=""
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
@@ -54,7 +54,7 @@ RUN mkdir -p /tmpscripts /etc/cont-init.d && \
 # 4 Entrypoint #
 ################
 
-RUN chmod 777 /entrypoint.sh 
+RUN chmod 777 /entrypoint.sh
 #WORKDIR /data/recipes
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/entrypoint.sh" ]
