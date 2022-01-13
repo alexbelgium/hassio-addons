@@ -66,6 +66,7 @@ https://github.com/alexbelgium/hassio-addons
 - [Firefly III](fireflyiii/) : A free and open source personal finance manager
 - [Firefly III Data Importer](fireflyiii_data_importer/) : Data importer for Firefly III
 - [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
+- [Tandoor Recipes](tandoor_recipes/): Recipe manager
 - [Wger](wger/): manage your personal workouts, weight and diet plans
 
 ## &#10003; Genealogy
