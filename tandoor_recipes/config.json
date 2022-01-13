@@ -12,8 +12,7 @@
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db"
   },
   "map": [
-    "share:rw",
-    "ssl:ro"
+    "config:rw"
   ],
   "name": "Tandoor recipes",
   "options": {
