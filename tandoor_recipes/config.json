@@ -4,7 +4,8 @@
   "description": "recipe manager",
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
-    "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db"
+    "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
+    "DEBUG": "0"
   },
   "map": ["config:rw"],
   "name": "Tandoor recipes",
