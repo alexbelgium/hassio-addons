@@ -15,7 +15,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM techblog/arpspoof-docker:latest
+FROM $BUILD_FROM
 
 ##################
 # 2 Modify Image #
