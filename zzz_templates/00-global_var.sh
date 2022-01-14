@@ -10,7 +10,7 @@ JSONSOURCE="/data/options.json"
 # Export keys as env variables
 # echo "All addon options were exported as variables"
 mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
-for KEYS in "${arr[@]}"; do
+for KEYS in ${arr[@]}; do
   # export key
   VALUE=$(jq ."$KEYS" ${JSONSOURCE})
   line="${KEYS}=${VALUE//[\"\']/}"
