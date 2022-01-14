@@ -30,8 +30,9 @@ mariadb_addon)
             "Please ensure it is installed and started"
     fi
 
-    # Do not delete this comment : install mysql client
-
+    # Install mysqlclient
+    pip install mysqlclient
+    
     # Use values
     export DB_ENGINE=django.db.backends.mysql
     export POSTGRES_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
