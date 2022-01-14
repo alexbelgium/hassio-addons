@@ -36,6 +36,7 @@ profile addon_db21ed7f_jellyfin_nas flags=(attach_disconnected,mediate_deleted) 
   /dev/ttyUSB0 mrwkl,
   /dev/* mrwkl,
   /tmp/** mrkwl,
+  /opt/vc/lib/ mrkwl,
   
   # Data access
   /data/** rw, 
