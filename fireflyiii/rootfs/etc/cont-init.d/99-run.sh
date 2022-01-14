@@ -108,8 +108,8 @@ bashio::log.info "$FREQUENCY updates"
 echo ""
 
 # Sets cron // do not delete this message
-cp /templates/cronupdate /etc/cron.${FREQUENCY}
-chmod 775 /etc/cron.${FREQUENCY}/cronupdate.sh
+cp /templates/cronupdate /etc/cron.${FREQUENCY}/
+chmod 775 /etc/cron.${FREQUENCY}/cronupdate
 
 ##############
 # LAUNCH APP #
