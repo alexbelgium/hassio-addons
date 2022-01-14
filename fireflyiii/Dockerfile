@@ -46,7 +46,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     rm -rf /tmpscripts || printf '%s\n' "${MODULES:-}" > /MODULESFILE
 
 # Manual apps
-ENV PACKAGES=""
+ENV PACKAGES="jq"
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
