@@ -37,17 +37,6 @@ RUN sed -i "s|/config|/config/addons_config/radarr/readarr|g" /etc/services.d/re
 # Copy local files
 COPY rootfs/ /
 
-# Manual apps
-ENV PACKAGES=""
-
-# Automatic apps & bashio
-RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
-    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
-    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
-    chmod 777 /automatic_packages.sh && \
-    /automatic_packages.sh "${PACKAGES:-}" && \
-    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
-
 # Modules
 ARG MODULES="00-banner.sh"
 
@@ -59,6 +48,17 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     if [ -d /etc/cont-init.d ]; then /bin/cp -rf /tmpscripts/* /etc/cont-init.d/ && chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /scripts ]; then /bin/cp -rf /tmpscripts/* /scripts/ && chmod -R 755 /scripts; fi && \
     rm -rf /tmpscripts || printf '%s\n' "${MODULES:-}" > /MODULESFILE
+
+# Manual apps
+ENV PACKAGES=""
+
+# Automatic apps & bashio
+RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
+    chmod 777 /automatic_packages.sh && \
+    /automatic_packages.sh "${PACKAGES:-}" && \
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
 ################
 # 4 Entrypoint #

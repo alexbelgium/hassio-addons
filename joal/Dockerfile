@@ -13,6 +13,7 @@
 # 1 Build Image #
 #################
 
+ARG BUILD_VERSION
 ARG BUILD_FROM
 ARG BUILD_UPSTREAM="2.1.29"
 FROM anthonyraymond/joal:$BUILD_UPSTREAM
@@ -29,6 +30,8 @@ RUN \
     tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null &&\
     chown -R $(id -u):$(id -g) /data/joal &&\
     rm /data/joal/jack-of* || true
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ##################
 # 3 Install apps #
@@ -48,11 +51,6 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh "${PACKAGES:-}" && \
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
-
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.1.29"
 
 # Modules
 ARG MODULES="00-banner.sh"
