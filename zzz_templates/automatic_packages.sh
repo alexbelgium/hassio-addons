@@ -40,7 +40,7 @@ PACKAGES="$PACKAGES jq curl"
 ##################################
 
 # Scripts
-for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
+for files in "/etc/cont-init.d" "/etc/services.d"; do
     # Next directory if does not exists
     if ! ls $files 1>/dev/null 2>&1; then continue; fi
 
@@ -164,7 +164,7 @@ fi
 # INSTALL MANUAL APPS #
 #######################
 
-for files in "/scripts" "/etc/services.d" "/etc/cont-init.d"; do
+for files in "/etc/services.d" "/etc/cont-init.d"; do
 
     # Next directory if does not exists
     if ! ls $files 1>/dev/null 2>&1; then continue; fi

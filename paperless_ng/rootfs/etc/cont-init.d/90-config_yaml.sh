@@ -45,10 +45,10 @@ function parse_yaml {
     local prefix=$2 || local prefix=""
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
-    -e "s| #.*$||g" \
-    -e "s|#.*$||g" \
-    -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+        -e "s| #.*$||g" \
+        -e "s|#.*$||g" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
         awk -F$fs '{
       indent = length($1)/2;
       vname[indent] = $2;
@@ -84,7 +84,6 @@ while IFS= read -r line; do
         export $line
         # Export the variable
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
-        sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
     else
