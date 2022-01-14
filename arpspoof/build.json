@@ -1,0 +1,8 @@
+{
+  "build_from": {
+    "armv7": "techblog/arpspoof-docker:latest",
+    "armhf": "techblog/arpspoof-docker:latest",
+    "aarch64": "techblog/arpspoof-docker:latest",
+    "amd64": "techblog/arpspoof-docker:latest"
+  }
+}
