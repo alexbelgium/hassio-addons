@@ -38,7 +38,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/automatic_packages.sh" --output /automatic_packages.sh && \
     chmod 777 /automatic_packages.sh && \
     /automatic_packages.sh "${PACKAGES:-}" && \
-    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE]
+    rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
 # Modules
 ARG MODULES="00-banner.sh"
