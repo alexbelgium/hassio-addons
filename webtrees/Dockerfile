@@ -38,7 +38,7 @@ RUN \
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES="00-banner.sh 90-config_yaml.sh 92-local_mounts.sh 92-smb_mounts.sh 99-custom_script.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \

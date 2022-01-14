@@ -38,7 +38,7 @@ RUN sed -i "s|/config|/config/addons_config/radarr/readarr|g" /etc/services.d/re
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \

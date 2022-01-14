@@ -42,7 +42,7 @@ RUN sed -i "s|config|config/transmission|g" /etc/services.d/transmission/run \
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES="00-banner.sh 90-dns_set.sh 92-local_mounts.sh 92-smb_mounts.sh "
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
