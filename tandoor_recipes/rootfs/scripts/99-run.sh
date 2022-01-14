@@ -31,7 +31,7 @@ mariadb_addon)
     fi
 
     # Use values
-    export DB_ENGINE=django.db.backends.postgresql
+    export DB_ENGINE=django.db.backends.mysql
     export POSTGRES_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
     export POSTGRES_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
     export POSTGRES_DB=/data/
