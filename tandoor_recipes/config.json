@@ -23,7 +23,7 @@
   "services": ["mysql:want"],
   "schema": {
     "SECRET_KEY": "str",
-    "DB_TYPE": "list(sqlite|postgresql_external|mariadb_addon)",
+    "DB_TYPE": "list(sqlite|postgresql_external)",
     "ALLOWED_HOSTS": "str?",
     "POSTGRES_HOST": "str?",
     "POSTGRES_PORT": "str?",
@@ -34,6 +34,6 @@
   "slug": "tandoor_recipes",
   "upstream": "1.0.4",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.4-6",
+  "version": "1.0.4-7",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
