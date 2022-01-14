@@ -5,6 +5,7 @@
 #####################
 
 export ALLOWED_HOSTS=$(bashio::config 'ALLOWED_HOSTS') && bashio::log.blue "ALLOWED_HOSTS=$ALLOWED_HOSTS"
+export SECRET_KEY=$(bashio::config 'SECRET_KEY') && bashio::log.blue "SECRET_KEY=$SECRET_KEY"
 
 ###################
 # Define database #
@@ -30,6 +31,9 @@ mariadb_addon)
             "Please ensure it is installed and started"
     fi
 
+    # Install mysqlclient
+    pip install pymysql &>/dev/null
+    
     # Use values
     export DB_ENGINE=django.db.backends.mysql
     export POSTGRES_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
