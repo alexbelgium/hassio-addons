@@ -84,6 +84,7 @@ while IFS= read -r line; do
         export $line
         # Export the variable
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
+        sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
     else
