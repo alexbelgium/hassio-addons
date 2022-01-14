@@ -31,7 +31,7 @@ mariadb_addon)
     fi
 
     # Install mysqlclient
-    pip install mysql-connector-python &>/dev/null || pip install pymysql &>/dev/null
+    pip install mysql-connector-python &>/dev/null || pip install pymysql &>/dev/null || bashio::log.fatal "can't install mysqlclient"
     
     # Use values
     export DB_ENGINE=django.db.backends.mysql
