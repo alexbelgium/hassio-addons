@@ -1,7 +1,7 @@
 #!/usr/bin/env bashio
 
 # Create directory
-mkdir -p /config/addons_config/papermerge
+mkdir -p /config/addons_config/papermerge/config
 
 # Copy previous config if existing
 if [ -d /data/config ]; then
