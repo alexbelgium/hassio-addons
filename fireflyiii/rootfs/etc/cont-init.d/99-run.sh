@@ -121,4 +121,5 @@ php artisan firefly-iii:upgrade-database
 
 bashio::log.info "Please wait while the app is loading !"
 
+cd /var/www/html
 sh entrypoint.sh
