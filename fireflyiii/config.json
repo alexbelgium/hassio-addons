@@ -5,8 +5,6 @@
   "description": "A free and open source personal finance manager",
   "devices": [],
   "environment": {
-    "TRUSTED_PROXIES": "**",
-    "DB_DATABASE": "/config/addons_config/fireflyiii/database/database.sqlite"
   },
   "map": ["config:rw", "share:rw", "ssl"],
   "name": "Firefly iii",
