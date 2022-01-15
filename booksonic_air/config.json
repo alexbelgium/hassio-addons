@@ -76,8 +76,8 @@
     "cifspassword": "str?"
   },
   "slug": "booksonic-air_nas",
-  "upstream": "v2112.2.0-ls41",
+  "upstream": "v2201.1.0-ls42",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/booksonic_air",
-  "version": "v2112.2.0-ls41",
+  "version": "v2201.1.0-ls42",
   "webui": "http://[HOST]:[PORT:4040]"
 }
