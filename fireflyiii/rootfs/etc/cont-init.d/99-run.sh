@@ -38,6 +38,7 @@ sqlite_internal)
     bashio::log.info "Using built in sqlite"
     # Set variable
     export DB_CONNECTION=sqlite
+    export DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
     # Creating database
     mkdir -p /config/addons_config/fireflyiii/database
     rm -r /var/www/html/storage/database
