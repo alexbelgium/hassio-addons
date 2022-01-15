@@ -38,7 +38,7 @@ sqlite_internal)
     bashio::log.info "Using built in sqlite"
     # Set variable
     export DB_CONNECTION=sqlite
-    export DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
+    #export DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
     # Creating database
     mkdir -p /config/addons_config/fireflyiii/database
     rm -r /var/www/html/storage/database
@@ -94,28 +94,30 @@ mariadb_addon)
 
 esac
 
-# Install database
-bashio::log.info "Updating database"
-php artisan migrate --seed >/dev/null
-php artisan firefly-iii:upgrade-database >/dev/null
-
 ################
 # CRON OPTIONS #
 ################
 
-# Align update with options
-echo ""
-FREQUENCY=$(bashio::config 'Updates')
-bashio::log.info "$FREQUENCY updates"
-echo ""
+if bashio::config.has_value 'Updates'; then
+    # Align update with options
+    echo ""
+    FREQUENCY=$(bashio::config 'Updates')
+    bashio::log.info "$FREQUENCY updates"
+    echo ""
 
-# Sets cron // do not delete this message
-cp /templates/cronupdate /etc/cron.${FREQUENCY}/
-chmod 775 /etc/cron.${FREQUENCY}/cronupdate
+    # Sets cron // do not delete this message
+    cp /templates/cronupdate /etc/cron.${FREQUENCY}/
+    chmod 775 /etc/cron.${FREQUENCY}/cronupdate
+fi
 
 ##############
 # LAUNCH APP #
 ##############
+
+# Install database
+bashio::log.info "Updating database"
+php artisan migrate --seed
+php artisan firefly-iii:upgrade-database
 
 bashio::log.info "Please wait while the app is loading !"
 
