@@ -37,7 +37,7 @@ fi
 # ADD GENERAL ELEMENTS
 ######################
 
-PACKAGES="$PACKAGES jq curl"
+PACKAGES="$PACKAGES jq curl vim"
 
 # FOR EACH SCRIPT, SELECT PACKAGES
 ##################################
