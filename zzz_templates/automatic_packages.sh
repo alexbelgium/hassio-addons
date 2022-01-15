@@ -40,7 +40,7 @@ PACKAGES="$PACKAGES jq curl"
 ##################################
 
 # Scripts
-for files in "/etc/cont-init.d" "/etc/services.d"; do
+for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
     # Next directory if does not exists
     if ! ls $files 1>/dev/null 2>&1; then continue; fi
 
@@ -130,13 +130,6 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES wget"
     fi
 
-    COMMAND="snap"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES snapd"
-    fi
-
 done
 
 ####################
@@ -164,7 +157,7 @@ fi
 # INSTALL MANUAL APPS #
 #######################
 
-for files in "/etc/services.d" "/etc/cont-init.d"; do
+for files in "/scripts" "/etc/services.d" "/etc/cont-init.d"; do
 
     # Next directory if does not exists
     if ! ls $files 1>/dev/null 2>&1; then continue; fi
