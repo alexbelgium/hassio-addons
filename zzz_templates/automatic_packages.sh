@@ -4,9 +4,15 @@
 # INIT #
 ########
 
+#Verbose or not
 VERBOSE=false
+#Avoid fails on non declared variables
 set +u 2>/dev/null
+#If no packages, empty
 PACKAGES="${*:-}"
+#Avoids messages if non interactive
+echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections || true
+
 [ "$VERBOSE" = true ] && echo "ENV : $PACKAGES"
 
 ############################
@@ -18,13 +24,10 @@ if command -v $COMMAND &>/dev/null; then
     # If apk based
     [ "$VERBOSE" = true ] && echo "apk based"
     PACKMANAGER="apk"
-    PACKAGES="apk add --no-cache $PACKAGES"
 else
     # If apt-get based
     [ "$VERBOSE" = true ] && echo "apt based"
     PACKMANAGER="apt"
-    PACKAGES="apt-get update \
-    && apt-get install -yqq --no-install-recommends $PACKAGES"
 fi
 
 ###################
@@ -131,11 +134,22 @@ done
 
 # Install apps
 [ "$VERBOSE" = true ] && echo "installing packages $PACKAGES"
-eval "$PACKAGES"
+[ "$PACKMANAGER" = "apt" ] && apt-get update >/dev/null || true
+
+# Install apps one by one to allow failures
+for packagestoinstall in $PACKAGES; do
+[ "$VERBOSE" = true ] && echo "... $packagestoinstall"
+    if [ "$PACKMANAGER" = "apk" ]; then
+        apk add --no-cache $packagestoinstall &>/dev/null || echo "Error : $packagestoinstall not found"
+    elif [ "$PACKMANAGER" = "apt" ]; then
+        apt-get install -yqq --no-install-recommends $packagestoinstall &>/dev/null || echo "Error : $packagestoinstall not found"
+    fi
+[ "$VERBOSE" = true ] && echo "... $packagestoinstall done"
+done
 
 # Clean after install
 [ "$VERBOSE" = true ] && echo "Cleaning apt cache"
-[ "$PACKMANAGER" = "apt" ] && apt-get clean || true
+[ "$PACKMANAGER" = "apt" ] && apt-get clean >/dev/null || true
 
 # Replace nginx if installed
 if ls /etc/nginx2 1>/dev/null 2>&1; then
