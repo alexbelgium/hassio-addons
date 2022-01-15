@@ -10,6 +10,13 @@
 #               /`
 
 #################
+# 0 Helper code #
+#################
+# hadolint ignore=DL3006
+# hadolint ignore=DL3008
+# hadolint ignore=DL3018
+
+#################
 # 1 Build Image #
 #################
 
@@ -51,7 +58,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/entrypoint.sh" ] 
+CMD [ "/entrypoint.sh" ]
 
 ############
 # 5 Labels #
