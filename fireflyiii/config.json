@@ -30,7 +30,7 @@
     "DB_DATABASE": "str?",
     "DB_USERNAME": "str?",
     "DB_PASSWORD": "str?",
-    "Updates": "list(|hourly|daily|weekly)"
+    "Updates": "list(|hourly|daily|weekly)?"
   },
   "slug": "fireflyiii",
   "services": ["mysql:want"],
