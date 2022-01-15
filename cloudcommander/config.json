@@ -75,8 +75,8 @@
     "DROPBOX_TOKEN": "str?"
   },
   "slug": "cloudcommander",
-  "upstream": "15.9.13",
+  "upstream": "15.9.14",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander",
-  "version": "15.9.13",
+  "version": "15.9.14",
   "webui": "http://[HOST]:[PORT:8000]"
 }
