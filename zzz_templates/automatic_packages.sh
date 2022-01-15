@@ -102,13 +102,6 @@ for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES moreutils"
     fi
 
-    COMMAND="sqlite"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES sqlite"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES sqlite3"
-    fi
-
     COMMAND="sqlite3"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
