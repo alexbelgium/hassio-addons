@@ -138,13 +138,13 @@ done
 
 # Install apps one by one to allow failures
 for packagestoinstall in $PACKAGES; do
-[ "$VERBOSE" = true ] && echo "... $packagestoinstall"
+    [ "$VERBOSE" = true ] && echo "... $packagestoinstall"
     if [ "$PACKMANAGER" = "apk" ]; then
         apk add --no-cache $packagestoinstall &>/dev/null || echo "Error : $packagestoinstall not found"
     elif [ "$PACKMANAGER" = "apt" ]; then
         apt-get install -yqq --no-install-recommends $packagestoinstall &>/dev/null || echo "Error : $packagestoinstall not found"
     fi
-[ "$VERBOSE" = true ] && echo "... $packagestoinstall done"
+    [ "$VERBOSE" = true ] && echo "... $packagestoinstall done"
 done
 
 # Clean after install
