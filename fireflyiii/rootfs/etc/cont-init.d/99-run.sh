@@ -116,8 +116,9 @@ fi
 
 # Install database
 bashio::log.info "Updating database"
-php artisan migrate --seed
-php artisan firefly-iii:upgrade-database
+php artisan migrate --seed --quiet
+php artisan firefly-iii:upgrade-database --quiet
+php artisan passport:install --quiet
 
 bashio::log.info "Please wait while the app is loading !"
 
