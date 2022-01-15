@@ -30,8 +30,6 @@ RUN \
     && sed -i "s|/config|/config/addons_config/jellyfin|g" /etc/cont-init.d/10-adduser \
     && sed -i "s|/config|/config/addons_config/jellyfin|g" /etc/cont-init.d/30-config
 
-VOLUME [ "/opt/vc/lib" ] 
-
 ##################
 # 3 Install apps #
 ##################
