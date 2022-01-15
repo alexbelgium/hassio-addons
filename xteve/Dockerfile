@@ -14,6 +14,7 @@
 #################
 # hadolint ignore=DL3006
 # hadolint ignore=DL3008
+# hadolint ignore=DL3009
 # hadolint ignore=DL3018
 
 #################
