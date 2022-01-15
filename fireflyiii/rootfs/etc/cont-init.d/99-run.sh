@@ -44,8 +44,8 @@ sqlite_internal)
     rm -r /var/www/html/storage/database
     ln -snf /config/addons_config/fireflyiii/database /var/www/html/storage
     chown -R www-data:www-data /config/addons_config/fireflyiii
-    chown -R www-data:www-data /var/www/html/storage/database
-    chmod 775 /var/www/html/storage/database
+    chown -R www-data:www-data /var/www/html/storage
+    chmod -R 777 /var/www/html/storage/database
     touch /var/www/html/storage/database/database.sqlite
     ;;
 
