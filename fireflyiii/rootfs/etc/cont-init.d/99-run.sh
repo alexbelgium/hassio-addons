@@ -50,6 +50,7 @@ sqlite_internal)
         # Create database
         touch /config/addons_config/fireflyiii/database/database.sqlite
         chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
+        chown -R www-data:www-data /config/addons_config/fireflyiii
         # Install database
         echo "updating database"
         php artisan migrate:refresh --seed --quiet
