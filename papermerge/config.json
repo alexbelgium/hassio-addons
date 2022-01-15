@@ -31,7 +31,7 @@
     "storage_dir": "str",
     "import_dir": "str",
     "smbv1": "bool?",
-    "CONFIG_LOCATION": "str"
+    "CONFIG_LOCATION": "str",
     "TZ": "str?"
   },
   "slug": "papermerge",
