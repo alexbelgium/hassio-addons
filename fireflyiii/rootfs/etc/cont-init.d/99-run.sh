@@ -42,22 +42,25 @@ sqlite_internal)
     mkdir -p /config/addons_config/fireflyiii/database
     chown -R www-data:www-data /config/addons_config/fireflyiii/database
 
-    # Creating symlink
-    rm -r /var/www/html/storage/database
-    ln -s /config/addons_config/fireflyiii/database /var/www/html/storage/database
-    
+    # Creating database
     if [ ! -f /config/addons_config/fireflyiii/database/database.sqlite ]; then
         # Create database
         touch /config/addons_config/fireflyiii/database/database.sqlite
-        chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
-        chown -R www-data:www-data /config/addons_config/fireflyiii
         # Install database
         echo "updating database"
         php artisan migrate:refresh --seed --quiet
         php artisan firefly-iii:upgrade-database --quiet
         php artisan passport:install --quiet
     fi
-    
+
+    # Creating symlink
+    rm -r /var/www/html/storage/database
+    ln -s /config/addons_config/fireflyiii/database /var/www/html/storage/database
+
+    # Updating permissions
+    chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
+    chown -R www-data:www-data /config/addons_config/fireflyiii
+
 #    chown -R www-data:www-data /config/addons_config/fireflyiii
 #    chown -R www-data:www-data /var/www/html/storage/database
 
