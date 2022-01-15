@@ -2,7 +2,7 @@
   "build_from": {
     "armhf": "fireflyiii/core:latest",
     "armv7": "fireflyiii/core:latest",
-    "aarch64": "fireflyiii/core:develop",
+    "aarch64": "fireflyiii/core:latest",
     "amd64": "fireflyiii/core:latest"
   }
 }
