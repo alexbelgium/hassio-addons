@@ -94,8 +94,9 @@ mariadb_addon)
 esac
 
 # Install database
-php artisan migrate --seed
-php artisan firefly-iii:upgrade-database
+bashio::log.info "Updating database"
+php artisan migrate --seed >/dev/null
+php artisan firefly-iii:upgrade-database >/dev/null
 
 ################
 # CRON OPTIONS #
