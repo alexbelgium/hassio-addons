@@ -30,6 +30,9 @@ RUN \
     && sed -i "s|/config|/config/addons_config/jellyfin|g" /etc/cont-init.d/10-adduser \
     && sed -i "s|/config|/config/addons_config/jellyfin|g" /etc/cont-init.d/30-config
 
+# Graphic drivers for rpi4
+RUN apt-get update && apt-get install -yqq libgles2-mesa libgles2-mesa-dev || true
+
 ##################
 # 3 Install apps #
 ##################
