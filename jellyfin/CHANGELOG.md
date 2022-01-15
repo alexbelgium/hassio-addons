@@ -1,3 +1,6 @@
+
+## 10.7.7-1-ls149 (15-01-2022)
+- Update to latest version from linuxserver/docker-jellyfin
 - "host_network": true to enable UPNP, chromecast, ...
 - Code to repair database due to a bug that occured when the config location changed
 
