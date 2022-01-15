@@ -5,6 +5,7 @@
   "description": "A free and open source personal finance manager",
   "devices": [],
   "environment": {
+    "TRUSTED_PROXIES": "**"
   },
   "map": ["config:rw", "share:rw", "ssl"],
   "name": "Firefly iii",
