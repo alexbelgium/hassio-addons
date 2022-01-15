@@ -4,7 +4,7 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
-![Supports
+![Supports 
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield]
 
@@ -19,7 +19,7 @@ This addon is based on the docker image https://hub.docker.com/r/fireflyiii/core
 
 ## Configuration
 
-PLEASE CHANGE YOUR APP_KEY BEFORE FIRST LAUNCH! YOU WON'T BE ABLE AFTERWRADS WITHOUT RESETTING YOUR DATABASE.
+PLEASE CHANGE YOUR APP_KEY BEFORE FIRST LAUNCH! YOU WON'T BE ABLE AFTERWRADS WITHOUT RESETTING YOUR DATABASE. 
 
 Options can be configured through two ways :
 
@@ -34,7 +34,6 @@ Options can be configured through two ways :
 "DB_DATABASE": "CHANGEME" # only needed if using a remote database
 "DB_USERNAME": "CHANGEME" # only needed if using a remote database
 "DB_PASSWORD": "CHANGEME" # only needed if using a remote database
-"Updates": hourly|daily|weekly # Sets an automatic update
 ```
 
 - Config.yaml

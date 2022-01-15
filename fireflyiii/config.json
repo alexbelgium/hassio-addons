@@ -1,20 +1,27 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7",
+    "armhf"
+  ],
   "boot": "auto",
   "description": "A free and open source personal finance manager",
   "devices": [],
   "environment": {
-    "TRUSTED_PROXIES": "**",
-    "DB_DATABASE": "/config/addons_config/fireflyiii/database/database.sqlite"
+    "TRUSTED_PROXIES": "**"
   },
-  "map": ["config:rw", "share:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
   "name": "Firefly iii",
   "options": {
     "DB_CONNECTION": "sqlite_internal",
     "APP_KEY": "CHANGEME_32_CHARS_EuC5dfn3LAPzeO",
-    "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml",
-    "Updates": "daily"
+    "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml"
   },
   "ports": {
     "8080/tcp": 3473
@@ -30,13 +37,14 @@
     "DB_PORT": "str?",
     "DB_DATABASE": "str?",
     "DB_USERNAME": "str?",
-    "DB_PASSWORD": "str?",
-    "Updates": "list(|hourly|daily|weekly)?"
+    "DB_PASSWORD": "str?"
   },
   "slug": "fireflyiii",
-  "services": ["mysql:want"],
+  "services": [
+    "mysql:want"
+  ],
   "upstream": "5.6.10",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.6.10-2",
+  "version": "5.6.10",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
