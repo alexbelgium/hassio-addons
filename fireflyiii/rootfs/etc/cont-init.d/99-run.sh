@@ -4,17 +4,15 @@
 # Init #
 ########
 
-# Change data location
-echo "Update data location"
-mkdir -p /data/fireflyiii
+# APP_KEY
+APP_KEY="$(bashio::config 'APP_KEY')"
 
 # Check APP_KEY format
 if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} instead of 32 characters"; fi
 
 # Backup APP_KEY file
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
-bashio::log.warning "Changing this value will require to reset your database"
-APP_KEY="$(bashio::config 'APP_KEY')"
+bashio::log.warning "Changing this value will require to reset your database" 
 
 # Get current app_key
 mkdir -p /config/addons_config/fireflyiii
@@ -23,7 +21,7 @@ CURRENT=$(sed -e '/^[<blank><tab>]*$/d' /config/addons_config/fireflyiii/APP_KEY
 
 # Save if new
 if [ "$CURRENT" != "$APP_KEY" ]; then
-    echo "$APP_KEY" >>/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
+echo "$APP_KEY" >>/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
 fi
 
 ###################
@@ -38,15 +36,21 @@ sqlite_internal)
     bashio::log.info "Using built in sqlite"
     # Set variable
     export DB_CONNECTION=sqlite
-    #export DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
     # Creating database
     mkdir -p /config/addons_config/fireflyiii/database
+    touch /config/addons_config/fireflyiii/database/database.sqlite
+    chown -R www-data:www-data /config/addons_config/fireflyiii/database
+    chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
+
+    # Creating symlink
     rm -r /var/www/html/storage/database
-    ln -snf /config/addons_config/fireflyiii/database /var/www/html/storage
-    chown -R www-data:www-data /config/addons_config/fireflyiii
-    chown -R www-data:www-data /var/www/html/storage
-    chmod -R 777 /var/www/html/storage/database
-    touch /var/www/html/storage/database/database.sqlite
+    ln -s /config/addons_config/fireflyiii/database /var/www/html/storage/database
+#    chown -R www-data:www-data /config/addons_config/fireflyiii
+#    chown -R www-data:www-data /var/www/html/storage/database
+
+#    mkdir -p /config/addons_config/fireflyiii/database
+#    touch /var/www/html/storage/database/database.sqlite
+#    touch /config/addons_config/fireflyiii/database/database.sqlite
     ;;
 
 # Use MariaDB
@@ -54,9 +58,9 @@ mariadb_addon)
     bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Detecting values..."
     if ! bashio::services.available 'mysql'; then
         bashio::log.fatal \
-        "Local database access should be provided by the MariaDB addon"
+            "Local database access should be provided by the MariaDB addon"
         bashio::exit.nok \
-        "Please ensure it is installed and started"
+            "Please ensure it is installed and started"
     fi
 
     # Use values
@@ -77,9 +81,9 @@ mariadb_addon)
     apt-get clean
     bashio::log.info "Creating database for Firefly-iii if required"
     mysql \
-    -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
-    -h "${DB_HOST}" -P "${DB_PORT}" \
-    -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
+        -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
+        -h "${DB_HOST}" -P "${DB_PORT}" \
+        -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
     ;;
 
 # Use remote
@@ -93,6 +97,12 @@ mariadb_addon)
     ;;
 
 esac
+
+# Install database
+echo "updating database"
+php artisan migrate:refresh --seed --quiet
+php artisan firefly-iii:upgrade-database --quiet
+php artisan passport:install --quiet
 
 ################
 # CRON OPTIONS #
@@ -113,12 +123,6 @@ fi
 ##############
 # LAUNCH APP #
 ##############
-
-# Install database
-bashio::log.info "Updating database"
-php artisan migrate --seed --quiet
-php artisan firefly-iii:upgrade-database --quiet
-php artisan passport:install --quiet
 
 bashio::log.info "Please wait while the app is loading !"
 

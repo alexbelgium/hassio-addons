@@ -18,7 +18,7 @@ for KEYS in "${arr[@]}"; do
   if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
   export $line
   # Export the variable to run scripts
-  line="${KEYS}=${VALUE//[\"\']/}"
+  line="${KEYS}=${VALUE//[\"\']/} &>/dev/null"
   sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
   sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
 done
