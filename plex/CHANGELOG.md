@@ -1,4 +1,7 @@
 
+## 1.25.3.5409-f11334058-ls97 (15-01-2022)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.25.3.5385-f05b712b6-ls96 (12-01-2022)
 - Update to latest version from linuxserver/docker-plex
 - "host_network": true to enable UPNP, chromecast, ...
