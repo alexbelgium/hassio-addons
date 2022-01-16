@@ -1,4 +1,7 @@
 
+## 0.8.1.2135-ls69 (16-01-2022)
+- Update to latest version from linuxserver/docker-lidarr
+
 ## 0.8.1.2135-ls68
 - updated to 0.8.1.2135-ls68
 - changed config location
