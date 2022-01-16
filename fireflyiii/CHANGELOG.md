@@ -1,3 +1,4 @@
+- Correct permissions
 - Allowed automatic update in hourly, daily or weekly setting from addon options
 
 ## 5.6.10 (09-01-2022)

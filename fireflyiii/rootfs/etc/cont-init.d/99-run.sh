@@ -12,7 +12,7 @@ if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} i
 
 # Backup APP_KEY file
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
-bashio::log.warning "Changing this value will require to reset your database" 
+bashio::log.warning "Changing this value will require to reset your database"
 
 # Get current app_key
 mkdir -p /config/addons_config/fireflyiii
@@ -21,8 +21,14 @@ CURRENT=$(sed -e '/^[<blank><tab>]*$/d' /config/addons_config/fireflyiii/APP_KEY
 
 # Save if new
 if [ "$CURRENT" != "$APP_KEY" ]; then
-echo "$APP_KEY" >>/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
+    echo "$APP_KEY" >>/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
 fi
+
+# Update permissions
+mkdir -p /config/addons_config/fireflyiii
+chown -R www-data:www-data /config/addons_config/fireflyiii
+chown -R www-data:www-data /var/www/html/storage
+chmod -R 775 /config/addons_config/fireflyiii
 
 ###################
 # Define database #
@@ -60,13 +66,7 @@ sqlite_internal)
     # Updating permissions
     chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
     chown -R www-data:www-data /config/addons_config/fireflyiii
-
-#    chown -R www-data:www-data /config/addons_config/fireflyiii
-#    chown -R www-data:www-data /var/www/html/storage/database
-
-#    mkdir -p /config/addons_config/fireflyiii/database
-#    touch /var/www/html/storage/database/database.sqlite
-#    touch /config/addons_config/fireflyiii/database/database.sqlite
+    chown -R www-data:www-data /var/www/html/storage
     ;;
 
 # Use MariaDB
