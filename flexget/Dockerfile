@@ -23,6 +23,7 @@ FROM wiserain/flexget:latest
 ##################
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# hadolint ignore=SC2016
 RUN \
     # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
