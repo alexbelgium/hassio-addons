@@ -19,7 +19,6 @@ ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.23.1"
 FROM "vaultwarden/server:${BUILD_UPSTREAM}" as vaultwarden
 FROM ${BUILD_FROM}
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Get the Bitwarden from official images
 COPY --from=vaultwarden /vaultwarden /opt/vaultwarden
