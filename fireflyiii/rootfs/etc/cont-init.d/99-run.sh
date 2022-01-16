@@ -81,12 +81,18 @@ mariadb_addon)
     fi
 
     # Use values
-    export DB_CONNECTION=mysql
-    export DB_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "DB_HOST=$DB_HOST"
-    export DB_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "DB_PORT=$DB_PORT"
-    export DB_DATABASE=firefly && bashio::log.blue "DB_DATABASE=$DB_DATABASE"
-    export DB_USERNAME=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USERNAME=$DB_USERNAME"
-    export DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD"
+    DB_CONNECTION=mysql
+    DB_HOST=$(bashio::services "mysql" "host")
+    DB_PORT=$(bashio::services "mysql" "port")
+    DB_DATABASE=firefly
+    DB_USERNAME=$(bashio::services "mysql" "username") 
+    DB_PASSWORD=$(bashio::services "mysql" "password")
+    export DB_CONNECTION
+    export DB_HOST && bashio::log.blue "DB_HOST=$DB_HOST"
+    export DB_PORT && bashio::log.blue "DB_PORT=$DB_PORT"
+    export DB_DATABASE && bashio::log.blue "DB_DATABASE=$DB_DATABASE"
+    export DB_USERNAME && bashio::log.blue "DB_USERNAME=$DB_USERNAME"
+    export DB_PASSWORD && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD"
 
     bashio::log.warning "Firefly-iii is using the Maria DB addon"
     bashio::log.warning "Please ensure this is included in your backups"
