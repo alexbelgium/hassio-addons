@@ -98,10 +98,6 @@ mariadb_addon)
     bashio::log.warning "Please ensure this is included in your backups"
     bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
-    bashio::log.info "Installing mysql to configure the database"
-    apt-get update
-    apt-get install -yq --no-install-recommends mariadb-client
-    apt-get clean
     bashio::log.info "Creating database for Firefly-iii if required"
     mysql \
         -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
