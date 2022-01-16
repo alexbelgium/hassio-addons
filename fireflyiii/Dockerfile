@@ -44,7 +44,7 @@ FROM ${BUILD_FROM}
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 00-global_var.sh 90-config_yaml.sh 91-silent.sh"
+ARG MODULES="00-banner.sh 00-global_var.sh 90-config_yaml.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
