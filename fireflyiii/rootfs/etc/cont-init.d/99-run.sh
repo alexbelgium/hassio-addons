@@ -128,6 +128,9 @@ if bashio::config.has_value 'Updates'; then
     # Sets cron // do not delete this message
     cp /templates/cronupdate /etc/cron.${FREQUENCY}/
     chmod 777 /etc/cron.${FREQUENCY}/cronupdate
+
+    # Starts cron
+    service cron start
 fi
 
 ##############
