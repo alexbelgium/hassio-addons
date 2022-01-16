@@ -32,8 +32,6 @@ RUN \
     chown -R $(id -u):$(id -g) /data/joal &&\
     rm /data/joal/jack-of* || true
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 ##################
 # 3 Install apps #
 ##################
