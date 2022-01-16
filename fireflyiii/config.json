@@ -21,8 +21,7 @@
   "options": {
     "DB_CONNECTION": "sqlite_internal",
     "APP_KEY": "CHANGEME_32_CHARS_EuC5dfn3LAPzeO",
-    "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml", 
-    "silent": true
+    "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml"
   },
   "ports": {
     "8080/tcp": 3473
@@ -40,7 +39,7 @@
     "DB_USERNAME": "str?",
     "DB_PASSWORD": "str?",
     "Updates": "list(|hourly|daily|weekly)?",
-    "silent": "bool"
+    "silent": "bool?"
   },
   "slug": "fireflyiii",
   "services": [
