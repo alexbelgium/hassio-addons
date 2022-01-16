@@ -13,7 +13,7 @@ if [ -d /data/config ]; then
 fi
 
 # Make symlinks
-ln -snf -T $CONFIGLOCATION/config /data/config
+ln -snf -T $CONFIGLOCATION/config /data
 
 # Make sure permissions are right
 chown -R $(id -u):$(id -g) $CONFIGLOCATION
