@@ -139,4 +139,8 @@ fi
 
 bashio::log.info "Please wait while the app is loading !"
 
+if bashio::config.true 'silent'; then
+/./usr/local/bin/entrypoint.sh >/dev/null
+else
 /./usr/local/bin/entrypoint.sh
+fi
