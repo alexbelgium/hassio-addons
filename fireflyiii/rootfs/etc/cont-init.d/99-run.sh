@@ -1,4 +1,5 @@
 #!/usr/bin/env bashio
+# hadolint ignore=SC2155 
 
 ########
 # Init #
