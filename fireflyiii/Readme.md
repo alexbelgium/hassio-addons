@@ -35,6 +35,7 @@ Options can be configured through two ways :
 "DB_USERNAME": "CHANGEME" # only needed if using a remote database
 "DB_PASSWORD": "CHANGEME" # only needed if using a remote database
 "Updates": hourly|daily|weekly # Sets an automatic update
+"silent": true # If false, show debug info
 ```
 
 - Config.yaml
