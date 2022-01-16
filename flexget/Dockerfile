@@ -22,6 +22,7 @@ FROM wiserain/flexget:latest
 # 2 Modify Image #
 ##################
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
     # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
