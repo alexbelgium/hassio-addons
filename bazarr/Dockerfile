@@ -22,6 +22,7 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
     # Correct config folder
     grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/addons_config/bazarr|g' \
