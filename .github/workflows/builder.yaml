@@ -189,7 +189,7 @@ jobs:
           rm -rf /tmp/buildx-cache
           mv /tmp/buildx-cache-new /tmp/buildx-cache
       - name: 🔑 GHCR Login
-        uses: docker/login-action@v1.8.0
+        uses: docker/login-action@v1.12.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
