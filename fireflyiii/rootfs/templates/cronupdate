@@ -2,11 +2,8 @@
 
 bashio::info "Running update according to defined schedule"
 if bashio::config.true 'silent'; then
-bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug" 
-/usr/local/bin/php /var/www/html/artisan firefly:cron >/dev/null
+    bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
+    /usr/local/bin/php /var/www/html/artisan firefly:cron >/dev/null
 else
-/usr/local/bin/php /var/www/html/artisan firefly:cron
+    /usr/local/bin/php /var/www/html/artisan firefly:cron
 fi
-
-chown -R www-data:www-data /config/addons_config/fireflyiii
-chown -R www-data:www-data /var/www/html/storage

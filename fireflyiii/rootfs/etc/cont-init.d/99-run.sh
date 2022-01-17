@@ -1,5 +1,5 @@
 #!/usr/bin/env bashio
-# hadolint ignore=SC2155 
+# hadolint ignore=SC2155
 
 ########
 # Init #
@@ -75,9 +75,9 @@ mariadb_addon)
     bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Detecting values..."
     if ! bashio::services.available 'mysql'; then
         bashio::log.fatal \
-            "Local database access should be provided by the MariaDB addon"
+        "Local database access should be provided by the MariaDB addon"
         bashio::exit.nok \
-            "Please ensure it is installed and started"
+        "Please ensure it is installed and started"
     fi
 
     # Use values
@@ -85,7 +85,7 @@ mariadb_addon)
     DB_HOST=$(bashio::services "mysql" "host")
     DB_PORT=$(bashio::services "mysql" "port")
     DB_DATABASE=firefly
-    DB_USERNAME=$(bashio::services "mysql" "username") 
+    DB_USERNAME=$(bashio::services "mysql" "username")
     DB_PASSWORD=$(bashio::services "mysql" "password")
     export DB_CONNECTION
     export DB_HOST && bashio::log.blue "DB_HOST=$DB_HOST"
@@ -100,9 +100,9 @@ mariadb_addon)
 
     bashio::log.info "Creating database for Firefly-iii if required"
     mysql \
-        -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
-        -h "${DB_HOST}" -P "${DB_PORT}" \
-        -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
+    -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
+    -h "${DB_HOST}" -P "${DB_PORT}" \
+    -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
     ;;
 
 # Use remote
@@ -132,6 +132,9 @@ if bashio::config.has_value 'Updates'; then
     cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
     chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
 
+    # Sets cron to run with www-data user
+    sed -i 's|root|www-data|g' /etc/crontab
+
     # Starts cron
     service cron start
 fi
@@ -143,8 +146,8 @@ fi
 bashio::log.info "Please wait while the app is loading !"
 
 if bashio::config.true 'silent'; then
-bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
-/./usr/local/bin/entrypoint.sh >/dev/null
+    bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
+    /./usr/local/bin/entrypoint.sh >/dev/null
 else
-/./usr/local/bin/entrypoint.sh
+    /./usr/local/bin/entrypoint.sh
 fi
