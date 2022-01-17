@@ -25,7 +25,7 @@ if [ -f ${JSONTOCHECK} ]; then
     for KEYS in "${arr[@]}"; do
         # Check if key exists
         KEYSTHERE=$(jq "has(\"${KEYS}\")" ${JSONTOCHECK})
-        if [ $KEYSTHERE != "true" ]; then
+        if [ "$KEYSTHERE" != "true" ]; then
             #Fetch initial value
             JSONSOURCEVALUE=$(jq -r ".\"$KEYS\"" ${JSONSOURCE})
             #Add key
@@ -48,6 +48,6 @@ fi
 #echo "Making sure settings.json structure is good"
 #for KEYS in "incomplete-dir" "download-dir" "rpc-host-whitelist-enabled" "rpc-authentication-required" "rpc-username" "rpc-password" "rpc-whitelist-enabled" "rpc-whitelist"; do
 #  KEYSTHERE=$(jq "has(\"${KEYS}\")" $CONFIGDIR/settings.json)
-#  [ $KEYSTHERE != "true" ] && sed -i "3 i\"${KEYS}\": null," $CONFIGDIR/settings.json && echo "... $KEYS was missing, added"
+#  [ "$KEYSTHERE" != "true" ] && sed -i "3 i\"${KEYS}\": null," $CONFIGDIR/settings.json && echo "... $KEYS was missing, added"
 #done
 #jq . -S $CONFIGDIR/settings.json | cat >temp.json && mv temp.json $CONFIGDIR/settings.json
