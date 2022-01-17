@@ -1,4 +1,4 @@
-/usr/bin/env bashio
+#!/usr/bin/env bashio
 
 bashio::info "Running update according to defined schedule"
 if bashio::config.true 'silent'; then
