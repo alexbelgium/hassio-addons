@@ -127,7 +127,7 @@ jobs:
 
       - name: ℹ️ Gather addon info
         id: information
-        uses: frenck/action-addon-information@v1.2
+        uses: frenck/action-addon-information@v1.3.1
         with:
           path: "./${{ matrix.addon }}/"
 
