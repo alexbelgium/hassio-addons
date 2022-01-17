@@ -6,6 +6,7 @@ CONFIGLOCATION=$(bashio::config "CONFIG_LOCATION")
 mkdir -p $CONFIGLOCATION/config
 
 # Copy previous config if existing
+unlink /data/config 2>/dev/null || true
 if [ -d /data/config ]; then
   echo "Moving to new location $CONFIGLOCATION"
   mv /data/config/* $CONFIGLOCATION/config/
