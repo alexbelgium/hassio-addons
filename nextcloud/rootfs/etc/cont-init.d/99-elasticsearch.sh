@@ -32,7 +32,7 @@ if bashio::config.true 'Full_Text_Search'; then
     APPS=(fulltextsearch fulltextsearch_elasticsearch files_fulltextsearch)
     for app in "${APPS[@]}"; do
         # If app exists, remove it
-        [ ! -z $($LAUNCHER app:getpath $app) ] && $LAUNCHER app:remove $app &>/dev/null
+        [ -n $($LAUNCHER app:getpath $app) ] && $LAUNCHER app:remove $app &>/dev/null
     done
 
     # Get Full Text Search app for nextcloud

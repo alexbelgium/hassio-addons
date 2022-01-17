@@ -28,7 +28,7 @@ echo "... adding ssl certs in files"
 for NGINXFILE in "/defaults/default" "/config/nginx/site-confs/default" "/data/config/nginx/site-confs/default"; do
   if [ -f $NGINXFILE ]; then
     LINE=$(sed -n "/ssl_certificate /=" $NGINXFILE)
-    if [ ! -z $LINE ]; then
+    if [ -n $LINE ]; then
       sed -i "/ssl_certificate/ d" $NGINXFILE
       sed -i "$LINE i ssl_certificate_key /ssl/$KEYFILE;" $NGINXFILE
       sed -i "$LINE i ssl_certificate /ssl/$CERTFILE;" $NGINXFILE
