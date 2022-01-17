@@ -22,7 +22,7 @@ if [ -f ${JSONTOCHECK} ]; then
     mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
 
     # Check if all keys are still there, or add them
-    for KEYS in ${arr[@]}; do
+    for KEYS in "${arr[@]}"; do
         # Check if key exists
         KEYSTHERE=$(jq "has(\"${KEYS}\")" ${JSONTOCHECK})
         if [ $KEYSTHERE != "true" ]; then

@@ -11,7 +11,7 @@ JSONSOURCE="/data/options.json"
 # Export keys as env variables
 # echo "All addon options were exported as variables"
 mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
-for KEYS in ${arr[@]}; do
+for KEYS in "${arr[@]}"; do
   # export key
   VALUE=$(jq ."$KEYS" ${JSONSOURCE})
   line="${KEYS}=${VALUE//[\"\']/}"
@@ -26,7 +26,7 @@ done
 ################
 # Set timezone #
 ################
-if [ -n "TZ" ] && [ -f /etc/localtime ]; then
+if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
   if [ -f /usr/share/zoneinfo/"$TZ" ]; then
     echo "Timezone set from $(cat /etc/timezone) to $TZ"
     ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" >/etc/timezone
