@@ -20,7 +20,7 @@ else
         cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
     else
         # Download template
-        TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/zzz_templates/config.template"
+        TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/config.template"
         curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
     fi
     # Need to restart
