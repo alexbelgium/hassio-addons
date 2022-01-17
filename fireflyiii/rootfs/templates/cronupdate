@@ -7,3 +7,6 @@ bashio::log.warning "Silent mode activated. Only errors will be shown. Please di
 else
 /usr/local/bin/php /var/www/html/artisan firefly:cron
 fi
+
+chown -R www-data:www-data /config/addons_config/fireflyiii
+chown -R www-data:www-data /var/www/html/storage
