@@ -1,4 +1,5 @@
-#!/usr/bin/env bashio
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 CONFIGLOCATION=$(bashio::config "CONFIG_LOCATION")
 
