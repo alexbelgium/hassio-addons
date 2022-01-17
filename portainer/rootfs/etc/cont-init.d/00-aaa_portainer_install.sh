@@ -1,6 +1,7 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 if [ -e "/PORTFILE" ]; then
-    echo "Installing portainer..." 
+    echo "Installing portainer..."
     BUILD_UPSTREAM=$(</PORTFILE)
     BUILD_ARCH=$(uname -m)
 
@@ -14,9 +15,9 @@ if [ -e "/PORTFILE" ]; then
     if [[ "${BUILD_ARCH}" == *armv7* ]]; then ARCH="arm"; fi
     if [[ "${BUILD_ARCH}" == arm ]]; then ARCH="arm"; fi
     if [[ "${BUILD_ARCH}" == *x86* ]]; then ARCH="amd64"; fi
-    
+
     curl -L -s \
-    "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
-    | tar zxvf - -C /opt/
-    echo "... success!" 
- fi
+        "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" |
+        tar zxvf - -C /opt/
+    echo "... success!"
+fi

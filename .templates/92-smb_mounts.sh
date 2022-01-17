@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 #########################
 # MOUNT SMB SHARES v1.6 #

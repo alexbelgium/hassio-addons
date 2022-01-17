@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 if bashio::config.true 'use_own_certs'; then
 
@@ -26,7 +27,7 @@ echo "... adding ssl certs in files"
 #Sets certificates
 for NGINXFILE in "/defaults/default" "/config/nginx/site-confs/default" "/data/config/nginx/site-confs/default"; do
   if [ -f $NGINXFILE ]; then
-      LINE=$(sed -n "/ssl_certificate /=" $NGINXFILE)
+    LINE=$(sed -n "/ssl_certificate /=" $NGINXFILE)
     if [ ! -z $LINE ]; then
       sed -i "/ssl_certificate/ d" $NGINXFILE
       sed -i "$LINE i ssl_certificate_key /ssl/$KEYFILE;" $NGINXFILE

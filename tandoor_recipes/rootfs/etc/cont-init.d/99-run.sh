@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 #####################
 # Export env values #
@@ -26,20 +27,20 @@ mariadb_addon)
     bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
     if ! bashio::services.available 'mysql'; then
         bashio::log.fatal \
-            "Local database access should be provided by the MariaDB addon"
+        "Local database access should be provided by the MariaDB addon"
         bashio::exit.nok \
-            "Please ensure it is installed and started"
+        "Please ensure it is installed and started"
     fi
 
     # Install mysqlclient
     pip install pymysql &>/dev/null
-    
+
     # Use values
     export DB_ENGINE=django.db.backends.mysql
     export POSTGRES_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
     export POSTGRES_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
     export POSTGRES_DB=/data/
-    
+
     .db && bashio::log.blue "POSTGRES_DB=$POSTGRES_DB"
     export POSTGRES_USER=$(bashio::services "mysql" "username") && bashio::log.blue "POSTGRES_USER=$POSTGRES_USER"
     export POSTGRES_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
@@ -74,4 +75,4 @@ ln -s /data/recipes/staticfiles /opt/recipes
 
 bashio::log.info "Launching app"
 cd /opt/recipes
-./boot.sh 
+./boot.sh

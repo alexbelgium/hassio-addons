@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 if bashio::services.available 'mysql'; then
     bashio::log.warning "MariaDB addon was found! It can't be configured automatically, but you can configure it manually using those values in the initial set-up :"

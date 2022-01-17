@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 if [ -d /config/filebrowser ]; then
   echo "Moving to new location /config/addons_config/filebrowser"

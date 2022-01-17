@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 #################
 # NGINX SETTING #
@@ -9,7 +10,7 @@ declare qbittorrent_protocol=http
 
 # Generate Ingress configuration
 if bashio::config.true 'ssl'; then
-qbittorrent_protocol=https
+    qbittorrent_protocol=https
 fi
 
 cp /etc/nginx/templates/ingress.gtpl /etc/nginx/servers/ingress.conf
@@ -20,17 +21,16 @@ sed -i "s|{{ .certfile }}|$(bashio::config 'certfile')|g" /etc/nginx/servers/ing
 sed -i "s|{{ .keyfile }}|$(bashio::config 'keyfile')|g" /etc/nginx/servers/ingress.conf
 sed -i "s|{{ .ssl }}|$(bashio::config 'ssl')|g" /etc/nginx/servers/ingress.conf
 
-       
 ######################
 # VUETORRENT INSTALL #
 ######################
 
-LATEST_RELEASE=$(curl -s -L https://api.github.com/repos/wdaan/vuetorrent/releases/latest \
-              | grep "browser_download_url.*zip" \
-              | cut -d : -f 2,3 \
-              | tr -d \" \
-              | xargs)
+LATEST_RELEASE=$(curl -s -L https://api.github.com/repos/wdaan/vuetorrent/releases/latest |
+    grep "browser_download_url.*zip" |
+    cut -d : -f 2,3 |
+    tr -d \" |
+    xargs)
 
 curl -s -S -O -J -L $LATEST_RELEASE
-unzip -o vuetorrent.zip -d / >/dev/null 
+unzip -o vuetorrent.zip -d / >/dev/null
 rm /vuetorrent.zip >/dev/null

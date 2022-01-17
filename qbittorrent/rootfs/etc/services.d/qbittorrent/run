@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 WEBUI_PORT=${WEBUI_PORT:-8080}
 

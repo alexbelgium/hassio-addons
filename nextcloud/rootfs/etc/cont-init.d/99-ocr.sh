@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ" || bashio::log.info "/data/config/www/nextcloud/occ not found"
 if ! bashio::fs.file_exists '/data/config/www/nextcloud/occ'; then
@@ -27,14 +28,14 @@ if bashio::config.has_value 'OCR'; then
         if bashio::config.has_value 'OCRLANG'; then
             OCRLANG=$(bashio::config 'OCRLANG')
             for LANG in $(echo "$OCRLANG" | tr "," " "); do
-              if [ $LANG != "eng" ]; then
-                apk add --quiet --no-cache tesseract-ocr-data-$LANG || apk add --quiet --no-cache tesseract-ocr-data-$LANG@community
-              fi
-              bashio::log.info "OCR Language installed : $LANG" || bashio::log.fatal "Couldn't install OCR lang $LANG. Please check its format is conform"
-              # Downloading trainer data
-              cd /usr/share/tessdata
-              rm -r $LANG.traineddata &>/dev/null || true
-              wget https://github.com/tesseract-ocr/tessdata/raw/main/$LANG.traineddata &>/dev/null
+                if [ $LANG != "eng" ]; then
+                    apk add --quiet --no-cache tesseract-ocr-data-$LANG || apk add --quiet --no-cache tesseract-ocr-data-$LANG@community
+                fi
+                bashio::log.info "OCR Language installed : $LANG" || bashio::log.fatal "Couldn't install OCR lang $LANG. Please check its format is conform"
+                # Downloading trainer data
+                cd /usr/share/tessdata
+                rm -r $LANG.traineddata &>/dev/null || true
+                wget https://github.com/tesseract-ocr/tessdata/raw/main/$LANG.traineddata &>/dev/null
             done
         fi
     elif $(bashio::config 'OCR') = false; then
