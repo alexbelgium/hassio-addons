@@ -37,6 +37,6 @@
   "slug": "papermerge",
   "upstream": "2.0.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.0.1-16",
+  "version": "2.0.1-17",
   "webui": "http://[HOST]:[PORT:8000]"
 }
