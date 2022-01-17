@@ -2,7 +2,7 @@
 
 CONFIGLOCATION=$(bashio::config "CONFIG_LOCATION")
 
-sed -i "s| /data/config| $CONFIGLOCATION|g" /etc/cont-init.d/* \
+sed -i "s| /data/config| $CONFIGLOCATION|g" /etc/cont-init.d/*
 sed -i "s| /data/config| $CONFIGLOCATION|g" /defaults/* || true
 
 # Create directory
