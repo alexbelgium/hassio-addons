@@ -71,7 +71,7 @@ jobs:
           labels=$(printf "$labels\norg.opencontainers.image.title=${{ steps.information.outputs.name }}")
           labels=$(printf "$labels\norg.opencontainers.image.description=${{ steps.information.outputs.description }}")
           labels=$(printf "$labels\norg.opencontainers.image.version=${{ steps.information.outputs.version }}")
-          labels=$(printf "$labels\norg.opencontainers.image.authors=Poeschl <Poeschl@users.noreply.github.com>")
+          labels=$(printf "$labels\norg.opencontainers.image.authors=alexbelgium <alexbelgium@users.noreply.github.com>")
           labels=$(printf "$labels\norg.opencontainers.image.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}")
           labels=$(printf "$labels\norg.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
           labels=$(printf "$labels\norg.opencontainers.image.created=$(date -Is)")
