@@ -1,3 +1,6 @@
+
+## 3.2.9 (18-01-2022)
+- Update to latest version from flexget/flexget
 - Working again with new config location
 
 ## 3.2.8 (07-01-2022)
