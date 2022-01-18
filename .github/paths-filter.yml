@@ -1,52 +1,52 @@
 # Those are the addon path filters used in the workflows to determine which addon needs to be build.
-#
+# name: slug/filename ; could be slug/** for all files
 addons_updater: addons_updater/CHANGELOG.md
 arpspoof: arpspoof/CHANGELOG.md
-#bazarr: bazarr/**
-#bitwarden: bitwarden/**
-#booksonic-air: booksonic-air/**
-#cloudcommander: cloudcommander/**
-#code-server: code-server/**
-#elasticsearch: elasticsearch/**
-#emby: emby/**
-#enedisgateway2mqtt: enedisgateway2mqtt/**
-#enedisgateway2mqtt: enedisgateway2mqtt/**
-#filebrowser: filebrowser/**
-#firefly iii: firefly iii/**
-#firefly iii data importer: firefly iii data importer/**
-#flaresolverr: flaresolverr/**
-#flexget: flexget/**
-#gazpar2mqtt: gazpar2mqtt/**
-#grav: grav/**
-#inadyn: inadyn/**
-#jackett: jackett/**
-#jellyfin: jellyfin/**
-#joal: joal/**
-#mealie: mealie/**
-#mylar3: mylar3/**
-#nextcloud ocr: nextcloud ocr/**
-#nzbget: nzbget/**
-#ombi: ombi/**
-#organizr: organizr/**
-#paperless ng: paperless ng/**
-#papermerge: papermerge/**
-#photoprism: photoprism/**
-#piwigo: piwigo/**
-#plex: plex/**
-#portainer: portainer/**
-#prowlarr: prowlarr/**
-#qbittorrent: qbittorrent/**
-#radarr: radarr/**
-#readarr: readarr/**
-#requestrr: requestrr/**
-#resioliosync: resioliosync/**
-#scrutiny: scrutiny/**
-#sonarr: sonarr/**
-#tandoor recipes: tandoor recipes/**
-#teamspeak: teamspeak/**
-#transmission: transmission/**
-#ubooquity: ubooquity/**
-#webtrees: webtrees/**
-#wger: wger/**
-#whoogle-search: whoogle-search/**
-#xteve: xteve/**
+bazarr: bazarr/CHANGELOG.md
+bitwarden: bitwarden/CHANGELOG.md
+booksonic-air: booksonic-air/CHANGELOG.md
+cloudcommander: cloudcommander/CHANGELOG.md
+code-server: code-server/CHANGELOG.md
+elasticsearch: elasticsearch/CHANGELOG.md
+emby: emby/CHANGELOG.md
+enedisgateway2mqtt: enedisgateway2mqtt/CHANGELOG.md
+enedisgateway2mqtt: enedisgateway2mqtt/CHANGELOG.md
+filebrowser: filebrowser/CHANGELOG.md
+firefly iii: firefly iii/CHANGELOG.md
+firefly iii data importer: firefly iii data importer/CHANGELOG.md
+flaresolverr: flaresolverr/CHANGELOG.md
+flexget: flexget/CHANGELOG.md
+gazpar2mqtt: gazpar2mqtt/CHANGELOG.md
+grav: grav/CHANGELOG.md
+inadyn: inadyn/CHANGELOG.md
+jackett: jackett/CHANGELOG.md
+jellyfin: jellyfin/CHANGELOG.md
+joal: joal/CHANGELOG.md
+mealie: mealie/CHANGELOG.md
+mylar3: mylar3/CHANGELOG.md
+nextcloud ocr: nextcloud ocr/CHANGELOG.md
+nzbget: nzbget/CHANGELOG.md
+ombi: ombi/CHANGELOG.md
+organizr: organizr/CHANGELOG.md
+paperless ng: paperless ng/CHANGELOG.md
+papermerge: papermerge/CHANGELOG.md
+photoprism: photoprism/CHANGELOG.md
+piwigo: piwigo/CHANGELOG.md
+plex: plex/CHANGELOG.md
+portainer: portainer/CHANGELOG.md
+prowlarr: prowlarr/CHANGELOG.md
+qbittorrent: qbittorrent/CHANGELOG.md
+radarr: radarr/CHANGELOG.md
+readarr: readarr/CHANGELOG.md
+requestrr: requestrr/CHANGELOG.md
+resioliosync: resioliosync/CHANGELOG.md
+scrutiny: scrutiny/CHANGELOG.md
+sonarr: sonarr/CHANGELOG.md
+tandoor recipes: tandoor recipes/CHANGELOG.md
+teamspeak: teamspeak/CHANGELOG.md
+transmission: transmission/CHANGELOG.md
+ubooquity: ubooquity/CHANGELOG.md
+webtrees: webtrees/CHANGELOG.md
+wger: wger/CHANGELOG.md
+whoogle-search: whoogle-search/CHANGELOG.md
+xteve: xteve/CHANGELOG.md
