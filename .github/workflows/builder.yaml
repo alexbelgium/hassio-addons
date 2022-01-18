@@ -2,7 +2,7 @@ name: Builder
 
 env:
   BUILD_ARGS: "--test"
-  MONITORED_FILES: "CHANGELOG.md"
+  MONITORED_FILES: "config.json"
 
 on:
   push:
