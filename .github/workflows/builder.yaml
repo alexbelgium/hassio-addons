@@ -55,10 +55,10 @@ jobs:
           version=${{ steps.information.outputs.version }}
           echo "Using imagetemplate '$imagetemplate'"
           echo "::set-output name=armhf::${imagetemplate/\{arch\}/armhf}${version}"
-          echo "::set-output name=armv7::${imagetemplate/\{arch\}/armv7}:${version}"
-          echo "::set-output name=aarch64::${imagetemplate/\{arch\}/aarch64}:${version}"
-          echo "::set-output name=amd64::${imagetemplate/\{arch\}/amd64}:${version}"
-          echo "::set-output name=i386::${imagetemplate/\{arch\}/i386}:${version}"
+          echo "::set-output name=armv7::${imagetemplate/\{arch\}/armv7}${version}"
+          echo "::set-output name=aarch64::${imagetemplate/\{arch\}/aarch64}${version}"
+          echo "::set-output name=amd64::${imagetemplate/\{arch\}/amd64}${version}"
+          echo "::set-output name=i386::${imagetemplate/\{arch\}/i386}${version}"
       - name: 🏷️ Create addon labels
         id: labels
         shell: bash
