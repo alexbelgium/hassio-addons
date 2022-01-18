@@ -3,7 +3,7 @@
   "description": "M3U Proxy for Plex DVR and Emby Live TV",
   "environment": {},
   "map": ["config:rw", "share:rw"],
-  "name ": "Xteve",
+  "name": "Xteve",
   "options": {},
   "ports": {
     "34400/tcp": 34400

@@ -8,7 +8,7 @@
   "image": "ghcr.io/alexbelgium/arpspoof-{arch}",
   "map": [],
   "host_network": true,
-  "name ": "Arpspoof",
+  "name": "Arpspoof",
   "options": {
     "ROUTER_IP": "yourip"
   },

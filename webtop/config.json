@@ -60,7 +60,7 @@
     "shm_size": "1gb"
   },
   "map": ["media:rw", "share:rw", "ssl"],
-  "name ": "Webtop",
+  "name": "Webtop",
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "ports": {
     "3000/tcp": 3000

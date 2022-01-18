@@ -1,5 +1,5 @@
 {
-  "name ": "Lidarr NAS",
+  "name": "Lidarr NAS",
   "version": "0.8.1.2135-ls69",
   "slug": "lidarr_nas",
   "description": "Music collection manager for Usenet and BitTorrent users",

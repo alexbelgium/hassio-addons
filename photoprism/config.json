@@ -40,7 +40,7 @@
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password"
   },
   "map": ["media:rw", "share:rw"],
-  "name ": "Photoprism",
+  "name": "Photoprism",
   "options": {
     "networkdisks": "//server/share",
     "cifsusername": "username",

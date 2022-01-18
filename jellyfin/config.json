@@ -51,7 +51,7 @@
     "/dev/nvme2"
   ],
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
-  "name ": "Jellyfin NAS",
+  "name": "Jellyfin NAS",
   "host_dbus": true,
   "options": {
     "PUID": 0,

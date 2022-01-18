@@ -49,7 +49,7 @@
     "share:rw",
     "ssl:rw"
   ],
-  "name ": "Filebrowser",
+  "name": "Filebrowser",
   "options": {
     "ssl": false,
     "certfile": "fullchain.pem",

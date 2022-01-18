@@ -4,7 +4,7 @@
   "environment": {},
   "host_network": true,
   "map": ["ssl"],
-  "name ": "Inadyn",
+  "name": "Inadyn",
   "image": "ghcr.io/alexbelgium/inadyn-{arch}",
   "options": {
     "providers": [

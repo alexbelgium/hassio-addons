@@ -9,7 +9,7 @@
     "TRUSTED_PROXIES": "**"
   },
   "map": ["config:rw", "share:rw", "ssl"],
-  "name ": "Firefly iii Data Importer",
+  "name": "Firefly iii Data Importer",
   "options": {},
   "ports": {
     "8080/tcp": 3474

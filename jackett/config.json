@@ -1,5 +1,5 @@
 {
-  "name ": "Jackett NAS",
+  "name": "Jackett NAS",
   "version": "0.20.371",
   "slug": "jackett_nas",
   "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",

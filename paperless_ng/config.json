@@ -41,7 +41,7 @@
     "PGID": "0"
   },
   "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
-  "name ": "Paperless NG",
+  "name": "Paperless NG",
   "options": {
     "PUID": 0,
     "PGID": 0,

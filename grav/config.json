@@ -6,7 +6,7 @@
   "environment": {},
   "image": "ghcr.io/alexbelgium/grav-{arch}",
   "map": ["share:rw", "media:rw", "config:rw"],
-  "name ": "Grav web server",
+  "name": "Grav web server",
   "options": {
     "PUID": 1000,
     "PGID": 1000

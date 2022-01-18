@@ -4,7 +4,7 @@
   "description": "Open source password management solution",
   "init": false,
   "map": ["ssl"],
-  "name ": "Vaultwarden (Bitwarden)",
+  "name": "Vaultwarden (Bitwarden)",
   "image": "ghcr.io/alexbelgium/vaultwarden-{arch}",
   "options": {
     "ssl": true,

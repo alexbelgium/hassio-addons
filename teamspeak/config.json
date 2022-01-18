@@ -11,7 +11,7 @@
   },
   "image": "ghcr.io/alexbelgium/teamspeak_server-{arch}",
   "map": ["share:rw"],
-  "name ": "Teamspeak server",
+  "name": "Teamspeak server",
   "ports": {
     "9987/udp": "9987",
     "10011/tcp": "10011",

@@ -8,7 +8,7 @@
     "FG_WEBUI_PASSWD": ""
   },
   "map": ["share:rw", "config:rw"],
-  "name ": "Flexget",
+  "name": "Flexget",
   "options": {
     "PUID": 0,
     "PGID": 0

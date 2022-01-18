@@ -8,7 +8,7 @@
   },
   "map": [],
   "image": "ghcr.io/alexbelgium/requestrr-{arch}",
-  "name ": "requestrr",
+  "name": "requestrr",
   "options": {
     "PUID": 0,
     "PGID": 0

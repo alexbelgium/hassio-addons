@@ -1,6 +1,6 @@
 {
   "host_network": true,
-  "name ": "Emby NAS",
+  "name": "Emby NAS",
   "version": "4.7.0.20",
   "slug": "emby_nas",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
