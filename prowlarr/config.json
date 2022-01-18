@@ -9,7 +9,7 @@
   },
   "image": "ghcr.io/alexbelgium/prowlarr-{arch}",
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
-  "name": "Prowlarr NAS",
+  "name ": "Prowlarr NAS",
   "options": {
     "PUID": 0,
     "PGID": 0,

@@ -9,7 +9,7 @@
   },
   "image": "ghcr.io/alexbelgium/elasticsearch-{arch}",
   "map": ["config:rw"],
-  "name": "Elasticsearch server",
+  "name ": "Elasticsearch server",
   "options": {},
   "host_network": true,
   "ports": {

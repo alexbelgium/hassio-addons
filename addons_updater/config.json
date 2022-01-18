@@ -8,7 +8,7 @@
   },
   "ingress": false,
   "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
-  "name": "Addons_Updater",
+  "name ": "Addons_Updater",
   "options": {
     "addon": [
       {

@@ -38,7 +38,7 @@
   "environment": {},
   "image": "ghcr.io/alexbelgium/resiliosync-{arch}",
   "map": ["share:rw", "config:rw"],
-  "name": "ResilioSync",
+  "name ": "ResilioSync",
   "options": {
     "PUID": 0,
     "PGID": 0

@@ -50,7 +50,7 @@
   "ingress": true,
   "ingress_port": 8099,
   "map": ["media:rw", "config:rw", "share:rw", "ssl"],
-  "name": "Qbittorrent",
+  "name ": "Qbittorrent",
   "options": {
     "ssl": false,
     "certfile": "fullchain.pem",

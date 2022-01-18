@@ -1,5 +1,5 @@
 {
-  "name": "Readarr NAS",
+  "name ": "Readarr NAS",
   "version": "nightly-alpine-0.1.0.1175-ls12",
   "slug": "readarr_nas",
   "description": "Book Manager and Automation",

@@ -4,7 +4,7 @@
   "description": "Open source document management system (DMS)",
   "environment": {},
   "map": ["share:rw", "media:rw", "ssl", "config:rw"],
-  "name": "Papermerge",
+  "name ": "Papermerge",
   "image": "ghcr.io/alexbelgium/papermerge-{arch}",
   "options": {
     "PUID": 0,

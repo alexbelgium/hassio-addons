@@ -8,7 +8,7 @@
     "TRUSTED_PROXIES": "**"
   },
   "map": ["config:rw", "share:rw", "ssl"],
-  "name": "Firefly iii",
+  "name ": "Firefly iii",
   "image": "ghcr.io/alexbelgium/fireflyiii-{arch}",
   "options": {
     "DB_CONNECTION": "sqlite_internal",

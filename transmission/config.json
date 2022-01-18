@@ -39,7 +39,7 @@
   ],
   "environment": {},
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
-  "name": "Transmission NAS",
+  "name ": "Transmission NAS",
   "options": {
     "PUID": 0,
     "PGID": 0,

@@ -9,7 +9,7 @@
   "image": "ghcr.io/alexbelgium/joal-{arch}",
   "ingress_port": 8099,
   "map": ["config:rw"],
-  "name": "Joal",
+  "name ": "Joal",
   "options": {
     "ui_path": "joal",
     "secret_token": "lrMY24Byhx",

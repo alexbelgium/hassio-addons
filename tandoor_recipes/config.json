@@ -9,7 +9,7 @@
   },
   "map": ["config:rw"],
   "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
-  "name": "Tandoor recipes",
+  "name ": "Tandoor recipes",
   "options": {
     "SECRET_KEY": "YOUR_SECRET_KEY",
     "DB_TYPE": "sqlite",

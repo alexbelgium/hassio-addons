@@ -10,7 +10,7 @@
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "ingress_port": 8099,
   "map": ["share:rw", "ssl:rw"],
-  "name": "Mealie",
+  "name ": "Mealie",
   "options": {
     "ssl": false,
     "certfile": "fullchain.pem",

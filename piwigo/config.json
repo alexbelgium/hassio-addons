@@ -39,7 +39,7 @@
     "PWG_LOCAL_DIR": "/data"
   },
   "map": ["media:rw", "share:rw", "ssl"],
-  "name": "Piwigo",
+  "name ": "Piwigo",
   "options": {
     "PUID": 1000,
     "PGID": 1000

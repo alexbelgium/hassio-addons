@@ -38,7 +38,7 @@
   ],
   "environment": {},
   "map": ["media:rw", "config:rw", "share:rw", "ssl"],
-  "name": "Ubooquity",
+  "name ": "Ubooquity",
   "options": {
     "PUID": 0,
     "PGID": 0,

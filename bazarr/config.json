@@ -1,5 +1,5 @@
 {
-  "name": "Bazarr NAS",
+  "name ": "Bazarr NAS",
   "version": "1.0.2",
   "slug": "bazarr_nas",
   "description": "Companion application to Sonarr and Radarr to download subtitles",

@@ -5,7 +5,7 @@
   "image": "ghcr.io/alexbelgium/wger-{arch}",
   "environment": {},
   "map": ["share:rw", "ssl:ro"],
-  "name": "Wger",
+  "name ": "Wger",
   "options": {},
   "ports": {
     "8000/tcp": "9927"

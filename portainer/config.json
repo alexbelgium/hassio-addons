@@ -9,7 +9,7 @@
   "init": false,
   "image": "ghcr.io/alexbelgium/portainer-{arch}",
   "map": ["share:rw", "ssl"],
-  "name": "Portainer",
+  "name ": "Portainer",
   "options": {
     "ssl": false,
     "certfile": "fullchain.pem",

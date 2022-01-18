@@ -38,7 +38,7 @@
   ],
   "environment": {},
   "map": ["backup:rw", "config:rw", "share:rw", "media:rw", "ssl"],
-  "name": "VS code",
+  "name ": "VS code",
   "options": {
     "PUID": 0,
     "PGID": 0

@@ -41,7 +41,7 @@
     "PGID": "0"
   },
   "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
-  "name": "Nzbget",
+  "name ": "Nzbget",
   "options": {
     "PUID": 0,
     "PGID": 0

@@ -53,7 +53,7 @@
     "WT_EMAIL": "me@example.com"
   },
   "map": ["config:rw", "share:rw", "ssl"],
-  "name": "Webtrees",
+  "name ": "Webtrees",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/webtrees/config.yaml",
     "BASE_URL": "http://192.168.178.23",

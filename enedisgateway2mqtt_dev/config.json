@@ -2,7 +2,7 @@
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "description": "use Enedis Gateway API to send data in your MQTT Broker (latest-dev channel)",
   "map": ["config:rw"],
-  "name": "Enedisgateway2mqtt Dev",
+  "name ": "Enedisgateway2mqtt Dev",
   "options": {
     "CONFIG_LOCATION": "/config/enedisgateway2mqtt_dev/config.yaml",
     "TZ": "Europe/Paris"

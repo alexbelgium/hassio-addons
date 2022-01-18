@@ -53,7 +53,7 @@
     "PGID": "0"
   },
   "map": ["share:rw", "media:rw", "ssl"],
-  "name": "Plex NAS",
+  "name ": "Plex NAS",
   "options": {
     "PUID": 0,
     "PGID": 0,
