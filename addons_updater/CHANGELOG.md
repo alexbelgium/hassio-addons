@@ -1,1 +1,2 @@
+- Automatic builds
 - Initial build
