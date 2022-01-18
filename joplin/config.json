@@ -3,7 +3,7 @@
   "version": "2.6.10",
   "upstream": "2.6.10",
   "slug": "joplin",
-  "description": "Self-hosted open source note-taking application",
+  "description ": "Self-hosted open source note-taking application",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:22300]",
   "ports": {

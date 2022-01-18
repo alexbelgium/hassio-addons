@@ -2,7 +2,7 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
-  "description": "Data importer for Firefly III (separate addon)",
+  "description ": "Data importer for Firefly III (separate addon)",
   "devices": [],
   "image": "ghcr.io/alexbelgium/fireflyiii-importer-{arch}",
   "environment": {
