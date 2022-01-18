@@ -1,7 +1,7 @@
 # Those are the addon path filters used in the workflows to determine which addon needs to be build.
 #
-addons_updater: addons_updater/**
-arpspoof: arpspoof/**
+addons_updater: addons_updater/CHANGELOG.md
+arpspoof: arpspoof/CHANGELOG.md
 #bazarr: bazarr/**
 #bitwarden: bitwarden/**
 #booksonic-air: booksonic-air/**
