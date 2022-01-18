@@ -3,6 +3,6 @@
   "reporters": ["html", "markdown"],
   "ignore": [
     "**/.git/**",
-    "**/*.md",
+    "**/*.md"
   ]
 }
