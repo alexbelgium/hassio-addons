@@ -2,7 +2,7 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "manual",
-  "description": "Automatic addons update by aligning version tag with upstream releases",
+  "description ": "Automatic addons update by aligning version tag with upstream releases",
   "environment": {
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },

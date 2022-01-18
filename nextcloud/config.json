@@ -42,7 +42,7 @@
   "hassio_api": true,
   "ingress_port": 0,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
-  "description": "Nextcloud for Home Assistant",
+  "description ": "Nextcloud for Home Assistant",
   "boot": "manual",
   "uart": true,
   "map": ["share:rw", "media:rw", "ssl:rw"],

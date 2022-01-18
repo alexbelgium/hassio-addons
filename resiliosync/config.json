@@ -1,7 +1,7 @@
 {
   "arch": ["aarch64", "amd64", "armhf", "armv7"],
   "boot": "auto",
-  "description": "Self-hosted file share and collaboration platform on the web",
+  "description ": "Self-hosted file share and collaboration platform on the web",
   "devices": [
     "/dev/net/tun",
     "/dev/sda",
