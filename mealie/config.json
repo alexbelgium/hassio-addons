@@ -1,7 +1,7 @@
 {
   "arch": ["aarch64", "amd64", "armhf", "armv7"],
   "boot": "auto",
-  "description ": "Mealie is a self hosted recipe manager and meal planner built in Vue",
+  "description": "Mealie is a self hosted recipe manager and meal planner built in Vue",
   "environment": {
     "DB_ENGINE": "sqlite",
     "APP_PORT": "9925"

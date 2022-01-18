@@ -2,7 +2,7 @@
   "name": "Radarr NAS",
   "version": "3.2.2.5080-7",
   "slug": "radarr_nas",
-  "description ": "A fork of Sonarr to work with movies like Couchpotato",
+  "description": "A fork of Sonarr to work with movies like Couchpotato",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],

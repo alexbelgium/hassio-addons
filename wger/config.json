@@ -1,7 +1,7 @@
 {
   "arch": ["amd64", "aarch64"],
   "boot": "auto",
-  "description ": "manage your personal workouts, weight and diet plans",
+  "description": "manage your personal workouts, weight and diet plans",
   "image": "ghcr.io/alexbelgium/wger-{arch}",
   "environment": {},
   "map": ["share:rw", "ssl:ro"],

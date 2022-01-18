@@ -1,6 +1,6 @@
 {
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
-  "description ": "use Enedis Gateway API to send data in your MQTT Broker (latest channel)",
+  "description": "use Enedis Gateway API to send data in your MQTT Broker (latest channel)",
   "map": ["config:rw"],
   "name": "Enedisgateway2mqtt",
   "options": {

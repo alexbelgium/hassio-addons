@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "upstream": "2.1.0",
   "slug": "flaresolverr",
-  "description ": "Proxy server to bypass Cloudflare protection ",
+  "description": "Proxy server to bypass Cloudflare protection ",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8191]",
   "image": "ghcr.io/alexbelgium/flaresolverr-{arch}",
