@@ -5,7 +5,8 @@
   "environment": {
     "PUID": "0",
     "PGID": "0",
-    "HOME": "/share/webtop"
+    "HOME": "/share/webtop",
+    "shm_size": "1gb"
   },
   "description": "Full linux desktop environment accessible via any modern web browser",
   "image": "ghcr.io/alexbelgium/webtop-{arch}",
@@ -54,11 +55,6 @@
     "/dev/nvme2"
   ],
   "video": true,
-  "environment": {
-    "PUID": "0",
-    "PGID": "0",
-    "shm_size": "1gb"
-  },
   "map": ["media:rw", "share:rw", "ssl"],
   "name": "Webtop",
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
