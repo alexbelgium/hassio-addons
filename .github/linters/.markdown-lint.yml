@@ -18,8 +18,14 @@
 ###############
 # Rules by id #
 ###############
-MD013: false # Maximum 80 characters per line
-MD041: false # First-line-heading/first-line-h1
+MD001: false    # Heading levels should only increment by one level at a time
+MD002: false    # First header should be a h1 header
+MD007:          # Unordered list indentation
+  indent: 2
+MD012: false    # Multiple consecutive blank lines
+MD013: false    # Line length
+MD025: false    # Multiple top level headings in the same document
+MD041: false    # First line in file should be a top level header
 
 #################
 # Rules by tags #
