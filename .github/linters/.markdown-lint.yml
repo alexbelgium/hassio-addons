@@ -18,9 +18,10 @@
 ###############
 # Rules by id #
 ###############
-MD041: false #/first-line-heading/first-line-h1
+MD013: false # Maximum 80 characters per line
+MD041: false # First-line-heading/first-line-h1
 
 #################
 # Rules by tags #
 #################
-blank_lines: false  # Error on blank lines
+blank_lines: false # Error on blank lines

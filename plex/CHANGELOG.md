@@ -80,14 +80,6 @@
 
 - Update to latest version from linuxserver/docker-prowlarr
 
-## 1.23.3.4707-ebb5fe9f3-ls58 (22-06-2021)
-
-- Update to latest version from linuxserver/docker-plex
-
-## nightly-0.1.0.515-ls41 (22-06-2021)
-
-- Update to latest version from linuxserver/docker-prowlarr
-
 ## 1.23.3.4707-ebb5fe9f3-ls57 (22-06-2021)
 
 - Update to latest version from linuxserver/docker-plex
