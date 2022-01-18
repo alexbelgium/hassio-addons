@@ -25,12 +25,13 @@ FROM photoprism/photoprism:latest
 
 RUN \
     # Create directories
-    mkdir -m 777 -p \
+    mkdir -p \
     /data/photoprism/originals \
     /data/photoprism/import \
     /data/photoprism/storage/config \
     /data/photoprism/backup \
     /data/photoprism/storage/cache && \
+    chmod -R 777 /data/photoprism \
     chown -Rf photoprism:photoprism /data/photoprism && \
     chmod -Rf a+rwx /data/photoprism && \
     # rename entrypoint
