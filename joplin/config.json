@@ -10,12 +10,11 @@
     "22300/tcp": 22300
   },
   "apparmor": true,
+  "image": "ghcr.io/alexbelgium/joplin-{arch}",
   "ports_description": {
     "22300/tcp": "Web interface"
   },
-  "map": [
-    "ssl"
-  ],
+  "map": ["ssl"],
   "environment": {
     "APP_PORT": "22300"
   },
@@ -39,10 +38,5 @@
     "MAILER_NOREPLY_NAME": "str?",
     "MAILER_NOREPLY_EMAIL": "str?"
   },
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armhf",
-    "armv7"
-  ]
+  "arch": ["aarch64", "amd64", "armhf", "armv7"]
 }

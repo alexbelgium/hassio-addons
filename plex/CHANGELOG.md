@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 ## 1.25.3.5409-f11334058-ls97 (15-01-2022)
 
 - Update to latest version from linuxserver/docker-plex

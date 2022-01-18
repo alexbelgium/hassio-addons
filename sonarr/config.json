@@ -42,6 +42,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "image": "ghcr.io/alexbelgium/sonarr-{arch}",
   "environment": {
     "PUID": "0",
     "PGID": "0"

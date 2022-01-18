@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 ## 20220107 (07-01-2022)
 
 - Update to latest version from photoprism/photoprism

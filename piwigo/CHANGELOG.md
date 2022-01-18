@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 
 ## 12.2.0 (04-01-2022)
 - Update to latest version from linuxserver/docker-piwigo

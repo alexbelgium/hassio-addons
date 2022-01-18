@@ -8,6 +8,7 @@
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
   "upstream": "3.2.2.5080",
+  "image": "ghcr.io/alexbelgium/radarr-{arch}",
   "webui": "http://[HOST]:[PORT:7878]",
   "startup": "services",
   "devices": [

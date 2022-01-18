@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 ## 2.1.29 (23-12-2021)
 
 - Update to latest version from anthonyraymond/joal

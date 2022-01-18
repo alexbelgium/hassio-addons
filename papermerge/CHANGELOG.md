@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 - Allow custom config location
 - Config exposed in /config/addons_config/papermerge
 - New standardized logic for Dockerfile build and packages installation

@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 
 ## 0.7.1 (03-01-2022)
 - Breaking change

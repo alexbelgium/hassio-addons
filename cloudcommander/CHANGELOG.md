@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 
 ## 15.9.14 (15-01-2022)
 - Update to latest version from coderaiser/cloudcmd

@@ -1,10 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armhf",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armhf", "armv7"],
   "boot": "auto",
   "description": "Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family",
   "environment": {
@@ -12,11 +7,9 @@
     "APP_PORT": "9925"
   },
   "ingress": false,
+  "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "ingress_port": 8099,
-  "map": [
-    "share:rw",
-    "ssl:rw"
-  ],
+  "map": ["share:rw", "ssl:rw"],
   "name": "Mealie",
   "options": {
     "ssl": false,

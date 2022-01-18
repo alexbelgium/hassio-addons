@@ -6,6 +6,7 @@
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "image": "ghcr.io/alexbelgium/whoogle-{arch}",
   "boot": "auto",
   "upstream": "0.7.0",
   "webui": "http://[HOST]:[PORT:5000]",
@@ -13,7 +14,7 @@
   "environment": {},
   "map": ["config:rw"],
   "options": {
-    "TZ":"Europe/Amsterdam",
+    "TZ": "Europe/Amsterdam",
     "WHOOGLE_CONFIG_URL": "https://website.com",
     "WHOOGLE_CONFIG_LANGUAGE": "lang_en"
   },

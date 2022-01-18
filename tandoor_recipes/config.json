@@ -1,10 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
   "description": "recipe manager",
   "environment": {
@@ -12,9 +7,8 @@
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
     "DEBUG": "0"
   },
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
+  "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
   "name": "Tandoor recipes",
   "options": {
     "SECRET_KEY": "YOUR_SECRET_KEY",
@@ -27,9 +21,7 @@
   "ports_description": {
     "8080/tcp": "Web interface"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "schema": {
     "SECRET_KEY": "str",
     "DB_TYPE": "list(sqlite|postgresql_external)",

@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 ## 10.7.7-1-ls149 (15-01-2022)
 
 - Update to latest version from linuxserver/docker-jellyfin

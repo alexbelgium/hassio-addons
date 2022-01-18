@@ -1,14 +1,10 @@
 {
   "host_network": true,
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7",
-    "armhf"
-  ],
+  "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
+  "image": "ghcr.io/alexbelgium/jellyfin-{arch}",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
@@ -54,12 +50,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Jellyfin NAS",
   "host_dbus": true,
   "options": {
@@ -78,11 +69,7 @@
     "7359/udp": "udp server discover (optional)",
     "1900/udp": "dlna (optional)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH",
-    "NET_ADMIN"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "schema": {
     "PUID": "int",
     "PGID": "int",

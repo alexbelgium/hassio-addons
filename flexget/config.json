@@ -1,20 +1,13 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armhf",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armhf", "armv7"],
   "description": "FlexGet is a multipurpose automation tool for all of your media",
+  "image": "ghcr.io/alexbelgium/flexget-{arch}",
   "environment": {
     "FG_PLUGINS": "",
     "FG_WEBUI_PASSWD": ""
   },
-  "map": [
-    "share:rw",
-    "config:rw"
-  ],
+  "map": ["share:rw", "config:rw"],
   "name": "Flexget",
   "options": {
     "PUID": 0,

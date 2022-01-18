@@ -1,2 +1,2 @@
-- Automatic builds
+- Automatic builds (reduced size, local wear, install duration...)
 - Initial build

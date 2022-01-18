@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 ## 0.8.1.2135-ls69 (16-01-2022)
 
 - Update to latest version from linuxserver/docker-lidarr

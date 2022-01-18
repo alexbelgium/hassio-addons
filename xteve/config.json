@@ -11,6 +11,7 @@
   "ports_description": {
     "34400/tcp": "Web interface"
   },
+  "image": "ghcr.io/alexbelgium/xteve-{arch}",
   "schema": {},
   "slug": "xteve",
   "upstream": "2.2.0.200",

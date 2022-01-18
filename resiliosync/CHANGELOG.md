@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - New standardized logic for Dockerfile build and packages installation
 - Add local & smb mounts (see readme)

@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 
 ## 1.23.1 (15-12-2021)
 - Update to latest version from dani-garcia/bitwarden_rs

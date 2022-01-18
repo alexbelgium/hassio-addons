@@ -10,6 +10,7 @@
     "verbose": true
   },
   "services": ["mqtt:want"],
+  "image": "ghcr.io/alexbelgium/enedisgateway2mqtt-{arch}",
   "schema": {
     "CONFIG_LOCATION": "str",
     "mqtt_autodiscover": "bool",

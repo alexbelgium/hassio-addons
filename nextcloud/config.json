@@ -4,6 +4,7 @@
   "version": "23.0.0-10",
   "upstream": "23.0.0",
   "slug": "nextcloud_ocr",
+  "image": "ghcr.io/alexbelgium/nextcloud-{arch}",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -36,10 +37,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "ingress": false,
   "hassio_api": true,
   "ingress_port": 0,

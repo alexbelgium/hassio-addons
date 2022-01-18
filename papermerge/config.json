@@ -2,16 +2,16 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "description": "Open source document management system (DMS)",
-  "environment": {
-  },
+  "environment": {},
   "map": ["share:rw", "media:rw", "ssl", "config:rw"],
   "name": "Papermerge",
+  "image": "ghcr.io/alexbelgium/papermerge-{arch}",
   "options": {
     "PUID": 0,
     "PGID": 0,
     "ocrlang": "eng,fra",
     "storage_dir": "/data/media",
-    "import_dir": "/share/papermerge/import", 
+    "import_dir": "/share/papermerge/import",
     "CONFIG_LOCATION": "/config/addons_config/papermerge"
   },
   "ports": {

@@ -10,10 +10,9 @@
   "upstream": "4.3.3",
   "webui": "http://[HOST]:[PORT:3579]",
   "startup": "services",
+  "image": "ghcr.io/alexbelgium/ombi-{arch}",
   "environment": {},
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "options": {
     "PUID": 0,
     "PGID": 0

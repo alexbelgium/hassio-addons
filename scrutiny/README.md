@@ -4,7 +4,7 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
-![Supports 
+![Supports
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
 
 Hi, I've create an addon for my use and wanted to share it if it can be useful to other people ;-)
@@ -17,7 +17,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ---
 
-[Scrutiny](https://github.com/AnalogJ/scrutiny) is a Hard Drive Health Dashboard & Monitoring solution, merging manufacturer provided S.M.A.R.T metrics with real-world failure rates. This addon is based on the [docker image](https://hub.docker.com/r/linuxserver/scrutiny) from [linuxserver.io](https://www.linuxserver.io/).
+[Scrutiny](https://github.com/AnalogJ/scrutiny) is a Hard Drive Health Dashboard & Monitoring solution, merging manufacturer provided S.M.A.R.T metrics with real-world failure rates. This addon is based on the [docker image](https://hub.docker.com/r/linuxserver/scrutiny) from [linuxserver.io](https://www.linuxserver.io/).
 
 Features :
 

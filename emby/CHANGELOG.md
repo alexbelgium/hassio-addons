@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 ## 4.7.0.20 (12-01-2022)
 
 - Update to latest version from linuxserver/docker-emby

@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 
 ## 2.6.10 (20-12-2021)
 - Update to latest version from laurent22/joplin

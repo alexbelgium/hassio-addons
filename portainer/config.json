@@ -1,10 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armhf",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armhf", "armv7"],
   "description": "Manage your Docker environment with ease",
   "docker_api": true,
   "hassio_api": true,
@@ -12,10 +7,8 @@
   "ingress_port": 1337,
   "ingress_stream": true,
   "init": false,
-  "map": [
-    "share:rw",
-    "ssl"
-  ],
+  "image": "ghcr.io/alexbelgium/portainer-{arch}",
+  "map": ["share:rw", "ssl"],
   "name": "Portainer",
   "options": {
     "ssl": false,

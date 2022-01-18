@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 
 ## 1.0.4.1 (18-01-2022)
 - Update to latest version from TandoorRecipes/recipes

@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 - Allow mounting smb and local drives for data storage
 - Allow Mariadb addon autodiscovery as database
 

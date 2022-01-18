@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 - New standardized logic for Dockerfile build and packages installation
 
 ## 0.5.4 (03-12-2021)

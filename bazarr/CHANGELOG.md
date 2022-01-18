@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 ## 1.0.2 (04-01-2022)
 
 - Update to latest version from linuxserver/docker-bazarr

@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 
 ## 0.6.3 (06-01-2022)
 - Update to latest version from linuxserver/docker-mylar3

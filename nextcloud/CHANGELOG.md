@@ -1,3 +1,4 @@
+- Automatic builds (reduced size, local wear, install duration...)
 - Automatic mount of local and smb mounts (see readme) 
 - New "Data directory" option that allows to define the folder where data are stored
 - Provides MariaDB addon information to use it as database on first installation
