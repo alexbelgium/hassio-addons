@@ -1,17 +1,18 @@
-
 ## 10.7.7-1-ls149 (15-01-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 - "host_network": true to enable UPNP, chromecast, ...
 - Code to repair database due to a bug that occured when the config location changed
 
 ## 10.7.7-1-ls148 (06-01-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - New standardized logic for Dockerfile build and packages installation
 - Add local mount (see readme)
 - Added watchdog feature
 - Allow mounting of devices up to sdg2
-- Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
+- SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 
 ## 10.7.7-1-ls130 (06-09-2021)
 

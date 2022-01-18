@@ -1,8 +1,9 @@
-
 ## 14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls166 (07-01-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls165 (04-01-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 - Removed watchdog
 - New standardized logic for Dockerfile build and packages installation
@@ -12,7 +13,7 @@
 ## 14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls159 (31-10-2021)
 
 - Update to latest version from linuxserver/docker-qbittorrent
-- Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
+- SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 
 ## 14.3.8.99202110120741-7429-1bae770b2ubuntu20.04.1-ls158 (13-10-2021)
 

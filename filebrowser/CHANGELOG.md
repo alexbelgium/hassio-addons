@@ -18,7 +18,7 @@
 - Allow mounting of devices up to sdg2
 - Allow uploads >16mb
 - Allow local mount in protected mode
-- Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
+- SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 
 ## 2.17.2 (28-08-2021)
 

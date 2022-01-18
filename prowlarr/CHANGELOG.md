@@ -1,26 +1,33 @@
-
 ## nightly-alpine-0.2.0.1407-ls25 (18-01-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.2.0.1395-ls259 (18-01-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.10.1386-ls257 (16-01-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.1.10.1375-ls256 (15-01-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-alpine-0.1.10.1375-ls20 (09-01-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-alpine-0.1.10.1357-ls18 (04-01-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-alpine-0.1.10.1352-ls17 (04-01-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-alpine-0.1.10.1341-ls11 (01-01-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 
@@ -172,7 +179,7 @@
 ## nightly-0.1.1.1030-ls162 (26-10-2021)
 
 - Update to latest version from linuxserver/docker-prowlarr
-- Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
+- SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 
 ## nightly-0.1.1.1029-ls161 (19-10-2021)
 

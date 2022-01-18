@@ -1,20 +1,25 @@
-
 ## nightly-alpine-0.1.0.1175-ls12 (18-01-2022)
+
 - Update to latest version from linuxserver/docker-readarr
 
 ## nightly-0.1.0.1162-ls66 (16-01-2022)
+
 - Update to latest version from linuxserver/docker-readarr
 
 ## nightly-0.1.0.1161-ls65 (15-01-2022)
+
 - Update to latest version from linuxserver/docker-readarr
 
 ## nightly-alpine-0.1.0.1156-ls5 (04-01-2022)
+
 - Update to latest version from linuxserver/docker-readarr
 
 ## nightly-alpine-0.1.0.1154-ls4
+
 - uppdated to version ls4
 
 ## nightly-alpine-0.1.0.1154-ls3 (01-01-2022)
+
 - Update to latest version from linuxserver/docker-readarr
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 
@@ -124,7 +129,7 @@
 ## nightly-0.1.0.998-ls20 (23-10-2021)
 
 - Update to latest version from linuxserver/docker-readarr
-- Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
+- SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 
 ## nightly-0.1.0.997-ls19 (19-10-2021)
 

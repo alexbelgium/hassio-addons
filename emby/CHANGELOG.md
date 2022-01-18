@@ -1,22 +1,26 @@
-
 ## 4.7.0.20 (12-01-2022)
+
 - Update to latest version from linuxserver/docker-emby
 - "host_network": true to enable UPNP, chromecast, ...
 
 ## 4.7.0.19-1
+
 - Changed local config location
 
 ## 4.7.0.19 (14-12-2021)
+
 - Update to latest version from linuxserver/docker-emby
 - New standardized logic for Dockerfile build and packages installation
 
 ## 4.7.0.18 (20-11-2021)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.7.0.17 (08-11-2021)
+
 - Update to latest version from linuxserver/docker-emby
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
-- Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
+- SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 
 ## 4.7.0.15 (23-10-2021)
 

@@ -1,14 +1,17 @@
-
 ## v2201.1.0-ls42 (15-01-2022)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2112.2.0-ls41 (04-01-2022)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2112.2.0-ls39 (18-12-2021)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2112.1.0-ls38 (12-12-2021)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 - New standardized logic for Dockerfile build and packages installation
 
@@ -36,7 +39,7 @@
 ## nightly-0.1.0.998-ls20 (23-10-2021)
 
 - Update to latest version from linuxserver/docker-booksonic-air
-- Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
+- SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 
 ## nightly-0.1.0.997-ls19 (19-10-2021)
 

@@ -1,33 +1,39 @@
-
 ## 1.25.3.5409-f11334058-ls97 (15-01-2022)
+
 - Update to latest version from linuxserver/docker-plex
 
 ## 1.25.3.5385-f05b712b6-ls96 (12-01-2022)
+
 - Update to latest version from linuxserver/docker-plex
 - "host_network": true to enable UPNP, chromecast, ...
-  
+
 ## 1.25.2.5319-c43dc0277-ls95 (11-01-2022)
+
 - Update to latest version from linuxserver/docker-plex
 
 ## 1.25.2.5319-c43dc0277-ls94 (04-01-2022)
+
 - Update to latest version from linuxserver/docker-plex
 
 ## 1.25.2.5319-c43dc0277-ls92 (14-12-2021)
+
 - Update to latest version from linuxserver/docker-plex
 - New standardized logic for Dockerfile build and packages installation
 
 ## 1.25.1.5286-34f965be8-ls91 (07-12-2021)
+
 - Update to latest version from linuxserver/docker-plex
 - localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
 
 ## 1.25.0.5282-2edd3c44d-ls89 (02-12-2021)
+
 - Update to latest version from linuxserver/docker-plex
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 
 ## 1.24.5.5173-8dcc73a59-ls83 (28-10-2021)
 
 - Update to latest version from linuxserver/docker-plex
-- Improve SMB mount code to v1.5 ; accepts several network disks separated by commas (//123.12.12.12/share,//123.12.12.12/hello) that are mount to /mnt/$sharename
+- SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 
 ## 1.24.4.5081-e362dc1ee-ls79 (13-10-2021)
 
