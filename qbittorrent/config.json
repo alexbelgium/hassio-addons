@@ -4,7 +4,7 @@
   "backup_exclude": ["image.tar"],
   "boot": "auto",
   "image": "ghcr.io/alexbelgium/qbittorrent-{arch}",
-  "description ": "qBittorrent is a bittorrent client",
+  "description": "qBittorrent is a bittorrent client",
   "devices": [
     "/dev/net/tun",
     "/dev/sda",

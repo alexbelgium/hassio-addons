@@ -2,7 +2,7 @@
   "name": "Lidarr NAS",
   "version": "0.8.1.2135-ls69",
   "slug": "lidarr_nas",
-  "description ": "Music collection manager for Usenet and BitTorrent users",
+  "description": "Music collection manager for Usenet and BitTorrent users",
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/Readme.md",
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7", "armhf"],

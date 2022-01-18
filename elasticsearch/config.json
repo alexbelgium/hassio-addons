@@ -1,6 +1,6 @@
 {
   "arch": ["aarch64", "amd64"],
-  "description ": "Free and Open, Distributed, RESTful Search Engine",
+  "description": "Free and Open, Distributed, RESTful Search Engine",
   "environment": {
     "ES_JAVA_OPTS": "-Xms1024M -Xmx1024M",
     "bootstrap.memory_lock": "true",

@@ -1,6 +1,6 @@
 {
   "arch": ["aarch64", "amd64", "armhf", "armv7"],
-  "description ": "M3U Proxy for Plex DVR and Emby Live TV",
+  "description": "M3U Proxy for Plex DVR and Emby Live TV",
   "environment": {},
   "map": ["config:rw", "share:rw"],
   "name": "Xteve",
