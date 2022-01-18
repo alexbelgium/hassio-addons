@@ -23,7 +23,6 @@ FROM ${BUILD_FROM}
 ##################
 
 # Correct data path
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
     grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
 
