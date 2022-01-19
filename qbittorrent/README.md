@@ -70,7 +70,6 @@ cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
 openvpn_enabled: true/false # is openvpn required to start qbittorrent
-openvpn_alternative_mode: true/false # if enabled, will tunnel only qbittorrent and not webui through vpn. Allows webui connection from external networks, but risk of decreased stability.
 openvpn_config": For example "config.ovpn" # name of the file located in /config/openvpn.
 openvpn_username": USERNAME
 openvpn_password: YOURPASSWORD
