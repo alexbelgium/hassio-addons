@@ -1,0 +1,23 @@
+image: "homeassistant/{arch}-builder"
+shadow_repository: "ghcr.io/home-assistant"
+build_from:
+  aarch64: "ghcr.io/home-assistant/aarch64-base:3.14"
+  armv7: "ghcr.io/home-assistant/armv7-base:3.14"
+  armhf: "ghcr.io/home-assistant/armhf-base:3.14"
+  amd64: "ghcr.io/home-assistant/amd64-base:3.14"
+  i386: "ghcr.io/home-assistant/i386-base:3.14"
+codenotary:
+  signer: notary@home-assistant.io
+  base_image: notary@home-assistant.io
+args:
+  CAS_VERSION: "1.0.1"
+  YQ_VERSION: "v4.13.2"
+labels:
+  io.hass.type: builder
+  org.opencontainers.image.title: "Home Assistant Builder"
+  org.opencontainers.image.description: "Container-based build system for Home Assistant"
+  org.opencontainers.image.source: "https://github.com/home-assistant/builder"
+  org.opencontainers.image.authors: "The Home Assistant Authors"
+  org.opencontainers.image.url: "https://www.home-assistant.io/"
+  org.opencontainers.image.documentation: "https://developers.home-assistant.io/"
+  org.opencontainers.image.licenses: "Apache License 2.0"
