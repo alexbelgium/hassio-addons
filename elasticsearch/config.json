@@ -7,7 +7,6 @@
     "discovery.type": "single-node",
     "TINI_SUBREAPER": "true"
   },
-  "image": "ghcr.io/alexbelgium/elasticsearch-{arch}",
   "map": ["config:rw"],
   "name": "Elasticsearch server",
   "options": {},
