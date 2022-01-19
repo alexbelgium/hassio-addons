@@ -1,3 +1,6 @@
+
+## 3.2.10 (19-01-2022)
+- Update to latest version from flexget/flexget
 - Automatic builds (reduced size, local wear, install duration...)
 
 ## 3.2.9 (18-01-2022)
