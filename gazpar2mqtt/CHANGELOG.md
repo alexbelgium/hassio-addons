@@ -1,3 +1,6 @@
+
+## 0.8.0 (19-01-2022)
+- Update to latest version from yukulehe/gazpar2mqtt
 - Automatic builds (reduced size, local wear, install duration...)
 
 ## 0.7.0 (06-01-2022)
