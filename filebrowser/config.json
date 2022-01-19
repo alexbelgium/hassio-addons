@@ -1,6 +1,7 @@
 {
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
+  "image": "ghcr.io/alexbelgium/filebrowser-{arch}",
   "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files",
   "devices": [
     "/dev/sda",
