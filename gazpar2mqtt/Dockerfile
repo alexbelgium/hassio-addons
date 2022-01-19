@@ -14,7 +14,8 @@
 # 1 Build Image #
 #################
 
-FROM yukulehe/gazpar2mqtt:latest
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
 ##################
 # 2 Modify Image #
