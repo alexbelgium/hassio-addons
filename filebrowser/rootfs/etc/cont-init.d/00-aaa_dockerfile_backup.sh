@@ -2,7 +2,7 @@
 # If dockerfile failed install manually
 if [ -e "/MODULESFILE" ]; then
     echo "Executing modules script"
-    PACKAGES=$(</MODULESFILE)
+    MODULES=$(</MODULESFILE)
     (
         ##############################
         # Automatic modules download #
