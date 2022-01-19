@@ -9,7 +9,6 @@
     "DIST_UPDATE": "1",
     "TS_UPDATE": "1"
   },
-  "image": "ghcr.io/alexbelgium/teamspeak_server-{arch}",
   "map": ["share:rw"],
   "name": "Teamspeak server",
   "ports": {
