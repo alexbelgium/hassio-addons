@@ -7,11 +7,11 @@
 #Verbose or not
 VERBOSE=false
 #Avoid fails on non declared variables
-set +u 2>/dev/null
+set +u 2>/dev/null || true
 #If no packages, empty
 PACKAGES="${*:-}"
 #Avoids messages if non interactive
-echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections || true
+(echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections) || true
 
 [ "$VERBOSE" = true ] && echo "ENV : $PACKAGES"
 
