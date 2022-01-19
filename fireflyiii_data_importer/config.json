@@ -4,7 +4,6 @@
   "boot": "auto",
   "description": "Data importer for Firefly III (separate addon)",
   "devices": [],
-  "image": "ghcr.io/alexbelgium/fireflyiii-importer-{arch}",
   "environment": {
     "TRUSTED_PROXIES": "**"
   },
