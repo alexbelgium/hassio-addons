@@ -7,7 +7,6 @@
     "CONFIG_LOCATION": "/config/enedisgateway2mqtt_dev/config.yaml",
     "TZ": "Europe/Paris"
   },
-  "image": "ghcr.io/alexbelgium/enedisgateway2mqtt-dev-{arch}",
   "schema": {
     "CONFIG_LOCATION": "str",
     "TZ": "str?"
