@@ -1,7 +1,7 @@
 {
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "description ": "recipe manager",
+  "description": "recipe manager",
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",

@@ -2,7 +2,7 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "description ": "scan, index and archive all your physical documents",
+  "description": "scan, index and archive all your physical documents",
   "image": "ghcr.io/alexbelgium/paperless_ng-{arch}",
   "devices": [
     "/dev/sda",

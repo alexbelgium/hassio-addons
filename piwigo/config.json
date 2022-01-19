@@ -1,7 +1,7 @@
 {
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "description ": "Piwigo is a photo gallery software for the web",
+  "description": "Piwigo is a photo gallery software for the web",
   "image": "ghcr.io/alexbelgium/piwigo-{arch}",
   "devices": [
     "/dev/sda",

@@ -1,7 +1,7 @@
 {
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "description ": "web's leading on-line collaborative genealogy application",
+  "description": "web's leading on-line collaborative genealogy application",
   "devices": [
     "/dev/mmcblk0p8",
     "/dev/sda",

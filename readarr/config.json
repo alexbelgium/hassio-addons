@@ -2,7 +2,7 @@
   "name": "Readarr NAS",
   "version": "nightly-alpine-0.1.0.1181-ls14",
   "slug": "readarr_nas",
-  "description ": "Book Manager and Automation",
+  "description": "Book Manager and Automation",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
