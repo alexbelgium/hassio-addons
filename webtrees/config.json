@@ -2,7 +2,6 @@
   "arch": ["aarch64", "amd64", "armv7", "armhf"],
   "boot": "auto",
   "description": "web's leading on-line collaborative genealogy application",
-  "image": "ghcr.io/alexbelgium/webtrees-{arch}",
   "devices": [
     "/dev/mmcblk0p8",
     "/dev/sda",
