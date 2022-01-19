@@ -2,7 +2,7 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "description": "A free and open source personal finance manager",
+  "description ": "A free and open source personal finance manager",
   "devices": [],
   "environment": {
     "TRUSTED_PROXIES": "**"

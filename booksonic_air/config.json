@@ -3,7 +3,7 @@
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "image": "ghcr.io/alexbelgium/booksonic_air-{arch}",
-  "description": "platform for accessing the audibooks you own wherever you are",
+  "description ": "platform for accessing the audibooks you own wherever you are",
   "devices": [
     "/dev/sda",
     "/dev/sdb",

@@ -1,19 +1,12 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
-  "description": "FlexGet is a multipurpose automation tool for all of your media",
+  "arch": ["aarch64", "amd64", "armv7"],
+  "description ": "FlexGet is a multipurpose automation tool for all of your media",
   "environment": {
     "FG_PLUGINS": "",
     "FG_WEBUI_PASSWD": ""
   },
-  "map": [
-    "share:rw",
-    "config:rw"
-  ],
+  "map": ["share:rw", "config:rw"],
   "name": "Flexget",
   "options": {
     "PUID": 0,

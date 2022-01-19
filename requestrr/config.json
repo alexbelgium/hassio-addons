@@ -1,7 +1,7 @@
 {
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "description": "Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat",
+  "description ": "Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat",
   "environment": {
     "PUID": "0",
     "PGID": "0"

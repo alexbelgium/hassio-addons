@@ -2,7 +2,7 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "description": "Data importer for Firefly III (separate addon)",
+  "description ": "Data importer for Firefly III (separate addon)",
   "devices": [],
   "environment": {
     "TRUSTED_PROXIES": "**"

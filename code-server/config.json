@@ -2,7 +2,7 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "description": "Code-server is VS Code running on a remote server, accessible through the browser.",
+  "description ": "Code-server is VS Code running on a remote server, accessible through the browser.",
   "image": "ghcr.io/alexbelgium/code-server-{arch}",
   "devices": [
     "/dev/sda",

@@ -3,7 +3,7 @@
   "version": "0.3.13-6",
   "upstream": "0.3.13",
   "slug": "scrutiny",
-  "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
+  "description ": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
   "url": "https://github.com/AnalogJ/scrutiny",
   "startup": "services",
   "arch": ["aarch64", "amd64", "armv7"],

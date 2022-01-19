@@ -2,7 +2,7 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "description": "block internet connection for local network devices",
+  "description ": "block internet connection for local network devices",
   "devices": [],
   "environment": {},
   "map": [],
