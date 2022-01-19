@@ -5,7 +5,6 @@
   "description": "block internet connection for local network devices",
   "devices": [],
   "environment": {},
-  "image": "ghcr.io/alexbelgium/arpspoof-{arch}",
   "map": [],
   "host_network": true,
   "name": "Arpspoof",
