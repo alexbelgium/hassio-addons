@@ -6,7 +6,6 @@
   "hassio_api": true,
   "host_network": false,
   "ingress": true,
-  "image": "ghcr.io/alexbelgium/joal-{arch}",
   "ingress_port": 8099,
   "map": ["config:rw"],
   "name": "Joal",
