@@ -61,7 +61,7 @@ if bashio::config.true 'openvpn_enabled'; then
   # ALTERNATIVE MODE  #
   #####################
 
-  if bashio::config.true 'openvpn_alternative_mode'; then
+  #if bashio::config.true 'openvpn_alternative_mode'; then
     # Remove previous line and bind tun0
     sed -i '/Interface/d' qBittorrent.conf
     # Bind tun0
@@ -69,7 +69,7 @@ if bashio::config.true 'openvpn_enabled'; then
     sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
     # Modify ovpn config
     echo "route-nopull" >>/etc/openvpn/config.ovpn
-  fi
+  #fi
 
 else
 
