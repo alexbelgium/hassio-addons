@@ -2,17 +2,17 @@
 # If dockerfile failed install manually
 if [ -e "/MODULESFILE" ]; then
     echo "Executing modules script"
-    PACKAGES=$(</MODULESFILE)
+    MODULES=$(</MODULESFILE)
     (
         ##############################
         # Automatic modules download #
         ##############################
         if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
             if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
-            mkdir -p /tmpscripts /etc/cont-init.d && \
-            for scripts in $MODULES; do curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /tmpscripts/"$scripts"; done && \
-            if [ -d /etc/cont-init.d ]; then /bin/cp -rf /tmpscripts/* /etc/cont-init.d/ && chmod -R 755 /etc/cont-init.d; fi && \
-            rm -rf /tmpscripts || printf '%s\n' "${MODULES:-}" >/MODULESFILE
+            mkdir -p /etc/cont-init.d && \
+            for scripts in $MODULES; do curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts"; done && \
+            chmod -R 755 /etc/cont-init.d; fi && \
+            || printf '%s\n' "${MODULES:-}" >/MODULESFILE
     ) >/dev/null
 
 fi
