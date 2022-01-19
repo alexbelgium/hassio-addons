@@ -11,7 +11,7 @@ elasticsearch: elasticsearch/CHANGELOG.md
 emby: emby/CHANGELOG.md
 enedisgateway2mqtt: enedisgateway2mqtt/CHANGELOG.md
 enedisgateway2mqtt: enedisgateway2mqtt/CHANGELOG.md
-filebrowser: filebrowser/CHANGELOG.md
+#filebrowser: filebrowser/CHANGELOG.md
 firefly iii: firefly iii/CHANGELOG.md
 firefly iii data importer: firefly iii data importer/CHANGELOG.md
 flaresolverr: flaresolverr/CHANGELOG.md
