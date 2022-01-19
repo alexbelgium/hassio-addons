@@ -1,14 +1,18 @@
 {
   "name": "Readarr NAS",
-  "version": "nightly-alpine-0.1.0.1175-ls12",
+  "version": "nightly-alpine-0.1.0.1181-ls14",
   "slug": "readarr_nas",
   "description": "Book Manager and Automation",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "image": "ghcr.io/alexbelgium/readarr-{arch}",
-  "upstream": "nightly-alpine-0.1.0.1175-ls12",
+  "upstream": "nightly-alpine-0.1.0.1181-ls14",
   "webui": "http://[HOST]:[PORT:8787]",
   "startup": "services",
   "devices": [
@@ -47,7 +51,12 @@
     "PUID": "0",
     "PGID": "0"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "config:rw"
+  ],
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -59,7 +68,10 @@
   "ports_description": {
     "8787/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
