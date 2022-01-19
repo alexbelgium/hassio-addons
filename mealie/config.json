@@ -7,7 +7,6 @@
     "APP_PORT": "9925"
   },
   "ingress": false,
-  "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "ingress_port": 8099,
   "map": ["share:rw", "ssl:rw"],
   "name": "Mealie",
