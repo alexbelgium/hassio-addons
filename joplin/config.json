@@ -10,7 +10,6 @@
     "22300/tcp": 22300
   },
   "apparmor": true,
-  "image": "ghcr.io/alexbelgium/joplin-{arch}",
   "ports_description": {
     "22300/tcp": "Web interface"
   },
