@@ -1,3 +1,4 @@
+- Removed openvpn_alternative_mode (please delete from config), now default
 - Changed openvpn mode to interface binding (no ip leakage) 
 - Automatic builds (reduced size, local wear, install duration...)
 
