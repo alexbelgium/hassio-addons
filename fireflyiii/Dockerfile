@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+FROM fireflyiii/core:latest
 
 ##################
 # 2 Modify Image #
