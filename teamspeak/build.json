@@ -1,7 +1,6 @@
 {
   "build_from": {
     "armv7": "ertagh/teamspeak3-server:latest-predownloaded",
-    "armhf": "ertagh/teamspeak3-server:latest-predownloaded",
     "aarch64": "ertagh/teamspeak3-server:latest-predownloaded",
     "amd64": "mbentley/teamspeak:latest"
   }

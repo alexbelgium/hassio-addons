@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/lidarr:arm32v7-latest",
     "armv7": "linuxserver/lidarr:arm32v7-latest",
     "aarch64": "linuxserver/lidarr:arm64v8-latest",
     "amd64": "linuxserver/lidarr:amd64-latest"

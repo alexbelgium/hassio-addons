@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/requestrr:arm32v7-latest",
     "armv7": "linuxserver/requestrr:arm32v7-latest",
     "aarch64": "linuxserver/requestrr:arm64v8-latest",
     "amd64": "linuxserver/requestrr:amd64-latest"

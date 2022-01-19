@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/mylar3:arm32v7-latest",
     "armv7": "linuxserver/mylar3:arm32v7-latest",
     "aarch64": "linuxserver/mylar3:arm64v8-latest",
     "amd64": "linuxserver/mylar3:amd64-latest"

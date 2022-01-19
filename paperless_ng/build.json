@@ -1,8 +1,7 @@
 {
   "build_from": {
     "armv7": "linuxserver/paperless-ng:arm32v7-latest",
-    "armhf": "linuxserver/paperless-ng:arm32v7-latest",
     "aarch64": "linuxserver/paperless-ng:arm64v8-latest",
     "amd64": "linuxserver/paperless-ng:amd64-latest"
   }
-} 
+}

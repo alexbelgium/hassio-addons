@@ -1,7 +1,6 @@
 {
   "build_from": {
     "armv7": "linuxserver/piwigo:arm32v7-latest",
-    "armhf": "linuxserver/piwigo:arm32v7-latest",
     "aarch64": "linuxserver/piwigo:arm64v8-latest",
     "amd64": "linuxserver/piwigo:amd64-latest"
   }

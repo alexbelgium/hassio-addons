@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/ombi:arm32v7-latest",
     "armv7": "linuxserver/ombi:arm32v7-latest",
     "aarch64": "linuxserver/ombi:arm64v8-latest",
     "amd64": "linuxserver/ombi:amd64-latest"

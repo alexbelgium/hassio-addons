@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/bazarr:arm32v7-latest",
     "armv7": "linuxserver/bazarr:arm32v7-latest",
     "aarch64": "linuxserver/bazarr:arm64v8-latest",
     "amd64": "linuxserver/bazarr:amd64-latest"

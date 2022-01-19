@@ -16,5 +16,5 @@
   "environment": {},
   "options": {},
   "schema": {},
-  "arch": ["aarch64", "amd64", "armhf", "armv7"]
+  "arch": ["aarch64", "amd64", "armv7"]
 }

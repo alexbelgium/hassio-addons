@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "organizr/organizr:linux-arm-v7",
     "armv7": "organizr/organizr:linux-arm-v7",
     "aarch64": "organizr/organizr:linux-arm64",
     "amd64": "organizr/organizr:linux-amd64"

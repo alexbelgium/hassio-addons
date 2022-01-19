@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/scrutiny:arm32v7-latest",
     "armv7": "linuxserver/scrutiny:arm32v7-latest",
     "aarch64": "linuxserver/scrutiny:arm64v8-latest",
     "amd64": "linuxserver/scrutiny:amd64-latest"

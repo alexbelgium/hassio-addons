@@ -6,7 +6,7 @@
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
   "url": "https://github.com/AnalogJ/scrutiny",
   "startup": "services",
-  "arch": ["aarch64", "amd64", "armv7", "armhf"],
+  "arch": ["aarch64", "amd64", "armv7"],
   "ingress": true,
   "ingress_port": 8099,
   "panel_icon": "mdi:glasses",

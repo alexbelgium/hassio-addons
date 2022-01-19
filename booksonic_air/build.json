@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/booksonic-air:arm32v7-latest",
     "armv7": "linuxserver/booksonic-air:arm32v7-latest",
     "aarch64": "linuxserver/booksonic-air:arm64v8-latest",
     "amd64": "linuxserver/booksonic-air:amd64-latest"

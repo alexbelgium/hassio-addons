@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/readarr:arm32v7-nightly",
     "armv7": "linuxserver/readarr:arm32v7-nightly",
     "aarch64": "linuxserver/readarr:arm64v8-nightly",
     "amd64": "linuxserver/readarr:amd64-nightly"

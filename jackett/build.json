@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/jackett:arm32v7-latest",
     "armv7": "linuxserver/jackett:arm32v7-latest",
     "aarch64": "linuxserver/jackett:arm64v8-latest",
     "amd64": "linuxserver/jackett:amd64-latest"

@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "armhf": "linuxserver/prowlarr:arm32v7-nightly",
     "armv7": "linuxserver/prowlarr:arm32v7-nightly",
     "aarch64": "linuxserver/prowlarr:arm64v8-nightly",
     "amd64": "linuxserver/prowlarr:amd64-nightly"

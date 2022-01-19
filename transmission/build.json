@@ -1,7 +1,6 @@
 {
   "build_from": {
     "armv7": "linuxserver/transmission:arm32v7-latest",
-    "armhf": "linuxserver/transmission:arm32v7-latest",
     "aarch64": "linuxserver/transmission:arm64v8-latest",
     "amd64": "linuxserver/transmission:amd64-latest"
   }
