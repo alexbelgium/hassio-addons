@@ -1,3 +1,6 @@
+
+## 0.20.399 (19-01-2022)
+- Update to latest version from linuxserver/docker-jackett
 - Automatic builds (reduced size, local wear, install duration...)
 
 ## 0.20.371 (18-01-2022)
