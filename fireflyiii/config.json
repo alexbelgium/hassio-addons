@@ -9,7 +9,6 @@
   },
   "map": ["config:rw", "share:rw", "ssl"],
   "name": "Firefly iii",
-  "image": "ghcr.io/alexbelgium/fireflyiii-{arch}",
   "options": {
     "DB_CONNECTION": "sqlite_internal",
     "APP_KEY": "CHANGEME_32_CHARS_EuC5dfn3LAPzeO",
@@ -38,6 +37,6 @@
   "services": ["mysql:want"],
   "upstream": "5.6.10",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.6.10-5",
+  "version": "5.6.10-6",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
