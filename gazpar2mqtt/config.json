@@ -3,7 +3,6 @@
   "description": "fetch GRDF data and publish data to a mqtt broker",
   "map": ["config:rw", "share:rw"],
   "name": "gazpar2mqtt",
-  "image": "ghcr.io/alexbelgium/gazpar2mqtt-{arch}",
   "options": {
     "CONFIG_LOCATION": "/config/gazpar2mqtt/config.yaml",
     "mqtt_autodiscover": true,
