@@ -57,6 +57,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
 # Install mustache
+# hadolint ignore=SC2015
 RUN apk add --no-cache \
     go \
     npm \
