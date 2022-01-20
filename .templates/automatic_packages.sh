@@ -141,9 +141,9 @@ ERROR=0
 for packagestoinstall in $PACKAGES; do
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall"
     if [ "$PACKMANAGER" = "apk" ]; then
-        apk add --no-cache $packagestoinstall &>/dev/null || (echo "Error : $packagestoinstall not found" && ERROR = 1)
+        apk add --no-cache $packagestoinstall &>/dev/null || (echo "Error : $packagestoinstall not found" && ERROR=1)
     elif [ "$PACKMANAGER" = "apt" ]; then
-        apt-get install -yqq --no-install-recommends $packagestoinstall &>/dev/null || (echo "Error : $packagestoinstall not found" && ERROR = 1)
+        apt-get install -yqq --no-install-recommends $packagestoinstall &>/dev/null || (echo "Error : $packagestoinstall not found" && ERROR=1)
     fi
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall done"
 done
