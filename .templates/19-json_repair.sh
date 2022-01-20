@@ -22,6 +22,7 @@ if [ -f ${JSONTOCHECK} ]; then
     mapfile -t arr < <(jq -r 'keys[]' ${JSONSOURCE})
 
     # Check if all keys are still there, or add them
+    # spellcheck disable=SC2068
     for KEYS in ${arr[@]}; do
         # Check if key exists
         KEYSTHERE=$(jq "has(\"${KEYS}\")" ${JSONTOCHECK})
