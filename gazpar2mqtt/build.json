@@ -1,7 +1,0 @@
-{
-  "build_from": {
-    "armv7": "yukulehe/gazpar2mqtt:",
-    "aarch64": "yukulehe/gazpar2mqtt:",
-    "amd64": "yukulehe/gazpar2mqtt:"
-  }
-}
