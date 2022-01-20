@@ -7,7 +7,6 @@
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby",
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
-  "image": "ghcr.io/alexbelgium/emby-{arch}",
   "boot": "auto",
   "upstream": "4.7.0.20",
   "webui": "http://[HOST]:[PORT:8096]",
