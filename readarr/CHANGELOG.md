@@ -1,3 +1,6 @@
+
+## nightly-alpine-0.1.0.1189-ls16 (20-01-2022)
+- Update to latest version from linuxserver/docker-readarr
 ## nightly-alpine-0.1.0.1181-ls14 (19-01-2022)
 
 - Update to latest version from linuxserver/docker-readarr
