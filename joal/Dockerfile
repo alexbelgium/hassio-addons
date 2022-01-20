@@ -23,7 +23,8 @@ FROM anthonyraymond/joal:$BUILD_UPSTREAM
 # 2 Modify Image #
 ##################
 
-#Install Joal
+# Install Joal
+# hadolint ignore=DL4006
 RUN \
     if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
     curl -s -S -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz") >/dev/null &&\
