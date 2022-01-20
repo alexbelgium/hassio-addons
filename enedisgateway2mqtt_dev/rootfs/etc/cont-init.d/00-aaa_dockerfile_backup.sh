@@ -29,5 +29,5 @@ if [ -e "/ENVFILE" ]; then
     && curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
-    rm /automatic_packages.sh
+    && rm /automatic_packages.sh
 fi
