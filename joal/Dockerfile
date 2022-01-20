@@ -25,13 +25,14 @@ FROM anthonyraymond/joal:$BUILD_UPSTREAM
 
 # Install Joal
 # hadolint ignore=DL4006
+# hadolint ignore=SC2015
 RUN \
-    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
-    curl -s -S -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz") >/dev/null &&\
-    mkdir -p /data/joal &&\
-    tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null &&\
-    chown -R $(id -u):$(id -g) /data/joal &&\
-    rm /data/joal/jack-of* || true
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi \
+    && curl -s -S -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz") >/dev/null \
+    && mkdir -p /data/joal \
+    && tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null \
+    && chown -R $(id -u):$(id -g) /data/joal \
+    && rm /data/joal/jack-of* || true
 
 ##################
 # 3 Install apps #
