@@ -1,20 +1,29 @@
 {
   "name": "Jackett NAS",
-  "version": "0.20.399",
+  "version": "0.20.413",
   "slug": "jackett_nas",
   "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jackett",
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
-  "upstream": "0.20.399",
+  "upstream": "0.20.413",
   "startup": "services",
   "webui": "http://[HOST]:[PORT:9117]",
   "environment": {
     "PUID": "0",
     "PGID": "0"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "options": {
     "PUID": 0,
     "PGID": 0
@@ -25,7 +34,10 @@
   "ports_description": {
     "9117/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
