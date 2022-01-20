@@ -22,6 +22,7 @@ FROM elasticsearch:$BUILD_UPSTREAM
 ##################
 
 # Data persistence
+# hadolint IGNORE=SC2016
 RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts..."' /usr/local/bin/docker-entrypoint.sh \
     && sed -i '5a chown -R $(id -u):$(id -g) $HOME' /usr/local/bin/docker-entrypoint.sh \
     && sed -i '5a done' /usr/local/bin/docker-entrypoint.sh \
