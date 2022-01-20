@@ -9,14 +9,11 @@ if [ -e "/MODULESFILE" ]; then
     MODULES=$(</MODULESFILE)
     MODULES="${MODULES:-00-banner.sh}"
 
-    (
-        if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
-        if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
-        mkdir -p /etc/cont-init.d && \
-        for scripts in "$MODULES"; do curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts"; done && \
-        chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
-    ) >/dev/null
-
+    if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
+    if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
+    mkdir -p /etc/cont-init.d && \
+    for scripts in $MODULES; do curl -L -f -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" || echo "script failed to install $scripts"; done && \
+    chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 fi
 
 #######################
