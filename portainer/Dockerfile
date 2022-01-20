@@ -27,6 +27,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 ARG BUILD_UPSTREAM="2.11.0"
 
+# hadolint ignore=SC2015
 RUN \
     BUILD_ARCH=$(uname -m) \
     && echo "${BUILD_ARCH}" \

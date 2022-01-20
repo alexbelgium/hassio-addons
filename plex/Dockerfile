@@ -25,6 +25,7 @@ FROM ${BUILD_FROM}
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# hadolint ignore=SC2016
 RUN \
     #############################
     # Allow UID and GID setting #

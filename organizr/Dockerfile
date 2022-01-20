@@ -21,6 +21,7 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# hadolint ignore=DL4006
 RUN \
     ########################################
     # Correct upstream image folders links #

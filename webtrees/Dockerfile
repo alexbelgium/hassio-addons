@@ -25,6 +25,7 @@ FROM nathanvaughn/webtrees:$BUILD_UPSTREAM
 # Global variables
 ENV WEBTREES_HOME="/data/webtrees"
 WORKDIR $WEBTREES_HOME
+# hadolint ignore=DL4006
 RUN \
     # Change data location
     grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \

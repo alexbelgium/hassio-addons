@@ -33,7 +33,8 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && usermod --home /share/webtop abc
 
 # Graphic drivers for rpi4
-RUN apt-get update && apt-get dist-upgrade && apt-get install -yqq libgles2-mesa libgles2-mesa-dev xorg-dev || true
+# hadolint ignore=SC2015
+RUN apt-get update && apt-get install -yqq --no-install-recommends libgles2-mesa libgles2-mesa-dev xorg-dev || true
 
 ##################
 # 3 Install apps #

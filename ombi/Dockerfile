@@ -22,6 +22,8 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# hadolint ignore=DL4006
+# hadolint ignore=SC2015
 RUN \
     # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
