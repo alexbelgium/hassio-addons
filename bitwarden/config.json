@@ -5,7 +5,6 @@
   "init": false,
   "map": ["ssl"],
   "name": "Vaultwarden (Bitwarden)",
-  "image": "ghcr.io/alexbelgium/vaultwarden-{arch}",
   "options": {
     "ssl": true,
     "certfile": "fullchain.pem",
