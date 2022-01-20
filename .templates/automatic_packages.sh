@@ -137,7 +137,6 @@ done
 if [ "$PACKMANAGER" = "apt" ]; then apt-get update >/dev/null; fi
 
 # Install apps one by one to allow failures
-ERROR=0
 for packagestoinstall in $PACKAGES; do
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall"
     if [ "$PACKMANAGER" = "apk" ]; then
