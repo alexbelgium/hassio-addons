@@ -5,7 +5,6 @@
   "environment": {},
   "map": ["share:rw", "media:rw", "ssl", "config:rw"],
   "name": "Papermerge",
-  "image": "ghcr.io/alexbelgium/papermerge-{arch}",
   "options": {
     "PUID": 0,
     "PGID": 0,

@@ -8,7 +8,6 @@
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "upstream": "0.20.399",
-  "image": "ghcr.io/alexbelgium/jackett-{arch}",
   "startup": "services",
   "webui": "http://[HOST]:[PORT:9117]",
   "environment": {

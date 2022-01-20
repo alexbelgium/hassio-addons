@@ -15,7 +15,6 @@
   },
   "map": ["config:rw", "ssl"],
   "webui": "http://[HOST]:[PORT:80]",
-  "image": "ghcr.io/alexbelgium/organizr-{arch}",
   "boot": "auto",
   "environment": {},
   "options": {

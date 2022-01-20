@@ -7,7 +7,6 @@
   "ingress_port": 1337,
   "ingress_stream": true,
   "init": false,
-  "image": "ghcr.io/alexbelgium/portainer-{arch}",
   "map": ["share:rw", "ssl"],
   "name": "Portainer",
   "options": {

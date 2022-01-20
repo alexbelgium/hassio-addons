@@ -1,54 +1,69 @@
-
 ## 0.20.399 (19-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
-- Automatic builds (reduced size, local wear, install duration...)
 
 ## 0.20.371 (18-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.363 (18-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.324 (16-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.319 (15-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.294 (12-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.285 (11-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.280 (10-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.268 (09-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.266 (08-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.256 (07-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.250 (06-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.244 (06-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.238 (04-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.236 (04-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 
 ## 0.20.222-1
+
 - Fixed local config
 
 ## 0.20.222 (01-01-2022)
+
 - Update to latest version from linuxserver/docker-jackett
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 

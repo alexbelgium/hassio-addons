@@ -1,38 +1,47 @@
-
 ## 0.8.0 (19-01-2022)
+
 - Update to latest version from yukulehe/gazpar2mqtt
-- Automatic builds (reduced size, local wear, install duration...)
 
 ## 0.7.0 (06-01-2022)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 
 ## 0.6.7 (06-01-2022)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 
 ## 0.6.6 (04-01-2022)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 
 ## 0.6.5 (29-12-2021)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 
 ## 0.6.4 (28-12-2021)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 
 ## 0.6.3 (24-12-2021)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 - Add verbose mode : disabling it removes messages
 
 ## 0.6.2 (18-12-2021)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 
 ## 0.6.1 (14-12-2021)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 - New standardized logic for Dockerfile build and packages installation
 
 ## 0.6 (11-12-2021)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 
 ## 0.5.3 (07-12-2021)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 - mqtt autodiscover added
 - allow !secrets in config.yaml (see Home Assistant documentation)

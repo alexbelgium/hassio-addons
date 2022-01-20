@@ -3,7 +3,6 @@
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "Bittorrent client based on linuxserver image",
-  "image": "ghcr.io/alexbelgium/transmission-{arch}",
   "devices": [
     "/dev/net/tun",
     "/dev/sda",

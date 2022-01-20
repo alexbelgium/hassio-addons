@@ -1,6 +1,5 @@
 - Removed openvpn_alternative_mode (please delete from config), now default
-- Changed openvpn mode to interface binding (no ip leakage) 
-- Automatic builds (reduced size, local wear, install duration...)
+- Changed openvpn mode to interface binding (no ip leakage)
 
 ## 14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls166 (07-01-2022)
 

@@ -1,22 +1,26 @@
-- Automatic builds (reduced size, local wear, install duration...)
-
 ## 15.9.14 (15-01-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 15.9.13 (24-12-2021)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 15.9.12 (16-12-2021)
+
 - Update to latest version from coderaiser/cloudcmd
 - New standardized logic for Dockerfile build and packages installation
 
 ## 15.9.11 (09-12-2021)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 15.9.10 (04-12-2021)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 15.9.9 (22-11-2021)
+
 - Update to latest version from coderaiser/cloudcmd
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 - Allow uploads > 16mb

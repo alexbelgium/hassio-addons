@@ -7,7 +7,6 @@
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
   "ingress": false,
-  "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "name": "Addons_Updater",
   "options": {
     "addon": [

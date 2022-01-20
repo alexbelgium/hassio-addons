@@ -1,7 +1,7 @@
-
 ## nightly-alpine-0.1.0.1181-ls14 (19-01-2022)
+
 - Update to latest version from linuxserver/docker-readarr
-- Automatic builds (reduced size, local wear, install duration...)
+
 ## nightly-alpine-0.1.0.1175-ls12 (18-01-2022)
 
 - Update to latest version from linuxserver/docker-readarr

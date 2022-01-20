@@ -1,6 +1,5 @@
-- Automatic builds (reduced size, local wear, install duration...)
-
 ## 4.3.3-3 (03-01-2022)
+
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - New standardized logic for Dockerfile build and packages installation
 

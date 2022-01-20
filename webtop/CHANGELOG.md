@@ -1,4 +1,3 @@
-- Automatic builds (reduced size, local wear, install duration...)
 - Switch to ubuntu-mate
 
 ## 4.16 (07-01-2022)

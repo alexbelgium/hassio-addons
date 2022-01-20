@@ -1,4 +1,3 @@
-- Automatic builds (reduced size, local wear, install duration...)
 - Silent mode added : hides output of the app if no errors
 - Correct permissions
 - Allowed automatic update in hourly, daily or weekly setting from addon options

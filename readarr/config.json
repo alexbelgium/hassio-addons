@@ -7,7 +7,6 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "image": "ghcr.io/alexbelgium/readarr-{arch}",
   "upstream": "nightly-alpine-0.1.0.1181-ls14",
   "webui": "http://[HOST]:[PORT:8787]",
   "startup": "services",

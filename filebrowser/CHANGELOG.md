@@ -1,4 +1,3 @@
-- Automatic builds (reduced size, local wear, install duration...)
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 
 ## 2.20.1 (23-12-2021)

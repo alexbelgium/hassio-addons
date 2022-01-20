@@ -3,7 +3,6 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-  "image": "ghcr.io/alexbelgium/plex-{arch}",
   "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
   "devices": [
     "/dev/dri",

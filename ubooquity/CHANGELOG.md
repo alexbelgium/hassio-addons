@@ -1,4 +1,3 @@
-- Automatic builds (reduced size, local wear, install duration...)
 - New standardized logic for Dockerfile build and packages installation
 - SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 - Add local drives mounts : used localdisks with the text "sda1, sdb1" according to your needs

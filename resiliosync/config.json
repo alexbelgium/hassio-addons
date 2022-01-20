@@ -36,7 +36,6 @@
     "/dev/nvme2"
   ],
   "environment": {},
-  "image": "ghcr.io/alexbelgium/resiliosync-{arch}",
   "map": ["share:rw", "config:rw"],
   "name": "ResilioSync",
   "options": {

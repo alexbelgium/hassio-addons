@@ -1,6 +1,5 @@
-- Automatic builds (reduced size, local wear, install duration...)
-
 ## 3.00-r2-ls107 (04-01-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 - New standardized logic for Dockerfile build and packages installation
 - Removal of requirement for unprotected mode

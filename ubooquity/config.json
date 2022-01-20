@@ -3,7 +3,6 @@
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
-  "image": "ghcr.io/alexbelgium/ubooquity-{arch}",
   "devices": [
     "/dev/sda",
     "/dev/sdb",

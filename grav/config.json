@@ -4,7 +4,6 @@
   "description": "Fast, Simple, and Flexible, file-based Web-platform",
   "devices": [],
   "environment": {},
-  "image": "ghcr.io/alexbelgium/grav-{arch}",
   "map": ["share:rw", "media:rw", "config:rw"],
   "name": "Grav web server",
   "options": {

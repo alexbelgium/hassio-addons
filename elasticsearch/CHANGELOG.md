@@ -1,3 +1,2 @@
-- Automatic builds (reduced size, local wear, install duration...)
 - New standardized logic for Dockerfile build and packages installation
 - Initial build

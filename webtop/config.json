@@ -9,7 +9,6 @@
     "shm_size": "1gb"
   },
   "description": "Full linux desktop environment accessible via any modern web browser",
-  "image": "ghcr.io/alexbelgium/webtop-{arch}",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",

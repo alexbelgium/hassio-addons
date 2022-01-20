@@ -78,7 +78,6 @@
     "PUID": 0,
     "PGID": 0
   },
-  "image": "ghcr.io/alexbelgium/scrutiny-{arch}",
   "schema": {
     "ssl": "bool",
     "certfile": "str",

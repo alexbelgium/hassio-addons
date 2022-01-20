@@ -4,7 +4,6 @@
   "version": "23.0.0-10",
   "upstream": "23.0.0",
   "slug": "nextcloud_ocr",
-  "image": "ghcr.io/alexbelgium/nextcloud-{arch}",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
