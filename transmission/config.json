@@ -1,6 +1,10 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "description": "Bittorrent client based on linuxserver image",
   "devices": [
@@ -37,7 +41,12 @@
     "/dev/nvme2"
   ],
   "environment": {},
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "name": "Transmission NAS",
   "options": {
     "PUID": 0,
@@ -61,7 +70,10 @@
     "51413/tcp": "Peer port (setup router port forwarding to this port)",
     "51413/udp": "Peer port (setup router port forwarding to this port)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
@@ -81,8 +93,8 @@
   },
   "slug": "transmission_ls",
   "startup": "services",
-  "upstream": "3.00-r2-ls107",
+  "upstream": "3.00-r2-ls108",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.00-r2-ls107",
+  "version": "3.00-r2-ls108",
   "webui": "http://[HOST]:[PORT:9091]"
 }
