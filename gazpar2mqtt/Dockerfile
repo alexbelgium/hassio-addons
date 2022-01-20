@@ -15,7 +15,8 @@
 #################
 
 ARG BUILD_FROM
-FROM $BUILD_FROM
+ARG BUILD_UPSTREAM="0.8.0" 
+FROM yukulehe/gazpar2mqtt:$BUILD_UPSTREAM
 
 ##################
 # 2 Modify Image #
