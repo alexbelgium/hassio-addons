@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -d /data/config/www/nextcloud/apps/pdfannotate ]; then
+if [ ! -d /data/config/www/nextcloud/apps/pdfannotate ]; then
   CURRENT="$PWD"
   cd /data/config/www/nextcloud/apps
   git clone https://gitlab.com/nextcloud-other/nextcloud-annotate pdfannotate
