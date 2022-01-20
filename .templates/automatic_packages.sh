@@ -11,7 +11,7 @@ set +u 2>/dev/null || true
 #If no packages, empty
 PACKAGES="${*:-}"
 #Avoids messages if non interactive
-(echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections) || true
+(echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections) >/dev/null || true
 
 [ "$VERBOSE" = true ] && echo "ENV : $PACKAGES"
 
@@ -137,12 +137,13 @@ done
 [ "$PACKMANAGER" = "apt" ] && apt-get update >/dev/null || true
 
 # Install apps one by one to allow failures
+ERROR=0
 for packagestoinstall in $PACKAGES; do
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall"
     if [ "$PACKMANAGER" = "apk" ]; then
-        apk add --no-cache $packagestoinstall &>/dev/null || echo "Error : $packagestoinstall not found"
+        apk add --no-cache $packagestoinstall &>/dev/null || (echo "Error : $packagestoinstall not found" && ERROR = 1)
     elif [ "$PACKMANAGER" = "apt" ]; then
-        apt-get install -yqq --no-install-recommends $packagestoinstall &>/dev/null || echo "Error : $packagestoinstall not found"
+        apt-get install -yqq --no-install-recommends $packagestoinstall &>/dev/null || (echo "Error : $packagestoinstall not found" && ERROR = 1)
     fi
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall done"
 done
@@ -211,3 +212,7 @@ for files in "/scripts" "/etc/services.d" "/etc/cont-init.d"; do
     fi
 
 done
+
+if [ $ERROR = 1 ]; then
+exit 1
+fi
