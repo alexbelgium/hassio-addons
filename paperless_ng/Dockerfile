@@ -24,6 +24,7 @@ FROM ${BUILD_FROM}
 
 ENV PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng
 # spellcheck disable=SC2015
+# hadolint ignore=SC2015
 RUN \
     #################
     # Correct image #

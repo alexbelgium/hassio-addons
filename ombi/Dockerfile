@@ -23,7 +23,7 @@ FROM ${BUILD_FROM}
 ##################
 
 # spellcheck disable=SC2015
-# hadolint ignore=DL4006
+# hadolint ignore=SC2015,DL4006
 RUN \
     # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \

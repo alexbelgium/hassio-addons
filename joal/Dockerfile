@@ -25,6 +25,7 @@ FROM anthonyraymond/joal:$BUILD_UPSTREAM
 
 # Install Joal
 # spellcheck disable=SC2015
+# hadolint ignore=SC2015
 # hadolint ignore=DL4006
 RUN \
     if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi \

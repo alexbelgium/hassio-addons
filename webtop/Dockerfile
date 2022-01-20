@@ -34,6 +34,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
 
 # Graphic drivers for rpi4
 # spellcheck disable=SC2015
+# hadolint ignore=SC2015
 RUN apt-get update && apt-get install -yqq --no-install-recommends libgles2-mesa libgles2-mesa-dev xorg-dev || true
 
 ##################

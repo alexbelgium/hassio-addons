@@ -58,6 +58,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 
 # Install mustache
 # spellcheck disable=SC2015
+# hadolint ignore=SC2015
 RUN apk add --no-cache \
     go \
     npm \
