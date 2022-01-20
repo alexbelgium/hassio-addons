@@ -14,7 +14,7 @@ if [ -e "/MODULESFILE" ]; then
     if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
     mkdir -p /etc/cont-init.d && \
     for scripts in $MODULES; do curl -L -f -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" || echo "script failed to install $scripts"; done && \
-    chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
+    chmod -R 777 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 fi
 
 #######################
