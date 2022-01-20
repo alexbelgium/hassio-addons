@@ -42,13 +42,3 @@ if [ -f ${JSONTOCHECK} ]; then
     # Message
     bashio::log.info "Your settings.json was checked and seems perfectly normal!"
 fi
-
-# Repair structure
-################
-#jq . -S $CONFIGDIR/settings.json | cat >temp.json && mv temp.json $CONFIGDIR/settings.json
-#echo "Making sure settings.json structure is good"
-#for KEYS in "incomplete-dir" "download-dir" "rpc-host-whitelist-enabled" "rpc-authentication-required" "rpc-username" "rpc-password" "rpc-whitelist-enabled" "rpc-whitelist"; do
-#  KEYSTHERE=$(jq "has(\"${KEYS}\")" $CONFIGDIR/settings.json)
-#  [ "$KEYSTHERE" != "true" ] && sed -i "3 i\"${KEYS}\": null," $CONFIGDIR/settings.json && echo "... $KEYS was missing, added"
-#done
-#jq . -S $CONFIGDIR/settings.json | cat >temp.json && mv temp.json $CONFIGDIR/settings.json
