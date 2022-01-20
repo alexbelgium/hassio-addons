@@ -46,7 +46,7 @@ PACKAGES="$PACKAGES jq curl vim"
 for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
     # Next directory if does not exists
     if ! ls $files 1>/dev/null 2>&1; then continue; fi
-
+    
     # Test each possible command
     COMMAND="nginx"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -55,77 +55,77 @@ for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES nginx"
         if ls /etc/nginx 1>/dev/null 2>&1; then mv /etc/nginx /etc/nginx2; fi
     fi
-
+    
     COMMAND="cifs"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
     fi
-
+    
     COMMAND="smbclient"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES samba samba-client"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES samba smbclient"
     fi
-
+    
     COMMAND="openvpn"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES coreutils openvpn"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES coreutils openvpn"
     fi
-
+    
     COMMAND="jq"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES jq"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES jq"
     fi
-
+    
     COMMAND="yamllint"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES yamllint"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES yamllint"
     fi
-
+    
     COMMAND="git"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES git"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES git"
     fi
-
+    
     COMMAND="sponge"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES moreutils"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES moreutils"
     fi
-
+    
     COMMAND="sqlite3"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES sqlite"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES sqlite3"
     fi
-
+    
     COMMAND="pip"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES py3-pip"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES pip"
     fi
-
+    
     COMMAND="wget"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES wget"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES wget"
     fi
-
+    
 done
 
 ####################
@@ -134,23 +134,23 @@ done
 
 # Install apps
 [ "$VERBOSE" = true ] && echo "installing packages $PACKAGES"
-[ "$PACKMANAGER" = "apt" ] && apt-get update >/dev/null || true
+if [ "$PACKMANAGER" = "apt" ]; then apt-get update >/dev/null; fi
 
 # Install apps one by one to allow failures
 ERROR=0
 for packagestoinstall in $PACKAGES; do
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall"
     if [ "$PACKMANAGER" = "apk" ]; then
-        apk add --no-cache $packagestoinstall &>/dev/null || (echo "Error : $packagestoinstall not found" && ERROR=1)
-    elif [ "$PACKMANAGER" = "apt" ]; then
-        apt-get install -yqq --no-install-recommends $packagestoinstall &>/dev/null || (echo "Error : $packagestoinstall not found" && ERROR=1)
+        apk add --no-cache "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
+        elif [ "$PACKMANAGER" = "apt" ]; then
+        apt-get install -yqq --no-install-recommends "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
     fi
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall done"
 done
 
 # Clean after install
 [ "$VERBOSE" = true ] && echo "Cleaning apt cache"
-[ "$PACKMANAGER" = "apt" ] && apt-get clean >/dev/null || true
+if [ "$PACKMANAGER" = "apt" ]; then apt-get clean >/dev/null; fi
 
 # Replace nginx if installed
 if ls /etc/nginx2 1>/dev/null 2>&1; then
@@ -166,10 +166,10 @@ fi
 #######################
 
 for files in "/scripts" "/etc/services.d" "/etc/cont-init.d"; do
-
+    
     # Next directory if does not exists
     if ! ls $files 1>/dev/null 2>&1; then continue; fi
-
+    
     # Bashio
     if grep -q -rnw "$files/" -e 'bashio' && [ ! -f "/usr/bin/bashio" ]; then
         [ "$VERBOSE" = true ] && echo "install bashio"
@@ -180,13 +180,13 @@ for files in "/scripts" "/etc/services.d" "/etc/cont-init.d"; do
         ln -s /usr/lib/bashio/bashio /usr/bin/bashio
         rm -rf /tmp/bashio
     fi
-
+    
     # Lastversion
     if grep -q -rnw "$files/" -e 'lastversion'; then
         [ "$VERBOSE" = true ] && echo "install lastversion"
         pip install lastversion
     fi
-
+    
     # Tempio
     if grep -q -rnw "$files/" -e 'tempio' && [ ! -f "/usr/bin/tempio" ]; then
         [ "$VERBOSE" = true ] && echo "install tempio"
@@ -195,24 +195,24 @@ for files in "/scripts" "/etc/services.d" "/etc/cont-init.d"; do
         curl -L -f -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
         chmod a+x /usr/bin/tempio
     fi
-
+    
     # Mustache
     COMMAND="mustache"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && apk add --no-cache go npm &&
-            apk upgrade --no-cache &&
-            apk add --no-cache --virtual .build-deps build-base git go &&
-            go get -u github.com/quantumew/mustache-cli &&
-            cp "$GOPATH"/bin/* /usr/bin/ &&
-            rm -rf "$GOPATH" /var/cache/apk/* /tmp/src &&
-            apk del .build-deps xz build-base
+        apk upgrade --no-cache &&
+        apk add --no-cache --virtual .build-deps build-base git go &&
+        go get -u github.com/quantumew/mustache-cli &&
+        cp "$GOPATH"/bin/* /usr/bin/ &&
+        rm -rf "$GOPATH" /var/cache/apk/* /tmp/src &&
+        apk del .build-deps xz build-base
         [ "$PACKMANAGER" = "apt" ] && apt-get update &&
-            apt-get install -yqq go npm node-mustache
+        apt-get install -yqq go npm node-mustache
     fi
-
+    
 done
 
-if [ $ERROR = 1 ]; then
-exit 1
+if [ -f /ERROR ]; then
+    exit 1
 fi
