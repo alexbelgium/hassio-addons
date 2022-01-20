@@ -7,6 +7,7 @@
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
+chmod 755 $CONFIGSOURCE
 
 # Check if config file is there, or create one from template
 if [ -f $CONFIGSOURCE ]; then
