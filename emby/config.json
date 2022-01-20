@@ -1,7 +1,7 @@
 {
   "host_network": true,
   "name": "Emby NAS",
-  "version": "4.7.0.20-3",
+  "version": "4.7.0.20-4",
   "slug": "emby_nas",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby",
