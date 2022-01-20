@@ -24,8 +24,7 @@ FROM ${BUILD_FROM}
 
 # Correct data path
 # hadolint ignore=DL4006 
-RUN \
-    grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
+RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/data|g'
 
 ##################
 # 3 Install apps #
