@@ -7,7 +7,8 @@
 if [ -e "/MODULESFILE" ]; then
     echo "Executing modules script"
     MODULES=$(</MODULESFILE)
-    MODULES)="${MODULES:-00-banner.sh}"
+    MODULES="${MODULES:-00-banner.sh}"
+
     ( if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash); fi && \
             if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi && \
             mkdir -p /etc/cont-init.d && \
@@ -17,13 +18,13 @@ if [ -e "/MODULESFILE" ]; then
 
 fi
 
+#######################
+# Automatic installer #
+#######################
 if [ -e "/ENVFILE" ]; then
     echo "Executing script"
     PACKAGES=$(</ENVFILE)
 
-    #######################
-    # Automatic installer #
-    #######################
     if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi && \
         if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi && \
         curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh && \
