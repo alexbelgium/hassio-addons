@@ -2,7 +2,7 @@ name: Builder
 
 env:
   BUILD_ARGS: ""
-  MONITORED_FILES: "config.json"
+  MONITORED_FILES: "/addons_updater/config.json"
 
 on:
   push:
