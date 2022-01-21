@@ -10,61 +10,29 @@ on:
       - master
 
 jobs:
-  init:
+  check-addon-changes:
     runs-on: ubuntu-latest
-    name: Initialize builds
     outputs:
-      changed_addons: ${{ steps.changed_addons.outputs.addons }}
-      changed: ${{ steps.changed_addons.outputs.changed }}
+      changedAddons: ${{ steps.filter.outputs.changes }}
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v2.4.0
 
-      - name: 📂 Detect chanced files
-        uses: dorny/paths-filter@v2
-        id: changed_addons
-        with:
-          filters: .github/paths-filter.yml
+    - name: ↩️ Checkout
+      uses: actions/checkout@v2
 
-    #  - name: Get changed files
-    #    id: changed_files
-    #    uses: jitterbit/get-changed-files@v1
+    - name: 📂 Detect chanced files
+      uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/paths-filter.yml
 
-    #  - name: Find add-on directories
-    #    id: addons
-    #    uses: home-assistant/actions/helpers/find-addons@master
-
-    #  - name: Get changed add-ons
-    #    id: changed_addons
-    #    run: |
-    #      declare -a changed_addons
-    #      for addon in ${{ steps.addons.outputs.addons }}; do
-    #        if [[ "${{ steps.changed_files.outputs.all }}" =~ $addon ]]; then
-    #          for file in ${{ env.MONITORED_FILES }}; do
-    #              if [[ "${{ steps.changed_files.outputs.all }}" =~ $addon/$file ]]; then
-    #                if [[ ! "${changed_addons[@]}" =~ $addon ]]; then
-    #                  changed_addons+=("\"${addon}\",");
-    #                fi
-    #              fi
-    #          done
-    #        fi
-    #      done
-    #      changed=$(echo ${changed_addons[@]} | rev | cut -c 2- | rev)
-    #      if [[ -n ${changed} ]]; then
-    #        echo "Changed add-ons: $changed";
-    #        echo "::set-output name=changed::true";
-    #        echo "::set-output name=addons::[$changed]";
-    #      else
-    #        echo "No add-on had any monitored files changed (${{ env.MONITORED_FILES }})";
-    #      fi
   build:
-    needs: init
+    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
+    needs: check-addon-changes
     runs-on: ubuntu-latest
-    if: needs.init.outputs.changed == 'true'
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
     strategy:
       matrix:
-        addon: ${{ fromJson(needs.init.outputs.changed_addons) }}
+        addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
         arch: ["aarch64", "amd64", "armv7"]
 
     steps:
