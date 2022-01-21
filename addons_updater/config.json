@@ -3,6 +3,7 @@
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "manual",
   "description": "Automatic addons update by aligning version tag with upstream releases",
+  "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "environment": {
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
