@@ -1,7 +1,7 @@
 # Those are the addon path filters used in the workflows to determine which addon needs to be build.
 # name: slug/filename ; could be slug/** for all files
-addons_updater: addons_updater/**
-#arpspoof: arpspoof/**
+addons_updater: addons_updater/config.json
+#arpspoof: arpspoof/config.json
 #bazarr: bazarr/**
 #bitwarden: bitwarden/**
 #booksonic-air: booksonic-air/**
