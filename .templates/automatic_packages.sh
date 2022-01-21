@@ -11,7 +11,7 @@ set +u 2>/dev/null || true
 #If no packages, empty
 PACKAGES="${*:-}"
 #Avoids messages if non interactive
-(echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections) >/dev/null || true
+(echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections) &>/dev/null || true
 
 [ "$VERBOSE" = true ] && echo "ENV : $PACKAGES"
 
@@ -43,7 +43,7 @@ PACKAGES="$PACKAGES jq curl vim"
 ##################################
 
 # Scripts
-for files in "/etc/cont-init.d" "/etc/services.d" "/scripts"; do
+for files in "/etc/cont-init.d" "/etc/services.d"; do
     # Next directory if does not exists
     if ! ls $files 1>/dev/null 2>&1; then continue; fi
     
@@ -164,7 +164,7 @@ fi
 # INSTALL MANUAL APPS #
 #######################
 
-for files in "/scripts" "/etc/services.d" "/etc/cont-init.d"; do
+for files in "/etc/services.d" "/etc/cont-init.d"; do
     
     # Next directory if does not exists
     if ! ls $files 1>/dev/null 2>&1; then continue; fi
@@ -181,9 +181,10 @@ for files in "/scripts" "/etc/services.d" "/etc/cont-init.d"; do
     fi
     
     # Lastversion
-    if grep -q -rnw "$files/" -e 'lastversion'; then
-        [ "$VERBOSE" = true ] && echo "install lastversion"
-        pip install lastversion
+    COMMAND="lastversion"
+    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
+        [ "$VERBOSE" = true ] && echo "install $COMMAND"
+        pip install $COMMAND
     fi
     
     # Tempio
