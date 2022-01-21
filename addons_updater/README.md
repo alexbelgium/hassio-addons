@@ -1,4 +1,4 @@
-# Home assistant add-on: addons updater
+# Home assistant add-on: addons updater 
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Support Thread][support-badge]](https://community.home-assistant.io/t/new-addon-automatically-update-addons-based-on-github-upstream-new-releases/)
