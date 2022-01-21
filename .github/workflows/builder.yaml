@@ -20,9 +20,15 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2.4.0
 
-      - name: Get changed files
-        id: changed_files
-        uses: jitterbit/get-changed-files@v1
+      - name: 📂 Detect chanced files
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: .github/paths-filter.yml
+
+    #  - name: Get changed files
+    #    id: changed_files
+    #    uses: jitterbit/get-changed-files@v1
 
       - name: Find add-on directories
         id: addons
