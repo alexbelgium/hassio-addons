@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "aarch64": "--platform=linux/arm64 homeassistant/aarch64-base-python:3.9-alpine3.13",
-    "armhf": "--platform=linux/arm/v6 homeassistant/armhf-base-python:3.9-alpine3.13",
-    "armv7": "--platform=linux/arm/v7 homeassistant/armv7-base-python:3.9-alpine3.13",
-    "amd64": "--platform=linux/amd64 homeassistant/amd64-base-python:3.9-alpine3.13"
+    "aarch64": "homeassistant/aarch64-base-python:3.9-alpine3.13",
+    "armhf": "homeassistant/armhf-base-python:3.9-alpine3.13",
+    "armv7": "homeassistant/armv7-base-python:3.9-alpine3.13",
+    "amd64": "homeassistant/amd64-base-python:3.9-alpine3.13"
   }
 }
