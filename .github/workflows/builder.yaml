@@ -22,7 +22,7 @@ jobs:
 
       - name: 📂 Detect chanced files
         uses: dorny/paths-filter@v2
-        id: filter
+        id: changed_files
         with:
           filters: .github/paths-filter.yml
 
