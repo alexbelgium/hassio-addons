@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM --platform=$BUILDPLATFORM $BUILD_FROM
 VOLUME [ "/data" ]
 
 ##################
