@@ -1,6 +1,9 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "description": "A server-based application for browsing, organizing and sharing your personal photo collection",
   "devices": [
     "/dev/sda",
@@ -38,7 +41,10 @@
   "environment": {
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password"
   },
-  "map": ["media:rw", "share:rw"],
+  "map": [
+    "media:rw",
+    "share:rw"
+  ],
   "name": "Photoprism",
   "options": {
     "networkdisks": "//server/share",
@@ -57,7 +63,10 @@
   "ports_description": {
     "2342/tcp": "Web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "localdisks": "str?",
     "networkdisks": "str?",
@@ -71,8 +80,8 @@
     "CUSTOM_OPTIONS": "str?"
   },
   "slug": "photoprism",
-  "upstream": "20220118",
+  "upstream": "20220121",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "20220118-2",
+  "version": "20220121",
   "webui": "http://[HOST]:[PORT:2342]"
 }
