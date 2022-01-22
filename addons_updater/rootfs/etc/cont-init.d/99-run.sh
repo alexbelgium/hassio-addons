@@ -24,7 +24,6 @@ git config --system user.email ${GITMAIL}
 
 if bashio::config.has_value 'gitapi'; then
   LOGINFO="... setting github API" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-
   export GITHUB_API_TOKEN=$(bashio::config 'gitapi')
 fi
 
