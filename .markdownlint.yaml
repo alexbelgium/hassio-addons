@@ -1,5 +1,3 @@
-default: true
-
 MD001: false    # Heading levels should only increment by one level at a time
 MD002: false    # First header should be a h1 header
 MD007:          # Unordered list indentation
