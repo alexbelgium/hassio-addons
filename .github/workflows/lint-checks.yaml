@@ -7,6 +7,8 @@ on:
 
 jobs:
   hadolint:
+    runs-on: ubuntu-latest
+    container: ghcr.io/hadolint/hadolint:latest-alpine
     steps:
       - uses: actions/checkout@v2 
       - uses: hadolint/hadolint-action@v1.6.0
