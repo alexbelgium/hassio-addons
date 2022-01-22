@@ -1,4 +1,8 @@
 name: Lint / Syntax checks
+
+env:
+  HADOLINT_FILES: "Dockerfile"
+
 on:
   push:
     branches: [ master ]
@@ -12,18 +16,17 @@ jobs:
     steps:
       - name: ↩️ Checkout
         uses: actions/checkout@v2
+        
+      - name: Get changed files
+        id: changed_files
+        uses: jitterbit/get-changed-files@v1
 
-      - name: 📂 Detect chanced files
-        id: filter
-        uses: dorny/paths-filter@v2.9.0
-        with:
-          list-files: 'shell'
-          filters: |
-            dockerfile:
-              - 'Dockerfile'
       - name: 🔎 Run hadolint
-        if: steps.filter.outputs.dockerfile == 'true'
-        run: hadolint ${{ steps.filter.outputs.dockerfile_files }}
+        run: for file in ${{ env.HADOLINT_FILES }}; do                
+               if [[ "${{ steps.changed_files.outputs.all }}" =~ $file ]]; then
+                 hadolint "${{ steps.changed_files.outputs.all }}"
+               fi
+             done
 
   shellcheck:
     runs-on: ubuntu-latest
