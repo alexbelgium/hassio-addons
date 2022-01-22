@@ -1,13 +1,22 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "description": "Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required",
   "environment": {
     "PUID": "0",
     "PGID": "0"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "name": "Prowlarr NAS",
   "options": {
     "PUID": 0,
@@ -22,7 +31,10 @@
   "ports_description": {
     "9696/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
@@ -34,8 +46,8 @@
   },
   "slug": "prowlarr",
   "startup": "services",
-  "upstream": "nightly-alpine-0.2.0.1419-ls26",
+  "upstream": "nightly-alpine-0.2.0.1423-ls27",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "nightly-alpine-0.2.0.1419-ls26",
+  "version": "nightly-alpine-0.2.0.1423-ls27",
   "webui": "http://[HOST]:[PORT:9696]"
 }
