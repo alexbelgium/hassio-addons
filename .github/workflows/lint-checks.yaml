@@ -22,8 +22,8 @@ jobs:
         run: |
           for files in ${{ steps.changed_files.outputs.all }}; do
             if [[ "$(basename ${files})" == "Dockerfile" ]]; then
-              echo "Hadolint ${{ steps.changed_files.outputs.all }}"
-              hadolint "${{ steps.changed_files.outputs.all }}"
+              echo "Hadolint $files"
+              hadolint "$files"
             fi
           done
 
@@ -41,9 +41,9 @@ jobs:
       - name: 🔎 Run ShellCheck
         run: |
           for files in ${{ steps.changed_files.outputs.all }}; do
-            if [[ "$(basename ${files})" == *".sh* ]]; then
-              echo "Spellcheck ${{ steps.changed_files.outputs.all }}"
-              hadolint "${{ steps.changed_files.outputs.all }}"
+            if [[ "$files" == *".sh* ]]; then
+              echo "Spellcheck $files"
+              spellcheck "$files"
             fi
           done
 
