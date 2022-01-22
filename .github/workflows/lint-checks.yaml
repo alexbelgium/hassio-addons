@@ -22,7 +22,11 @@ jobs:
         uses: jitterbit/get-changed-files@v1
 
       - name: 🔎 Run hadolint
-        run: hadolint "${{ steps.changed_files.outputs.all }}"
+        run: for files in ${{ steps.changed_files.outputs.all }}; do
+               if [[ "$(basename ${files})" == "Dockerfile" ]]; then
+                 hadolint "${{ steps.changed_files.outputs.all }}"
+               fi
+             done
 
   shellcheck:
     runs-on: ubuntu-latest
