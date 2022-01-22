@@ -81,6 +81,7 @@ https://github.com/alexbelgium/hassio-addons
 - [Inadyn](inadyn/) : Inadyn, or In-a-Dyn, is a small and simple Dynamic DNS, DDNS, client with HTTPS support. Commonly available in many GNU/Linux distributions, used in off the shelf routers and Internet gateways to automate the task of keeping your Internet name in sync with your public¹ IP address. It can also be used in installations with redundant (backup) connections to the Internet.
 - [Portainer](portainer/) ![privileged][privileged-shield] ![ingress][ingress-shield] : Manage your docker environment
 - [Scrutiny](scrutiny/) ![support][support-shield] ![ingress][ingress-shield]: Scrutiny WebUI for smartd S.M.A.R.T monitoring
+- [Spotweb by @woutercoppens](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
 - [Teamspeak](teamspeak/): Voice communication for online gaming, education and training.
 
 ## &#10003; Multimedia distributors
@@ -124,7 +125,7 @@ https://github.com/alexbelgium/hassio-addons
 ## &#10003; Web hosting
 
 - [Grav](grav/) ![smb][smb-shield] : Fast, Simple, and Flexible, file-based Web-platform
-- [Resioliosync](resiolosync/) ![smb][smb-shield]: Self-hosted file share and collaboration platform on the Web (dev by @TyjTyj)
+- [Resioliosync by @tyjtyj](resiolosync/) ![smb][smb-shield]: Self-hosted file share and collaboration platform on the Web
 
 [//]: # "ADDONLIST_END"
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg

@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Runs the hourly task to update spots
+# ==============================================================================
+
+s6-setuidgid nginx php8 /app/retrieve.php

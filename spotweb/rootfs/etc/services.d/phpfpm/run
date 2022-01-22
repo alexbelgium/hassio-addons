@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.info "Starting PHP-FPM..."
+
+#/usr/sbin/php-fpm8 -F
+exec php-fpm8 --nodaemonize
