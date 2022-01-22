@@ -28,7 +28,7 @@ ENV LANG C.UTF-8
 ENV APP_ID="spotweb"
 ENV APP_NAME="Spotweb"
 ENV APP_DIR="/app"
-ENV SPOTWEB_RELEASE="1.5.1"
+ENV BUILD_UPSTREAM="1.5.1"
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -132,8 +132,8 @@ LABEL \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="${APP_NAME}" \
     org.label-schema.schema-version="1.0" \
-    org.label-schema.url="https://github.com/alexbelgium/hassio-addons/${APP_ID}" \
-    org.label-schema.usage="https://github.com/alexbelgium/hassio-addons/tree/master/${APP_ID}/README.md" \
+    org.label-schema.url="https://github.com/woutercoppens/hassio-addons/${APP_ID}" \
+    org.label-schema.usage="https://github.com/woutercoppens/hassio-addons/tree/master/${APP_ID}/README.md" \
     org.label-schema.vcs-ref=${BUILD_REF} \
-    org.label-schema.vcs-url="https://github.com/alexbelgium/hassio-addons/${APP_ID}" \
+    org.label-schema.vcs-url="https://github.com/woutercoppens/hassio-addons/${APP_ID}" \
     org.label-schema.vendor="Wouter's Community Add-ons for Home Assistant"
