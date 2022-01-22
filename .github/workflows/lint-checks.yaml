@@ -23,7 +23,7 @@ jobs:
 
       - name: 🔎 Run hadolint
         run: for file in ${{ env.HADOLINT_FILES }}; do                
-               if [[ "${{ steps.changed_files.outputs.all }}" == **/"$file" ]]; then
+               if [[ "${{ steps.changed_files.outputs.all }}" == *"$file"* ]]; then
                  hadolint "${{ steps.changed_files.outputs.all }}"
                fi
              done
