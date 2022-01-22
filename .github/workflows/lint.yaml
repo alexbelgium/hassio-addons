@@ -1,12 +1,6 @@
-name: Lint
+name: Weekly Codebase Lint
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
   schedule:
     - cron: "0 0 * * *"
 
