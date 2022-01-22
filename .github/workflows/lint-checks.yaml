@@ -22,11 +22,12 @@ jobs:
         uses: jitterbit/get-changed-files@v1
 
       - name: 🔎 Run hadolint
-        run: for file in ${{ env.HADOLINT_FILES }}; do                
-               if [[ "${{ steps.changed_files.outputs.all }}" == "$file" ]]; then
-                 hadolint "$( basename ${{ steps.changed_files.outputs.all }})"
-               fi
-             done
+        run: hadolint "${{ steps.changed_files.outputs.all }}"
+        #for file in ${{ env.HADOLINT_FILES }}; do                
+          #     if [[ "${{ steps.changed_files.outputs.all }}" == "$file" ]]; then
+             #    hadolint "$( basename ${{ steps.changed_files.outputs.all }})"
+          #     fi
+          #   done
 
   shellcheck:
     runs-on: ubuntu-latest
