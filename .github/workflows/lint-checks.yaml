@@ -37,9 +37,7 @@ jobs:
         id: filter
         uses: dorny/paths-filter@v2.9.0
         with:
-          list-files: 'shell'
           filters: |
-            shell:
               - '**/*.sh'
               - '**/cont-init.d/*'
               - '**/services.d/*'
