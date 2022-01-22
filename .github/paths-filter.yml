@@ -1,52 +1,60 @@
+###############
+# AUTO BUILDS #
+###############
 # Those are the addon path filters used in the workflows to determine which addon needs to be build.
-# name: slug/filename ; could be slug/** for all files
+# name: slug/filename ; could be slug/config.* for all files
 addons_updater: addons_updater/config.*
+spotweb: spotweb/config.*
+
+#################
+# MANUAL BUILDS #
+#################
 #arpspoof: arpspoof/config.json
-#bazarr: bazarr/**
-#bitwarden: bitwarden/**
-#booksonic-air: booksonic-air/**
-#cloudcommander: cloudcommander/**
-#code-server: code-server/**
-#elasticsearch: elasticsearch/**
-#emby: emby/**
-#enedisgateway2mqtt: enedisgateway2mqtt/**
-#enedisgateway2mqtt: enedisgateway2mqtt/**
-#filebrowser: filebrowser/**
-#firefly iii: firefly iii/**
-#firefly iii data importer: firefly iii data importer/**
-#flaresolverr: flaresolverr/**
-#flexget: flexget/**
-#gazpar2mqtt: gazpar2mqtt/**
-#grav: grav/**
-#inadyn: inadyn/**
-#jackett: jackett/**
-#jellyfin: jellyfin/**
-#joal: joal/**
-#mealie: mealie/**
-#mylar3: mylar3/**
-#nextcloud ocr: nextcloud ocr/**
-#nzbget: nzbget/**
-#ombi: ombi/**
-#organizr: organizr/**
-#paperless ng: paperless ng/**
-#papermerge: papermerge/**
-#photoprism: photoprism/**
-#piwigo: piwigo/**
-#plex: plex/**
-#portainer: portainer/**
-#prowlarr: prowlarr/**
-#qbittorrent: qbittorrent/**
-#radarr: radarr/**
-#readarr: readarr/**
-#requestrr: requestrr/**
-#resioliosync: resioliosync/**
-#scrutiny: scrutiny/**
-#sonarr: sonarr/**
-#tandoor recipes: tandoor recipes/**
-#teamspeak: teamspeak/**
-#transmission: transmission/**
-#ubooquity: ubooquity/**
-#webtrees: webtrees/**
-#wger: wger/**
-#whoogle-search: whoogle-search/**
-#xteve: xteve/** 
+#bazarr: bazarr/config.*
+#bitwarden: bitwarden/config.*
+#booksonic-air: booksonic-air/config.*
+#cloudcommander: cloudcommander/config.*
+#code-server: code-server/config.*
+#elasticsearch: elasticsearch/config.*
+#emby: emby/config.*
+#enedisgateway2mqtt: enedisgateway2mqtt/config.*
+#enedisgateway2mqtt: enedisgateway2mqtt/config.*
+#filebrowser: filebrowser/config.*
+#firefly iii: firefly iii/config.*
+#firefly iii data importer: firefly iii data importer/config.*
+#flaresolverr: flaresolverr/config.*
+#flexget: flexget/config.*
+#gazpar2mqtt: gazpar2mqtt/config.*
+#grav: grav/config.*
+#inadyn: inadyn/config.*
+#jackett: jackett/config.*
+#jellyfin: jellyfin/config.*
+#joal: joal/config.*
+#mealie: mealie/config.*
+#mylar3: mylar3/config.*
+#nextcloud ocr: nextcloud ocr/config.*
+#nzbget: nzbget/config.*
+#ombi: ombi/config.*
+#organizr: organizr/config.*
+#paperless ng: paperless ng/config.*
+#papermerge: papermerge/config.*
+#photoprism: photoprism/config.*
+#piwigo: piwigo/config.*
+#plex: plex/config.*
+#portainer: portainer/config.*
+#prowlarr: prowlarr/config.*
+#qbittorrent: qbittorrent/config.*
+#radarr: radarr/config.*
+#readarr: readarr/config.*
+#requestrr: requestrr/config.*
+#resioliosync: resioliosync/config.*
+#scrutiny: scrutiny/config.*
+#sonarr: sonarr/config.*
+#tandoor recipes: tandoor recipes/config.*
+#teamspeak: teamspeak/config.*
+#transmission: transmission/config.*
+#ubooquity: ubooquity/config.*
+#webtrees: webtrees/config.*
+#wger: wger/config.*
+#whoogle-search: whoogle-search/config.*
+#xteve: xteve/config.* 
