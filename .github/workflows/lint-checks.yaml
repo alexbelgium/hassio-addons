@@ -12,7 +12,7 @@ on:
 jobs:
   hadolint:
     runs-on: ubuntu-latest
-    container: ghcr.io/hadolint/hadolint:latest
+    container: ghcr.io/hadolint/hadolint:latest-alpine
     steps:
       - name: ↩️ Checkout
         uses: actions/checkout@v2
