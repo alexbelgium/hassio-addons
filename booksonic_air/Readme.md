@@ -1,5 +1,5 @@
 # Home assistant add-on: booksonic-air
-
+ 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
