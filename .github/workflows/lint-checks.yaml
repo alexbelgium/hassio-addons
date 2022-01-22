@@ -7,8 +7,6 @@ on:
 
 jobs:
   hadolint:
-  
-  hadolint:
     runs-on: ubuntu-latest
     container: ghcr.io/hadolint/hadolint:latest-alpine
     steps:
