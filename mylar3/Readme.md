@@ -4,8 +4,8 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
-![Supports 
- Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
+![Supports
+ Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield]
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
@@ -14,14 +14,10 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-
-
 [mylar3](https://github.com/mylar3/mylar3) is an automated Comic Book downloader (cbr/cbz) for use with NZB and torrents written in python. It supports SABnzbd, NZBGET, and many torrent clients in addition to DDL.
 This addon is based on the docker image https://github.com/linuxserver/docker-mylar3
 
 ## Installation
-
-
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
@@ -35,8 +31,6 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Open the webUI and adapt the software options
 
 ## Configuration
-
-
 
 Webui can be found at <http://your-ip:PORT>.
 The default username/password : described in the startup log.
@@ -58,13 +52,10 @@ Create an issue on github
 
 ## Illustration
 
-
-
 ![illustration](https://d33wubrfki0l68.cloudfront.net/664a5e42eeb092c4e544606ea29b09a8379ff234/cfe2c/images/mylar.jpg)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg

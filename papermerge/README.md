@@ -4,8 +4,8 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
-![Supports 
- Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
+![Supports
+ Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armv7 Architecture][armv7-shield]
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
@@ -36,6 +36,7 @@ Webui can be found at `<your-ip>:8000`.
 Options can be configured through two ways :
 
 - Addon options
+
 ```yaml
 GUID: user
 GPID: user
@@ -47,11 +48,10 @@ cifspassword: "password" # smb password (optional)
 ```
 
 - papermerge.conf.py
-Custom env variables can be added to the /config/addons_config/papermerge/papermerge.conf.py.
-Full variables can be found here : https://papermerge.readthedocs.io/en/v2.0.1/settings.html. 
+  Custom env variables can be added to the /config/addons_config/papermerge/papermerge.conf.py.
+  Full variables can be found here : https://papermerge.readthedocs.io/en/v2.0.1/settings.html.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg

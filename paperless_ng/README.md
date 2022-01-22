@@ -4,8 +4,8 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
-![Supports 
- Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
+![Supports
+ Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield]
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
@@ -20,7 +20,9 @@ This addon is based on the docker image from [linuxserver.io](https://www.linuxs
 ## Configuration
 
 Options can be configured through two ways :
+
 - Addon options
+
 ```yaml
 GUID: user
 GPID: user
@@ -28,10 +30,11 @@ localdisks: sda1 #put the hardware name of your drive to mount separated by comm
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
-CONFIG_LOCATION : Location of the config.yaml (see below)
-OCRLANG : fra,eng #Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
+CONFIG_LOCATION: Location of the config.yaml (see below)
+OCRLANG: fra,eng #Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
 TZ: Europe/Paris # Sets a specific timezone
 ```
+
 - Config.yaml
 
 Custom env variables can be added to the config.yaml file referenced in the addon options. Full env variables can be found here : https://paperless-ng.readthedocs.io/en/latest/configuration.html. It must be entered in a valid yaml format, that is verified at launch of the addon.
@@ -70,5 +73,4 @@ Create an issue on github
 [ssl-shield]: https://img.shields.io/badge/ssl-yes-green.svg
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg

@@ -4,7 +4,7 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
-![Supports 
+![Supports
  Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield]
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
@@ -15,18 +15,19 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ---
 
-[Elasticsearch](https://github.com/elastic/elasticsearch) is the distributed, RESTful search and analytics engine at the heart of the [Elastic Stack](https://www.elastic.co/fr/products/). 
+[Elasticsearch](https://github.com/elastic/elasticsearch) is the distributed, RESTful search and analytics engine at the heart of the [Elastic Stack](https://www.elastic.co/fr/products/).
 You can use Elasticsearch to store, search, and manage data for:
+
 - Logs
 - Metrics
 - A search backend
 - Application monitoring
 - Endpoint security
-... and more!
+  ... and more!
 
 To learn more about Elasticsearch’s features and capabilities, see their [product page](https://www.elastic.co/fr/elasticsearch/) .
 
-Here, this addon is used to single node that can be called from other addons needing it. 
+Here, this addon is used to single node that can be called from other addons needing it.
 
 ## Installation
 
@@ -44,12 +45,12 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
-No webui, no addon options. 
+No webui, no addon options.
 Elasticsearch is using by calling it from another app, such as nextcloud.
 
 ## Integration with HA
 
-Component : https://community.home-assistant.io/t/elasticsearch-component-publish-home-assistant-events-to-elasticsearch/66877 
+Component : https://community.home-assistant.io/t/elasticsearch-component-publish-home-assistant-events-to-elasticsearch/66877
 
 ## Support
 
@@ -62,5 +63,4 @@ Create an issue on github
 [ssl-shield]: https://img.shields.io/badge/ssl-yes-green.svg
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg

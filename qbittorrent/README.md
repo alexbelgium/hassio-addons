@@ -4,8 +4,8 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
-![Supports 
- Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armhf Architecture][armhf-shield] ![Supports armv7 Architecture][armv7-shield]
+![Supports
+ Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armv7 Architecture][armv7-shield]
 ![Supports smb mounts][smb-shield] ![Supports openvpn][openvpn-shield] ![Supports ingress][ingress-shield] ![Supports ssl][ssl-shield]
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
@@ -62,7 +62,7 @@ keyfile: privkey.pem #sslkeyfile, must be located in /ssl
 whitelist: "localhost,192.168.0.0/16" # list ip subnets that won't need a password (optional)
 Username: "admin" #username to access webui. Please change it as the default is admin for all installations.
 customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start.
-DNS_servers : 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
+DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
 SavePath: "/share/qbittorrent" # Define the download directory
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
@@ -97,5 +97,4 @@ Create an issue on github, or ask on the [home assistant thread](https://communi
 [ssl-shield]: https://img.shields.io/badge/ssl-yes-green.svg
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg

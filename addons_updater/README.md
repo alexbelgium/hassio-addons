@@ -1,4 +1,4 @@
-# Home assistant add-on: addons updater 
+# Home assistant add-on: addons updater
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Support Thread][support-badge]](https://community.home-assistant.io/t/new-addon-automatically-update-addons-based-on-github-upstream-new-releases/)
@@ -6,10 +6,9 @@
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 [support-badge]: https://camo.githubusercontent.com/f4dbb995049f512fdc97fcc9e022ac243fa38c408510df9d46c7467d0970d959/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f537570706f72742d7468726561642d677265656e2e737667
 
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faddons_updater%2Fconfig.json) 
+![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faddons_updater%2Fconfig.json)
 ![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faddons_updater%2Fconfig.json)
 ![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faddons_updater%2Fconfig.json)
-
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
@@ -18,7 +17,6 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 This script allows to automatically update addons based on upstream new releases. This is only an helper tool for developers. End users don’t need that to update their addons - they are automatically alerted by HA when an update is available
-
 
 ## Installation
 
@@ -46,13 +44,14 @@ addon:
     upstream: name/repo, example is 'linuxserver/docker-emby'
     source : github or dockerhub
 gituser: your github username
-gitpass: your github password 
+gitpass: your github password
 gitmail: your github email
 verbose: 'false'
 gitapi: optional, it is the API key from your github repo
 ```
 
 Example:
+
 ```yaml
 addon:
   - slug: sonarr
@@ -71,13 +70,12 @@ addon:
     repository: alexbelgium/hassio-addons
     upstream: linuxserver/docker-ubooquity
 gituser: your github username
-gitpass: your github password 
+gitpass: your github password
 gitmail: your github email
-verbose: 'false'
+verbose: "false"
 ```
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg

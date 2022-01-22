@@ -4,8 +4,7 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
-
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json) 
+![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json)
 ![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json)
 ![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json)
 
@@ -37,7 +36,6 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Webui can be found at <http://your-ip:PORT>.
 
-
 ```yaml
 ROUTER_IP: 127.0.0.1 #Required Router IP
 INTERFACE_NAME: name #Required Interface name. Autofilled if empty.
@@ -46,7 +44,6 @@ INTERFACE_NAME: name #Required Interface name. Autofilled if empty.
 ## Home-Assistant configuration
 
 You can use a `command_line` switch to temporary disable a internet device in your network.
-
 
 ```yaml
 - platform: command_line
@@ -72,5 +69,4 @@ NO illustration
 [smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
