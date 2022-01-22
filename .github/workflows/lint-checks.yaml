@@ -22,6 +22,7 @@ jobs:
         run: |
           for files in ${{ steps.changed_files.outputs.all }}; do
             if [[ "$(basename ${files})" == "Dockerfile" ]]; then
+              echo "Hadolint ${{ steps.changed_files.outputs.all }}"
               hadolint "${{ steps.changed_files.outputs.all }}"
             fi
           done
