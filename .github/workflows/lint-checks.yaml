@@ -1,8 +1,5 @@
 name: Lint / Syntax checks
 
-env:
-  HADOLINT_FILES: "Dockerfile"
-
 on:
   push:
     branches: [ master ]
