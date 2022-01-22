@@ -27,7 +27,7 @@
     "keyfile": "privkey.pem"
   },
   "ports": {
-    "80/tcp": "1.5.1"
+    "80/tcp": "null"
   },
   "ports_description": {
     "80/tcp": "Not required for Ingress"
