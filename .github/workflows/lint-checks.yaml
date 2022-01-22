@@ -7,13 +7,25 @@ on:
 
 jobs:
   hadolint:
-    name: 🔎 Run hadolint
+  
+  hadolint:
     runs-on: ubuntu-latest
+    container: ghcr.io/hadolint/hadolint:latest-alpine
     steps:
-      - uses: actions/checkout@v2 
-      - uses: hadolint/hadolint-action@v1.6.0
+      - name: ↩️ Checkout
+        uses: actions/checkout@v2
+
+      - name: 📂 Detect chanced files
+        id: filter
+        uses: dorny/paths-filter@v2.9.0
         with:
-          dockerfile: Dockerfile
+          list-files: 'shell'
+          filters: |
+            dockerfile:
+              - 'Dockerfile'
+      - name: 🔎 Run hadolint
+        if: steps.filter.outputs.dockerfile == 'true'
+        run: hadolint ${{ steps.filter.outputs.dockerfile_files }}
 
   shellcheck:
     runs-on: ubuntu-latest
