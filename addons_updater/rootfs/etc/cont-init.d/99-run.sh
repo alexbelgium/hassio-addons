@@ -129,9 +129,11 @@ for addons in $(bashio::config "addon|keys"); do
 
     #Change all instances of version
     LOGINFO="... $SLUG : updating files" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
-    sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/config.json
-    sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/Dockerfile || true                                                  #Allow absence of Dockerfile
-    [ -f "/data/${BASENAME}/${SLUG}/build.json" ] && sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/build.json || true #Allow absence of build.json
+    for files in "config.json" "config.yaml" "Dockerfile" "build.json" "build.yaml";do
+      if [ -f /data/${BASENAME}/${SLUG}/$files ]; then
+        sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/${BASENAME}/${SLUG}/$files
+      fi
+    done
 
     # Remove " and modify version
     LASTVERSION=${LASTVERSION//\"/}
