@@ -14,3 +14,4 @@ for SCRIPTS in /etc/cont-init.d/*; do
   sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' "$SCRIPTS"
   /."$SCRIPTS" || echo "$SCRIPTS: exiting $?"
 done
+
