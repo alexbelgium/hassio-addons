@@ -1,8 +1,12 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "name": "Spotweb by @woutercoppens",
   "image": "ghcr.io/alexbelgium/spotweb-{arch}",
-  "version": "dev",
+  "version": "1.5.1",
   "slug": "spotweb",
   "description": "Spotweb is a decentralized usenet community based on the Spotnet protocol",
   "url": "https://github.com/alexbelgium/hassio-addons/spotweb",
@@ -11,14 +15,22 @@
   "ingress_port": 8099,
   "panel_icon": "mdi:chart-timeline",
   "panel_title": "Spotweb",
-  "map": ["ssl", "config:rw", "backup:rw"],
+  "map": [
+    "ssl",
+    "config:rw",
+    "backup:rw"
+  ],
   "options": {
     "ssl": false,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem"
   },
-  "ports": { "80/tcp": null },
-  "ports_description": { "80/tcp": "Not required for Ingress" },
+  "ports": {
+    "80/tcp": "1.5.1"
+  },
+  "ports_description": {
+    "80/tcp": "Not required for Ingress"
+  },
   "schema": {
     "remote_mysql_host": "str?",
     "remote_mysql_database": "str?",
@@ -30,7 +42,9 @@
     "keyfile": "str",
     "ssl": "bool"
   },
-  "services": ["mysql:want"],
+  "services": [
+    "mysql:want"
+  ],
   "startup": "services",
   "hassio_api": true
 }
