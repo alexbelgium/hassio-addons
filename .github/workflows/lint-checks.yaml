@@ -52,8 +52,11 @@ jobs:
     steps:
       - name: ↩️ Checkout
         uses: actions/checkout@v2
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
 
       - name: 🔎 Run markdownlint
         uses: nosborn/github-action-markdown-cli@v1.1.1
         with:
-          files: .
+          rules: markdownlint.yaml
