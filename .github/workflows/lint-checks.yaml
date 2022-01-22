@@ -43,7 +43,7 @@ jobs:
           for files in ${{ steps.changed_files.outputs.all }}; do
             if [[ "$files" == *".sh" ]]; then
               echo "Spellcheck $files"
-              spellcheck "$files"
+              shellcheck "$files"
             fi
           done
 
