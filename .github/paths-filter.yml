@@ -19,7 +19,7 @@ spotweb: spotweb/config.*
 #emby: emby/config.*
 #enedisgateway2mqtt: enedisgateway2mqtt/config.*
 #enedisgateway2mqtt: enedisgateway2mqtt/config.*
-filebrowser: filebrowser/config.*
+#filebrowser: filebrowser/config.*
 #firefly iii: firefly iii/config.*
 #firefly iii data importer: firefly iii data importer/config.*
 #flaresolverr: flaresolverr/config.*
