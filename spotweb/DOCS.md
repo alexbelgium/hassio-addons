@@ -19,7 +19,18 @@ comparison to installing any other Home Assistant add-on.
 This addon will automatically configure and create the database. These steps can be skipped following the official documentation.
 All you have to do: enter your usenet server details and your download client (eg: nzbget).
 
-## Configuration
+## Configuration Spotweb
+
+The official documentation mentions:
+Please run 'http://yourdomain.com/install.php' from within your browser before attempting anything further with Spotweb and make sure all items are checked 'OK'.
+These steps can be skipped as this addon will automatically configure and create the database. 
+
+All you have to do: enter your usenet server details and your download client (eg: nzbget).
+
+**Note**: Spots are retrieved via an hourly cron job. It can take up to an hour before the spots start appearing.
+Depending on the specs of your system, it can take more than 24 hours before all spots are retrieved. 
+
+## Configuration Addon
 
 **Note**: _Remember to restart the add-on when the configuration is changed._
 
