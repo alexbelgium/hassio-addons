@@ -132,8 +132,8 @@ LABEL \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="${APP_NAME}" \
     org.label-schema.schema-version="1.0" \
-    org.label-schema.url="https://github.com/woutercoppens/hassio-addons/${APP_ID}" \
-    org.label-schema.usage="https://github.com/woutercoppens/hassio-addons/tree/master/${APP_ID}/README.md" \
+    org.label-schema.url="https://github.com/alexbelgium/hassio-addons/${APP_ID}" \
+    org.label-schema.usage="https://github.com/alexbelgium/hassio-addons/tree/master/${APP_ID}/README.md" \
     org.label-schema.vcs-ref=${BUILD_REF} \
-    org.label-schema.vcs-url="https://github.com/woutercoppens/hassio-addons/${APP_ID}" \
-    org.label-schema.vendor="Wouter's Community Add-ons for Home Assistant"
+    org.label-schema.vcs-url="https://github.com/alexbelgium/hassio-addons/${APP_ID}" \
+    org.label-schema.vendor="Alex Belgium's Add-ons for Home Assistant"
