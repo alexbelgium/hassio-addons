@@ -37,6 +37,7 @@
   "environment": {
     "FB_BASEURL": "/filebrowser"
   },
+  "image": "ghcr.io/alexbelgium/filebrowser-{arch}",
   "ingress": true,
   "ingress_port": 8099,
   "ingress_stream": true,
