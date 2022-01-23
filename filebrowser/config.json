@@ -83,3 +83,4 @@
   "version": "2.20.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
+
