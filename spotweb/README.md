@@ -1,8 +1,8 @@
-# Wouter's Home Assistant Add-ons: Spotweb by @woutercoppens
+# Home Assistant Add-ons: Spotweb
 
 ## About
 
-This addon was built by [@woutercoppens](https://github.com/woutercoppens/hassio-addons/tree/main/spotweb) and is hosted on this repository.
+This addon was built by @woutercoppens and is hosted on this repository.
 
 [Spotweb][spotweb] is a decentralized usenet community based on the [Spotnet][spotnet] protocol.
 
