@@ -16,6 +16,9 @@ comparison to installing any other Home Assistant add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
+This addon will automatically configure and create the database. These steps can be skipped following the official documentation.
+All you have to do: enter your usenet server details and your download client (eg: nzbget).
+
 ## Configuration
 
 **Note**: _Remember to restart the add-on when the configuration is changed._
@@ -96,6 +99,9 @@ within the configuration to use an external MySql/MariaDB Database. Please note
 that there is no easy upgrade path between the two options.
 
 ## Known issues and limitations
+
+When configuring the download client (NZB handling), 'addon_62c7908d_nzbget_docker' is automatically filled in as hostname of nzbget.
+You'll have to lookup the correct hostname of your nzbget addon. It is usually 'local-nzbget'.
 
 ## Changelog & Releases
 
