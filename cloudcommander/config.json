@@ -76,6 +76,6 @@
   "slug": "cloudcommander",
   "upstream": "15.9.15",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander",
-  "version": "15.9.15",
+  "version": "15.9.15-2",
   "webui": "http://[HOST]:[PORT:8000]"
 }
