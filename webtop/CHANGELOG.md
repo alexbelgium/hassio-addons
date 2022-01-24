@@ -1,4 +1,5 @@
-- Add several custom repositories
+- To update, uninstall and reinstall
+- Add several custom repositories by default to increase installable apps 
 - Switch to ubuntu-mate
 
 ## 4.16 (07-01-2022)
