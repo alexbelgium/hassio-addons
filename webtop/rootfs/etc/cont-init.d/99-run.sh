@@ -15,13 +15,13 @@ graphics-drivers/ppa"
 echo "Adding custom repository : "
 for repositories in $CUSTOMREPOSITORIES; do
 echo "$repositories"
-add-apt-repository ppa:$repositories || true
+add-apt-repository ppa:$repositories >/dev/null || true
 done
 
 # Uprade
 echo "Updating distribution"
 apt-get update &>/dev/null
-apt-get -y upgrade >/dev/null || true
+apt-get -y upgrade &>/dev/null || true
 
 # Fix mate software center
 if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
