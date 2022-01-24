@@ -5,6 +5,7 @@
 # name: slug/filename ; could be slug/config.* for all files
 addons_updater: addons_updater/config.*
 spotweb: spotweb/config.*
+webtop: webtop/config.*
 
 #################
 # MANUAL BUILDS #
