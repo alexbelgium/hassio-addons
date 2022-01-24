@@ -22,14 +22,14 @@ FROM ${BUILD_FROM}ubuntu-mate
 # 2 Modify Image #
 ##################
 
-ARG CUSTOMREPOSITORIES="libreoffice/ppa
-ubuntuhandbook1/darktable
-mozillateam/ppa
-stebbins/handbrake-releases
-kritalime/ppa
-team-xbmc/ppa
-lutris-team/lutris
-graphics-drivers/ppa"
+ARG CUSTOMREPOSITORIES="libreoffice/ppa \
+    ubuntuhandbook1/darktable \
+    mozillateam/ppa \
+    stebbins/handbrake-releases \
+    kritalime/ppa \
+    team-xbmc/ppa \
+    lutris-team/lutris \
+    graphics-drivers/ppa"
 
 # Allow UID and GID setting
 RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
