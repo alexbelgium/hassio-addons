@@ -1,9 +1,25 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+# Add custom repositories
+
+CUSTOMREPOSITORIES="libreoffice/ppa
+ubuntuhandbook1/darktable
+mozillateam/ppa
+stebbins/handbrake-releases
+kritalime/ppa
+team-xbmc/ppa
+lutris-team/lutris
+graphics-drivers/ppa"
+
+echo "Adding custom repository : "
+for repositories in $CUSTOMREPOSITORIES; do
+echo "$repositories"
+add-apt-repository ppa:$repositories || true
+done
+
 # Uprade
 echo "Updating distribution"
-export DEBIAN_FRONTEND=noninteractive
 apt-get update &>/dev/null
 apt-get -y upgrade >/dev/null || true
 
