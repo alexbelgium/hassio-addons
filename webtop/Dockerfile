@@ -22,6 +22,15 @@ FROM ${BUILD_FROM}ubuntu-mate
 # 2 Modify Image #
 ##################
 
+ARG CUSTOMREPOSITORIES="libreoffice/ppa
+ubuntuhandbook1/darktable
+mozillateam/ppa
+stebbins/handbrake-releases
+kritalime/ppa
+team-xbmc/ppa
+lutris-team/lutris
+graphics-drivers/ppa"
+
 # Allow UID and GID setting
 RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
@@ -30,12 +39,10 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's|/config|/share/webtop|g' /defaults/* \
     && sed -i 's|/config|/share/webtop|g' /etc/cont-init.d/* \
     && sed -i 's|/config|/share/webtop|g' /etc/services.d/*/run \
-    && usermod --home /share/webtop abc
-
-# Graphic drivers for rpi4
-# spellcheck disable=SC2015
-# hadolint ignore=SC2015
-RUN apt-get update && apt-get install -yqq --no-install-recommends libgles2-mesa libgles2-mesa-dev xorg-dev || true
+    && usermod --home /share/webtop abc \
+    # Add custom repositories
+    && echo "Adding custom repository : " \
+    && for repositories in $CUSTOMREPOSITORIES; do add-apt-repository ppa:$repositories >/dev/null || true; done
 
 ##################
 # 3 Install apps #
