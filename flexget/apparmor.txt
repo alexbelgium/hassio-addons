@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile booksonic-air_addon flags=(attach_disconnected,mediate_deleted) {
+profile flexget_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,
@@ -16,13 +16,9 @@ profile booksonic-air_addon flags=(attach_disconnected,mediate_deleted) {
   network inet,
   network inet6,
   network netlink raw,
-
   capability setgid,
   capability setuid,
-  capability sys_admin,
-  capability dac_read_search,
-  # capability dac_override,
-  # capability sys_rawio,
+
 
 # S6-Overlay
   /bin/** ix,
@@ -37,12 +33,6 @@ profile booksonic-air_addon flags=(attach_disconnected,mediate_deleted) {
   /var/run/** mrwkl,
   /var/run/ mrwkl,
   /dev/i2c-1 mrwkl,
-  # Files required
-  /dev/sda1 mrwkl,
-  /dev/sdb1 mrwkl,
-  /dev/mmcblk0p1 mrwkl,
-  /dev/* mrwkl,
-  /tmp/** mrkwl,
 
   # Data access
   /data/** rw,
