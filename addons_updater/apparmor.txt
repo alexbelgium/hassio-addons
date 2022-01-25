@@ -25,7 +25,7 @@ profile addon_updater flags=(attach_disconnected,mediate_deleted) {
   /etc/cont-finish.d/** rwix,
   /run/** rwk,
 
-  # Bashio
+  # bashio
   /usr/lib/bashio/** ix,
   /tmp/** rw,
 
