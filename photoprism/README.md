@@ -35,7 +35,9 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at <http://your-ip:2342>
+Options can be configured through two ways :
+
+- Addon options
 
 ```yaml
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
@@ -48,8 +50,14 @@ STORAGE_PATH: "/share/photoprism/storage" # storage PATH for cache, database and
 ORIGINALS_PATH: "/share/photoprism/originals" # originals PATH containing your photo and video collection
 IMPORT_PATH: "/share/photoprism/import" # PATH for importing files to originals
 BACKUP_PATH: "/share/photoprism/backup" # backup storage PATH
-CUSTOM_OPTIONS: "--site-title HA_Photoprism" # custom options from https://docs.photoprism.org/getting-started/config-options/
+CONFIG_LOCATION: "/config/addons_config/config.yaml" # Sets the location of the config.yaml (see below)
 ```
+
+- Config.yaml
+
+Configuration is done by customizing the config.yaml that can be found in /config/addons_config/config.yaml
+
+The complete list of options can be seen here : https://github.com/photoprism/photoprism/blob/develop/docker-compose.yml
 
 ## Illustration
 
