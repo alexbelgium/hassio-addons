@@ -26,7 +26,7 @@ USER root
 
 RUN touch /data/database.sqlite \
     && chown wger /data/database.sqlite \
-    && ln -s /data/database.sqlite /home/wger/db
+    && ln -s /data/database.sqlite wger/db
 
 ##################
 # 3 Install apps #
