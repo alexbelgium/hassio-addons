@@ -1,4 +1,4 @@
-# Home Assistant Community Add-on: Bookstack
+# Home Assistant Community Add-on: Spotweb
 
 [Spotweb][spotweb] is a decentralized usenet community based on the [Spotnet][spotnet] protocol. Please support the developers of this software at
 [spotweb].
@@ -179,7 +179,7 @@ SOFTWARE.
 [discord-ha]: https://discord.gg/c5DvZ4e
 [discord]: https://discord.me/hassioaddons
 [forum]: https://community.home-assistant.io/t/community-hass-io-xxxxx/xxxxx
-[woutercoppens]: https://github.com/alexbelgium
+[woutercoppens]: https://github.com/woutercoppens
 [issue]: https://github.com/alexbelgium/hassio-addons/issues
 [reddit]: https://reddit.com/r/homeassistant
 [releases]: https://github.com/alexbelgium/hassio-addons/releases
