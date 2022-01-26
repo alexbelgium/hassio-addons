@@ -24,8 +24,8 @@ FROM wger/devel:latest
 VOLUME [ "/data" ]
 
 RUN sed -i "1a ln -s /data/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
-    && sed -i "1a ln -s /data/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
-    && sed -i "1a ln -s touch /data/database.sqlite" /home/wger/entrypoint.sh
+    && sed -i "1a rm /home/wger/db/database.sqlite || true" /home/wger/entrypoint.sh \
+    && sed -i "1a touch /data/database.sqlite && chown -R wger /data && chmod -R 777 /data" /home/wger/entrypoint.sh
 
 ##################
 # 3 Install apps #
