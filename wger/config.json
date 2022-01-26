@@ -1,8 +1,9 @@
 {
-  "arch": ["amd64", "aarch64"],
+  "arch": ["amd64"],
   "boot": "auto",
   "description": "manage your personal workouts, weight and diet plans",
-  "environment": {},
+  "environment": {
+    "DJANGO_DB_DATABASE": "/data/database.sqlite" },
   "map": ["share:rw", "ssl:ro"],
   "name": "Wger",
   "options": {},
