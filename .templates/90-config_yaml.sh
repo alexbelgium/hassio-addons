@@ -9,7 +9,7 @@
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 
 # Check if config file is there, or create one from template
-if [ -f $CONFIGSOURCE ]; then
+if [ -f "$CONFIGSOURCE" ]; then
     echo "Using config file found in $CONFIGSOURCE"
 else
     echo "No config file, creating one from template"
@@ -25,7 +25,7 @@ else
         curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
     fi
     # Need to restart
-    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
+    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in "$CONFIGSOURCE" before restarting."
     # bashio::exit.nok
 fi
 
@@ -34,7 +34,7 @@ chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
 
 # Check if yaml is valid
 EXIT_CODE=0
-yamllint -d relaxed $CONFIGSOURCE &>ERROR || EXIT_CODE=$?
+yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
 if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
 else
@@ -47,19 +47,21 @@ fi
 # Helper function
 function parse_yaml {
     local prefix=$2 || local prefix=""
+    # spellcheck disable=SC2155
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
     -e "s| #.*$||g" \
     -e "s|#.*$||g" \
+    # spellcheck disable=SC1087
     -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$1" |
         awk -F$fs '{
       indent = length($1)/2;
       vname[indent] = $2;
       for (i in vname) {if (i > indent) {delete vname[i]}}
       if (length($3) > 0) {
          vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, "$2", "$3");
       }
      }'
 }
@@ -77,7 +79,7 @@ while IFS= read -r line; do
         secret=${line#*secret }
         # Check if single match
         secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
-        [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+        [[ $(echo "$secretnum") == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
@@ -85,6 +87,7 @@ while IFS= read -r line; do
     fi
     # Data validation
     if [[ $line =~ ^.+[=].+$ ]]; then
+        # spellcheck disable=SC2163,SC2086
         export $line
         # Export the variable
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
