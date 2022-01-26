@@ -2,8 +2,6 @@
 
 ## About
 
-This addon was built by @woutercoppens and is hosted on this repository.
-
 [Spotweb][spotweb] is a decentralized usenet community based on the [Spotnet][spotnet] protocol.
 
 Spotweb is one of the most-featured Spotnet clients currently available, featuring among other things:
@@ -16,6 +14,8 @@ Spotweb is one of the most-featured Spotnet clients currently available, featuri
 - Sabnzbd and nzbget integration.
 - Multi-language.
 - Multiple-user ready.
+
+This addon was built by @woutercoppens and is hosted on this repository.
 
 ## Installation
 
