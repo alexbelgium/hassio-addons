@@ -1,5 +1,48 @@
 #!/usr/bin/env bashio
 
+###################
+# Define database #
+###################
+
+bashio::log.info "Defining database"
+
+case $(bashio::config 'DB_TYPE') in
+
+# Use sqlite
+sqlite)
+    bashio::log.info "Using a local sqlite database"
+    ;;
+
+mariadb_addon)
+    bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
+    if ! bashio::services.available 'mysql'; then
+        bashio::log.fatal \
+        "Local database access should be provided by the MariaDB addon"
+        bashio::exit.nok \
+        "Please ensure it is installed and started"
+    fi
+
+    # Install mysqlclient
+    pip install pymysql &>/dev/null || true
+
+    # Use values
+    PHOTOPRISM_DATABASE_DRIVER: "mysql"
+    PHOTOPRISM_DATABASE_SERVER: "$(bashio::services 'mysql' 'host'):$(bashio::services 'mysql' 'port')"
+    PHOTOPRISM_DATABASE_NAME: "photoprism"
+    PHOTOPRISM_DATABASE_USER: "$(bashio::services 'mysql' 'username')"
+    PHOTOPRISM_DATABASE_PASSWORD: "$(bashio::services 'mysql' 'password')"
+    export PHOTOPRISM_DATABASE_DRIVER && bashio::log.blue "PHOTOPRISM_DATABASE_DRIVER=$PHOTOPRISM_DATABASE_DRIVER"
+    export PHOTOPRISM_DATABASE_SERVER && bashio::log.blue "PHOTOPRISM_DATABASE_SERVER=$PHOTOPRISM_DATABASE_SERVER"
+    export PHOTOPRISM_DATABASE_NAME && bashio::log.blue "PHOTOPRISM_DATABASE_NAME=$PHOTOPRISM_DATABASE_NAME"
+    export PHOTOPRISM_DATABASE_USER && bashio::log.blue "PHOTOPRISM_DATABASE_USER=$PHOTOPRISM_DATABASE_USER"
+    export PHOTOPRISM_DATABASE_PASSWORD && bashio::log.blue "PHOTOPRISM_DATABASE_PASSWORD=$PHOTOPRISM_DATABASE_PASSWORD"
+
+    bashio::log.warning "Webtrees is using the Maria DB addon"
+    bashio::log.warning "Please ensure this is included in your backups"
+    bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
+    ;;
+esac
+
 ##############
 # LAUNCH APP #
 ##############
