@@ -1,3 +1,4 @@
+- CUSTOM_OPTIONS deprecated : use config.yaml (see Readme)
 - Any ENV variables can be set by config.yaml (see Readme)
 
 ## 20220121 (21-01-2022)
