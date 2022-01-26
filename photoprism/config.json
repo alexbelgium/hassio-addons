@@ -39,7 +39,8 @@
   ],
   "homeassistant": "0.92.0b2",
   "environment": {
-    "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password"
+    "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password",
+    "working_dir": "/data/photoprism"
   },
   "map": [
     "media:rw",
