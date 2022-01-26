@@ -50,9 +50,11 @@ fi
 sed -i '/CSRFProtection/d' qBittorrent.conf
 sed -i '/ClickjackingProtection/d' qBittorrent.conf
 sed -i '/HostHeaderValidation/d' qBittorrent.conf
+sed -i '/WebUI\Address/d' qBittorrent.conf
 sed -i "$LINE i\WebUI\\\CSRFProtection=false" qBittorrent.conf
 sed -i "$LINE i\WebUI\\\ClickjackingProtection=false" qBittorrent.conf
 sed -i "$LINE i\WebUI\\\HostHeaderValidation=false" qBittorrent.conf
+sed -i "$LINE i\WebUI\\\Address=*" qBittorrent.conf
 
 ################
 # Correct Port #
