@@ -6,7 +6,7 @@
   ],
   "name": "Spotweb",
   "image": "ghcr.io/alexbelgium/spotweb-{arch}",
-  "version": "1.5.1-3",
+  "version": "1.5.1-4",
   "upstream": "1.5.1",
   "slug": "spotweb",
   "description": "Spotweb is a decentralized usenet community based on the Spotnet protocol",

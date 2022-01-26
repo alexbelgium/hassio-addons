@@ -88,6 +88,10 @@ if [ "$RESULT" == "$dbname" ]; then
     # database already exists, do healthcheck with upgrade-db
     bashio::log.info "Existing database, checking health with upgrade-db...."
     s6-setuidgid nginx php8 /app/bin/upgrade-db.php>/dev/null
+    # database already exists, do healthcheck with upgrade-db
+    bashio::log.info "Existing database, clearing cache with upgrade-db"
+    bashio::log.info "to fix potential cache corruption..."
+    s6-setuidgid nginx php8 /app/bin/upgrade-db.php --clear-cache -yes >/dev/null   
 else
     # database does not yet exist
     bashio::log.info "Creating database with default settings...."
