@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Runs the daily task to check the spotweb cache
+# ==============================================================================
+
+s6-setuidgid nginx php8 /app/bin/check-cache.php
