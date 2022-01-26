@@ -1,5 +1,5 @@
 {
-  "arch": ["amd64"],
+  "arch": ["amd64", "aarch64"],
   "boot": "auto",
   "description": "manage your personal workouts, weight and diet plans",
   "environment": {
