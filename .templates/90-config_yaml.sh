@@ -7,7 +7,6 @@
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-chmod 755 $CONFIGSOURCE
 
 # Check if config file is there, or create one from template
 if [ -f $CONFIGSOURCE ]; then
@@ -29,6 +28,9 @@ else
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
     # bashio::exit.nok
 fi
+
+# Permissions
+chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
 
 # Check if yaml is valid
 EXIT_CODE=0
