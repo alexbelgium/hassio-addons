@@ -57,7 +57,8 @@
     "ORIGINALS_PATH": "/share/photoprism/originals",
     "IMPORT_PATH": "/share/photoprism/import",
     "BACKUP_PATH": "/share/photoprism/backup",
-    "CUSTOM_OPTIONS": "--site-title HA_Photoprism"
+    "CUSTOM_OPTIONS": "--site-title HA_Photoprism",
+    "CONFIG_LOCATION": "/config/addons_config/photoprism/config.yaml"
   },
   "ports": {
     "2342/tcp": 2342
@@ -79,7 +80,8 @@
     "ORIGINALS_PATH": "str",
     "IMPORT_PATH": "str",
     "BACKUP_PATH": "str",
-    "CUSTOM_OPTIONS": "str?"
+    "CUSTOM_OPTIONS": "str?",
+    "CONFIG_LOCATION": "str"
   },
   "slug": "photoprism",
   "upstream": "20220121",
