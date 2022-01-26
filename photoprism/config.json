@@ -49,6 +49,7 @@
   ],
   "name": "Photoprism",
   "options": {
+    "DB_TYPE": "sqlite",
     "networkdisks": "//server/share",
     "cifsusername": "username",
     "cifspassword": "password",
@@ -79,7 +80,8 @@
     "ORIGINALS_PATH": "str",
     "IMPORT_PATH": "str",
     "BACKUP_PATH": "str",
-    "CONFIG_LOCATION": "str"
+    "CONFIG_LOCATION": "str",
+    "DB_TYPE": "list(sqlite|mariadb_addon)"
   },
   "slug": "photoprism",
   "upstream": "20220121",
