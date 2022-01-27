@@ -40,6 +40,8 @@ mariadb_addon)
     bashio::log.warning "Webtrees is using the Maria DB addon"
     bashio::log.warning "Please ensure this is included in your backups"
     bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
+
+    mysql -uuser -p -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME; CHARACTER SET = 'utf8mb4'; COLLATE = 'utf8mb4_unicode_ci'" || true
     ;;
 esac
 
