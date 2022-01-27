@@ -1,30 +1,30 @@
 # Inadyn v2.0 configuration file format{{#verify_address}}
-verify-address = {{verify_address}}{{/verify_address}}{{#fake_address}}
-fake-address = {{fake_address}}{{/fake_address}}{{#allow_ipv6}}
-allow-ipv6 = {{allow_ipv6}}{{/allow_ipv6}}{{#iface}}
-iface = "{{iface}}"{{/iface}}{{#iterations}}
-iterations = {{iterations}}{{/iterations}}{{#period}}
-period = {{period}}{{/period}}{{#forced_update}}
-forced-update = {{forced_update}}{{/forced_update}}{{#secure_ssl}}
-secure-ssl = {{secure_ssl}}{{/secure_ssl}}{{#user_agent}}
-user-agent = {{user_agent}}{{/user_agent}}
+verify-address = {{{verify_address}}}{{/verify_address}}{{#fake_address}}
+fake-address = {{{fake_address}}}{{/fake_address}}{{#allow_ipv6}}
+allow-ipv6 = {{{allow_ipv6}}}{{/allow_ipv6}}{{#iface}}
+iface = "{{{iface}}}"{{/iface}}{{#iterations}}
+iterations = {{{iterations}}}{{/iterations}}{{#period}}
+period = {{{period}}}{{/period}}{{#forced_update}}
+forced-update = {{{forced_update}}}{{/forced_update}}{{#secure_ssl}}
+secure-ssl = {{{secure_ssl}}}{{/secure_ssl}}{{#user_agent}}
+user-agent = {{{user_agent}}}{{/user_agent}}
 
 {{#providers}}
-{{#custom_provider}}custom{{/custom_provider}}{{^custom_provider}}provider{{/custom_provider}} {{provider}} {
-    username         = "{{username}}"{{#password}}
-    password         = "{{password}}"{{/password}}{{#ssl}}
-    ssl              = {{ssl}}{{/ssl}}
-    hostname         = "{{hostname}}"{{#checkip_ssl}}
-    checkip-ssl      = {{checkip_ssl}}{{/checkip_ssl}}{{#checkip_server}}
-    checkip-server   = "{{checkip_server}}"{{/checkip_server}}{{#checkip_command}}
-    checkip-command  = "{{checkip_command}}"{{/checkip_command}}{{#checkip_path}}
-    checkip-path     = "{{checkip_path}}"{{/checkip_path}}{{#user_agent}}
-    user-agent       = "{{user_agent}}"{{/user_agent}}{{#wildcard}}
-    wildcard         = "{{wildcard}}"{{/wildcard}}{{#ddns_server}}
-    ddns-server      = "{{ddns_server}}"{{/ddns_server}}{{#ddns_path}}
-    ddns-path        = "{{ddns_path}}"{{/ddns_path}}{{#append_myip}}
-    append-myip      = "{{append_myip}}"{{/append_myip}}{{#proxied}}
-    proxied          = "{{proxied}}"{{/proxied}}{{#ttl}}
-    ttl              = "{{ttl}}"{{/ttl}}
+{{#custom_provider}}custom{{/custom_provider}}{{^custom_provider}}provider{{/custom_provider}} {{{provider}}} {
+    username         = "{{{username}}}"{{#password}}
+    password         = "{{{password}}}"{{/password}}{{#ssl}}
+    ssl              = {{{ssl}}}{{/ssl}}
+    hostname         = "{{{hostname}}}"{{#checkip_ssl}}
+    checkip-ssl      = {{{checkip_ssl}}}{{/checkip_ssl}}{{#checkip_server}}
+    checkip-server   = "{{{checkip_server}}}"{{/checkip_server}}{{#checkip_command}}
+    checkip-command  = "{{{checkip_command}}}"{{/checkip_command}}{{#checkip_path}}
+    checkip-path     = "{{{checkip_path}}}"{{/checkip_path}}{{#user_agent}}
+    user-agent       = "{{{user_agent}}}"{{/user_agent}}{{#wildcard}}
+    wildcard         = "{{{wildcard}}}"{{/wildcard}}{{#ddns_server}}
+    ddns-server      = "{{{ddns_server}}}"{{/ddns_server}}{{#ddns_path}}
+    ddns-path        = "{{{ddns_path}}}"{{/ddns_path}}{{#append_myip}}
+    append-myip      = "{{{append_myip}}}"{{/append_myip}}{{#proxied}}
+    proxied          = "{{{proxied}}}"{{/proxied}}{{#ttl}}
+    ttl              = "{{{ttl}}}"{{/ttl}}
 }
 {{/providers}}
