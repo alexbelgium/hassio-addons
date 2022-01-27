@@ -9,7 +9,7 @@
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 
 # Check if config file is there, or create one from template
-if [ -f "$CONFIGSOURCE" ]; then
+if [ -f $CONFIGSOURCE ]; then
     echo "Using config file found in $CONFIGSOURCE"
 else
     echo "No config file, creating one from template"
@@ -25,7 +25,7 @@ else
         curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
     fi
     # Need to restart
-    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in "$CONFIGSOURCE" before restarting."
+    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
     # bashio::exit.nok
 fi
 
@@ -34,7 +34,7 @@ chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
 
 # Check if yaml is valid
 EXIT_CODE=0
-yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
+yamllint -d relaxed $CONFIGSOURCE &>ERROR || EXIT_CODE=$?
 if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
 else
@@ -77,7 +77,7 @@ while IFS= read -r line; do
         secret=${line#*secret }
         # Check if single match
         secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
-        [[ $(echo "$secretnum") == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+        [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
@@ -85,7 +85,6 @@ while IFS= read -r line; do
     fi
     # Data validation
     if [[ $line =~ ^.+[=].+$ ]]; then
-        # spellcheck disable=SC2163,SC2086
         export $line
         # Export the variable
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
