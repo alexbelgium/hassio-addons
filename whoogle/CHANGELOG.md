@@ -1,3 +1,6 @@
+
+## 0.7.1 (27-01-2022)
+- Update to latest version from benbusby/whoogle-search
 ## 0.7.1 (03-01-2022)
 
 - Breaking change
