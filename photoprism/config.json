@@ -87,6 +87,6 @@
   "slug": "photoprism",
   "upstream": "20220121",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "20220121-11",
+  "version": "20220121-12",
   "webui": "http://[HOST]:[PORT:2342]"
 }
