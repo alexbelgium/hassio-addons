@@ -23,8 +23,8 @@ user-agent = {{user_agent}}{{/user_agent}}
     wildcard         = "{{wildcard}}"{{/wildcard}}{{#ddns_server}}
     ddns-server      = "{{ddns_server}}"{{/ddns_server}}{{#ddns_path}}
     ddns-path        = "{{ddns_path}}"{{/ddns_path}}{{#append_myip}}
-    append-myip      = "{{append_myip}}"{{/append_myip}}
-    proxied          = "{{proxied}}"{{/proxied}}
+    append-myip      = "{{append_myip}}"{{/append_myip}}{{#proxied}}
+    proxied          = "{{proxied}}"{{/proxied}}{{#ttl}}
     ttl              = "{{ttl}}"{{/ttl}}
 }
 {{/providers}}
