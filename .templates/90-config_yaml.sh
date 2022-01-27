@@ -47,12 +47,10 @@ fi
 # Helper function
 function parse_yaml {
     local prefix=$2 || local prefix=""
-    # spellcheck disable=SC2155
     local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
     sed -ne "s|^\($s\):|\1|" \
     -e "s| #.*$||g" \
     -e "s|#.*$||g" \
-    # spellcheck disable=SC1087
     -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
     -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$1" |
         awk -F$fs '{
