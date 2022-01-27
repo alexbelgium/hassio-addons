@@ -26,11 +26,11 @@ mariadb_addon)
     pip install pymysql &>/dev/null || true
 
     # Use values
-    PHOTOPRISM_DATABASE_DRIVER: "mysql"
-    PHOTOPRISM_DATABASE_SERVER: "$(bashio::services 'mysql' 'host'):$(bashio::services 'mysql' 'port')"
-    PHOTOPRISM_DATABASE_NAME: "photoprism"
-    PHOTOPRISM_DATABASE_USER: "$(bashio::services 'mysql' 'username')"
-    PHOTOPRISM_DATABASE_PASSWORD: "$(bashio::services 'mysql' 'password')"
+    PHOTOPRISM_DATABASE_DRIVER="mysql"
+    PHOTOPRISM_DATABASE_SERVER="$(bashio::services 'mysql' 'host'):$(bashio::services 'mysql' 'port')"
+    PHOTOPRISM_DATABASE_NAME="photoprism"
+    PHOTOPRISM_DATABASE_USER="$(bashio::services 'mysql' 'username')"
+    PHOTOPRISM_DATABASE_PASSWORD="$(bashio::services 'mysql' 'password')"
     export PHOTOPRISM_DATABASE_DRIVER && bashio::log.blue "PHOTOPRISM_DATABASE_DRIVER=$PHOTOPRISM_DATABASE_DRIVER"
     export PHOTOPRISM_DATABASE_SERVER && bashio::log.blue "PHOTOPRISM_DATABASE_SERVER=$PHOTOPRISM_DATABASE_SERVER"
     export PHOTOPRISM_DATABASE_NAME && bashio::log.blue "PHOTOPRISM_DATABASE_NAME=$PHOTOPRISM_DATABASE_NAME"
