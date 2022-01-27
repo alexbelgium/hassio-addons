@@ -22,7 +22,7 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-
+USER root
 
 ##################
 # 3 Install apps #
