@@ -41,7 +41,7 @@ mariadb_addon)
     bashio::log.warning "Please ensure this is included in your backups"
     bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
-    mysql --host=$(bashio::services 'mysql' 'host') --port=$(bashio::services 'mysql' 'port') --user=$PHOTOPRISM_DATABASE_USER --password=$PHOTOPRISM_DATABASE_PASSWORD -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME; CHARACTER SET = utf8mb4; COLLATE = utf8mb4_unicode_ci" || true
+    mysql --host=$(bashio::services 'mysql' 'host') --port=$(bashio::services 'mysql' 'port') --user=$PHOTOPRISM_DATABASE_USER --password=$PHOTOPRISM_DATABASE_PASSWORD -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME; CHARACTER SET = utf8mb4; COLLATE = utf8mb4_unicode_ci;" || true
     ;;
 esac
 
