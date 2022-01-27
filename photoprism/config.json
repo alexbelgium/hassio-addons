@@ -70,6 +70,7 @@
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
+  "services": ["mysql:want"],
   "schema": {
     "localdisks": "str?",
     "networkdisks": "str?",
