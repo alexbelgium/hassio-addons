@@ -1,3 +1,6 @@
+
+## 2.2.0 (31-01-2022)
+- Update to latest version from FlareSolverr/FlareSolverr
 ## 2.6.10 (20-12-2021)
 
 - Update to latest version from laurent22/joplin
