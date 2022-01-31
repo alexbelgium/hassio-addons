@@ -1,3 +1,6 @@
+
+## 5.6.13 (31-01-2022)
+- Update to latest version from firefly-iii/firefly-iii
 - Silent mode added : hides output of the app if no errors
 - Correct permissions
 - Allowed automatic update in hourly, daily or weekly setting from addon options
