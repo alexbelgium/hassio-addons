@@ -53,6 +53,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "image": "ghcr.io/alexbelgium/webtop-kde-{arch}",
   "video": true,
   "map": ["media:rw", "share:rw", "ssl"],
   "name": "Webtop Alpine KDE",
