@@ -56,7 +56,7 @@
   "image": "ghcr.io/alexbelgium/webtop-{arch}",
   "video": true,
   "map": ["media:rw", "share:rw", "ssl"],
-  "name": "Webtop",
+  "name": "Webtop Ubuntu Mate",
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "ports": {
     "3000/tcp": 3000
