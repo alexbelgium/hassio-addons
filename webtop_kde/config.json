@@ -76,7 +76,7 @@
     "DNS_server": "str?",
     "additional_apps": "str?"
   },
-  "slug": "webtop_kde",
+  "slug": "webtop-kde",
   "upstream": "4.16",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.16",
