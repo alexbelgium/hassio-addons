@@ -22,14 +22,7 @@ FROM ${BUILD_FROM}alpine-kde
 # 2 Modify Image #
 ##################
 
-ARG CUSTOMREPOSITORIES="libreoffice/ppa \
-    ubuntuhandbook1/darktable \
-    mozillateam/ppa \
-    stebbins/handbrake-releases \
-    kritalime/ppa \
-    team-xbmc/ppa \
-    lutris-team/lutris \
-    graphics-drivers/ppa"
+ARG CUSTOMREPOSITORIES="https://pkgs.alpinelinux.org/package/edge/testing/"
 
 # Allow UID and GID setting
 RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
@@ -42,7 +35,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && usermod --home /share/webtop abc \
     # Add custom repositories
     && echo "Adding custom repository : " \
-    && for repositories in $CUSTOMREPOSITORIES; do add-apt-repository ppa:$repositories >/dev/null || true; done
+    && for repositories in $CUSTOMREPOSITORIES; do sudo apk add libgdiplus --repository=$repositories >/dev/null || true; done
 
 ##################
 # 3 Install apps #
