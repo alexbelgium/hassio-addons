@@ -31,8 +31,8 @@
     "TZ": "str?"
   },
   "slug": "grav",
-  "upstream": "1.7.29",
+  "upstream": "1.7.29.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.7.29",
+  "version": "1.7.29.1",
   "webui": "http://[HOST]:[PORT:80]"
 }
