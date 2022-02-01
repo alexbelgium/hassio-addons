@@ -6,6 +6,7 @@
 addons_updater: addons_updater/config.*
 spotweb: spotweb/config.*
 webtop: webtop/config.*
+webtop_kde: webtop_kde/config.*
 
 #################
 # MANUAL BUILDS #
