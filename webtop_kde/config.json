@@ -62,6 +62,8 @@
   "ports": {
     "3000/tcp": 3001
   },
+  "udev": true, 
+  "host_dbus": true,
   "ports_description": {
     "3000/tcp": "web interface"
   },
@@ -81,7 +83,7 @@
   "slug": "webtop-kde",
   "upstream": "4.16",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-2",
+  "version": "4.16-3",
   "webui": "http://[HOST]:[PORT:3000]"
 }
 
