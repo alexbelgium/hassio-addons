@@ -1,4 +1,7 @@
 
+## nightly-alpine-0.2.0.1448-ls33 (01-02-2022)
+- Update to latest version from linuxserver/docker-prowlarr
+
 ## nightly-alpine-0.2.0.1447-ls32 (31-01-2022)
 - Update to latest version from linuxserver/docker-prowlarr
 
