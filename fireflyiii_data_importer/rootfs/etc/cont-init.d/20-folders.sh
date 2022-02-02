@@ -1,7 +1,9 @@
 #!/usr/bin/env bashio
 
+CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
+
 # Create directory
-mkdir -p /config/addons_config/fireflyiii_data_importer
+mkdir -p "$(dirname "${CONFIGSOURCE}")"
 
 # Make sure permissions are right
-chown -R $(id -u):$(id -g) /config/addons_config/fireflyiii_data_importer
+chown -R $(id -u):$(id -g) "$(dirname "${CONFIGSOURCE}")"
