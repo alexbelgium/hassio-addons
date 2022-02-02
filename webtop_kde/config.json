@@ -3,8 +3,8 @@
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "environment": {
-    "PUID": "0",
-    "PGID": "0",
+    "PUID": "1000",
+    "PGID": "1000",
     "HOME": "/share/webtop_kde",
     "shm_size": "1gb"
   },
@@ -69,8 +69,8 @@
     "3000/tcp": "web interface"
   },
   "options": {
-    "PUID": 0,
-    "PGID": 0,
+    "PUID": 1000,
+    "PGID": 1000,
     "additional_apps": "engrampa,thunderbird,libreoffice"
   },
   "schema": {
