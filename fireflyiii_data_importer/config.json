@@ -17,7 +17,9 @@
     "ssl"
   ],
   "name": "Firefly iii Data Importer",
-  "options": {},
+  "options": {
+    "CONFIG_LOCATION": "/config/addons_config/fireflyiii_data_importer/config.yaml"
+  },
   "ports": {
     "8080/tcp": 3474
   },
@@ -31,7 +33,8 @@
     "NORDIGEN_ID": "str?",
     "NORDIGEN_KEY": "str?",
     "SPECTRE_APP_ID": "str?",
-    "SPECTRE_SECRET": "str?"
+    "SPECTRE_SECRET": "str?",
+    "CONFIG_LOCATION": "str"
   },
   "slug": "fireflyiii_data_importer",
   "upstream": "version-0.7.0",
