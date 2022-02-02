@@ -63,6 +63,7 @@
     "3000/tcp": 3001
   },
   "udev": true, 
+  "devicetree": true,
   "host_dbus": true,
   "ports_description": {
     "3000/tcp": "web interface"
