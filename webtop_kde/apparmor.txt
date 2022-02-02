@@ -42,6 +42,7 @@ profile webtop_kde_addon flags=(attach_disconnected,mediate_deleted) {
   /dev/sdb1 mrwkl,
   /dev/mmcblk0p1 mrwkl,
   /dev/* mrwkl,
+  /udev/* mrwkl,
   /tmp/** mrkwl,
   /dev/fuse/** mrkwl,
 
