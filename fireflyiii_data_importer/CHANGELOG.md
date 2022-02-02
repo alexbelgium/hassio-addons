@@ -1,3 +1,4 @@
+- Add config.yaml configurable options (see readme)
 
 ## version-0.7.0 (22-01-2022)
 - Update to latest version from fireflyiii/data-importer
