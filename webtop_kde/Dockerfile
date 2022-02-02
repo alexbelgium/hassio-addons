@@ -35,7 +35,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && usermod --home /share/webtop_kde abc \
     # Add custom repositories
     && echo "Adding custom repository : " \
-    && for repositories in $CUSTOMREPOSITORIES; do sudo apk add libgdiplus --repository=$repositories >/dev/null; done
+    && for repositories in $CUSTOMREPOSITORIES; do apk add libgdiplus --repository=$repositories >/dev/null; done
 
 ##################
 # 3 Install apps #
