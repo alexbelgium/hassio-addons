@@ -35,6 +35,10 @@ RUN \
     && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/addons_config/flexget|g' \
     && grep -rl " /config" /etc/services.d | xargs sed -i 's| /config| /config/addons_config/flexget|g' \
     && sed -i 's=/config/flexget=/config/addons_config/flexget || true=g' /etc/cont-init.d/10-adduser \
+    # \
+    # Allow loglevel
+    # && sed -i 's/bash/bashio/g' /etc/services.d/*/run \
+    # && sed -i 's/--loglevel info/--loglevel $(bashio::config "FG_LOG_LEVEL")/g' /etc/services.d/*/run \
     \
     # Set password
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/20-config \
@@ -49,7 +53,7 @@ RUN \
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES="00-banner.sh 00-global_var.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
