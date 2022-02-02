@@ -29,9 +29,9 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     # Change home folder location
-    && sed -i 's|/config|/share/webtop|g' /defaults/* \
-    && sed -i 's|/config|/share/webtop|g' /etc/cont-init.d/* \
-    && sed -i 's|/config|/share/webtop|g' /etc/services.d/*/run \
+    && sed -i 's|/config|/share/webtop_kde|g' /defaults/* \
+    && sed -i 's|/config|/share/webtop_kde|g' /etc/cont-init.d/* \
+    && sed -i 's|/config|/share/webtop_kde|g' /etc/services.d/*/run \
     && usermod --home /share/webtop abc \
     # Add custom repositories
     && echo "Adding custom repository : " \
