@@ -22,7 +22,7 @@ FROM ${BUILD_FROM}alpine-kde
 # 2 Modify Image #
 ##################
 
-ARG CUSTOMREPOSITORIES="https://pkgs.alpinelinux.org/package/edge/testing/"
+ARG CUSTOMREPOSITORIES="http://dl-cdn.alpinelinux.org/alpine/edge/testing/"
 
 # Allow UID and GID setting
 RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
