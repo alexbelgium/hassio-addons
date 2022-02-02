@@ -22,7 +22,12 @@ This addon is based on the docker image https://hub.docker.com/r/fireflyiii/data
 
 Read official documentation for information how to set the variables: https://docs.firefly-iii.org/data-importer
 
+Options can be configured through two ways :
+
+- Addon options
+
 ```yaml
+"CONFIG_LOCATION": location of the config.yaml # Sets the location of the config.yaml (see below)
 "FIREFLY_III_ACCESS_TOKEN": required to access Firefly
 "FIREFLY_III_CLIENT_ID": alternative way to access Firefly
 "FIREFLY_III_URL": your url, either local (docker IP), or external (public IP)
@@ -31,6 +36,12 @@ Read official documentation for information how to set the variables: https://do
 "SPECTRE_APP_ID": your Spectre / Salt Edge Client ID
 "SPECTRE_SECRET": your Spectre / Salt Edge Client secret
 ```
+
+- Config.yaml
+
+Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options
+
+The complete list of ENV variables can be seen here : https://github.com/firefly-iii/data-importer/blob/main/.env.example
 
 ## Installation
 
