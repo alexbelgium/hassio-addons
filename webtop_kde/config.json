@@ -57,7 +57,7 @@
   "image": "ghcr.io/alexbelgium/webtop-kde-{arch}",
   "video": true,
   "map": ["media:rw", "share:rw", "ssl"],
-  "name": "Webtop Alpine KDE",
+  "name": "Webtop Fedora KDE",
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "ports": {
     "3000/tcp": 3001
@@ -88,7 +88,7 @@
   "slug": "webtop-kde",
   "upstream": "4.16",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-7",
+  "version": "4.16-8",
   "webui": "http://[HOST]:[PORT:3000]"
 }
 
