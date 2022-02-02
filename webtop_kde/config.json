@@ -60,7 +60,7 @@
   "name": "Webtop Fedora KDE",
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "ports": {
-    "3000/tcp": 3001
+    "3000/tcp": 3000
   },
   "udev": true, 
   "devicetree": true,
