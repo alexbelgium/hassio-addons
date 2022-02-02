@@ -19,7 +19,11 @@ FlexGet is a multipurpose automation tool for all of your media. See https://fle
 
 ## Config
 
-WebuiPass - Password to access webui
+    "PUID": custom user (default root)  
+    "PGID": custom user (default root) 
+    "WebuiPass": Password to access webui 
+    "FG_PLUGINS": Plugins addition
+    "FG_LOG_LEVEL": Log level (critical|error|warning|info|verbose|debug|trace)
 
 ## Start
 
