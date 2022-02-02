@@ -2,7 +2,6 @@ name: Builder
 
 env:
   BUILD_ARGS: ""
-  MONITORED_FILES: "builder"
 
 on:
   push:
