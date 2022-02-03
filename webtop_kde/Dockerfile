@@ -34,7 +34,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && usermod --home /share/webtop_kde abc \
     \
     # Correct error in upstream image
-    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/* \
+    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config \
     \
     # Add custom repositories
     && echo "Adding custom repository : " \
