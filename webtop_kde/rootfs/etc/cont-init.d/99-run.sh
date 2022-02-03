@@ -13,6 +13,11 @@ if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
   service dbus restart
 fi
 
+# Add custom repositories
+echo "Adding custom repository : "
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+
 # Install specific apps
 if bashio::config.has_value 'additional_apps'; then
   bashio::log.info "Installing additional apps :"
