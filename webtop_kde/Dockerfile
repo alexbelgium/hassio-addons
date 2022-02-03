@@ -29,7 +29,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     \
     # Change home folder location
     && sed -i 's|/config|/share/webtop_kde|g' /defaults/* \
-    && sed -i 's|/config|/share/webtop_kde|g' /etc/cont-init.d/* \
+    #&& sed -i 's|/config|/share/webtop_kde|g' /etc/cont-init.d/* \
     && sed -i 's|/config|/share/webtop_kde|g' /etc/services.d/*/run \
     && usermod --home /share/webtop_kde abc \
     \
