@@ -30,14 +30,14 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
     \
     # Change home folder location
-    && sed -i 's|/config|/share/webtop_kde|g' /defaults/* \
-    && sed -i 's|/config|/share/webtop_kde|g' /etc/cont-init.d/* \
-    && sed -i 's|/config|/share/webtop_kde|g' /etc/services.d/*/run \
-    && usermod --home /share/webtop_kde abc \
-    \
+    && sed -i 's| /config| /share/webtop_kde|g' /defaults/* \
+    && sed -i 's| /config| /share/webtop_kde|g' /etc/cont-init.d/* \
+    && sed -i 's| /config| /share/webtop_kde|g' /etc/services.d/*/run \
+    && usermod --home /share/webtop_kde abc
+    #\
     # Add custom repositories
-    && if [ -f /etc/apk/repositories ]; then echo "Adding custom repository : " \
-    && for repositories in $CUSTOMREPOSITORIES; do echo "$repositories" >> /etc/apk/repositories; done; fi
+    #&& if [ -f /etc/apk/repositories ]; then echo "Adding custom repository : " \
+    #&& for repositories in $CUSTOMREPOSITORIES; do echo "$repositories" >> /etc/apk/repositories; done; fi
 
 ##################
 # 3 Install apps #
