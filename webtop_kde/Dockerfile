@@ -34,10 +34,10 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's| /config| /share/webtop_kde|g' /etc/cont-init.d/* \
     && sed -i 's| /config| /share/webtop_kde|g' /etc/services.d/*/run \
     && usermod --home /share/webtop_kde abc
-    #\
+    \
     # Add custom repositories
-    #&& if [ -f /etc/apk/repositories ]; then echo "Adding custom repository : " \
-    #&& for repositories in $CUSTOMREPOSITORIES; do echo "$repositories" >> /etc/apk/repositories; done; fi
+    && if [ -f /etc/apk/repositories ]; then echo "Adding custom repository : " \
+    && for repositories in $CUSTOMREPOSITORIES; do echo "$repositories" >> /etc/apk/repositories; done; fi
 
 ##################
 # 3 Install apps #
@@ -57,7 +57,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
-ENV PACKAGES="engrampa"
+ENV PACKAGES="plasma-desktop systemsettings sddm breeze elogind polkit-elogind engrampa"
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
