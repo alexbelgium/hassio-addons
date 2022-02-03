@@ -22,8 +22,6 @@ FROM ${BUILD_FROM}alpine-kde
 # 2 Modify Image #
 ##################
 
-ARG CUSTOMREPOSITORIES="http://dl-cdn.alpinelinux.org/alpine/edge/community http://dl-cdn.alpinelinux.org/alpine/edge/testing"
-
 # Allow UID and GID setting
 RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
@@ -36,8 +34,9 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && usermod --home /share/webtop_kde abc \
     \
     # Add custom repositories
-    && if [ -f /etc/apk/repositories ]; then echo "Adding custom repository : " \
-    && for repositories in $CUSTOMREPOSITORIES; do echo "$repositories" >> /etc/apk/repositories; done; fi
+    && echo "Adding custom repository : " \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 ##################
 # 3 Install apps #
@@ -57,7 +56,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
-ENV PACKAGES="plasma-desktop systemsettings sddm breeze elogind polkit-elogind engrampa"
+ENV PACKAGES="systemsettings engrampa"
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
