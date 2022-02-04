@@ -95,7 +95,8 @@
     "cifspassword": "str?",
     "cifsdomain": "str?",
     "DNS_server": "str?",
-    "additional_apps": "str?"
+    "additional_apps": "str?",
+    "edge_repositories": "bool?"
   },
   "slug": "webtop-kde",
   "upstream": "4.16-r0-ls40",
