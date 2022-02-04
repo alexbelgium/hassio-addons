@@ -17,10 +17,11 @@ fi
 { echo "http://dl-cdn.alpinelinux.org/alpine/edge/community";
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing";
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/main";
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/releases";
-echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community";
-echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main";
-echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/releases"; } > /etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/releases"; } > /etc/apk/repositories
+
+#echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community";
+#echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main";
+#echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/releases";
 
 # Install specific apps
 if bashio::config.has_value 'additional_apps'; then
