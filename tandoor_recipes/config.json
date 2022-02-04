@@ -40,8 +40,8 @@
     "POSTGRES_DB": "str?"
   },
   "slug": "tandoor_recipes",
-  "upstream": "1.0.5.2",
+  "upstream": "1.0.6",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.5.2",
+  "version": "1.0.6",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
