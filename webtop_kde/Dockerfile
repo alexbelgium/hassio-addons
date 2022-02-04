@@ -55,7 +55,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
-ENV PACKAGES="engrampa mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev"
+ENV PACKAGES="engrampa ksystemstats mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev"
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
