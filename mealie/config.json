@@ -36,8 +36,8 @@
   },
   "slug": "mealie",
   "startup": "services",
-  "upstream": "0.5.5",
+  "upstream": "0.5.6",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9925]"
 }
