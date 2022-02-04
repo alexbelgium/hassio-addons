@@ -14,14 +14,16 @@ if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
 fi
 
 # Add repositories
-{ echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
-echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing";
-echo "https://dl-cdn.alpinelinux.org/alpine/edge/main";
-echo "https://dl-cdn.alpinelinux.org/alpine/edge/releases"; } > /etc/apk/repositories
-
-#echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community";
-#echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main";
-#echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/releases";
+if bashio::config.true 'edge_repositories'; then
+  { echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
+  echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing";
+  echo "https://dl-cdn.alpinelinux.org/alpine/edge/main";
+  echo "https://dl-cdn.alpinelinux.org/alpine/edge/releases"; } > /etc/apk/repositories
+else
+  { echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/community";
+  echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/main";
+  echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases"; } > /etc/apk/repositories
+fi
 
 # Install specific apps
 if bashio::config.has_value 'additional_apps'; then
