@@ -14,13 +14,13 @@ if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
 fi
 
 # Add repositories
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" > /etc/apk/repositories
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/releases" >> /etc/apk/repositories
-echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
-echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" >> /etc/apk/repositories
-echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/releases" >> /etc/apk/repositories
+{ echo "http://dl-cdn.alpinelinux.org/alpine/edge/community";
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing";
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/main";
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/releases";
+echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community";
+echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main";
+echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/releases"; } > /etc/apk/repositories
 
 # Install specific apps
 if bashio::config.has_value 'additional_apps'; then
@@ -29,10 +29,12 @@ if bashio::config.has_value 'additional_apps'; then
   NEWAPPS=$(bashio::config 'additional_apps')
   for APP in ${NEWAPPS//,/ }; do
     bashio::log.green "... $APP"
-    # Test install with both apt-get and snap
-    # hadolint ignore=SC2015
-    (apt-get install -yqq "$APP" &>/dev/null || apk add --no-cache "$APP" &>/dev/null) &&
-      bashio::log.green "... done" ||
-      bashio::log.red "... not successful, please check package name"
+    if command -v "apk" &>/dev/null; then
+        # If apk based
+        apk add --no-cache "$APP" &>/dev/null
+    else
+        # If apt-get based
+        apt-get install -yqq "$APP" &>/dev/null
+    fi && bashio::log.green "... done" || bashio::log.red "... not successful, please check package name"
   done
 fi
