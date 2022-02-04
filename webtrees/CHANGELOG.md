@@ -1,3 +1,6 @@
+
+## 2.1.0-alpha.2 (04-02-2022)
+- Update to latest version from nathanvaughn/webtrees-docker
 - Allow mounting smb and local drives for data storage
 - Allow Mariadb addon autodiscovery as database
 
