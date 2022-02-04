@@ -62,12 +62,16 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
+    "localdisks": "str?",
+    "networkdisks": "str?",
+    "cifsusername": "str?",
+    "cifspassword": "str?"
     "TZ": "str?"
   },
   "slug": "code-server",
   "startup": "services",
   "upstream": "4.0.2",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/coder-server",
-  "version": "4.0.2",
+  "version": "4.0.2-2",
   "webui": "http://[HOST]:[PORT:8443]"
 }
