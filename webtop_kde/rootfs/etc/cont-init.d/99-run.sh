@@ -4,7 +4,7 @@
 # Uprade
 echo "Updating distribution"
 apt-get update &>/dev/null || apk update &>/dev/null || true
-apt-get -y upgrade &>/dev/null || apk upgrade --available &>/dev/null || true
+apt-get -y upgrade &>/dev/null || apk upgrade &>/dev/null || true
 
 # Fix mate software center
 if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
