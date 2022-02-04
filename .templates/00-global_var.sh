@@ -20,7 +20,7 @@ for KEYS in ${arr[@]}; do
   # Export the variable to run scripts
   line="${KEYS}=${VALUE//[\"\']/} 2>/dev/null || true"
   if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
-  if cat /etc/cont-init.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
+  if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
 done
 
 ################
