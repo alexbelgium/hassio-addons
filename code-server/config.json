@@ -65,7 +65,7 @@
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
+    "cifspassword": "str?",
     "TZ": "str?"
   },
   "slug": "code-server",
