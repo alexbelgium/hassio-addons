@@ -34,16 +34,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && usermod --home /share/webtop_kde abc \
     \
     # Correct error in upstream image
-    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config \
-    \
-    # Add repositories
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" > /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/releases" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/releases" >> /etc/apk/repositories
+    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config
 
 ##################
 # 3 Install apps #
