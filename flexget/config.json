@@ -29,12 +29,12 @@
     "PUID": "int",
     "PGID": "int",
     "WebuiPass": "str?",
-    "FG_PLUGINS": "str?", 
+    "FG_PLUGINS": "str?",
     "FG_LOG_LEVEL": "list(critical|error|warning|info|verbose|debug|trace)?"
   },
   "slug": "flexget",
-  "upstream": "3.2.16",
+  "upstream": "3.2.17",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.2.16-2",
+  "version": "3.2.17",
   "webui": "http://[HOST]:[PORT:5050]"
 }
