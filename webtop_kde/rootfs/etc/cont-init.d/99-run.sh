@@ -29,12 +29,7 @@ if bashio::config.has_value 'additional_apps'; then
   NEWAPPS=$(bashio::config 'additional_apps')
   for APP in ${NEWAPPS//,/ }; do
     bashio::log.green "... $APP"
-    if command -v "apk" &>/dev/null; then
-        # If apk based
-        apk add --no-cache "$APP" &>/dev/null
-    else
-        # If apt-get based
-        apt-get install -yqq "$APP" &>/dev/null
-    fi && bashio::log.green "... done" || bashio::log.red "... not successful, please check package name"
+    apk add --no-cache "$APP" &>/dev/null || apt-get install -yqq "$APP" &>/dev/null \
+    && bashio::log.green "... done" || bashio::log.red "... not successful, please check package name"
   done
 fi
