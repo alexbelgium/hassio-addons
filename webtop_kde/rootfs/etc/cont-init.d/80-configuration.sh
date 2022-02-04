@@ -14,10 +14,10 @@ if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
 fi
 
 # Add repositories
-{ echo "http://dl-cdn.alpinelinux.org/alpine/edge/community";
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing";
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/main";
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/releases"; } > /etc/apk/repositories
+{ echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
+echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing";
+echo "https://dl-cdn.alpinelinux.org/alpine/edge/main";
+echo "https://dl-cdn.alpinelinux.org/alpine/edge/releases"; } > /etc/apk/repositories
 
 #echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community";
 #echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main";
@@ -30,6 +30,7 @@ if bashio::config.has_value 'additional_apps'; then
   NEWAPPS=$(bashio::config 'additional_apps')
   for APP in ${NEWAPPS//,/ }; do
     bashio::log.green "... $APP"
+    # shellcheck disable=SC2015
     apk add --no-cache "$APP" &>/dev/null || apt-get install -yqq "$APP" &>/dev/null \
     && bashio::log.green "... done" || bashio::log.red "... not successful, please check package name"
   done
