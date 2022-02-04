@@ -1,3 +1,6 @@
+
+## 0.5.5 (04-02-2022)
+- Update to latest version from hay-kot/mealie
 - New standardized logic for Dockerfile build and packages installation
 
 ## 0.5.4 (03-12-2021)
