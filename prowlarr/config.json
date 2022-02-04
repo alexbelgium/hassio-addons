@@ -46,8 +46,8 @@
   },
   "slug": "prowlarr",
   "startup": "services",
-  "upstream": "nightly-alpine-0.2.0.1455-ls34",
+  "upstream": "nightly-alpine-0.2.0.1463-ls36",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "nightly-alpine-0.2.0.1455-ls34",
+  "version": "nightly-alpine-0.2.0.1463-ls36",
   "webui": "http://[HOST]:[PORT:9696]"
 }
