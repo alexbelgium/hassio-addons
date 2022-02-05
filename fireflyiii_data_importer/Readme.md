@@ -20,7 +20,9 @@ This addon is based on the docker image https://hub.docker.com/r/fireflyiii/data
 
 ## Configuration
 
-Read official documentation for information how to set the variables: https://docs.firefly-iii.org/data-importer
+Read official documentation for information how to set the variables: https://docs.firefly-iii.org/data-importer.
+Configurations can be added in the /config/addons_config/fireflyiii_data_importer/configurations folder according to :https://docs.firefly-iii.org/data-importer/help/config/
+An auto import can be made by adding files in /config/addons_config/fireflyiii_data_importer/import_files according to : https://docs.firefly-iii.org/data-importer/usage/command_line/
 
 Options can be configured through two ways :
 
@@ -35,6 +37,8 @@ Options can be configured through two ways :
 "NORDIGEN_KEY": your Nordigen Client Secret
 "SPECTRE_APP_ID": your Spectre / Salt Edge Client ID
 "SPECTRE_SECRET": your Spectre / Salt Edge Client secret
+"Updates": hourly|daily|weekly # Sets an automatic upload of files set in /config/addons_config/fireflyiii_data_importer/import_files
+"silent": true # suppresses debug messages
 ```
 
 - Config.yaml
