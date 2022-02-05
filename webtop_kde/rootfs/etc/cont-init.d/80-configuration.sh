@@ -25,6 +25,14 @@ else
   echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases"; } > /etc/apk/repositories
 fi
 
+
+# Install rpi video drivers
+if bashio::config.true 'rpi_video_drivers'; then
+  bashio::log.info "Installing Rpi graphic drivers"
+  apk add --no-cache mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev >/dev/null && bashio::log.green "... done" || 
+  bashio::log.red "... not successful"
+fi
+
 # Install specific apps
 if bashio::config.has_value 'additional_apps'; then
   bashio::log.info "Installing additional apps :"
