@@ -6,7 +6,7 @@ CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 # CONFIG IMPORT #
 #################
 
-if [ $(ls -A $CONFIGSOURCE/configurations) ]; then
+if [ $(ls -A "$CONFIGSOURCE/configurations") ]; then
     bashio::log.info "Configurations were found in $CONFIGSOURCE/configurations, they will be loaded."
     JSON_CONFIGURATION_DIR="$CONFIGSOURCE/configurations"
     export JSON_CONFIGURATION_DIR
@@ -18,9 +18,7 @@ fi
 
 if bashio::config.has_value 'Updates'; then
     
-    CONFIGSOURCE="$(dirname "${CONFIGSOURCE}/import_files")"
-    
-    if [ $(ls -A $CONFIGSOURCE) ]; then
+    if [ "$(ls -A ${CONFIGSOURCE}/import_files)" ]; then
         # Align update with options
         echo ""
         FREQUENCY=$(bashio::config 'Updates')
@@ -38,18 +36,18 @@ if bashio::config.has_value 'Updates'; then
         service cron start
         
         # Export variables
-        IMPORT_DIR_WHITELIST="$CONFIGSOURCE"
+        IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"
         export IMPORT_DIR_WHITELIST
         
-        bashio::log.info "Automatic updates were requested. The files in $CONFIGSOURCE will be imported $FREQUENCY."
+        bashio::log.info "Automatic updates were requested. The files in ${CONFIGSOURCE}/import_files will be imported $FREQUENCY."
         
     else
-        bashio::log.fatal "Automatic updates were requested, but there are no configuration files in $CONFIGSOURCE. There will therefore be be no automatic updates."
+        bashio::log.fatal "Automatic updates were requested, but there are no configuration files in ${CONFIGSOURCE}/import_files. There will therefore be be no automatic updates."
     fi
     
 else
     
-    bashio::log.info "Automatic updates not set in addon config. If you add configuration files in $CONFIGSOURCE, they won't be automatically updated."
+    bashio::log.info "Automatic updates not set in addon config. If you add configuration files in ${CONFIGSOURCE}/import_files, they won't be automatically updated."
     
 fi
 
