@@ -96,7 +96,8 @@
     "cifsdomain": "str?",
     "DNS_server": "str?",
     "additional_apps": "str?",
-    "edge_repositories": "bool?"
+    "edge_repositories": "bool?",
+    "rpi_video_drivers": "bool?"
   },
   "slug": "webtop-kde",
   "upstream": "4.16-r0-ls40",
