@@ -1,10 +1,18 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+# Set repositories
+  { echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/community";
+  echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/main";
+  echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases"; 
+  echo "https://alpine.global.ssl.fastly.net/alpine/latest-stable/community";
+  echo "https://alpine.global.ssl.fastly.net/alpine/latest-stable/main";
+  echo "https://alpine.global.ssl.fastly.net/alpine/latest-stable/releases"; } > /etc/apk/repositories
+
 # Uprade
 echo "Updating distribution"
-apt-get update &>/dev/null || apk update &>/dev/null || true
-apt-get -y upgrade &>/dev/null || apk upgrade &>/dev/null || true
+apk update &>/dev/null || apt-get update &>/dev/null || true
+apk upgrade &>/dev/null || apt-get -y upgrade &>/dev/null || true
 
 # Fix mate software center
 if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
@@ -13,18 +21,13 @@ if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
   service dbus restart
 fi
 
-# Add repositories
+# Add Edge repositories
 if bashio::config.true 'edge_repositories'; then
-  { echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
+{ echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
   echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing";
   echo "https://dl-cdn.alpinelinux.org/alpine/edge/main";
   echo "https://dl-cdn.alpinelinux.org/alpine/edge/releases"; } > /etc/apk/repositories
-else
-  { echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/community";
-  echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/main";
-  echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases"; } > /etc/apk/repositories
 fi
-
 
 # Install rpi video drivers
 if bashio::config.true 'rpi_video_drivers'; then
