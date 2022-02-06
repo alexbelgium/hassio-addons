@@ -38,4 +38,8 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Use action to check for CRLF endings
-        uses: erclu/check-crlf@v1
+        uses: erclu/check-crlf@v1.2.0
+
+      - name: check-mixed-line-endings
+        uses: ymwymw/check-mixed-line-endings@v2
+
