@@ -36,6 +36,8 @@ networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separat
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
+rpi_video_drivers: installs graphic driver for rpi
+edge_repositories: switch the apps from stable to edge repositories
 ```
 
 ## Installation
