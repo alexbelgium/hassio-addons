@@ -84,6 +84,7 @@
     "PUID": 1000,
     "PGID": 1000,
     "DNS_server": "8.8.8.8",
+    "rpi_video_drivers": true,
     "additional_apps": "engrampa,libreoffice"
   },
   "schema": {
@@ -97,6 +98,7 @@
     "cifsdomain": "str?",
     "DNS_server": "str?",
     "additional_apps": "str?",
+    "rpi_video_drivers": "bool?",
     "edge_repositories": "bool?"
   },
   "slug": "webtop-kde",
