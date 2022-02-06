@@ -1,3 +1,6 @@
+- Option to enable rpi graphic drivers
+- Option to enable edge repositories
+- Code improvement
 
 ## 4.16-r0-ls40 (04-02-2022)
 - Update to latest version from linuxserver/docker-webtop
