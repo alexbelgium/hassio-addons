@@ -23,17 +23,11 @@ fi
 
 # Add Edge repositories
 if bashio::config.true 'edge_repositories'; then
+bashio::log.info "Changing app repositories to edge"
 { echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
   echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing";
   echo "https://dl-cdn.alpinelinux.org/alpine/edge/main";
   echo "https://dl-cdn.alpinelinux.org/alpine/edge/releases"; } > /etc/apk/repositories
-fi
-
-# Install rpi video drivers
-if bashio::config.true 'rpi_video_drivers'; then
-  bashio::log.info "Installing Rpi graphic drivers"
-  apk add --no-cache mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev >/dev/null && bashio::log.green "... done" || 
-  bashio::log.red "... not successful"
 fi
 
 # Install specific apps
