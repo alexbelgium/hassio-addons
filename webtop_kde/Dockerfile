@@ -51,7 +51,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
     && mkdir -p /etc/cont-init.d \
     && for scripts in $MODULES; do curl -L -f -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" || (echo "script failed to install $scripts" && exit 1); done \
-    && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
+    && chmod -R 755 /etc/cont-init.d
 
 # Manual apps
 ENV PACKAGES="engrampa mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev"
@@ -62,7 +62,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && curl -L -f -s "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
-    && rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+    && rm /automatic_packages.sh
 
 ################
 # 4 Entrypoint #
