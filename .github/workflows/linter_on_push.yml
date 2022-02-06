@@ -39,5 +39,3 @@ jobs:
 
       - name: Use action to check for CRLF endings
         uses: erclu/check-crlf@v1
-        with: # omit this mapping to use default path
-          path: ./a-custom-path 
