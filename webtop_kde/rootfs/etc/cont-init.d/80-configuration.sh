@@ -14,6 +14,13 @@ echo "Updating distribution"
 apk update &>/dev/null || apt-get update &>/dev/null || true
 apk upgrade &>/dev/null || apt-get -y upgrade &>/dev/null || true
 
+# Install rpi video drivers
+if bashio::config.true 'rpi_video_drivers'; then
+  bashio::log.info "Installing Rpi graphic drivers"
+  apk add --no-cache mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev >/dev/null && bashio::log.green "... done" || 
+  bashio::log.red "... not successful. Are you on a rpi?"
+fi
+
 # Fix mate software center
 if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
   echo "Allow software center"
