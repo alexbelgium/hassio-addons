@@ -22,3 +22,18 @@ jobs:
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_NATURAL_LANGUAGE: false
+
+
+  check_crlf:
+    name: Check CRLF action
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository contents
+        uses: actions/checkout@v1
+
+      - name: Use action to check for CRLF endings
+        uses: erclu/check-crlf@v1.2.0
+
+      - name: check-mixed-line-endings
+        uses: ymwymw/check-mixed-line-endings@v2
