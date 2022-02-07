@@ -8,14 +8,14 @@ CONFIGSOURCE=$(bashio::config "PMM_CONFIG")
 ##################
 
 PUID=$(bashio::config 'PUID')
-GUID=$(bashio::config 'GGID')
+PGID=$(bashio::config 'PGID')
 
 if [ ! -d "$(dirname "${CONFIGSOURCE}")" ]; then
   echo "Creating $(dirname ${CONFIGSOURCE})"
   mkdir -p "$(dirname "${CONFIGSOURCE}")"
 fi
 
-chown -R "$PUID":"$GUID" "$(dirname "${CONFIGSOURCE}")"
+chown -R "$PUID":"$PGID" "$(dirname "${CONFIGSOURCE}")"
 
 ###################
 # Set config.yaml #
