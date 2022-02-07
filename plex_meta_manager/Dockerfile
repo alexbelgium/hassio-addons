@@ -36,7 +36,7 @@ RUN \
     \
     # Add template config.yaml
     && mkdir /templates \
-    && curl -L -f -s -S "https://github.com/meisnate12/Plex-Meta-Manager/blob/master/config/config.yml.template" -o /templates/config.yaml
+    && curl -L -f -s -S "https://github.com/meisnate12/Plex-Meta-Manager/blob/master/config/config.yml.template" -o /templates/config.yml
 
 
 ##################
