@@ -27,6 +27,4 @@ if [ -f "$CONFIGSOURCE" ]; then
 else
     cp /templates/config.yml "$(dirname "${CONFIGSOURCE}")"
     bashio::log.warning "No config file, creating one from template. Please correct the config.yml file before restarting the addon !"
-    sleep 10
-    bashio::addon.stop
 fi
