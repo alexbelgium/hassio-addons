@@ -1,4 +1,7 @@
 
+## 3.2.18 (07-02-2022)
+- Update to latest version from flexget/flexget
+
 ## 3.2.17 (04-02-2022)
 - Update to latest version from flexget/flexget
 - Addition of FG_LOG_LEVEL
