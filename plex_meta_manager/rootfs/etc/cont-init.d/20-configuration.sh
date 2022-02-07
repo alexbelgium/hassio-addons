@@ -8,7 +8,7 @@ CONFIGSOURCE=$(bashio::config "PMM_CONFIG")
 ##################
 
 PUID=$(bashio::config 'PUID')
-GUID=$(bashio::config 'GUID')
+GUID=$(bashio::config 'GGID')
 
 if [ ! -d "$(dirname "${CONFIGSOURCE}")" ]; then
   echo "Creating $(dirname ${CONFIGSOURCE})"
