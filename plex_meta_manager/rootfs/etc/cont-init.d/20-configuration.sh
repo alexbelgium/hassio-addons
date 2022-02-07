@@ -20,9 +20,10 @@ chown -R "$PUID":"$GUID" /config/addons_config/plex-meta-manager
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "PMM_CONFIG")
+CONFIGSOURCE=$(dirname "$CONFIGSOURCE")
 
 # Check if config file is there, or create one from template
-if [ -f $CONFIGSOURCE/config.yml ]; then
+if [ -f "$CONFIGSOURCE"/config.yml ]; then
     bashio::log.info "Using config file found in $CONFIGSOURCE"
 else
     cp /templates/config.yml "$(dirname "${CONFIGSOURCE}")"
