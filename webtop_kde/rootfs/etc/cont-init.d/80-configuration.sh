@@ -44,5 +44,13 @@ fi
 if bashio::config.has_value 'KEYBOARD'; then
   KEYBOARD=$(bashio::config 'KEYBOARD')
   bashio::log.info "Setting keyboard to $KEYBOARD"
-  sed -i "1a export KEYBOARD=$KEYBOARD" /etc/services.d/*/*run* 2>/dev/null
+  sed -i "1a export KEYBOARD=$KEYBOARD" /etc/services.d/web/run
 fi
+
+# Set password
+if bashio::config.has_value 'PASSWORD'; then
+  PASSWORD=$(bashio::config 'PASSWORD')
+  bashio::log.info "Setting password to the value defined in options"
+  sed -i "1a export PASSWORD=$PASSWORD" /etc/services.d/web/run
+fi
+
