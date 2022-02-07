@@ -45,5 +45,6 @@ fi
 # Set password
 if bashio::config.has_value 'PASSWORD'; then
   bashio::log.info "Setting password to the value defined in options"
-  usermod --password $(echo $(bashio::config 'PASSWORD') | openssl passwd -1 -stdin) abc
+  PASSWORD=$(bashio::config 'PASSWORD')
+  usermod --password $(echo "$PASSWORD") | openssl passwd -1 -stdin) abc
 fi
