@@ -13,14 +13,14 @@
   "environment": {},
   "map": ["config:rw"],
   "options": {
-    "PUID": 0,
-    "PGID": 0,
+    "PUID": 1000,
+    "PGID": 1000,
     "HOME": "/config/addons_config/plex-data-manager"
   },
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
-    "PUID": "bool",
-    "PGID": "bool",
+    "PUID": "int",
+    "PGID": "int",
     "TZ": "str?",
     "HOME": "str",
     "PMM_CONFIG": "str?",
