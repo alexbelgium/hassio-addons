@@ -44,8 +44,6 @@ fi
 
 # Set password
 if bashio::config.has_value 'PASSWORD'; then
-  PASSWORD=$(bashio::config 'PASSWORD')
   bashio::log.info "Setting password to the value defined in options"
-  sed -i "1a export PASSWORD=$PASSWORD" /etc/services.d/web/run
+  echo "$(bashio::config 'PASSWORD')" | passwd --stdin abc
 fi
-
