@@ -15,7 +15,7 @@
   "options": {
     "PUID": 1000,
     "PGID": 1000,
-    "HOME": "/config/addons_config/plex-data-manager"
+    "PMM_CONFIG": "/config/addons_config/plex-data-manager/config.yml"
   },
   "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
