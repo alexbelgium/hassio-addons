@@ -1,4 +1,7 @@
 
+## 5.6.14 (07-02-2022)
+- Update to latest version from firefly-iii/firefly-iii
+
 ## 5.6.13 (31-01-2022)
 - Update to latest version from firefly-iii/firefly-iii
 - Silent mode added : hides output of the app if no errors
