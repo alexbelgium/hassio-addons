@@ -21,7 +21,9 @@ This addon is based on the docker image https://hub.docker.com/r/fireflyiii/data
 ## Configuration
 
 Read official documentation for information how to set the variables: https://docs.firefly-iii.org/data-importer.
+
 Configurations can be added in the /config/addons_config/fireflyiii_data_importer/configurations folder according to :https://docs.firefly-iii.org/data-importer/help/config/
+
 An auto import can be made by adding files in /config/addons_config/fireflyiii_data_importer/import_files according to : https://docs.firefly-iii.org/data-importer/usage/command_line/
 
 Options can be configured through two ways :
