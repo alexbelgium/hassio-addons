@@ -9,6 +9,11 @@ bashio::log.info "Changing app repositories to edge"
   echo "https://dl-cdn.alpinelinux.org/alpine/edge/main"; } > /etc/apk/repositories
 fi
 
+# Upgrade
+echo "Updating distribution"
+apk update >/dev/null
+apk upgrade >/dev/null
+
 # Install rpi video drivers
 if bashio::config.true 'rpi_video_drivers'; then
   bashio::log.info "Installing Rpi graphic drivers"
