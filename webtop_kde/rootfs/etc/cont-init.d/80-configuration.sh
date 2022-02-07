@@ -41,8 +41,8 @@ if bashio::config.has_value 'additional_apps'; then
 fi
 
 # Set keyboard
-if bashio::config.has_value 'additional_apps'; then
+if bashio::config.has_value 'KEYBOARD'; then
   KEYBOARD=$(bashio::config 'KEYBOARD')
   bashio::log.info "Setting keyboard to $KEYBOARD"
-  sed -i "1a KEYBOARD=$KEYBOARD && export KEYBOARD" /etc/services.d/*/*run* 2>/dev/null
+  sed -i "1a export KEYBOARD=$KEYBOARD" /etc/services.d/*/*run* 2>/dev/null
 fi
