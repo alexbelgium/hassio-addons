@@ -45,7 +45,6 @@ Options can be configured through two ways :
 - Addon options
 
 ```yaml
-CONFIG_LOCATION: location of the config.yaml # Sets the location of the config.yaml (see below)
 PUID: 1000 #for UserID - see below for explanation
 PGID: 1000 #for GroupID - see below for explanation
 TZ: Europe/London #Specify a timezone to use EG Europe/London.
