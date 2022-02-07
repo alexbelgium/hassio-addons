@@ -45,5 +45,5 @@ fi
 # Set password
 if bashio::config.has_value 'PASSWORD'; then
   bashio::log.info "Setting password to the value defined in options"
-  echo "$(bashio::config 'PASSWORD')" | passwd --stdin abc
+  echo $(bashio::config 'PASSWORD') | passwd --stdin abc
 fi
