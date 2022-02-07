@@ -1,13 +1,17 @@
 {
   "name": "Lidarr NAS",
-  "version": "0.8.1.2135-ls69",
+  "version": "0.8.1.2135-ls70",
   "slug": "lidarr_nas",
   "description": "Music collection manager for Usenet and BitTorrent users",
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/Readme.md",
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
-  "upstream": "0.8.1.2135-ls69",
+  "upstream": "0.8.1.2135-ls70",
   "webui": "http://[HOST]:[PORT:8686]",
   "startup": "services",
   "devices": [
@@ -46,7 +50,12 @@
     "PUID": "0",
     "PGID": "0"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "config:rw"
+  ],
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -60,7 +69,10 @@
   "ports_description": {
     "8686/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
