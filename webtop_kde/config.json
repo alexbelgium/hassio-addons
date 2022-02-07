@@ -9,7 +9,7 @@
   "environment": {
     "PUID": "1000",
     "PGID": "1000",
-    "TITLE"= "Alpine KDE webtop",
+    "TITLE": "Alpine KDE webtop",
     "HOME": "/share/webtop_kde",
     "shm_size": "1gb"
   },
@@ -84,6 +84,7 @@
   "options": {
     "PUID": 1000,
     "PGID": 1000,
+    "PASSWORD": "abc",
     "DNS_server": "8.8.8.8",
     "rpi_video_drivers": true,
     "additional_apps": "engrampa,libreoffice"
@@ -107,7 +108,7 @@
   "slug": "webtop-kde",
   "upstream": "4.16-r0-ls42",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls42",
+  "version": "4.16-r0-ls42-2",
   "webui": "http://[HOST]:[PORT:3000]"
 }
 
