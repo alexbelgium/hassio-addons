@@ -4,6 +4,7 @@
 # Those are the addon path filters used in the workflows to determine which addon needs to be build.
 # name: slug/filename ; could be slug/config.* for all files
 addons_updater: addons_updater/config.*
+plex_meta_manager: plex_meta_manager/config.*
 spotweb: spotweb/config.*
 webtop: webtop/config.*
 webtop_kde: webtop_kde/config.*
