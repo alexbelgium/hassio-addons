@@ -34,7 +34,10 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && usermod --home /share/webtop_kde abc \
     \
     # Correct error in upstream image
-    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config
+    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config \
+    \
+    # Update distribution
+    && apk upgrade --no-cache
 
 ##################
 # 3 Install apps #
