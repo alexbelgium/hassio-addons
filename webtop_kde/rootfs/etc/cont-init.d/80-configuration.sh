@@ -1,14 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-# Set repositories
-  { echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/community";
-  echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/main";
-  echo "https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases"; 
-  echo "https://alpine.global.ssl.fastly.net/alpine/latest-stable/community";
-  echo "https://alpine.global.ssl.fastly.net/alpine/latest-stable/main";
-  echo "https://alpine.global.ssl.fastly.net/alpine/latest-stable/releases"; } > /etc/apk/repositories
-
 # Uprade
 echo "Updating distribution"
 apk update &>/dev/null || apt-get update &>/dev/null || true
