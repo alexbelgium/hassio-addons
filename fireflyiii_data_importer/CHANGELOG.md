@@ -1,3 +1,6 @@
+
+## version-0.8.0 (07-02-2022)
+- Update to latest version from fireflyiii/data-importer
 - Add auto import of csv files periodically (see readme)
 - Add auto import of configurations (see readme)
 - Add config.yaml configurable options (see readme)

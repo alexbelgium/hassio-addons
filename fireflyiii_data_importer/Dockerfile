@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="version-0.7.0"
+ARG BUILD_UPSTREAM="version-0.8.0"
 FROM ${BUILD_FROM}
 
 ##################
