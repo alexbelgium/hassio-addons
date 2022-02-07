@@ -9,6 +9,7 @@
   "environment": {
     "PUID": "1000",
     "PGID": "1000",
+    "TITLE"= "Alpine KDE webtop",
     "HOME": "/share/webtop_kde",
     "shm_size": "1gb"
   },
@@ -97,6 +98,7 @@
     "cifspassword": "str?",
     "cifsdomain": "str?",
     "DNS_server": "str?",
+    "PASSWORD": "str?",
     "KEYBOARD": "list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?",
     "additional_apps": "str?",
     "rpi_video_drivers": "bool?",
