@@ -21,9 +21,8 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
+    "PMM_CONFIG": "str",
     "TZ": "str?",
-    "HOME": "str",
-    "PMM_CONFIG": "str?",
     "PMM_TIME": "str?",
     "PMM_RUN": "bool?",
     "PMM_TEST": "bool?",
