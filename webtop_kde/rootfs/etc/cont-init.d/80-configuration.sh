@@ -39,3 +39,10 @@ if bashio::config.has_value 'additional_apps'; then
     apk add --no-cache "$APP" >/dev/null || bashio::log.red "... not successful, please check package name"
   done
 fi
+
+# Set keyboard
+if bashio::config.has_value 'additional_apps'; then
+  KEYBOARD=$(bashio::config 'KEYBOARD')
+  bashio::log.info "Setting keyboard to $KEYBOARD"
+  sed -i "1a KEYBOARD=$KEYBOARD && export KEYBOARD" /etc/services.d/*/*run* 2>/dev/null
+fi
