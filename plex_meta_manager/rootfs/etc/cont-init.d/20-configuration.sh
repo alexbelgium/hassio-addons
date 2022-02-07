@@ -23,8 +23,10 @@ CONFIGSOURCE=$(bashio::config "HOME")
 
 # Check if config file is there, or create one from template
 if [ -f $CONFIGSOURCE/config.yml ]; then
-    echo "Using config file found in $CONFIGSOURCE"
+    bashio::log.info "Using config file found in $CONFIGSOURCE"
 else
-    echo "No config file, creating one from template"
     cp /templates/config.yml "$(dirname "${CONFIGSOURCE}")"
+    bashio::log.warning "No config file, creating one from template. Please correct the config.yml file before restarting the addon !"
+    sleep 10
+    bashio::addon.stop
 fi
