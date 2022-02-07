@@ -1,7 +1,7 @@
 {
   "name": "FlareSolverr",
-  "version": "2.2.0",
-  "upstream": "2.2.0",
+  "version": "2.2.1",
+  "upstream": "2.2.1",
   "slug": "flaresolverr",
   "description": "Proxy server to bypass Cloudflare protection ",
   "url": "https://github.com/alexbelgium/hassio-addons",
