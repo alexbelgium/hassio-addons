@@ -1,5 +1,8 @@
 #!/usr/bin/with-contenv bashio
 
+# Where is the config
+CONFIGSOURCE=$(bashio::config "PMM_CONFIG")
+
 ##################
 # Create folders #
 ##################
@@ -7,19 +10,16 @@
 PUID=$(bashio::config 'PUID')
 GUID=$(bashio::config 'GUID')
 
-if [ ! -d /config/addons_config/plex-meta-manager ]; then
-  echo "Creating /config/addons_config/plex-meta-manager"
-  mkdir -p /config/addons_config/plex-meta-manager
+if [ ! -d "$(dirname "${CONFIGSOURCE}")" ]; then
+  echo "Creating $(dirname ${CONFIGSOURCE})"
+  mkdir -p "$(dirname "${CONFIGSOURCE}")"
 fi
 
-chown -R "$PUID":"$GUID" /config/addons_config/plex-meta-manager
+chown -R "$PUID":"$GUID" "$(dirname "${CONFIGSOURCE}")"
 
 ###################
 # Set config.yaml #
 ###################
-
-# Where is the config
-CONFIGSOURCE=$(bashio::config "PMM_CONFIG")
 
 # Check if config file is there, or create one from template
 if [ -f "$CONFIGSOURCE" ]; then
