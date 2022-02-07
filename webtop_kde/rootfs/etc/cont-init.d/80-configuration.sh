@@ -1,10 +1,17 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-# Uprade
-echo "Updating distribution"
-apk update &>/dev/null || apt-get update &>/dev/null || true
-apk upgrade &>/dev/null || apt-get -y upgrade &>/dev/null || true
+# Adding communuity repository
+echo "https://dl-cdn.alpinelinux.org/alpine/edge/releases"; } >> /etc/apk/repositories
+
+# Add Edge repositories
+if bashio::config.true 'edge_repositories'; then
+bashio::log.info "Changing app repositories to edge"
+{ echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
+  echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing";
+  echo "https://dl-cdn.alpinelinux.org/alpine/edge/main";
+  echo "https://dl-cdn.alpinelinux.org/alpine/edge/releases"; } > /etc/apk/repositories
+fi
 
 # Install rpi video drivers
 if bashio::config.true 'rpi_video_drivers'; then
@@ -18,15 +25,6 @@ if [ -f /usr/lib/dbus-1.0/dbus-daemon-launch-helper ]; then
   echo "Allow software center"
   chmod u+s /usr/lib/dbus-1.0/dbus-daemon-launch-helper
   service dbus restart
-fi
-
-# Add Edge repositories
-if bashio::config.true 'edge_repositories'; then
-bashio::log.info "Changing app repositories to edge"
-{ echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
-  echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing";
-  echo "https://dl-cdn.alpinelinux.org/alpine/edge/main";
-  echo "https://dl-cdn.alpinelinux.org/alpine/edge/releases"; } > /etc/apk/repositories
 fi
 
 # Install specific apps
