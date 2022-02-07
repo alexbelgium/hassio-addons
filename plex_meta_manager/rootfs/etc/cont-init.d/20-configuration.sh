@@ -19,7 +19,7 @@ chown -R "$PUID":"$GUID" /config/addons_config/plex-meta-manager
 ###################
 
 # Where is the config
-CONFIGSOURCE=$(bashio::config "HOME")
+CONFIGSOURCE=$(bashio::config "PMM_CONFIG")
 
 # Check if config file is there, or create one from template
 if [ -f $CONFIGSOURCE/config.yml ]; then
