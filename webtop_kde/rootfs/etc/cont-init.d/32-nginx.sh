@@ -34,3 +34,4 @@ sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 
 # Implement SUBFOLDER value
 sed -i "1a SUBFOLDER=$(bashio::addon.ingress_url)" /etc/services.d/autostart/run
+sed -i "1a SUBFOLDER=$(bashio::addon.ingress_url)" /etc/services.d/gclient/run
