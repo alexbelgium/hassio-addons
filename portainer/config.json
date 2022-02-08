@@ -39,8 +39,8 @@
   },
   "slug": "portainer",
   "startup": "services",
-  "upstream": "2.11.1",
+  "upstream": "2.11.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.11.1",
+  "version": "2.11.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9099]"
 }

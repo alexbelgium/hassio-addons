@@ -1,4 +1,7 @@
 
+## 2.11.0 (08-02-2022)
+- Update to latest version from portainer/portainer
+
 ## 2.11.1 (08-02-2022)
 - Update to latest version from portainer/portainer
 - New standardized logic for Dockerfile build and packages installation
