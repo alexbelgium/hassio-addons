@@ -1,3 +1,4 @@
+- New feature : change passxord from addon options
 
 ## 4.16-r0-ls42 (07-02-2022)
 - Update to latest version from linuxserver/docker-webtop
