@@ -60,6 +60,8 @@
     "/dev/nvme2"
   ],
   "image": "ghcr.io/alexbelgium/webtop-kde-{arch}",
+  "ingress": true,
+  "panel_icon": "mdi:kde",
   "video": true,
   "map": [
     "media:rw",
@@ -73,7 +75,7 @@
     "NET_ADMIN"
   ],
   "ports": {
-    "3000/tcp": 3000
+    "3000/tcp": null
   },
   "udev": true,
   "devicetree": true,
@@ -84,7 +86,6 @@
   "options": {
     "PUID": 1000,
     "PGID": 1000,
-    "PASSWORD": "abc",
     "DNS_server": "8.8.8.8",
     "rpi_video_drivers": true,
     "additional_apps": "engrampa,libreoffice"
@@ -99,7 +100,7 @@
     "cifspassword": "str?",
     "cifsdomain": "str?",
     "DNS_server": "str?",
-    "PASSWORD": "str",
+    "PASSWORD": "str?",
     "KEYBOARD": "list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?",
     "additional_apps": "str?",
     "rpi_video_drivers": "bool?",
@@ -108,6 +109,6 @@
   "slug": "webtop-kde",
   "upstream": "4.16-r0-ls42",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls42-5",
+  "version": "4.16-r0-ls42-6",
   "webui": "http://[HOST]:[PORT:3000]"
 }
