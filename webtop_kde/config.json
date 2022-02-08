@@ -62,7 +62,7 @@
   ],
   "image": "ghcr.io/alexbelgium/webtop-kde-{arch}",
   "ingress": true,
-  "panel_icon": "mdi:kde",
+  "panel_icon": "mdi:Monitor",
   "video": true,
   "map": [
     "media:rw",
