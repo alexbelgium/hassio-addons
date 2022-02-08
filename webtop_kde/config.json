@@ -11,6 +11,7 @@
     "PGID": "1000",
     "TITLE": "Alpine KDE webtop",
     "HOME": "/share/webtop_kde",
+    "FM_HOME": "/share/webtop_kde",
     "shm_size": "1gb"
   },
   "description": "Full linux desktop environment accessible via any modern web browser",
