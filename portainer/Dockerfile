@@ -25,7 +25,7 @@ FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-ARG BUILD_UPSTREAM="2.11.0"
+ARG BUILD_UPSTREAM="2.11.1"
 
 # spellcheck disable=SC2015
 # hadolint ignore=SC2015
