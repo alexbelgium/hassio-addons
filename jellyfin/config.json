@@ -63,7 +63,8 @@
   "host_dbus": true,
   "options": {
     "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "data_location": "/config/addons_config/jellyfin"
   },
   "ports": {
     "8096/tcp": 8096,
@@ -86,6 +87,7 @@
     "PUID": "int",
     "PGID": "int",
     "TZ": "str?",
+    "data_location": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
     "cifsusername": "str?",
@@ -97,7 +99,7 @@
   "startup": "services",
   "upstream": "10.7.7-1-ls150",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.7.7-1-ls150",
+  "version": "10.7.7-1-ls150-2",
   "video": true,
   "webui": "http://[HOST]:[PORT:8096]"
 }
