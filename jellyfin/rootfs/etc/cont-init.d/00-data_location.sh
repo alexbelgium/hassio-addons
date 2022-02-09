@@ -11,5 +11,5 @@ sed -i "s|/config|$LOCATION|g" /etc/cont-init.d/30-config
 echo "Creating $LOCATION"
 mkdir -p "$LOCATION"
 
-bashio::log.info "Setting ownership to $PUID:$GUID" 
-chown "$PUID":"$GUID" "$LOCATION"
+bashio::log.info "Setting ownership to $PUID:$PGID" 
+chown "$PUID":"$PGID" "$LOCATION"
