@@ -27,9 +27,11 @@ RUN \
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i "s|/config|/config/addons_config/jellyfin|g" /etc/services.d/jellyfin/run \
-    && sed -i "s|/config|/config/addons_config/jellyfin|g" /etc/cont-init.d/10-adduser \
-    && sed -i "s|/config|/config/addons_config/jellyfin|g" /etc/cont-init.d/30-config
+    && { echo '#!/usr/bin/with-contenv bashio';
+    echo sed -i "s|/config|$(bashio::config "data_location")|g" /etc/services.d/jellyfin/run ;
+    echo sed -i "s|/config|$(bashio::config "data_location"|g" /etc/cont-init.d/10-adduser ;
+    echo sed -i "s|/config|$(bashio::config "data_location"|g" /etc/cont-init.d/30-config ; } > /etc/cont-init.d/00-data_location.sh \
+    && chmod +x /etc/cont-init.d/00-data_location.sh
 
 ##################
 # 3 Install apps #
