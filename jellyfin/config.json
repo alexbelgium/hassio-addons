@@ -99,7 +99,7 @@
   "startup": "services",
   "upstream": "10.7.7-1-ls150",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.7.7-1-ls150-2",
+  "version": "10.7.7-1-ls150-3",
   "video": true,
   "webui": "http://[HOST]:[PORT:8096]"
 }
