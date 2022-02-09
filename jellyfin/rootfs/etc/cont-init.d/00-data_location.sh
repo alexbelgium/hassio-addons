@@ -12,4 +12,4 @@ echo "Creating $LOCATION"
 mkdir -p "$LOCATION"
 
 bashio::log.info "Setting ownership to $PUID:$PGID" 
-chown "$PUID":"$PGID" "$LOCATION"
+chown "abc":"abc" "$LOCATION"
