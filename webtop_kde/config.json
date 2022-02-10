@@ -105,7 +105,8 @@
     "KEYBOARD": "list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?",
     "additional_apps": "str?",
     "rpi_video_drivers": "bool?",
-    "edge_repositories": "bool?"
+    "edge_repositories": "bool?",
+    "data_location": "str?"
   },
   "slug": "webtop-kde",
   "upstream": "4.16-r0-ls42",
