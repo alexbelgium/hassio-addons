@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "armv7": "linuxserver/sonarr:arm32v7-latest",
-    "aarch64": "linuxserver/sonarr:arm64v8-latest",
-    "amd64": "linuxserver/sonarr:amd64-latest"
+    "armv7": "lscr.io/linuxserver/sonarr:arm32v7-latest",
+    "aarch64": "lscr.io/linuxserver/sonarr:arm64v8-latest",
+    "amd64": "lscr.io/linuxserver/sonarr:amd64-latest"
   }
 }
