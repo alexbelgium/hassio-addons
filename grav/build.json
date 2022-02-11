@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "armv7": "linuxserver/grav:arm32v7-latest",
-    "aarch64": "linuxserver/grav:arm64v8-latest",
-    "amd64": "linuxserver/grav:amd64-latest"
+    "armv7": "lscr.io/linuxserver/grav:arm32v7-latest",
+    "aarch64": "lscr.io/linuxserver/grav:arm64v8-latest",
+    "amd64": "lscr.io/linuxserver/grav:amd64-latest"
   }
 }
