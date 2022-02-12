@@ -23,6 +23,9 @@ FROM etechonomy/joplin-server:latest
 
 USER root
 
+# Prevent curl issue
+RUN echo insecure >> ~/.curlrc
+
 ##################
 # 3 Install apps #
 ##################
