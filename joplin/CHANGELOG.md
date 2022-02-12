@@ -1,3 +1,6 @@
+
+## 2.7.4 (12-02-2022)
+- Update to latest version from etechonomy/joplin-server
 ## 2.6.10 (20-12-2021)
 
 - Update to latest version from laurent22/joplin
