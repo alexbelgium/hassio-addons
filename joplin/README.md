@@ -20,7 +20,7 @@ Thanks to @poudenes for helping with the development!
 
 Project homepage : https://github.com/laurent22/joplin
 
-Based on the docker image : https://hub.docker.com/r/florider89/joplin-server
+Based on the docker image : https://hub.docker.com/r/etechonomy/joplin-server
 
 ## Installation
 
