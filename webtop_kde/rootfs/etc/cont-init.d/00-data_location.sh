@@ -22,11 +22,10 @@ sed -i "s|/share/webtop_kde|$LOCATION|g" /etc/cont-init.d/*
 sed -i "s|/share/webtop_kde|$LOCATION|g" /etc/services.d/*/run
 usermod --home "$LOCATION" abc
 
-# Set ownership
-bashio::log.info "Setting ownership to $PUID:$PGID" 
-chown "$PUID":"$PGID" "$LOCATION"
-
 # Create folder
 echo "Creating $LOCATION"
 mkdir -p "$LOCATION"
 
+# Set ownership
+bashio::log.info "Setting ownership to $PUID:$PGID" 
+chown "$PUID":"$PGID" "$LOCATION"
