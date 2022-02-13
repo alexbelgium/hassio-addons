@@ -1,4 +1,7 @@
 
+## v2201.1.0-ls45 (13-02-2022)
+- Update to latest version from linuxserver/docker-booksonic-air
+
 ## v2201.1.0-ls44 (07-02-2022)
 - Update to latest version from linuxserver/docker-booksonic-air
 
