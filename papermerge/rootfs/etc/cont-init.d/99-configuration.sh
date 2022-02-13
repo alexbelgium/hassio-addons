@@ -6,19 +6,19 @@
 ##################
 
 #Set media dir
-MEDIADIR='"'$(bashio::config 'storage_dir')'"'
+MEDIADIR=$(bashio::config 'storage_dir')
 #clean data
 sed -i '/MEDIA_DIR/d' /data/config/papermerge.conf.py
 #add data
-sed -i "2 i\MEDIA_DIR = $MEDIADIR" /data/config/papermerge.conf.py
+sed -i "2 i\MEDIA_DIR = \"$MEDIADIR\"" /data/config/papermerge.conf.py
 bashio::log.info "Storage dir set to $MEDIADIR"
 
 #Set import dir
-IMPORTDIR='"'$(bashio::config 'import_dir')'"'
+IMPORTDIR=$(bashio::config 'import_dir')
 #clean data
 sed -i '/IMPORTER_DIR/d' /data/config/papermerge.conf.py || true
 #add data
-sed -i "2 i\IMPORTER_DIR = $MEDIADIR" /data/config/papermerge.conf.py
+sed -i "2 i\IMPORTER_DIR = \"$IMPORTDIR\"" /data/config/papermerge.conf.py
 bashio::log.info "Import dir set to $IMPORTDIR"
 
 ##################
