@@ -22,6 +22,9 @@
   "options": {
     "APP_BASE_URL": "http://your_domain:port"
   },
+  "map": [
+    "config:rw"
+  ],
   "schema": {
     "APP_BASE_URL": "str",
     "DB_CLIENT": "str?",
