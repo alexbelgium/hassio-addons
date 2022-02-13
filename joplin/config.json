@@ -1,6 +1,6 @@
 {
   "name": "Joplin Server",
-  "version": "2.7.4-2",
+  "version": "2.7.4-3",
   "upstream": "2.7.4",
   "slug": "joplin",
   "description": "Self-hosted open source note-taking application",
