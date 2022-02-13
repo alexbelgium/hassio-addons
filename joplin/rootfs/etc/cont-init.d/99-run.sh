@@ -14,10 +14,14 @@ fi
    # Create folder
    echo "Creating $LOCATION"
    mkdir -p "$LOCATION"
+   touch "$LOCATION"/database.sqlite
+
    mkdir -p "$LOCATION"/resources
    ln -s $LOCATION/resources /home/joplin/packages/server
-
-export SQLITE_DATABASE="$LOCATION/database.sqlite"
+   
+   chown -R www-data:www-data "$LOCATION"
+   chmod -R 775 "$LOCATION"
+   export SQLITE_DATABASE="$LOCATION/database.sqlite"
 
 if bashio::config.has_value 'POSTGRES_DATABASE'; then 
 bashio::log.info "Using postgres"
@@ -31,7 +35,6 @@ bashio::config.has_value 'POSTGRES_HOST' && export POSTGRES_HOST=$(bashio::confi
 else
 
 bashio::log.info "Using sqlite"
-
 fi
 
 ##############
