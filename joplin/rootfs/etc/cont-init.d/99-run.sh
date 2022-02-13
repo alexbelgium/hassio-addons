@@ -7,8 +7,6 @@ bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores a
    echo "Creating $LOCATION"
    mkdir -p "$LOCATION"
    mkdir -p "$LOCATION"/resources
-
-   rm -r /home/joplin/resources || true
    ln -s $LOCATION/resources /home/joplin/packages/server
     
 
@@ -34,16 +32,7 @@ else
 
 bashio::log.info "Using sqlite"
 
-
-   # Creating database
-   if [ ! -f $LOCATION/db-prod.sqlite ]; then
-       # Create database
-       touch $LOCATION/db-prod.sqlite
-   fi
-
-    # Creating symlink
-    rm -r /home/joplin/packages/server/db-prod.sqlite || true
-    ln -s $LOCATION/db-prod.sqlite /home/joplin/packages/server/db-prod.sqlite
+export SQLITE_DATABASE="$LOCATION/database.sqlite"
 
 fi
 
