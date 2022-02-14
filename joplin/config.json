@@ -40,7 +40,8 @@
     "MAILER_AUTH_USER": "str?",
     "MAILER_AUTH_PASSWORD": "str?",
     "MAILER_NOREPLY_NAME": "str?",
-    "MAILER_NOREPLY_EMAIL": "str?"
+    "MAILER_NOREPLY_EMAIL": "str?",
+    "data_location": "str?"
   },
   "arch": [
     "aarch64",
