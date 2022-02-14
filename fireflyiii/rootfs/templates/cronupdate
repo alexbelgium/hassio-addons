@@ -1,5 +1,6 @@
 #!/usr/bin/env bashio
 
+(
 bashio::log.info "Running update according to defined schedule" > /dev/stdout
 if bashio::config.true 'silent'; then
     bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug" > /dev/stdout
@@ -7,3 +8,4 @@ if bashio::config.true 'silent'; then
 else
     /usr/local/bin/php /var/www/html/artisan firefly:cron > /dev/stdout 2> /dev/stdout
 fi
+) &>/proc/1/fd/1
