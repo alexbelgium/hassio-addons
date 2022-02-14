@@ -11,5 +11,4 @@ if bashio::config.true 'silent'; then
 else
     /usr/local/bin/php /var/www/html/artisan importer:auto-import "$PATHTOFILES"/import_files
 fi
-fi
 ) &>/proc/1/fd/1
