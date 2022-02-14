@@ -19,8 +19,9 @@ fi
    mkdir -p "$LOCATION"/resources
    ln -s $LOCATION/resources /home/joplin/packages/server
    
-   chown -R www-data:www-data "$LOCATION"
+   # chown -R www-data:www-data "$LOCATION"
    chmod -R 775 "$LOCATION"
+   chmod 777 "$LOCATION/database.sqlite"
    export SQLITE_DATABASE="$LOCATION/database.sqlite"
 
 if bashio::config.has_value 'POSTGRES_DATABASE'; then 
