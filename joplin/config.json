@@ -1,6 +1,6 @@
 {
   "name": "Joplin Server",
-  "version": "2.7.4-5",
+  "version": "2.7.4-6",
   "upstream": "2.7.4",
   "slug": "joplin",
   "description": "Self-hosted open source note-taking application",
@@ -24,7 +24,8 @@
     "data_location": "/config/addons_config/joplin"
   },
   "map": [
-    "config:rw"
+    "config:rw",
+    "share:rw"
   ],
   "schema": {
     "APP_BASE_URL": "str",
