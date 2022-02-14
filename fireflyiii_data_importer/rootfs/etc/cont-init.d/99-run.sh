@@ -29,7 +29,6 @@ if bashio::config.has_value 'Updates'; then
         # Sets cron // do not delete this message
         cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
         chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
-        chown www-data:www-data /etc/cron."${FREQUENCY}"/cronupdate
         
         # Sets cron to run with www-data user
         sed -i 's|root|www-data|g' /etc/crontab
@@ -59,4 +58,9 @@ fi
 
 bashio::log.info "Please wait while the app is loading !"
 
-/./usr/local/bin/entrypoint.sh
+if bashio::config.true 'silent'; then
+    bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
+    /./usr/local/bin/entrypoint.sh >/dev/null
+else
+    /./usr/local/bin/entrypoint.sh
+fi
