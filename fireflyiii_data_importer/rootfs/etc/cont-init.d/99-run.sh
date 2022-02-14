@@ -31,7 +31,7 @@ if bashio::config.has_value 'Updates'; then
         chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
         
         # Sets cron to run with www-data user
-        sed -i 's|root|www-data|g' /etc/crontab
+        # sed -i 's|root|www-data|g' /etc/crontab
         
         # Starts cron
         service cron start
