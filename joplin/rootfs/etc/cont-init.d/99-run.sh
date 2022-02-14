@@ -6,7 +6,7 @@ bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores a
 LOCATION=$(bashio::config 'data_location')
 if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
 # Default location
-LOCATION="/config/addons_config/joplin"
+LOCATION="/data"
 else
 bashio::log.warning "Warning : a custom data location was selected, but the previous folder will NOT be copied. You need to do it manually"
 fi
