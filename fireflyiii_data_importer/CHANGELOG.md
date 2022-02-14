@@ -1,3 +1,4 @@
+- Show cron jobs messages in log
 
 ## version-0.8.0 (07-02-2022)
 - Update to latest version from fireflyiii/data-importer
