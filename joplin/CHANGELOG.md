@@ -1,4 +1,5 @@
-- Allow sqlite persistance
+- FIX BUG : Allow sqlite persistance
+- Default sqlite storage : /config/addons_config/joplin
 
 ## 2.7.4 (12-02-2022)
 - Update to latest version from etechonomy/joplin-server
