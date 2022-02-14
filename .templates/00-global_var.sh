@@ -16,7 +16,11 @@ for KEYS in ${arr[@]}; do
   VALUE=$(jq ."$KEYS" ${JSONSOURCE})
   line="${KEYS}=${VALUE//[\"\']/}"
   # Use locally
-  if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
+  if ! bashio::config.false "verbose" || [[ ! "$line" == *"PASS"* ]]; then 
+    bashio::log.blue "$line"
+  else
+    bashio::log.blue "${KEYS}=******redacted******"
+  fi
   # Export the variable to run scripts
   line="${KEYS}=${VALUE//[\"\']/} 2>/dev/null || true"
   if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
