@@ -1,3 +1,4 @@
+- Show cron jobs messages in log
 
 ## 5.6.14 (07-02-2022)
 - Update to latest version from firefly-iii/firefly-iii
