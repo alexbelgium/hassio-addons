@@ -15,7 +15,7 @@ fi
    echo "Creating $LOCATION"
    mkdir -p "$LOCATION"
    if [ ! -f "$LOCATION"/database.sqlite ]; then
-   cp /home/joplin/packages/server "$LOCATION"/database.sqlite
+   cp /home/joplin/packages/server/db-prod.sqlite "$LOCATION"/database.sqlite
    fi
    #touch "$LOCATION"/database.sqlite
 
