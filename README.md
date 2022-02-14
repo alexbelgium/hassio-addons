@@ -17,8 +17,6 @@ _Thanks to all contributors !_
   <img src="https://contrib.rocks/image?repo=alexbelgium/hassio-addons" />
 </a>
 
-![Github stats](https://github-readme-stats.vercel.app/api?username=alexbelgium&show_icons=true&theme=radical)
-
 ## About
 
 My home assistant addon repository.
