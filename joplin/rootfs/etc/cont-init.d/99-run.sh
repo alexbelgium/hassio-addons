@@ -22,7 +22,7 @@ fi
    mkdir -p "$LOCATION"/resources
    ln -s $LOCATION/resources /home/joplin/packages/server
    
-   # chown -R www-data:www-data "$LOCATION"
+   chown -R joplin:joplin "$LOCATION"
    chmod -R 777 "$LOCATION"
    chmod 777 "$LOCATION/database.sqlite"
    export SQLITE_DATABASE="$LOCATION/database.sqlite"
