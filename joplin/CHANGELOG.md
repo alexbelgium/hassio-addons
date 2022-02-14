@@ -1,3 +1,4 @@
+- Data location can be szt either in /config, /data or /share
 - FIX BUG : Allow sqlite persistance
 - Default sqlite storage : /config/addons_config/joplin
 
