@@ -12,14 +12,16 @@ bashio::log.warning "Warning : a custom data location was selected, but the prev
 fi
 
    # Create folder
-   echo "Creating $LOCATION"
-   mkdir -p "$LOCATION"
-   if [ ! -f "$LOCATION"/database.sqlite ]; then
-   cp /home/joplin/packages/server/db-prod.sqlite "$LOCATION"/database.sqlite
+   if [ ! -d "$LOCATION" ]; then 
+      echo "Creating $LOCATION"
+      mkdir -p "$LOCATION"
    fi
-   #touch "$LOCATION"/database.sqlite
 
-   mkdir -p "$LOCATION"/resources
+   touch "$LOCATION"/database.sqlite
+
+   if [ ! -d "$LOCATION"/resources ]; then 
+      mkdir -p "$LOCATION"/resources
+   fi
    ln -s $LOCATION/resources /home/joplin/packages/server
    
    chown -R joplin:joplin "$LOCATION"
