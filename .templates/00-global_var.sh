@@ -16,10 +16,10 @@ for KEYS in ${arr[@]}; do
   VALUE=$(jq ."$KEYS" ${JSONSOURCE})
   line="${KEYS}=${VALUE//[\"\']/}"
   # Use locally
-  if ! bashio::config.false "verbose" || [[ ! "$line" == *"PASS"* ]]; then 
-    bashio::log.blue "$line"
-  else
+  if bashio::config.false "verbose" || [[ "$line" == *"PASS"* ]]; then 
     bashio::log.blue "${KEYS}=******redacted******"
+  else
+    bashio::log.blue "$line"
   fi
   # Export the variable to run scripts
   line="${KEYS}=${VALUE//[\"\']/} 2>/dev/null || true"
