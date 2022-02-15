@@ -16,7 +16,7 @@ for KEYS in ${arr[@]}; do
   VALUE=$(jq ."$KEYS" ${JSONSOURCE})
   line="${KEYS}=${VALUE//[\"\']/}"
   # Use locally
-  if bashio::config.false "verbose" || [[ "$line" == *"PASS"* ]]; then 
+  if [[ bashio::config.false "verbose" || "${KEYS}" == *"PASS"* ]]; then 
     bashio::log.blue "${KEYS}=******redacted******"
   else
     bashio::log.blue "$line"
