@@ -1,3 +1,4 @@
+- Allow base64 keys
 - Show cron jobs messages in log
 
 ## 5.6.14 (07-02-2022)
