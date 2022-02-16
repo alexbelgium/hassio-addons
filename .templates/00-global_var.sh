@@ -18,7 +18,7 @@ for KEYS in ${arr[@]}; do
   line="${KEYS}=${VALUE//[\"\']/}"
   # Use locally
   if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then 
-    bashio::log.blue "${KEYS}=******redacted******"
+    bashio::log.blue "${KEYS}=******"
   else
     bashio::log.blue "$line"
   fi
