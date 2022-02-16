@@ -1,3 +1,6 @@
+
+## 23.0.2 (16-02-2022)
+- Update to latest version from linuxserver/docker-nextcloud
 - Automatic mount of local and smb mounts (see readme)
 - New "Data directory" option that allows to define the folder where data are stored
 - Provides MariaDB addon information to use it as database on first installation

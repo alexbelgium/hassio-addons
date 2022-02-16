@@ -1,8 +1,8 @@
 {
   "name": "Nextcloud",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "23.0.0-11",
-  "upstream": "23.0.0",
+  "version": "23.0.2",
+  "upstream": "23.0.2",
   "slug": "nextcloud_ocr",
   "devices": [
     "/dev/sda",
@@ -36,15 +36,26 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "ingress": false,
   "hassio_api": true,
   "ingress_port": 0,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "description": "Nextcloud for Home Assistant",
   "boot": "manual",
   "uart": true,
-  "map": ["share:rw", "media:rw", "ssl:rw"],
+  "map": [
+    "share:rw",
+    "media:rw",
+    "ssl:rw"
+  ],
   "ports": {
     "443/tcp": 8099,
     "80/tcp": null
@@ -65,7 +76,9 @@
     "Full_Text_Search": false,
     "elasticsearch_server": "<ip:port>"
   },
-  "services": ["mysql:want"],
+  "services": [
+    "mysql:want"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
