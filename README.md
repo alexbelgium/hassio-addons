@@ -5,6 +5,7 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 [update-badge]: https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update
+[![GitHub Super-Linter](https://github.com/alexbelgium/hassio-addons/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 [support-badge]: https://camo.githubusercontent.com/f4dbb995049f512fdc97fcc9e022ac243fa38c408510df9d46c7467d0970d959/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f537570706f72742d7468726561642d677265656e2e737667
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
