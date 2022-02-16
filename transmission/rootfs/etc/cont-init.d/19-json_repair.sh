@@ -23,7 +23,7 @@ if [ -f ${JSONTOCHECK} ]; then
 
     # Check if all keys are still there, or add them
     # spellcheck disable=SC2068
-    for KEYS in ${arr[@]}; do
+    for KEYS in "${arr[@]}"; do
         # Check if key exists
         KEYSTHERE=$(jq "has(\"${KEYS}\")" ${JSONTOCHECK})
         if [ "$KEYSTHERE" != "true" ]; then
