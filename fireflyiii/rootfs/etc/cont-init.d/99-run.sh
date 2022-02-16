@@ -9,7 +9,8 @@
 APP_KEY="$(bashio::config 'APP_KEY')"
 
 # Check APP_KEY format
-if [ ! ${#APP_KEY} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} instead of 32 characters"; fi
+APP_KEY_COUNT=${APP_KEY#*base64:}
+if [ ! ${#APP_KEY_COUNT} = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY_COUNT} instead of 32 characters"; fi
 
 # Backup APP_KEY file
 bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
