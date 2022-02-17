@@ -15,7 +15,7 @@ mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 for KEYS in "${arr[@]}"; do
   # export key
   VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
-  line="${KEYS}=\'${VALUE//[\"\']/}\'"
+  line="${KEYS}='${VALUE//[\"\']/}'"
   # Use locally
   if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
     bashio::log.blue "${KEYS}=******"
