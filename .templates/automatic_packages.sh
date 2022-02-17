@@ -20,7 +20,7 @@ PACKAGES="${*:-}"
 ############################
 
 COMMAND="apk"
-if command -v $COMMAND &>/dev/null; then
+if command -v "$COMMAND" &>/dev/null; then
     # If apk based
     [ "$VERBOSE" = true ] && echo "apk based"
     PACKMANAGER="apk"
@@ -137,6 +137,7 @@ done
 if [ "$PACKMANAGER" = "apt" ]; then apt-get update >/dev/null; fi
 
 # Install apps one by one to allow failures
+# shellcheck disable=SC2086
 for packagestoinstall in $PACKAGES; do
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall"
     if [ "$PACKMANAGER" = "apk" ]; then
