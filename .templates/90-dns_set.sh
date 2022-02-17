@@ -21,7 +21,7 @@ if bashio::config.has_value 'DNS_server'; then
   done
 
   # Write resolv.conf
-  printf "${DNS}" >/etc/resolv.conf
+  printf "%s" "${DNS}" >/etc/resolv.conf
   chmod 644 /etc/resolv.conf
   bashio::log.info "DNS SERVERS set to $DNSLIST"
 else
