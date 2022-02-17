@@ -59,7 +59,7 @@ if bashio::config.has_value 'networkdisks'; then
     fi
 
     # Messages
-    if [ "$MOUNTED" = true ] && [ mountpoint -q /mnt/"$diskname" ]; then
+    if [ "$MOUNTED" = true ] && mountpoint -q /mnt/"$diskname"; then
       #Test write permissions
       # shellcheck disable=SC2015
       touch "/mnt/$diskname/testaze" && rm "/mnt/$diskname/testaze" &&
