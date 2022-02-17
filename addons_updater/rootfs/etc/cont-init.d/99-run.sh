@@ -146,11 +146,6 @@ for addons in $(bashio::config "addon|keys"); do
     sed -i "1i " /data/${BASENAME}/${SLUG}/CHANGELOG.md
     LOGINFO="... $SLUG : files updated" && if [ $VERBOSE = true ]; then bashio::log.info $LOGINFO; fi
 
-    #Build new version if requested
-    if [ -f /data/${BASENAME}/${SLUG}/builder ]; then
-    sed -i "1i ${LASTVERSION}" /data/${BASENAME}/${SLUG}/builder
-    fi
-
     #Git commit and push
     git add -A # add all modified files
     git commit -m "Updater bot : $SLUG updated to ${LASTVERSION}" >/dev/null
