@@ -18,7 +18,7 @@ GITPASS=$(bashio::config 'gitpass')
 GITMAIL=$(bashio::config 'gitmail')
 git config --system http.sslVerify false
 git config --system credential.helper 'cache --timeout 7200'
-git config --system user.name ${GITUSER}
+git config --system user.name "${GITUSER}"
 git config --system user.password "${GITPASS}"
 git config --system user.email "${GITMAIL}"
 
@@ -48,7 +48,7 @@ for addons in $(bashio::config "addon|keys"); do
     git clone "https://github.com/${REPOSITORY}"
   else
     LOGINFO="... $SLUG : updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-    cd "/data/$BASENAME"
+    cd "/data/$BASENAME" || exit
     git pull --rebase &>/dev/null || git reset --hard &>/dev/null
     git pull --rebase &>/dev/null
   fi
