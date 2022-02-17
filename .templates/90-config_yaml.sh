@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+# shellcheck disable=SC2155,SC1087,SC2163,SC2116,SC2086
 
 ##################
 # INITIALIZATION #
