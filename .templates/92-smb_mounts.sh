@@ -29,7 +29,7 @@ if bashio::config.has_value 'networkdisks'; then
   for disk in ${MOREDISKS//,/ }; do # Separate comma separated values
 
     # Clean name of network share
-    # shellcheck disable=SC2116
+    # shellcheck disable=SC2116,SC2001
     disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
     diskname="${disk//\\//}"            #replace \ with /
     diskname="${diskname##*/}"          # Get only last part of the name
@@ -44,7 +44,8 @@ if bashio::config.has_value 'networkdisks'; then
     mkdir -p /mnt/"$diskname"
     chown -R root:root /mnt/"$diskname"
 
-    #Tries to mount with default options
+    # Tries to mount with default options
+    # shellcheck disable=SC2140
     mount -t cifs -o rw,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}$DOMAIN" "$disk" /mnt/"$diskname" 2>ERRORCODE && MOUNTED=true || MOUNTED=false
 
     # if Fail test different smb and sec versions
@@ -58,8 +59,9 @@ if bashio::config.has_value 'networkdisks'; then
     fi
 
     # Messages
-    if [ "$MOUNTED" = true ] && [ "mountpoint -q /mnt/$diskname" ]; then
+    if [ "$MOUNTED" = true ] && [ mountpoint -q /mnt/"$diskname" ]; then
       #Test write permissions
+      # shellcheck disable=SC2015
       touch "/mnt/$diskname/testaze" && rm "/mnt/$diskname/testaze" &&
         bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $SMBVERS$SECVERS" ||
         bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
