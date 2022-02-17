@@ -9,7 +9,7 @@
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 
 # Check if config file is there, or create one from template
-if [ -f $CONFIGSOURCE ]; then
+if [ -f "$CONFIGSOURCE" ]; then
     echo "Using config file found in $CONFIGSOURCE"
 else
     echo "No config file, creating one from template"
@@ -22,7 +22,7 @@ else
     else
         # Download template
         TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/config.template"
-        curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
+        curl -L -f -s "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
     fi
     # Need to restart
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
@@ -34,8 +34,8 @@ chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
 
 # Check if yaml is valid
 EXIT_CODE=0
-yamllint -d relaxed $CONFIGSOURCE &>ERROR || EXIT_CODE=$?
-if [ $EXIT_CODE = 0 ]; then
+yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
+if [ "$EXIT_CODE" = 0 ]; then
     echo "Config file is a valid yaml"
 else
     cat ERROR
@@ -70,7 +70,7 @@ bashio::log.info "Starting the app with the variables in in $CONFIGSOURCE"
 parse_yaml "$CONFIGSOURCE" "" >/tmpfile
 while IFS= read -r line; do
     # Clean output
-    line=${line//[\"\']/}
+    line="${line//[\"\']/}"
     # Check if secret
     if [[ "${line}" == *'!secret '* ]]; then
         echo "secret detected"
@@ -84,8 +84,8 @@ while IFS= read -r line; do
         line="${line%%=*}='$secret'"
     fi
     # Data validation
-    if [[ $line =~ ^.+[=].+$ ]]; then
-        export $line
+    if [[ "$line" =~ ^.+[=].+$ ]]; then
+        export "$line"
         # Export the variable
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
         sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
