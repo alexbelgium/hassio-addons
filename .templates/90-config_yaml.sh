@@ -81,7 +81,7 @@ while IFS= read -r line; do
         # Get text
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
-        line="${line%%=*}=$secret"
+        line="${line%%=*}='$secret'"
     fi
     # Data validation
     if [[ $line =~ ^.+[=].+$ ]]; then
