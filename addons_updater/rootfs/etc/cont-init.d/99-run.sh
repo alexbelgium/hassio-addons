@@ -63,6 +63,7 @@ for addons in $(bashio::config "addon|keys"); do
 
   if [ "$SOURCE" = "dockerhub" ]; then
     # Use dockerhub as upstream
+    # shellcheck disable=SC2116
     DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
     DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
     LASTVERSION=$(
@@ -142,9 +143,9 @@ for addons in $(bashio::config "addon|keys"); do
 
     #Update changelog
     touch "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
-    sed -i "1i - Update to latest version from $UPSTREAM" /data/${BASENAME}/${SLUG}/CHANGELOG.md
-    sed -i "1i ## ${LASTVERSION} (${DATE})" /data/${BASENAME}/${SLUG}/CHANGELOG.md
-    sed -i "1i " /data/${BASENAME}/${SLUG}/CHANGELOG.md
+    sed -i "1i - Update to latest version from $UPSTREAM" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
+    sed -i "1i ## ${LASTVERSION} (${DATE})" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
+    sed -i "1i " "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
     LOGINFO="... $SLUG : files updated" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
     #Git commit and push
