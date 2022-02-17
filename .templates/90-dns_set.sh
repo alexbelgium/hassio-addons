@@ -14,6 +14,7 @@ if bashio::config.has_value 'DNS_server'; then
   DNSLIST=""
 
   # Get DNS servers
+  # shellcheck disable=SC2086
   for server in ${DNSSERVER//,/ }; do # Separate comma separated values
     DNS="${DNS}nameserver $server\n"
     DNSLIST="$server $DNSLIST"
