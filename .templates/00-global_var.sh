@@ -15,7 +15,7 @@ mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 for KEYS in "${arr[@]}"; do
   # export key
   VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
-  line="${KEYS}=${VALUE//[\"\']/}"
+  line="${KEYS}=\"${VALUE//[\"\']/}\""
   # Use locally
   if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
     bashio::log.blue "${KEYS}=******"
@@ -23,9 +23,8 @@ for KEYS in "${arr[@]}"; do
     bashio::log.blue "$line"
   fi
   # Export the variable to run scripts
-  line="${KEYS}=${VALUE//[\"\']/} 2>/dev/null || true"
-  if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export \"$line\"" /etc/services.d/*/*run* 2>/dev/null; fi
-  if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export \"$line\"" /etc/cont-init.d/*run* 2>/dev/null; fi
+  if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
+  if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
 done
 
 ################
