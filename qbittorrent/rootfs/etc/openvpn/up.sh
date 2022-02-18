@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck disable=SD2154,SC2004,SC2059,SC2086
 
 # launch qbittorrent
 /etc/openvpn/up-qbittorrent.sh "${4}" &

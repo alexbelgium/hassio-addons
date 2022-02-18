@@ -5,7 +5,7 @@
 # NGINX SETTING #
 #################
 
-declare admin_port
+#declare admin_port
 declare qbittorrent_protocol=http
 
 # Generate Ingress configuration
@@ -31,6 +31,6 @@ LATEST_RELEASE=$(curl -s -L https://api.github.com/repos/wdaan/vuetorrent/releas
     tr -d \" |
     xargs)
 
-curl -s -S -O -J -L $LATEST_RELEASE
+curl -s -S -O -J -L "$LATEST_RELEASE"
 unzip -o vuetorrent.zip -d / >/dev/null
 rm /vuetorrent.zip >/dev/null

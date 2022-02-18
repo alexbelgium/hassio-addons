@@ -6,7 +6,8 @@
 ##########
 
 # Define preferences line
-cd /config/qBittorrent/
+mkdir -p /config/qBittorrent
+cd /config/qBittorrent/ || true
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$((LINE + 1))
 
@@ -32,8 +33,8 @@ if bashio::config.has_value 'SavePath'; then
   #sed -i "$LINE i\Session\\\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
   sed -i '/SavePath/d' qBittorrent.conf
   sed -i "$LINE i\Downloads\\\SavePath=$DOWNLOADS" qBittorrent.conf
-  mkdir -p $DOWNLOADS || bashio::log.fatal "Error : folder defined in SavePath doesn't exist and can't be created. Check path"
-  chown -R abc:abc $DOWNLOADS || bashio::log.fatal "Error, please check default save folder configuration in addon"
+  mkdir -p "$DOWNLOADS" || bashio::log.fatal "Error : folder defined in SavePath doesn't exist and can't be created. Check path"
+  chown -R abc:abc "$DOWNLOADS" || bashio::log.fatal "Error, please check default save folder configuration in addon"
   bashio::log.info "Downloads can be found in $DOWNLOADS"
 
 else
@@ -87,7 +88,7 @@ fi
 # WHITELIST    #
 ################
 
-cd /config/qBittorrent/
+cd /config/qBittorrent/ || true
 if bashio::config.has_value 'whitelist'; then
   WHITELIST=$(bashio::config 'whitelist')
   #clean data
@@ -101,7 +102,7 @@ fi
 # USERNAME    #
 ###############
 
-cd /config/qBittorrent/
+cd /config/qBittorrent/ || true
 if bashio::config.has_value 'Username'; then
   USERNAME=$(bashio::config 'Username')
   #clean data
@@ -130,23 +131,23 @@ if bashio::config.has_value 'customUI'; then
   ### Download WebUI
   case $CUSTOMUI in
   "vuetorrent")
-    curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip") >/dev/null
+    curl -s -S -J -L -o /webui/release.zip "$(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip")" >/dev/null
     ;;
 
   "qbit-matUI")
-    curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip") >/dev/null
+    curl -s -S -J -L -o /webui/release.zip "$(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip")" >/dev/null
     ;;
 
   "qb-web")
-    curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip") >/dev/null
+    curl -s -S -J -L -o /webui/release.zip "$(curl -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip")" >/dev/null
     ;;
   esac
 
   ### Install WebUI
-  mkdir -p /webui/$CUSTOMUI
-  unzip -q /webui/release.zip -d /webui/$CUSTOMUI
+  mkdir -p /webui/"$CUSTOMUI"
+  unzip -q /webui/release.zip -d /webui/"$CUSTOMUI"
   rm /webui/*.zip
-  CUSTOMUIDIR="$(dirname "$(find /webui/$CUSTOMUI -iname "public" -type d)")"
+  CUSTOMUIDIR="$(dirname "$(find /webui/"$CUSTOMUI" -iname "public" -type d)")"
   # Set qbittorrent
   sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
   sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf

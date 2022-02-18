@@ -5,7 +5,7 @@
 # NGINX SETTING #
 #################
 
-declare admin_port
+#declare admin_port
 declare portainer_protocol=http
 
 # Generate Ingress configuration
