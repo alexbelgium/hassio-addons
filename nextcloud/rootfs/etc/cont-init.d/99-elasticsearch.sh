@@ -21,7 +21,8 @@ fi
 #################################################################################
 
 if bashio::config.true 'Full_Text_Search'; then
-    if [ $LAUNCHER fulltextsearch:index &>/dev/null ]; then
+    # shellcheck disable=SC1073,SC1072,SC1009
+    if [ eval $LAUNCHER fulltextsearch:index &>/dev/null ]; then
         echo "Full Text Search is already working"
         break 2
     fi

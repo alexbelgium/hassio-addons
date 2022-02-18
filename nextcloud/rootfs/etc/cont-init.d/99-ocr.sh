@@ -13,7 +13,7 @@ if [[ $($LAUNCHER -V) == *"not installed"* ]]; then
 fi
 
 # Install OCR if requested
-if [ $(bashio::config 'OCR') = "true" ]; then
+if [ "$(bashio::config 'OCR')" = "true" ]; then
     # Install package
     if bashio::config.true 'OCR'; then
 
@@ -38,7 +38,7 @@ if [ $(bashio::config 'OCR') = "true" ]; then
                 wget https://github.com/tesseract-ocr/tessdata/raw/main/"$LANG".traineddata &>/dev/null
             done
         fi
-    elif [ $(bashio::config 'OCR') = "false" ]; then
+    elif [ "$(bashio::config 'OCR')" = "false" ]; then
         bashio::log.info 'Removing OCR'
         # Delete package
         apk del tesseract-ocr.* &>/dev/null || true
