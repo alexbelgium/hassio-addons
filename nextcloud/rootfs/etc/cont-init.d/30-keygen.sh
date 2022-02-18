@@ -9,8 +9,8 @@ if bashio::config.true 'use_own_certs'; then
 
   #Check if files exist
   echo "... checking if referenced files exist"
-  [ ! -f /ssl/$CERTFILE ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$CERTFILE not found" && bashio::exit.nok
-  [ ! -f /ssl/$KEYFILE ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$KEYFILE not found" && bashio::exit.nok
+  [ ! -f /ssl/"$CERTFILE" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$CERTFILE not found" && bashio::exit.nok
+  [ ! -f /ssl/"$KEYFILE" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$KEYFILE not found" && bashio::exit.nok
 
 else
   mkdir -p /ssl/nextcloud/keys
@@ -28,7 +28,7 @@ echo "... adding ssl certs in files"
 for NGINXFILE in "/defaults/default" "/config/nginx/site-confs/default" "/data/config/nginx/site-confs/default"; do
   if [ -f $NGINXFILE ]; then
     LINE=$(sed -n "/ssl_certificate /=" $NGINXFILE)
-    if [ -n $LINE ]; then
+    if [[ -n "$LINE" ]]; then
       sed -i "/ssl_certificate/ d" $NGINXFILE
       sed -i "$LINE i ssl_certificate_key /ssl/$KEYFILE;" $NGINXFILE
       sed -i "$LINE i ssl_certificate /ssl/$CERTFILE;" $NGINXFILE

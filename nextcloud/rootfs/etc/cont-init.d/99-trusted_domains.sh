@@ -39,7 +39,7 @@ if bashio::config.has_value 'trusted_domains'; then
     bashio::log.info "... alignement with trusted domains list : ${TRUSTEDDOMAINS}"
     for domain in ${TRUSTEDDOMAINS//,/ }; do # Comma separated values
         bashio::log.info "... adding ${domain}"
-        $LAUNCHER config:system:set trusted_domains $i --value=${domain}
+        $LAUNCHER config:system:set trusted_domains $i --value="${domain}"
         i=$((i + 1))
     done
 

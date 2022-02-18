@@ -8,7 +8,7 @@ datadirectory=$(bashio::config 'data_directory')
 groupmod -o -g "$PGID" abc
 usermod -o -u "$PUID" abc
 mkdir -p /data/config
-mkdir -p $datadirectory
+mkdir -p "$datadirectory"
 echo '
 -------------------------------------
           _         ()

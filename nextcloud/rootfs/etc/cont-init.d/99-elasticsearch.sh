@@ -21,7 +21,7 @@ fi
 #################################################################################
 
 if bashio::config.true 'Full_Text_Search'; then
-    if [ $LAUNCHER fulltextsearch:index ] &>/dev/null; then
+    if [ $LAUNCHER fulltextsearch:index &>/dev/null ]; then
         echo "Full Text Search is already working"
         break 2
     fi
