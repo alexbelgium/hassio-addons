@@ -5,10 +5,10 @@
 #################
 
 declare port
-declare certfile
+# declare certfile
 declare ingress_interface
 declare ingress_port
-declare keyfile
+# declare keyfile
 
 CLOUDCMD_PREFIX=$(bashio::addon.ingress_entry)
 export CLOUDCMD_PREFIX
@@ -19,7 +19,7 @@ if bashio::config.true 'ssl'; then
   bashio::config.require.ssl
 fi
 
-port=$(bashio::addon.port 80)
+# port=$(bashio::addon.port 80)
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 sed -i "s|%%protocol%%|${ADDON_PROTOCOL}|g" /etc/nginx/servers/ingress.conf
@@ -47,7 +47,7 @@ fi
 bashio::log.info "Starting..."
 
 cd /
-./usr/src/app/bin/cloudcmd.mjs '"'$DROPBOX_TOKEN$CUSTOMOPTIONS'"' &
+./usr/src/app/bin/cloudcmd.mjs '"'"$DROPBOX_TOKEN""$CUSTOMOPTIONS"'"' &
 bashio::net.wait_for 8000 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
