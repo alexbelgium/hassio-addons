@@ -1,3 +1,4 @@
+# yamllint disable rule:line-length
 ---
 name: Builder
 
@@ -51,7 +52,6 @@ jobs:
         env:
           HEAD: "${{ github.head_ref }}"
         run: |
-          # yamllint disable rule:line-length
           # shellcheck disable=SC2157,SC2086 
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
              echo "::set-output name=build_arch::true";
