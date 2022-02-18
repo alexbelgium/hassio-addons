@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2116
 
 # If dockerfile failed install manually
 
