@@ -6,8 +6,8 @@
 ###############
 declare port
 declare certfile
-declare ingress_interface
-declare ingress_port
+#declare ingress_interface
+#declare ingress_port
 declare keyfile
 
 # General values
