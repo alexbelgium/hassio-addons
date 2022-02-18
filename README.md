@@ -11,8 +11,8 @@
 [![GitHub Super-Linter](https://github.com/alexbelgium/hassio-addons/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 [![Builder](https://github.com/alexbelgium/hassio-addons/workflows/Builder/badge.svg)](https://github.com/alexbelgium/hassio-addons/actions/workflows/builder.yaml)
 
-![issues-open](https://img.shields.io/github/issues/alexbelgium/hassio-addons) 
-![closed-issues](https://img.shields.io/github/issues-closed-raw/alexbelgium/hassio-addons) 
+![issues-open](https://img.shields.io/github/issues/alexbelgium/hassio-addons)
+![closed-issues](https://img.shields.io/github/issues-closed-raw/alexbelgium/hassio-addons)
 ![contributors-badge](https://img.shields.io/github/contributors/alexbelgium/hassio-addons)
 ![license](https://img.shields.io/github/license/alexbelgium/hassio-addons)
 
