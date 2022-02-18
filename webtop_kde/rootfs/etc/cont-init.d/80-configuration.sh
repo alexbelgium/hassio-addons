@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+# shellcheck disable=SC2116
 
 # Add Edge repositories
 if bashio::config.true 'edge_repositories'; then
@@ -12,7 +13,7 @@ fi
 # Install rpi video drivers
 if bashio::config.true 'rpi_video_drivers'; then
   bashio::log.info "Installing Rpi graphic drivers"
-  apk add --no-cache mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev >/dev/null && bashio::log.green "... done" || 
+  apk add --no-cache mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev >/dev/null && bashio::log.green "... done" ||
   bashio::log.red "... not successful. Are you on a rpi?"
 fi
 

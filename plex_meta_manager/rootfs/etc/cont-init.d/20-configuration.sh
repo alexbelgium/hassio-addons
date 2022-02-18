@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "PMM_CONFIG")

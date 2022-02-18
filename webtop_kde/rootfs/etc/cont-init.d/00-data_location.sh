@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 # Define user
 PUID=$(bashio::config "PUID")
@@ -27,5 +28,5 @@ echo "Creating $LOCATION"
 mkdir -p "$LOCATION"
 
 # Set ownership
-bashio::log.info "Setting ownership to $PUID:$PGID" 
+bashio::log.info "Setting ownership to $PUID:$PGID"
 chown "$PUID":"$PGID" "$LOCATION"

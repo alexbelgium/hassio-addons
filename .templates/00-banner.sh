@@ -1,5 +1,4 @@
 #!/usr/bin/with-contenv bashio
-
 # shellcheck shell=bash
 # ==============================================================================
 # Displays a simple add-on banner on startup

@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 LOCATION=$(bashio::config 'data_location')
 
@@ -8,64 +9,64 @@ if [ ! -d /jellyfin ]; then
   chown -R abc:abc /jellyfin
 fi
 
-if [ ! -d $LOCATION/tv ]; then
-  echo "Creating $LOCATION/tv"
-  mkdir -p $LOCATION/tv
-  chown -R abc:abc $LOCATION/tv
+if [ ! -d "$LOCATION"/tv ]; then
+  echo "Creating "$LOCATION"/tv"
+  mkdir -p "$LOCATION"/tv
+  chown -R abc:abc "$LOCATION"/tv
 fi
 
-if [ ! -d $LOCATION/movies ]; then
-  echo "Creating $LOCATION/movies"
-  mkdir -p $LOCATION/movies
-  chown -R abc:abc $LOCATION/movies
+if [ ! -d "$LOCATION"/movies ]; then
+  echo "Creating "$LOCATION"/movies"
+  mkdir -p "$LOCATION"/movies
+  chown -R abc:abc "$LOCATION"/movies
 fi
 
-if [ ! -d $LOCATION ]; then
-  echo "Creating $LOCATION"
-  mkdir -p $LOCATION
-  chown -R abc:abc $LOCATION
+if [ ! -d "$LOCATION" ]; then
+  echo "Creating "$LOCATION""
+  mkdir -p "$LOCATION"
+  chown -R abc:abc "$LOCATION"
 fi
 
 # links
 
 if [ ! -d /jellyfin/cache ]; then
   echo "Creating link for /jellyfin/cache"
-  mkdir -p $LOCATION/cache
-  chown -R abc:abc $LOCATION/cache
-  ln -s $LOCATION/cache /jellyfin/cache
+  mkdir -p "$LOCATION"/cache
+  chown -R abc:abc "$LOCATION"/cache
+  ln -s "$LOCATION"/cache /jellyfin/cache
 fi
 
 if [ ! -d /jellyfin/data ]; then
   echo "Creating link for /jellyfin/data"
-  mkdir -p $LOCATION/data
-  chown -R abc:abc $LOCATION/data
-  ln -s $LOCATION/data /jellyfin/data
+  mkdir -p "$LOCATION"/data
+  chown -R abc:abc "$LOCATION"/data
+  ln -s "$LOCATION"/data /jellyfin/data
 fi
 
 if [ ! -d /jellyfin/logs ]; then
   echo "Creating link for /jellyfin/logs"
-  mkdir -p $LOCATION/logs
-  chown -R abc:abc $LOCATION/logs
-  ln -s $LOCATION/logs /jellyfin/logs
+  mkdir -p "$LOCATION"/logs
+  chown -R abc:abc "$LOCATION"/logs
+  ln -s "$LOCATION"/logs /jellyfin/logs
 fi
 
 if [ ! -d /jellyfin/metadata ]; then
   echo "Creating link for /jellyfin/metadata"
-  mkdir -p $LOCATION/metadata
-  chown -R abc:abc $LOCATION/metadata
-  ln -s $LOCATION/metadata /jellyfin/metadata
+  mkdir -p "$LOCATION"/metadata
+  chown -R abc:abc "$LOCATION"/metadata
+  ln -s "$LOCATION"/metadata /jellyfin/metadata
 fi
 
 if [ ! -d /jellyfin/plugins ]; then
   echo "Creating link for /jellyfin/plugins"
-  mkdir -p $LOCATION/plugins
-  chown -R abc:abc $LOCATION/plugins
-  ln -s $LOCATION/plugins /jellyfin/plugins
+  mkdir -p "$LOCATION"/plugins
+  chown -R abc:abc "$LOCATION"/plugins
+  ln -s "$LOCATION"/plugins /jellyfin/plugins
 fi
 
 if [ ! -d /jellyfin/root ]; then
   echo "Creating link for /jellyfin/root"
-  mkdir -p $LOCATION/root
-  chown -R abc:abc $LOCATION/root
-  ln -s $LOCATION/root /jellyfin/root
+  mkdir -p "$LOCATION"/root
+  chown -R abc:abc "$LOCATION"/root
+  ln -s "$LOCATION"/root /jellyfin/root
 fi
