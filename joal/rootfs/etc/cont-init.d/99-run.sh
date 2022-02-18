@@ -17,9 +17,9 @@ fi
 # download latest version
 
 if [ "$VERBOSE" = true ]; then
-  curl -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")
+  curl -J -L -o /tmp/joal.tar.gz "$(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")"
 else
-  curl -s -S -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz") >/dev/null
+  curl -s -S -J -L -o /tmp/joal.tar.gz "$(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")" >/dev/null
 fi
 mkdir -p /data/joal
 tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
@@ -45,20 +45,20 @@ ln -sf /config/addons_config/joal/config.json /data/joal/config.json
 # SET VARIABLES #
 ###############
 
-declare port
-declare certfile
+#declare port
+#declare certfile
 declare ingress_interface
 declare ingress_port
-declare keyfile
+#declare keyfile
 
-INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::addon.ingress_url)
+#INGRESSURL=$(bashio::config 'local_ip_port')$(bashio::addon.ingress_url)
 host_port=$(bashio::core.port)
 ingress_url=$(bashio::addon.ingress_entry)
 ADDONPORT=$(bashio::addon.port "8081")
 host_ip=$(bashio::network.ipv4_address)
 host_ip=${host_ip%/*}
 UIPATH=$(bashio::config 'ui_path')
-port=$(bashio::addon.port 80)
+#port=$(bashio::addon.port 80)
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 
@@ -85,9 +85,9 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 ###############
 
 if [ "$VERBOSE" = true ]; then
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${UIPATH} --joal.ui.secret-token=$TOKEN
+  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="${UIPATH}" --joal.ui.secret-token="$TOKEN"
 else
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${UIPATH} --joal.ui.secret-token=$TOKEN >/dev/null
+  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="${UIPATH}" --joal.ui.secret-token="$TOKEN" >/dev/null
 fi &
 bashio::log.info "Please wait, loading..."
 
@@ -116,7 +116,7 @@ exec nginx &
 if bashio::config.has_value 'run_duration'; then
   RUNTIME=$(bashio::config 'run_duration')
   bashio::log.info "Addon will stop after $RUNTIME"
-  sleep $RUNTIME &&
+  sleep "$RUNTIME" &&
     bashio::log.info "Timeout achieved, addon will stop !" &&
     exit 0
 else
