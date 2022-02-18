@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+# shellcheck disable=SC2155
 
 #####################
 # Export env values #
@@ -74,5 +75,5 @@ ln -s /config/addons_config/tandoor_recipes/mediafiles /opt/recipes
 ln -s /data/recipes/staticfiles /opt/recipes
 
 bashio::log.info "Launching app"
-cd /opt/recipes
+cd /opt/recipes || exit
 ./boot.sh
