@@ -1,5 +1,4 @@
-#!/usr/bin/with-contenv bashio
-# shellcheck shell=bash
+#!/bin/bash
 
 # create folders
 mkdir -p \
