@@ -19,4 +19,3 @@ fi
 [[ ! -f /data/config/crontabs/root ]] && \
 	cp /defaults/root /data/config/crontabs/root
 cp /data/config/crontabs/root /etc/crontabs/root
-
