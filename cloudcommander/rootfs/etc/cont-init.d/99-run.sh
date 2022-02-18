@@ -4,7 +4,7 @@
 # NGINX SETTING #
 #################
 
-declare port
+# declare port
 # declare certfile
 declare ingress_interface
 declare ingress_port
