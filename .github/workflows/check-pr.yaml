@@ -1,4 +1,4 @@
-# shellcheck disable=SC2076,SC2059
+---
 name: Check PR Build
 on:
   pull_request:
@@ -42,6 +42,7 @@ jobs:
       - name: 🔎 Check for updated CHANGELOG.md
         shell: bash
         run: |
+          # shellcheck disable=SC2076,SC2059
           if [[ ! "${{ needs.check-addon-changes.outputs.changedChangelogFiles }}" =~ "${{ matrix.addon }}/CHANGELOG.md" ]]; then
               echo "::error::No new entries in ${{ matrix.addon }} CHANGELOG.md file!"
               exit 1
@@ -149,6 +150,7 @@ jobs:
         id: labels
         shell: bash
         run: |
+          # shellcheck disable=SC2076,SC2059
           labels="io.hass.version=${{ steps.information.outputs.version }}"
           labels=$(printf "$labels\nio.hass.name=${{ steps.information.outputs.name }}")
           labels=$(printf "$labels\nio.hass.description=${{ steps.information.outputs.description }}")
