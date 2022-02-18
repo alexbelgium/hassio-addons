@@ -1,6 +1,6 @@
 #!/usr/bin/env bashio
 
-bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores and 4 GB of memory. Otherwise the system will become unresponsive and crash." 
+bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores and 4 GB of memory. Otherwise the system will become unresponsive and crash."
 
 # Check data location
 LOCATION=$(bashio::config 'data_location')
@@ -12,24 +12,24 @@ bashio::log.warning "Warning : a custom data location was selected, but the prev
 fi
 
    # Create folder
-   if [ ! -d "$LOCATION" ]; then 
+   if [ ! -d "$LOCATION" ]; then
       echo "Creating $LOCATION"
       mkdir -p "$LOCATION"
    fi
 
    touch "$LOCATION"/database.sqlite
 
-   if [ ! -d "$LOCATION"/resources ]; then 
+   if [ ! -d "$LOCATION"/resources ]; then
       mkdir -p "$LOCATION"/resources
    fi
-   ln -s $LOCATION/resources /home/joplin/packages/server
-   
+   ln -s "$LOCATION"/resources /home/joplin/packages/server
+
    chown -R joplin:joplin "$LOCATION"
    chmod -R 777 "$LOCATION"
    chmod 777 "$LOCATION/database.sqlite"
    export SQLITE_DATABASE="$LOCATION/database.sqlite"
 
-if bashio::config.has_value 'POSTGRES_DATABASE'; then 
+if bashio::config.has_value 'POSTGRES_DATABASE'; then
 bashio::log.info "Using postgres"
 
 bashio::config.has_value 'DB_CLIENT' && export DB_CLIENT=$(bashio::config 'DB_CLIENT') && bashio::log.info 'Database client set'
