@@ -43,6 +43,7 @@ for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPR
     mkdir -p "$variabletest" || bashio::log.fatal "Can't create $variabletest path"
   fi
   # Check if path writable
+  # shellcheck disable=SC2015
   touch "$variabletest"/aze && rm "$variabletest"/aze || bashio::log.fatal "$variabletest path is not writable"
 done
 
