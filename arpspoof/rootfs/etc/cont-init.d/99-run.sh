@@ -1,4 +1,5 @@
 #!/usr/bin/env bashio
+# shellcheck shell=bash
 
 # Autodefine if not defined
 if [ -n "$INTERFACE_NAME" ]; then

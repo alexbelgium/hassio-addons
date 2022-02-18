@@ -1,4 +1,5 @@
 #!/usr/bin/env bashio
+# shellcheck shell=bash
 # hadolint ignore=SC2155
 
 ########

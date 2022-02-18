@@ -1,4 +1,5 @@
 #!/usr/bin/env bashio
+# shellcheck shell=bash
 
 ###################
 # SSL CONFIG v1.0 #

@@ -1,4 +1,6 @@
 #!/usr/bin/env bashio
+# shellcheck shell=bash
+# shellcheck disable=SC2155
 
 bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores and 4 GB of memory. Otherwise the system will become unresponsive and crash."
 
@@ -61,5 +63,5 @@ export APP_BASE_URL=$(bashio::config 'APP_BASE_URL')
 
 bashio::log.info 'Starting Joplin. Initial user is "admin@localhost" with password "admin"'
 
-cd /home/joplin
+cd /home/joplin || true
 npm --prefix packages/server start
