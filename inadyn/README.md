@@ -37,7 +37,7 @@ For configuration, see https://github.com/troglobit/inadyn
 
 The available configuration options are as follows (this is filled in with some example data):
 
-```
+```json
 {
   "verify_address": false,
   "fake_address": false,
@@ -70,7 +70,7 @@ The available configuration options are as follows (this is filled in with some 
 
 You should not fill in all of these, only use what is necessary. A typical example would look like:
 
-```
+```json
 {
     {
       "provider": "duckdns",
@@ -83,7 +83,7 @@ You should not fill in all of these, only use what is necessary. A typical examp
 
 or:
 
-```
+```json
 {
   "providers": [
     {
@@ -98,7 +98,7 @@ or:
 
 for a custom provider that is not supported by inadyn you can do:
 
-```
+```json
 {
   "providers": [
     {

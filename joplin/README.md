@@ -45,7 +45,7 @@ APP_BASE_URL: This is the base public URL where the service will be running. For
 To use an existing PostgresSQL server, set the following variables in the config:
 Make sure that the provided database and user exist as the server will not create them.
 
-```
+```yaml
 DB_CLIENT=pg
 POSTGRES_PASSWORD=joplin
 POSTGRES_DATABASE=joplin
@@ -56,7 +56,7 @@ POSTGRES_HOST=localhost
 
 To use email service, set the follow variables in the config:
 
-```
+```yaml
 1 = true, 0 = false
 MAILER_HOST=mail.example.com
 MAILER_PORT=995

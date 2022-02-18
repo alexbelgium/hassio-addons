@@ -96,7 +96,7 @@ rest:
 
 ---
 
-![](https://github.com/AnalogJ/scrutiny/raw/master/docs/dashboard.png)
+![Illustration](https://github.com/AnalogJ/scrutiny/raw/master/docs/dashboard.png)
 
 ## Support
 

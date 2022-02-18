@@ -23,12 +23,12 @@ All you have to do: enter your usenet server details and your download client (e
 
 The official documentation mentions:
 Please run 'http://yourdomain.com/install.php' from within your browser before attempting anything further with Spotweb and make sure all items are checked 'OK'.
-These steps can be skipped as this addon will automatically configure and create the database. 
+These steps can be skipped as this addon will automatically configure and create the database.
 
 All you have to do: enter your usenet server details and your download client (eg: nzbget).
 
 **Note**: Spots are retrieved via an hourly cron job. It can take up to an hour before the spots start appearing.
-Depending on the specs of your system, it can take more than 24 hours before all spots are retrieved. 
+Depending on the specs of your system, it can take more than 24 hours before all spots are retrieved.
 
 ## Configuration Addon
 

@@ -1,5 +1,7 @@
 # Home assistant add-on: alexbelgium
 
+<!-- markdownlint-disable MD033 -->
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 ![update-badge]
 
@@ -37,7 +39,7 @@ Adding this add-ons repository to your Home Assistant instance is
 pretty easy. Follow [the official instructions](https://home-assistant.io/hassio/installing_third_party_addons) on the
 website of Home Assistant, and use the following URL:
 
-```
+```yaml
 https://github.com/alexbelgium/hassio-addons
 ```
 
