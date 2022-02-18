@@ -34,6 +34,7 @@ jobs:
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_NATURAL_LANGUAGE: false
+          ACTION_ACTIONLINT_DISABLE_ERRORS: true
 
 
   check_crlf:
