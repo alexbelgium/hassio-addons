@@ -4,6 +4,6 @@
   "ignore": [
     "**/.git/**",
     "**/*.md",
-    "check-pr.yaml"
+    "**/workflows/**"
   ]
 }
