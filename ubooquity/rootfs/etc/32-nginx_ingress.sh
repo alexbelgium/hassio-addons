@@ -12,6 +12,7 @@ declare port
 
 # General values
 port=$(bashio::addon.ingress_port)
+# shellcheck disable=SC2210
 if [ "$port" ] >1; then
   # Adapt nginx
   sed -i "s|%%port%%|$port|g" /etc/nginx/servers/ingress.conf
