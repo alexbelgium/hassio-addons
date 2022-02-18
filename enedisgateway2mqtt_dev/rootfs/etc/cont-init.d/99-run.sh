@@ -15,7 +15,7 @@ mkdir -p "$(dirname "${DATABASESOURCE}")"
 # Check absence of config file
 if [ -f /data/config.yaml ] && [ ! -L /data/config.yaml ]; then
   bashio::log.warning "A current config was found in /data, it is backuped to ${CONFIGSOURCE}.bak"
-  mv /data/config.yaml $CONFIGSOURCE.bak
+  mv /data/config.yaml "$CONFIGSOURCE".bak
 fi
 
 # Check if config file is there, or create one from template
@@ -27,7 +27,7 @@ if [ -f "$CONFIGSOURCE" ]; then
   # Check if yaml is valid
   EXIT_CODE=0
   yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
-  if [ $EXIT_CODE = 0 ]; then
+  if [ "$EXIT_CODE" = 0 ]; then
     echo "Config file is a valid yaml"
   else
     cat ERROR
@@ -36,26 +36,26 @@ if [ -f "$CONFIGSOURCE" ]; then
   fi
 else
   # Create symlink for addon to create config
-  touch ${CONFIGSOURCE}
+  touch "${CONFIGSOURCE}"
   ln -sf "$CONFIGSOURCE" /data
-  rm $CONFIGSOURCE
+  rm "$CONFIGSOURCE"
   # Need to restart
-  bashio::log.fatal "Config file not found. The addon will create a new one, then stop. Please customize the file in "$CONFIGSOURCE" before restarting."
+  bashio::log.fatal "Config file not found. The addon will create a new one, then stop. Please customize the file in $CONFIGSOURCE before restarting."
 fi
 
 # Remove previous link or file
 [ -f /data/enedisgateway.db ] && rm /data/enedisgateway.db
 
 # Check if database is here or create symlink
-if [ -f $DATABASESOURCE ]; then
+if [ -f "$DATABASESOURCE" ]; then
   # Create symlink if not existing yet
-  ln -sf ${DATABASESOURCE} /data && echo "creating symlink"
+  ln -sf "${DATABASESOURCE}" /data && echo "creating symlink"
   bashio::log.info "Using database file found in $DATABASESOURCE"
 else
   # Create symlink for addon to create database
-  touch ${DATABASESOURCE}
-  ln -sf $DATABASESOURCE /data
-  rm $DATABASESOURCE
+  touch "${DATABASESOURCE}"
+  ln -sf "$DATABASESOURCE" /data
+  rm "$DATABASESOURCE"
 fi
 
 ##############
@@ -66,6 +66,7 @@ bashio::log.info "Starting the app"
 echo " "
 
 # Test mode
+TZ=$(bashio::config "TZ")
 if [ "$TZ" = "test" ]; then
   echo "secret mode found, launching script in /config/test.sh"
   cd /config || exit
