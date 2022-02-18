@@ -15,22 +15,15 @@ else
   KEYFILE=""
 fi
 
-####################
-# SET UID GID v1.0 #
-####################
-bashio::log.info 'PUID GUID set to root'
-PUID=0
-PGID=0
-
 #################
 # NGINX SETTING #
 #################
 
-declare port
-declare certfile
+#declare port
+#declare certfile
 declare ingress_interface
 declare ingress_port
-declare keyfile
+#declare keyfile
 
 FB_BASEURL=$(bashio::addon.ingress_entry)
 export FB_BASEURL
@@ -41,7 +34,7 @@ if bashio::config.true 'ssl'; then
   ADDON_PROTOCOL=https
 fi
 
-port=$(bashio::addon.port 80)
+#port=$(bashio::addon.port 80)
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 sed -i "s|%%protocol%%|${ADDON_PROTOCOL}|g" /etc/nginx/servers/ingress.conf
@@ -83,7 +76,7 @@ fi
 
 bashio::log.info "Starting..."
 
-/./filebrowser $CERTFILE $KEYFILE --root=$BASE_FOLDER --address=0.0.0.0 --database=/config/addons_config/filebrowser/filebrowser.dB $NOAUTH &
+/./filebrowser "$CERTFILE" "$KEYFILE" --root="$BASE_FOLDER" --address=0.0.0.0 --database=/config/addons_config/filebrowser/filebrowser.dB "$NOAUTH" &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx

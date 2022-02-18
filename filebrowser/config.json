@@ -35,7 +35,9 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "FB_BASEURL": "/filebrowser"
+    "FB_BASEURL": "/filebrowser",
+    "PUID": "0",
+    "PGID": "0"
   },
   "ingress": true,
   "ingress_port": 8099,
@@ -82,4 +84,3 @@
   "version": "2.20.1-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
-
