@@ -1,3 +1,4 @@
+# shellcheck disable=SC2157,SC2086
 name: Builder
 
 env:
@@ -8,7 +9,7 @@ on:
     branches:
       - master
     paths:
-      - '**/config.*'
+      - "**/config.*"
 
 jobs:
   check-addon-changes:
@@ -16,15 +17,14 @@ jobs:
     outputs:
       changedAddons: ${{ steps.filter.outputs.changes }}
     steps:
+      - name: ↩️ Checkout
+        uses: actions/checkout@v2
 
-    - name: ↩️ Checkout
-      uses: actions/checkout@v2
-
-    - name: 📂 Detect chanced files
-      uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: .github/paths-filter.yml
+      - name: 📂 Detect chanced files
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: .github/paths-filter.yml
 
   build:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}

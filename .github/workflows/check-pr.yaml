@@ -1,3 +1,4 @@
+# shellcheck disable=SC2076,SC2059
 name: Check PR Build
 on:
   pull_request:
@@ -11,24 +12,23 @@ jobs:
       changedAddons: ${{ steps.filter.outputs.changes }}
       changedChangelogFiles: ${{ steps.changed-files.outputs.changelogs_files }}
     steps:
+      - name: ↩️ Checkout
+        uses: actions/checkout@v2
 
-    - name: ↩️ Checkout
-      uses: actions/checkout@v2
+      - name: 📂 Detect chanced addons
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: .github/paths-filter.yml
 
-    - name: 📂 Detect chanced addons
-      uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: .github/paths-filter.yml
-
-    - name: 📂 Detect chanced files
-      uses: dorny/paths-filter@v2
-      id: changed-files
-      with:
-        list-files: csv
-        filters: |
-          changelogs:
-            - '**/CHANGELOG.md'
+      - name: 📂 Detect chanced files
+        uses: dorny/paths-filter@v2
+        id: changed-files
+        with:
+          list-files: csv
+          filters: |
+            changelogs:
+              - '**/CHANGELOG.md'
   check-changed-changelog:
     name: Check if CHANGELOG.md changed
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
@@ -39,7 +39,6 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
     steps:
-
       - name: 🔎 Check for updated CHANGELOG.md
         shell: bash
         run: |
@@ -57,7 +56,6 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
     steps:
-
       - name: ↩️ Checkout
         uses: actions/checkout@v2
 
@@ -80,7 +78,6 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
     steps:
-
       - name: ↩️ Checkout
         uses: actions/checkout@v2
 
@@ -91,7 +88,7 @@ jobs:
           if [[ -z "$labeltext" ]]; then
               echo "::error::There is no label for this addon! Please add it to .github/labels.yaml and .github/labeler.yaml"
               exit 1
-          fi 
+          fi
   addon-linter:
     name: Addon linting
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
@@ -102,7 +99,6 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
     steps:
-
       - name: ↩️ Checkout
         uses: actions/checkout@v2
 
@@ -110,7 +106,7 @@ jobs:
         uses: frenck/action-addon-linter@v2
         with:
           path: "./${{ matrix.addon }}"
-          
+
   check-build:
     name: Test addon build
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
@@ -121,7 +117,6 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
     steps:
-
       - name: ↩️ Checkout
         uses: actions/checkout@v2
 
@@ -198,7 +193,7 @@ jobs:
 
       - name: 🏗️ Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-     
+
       - name: 💿 Build Addon - armhf
         if: ${{ steps.information.outputs.armhf == 'true' }}
         uses: docker/build-push-action@v2
@@ -258,7 +253,7 @@ jobs:
           build-args: ${{ steps.build_args.outputs.amd64 }}
           cache-from: type=local,src=/tmp/buildx-cache/amd64
           cache-to: type=local,dest=/tmp/buildx-cache-new/amd64
-      
+
       - name: 💿 Build Addon - i386
         if: ${{ steps.information.outputs.i386 == 'true' }}
         uses: docker/build-push-action@v2
