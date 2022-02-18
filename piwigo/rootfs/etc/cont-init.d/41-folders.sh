@@ -40,4 +40,5 @@ fi
 ##################
 # CORRECT CONFIG #
 ##################
+# shellcheck disable=SC2015
 sed -i 's|E_ALL|""|g' /share/piwigo/config/config.inc.php && echo "config corrected for php error" || true

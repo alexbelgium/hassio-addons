@@ -1,5 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
+# shellcheck disable=SC2155,SC2015
 
 ###########
 # SCRIPTS #
@@ -35,14 +36,14 @@ fi
 # Test configs
 for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPRISM_IMPORT_PATH $PHOTOPRISM_BACKUP_PATH; do
   # Check if path exists
-  if bashio::fs.directory_exists $variabletest; then
+  if bashio::fs.directory_exists "$variabletest"; then
     true
   else
     bashio::log.info "Path $variabletest doesn't exist. Creating it now..."
-    mkdir -p $variabletest || bashio::log.fatal "Can't create $variabletest path"
+    mkdir -p "$variabletest" || bashio::log.fatal "Can't create $variabletest path"
   fi
   # Check if path writable
-  touch $variabletest/aze && rm $variabletest/aze || bashio::log.fatal "$variable path is not writable"
+  touch "$variabletest"/aze && rm "$variabletest"/aze || bashio::log.fatal "$variabletest path is not writable"
 done
 
 # Start messages
@@ -50,4 +51,4 @@ bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default username : admin, default password: "please_change_password"'
 
 cd /
-./entrypoint.sh photoprism start '"'$CUSTOMOPTIONS'"'
+./entrypoint.sh photoprism start '"'"$CUSTOMOPTIONS"'"'

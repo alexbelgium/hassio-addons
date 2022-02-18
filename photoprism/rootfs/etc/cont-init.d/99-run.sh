@@ -42,7 +42,7 @@ mariadb_addon)
     bashio::log.warning "Please ensure this is included in your backups"
     bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
-    mysql --host=$(bashio::services 'mysql' 'host') --port=$(bashio::services 'mysql' 'port') --user=$PHOTOPRISM_DATABASE_USER --password=$PHOTOPRISM_DATABASE_PASSWORD -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME; CHARACTER SET = utf8mb4; COLLATE = utf8mb4_unicode_ci;" || true
+    mysql --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME; CHARACTER SET = utf8mb4; COLLATE = utf8mb4_unicode_ci;" || true
     ;;
 esac
 
@@ -51,23 +51,28 @@ esac
 ##############
 
 # Configure app
-export PHOTOPRISM_UPLOAD_NSFW=$(bashio::config 'UPLOAD_NSFW')
-export PHOTOPRISM_STORAGE_PATH=$(bashio::config 'STORAGE_PATH')
-export PHOTOPRISM_ORIGINALS_PATH=$(bashio::config 'ORIGINALS_PATH')
-export PHOTOPRISM_IMPORT_PATH=$(bashio::config 'IMPORT_PATH')
-export PHOTOPRISM_BACKUP_PATH=$(bashio::config 'BACKUP_PATH')
+PHOTOPRISM_UPLOAD_NSFW=$(bashio::config 'UPLOAD_NSFW')
+PHOTOPRISM_STORAGE_PATH=$(bashio::config 'STORAGE_PATH')
+PHOTOPRISM_ORIGINALS_PATH=$(bashio::config 'ORIGINALS_PATH')
+PHOTOPRISM_IMPORT_PATH=$(bashio::config 'IMPORT_PATH')
+PHOTOPRISM_BACKUP_PATH=$(bashio::config 'BACKUP_PATH')
+export PHOTOPRISM_UPLOAD_NSFW
+export PHOTOPRISM_STORAGE_PATH
+export PHOTOPRISM_ORIGINALS_PATH
+export PHOTOPRISM_IMPORT_PATH
+export PHOTOPRISM_BACKUP_PATH
 
 # Test configs
 for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPRISM_IMPORT_PATH $PHOTOPRISM_BACKUP_PATH; do
   # Check if path exists
-  if bashio::fs.directory_exists $variabletest; then
+  if bashio::fs.directory_exists "$variabletest"; then
     true
   else
     bashio::log.info "Path $variabletest doesn't exist. Creating it now..."
-    mkdir -p $variabletest || bashio::log.fatal "Can't create $variabletest path"
+    mkdir -p "$variabletest" || bashio::log.fatal "Can't create $variabletest path"
   fi
   # Check if path writable
-  touch $variabletest/aze && rm $variabletest/aze || bashio::log.fatal "$variable path is not writable"
+  touch "$variabletest"/aze && rm "$variabletest"/aze || bashio::log.fatal "$variabletest path is not writable"
 done
 
 # Start messages

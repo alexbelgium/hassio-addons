@@ -31,14 +31,14 @@ if [ ! -d /config ]; then
 fi
 chown -R abc:abc /config
 
-if [ ! -d $MEDIADIR ]; then
+if [ ! -d "$MEDIADIR" ]; then
   echo "Creating $MEDIADIR"
-  mkdir -p $MEDIADIR
+  mkdir -p "$MEDIADIR"
 fi
-chown -R abc:abc $MEDIADIR
+chown -R abc:abc "$MEDIADIR"
 
-if [ ! -d $IMPORTDIR ]; then
+if [ ! -d "$IMPORTDIR" ]; then
   echo "Creating $IMPORTDIR"
-  mkdir -p $IMPORTDIR
+  mkdir -p "$IMPORTDIR"
 fi
-chown -R abc:abc $IMPORTDIR
+chown -R abc:abc "$IMPORTDIR"
