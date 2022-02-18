@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-# shellcheck disable=SC2116
+# shellcheck disable=SC2015
 
 # Add Edge repositories
 if bashio::config.true 'edge_repositories'; then
