@@ -31,7 +31,7 @@ RUN \
     && curl -s -S -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz") >/dev/null \
     && mkdir -p /data/joal \
     && tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null \
-    && chown -R $(id -u):$(id -g) /data/joal \
+    && chown -R "$(id -u):$(id -g)" /data/joal \
     && rm /data/joal/jack-of* || true
 
 ##################

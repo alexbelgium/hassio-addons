@@ -17,4 +17,4 @@ if [ -d /data/config ]; then
 fi
 
 # Make sure permissions are right
-chown -R $(id -u):$(id -g) $CONFIGLOCATION
+chown -R "$(id -u):$(id -g)" $CONFIGLOCATION

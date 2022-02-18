@@ -16,14 +16,14 @@ fi
 
 # download latest version
 
-if [ $VERBOSE = true ]; then
+if [ "$VERBOSE" = true ]; then
   curl -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")
 else
   curl -s -S -J -L -o /tmp/joal.tar.gz $(curl -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz") >/dev/null
 fi
 mkdir -p /data/joal
 tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
-chown -R $(id -u):$(id -g) /data/joal
+chown -R "$(id -u):$(id -g)" /data/joal
 rm /data/joal/jack-of*
 bashio::log.info "Joal updated"
 
@@ -84,7 +84,7 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 # LAUNCH APPS #
 ###############
 
-if [ $VERBOSE = true ]; then
+if [ "$VERBOSE" = true ]; then
   nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${UIPATH} --joal.ui.secret-token=$TOKEN
 else
   nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix=${UIPATH} --joal.ui.secret-token=$TOKEN >/dev/null

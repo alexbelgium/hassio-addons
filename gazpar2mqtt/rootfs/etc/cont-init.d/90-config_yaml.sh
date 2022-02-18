@@ -10,7 +10,7 @@ CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 chmod 755 $CONFIGSOURCE
 
 # Check if config file is there, or create one from template
-if [ -f $CONFIGSOURCE ]; then
+if [ -f "$CONFIGSOURCE" ]; then
     echo "Using config file found in $CONFIGSOURCE"
 else
     echo "No config file, creating one from template"
@@ -26,13 +26,13 @@ else
         curl -L -f -s $TEMPLATESOURCE --output $CONFIGSOURCE
     fi
     # Need to restart
-    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
+    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in "$CONFIGSOURCE" before restarting."
     # bashio::exit.nok
 fi
 
 # Check if yaml is valid
 EXIT_CODE=0
-yamllint -d relaxed $CONFIGSOURCE &>ERROR || EXIT_CODE=$?
+yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
 if [ $EXIT_CODE = 0 ]; then
     echo "Config file is a valid yaml"
 else

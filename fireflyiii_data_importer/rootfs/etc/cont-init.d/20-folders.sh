@@ -9,4 +9,4 @@ mkdir -p "$CONFIGSOURCE/import_files" || true
 mkdir -p "$CONFIGSOURCE/configurations" || true
 
 # Make sure permissions are right
-chown -R $(id -u):$(id -g) "$CONFIGSOURCE"
+chown -R "$(id -u):$(id -g)" "$CONFIGSOURCE"
