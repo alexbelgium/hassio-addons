@@ -10,19 +10,19 @@ if [ ! -d /jellyfin ]; then
 fi
 
 if [ ! -d "$LOCATION"/tv ]; then
-  echo "Creating "$LOCATION"/tv"
+  echo "Creating $LOCATION/tv"
   mkdir -p "$LOCATION"/tv
   chown -R abc:abc "$LOCATION"/tv
 fi
 
 if [ ! -d "$LOCATION"/movies ]; then
-  echo "Creating "$LOCATION"/movies"
+  echo "Creating $LOCATION/movies"
   mkdir -p "$LOCATION"/movies
   chown -R abc:abc "$LOCATION"/movies
 fi
 
 if [ ! -d "$LOCATION" ]; then
-  echo "Creating "$LOCATION""
+  echo "Creating $LOCATION"
   mkdir -p "$LOCATION"
   chown -R abc:abc "$LOCATION"
 fi
