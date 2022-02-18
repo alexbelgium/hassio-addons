@@ -1,6 +1,6 @@
 ## Environment Variables
 
-<!-- markdownlint-disable MD007 MD010 MD033 -->
+<!-- markdownlint-disable MD007 MD010 MD030 MD033 -->
 
 There are a few optional environment variables available for customizing a Whoogle instance. These can be set manually, or copied into `whoogle.env` and enabled for your preferred deployment method:
 
