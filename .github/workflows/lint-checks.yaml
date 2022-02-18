@@ -1,4 +1,5 @@
 # shellcheck disable=SC2043
+---
 name: Lint / Syntax checks
 
 on:
