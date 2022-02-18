@@ -1,7 +1,7 @@
 #!/usr/bin/env bashio
 
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-CONFIGSOURCE=$(dirname $CONFIGSOURCE)
+CONFIGSOURCE=$(dirname "$CONFIGSOURCE")
 
 # Create directory
 mkdir -p "$CONFIGSOURCE" || true
