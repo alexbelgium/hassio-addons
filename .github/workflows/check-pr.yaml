@@ -152,24 +152,24 @@ jobs:
         run: |
           # shellcheck disable=SC2076,SC2059
           labels="io.hass.version=${{ steps.information.outputs.version }}"
-          labels=$(printf "$labels\nio.hass.name=${{ steps.information.outputs.name }}")
-          labels=$(printf "$labels\nio.hass.description=${{ steps.information.outputs.description }}")
-          labels=$(printf "$labels\nio.hass.type=addon")
-          labels=$(printf "$labels\nio.hass.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
-          labels=$(printf "$labels\norg.opencontainers.image.title=${{ steps.information.outputs.name }}")
-          labels=$(printf "$labels\norg.opencontainers.image.description=${{ steps.information.outputs.description }}")
-          labels=$(printf "$labels\norg.opencontainers.image.version=${{ steps.information.outputs.version }}")
-          labels=$(printf "$labels\norg.opencontainers.image.authors=Poeschl <Poeschl@users.noreply.github.com>")
-          labels=$(printf "$labels\norg.opencontainers.image.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}")
-          labels=$(printf "$labels\norg.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
-          labels=$(printf "$labels\norg.opencontainers.image.created=$(date -Is)")
-          labels=$(printf "$labels\norg.opencontainers.image.revision=${GITHUB_SHA}")
+          labels=$(printf '%s' "$labels\nio.hass.name=${{ steps.information.outputs.name }}")
+          labels=$(printf '%s' "$labels\nio.hass.description=${{ steps.information.outputs.description }}")
+          labels=$(printf '%s' "$labels\nio.hass.type=addon")
+          labels=$(printf '%s' "$labels\nio.hass.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.title=${{ steps.information.outputs.name }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.description=${{ steps.information.outputs.description }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.version=${{ steps.information.outputs.version }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.authors=Poeschl <Poeschl@users.noreply.github.com>")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.created=$(date -Is)")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.revision=${GITHUB_SHA}")
           echo "Generic labels: $labels"
-          armhf_labels=$(printf "$labels\nio.hass.arch=armhf")
-          armv7_labels=$(printf "$labels\nio.hass.arch=armv7")
-          aarch64_labels=$(printf "$labels\nio.hass.arch=aarch64")
-          amd64_labels=$(printf "$labels\nio.hass.arch=amd64")
-          i386_labels=$(printf "$labels\nio.hass.arch=i386")
+          armhf_labels=$(printf '%s' "$labels\nio.hass.arch=armhf")
+          armv7_labels=$(printf '%s' "$labels\nio.hass.arch=armv7")
+          aarch64_labels=$(printf '%s' "$labels\nio.hass.arch=aarch64")
+          amd64_labels=$(printf '%s' "$labels\nio.hass.arch=amd64")
+          i386_labels=$(printf '%s' "$labels\nio.hass.arch=i386")
           # allow multiline outputs, see https://github.community/t/set-output-truncates-multiline-strings/16852
           armhf_labels="${armhf_labels//$'\n'/'%0A'}"
           armv7_labels="${armv7_labels//$'\n'/'%0A'}"
