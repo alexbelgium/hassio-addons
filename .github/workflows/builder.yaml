@@ -48,13 +48,15 @@ jobs:
 
       - name: Check if add-on should be built
         id: check
+        env:
+          HEAD: "${{ github.head_ref }}"
         run: |
           # yamllint disable rule:line-length
           # shellcheck disable=SC2157,SC2086 
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
              echo "::set-output name=build_arch::true";
              echo "::set-output name=image::$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f3)";
-             if [[ -z "${{ github.head_ref }}" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
+             if [[ -z "${{ $HEAD }}" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
                  echo "BUILD_ARGS=" >> $GITHUB_ENV;
              fi
            else
