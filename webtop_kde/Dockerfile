@@ -37,6 +37,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config \
     \
     # Update distribution
+    ## hadolint ignore=DL3017
     && apk upgrade --no-cache
 
 ##################
