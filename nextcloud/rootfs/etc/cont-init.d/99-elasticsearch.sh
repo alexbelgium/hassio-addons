@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+# shellcheck disable=SC2086
 
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ" || bashio::log.info "/data/config/www/nextcloud/occ not found"
 if ! bashio::fs.file_exists '/data/config/www/nextcloud/occ'; then
