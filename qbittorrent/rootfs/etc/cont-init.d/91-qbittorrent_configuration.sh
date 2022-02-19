@@ -131,15 +131,15 @@ if bashio::config.has_value 'customUI'; then
   ### Download WebUI
   case $CUSTOMUI in
   "vuetorrent")
-    curl -s -S -J -L -o /webui/release.zip "$(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip")" >/dev/null
+    curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip") >/dev/null
     ;;
 
   "qbit-matUI")
-    curl -s -S -J -L -o /webui/release.zip "$(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip")" >/dev/null
+    curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip") >/dev/null
     ;;
 
   "qb-web")
-    curl -s -S -J -L -o /webui/release.zip "$(curl -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip")" >/dev/null
+    curl -s -S -J -L -o /webui/release.zip $(curl -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip") >/dev/null
     ;;
   esac
 
