@@ -55,6 +55,5 @@ Component : https://community.home-assistant.io/t/elasticsearch-component-publis
 
 Create an issue on github
 
-[ssl-shield]: https://img.shields.io/badge/ssl-yes-green.svg
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
