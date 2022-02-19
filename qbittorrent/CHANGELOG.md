@@ -1,3 +1,4 @@
+- Fix custom DNS
 - Host header validation disabled (avoids ingress issues)
 - Removed openvpn_alternative_mode (please delete from config), now default
 - Changed openvpn mode to interface binding (no ip leakage)
