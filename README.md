@@ -3,17 +3,16 @@
 <!-- markdownlint-disable MD033 -->
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+![update-badge](https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update)
 
-[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
+[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white 
 
 [![GitHub Super-Linter](https://github.com/alexbelgium/hassio-addons/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 [![Builder](https://github.com/alexbelgium/hassio-addons/workflows/Builder/badge.svg)](https://github.com/alexbelgium/hassio-addons/actions/workflows/builder.yaml)
 
-![update-badge](https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update)
 ![issues-open](https://img.shields.io/github/issues/alexbelgium/hassio-addons)
 ![closed-issues](https://img.shields.io/github/issues-closed-raw/alexbelgium/hassio-addons?color=brightgreen)
 ![contributors-badge](https://img.shields.io/github/contributors/alexbelgium/hassio-addons?color=brightgreen)
-![license](https://img.shields.io/github/license/alexbelgium/hassio-addons?color=brightgreen)
 
 [support-badge]: https://camo.githubusercontent.com/f4dbb995049f512fdc97fcc9e022ac243fa38c408510df9d46c7467d0970d959/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f537570706f72742d7468726561642d677265656e2e737667
 
