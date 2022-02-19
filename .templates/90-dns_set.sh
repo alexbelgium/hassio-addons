@@ -21,6 +21,7 @@ if bashio::config.has_value 'DNS_server'; then
   done
 
   # Write resolv.conf
+  # shellcheck disable=SC2059
   printf "${DNS}" >/etc/resolv.conf
   chmod 644 /etc/resolv.conf
   bashio::log.info "DNS SERVERS set to $DNSLIST"
