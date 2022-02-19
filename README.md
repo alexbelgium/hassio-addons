@@ -9,6 +9,7 @@
 
 [![GitHub Super-Linter](https://github.com/alexbelgium/hassio-addons/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 [![Builder](https://github.com/alexbelgium/hassio-addons/workflows/Builder/badge.svg)](https://github.com/alexbelgium/hassio-addons/actions/workflows/builder.yaml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexbelgium/hassio-addons&amp;utm_campaign=Badge_Grade)
 
 ![issues-open](https://img.shields.io/github/issues/alexbelgium/hassio-addons)
 ![closed-issues](https://img.shields.io/github/issues-closed-raw/alexbelgium/hassio-addons?color=brightgreen)
