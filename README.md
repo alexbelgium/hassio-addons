@@ -11,10 +11,6 @@
 [![Builder](https://github.com/alexbelgium/hassio-addons/workflows/Builder/badge.svg)](https://github.com/alexbelgium/hassio-addons/actions/workflows/builder.yaml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexbelgium/hassio-addons&amp;utm_campaign=Badge_Grade)
 
-![issues-open](https://img.shields.io/github/issues/alexbelgium/hassio-addons)
-![closed-issues](https://img.shields.io/github/issues-closed-raw/alexbelgium/hassio-addons?color=brightgreen)
-![contributors-badge](https://img.shields.io/github/contributors/alexbelgium/hassio-addons?color=brightgreen)
-
 [support-badge]: https://camo.githubusercontent.com/f4dbb995049f512fdc97fcc9e022ac243fa38c408510df9d46c7467d0970d959/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f537570706f72742d7468726561642d677265656e2e737667
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
