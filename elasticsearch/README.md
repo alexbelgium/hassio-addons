@@ -23,7 +23,7 @@ You can use Elasticsearch to store, search, and manage data for:
 - A search backend
 - Application monitoring
 - Endpoint security
-  ... and more!
+- ... and more!
 
 To learn more about Elasticsearch’s features and capabilities, see their [product page](https://www.elastic.co/fr/elasticsearch/) .
 
