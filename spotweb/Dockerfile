@@ -34,9 +34,10 @@ ENV BUILD_UPSTREAM="1.5.1"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-# hadolint ignore=DL3003,DL3017
+# hadolint ignore=DL3003
 # Install app dependencies
 RUN apk -U update && \
+    # hadolint ignore=DL3017
     apk -U upgrade && \
     apk -U add --no-cache \
     git \
