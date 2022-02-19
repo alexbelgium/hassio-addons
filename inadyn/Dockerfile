@@ -58,7 +58,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 
 # Install mustache
 # spellcheck disable=SC2015
-# hadolint ignore=SC2015
+# hadolint ignore=SC2015,DL3017
 RUN apk add --no-cache \
     go \
     npm \
@@ -70,8 +70,8 @@ RUN apk add --no-cache \
     git\
     go &&\
     go get -u github.com/quantumew/mustache-cli &&\
-    cp $GOPATH/bin/* /usr/bin/ && \
-    rm -rf $GOPATH /var/cache/apk/* /tmp/src &&\
+    cp "$GOPATH"/bin/* /usr/bin/ && \
+    rm -rf "$GOPATH" /var/cache/apk/* /tmp/src &&\
     apk del .build-deps xz build-base || true
 
 ################
