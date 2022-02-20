@@ -1,6 +1,6 @@
 {
   "name": "Jackett NAS",
-  "version": "0.20.576",
+  "version": "0.20.596",
   "slug": "jackett_nas",
   "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jackett",
@@ -11,7 +11,7 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "0.20.576",
+  "upstream": "0.20.596",
   "startup": "services",
   "webui": "http://[HOST]:[PORT:9117]",
   "environment": {
