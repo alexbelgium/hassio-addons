@@ -7,11 +7,26 @@ PGID=$(bashio::config "PGID")
 
 # Check data location
 LOCATION=$(bashio::config 'data_location')
+
 if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
 # Default location
 LOCATION="/share/webtop_kde"
 else
 bashio::log.warning "Warning : a custom data location was selected, but the previous folder will NOT be copied. You need to do it manually"
+
+  # Check if config is located in an acceptable location 
+  LOCATIONOK=""
+  for location in "/share" "/config" "/data" "/mnt"; do
+      if [[ "$LOCATION" == "$location"* ]]; then 
+          LOCATIONOK=true
+      fi
+  done
+
+  if [ -z "$LOCATIONOK" ]; then
+      LOCATION=/config/addons_config/${HOSTNAME#*-}
+      bashio::log.fatal "Your data_location value can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $LOCATION"
+  fi
+
 fi
 
 # Set data location
