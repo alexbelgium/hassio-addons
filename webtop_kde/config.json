@@ -60,6 +60,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "image": "ghcr.io/alexbelgium/webtop-kde-{arch}",
   "ingress": true,
   "panel_icon": "mdi:Monitor",
   "video": true,
