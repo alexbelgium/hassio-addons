@@ -120,11 +120,11 @@ for addons in $(bashio::config "addon|keys"); do
     #If beta flag, select beta version
     if [ "${BETA}" = true ]; then
       LOGINFO="... $SLUG : beta is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      # shellcheck disable=SC2015
+      # shellcheck disable=SC2086
       LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $ARGUMENTS) || break
     else
       LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      # shellcheck disable=SC2015
+      # shellcheck disable=SC2086
       LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $ARGUMENTS) || break
     fi
 
