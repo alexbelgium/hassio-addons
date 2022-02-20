@@ -123,8 +123,7 @@ rm -f -r /webui
 mkdir -p /webui
 chown abc:abc /webui
 
-if bashio::config.has_value 'customUI'; then
-  if [ ! "$CUSTOMUI" = default ]; then
+if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ]; then
     ### Variables
     CUSTOMUI=$(bashio::config 'customUI')
     bashio::log.info "Alternate UI enabled : $CUSTOMUI. If webui don't work, disable this option"
@@ -156,7 +155,6 @@ if bashio::config.has_value 'customUI'; then
     # Set nginx
     #sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
     #sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf
-  fi
 
 fi
 
