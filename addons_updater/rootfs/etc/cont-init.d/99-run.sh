@@ -106,7 +106,7 @@ for addons in $(bashio::config "addon|keys"); do
     fi
 
     #Prepare tag flag
-    if [ "${FILTER_TEXT}" = "null" ] || [ "${FILTER_TEXT}" ="" ]; then
+    if [ "${FILTER_TEXT}" = "null" ] || [ "${FILTER_TEXT}" = "" ]; then
       FILTER_TEXT=""
     else
       LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
