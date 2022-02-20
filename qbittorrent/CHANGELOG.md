@@ -1,12 +1,7 @@
 
 ## release-4.4.1-ls172 (20-02-2022)
 - Update to latest version from linuxserver/docker-qbittorrent
-
-## 14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls166 (20-02-2022)
-- Update to latest version from linuxserver/docker-qbittorrent
-
-## 20.04.1 (20-02-2022)
-- Update to latest version from linuxserver/qbittorrent
+- Complete rebase to alpine
 - Fix custom DNS
 - Host header validation disabled (avoids ingress issues)
 - Removed openvpn_alternative_mode (please delete from config), now default
