@@ -44,10 +44,5 @@ comparison to installing any other Hass.io add-on.
 If you have in issue with your installation, please be sure to checkout github.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-[smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
-[openvpn-shield]: https://img.shields.io/badge/openvpn-yes-green.svg
-[ingress-shield]: https://img.shields.io/badge/ingress-yes-green.svg
-[ssl-shield]: https://img.shields.io/badge/ssl-yes-green.svg
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
