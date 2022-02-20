@@ -9,6 +9,17 @@
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 
+# Check if config is located in an acceptable location 
+#for location in "/share" "/config" "/data" 
+#if [[ "$CONFIGSOURCE" == "$location"* ]]; then 
+#LOCATIONOK=true
+#fi
+#done
+#if [ ! "$LOCATIONOK" = "true" ]; then
+#CONFIGSOURCE=
+#bashio::log.fatal "Your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE" 
+#fi
+
 # Check if config file is there, or create one from template
 if [ -f "$CONFIGSOURCE" ]; then
     echo "Using config file found in $CONFIGSOURCE"
