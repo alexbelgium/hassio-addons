@@ -64,9 +64,3 @@ Create an issue on github
 ---
 
 ![illustration](https://www.bazarr.media/assets/img/upgrade.png)
-
-[repository]: https://github.com/alexbelgium/hassio-addons
-[smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
-[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
-[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
