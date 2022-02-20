@@ -1,3 +1,6 @@
+
+## 20.04.1 (20-02-2022)
+- Update to latest version from linuxserver/qbittorrent
 - Fix custom DNS
 - Host header validation disabled (avoids ingress issues)
 - Removed openvpn_alternative_mode (please delete from config), now default

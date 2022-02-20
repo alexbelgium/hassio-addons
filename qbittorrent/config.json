@@ -1,6 +1,10 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "description": "qBittorrent is a bittorrent client",
   "devices": [
     "/dev/net/tun",
@@ -45,7 +49,12 @@
   "homeassistant_api": true,
   "ingress": true,
   "ingress_port": 8099,
-  "map": ["media:rw", "config:rw", "share:rw", "ssl"],
+  "map": [
+    "media:rw",
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
   "name": "Qbittorrent",
   "options": {
     "ssl": false,
@@ -70,7 +79,11 @@
     "6881/tcp": "Peer port",
     "6881/udp": "Peer port"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
+  ],
   "schema": {
     "ssl": "bool",
     "certfile": "str",
@@ -96,8 +109,8 @@
     "TZ": "str?"
   },
   "slug": "qbittorrent",
-  "upstream": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls166",
+  "upstream": "20.04.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls166-9",
+  "version": "20.04.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
