@@ -139,7 +139,6 @@ https://github.com/alexbelgium/hassio-addons
 - [Grav](grav/) ![smb][smb-shield] : Fast, Simple, and Flexible, file-based Web-platform
 - [Resioliosync by @tyjtyj](resiolosync/) ![smb][smb-shield]: Self-hosted file share and collaboration platform on the Web
 
-[//]: # "ADDONLIST_END"
 [smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
 [sql-shield]: https://img.shields.io/badge/SQL-external-orange.svg
 [privileged-shield]: https://img.shields.io/badge/privileged-required-orange.svg
