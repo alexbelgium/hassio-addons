@@ -91,21 +91,17 @@ for addons in $(bashio::config "addon|keys"); do
     #Prepare tag flag
     if [ "${FULLTAG}" = true ]; then
       LOGINFO="... $SLUG : fulltag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      FULLTAG="--format tag"
       ARGUMENTS="$ARGUMENTS --format tag"
     else
       LOGINFO="... $SLUG : fulltag is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      FULLTAG=""
     fi
 
     #Prepare tag flag
     if [ "${HAVINGASSET}" = true ]; then
       LOGINFO="... $SLUG : asset_only tag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      HAVINGASSET="--having-asset"
       ARGUMENTS="$ARGUMENTS --having-asset"
     else
       LOGINFO="... $SLUG : asset_only is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      HAVINGASSET=""
     fi
 
     #Prepare tag flag
@@ -114,7 +110,6 @@ for addons in $(bashio::config "addon|keys"); do
     else
       LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
       ARGUMENTS="$ARGUMENTS --only $FILTER_TEXT"
-      FILTER_TEXT="--only \"$FILTER_TEXT\""
     fi
 
     #If beta flag, select beta version
