@@ -116,13 +116,13 @@ for addons in $(bashio::config "addon|keys"); do
     #If beta flag, select beta version
     if [ "${BETA}" = true ]; then
       LOGINFO="... $SLUG : beta is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM $FULLTAG $HAVINGASSET $FILTER_TEXT") || break
+      LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" "$FULLTAG" "$HAVINGASSET" "$FILTER_TEXT") || break
     else
       LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      LASTVERSION=$(lastversion "https://github.com/$UPSTREAM $FULLTAG $HAVINGASSET $FILTER_TEXT") || break
+      LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" "$FULLTAG" "$HAVINGASSET" "$FILTER_TEXT") || break
     fi
 
-  fi
+  fi 
 
   # Add brackets
   LASTVERSION='"'${LASTVERSION}'"'
