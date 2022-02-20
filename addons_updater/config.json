@@ -35,7 +35,8 @@
         "repository": "str",
         "slug": "str",
         "upstream": "str",
-        "source": "str?"
+        "source": "str?",
+        "filter": "str?"
       }
     ],
     "gitapi": "str?",
@@ -47,5 +48,5 @@
   "slug": "updater",
   "startup": "once",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater",
-  "version": "5.4"
+  "version": "5.5"
 }
