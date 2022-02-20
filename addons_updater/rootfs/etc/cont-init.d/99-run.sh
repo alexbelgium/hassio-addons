@@ -110,7 +110,7 @@ for addons in $(bashio::config "addon|keys"); do
       FILTER_TEXT=""
     else
       LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      FILTER_TEXT="--only $FILTER_TEXT"
+      FILTER_TEXT=" --only \"$FILTER_TEXT\""
     fi
 
     #If beta flag, select beta version
