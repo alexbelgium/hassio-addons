@@ -123,9 +123,9 @@ rm -f -r /webui
 mkdir -p /webui
 chown abc:abc /webui
 
+CUSTOMUI=$(bashio::config 'customUI')
 if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ]; then
     ### Variables
-    CUSTOMUI=$(bashio::config 'customUI')
     bashio::log.info "Alternate UI enabled : $CUSTOMUI. If webui don't work, disable this option"
 
     ### Download WebUI
