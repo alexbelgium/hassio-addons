@@ -37,5 +37,3 @@ FlexGet is a multipurpose automation tool for all of your media. See https://fle
 ## Troubleshooting
 
 If you have in issue with your installation, please be sure to checkout github.
-
-[repository]: https://github.com/alexbelgium/hassio-addons
