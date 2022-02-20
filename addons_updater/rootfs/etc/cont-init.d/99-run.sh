@@ -87,10 +87,12 @@ for addons in $(bashio::config "addon|keys"); do
 
   else
     # Use github as upstream
+    ARGUMENTS=""
     #Prepare tag flag
     if [ "${FULLTAG}" = true ]; then
       LOGINFO="... $SLUG : fulltag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
       FULLTAG="--format tag"
+      ARGUMENTS="$ARGUMENTS --format tag"
     else
       LOGINFO="... $SLUG : fulltag is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
       FULLTAG=""
@@ -100,6 +102,7 @@ for addons in $(bashio::config "addon|keys"); do
     if [ "${HAVINGASSET}" = true ]; then
       LOGINFO="... $SLUG : asset_only tag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
       HAVINGASSET="--having-asset"
+      ARGUMENTS="$ARGUMENTS --having-asset"
     else
       LOGINFO="... $SLUG : asset_only is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
       HAVINGASSET=""
@@ -110,16 +113,19 @@ for addons in $(bashio::config "addon|keys"); do
       FILTER_TEXT=""
     else
       LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+      ARGUMENTS="$ARGUMENTS --only $FILTER_TEXT"
       FILTER_TEXT="--only \"$FILTER_TEXT\""
     fi
 
     #If beta flag, select beta version
     if [ "${BETA}" = true ]; then
       LOGINFO="... $SLUG : beta is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" "$FULLTAG" "$HAVINGASSET" "$FILTER_TEXT") || break
+      # shellcheck disable=SC2015
+      LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $ARGUMENTS) || break
     else
       LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" "$FULLTAG" "$HAVINGASSET" "$FILTER_TEXT") || break
+      # shellcheck disable=SC2015
+      LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $ARGUMENTS) || break
     fi
 
   fi 
