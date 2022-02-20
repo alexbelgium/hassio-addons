@@ -19,7 +19,7 @@ jobs:
       changedAddons: ${{ steps.filter.outputs.changes }}
     steps:
       - name: ↩️ Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.0
 
       - name: 📂 Detect chanced files
         uses: dorny/paths-filter@v2
