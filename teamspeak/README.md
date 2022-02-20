@@ -2,6 +2,13 @@
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
+![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fteamspeak%2Fconfig.json)
+![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fteamspeak%2Fconfig.json)
+![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fteamspeak%2Fconfig.json)
+
+[![GitHub Super-Linter](https://github.com/alexbelgium/hassio-addons/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![Builder](https://github.com/alexbelgium/hassio-addons/workflows/Builder/badge.svg)](https://github.com/alexbelgium/hassio-addons/actions/workflows/builder.yaml)
+
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
 ![Supports
@@ -36,12 +43,3 @@ comparison to installing any other Hass.io add-on.
 ## Support
 
 If you have in issue with your installation, please be sure to checkout github.
-
-[repository]: https://github.com/alexbelgium/hassio-addons
-[smb-shield]: https://img.shields.io/badge/smb-yes-green.svg
-[openvpn-shield]: https://img.shields.io/badge/openvpn-yes-green.svg
-[ingress-shield]: https://img.shields.io/badge/ingress-yes-green.svg
-[ssl-shield]: https://img.shields.io/badge/ssl-yes-green.svg
-[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
-[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
