@@ -35,10 +35,6 @@ comparison to installing any other Hass.io add-on.
   - Username: `admin`
   - Password: `adminadmin`
 
-```yaml
-
-```
-
 ## Support
 
 If you have in issue with your installation, please be sure to checkout github.
