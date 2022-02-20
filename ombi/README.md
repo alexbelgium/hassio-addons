@@ -44,3 +44,5 @@ GPID: user
 ## Support
 
 Create an issue on github
+
+[repository]: https://github.com/alexbelgium/hassio-addons
