@@ -38,6 +38,7 @@ for addons in $(bashio::config "addon|keys"); do
   FULLTAG=$(bashio::config "addon[${addons}].fulltag")
   HAVINGASSET=$(bashio::config "addon[${addons}].having_asset")
   SOURCE=$(bashio::config "addon[${addons}].source")
+  FILTER_TEXT=$(bashio::config "addon[${addons}].filter")
   BASENAME=$(basename "https://github.com/$REPOSITORY")
   DATE="$(date '+%d-%m-%Y')"
 
@@ -104,13 +105,21 @@ for addons in $(bashio::config "addon|keys"); do
       HAVINGASSET=""
     fi
 
+    #Prepare tag flag
+    if [ "${FILTER_TEXT}" = "null" ] || [ "${FILTER_TEXT}" ="" ]; then
+      FILTER_TEXT=""
+    else
+      LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+      FILTER_TEXT="--only $FILTER_TEXT"
+    fi
+
     #If beta flag, select beta version
     if [ "${BETA}" = true ]; then
       LOGINFO="... $SLUG : beta is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" "$FULLTAG" "$HAVINGASSET") || break
+      LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" "$FULLTAG" "$HAVINGASSET" "$FILTER_TEXT") || break
     else
       LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-      LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" "$FULLTAG" "$HAVINGASSET") || break
+      LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" "$FULLTAG" "$HAVINGASSET" "$FILTER_TEXT") || break
     fi
 
   fi
