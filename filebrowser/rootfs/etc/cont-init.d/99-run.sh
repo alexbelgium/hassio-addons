@@ -77,7 +77,7 @@ fi
 
 bashio::log.info "Starting..."
 
-# shellcheck dosable=SC2086
+# shellcheck disable=SC2086
 /./filebrowser $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --database=/config/addons_config/filebrowser/filebrowser.dB "$NOAUTH" &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
