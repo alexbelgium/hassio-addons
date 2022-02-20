@@ -175,6 +175,7 @@ SOFTWARE.
 
 [spotnet]: https://github.com/spotnet/spotnet/wiki
 [spotweb]: https://github.com/spotweb/spotweb
+[repository]: https://github.com/alexbelgium/hassio-addons
 [contributors]: https://github.com/alexbelgium/spotweb/graphs/contributors
 [discord-ha]: https://discord.gg/c5DvZ4e
 [discord]: https://discord.me/hassioaddons
