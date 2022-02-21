@@ -1,6 +1,4 @@
-
-## 14.3.9.99202110311443-7435-01519b5e7ubuntu20.04.1-ls166 (21-02-2022)
-- Update to latest version from linuxserver/docker-qbittorrent
+- Fix download folder
 
 ## release-4.4.1-ls172 (20-02-2022)
 - Update to latest version from linuxserver/docker-qbittorrent
