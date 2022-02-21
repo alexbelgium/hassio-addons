@@ -14,11 +14,11 @@ if bashio::config.true 'openvpn_enabled'; then
   # ENABLE IPV6 #
   ###############
   
-  { echo "net.ipv6.conf.all.disable_ipv6 = 0";
-  echo "net.ipv6.conf.default.disable_ipv6 = 0";
-  echo "net.ipv6.conf.lo.disable_ipv6 = 0"; } >> /etc/sysctl.conf || true
+  # { echo "net.ipv6.conf.all.disable_ipv6 = 0";
+  # echo "net.ipv6.conf.default.disable_ipv6 = 0";
+  # echo "net.ipv6.conf.lo.disable_ipv6 = 0"; } >> /etc/sysctl.conf || true
   
-  sysctl -p || true
+  # sysctl -p || true
 
   #####################
   # CONFIGURE OPENVPN #
