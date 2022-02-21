@@ -1,4 +1,4 @@
-- qb-web custom ui removed
+- Fix qb-web custom ui
 - Fix download folder
 
 ## release-4.4.1-ls172 (20-02-2022)
