@@ -93,7 +93,7 @@
     "PGID": "int?",
     "SavePath": "str?",
     "Username": "str?",
-    "customUI": "list(default|vuetorrent|qbit-matUI|qb-web)?",
+    "customUI": "list(default|vuetorrent|qbit-matUI)?",
     "DNS_server": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
