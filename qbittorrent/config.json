@@ -111,6 +111,6 @@
   "slug": "qbittorrent",
   "upstream": "release-4.4.1-ls173",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "release-4.4.1-ls173",
+  "version": "release-4.4.1-ls173-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
