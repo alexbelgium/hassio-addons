@@ -5,7 +5,6 @@
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fflexget%2Fconfig.json)
 ![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fflexget%2Fconfig.json)
 ![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fflexget%2Fconfig.json)
-![Webui](https://img.shields.io/badge/dynamic/json?color=success&label=WebUI&query=%24.webui&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fflexget%2Fconfig.json)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
 [![GitHub Super-Linter](https://github.com/alexbelgium/hassio-addons/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
@@ -27,14 +26,12 @@ FlexGet is a multipurpose automation tool for all of your media. See https://fle
 
     "PUID": custom user (default root)
     "PGID": custom user (default root)
-    "WebuiPass": Password to access webui
     "FG_PLUGINS": Plugins addition
     "FG_LOG_LEVEL": Log level (critical|error|warning|info|verbose|debug|trace)
 
 ## Start
 
 - Start the addon. Wait a while and check the log for any errors.
-- Open yourdomain.com:5050 (where ":5050" is the port configured in the Flexget addon). Enable webui in the config file
 
 ## Troubleshooting
 
