@@ -83,6 +83,21 @@ run_duration: 12h #for how long should the addon run. Must be formatted as numbe
 
 Use the [qBittorrent integration](https://www.home-assistant.io/integrations/qbittorrent/)
 
+## Common issues
+
+### ipv6 issues with openvpn
+
+Add this code to your .ovpn config
+```bash
+# don't route lan through vpn
+route 192.168.1.0 255.255.255.0 net_gateway
+
+# deactivate ipv6
+pull-filter ignore "dhcp-option DNS6"
+pull-filter ignore "tun-ipv6"
+pull-filter ignore "ifconfig-ipv6"
+```
+
 ## Support
 
 Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-qbittorrent/279247)
