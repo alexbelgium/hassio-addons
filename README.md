@@ -44,8 +44,6 @@ website of Home Assistant, and use the following URL:
 https://github.com/alexbelgium/hassio-addons
 ```
 
-[//]: # "ADDONLIST_START"
-
 ## &#10003; Connectors
 
 - [enedisgateway2mqtt](enedisgateway2mqtt/) : use Enedis Gateway API to send data in your MQTT Broker
@@ -99,10 +97,10 @@ https://github.com/alexbelgium/hassio-addons
 ## &#10003; Multimedia distributors
 
 - [Booksonic-air](booksonic_air/) ![smb][smb-shield]: platform for accessing the audibooks you own wherever you are
-- [Emby](emby/) ![smb][smb-shield]: A Free Software Media System that puts you in control of managing and streaming your media.
+- [Emby](emby/) ![smb][smb-shield]: A Free Software Media System that puts you in control of managing and streaming your media
 - [Flexget](flexget/) : FlexGet is a multipurpose automation tool for all of your media (Developed for @TyjTyj)
 - [Jellyfin](jellyfin/) ![smb][smb-shield] : A Free Software Media System that puts you in control of managing and streaming your media.
-- [Mylar3](mylar3/) ![smb][smb-shield] : automated Comic Book downloader (cbr/cbz) for use with NZB and torrents written in python. It supports SABnzbd, NZBGET, and many torrent clients in addition to DDL.
+- [Mylar3](mylar3/) ![smb][smb-shield] : automated Comic Book downloader (cbr/cbz) for use with NZB and torrents written in python. It supports SABnzbd, NZBGET, and many torrent clients in addition to DDL
 - [Ombi](ombi/) : Self-hosted Plex Request and user management system
 - [Plex](plex/) ![smb][smb-shield] : Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
 - [xTeVe](xteve/): M3U Proxy for Plex DVR and Emby Live TV.
