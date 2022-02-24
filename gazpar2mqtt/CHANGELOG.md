@@ -1,6 +1,8 @@
+DO NOT UPDATE, TESTS ONGOING
 
 ## 0.8.1 (20-01-2022)
 - Update to latest version from yukulehe/gazpar2mqtt
+
 ## 0.8.0 (19-01-2022)
 
 - Update to latest version from yukulehe/gazpar2mqtt
