@@ -30,4 +30,4 @@ if [ -e "/ENVFILE" ]; then
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh
-fi
+fi 
