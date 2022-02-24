@@ -1,6 +1,6 @@
 {
   "name": "Readarr NAS",
-  "version": "nightly-0.1.0.1248-ls94",
+  "version": "nightly-0.1.1.1259-ls96",
   "slug": "readarr_nas",
   "description": "Book Manager and Automation",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
@@ -11,7 +11,7 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "nightly-0.1.0.1248-ls94",
+  "upstream": "nightly-0.1.1.1259-ls96",
   "webui": "http://[HOST]:[PORT:8787]",
   "startup": "services",
   "devices": [

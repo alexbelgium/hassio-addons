@@ -28,12 +28,7 @@ RUN sed -i "s|config|config/transmission|g" /etc/services.d/transmission/run \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    # Allow return to original UI
-    && ln -s /usr/share/transmission/web/style /transmission-web-control && \
-    ln -s /usr/share/transmission/web/images /transmission-web-control && \
-    ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
-    ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
+    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
 
 ##################
 # 3 Install apps #

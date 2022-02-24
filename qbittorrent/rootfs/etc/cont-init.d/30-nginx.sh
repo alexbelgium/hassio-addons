@@ -35,7 +35,7 @@ sed -i "s|{{ .ssl }}|$(bashio::config 'ssl')|g" /etc/nginx/servers/ingress.conf
 ######################
 
 [ "$DEBUG" = "debug" ] && echo "Before var"
-LATEST_RELEASE=$(curl -s -L https://api.github.com/repos/wdaan/vuetorrent/releases/latest |
+LATEST_RELEASE=$(curl -s --retry 5 -L https://api.github.com/repos/wdaan/vuetorrent/releases/latest |
     grep "browser_download_url.*zip" |
     cut -d : -f 2,3 |
     tr -d \" |

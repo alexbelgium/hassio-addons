@@ -33,8 +33,8 @@
     "FG_LOG_LEVEL": "list(critical|error|warning|info|verbose|debug|trace)?"
   },
   "slug": "flexget",
-  "upstream": "3.3.0",
+  "upstream": "3.3.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "webui": "http://[HOST]:[PORT:5050]"
 }
