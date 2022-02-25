@@ -54,9 +54,9 @@ You can use a `command_line` switch to temporary disable a internet device in yo
   switches:
     iphone_internet:
       friendly_name: "iPhone internet"
-      command_off: "/usr/bin/curl -X GET http://{HA-IP}:7022/disconnect?ip={iPhoneIP}"
-      command_on: "/usr/bin/curl -X GET http://{HA-IP}:7022/reconnect?ip={iPhoneIP}"
-      command_state: "/usr/bin/curl -X GET http://{HA-IP}:7022/status?ip={iPhoneIP}"
+      command_off: "/usr/bin/curl -f -X GET http://{HA-IP}:7022/disconnect?ip={iPhoneIP}"
+      command_on: "/usr/bin/curl -f -X GET http://{HA-IP}:7022/reconnect?ip={iPhoneIP}"
+      command_state: "/usr/bin/curl -f -X GET http://{HA-IP}:7022/status?ip={iPhoneIP}"
       value_template: >
         {{ value != "1" }}
 ```

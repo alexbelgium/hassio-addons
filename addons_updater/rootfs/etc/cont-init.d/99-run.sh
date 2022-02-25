@@ -68,7 +68,7 @@ for addons in $(bashio::config "addon|keys"); do
     DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
     DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
     LASTVERSION=$(
-      curl -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
+      curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
         jq '.results | .[] | .name' -r |
         sed -e '/.*latest.*/d' |
         sed -e '/.*dev.*/d' |
@@ -77,7 +77,7 @@ for addons in $(bashio::config "addon|keys"); do
     )
     [ "${BETA}" = true ] &&
       LASTVERSION=$(
-        curl -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
+        curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
           jq '.results | .[] | .name' -r |
           sed -e '/.*latest.*/d' |
           sed -e '/.*dev.*/!d' |
@@ -123,7 +123,7 @@ for addons in $(bashio::config "addon|keys"); do
       LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $ARGUMENTS) || break
     fi
 
-  fi 
+  fi
 
   # Add brackets
   LASTVERSION='"'${LASTVERSION}'"'

@@ -47,7 +47,7 @@ ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh"
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
     && mkdir -p /etc/cont-init.d \
-    && for scripts in $MODULES; do echo "$scripts" && curl -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" || (echo "script failed to install $scripts" && exit 1); done \
+    && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" || (echo "script failed to install $scripts" && exit 1); done \
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
@@ -56,7 +56,7 @@ ENV PACKAGES="curl"
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
-    && curl -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
+    && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE

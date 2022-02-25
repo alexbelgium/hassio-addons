@@ -41,7 +41,7 @@ RUN \
     && if [[ "${BUILD_ARCH}" == arm ]]; then ARCH="arm"; fi \
     && if [[ "${BUILD_ARCH}" == *x86* ]]; then ARCH="amd64"; fi \
     \
-    && curl -L -s \
+    && curl -f -L -s \
     "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
     | tar zxvf - -C /opt/ || printf '%s\n' "${BUILD_UPSTREAM}" > /PORTFILE
 
@@ -60,7 +60,7 @@ ARG MODULES="00-banner.sh"
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
     && mkdir -p /etc/cont-init.d \
-    && for scripts in $MODULES; do echo "$scripts" && curl -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" || (echo "script failed to install $scripts" && exit 1); done \
+    && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" || (echo "script failed to install $scripts" && exit 1); done \
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
@@ -69,7 +69,7 @@ ENV PACKAGES="nginx"
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
-    && curl -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
+    && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE

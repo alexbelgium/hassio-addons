@@ -40,7 +40,7 @@ if bashio::config.has_value 'SavePath'; then
   # Replace session save path
   CURRENTSAVEPATH=$(sed -n '/Session\\DefaultSavePath/p' qBittorrent.conf)
   sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf 2>/dev/null || true
-  
+
   # Info
   bashio::log.info "Downloads can be found in $DOWNLOADS"
 fi
@@ -136,15 +136,15 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ]; then
     ### Download WebUI
     case $CUSTOMUI in
     "vuetorrent")
-      curl -s -S -J -L -o /webui/release.zip "$(curl -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
+      curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
       ;;
 
     "qbit-matUI")
-      curl -s -S -J -L -o /webui/release.zip "$(curl -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip" | head -1)" >/dev/null
+      curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip" | head -1)" >/dev/null
       ;;
 
     "qb-web")
-      curl -s -S -J -L -o /webui/release.zip "$(curl -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
+      curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
       ;;
 
     esac

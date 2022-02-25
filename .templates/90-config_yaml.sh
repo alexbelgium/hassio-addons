@@ -36,7 +36,7 @@ else
     else
         # Download template
         TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/config.template"
-        curl -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
+        curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
     fi
     # Need to restart
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
