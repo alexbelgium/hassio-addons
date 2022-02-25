@@ -62,6 +62,7 @@ CMD ["/entrypoint.sh"]
 VOLUME [ "/data" ]
 VOLUME [ "/share" ]
 
+
 ############
 # 5 Labels #
 ############
