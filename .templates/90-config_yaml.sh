@@ -9,17 +9,17 @@
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 
-# Check if config is located in an acceptable location 
+# Check if config is located in an acceptable location
 LOCATIONOK=""
 for location in "/share" "/config" "/data"; do
-    if [[ "$CONFIGSOURCE" == "$location"* ]]; then 
+    if [[ "$CONFIGSOURCE" == "$location"* ]]; then
         LOCATIONOK=true
     fi
 done
 
 if [ -z "$LOCATIONOK" ]; then
     CONFIGSOURCE=/config/addons_config/${HOSTNAME#*-}
-    bashio::log.fatal "Your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE" 
+    bashio::log.fatal "Your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
 fi
 
 # Check if config file is there, or create one from template
@@ -36,7 +36,7 @@ else
     else
         # Download template
         TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/config.template"
-        curl -L -f -s "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
+        curl -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
     fi
     # Need to restart
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
