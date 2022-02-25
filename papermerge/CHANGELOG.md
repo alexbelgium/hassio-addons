@@ -1,3 +1,5 @@
+- New feature : IMAP document import (@fkhofmann)
+- OCR configuration has been rewritten (@fkhofmann)
 - Import dir bug fix (@fkhofmann)
 - Allow custom config location
 - Config exposed in /config/addons_config/papermerge

@@ -42,3 +42,32 @@ if [ ! -d "$IMPORTDIR" ]; then
   mkdir -p "$IMPORTDIR"
 fi
 chown -R abc:abc "$IMPORTDIR"
+
+##################
+# CONFIGURE IMAP #
+##################
+
+IMAPHOST=$(bashio::config 'imaphost')
+IMAPUSERNAME=$(bashio::config 'imapusername')
+IMAPPASSWORD=$(bashio::config 'imappassword')
+
+if [ "$IMAPHOST" != "null" ]; then
+    printf "\nIMPORT_MAIL_HOST = \"%s\"" "$IMAPHOST" >> /data/config/papermerge.conf.py
+    bashio::log.info "IMPORT_MAIL_HOST set to $IMAPHOST"
+
+    if [ "$IMAPUSERNAME" != "null" ]; then
+        printf "\nIMPORT_MAIL_USER = \"%s\"" "$IMAPUSERNAME" >> /data/config/papermerge.conf.py
+        bashio::log.info "IMPORT_MAIL_USER set to $IMAPUSERNAME"
+    else
+        bashio::log.info "! IMAPHOST has been set, but no IMAPUSERNAME. Please check your configuration!"
+    fi
+
+    if [ "$IMAPPASSWORD" != "null" ]; then
+        printf "\nIMPORT_MAIL_PASS = \"%s\"" "$IMAPPASSWORD" >> /data/config/papermerge.conf.py
+        IMAPPASSWORDMASKED=$(echo "$IMAPPASSWORD" | sed -r 's/./x/g')
+        bashio::log.info "IMPORT_MAIL_PASS set to $IMAPPASSWORDMASKED"
+    else
+        bashio::log.info "! IMAPHOST has been set, but no IMAPPASSWORD. Please check your configuration!"
+    fi
+
+fi

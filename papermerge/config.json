@@ -30,12 +30,15 @@
     "storage_dir": "str",
     "import_dir": "str",
     "smbv1": "bool?",
+    "imaphost": "str?",
+    "imapusername": "str?",
+    "imappassword": "str?",
     "CONFIG_LOCATION": "str",
     "TZ": "str?"
   },
   "slug": "papermerge",
   "upstream": "2.0.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.0.1-18",
+  "version": "2.0.1-19",
   "webui": "http://[HOST]:[PORT:8000]"
 }
