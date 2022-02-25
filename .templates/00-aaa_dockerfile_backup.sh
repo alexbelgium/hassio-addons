@@ -9,7 +9,7 @@
 if [ -e "/MODULESFILE" ]; then
     MODULES=$(</MODULESFILE)
     MODULES="${MODULES:-00-banner.sh}"
-    echo "Executing modules script : installing $MODULES"
+    echo "Executing modules script : $MODULES"
 
     if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
