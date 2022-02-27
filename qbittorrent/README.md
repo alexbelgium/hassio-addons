@@ -100,7 +100,7 @@ pull-filter ignore "ifconfig-ipv6"
 
 ### nginx error code
 
->[cont-init.d] 30-nginx.sh: executing... 
+>[cont-init.d] 30-nginx.sh: executing...
 >[cont-init.d] 30-nginx.sh: exited 1.
 
 Wait a couple minutes and restart addon, it could be a temporary unavailability of github
