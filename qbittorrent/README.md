@@ -85,7 +85,7 @@ Use the [qBittorrent integration](https://www.home-assistant.io/integrations/qbi
 
 ## Common issues
 
-### ipv6 issues with openvpn
+### ipv6 issues with openvpn (@happycoo)
 
 Add this code to your .ovpn config
 ```bash
@@ -98,7 +98,7 @@ pull-filter ignore "tun-ipv6"
 pull-filter ignore "ifconfig-ipv6"
 ```
 
-### nginx error code
+### nginx error code (@Nanianmichaels)
 
 >[cont-init.d] 30-nginx.sh: executing...
 >[cont-init.d] 30-nginx.sh: exited 1.
