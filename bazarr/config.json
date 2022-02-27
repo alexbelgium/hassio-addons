@@ -1,16 +1,24 @@
 {
   "name": "Bazarr NAS",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "slug": "bazarr_nas",
   "description": "Companion application to Sonarr and Radarr to download subtitles",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bazarr",
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
-  "upstream": "1.0.2",
+  "upstream": "1.0.3",
   "webui": "http://[HOST]:[PORT:6767]",
   "startup": "services",
-  "backup_exclude": ["**/Backups/*", "**/logs/*", "**/MediaCover/*"],
+  "backup_exclude": [
+    "**/Backups/*",
+    "**/logs/*",
+    "**/MediaCover/*"
+  ],
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -48,7 +56,12 @@
     "PGID": "0"
   },
   "ingress": false,
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "options": {
     "PUID": 0,
     "PGID": 0
@@ -59,7 +72,10 @@
   "ports_description": {
     "6767/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
