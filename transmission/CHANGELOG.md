@@ -1,3 +1,4 @@
+- Removed default values for disk mount
 
 ## 3.00-r5-ls113 (24-02-2022)
 - Update to latest version from linuxserver/docker-transmission
