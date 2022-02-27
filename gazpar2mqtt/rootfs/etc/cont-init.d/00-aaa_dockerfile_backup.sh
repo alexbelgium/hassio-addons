@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# shellcheck disable=SC2015
 # If dockerfile failed install manually
 
 ##############################
