@@ -3,5 +3,5 @@
 for files in ./*/Readme.md; do
 #VAR=$(dirname $files)
 #sed -i "s/ZZZZZZZZZZZZZ/${VAR#*/}/g" $files
-sed -i '/.webui/d' $files
+sed -i '/.webui/d' "$files"
 done
