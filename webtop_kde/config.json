@@ -6,6 +6,7 @@
     "armv7"
   ],
   "boot": "auto",
+  "devicetree": true,
   "environment": {
     "PUID": "1000",
     "PGID": "1000",
