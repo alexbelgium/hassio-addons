@@ -54,11 +54,7 @@
     "customUI": "transmission-web-control",
     "download_dir": "/share/downloads",
     "incomplete_dir": "/share/incomplete",
-    "networkdisks": "//ADDRESS/SHARE",
-    "cifsusername": "username",
-    "cifspassword": "password",
-    "DNS_server": "8.8.8.8,1.1.1.1",
-    "localdisks": "sda1"
+    "DNS_server": "8.8.8.8,1.1.1.1"
   },
   "ports": {
     "9091/tcp": 9091,
