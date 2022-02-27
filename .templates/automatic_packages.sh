@@ -56,6 +56,13 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         if ls /etc/nginx 1>/dev/null 2>&1; then mv /etc/nginx /etc/nginx2; fi
     fi
 
+    #COMMAND="mount"
+    #if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
+    #    [ "$VERBOSE" = true ] && echo "$COMMAND required"
+    #    [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES fuse-exfat fuse-exfat-utils"
+    #    [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils"
+    #fi
+
     COMMAND="cifs"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
