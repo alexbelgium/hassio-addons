@@ -2,6 +2,8 @@
 # shellcheck disable=SC2015
 # If dockerfile failed install manually
 
+set -x
+
 ##############################
 # Automatic modules download #
 ##############################
@@ -15,10 +17,7 @@ if [ -e "/MODULESFILE" ]; then
     && mkdir -p /etc/cont-init.d \
     && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" \
     && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] \
-    && echo "setting permission" && chmod 777 /etc/cont-init.d/"$scripts" || (echo "script failed to install $scripts" && exit 1); done
-
-echo "list files in scripts"
-ls -l /etc/cont-init.d
+    && echo "setting permission" && chmod 755 /etc/cont-init.d/"$scripts" || (echo "script failed to install $scripts" && exit 1); done
 
 fi
 
