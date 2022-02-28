@@ -63,8 +63,8 @@ if bashio::config.true 'openvpn_enabled'; then
     # Bind tun0
     sed -i "$LINE i\Connection\\\Interface=tun0" qBittorrent.conf
     sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
-    sed -i "$SESSION i\Connection\\\Interface=tun0" qBittorrent.conf
-    sed -i "$SESSION i\Connection\\\InterfaceName=tun0" qBittorrent.conf
+    sed -i "$SESSION i\Session\\\Interface=tun0" qBittorrent.conf
+    sed -i "$SESSION i\Session\\\InterfaceName=tun0" qBittorrent.conf
   else
     bashio::log.error "qBittorrent config file doesn't exist, openvpn must be added manually to qbittorrent options "
     exit 1
