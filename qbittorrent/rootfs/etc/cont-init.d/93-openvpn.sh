@@ -51,35 +51,27 @@ if bashio::config.true 'openvpn_enabled'; then
   QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
   # Define preferences line
   cd /config/qBittorrent/ || exit 1
-  LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
+  LINE=$(sed -n '/[Preferences]/=' qBittorrent.conf)
   LINE=$((LINE + 1))
+  SESSION=$(sed -n '/[BitTorrent]/=' qBittorrent.conf)
+  SESSION=$((SESSION + 1))
 
   # If qBittorrent.conf exists
   if [ -f "$QBT_CONFIG_FILE" ]; then
     # Remove previous line and bind tun0
     sed -i '/Interface/d' qBittorrent.conf
-    # sed -i '/PortRangeMin/d' qBittorrent.conf
     # Bind tun0
-    # sed -i "$LINE i\Connection\\\Interface=tun0" qBittorrent.conf
-    # sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
+    sed -i "$LINE i\Connection\\\Interface=tun0" qBittorrent.conf
+    sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
+    sed -i "$SESSION i\Connection\\\Interface=tun0" qBittorrent.conf
+    sed -i "$SESSION i\Connection\\\InterfaceName=tun0" qBittorrent.conf
   else
     bashio::log.error "qBittorrent config file doesn't exist, openvpn must be added manually to qbittorrent options "
     exit 1
   fi
 
-  #####################
-  # ALTERNATIVE MODE  #
-  #####################
-
-  #if bashio::config.true 'openvpn_alternative_mode'; then
-    # Remove previous line and bind tun0
-    sed -i '/Interface/d' qBittorrent.conf
-    # Bind tun0
-    sed -i "$LINE i\Connection\\\Interface=tun0" qBittorrent.conf
-    sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
-    # Modify ovpn config
-    echo "route-nopull" >>/etc/openvpn/config.ovpn
-  #fi
+  # Modify ovpn config
+  echo "route-nopull" >>/etc/openvpn/config.ovpn
 
 else
 
