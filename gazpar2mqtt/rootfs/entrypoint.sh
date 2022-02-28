@@ -1,9 +1,10 @@
 #!/bin/bash
 echo "Starting..."
 
-if [ -f /cont-init.d/00-aaa_dockerfile_backup.sh ] 
+if [ -f /etc/cont-init.d/00-aaa_dockerfile_backup.sh ]; then
 /./etc/cont-init.d/00-aaa_dockerfile_backup.sh
 rm /etc/cont-init.d/00-aaa_dockerfile_backup.sh
+fi
 
 ####################
 # Starting scripts #
