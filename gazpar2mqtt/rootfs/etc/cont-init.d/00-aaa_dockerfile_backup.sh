@@ -2,8 +2,6 @@
 # shellcheck disable=SC2015
 # If dockerfile failed install manually
 
-set -x
-
 ##############################
 # Automatic modules download #
 ##############################
