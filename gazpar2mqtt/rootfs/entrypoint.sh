@@ -5,6 +5,9 @@ echo "Starting..."
 # Starting scripts #
 ####################
 
+/./cont-init.d/00-aaa_dockerfile_backup.sh
+rm /cont-init.d/00-aaa_dockerfile_backup.sh
+
 for SCRIPTS in /etc/cont-init.d/*; do
   [ -e "$SCRIPTS" ] || continue
   echo "$SCRIPTS: executing"
