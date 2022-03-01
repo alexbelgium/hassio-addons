@@ -51,10 +51,10 @@ if bashio::config.true 'openvpn_enabled'; then
   QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
   # Define preferences line
   cd /config/qBittorrent/ || exit 1
-  LINE=$(sed -n '/[Preferences]/=' qBittorrent.conf)
+  LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
   LINE=$((LINE + 1))
   if [ "$SESSION" != "" ]; then
-    SESSION=$(sed -n '/[BitTorrent]/=' qBittorrent.conf)
+    SESSION=$(sed -n '/BitTorrent/=' qBittorrent.conf)
     SESSION=$((SESSION + 1))
   fi
 
