@@ -1,3 +1,6 @@
+
+## 5.6.16 (01-03-2022)
+- Update to latest version from firefly-iii/firefly-iii
 - Allow base64 keys
 - Show cron jobs messages in log
 
