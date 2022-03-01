@@ -1,6 +1,13 @@
 #!/bin/bash
 echo "Starting..."
 
+if [ -f /etc/cont-init.d/00-aaa_dockerfile_backup.sh ]; then
+  chown "$(id -u)":"$(id -g)" /etc/cont-init.d/00-aaa_dockerfile_backup.sh
+  chmod +x /etc/cont-init.d/00-aaa_dockerfile_backup.sh
+  /./etc/cont-init.d/00-aaa_dockerfile_backup.sh
+  rm /etc/cont-init.d/00-aaa_dockerfile_backup.sh
+fi
+
 ####################
 # Starting scripts #
 ####################
@@ -14,4 +21,3 @@ for SCRIPTS in /etc/cont-init.d/*; do
   sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' "$SCRIPTS"
   /."$SCRIPTS" || echo "$SCRIPTS: exiting $?"
 done
-
