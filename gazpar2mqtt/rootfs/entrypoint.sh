@@ -2,8 +2,10 @@
 echo "Starting..."
 
 if [ -f /etc/cont-init.d/00-aaa_dockerfile_backup.sh ]; then
-/./etc/cont-init.d/00-aaa_dockerfile_backup.sh
-rm /etc/cont-init.d/00-aaa_dockerfile_backup.sh
+  chown "$(id -u)":"$(id -g)" /etc/cont-init.d/00-aaa_dockerfile_backup.sh
+  chmod +x /etc/cont-init.d/00-aaa_dockerfile_backup.sh
+  /./etc/cont-init.d/00-aaa_dockerfile_backup.sh
+  rm /etc/cont-init.d/00-aaa_dockerfile_backup.sh
 fi
 
 ####################
