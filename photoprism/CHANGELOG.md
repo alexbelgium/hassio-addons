@@ -1,3 +1,6 @@
+
+## 220302-impish (03-03-2022)
+- Update to latest version from photoprism/photoprism
 - CUSTOM_OPTIONS deprecated : use config.yaml (see Readme)
 - Any ENV variables can be set by config.yaml (see Readme)
 

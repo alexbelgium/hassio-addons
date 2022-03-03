@@ -45,7 +45,7 @@
   "map": [
     "media:rw",
     "share:rw",
-    "config:rw"    
+    "config:rw"
   ],
   "name": "Photoprism",
   "options": {
@@ -70,7 +70,9 @@
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
-  "services": ["mysql:want"],
+  "services": [
+    "mysql:want"
+  ],
   "schema": {
     "localdisks": "str?",
     "networkdisks": "str?",
@@ -85,8 +87,8 @@
     "DB_TYPE": "list(sqlite|mariadb_addon)"
   },
   "slug": "photoprism",
-  "upstream": "20220121",
+  "upstream": "220302-impish",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "20220121-12",
+  "version": "220302-impish",
   "webui": "http://[HOST]:[PORT:2342]"
 }
