@@ -41,6 +41,6 @@
   "startup": "services",
   "upstream": "2.11.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.11.1",
+  "version": "2.11.1-TESTDONOTUPDATE",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9099]"
 }
