@@ -1,4 +1,3 @@
-DO NOT UPDATE, TESTS ONGOING
 - New logic for non HAos systems
 
 ## 0.8.1 (20-01-2022)
