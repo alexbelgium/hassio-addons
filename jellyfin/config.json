@@ -97,9 +97,9 @@
   },
   "slug": "jellyfin",
   "startup": "services",
-  "upstream": "10.7.7-1-ls152",
+  "upstream": "10.7.7-1-ls153",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.7.7-1-ls152",
+  "version": "10.7.7-1-ls153",
   "video": true,
   "webui": "http://[HOST]:[PORT:8096]"
 }
