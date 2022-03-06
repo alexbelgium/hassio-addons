@@ -1,13 +1,17 @@
 {
   "name": "Sonarr NAS",
-  "version": "3.0.6.1342-6",
+  "version": "3.0.7.1477",
   "slug": "sonarr_nas",
   "description": "Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. ",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
-  "upstream": "3.0.6.1342",
+  "upstream": "3.0.7.1477",
   "webui": "http://[HOST]:[PORT:8989]",
   "startup": "services",
   "devices": [
@@ -46,7 +50,12 @@
     "PUID": "0",
     "PGID": "0"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "options": {
     "PUID": 0,
     "PGID": 0,
@@ -60,7 +69,10 @@
   "ports_description": {
     "8989/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PUID": "int",
     "PGID": "int",
