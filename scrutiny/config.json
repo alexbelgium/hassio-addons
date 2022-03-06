@@ -1,6 +1,6 @@
 {
   "name": "Scrutiny",
-  "version": "0.3.13-6",
+  "version": "0.3.13-7",
   "upstream": "0.3.13",
   "slug": "scrutiny",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
@@ -53,7 +53,7 @@
   ],
   "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
   "udev": "true",
-  "apparmor": true,
+  "apparmor": false,
   "map": [],
   "boot": "auto",
   "environment": {
