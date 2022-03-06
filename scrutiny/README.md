@@ -51,6 +51,9 @@ The installation of this add-on is pretty straightforward and not different in c
 Webui can be found at <http://your-ip:8080>, or through Ingress.
 It automatically mounts all local drives.
 
+Enable full access only if you are booting from usb.
+SMART access should work without full access in all other scenarios.
+
 ```yaml
 GUID: user
 GPID: user
