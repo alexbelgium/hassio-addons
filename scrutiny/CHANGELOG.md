@@ -1,3 +1,4 @@
+- Added full access. Use only if you can't connect without
 - New standardized logic for Dockerfile build and packages installation
 - Added : "/dev/nvme0"
 
