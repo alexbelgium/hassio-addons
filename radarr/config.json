@@ -1,6 +1,6 @@
 {
   "name": "Radarr NAS",
-  "version": "4.0.4.5922",
+  "version": "4.0.5.5981",
   "slug": "radarr_nas",
   "description": "A fork of Sonarr to work with movies like Couchpotato",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
@@ -11,7 +11,7 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "4.0.4.5922",
+  "upstream": "4.0.5.5981",
   "webui": "http://[HOST]:[PORT:7878]",
   "startup": "services",
   "devices": [
