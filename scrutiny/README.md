@@ -30,6 +30,23 @@ Features :
 - Ingress with/without ssl
 - Automatic upstream updates
 
+## Configuration
+
+---
+
+Webui can be found at <http://your-ip:8080>, or through Ingress.
+It automatically mounts all local drives.
+
+Enable full access only if you are encountering issues. SMART access should work without full access in all other scenarios.
+
+```yaml
+GUID: user
+GPID: user
+ssl: true/false (for Ingress)
+certfile: fullchain.pem #ssl certificate
+keyfile: privkey.pem #sslkeyfile
+```
+
 ## Installation
 
 ---
@@ -43,24 +60,6 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI (Ingress based) and adapt the software options
-
-## Configuration
-
----
-
-Webui can be found at <http://your-ip:8080>, or through Ingress.
-It automatically mounts all local drives.
-
-Enable full access only if you are booting from usb.
-SMART access should work without full access in all other scenarios.
-
-```yaml
-GUID: user
-GPID: user
-ssl: true/false (for Ingress)
-certfile: fullchain.pem #ssl certificate
-keyfile: privkey.pem #sslkeyfile
-```
 
 # Integration in home assistant
 
