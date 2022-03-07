@@ -10,9 +10,9 @@ mkdir -p "$CONFIGSOURCE/import_files" || true
 mkdir -p "$CONFIGSOURCE/configurations" || true
 
 # Create symlinks
-cp -n /data/configurations $CONFIGSOURCE/configurations
+cp -rnf /data/configurations $CONFIGSOURCE
 rm -r /data/configurations
-ln -s $CONFIGSOURCE/configurations /data/configurations
+ln -s $CONFIGSOURCE/configurations /data
 
 # Make sure permissions are right
 chown -R "$(id -u):$(id -g)" "$CONFIGSOURCE"
