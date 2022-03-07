@@ -1,6 +1,6 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": ["amd64"],
   "boot": "auto",
   "description": "Import financial transactions from you FinTS enabled bank into Firefly III",
   "devices": [],
