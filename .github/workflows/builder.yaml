@@ -43,7 +43,7 @@ jobs:
     strategy:
       matrix:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
-        arch: ${{ steps.info.outputs.architectures }}
+        arch: ${{ needs.check-addon-changes.outputs.architectures }}
 
     steps:
       - name: Check out repository
