@@ -9,6 +9,7 @@ plex_meta_manager: plex_meta_manager/config.*
 spotweb: spotweb/config.*
 webtop: webtop/config.*
 webtop_kde: webtop_kde/config.*
+fireflyiii_fints_importer: fireflyiii_fints_importer/config.*
 
 #################
 # MANUAL BUILDS #
