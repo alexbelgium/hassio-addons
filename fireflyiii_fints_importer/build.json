@@ -1,7 +1,5 @@
 {
   "build_from": {
-    "armv7": "benkl/firefly-iii-fints-importer:latest",
-    "aarch64": "benkl/firefly-iii-fints-importer:latest",
     "amd64": "benkl/firefly-iii-fints-importer:latest"
   }
 }
