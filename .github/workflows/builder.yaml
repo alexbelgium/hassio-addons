@@ -14,18 +14,26 @@ on:
 
 jobs:
   check-addon-changes:
+    name: Initialize build
     runs-on: ubuntu-latest
     outputs:
+      architectures: ${{ steps.info.outputs.architectures }}
       changedAddons: ${{ steps.filter.outputs.changes }}
     steps:
-      - name: ↩️ Checkout
-        uses: actions/checkout@v2.4.0
+    - name: Checkout the repository
+      uses: actions/checkout@v2.4.0
+      with:
+        fetch-depth: 0
 
-      - name: 📂 Detect chanced files
-        uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: .github/paths-filter.yml
+    - name: Get information
+      id: info
+      uses: home-assistant/actions/helpers/info@master
+
+    - name: 📂 Detect chanced files
+      uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/paths-filter.yml
 
   build:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
