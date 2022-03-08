@@ -50,7 +50,7 @@ The available configuration options are as follows (this is filled in with some 
   "iface": "eth0",
   "iterations": 0,
   "period": 300,
-  "forced_update": false,
+  "forced_update": 300,
   "secure_ssl": true,
   "providers": [
     {
