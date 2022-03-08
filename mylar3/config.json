@@ -74,8 +74,8 @@
     "cifspassword": "str?"
   },
   "slug": "mylar3",
-  "upstream": "0.6.4",
+  "upstream": "0.6.5",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "webui": "http://[HOST]:[PORT:8090]"
 }
