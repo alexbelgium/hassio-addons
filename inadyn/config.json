@@ -22,7 +22,7 @@
     "iface": "str?",
     "iterations": "int?",
     "period": "int?",
-    "forced_update": "bool?",
+    "forced_update": "int?",
     "secure_ssl": "bool?",
     "providers": [
       {
