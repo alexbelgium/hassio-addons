@@ -48,7 +48,7 @@ mariadb_addon)
     ;;
 
 # Use remote
-*)
+external)
     bashio::log.info "Using remote database. Requirement : filling all addon options fields, and making sure the database already exists"
     for conditions in "ZM_DB_HOST" "ZM_DB_PORT" "ZM_DB_NAME" "ZM_DB_USER" "ZM_DB_PASS"; do
         if ! bashio::config.has_value "$conditions"; then
