@@ -4,7 +4,7 @@
   "boot": "auto",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
-  "map": ["config:rw", "share:rw", "ssl"],
+  "map": ["config:rw"],
   "name": "Zoneminder",
   "options": {
     "DB_CONNECTION": "mariadb_addon"
