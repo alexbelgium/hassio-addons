@@ -30,9 +30,7 @@ ENV PGID=0
 
 
 # hadolint ignore=DL4006
-RUN \
-# Change data location
-    grep -rl "/config" /etc/ | xargs sed -i 's|/config|/config/addons_config/zoneminder|g'
+RUN sed -i 's|/config|/config/addons_config/zoneminder|g' /etc/cont-init.d/*
 
 ##################
 # 3 Install apps #
