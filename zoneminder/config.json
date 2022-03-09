@@ -28,7 +28,7 @@
   "slug": "zoneminder",
   "upstream": "1.36.12",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.36.12-1",
+  "version": "1.36.12-2",
   "services": ["mysql:want"],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
