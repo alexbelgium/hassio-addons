@@ -67,8 +67,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 RUN set -x && \
     apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
         dos2unix && \
-    chmod -R +x /etc/cont-init.d/* && \
-    dos2unix /etc/cont-init.d/*
+    chmod -R +x /etc/cont-init.d/*
 
 #RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/init" ]
