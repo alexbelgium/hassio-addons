@@ -28,6 +28,8 @@ ENV DZM_CONFIG_DIR="/config/addons_config/zoneminder"
 ENV PUID=0
 ENV PGID=0
 
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL4006
 RUN sed -i 's|/config|/config/addons_config/zoneminder|g' /etc/cont-init.d/*
@@ -43,7 +45,8 @@ COPY rootfs/ /
 ARG MODULES="00-banner.sh 00-global_var.sh"
 
 # Automatic modules download
-RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
+RUN set -x && \
+    if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
     && mkdir -p /etc/cont-init.d \
     && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] || (echo "script failed to install $scripts" && exit 1); done \
@@ -53,7 +56,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ENV PACKAGES=""
 
 # Automatic apps & bashio
-RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
+RUN set -x && \
+    if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
     && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
     && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
     && chmod 777 /automatic_packages.sh \
@@ -65,9 +69,9 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 RUN set -x && \
-    apk add --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
-        dos2unix && \
-    chmod -R +x /etc/cont-init.d/*
+    apt-get update && apt-get install -y dos2unix && \
+    chmod -R +x /etc/cont-init.d/* \
+    dos2unix /etc/cont-init.d/*
 
 #RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/init" ]
