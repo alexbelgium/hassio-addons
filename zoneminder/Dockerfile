@@ -65,6 +65,9 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 RUN chmod 777 /etc/cont-init.d/*
+RUN set -x \
+    && find /etc/cont-init.d -type f -print0 | xargs -0 -n 1 -P 4 dos2unix \
+    && chmod -R +x *
 
 #RUN chmod 777 /entrypoint.sh
 #ENTRYPOINT [ "/usr/bin/env" ]
