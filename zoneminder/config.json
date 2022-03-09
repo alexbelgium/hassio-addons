@@ -1,7 +1,7 @@
 {
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
-  "init": false,
+  "init": true,
   "boot": "auto",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
