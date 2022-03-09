@@ -5,7 +5,6 @@
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "devices": [],
   "environment": {
-    "TRUSTED_PROXIES": "**"
   },
   "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
   "map": ["config:rw", "share:rw", "ssl"],
