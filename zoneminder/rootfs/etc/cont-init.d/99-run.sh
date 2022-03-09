@@ -1,4 +1,4 @@
-#!/usr/bin/env bashio
+#!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 # hadolint ignore=SC2155
 
