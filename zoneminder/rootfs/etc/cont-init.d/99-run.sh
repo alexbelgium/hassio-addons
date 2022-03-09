@@ -1,6 +1,9 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/env bashio
 # shellcheck shell=bash
 # hadolint ignore=SC2155
+
+set +e
+set +x
 
 ###################
 # Define database #
