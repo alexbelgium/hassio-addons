@@ -3,7 +3,7 @@
 # hadolint ignore=SC2155
 
 set +e
-set +x
+set -x
 
 ###################
 # Define database #
