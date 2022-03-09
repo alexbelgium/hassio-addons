@@ -28,9 +28,13 @@ ENV DZM_CONFIG_DIR="/config/addons_config/zoneminder"
 ENV PUID=0
 ENV PGID=0
 
-# Change data location
+
 # hadolint ignore=DL4006
-RUN grep -rl "/config" /etc/ | xargs sed -i 's|/config|/config/addons_config/zoneminder|g'
+RUN \
+# Change data location
+    grep -rl "/config" /etc/ | xargs sed -i 's|/config|/config/addons_config/zoneminder|g' \
+# Move config files
+    mv /config /configold
 
 ##################
 # 3 Install apps #
