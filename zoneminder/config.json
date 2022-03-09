@@ -3,8 +3,6 @@
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
-  "environment": {
-  },
   "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
   "map": ["config:rw", "share:rw", "ssl"],
   "name": "Zoneminder",
