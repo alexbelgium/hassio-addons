@@ -10,7 +10,8 @@ set -x
 ###################
 
 bashio::log.info "Defining database"
-case $(bashio::config 'DB_CONNECTION') in
+DBTYPE=$(bashio::config 'DB_CONNECTION')
+case "$DBTYPE" in
 
 # Use MariaDB
 mariadb_addon)
