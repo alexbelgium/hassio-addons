@@ -2,6 +2,8 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
   "init": false,
+  "hassio_api": true,
+  "homeassistant_api": true,
   "boot": "auto",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "map": ["config:rw"],
