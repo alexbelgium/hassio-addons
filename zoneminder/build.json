@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "armv7": "yaoa/zoneminder-base:main",
-    "aarch64": "yaoa/zoneminder-base:main",
-    "amd64": "yaoa/zoneminder-base:main"
+    "armv7": "yaoa/zoneminder-base:armv7-main",
+    "aarch64": "yaoa/zoneminder-base:arm64-main",
+    "amd64": "yaoa/zoneminder-base:amd64-main"
   }
 }
