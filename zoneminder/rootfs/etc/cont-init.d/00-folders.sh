@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/bin/bash
 # shellcheck shell=bash
 
 #CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
