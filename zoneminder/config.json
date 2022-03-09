@@ -1,7 +1,7 @@
 {
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
-  "init": true,
+  "init": false,
   "boot": "auto",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
@@ -27,7 +27,7 @@
   "slug": "zoneminder",
   "upstream": "1.36.12",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.36.12-9",
+  "version": "1.36.12-10",
   "services": ["mysql:want"],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
