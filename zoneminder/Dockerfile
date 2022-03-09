@@ -64,7 +64,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-RUN chmod -R +x /etc/cont-init.d/*
+RUN chmod -R +x /etc/cont-init.d/* \
+    dos2unix /etc/cont-init.d/*
 
 #RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/init" ]
