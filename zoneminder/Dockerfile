@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="1.0"
+ARG BUILD_UPSTREAM="test"
 FROM ${BUILD_FROM}
 
 ##################
@@ -26,6 +26,7 @@ FROM ${BUILD_FROM}
 # Global variables
 ENV DZM_CONFIG_DIR="/config/addons_config/zoneminder"
 # Change data location
+# hadolint ignore=DL4006
 RUN grep -rl "/config" /etc/ | xargs sed -i 's|/config|/config/addons_config/zoneminder|g'
 
 ##################

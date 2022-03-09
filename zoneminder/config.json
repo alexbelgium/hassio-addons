@@ -28,9 +28,9 @@
     "ZM_DB_PASS": "str?"
   },
   "slug": "zoneminder",
-  "upstream": "1.2",
+  "upstream": "test",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.1",
+  "version": "test",
   "services": ["mysql:want"],
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
