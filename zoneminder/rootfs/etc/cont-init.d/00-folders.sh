@@ -5,8 +5,6 @@
 #CONFIGSOURCE=$(dirname "$CONFIGSOURCE")
 CONFIGSOURCE="/config/addons_config/zoneminder"
 
-cp -rn /configold/* "$CONFIGSOURCE"/
-
 # Create directory
 mkdir -p "$CONFIGSOURCE" || true
 
