@@ -4,6 +4,7 @@
   "init": false,
   "hassio_api": true,
   "homeassistant_api": true,
+  "hassio_role": "homeassistant",
   "boot": "auto",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "map": ["config:rw"],
