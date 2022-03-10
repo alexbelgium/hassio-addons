@@ -1,6 +1,6 @@
 {
   "name": "Scrutiny (Full Access)",
-  "version": "0.3.13-7",
+  "version": "0.3.13-8",
   "upstream": "0.3.13",
   "slug": "scrutiny_fa",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)",
