@@ -2,15 +2,39 @@
 # shellcheck shell=bash
 # hadolint ignore=SC2155
 
-sleep 1000000
+###################################
+# Export all addon options as env #
+###################################
+
+# For all keys in options.json
+JSONSOURCE="/data/options.json"
+
+# Export keys as env variables
+# echo "All addon options were exported as variables"
+mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
+
+for KEYS in "${arr[@]}"; do
+  # export key
+  VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
+  line="${KEYS}='${VALUE//[\"\']/}'"
+  # Use locally
+  if [[ "${KEYS}" == *"PASS"* ]]; then
+    bashio::log.blue "${KEYS}=******"
+  else
+    bashio::log.blue "$line"
+  fi
+  # Export the variable to run scripts
+  export $line
+  if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
+  if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
+done
 
 ###################
 # Define database #
 ###################
 
 bashio::log.info "Defining database"
-DBTYPE=$(bashio::config 'DB_CONNECTION')
-case "$DBTYPE" in
+case "$DB_CONNECTION" in
 
 # Use MariaDB
 mariadb_addon)
