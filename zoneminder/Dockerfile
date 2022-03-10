@@ -42,7 +42,7 @@ RUN sed -i 's|/config|/config/addons_config/zoneminder|g' /etc/cont-init.d/*
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES=""
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
