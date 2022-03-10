@@ -19,7 +19,7 @@ jobs:
       changedAddons: ${{ steps.filter.outputs.changes }}
     steps:
       - name: ↩️ Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2.4.0
 
       - name: 📂 Detect chanced files
         uses: dorny/paths-filter@v2
@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2.4.0
 
       - name: Get information
         id: info
@@ -65,7 +65,7 @@ jobs:
           fi
       - name: Login to GitHub Container Registry
         if: env.BUILD_ARGS != '--test'
-        uses: docker/login-action@v1.14.1
+        uses: docker/login-action@v1.14.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
