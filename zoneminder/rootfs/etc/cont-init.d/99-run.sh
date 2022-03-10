@@ -2,10 +2,7 @@
 # shellcheck shell=bash
 # hadolint ignore=SC2155
 
-TEST=$(bashio::config 'ZM_DB_HOST')
-if [[ "$TEST" = "debug" ]]; then
 sleep 1000000
-fi
 
 ###################
 # Define database #
