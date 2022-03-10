@@ -10,5 +10,3 @@ mkdir -p "$CONFIGSOURCE" || true
 
 # Make sure permissions are right
 chown -R "$(id -u):$(id -g)" "$CONFIGSOURCE"
-
-sleep 10000000
