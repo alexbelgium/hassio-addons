@@ -1,0 +1,7 @@
+{
+  "build_from": {
+    "armv7": "lscr.io/linuxserver/scrutiny:arm32v7-latest",
+    "aarch64": "lscr.io/linuxserver/scrutiny:arm64v8-latest",
+    "amd64": "lscr.io/linuxserver/scrutiny:amd64-latest"
+  }
+}
