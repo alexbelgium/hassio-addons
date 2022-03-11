@@ -1,12 +1,16 @@
 {
   "name": "Scrutiny (Full Access)",
-  "version": "0.3.13-9",
+  "version": "0.3.13-10",
   "upstream": "0.3.13",
   "slug": "scrutiny_fa",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)",
   "url": "https://github.com/AnalogJ/scrutiny",
   "startup": "services",
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "image": "ghcr.io/alexbelgium/scrutiny-fa-{arch}",
   "ingress": true,
   "ingress_port": 8099,
@@ -20,7 +24,6 @@
   "full_access": true,
   "udev": "true",
   "apparmor": "true",
-  "map": [],
   "boot": "auto",
   "environment": {
     "SCRUTINY_API_ENDPOINT": "http://localhost:8080",
