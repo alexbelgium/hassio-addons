@@ -89,8 +89,8 @@
   },
   "slug": "transmission_ls",
   "startup": "services",
-  "upstream": "3.00-r5-ls114",
+  "upstream": "3.00-r5-ls115",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.00-r5-ls114",
+  "version": "3.00-r5-ls115",
   "webui": "http://[HOST]:[PORT:9091]"
 }
