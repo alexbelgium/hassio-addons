@@ -45,4 +45,6 @@ Create an issue on github
 
 ## Illustration
 
+![viewmonitor-stream](https://user-images.githubusercontent.com/44178713/157933856-33ed3d44-6b91-4ce2-8a9b-daf9b618176c.png)
+
 [repository]: https://github.com/alexbelgium/hassio-addons
