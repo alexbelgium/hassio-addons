@@ -1,7 +1,7 @@
-- Test ongoing, dont update
+- Reduce backup size (thanks @lmagyar)
 
 ## 2.11.1 (10-02-2022)
-- Update to latest version from portainer/portainer
+- Update to latest version from portainer/portaine@
 
 ## 2.11.0 (08-02-2022)
 - Update to latest version from portainer/portainer
