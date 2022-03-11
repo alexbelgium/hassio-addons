@@ -111,6 +111,6 @@
   "slug": "webtop-kde",
   "upstream": "4.16-r0-ls46",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls46",
+  "version": "4.16-r0-ls46-2",
   "webui": "http://[HOST]:[PORT:3000]"
 }
