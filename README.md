@@ -46,7 +46,6 @@ https://github.com/alexbelgium/hassio-addons
 
 ## Addons list
 
-
 ### &#10003; Connectors
 
 - [enedisgateway2mqtt](enedisgateway2mqtt/) : use Enedis Gateway API to send data in your MQTT Broker
@@ -81,6 +80,7 @@ https://github.com/alexbelgium/hassio-addons
 - [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
 - [Tandoor Recipes](tandoor_recipes/): Recipe manager
 - [Wger](wger/): manage your personal workouts, weight and diet plans
+- [Zoneminder](zoneminder/): a full-featured, open source, state-of-the-art video surveillance software system
 
 ### &#10003; Genealogy
 
