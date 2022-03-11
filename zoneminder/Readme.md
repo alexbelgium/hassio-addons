@@ -39,6 +39,10 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
+## Integration in home assistant
+
+https://www.home-assistant.io/integrations/zoneminder/
+
 ## Support
 
 Create an issue on github
