@@ -1,6 +1,12 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+#######################
+# Require unprotected #
+#######################
+
+bashio::require.unprotected
+
 ##############
 # Data usage #
 ##############
