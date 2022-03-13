@@ -21,6 +21,7 @@
   "ports_description": {
     "8080/tcp": "Web UI port"
   },
+  "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
   "full_access": true,
   "devices": [
     "/dev/sda",
