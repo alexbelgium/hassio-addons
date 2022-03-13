@@ -5,7 +5,7 @@
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "name": "Zoneminder",
   "ports": {
-    "80/tcp": 3777
+    "80/tcp": 3778
   },
   "map": [
     "config:rw",
