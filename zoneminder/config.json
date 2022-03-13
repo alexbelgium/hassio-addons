@@ -4,8 +4,6 @@
   "boot": "auto",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "name": "Zoneminder",
-  "options": {
-  },
   "ports": {
     "80/tcp": 3777
   },
@@ -18,8 +16,6 @@
   "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
   "ports_description": {
     "80/tcp": "web interface"
-  },
-  "schema": {
   },
   "slug": "zoneminder",
   "upstream": "1.36.12",
