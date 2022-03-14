@@ -32,8 +32,6 @@ jobs:
     needs: check-addon-changes
     runs-on: ubuntu-latest
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
-    secrets:
-      CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
     strategy:
       matrix:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
@@ -76,6 +74,8 @@ jobs:
       - name: Build ${{ matrix.addon }} add-on
         if: steps.check.outputs.build_arch == 'true'
         uses: home-assistant/builder@2022.03.1
+        secrets:
+          CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
         with:
           args: |
             ${{ env.BUILD_ARGS }} \
