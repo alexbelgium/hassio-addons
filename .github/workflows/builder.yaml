@@ -32,6 +32,8 @@ jobs:
     needs: check-addon-changes
     runs-on: ubuntu-latest
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
+    secrets:
+      CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
     strategy:
       matrix:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
