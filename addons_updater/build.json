@@ -4,4 +4,7 @@
     "armv7": "ghcr.io/hassio-addons/base-python/armv7:8.0.1",
     "amd64": "ghcr.io/hassio-addons/base-python/amd64:8.0.1"
   }
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
 }
