@@ -86,9 +86,9 @@ fi
 # ALLOW WEBUI #
 ###############
 
-/usr/sbin/ip route add 10.0.0.0/8 via 172.30.32.1
-/usr/sbin/ip route add 192.168.0.0/16 via 172.30.32.1
-/usr/sbin/ip route add 172.16.0.0/12 via 172.30.32.1
+ip route add 10.0.0.0/8 via 172.30.32.1
+ip route add 192.168.0.0/16 via 172.30.32.1
+ip route add 172.16.0.0/12 via 172.30.32.1
 
 exit 0
 
