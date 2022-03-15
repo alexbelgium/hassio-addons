@@ -24,6 +24,6 @@ jobs:
       - name: Create New Pull Request If Needed
         uses: peter-evans/create-pull-request@v3
         with:
-          title: "[auto] ci: apply beautysh changes"
+          title: "Apply beautysh changes"
           branch-suffix: timestamp
           commit-message: Beautify bash
