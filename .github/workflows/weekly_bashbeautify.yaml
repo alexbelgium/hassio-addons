@@ -19,7 +19,7 @@ jobs:
         uses: illvart/beautysh-action@latest
         with:
           # Pass beautysh options in args, for example:
-          args: '*.sh --indent-size 4'
+          args: '**/*.sh --indent-size 4'
 
       - name: Create New Pull Request If Needed
         uses: peter-evans/create-pull-request@v3
