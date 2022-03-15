@@ -18,9 +18,9 @@
   ],
   "name": "Firefly iii",
   "options": {
-    "DB_CONNECTION": "sqlite_internal",
     "APP_KEY": "CHANGEME_32_CHARS_EuC5dfn3LAPzeO",
     "CONFIG_LOCATION": "/config/addons_config/fireflyiii/config.yaml",
+    "DB_CONNECTION": "sqlite_internal",
     "silent": "true"
   },
   "ports": {
@@ -30,21 +30,21 @@
     "8080/tcp": "web interface"
   },
   "schema": {
-    "CONFIG_LOCATION": "str",
     "APP_KEY": "str",
+    "CONFIG_LOCATION": "str",
     "DB_CONNECTION": "list(sqlite_internal|mariadb_addon|mysql|pgsql)",
-    "DB_HOST": "str?",
-    "DB_PORT": "str?",
     "DB_DATABASE": "str?",
-    "DB_USERNAME": "str?",
+    "DB_HOST": "str?",
     "DB_PASSWORD": "str?",
+    "DB_PORT": "str?",
+    "DB_USERNAME": "str?",
     "Updates": "list(|hourly|daily|weekly)?",
     "silent": "bool?"
   },
-  "slug": "fireflyiii",
   "services": [
     "mysql:want"
   ],
+  "slug": "fireflyiii",
   "upstream": "5.6.16",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "5.6.16",

@@ -1,9 +1,4 @@
 {
-  "name": "Sonarr NAS",
-  "version": "3.0.7.1477",
-  "slug": "sonarr_nas",
-  "description": "Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. ",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -11,9 +6,7 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "3.0.7.1477",
-  "webui": "http://[HOST]:[PORT:8989]",
-  "startup": "services",
+  "description": "Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. ",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -47,8 +40,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "map": [
     "config:rw",
@@ -56,12 +49,13 @@
     "media:rw",
     "ssl"
   ],
+  "name": "Sonarr NAS",
   "options": {
-    "PUID": 0,
     "PGID": 0,
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
+    "PUID": 0,
+    "cifspassword": "<password>",
     "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
   },
   "ports": {
     "8989/tcp": 8989
@@ -74,13 +68,19 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
     "smbv1": "bool?"
-  }
+  },
+  "slug": "sonarr_nas",
+  "startup": "services",
+  "upstream": "3.0.7.1477",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
+  "version": "3.0.7.1477",
+  "webui": "http://[HOST]:[PORT:8989]"
 }

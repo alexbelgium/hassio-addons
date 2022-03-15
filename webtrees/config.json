@@ -40,20 +40,20 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PORT": "80",
-    "WEBTREES_HOME": "/data/webtrees",
-    "DB_PREFIX": "wt_",
-    "PRETTY_URLS": "1",
-    "LANG": "en-US",
     "DB_HOST": "http://127.0.0.1",
-    "DB_PORT": "80",
-    "DB_USER": "databaseuser",
-    "DB_PASS": "databasepassword",
     "DB_NAME": "webtrees",
-    "WT_USER": "admin",
+    "DB_PASS": "databasepassword",
+    "DB_PORT": "80",
+    "DB_PREFIX": "wt_",
+    "DB_USER": "databaseuser",
+    "LANG": "en-US",
+    "PORT": "80",
+    "PRETTY_URLS": "1",
+    "WEBTREES_HOME": "/data/webtrees",
+    "WT_EMAIL": "me@example.com",
     "WT_NAME": "Full Name",
     "WT_PASS": "mybadpassword",
-    "WT_EMAIL": "me@example.com"
+    "WT_USER": "admin"
   },
   "map": [
     "config:rw",
@@ -62,30 +62,30 @@
   ],
   "name": "Webtrees",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/webtrees/config.yaml",
     "BASE_URL": "http://192.168.178.23",
+    "CONFIG_LOCATION": "/config/addons_config/webtrees/config.yaml",
     "DB_TYPE": "sqlite"
   },
   "ports": {
-    "80/tcp": "9999",
-    "443/tcp": null
+    "443/tcp": null,
+    "80/tcp": "9999"
   },
   "ports_description": {
-    "80/tcp": "Web interface",
-    "443/tcp": "Https web interface"
+    "443/tcp": "Https web interface",
+    "80/tcp": "Web interface"
   },
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "CONFIG_LOCATION": "str",
     "BASE_URL": "url",
+    "CONFIG_LOCATION": "str",
     "DB_TYPE": "list(sqlite|external|mariadb_addon)",
-    "localdisks": "str?",
-    "networkdisks": "str?",
+    "cifspassword": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
+    "localdisks": "str?",
+    "networkdisks": "str?"
   },
   "services": [
     "mysql:want"

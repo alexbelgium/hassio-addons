@@ -1,9 +1,4 @@
 {
-  "name": "Radarr NAS",
-  "version": "4.0.5.5981",
-  "slug": "radarr_nas",
-  "description": "A fork of Sonarr to work with movies like Couchpotato",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -11,9 +6,7 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "4.0.5.5981",
-  "webui": "http://[HOST]:[PORT:7878]",
-  "startup": "services",
+  "description": "A fork of Sonarr to work with movies like Couchpotato",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -47,8 +40,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "map": [
     "config:rw",
@@ -56,12 +49,13 @@
     "media:rw",
     "ssl"
   ],
+  "name": "Radarr NAS",
   "options": {
-    "PUID": 0,
     "PGID": 0,
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
+    "PUID": 0,
+    "cifspassword": "<password>",
     "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
   },
   "ports": {
     "7878/tcp": 7878
@@ -74,13 +68,19 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
     "smbv1": "bool?"
-  }
+  },
+  "slug": "radarr_nas",
+  "startup": "services",
+  "upstream": "4.0.5.5981",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
+  "version": "4.0.5.5981",
+  "webui": "http://[HOST]:[PORT:7878]"
 }

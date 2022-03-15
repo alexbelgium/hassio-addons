@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "armv7": "lscr.io/linuxserver/qbittorrent:arm32v7",
     "aarch64": "lscr.io/linuxserver/qbittorrent:arm64v8",
-    "amd64": "lscr.io/linuxserver/qbittorrent:amd64"
+    "amd64": "lscr.io/linuxserver/qbittorrent:amd64",
+    "armv7": "lscr.io/linuxserver/qbittorrent:arm32v7"
   }
 }

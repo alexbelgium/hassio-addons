@@ -37,11 +37,11 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "homeassistant": "0.92.0b2",
   "environment": {
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password",
     "working_dir": "/data/photoprism"
   },
+  "homeassistant": "0.92.0b2",
   "map": [
     "media:rw",
     "share:rw",
@@ -49,16 +49,16 @@
   ],
   "name": "Photoprism",
   "options": {
-    "DB_TYPE": "sqlite",
-    "networkdisks": "//server/share",
-    "cifsusername": "username",
-    "cifspassword": "password",
-    "UPLOAD_NSFW": "true",
-    "STORAGE_PATH": "/share/photoprism/storage",
-    "ORIGINALS_PATH": "/share/photoprism/originals",
-    "IMPORT_PATH": "/share/photoprism/import",
     "BACKUP_PATH": "/share/photoprism/backup",
-    "CONFIG_LOCATION": "/config/addons_config/photoprism/config.yaml"
+    "CONFIG_LOCATION": "/config/addons_config/photoprism/config.yaml",
+    "DB_TYPE": "sqlite",
+    "IMPORT_PATH": "/share/photoprism/import",
+    "ORIGINALS_PATH": "/share/photoprism/originals",
+    "STORAGE_PATH": "/share/photoprism/storage",
+    "UPLOAD_NSFW": "true",
+    "cifspassword": "password",
+    "cifsusername": "username",
+    "networkdisks": "//server/share"
   },
   "ports": {
     "2342/tcp": 2342
@@ -70,22 +70,22 @@
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
+  "schema": {
+    "BACKUP_PATH": "str",
+    "CONFIG_LOCATION": "str",
+    "DB_TYPE": "list(sqlite|mariadb_addon)",
+    "IMPORT_PATH": "str",
+    "ORIGINALS_PATH": "str",
+    "STORAGE_PATH": "str",
+    "UPLOAD_NSFW": "bool",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?"
+  },
   "services": [
     "mysql:want"
   ],
-  "schema": {
-    "localdisks": "str?",
-    "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
-    "UPLOAD_NSFW": "bool",
-    "STORAGE_PATH": "str",
-    "ORIGINALS_PATH": "str",
-    "IMPORT_PATH": "str",
-    "BACKUP_PATH": "str",
-    "CONFIG_LOCATION": "str",
-    "DB_TYPE": "list(sqlite|mariadb_addon)"
-  },
   "slug": "photoprism",
   "upstream": "220302-impish",
   "url": "https://github.com/alexbelgium/hassio-addons-test",

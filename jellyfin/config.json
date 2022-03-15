@@ -1,5 +1,4 @@
 {
-  "host_network": true,
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -53,6 +52,8 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "host_dbus": true,
+  "host_network": true,
   "map": [
     "config:rw",
     "share:rw",
@@ -60,23 +61,22 @@
     "ssl"
   ],
   "name": "Jellyfin NAS",
-  "host_dbus": true,
   "options": {
-    "PUID": 0,
     "PGID": 0,
+    "PUID": 0,
     "data_location": "/config/addons_config/jellyfin"
   },
   "ports": {
-    "8096/tcp": 8096,
-    "8920/tcp": 8920,
+    "1900/udp": null,
     "7359/udp": null,
-    "1900/udp": null
+    "8096/tcp": 8096,
+    "8920/tcp": 8920
   },
   "ports_description": {
-    "8096/tcp": "web interface",
-    "8920/tcp": "https web interface (optional)",
+    "1900/udp": "dlna (optional)",
     "7359/udp": "udp server discover (optional)",
-    "1900/udp": "dlna (optional)"
+    "8096/tcp": "web interface",
+    "8920/tcp": "https web interface (optional)"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -84,15 +84,15 @@
     "NET_ADMIN"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
     "data_location": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
-    "cifsdomain": "str?",
     "smbv1": "bool?"
   },
   "slug": "jellyfin",

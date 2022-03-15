@@ -49,43 +49,43 @@
   ],
   "name": "Transmission NAS",
   "options": {
-    "PUID": 0,
+    "DNS_server": "8.8.8.8,1.1.1.1",
     "PGID": 0,
+    "PUID": 0,
     "customUI": "transmission-web-control",
     "download_dir": "/share/downloads",
-    "incomplete_dir": "/share/incomplete",
-    "DNS_server": "8.8.8.8,1.1.1.1"
+    "incomplete_dir": "/share/incomplete"
   },
   "ports": {
-    "9091/tcp": 9091,
     "51413/tcp": 51413,
-    "51413/udp": 51413
+    "51413/udp": 51413,
+    "9091/tcp": 9091
   },
   "ports_description": {
-    "9091/tcp": "Web UI port (required)",
     "51413/tcp": "Peer port (setup router port forwarding to this port)",
-    "51413/udp": "Peer port (setup router port forwarding to this port)"
+    "51413/udp": "Peer port (setup router port forwarding to this port)",
+    "9091/tcp": "Web UI port (required)"
   },
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
+    "DNS_server": "str?",
     "PGID": "int",
-    "customUI": "list(standard|combustion-release|transmission-web-control|kettu|flood-for-transmission)",
+    "PUID": "int",
     "TZ": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "customUI": "list(standard|combustion-release|transmission-web-control|kettu|flood-for-transmission)",
     "download_dir": "str",
     "incomplete_dir": "str?",
-    "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
-    "DNS_server": "str?",
     "localdisks": "str?",
-    "whitelist": "str?",
-    "user": "str?",
+    "networkdisks": "str?",
     "pass": "str?",
-    "smbv1": "bool?"
+    "smbv1": "bool?",
+    "user": "str?",
+    "whitelist": "str?"
   },
   "slug": "transmission_ls",
   "startup": "services",

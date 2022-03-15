@@ -12,9 +12,9 @@
   ],
   "name": "Vaultwarden (Bitwarden)",
   "options": {
-    "ssl": true,
     "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem"
+    "keyfile": "privkey.pem",
+    "ssl": true
   },
   "ports": {
     "7277/tcp": 7277
@@ -23,11 +23,11 @@
     "7277/tcp": "Bitwarden Vault"
   },
   "schema": {
-    "log_level": "list(trace|debug|info|notice|warning|error|fatal)?",
-    "ssl": "bool",
     "certfile": "str",
     "keyfile": "str",
-    "request_size_limit": "int?"
+    "log_level": "list(trace|debug|info|notice|warning|error|fatal)?",
+    "request_size_limit": "int?",
+    "ssl": "bool"
   },
   "slug": "bitwarden",
   "startup": "services",

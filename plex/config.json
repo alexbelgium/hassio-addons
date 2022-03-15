@@ -1,5 +1,4 @@
 {
-  "host_network": true,
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -51,10 +50,11 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "VERSION": "docker",
+    "PGID": "0",
     "PUID": "0",
-    "PGID": "0"
+    "VERSION": "docker"
   },
+  "host_network": true,
   "map": [
     "share:rw",
     "media:rw",
@@ -62,17 +62,16 @@
   ],
   "name": "Plex NAS",
   "options": {
-    "PUID": 0,
     "PGID": 0,
-    "claim": "Get_from_https://www.plex.tv/claim",
-    "networkdisks": "//server/share",
+    "PUID": 0,
+    "cifspassword": "password",
     "cifsusername": "username",
-    "cifspassword": "password"
+    "claim": "Get_from_https://www.plex.tv/claim",
+    "networkdisks": "//server/share"
   },
   "ports": {
     "1900/udp": 1900,
     "3005/tcp": 3005,
-    "8324/tcp": 8324,
     "32400/tcp": 32400,
     "32410/udp": 32410,
     "32412/udp": 32412,
@@ -80,12 +79,12 @@
     "32414/udp": 32414,
     "32469/tcp": 32469,
     "33400/tcp": 33400,
-    "33443/tcp": 33443
+    "33443/tcp": 33443,
+    "8324/tcp": 8324
   },
   "ports_description": {
     "1900/udp": "Plex DLNA Server",
     "3005/tcp": "Plex Home Theater via Plex Companion",
-    "8324/tcp": "Plex for Roku via Plex Companion",
     "32400/tcp": "Plex Media Server Interface",
     "32410/udp": "GDM network discovery",
     "32412/udp": "GDM network discovery",
@@ -93,22 +92,23 @@
     "32414/udp": "GDM network discovery",
     "32469/tcp": "Plex DLNA Server",
     "33400/tcp": "WebTools",
-    "33443/tcp": "WebTools"
+    "33443/tcp": "WebTools",
+    "8324/tcp": "Plex for Roku via Plex Companion"
   },
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
-    "claim": "str",
+    "PUID": "int",
     "TZ": "str?",
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "claim": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
-    "cifsdomain": "str?",
     "smbv1": "bool?"
   },
   "slug": "plex_nas",

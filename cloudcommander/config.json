@@ -65,13 +65,13 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
+    "CUSTOM_OPTIONS": "str?",
+    "DROPBOX_TOKEN": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
-    "smbv1": "bool?",
-    "CUSTOM_OPTIONS": "str?",
-    "DROPBOX_TOKEN": "str?"
+    "smbv1": "bool?"
   },
   "slug": "cloudcommander",
   "upstream": "16.0.0",

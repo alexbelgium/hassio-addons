@@ -1,6 +1,10 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
   "devices": [
@@ -36,15 +40,20 @@
     "/dev/nvme2"
   ],
   "environment": {},
-  "map": ["media:rw", "config:rw", "share:rw", "ssl"],
+  "map": [
+    "media:rw",
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
   "name": "Ubooquity",
   "options": {
-    "PUID": 0,
     "PGID": 0,
-    "maxmem": 200,
-    "ssl": false,
+    "PUID": 0,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
+    "maxmem": 200,
+    "ssl": false,
     "theme": "default"
   },
   "ports": {
@@ -55,21 +64,24 @@
     "2205/tcp": "Library page (to expose)",
     "2206/tcp": "Admin page (local)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
-    "maxmem": "int",
-    "ssl": "bool",
+    "PUID": "int",
+    "TZ": "str?",
     "certfile": "str",
-    "keyfile": "str",
-    "theme": "list(default|comixology2|plextheme-master)",
-    "networkdisks": "str?",
-    "cifsusername": "str?",
     "cifspassword": "str?",
+    "cifsusername": "str?",
+    "keyfile": "str",
     "localdisks": "str?",
+    "maxmem": "int",
+    "networkdisks": "str?",
     "smbv1": "bool?",
-    "TZ": "str?"
+    "ssl": "bool",
+    "theme": "list(default|comixology2|plextheme-master)"
   },
   "slug": "ubooquity",
   "startup": "services",

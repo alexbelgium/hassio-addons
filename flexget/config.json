@@ -16,8 +16,8 @@
   ],
   "name": "Flexget",
   "options": {
-    "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "PUID": 0
   },
   "ports": {
     "5050/tcp": 5050
@@ -26,11 +26,11 @@
     "5050/tcp": "Web interface"
   },
   "schema": {
-    "PUID": "int",
-    "PGID": "int",
-    "WebuiPass": "str?",
+    "FG_LOG_LEVEL": "list(critical|error|warning|info|verbose|debug|trace)?",
     "FG_PLUGINS": "str?",
-    "FG_LOG_LEVEL": "list(critical|error|warning|info|verbose|debug|trace)?"
+    "PGID": "int",
+    "PUID": "int",
+    "WebuiPass": "str?"
   },
   "slug": "flexget",
   "upstream": "3.3.3",

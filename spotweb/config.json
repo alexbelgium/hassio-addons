@@ -4,28 +4,25 @@
     "amd64",
     "armv7"
   ],
-  "name": "Spotweb",
-  "image": "ghcr.io/alexbelgium/spotweb-{arch}",
-  "version": "1.5.1-6",
-  "upstream": "1.5.1",
-  "slug": "spotweb",
   "description": "Spotweb is a decentralized usenet community based on the Spotnet protocol",
-  "url": "https://github.com/alexbelgium/hassio-addons/spotweb",
-  "init": false,
+  "hassio_api": true,
+  "image": "ghcr.io/alexbelgium/spotweb-{arch}",
   "ingress": true,
   "ingress_port": 8099,
-  "panel_icon": "mdi:chart-timeline",
-  "panel_title": "Spotweb",
+  "init": false,
   "map": [
     "ssl",
     "config:rw",
     "backup:rw"
   ],
+  "name": "Spotweb",
   "options": {
-    "ssl": false,
     "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem"
+    "keyfile": "privkey.pem",
+    "ssl": false
   },
+  "panel_icon": "mdi:chart-timeline",
+  "panel_title": "Spotweb",
   "ports": {
     "80/tcp": null
   },
@@ -33,19 +30,22 @@
     "80/tcp": "Not required for Ingress"
   },
   "schema": {
-    "remote_mysql_host": "str?",
-    "remote_mysql_database": "str?",
-    "remote_mysql_username": "str?",
-    "remote_mysql_password": "password?",
-    "remote_mysql_port": "int?",
-    "log_level": "list(trace|debug|info|notice|warning|error|fatal)?",
     "certfile": "str",
     "keyfile": "str",
+    "log_level": "list(trace|debug|info|notice|warning|error|fatal)?",
+    "remote_mysql_database": "str?",
+    "remote_mysql_host": "str?",
+    "remote_mysql_password": "password?",
+    "remote_mysql_port": "int?",
+    "remote_mysql_username": "str?",
     "ssl": "bool"
   },
   "services": [
     "mysql:want"
   ],
+  "slug": "spotweb",
   "startup": "services",
-  "hassio_api": true
+  "upstream": "1.5.1",
+  "url": "https://github.com/alexbelgium/hassio-addons/spotweb",
+  "version": "1.5.1-6"
 }

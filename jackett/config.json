@@ -1,9 +1,4 @@
 {
-  "name": "Jackett NAS",
-  "version": "0.20.708",
-  "slug": "jackett_nas",
-  "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jackett",
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -11,12 +6,10 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "0.20.708",
-  "startup": "services",
-  "webui": "http://[HOST]:[PORT:9117]",
+  "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "map": [
     "config:rw",
@@ -24,9 +17,10 @@
     "media:rw",
     "ssl"
   ],
+  "name": "Jackett NAS",
   "options": {
-    "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "PUID": 0
   },
   "ports": {
     "9117/tcp": 9117
@@ -39,12 +33,18 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?",
+    "cifspassword": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
-  }
+    "localdisks": "str?",
+    "networkdisks": "str?"
+  },
+  "slug": "jackett_nas",
+  "startup": "services",
+  "upstream": "0.20.708",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jackett",
+  "version": "0.20.708",
+  "webui": "http://[HOST]:[PORT:9117]"
 }

@@ -1,9 +1,4 @@
 {
-  "name": "Whoogle Search",
-  "version": "0.7.1-2",
-  "slug": "whoogle-search",
-  "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -11,17 +6,17 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "0.7.1",
-  "webui": "http://[HOST]:[PORT:5000]",
+  "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
   "devices": [],
   "environment": {},
   "map": [
     "config:rw"
   ],
+  "name": "Whoogle Search",
   "options": {
     "TZ": "Europe/Amsterdam",
-    "WHOOGLE_CONFIG_URL": "https://website.com",
-    "WHOOGLE_CONFIG_LANGUAGE": "lang_en"
+    "WHOOGLE_CONFIG_LANGUAGE": "lang_en",
+    "WHOOGLE_CONFIG_URL": "https://website.com"
   },
   "ports": {
     "5000/tcp": 5000
@@ -30,36 +25,41 @@
     "5000/tcp": "Web interface"
   },
   "schema": {
-    "TZ": "str",
-    "WHOOGLE_CONFIG_URL": "str",
-    "WHOOGLE_CONFIG_LANGUAGE": "str",
     "HTTPS_ONLY": "list(0|1)?",
-    "WHOOGLE_CONFIG_NEAR": "str?",
-    "WHOOGLE_CONFIG_GET_ONLY": "list(0|1)?",
-    "WHOOGLE_CONFIG_THEME": "list(system|light|dark)?",
-    "WHOOGLE_AUTOCOMPLETE": "list(0|1)?",
-    "WHOOGLE_CONFIG_DISABLE": "list(0|1)?",
-    "WHOOGLE_CONFIG_VIEW_IMAGE": "list(0|1)?",
-    "WHOOGLE_CSP": "list(0|1)?",
-    "WHOOGLE_CONFIG_SAFE": "list(0|1)?",
-    "WHOOGLE_CONFIG_ALTS": "list(0|1)?",
-    "WHOOGLE_CONFIG_NEW_TAB": "list(0|1)?",
-    "WHOOGLE_MINIMAL": "list(0|1)?",
+    "TZ": "str",
+    "WHOOGLE_ALT_IG": "str?",
+    "WHOOGLE_ALT_MD": "str?",
+    "WHOOGLE_ALT_RD": "str?",
+    "WHOOGLE_ALT_TL": "str?",
     "WHOOGLE_ALT_TW": "str?",
     "WHOOGLE_ALT_YT": "str?",
-    "WHOOGLE_ALT_IG": "str?",
-    "WHOOGLE_ALT_RD": "str?",
-    "WHOOGLE_ALT_MD": "str?",
-    "WHOOGLE_ALT_TL": "str?",
-    "WHOOGLE_USER": "str?",
+    "WHOOGLE_AUTOCOMPLETE": "list(0|1)?",
+    "WHOOGLE_CONFIG_ALTS": "list(0|1)?",
+    "WHOOGLE_CONFIG_BLOCK": "str?",
+    "WHOOGLE_CONFIG_COUNTRY": "str?",
+    "WHOOGLE_CONFIG_DISABLE": "list(0|1)?",
+    "WHOOGLE_CONFIG_GET_ONLY": "list(0|1)?",
+    "WHOOGLE_CONFIG_LANGUAGE": "str",
+    "WHOOGLE_CONFIG_NEAR": "str?",
+    "WHOOGLE_CONFIG_NEW_TAB": "list(0|1)?",
+    "WHOOGLE_CONFIG_SAFE": "list(0|1)?",
+    "WHOOGLE_CONFIG_SEARCH_LANGUAGE": "str?",
+    "WHOOGLE_CONFIG_THEME": "list(system|light|dark)?",
+    "WHOOGLE_CONFIG_URL": "str",
+    "WHOOGLE_CONFIG_VIEW_IMAGE": "list(0|1)?",
+    "WHOOGLE_CSP": "list(0|1)?",
+    "WHOOGLE_MINIMAL": "list(0|1)?",
     "WHOOGLE_PASS": "password?",
-    "WHOOGLE_PROXY_USER": "str?",
+    "WHOOGLE_PROXY_LOC": "str?",
     "WHOOGLE_PROXY_PASS": "str?",
     "WHOOGLE_PROXY_TYPE": "str?",
-    "WHOOGLE_PROXY_LOC": "str?",
-    "WHOOGLE_CONFIG_COUNTRY": "str?",
-    "WHOOGLE_CONFIG_SEARCH_LANGUAGE": "str?",
-    "WHOOGLE_CONFIG_BLOCK": "str?",
-    "WHOOGLE_RESULTS_PER_PAGE": "int(5,100)?"
-  }
+    "WHOOGLE_PROXY_USER": "str?",
+    "WHOOGLE_RESULTS_PER_PAGE": "int(5,100)?",
+    "WHOOGLE_USER": "str?"
+  },
+  "slug": "whoogle-search",
+  "upstream": "0.7.1",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
+  "version": "0.7.1-2",
+  "webui": "http://[HOST]:[PORT:5000]"
 }

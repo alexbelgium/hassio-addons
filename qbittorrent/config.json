@@ -40,9 +40,9 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "WEBUI_PORT": "8080",
+    "PGID": "0",
     "PUID": "0",
-    "PGID": "0"
+    "WEBUI_PORT": "8080"
   },
   "hassio_api": true,
   "hassio_role": "homeassistant",
@@ -57,27 +57,27 @@
   ],
   "name": "Qbittorrent",
   "options": {
-    "ssl": false,
-    "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem",
-    "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16",
-    "customUI": "vuetorrent",
+    "DNS_server": "8.8.8.8,1.1.1.1",
+    "PGID": "0",
+    "PUID": "0",
     "SavePath": "/share/qBittorrent",
     "Username": "admin",
-    "DNS_server": "8.8.8.8,1.1.1.1",
-    "PUID": "0",
-    "PGID": "0"
+    "certfile": "fullchain.pem",
+    "customUI": "vuetorrent",
+    "keyfile": "privkey.pem",
+    "ssl": false,
+    "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16"
   },
   "panel_icon": "mdi:progress-download",
   "ports": {
-    "8080/tcp": 8081,
     "6881/tcp": 6881,
-    "6881/udp": 6881
+    "6881/udp": 6881,
+    "8080/tcp": 8081
   },
   "ports_description": {
-    "8080/tcp": "Web UI port (nor required for Ingress)",
     "6881/tcp": "Peer port",
-    "6881/udp": "Peer port"
+    "6881/udp": "Peer port",
+    "8080/tcp": "Web UI port (nor required for Ingress)"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -85,28 +85,28 @@
     "NET_ADMIN"
   ],
   "schema": {
-    "ssl": "bool",
-    "certfile": "str",
-    "keyfile": "str",
-    "whitelist": "str?",
-    "PUID": "int?",
-    "PGID": "int?",
-    "SavePath": "str?",
-    "Username": "str?",
-    "customUI": "list(default|vuetorrent|qbit-matUI|qb-web)?",
     "DNS_server": "str?",
+    "PGID": "int?",
+    "PUID": "int?",
+    "SavePath": "str?",
+    "TZ": "str?",
+    "Username": "str?",
+    "certfile": "str",
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "customUI": "list(default|vuetorrent|qbit-matUI|qb-web)?",
+    "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "smbv1": "bool?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
-    "cifsdomain": "str?",
-    "openvpn_enabled": "bool?",
     "openvpn_config": "str?",
-    "openvpn_username": "str?",
+    "openvpn_enabled": "bool?",
     "openvpn_password": "str?",
+    "openvpn_username": "str?",
     "run_duration": "str?",
-    "TZ": "str?"
+    "smbv1": "bool?",
+    "ssl": "bool",
+    "whitelist": "str?"
   },
   "slug": "qbittorrent",
   "upstream": "release-4.4.1-ls173",

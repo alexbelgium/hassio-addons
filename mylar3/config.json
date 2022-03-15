@@ -40,8 +40,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "map": [
     "config:rw",
@@ -51,8 +51,8 @@
   ],
   "name": "Mylar3",
   "options": {
-    "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "PUID": 0
   },
   "ports": {
     "8090/tcp": 8090
@@ -65,13 +65,13 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?",
+    "cifspassword": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
+    "localdisks": "str?",
+    "networkdisks": "str?"
   },
   "slug": "mylar3",
   "upstream": "0.6.5",

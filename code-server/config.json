@@ -49,8 +49,8 @@
   ],
   "name": "VS code",
   "options": {
-    "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "PUID": 0
   },
   "ports": {
     "8443/tcp": 8443
@@ -60,13 +60,13 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
-    "localdisks": "str?",
-    "networkdisks": "str?",
-    "cifsusername": "str?",
+    "PUID": "int",
+    "TZ": "str?",
     "cifspassword": "str?",
-    "TZ": "str?"
+    "cifsusername": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?"
   },
   "slug": "code-server",
   "startup": "services",

@@ -1,9 +1,4 @@
 {
-  "name": "Lidarr NAS",
-  "version": "0.8.1.2135-ls75",
-  "slug": "lidarr_nas",
-  "description": "Music collection manager for Usenet and BitTorrent users",
-  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/Readme.md",
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -11,9 +6,7 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "0.8.1.2135-ls75",
-  "webui": "http://[HOST]:[PORT:8686]",
-  "startup": "services",
+  "description": "Music collection manager for Usenet and BitTorrent users",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -47,8 +40,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "map": [
     "config:rw",
@@ -56,12 +49,13 @@
     "media:rw",
     "config:rw"
   ],
+  "name": "Lidarr NAS",
   "options": {
-    "PUID": 0,
     "PGID": 0,
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
+    "PUID": 0,
+    "cifspassword": "<password>",
     "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
   },
   "ports": {
     "8686/tcp": 8686
@@ -74,12 +68,18 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?",
+    "cifspassword": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
-  }
+    "localdisks": "str?",
+    "networkdisks": "str?"
+  },
+  "slug": "lidarr_nas",
+  "startup": "services",
+  "upstream": "0.8.1.2135-ls75",
+  "url": "https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/Readme.md",
+  "version": "0.8.1.2135-ls75",
+  "webui": "http://[HOST]:[PORT:8686]"
 }

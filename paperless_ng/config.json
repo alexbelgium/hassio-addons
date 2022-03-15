@@ -1,6 +1,10 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "description": "scan, index and archive all your physical documents",
   "devices": [
@@ -36,15 +40,20 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
-  "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "config:rw"
+  ],
   "name": "Paperless NG",
   "options": {
-    "PUID": 0,
+    "CONFIG_LOCATION": "/config/addons_config/paperless_ng/config.yaml",
     "PGID": 0,
-    "CONFIG_LOCATION": "/config/addons_config/paperless_ng/config.yaml"
+    "PUID": 0
   },
   "ports": {
     "8000/tcp": 8011
@@ -52,17 +61,20 @@
   "ports_description": {
     "8000/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
-    "PUID": "int",
-    "PGID": "int",
-    "TZ": "str?",
     "CONFIG_LOCATION": "str",
-    "localdisks": "str?",
-    "networkdisks": "str?",
-    "cifsusername": "str?",
+    "OCRLANG": "str?",
+    "PGID": "int",
+    "PUID": "int",
+    "TZ": "str?",
     "cifspassword": "str?",
-    "OCRLANG": "str?"
+    "cifsusername": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?"
   },
   "slug": "paperless_ng",
   "upstream": "1.5.0",

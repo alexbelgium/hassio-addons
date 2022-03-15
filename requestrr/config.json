@@ -1,16 +1,20 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "description": "Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat",
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "map": [],
   "name": "requestrr",
   "options": {
-    "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "PUID": 0
   },
   "ports": {
     "4545/tcp": 4545
@@ -18,10 +22,13 @@
   "ports_description": {
     "4545/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?"
   },
   "slug": "requestrr",

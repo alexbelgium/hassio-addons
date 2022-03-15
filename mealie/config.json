@@ -7,8 +7,8 @@
   "boot": "auto",
   "description": "Mealie is a self hosted recipe manager and meal planner built in Vue",
   "environment": {
-    "DB_ENGINE": "sqlite",
-    "APP_PORT": "9925"
+    "APP_PORT": "9925",
+    "DB_ENGINE": "sqlite"
   },
   "ingress": false,
   "ingress_port": 8099,
@@ -18,9 +18,9 @@
   ],
   "name": "Mealie",
   "options": {
-    "ssl": false,
     "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem"
+    "keyfile": "privkey.pem",
+    "ssl": false
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
@@ -30,9 +30,9 @@
     "80/tcp": "Web interface"
   },
   "schema": {
-    "ssl": "bool",
     "certfile": "str",
-    "keyfile": "str"
+    "keyfile": "str",
+    "ssl": "bool"
   },
   "slug": "mealie",
   "startup": "services",

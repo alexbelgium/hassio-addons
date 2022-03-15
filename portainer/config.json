@@ -6,7 +6,8 @@
   ],
   "backup_exclude": [
     "backups",
-    "docker_config/cli-plugins" ],
+    "docker_config/cli-plugins"
+  ],
   "description": "Manage your Docker environment with ease",
   "docker_api": true,
   "hassio_api": true,
@@ -20,25 +21,25 @@
   ],
   "name": "Portainer",
   "options": {
-    "ssl": false,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "password": "default"
+    "password": "default",
+    "ssl": false
   },
   "panel_icon": "mdi:docker",
   "ports": {
-    "9099/tcp": 9000,
-    "8000/tcp": null
+    "8000/tcp": null,
+    "9099/tcp": 9000
   },
   "ports_description": {
-    "9099/tcp": "Web UI port",
-    "8000/tcp": "Edge Agent Api (Enable when managing remote edge agents)"
+    "8000/tcp": "Edge Agent Api (Enable when managing remote edge agents)",
+    "9099/tcp": "Web UI port"
   },
   "schema": {
-    "ssl": "bool",
     "certfile": "str",
     "keyfile": "str",
-    "password": "str?"
+    "password": "str?",
+    "ssl": "bool"
   },
   "slug": "portainer",
   "startup": "services",

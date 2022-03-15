@@ -40,8 +40,8 @@
   ],
   "environment": {
     "FB_BASEURL": "/filebrowser",
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "ingress": true,
   "ingress_port": 8099,
@@ -56,10 +56,10 @@
   ],
   "name": "Filebrowser",
   "options": {
-    "ssl": false,
+    "NoAuth": true,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "NoAuth": true
+    "ssl": false
   },
   "panel_icon": "mdi:file-search",
   "ports": {
@@ -73,16 +73,16 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "ssl": "bool",
+    "NoAuth": "bool",
+    "base_folder": "str?",
     "certfile": "str",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
     "smbv1": "bool?",
-    "NoAuth": "bool",
-    "base_folder": "str?"
+    "ssl": "bool"
   },
   "slug": "filebrowser",
   "startup": "services",

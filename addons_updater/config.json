@@ -1,13 +1,17 @@
 {
   "apparmor": true,
-  "codenotary": "alexandrep.github@gmail.com",
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "manual",
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "Automatic addons update by aligning version tag with upstream releases",
-  "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "environment": {
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
+  "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "name": "Addons_Updater",
   "options": {
     "addon": [
@@ -30,13 +34,13 @@
     "addon": [
       {
         "beta": "bool",
+        "filter": "str?",
         "fulltag": "bool",
         "having_asset": "bool?",
         "repository": "str",
         "slug": "str",
-        "upstream": "str",
         "source": "str?",
-        "filter": "str?"
+        "upstream": "str"
       }
     ],
     "gitapi": "str?",

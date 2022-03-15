@@ -1,6 +1,8 @@
 {
   "apparmor": true,
-  "arch": ["amd64"],
+  "arch": [
+    "amd64"
+  ],
   "boot": "auto",
   "description": "Import financial transactions from you FinTS enabled bank into Firefly III",
   "devices": [],
@@ -8,7 +10,11 @@
     "TRUSTED_PROXIES": "**"
   },
   "image": "ghcr.io/alexbelgium/fireflyiii_fints_importer-{arch}",
-  "map": ["config:rw", "share:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
   "name": "Firefly iii FinTS Importer",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/fireflyiii_fints_importer/config.yaml"

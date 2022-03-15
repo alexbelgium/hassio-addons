@@ -8,8 +8,8 @@
   "boot": "auto",
   "description": "Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required",
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "map": [
     "config:rw",
@@ -19,11 +19,11 @@
   ],
   "name": "Prowlarr NAS",
   "options": {
-    "PUID": 0,
     "PGID": 0,
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
+    "PUID": 0,
+    "cifspassword": "<password>",
     "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
   },
   "ports": {
     "9696/tcp": 9696
@@ -36,12 +36,12 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
-    "networkdisks": "str?",
-    "cifsusername": "str?",
     "cifspassword": "str?",
+    "cifsusername": "str?",
+    "networkdisks": "str?",
     "smbv1": "bool?"
   },
   "slug": "prowlarr",

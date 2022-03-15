@@ -1,16 +1,21 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "description": "Free and Open, Distributed, RESTful Search Engine",
   "environment": {
     "ES_JAVA_OPTS": "-Xms1024M -Xmx1024M",
+    "TINI_SUBREAPER": "true",
     "bootstrap.memory_lock": "true",
-    "discovery.type": "single-node",
-    "TINI_SUBREAPER": "true"
+    "discovery.type": "single-node"
   },
-  "map": ["config:rw"],
+  "host_network": true,
+  "map": [
+    "config:rw"
+  ],
   "name": "Elasticsearch server",
   "options": {},
-  "host_network": true,
   "ports": {
     "9200/tcp": 9200,
     "9300/tcp": 9300

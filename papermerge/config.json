@@ -1,17 +1,26 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "description": "Open source document management system (DMS)",
   "environment": {},
-  "map": ["share:rw", "media:rw", "ssl", "config:rw"],
+  "map": [
+    "share:rw",
+    "media:rw",
+    "ssl",
+    "config:rw"
+  ],
   "name": "Papermerge",
   "options": {
-    "PUID": 0,
+    "CONFIG_LOCATION": "/config/addons_config/papermerge",
     "PGID": 0,
-    "ocrlang": "eng,fra",
-    "storage_dir": "/data/media",
+    "PUID": 0,
     "import_dir": "/share/papermerge/import",
-    "CONFIG_LOCATION": "/config/addons_config/papermerge"
+    "ocrlang": "eng,fra",
+    "storage_dir": "/data/media"
   },
   "ports": {
     "8000/tcp": 8000
@@ -19,22 +28,25 @@
   "ports_description": {
     "8000/tcp": "Web UI port (required)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
-    "PUID": "int",
-    "PGID": "int",
-    "ocrlang": "str",
-    "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
-    "storage_dir": "str",
-    "import_dir": "str",
-    "smbv1": "bool?",
-    "imaphost": "str?",
-    "imapusername": "str?",
-    "imappassword": "str?",
     "CONFIG_LOCATION": "str",
-    "TZ": "str?"
+    "PGID": "int",
+    "PUID": "int",
+    "TZ": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "imaphost": "str?",
+    "imappassword": "str?",
+    "imapusername": "str?",
+    "import_dir": "str",
+    "networkdisks": "str?",
+    "ocrlang": "str",
+    "smbv1": "bool?",
+    "storage_dir": "str"
   },
   "slug": "papermerge",
   "upstream": "2.0.1",

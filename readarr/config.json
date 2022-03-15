@@ -1,9 +1,4 @@
 {
-  "name": "Readarr NAS",
-  "version": "nightly-0.1.1.1278-ls101",
-  "slug": "readarr_nas",
-  "description": "Book Manager and Automation",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -11,9 +6,7 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "nightly-0.1.1.1278-ls101",
-  "webui": "http://[HOST]:[PORT:8787]",
-  "startup": "services",
+  "description": "Book Manager and Automation",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -47,8 +40,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "map": [
     "config:rw",
@@ -56,10 +49,11 @@
     "media:rw",
     "config:rw"
   ],
+  "name": "Readarr NAS",
   "options": {
-    "PUID": 0,
+    "CONFIG_LOCATION": "/config/readarr",
     "PGID": 0,
-    "CONFIG_LOCATION": "/config/readarr"
+    "PUID": 0
   },
   "ports": {
     "8787/tcp": 8787
@@ -72,13 +66,19 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
+    "CONFIG_LOCATION": "str",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?",
-    "cifsusername": "str?",
     "cifspassword": "str?",
-    "CONFIG_LOCATION": "str"
-  }
+    "cifsusername": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?"
+  },
+  "slug": "readarr_nas",
+  "startup": "services",
+  "upstream": "nightly-0.1.1.1278-ls101",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
+  "version": "nightly-0.1.1.1278-ls101",
+  "webui": "http://[HOST]:[PORT:8787]"
 }

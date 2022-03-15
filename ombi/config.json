@@ -1,9 +1,4 @@
 {
-  "name": "Ombi",
-  "version": "4.10.2",
-  "slug": "ombi",
-  "description": "Self-hosted Plex Request and user management system",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/ombi",
   "apparmor": true,
   "arch": [
     "aarch64",
@@ -11,16 +6,15 @@
     "armv7"
   ],
   "boot": "auto",
-  "upstream": "4.10.2",
-  "webui": "http://[HOST]:[PORT:3579]",
-  "startup": "services",
+  "description": "Self-hosted Plex Request and user management system",
   "environment": {},
   "map": [
     "config:rw"
   ],
+  "name": "Ombi",
   "options": {
-    "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "PUID": 0
   },
   "ports": {
     "3579/tcp": 3579
@@ -29,7 +23,13 @@
     "3579/tcp": "Web interface"
   },
   "schema": {
-    "PUID": "int",
-    "PGID": "int"
-  }
+    "PGID": "int",
+    "PUID": "int"
+  },
+  "slug": "ombi",
+  "startup": "services",
+  "upstream": "4.10.2",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/ombi",
+  "version": "4.10.2",
+  "webui": "http://[HOST]:[PORT:3579]"
 }

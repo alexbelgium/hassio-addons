@@ -1,5 +1,9 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "description": "An open source command line RatioMaster with WebUI",
   "environment": {},
@@ -7,12 +11,14 @@
   "host_network": false,
   "ingress": true,
   "ingress_port": 8099,
-  "map": ["config:rw"],
+  "map": [
+    "config:rw"
+  ],
   "name": "Joal",
   "options": {
-    "ui_path": "joal",
+    "run_duration": "12h",
     "secret_token": "lrMY24Byhx",
-    "run_duration": "12h"
+    "ui_path": "joal"
   },
   "panel_icon": "mdi:owl",
   "ports": {
@@ -24,9 +30,9 @@
     "8081/tcp": "Web UI port (required)"
   },
   "schema": {
-    "ui_path": "str",
-    "secret_token": "str",
     "run_duration": "str?",
+    "secret_token": "str",
+    "ui_path": "str",
     "verbose": "bool?"
   },
   "slug": "joal",

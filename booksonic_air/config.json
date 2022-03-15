@@ -40,8 +40,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PUID": "0",
-    "PGID": "0"
+    "PGID": "0",
+    "PUID": "0"
   },
   "map": [
     "share:rw",
@@ -49,11 +49,11 @@
   ],
   "name": "Booksonic-air",
   "options": {
-    "PUID": 0,
     "PGID": 0,
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>",
+    "PUID": 0,
+    "cifspassword": "<password>",
     "cifsusername": "<username>",
-    "cifspassword": "<password>"
+    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
   },
   "ports": {
     "4040/tcp": 4040
@@ -66,13 +66,13 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?",
+    "cifspassword": "str?",
     "cifsusername": "str?",
-    "cifspassword": "str?"
+    "localdisks": "str?",
+    "networkdisks": "str?"
   },
   "slug": "booksonic-air_nas",
   "upstream": "v2201.1.0-ls48",

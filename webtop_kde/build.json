@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "armv7": "lscr.io/linuxserver/webtop:arm32v7-",
     "aarch64": "lscr.io/linuxserver/webtop:arm64v8-",
-    "amd64": "lscr.io/linuxserver/webtop:amd64-"
+    "amd64": "lscr.io/linuxserver/webtop:amd64-",
+    "armv7": "lscr.io/linuxserver/webtop:arm32v7-"
   }
 }

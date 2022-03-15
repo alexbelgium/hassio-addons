@@ -6,15 +6,6 @@
     "armv7"
   ],
   "boot": "auto",
-  "devicetree": true,
-  "environment": {
-    "PUID": "1000",
-    "PGID": "1000",
-    "TITLE": "Alpine KDE webtop",
-    "HOME": "/share/webtop_kde",
-    "FM_HOME": "/share/webtop_kde",
-    "shm_size": "1gb"
-  },
   "description": "Full linux desktop environment accessible via any modern web browser",
   "devices": [
     "/dev/fuse",
@@ -61,56 +52,65 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "devicetree": true,
+  "environment": {
+    "FM_HOME": "/share/webtop_kde",
+    "HOME": "/share/webtop_kde",
+    "PGID": "1000",
+    "PUID": "1000",
+    "TITLE": "Alpine KDE webtop",
+    "shm_size": "1gb"
+  },
+  "host_dbus": true,
   "image": "ghcr.io/alexbelgium/webtop-kde-{arch}",
   "ingress": true,
-  "panel_icon": "mdi:Monitor",
-  "video": true,
   "map": [
     "media:rw",
     "share:rw",
     "ssl"
   ],
   "name": "Webtop Alpine KDE",
+  "options": {
+    "DNS_server": "8.8.8.8",
+    "PGID": 1000,
+    "PUID": 1000,
+    "additional_apps": "engrampa,libreoffice",
+    "rpi_video_drivers": true
+  },
+  "panel_icon": "mdi:Monitor",
+  "ports": {
+    "3000/tcp": null
+  },
+  "ports_description": {
+    "3000/tcp": "web interface"
+  },
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH",
     "NET_ADMIN"
   ],
-  "ports": {
-    "3000/tcp": null
-  },
-  "udev": true,
-  "host_dbus": true,
-  "ports_description": {
-    "3000/tcp": "web interface"
-  },
-  "options": {
-    "PUID": 1000,
-    "PGID": 1000,
-    "DNS_server": "8.8.8.8",
-    "rpi_video_drivers": true,
-    "additional_apps": "engrampa,libreoffice"
-  },
   "schema": {
-    "PUID": "int",
+    "DNS_server": "str?",
+    "KEYBOARD": "list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?",
+    "PASSWORD": "str?",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?",
+    "additional_apps": "str?",
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "data_location": "str?",
+    "edge_repositories": "bool?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "cifsusername": "str?",
-    "cifspassword": "str?",
-    "cifsdomain": "str?",
-    "DNS_server": "str?",
-    "PASSWORD": "str?",
-    "KEYBOARD": "list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?",
-    "additional_apps": "str?",
-    "rpi_video_drivers": "bool?",
-    "edge_repositories": "bool?",
-    "data_location": "str?"
+    "rpi_video_drivers": "bool?"
   },
   "slug": "webtop-kde",
+  "udev": true,
   "upstream": "4.16-r0-ls47",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.16-r0-ls47",
+  "video": true,
   "webui": "http://[HOST]:[PORT:3000]"
 }

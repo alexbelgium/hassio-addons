@@ -27,14 +27,14 @@
     "8080/tcp": "web interface"
   },
   "schema": {
+    "CONFIG_LOCATION": "str",
     "FIREFLY_III_ACCESS_TOKEN": "str",
-    "FIREFLY_III_URL": "str",
     "FIREFLY_III_CLIENT_ID": "str?",
+    "FIREFLY_III_URL": "str",
     "NORDIGEN_ID": "str?",
     "NORDIGEN_KEY": "str?",
     "SPECTRE_APP_ID": "str?",
     "SPECTRE_SECRET": "str?",
-    "CONFIG_LOCATION": "str",
     "Updates": "list(hourly|daily|weekly)?",
     "silent": "bool?"
   },

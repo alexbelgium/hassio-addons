@@ -15,8 +15,8 @@
   ],
   "name": "Grav web server",
   "options": {
-    "PUID": 1000,
-    "PGID": 1000
+    "PGID": 1000,
+    "PUID": 1000
   },
   "ports": {
     "80/tcp": 9191
@@ -26,8 +26,8 @@
   },
   "privileged": [],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
+    "PUID": "int",
     "TZ": "str?"
   },
   "slug": "grav",

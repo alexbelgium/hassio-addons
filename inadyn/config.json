@@ -1,50 +1,56 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "description": "Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)",
   "environment": {},
   "host_network": true,
-  "map": ["ssl"],
+  "map": [
+    "ssl"
+  ],
   "name": "Inadyn",
   "options": {
     "providers": [
       {
-        "provider": "yourprovider",
-        "username": "username",
+        "hostname": "dynamic-subdomain.example.com",
         "password": "password",
-        "hostname": "dynamic-subdomain.example.com"
+        "provider": "yourprovider",
+        "username": "username"
       }
     ]
   },
   "schema": {
-    "verify_address": "bool?",
-    "fake_address": "bool?",
     "allow_ipv6": "bool?",
+    "fake_address": "bool?",
+    "forced_update": "int?",
     "iface": "str?",
     "iterations": "int?",
     "period": "int?",
-    "forced_update": "int?",
-    "secure_ssl": "bool?",
     "providers": [
       {
-        "provider": "str",
-        "custom_provider": "bool?",
-        "username": "str",
-        "password": "str?",
-        "ssl": "bool?",
-        "hostname": "str",
-        "checkip_ssl": "bool?",
-        "checkip_server": "str?",
+        "append_myip": "bool?",
         "checkip_command": "str?",
         "checkip_path": "str?",
-        "user_agent": "str?",
-        "wildcard": "bool?",
-        "ddns_server": "str?",
+        "checkip_server": "str?",
+        "checkip_ssl": "bool?",
+        "custom_provider": "bool?",
         "ddns_path": "str?",
-        "append_myip": "bool?",
+        "ddns_server": "str?",
+        "hostname": "str",
+        "password": "str?",
+        "provider": "str",
         "proxied": "bool?",
-        "ttl": "int?"
+        "ssl": "bool?",
+        "ttl": "int?",
+        "user_agent": "str?",
+        "username": "str",
+        "wildcard": "bool?"
       }
-    ]
+    ],
+    "secure_ssl": "bool?",
+    "verify_address": "bool?"
   },
   "slug": "inadyn",
   "upstream": "2.9.1",
