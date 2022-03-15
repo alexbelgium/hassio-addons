@@ -1,4 +1,4 @@
-name: Weekly beautify
+name: Weekly prettier
 
 on:
   schedule:
