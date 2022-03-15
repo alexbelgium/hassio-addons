@@ -21,5 +21,6 @@ jobs:
         uses: creyD/prettier_action@v4.2
         with:
           # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{js,md,json,yml,yaml,sh}
+          prettier_options: --write **/*.{js,md,json,yml,yaml}
+          prettier_plugins: prettier-plugin-sort-json
           file_pattern: "."
