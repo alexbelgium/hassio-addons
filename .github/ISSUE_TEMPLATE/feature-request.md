@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ""
-labels: "prevent stale, enhancement"
+labels: ['prevent stale', 'enhancement']
 assignees: ""
 ---
 
