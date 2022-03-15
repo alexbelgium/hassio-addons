@@ -1,10 +1,9 @@
-name: CI
+name: Weekly bash beautify
 
 on:
-  pull_request:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
       
 jobs:
   beautify:
@@ -22,9 +21,9 @@ jobs:
           # Pass beautysh options in args, for example:
           args: '*.sh --indent-size 4'
 
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Create New Pull Request If Needed
+        uses: peter-evans/create-pull-request@v3
         with:
-          commit_message: '[auto] ci: apply beautysh changes'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          title: [auto] ci: apply beautysh changes
+          branch-suffix: timestamp
+          commit-message: Beautify bash
