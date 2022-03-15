@@ -31,4 +31,4 @@ jobs:
         stale-pr-label: 'stale'
         days-before-stale: '5'
         days-before-close: '2'
-        exempt-issue-labels: 'enhancement'
+        exempt-issue-labels: 'prevent_stale'
