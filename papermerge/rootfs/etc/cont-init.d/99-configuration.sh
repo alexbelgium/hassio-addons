@@ -26,20 +26,20 @@ bashio::log.info "Import dir set to $IMPORTDIR"
 ##################
 
 if [ ! -d /config ]; then
-  echo "Creating /config"
-  mkdir -p /config
+    echo "Creating /config"
+    mkdir -p /config
 fi
 chown -R abc:abc /config
 
 if [ ! -d "$MEDIADIR" ]; then
-  echo "Creating $MEDIADIR"
-  mkdir -p "$MEDIADIR"
+    echo "Creating $MEDIADIR"
+    mkdir -p "$MEDIADIR"
 fi
 chown -R abc:abc "$MEDIADIR"
 
 if [ ! -d "$IMPORTDIR" ]; then
-  echo "Creating $IMPORTDIR"
-  mkdir -p "$IMPORTDIR"
+    echo "Creating $IMPORTDIR"
+    mkdir -p "$IMPORTDIR"
 fi
 chown -R abc:abc "$IMPORTDIR"
 

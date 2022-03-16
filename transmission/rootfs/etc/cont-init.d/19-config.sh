@@ -24,8 +24,8 @@ mkdir -p /config/transmission || true
 chown -R abc:abc /config/transmission || true
 
 if ! bashio::fs.file_exists "$CONFIGDIR/settings.json"; then
-  echo "Creating default config"
-  cp "/defaults/settings.json" "$CONFIGDIR/settings.json"
+    echo "Creating default config"
+    cp "/defaults/settings.json" "$CONFIGDIR/settings.json"
 fi
 
 #################
@@ -36,16 +36,16 @@ fi
 ##############
 
 if bashio::config.has_value 'customUI'; then
-  CUSTOMUI=$(bashio::config 'customUI')
-  [ "$CUSTOMUI" != "standard" ] && sed -i "1a export TRANSMISSION_WEB_HOME=\"/$CUSTOMUI/\"" /etc/services.d/transmission/run
+    CUSTOMUI=$(bashio::config 'customUI')
+    [ "$CUSTOMUI" != "standard" ] && sed -i "1a export TRANSMISSION_WEB_HOME=\"/$CUSTOMUI/\"" /etc/services.d/transmission/run
 
-  # Enable transmission-web-control return to default UI
-  if [ ! -f "/transmission-web-control/index.original.html" ]; then
-    ln -s /usr/share/transmission/web/style /transmission-web-control
-    ln -s /usr/share/transmission/web/images /transmission-web-control
-    ln -s /usr/share/transmission/web/javascript /transmission-web-control
-    ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
-  fi
+    # Enable transmission-web-control return to default UI
+    if [ ! -f "/transmission-web-control/index.original.html" ]; then
+        ln -s /usr/share/transmission/web/style /transmission-web-control
+        ln -s /usr/share/transmission/web/images /transmission-web-control
+        ln -s /usr/share/transmission/web/javascript /transmission-web-control
+        ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
+    fi
 fi
 bashio::log.info "UI selected : $CUSTOMUI"
 
@@ -64,13 +64,13 @@ chown abc:abc "$download_dir"
 
 # if incomplete dir > 2, to allow both null and '', set it as existing
 if [ ${#incomplete_dir} -ge 2 ]; then
-  echo "Incomplete dir set: $incomplete_dir"
-  CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
-  mkdir -p "$incomplete_dir"
-  chown abc:abc "$incomplete_dir"
+    echo "Incomplete dir set: $incomplete_dir"
+    CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
+    mkdir -p "$incomplete_dir"
+    chown abc:abc "$incomplete_dir"
 else
-  echo "Incomplete dir disabled"
-  CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=false")
+    echo "Incomplete dir disabled"
+    CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=false")
 fi
 
 # Defaults
@@ -80,7 +80,7 @@ CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-host-whitelist-enabled\"=false")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"bind-address-ipv4\"=\"0.0.0.0\"")
 
 echo "${CONFIG}" >"$CONFIGDIR"/settings.json &&
-  jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json $CONFIGDIR/settings.json
+jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json $CONFIGDIR/settings.json
 
 # USER and PASS
 ###############
@@ -89,17 +89,17 @@ CONFIG=$(<"$CONFIGDIR"/settings.json)
 USER=$(bashio::config 'user')
 PASS=$(bashio::config 'pass')
 if bashio::config.has_value 'user'; then
-  BOOLEAN=true
-  bashio::log.info "User & Pass set, authentification will be with user : $USER and pass : $PASS"
+    BOOLEAN=true
+    bashio::log.info "User & Pass set, authentification will be with user : $USER and pass : $PASS"
 else
-  BOOLEAN=false
-  bashio::log.warning "User & Pass not set, no authentification required"
+    BOOLEAN=false
+    bashio::log.warning "User & Pass not set, no authentification required"
 fi
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-authentication-required\"=${BOOLEAN}")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-username\"=\"${USER}\"")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-password\"=\"${PASS}\"")
 echo "${CONFIG}" >"$CONFIGDIR"/settings.json &&
-  jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json "$CONFIGDIR"/settings.json
+jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json "$CONFIGDIR"/settings.json
 
 # WHITELIST
 ###########
@@ -107,13 +107,13 @@ echo "${CONFIG}" >"$CONFIGDIR"/settings.json &&
 CONFIG=$(<"$CONFIGDIR"/settings.json)
 WHITELIST=$(bashio::config 'whitelist')
 if bashio::config.has_value 'whitelist'; then
-  BOOLEAN=true
-  bashio::log.info "Whitelist set, no authentification from IP $WHITELIST"
+    BOOLEAN=true
+    bashio::log.info "Whitelist set, no authentification from IP $WHITELIST"
 else
-  BOOLEAN=false
-  sed -i "2 i\"rpc-whitelist-enabled\": false," "$CONFIGDIR"/settings.json
+    BOOLEAN=false
+    sed -i "2 i\"rpc-whitelist-enabled\": false," "$CONFIGDIR"/settings.json
 fi
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-whitelist-enabled\"=${BOOLEAN}")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-whitelist\"=\"$WHITELIST\"")
 echo "${CONFIG}" >"$CONFIGDIR"/settings.json &&
-  jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json "$CONFIGDIR"/settings.json
+jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json "$CONFIGDIR"/settings.json

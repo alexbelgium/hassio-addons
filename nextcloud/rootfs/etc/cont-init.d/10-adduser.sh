@@ -22,7 +22,7 @@ Brought to you by linuxserver.io
 -------------------------------------'
 if [[ -f /donate.txt ]]; then
     echo '
-To support the app dev(s) visit:'
+    To support the app dev(s) visit:'
     cat /donate.txt
 fi
 echo '

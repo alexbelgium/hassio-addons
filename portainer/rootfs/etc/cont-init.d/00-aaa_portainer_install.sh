@@ -18,6 +18,6 @@ if [ -e "/PORTFILE" ]; then
 
     curl -f -L -s \
         "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" |
-        tar zxvf - -C /opt/
+    tar zxvf - -C /opt/
     echo "... success!"
 fi

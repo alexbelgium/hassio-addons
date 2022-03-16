@@ -42,15 +42,15 @@ FREQUENCY=$(bashio::config 'Updates')
 bashio::log.info "$FREQUENCY updates"
 
 case $FREQUENCY in
-"Hourly")
-  sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
-  ;;
+    "Hourly")
+        sed -i -e '$a 0 * * * * /run.sh' /etc/crontabs/root
+        ;;
 
-"Daily")
-  sed -i -e '$a 0 0 * * * /run.sh' /etc/crontabs/root
-  ;;
+    "Daily")
+        sed -i -e '$a 0 0 * * * /run.sh' /etc/crontabs/root
+        ;;
 
-"Weekly")
-  sed -i -e '$a 0 0 * * 0 /run.sh' /etc/crontabs/root
-  ;;
+    "Weekly")
+        sed -i -e '$a 0 0 * * 0 /run.sh' /etc/crontabs/root
+        ;;
 esac
