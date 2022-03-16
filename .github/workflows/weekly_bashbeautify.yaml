@@ -1,0 +1,29 @@
+name: Weekly bash beautify
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+      
+jobs:
+  beautify:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          
+      - name: Run beautysh
+        uses: illvart/beautysh-action@latest
+        with:
+          # Pass beautysh options in args, for example:
+          args: '**/*.sh --indent-size 4'
+
+      - name: Create New Pull Request If Needed
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Apply beautysh changes"
+          branch-suffix: timestamp
+          commit-message: Beautify bash
