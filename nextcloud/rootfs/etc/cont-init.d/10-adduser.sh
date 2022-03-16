@@ -21,9 +21,9 @@ echo '
 Brought to you by linuxserver.io
 -------------------------------------'
 if [[ -f /donate.txt ]]; then
-    echo '
-To support the app dev(s) visit:'
-    cat /donate.txt
+  echo '
+  To support the app dev(s) visit:'
+  cat /donate.txt
 fi
 echo '
 To support LSIO projects visit:

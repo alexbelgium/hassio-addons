@@ -17,19 +17,19 @@ bashio::log.info "Defining database"
 export DB_TYPE=$(bashio::config 'DB_TYPE')
 case $(bashio::config 'DB_TYPE') in
 
-# Use sqlite
-sqlite)
+    # Use sqlite
+  sqlite)
     bashio::log.info "Using a local sqlite database"
     export DB_ENGINE="django.db.backends.sqlite3"
     export POSTGRES_DB="/config/addons_config/tandoor_recipes/recipes.db"
     ;;
 
-mariadb_addon)
+  mariadb_addon)
     bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
     if ! bashio::services.available 'mysql'; then
-        bashio::log.fatal \
+      bashio::log.fatal \
         "Local database access should be provided by the MariaDB addon"
-        bashio::exit.nok \
+      bashio::exit.nok \
         "Please ensure it is installed and started"
     fi
 
@@ -51,7 +51,7 @@ mariadb_addon)
     bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
     ;;
 
-postgresql_external)
+  postgresql_external)
     bashio::log.info "Using an external database, please populate all required fields in the addons config"
     export DB_ENGINE=django.db.backends.postgresql
     export POSTGRES_HOST=$(bashio::config "POSTGRES_HOST") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"

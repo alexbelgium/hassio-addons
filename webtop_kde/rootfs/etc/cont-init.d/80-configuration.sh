@@ -4,9 +4,9 @@
 
 # Add Edge repositories
 if bashio::config.true 'edge_repositories'; then
-bashio::log.info "Changing app repositories to edge"
-{ echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
-  echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing";
+  bashio::log.info "Changing app repositories to edge"
+  { echo "https://dl-cdn.alpinelinux.org/alpine/edge/community";
+    echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing";
   echo "https://dl-cdn.alpinelinux.org/alpine/edge/main"; } > /etc/apk/repositories
 fi
 

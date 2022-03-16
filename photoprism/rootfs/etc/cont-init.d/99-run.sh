@@ -9,17 +9,17 @@ bashio::log.info "Defining database"
 
 case $(bashio::config 'DB_TYPE') in
 
-# Use sqlite
-sqlite)
+    # Use sqlite
+  sqlite)
     bashio::log.info "Using a local sqlite database"
     ;;
 
-mariadb_addon)
+  mariadb_addon)
     bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
     if ! bashio::services.available 'mysql'; then
-        bashio::log.fatal \
+      bashio::log.fatal \
         "Local database access should be provided by the MariaDB addon"
-        bashio::exit.nok \
+      bashio::exit.nok \
         "Please ensure it is installed and started"
     fi
 

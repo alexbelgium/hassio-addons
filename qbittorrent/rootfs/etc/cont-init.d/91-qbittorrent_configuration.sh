@@ -130,11 +130,11 @@ chown abc:abc /webui
 
 CUSTOMUI=$(bashio::config 'customUI')
 if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ]; then
-    ### Variables
-    bashio::log.info "Alternate UI enabled : $CUSTOMUI. If webui don't work, disable this option"
+  ### Variables
+  bashio::log.info "Alternate UI enabled : $CUSTOMUI. If webui don't work, disable this option"
 
-    ### Download WebUI
-    case $CUSTOMUI in
+  ### Download WebUI
+  case $CUSTOMUI in
     "vuetorrent")
       curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
       ;;
@@ -147,19 +147,19 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ]; then
       curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
       ;;
 
-    esac
+  esac
 
-    ### Install WebUI
-    mkdir -p /webui/"$CUSTOMUI"
-    unzip -q /webui/release.zip -d /webui/"$CUSTOMUI"
-    rm /webui/*.zip
-    CUSTOMUIDIR="$(dirname "$(find /webui/"$CUSTOMUI" -iname "public" -type d)")"
-    # Set qbittorrent
-    sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
-    sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
-    # Set nginx
-    #sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
-    #sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf
+  ### Install WebUI
+  mkdir -p /webui/"$CUSTOMUI"
+  unzip -q /webui/release.zip -d /webui/"$CUSTOMUI"
+  rm /webui/*.zip
+  CUSTOMUIDIR="$(dirname "$(find /webui/"$CUSTOMUI" -iname "public" -type d)")"
+  # Set qbittorrent
+  sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/qBittorrent/qBittorrent.conf
+  sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/qBittorrent/qBittorrent.conf
+  # Set nginx
+  #sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
+  #sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf
 
 fi
 

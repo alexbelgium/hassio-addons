@@ -18,18 +18,18 @@ bashio::log.info "Defining database"
 export DB_TYPE=$(bashio::config 'DB_TYPE')
 case $(bashio::config 'DB_TYPE') in
 
-# Use sqlite
-sqlite)
+    # Use sqlite
+  sqlite)
     bashio::log.info "Using a local sqlite database $WEBTREES_HOME/$DB_NAME please wait then login. Default credentials : $WT_USER : $WT_PASS"
     ;;
 
-mariadb_addon)
+  mariadb_addon)
     bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
     if ! bashio::services.available 'mysql'; then
-        bashio::log.fatal \
-            "Local database access should be provided by the MariaDB addon"
-        bashio::exit.nok \
-            "Please ensure it is installed and started"
+      bashio::log.fatal \
+        "Local database access should be provided by the MariaDB addon"
+      bashio::exit.nok \
+        "Please ensure it is installed and started"
     fi
 
     # Use values
@@ -45,7 +45,7 @@ mariadb_addon)
     bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
     ;;
 
-external)
+  external)
     bashio::log.info "Using an external database, please populate all required fields in the config.yaml according to dovumentation"
     ;;
 
@@ -59,24 +59,24 @@ esac
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
 
-    #set variables
-    CERTFILE=$(bashio::config 'certfile')
-    KEYFILE=$(bashio::config 'keyfile')
+  #set variables
+  CERTFILE=$(bashio::config 'certfile')
+  KEYFILE=$(bashio::config 'keyfile')
 
-    #Replace variables
-    sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/default-ssl.conf
-    sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/default-ssl.conf
-    sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
-    sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
+  #Replace variables
+  sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/default-ssl.conf
+  sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/default-ssl.conf
+  sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
+  sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
 
-    #Send env variables
-    export HTTPS=true
-    export SSL=true
-    BASE_URL="$BASE_URL":$(bashio::addon.port 443)
-    export BASE_URL="${BASE_URL/http:/https:}"
+  #Send env variables
+  export HTTPS=true
+  export SSL=true
+  BASE_URL="$BASE_URL":$(bashio::addon.port 443)
+  export BASE_URL="${BASE_URL/http:/https:}"
 
-    #Communication
-    bashio::log.info "Ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+  #Communication
+  bashio::log.info "Ssl enabled. If webui don't work, disable ssl or check your certificate paths"
 fi
 
 ##############
@@ -99,12 +99,12 @@ chown -R www-data:www-data "$WEBTREES_HOME"
 # Make links with share
 echo "... make links with data in /share"
 for VOL in "data" "modules_v4"; do
-    mkdir -p "$OLD_WEBTREES_HOME"/"$VOL"
-    cp -rn "$OLD_WEBTREES_HOME"/"$VOL" "$WEBTREES_HOME" || true
-    # shellcheck disable=SC2115
-    rm -r "$OLD_WEBTREES_HOME"/"$VOL" || true
-    echo "... linking $VOL"
-    ln -s "$WEBTREES_HOME"/"$VOL" "$OLD_WEBTREES_HOME"
+  mkdir -p "$OLD_WEBTREES_HOME"/"$VOL"
+  cp -rn "$OLD_WEBTREES_HOME"/"$VOL" "$WEBTREES_HOME" || true
+  # shellcheck disable=SC2115
+  rm -r "$OLD_WEBTREES_HOME"/"$VOL" || true
+  echo "... linking $VOL"
+  ln -s "$WEBTREES_HOME"/"$VOL" "$OLD_WEBTREES_HOME"
 done
 
 chown -R www-data:www-data "$WEBTREES_HOME"
@@ -112,10 +112,10 @@ chown -R www-data:www-data "$WEBTREES_HOME"
 # Correct base url if needed
 echo "... align base url with latest addon value"
 if [ -f "$WEBTREES_HOME"/data/config.ini.php ]; then
-    echo "Aligning base_url addon config"
-    LINE=$(sed -n '/base_url/=' "$WEBTREES_HOME"/data/config.ini.php)
-    sed -i "$LINE a base_url=\"$BASE_URL\"" "$WEBTREES_HOME"/data/config.ini.php
-    sed -i "$LINE d" "$WEBTREES_HOME"/data/config.ini.php
+  echo "Aligning base_url addon config"
+  LINE=$(sed -n '/base_url/=' "$WEBTREES_HOME"/data/config.ini.php)
+  sed -i "$LINE a base_url=\"$BASE_URL\"" "$WEBTREES_HOME"/data/config.ini.php
+  sed -i "$LINE d" "$WEBTREES_HOME"/data/config.ini.php
 fi || true
 
 # Execute main script

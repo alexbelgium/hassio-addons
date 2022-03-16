@@ -118,8 +118,8 @@ if bashio::config.has_value 'run_duration'; then
   RUNTIME=$(bashio::config 'run_duration')
   bashio::log.info "Addon will stop after $RUNTIME"
   sleep "$RUNTIME" &&
-    bashio::log.info "Timeout achieved, addon will stop !" &&
-    exit 0
+  bashio::log.info "Timeout achieved, addon will stop !" &&
+  exit 0
 else
   bashio::log.info "Run_duration option not defined, addon will run continuously"
 fi

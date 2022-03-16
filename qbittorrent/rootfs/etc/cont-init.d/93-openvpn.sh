@@ -13,11 +13,11 @@ if bashio::config.true 'openvpn_enabled'; then
   ###############
   # ENABLE IPV6 #
   ###############
-  
+
   # { echo "net.ipv6.conf.all.disable_ipv6 = 0";
   # echo "net.ipv6.conf.default.disable_ipv6 = 0";
   # echo "net.ipv6.conf.lo.disable_ipv6 = 0"; } >> /etc/sysctl.conf || true
-  
+
   # sysctl -p || true
 
   #####################
@@ -69,7 +69,7 @@ if bashio::config.true 'openvpn_enabled'; then
       sed -i "$SESSION i\Session\\\Interface=tun0" qBittorrent.conf
       sed -i "$SESSION i\Session\\\InterfaceName=tun0" qBittorrent.conf
     fi
- 
+
   else
     bashio::log.error "qBittorrent config file doesn't exist, openvpn must be added manually to qbittorrent options "
     exit 1

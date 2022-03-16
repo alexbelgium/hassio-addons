@@ -9,8 +9,8 @@
 CONFIGSOURCE="/config/addons_config/zoneminder"
 if [ ! -f "$CONFIGSOURCE"/zm.conf ]; then
 
-# Copy conf files
-cp /etc/zm/zm.conf "$CONFIGSOURCE"
+  # Copy conf files
+  cp /etc/zm/zm.conf "$CONFIGSOURCE"
 fi
 
 ###################
@@ -20,13 +20,13 @@ fi
 bashio::log.info "Defining database"
 case "$(bashio::config "DB_CONNECTION")" in
 
-# Use MariaDB
-mariadb_addon)
+    # Use MariaDB
+  mariadb_addon)
     bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Detecting values..."
     if ! bashio::services.available 'mysql'; then
-        bashio::log.fatal \
+      bashio::log.fatal \
         "Local database access should be provided by the MariaDB addon"
-        bashio::exit.nok \
+      bashio::exit.nok \
         "Please ensure it is installed and started"
     fi
 
@@ -51,24 +51,24 @@ mariadb_addon)
 
     bashio::log.info "Creating database for Firefly-iii if required"
     mysql \
-    -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
-    -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
-    -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
+      -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
+      -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
+      -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
     ;;
 
-# Use remote
-external)
+    # Use remote
+  external)
     bashio::log.info "Using remote database. Requirement : filling all addon options fields, and making sure the database already exists"
     for conditions in "ZM_DB_HOST" "ZM_DB_PORT" "ZM_DB_NAME" "ZM_DB_USER" "ZM_DB_PASS"; do
-        if ! bashio::config.has_value "$conditions"; then
-            bashio::exit.nok "Remote database has been specified but $conditions is not defined in addon options"
-        fi
+      if ! bashio::config.has_value "$conditions"; then
+        bashio::exit.nok "Remote database has been specified but $conditions is not defined in addon options"
+      fi
     done
     ;;
 
 
-# Use remote
-*)
+    # Use remote
+  *)
     bashio::log.info "Using internal database"
     ;;
 

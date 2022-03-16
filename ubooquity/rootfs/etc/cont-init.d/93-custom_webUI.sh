@@ -12,16 +12,16 @@ if bashio::config.has_value 'theme'; then
 
   ### Download WebUI
   case "$CUSTOMUI" in
-  "comixology2")
-    curl -f -s -S -J -L -o /data/release.zip https://github.com/scooterpsu/Comixology_Ubooquity_2/releases/download/v3.4/comixology2.zip >/dev/null &&
+    "comixology2")
+      curl -f -s -S -J -L -o /data/release.zip https://github.com/scooterpsu/Comixology_Ubooquity_2/releases/download/v3.4/comixology2.zip >/dev/null &&
       unzip -o -q /data/release.zip -d /config/addons_config/ubooquity/themes/
-    ;;
+      ;;
 
-  "plextheme-master")
-    curl -f -s -S -J -L -o /data/release.zip https://github.com/FinalAngel/plextheme/archive/master.zip >/dev/null &&
+    "plextheme-master")
+      curl -f -s -S -J -L -o /data/release.zip https://github.com/FinalAngel/plextheme/archive/master.zip >/dev/null &&
       unzip -q /data/release.zip -d /config/addons_config/ubooquity/themes/
-    #    && mv /config/addons_config/ubooquity/themes/plextheme-master/ /config/addons_config/ubooquity/themes/
-    ;;
+      #    && mv /config/addons_config/ubooquity/themes/plextheme-master/ /config/addons_config/ubooquity/themes/
+      ;;
 
   esac
 

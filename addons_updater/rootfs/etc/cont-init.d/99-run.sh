@@ -69,21 +69,21 @@ for addons in $(bashio::config "addon|keys"); do
     DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
     LASTVERSION=$(
       curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
-        jq '.results | .[] | .name' -r |
-        sed -e '/.*latest.*/d' |
-        sed -e '/.*dev.*/d' |
-        sort -V |
-        tail -n 1
+      jq '.results | .[] | .name' -r |
+      sed -e '/.*latest.*/d' |
+      sed -e '/.*dev.*/d' |
+      sort -V |
+      tail -n 1
     )
     [ "${BETA}" = true ] &&
-      LASTVERSION=$(
-        curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
-          jq '.results | .[] | .name' -r |
-          sed -e '/.*latest.*/d' |
-          sed -e '/.*dev.*/!d' |
-          sort -V |
-          tail -n 1
-      )
+    LASTVERSION=$(
+      curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
+      jq '.results | .[] | .name' -r |
+      sed -e '/.*latest.*/d' |
+      sed -e '/.*dev.*/!d' |
+      sort -V |
+      tail -n 1
+    )
 
   else
     # Use github as upstream

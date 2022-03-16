@@ -26,7 +26,7 @@ CURRENT=$(sed -e '/^[<blank><tab>]*$/d' /config/addons_config/fireflyiii/APP_KEY
 
 # Save if new
 if [ "$CURRENT" != "$APP_KEY" ]; then
-    echo "$APP_KEY" >>/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
+  echo "$APP_KEY" >>/config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
 fi
 
 # Update permissions
@@ -42,8 +42,8 @@ chmod -R 775 /config/addons_config/fireflyiii
 bashio::log.info "Defining database"
 case $(bashio::config 'DB_CONNECTION') in
 
-# Use sqlite
-sqlite_internal)
+    # Use sqlite
+  sqlite_internal)
     bashio::log.info "Using built in sqlite"
 
     # Set variable
@@ -55,13 +55,13 @@ sqlite_internal)
 
     # Creating database
     if [ ! -f /config/addons_config/fireflyiii/database/database.sqlite ]; then
-        # Create database
-        touch /config/addons_config/fireflyiii/database/database.sqlite
-        # Install database
-        echo "updating database"
-        php artisan migrate:refresh --seed --quiet
-        php artisan firefly-iii:upgrade-database --quiet
-        php artisan passport:install --quiet
+      # Create database
+      touch /config/addons_config/fireflyiii/database/database.sqlite
+      # Install database
+      echo "updating database"
+      php artisan migrate:refresh --seed --quiet
+      php artisan firefly-iii:upgrade-database --quiet
+      php artisan passport:install --quiet
     fi
 
     # Creating symlink
@@ -74,13 +74,13 @@ sqlite_internal)
     chown -R www-data:www-data /var/www/html/storage
     ;;
 
-# Use MariaDB
-mariadb_addon)
+    # Use MariaDB
+  mariadb_addon)
     bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Detecting values..."
     if ! bashio::services.available 'mysql'; then
-        bashio::log.fatal \
+      bashio::log.fatal \
         "Local database access should be provided by the MariaDB addon"
-        bashio::exit.nok \
+      bashio::exit.nok \
         "Please ensure it is installed and started"
     fi
 
@@ -104,18 +104,18 @@ mariadb_addon)
 
     bashio::log.info "Creating database for Firefly-iii if required"
     mysql \
-    -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
-    -h "${DB_HOST}" -P "${DB_PORT}" \
-    -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
+      -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
+      -h "${DB_HOST}" -P "${DB_PORT}" \
+      -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
     ;;
 
-# Use remote
-*)
+    # Use remote
+  *)
     bashio::log.info "Using remote database. Requirement : filling all addon options fields, and making sure the database already exists"
     for conditions in "DB_HOST" "DB_PORT" "DB_DATABASE" "DB_USERNAME" "DB_PASSWORD"; do
-        if ! bashio::config.has_value "$conditions"; then
-            bashio::exit.nok "Remote database has been specified but $conditions is not defined in addon options"
-        fi
+      if ! bashio::config.has_value "$conditions"; then
+        bashio::exit.nok "Remote database has been specified but $conditions is not defined in addon options"
+      fi
     done
     ;;
 
@@ -126,21 +126,21 @@ esac
 ################
 
 if bashio::config.has_value 'Updates'; then
-    # Align update with options
-    echo ""
-    FREQUENCY=$(bashio::config 'Updates')
-    bashio::log.info "$FREQUENCY updates"
-    echo ""
+  # Align update with options
+  echo ""
+  FREQUENCY=$(bashio::config 'Updates')
+  bashio::log.info "$FREQUENCY updates"
+  echo ""
 
-    # Sets cron // do not delete this message
-    cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
-    chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
+  # Sets cron // do not delete this message
+  cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
+  chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
 
-    # Sets cron to run with www-data user
-    # sed -i 's|root|www-data|g' /etc/crontab
+  # Sets cron to run with www-data user
+  # sed -i 's|root|www-data|g' /etc/crontab
 
-    # Starts cron
-    service cron start
+  # Starts cron
+  service cron start
 fi
 
 ##############
@@ -150,8 +150,8 @@ fi
 bashio::log.info "Please wait while the app is loading !"
 
 if bashio::config.true 'silent'; then
-    bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
-    /./usr/local/bin/entrypoint.sh >/dev/null
+  bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
+  /./usr/local/bin/entrypoint.sh >/dev/null
 else
-    /./usr/local/bin/entrypoint.sh
+  /./usr/local/bin/entrypoint.sh
 fi
