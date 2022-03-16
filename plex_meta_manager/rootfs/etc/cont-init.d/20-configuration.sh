@@ -12,8 +12,8 @@ PUID=$(bashio::config 'PUID')
 PGID=$(bashio::config 'PGID')
 
 if [ ! -d "$(dirname "${CONFIGSOURCE}")" ]; then
-  echo "Creating $(dirname "${CONFIGSOURCE}")"
-  mkdir -p "$(dirname "${CONFIGSOURCE}")"
+    echo "Creating $(dirname "${CONFIGSOURCE}")"
+    mkdir -p "$(dirname "${CONFIGSOURCE}")"
 fi
 
 chown -R "$PUID":"$PGID" "$(dirname "${CONFIGSOURCE}")"

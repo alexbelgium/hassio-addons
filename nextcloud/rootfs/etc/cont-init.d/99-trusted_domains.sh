@@ -22,14 +22,14 @@ if bashio::config.has_value 'trusted_domains'; then
     $LAUNCHER config:system:get trusted_domains || bashio::log.info "No trusted domain set yet. The first one will be set when doing initial configuration"
 
     bashio::log.info "Trusted domains set in the configuration. Refreshing domains." &&
-        ###################################
-        # Remove previous trusted domains #
-        ###################################
-        bashio::log.info "... removing previously added trusted domain (except for first one created)"
+    ###################################
+    # Remove previous trusted domains #
+    ###################################
+    bashio::log.info "... removing previously added trusted domain (except for first one created)"
     i=2
     until [ $i -gt 5 ]; do
         $LAUNCHER config:system:delete trusted_domains $i &&
-            ((i = i + 1)) || exit
+        ((i = i + 1)) || exit
     done
 
     ###########################

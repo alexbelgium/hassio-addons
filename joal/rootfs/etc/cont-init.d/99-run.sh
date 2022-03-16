@@ -12,15 +12,15 @@ VERBOSE=$(bashio::config 'verbose') || true
 # check password change
 
 if [ "$TOKEN" = "lrMY24Byhx" ]; then
-  bashio::log.warning "The token is still the default one, please change from addon options"
+    bashio::log.warning "The token is still the default one, please change from addon options"
 fi
 
 # download latest version
 
 if [ "$VERBOSE" = true ]; then
-  curl -f -J -L -o /tmp/joal.tar.gz "$(curl -f -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")"
+    curl -f -J -L -o /tmp/joal.tar.gz "$(curl -f -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")"
 else
-  curl -f -s -S -J -L -o /tmp/joal.tar.gz "$(curl -f -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")" >/dev/null
+    curl -f -s -S -J -L -o /tmp/joal.tar.gz "$(curl -f -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")" >/dev/null
 fi
 mkdir -p /data/joal
 tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
@@ -34,9 +34,9 @@ bashio::log.info "Joal updated"
 
 # If config doesn't exist, create it
 if [ ! -f /config/addons_config/joal/config.json ]; then
-  bashio::log.info "Symlinking config files"
-  mkdir -p /config/addons_config/joal
-  cp /data/joal/config.json /config/addons_config/joal/config.json
+    bashio::log.info "Symlinking config files"
+    mkdir -p /config/addons_config/joal
+    cp /data/joal/config.json /config/addons_config/joal/config.json
 fi
 
 # Refresh symlink
@@ -86,9 +86,9 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 ###############
 
 if [ "$VERBOSE" = true ]; then
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="${UIPATH}" --joal.ui.secret-token="$TOKEN"
+    nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="${UIPATH}" --joal.ui.secret-token="$TOKEN"
 else
-  nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="${UIPATH}" --joal.ui.secret-token="$TOKEN" >/dev/null
+    nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="${UIPATH}" --joal.ui.secret-token="$TOKEN" >/dev/null
 fi &
 bashio::log.info "Please wait, loading..."
 
@@ -115,11 +115,11 @@ exec nginx &
 ###########
 
 if bashio::config.has_value 'run_duration'; then
-  RUNTIME=$(bashio::config 'run_duration')
-  bashio::log.info "Addon will stop after $RUNTIME"
-  sleep "$RUNTIME" &&
+    RUNTIME=$(bashio::config 'run_duration')
+    bashio::log.info "Addon will stop after $RUNTIME"
+    sleep "$RUNTIME" &&
     bashio::log.info "Timeout achieved, addon will stop !" &&
     exit 0
 else
-  bashio::log.info "Run_duration option not defined, addon will run continuously"
+    bashio::log.info "Run_duration option not defined, addon will run continuously"
 fi

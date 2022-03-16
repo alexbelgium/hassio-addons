@@ -46,10 +46,10 @@ chmod +x "${ocpath}"/occ
 
 printf "chmod/chown .htaccess\n"
 if [ -f "${ocpath}"/.htaccess ]; then
-  chmod 0644 "${ocpath}"/.htaccess
-  chown "${rootuser}":"${htgroup}" "${ocpath}"/.htaccess
+    chmod 0644 "${ocpath}"/.htaccess
+    chown "${rootuser}":"${htgroup}" "${ocpath}"/.htaccess
 fi
 if [ -f "${ocpath}"/data/.htaccess ]; then
-  chmod 0644 "${ocpath}"/data/.htaccess
-  chown "${rootuser}":"${htgroup}" "${ocpath}"/data/.htaccess
+    chmod 0644 "${ocpath}"/data/.htaccess
+    chown "${rootuser}":"${htgroup}" "${ocpath}"/data/.htaccess
 fi
