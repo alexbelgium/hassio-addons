@@ -22,7 +22,7 @@ jobs:
             beautysh
       - name: "Run beautify"
         run: |
-          for f in $(find / -name '*.sh'); do beautysh --indent-size 4 $f; done
+          find . -name '*.sh' | xargs beautysh --indent-size 4
       - name: Create New Pull Request If Needed
         uses: peter-evans/create-pull-request@v3
         with:
