@@ -11,9 +11,9 @@ mkdir -p "$CONFIGLOCATION"/config
 
 # Copy previous config if existing
 if [ -d /data/config ]; then
-  echo "Moving to new location $CONFIGLOCATION"
-  mv /data/config/* "$CONFIGLOCATION"/config/
-  rm -r /data/config
+    echo "Moving to new location $CONFIGLOCATION"
+    mv /data/config/* "$CONFIGLOCATION"/config/
+    rm -r /data/config
 fi
 
 # Make sure permissions are right

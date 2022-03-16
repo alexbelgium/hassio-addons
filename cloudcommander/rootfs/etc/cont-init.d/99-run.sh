@@ -16,8 +16,8 @@ export CLOUDCMD_PREFIX
 
 declare ADDON_PROTOCOL=http
 if bashio::config.true 'ssl'; then
-  ADDON_PROTOCOL=https
-  bashio::config.require.ssl
+    ADDON_PROTOCOL=https
+    bashio::config.require.ssl
 fi
 
 # port=$(bashio::addon.port 80)
@@ -34,15 +34,15 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 ###############
 
 if bashio::config.has_value 'CUSTOM_OPTIONS'; then
-  CUSTOMOPTIONS=" $(bashio::config 'CUSTOM_OPTIONS')"
+    CUSTOMOPTIONS=" $(bashio::config 'CUSTOM_OPTIONS')"
 else
-  CUSTOMOPTIONS=""
+    CUSTOMOPTIONS=""
 fi
 
 if bashio::config.has_value 'DROPBOX_TOKEN'; then
-  DROPBOX_TOKEN="--dropbox --dropbox-token $(bashio::config 'DROPBOX_TOKEN')"
+    DROPBOX_TOKEN="--dropbox --dropbox-token $(bashio::config 'DROPBOX_TOKEN')"
 else
-  DROPBOX_TOKEN=""
+    DROPBOX_TOKEN=""
 fi
 
 bashio::log.info "Starting..."

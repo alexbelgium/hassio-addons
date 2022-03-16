@@ -16,11 +16,11 @@ LINE=$((LINE + 1))
 ###########
 
 if bashio::config.has_value 'run_duration'; then
-  rm /etc/services.d/qbittorrent/run
-  mv /etc/services.d/qbittorrent/timer /etc/services.d/qbittorrent/run
-  chmod +x /etc/services.d/qbittorrent/run
+    rm /etc/services.d/qbittorrent/run
+    mv /etc/services.d/qbittorrent/timer /etc/services.d/qbittorrent/run
+    chmod +x /etc/services.d/qbittorrent/run
 else
-  rm /etc/services.d/qbittorrent/timer
+    rm /etc/services.d/qbittorrent/timer
 fi
 
 ##################
@@ -33,16 +33,16 @@ DOWNLOADS=$(bashio::config 'SavePath')
 # Set configuration
 if bashio::config.has_value 'SavePath'; then
 
-  # Replace save path
-  CURRENTSAVEPATH=$(sed -n '/Downloads\\SavePath/p' qBittorrent.conf)
-  sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf 2>/dev/null || true
+    # Replace save path
+    CURRENTSAVEPATH=$(sed -n '/Downloads\\SavePath/p' qBittorrent.conf)
+    sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf 2>/dev/null || true
 
-  # Replace session save path
-  CURRENTSAVEPATH=$(sed -n '/Session\\DefaultSavePath/p' qBittorrent.conf)
-  sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf 2>/dev/null || true
+    # Replace session save path
+    CURRENTSAVEPATH=$(sed -n '/Session\\DefaultSavePath/p' qBittorrent.conf)
+    sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf 2>/dev/null || true
 
-  # Info
-  bashio::log.info "Downloads can be found in $DOWNLOADS"
+    # Info
+    bashio::log.info "Downloads can be found in $DOWNLOADS"
 fi
 
 # Create default location
@@ -78,15 +78,15 @@ sed -i '/HTTPS/d' qBittorrent.conf
 
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
-  bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
-  #set variables
-  CERTFILE=$(bashio::config 'certfile')
-  KEYFILE=$(bashio::config 'keyfile')
+    bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+    #set variables
+    CERTFILE=$(bashio::config 'certfile')
+    KEYFILE=$(bashio::config 'keyfile')
 
-  #Modify configuration
-  sed -i "$LINE i\WebUI\\\HTTPS\\\Enabled=True" qBittorrent.conf
-  sed -i "$LINE i\WebUI\\\HTTPS\\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
-  sed -i "$LINE i\WebUI\\\HTTPS\\\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
+    #Modify configuration
+    sed -i "$LINE i\WebUI\\\HTTPS\\\Enabled=True" qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\HTTPS\\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\HTTPS\\\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
 fi
 
 ################
@@ -95,12 +95,12 @@ fi
 
 cd /config/qBittorrent/ || true
 if bashio::config.has_value 'whitelist'; then
-  WHITELIST=$(bashio::config 'whitelist')
-  #clean data
-  sed -i '/AuthSubnetWhitelist/d' qBittorrent.conf
-  sed -i "$LINE i\WebUI\\\AuthSubnetWhitelistEnabled=true" qBittorrent.conf
-  sed -i "$LINE i\WebUI\\\AuthSubnetWhitelist=$WHITELIST" qBittorrent.conf
-  bashio::log.info "Whitelisted subsets will not require a password : $WHITELIST"
+    WHITELIST=$(bashio::config 'whitelist')
+    #clean data
+    sed -i '/AuthSubnetWhitelist/d' qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\AuthSubnetWhitelistEnabled=true" qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\AuthSubnetWhitelist=$WHITELIST" qBittorrent.conf
+    bashio::log.info "Whitelisted subsets will not require a password : $WHITELIST"
 fi
 
 ###############
@@ -109,12 +109,12 @@ fi
 
 cd /config/qBittorrent/ || true
 if bashio::config.has_value 'Username'; then
-  USERNAME=$(bashio::config 'Username')
-  #clean data
-  sed -i '/WebUI\\\Username/d' qBittorrent.conf
-  #add data
-  sed -i "$LINE i\WebUI\\\Username=$USERNAME" qBittorrent.conf
-  bashio::log.info "WEBUI username set to $USERNAME"
+    USERNAME=$(bashio::config 'Username')
+    #clean data
+    sed -i '/WebUI\\\Username/d' qBittorrent.conf
+    #add data
+    sed -i "$LINE i\WebUI\\\Username=$USERNAME" qBittorrent.conf
+    bashio::log.info "WEBUI username set to $USERNAME"
 fi
 
 ################
@@ -135,17 +135,17 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ]; then
 
     ### Download WebUI
     case $CUSTOMUI in
-    "vuetorrent")
-      curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
-      ;;
+        "vuetorrent")
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
+            ;;
 
-    "qbit-matUI")
-      curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip" | head -1)" >/dev/null
-      ;;
+        "qbit-matUI")
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip" | head -1)" >/dev/null
+            ;;
 
-    "qb-web")
-      curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
-      ;;
+        "qb-web")
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
+            ;;
 
     esac
 
