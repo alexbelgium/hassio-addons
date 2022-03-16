@@ -1,0 +1,75 @@
+# yamllint disable rule:line-length
+---
+name: weekly activities
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+jobs:
+  sort_json:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+    - name: Run script file
+      id: sort
+      run: |
+        for files in */*.json; do
+          echo "Sorting $files"
+          jq --sort-keys . "$files" > config2.json && cat config2.json > "$files" && rm config2.json
+          echo "::set-output name=changed::1"
+        done
+      shell: bash
+    - name: Create New Pull Request If Needed
+      if: steps.sort.outputs.changed != ''
+      uses: peter-evans/create-pull-request@v3
+      with:
+        title: Json sort weekly
+        branch-suffix: timestamp
+        commit-message: Sorted json
+
+  compress_images:
+    name: calibreapp/image-actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Compress Images
+        id: calibre
+        uses: calibreapp/image-actions@main
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: true
+      - name: Create New Pull Request If Needed
+        if: steps.calibre.outputs.markdown != ''
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: Compressed Images Nightly
+          branch-suffix: timestamp
+          commit-message: Compressed Images
+          body: ${{ steps.calibre.outputs.markdown }} 
+          
+  beautify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-python@v1
+      - name: "Install beautify"
+        uses: BSFishy/pip-action@v1
+        with:
+          packages: |
+            beautysh
+      - name: "Run beautify"
+        run: |
+          find . -name '*.sh' | xargs beautysh --indent-size 4
+      - name: Create New Pull Request If Needed
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Apply beautysh changes"
+          branch-suffix: timestamp
+          commit-message: Beautify bash
