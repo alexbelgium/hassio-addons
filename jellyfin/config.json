@@ -88,7 +88,7 @@
   "startup": "services",
   "upstream": "10.7.7-1-ls155",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.7.7-1-ls155-ingress",
+  "version": "10.7.7-1-ls155-ingress2",
   "video": true,
   "webui": "http://[HOST]:[PORT:8096]"
 }
