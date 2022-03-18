@@ -51,6 +51,7 @@
   "host_dbus": true,
   "host_network": true,
   "ingress": true,
+  "ingress_stream": true,
   "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Jellyfin NAS",
   "options": {
