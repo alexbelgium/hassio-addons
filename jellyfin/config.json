@@ -58,7 +58,7 @@
     "PUID": 0,
     "data_location": "/config/addons_config/jellyfin"
   },
-  "panel_icon": "mdi:BilliardsRack",
+  "panel_icon": "mdi:billiards-rack",
   "ports": {
     "1900/udp": null,
     "7359/udp": null,
