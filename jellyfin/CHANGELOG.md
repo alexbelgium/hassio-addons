@@ -1,21 +1,29 @@
+- Addition of ingress
 
 ## 10.7.7-1-ls155 (17-03-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls154 (11-03-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls153 (05-03-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls152 (24-02-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls151 (17-02-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls150 (20-01-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
+
 ## 10.7.7-1-ls149 (15-01-2022)
 
 - Update to latest version from linuxserver/docker-jellyfin
