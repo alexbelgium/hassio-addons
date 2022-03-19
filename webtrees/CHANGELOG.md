@@ -1,4 +1,7 @@
 
+## 2.1.0-beta.1 (19-03-2022)
+- Update to latest version from nathanvaughn/webtrees-docker
+
 ## 2.1.0-alpha.2 (04-02-2022)
 - Update to latest version from nathanvaughn/webtrees-docker
 - Allow mounting smb and local drives for data storage
