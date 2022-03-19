@@ -77,7 +77,7 @@
     "additional_apps": "engrampa,libreoffice",
     "rpi_video_drivers": true
   },
-  "panel_icon": "mdi:kde",
+  "panel_icon": "mdi:monitor",
   "ports": {
     "3000/tcp": null
   },
