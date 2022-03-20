@@ -23,6 +23,8 @@ Forked to add latest beta versions, smb and local hdd mount.
 - Inital version : https://github.com/petersendev/hassio-addons
 - CIFS code : https://github.com/dianlight/hassio-addons
 
+Ingress cannot be added as case url is not accepted by the app, although it is a requirement for ingress
+
 [emby](https://emby.media/) organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone emby Media Server.
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-emby) from linuxserver.io.
