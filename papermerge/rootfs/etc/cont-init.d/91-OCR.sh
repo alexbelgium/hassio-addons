@@ -8,7 +8,7 @@ OCRLANG="$(bashio::config "ocrlang")"
 CONFIGLOCATION="$(bashio::config "CONFIG_LOCATION")"
 #If it's a file, get the folder
 if [ ! -d "$CONFIGLOCATION" ]; then
-    CONFIGLOCATION="$(dirname $CONFIGLOCATION)"
+    CONFIGLOCATION="$(dirname "$CONFIGLOCATION")"
 fi
 
 languageCount=$(echo "$OCRLANG" | tr -cd ',' | wc -c)
