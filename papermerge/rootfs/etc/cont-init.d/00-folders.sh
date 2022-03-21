@@ -5,11 +5,11 @@ CONFIGLOCATION=$(bashio::config "CONFIG_LOCATION")
 
 
 if [ ! -d "$CONFIGLOCATION" ]; then
-CONFIGLOCATION="$(dirname "$CONFIGLOCATION")"
+    CONFIGLOCATION="$(dirname "$CONFIGLOCATION")"
 fi
 
-sed -i "s| /data/config| $CONFIGLOCATION|g" /etc/cont-init.d/*
-sed -i "s| /data/config| $CONFIGLOCATION|g" /defaults/* || true
+sed -i "s|/data/config|$CONFIGLOCATION|g" /etc/cont-init.d/*
+sed -i "s|/data/config|$CONFIGLOCATION|g" /defaults/*
 
 # Create directory
 mkdir -p "$CONFIGLOCATION"/config
