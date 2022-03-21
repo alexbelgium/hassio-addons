@@ -130,7 +130,7 @@ jobs:
           path: "./${{ matrix.addon }}/"
 
       - name: 🗄️ Cache docker layers
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /tmp/buildx-cache
           key: ${{ runner.os }}-buildx-${{ matrix.addon }}-${{ hashFiles('**/Dockerfile') }}
