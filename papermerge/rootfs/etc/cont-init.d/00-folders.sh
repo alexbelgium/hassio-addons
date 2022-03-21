@@ -20,6 +20,3 @@ if [ -d /data/config ]; then
     mv /data/config/* "$CONFIGLOCATION"/config/
     rm -r /data/config
 fi
-
-# Make sure permissions are right
-chown -R "$(id -u):$(id -g)" "$CONFIGLOCATION"
