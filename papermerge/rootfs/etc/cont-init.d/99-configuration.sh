@@ -1,6 +1,10 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+# Symlink config 
+
+ln -s /data/config/papermerge.conf.py /etc
+
 ##################
 # SELECT FOLDERS #
 ##################
