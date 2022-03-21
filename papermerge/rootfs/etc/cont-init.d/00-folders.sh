@@ -23,7 +23,3 @@ fi
 
 # Make sure permissions are right
 chown -R "$(id -u):$(id -g)" "$CONFIGLOCATION"
-
-# Exporting config location
-bashio::log.info "Config file can be found in $CONFIGLOCATION"
-sed -i "1a export PAPERMERGE_CONFIG_FILE=$CONFIGLOCATION" /etc/services.d/papermerge/run
