@@ -32,7 +32,9 @@ RUN \
     && sed -i 's| /config| /data/config|g' /etc/cont-init.d/* \
     && sed -i 's| /config| /data/config|g' /defaults/* \
     && sed -i 's|"/config| /data/config|g' /etc/cont-init.d/* \
-    && sed -i 's|"/config| /data/config|g' /defaults/*
+    && sed -i 's|"/config| /data/config|g' /defaults/* \
+    && sed -i 's|/config \| /data/config|g' /etc/cont-init.d/* \
+    && sed -i 's|/config \| /data/config|g' /defaults/*
 
 ##################
 # 3 Install apps #
