@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+exit 0
+
 # Allow OCR setting
 OCRLANG="$(bashio::config "ocrlang")"
 
@@ -10,8 +12,6 @@ CONFIGLOCATION="$(bashio::config "CONFIG_LOCATION")"
 if [ ! -d "$CONFIGLOCATION" ]; then
     CONFIGLOCATION="$(dirname "$CONFIGLOCATION")"
 fi
-
-exit 0
 
 languageCount=$(echo "$OCRLANG" | tr -cd ',' | wc -c)
 languageCount=$((languageCount+1))
