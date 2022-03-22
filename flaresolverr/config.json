@@ -17,8 +17,8 @@
   },
   "schema": {},
   "slug": "flaresolverr",
-  "upstream": "2.2.1",
+  "upstream": "2.2.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8191]"
 }
