@@ -22,7 +22,7 @@ if [ -n "$OCRLANG" ]; then
     sed -i "${lineStart},${lineEnd}d" "$CONFIGLOCATION"/papermerge.conf.py
 
     bashio::log.info "Writing new configuration"
-    echo "OCRLANG = {" >> "$CONFIGLOCATION"/papermerge.conf.py
+    echo "OCR_LANGUAGES = {" >> "$CONFIGLOCATION"/papermerge.conf.py
 
     languages=$(echo "$OCRLANG" | tr "," "\n")
 
