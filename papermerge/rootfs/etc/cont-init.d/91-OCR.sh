@@ -11,6 +11,9 @@ if [ ! -d "$CONFIGLOCATION" ]; then
     CONFIGLOCATION="$(dirname "$CONFIGLOCATION")"
 fi
 
+#Correct previous bug
+sed -i "s|OCRLANG|OCR_LANGUAGES|g" "$CONFIGLOCATION"/papermerge.conf.py
+
 languageCount=$(echo "$OCRLANG" | tr -cd ',' | wc -c)
 languageCount=$((languageCount+1))
 bashio::log.info "Configuring ${languageCount} languages"
