@@ -1,4 +1,7 @@
 
+## 23.0.3 (22-03-2022)
+- Update to latest version from linuxserver/docker-nextcloud
+
 ## 23.0.2 (16-02-2022)
 - Update to latest version from linuxserver/docker-nextcloud
 - Automatic mount of local and smb mounts (see readme)
