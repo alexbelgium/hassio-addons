@@ -10,8 +10,5 @@ bashio::log.info "Setting config location to $CONFIGLOCATION"
 # Adapt files
 sed -i "s|/data/config|$CONFIGLOCATION|g" /etc/cont-init.d/*
 
-# Create directory
-mkdir -p "$CONFIGLOCATION"/config
-
 # Avoid tamper issues
 chown -r root:root "$CONFIGLOCATION"/custom*
