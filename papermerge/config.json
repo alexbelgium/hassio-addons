@@ -49,8 +49,8 @@
     "storage_dir": "str"
   },
   "slug": "papermerge",
-  "upstream": "2.0.1",
+  "upstream": "v2.0.1-ls40",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.0.1-20",
+  "version": "v2.0.1-ls40",
   "webui": "http://[HOST]:[PORT:8000]"
 }
