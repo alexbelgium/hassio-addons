@@ -13,10 +13,3 @@ sed -i "s|/data/config|$CONFIGLOCATION|g" /defaults/*
 
 # Create directory
 mkdir -p "$CONFIGLOCATION"/config
-
-# Copy previous config if existing
-if [ -d /data/config ]; then
-    echo "Moving to new location $CONFIGLOCATION"
-    mv /data/config/* "$CONFIGLOCATION"/config/
-    rm -r /data/config
-fi
