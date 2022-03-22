@@ -1,3 +1,4 @@
+- OCR corrected
 - New feature : IMAP document import (@fkhofmann)
 - OCR configuration has been rewritten (@fkhofmann)
 - Import dir bug fix (@fkhofmann)
