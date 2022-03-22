@@ -1,10 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-# Symlink config 
-
-ln -s /data/config/papermerge.conf.py /etc
-
 ##################
 # SELECT FOLDERS #
 ##################
@@ -29,11 +25,11 @@ bashio::log.info "Import dir set to $IMPORTDIR"
 # CREATE FOLDERS #
 ##################
 
-if [ ! -d /config ]; then
-    echo "Creating /config"
-    mkdir -p /config
-fi
-chown -R abc:abc /config
+#if [ ! -d /data/config ]; then
+#    echo "Creating /config"
+#    mkdir -p /config
+#fi
+#chown -R abc:abc /config
 
 if [ ! -d "$MEDIADIR" ]; then
     echo "Creating $MEDIADIR"
