@@ -11,6 +11,8 @@ if [ ! -d "$CONFIGLOCATION" ]; then
     CONFIGLOCATION="$(dirname "$CONFIGLOCATION")"
 fi
 
+exit 0
+
 languageCount=$(echo "$OCRLANG" | tr -cd ',' | wc -c)
 languageCount=$((languageCount+1))
 bashio::log.info "Configuring ${languageCount} languages"
