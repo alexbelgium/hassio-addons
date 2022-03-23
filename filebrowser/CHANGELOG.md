@@ -1,8 +1,11 @@
+- Add codenotary sign
 
 ## 2.21.1 (23-02-2022)
+
 - Update to latest version from hurlenko/filebrowser-docker
 
 ## 2.21.0 (22-02-2022)
+
 - Update to latest version from hurlenko/filebrowser-docker
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 

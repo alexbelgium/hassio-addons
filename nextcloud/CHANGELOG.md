@@ -1,3 +1,4 @@
+- Add codenotary sign
 
 ## 23.0.3 (22-03-2022)
 - Update to latest version from linuxserver/docker-nextcloud

@@ -1,24 +1,33 @@
+- Add codenotary sign
 
 ## 1.25.7.5604-980a13e02-ls106 (17-03-2022)
+
 - Update to latest version from linuxserver/docker-plex
 
 ## 1.25.6.5577-c8bd13540-ls104 (08-03-2022)
+
 - Update to latest version from linuxserver/docker-plex
 
 ## 1.25.6.5577-c8bd13540-ls103 (22-02-2022)
+
 - Update to latest version from linuxserver/docker-plex
 
 ## 1.25.5.5492-12f6b8c83-ls101 (08-02-2022)
+
 - Update to latest version from linuxserver/docker-plex
 
 ## 1.25.4.5487-648a8f9f9-ls100 (02-02-2022)
+
 - Update to latest version from linuxserver/docker-plex
 
 ## 1.25.4.5468-989df2310-ls99 (31-01-2022)
+
 - Update to latest version from linuxserver/docker-plex
 
 ## 1.25.3.5409-f11334058-ls98 (25-01-2022)
+
 - Update to latest version from linuxserver/docker-plex
+
 ## 1.25.3.5409-f11334058-ls97 (15-01-2022)
 
 - Update to latest version from linuxserver/docker-plex

@@ -1,3 +1,4 @@
+- Add codenotary sign
 
 ## 1.7.31 (15-03-2022)
 - Update to latest version from linuxserver/docker-grav

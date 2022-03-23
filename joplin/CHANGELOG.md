@@ -1,3 +1,4 @@
+- Add codenotary sign
 - Data location can be set either in /config, /data or /share
 - FIX BUG : Allow sqlite persistance
 - Default sqlite storage : /config/addons_config/joplin

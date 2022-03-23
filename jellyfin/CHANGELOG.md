@@ -1,3 +1,4 @@
+- Add codenotary sign
 - Addition of ingress
 
 ## 10.7.7-1-ls155 (17-03-2022)

@@ -1,3 +1,4 @@
+- Add codenotary sign
 - Fix openvpn interface bind
 - Fix qb-web custom ui
 - Fix download folder

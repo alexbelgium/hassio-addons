@@ -1,24 +1,33 @@
+- Add codenotary sign
 
 ## v2201.1.0-ls49 (22-03-2022)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls48 (14-03-2022)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls47 (06-03-2022)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls46 (27-02-2022)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls45 (13-02-2022)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls44 (07-02-2022)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls43 (27-01-2022)
+
 - Update to latest version from linuxserver/docker-booksonic-air
+
 ## v2201.1.0-ls42 (15-01-2022)
 
 - Update to latest version from linuxserver/docker-booksonic-air

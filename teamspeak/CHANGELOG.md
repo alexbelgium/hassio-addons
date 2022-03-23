@@ -1,3 +1,4 @@
+- Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation
 
 ## debian (04-12-2021)

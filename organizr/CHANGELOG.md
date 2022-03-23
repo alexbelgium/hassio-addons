@@ -1,2 +1,3 @@
+- Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation
 - Initial build

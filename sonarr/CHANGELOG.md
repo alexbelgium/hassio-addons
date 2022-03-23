@@ -1,6 +1,9 @@
+- Add codenotary sign
 
 ## 3.0.7.1477 (06-03-2022)
+
 - Update to latest version from linuxserver/docker-sonarr
+
 ## 3.0.6.1342-6 (03-01-2022)
 
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)

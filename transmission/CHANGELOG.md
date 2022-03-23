@@ -1,25 +1,34 @@
+- Add codenotary sign
 
 ## 3.00-r5-ls116 (17-03-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls115 (11-03-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls114 (05-03-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 - Removed default values for disk mount
 
 ## 3.00-r5-ls113 (24-02-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls112 (22-02-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r2-ls109 (27-01-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r2-ls108 (20-01-2022)
+
 - Update to latest version from linuxserver/docker-transmission
+
 ## 3.00-r2-ls107 (04-01-2022)
 
 - Update to latest version from linuxserver/docker-transmission

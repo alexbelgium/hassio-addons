@@ -1,40 +1,54 @@
+- Add codenotary sign
 
 ## 3.3.3 (11-03-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.3.2 (01-03-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.3.1 (24-02-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.3.0 (15-02-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.2.18 (07-02-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.2.17 (04-02-2022)
+
 - Update to latest version from flexget/flexget
 - Addition of FG_LOG_LEVEL
 
 ## 3.2.16 (27-01-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.2.15 (24-01-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.2.14 (23-01-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.2.13 (22-01-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.2.12 (21-01-2022)
+
 - Update to latest version from flexget/flexget
 
 ## 3.2.11 (20-01-2022)
+
 - Update to latest version from flexget/flexget
+
 ## 3.2.10 (19-01-2022)
 
 - Update to latest version from flexget/flexget

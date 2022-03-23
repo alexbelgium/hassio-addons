@@ -1,3 +1,4 @@
+- Add codenotary sign
 
 ## 2.1.0-beta.1 (19-03-2022)
 - Update to latest version from nathanvaughn/webtrees-docker
