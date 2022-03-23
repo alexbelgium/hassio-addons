@@ -3,5 +3,8 @@
     "aarch64": "lscr.io/linuxserver/transmission:arm64v8-latest",
     "amd64": "lscr.io/linuxserver/transmission:amd64-latest",
     "armv7": "lscr.io/linuxserver/transmission:arm32v7-latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }

@@ -1,10 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "Code-server is VS Code running on a remote server, accessible through the browser.",
   "devices": [
@@ -40,13 +36,7 @@
     "/dev/nvme2"
   ],
   "environment": {},
-  "map": [
-    "backup:rw",
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl"
-  ],
+  "map": ["backup:rw", "config:rw", "share:rw", "media:rw", "ssl"],
   "name": "VS code",
   "options": {
     "PGID": 0,
@@ -55,10 +45,7 @@
   "ports": {
     "8443/tcp": 8443
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -72,6 +59,7 @@
   "startup": "services",
   "upstream": "4.2.0",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/coder-server",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "4.2.0",
   "webui": "http://[HOST]:[PORT:8443]"
 }

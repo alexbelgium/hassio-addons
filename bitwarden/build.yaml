@@ -5,6 +5,3 @@ build_from:
   armv7: ghcr.io/hassio-addons/debian-base/armv7:stable
 codenotary:
   signer: alexandrep.github@gmail.com
-
-
-

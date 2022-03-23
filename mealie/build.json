@@ -3,5 +3,8 @@
     "aarch64": "hkotel/mealie:latest",
     "amd64": "hkotel/mealie:latest",
     "armv7": "hkotel/mealie:v0.4.3"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }

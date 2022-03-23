@@ -1,9 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "description": "A server-based application for browsing, organizing and sharing your personal photo collection",
   "devices": [
     "/dev/sda",
@@ -42,11 +39,7 @@
     "working_dir": "/data/photoprism"
   },
   "homeassistant": "0.92.0b2",
-  "map": [
-    "media:rw",
-    "share:rw",
-    "config:rw"
-  ],
+  "map": ["media:rw", "share:rw", "config:rw"],
   "name": "Photoprism",
   "options": {
     "BACKUP_PATH": "/share/photoprism/backup",
@@ -66,10 +59,7 @@
   "ports_description": {
     "2342/tcp": "Web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "BACKUP_PATH": "str",
     "CONFIG_LOCATION": "str",
@@ -83,12 +73,11 @@
     "localdisks": "str?",
     "networkdisks": "str?"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "photoprism",
   "upstream": "220302-impish",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "220302-impish",
   "webui": "http://[HOST]:[PORT:2342]"
 }

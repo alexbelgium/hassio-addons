@@ -1,22 +1,13 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
   "environment": {
     "PGID": "0",
     "PUID": "0"
   },
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Jackett NAS",
   "options": {
     "PGID": 0,
@@ -28,10 +19,7 @@
   "ports_description": {
     "9117/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -45,6 +33,7 @@
   "startup": "services",
   "upstream": "0.20.744",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jackett",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "0.20.744",
   "webui": "http://[HOST]:[PORT:9117]"
 }

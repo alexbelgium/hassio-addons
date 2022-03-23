@@ -1,21 +1,13 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "A free and open source personal finance manager",
   "devices": [],
   "environment": {
     "TRUSTED_PROXIES": "**"
   },
-  "map": [
-    "config:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "ssl"],
   "name": "Firefly iii",
   "options": {
     "APP_KEY": "CHANGEME_32_CHARS_EuC5dfn3LAPzeO",
@@ -41,12 +33,11 @@
     "Updates": "list(|hourly|daily|weekly)?",
     "silent": "bool?"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "fireflyiii",
   "upstream": "5.6.16",
   "url": "https://github.com/alexbelgium/hassio-addons",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "5.6.16",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

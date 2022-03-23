@@ -1,10 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "description": "Cloud Commander a file manager for the web with console and editor",
   "devices": [
     "/dev/mmcblk0p8",
@@ -60,10 +56,7 @@
   "ports_description": {
     "8000/tcp": "Web UI port (required)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "CUSTOM_OPTIONS": "str?",
     "DROPBOX_TOKEN": "str?",
@@ -76,6 +69,7 @@
   "slug": "cloudcommander",
   "upstream": "16.0.0",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "16.0.0",
   "webui": "http://[HOST]:[PORT:8000]"
 }

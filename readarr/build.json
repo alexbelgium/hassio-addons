@@ -3,5 +3,8 @@
     "aarch64": "lscr.io/linuxserver/readarr:arm64v8-nightly",
     "amd64": "lscr.io/linuxserver/readarr:amd64-nightly",
     "armv7": "lscr.io/linuxserver/readarr:arm32v7-nightly"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }

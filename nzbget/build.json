@@ -3,5 +3,8 @@
     "aarch64": "lscr.io/linuxserver/nzbget:arm64v8-latest",
     "amd64": "lscr.io/linuxserver/nzbget:amd64-latest",
     "armv7": "lscr.io/linuxserver/nzbget:arm32v7-latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }

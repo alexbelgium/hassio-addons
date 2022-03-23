@@ -3,5 +3,8 @@
     "aarch64": "lscr.io/linuxserver/qbittorrent:arm64v8",
     "amd64": "lscr.io/linuxserver/qbittorrent:amd64",
     "armv7": "lscr.io/linuxserver/qbittorrent:arm32v7"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }

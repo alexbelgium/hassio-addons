@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "manual",
   "description": "Nextcloud for Home Assistant",
   "devices": [
@@ -42,11 +38,7 @@
   "hassio_api": true,
   "ingress": false,
   "ingress_port": 0,
-  "map": [
-    "share:rw",
-    "media:rw",
-    "ssl:rw"
-  ],
+  "map": ["share:rw", "media:rw", "ssl:rw"],
   "name": "Nextcloud",
   "options": {
     "Full_Text_Search": false,
@@ -66,10 +58,7 @@
     "443/tcp": 8099,
     "80/tcp": null
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "Full_Text_Search": "bool?",
     "OCR": "bool?",
@@ -88,13 +77,12 @@
     "trusted_domains": "str?",
     "use_own_certs": "bool"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "nextcloud_ocr",
   "uart": true,
   "upstream": "23.0.3",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "23.0.3",
   "webui": "https://[HOST]:[PORT:443]"
 }

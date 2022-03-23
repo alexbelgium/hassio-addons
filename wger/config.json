@@ -1,17 +1,11 @@
 {
-  "arch": [
-    "amd64",
-    "aarch64"
-  ],
+  "arch": ["amd64", "aarch64"],
   "boot": "auto",
   "description": "manage your personal workouts, weight and diet plans",
   "environment": {
     "DJANGO_DB_DATABASE": "/data/database.sqlite"
   },
-  "map": [
-    "share:rw",
-    "ssl:ro"
-  ],
+  "map": ["share:rw", "ssl:ro"],
   "name": "Wger",
   "options": {},
   "ports": {
@@ -25,6 +19,7 @@
   "startup": "services",
   "upstream": "1.9",
   "url": "https://github.com/alexbelgium/hassio-addons",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "1.9-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
 }

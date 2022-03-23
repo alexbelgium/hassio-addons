@@ -5,6 +5,6 @@
     "armv7": "ghcr.io/hassio-addons/base/armv7:stable"
   },
   "codenotary": {
-    "signer": "alexandrep.github@gmail.com" 
+    "signer": "alexandrep.github@gmail.com"
   }
 }

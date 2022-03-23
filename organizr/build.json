@@ -3,5 +3,8 @@
     "aarch64": "organizr/organizr:linux-arm64",
     "amd64": "organizr/organizr:linux-amd64",
     "armv7": "organizr/organizr:linux-arm-v7"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }

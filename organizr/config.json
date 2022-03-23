@@ -1,16 +1,9 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "An HTPC/Homelab services organizer that is written in PHP",
   "environment": {},
-  "map": [
-    "config:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "ssl"],
   "name": "Organizr",
   "options": {
     "PGID": "1000",
@@ -30,6 +23,7 @@
   "startup": "services",
   "upstream": "1.90",
   "url": "https://github.com/alexbelgium/hassio-addons",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "1.90",
   "webui": "http://[HOST]:[PORT:80]"
 }

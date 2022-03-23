@@ -1,10 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "platform for accessing the audibooks you own wherever you are",
   "devices": [
@@ -43,10 +39,7 @@
     "PGID": "0",
     "PUID": "0"
   },
-  "map": [
-    "share:rw",
-    "media:rw"
-  ],
+  "map": ["share:rw", "media:rw"],
   "name": "Booksonic-air",
   "options": {
     "PGID": 0,
@@ -61,10 +54,7 @@
   "ports_description": {
     "4040/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -77,6 +67,7 @@
   "slug": "booksonic-air_nas",
   "upstream": "v2201.1.0-ls49",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/booksonic_air",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "v2201.1.0-ls49",
   "webui": "http://[HOST]:[PORT:4040]"
 }

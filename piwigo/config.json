@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "Piwigo is a photo gallery software for the web",
   "devices": [
@@ -41,11 +37,7 @@
   "environment": {
     "PWG_LOCAL_DIR": "/data"
   },
-  "map": [
-    "media:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["media:rw", "share:rw", "ssl"],
   "name": "Piwigo",
   "options": {
     "PGID": 1000,
@@ -57,10 +49,7 @@
   "ports_description": {
     "80/tcp": "Web UI port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -75,6 +64,7 @@
   "startup": "services",
   "upstream": "12.2.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "12.2.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }

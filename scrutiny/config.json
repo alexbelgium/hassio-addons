@@ -1,10 +1,6 @@
 {
   "apparmor": "true",
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
   "devices": [
@@ -66,11 +62,7 @@
   "ports_description": {
     "8080/tcp": "Web UI port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "SYS_RAWIO",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -85,5 +77,6 @@
   "udev": "true",
   "upstream": "0.3.13",
   "url": "https://github.com/AnalogJ/scrutiny",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "0.3.13-7"
 }

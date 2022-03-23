@@ -1,10 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "description": "Book Manager and Automation",
   "devices": [
@@ -43,12 +39,7 @@
     "PGID": "0",
     "PUID": "0"
   },
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "config:rw"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
   "name": "Readarr NAS",
   "options": {
     "CONFIG_LOCATION": "/config/readarr",
@@ -61,10 +52,7 @@
   "ports_description": {
     "8787/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "CONFIG_LOCATION": "str",
     "PGID": "int",
@@ -79,6 +67,7 @@
   "startup": "services",
   "upstream": "nightly-0.1.1.1281-ls103",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "nightly-0.1.1.1281-ls103",
   "webui": "http://[HOST]:[PORT:8787]"
 }

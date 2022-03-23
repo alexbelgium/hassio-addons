@@ -3,5 +3,8 @@
     "aarch64": "fireflyiii/data-importer:latest",
     "amd64": "fireflyiii/data-importer:latest",
     "armv7": "fireflyiii/data-importer:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }

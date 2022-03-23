@@ -1,10 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "description": "qBittorrent is a bittorrent client",
   "devices": [
     "/dev/net/tun",
@@ -49,12 +45,7 @@
   "homeassistant_api": true,
   "ingress": true,
   "ingress_port": 8099,
-  "map": [
-    "media:rw",
-    "config:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["media:rw", "config:rw", "share:rw", "ssl"],
   "name": "Qbittorrent",
   "options": {
     "DNS_server": "8.8.8.8,1.1.1.1",
@@ -79,11 +70,7 @@
     "6881/udp": "Peer port",
     "8080/tcp": "Web UI port (nor required for Ingress)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH",
-    "NET_ADMIN"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "schema": {
     "DNS_server": "str?",
     "PGID": "int?",
@@ -111,6 +98,7 @@
   "slug": "qbittorrent",
   "upstream": "release-4.4.1-ls173",
   "url": "https://github.com/alexbelgium/hassio-addons",
+  "codenotary": "alexandrep.github@gmail.com",
   "version": "release-4.4.1-ls173-9",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

@@ -3,5 +3,8 @@
     "aarch64": "lscr.io/linuxserver/nextcloud:arm64v8-latest",
     "amd64": "lscr.io/linuxserver/nextcloud:amd64-latest",
     "armv7": "lscr.io/linuxserver/nextcloud:arm32v7-latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }

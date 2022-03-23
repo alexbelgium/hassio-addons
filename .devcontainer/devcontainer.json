@@ -8,7 +8,7 @@
     "WORKSPACE_DIRECTORY": "${containerWorkspaceFolder}"
   },
   "extensions": ["timonwong.shellcheck", "esbenp.prettier-vscode"],
-  "mounts": [ "type=volume,target=/var/lib/docker" ],
+  "mounts": ["type=volume,target=/var/lib/docker"],
   "settings": {
     "terminal.integrated.profiles.linux": {
       "zsh": {
@@ -20,5 +20,8 @@
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
     "files.trimTrailingWhitespace": true
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }
