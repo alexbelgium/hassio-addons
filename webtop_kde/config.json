@@ -2,7 +2,6 @@
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
-
   "description": "Full linux desktop environment accessible via any modern web browser",
   "devices": [
     "/dev/fuse",
