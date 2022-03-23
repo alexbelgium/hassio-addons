@@ -3,7 +3,7 @@
     "aarch64": "lscr.io/linuxserver/emby:arm64v8-beta",
     "amd64": "lscr.io/linuxserver/emby:amd64-beta",
     "armv7": "lscr.io/linuxserver/emby:arm32v7-beta"
-  }
+  },
   "codenotary": { 
     "signer": "alexandrep.github@gmail.com" 
   }
