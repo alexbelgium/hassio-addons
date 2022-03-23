@@ -4,3 +4,7 @@ build_from:
   amd64: ghcr.io/hassio-addons/base/amd64:stable
   armv7: ghcr.io/hassio-addons/base/armv7:stable
   i386: ghcr.io/hassio-addons/base/i386:stable
+codenotary:
+  signer: alexandrep.github@gmail.com
+
+
