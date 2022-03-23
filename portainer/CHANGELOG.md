@@ -1,3 +1,4 @@
+- Add codenotary sign
 - Reduce backup size (thanks @lmagyar)
 
 ## 2.11.1 (10-02-2022)
