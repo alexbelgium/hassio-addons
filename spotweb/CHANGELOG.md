@@ -1,3 +1,4 @@
+- Add codenotary sign
 - Show cron jobs status in log
 - Run check-cache at bootup
 
