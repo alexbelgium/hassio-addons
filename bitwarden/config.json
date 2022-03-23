@@ -5,6 +5,7 @@
     "amd64",
     "armv7"
   ],
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "Open source password management solution",
   "init": false,
   "map": [
