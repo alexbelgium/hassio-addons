@@ -8,6 +8,7 @@ addons_updater: addons_updater/config.*
 plex_meta_manager: plex_meta_manager/config.*
 spotweb: spotweb/config.*
 webtop: webtop/config.*
+filebrowser: filebrowser/config.*
 webtop_kde: webtop_kde/config.*
 fireflyiii_fints_importer: fireflyiii_fints_importer/config.*
 scrutiny_fa: scrutiny_fa/config.*
