@@ -4,6 +4,7 @@
     "amd64",
     "armv7"
   ],
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "Spotweb is a decentralized usenet community based on the Spotnet protocol",
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/spotweb-{arch}",
