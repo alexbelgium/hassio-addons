@@ -6,6 +6,7 @@
     "armv7"
   ],
   "boot": "auto",
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "Full linux desktop environment accessible via any modern web browser",
   "devices": [
     "/dev/fuse",
