@@ -11,6 +11,7 @@
     "*/transcoding-temp/",
     "*/metadata/"
   ],
+  "codenotary": "alexandrep.github@gmail.com",
   "boot": "auto",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "devices": [
