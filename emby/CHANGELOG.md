@@ -1,6 +1,7 @@
 
 ## 4.7.0.32 (23-03-2022)
 - Update to latest version from linuxserver/docker-emby
+- Add codenotary sign
 
 ## 4.7.0.31 (17-03-2022)
 - Update to latest version from linuxserver/docker-emby
