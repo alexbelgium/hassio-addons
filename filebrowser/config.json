@@ -34,7 +34,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "image": "ghcr.io/alexbelgium/filebrowser-{arch}",
   "environment": {
     "FB_BASEURL": "/filebrowser",
     "PGID": "0",
