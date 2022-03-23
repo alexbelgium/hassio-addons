@@ -34,6 +34,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "image": "ghcr.io/alexbelgium/filebrowser-{arch}",
   "environment": {
     "FB_BASEURL": "/filebrowser",
     "PGID": "0",
@@ -82,6 +83,6 @@
   "upstream": "2.21.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "codenotary": "alexandrep.github@gmail.com",
-  "version": "2.21.1",
+  "version": "2.21.1-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
