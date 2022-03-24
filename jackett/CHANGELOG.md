@@ -1,3 +1,6 @@
+
+## 0.20.754 (24-03-2022)
+- Update to latest version from linuxserver/docker-jackett
 - Add codenotary sign
 
 ## 0.20.744 (22-03-2022)
