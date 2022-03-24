@@ -7,7 +7,7 @@
     "*/transcoding-temp/",
     "*/metadata/"
   ],
-  "description": "Distributed transcode automation using FFmpeg/HandBrake + Audio/Video library analytics + video health checking",
+  "description": "Distributed transcode automation using FFmpeg/HandBrake",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
