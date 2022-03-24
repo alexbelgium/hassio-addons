@@ -1,3 +1,6 @@
+
+## 2.7.3.1381 (24-03-2022)
+- Update to latest version from linuxserver/docker-resilio-sync
 - Add codenotary sign
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - New standardized logic for Dockerfile build and packages installation

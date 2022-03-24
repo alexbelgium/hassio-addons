@@ -1,5 +1,9 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "description": "Self-hosted file share and collaboration platform on the web",
   "devices": [
@@ -36,7 +40,10 @@
     "/dev/nvme2"
   ],
   "environment": {},
-  "map": ["share:rw", "config:rw"],
+  "map": [
+    "share:rw",
+    "config:rw"
+  ],
   "name": "ResilioSync",
   "options": {
     "PGID": 0,
@@ -50,7 +57,11 @@
     "55555/tcp": "Sync Port",
     "8888/tcp": "Web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -62,9 +73,9 @@
     "networkdisks": "str?"
   },
   "slug": "resiliosync",
-  "upstream": "2.7.2.1375",
+  "upstream": "2.7.3.1381",
   "url": "https://github.com/tyjtyj/hassio-addons",
   "codenotary": "alexandrep.github@gmail.com",
-  "version": "2.7.2.1375-6",
+  "version": "2.7.3.1381",
   "webui": "http://[HOST]:[PORT:8888]"
 }
