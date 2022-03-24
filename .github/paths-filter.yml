@@ -9,10 +9,10 @@ fireflyiii_fints_importer: fireflyiii_fints_importer/config.*
 plex_meta_manager: plex_meta_manager/config.*
 scrutiny_fa: scrutiny_fa/config.*
 spotweb: spotweb/config.*
+tdarr: tdarr/config.*
 webtop: webtop/config.*
 webtop_kde: webtop_kde/config.*
 zoneminder: zoneminder/config.*
-
 #################
 # MANUAL BUILDS #
 #################
@@ -64,4 +64,4 @@ zoneminder: zoneminder/config.*
 #webtrees: webtrees/config.*
 #wger: wger/config.*
 #whoogle-search: whoogle-search/config.*
-#xteve: xteve/config.* 
+#xteve: xteve/config.*

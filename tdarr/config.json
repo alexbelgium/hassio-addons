@@ -1,0 +1,97 @@
+{
+  "apparmor": true,
+  "arch": ["aarch64", "amd64", "armv7"],
+  "backup_exclude": [
+    "*/cache/",
+    "*/logs/",
+    "*/transcoding-temp/",
+    "*/metadata/"
+  ],
+  "description": "Distributed transcode automation using FFmpeg/HandBrake + Audio/Video library analytics + video health checking",
+  "devices": [
+    "/dev/sda",
+    "/dev/sdb",
+    "/dev/sdc",
+    "/dev/sdd",
+    "/dev/sde",
+    "/dev/sdf",
+    "/dev/sdg",
+    "/dev/nvme",
+    "/dev/mmcblk",
+    "/dev/sda1",
+    "/dev/sdb1",
+    "/dev/sdc1",
+    "/dev/sdd1",
+    "/dev/sde1",
+    "/dev/sdf1",
+    "/dev/sdg1",
+    "/dev/sda2",
+    "/dev/sdb2",
+    "/dev/sdc2",
+    "/dev/sdd2",
+    "/dev/sde2",
+    "/dev/sdf2",
+    "/dev/sdg2",
+    "/dev/sda3",
+    "/dev/sdb3",
+    "/dev/sda4",
+    "/dev/sdb4",
+    "/dev/nvme0",
+    "/dev/nvme1",
+    "/dev/nvme2"
+  ],
+  "environment": {
+    "serverIP": "0.0.0.0",
+    "serverPort": "8266",
+    "webUIPort": "8265",
+    "internalNode": "true",
+    "nodeID": "MyInternalNode",
+    "nodeIP": "0.0.0.0",
+    "nodePort": "8267",
+    "TZ": "Europe/London",
+    "PUID": "0",
+    "PGID": "0",
+    "NVIDIA_DRIVER_CAPABILITIES": "all",
+    "NVIDIA_VISIBLE_DEVICES": "all"
+  },
+  "host_dbus": true,
+  "image": "ghcr.io/alexbelgium/tdarr-{arch}",
+  "map": [
+    "media:rw",
+    "config:rw",
+    "addons:rw",
+    "backup:rw",
+    "share:rw",
+    "ssl:rw"
+  ],
+  "name": "Tdarr",
+  "options": {
+    "CONFIG_LOCATION": "/config/addons_config/tdarr"
+  },
+  "panel_icon": "mdi:file-search",
+  "ports": {
+    "8265/tcp": 8265,
+    "8266/tcp": 8266
+  },
+  "ports_description": {
+    "8265/tcp": "Web UI port",
+    "8266/tcp": "Server Port"
+  },
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "schema": {
+    "CONFIG_LOCATION": "str",
+    "TZ": "str?",
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?"
+  },
+  "slug": "tdarr",
+  "upstream": "2.00.16.3",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "codenotary": "alexandrep.github@gmail.com",
+  "version": "2.00.16.3",
+  "video": true,
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8265]"
+}

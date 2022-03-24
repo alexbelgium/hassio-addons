@@ -95,6 +95,7 @@ https://github.com/alexbelgium/hassio-addons
 - [Portainer](portainer/) ![privileged][privileged-shield] ![ingress][ingress-shield] : Manage your docker environment
 - [Scrutiny](scrutiny/) ![support][support-shield] ![ingress][ingress-shield]: Scrutiny WebUI for smartd S.M.A.R.T monitoring
 - [Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
+- [Tdarr](tdarr/): Distributed transcode automation using FFmpeg/HandBrake + Audio/Video library analytics + video health checking
 - [Teamspeak](teamspeak/): Voice communication for online gaming, education and training.
 
 ### &#10003; Multimedia distributors
