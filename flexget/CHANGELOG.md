@@ -1,3 +1,6 @@
+
+## 3.3.4 (24-03-2022)
+- Update to latest version from flexget/flexget
 - Add codenotary sign
 
 ## 3.3.3 (11-03-2022)
