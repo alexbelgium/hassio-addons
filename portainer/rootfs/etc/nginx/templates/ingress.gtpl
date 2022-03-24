@@ -22,9 +22,6 @@ server {
     proxy_connect_timeout 30m;
     proxy_send_timeout 30m;
     proxy_read_timeout 30m;
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }
 

@@ -120,9 +120,6 @@ server {
     location ~ \.(?:png|html|ttf|ico|jpg|jpeg|bcmap|mp4|webm)$ {
         try_files $uri /index.php$request_uri;
         access_log off;
-    },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
-  }
+    }
 }
 

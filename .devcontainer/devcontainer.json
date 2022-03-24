@@ -20,8 +20,5 @@
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
     "files.trimTrailingWhitespace": true
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }
