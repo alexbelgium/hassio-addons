@@ -1,14 +1,18 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "backup_exclude": [
     "*/cache/",
     "*/logs/",
     "*/transcoding-temp/",
     "*/metadata/"
   ],
-
   "boot": "auto",
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "devices": [
     "/dev/dri",
@@ -56,7 +60,12 @@
     "/dev/nvme2"
   ],
   "host_network": true,
-  "map": ["config:rw", "share:rw", "media:rw", "ssl:rw"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl:rw"
+  ],
   "name": "Emby NAS",
   "options": {
     "PGID": 0,
@@ -75,7 +84,10 @@
     "8096/tcp": "web interface",
     "8920/tcp": "https web interface (optional)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -92,7 +104,6 @@
   "startup": "services",
   "upstream": "4.7.0.32",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "4.7.0.32",
   "video": true,
   "webui": "http://[HOST]:[PORT:8096]"

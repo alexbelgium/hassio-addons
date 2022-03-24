@@ -1,13 +1,20 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "recipe manager",
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
     "DEBUG": "0",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db"
   },
-  "map": ["config:rw"],
+  "map": [
+    "config:rw"
+  ],
   "name": "Tandoor recipes",
   "options": {
     "ALLOWED_HOSTS": "",
@@ -30,11 +37,12 @@
     "POSTGRES_USER": "str?",
     "SECRET_KEY": "str"
   },
-  "services": ["mysql:want"],
+  "services": [
+    "mysql:want"
+  ],
   "slug": "tandoor_recipes",
   "upstream": "1.1.4",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "1.1.4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

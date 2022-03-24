@@ -1,11 +1,19 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted open source note-taking application",
   "environment": {
     "APP_PORT": "22300"
   },
-  "map": ["config:rw", "share:rw"],
+  "map": [
+    "config:rw",
+    "share:rw"
+  ],
   "name": "Joplin Server",
   "options": {
     "APP_BASE_URL": "http://your_domain:port",
@@ -38,7 +46,6 @@
   "slug": "joplin",
   "upstream": "2.7.4",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "2.7.4-8",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:22300]"
 }

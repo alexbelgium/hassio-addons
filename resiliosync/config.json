@@ -5,6 +5,7 @@
     "armv7"
   ],
   "boot": "auto",
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted file share and collaboration platform on the web",
   "devices": [
     "/dev/net/tun",
@@ -75,7 +76,6 @@
   "slug": "resiliosync",
   "upstream": "2.7.3.1381",
   "url": "https://github.com/tyjtyj/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "2.7.3.1381",
   "webui": "http://[HOST]:[PORT:8888]"
 }
