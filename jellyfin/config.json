@@ -1,7 +1,12 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "devices": [
     "/dev/dri",
@@ -52,7 +57,12 @@
   "host_network": true,
   "ingress": true,
   "ingress_stream": true,
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "name": "Jellyfin NAS",
   "options": {
     "PGID": 0,
@@ -72,7 +82,11 @@
     "8096/tcp": "web interface",
     "8920/tcp": "https web interface (optional)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -89,7 +103,6 @@
   "startup": "services",
   "upstream": "10.7.7-1-ls155",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "10.7.7-1-ls155-ingress2",
   "video": true,
   "webui": "http://[HOST]:[PORT:8096]"

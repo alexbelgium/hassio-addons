@@ -1,7 +1,14 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "use Enedis Gateway API to send data in your MQTT Broker (latest-dev channel)",
-  "map": ["config:rw"],
+  "map": [
+    "config:rw"
+  ],
   "name": "Enedisgateway2mqtt Dev",
   "options": {
     "CONFIG_LOCATION": "/config/enedisgateway2mqtt_dev/config.yaml",
@@ -14,6 +21,5 @@
   "slug": "enedisgateway2mqtt_dev",
   "upstream": "0.7.8-dev",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "0.7.8-dev"
 }

@@ -1,6 +1,11 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files",
   "devices": [
     "/dev/sda",
@@ -64,7 +69,10 @@
   "ports_description": {
     "8080/tcp": "Web UI port"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "NoAuth": "bool",
     "base_folder": "str?",
@@ -81,7 +89,6 @@
   "startup": "services",
   "upstream": "2.21.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "2.21.1-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

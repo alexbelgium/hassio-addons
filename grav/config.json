@@ -1,10 +1,19 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "Fast, Simple, and Flexible, file-based Web-platform",
   "devices": [],
   "environment": {},
-  "map": ["share:rw", "media:rw", "config:rw"],
+  "map": [
+    "share:rw",
+    "media:rw",
+    "config:rw"
+  ],
   "name": "Grav web server",
   "options": {
     "PGID": 1000,
@@ -25,7 +34,6 @@
   "slug": "grav",
   "upstream": "1.7.31",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "1.7.31",
   "webui": "http://[HOST]:[PORT:80]"
 }

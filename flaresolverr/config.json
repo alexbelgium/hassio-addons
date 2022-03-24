@@ -1,6 +1,11 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "Proxy server to bypass Cloudflare protection ",
   "environment": {},
   "name": "FlareSolverr",
@@ -15,7 +20,6 @@
   "slug": "flaresolverr",
   "upstream": "2.2.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "2.2.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8191]"
 }

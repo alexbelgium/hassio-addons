@@ -1,5 +1,10 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "voice communication for online gaming, education and training",
   "environment": {
     "DIST_UPDATE": "1",
@@ -9,7 +14,9 @@
     "TS3SERVER_LICENSE": "accept",
     "TS_UPDATE": "1"
   },
-  "map": ["share:rw"],
+  "map": [
+    "share:rw"
+  ],
   "name": "Teamspeak server",
   "ports": {
     "10011/tcp": "10011",
@@ -26,6 +33,5 @@
   "slug": "teamspeak",
   "upstream": "3.13.6",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "3.13.6"
 }

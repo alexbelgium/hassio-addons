@@ -1,13 +1,20 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "An open source command line RatioMaster with WebUI",
   "environment": {},
   "hassio_api": true,
   "host_network": false,
   "ingress": true,
   "ingress_port": 8099,
-  "map": ["config:rw"],
+  "map": [
+    "config:rw"
+  ],
   "name": "Joal",
   "options": {
     "run_duration": "12h",
@@ -33,7 +40,6 @@
   "startup": "services",
   "upstream": "2.1.29",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "2.1.29",
   "webui": "http://[HOST]:[PORT:8081]/joal/ui?ui_credentials=%7B%22host%22%3A%22[HOST]%22%2C%22port%22%3A%22[PORT:8081]%22%2C%22pathPrefix%22%3A%22joal%22%2C%22secretToken%22%3A%22lrMY24Byhx%22%7D"
 }
