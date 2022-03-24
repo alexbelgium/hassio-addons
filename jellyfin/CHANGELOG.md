@@ -1,3 +1,6 @@
+
+## 10.7.7-1-ls156 (24-03-2022)
+- Update to latest version from linuxserver/docker-jellyfin
 - Add codenotary sign
 - Addition of ingress
 
