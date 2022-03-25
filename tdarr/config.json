@@ -41,12 +41,12 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "serverIP": "0.0.0.0",
+    "serverIP": "127.0.0.1",
     "serverPort": "8266",
     "webUIPort": "8265",
     "internalNode": "true",
     "nodeID": "MyInternalNode",
-    "nodeIP": "0.0.0.0",
+    "nodeIP": "127.0.0.1",
     "nodePort": "8267",
     "TZ": "Europe/London",
     "PUID": "0",
