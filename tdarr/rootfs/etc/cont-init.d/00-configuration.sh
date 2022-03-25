@@ -38,7 +38,7 @@ ln -snf "$CONFIGLOCATION" /tdarr/configs
 
 # Symlink server data
 [ -d /tdarr/server/Tdarr ] && rm -r /tdarr/server/Tdarr
-ln -snf "$CONFIGLOCATION" /tdarr/server/Tdarr
+ln -snf "$CONFIGLOCATION/server" /tdarr/server/Tdarr
 
 # Text
 bashio::log.info "Setting config location to $CONFIGLOCATION"
