@@ -39,8 +39,8 @@ sed -i "s|/app|/tdarr|g" /etc/services.d/*/run
 ln -s "$CONFIGLOCATION" /tdarr/configs
 
 # Symlink server data
-cp -n /tdarr/server/Tdarr/* "$CONFIGLOCATION" &>/dev/null || true
 [ -d /tdarr/server/Tdarr ] && rm -r /tdarr/server/Tdarr
+mkdir -p /tdarr/server
 ln -s "$CONFIGLOCATION" /tdarr/server/Tdarr
 
 # Text
