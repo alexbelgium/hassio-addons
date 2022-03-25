@@ -28,7 +28,6 @@ CONFIGLOCATION="$(bashio::config 'CONFIG_LOCATION')"
 
 # Create folder
 mkdir -p "$CONFIGLOCATION"
-mkdir -p "$CONFIGLOCATION"/Tdarr
 
 # Rename base folder
 mv /app /tdarr
@@ -40,7 +39,7 @@ sed -i "s|/app|/tdarr|g" /etc/services.d/*/run
 ln -s "$CONFIGLOCATION" /tdarr/configs
 
 # Symlink server data
-[ -f /tdarr/server/Tdarr/* ] && cp -n /tdarr/server/Tdarr/* "$CONFIGLOCATION" &>/dev/null || true
+cp -n /tdarr/server/Tdarr/* "$CONFIGLOCATION" &>/dev/null || true
 [ -d /tdarr/server/Tdarr ] && rm -r /tdarr/server/Tdarr
 ln -s "$CONFIGLOCATION" /tdarr/server/Tdarr
 
