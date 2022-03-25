@@ -1,4 +1,7 @@
 
+## nightly-0.2.0.1617-ls302 (25-03-2022)
+- Update to latest version from linuxserver/docker-prowlarr
+
 ## nightly-0.2.0.1609-ls300 (24-03-2022)
 - Update to latest version from linuxserver/docker-prowlarr
 - Add codenotary sign
