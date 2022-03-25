@@ -1,6 +1,7 @@
 {
   "apparmor": true,
   "arch": ["aarch64", "amd64", "armv7"],
+  "backup": "cold",
   "backup_exclude": [
     "*/cache/",
     "*/logs/",
