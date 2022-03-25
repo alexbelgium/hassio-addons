@@ -21,11 +21,14 @@ bashio::log.info "Setting PUID=$PUID, PGID=$PGID"
 # Set Configuration #
 #####################
 
+cd /
+
 # Config location
 CONFIGLOCATION="$(bashio::config 'CONFIG_LOCATION')"
 
 # Create folder
 mkdir -p "$CONFIGLOCATION"
+mkdir -p "$CONFIGLOCATION"/Tdarr
 
 # Rename base folder
 mv /app /tdarr
@@ -34,11 +37,12 @@ sed -i "s|/app|/tdarr|g" /etc/services.d/*/run
 
 # Symlink configs
 [ -d /tdarr/configs ] && rm -r /tdarr/configs
-ln -snf "$CONFIGLOCATION" /tdarr/configs
+ln -s "$CONFIGLOCATION" /tdarr/configs
 
 # Symlink server data
+[ -f /tdarr/server/Tdarr/* ] && cp -n /tdarr/server/Tdarr/* "$CONFIGLOCATION" &>/dev/null || true
 [ -d /tdarr/server/Tdarr ] && rm -r /tdarr/server/Tdarr
-ln -snf "$CONFIGLOCATION/server" /tdarr/server/Tdarr
+ln -s "$CONFIGLOCATION" /tdarr/server/Tdarr
 
 # Text
 bashio::log.info "Setting config location to $CONFIGLOCATION"
