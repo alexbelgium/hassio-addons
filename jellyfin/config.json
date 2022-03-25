@@ -56,6 +56,7 @@
   "host_dbus": true,
   "host_network": true,
   "ingress": true,
+  "ingress_port": 8111,
   "ingress_stream": true,
   "map": [
     "config:rw",
