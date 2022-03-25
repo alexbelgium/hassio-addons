@@ -1,3 +1,6 @@
+
+## 0.6.6 (25-03-2022)
+- Update to latest version from linuxserver/docker-mylar3
 - Add codenotary sign
 
 ## 0.6.5.2 (17-03-2022)
