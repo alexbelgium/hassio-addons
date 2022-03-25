@@ -92,7 +92,7 @@
   "upstream": "2.00.16.3",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "codenotary": "alexandrep.github@gmail.com",
-  "version": "2.00.16.3-2",
+  "version": "2.00.16.3-3",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8265]"
 }
