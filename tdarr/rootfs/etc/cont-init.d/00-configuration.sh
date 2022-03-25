@@ -37,7 +37,7 @@ sed -i "s|/app|/tdarr|g" /etc/services.d/*/run
 ln -snf "$CONFIGLOCATION" /tdarr/configs
 
 # Symlink server data
-[ -d /tdarr/server ] && rm -r /tdarr/server/Tdarr
+[ -d /tdarr/server/Tdarr ] && rm -r /tdarr/server/Tdarr
 ln -snf "/config/addons_config/tdarr" /tdarr/server/Tdarr
 
 # Text
