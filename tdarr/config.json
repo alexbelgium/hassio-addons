@@ -1,6 +1,10 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "backup": "cold",
   "backup_exclude": [
     "*/cache/",
@@ -8,6 +12,7 @@
     "*/transcoding-temp/",
     "*/metadata/"
   ],
+  "codenotary": "alexandrep.github@gmail.com",
   "description": "Distributed transcode automation using FFmpeg/HandBrake",
   "devices": [
     "/dev/sda",
@@ -42,18 +47,18 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "serverIP": "127.0.0.1",
-    "serverPort": "8266",
-    "webUIPort": "8265",
+    "NVIDIA_DRIVER_CAPABILITIES": "all",
+    "NVIDIA_VISIBLE_DEVICES": "all",
+    "PGID": "0",
+    "PUID": "0",
+    "TZ": "Europe/London",
     "internalNode": "true",
     "nodeID": "MyInternalNode",
     "nodeIP": "127.0.0.1",
     "nodePort": "8267",
-    "TZ": "Europe/London",
-    "PUID": "0",
-    "PGID": "0",
-    "NVIDIA_DRIVER_CAPABILITIES": "all",
-    "NVIDIA_VISIBLE_DEVICES": "all"
+    "serverIP": "127.0.0.1",
+    "serverPort": "8266",
+    "webUIPort": "8265"
   },
   "host_dbus": true,
   "image": "ghcr.io/alexbelgium/tdarr-{arch}",
@@ -78,7 +83,10 @@
     "8265/tcp": "Web UI port",
     "8266/tcp": "Server Port"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "CONFIG_LOCATION": "str",
     "TZ": "str?",
@@ -91,7 +99,6 @@
   "slug": "tdarr",
   "upstream": "2.00.16.3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "codenotary": "alexandrep.github@gmail.com",
   "version": "2.00.16.3-4",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8265]"
