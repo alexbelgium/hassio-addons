@@ -1,3 +1,6 @@
+
+## 0.8.1.2135-ls77 (27-03-2022)
+- Update to latest version from linuxserver/docker-lidarr
 - Add codenotary sign
 
 ## 0.8.1.2135-ls76 (22-03-2022)
