@@ -11,4 +11,4 @@ mkdir -p "$CONFIGSOURCE/configurations" || true
 
 # Make sure permissions are right
 chown -R "www-data:www-data" "$CONFIGSOURCE"
-chmod -r 755 "$CONFIGSOURCE"
+chmod -R 755 "$CONFIGSOURCE"
