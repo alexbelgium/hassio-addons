@@ -24,7 +24,7 @@ jobs:
         run: |
           find . -name '*.sh' -print0 | xargs -0 beautysh --indent-size 4
       - name: Create New Pull Request If Needed
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           title: "Apply beautysh changes"
           branch-suffix: timestamp
