@@ -1,4 +1,4 @@
-- Major : switch to paperless NGX
+- Major change : switch to paperless NGX
 - Add codenotary sign
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 - MultiOCR: in OCRLANG field use comma separated value. Ex: fra,deu (working)
