@@ -1,10 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "scan, index and archive all your physical documents",
@@ -44,13 +40,8 @@
     "PGID": "0",
     "PUID": "0"
   },
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "config:rw"
-  ],
-  "name": "Paperless NG",
+  "map": ["config:rw", "share:rw", "media:rw", "config:rw"],
+  "name": "Paperless NGX",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/paperless_ng/config.yaml",
     "PGID": 0,
@@ -62,10 +53,7 @@
   "ports_description": {
     "8000/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "CONFIG_LOCATION": "str",
     "OCRLANG": "str?",

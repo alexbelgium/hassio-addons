@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile addon_db21ed7f_paperless_ng flags=(attach_disconnected,mediate_deleted) {
+profile addon_db21ed7f_paperless_ngx flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,

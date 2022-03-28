@@ -1,4 +1,4 @@
-# Home assistant add-on: Paperless NG
+# Home assistant add-on: Paperless NGX
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -18,7 +18,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[Paperless NG](https://github.com/jonaswinkler/paperless-ng) is a cross-platform free and open-source BitTorrent client.
+[Paperless NGX](https://github.com/paperless-ngx/paperless-ngx) is a cross-platform free and open-source BitTorrent client.
 This addon is based on the docker image from [linuxserver.io](https://www.linuxserver.io/).
 
 ## Configuration
@@ -41,7 +41,7 @@ TZ: Europe/Paris # Sets a specific timezone
 
 - Config.yaml
 
-Custom env variables can be added to the config.yaml file referenced in the addon options. Full env variables can be found here : https://paperless-ng.readthedocs.io/en/latest/configuration.html. It must be entered in a valid yaml format, that is verified at launch of the addon.
+Custom env variables can be added to the config.yaml file referenced in the addon options. Full env variables can be found here : https://paperless-ngx.readthedocs.io/en/latest/configuration.html. It must be entered in a valid yaml format, that is verified at launch of the addon.
 
 ## Installation
 
@@ -68,4 +68,4 @@ Create an issue on github
 
 ---
 
-![illustration](https://paperless-ng.readthedocs.io/en/latest/_images/documents-smallcards.png)
+![illustration](https://paperless-ngx.readthedocs.io/en/latest/_images/documents-smallcards.png)

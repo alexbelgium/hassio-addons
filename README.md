@@ -58,7 +58,7 @@ https://github.com/alexbelgium/hassio-addons
 ### &#10003; Documents management
 
 - [Nextcloud OCR](nextcloud/) ![smb][smb-shield] : A Nextcloud container, brought to you by LinuxServer.io
-- [Paperless NG](paperless_ng/) ![smb][smb-shield] : scan, index and archive all your physical documents
+- [Paperless NGX](paperless_ngx/) ![smb][smb-shield] : scan, index and archive all your physical documents
 - [Papermerge](papermerge/) ![smb][smb-shield] : Open source document management system (DMS)
 - [Elasticsearch](elasticsearch/) : distributed, RESTful search and analytics engine capable of solving a growing number of use cases
 
