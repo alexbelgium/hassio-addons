@@ -8,8 +8,8 @@ PATHTOFILES="$(dirname "${PATHTOFILES}")"
 bashio::log.info "Running update according to defined schedule. Files located in $PATHTOFILES will be imported"
 if bashio::config.true 'silent'; then
     bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
-    su -l www-data -s /bin/bash -c "/usr/local/bin/php /var/www/html/artisan importer:auto-import $PATHTOFILES/import_files >/dev/null"
+    /usr/local/bin/php /var/www/html/artisan importer:auto-import "$PATHTOFILES/import files" >/dev/null
 else
-    su -l www-data -s /bin/bash -c "/usr/local/bin/php /var/www/html/artisan importer:auto-import $PATHTOFILES/import_files"
+    /usr/local/bin/php /var/www/html/artisan importer:auto-import "$PATHTOFILES/import_files"
 fi
 ) &>/proc/1/fd/1
