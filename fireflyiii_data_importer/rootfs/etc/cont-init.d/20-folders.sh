@@ -10,5 +10,5 @@ mkdir -p "$CONFIGSOURCE/import_files" || true
 mkdir -p "$CONFIGSOURCE/configurations" || true
 
 # Make sure permissions are right
-chown -R "www-data:www-data" "$CONFIGSOURCE"
+chown -R "root:root" "$CONFIGSOURCE"
 chmod -R 755 "$CONFIGSOURCE"
