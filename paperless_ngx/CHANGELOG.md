@@ -1,3 +1,6 @@
+
+## ngx-1.6.0-ls1 (28-03-2022)
+- Update to latest version from linuxserver/docker-paperless-ngx
 - Major change : switch to paperless NGX
 - Add codenotary sign
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
