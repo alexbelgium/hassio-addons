@@ -47,8 +47,8 @@
   },
   "slug": "prowlarr",
   "startup": "services",
-  "upstream": "nightly-0.2.0.1617-ls302",
+  "upstream": "nightly-0.2.0.1621-ls303",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "nightly-0.2.0.1617-ls302",
+  "version": "nightly-0.2.0.1621-ls303",
   "webui": "http://[HOST]:[PORT:9696]"
 }
