@@ -5,6 +5,7 @@
     "amd64",
     "armv7"
   ],
+  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "scan, index and archive all your physical documents",
   "devices": [
