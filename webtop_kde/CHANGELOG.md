@@ -1,3 +1,4 @@
+- Devicetree feature removed as cause issue on some systems
 
 ## 4.16-r0-ls49 (27-03-2022)
 - Update to latest version from linuxserver/docker-webtop
