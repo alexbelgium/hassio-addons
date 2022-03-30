@@ -128,6 +128,7 @@ https://github.com/alexbelgium/hassio-addons
 ### &#10003; Security tools
 
 - [Bitwarden](bitwarden/) : Open source password management solution
+- [guacd](guacd/) : Clientless remote desktop gateway
 - [whoogle-search](whoogle/) : Self-hosted, ad-free, privacy-respecting metasearch engine
 
 ### &#10003; Torrent tools
