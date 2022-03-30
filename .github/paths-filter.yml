@@ -6,6 +6,7 @@
 # name: slug/filename ; could be slug/config.* for all files
 addons_updater: addons_updater/config.*
 fireflyiii_fints_importer: fireflyiii_fints_importer/config.*
+guacd: guacd/config.*
 paperless_ngx: paperless_ngx/config.*
 plex_meta_manager: plex_meta_manager/config.*
 scrutiny_fa: scrutiny_fa/config.*
