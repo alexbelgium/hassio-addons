@@ -9,7 +9,7 @@
   },
   "image": "ghcr.io/alexbelgium/guacd-{arch}",
   "map": ["media:rw", "share:rw", "ssl"],
-  "name": "guacd",
+  "name": "Guacamole Client",
   "options": {
     "PGID": 1000,
     "PUID": 1000
