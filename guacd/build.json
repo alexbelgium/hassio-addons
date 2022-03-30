@@ -1,0 +1,10 @@
+{
+  "build_from": {
+    "aarch64": "lscr.io/linuxserver/guacd:arm64v8-",
+    "amd64": "lscr.io/linuxserver/guacd:amd64-",
+    "armv7": "lscr.io/linuxserver/guacd:arm32v7-"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}

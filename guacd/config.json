@@ -1,0 +1,35 @@
+{
+  "apparmor": true,
+  "arch": ["aarch64", "amd64", "armv7"],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "Clientless remote desktop gateway",
+  "environment": {
+    "FM_HOME": "/config/addons_config/guacd",
+    "HOME": "/config/addons_config/guacd"
+  },
+  "image": "ghcr.io/alexbelgium/guacd-{arch}",
+  "map": ["media:rw", "share:rw", "ssl"],
+  "name": "guacd",
+  "options": {
+    "PGID": 1000,
+    "PUID": 1000
+  },
+  "ports": {
+    "4822/tcp": 4822
+  },
+  "ports_description": {
+    "4822/tcp": "web interface"
+  },
+
+  "schema": {
+    "PGID": "int",
+    "PUID": "int",
+    "TZ": "str?"
+  },
+  "slug": "guacd",
+  "upstream": "4.16-r0-ls49",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "4.16-r0-ls49-2",
+  "video": true,
+  "webui": "http://[HOST]:[PORT:4822]"
+}
