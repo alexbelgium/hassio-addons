@@ -1,5 +1,5 @@
 - Switch user from www-data to root
-- - Add codenotary sign
+- Add codenotary sign
 
 ## version-0.9.0 (22-02-2022)
 
