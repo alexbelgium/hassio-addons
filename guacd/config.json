@@ -29,7 +29,7 @@
   "slug": "guacd",
   "upstream": "1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1-2",
+  "version": "1.0",
   "video": true,
   "webui": "http://[HOST]:[PORT:4822]"
 }
