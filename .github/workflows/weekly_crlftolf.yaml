@@ -20,7 +20,7 @@ jobs:
         grep -rl '\r' . | xargs sed -i 's/\r//'
       shell: bash
     - name: Create New Pull Request If Needed
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v3
       with:
         title: Crlf to lf
         branch-suffix: timestamp
