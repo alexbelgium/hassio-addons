@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-slug=paperless
+slug=paperless_ng
 
 if [ ! -d /config/addons_config/$slug ]; then
 
