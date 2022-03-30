@@ -1,0 +1,29 @@
+# yamllint disable rule:line-length
+---
+name: Convert crlf to lf
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+jobs:
+  sort_json:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+    - name: Run script file
+      id: sort
+      run: |
+        echo "Converting crlf to lf"
+        grep -rl '\r' . | xargs sed -i 's/\r//'
+        echo "::set-output name=changed::1"
+      shell: bash
+    - name: Create New Pull Request If Needed
+      if: steps.sort.outputs.changed != ''
+      uses: peter-evans/create-pull-request@v4
+      with:
+        title: Crlf to lf
+        branch-suffix: timestamp
+        commit-message: Crlf to lf
