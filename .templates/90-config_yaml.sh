@@ -58,7 +58,7 @@ else
 fi
 
 # Check if = instead of :
-if [[ "$(grep -c "=" "config.yaml")" -gt 2 ]]; then
+if [[ "$(grep -c "=" "$CONFIGSOURCE")" -gt 2 ]]; then
     bashio::log.warning 'Are you sure you did not use "KEY=VALUE" ? yaml nomenclature requires "KEY:VALUE"'
 fi
 
