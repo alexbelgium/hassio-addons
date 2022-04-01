@@ -1,4 +1,7 @@
 
+## 3.00-r5-ls118 (02-04-2022)
+- Update to latest version from linuxserver/docker-transmission
+
 ## 3.00-r5-ls117 (24-03-2022)
 - Update to latest version from linuxserver/docker-transmission
 - Add codenotary sign
