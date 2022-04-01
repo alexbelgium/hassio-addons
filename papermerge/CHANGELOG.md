@@ -1,4 +1,7 @@
 
+## v2.0.1-ls42 (02-04-2022)
+- Update to latest version from linuxserver/docker-papermerge
+
 ## v2.0.1-ls41 (25-03-2022)
 - Update to latest version from linuxserver/docker-papermerge
 - Add codenotary sign
