@@ -1,4 +1,7 @@
 
+## nightly-0.1.1.1287-ls105 (02-04-2022)
+- Update to latest version from linuxserver/docker-readarr
+
 ## nightly-0.1.1.1287-ls104 (24-03-2022)
 - Update to latest version from linuxserver/docker-readarr
 - Add codenotary sign
