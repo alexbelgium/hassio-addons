@@ -1,3 +1,6 @@
+
+## 10.7.7-1-ls157 (02-04-2022)
+- Update to latest version from linuxserver/docker-jellyfin
 - Ingress port changed to avoid conflicts
 
 ## 10.7.7-1-ls156 (24-03-2022)
