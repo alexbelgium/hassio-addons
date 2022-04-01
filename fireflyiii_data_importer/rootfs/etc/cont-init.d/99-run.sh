@@ -20,7 +20,6 @@ fi
 
 if bashio::config.has_value 'Updates'; then
 
-    if [ "$(ls -A "${CONFIGSOURCE}"/import_files)" ]; then
         # Align update with options
         echo ""
         FREQUENCY=$(bashio::config 'Updates')
@@ -43,8 +42,9 @@ if bashio::config.has_value 'Updates'; then
 
         bashio::log.info "Automatic updates were requested. The files in ${CONFIGSOURCE}/import_files will be imported $FREQUENCY."
 
-    else
+    if [ ! "$(ls -A "${CONFIGSOURCE}"/import_files)" ]; then
         bashio::log.fatal "Automatic updates were requested, but there are no configuration files in ${CONFIGSOURCE}/import_files. There will therefore be be no automatic updates."
+        true
     fi
 
 else
