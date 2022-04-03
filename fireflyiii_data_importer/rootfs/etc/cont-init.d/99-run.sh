@@ -20,27 +20,27 @@ fi
 
 if bashio::config.has_value 'Updates'; then
 
-        # Align update with options
-        echo ""
-        FREQUENCY=$(bashio::config 'Updates')
-        bashio::log.info "$FREQUENCY updates"
-        echo ""
+    # Align update with options
+    echo ""
+    FREQUENCY=$(bashio::config 'Updates')
+    bashio::log.info "$FREQUENCY updates"
+    echo ""
 
-        # Sets cron // do not delete this message
-        cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
-        chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
+    # Sets cron // do not delete this message
+    cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
+    chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
 
-        # Sets cron to run with www-data user
-        # sed -i 's|root|www-data|g' /etc/crontab
+    # Sets cron to run with www-data user
+    # sed -i 's|root|www-data|g' /etc/crontab
 
-        # Starts cron
-        service cron start
+    # Starts cron
+    service cron start
 
-        # Export variables
-        IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"
-        export IMPORT_DIR_WHITELIST
+    # Export variables
+    IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"
+    export IMPORT_DIR_WHITELIST
 
-        bashio::log.info "Automatic updates were requested. The files in ${CONFIGSOURCE}/import_files will be imported $FREQUENCY."
+    bashio::log.info "Automatic updates were requested. The files in ${CONFIGSOURCE}/import_files will be imported $FREQUENCY."
 
     if [ ! "$(ls -A "${CONFIGSOURCE}"/import_files)" ]; then
         bashio::log.fatal "Automatic updates were requested, but there are no configuration files in ${CONFIGSOURCE}/import_files. There will therefore be be no automatic updates."
