@@ -79,8 +79,8 @@
   },
   "slug": "lidarr_nas",
   "startup": "services",
-  "upstream": "0.8.1.2135-ls77",
+  "upstream": "0.8.1.2135-ls78",
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/Readme.md",
-  "version": "0.8.1.2135-ls77",
+  "version": "0.8.1.2135-ls78",
   "webui": "http://[HOST]:[PORT:8686]"
 }
