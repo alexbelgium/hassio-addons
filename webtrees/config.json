@@ -93,8 +93,8 @@
   ],
   "slug": "webtrees",
   "startup": "services",
-  "upstream": "2.1.0-beta.1",
+  "upstream": "2.1.0-beta.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.0-beta.1",
+  "version": "2.1.0-beta.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
