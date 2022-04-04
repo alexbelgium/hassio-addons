@@ -1,3 +1,6 @@
+
+## version-0.9.3 (05-04-2022)
+- Update to latest version from fireflyiii/data-importer
 - Switch user from www-data to root
 - Add codenotary sign
 
