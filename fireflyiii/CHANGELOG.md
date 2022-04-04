@@ -1,3 +1,6 @@
+
+## 5.7.1 (05-04-2022)
+- Update to latest version from firefly-iii/firefly-iii
 - Add codenotary sign
 
 ## 5.6.16 (01-03-2022)
