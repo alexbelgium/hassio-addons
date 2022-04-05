@@ -14,6 +14,7 @@ spotweb: spotweb/config.*
 tdarr: tdarr/config.*
 webtop: webtop/config.*
 webtop_kde: webtop_kde/config.*
+webtrees: webtrees/config.*
 zoneminder: zoneminder/config.*
 
 #################
