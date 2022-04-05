@@ -30,7 +30,7 @@ RUN \
     # Change data location
     grep -rl "/var/www/webtrees" /etc/ | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
     # Add end script
-    && sed -i '$ d' /docker-entrypoint.sh
+    && sed -i '$ d' /docker-entrypoint.py
 
 ##################
 # 3 Install apps #
