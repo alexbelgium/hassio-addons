@@ -119,9 +119,9 @@ if [ -f "$WEBTREES_HOME"/data/config.ini.php ]; then
 fi || true
 
 # Execute main script
-echo "/docker-entrypoint.sh"
+echo "python3 /docker-entrypoint.py"
 cd /
-./docker-entrypoint.sh
+python3 /docker-entrypoint.py
 
 ############
 # END INFO #
