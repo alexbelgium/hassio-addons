@@ -97,5 +97,5 @@
   "upstream": "2.1.0-beta.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.1.0-beta.2",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
+  "webui": "http://[HOST]:[PORT:80]"
 }
