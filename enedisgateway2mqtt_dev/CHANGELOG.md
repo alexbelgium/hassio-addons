@@ -1,3 +1,6 @@
+
+## 0.8.0-dev (07-04-2022)
+- Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
 - Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation
 - Always aligned with dev versions
