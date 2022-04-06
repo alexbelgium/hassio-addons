@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 CONFIGSOURCE="$(dirname "${CONFIGSOURCE}")"
