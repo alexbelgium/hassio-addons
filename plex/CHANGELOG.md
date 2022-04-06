@@ -1,4 +1,7 @@
 
+## 1.25.9.5721-965587f64-ls109 (07-04-2022)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.25.8.5663-e071c3d62-ls107 (24-03-2022)
 - Update to latest version from linuxserver/docker-plex
 - Add codenotary sign
