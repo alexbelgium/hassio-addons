@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 CONFIGSOURCE="$(dirname "${CONFIGSOURCE}")"
