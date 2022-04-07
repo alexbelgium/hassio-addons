@@ -28,7 +28,8 @@ WORKDIR $WEBTREES_HOME
 # hadolint ignore=DL4006
 RUN \
     # Change data location
-    grep -rl "/var/www/webtrees" / | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g'
+    grep -rl "/var/www/webtrees" /etc | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
+    && sed -i 's|/var/www/webtrees|/data/webtrees|g' /docker-entrypoint.py
     # Add end script
     # && sed -i '$ d' /docker-entrypoint.py
 
