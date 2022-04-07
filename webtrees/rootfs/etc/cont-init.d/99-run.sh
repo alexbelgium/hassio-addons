@@ -121,7 +121,7 @@ fi || true
 # Execute main script
 echo "python3 /docker-entrypoint.py"
 cd /
-python3 /docker-entrypoint.py
+python3 /docker-entrypoint.py & echo "Starting"
 
 ############
 # END INFO #
