@@ -79,8 +79,8 @@
     "networkdisks": "str?"
   },
   "slug": "paperless_ng",
-  "upstream": "ngx-1.6.0-ls2",
+  "upstream": "ngx-1.6.0-ls3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "ngx-1.6.0-ls2",
+  "version": "ngx-1.6.0-ls3",
   "webui": "http://[HOST]:[PORT:8000]"
 }
