@@ -1,3 +1,4 @@
+- New feature "openvpn_alt_mode": bind at container level and not app level
 - Add codenotary sign
 - Fix openvpn interface bind
 - Fix qb-web custom ui
