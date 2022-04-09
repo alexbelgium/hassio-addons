@@ -102,6 +102,7 @@
     "networkdisks": "str?",
     "openvpn_config": "str?",
     "openvpn_enabled": "bool?",
+    "openvpn_alt_mode": "bool?",
     "openvpn_password": "str?",
     "openvpn_username": "str?",
     "run_duration": "str?",
@@ -112,6 +113,6 @@
   "slug": "qbittorrent",
   "upstream": "release-4.4.1-ls173",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "release-4.4.1-ls173-9",
+  "version": "release-4.4.1-ls173-10",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
