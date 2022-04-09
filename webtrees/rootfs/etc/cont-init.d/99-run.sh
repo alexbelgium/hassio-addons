@@ -118,11 +118,6 @@ if [ -f "$WEBTREES_HOME"/data/config.ini.php ]; then
     sed -i "$LINE d" "$WEBTREES_HOME"/data/config.ini.php
 fi || true
 
-# Execute main script
-echo "python3 /docker-entrypoint.py"
-cd /
-python3 /docker-entrypoint.py & echo "Starting"
-
 ############
 # END INFO #
 ############
@@ -132,4 +127,7 @@ DB_NAME=$(echo "$DB_NAME" | tr -d '"')
 bashio::log.info "Data is stored in $WEBTREES_HOME"
 bashio::log.info "Webui can be accessed at : $BASE_URL"
 
-#exec apache2-foreground
+# Execute main script
+echo "python3 /docker-entrypoint.py"
+cd /
+python3 /docker-entrypoint.py
