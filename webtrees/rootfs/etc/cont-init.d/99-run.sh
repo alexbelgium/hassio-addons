@@ -132,4 +132,4 @@ DB_NAME=$(echo "$DB_NAME" | tr -d '"')
 bashio::log.info "Data is stored in $WEBTREES_HOME"
 bashio::log.info "Webui can be accessed at : $BASE_URL"
 
-exec apache2-foreground
+#exec apache2-foreground
