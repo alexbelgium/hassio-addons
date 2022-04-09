@@ -6,6 +6,8 @@ declare openvpn_config
 declare openvpn_username
 declare openvpn_password
 
+QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
+
 if bashio::config.true 'openvpn_enabled'; then
 
     bashio::log.info "Configuring openvpn"
@@ -38,14 +40,14 @@ if bashio::config.true 'openvpn_enabled'; then
     # CONFIGURE QBITTORRENT #
     #########################
 
-    QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
-
     # WITH CONTAINER BINDING
     #########################
     # If alternative mode enabled, bind container
     if bashio::config.true 'openvpn_alt_mode'; then
+        echo "Using container binding"
 
         # Remove interface
+        echo "... deleting previous interface settings"
         sed -i '/Interface/d' "$QBT_CONFIG_FILE"
 
         # Modify ovpn config
@@ -65,25 +67,25 @@ if bashio::config.true 'openvpn_enabled'; then
         
         # Define preferences line
         cd /config/qBittorrent/ || exit 1
-        LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
+        LINE=$(sed -n '/Preferences/=' "$QBT_CONFIG_FILE")
         LINE=$((LINE + 1))
-        SESSION=$(sed -n '/BitTorrent/=' qBittorrent.conf)
+        SESSION=$(sed -n '/BitTorrent/=' "$QBT_CONFIG_FILE")
 
         # If qBittorrent.conf exists
         if [ -f "$QBT_CONFIG_FILE" ]; then
             # Remove previous line and bind tun0
             echo "... deleting previous interface settings"
-            sed -i '/Interface/d' qBittorrent.conf
+            sed -i '/Interface/d' "$QBT_CONFIG_FILE"
 
             # Bind tun0
             echo "... binding tun0 interface in qBittorrent configuration"
-            sed -i "$LINE i\Connection\\\Interface=tun0" qBittorrent.conf
-            sed -i "$LINE i\Connection\\\InterfaceName=tun0" qBittorrent.conf
+            sed -i "$LINE i\Connection\\\Interface=tun0" "$QBT_CONFIG_FILE"
+            sed -i "$LINE i\Connection\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
 
             if [ "$SESSION" != "" ]; then
                 SESSION=$((SESSION + 1))
-                sed -i "$SESSION i\Session\\\Interface=tun0" qBittorrent.conf
-                sed -i "$SESSION i\Session\\\InterfaceName=tun0" qBittorrent.conf
+                sed -i "$SESSION i\Session\\\Interface=tun0" "$QBT_CONFIG_FILE"
+                sed -i "$SESSION i\Session\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
             fi
 
         else
@@ -104,8 +106,7 @@ else
     ##################
     
     # Ensure no redirection by removing the direction tag
-    cd /config/qBittorrent/ || exit 1
-    sed -i '/Interface/d' qBittorrent.conf
+    sed -i '/Interface/d' "$QBT_CONFIG_FILE"
     bashio::log.info "Direct connection without VPN enabled"
 
 fi
