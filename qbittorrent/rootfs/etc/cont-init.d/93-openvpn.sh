@@ -55,7 +55,7 @@ if bashio::config.true 'openvpn_enabled'; then
             echo "... removing route-nopull from your config.ovpn"
             sed -i '/route-nopull/d' /etc/openvpn/config.ovpn
         fi
-        
+
         # Exit
         exit 0
     fi
@@ -63,48 +63,48 @@ if bashio::config.true 'openvpn_enabled'; then
     # WITH INTERFACE BINDING
     #########################
     # Connection with interface binding
-        echo "Using interface binding in the qBittorrent app"
-        
-        # Define preferences line
-        cd /config/qBittorrent/ || exit 1
-        LINE=$(sed -n '/Preferences/=' "$QBT_CONFIG_FILE")
-        LINE=$((LINE + 1))
-        SESSION=$(sed -n '/BitTorrent/=' "$QBT_CONFIG_FILE")
+    echo "Using interface binding in the qBittorrent app"
 
-        # If qBittorrent.conf exists
-        if [ -f "$QBT_CONFIG_FILE" ]; then
-            # Remove previous line and bind tun0
-            echo "... deleting previous interface settings"
-            sed -i '/Interface/d' "$QBT_CONFIG_FILE"
+    # Define preferences line
+    cd /config/qBittorrent/ || exit 1
+    LINE=$(sed -n '/Preferences/=' "$QBT_CONFIG_FILE")
+    LINE=$((LINE + 1))
+    SESSION=$(sed -n '/BitTorrent/=' "$QBT_CONFIG_FILE")
 
-            # Bind tun0
-            echo "... binding tun0 interface in qBittorrent configuration"
-            sed -i "$LINE i\Connection\\\Interface=tun0" "$QBT_CONFIG_FILE"
-            sed -i "$LINE i\Connection\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
+    # If qBittorrent.conf exists
+    if [ -f "$QBT_CONFIG_FILE" ]; then
+        # Remove previous line and bind tun0
+        echo "... deleting previous interface settings"
+        sed -i '/Interface/d' "$QBT_CONFIG_FILE"
 
-            if [ "$SESSION" != "" ]; then
-                SESSION=$((SESSION + 1))
-                sed -i "$SESSION i\Session\\\Interface=tun0" "$QBT_CONFIG_FILE"
-                sed -i "$SESSION i\Session\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
-            fi
+        # Bind tun0
+        echo "... binding tun0 interface in qBittorrent configuration"
+        sed -i "$LINE i\Connection\\\Interface=tun0" "$QBT_CONFIG_FILE"
+        sed -i "$LINE i\Connection\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
 
-        else
-            bashio::log.error "qBittorrent config file doesn't exist, openvpn must be added manually to qbittorrent options "
-            exit 1
+        if [ "$SESSION" != "" ]; then
+            SESSION=$((SESSION + 1))
+            sed -i "$SESSION i\Session\\\Interface=tun0" "$QBT_CONFIG_FILE"
+            sed -i "$SESSION i\Session\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
         fi
 
-        # Modify ovpn config
-        if ! grep -q route-nopull /etc/openvpn/config.ovpn; then
-            echo "... adding route-nopull to your config.ovpn"
-            echo "route-nopull" >>/etc/openvpn/config.ovpn
-        fi
+    else
+        bashio::log.error "qBittorrent config file doesn't exist, openvpn must be added manually to qbittorrent options "
+        exit 1
+    fi
+
+    # Modify ovpn config
+    if ! grep -q route-nopull /etc/openvpn/config.ovpn; then
+        echo "... adding route-nopull to your config.ovpn"
+        echo "route-nopull" >>/etc/openvpn/config.ovpn
+    fi
 
 else
 
     ##################
     # REMOVE OPENVPN #
     ##################
-    
+
     # Ensure no redirection by removing the direction tag
     sed -i '/Interface/d' "$QBT_CONFIG_FILE"
     bashio::log.info "Direct connection without VPN enabled"
