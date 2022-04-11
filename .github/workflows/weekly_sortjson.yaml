@@ -26,6 +26,6 @@ jobs:
       if: steps.sort.outputs.changed != ''
       uses: peter-evans/create-pull-request@v3
       with:
-        title: "Github bot : json sorter"
+        title: "Github bot : json sorted"
         branch-suffix: timestamp
         commit-message: "Github bot : json sorted"
