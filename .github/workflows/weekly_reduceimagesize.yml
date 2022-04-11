@@ -24,7 +24,7 @@ jobs:
         if: steps.calibre.outputs.markdown != ''
         uses: peter-evans/create-pull-request@v4
         with:
-          title: Compressed Images Nightly
+          title: "Github bot : image compressed"
           branch-suffix: timestamp
-          commit-message: Compressed Images
+          commit-message: "Github bot : image compressed"
           body: ${{ steps.calibre.outputs.markdown }} 
