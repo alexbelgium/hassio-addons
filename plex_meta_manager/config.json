@@ -35,7 +35,7 @@
     "TZ": "str?"
   },
   "slug": "plex-meta-manager",
-  "upstream": "v1.16.3-ls9",
+  "upstream": "v1.16.3-ls10",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex_meta_manager",
-  "version": "v1.16.3-ls9"
+  "version": "v1.16.3-ls10"
 }
