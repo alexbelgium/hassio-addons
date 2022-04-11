@@ -22,6 +22,6 @@ jobs:
     - name: Create New Pull Request If Needed
       uses: peter-evans/create-pull-request@v3
       with:
-        title: Crlf to lf
+        title: "Github bot : crlf removed"
         branch-suffix: timestamp
-        commit-message: Crlf to lf
+        commit-message: "Github bot : crlf removed"
