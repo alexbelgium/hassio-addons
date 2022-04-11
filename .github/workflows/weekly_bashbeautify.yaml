@@ -26,6 +26,6 @@ jobs:
       - name: Create New Pull Request If Needed
         uses: peter-evans/create-pull-request@v4
         with:
-          title: "Apply beautysh changes"
+          title: "Github bot : script beautyshied"
           branch-suffix: timestamp
-          commit-message: Beautify bash
+          commit-message: "Github bot : script beautyshied"
