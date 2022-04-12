@@ -8,7 +8,6 @@ CONFIGSOURCE=$(dirname "$CONFIGSOURCE")
 mkdir -p "$CONFIGSOURCE"
 
 # Create symlinks
-cp -rnf /data/configurations "$CONFIGSOURCE"
 rm -r /data/configurations
 ln -sf "$CONFIGSOURCE" /data/configurations
 
