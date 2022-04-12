@@ -84,4 +84,3 @@ jobs:
             --image "${{ steps.check.outputs.image }}" \
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon
-            --signerID "alexandrep.github@gmail.com"
