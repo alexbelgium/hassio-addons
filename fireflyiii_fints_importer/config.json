@@ -17,8 +17,7 @@
   ],
   "name": "Firefly iii FinTS Importer",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/fireflyiii_fints_importer/config.yaml",
-    "Updates": "weekly"
+    "CONFIG_LOCATION": "/config/addons_config/fireflyiii_fints_importer"
   },
   "ports": {
     "8080/tcp": 3476
@@ -28,8 +27,7 @@
   },
   "schema": {
     "CONFIG_LOCATION": "str",
-    "silent": "bool?",
-    "Updates": "list(hourly|daily|weekly)?"
+    "silent": "bool?"
   },
   "slug": "fireflyiii_fints_importer",
   "upstream": "1.2",
