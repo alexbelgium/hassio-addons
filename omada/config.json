@@ -1,0 +1,47 @@
+{
+  "apparmor": true,
+  "arch": ["aarch64", "amd64", "armv7"],
+  "boot": "auto",
+  "description": "TP-Link Omada Controller",
+  "environment": {
+    "MANAGE_HTTP_PORT": "8088",
+    "MANAGE_HTTPS_PORT": "8043",
+    "PORTAL_HTTP_PORT": "8088",
+    "PORTAL_HTTPS_PORT": "8843",
+    "SHOW_SERVER_LOGS": "true",
+    "SHOW_MONGODB_LOGS": "false",
+    "SSL_CERT_NAME": "tls.crt",
+    "SSL_KEY_NAME": "tls.key",
+    "TZ": "Etc/UTC"
+  },
+  "image": "ghcr.io/alexbelgium/omada-{arch}",
+  "name": "Omada",
+  "options": {},
+  "ports": {
+    "8088/tcp": 8088,
+    "8043/tcp": 8043,
+    "8843/tcp": 8843,
+    "29810/tcp": 29810,
+    "29811/tcp": 29811,
+    "29812/tcp": 29812,
+    "29813/tcp": 29813,
+    "29814/tcp": 29814
+  },
+  "map": ["config:rw"],
+  "ports_description": {
+    "8088/tcp": "web interface",
+    "8043/tcp": "web interface https",
+    "8843/tcp": "portal http",
+    "29810/tcp": "omada port",
+    "29811/tcp": "omada port",
+    "29812/tcp": "omada port",
+    "29813/tcp": "omada port",
+    "29814/tcp": "omada port"
+  },
+  "schema": {},
+  "slug": "omada",
+  "upstream": "5.1.7",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "5.1.7",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8088]"
+}
