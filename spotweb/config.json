@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Spotweb is a decentralized usenet community based on the Spotnet protocol",
   "hassio_api": true,
@@ -11,11 +7,7 @@
   "ingress": true,
   "ingress_port": 8099,
   "init": false,
-  "map": [
-    "ssl",
-    "config:rw",
-    "backup:rw"
-  ],
+  "map": ["ssl", "config:rw", "backup:rw"],
   "name": "Spotweb",
   "options": {
     "certfile": "fullchain.pem",
@@ -41,12 +33,10 @@
     "remote_mysql_username": "str?",
     "ssl": "bool"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "spotweb",
   "startup": "services",
   "upstream": "1.5.1",
   "url": "https://github.com/alexbelgium/hassio-addons/spotweb",
-  "version": "1.5.1-6"
+  "version": "1.5.1-7"
 }

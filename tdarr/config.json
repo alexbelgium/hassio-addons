@@ -1,10 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "backup": "cold",
   "backup_exclude": [
     "*/cache/",
@@ -83,10 +79,7 @@
     "8265/tcp": "Web UI port",
     "8266/tcp": "Server Port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "CONFIG_LOCATION": "str",
     "TZ": "str?",
@@ -99,7 +92,7 @@
   "slug": "tdarr",
   "upstream": "2.00.16.3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.00.16.3-4",
+  "version": "2.00.16.3-5",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8265]"
 }

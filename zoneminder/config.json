@@ -1,20 +1,11 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
-  "map": [
-    "config:rw",
-    "media:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "media:rw", "share:rw", "ssl"],
   "name": "Zoneminder",
   "ports": {
     "80/tcp": 3778
@@ -22,12 +13,10 @@
   "ports_description": {
     "80/tcp": "web interface"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "zoneminder",
   "upstream": "1.36.14",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.36.14",
+  "version": "1.36.14-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]/zm"
 }

@@ -1,18 +1,12 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
   "devices": [],
   "environment": {},
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Whoogle Search",
   "options": {
     "TZ": "Europe/Amsterdam",
@@ -61,6 +55,6 @@
   "slug": "whoogle-search",
   "upstream": "0.7.1",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
-  "version": "0.7.1-2",
+  "version": "0.7.1-3",
   "webui": "http://[HOST]:[PORT:5000]"
 }

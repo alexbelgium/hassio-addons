@@ -1,10 +1,6 @@
 {
   "apparmor": true,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Full linux desktop environment accessible via any modern web browser",
@@ -64,11 +60,7 @@
   "host_dbus": true,
   "image": "ghcr.io/alexbelgium/webtop-kde-{arch}",
   "ingress": true,
-  "map": [
-    "media:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["media:rw", "share:rw", "ssl"],
   "name": "Webtop Alpine KDE",
   "options": {
     "DNS_server": "8.8.8.8",
