@@ -16,7 +16,6 @@
   },
   "image": "ghcr.io/alexbelgium/omada-{arch}",
   "name": "Omada",
-  "options": {},
   "ports": {
     "8088/tcp": 8088,
     "8043/tcp": 8043,
@@ -38,7 +37,6 @@
     "29813/tcp": "omada port",
     "29814/tcp": "omada port"
   },
-  "schema": {},
   "slug": "omada",
   "upstream": "5.1.7",
   "url": "https://github.com/alexbelgium/hassio-addons",
