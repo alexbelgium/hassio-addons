@@ -26,7 +26,7 @@ This addon is based on the docker image https://hub.docker.com/r/benkl/firefly-i
 
 Read official documentation for information how to set : https://github.com/bnw/firefly-iii-fints-importer
 
-Configurations can be added in the /config/addons_config/fireflyiii_fints_importer/configurations folder according to : https://github.com/bnw/firefly-iii-fints-importer#storing-configurations
+Configurations can be added in the /config/addons_config/fireflyiii_fints_importer/ folder according to : https://github.com/bnw/firefly-iii-fints-importer#storing-configurations
 
 ## Installation
 
