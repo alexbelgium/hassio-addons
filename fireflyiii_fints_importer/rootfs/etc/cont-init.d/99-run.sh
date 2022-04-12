@@ -1,8 +1,7 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
-CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-CONFIGSOURCE="$(dirname "$CONFIGSOURCE")"
+CONFIGSOURCE="/config/addons_config/fireflyiii_fints_importer"
 
 #################
 # CONFIG IMPORT #
