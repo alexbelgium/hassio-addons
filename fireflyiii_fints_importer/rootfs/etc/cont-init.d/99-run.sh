@@ -8,8 +8,10 @@ CONFIGSOURCE="$(dirname "$CONFIGSOURCE")"
 # CONFIG IMPORT #
 #################
 
-if [ "$(ls -A "$CONFIGSOURCE/configurations")" ]; then
-    bashio::log.info "Configurations were found in $CONFIGSOURCE/configurations, they will be loaded."
+if [ "$(ls -A "$CONFIGSOURCE")" ]; then
+    bashio::log.info "Configurations were found in $CONFIGSOURCE, they will be loaded."
+else
+    bashio::log.warning "No configurations in $CONFIGSOURCE, you'll need to input the infos manually."    
 fi
 
 ################
@@ -18,7 +20,8 @@ fi
 
 if bashio::config.has_value 'Updates'; then
 
-    if [ "$(ls -A "${CONFIGSOURCE}"/import_files)" ]; then
+    if [ "$(ls -A "${CONFIGSOURCE}")" ]; then
+
         # Align update with options
         echo ""
         FREQUENCY=$(bashio::config 'Updates')
@@ -39,10 +42,10 @@ if bashio::config.has_value 'Updates'; then
         IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"
         export IMPORT_DIR_WHITELIST
 
-        bashio::log.info "Automatic updates were requested. The files in ${CONFIGSOURCE}/import_files will be imported $FREQUENCY."
+        bashio::log.info "Automatic updates were requested. The files in ${CONFIGSOURCE} will be imported $FREQUENCY."
 
     else
-        bashio::log.fatal "Automatic updates were requested, but there are no configuration files in ${CONFIGSOURCE}/import_files. There will therefore be be no automatic updates."
+        bashio::log.fatal "Automatic updates were requested, but there are no configuration files in ${CONFIGSOURCE}. There will therefore be be no automatic updates."
     fi
 
 fi
