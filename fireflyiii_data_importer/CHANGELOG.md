@@ -1,4 +1,7 @@
 
+## version-0.9.8 (12-04-2022)
+- Update to latest version from fireflyiii/data-importer
+
 ## version-0.9.7 (11-04-2022)
 - Update to latest version from fireflyiii/data-importer
 
