@@ -3,5 +3,8 @@
     "armv7": "mbentley/omada-controller:latest",
     "aarch64": "mbentley/omada-controller:latest",
     "amd64": "mbentley/omada-controller:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
 }
