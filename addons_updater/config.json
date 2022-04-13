@@ -7,7 +7,7 @@
   "environment": {
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
-  "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
+  "image": "ghcr.io/alexbelgium/addons_updater2-{arch}",
   "name": "Addons_Updater",
   "options": {
     "addon": [
@@ -48,5 +48,5 @@
   "slug": "updater",
   "startup": "once",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater",
-  "version": "2.2"
+  "version": "2.3"
 }
