@@ -7,7 +7,7 @@
   "environment": {
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
-  "image": "ghcr.io/alexbelgium/addons_updater2-{arch}",
+  "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "name": "Addons_Updater",
   "options": {
     "addon": [
