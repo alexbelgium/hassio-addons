@@ -9,6 +9,7 @@
   "environment": {
     "DJANGO_DB_DATABASE": "/data/database.sqlite"
   },
+  "image": "ghcr.io/alexbelgium/wger-{arch}",
   "map": [
     "share:rw",
     "ssl:ro"
