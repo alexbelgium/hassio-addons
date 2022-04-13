@@ -16,7 +16,6 @@ tdarr: tdarr/config.*
 webtop: webtop/config.*
 webtop_kde: webtop_kde/config.*
 webtrees: webtrees/config.*
-wger: wger/config.*
 zoneminder: zoneminder/config.*
 
 #################
