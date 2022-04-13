@@ -24,8 +24,6 @@
     "gituser": "gituser",
     "verbose": true
   },
-  "ports": {},
-  "ports_description": {},
   "schema": {
     "addon": [
       {
