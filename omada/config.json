@@ -1,6 +1,10 @@
 {
   "apparmor": true,
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "TP-Link Omada Controller",
@@ -27,7 +31,9 @@
     "29813/tcp": 29813,
     "29814/tcp": 29814
   },
-  "map": ["config:rw"],
+  "map": [
+    "config:rw"
+  ],
   "ports_description": {
     "8088/tcp": "web interface",
     "8043/tcp": "web interface https",
@@ -39,8 +45,8 @@
     "29814/tcp": "omada port"
   },
   "slug": "omada",
-  "upstream": "5.1.7",
+  "upstream": "5.0-arm64",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.1.7-2",
+  "version": "5.0-arm64",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8088]"
 }
