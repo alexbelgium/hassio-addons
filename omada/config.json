@@ -5,7 +5,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "TP-Link Omada Controller",
   "environment": {
@@ -32,7 +31,8 @@
     "29814/tcp": 29814
   },
   "map": [
-    "config:rw"
+    "config:rw",
+    "ssl:ro"
   ],
   "ports_description": {
     "8088/tcp": "web interface",
