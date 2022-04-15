@@ -29,8 +29,8 @@
   },
   "slug": "ombi",
   "startup": "services",
-  "upstream": "4.10.2",
+  "upstream": "4.16.11",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/ombi",
-  "version": "4.10.2",
+  "version": "4.16.11",
   "webui": "http://[HOST]:[PORT:3579]"
 }
