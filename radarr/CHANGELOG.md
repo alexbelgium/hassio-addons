@@ -1,3 +1,6 @@
+
+## 4.1.0.6175 (16-04-2022)
+- Update to latest version from linuxserver/docker-radarr
 - Add codenotary sign
 
 ## 4.0.5.5981 (06-03-2022)
