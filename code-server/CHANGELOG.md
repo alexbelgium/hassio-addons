@@ -1,3 +1,6 @@
+
+## 4.3.0 (16-04-2022)
+- Update to latest version from linuxserver/docker-code-server
 - Add codenotary sign
 
 ## 4.2.0 (23-03-2022)
