@@ -102,9 +102,9 @@
   },
   "slug": "emby_nas",
   "startup": "services",
-  "upstream": "4.7.0.34",
+  "upstream": "4.7.0.35",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby",
-  "version": "4.7.0.34",
+  "version": "4.7.0.35",
   "video": true,
   "webui": "http://[HOST]:[PORT:8096]"
 }
