@@ -5,8 +5,8 @@ CONFIGSOURCE="/config/addons_config/omada"
 
 # Create directory
 if [ ! -f "$CONFIGSOURCE" ]; then
-echo "Creating directory"
-mkdir -p "$CONFIGSOURCE"
+    echo "Creating directory"
+    mkdir -p "$CONFIGSOURCE"
 fi
 
 # Ensure structure is correct
