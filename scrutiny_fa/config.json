@@ -1,6 +1,10 @@
 {
   "apparmor": "true",
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)",
@@ -29,7 +33,11 @@
   "ports_description": {
     "8080/tcp": "Web UI port"
   },
-  "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "SYS_RAWIO",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",
