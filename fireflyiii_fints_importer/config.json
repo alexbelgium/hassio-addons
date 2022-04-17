@@ -17,8 +17,7 @@
     "ssl"
   ],
   "name": "Firefly iii FinTS Importer",
-  "options": {
-  },
+  "options": {},
   "ports": {
     "8080/tcp": 3476
   },
