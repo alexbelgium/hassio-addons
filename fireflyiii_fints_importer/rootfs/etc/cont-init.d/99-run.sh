@@ -10,7 +10,7 @@ CONFIGSOURCE="/config/addons_config/fireflyiii_fints_importer"
 if [ "$(ls -A "$CONFIGSOURCE")" ]; then
     bashio::log.info "Configurations were found in $CONFIGSOURCE, they will be loaded."
 else
-    bashio::log.warning "No configurations in $CONFIGSOURCE, you'll need to input the infos manually."    
+    bashio::log.warning "No configurations in $CONFIGSOURCE, you'll need to input the infos manually."
 fi
 
 ################
