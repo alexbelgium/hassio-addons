@@ -1,5 +1,7 @@
 #!/bin/bash
 
+NEXTCLOUD_PATH="/data/config/www/nextcloud"
+
 # create folders
 mkdir -p \
     "${NEXTCLOUD_PATH}" \
