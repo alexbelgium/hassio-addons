@@ -1,3 +1,6 @@
+
+## 2.2.4 (19-04-2022)
+- Update to latest version from FlareSolverr/FlareSolverr
 - Add codenotary sign
 
 ## 2.2.2 (22-03-2022)
