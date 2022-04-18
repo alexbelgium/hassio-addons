@@ -45,7 +45,9 @@ RUN \
     /etc/php7/php.ini \
     && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/default \
     # Correct ssl path
-    && sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/default
+    && sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/default \
+    # Correct initial directory
+    && sed -i "s|/data|%%datadirectory%%|g" /defaults/config.php
 
 ##################
 # 3 Install apps #
