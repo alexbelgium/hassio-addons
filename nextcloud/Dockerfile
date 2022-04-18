@@ -36,6 +36,7 @@ RUN \
     && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" /etc/services.d/nginx/* \
+    && sed -i "s|config|data/config|g" /defaults/* \
     # modify data limits files
     # -e 's/memory_limit=512M/memory_limit=1024M/g' \
     && sed -i \
@@ -44,7 +45,7 @@ RUN \
     /etc/php7/php.ini \
     && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/default \
     # Correct ssl path
-    && sed -i "s|/config/keys|/ssl/nextcloud/keys|g" /defaults/default
+    && sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/default
 
 ##################
 # 3 Install apps #
