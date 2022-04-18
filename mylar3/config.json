@@ -75,8 +75,8 @@
     "networkdisks": "str?"
   },
   "slug": "mylar3",
-  "upstream": "0.6.6",
+  "upstream": "0.6.7",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "webui": "http://[HOST]:[PORT:8090]"
 }
