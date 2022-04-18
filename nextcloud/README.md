@@ -53,7 +53,8 @@ comparison to installing any other Hass.io add-on.
 1. Click the `Save` button to store your configuration.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
+1. Go to the webui, where you will create your username, password, and database (if using mariadb, infos are in the log)
+1. Restart the addon, to apply any option that should be applied
+ 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [elasticsearch-shield]: https://img.shields.io/badge/Elasticsearch-optional-blue.svg?logo=elasticsearch
