@@ -97,9 +97,9 @@
     "networkdisks": "str?"
   },
   "slug": "tdarr",
-  "upstream": "2.00.16.3",
+  "upstream": "2.00.17",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.00.16.3-5",
+  "version": "2.00.17",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8265]"
 }
