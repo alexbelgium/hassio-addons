@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  sort_json:
+  crlf_to_lf:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout Repo
