@@ -17,7 +17,7 @@ jobs:
       id: sort
       run: |
         echo "Converting crlf to lf"
-        grep -rl '\r' ./hassio-addons | xargs sed -i 's/\r//'
+        grep -rl '^M$' . | xargs sed 's/^M$//'
       shell: bash
     - name: Create New Pull Request If Needed
       uses: peter-evans/create-pull-request@v3
