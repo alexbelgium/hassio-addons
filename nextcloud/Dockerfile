@@ -42,7 +42,9 @@ RUN \
     -e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
     -e 's/post_max_size=1024M/post_max_size=10240M/g' \
     /etc/php7/php.ini \
-    && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/default
+    && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/default \
+    # Correct ssl path
+    && sed -i "s|/config/keys|/ssl/nextcloud/keys|g" /defaults/default
 
 ##################
 # 3 Install apps #
