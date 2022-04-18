@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 
 if bashio::services.available 'mysql'; then
-    bashio::log.warning "MariaDB addon was found! It can't be configured automatically due to the way Nextcloud works, but you can configure it manually using those values in the initial set-up :"
+    bashio::log.warning "MariaDB addon was found! It can't be configured automatically due to the way Nextcloud works, but you can configure it manually when running the web UI for the first time using those values :"
     bashio::log.blue "Database user : $(bashio::services "mysql" "username")"
     bashio::log.blue "Database password : $(bashio::services "mysql" "password")"
     bashio::log.blue "Database name : nextcloud"
