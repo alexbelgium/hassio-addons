@@ -8,7 +8,7 @@ on:
     - cron: '00 23 * * 0'
 
 jobs:
-  build:
+  reduce_image_size:
     name: calibreapp/image-actions
     runs-on: ubuntu-latest
     steps:
