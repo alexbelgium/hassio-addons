@@ -30,8 +30,8 @@ RUN \
     # Change data location
     grep -rl "/var/www/webtrees" /etc | xargs sed -i 's|/var/www/webtrees|/data/webtrees|g' \
     && sed -i 's|/var/www/webtrees|/data/webtrees|g' /docker-entrypoint.py
-# Add end script
-# && sed -i '$ d' /docker-entrypoint.py
+    # Add end script
+    # && sed -i '$ d' /docker-entrypoint.py
 
 ##################
 # 3 Install apps #
@@ -53,8 +53,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # Manual apps
 ENV PACKAGES="jq \
     curl \
-    yamllint \
-    nginx"
+    yamllint"
 
 # Automatic apps & bashio
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \

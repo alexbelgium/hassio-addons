@@ -130,10 +130,4 @@ bashio::log.info "Webui can be accessed at : $BASE_URL"
 # Execute main script
 echo "python3 /docker-entrypoint.py"
 cd /
-python3 /docker-entrypoint.py & true
-
-# Wait for app to become available
-bashio::net.wait_for 3000 localhost 80
-bashio::log.info "Starting NGinx..."
-
-exec nginx
+python3 /docker-entrypoint.py
