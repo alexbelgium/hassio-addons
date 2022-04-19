@@ -173,6 +173,6 @@ for addons in $(bashio::config "addon|keys"); do
         bashio::log.green "... $SLUG is up-to-date ${CURRENT}"
     fi
 
-done
+done || true # Continue even if issue
 
 bashio::log.info "Addons update completed"
