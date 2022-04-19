@@ -60,6 +60,8 @@
     "/dev/nvme2"
   ],
   "host_network": true,
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "config:rw",
     "share:rw",
@@ -72,6 +74,7 @@
     "PUID": 0,
     "silent": true
   },
+  "panel_icon": "mdi:emby",
   "ports": {
     "1900/udp": null,
     "7359/udp": null,
@@ -104,7 +107,7 @@
   "startup": "services",
   "upstream": "4.7.0.35",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby",
-  "version": "4.7.0.35",
+  "version": "4.7.0.35-ingressbeta",
   "video": true,
   "webui": "http://[HOST]:[PORT:8096]"
 }
