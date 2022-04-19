@@ -56,11 +56,11 @@ for addons in $(bashio::config "addon|keys"); do
 
     #Define the folder addon
     LOGINFO="... $SLUG : checking slug exists in repo" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-    cd /data/"${BASENAME}"/"${SLUG}" || bashio::log.error "$SLUG addon not found in this repository. Exiting. Exiting."
+    cd /data/"${BASENAME}"/"${SLUG}" || ( bashio::log.error "$SLUG addon not found in this repository. Exiting." && continue )
 
     #Find current version
     LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-    CURRENT=$(jq .upstream config.json) || bashio::log.error "$SLUG addon upstream tag not found in config.json. Exiting."
+    CURRENT=$(jq .upstream config.json) || ( bashio::log.error "$SLUG addon upstream tag not found in config.json. Exiting." && continue )
 
     if [ "$SOURCE" = "dockerhub" ]; then
         # Use dockerhub as upstream
@@ -116,11 +116,11 @@ for addons in $(bashio::config "addon|keys"); do
         if [ "${BETA}" = true ]; then
             LOGINFO="... $SLUG : beta is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
             # shellcheck disable=SC2086
-            LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $ARGUMENTS) || break
+            LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $ARGUMENTS) || continue
         else
             LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
             # shellcheck disable=SC2086
-            LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $ARGUMENTS) || break
+            LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $ARGUMENTS) || continue
         fi
 
     fi
