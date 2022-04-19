@@ -57,6 +57,7 @@
     "WT_USER": "admin"
   },
   "image": "ghcr.io/alexbelgium/webtrees-{arch}",
+  "ingress": true,
   "map": [
     "config:rw",
     "share:rw",
@@ -96,6 +97,6 @@
   "startup": "services",
   "upstream": "2.1.0-beta.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.0-beta.2-3",
+  "version": "2.1.0-beta.2-4",
   "webui": "http://[HOST]:[PORT:80]"
 }
