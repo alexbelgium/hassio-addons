@@ -23,6 +23,8 @@ This addon is based on the docker image from [linuxserver.io](https://www.linuxs
 
 ## Configuration
 
+Default username:password is admin:admin. Once logged in, you can change it from within the administration panel.
+
 Options can be configured through two ways :
 
 - Addon options
