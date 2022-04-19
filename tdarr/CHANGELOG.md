@@ -1,4 +1,7 @@
 
+## 2.00.18 (19-04-2022)
+- Update to latest version from haveagitgat/tdarr
+
 ## 2.00.17 (19-04-2022)
 - Update to latest version from haveagitgat/tdarr
 - Server data (including plugins downloaded) made persistent
