@@ -61,6 +61,7 @@
   ],
   "host_network": true,
   "ingress": true,
+  "ingress_port": 8112,
   "ingress_stream": true,
   "map": [
     "config:rw",
