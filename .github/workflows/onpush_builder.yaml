@@ -22,7 +22,7 @@ jobs:
       - name: ↩️ Checkout
         uses: actions/checkout@v3
 
-      - name: 📂 Detect chanced files
+      - name: 📂 Detect changed files
         uses: dorny/paths-filter@v2
         id: filter
         with:
