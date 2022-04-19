@@ -4,6 +4,7 @@
 ###############
 # Those are the addon path filters used in the workflows to determine which addon needs to be build.
 # name: slug/filename ; could be slug/config.* for all files
+all: */config.*
 addons_updater: addons_updater/config.*
 fireflyiii_fints_importer: fireflyiii_fints_importer/config.*
 guacd: guacd/config.*
