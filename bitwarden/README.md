@@ -19,7 +19,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Password manager.
-Created by Frenck here : https://github.com/hassio-addons/addon-bitwarden
+Created by Frenck, please see documentation here : https://github.com/hassio-addons/addon-bitwarden
+This fork is only with automated updates.
 
 ## Configuration
 
