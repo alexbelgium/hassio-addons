@@ -1,5 +1,8 @@
 # Home assistant add-on: Vaultwarden (Bitwarden RS)
 
+IT IS RECOMMENDED TO USE THE OFFICIAL ADDON (https://github.com/hassio-addons/addon-bitwarden) INSTEAD OF THIS FORK.
+THE ONLY BENEFIT OF THIS FORK IS AUTOMATED RELEASES, NOW IMPLEMENTED IN THE OFFICAL ONE.
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbitwarden%2Fconfig.json)
@@ -18,35 +21,6 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-Password manager.
 Created by Frenck, please see documentation here : https://github.com/hassio-addons/addon-bitwarden
-This fork is only with automated updates.
-
-## Configuration
-
-Webui can be found at <http://your-ip:7277>.
-Default username: "admin" and password: "admin"
-
-```yaml
-ssl: true # Enables ssl
-certfile: fullchain.pem # Must be located in /ssl/
-keyfile: privkey.pem # Must be located in /ssl/
-```
-
-## Installation
-
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Hass.io add-on.
-
-1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
-1. Install this add-on.
-1. Click the `Save` button to store your configuration.
-1. Start the add-on.
-1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
-## Support
-
-Create an issue on github
 
 [repository]: https://github.com/alexbelgium/hassio-addons
