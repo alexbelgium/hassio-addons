@@ -1,4 +1,5 @@
 # yamllint disable rule:line-length
+# inspired from https://github.com/Poeschl/Hassio-Addons
 ---
 name: Builder
 
