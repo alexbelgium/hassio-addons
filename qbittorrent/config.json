@@ -45,9 +45,6 @@
     "PUID": "0",
     "WEBUI_PORT": "8080"
   },
-  "hassio_api": true,
-  "hassio_role": "homeassistant",
-  "homeassistant_api": true,
   "ingress": true,
   "ingress_port": 8099,
   "map": [
