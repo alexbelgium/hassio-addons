@@ -22,13 +22,13 @@ jobs:
         for f in *; do
           # $f is an addon directory
           if [ -f "$f"/config.json ]; then
-            [ $(jq '.[arch].aarch64' $f/config.json") ] && sed -i "$ADDONSLINEi ![aarch64][aarch64-badge]" README.md   
-            [ $(jq '.[arch].amd64' $f/config.json") ] && sed -i "$ADDONSLINEi ![amd64][amd64-badge]" README.md   
-            [ $(jq '.[arch].armv7' $f/config.json") ] && sed -i "$ADDONSLINEi ![armv7][armv7-badge]" README.md   
-            [ $(jq '.ingress' $f/config.json") ] && sed -i "$ADDONSLINEi ![ingress][ingress-badge]" README.md   
-            [ $(jq '.codenotary' $f/config.json") ] && sed -i "$ADDONSLINEi ![Signed][signed-badge]" README.md         
-            [ $(jq '.version' $f/config.json") ] && sed -i "$ADDONSLINEi ![version][version-badge]" README.md         
-            sed -i "$ADDONSLINEi - [$(jq '.name' $f/config.json")]($f/) : jq '.description' $f/config.json" README.md
+            [ $(jq '.[arch].aarch64' "$f/config.json") ] && sed -i "$ADDONSLINEi ![aarch64][aarch64-badge]" README.md   
+            [ $(jq '.[arch].amd64' "$f/config.json") ] && sed -i "$ADDONSLINEi ![amd64][amd64-badge]" README.md   
+            [ $(jq '.[arch].armv7' "$f/config.json") ] && sed -i "$ADDONSLINEi ![armv7][armv7-badge]" README.md   
+            [ $(jq '.ingress' "$f/config.json") ] && sed -i "$ADDONSLINEi ![ingress][ingress-badge]" README.md   
+            [ $(jq '.codenotary' "$f/config.json") ] && sed -i "$ADDONSLINEi ![Signed][signed-badge]" README.md         
+            [ $(jq '.version' "$f/config.json") ] && sed -i "$ADDONSLINEi ![version][version-badge]" README.md         
+            sed -i "$ADDONSLINEi - [$(jq '.name' $f/config.json)]($f/) : jq '.description' $f/config.json" README.md
           fi
         done
       shell: bash
