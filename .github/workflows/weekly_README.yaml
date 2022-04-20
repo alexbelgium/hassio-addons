@@ -16,7 +16,9 @@ jobs:
     - name: Run script file
       run: |
         rm README.md
-        cp .templates/.README.md README.md
+        # Prepare template
+        cp .templates/.README.md README2.md
+        # Fill template
         ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README.md)
         sed -i "/**ADDONS_LIST%%/d" README.md
         for f in $( ls | sort -r ); do
@@ -37,6 +39,11 @@ jobs:
             sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$f"'/) : '"$DESCRIPTION \\n" README.md
           fi
         done
+        # Replace template if change
+        if((`stat -c%s "README2.md"`!==`stat -c%s "README.md"`));then
+          rm README.md
+          mv README2.md README.md
+        fi
       shell: bash
     - name: Commit if needed
       uses: EndBug/add-and-commit@v9
