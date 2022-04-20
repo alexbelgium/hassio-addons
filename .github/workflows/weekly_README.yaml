@@ -19,7 +19,7 @@ jobs:
         cp .README.j2 README.md
         ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README.md)
         sed -i "/**ADDONS_LIST%%/d" README.md
-        for f in *; do
+        for f in $( ls | sort -n ); do
           # $f is an addon directory
           if [ -f "$f"/config.json ]; then
             echo "Project $f"
@@ -31,7 +31,7 @@ jobs:
             sed -i "$ADDONSLINE"'a ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README.md || true
             NAME=$(jq -r '.name' $f/config.json)
             DESCRIPTION=$(jq -r '.description' $f/config.json)
-            sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$f"'/) : '"$Description \\n" README.md
+            sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$f"'/) : '"$DESCRIPTION \\n" README.md
           fi
         done
       shell: bash
