@@ -48,7 +48,7 @@
     "media:rw",
     "ssl"
   ],
-  "name": "VS code",
+  "name": "Code-server (VScode)",
   "options": {
     "PGID": 0,
     "PUID": 0
