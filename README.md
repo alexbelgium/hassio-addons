@@ -41,432 +41,432 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 
 ## Add-ons provided by this repository
 
+
 &#10003; [Zoneminder](zoneminder/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzoneminder%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Xteve](xteve/) :  
 
+&#10003; [Xteve](xteve/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fxteve%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Whoogle Search](whoogle/) :  
 
+&#10003; [Whoogle Search](whoogle/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwhoogle%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Wger](wger/) :  
 
+&#10003; [Wger](wger/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwger%2Fconfig.json)
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Webtrees](webtrees/) :  
 
+&#10003; [Webtrees](webtrees/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtrees%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Webtop Alpine KDE](webtop_kde/) :  
 
+&#10003; [Webtop Alpine KDE](webtop_kde/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop_kde%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Ubooquity](ubooquity/) :  
 
+&#10003; [Ubooquity](ubooquity/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fubooquity%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Transmission NAS](transmission/) :  
 
+&#10003; [Transmission NAS](transmission/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Teamspeak server](teamspeak/) :  
 
+&#10003; [Teamspeak server](teamspeak/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fteamspeak%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Tdarr](tdarr/) :  
 
+&#10003; [Tdarr](tdarr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftdarr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Tandoor recipes](tandoor_recipes/) :  
 
+&#10003; [Tandoor recipes](tandoor_recipes/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftandoor_recipes%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Spotweb](spotweb/) :  
 
+&#10003; [Spotweb](spotweb/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fspotweb%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Sonarr NAS](sonarr/) :  
 
+&#10003; [Sonarr NAS](sonarr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsonarr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Scrutiny (Full Access)](scrutiny_fa/) :  
 
+&#10003; [Scrutiny (Full Access)](scrutiny_fa/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_fa%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Scrutiny](scrutiny/) :  
 
+&#10003; [Scrutiny](scrutiny/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [ResilioSync](resiliosync/) :  
 
+&#10003; [ResilioSync](resiliosync/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fresiliosync%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [requestrr](requestrr/) :  
 
+&#10003; [requestrr](requestrr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Frequestrr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Readarr NAS](readarr/) :  
 
+&#10003; [Readarr NAS](readarr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Freadarr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Radarr NAS](radarr/) :  
 
+&#10003; [Radarr NAS](radarr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fradarr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Qbittorrent](qbittorrent/) :  
 
+&#10003; [Qbittorrent](qbittorrent/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Prowlarr NAS](prowlarr/) :  
 
+&#10003; [Prowlarr NAS](prowlarr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fprowlarr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Portainer](portainer/) :  
 
+&#10003; [Portainer](portainer/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Plex meta manager](plex_meta_manager/) :  
 
+&#10003; [Plex meta manager](plex_meta_manager/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fplex_meta_manager%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Plex NAS](plex/) :  
 
+&#10003; [Plex NAS](plex/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fplex%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Piwigo](piwigo/) :  
 
+&#10003; [Piwigo](piwigo/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpiwigo%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Photoprism](photoprism/) :  
 
+&#10003; [Photoprism](photoprism/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fphotoprism%2Fconfig.json)
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Papermerge](papermerge/) :  
 
+&#10003; [Papermerge](papermerge/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpapermerge%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Paperless NGX](paperless_ngx/) :  
 
+&#10003; [Paperless NGX](paperless_ngx/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpaperless_ngx%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Organizr](organizr/) :  
 
+&#10003; [Organizr](organizr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Forganizr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Ombi](ombi/) :  
 
+&#10003; [Ombi](ombi/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fombi%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Omada](omada/) :  
 
+&#10003; [Omada](omada/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fomada%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Nzbget](nzbget/) :  
 
+&#10003; [Nzbget](nzbget/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnzbget%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Nextcloud](nextcloud/) :  
 
+&#10003; [Nextcloud](nextcloud/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnextcloud%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Mylar3](mylar3/) :  
 
+&#10003; [Mylar3](mylar3/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmylar3%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Mealie](mealie/) :  
 
+&#10003; [Mealie](mealie/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Lidarr NAS](lidarr/) :  
 
+&#10003; [Lidarr NAS](lidarr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Flidarr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Joplin Server](joplin/) :  
 
+&#10003; [Joplin Server](joplin/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjoplin%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Joal](joal/) :  
 
+&#10003; [Joal](joal/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjoal%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Jellyfin NAS](jellyfin/) :  
 
+&#10003; [Jellyfin NAS](jellyfin/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyfin%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Jackett NAS](jackett/) :  
 
+&#10003; [Jackett NAS](jackett/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjackett%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Inadyn](inadyn/) :  
 
+&#10003; [Inadyn](inadyn/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Finadyn%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Grav web server](grav/) :  
 
+&#10003; [Grav web server](grav/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fgrav%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [gazpar2mqtt](gazpar2mqtt/) :  
 
+&#10003; [gazpar2mqtt](gazpar2mqtt/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fgazpar2mqtt%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Flexget](flexget/) :  
 
+&#10003; [Flexget](flexget/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fflexget%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [FlareSolverr](flaresolverr/) :  
 
+&#10003; [FlareSolverr](flaresolverr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fflaresolverr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Firefly iii FinTS Importer](fireflyiii_fints_importer/) :  
 
+&#10003; [Firefly iii FinTS Importer](fireflyiii_fints_importer/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffireflyiii_fints_importer%2Fconfig.json)
 ![amd64][amd64-badge]
-&#10003; [Firefly iii Data Importer](fireflyiii_data_importer/) :  
 
+&#10003; [Firefly iii Data Importer](fireflyiii_data_importer/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffireflyiii_data_importer%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Firefly iii](fireflyiii/) :  
 
+&#10003; [Firefly iii](fireflyiii/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffireflyiii%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Filebrowser](filebrowser/) :  
 
+&#10003; [Filebrowser](filebrowser/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Enedisgateway2mqtt Dev](enedisgateway2mqtt_dev/) :  
 
+&#10003; [Enedisgateway2mqtt Dev](enedisgateway2mqtt_dev/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Enedisgateway2mqtt](enedisgateway2mqtt/) :  
 
+&#10003; [Enedisgateway2mqtt](enedisgateway2mqtt/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Emby NAS](emby/) :  
 
+&#10003; [Emby NAS](emby/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Femby%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Elasticsearch server](elasticsearch/) :  
 
+&#10003; [Elasticsearch server](elasticsearch/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Felasticsearch%2Fconfig.json)
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [VS code](code-server/) :  
 
+&#10003; [VS code](code-server/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcode-server%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Cloudcommander](cloudcommander/) :  
 
+&#10003; [Cloudcommander](cloudcommander/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcloudcommander%2Fconfig.json)
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Booksonic-air](booksonic_air/) :  
 
+&#10003; [Booksonic-air](booksonic_air/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbooksonic_air%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Vaultwarden (Bitwarden)](bitwarden/) :  
 
+&#10003; [Vaultwarden (Bitwarden)](bitwarden/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbitwarden%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Bazarr NAS](bazarr/) :  
 
+&#10003; [Bazarr NAS](bazarr/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbazarr%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Arpspoof](arpspoof/) :  
 
+&#10003; [Arpspoof](arpspoof/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-&#10003; [Repository Updater](addons_updater/) :  
 
+&#10003; [Repository Updater](addons_updater/) :  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faddons_updater%2Fconfig.json)
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-
 
 ## Support
 
