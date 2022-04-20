@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  crlf_to_lf:
+  README_updater:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout Repo
@@ -30,8 +30,8 @@ jobs:
             [ $(jq '.ingress' "$f/config.json") ] && echo "ingress" && sed -i "$ADDONSLINE"'i ![ingress][ingress-badge]' README.md || true
             [ $(jq '.codenotary' "$f/config.json") ] && echo "codenotary" && sed -i "$ADDONSLINE"'i ![Signed][signed-badge]' README.md || true     
             [ $(jq '.version' "$f/config.json") ] && echo "version" && sed -i "$ADDONSLINE"'i ![version][version-badge]' README.md || true
-            NAME=$(jq '.name' $f/config.json)
-            DESCRIPTION=$(jq '.description' $f/config.json)
+            NAME=$(jq -r '.name' $f/config.json)
+            DESCRIPTION=$(jq -r '.description' $f/config.json)
             sed -i "$ADDONSLINE"'i ['"$NAME"']('"$f"'/) : '"$DESCRIPTION" README.md
           fi
         done
