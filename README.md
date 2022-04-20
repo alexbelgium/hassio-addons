@@ -42,7 +42,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 ## Add-ons provided by this repository
 
 
-&#10003; [Repository Updater](addons_updater/) : Automatic addons update by aligning version tag with upstream releases 
+&#10003; [Add-ons Repository Updater](addons_updater/) : Automatic addons update by aligning version tag with upstream releases 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faddons_updater%2Fconfig.json)
 ![armv7][armv7-badge]
@@ -371,6 +371,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Scrutiny (Full Access)](scrutiny_fa/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access) 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_fa%2Fconfig.json)
+![full_access][full_access-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
@@ -481,4 +482,7 @@ You have several options to get them answered:
 [amd64-badge]: https://img.shields.io/badge/amd64--green.svg
 [armv7-badge]: https://img.shields.io/badge/armv7--green.svg
 [ingress-badge]: https://img.shields.io/badge/ingress--blue.svg
+[localdisks-badge]: https://img.shields.io/badge/Mounts-localdisks-blue.svg
+[smb-badge]: https://img.shields.io/badge/Mounts-networkdisks-blue.svg
+[full_access-badge]: https://img.shields.io/badge/Requires-full_access-orange.svg
 [forum]: https://community.home-assistant.io/t/my-custom-repo
