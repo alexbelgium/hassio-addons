@@ -32,7 +32,7 @@ jobs:
             sed -i "$ADDONSLINE"'i ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README.md || true
             NAME=$(jq -r '.name' $f/config.json)
             DESCRIPTION=$(jq -r '.description' $f/config.json)
-            sed -i "$ADDONSLINE"'i - ['"$NAME"']('"$f"'/) : '"$DESCRIPTION" README.md
+            sed -i "$ADDONSLINE"'i ### &#10003; ['"$NAME"']('"$f"'/) : '"$DESCRIPTION" README.md
             sed -i "$ADDONSLINE"'{G;}' README.md
           fi
         done
