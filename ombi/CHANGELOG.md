@@ -1,4 +1,7 @@
 
+## 4.16.12 (20-04-2022)
+- Update to latest version from linuxserver/docker-ombi
+
 ## 4.16.11 (16-04-2022)
 - Update to latest version from linuxserver/docker-ombi
 - Add codenotary sign
