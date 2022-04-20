@@ -19,7 +19,7 @@ jobs:
         cp .README.j2 README.md
         ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README.md)
         sed -i "/**ADDONS_LIST%%/d" README.md
-        for f in $( ls | sort -n ); do
+        for f in $( ls | sort -r ); do
           # $f is an addon directory
           if [ -f "$f"/config.json ]; then
             echo "Project $f"
