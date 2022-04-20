@@ -90,7 +90,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
 
-&#10003; [VS code](code-server/) : Code-server is VS Code running on a remote server, accessible through the browser. 
+&#10003; [Code-server (VScode)](code-server/) : Code-server is VS Code running on a remote server, accessible through the browser. 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcode-server%2Fconfig.json)
 ![smb][smb-badge]
@@ -142,6 +142,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Firefly iii](fireflyiii/) : A free and open source personal finance manager 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffireflyiii%2Fconfig.json)
+![MariaDB][mariadb-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -255,6 +256,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Nextcloud](nextcloud/) : Nextcloud for Home Assistant 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnextcloud%2Fconfig.json)
+![MariaDB][mariadb-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
@@ -311,6 +313,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Photoprism](photoprism/) : A server-based application for browsing, organizing and sharing your personal photo collection 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fphotoprism%2Fconfig.json)
+![MariaDB][mariadb-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 ![amd64][amd64-badge]
@@ -430,6 +433,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fspotweb%2Fconfig.json)
+![MariaDB][mariadb-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
@@ -438,6 +442,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Tandoor recipes](tandoor_recipes/) : recipe manager 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftandoor_recipes%2Fconfig.json)
+![MariaDB][mariadb-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -489,6 +494,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Webtrees](webtrees/) : web's leading on-line collaborative genealogy application 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtrees%2Fconfig.json)
+![MariaDB][mariadb-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
@@ -518,6 +524,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Zoneminder](zoneminder/) : A full-featured, open source, state-of-the-art video surveillance software system 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzoneminder%2Fconfig.json)
+![MariaDB][mariadb-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -535,6 +542,7 @@ You have several options to get them answered:
 [amd64-badge]: https://img.shields.io/badge/amd64--green.svg
 [armv7-badge]: https://img.shields.io/badge/armv7--green.svg
 [ingress-badge]: https://img.shields.io/badge/ingress--blue.svg
+[mariadb-badge]: https://img.shields.io/badge/MariaDB_addon--green.svg
 [localdisks-badge]: https://img.shields.io/badge/Mounts-localdisks-blue.svg
 [smb-badge]: https://img.shields.io/badge/Mounts-networkdisks-blue.svg
 [full_access-badge]: https://img.shields.io/badge/Requires-full_access-orange.svg
