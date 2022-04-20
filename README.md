@@ -541,7 +541,7 @@ You have several options to get them answered:
 [aarch64-badge]: https://img.shields.io/badge/aarch64--green.svg
 [amd64-badge]: https://img.shields.io/badge/amd64--green.svg
 [armv7-badge]: https://img.shields.io/badge/armv7--green.svg
-[ingress-badge]: https://img.shields.io/badge/ingress--blue.svg
+[ingress-badge]: https://img.shields.io/badge/ingress--blue.svg?logo=ingress
 [mariadb-badge]: https://img.shields.io/badge/MariaDB_addon--green.svg
 [localdisks-badge]: https://img.shields.io/badge/Mounts-localdisks-blue.svg
 [smb-badge]: https://img.shields.io/badge/Mounts-networkdisks-blue.svg
