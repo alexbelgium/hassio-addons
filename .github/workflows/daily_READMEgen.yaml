@@ -18,18 +18,17 @@ jobs:
         rm README.md
         cp .README.j2 README.md
         ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README.md)
-        echo "line is $ADDONSLINE"
         sed -i "/**ADDONS_LIST%%/d" README.md
         for f in *; do
           # $f is an addon directory
           if [ -f "$f"/config.json ]; then
             echo "Project $f"
             sed -i "$ADDONSLINE"'{G;}' README.md
-            [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]] && echo "aarch64" && sed -i "$ADDONSLINE"'i ![aarch64][aarch64-badge]' README.md || true
-            [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]] && echo "amd64" && sed -i "$ADDONSLINE"'i ![amd64][amd64-badge]' README.md || true
-            [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && echo "armv7" && sed -i "$ADDONSLINE"'i ![armv7][armv7-badge]' README.md || true
-            [ $(jq '.ingress' "$f/config.json") ] && echo "ingress" && sed -i "$ADDONSLINE"'i ![ingress][ingress-badge]' README.md || true
-            [ $(jq '.codenotary' "$f/config.json") ] && echo "codenotary" && sed -i "$ADDONSLINE"'i ![Signed][signed-badge]' README.md || true     
+            [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]] && sed -i "$ADDONSLINE"'i ![aarch64][aarch64-badge]' README.md || true
+            [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]] && sed -i "$ADDONSLINE"'i ![amd64][amd64-badge]' README.md || true
+            [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && sed -i "$ADDONSLINE"'i ![armv7][armv7-badge]' README.md || true
+            [ $(jq '.ingress' "$f/config.json") ] && sed -i "$ADDONSLINE"'i ![ingress][ingress-badge]' README.md || true
+            [ $(jq '.codenotary' "$f/config.json") ] && sed -i "$ADDONSLINE"'i ![Signed][signed-badge]' README.md || true     
             sed -i "$ADDONSLINE"'i ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README.md || true
             NAME=$(jq -r '.name' $f/config.json)
             DESCRIPTION=$(jq -r '.description' $f/config.json)
