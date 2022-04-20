@@ -37,9 +37,7 @@ jobs:
           fi
         done
       shell: bash
-    - name: Create New Pull Request If Needed
-      uses: peter-evans/create-pull-request@v3
+    - name: Commit if needed
+      uses: EndBug/add-and-commit@v9
       with:
-        title: "Github bot : README updated"
-        branch-suffix: timestamp
-        commit-message: "Github bot : README updated"
+        default_author: github_actions
