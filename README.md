@@ -588,7 +588,7 @@ You have several options to get them answered:
 
 [signed-badge]: https://img.shields.io/badge/signed-yes-green.svg
 [ingress-badge]: https://img.shields.io/badge/ingress-yes-green.svg
-[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
-[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
+[aarch64-badge]: https://img.shields.io/badge/aarch64-yes-green.svg
+[amd64-badge]: https://img.shields.io/badge/amd64-yes-green.svg
+[armv7-badge]: https://img.shields.io/badge/armv7-yes-green.svg
 [forum]: https://community.home-assistant.io/t/my-custom-repo
