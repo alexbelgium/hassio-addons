@@ -59,6 +59,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Bazarr NAS](bazarr/) : Companion application to Sonarr and Radarr to download subtitles 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbazarr%2Fconfig.json)
+![smb][smb-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -73,6 +74,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Booksonic-air](booksonic_air/) : platform for accessing the audibooks you own wherever you are 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbooksonic_air%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -80,6 +83,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Cloudcommander](cloudcommander/) : Cloud Commander a file manager for the web with console and editor 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcloudcommander%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
@@ -88,6 +93,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [VS code](code-server/) : Code-server is VS Code running on a remote server, accessible through the browser. 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcode-server%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -101,6 +108,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Emby NAS](emby/) : A Free Software Media System that puts you in control of managing and streaming your media. 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Femby%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
@@ -123,6 +132,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Filebrowser](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
@@ -185,6 +196,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Jackett NAS](jackett/) : translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjackett%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -192,6 +205,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Jellyfin NAS](jellyfin/) : A Free Software Media System that puts you in control of managing and streaming your media. 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyfin%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
@@ -215,6 +230,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Lidarr NAS](lidarr/) : Music collection manager for Usenet and BitTorrent users 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Flidarr%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -229,6 +246,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Mylar3](mylar3/) : Automated comic book downloader for use with NZB and torrents 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmylar3%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -236,6 +255,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Nextcloud](nextcloud/) : Nextcloud for Home Assistant 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnextcloud%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -243,6 +264,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Nzbget](nzbget/) : usenet downloader 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnzbget%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -271,6 +294,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Paperless NGX](paperless_ngx/) : scan, index and archive all your physical documents 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpaperless_ngx%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -278,6 +303,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Papermerge](papermerge/) : Open source document management system (DMS) 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpapermerge%2Fconfig.json)
+![smb][smb-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -285,12 +311,16 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Photoprism](photoprism/) : A server-based application for browsing, organizing and sharing your personal photo collection 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fphotoprism%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
 
 &#10003; [Piwigo](piwigo/) : Piwigo is a photo gallery software for the web 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpiwigo%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -298,6 +328,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Plex NAS](plex/) : Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fplex%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -320,6 +352,7 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Prowlarr NAS](prowlarr/) : Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fprowlarr%2Fconfig.json)
+![smb][smb-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -327,6 +360,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Qbittorrent](qbittorrent/) : qBittorrent is a bittorrent client 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
@@ -335,6 +370,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Radarr NAS](radarr/) : A fork of Sonarr to work with movies like Couchpotato 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fradarr%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -342,6 +379,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Readarr NAS](readarr/) : Book Manager and Automation 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Freadarr%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -356,6 +395,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [ResilioSync](resiliosync/) : Self-hosted file share and collaboration platform on the web 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fresiliosync%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -380,6 +421,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Sonarr NAS](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them.  
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsonarr%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -402,6 +445,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Tdarr](tdarr/) : Distributed transcode automation using FFmpeg/HandBrake 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftdarr%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -416,6 +461,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Transmission NAS](transmission/) : Bittorrent client based on linuxserver image 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -423,6 +470,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Ubooquity](ubooquity/) : Free, lightweight and easy-to-use home server for your comics and ebooks 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fubooquity%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -430,6 +479,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Webtop Alpine KDE](webtop_kde/) : Full linux desktop environment accessible via any modern web browser 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop_kde%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
@@ -438,6 +489,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Webtrees](webtrees/) : web's leading on-line collaborative genealogy application 
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtrees%2Fconfig.json)
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
