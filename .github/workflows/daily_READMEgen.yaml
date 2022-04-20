@@ -35,19 +35,6 @@ jobs:
     - name: Create New Pull Request If Needed
       uses: peter-evans/create-pull-request@v3
       with:
-        title: "Github bot : crlf removed"
+        title: "Github bot : README updated"
         branch-suffix: timestamp
-        commit-message: "Github bot : crlf removed"
-
-
-{% for addon in addons %} : {{ addon.description }}
-### &#10003; [{{ addon.name }}][addon-{{ addon.target }}]
-
-![Latest Version][{{ addon.target }}-version-shield]
-![Supports armhf Architecture][{{ addon.target }}-armhf-shield]
-![Supports armv7 Architecture][{{ addon.target }}-armv7-shield]
-![Supports aarch64 Architecture][{{ addon.target }}-aarch64-shield]
-![Supports amd64 Architecture][{{ addon.target }}-amd64-shield]
-![Supports i386 Architecture][{{ addon.target }}-i386-shield]
-
-{% endfor %}
+        commit-message: "Github bot : README updated"
