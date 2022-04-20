@@ -32,7 +32,7 @@ jobs:
             [ $(jq '.version' "$f/config.json") ] && sed -i "$ADDONSLINEi ![version][version-badge]" README.md
             NAME=$(jq '.name' $f/config.json)
             DESCRIPTION=$(jq '.description' $f/config.json)
-            sed -i "$ADDONSLINE i [$NAME]($f/) : $DESCRIPTION" README.md
+            sed -i "$ADDONSLINE i '['$NAME']'($f/) : $DESCRIPTION" README.md
           fi
         done
       shell: bash
