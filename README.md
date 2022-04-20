@@ -25,126 +25,565 @@ _Thanks to all contributors !_
 
 ## About
 
-My home assistant addon repository.
-In case of issue, create an issue in the repository and reference the full log from supervisor (all red or white text).
+Home Assistant allows anyone to create add-on repositories to share their
+add-ons for Home Assistant easily. This repository is one of those repositories,
+providing extra Home Assistant add-ons for your installation.
 
-- ![smb][smb-shield] : allows accessing smb shares, or a local external disk
-- ![ingress][ingress-shield] : supports Ingress
-- ![sql][sql-shield] : requires an external sql database server
-- ![privileged][privileged-shield] : requires protection mode off to run
-- ![ram][ram-shield] : a minimum of 4gb of RAM is recommended to avoid crashing the system
+The primary goal of this project is to provide you (as a Home Assistant user)
+with additional, high quality, add-ons that allow you to take your automated
+home to the next level.
 
 ## Installation
 
-Adding this add-ons repository to your Home Assistant instance is
-pretty easy. Follow [the official instructions](https://home-assistant.io/hassio/installing_third_party_addons) on the
-website of Home Assistant, and use the following URL:
+In the Home Assistant add-on store, a possibility to add a repository is provided, and [documented on the Home Assistant website](https://home-assistant.io/hassio/installing_third_party_addons).
 
-```yaml
-https://github.com/alexbelgium/hassio-addons
-```
+Use the following URL to add this repository: https://github.com/alexbelgium/hassio-addons
 
-## Addons list
+## Add-ons provided by this repository
 
-### &#10003; Connectors
+[Zoneminder](zoneminder/) : A full-featured, open source, state-of-the-art video surveillance software system
+![version][version-badge]
 
-- [enedisgateway2mqtt](enedisgateway2mqtt/) : use Enedis Gateway API to send data in your MQTT Broker
-- [gazpar2mqtt](gazpar2mqtt/) : Python script to fetch GRDF data and publish data to a mqtt broker
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Xteve](xteve/) : M3U Proxy for Plex DVR and Emby Live TV
 
-### &#10003; Comics management
+![version][version-badge]
 
-- [Ubooquity](ubooquity/) ![smb][smb-shield] ![support][support-shield] ![ram][ram-shield]: Free, lightweight and easy-to-use home server for your comics and ebooks !
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Whoogle Search](whoogle/) : Self-hosted, ad-free, privacy-respecting metasearch engine
 
-### &#10003; Documents management
+![version][version-badge]
 
-- [Nextcloud OCR](nextcloud/) ![smb][smb-shield] : A Nextcloud container, brought to you by LinuxServer.io
-- [Paperless NGX](paperless_ngx/) ![smb][smb-shield] : scan, index and archive all your physical documents
-- [Papermerge](papermerge/) ![smb][smb-shield] : Open source document management system (DMS)
-- [Elasticsearch](elasticsearch/) : distributed, RESTful search and analytics engine capable of solving a growing number of use cases
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Wger](wger/) : manage your personal workouts, weight and diet plans
 
-### &#10003; File explorers
+![version][version-badge]
 
-- [Cloudcommander](cloudcommander/) ![smb][smb-shield] : File manager
-- [Filebrowser](filebrowser/) ![support][support-shield]![smb][smb-shield] : A file manager for the web
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Webtrees](webtrees/) : web's leading on-line collaborative genealogy application
 
-### &#10003; Images management
+![version][version-badge]
 
-- [Photoprism](photoprism/) ![smb][smb-shield] ![sql][sql-shield] ![ram][ram-shield] : server-based application for browsing, organizing and sharing your personal photo collection
-- [Piwigo](piwigo/) ![smb][smb-shield] ![sql][sql-shield] : photo gallery software for the web
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Webtop Alpine KDE](webtop_kde/) : Full linux desktop environment accessible via any modern web browser
 
-### &#10003; Home & family
+![version][version-badge]
 
-- [Enedisgateway2mqtt](enedisgateway2mqtt) : use Enedis Gateway API to send data in your MQTT Broker
-- [Firefly III](fireflyiii/) : A free and open source personal finance manager
-- [Firefly III Data Importer](fireflyiii_data_importer/) : Data importer for Firefly III
-- [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family. This addon is based on the docker image from hay-kot.
-- [Tandoor Recipes](tandoor_recipes/): Recipe manager
-- [TP-link Omada](omada/): TP-Link Omada Controller
-- [Wger](wger/): manage your personal workouts, weight and diet plans
-- [Zoneminder](zoneminder/): a full-featured, open source, state-of-the-art video surveillance software system
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Ubooquity](ubooquity/) : Free, lightweight and easy-to-use home server for your comics and ebooks
 
-### &#10003; Genealogy
+![version][version-badge]
 
-- [Webtrees](webtrees/): web's leading online collaborative genealogy application
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Transmission NAS](transmission/) : Bittorrent client based on linuxserver image
 
-### &#10003; Misc tools
+![version][version-badge]
 
-- [Addons Updater](addons_updater/) [![Support Thread][support-badge]](https://community.home-assistant.io/t/new-addon-automatically-update-addons-based-on-github-upstream-new-releases/) : Automatic addons update by aligning version tag with github upstream releases
-- [Arpspoof](arpspoof/): adds ability to block internet connection for local network devices
-- [Code-server](code-server/) : Code-server is VS Code running on a remote server, accessible through the browser.
-- [Inadyn](inadyn/) : Inadyn, or In-a-Dyn, is a small and simple Dynamic DNS, DDNS, client with HTTPS support. Commonly available in many GNU/Linux distributions, used in off the shelf routers and Internet gateways to automate the task of keeping your Internet name in sync with your public¹ IP address. It can also be used in installations with redundant (backup) connections to the Internet.
-- [Portainer](portainer/) ![privileged][privileged-shield] ![ingress][ingress-shield] : Manage your docker environment
-- [Scrutiny](scrutiny/) ![support][support-shield] ![ingress][ingress-shield]: Scrutiny WebUI for smartd S.M.A.R.T monitoring
-- [Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
-- [Tdarr](tdarr/): Distributed transcode automation using FFmpeg/HandBrake + Audio/Video library analytics + video health checking
-- [Teamspeak](teamspeak/): Voice communication for online gaming, education and training.
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Teamspeak server](teamspeak/) : voice communication for online gaming, education and training
 
-### &#10003; Multimedia distributors
+![version][version-badge]
 
-- [Booksonic-air](booksonic_air/) ![smb][smb-shield]: platform for accessing the audibooks you own wherever you are
-- [Emby](emby/) ![smb][smb-shield]: A Free Software Media System that puts you in control of managing and streaming your media
-- [Flexget](flexget/) : FlexGet is a multipurpose automation tool for all of your media (Developed for @TyjTyj)
-- [Jellyfin](jellyfin/) ![smb][smb-shield] : A Free Software Media System that puts you in control of managing and streaming your media.
-- [Mylar3](mylar3/) ![smb][smb-shield] : automated Comic Book downloader (cbr/cbz) for use with NZB and torrents written in python. It supports SABnzbd, NZBGET, and many torrent clients in addition to DDL
-- [Ombi](ombi/) : Self-hosted Plex Request and user management system
-- [Plex](plex/) ![smb][smb-shield] : Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
-- [xTeVe](xteve/): M3U Proxy for Plex DVR and Emby Live TV.
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Tdarr](tdarr/) : Distributed transcode automation using FFmpeg/HandBrake
 
-### &#10003; Multimedia downloaders
+![version][version-badge]
 
-- [Bazarr](bazarr/) ![smb][smb-shield] : Companion application to Sonarr and Radarr to download subtitles
-- [FlareSolverr](flaresolverr/) : Proxy server to bypass Cloudflare protection
-- [Jackett](jackett/) ![smb][smb-shield] : Translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
-- [Nzbget](nzbget/) is a usenet downloader, written in C++ and designed with performance in mind to achieve maximum download speed by using very little system resources
-- [Prowlarr](prowlarr/) ![smb][smb-shield] : Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
-- [Radarr](radarr/) ![smb][smb-shield] : A fork of Sonarr to work with movies like Couchpotato
-- [Readarr](readarr/) ![smb][smb-shield] : Book Manager and Automation
-- [Requestrr](requestrr/) : Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat
-- [Sonarr](sonarr/) ![smb][smb-shield] : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them.
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Tandoor recipes](tandoor_recipes/) : recipe manager
 
-### &#10003; Organizers
+![version][version-badge]
 
-- [Organizr](organizr/) : An HTPC/Homelab services organizer that is written in PHP
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
 
-### &#10003; Security tools
+![version][version-badge]
 
-- [Bitwarden](bitwarden/) : Open source password management solution
-- [whoogle-search](whoogle/) : Self-hosted, ad-free, privacy-respecting metasearch engine
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Sonarr NAS](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. 
 
-### &#10003; Torrent tools
+![version][version-badge]
 
-- [Joal](joal/) ![ingress][ingress-shield] : An open source command line RatioMaster with WebUI.
-- [Qbittorrent](qbittorrent/) ![smb][smb-shield] ![support][support-shield] ![ingress][ingress-shield] : Torrent manager with custom ui and many configurable options
-- [Transmission](transmission/) ![smb][smb-shield] : The torrent client for Hass.io.
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Scrutiny (Full Access)](scrutiny_fa/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)
 
-### &#10003; Web hosting
+![version][version-badge]
 
-- [Grav](grav/) ![smb][smb-shield] : Fast, Simple, and Flexible, file-based Web-platform
-- [Resioliosync by @tyjtyj](resiolosync/) ![smb][smb-shield]: Self-hosted file share and collaboration platform on the Web
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Scrutiny](scrutiny/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring
 
-[smb-shield]: https://img.shields.io/badge/SMB--green?style=plastic.svg
-[sql-shield]: https://img.shields.io/badge/SQL-external-orange.svg
-[privileged-shield]: https://img.shields.io/badge/privileged-required-orange.svg
-[ingress-shield]: https://img.shields.io/badge/ingress--green.svg
-[support-shield]: https://img.shields.io/badge/Support-thread-green.svg
-[ram-shield]: https://img.shields.io/badge/RAM_min-4Gb-orange.svg
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[ResilioSync](resiliosync/) : Self-hosted file share and collaboration platform on the web
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[requestrr](requestrr/) : Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Readarr NAS](readarr/) : Book Manager and Automation
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Radarr NAS](radarr/) : A fork of Sonarr to work with movies like Couchpotato
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Qbittorrent](qbittorrent/) : qBittorrent is a bittorrent client
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Prowlarr NAS](prowlarr/) : Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Portainer](portainer/) : Manage your Docker environment with ease
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Plex meta manager](plex_meta_manager/) : Python script to update metadata information for movies, shows, and collections as well as automatically build collections
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Plex NAS](plex/) : Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Piwigo](piwigo/) : Piwigo is a photo gallery software for the web
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Photoprism](photoprism/) : A server-based application for browsing, organizing and sharing your personal photo collection
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Papermerge](papermerge/) : Open source document management system (DMS)
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Paperless NGX](paperless_ngx/) : scan, index and archive all your physical documents
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Organizr](organizr/) : An HTPC/Homelab services organizer that is written in PHP
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Ombi](ombi/) : Self-hosted Plex Request and user management system
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Omada](omada/) : TP-Link Omada Controller
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Nzbget](nzbget/) : usenet downloader
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Nextcloud](nextcloud/) : Nextcloud for Home Assistant
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Mylar3](mylar3/) : Automated comic book downloader for use with NZB and torrents
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner built in Vue
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Lidarr NAS](lidarr/) : Music collection manager for Usenet and BitTorrent users
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Joplin Server](joplin/) : Self-hosted open source note-taking application
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Joal](joal/) : An open source command line RatioMaster with WebUI
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Jellyfin NAS](jellyfin/) : A Free Software Media System that puts you in control of managing and streaming your media.
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Jackett NAS](jackett/) : translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Inadyn](inadyn/) : Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Grav web server](grav/) : Fast, Simple, and Flexible, file-based Web-platform
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[gazpar2mqtt](gazpar2mqtt/) : fetch GRDF data and publish data to a mqtt broker
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Flexget](flexget/) : FlexGet is a multipurpose automation tool for all of your media
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[FlareSolverr](flaresolverr/) : Proxy server to bypass Cloudflare protection 
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Firefly iii FinTS Importer](fireflyiii_fints_importer/) : Import financial transactions from you FinTS enabled bank into Firefly III
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![amd64][amd64-badge]
+[Firefly iii Data Importer](fireflyiii_data_importer/) : Data importer for Firefly III (separate addon)
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Firefly iii](fireflyiii/) : A free and open source personal finance manager
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Filebrowser](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Enedisgateway2mqtt Dev](enedisgateway2mqtt_dev/) : use Enedis Gateway API to send data in your MQTT Broker (latest-dev channel)
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Enedisgateway2mqtt](enedisgateway2mqtt/) : use Enedis Gateway API to send data in your MQTT Broker (latest channel)
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Emby NAS](emby/) : A Free Software Media System that puts you in control of managing and streaming your media.
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Elasticsearch server](elasticsearch/) : Free and Open, Distributed, RESTful Search Engine
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[VS code](code-server/) : Code-server is VS Code running on a remote server, accessible through the browser.
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Cloudcommander](cloudcommander/) : Cloud Commander a file manager for the web with console and editor
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Booksonic-air](booksonic_air/) : platform for accessing the audibooks you own wherever you are
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Vaultwarden (Bitwarden)](bitwarden/) : Open source password management solution
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Bazarr NAS](bazarr/) : Companion application to Sonarr and Radarr to download subtitles
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Arpspoof](arpspoof/) : block internet connection for local network devices
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+[Repository Updater](addons_updater/) : Automatic addons update by aligning version tag with upstream releases
+
+![version][version-badge]
+
+![Signed][signed-badge]
+![ingress][ingress-badge]
+![armv7][armv7-badge]
+![amd64][amd64-badge]
+![aarch64][aarch64-badge]
+
+
+## Support
+
+Got questions?
+
+You have several options to get them answered:
+
+- The Home Assistant [Community Forum][forum].
+- This repository issues list
+
+[forum]: https://community.home-assistant.io/t/my-custom-repo
