@@ -24,12 +24,12 @@ jobs:
           # $f is an addon directory
           if [ -f "$f"/config.json ]; then
             echo "Project $f"
-            [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]] && sed -i "$ADDONSLINEi ![aarch64][aarch64-badge]" README.md   
-            [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]] && sed -i "$ADDONSLINEi ![amd64][amd64-badge]" README.md   
-            [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && sed -i "$ADDONSLINEi ![armv7][armv7-badge]" README.md   
-            [ $(jq '.ingress' "$f/config.json") ] && sed -i "$ADDONSLINEi ![ingress][ingress-badge]" README.md   
-            [ $(jq '.codenotary' "$f/config.json") ] && sed -i "$ADDONSLINEi ![Signed][signed-badge]" README.md         
-            [ $(jq '.version' "$f/config.json") ] && sed -i "$ADDONSLINEi ![version][version-badge]" README.md
+            [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]] && echo "aarch64" && sed -i "$ADDONSLINEi ![aarch64][aarch64-badge]" README.md || true
+            [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]] && echo "amd64" && sed -i "$ADDONSLINEi ![amd64][amd64-badge]" README.md || true
+            [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && echo "armv7" && sed -i "$ADDONSLINEi ![armv7][armv7-badge]" README.md || true
+            [ $(jq '.ingress' "$f/config.json") ] && echo "ingress" && sed -i "$ADDONSLINEi ![ingress][ingress-badge]" README.md || true
+            [ $(jq '.codenotary' "$f/config.json") ] && echo "codenotary" && sed -i "$ADDONSLINEi ![Signed][signed-badge]" README.md || true     
+            [ $(jq '.version' "$f/config.json") ] && echo "version" && sed -i "$ADDONSLINEi ![version][version-badge]" README.md || true
             NAME=$(jq '.name' $f/config.json)
             DESCRIPTION=$(jq '.description' $f/config.json)
             sed -i "$ADDONSLINE i '['$NAME']'($f/) : $DESCRIPTION" README.md
