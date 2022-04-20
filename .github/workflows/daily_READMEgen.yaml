@@ -24,6 +24,7 @@ jobs:
           # $f is an addon directory
           if [ -f "$f"/config.json ]; then
             echo "Project $f"
+            sed -i "$ADDONSLINE"'{G;}' README.md
             [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]] && echo "aarch64" && sed -i "$ADDONSLINE"'i ![aarch64][aarch64-badge]' README.md || true
             [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]] && echo "amd64" && sed -i "$ADDONSLINE"'i ![amd64][amd64-badge]' README.md || true
             [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && echo "armv7" && sed -i "$ADDONSLINE"'i ![armv7][armv7-badge]' README.md || true
@@ -32,8 +33,8 @@ jobs:
             sed -i "$ADDONSLINE"'i ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README.md || true
             NAME=$(jq -r '.name' $f/config.json)
             DESCRIPTION=$(jq -r '.description' $f/config.json)
-            sed -i "$ADDONSLINE"'i ['"$NAME"']('"$f"'/) : '"$DESCRIPTION" README.md
             sed -i "$ADDONSLINE"'{G;}' README.md
+            sed -i "$ADDONSLINE"'i ['"$NAME"']('"$f"'/) : '"$DESCRIPTION" README.md
           fi
         done
       shell: bash
