@@ -15,7 +15,6 @@ jobs:
       uses: actions/checkout@v3
     - name: Run script file
       run: |
-        rm README.md
         # Prepare template
         cp .templates/.README.md README2.md
         # Fill template
@@ -26,17 +25,17 @@ jobs:
           if [ -f "$f"/config.json ]; then
             echo "Project $f"
             sed -i "$ADDONSLINE"'{G;}' README.md
-            [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]] && sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README.md || true
-            [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]] && sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README.md || true
-            [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README.md || true
-            [[ $(jq '.ingress' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README.md || true
-            [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]] && sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README.md || true
-            [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]] && sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README.md || true
-            [[ $(jq '.full_access' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README.md || true
-            sed -i "$ADDONSLINE"'a ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README.md || true
+            [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]] && sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md || true
+            [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]] && sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md || true
+            [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md || true
+            [[ $(jq '.ingress' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md || true
+            [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]] && sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md || true
+            [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]] && sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md || true
+            [[ $(jq '.full_access' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md || true
+            sed -i "$ADDONSLINE"'a ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README2.md || true
             NAME=$(jq -r '.name' $f/config.json)
             DESCRIPTION=$(jq -r '.description' $f/config.json)
-            sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$f"'/) : '"$DESCRIPTION \\n" README.md
+            sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$f"'/) : '"$DESCRIPTION \\n" README2.md
           fi
         done
         # Replace template if change
