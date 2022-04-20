@@ -16,7 +16,7 @@ jobs:
     - name: Run script file
       run: |
         rm README.md
-        cp .README.j2 README.md
+        cp .templates/.README.md README.md
         ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README.md)
         sed -i "/**ADDONS_LIST%%/d" README.md
         for f in $( ls | sort -r ); do
@@ -29,6 +29,8 @@ jobs:
             [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README.md || true
             [[ $(jq '.ingress' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README.md || true
             [[ $(jq '.schema[]' "$f/config.json") == *"localdisks"* ]] && sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README.md || true
+            [[ $(jq '.schema[]' "$f/config.json") == *"networkdisks"* ]] && sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README.md || true
+            [[ $(jq '.full_access' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README.md || true
             sed -i "$ADDONSLINE"'a ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README.md || true
             NAME=$(jq -r '.name' $f/config.json)
             DESCRIPTION=$(jq -r '.description' $f/config.json)
