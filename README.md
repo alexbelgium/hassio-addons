@@ -538,11 +538,11 @@ You have several options to get them answered:
 - The Home Assistant [Community Forum][forum].
 - This repository issues list
 
-[aarch64-badge]: https://img.shields.io/badge/aarch64--green.svg
-[amd64-badge]: https://img.shields.io/badge/amd64--green.svg
-[armv7-badge]: https://img.shields.io/badge/armv7--green.svg
-[ingress-badge]: https://img.shields.io/badge/ingress--blue.svg?logo=ingress
-[mariadb-badge]: https://img.shields.io/badge/MariaDB_addon--green.svg
+[aarch64-badge]: https://img.shields.io/badge/-aarch64-green.svg?logo=arm
+[amd64-badge]: https://img.shields.io/badge/-amd64-green.svg?logo=amd
+[armv7-badge]: https://img.shields.io/badge/-armv7-green.svg?logo=arm
+[ingress-badge]: https://img.shields.io/badge/-ingress-blue.svg?logo=Ingress
+[mariadb-badge]: https://img.shields.io/badge/-MariaDB_addon-green.svg?style=for-the-badge&logo=mariadb&logoColor=white
 [localdisks-badge]: https://img.shields.io/badge/Mounts-localdisks-blue.svg
 [smb-badge]: https://img.shields.io/badge/Mounts-networkdisks-blue.svg
 [full_access-badge]: https://img.shields.io/badge/Requires-full_access-orange.svg
