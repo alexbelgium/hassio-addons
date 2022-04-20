@@ -50,4 +50,5 @@ jobs:
     - name: Commit if needed
       uses: EndBug/add-and-commit@v9
       with:
+        message: "GitHub bot : README updated"
         default_author: github_actions
