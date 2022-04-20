@@ -41,535 +41,535 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 
 ## Add-ons provided by this repository
 
-[Zoneminder](zoneminder/) : A full-featured, open source, state-of-the-art video surveillance software system
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzoneminder%2Fconfig.json)
+- [Zoneminder](zoneminder/) : A full-featured, open source, state-of-the-art video surveillance software system
 
+![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzoneminder%2Fconfig.json)
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Xteve](xteve/) : M3U Proxy for Plex DVR and Emby Live TV
+- [Xteve](xteve/) : M3U Proxy for Plex DVR and Emby Live TV
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fxteve%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Whoogle Search](whoogle/) : Self-hosted, ad-free, privacy-respecting metasearch engine
+- [Whoogle Search](whoogle/) : Self-hosted, ad-free, privacy-respecting metasearch engine
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwhoogle%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Wger](wger/) : manage your personal workouts, weight and diet plans
+- [Wger](wger/) : manage your personal workouts, weight and diet plans
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwger%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Webtrees](webtrees/) : web's leading on-line collaborative genealogy application
+- [Webtrees](webtrees/) : web's leading on-line collaborative genealogy application
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtrees%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Webtop Alpine KDE](webtop_kde/) : Full linux desktop environment accessible via any modern web browser
+- [Webtop Alpine KDE](webtop_kde/) : Full linux desktop environment accessible via any modern web browser
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop_kde%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Ubooquity](ubooquity/) : Free, lightweight and easy-to-use home server for your comics and ebooks
+- [Ubooquity](ubooquity/) : Free, lightweight and easy-to-use home server for your comics and ebooks
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fubooquity%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Transmission NAS](transmission/) : Bittorrent client based on linuxserver image
+- [Transmission NAS](transmission/) : Bittorrent client based on linuxserver image
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Teamspeak server](teamspeak/) : voice communication for online gaming, education and training
+- [Teamspeak server](teamspeak/) : voice communication for online gaming, education and training
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fteamspeak%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Tdarr](tdarr/) : Distributed transcode automation using FFmpeg/HandBrake
+- [Tdarr](tdarr/) : Distributed transcode automation using FFmpeg/HandBrake
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftdarr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Tandoor recipes](tandoor_recipes/) : recipe manager
+- [Tandoor recipes](tandoor_recipes/) : recipe manager
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftandoor_recipes%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
+- [Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fspotweb%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Sonarr NAS](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. 
+- [Sonarr NAS](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. 
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsonarr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Scrutiny (Full Access)](scrutiny_fa/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)
+- [Scrutiny (Full Access)](scrutiny_fa/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_fa%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Scrutiny](scrutiny/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring
+- [Scrutiny](scrutiny/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[ResilioSync](resiliosync/) : Self-hosted file share and collaboration platform on the web
+- [ResilioSync](resiliosync/) : Self-hosted file share and collaboration platform on the web
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fresiliosync%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[requestrr](requestrr/) : Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat
+- [requestrr](requestrr/) : Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Frequestrr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Readarr NAS](readarr/) : Book Manager and Automation
+- [Readarr NAS](readarr/) : Book Manager and Automation
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Freadarr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Radarr NAS](radarr/) : A fork of Sonarr to work with movies like Couchpotato
+- [Radarr NAS](radarr/) : A fork of Sonarr to work with movies like Couchpotato
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fradarr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Qbittorrent](qbittorrent/) : qBittorrent is a bittorrent client
+- [Qbittorrent](qbittorrent/) : qBittorrent is a bittorrent client
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Prowlarr NAS](prowlarr/) : Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
+- [Prowlarr NAS](prowlarr/) : Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fprowlarr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Portainer](portainer/) : Manage your Docker environment with ease
+- [Portainer](portainer/) : Manage your Docker environment with ease
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Plex meta manager](plex_meta_manager/) : Python script to update metadata information for movies, shows, and collections as well as automatically build collections
+- [Plex meta manager](plex_meta_manager/) : Python script to update metadata information for movies, shows, and collections as well as automatically build collections
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fplex_meta_manager%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Plex NAS](plex/) : Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
+- [Plex NAS](plex/) : Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fplex%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Piwigo](piwigo/) : Piwigo is a photo gallery software for the web
+- [Piwigo](piwigo/) : Piwigo is a photo gallery software for the web
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpiwigo%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Photoprism](photoprism/) : A server-based application for browsing, organizing and sharing your personal photo collection
+- [Photoprism](photoprism/) : A server-based application for browsing, organizing and sharing your personal photo collection
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fphotoprism%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Papermerge](papermerge/) : Open source document management system (DMS)
+- [Papermerge](papermerge/) : Open source document management system (DMS)
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpapermerge%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Paperless NGX](paperless_ngx/) : scan, index and archive all your physical documents
+- [Paperless NGX](paperless_ngx/) : scan, index and archive all your physical documents
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpaperless_ngx%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Organizr](organizr/) : An HTPC/Homelab services organizer that is written in PHP
+- [Organizr](organizr/) : An HTPC/Homelab services organizer that is written in PHP
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Forganizr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Ombi](ombi/) : Self-hosted Plex Request and user management system
+- [Ombi](ombi/) : Self-hosted Plex Request and user management system
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fombi%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Omada](omada/) : TP-Link Omada Controller
+- [Omada](omada/) : TP-Link Omada Controller
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fomada%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Nzbget](nzbget/) : usenet downloader
+- [Nzbget](nzbget/) : usenet downloader
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnzbget%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Nextcloud](nextcloud/) : Nextcloud for Home Assistant
+- [Nextcloud](nextcloud/) : Nextcloud for Home Assistant
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnextcloud%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Mylar3](mylar3/) : Automated comic book downloader for use with NZB and torrents
+- [Mylar3](mylar3/) : Automated comic book downloader for use with NZB and torrents
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmylar3%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner built in Vue
+- [Mealie](mealie/) : Mealie is a self hosted recipe manager and meal planner built in Vue
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Lidarr NAS](lidarr/) : Music collection manager for Usenet and BitTorrent users
+- [Lidarr NAS](lidarr/) : Music collection manager for Usenet and BitTorrent users
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Flidarr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Joplin Server](joplin/) : Self-hosted open source note-taking application
+- [Joplin Server](joplin/) : Self-hosted open source note-taking application
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjoplin%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Joal](joal/) : An open source command line RatioMaster with WebUI
+- [Joal](joal/) : An open source command line RatioMaster with WebUI
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjoal%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Jellyfin NAS](jellyfin/) : A Free Software Media System that puts you in control of managing and streaming your media.
+- [Jellyfin NAS](jellyfin/) : A Free Software Media System that puts you in control of managing and streaming your media.
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyfin%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Jackett NAS](jackett/) : translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
+- [Jackett NAS](jackett/) : translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjackett%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Inadyn](inadyn/) : Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)
+- [Inadyn](inadyn/) : Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Finadyn%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Grav web server](grav/) : Fast, Simple, and Flexible, file-based Web-platform
+- [Grav web server](grav/) : Fast, Simple, and Flexible, file-based Web-platform
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fgrav%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[gazpar2mqtt](gazpar2mqtt/) : fetch GRDF data and publish data to a mqtt broker
+- [gazpar2mqtt](gazpar2mqtt/) : fetch GRDF data and publish data to a mqtt broker
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fgazpar2mqtt%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Flexget](flexget/) : FlexGet is a multipurpose automation tool for all of your media
+- [Flexget](flexget/) : FlexGet is a multipurpose automation tool for all of your media
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fflexget%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[FlareSolverr](flaresolverr/) : Proxy server to bypass Cloudflare protection 
+- [FlareSolverr](flaresolverr/) : Proxy server to bypass Cloudflare protection 
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fflaresolverr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Firefly iii FinTS Importer](fireflyiii_fints_importer/) : Import financial transactions from you FinTS enabled bank into Firefly III
+- [Firefly iii FinTS Importer](fireflyiii_fints_importer/) : Import financial transactions from you FinTS enabled bank into Firefly III
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffireflyiii_fints_importer%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![amd64][amd64-badge]
-[Firefly iii Data Importer](fireflyiii_data_importer/) : Data importer for Firefly III (separate addon)
+- [Firefly iii Data Importer](fireflyiii_data_importer/) : Data importer for Firefly III (separate addon)
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffireflyiii_data_importer%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Firefly iii](fireflyiii/) : A free and open source personal finance manager
+- [Firefly iii](fireflyiii/) : A free and open source personal finance manager
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffireflyiii%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Filebrowser](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
+- [Filebrowser](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Enedisgateway2mqtt Dev](enedisgateway2mqtt_dev/) : use Enedis Gateway API to send data in your MQTT Broker (latest-dev channel)
+- [Enedisgateway2mqtt Dev](enedisgateway2mqtt_dev/) : use Enedis Gateway API to send data in your MQTT Broker (latest-dev channel)
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Enedisgateway2mqtt](enedisgateway2mqtt/) : use Enedis Gateway API to send data in your MQTT Broker (latest channel)
+- [Enedisgateway2mqtt](enedisgateway2mqtt/) : use Enedis Gateway API to send data in your MQTT Broker (latest channel)
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Emby NAS](emby/) : A Free Software Media System that puts you in control of managing and streaming your media.
+- [Emby NAS](emby/) : A Free Software Media System that puts you in control of managing and streaming your media.
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Femby%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Elasticsearch server](elasticsearch/) : Free and Open, Distributed, RESTful Search Engine
+- [Elasticsearch server](elasticsearch/) : Free and Open, Distributed, RESTful Search Engine
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Felasticsearch%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[VS code](code-server/) : Code-server is VS Code running on a remote server, accessible through the browser.
+- [VS code](code-server/) : Code-server is VS Code running on a remote server, accessible through the browser.
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcode-server%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Cloudcommander](cloudcommander/) : Cloud Commander a file manager for the web with console and editor
+- [Cloudcommander](cloudcommander/) : Cloud Commander a file manager for the web with console and editor
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcloudcommander%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Booksonic-air](booksonic_air/) : platform for accessing the audibooks you own wherever you are
+- [Booksonic-air](booksonic_air/) : platform for accessing the audibooks you own wherever you are
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbooksonic_air%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Vaultwarden (Bitwarden)](bitwarden/) : Open source password management solution
+- [Vaultwarden (Bitwarden)](bitwarden/) : Open source password management solution
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbitwarden%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Bazarr NAS](bazarr/) : Companion application to Sonarr and Radarr to download subtitles
+- [Bazarr NAS](bazarr/) : Companion application to Sonarr and Radarr to download subtitles
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbazarr%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Arpspoof](arpspoof/) : block internet connection for local network devices
+- [Arpspoof](arpspoof/) : block internet connection for local network devices
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
-[Repository Updater](addons_updater/) : Automatic addons update by aligning version tag with upstream releases
+- [Repository Updater](addons_updater/) : Automatic addons update by aligning version tag with upstream releases
+
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faddons_updater%2Fconfig.json)
-
 ![Signed][signed-badge]
 ![ingress][ingress-badge]
 ![armv7][armv7-badge]
