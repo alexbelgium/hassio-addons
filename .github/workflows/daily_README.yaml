@@ -24,9 +24,9 @@ jobs:
           if [ -f "$f"/config.json ]; then
             echo "Project $f"
             sed -i "$ADDONSLINE"'{G;}' README2.md
-            [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]] && sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md
-            [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]] && sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md
-            [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md
+            if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi
+            if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi
+            if [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]]; then sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi
             [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]] && sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md
             [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]] && sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md
             [[ $(jq '.full_access' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md
