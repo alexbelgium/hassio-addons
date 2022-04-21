@@ -27,11 +27,11 @@ jobs:
             [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]] && sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md
             [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]] && sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md
             [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]] && sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md
-            [[ $(jq '.ingress' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md
             [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]] && sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md
             [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]] && sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md
             [[ $(jq '.full_access' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md
             [[ $(jq '.services[]' "$f/config.json") == *"mysql"* ]] && sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md
+            [[ $(jq '.ingress' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md
             sed -i "$ADDONSLINE"'a ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README2.md || true
             NAME=$(jq -r '.name' $f/config.json)
             DESCRIPTION=$(jq -r '.description' $f/config.json)
