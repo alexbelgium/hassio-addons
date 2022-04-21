@@ -538,9 +538,9 @@ You have several options to get them answered:
 - The Home Assistant [Community Forum][forum].
 - This repository issues list
 
-[aarch64-badge]: https://img.shields.io/badge/-aarch64-green.svg?logo=arm
-[amd64-badge]: https://img.shields.io/badge/-amd64-green.svg?logo=amd
-[armv7-badge]: https://img.shields.io/badge/-armv7-green.svg?logo=arm
+[aarch64-badge]: https://img.shields.io/badge/aarch64--green.svg?logo=arm
+[amd64-badge]: https://img.shields.io/badge/amd64--green.svg?logo=amd
+[armv7-badge]: https://img.shields.io/badge/armv7--green.svg?logo=arm
 [ingress-badge]: https://img.shields.io/badge/-ingress-blue.svg?logo=Ingress
 [mariadb-badge]: https://img.shields.io/badge/-MariaDB_addon-green.svg?logo=mariadb&logoColor=white
 [localdisks-badge]: https://img.shields.io/badge/Mounts-localdisks-blue.svg
