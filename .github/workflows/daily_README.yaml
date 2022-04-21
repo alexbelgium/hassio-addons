@@ -39,7 +39,7 @@ jobs:
           fi
         done
         # Replace template if change
-        if [[ $(stat -c%s "README2.md") == $(stat -c%s "README.md") ]]; then
+        if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
           echo "no changes"
           rm README2.md
         else
