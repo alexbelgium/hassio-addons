@@ -24,14 +24,14 @@ jobs:
           if [ -f "$f"/config.json ]; then
             echo "Project $f"
             sed -i "$ADDONSLINE"'{G;}' README2.md
-            if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi
-            if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi
-            if [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]]; then sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi
             [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]] && sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md
             [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]] && sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md
             [[ $(jq '.full_access' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md
             [[ $(jq '.services[]' "$f/config.json") == *"mysql"* ]] && sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md
             [[ $(jq '.ingress' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md
+            if [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]]; then sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi
+            if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi
+            if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi
             sed -i "$ADDONSLINE"'a ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README2.md || true
             NAME=$(jq -r '.name' "$f"/config.json)
             DESCRIPTION=$(jq -r '.description' "$f"/config.json)
