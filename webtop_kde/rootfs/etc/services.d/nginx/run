@@ -5,13 +5,6 @@
 # Wait for transmission to become available
 bashio::net.wait_for 3000 localhost 900
 
-# Set TZ
-if bashio::config.has_value 'TZ'; then
-    TIMEZONE=$(bashio::config 'TZ')
-    bashio::log.info "Setting timezone to $TIMEZONE"
-    ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" >/etc/timezone
-fi
-
 bashio::log.info "Starting NGinx..."
 
 exec nginx
