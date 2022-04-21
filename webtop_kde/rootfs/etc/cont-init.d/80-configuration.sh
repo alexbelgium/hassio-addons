@@ -43,13 +43,6 @@ if bashio::config.has_value 'KEYBOARD'; then
     sed -i "1a export KEYBOARD=$KEYBOARD" /etc/services.d/web/run
 fi
 
-# Set TZ
-if bashio::config.has_value 'TZ'; then
-    TIMEZONE=$(bashio::config 'TZ')
-    bashio::log.info "Setting timezone to $TIMEZONE"
-    ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" >/etc/timezone
-fi
-
 # Set password
 if bashio::config.has_value 'PASSWORD'; then
     bashio::log.info "Setting password to the value defined in options"
