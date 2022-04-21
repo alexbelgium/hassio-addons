@@ -36,6 +36,13 @@ if bashio::config.has_value 'additional_apps'; then
     done
 fi
 
+# Set TZ
+if bashio::config.has_value 'TZ'; then
+    TIMEZONE=$(bashio::config 'TZ')
+    bashio::log.info "Setting timezone to $TIMEZONE"
+    ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime && echo "$TIMEZONE" >/etc/timezone
+fi
+
 # Set keyboard
 if bashio::config.has_value 'KEYBOARD'; then
     KEYBOARD=$(bashio::config 'KEYBOARD')
