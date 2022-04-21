@@ -19,7 +19,7 @@ jobs:
         cp .templates/.README.md README2.md
         ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README2.md)
         sed -i "/**ADDONS_LIST%%/d" README2.md
-        for f in $( ls | sort -r ); do
+        for f in $( find * -type d -maxdepth 0 | sort -r ); do
           # $f is an addon directory
           if [ -f "$f"/config.json ]; then
             echo "Project $f"
@@ -33,8 +33,8 @@ jobs:
             [[ $(jq '.services[]' "$f/config.json") == *"mysql"* ]] && sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md
             [[ $(jq '.ingress' "$f/config.json") == "true" ]] && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md
             sed -i "$ADDONSLINE"'a ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README2.md || true
-            NAME=$(jq -r '.name' $f/config.json)
-            DESCRIPTION=$(jq -r '.description' $f/config.json)
+            NAME=$(jq -r '.name' "$f"/config.json)
+            DESCRIPTION=$(jq -r '.description' "$f"/config.json)
             sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$f"'/) : '"$DESCRIPTION\\n" README2.md
           fi
         done
