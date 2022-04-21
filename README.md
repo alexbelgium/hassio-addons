@@ -35,11 +35,9 @@ home to the next level.
 
 ## Installation
 
-In the Home Assistant add-on store, a possibility to add a repository is provided, and [documented on the Home Assistant website](https://home-assistant.io/hassio/installing_third_party_addons).
-
-Use the following URL to add this repository: https://github.com/alexbelgium/hassio-addons
-
 [![Add repository on my Home Assistant][repository-badge]][repository-url]
+
+If you want to do add the repository manually, please follow the procedure highlighted in the [Home Assistant website](https://home-assistant.io/hassio/installing_third_party_addons). Use the following URL to add this repository: https://github.com/alexbelgium/hassio-addons
 
 ## Add-ons provided by this repository
 
@@ -85,9 +83,9 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Cloudcommander](cloudcommander/) : Cloud Commander a file manager for the web with console and editor
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcloudcommander%2Fconfig.json)
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
-![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -110,9 +108,9 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Emby NAS](emby/) : A Free Software Media System that puts you in control of managing and streaming your media.
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Femby%2Fconfig.json)
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
-![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -134,9 +132,9 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Filebrowser](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.json)
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
-![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -208,9 +206,9 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Jellyfin NAS](jellyfin/) : A Free Software Media System that puts you in control of managing and streaming your media.
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyfin%2Fconfig.json)
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
-![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -365,9 +363,9 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Qbittorrent](qbittorrent/) : qBittorrent is a bittorrent client
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fqbittorrent%2Fconfig.json)
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
-![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -417,8 +415,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Scrutiny (Full Access)](scrutiny_fa/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_fa%2Fconfig.json)
-![full_access][full_access-badge]
 ![ingress][ingress-badge]
+![full_access][full_access-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -435,8 +433,8 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fspotweb%2Fconfig.json)
-![MariaDB][mariadb-badge]
 ![ingress][ingress-badge]
+![MariaDB][mariadb-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -486,9 +484,9 @@ Use the following URL to add this repository: https://github.com/alexbelgium/has
 &#10003; [Webtop Alpine KDE](webtop_kde/) : Full linux desktop environment accessible via any modern web browser
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop_kde%2Fconfig.json)
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
-![ingress][ingress-badge]
 ![armv7][armv7-badge]
 ![amd64][amd64-badge]
 ![aarch64][aarch64-badge]
@@ -543,7 +541,7 @@ You have several options to get them answered:
 [aarch64-badge]: https://img.shields.io/badge/-aarch64-green.svg?logo=arm
 [amd64-badge]: https://img.shields.io/badge/-amd64-green.svg?logo=amd
 [armv7-badge]: https://img.shields.io/badge/-armv7-green.svg?logo=arm
-[ingress-badge]: https://img.shields.io/badge/-ingress-blue.svg?logo=Ingress
+[ingress-badge]: https://img.shields.io/badge/-ingress-blueviolet.svg?logo=Ingress
 [mariadb-badge]: https://img.shields.io/badge/-MariaDB_addon-green.svg?logo=mariadb&logoColor=white
 [localdisks-badge]: https://img.shields.io/badge/Mounts-localdisks-blue.svg
 [smb-badge]: https://img.shields.io/badge/Mounts-networkdisks-blue.svg
