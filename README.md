@@ -1,6 +1,6 @@
 # Home assistant add-on: alexbelgium
 
-<!-- markdownlint-disable MD033 -->
+<!-- markdownlint-disable MD033
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 ![update-badge](https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update)
@@ -302,33 +302,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 ![armv7][armv7-badge]
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-
-&#10003; [Papermerge](papermerge/) : Open source document management system (DMS)
-
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpapermerge%2Fconfig.json)
-![smb][smb-badge]
-![armv7][armv7-badge]
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-
-&#10003; [Photoprism](photoprism/) : A server-based application for browsing, organizing and sharing your personal photo collection
-
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fphotoprism%2Fconfig.json)
-![MariaDB][mariadb-badge]
-![smb][smb-badge]
-![localdisks][localdisks-badge]
-![armv7no][armv7no-badge]
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-
-&#10003; [Piwigo](piwigo/) : Piwigo is a photo gallery software for the web
-
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpiwigo%2Fconfig.json)
-![smb][smb-badge]
-![localdisks][localdisks-badge]
-![armv7][armv7-badge]
+![
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
