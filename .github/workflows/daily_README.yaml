@@ -35,7 +35,7 @@ jobs:
             sed -i "$ADDONSLINE"'a ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$f"'%2Fconfig.json)' README2.md || true
             NAME=$(jq -r '.name' $f/config.json)
             DESCRIPTION=$(jq -r '.description' $f/config.json)
-            sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$f"'/) : '"$DESCRIPTION \\n" README2.md
+            sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$f"'/) : '"$DESCRIPTION\\n" README2.md
           fi
         done
         # Replace template if change
