@@ -47,7 +47,7 @@ fi
 if bashio::config.has_value 'TZ'; then
     TIMEZONE=$(bashio::config 'TZ')
     bashio::log.info "Setting timezone to $TIMEZONE"
-    sed -i "1a export TZ=$TIMEZONE" /etc/services.d/web/run
+    cp /usr/share/zoneinfo/$TZ /etc/localtime
 fi
 
 # Set password
