@@ -28,7 +28,7 @@ jobs:
         done
         
         # Sort yaml
-        sort ".github/paths-filter.yml"
+        sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
       
     - name: Create README file
       run: |
