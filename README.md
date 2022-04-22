@@ -21,48 +21,7 @@ _Thanks to all contributors !_
 
 [![contributors](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)
 
-## About
-
-Home Assistant allows anyone to create add-on repositories to share their
-add-ons for Home Assistant easily. This repository is one of those repositories,
-providing extra Home Assistant add-ons for your installation.
-
-The primary goal of this project is to provide you (as a Home Assistant user)
-with additional, high quality, add-ons that allow you to take your automated
-home to the next level.
-
-## Installation
-
-[![Add repository on my Home Assistant][repository-badge]][repository-url]
-
-If you want to do add the repository manually, please follow the procedure highlighted in the [Home Assistant website](https://home-assistant.io/hassio/installing_third_party_addons). Use the following URL to add this repository: https://github.com/alexbelgium/hassio-addons
-
-## Add-ons provided by this repository
-
-
-&#10003; [Add-ons Repository Updater](addons_updater/) : Automatic addons update by aligning version tag with upstream releases
-
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faddons_updater%2Fconfig.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7][armv7-badge]
-
-&#10003; [Arpspoof](arpspoof/) : block internet connection for local network devices
-
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7][armv7-badge]
-
-&#10003; [Bazarr NAS](bazarr/) : Companion application to Sonarr and Radarr to download subtitles
-
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbazarr%2Fconfig.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7][armv7-badge]
-![smb][smb-badge]
-
-&#10003; [Booksonic-air](booksonic_air/) : platform for accessing the audibooks you own wherever you are
+##  you are
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbooksonic_air%2Fconfig.json)
 ![aarch64][aarch64-badge]
