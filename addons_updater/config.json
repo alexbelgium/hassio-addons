@@ -12,7 +12,7 @@
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
   "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
-  "name": "Add-ons Repository Updater",
+  "name": "Repository Updater",
   "options": {
     "addon": [
       {
