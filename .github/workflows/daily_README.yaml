@@ -21,12 +21,20 @@ jobs:
         # Go through all folders, add to filters if not existing
         for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           if [ -f "$f"/config.json ]; then
-            if ! grep "$f" ".github/paths-filter.yml"; then
+          
+            # Add to file
+            if ! grep "$f:" ".github/paths-filter.yml"; then
               echo "$f: $f/config.*" >> ".github/paths-filter.yml"
             fi
+            
+            # Identify addons with true images
+            if [ "$(jq '.image' "$f/config.json")" != null ]; then 
+              sed "/$f:/ s/$/ # Image : $(jq '.image' "$f/config.json")/" ".github/paths-filter.yml"
+            fi            
           fi
         done
-        
+
+
         # Sort yaml
         sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
       
