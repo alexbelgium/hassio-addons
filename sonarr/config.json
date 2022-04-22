@@ -7,7 +7,7 @@
   ],
   "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. ",
+  "description": "Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
