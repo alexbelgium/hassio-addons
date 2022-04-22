@@ -26,9 +26,7 @@ jobs:
         uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: | #.github/paths-filter.yml
-            changedAddons: 
-              - "**/config.*"
+          filters: .github/paths-filter.yml
 
   build:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
