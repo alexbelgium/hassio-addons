@@ -10,7 +10,7 @@
     "config:rw",
     "share:rw"
   ],
-  "name": "gazpar2mqtt",
+  "name": "Gazpar2mqtt",
   "options": {
     "CONFIG_LOCATION": "/config/gazpar2mqtt/config.yaml",
     "TZ": "Europe/Paris",
