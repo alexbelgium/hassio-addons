@@ -28,7 +28,7 @@ jobs:
           if [ -f "$f"/config.json ]; then
             echo "$f" > "$f"/oldname
             NAME=$(jq -r '.name' "$f"/config.json)
-            if [[ "$f" !== "$NAME" ]]; then mv "$f" "$NAME"; fi
+            if [[ "$f" != "$NAME" ]]; then mv "$f" "$NAME"; fi
           fi
         done      
         
