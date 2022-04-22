@@ -27,9 +27,7 @@ jobs:
         id: filter
         with:
           #filters: .github/paths-filter.yml
-          filters: | 
-            src: 
-              - '**/config.*'
+          filters: '**/config.*'
 
   build:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
