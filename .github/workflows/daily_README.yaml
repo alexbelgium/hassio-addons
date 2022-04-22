@@ -45,7 +45,7 @@ jobs:
             if [ -f "$f/oldname" ]; then FOLDERNAME="$(cat "$f/oldname")"; else FOLDERNAME="$f"; fi
             NAME=$(jq -r '.name' "$f/config.json")
             DESCRIPTION=$(jq -r '.description' "$f/config.json")
-            if [ $(jq '.panel_icon' "$f/config.json") ]; ICON=![image](https://api.iconify.design/mdi/$(jq '.panel_icon' "$f/config.json").svg); else ICON=""; fi
+            if [ $(jq '.panel_icon' "$f/config.json") ]; then ICON=![image](https://api.iconify.design/mdi/$(jq '.panel_icon' "$f/config.json").svg); else ICON=""; fi
 
             # Write infos
             sed -i "$ADDONSLINE"'{G;}' README2.md
