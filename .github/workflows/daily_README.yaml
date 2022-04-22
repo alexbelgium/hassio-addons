@@ -28,8 +28,8 @@ jobs:
             fi
             
             # Identify addons with true images
-            if [ "$(jq '.image' "$f/config.json")" != null ]; then 
-              sed "/$f:/ s/$/ # Image : $(jq '.image' "$f/config.json")/" ".github/paths-filter.yml"
+            if [ "$(jq '.image' "$f/config.json")" != null ]; then
+              sed  -i '/'"$f:"'/s/$/ '"# Image : $(jq '.image' "$f/config.json")/""'/' ".github/paths-filter.yml"
             fi            
           fi
         done
