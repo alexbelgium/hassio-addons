@@ -6,7 +6,7 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Proxy server to bypass Cloudflare protection ",
+  "description": "Proxy server to bypass Cloudflare protection",
   "environment": {},
   "name": "FlareSolverr",
   "options": {},
