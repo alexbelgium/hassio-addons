@@ -1,3 +1,6 @@
+
+## 23.0.4 (22-04-2022)
+- Update to latest version from linuxserver/docker-nextcloud
 - Fix : correct bug preventing start
 - Add codenotary sign
 

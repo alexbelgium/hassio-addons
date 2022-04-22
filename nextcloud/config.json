@@ -94,8 +94,8 @@
   ],
   "slug": "nextcloud_ocr",
   "uart": true,
-  "upstream": "23.0.3",
+  "upstream": "23.0.4",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "23.0.3-2",
+  "version": "23.0.4",
   "webui": "https://[HOST]:[PORT:443]"
 }
