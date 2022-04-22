@@ -13,7 +13,24 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v3
-    - name: Run script file
+    - name: Update path_filters
+      run: |
+        # Init
+        echo "Starting"
+        
+        # Go through all folders, add to filters if not existing
+        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
+          if [ -f "$f"/config.json ]; then
+            if ! grep -Fxq "$f" ".github/paths-filter.yml"; then
+              echo "$f: $f/config.*" >> ".github/paths-filter.yml"
+            fi
+          fi
+        done
+        
+        # Sort yaml
+        diff -u <(grep name: ".github/paths-filter.yml") <(grep name: ".github/paths-filter.yml" | sort)
+      
+    - name: Create README file
       run: |
         # Init
         echo "Starting"
