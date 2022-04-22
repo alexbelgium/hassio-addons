@@ -73,19 +73,10 @@ jobs:
           mv README2.md README.md
         fi
       shell: bash
-    - name: Create New Pull Request If Needed
-      if: steps.calibre.outputs.markdown != ''
-      uses: peter-evans/create-pull-request@v4
+    - name: Commit if needed
+      uses: EndBug/add-and-commit@v9
       with:
-        title: "Github bot : image compressed"
-        branch-suffix: timestamp
-        commit-message: "Github bot : image compressed"
-        body: ${{ steps.calibre.outputs.markdown }} 
-          
-      #- name: Commit if needed
-      #uses: EndBug/add-and-commit@v9
-      #with:
-      #  message: "GitHub bot : README updated"
-      #  default_author: github_actions
+        message: "GitHub bot : README updated"
+        default_author: github_actions
 
 
