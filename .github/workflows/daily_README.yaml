@@ -35,7 +35,7 @@ jobs:
         done      
         
         # Populate template
-        find -- * -maxdepth 0 -type d | sort -r | while read f; do
+        find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
           # $f is an addon directory
           if [ -f "$f/config.json" ]; then
             echo "Project $f"
@@ -56,10 +56,10 @@ jobs:
         done
 
         # Restore folders name
-        for f in */; do
-          if [ -f "${f}oldname" ]; then
-            NAME="$(cat "${f}oldname")"
-            rm "$f"oldname"
+        find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
+          if [ -f "$f/oldname" ]; then
+            NAME="$(cat "$/f/oldname")"
+            rm "$f"/oldname
             mv "$f" "$NAME"
           fi
         done
