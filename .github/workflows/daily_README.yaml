@@ -24,7 +24,7 @@ jobs:
         sed -i "/**ADDONS_LIST%%/d" README2.md
         
         # Sort folders by addon name
-        for f in "$( find -- * -type d | sort -r )"; do
+        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           if [ -f "$f"/config.json ]; then
             NAME=$(jq -r '.name' "$f"/config.json)
             if [[ "$f" != "$NAME" ]]; then
@@ -35,7 +35,7 @@ jobs:
         done      
         
         # Populate template
-        for f in "$( find -- * -type d | sort -r )"; do
+        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           # $f is an addon directory
           if [ -f "$f/config.json" ]; then
             echo "Project $f"
