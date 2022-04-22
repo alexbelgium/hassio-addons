@@ -10,7 +10,7 @@
 #################
 #################
 ---
-addons_updater: addons_updater/config.*
+addons_updater: addons_updater/config.* # Image : yes
 arpspoof: arpspoof/config.*
 bazarr: bazarr/config.*
 bitwarden: bitwarden/config.*
@@ -19,10 +19,12 @@ cloudcommander: cloudcommander/config.*
 code-server: code-server/config.*
 elasticsearch: elasticsearch/config.*
 emby: emby/config.*
+enedisgateway2mqtt: enedisgateway2mqtt/config.*
 enedisgateway2mqtt_dev: enedisgateway2mqtt_dev/config.*
 filebrowser: filebrowser/config.*
+fireflyiii: fireflyiii/config.*
 fireflyiii_data_importer: fireflyiii_data_importer/config.*
-fireflyiii_fints_importer: fireflyiii_fints_importer/config.*
+fireflyiii_fints_importer: fireflyiii_fints_importer/config.* # Image : yes
 flaresolverr: flaresolverr/config.*
 flexget: flexget/config.*
 gazpar2mqtt: gazpar2mqtt/config.*
@@ -38,14 +40,15 @@ mealie: mealie/config.*
 mylar3: mylar3/config.*
 nextcloud: nextcloud/config.*
 nzbget: nzbget/config.*
-omada: omada/config.*
+omada: omada/config.* # Image : yes
 ombi: ombi/config.*
 organizr: organizr/config.*
 paperless_ngx: paperless_ngx/config.*
 papermerge: papermerge/config.*
 photoprism: photoprism/config.*
 piwigo: piwigo/config.*
-plex_meta_manager: plex_meta_manager/config.*
+plex: plex/config.*
+plex_meta_manager: plex_meta_manager/config.* # Image : yes
 portainer: portainer/config.*
 prowlarr: prowlarr/config.*
 qbittorrent: qbittorrent/config.*
@@ -53,18 +56,19 @@ radarr: radarr/config.*
 readarr: readarr/config.*
 requestrr: requestrr/config.*
 resiliosync: resiliosync/config.*
-scrutiny_fa: scrutiny_fa/config.*
+scrutiny: scrutiny/config.*
+scrutiny_fa: scrutiny_fa/config.* # Image : yes
 sonarr: sonarr/config.*
-spotweb: spotweb/config.*
+spotweb: spotweb/config.* # Image : yes
 tandoor_recipes: tandoor_recipes/config.*
-tdarr: tdarr/config.*
+tdarr: tdarr/config.* # Image : yes
 teamspeak: teamspeak/config.*
 transmission: transmission/config.*
 ubooquity: ubooquity/config.*
 webtop: webtop/config.*
-webtop_kde: webtop_kde/config.*
-webtrees: webtrees/config.*
+webtop_kde: webtop_kde/config.* # Image : yes
+webtrees: webtrees/config.* # Image : yes
 wger: wger/config.*
 whoogle: whoogle/config.*
 xteve: xteve/config.*
-zoneminder: zoneminder/config.*
+zoneminder: zoneminder/config.* # Image : yes
