@@ -1,4 +1,7 @@
 
+## 16.1.0 (23-04-2022)
+- Update to latest version from coderaiser/cloudcmd
+
 ## 16.0.1 (22-04-2022)
 - Update to latest version from coderaiser/cloudcmd
 - Add codenotary sign
