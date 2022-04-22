@@ -15,10 +15,24 @@ jobs:
       uses: actions/checkout@v3
     - name: Run script file
       run: |
+        # Init
         echo "Starting"
+        
+        # Prepare template
         cp .templates/.README.md README2.md
         ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README2.md)
         sed -i "/**ADDONS_LIST%%/d" README2.md
+        
+        # Sort folders by addon name
+        for f in $( find -- * -type d | sort -r ); do
+          if [ -f "$f"/config.json ]; then
+            echo "$f" > "$f"/oldname
+            NAME=$(jq -r '.name' "$f"/config.json)
+            mv "$f" "NAME"
+          fi
+        done      
+        
+        # Populate template
         for f in $( find -- * -type d | sort -r ); do
           # $f is an addon directory
           if [ -f "$f"/config.json ]; then
@@ -38,6 +52,14 @@ jobs:
             sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$f"'/) : '"$DESCRIPTION\\n" README2.md
           fi
         done
+
+        # Restore folders name
+        for f in $( find -- * -type d | sort -r ); do
+          if [ -f "$f"/config.json ]; then
+            mv "$f" "$(cat "$f"/oldname)
+          fi
+        done     
+
         # Replace template if change
         if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
           echo "no changes"
