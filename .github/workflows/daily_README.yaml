@@ -35,7 +35,7 @@ jobs:
         done      
         
         # Populate template
-        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
+        find -- * -maxdepth 0 -type d | sort -r | while read f; do
           # $f is an addon directory
           if [ -f "$f/config.json" ]; then
             echo "Project $f"
@@ -56,13 +56,13 @@ jobs:
         done
 
         # Restore folders name
-        for f in "$( find -- * -type d | sort -r )"; do
-          if [ -f "${f}/oldname" ]; then
-            NAME="$(cat "${f}/oldname")"
-            rm "$f/oldname"
+        for f in */; do
+          if [ -f "${f}oldname" ]; then
+            NAME="$(cat "${f}oldname")"
+            rm "$f"oldname"
             mv "$f" "$NAME"
           fi
-        done     
+        done
 
         # Replace template if change
         if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
@@ -73,8 +73,19 @@ jobs:
           mv README2.md README.md
         fi
       shell: bash
-    - name: Commit if needed
-      uses: EndBug/add-and-commit@v9
+    - name: Create New Pull Request If Needed
+      if: steps.calibre.outputs.markdown != ''
+      uses: peter-evans/create-pull-request@v4
       with:
-        message: "GitHub bot : README updated"
-        default_author: github_actions
+        title: "Github bot : image compressed"
+        branch-suffix: timestamp
+        commit-message: "Github bot : image compressed"
+        body: ${{ steps.calibre.outputs.markdown }} 
+          
+      #- name: Commit if needed
+      #uses: EndBug/add-and-commit@v9
+      #with:
+      #  message: "GitHub bot : README updated"
+      #  default_author: github_actions
+
+
