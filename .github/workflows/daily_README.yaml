@@ -58,8 +58,8 @@ jobs:
         # Restore folders name
         find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
           if [ -f "$f/oldname" ]; then
-            NAME="$(cat "$/f/oldname")"
-            rm "$f"/oldname
+            NAME="$(cat "$f/oldname")"
+            rm "$f/oldname"
             mv "$f" "$NAME"
           fi
         done
