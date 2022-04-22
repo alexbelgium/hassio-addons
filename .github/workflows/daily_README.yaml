@@ -45,7 +45,8 @@ jobs:
             if [ -f "$f/oldname" ]; then FOLDERNAME="$(cat "$f/oldname")"; else FOLDERNAME="$f"; fi
             NAME=$(jq -r '.name' "$f/config.json")
             DESCRIPTION=$(jq -r '.description' "$f/config.json")
-            
+            if [ $(jq '.panel_icon' "$f/config.json") ]; ICON=![image](https://api.iconify.design/mdi/"$(jq '.panel_icon' "$f/config.json")".svg); else ICON=""; fi
+
             # Write infos
             sed -i "$ADDONSLINE"'{G;}' README2.md
             if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
@@ -57,7 +58,7 @@ jobs:
             if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi
             if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi
             sed -i "$ADDONSLINE"'a ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.json)' README2.md || true
-            sed -i "$ADDONSLINE"'a &#10003; ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION\\n" README2.md
+            sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION\\n" README2.md
           fi
         done
 
