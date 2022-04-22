@@ -39,7 +39,7 @@ jobs:
           # $f is an addon directory
           if [ -f "$f/config.json" ]; then
             echo "Project $f"
-            if [ "$f/oldname" ]; then NAME="$(cat "$f/oldname")"; else NAME="$f"; fi
+            if [ -f "$f/oldname" ]; then NAME="$(cat "$f/oldname")"; else NAME="$f"; fi
             sed -i "$ADDONSLINE"'{G;}' README2.md
             if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
             if [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]]; then sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md; fi
