@@ -78,5 +78,3 @@ jobs:
       with:
         message: "GitHub bot : README updated"
         default_author: github_actions
-
-
