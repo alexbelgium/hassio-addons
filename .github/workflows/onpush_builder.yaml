@@ -26,10 +26,12 @@ jobs:
         uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: .github/paths-filter.yml
+          filters: | #.github/paths-filter.yml
+            changedAddons: 
+              - "**/config.*"
 
   build:
-    #if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
+    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     needs: check-addon-changes
     runs-on: ubuntu-latest
     environment: CR_PAT
