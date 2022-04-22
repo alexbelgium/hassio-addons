@@ -75,8 +75,8 @@
     "smbv1": "bool?"
   },
   "slug": "cloudcommander",
-  "upstream": "16.0.0",
+  "upstream": "16.0.1",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander",
-  "version": "16.0.0",
+  "version": "16.0.1",
   "webui": "http://[HOST]:[PORT:8000]"
 }
