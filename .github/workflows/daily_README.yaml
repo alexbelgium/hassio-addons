@@ -28,7 +28,7 @@ jobs:
           if [ -f "$f"/config.json ]; then
             echo "$f" > "$f"/oldname
             NAME=$(jq -r '.name' "$f"/config.json)
-            mv "$f" "$NAME"
+            if [[ "$f" !== "$NAME" ]]; then mv "$f" "$NAME"; fi
           fi
         done      
         
@@ -55,7 +55,7 @@ jobs:
 
         # Restore folders name
         for f in $( find -- * -type d | sort -r ); do
-          if [ -f "$f"/config.json ]; then
+          if [ -f "$f"/oldname ]; then
             NAME=$(cat "$f"/oldname)
             rm "$f"/oldname
             mv "$f" "$NAME"
