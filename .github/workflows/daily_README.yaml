@@ -28,9 +28,7 @@ jobs:
         done
         
         # Sort yaml
-        add-apt-repository ppa:rmescandon/yq
-        sudo apt-get install yq
-        yq 'sort_keys(.)' ".github/paths-filter.yml"
+        sort ".github/paths-filter.yml"
       
     - name: Create README file
       run: |
