@@ -24,13 +24,15 @@ jobs:
         sed -i "/**ADDONS_LIST%%/d" README2.md
         
         # Sort folders by addon name
-        #for f in $( find -- * -type d | sort -r ); do
-        #  if [ -f "$f"/config.json ]; then
-        #    echo "$f" > "$f"/oldname
-        #    NAME=$(jq -r '.name' "$f"/config.json)
-        #    if [[ "$f" != "$NAME" ]]; then mv "$f" "$NAME"; fi
-        #  fi
-        #done      
+        for f in "$( find -- * -type d | sort -r )"; do
+          if [ -f "$f"/config.json ]; then
+            NAME=$(jq -r '.name' "$f"/config.json)
+            if [[ "$f" != "$NAME" ]]; then
+              echo "$f" > "$f"/oldname
+              mv "$f" "$NAME"
+            fi
+          fi
+        done      
         
         # Populate template
         for f in $( find -- * -type d | sort -r ); do
@@ -54,13 +56,13 @@ jobs:
         done
 
         # Restore folders name
-        #for f in $( find -- * -type d | sort -r ); do
-        #  if [ -f "$f"/oldname ]; then
-        #    NAME=$(cat "$f"/oldname)
-        #    rm "$f"/oldname
-        #    mv "$f" "$NAME"
-        #  fi
-        #done     
+        for f in "$( find -- * -type d | sort -r )"; do
+          if [ -f "${f}/oldname" ]; then
+            NAME="$(cat "${f}/oldname")"
+            rm "$f/oldname"
+            mv "$f" "$NAME"
+          fi
+        done     
 
         # Replace template if change
         if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
