@@ -47,8 +47,10 @@ jobs:
             DESCRIPTION=$(jq -r '.description' "$f/config.json")
 
             # Get icon
-            if [ "$(jq '.panel_icon' "$f/config.json")" ]; then 
-              ICON="![image](https://api.iconify.design/mdi/$(jq '.panel_icon' "$f/config.json").svg)"
+            if [ "$(jq '.panel_icon' "$f/config.json")" != null ]; then 
+              ICON="$(jq -r '.panel_icon' "$f/config.json")"
+              ICON=${ICON#*:}
+              ICON="![image](https://api.iconify.design/mdi/$ICON.svg)"
             else 
               ICON=""
             fi
