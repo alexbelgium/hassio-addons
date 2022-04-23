@@ -1,0 +1,10 @@
+{
+  "build_from": {
+    "aarch64": "lscr.io/linuxserver/overseerr:arm64v8-latest",
+    "amd64": "lscr.io/linuxserver/overseerr:amd64-latest",
+    "armv7": "lscr.io/linuxserver/overseerr:arm32v7-latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}

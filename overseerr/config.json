@@ -1,0 +1,43 @@
+{
+  "apparmor": true,
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "boot": "auto",
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "Request management and media discovery tool built to work with your existing Plex ecosystem",
+  "devices": [],
+  "environment": {
+    "PGID": "0",
+    "PUID": "0"
+  },
+  "map": [
+    "config:rw"
+  ],
+  "name": "Overseerr",
+  "options": {
+    "CONFIG_LOCATION": "/config/overseerr",
+    "PGID": 0,
+    "PUID": 0
+  },
+  "ports": {
+    "5055/tcp": 5055
+  },
+  "ports_description": {
+    "5055/tcp": "web interface"
+  },
+  "privileged": [],
+  "schema": {
+    "CONFIG_LOCATION": "str",
+    "PGID": "int",
+    "PUID": "int",
+    "TZ": "str?"
+  },
+  "slug": "overseerr",
+  "upstream": "1.29.1",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/overseerr",
+  "version": "1.29.1",
+  "webui": "http://[HOST]:[PORT:5055]"
+}
