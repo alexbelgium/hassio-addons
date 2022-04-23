@@ -33,6 +33,7 @@ nextcloud: nextcloud/config.*
 nzbget: nzbget/config.*
 omada: omada/config.* # Image : yes
 ombi: ombi/config.*
+overseerr: overseerr/config.* # Image : yes
 organizr: organizr/config.*
 paperless_ngx: paperless_ngx/config.*
 papermerge: papermerge/config.*
