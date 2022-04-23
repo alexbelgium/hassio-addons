@@ -23,8 +23,8 @@ ENV BASHIO_VERSION=1.29.1
 # 2 Modify Image #
 ##################
 
-RUN sed -i "s|/config|/config/addons_config/overseerr|g" /etc/services.d/overseerr/run \
-    && sed -i "s|/config|/config/addons_config/overseerr|g" /etc/cont-init.d/30-config \
+RUN sed -i "s|/config|/config/addons_config/addons_config/overseerr|g" /etc/services.d/overseerr/run \
+    && sed -i "s|/config|/config/addons_config/addons_config/overseerr|g" /etc/cont-init.d/30-config \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
