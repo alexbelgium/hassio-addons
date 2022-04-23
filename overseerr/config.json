@@ -18,7 +18,7 @@
   ],
   "name": "Overseerr",
   "options": {
-    "CONFIG_LOCATION": "/config/overseerr",
+    "CONFIG_LOCATION": "/config/addons_config/overseerr",
     "PGID": 0,
     "PUID": 0
   },
