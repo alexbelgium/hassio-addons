@@ -55,7 +55,7 @@ comparison to installing any other Hass.io add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Go to the webui, where you will create your username, password, and database (if using mariadb, infos are in the log)
 1. Restart the addon, to apply any option that should be applied
- 
+
 ## HA integration
 
 See this component : https://www.home-assistant.io/integrations/nextcloud/
