@@ -4,11 +4,9 @@
 #################
 # NGINX SETTING #
 #################
-declare port
-declare certfile
+
 declare ingress_interface
 declare ingress_port
-declare keyfile
 
 echo "Adapting for ingress"
 ingress_port=$(bashio::addon.ingress_port)
