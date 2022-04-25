@@ -45,8 +45,8 @@
     "8843/tcp": "portal http"
   },
   "slug": "omada",
-  "upstream": "5.0-arm64",
+  "upstream": "5.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.0-arm64",
+  "version": "5.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8088]"
 }
