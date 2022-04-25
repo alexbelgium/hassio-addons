@@ -1,3 +1,6 @@
+
+## 4.7.0.36 (26-04-2022)
+- Update to latest version from linuxserver/docker-emby
 - Beta: inclusion of Ingress (please report issues)
 
 ## 4.7.0.35 (16-04-2022)
