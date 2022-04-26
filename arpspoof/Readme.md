@@ -47,6 +47,8 @@ INTERFACE_NAME: name #Required Interface name. Autofilled if empty.
 
 ## Home-Assistant configuration
 
+Description : [techblog](https://en.techblog.co.il/2021/03/15/home-assistant-cut-internet-connection-using-arpspoof/)
+
 You can use a `command_line` switch to temporary disable a internet device in your network.
 
 ```yaml
