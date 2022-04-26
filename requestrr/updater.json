@@ -1,0 +1,8 @@
+{
+  "last_update": "26-04-2022",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "requestrr",
+  "source": "github",
+  "upstream_repo": "linuxserver/docker-requestrr",
+  "upstream_version": "2.1.2 "
+}

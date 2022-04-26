@@ -1,0 +1,8 @@
+{
+  "last_update": "26-04-2022",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "fireflyiii_data_importer",
+  "source": "dockerhub",
+  "upstream_repo": "fireflyiii/data-importer",
+  "upstream_version": "version-0.9.8 "
+}

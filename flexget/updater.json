@@ -1,0 +1,8 @@
+{
+  "last_update": "26-04-2022",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "flexget",
+  "source": "github",
+  "upstream_repo": "flexget/flexget",
+  "upstream_version": "3.3.8 "
+}

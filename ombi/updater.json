@@ -1,0 +1,8 @@
+{
+  "last_update": "26-04-2022",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "ombi",
+  "source": "github",
+  "upstream_repo": "linuxserver/docker-ombi",
+  "upstream_version": "4.16.12 "
+}

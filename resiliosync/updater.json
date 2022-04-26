@@ -1,0 +1,8 @@
+{
+  "last_update": "26-04-2022",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "resiliosync",
+  "source": "github",
+  "upstream_repo": "linuxserver/docker-resilio-sync",
+  "upstream_version": "2.7.3.1381 "
+}
