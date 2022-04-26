@@ -1,3 +1,6 @@
+
+## 3.0.8.1507 (26-04-2022)
+- Update to latest version from linuxserver/docker-sonarr
 - Add codenotary sign
 
 ## 3.0.7.1477 (06-03-2022)

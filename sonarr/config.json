@@ -80,8 +80,8 @@
   },
   "slug": "sonarr_nas",
   "startup": "services",
-  "upstream": "3.0.7.1477",
+  "upstream": "3.0.8.1507",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
-  "version": "3.0.7.1477",
+  "version": "3.0.8.1507",
   "webui": "http://[HOST]:[PORT:8989]"
 }
