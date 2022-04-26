@@ -8,7 +8,6 @@
   "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "block internet connection for local network devices",
-  "devices": [],
   "environment": {},
   "host_network": true,
   "map": [],
