@@ -58,9 +58,9 @@ if [ -f "$f"/updater.json ]; then
     cd /data/"${BASENAME}"/"${SLUG}" || { bashio::log.error "$SLUG addon not found in this repository. Exiting."; continue; }
 
     # Get variables
-    UPSTREAM=$(jq -r .upstream updater.json)
+    UPSTREAM=$(jq -r .upstream_repo updater.json)
     BETA=$(jq -r .beta updater.json)
-    FULLTAG=$(jq -r .github fulltag updater.json)
+    FULLTAG=$(jq -r .github_fulltag updater.json)
     HAVINGASSET=$(jq -r .github_havingasset updater.json)
     SOURCE=$(jq -r .source updater.json)
     FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
