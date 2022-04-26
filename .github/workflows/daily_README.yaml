@@ -60,7 +60,7 @@ jobs:
         done      
         
         # Populate template
-        for f in $(dirname "$(find -- */config.json -maxdepth 0 -type d | sort -r )"); do
+        for f in $(find -- */config.json -maxdepth 0 -type d | sort -r ); do
           # $f is an addon directory
           if [ -f "$f/config.json" ]; then
           
