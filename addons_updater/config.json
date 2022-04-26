@@ -45,7 +45,8 @@
     "gitmail": "str",
     "gitpass": "str",
     "gituser": "str",
-    "verbose": "bool"
+    "verbose": "bool",
+    "repository": "str"
   },
   "slug": "updater",
   "startup": "once",
