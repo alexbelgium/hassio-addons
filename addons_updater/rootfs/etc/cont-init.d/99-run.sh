@@ -68,7 +68,7 @@ if [ -f "$f"/updater.json ]; then
 
     #Find current version
     LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-    CURRENT=$(jq .upstream updater.json) || { bashio::log.error "$SLUG addon upstream tag not found in updater.json. Exiting."; continue; }
+    CURRENT=$(jq .upstream_version updater.json) || { bashio::log.error "$SLUG addon upstream tag not found in updater.json. Exiting."; continue; }
 
     if [ "$SOURCE" = "dockerhub" ]; then
         # Use dockerhub as upstream
@@ -158,7 +158,7 @@ if [ -f "$f"/updater.json ]; then
         LASTVERSION=${LASTVERSION//\"/}
         CURRENT=${CURRENT//\"/}
         jq --arg variable "$LASTVERSION" '.version = $variable' /data/"${BASENAME}"/"${SLUG}"/config.json | sponge /data/"${BASENAME}"/"${SLUG}"/config.json # Replace version tag
-        jq --arg variable "$LASTVERSION" '.upstream = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace upstream tag
+        jq --arg variable "$LASTVERSION" '.upstream_version = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace upstream tag
         jq --arg variable "$DATE" '.last_update = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace date tag
 
         #Update changelog
