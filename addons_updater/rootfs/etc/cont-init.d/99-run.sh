@@ -32,7 +32,8 @@ LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$
 
 # Go through all folders, add to filters if not existing
 cd /data/hassio-addons || exit
-for f in $( dirname "$(find -- */updater.json -maxdepth 0 -type d | sort -r )" ); do
+for f in *; do
+if [ -f "$f"/updater.json ]; then
     cd /
     SLUG=$f
     REPOSITORY=$(jq -r .repository /data/"$f"/updater.json)
@@ -177,6 +178,7 @@ for f in $( dirname "$(find -- */updater.json -maxdepth 0 -type d | sort -r )" )
     else
         bashio::log.green "... $SLUG is up-to-date ${CURRENT}"
     fi
+fi
 done || true # Continue even if issue
 
 bashio::log.info "Addons update completed"
