@@ -50,6 +50,7 @@ echo "go in folder"
 
 cd /data/"$BASENAME" || true
 for f in *; do
+echo "$f"
 if [ -f "$f"/updater.json ]; then
     SLUG=$f
 
