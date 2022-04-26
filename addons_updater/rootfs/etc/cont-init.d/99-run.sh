@@ -47,23 +47,23 @@ LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$
 
 # Go through all folders, add to filters if not existing
 echo "go in folder"
-cd /data/"$BASENAME" || exit
-for f in *; do
-echo "folder $f"
+
+for f in /data/"$BASENAME"/*; do
 if [ -f "$f"/updater.json ]; then
     SLUG=$f
-
-    UPSTREAM=$(jq -r .upstream "$f"/updater.json)
-    BETA=$(jq -r .beta "$f"/updater.json)
-    FULLTAG=$(jq -r .github_fulltag "$f"/updater.json)
-    HAVINGASSET=$(jq -r .github_havingasset "$f"/updater.json)
-    SOURCE=$(jq -r .source "$f"/updater.json)
-    FILTER_TEXT=$(jq -r .github_tagfilter "$f"/updater.json)
-    DATE="$(date '+%d-%m-%Y')"
 
     #Define the folder addon
     LOGINFO="... $SLUG : checking slug exists in repo" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
     cd /data/"${BASENAME}"/"${SLUG}" || { bashio::log.error "$SLUG addon not found in this repository. Exiting."; continue; }
+
+    # Get variables
+    UPSTREAM=$(jq -r .upstream updater.json)
+    BETA=$(jq -r .beta updater.json)
+    FULLTAG=$(jq -r .github fulltag updater.json)
+    HAVINGASSET=$(jq -r .github_havingasset updater.json)
+    SOURCE=$(jq -r .source updater.json)
+    FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
+    DATE="$(date '+%d-%m-%Y')"
 
     #Find current version
     LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
