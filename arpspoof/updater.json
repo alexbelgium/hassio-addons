@@ -4,6 +4,5 @@
   "slug": "arpspoof",
   "source": "github",
   "upstream_repo": "t0mer/Arpspoof-Docker",
-  "upstream_version": "1.0.0 ",
-  "upstream": "4.0.0"
+  "upstream_version": "1.0.0 "
 }
