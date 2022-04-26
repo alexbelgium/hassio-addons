@@ -83,6 +83,6 @@
   "startup": "services",
   "upstream": "1.0.3",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bazarr",
-  "version": "1.0.3",
+  "version": "4.0.0",
   "webui": "http://[HOST]:[PORT:6767]"
 }
