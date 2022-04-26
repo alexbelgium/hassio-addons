@@ -33,11 +33,11 @@ fi
     BASENAME=$(basename "https://github.com/$REPOSITORY")
 
     if [ ! -d "/data/$BASENAME" ]; then
-        LOGINFO="... $SLUG : cloning ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+        LOGINFO="... cloning ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
         cd /data/ || exit
         git clone "https://github.com/${REPOSITORY}"
     else
-        LOGINFO="... $SLUG : updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+        LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
         cd "/data/$BASENAME" || exit
         git pull --rebase &>/dev/null || git reset --hard &>/dev/null
         git pull --rebase &>/dev/null
