@@ -34,8 +34,6 @@ jobs:
             fi            
           fi
         done
-
-
         # Sort yaml
         sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
       
@@ -50,17 +48,18 @@ jobs:
         sed -i "/**ADDONS_LIST%%/d" README2.md
         
         # Sort folders by addon name
-       
-        for f in $(dirname "$(find -- */config.json -maxdepth 0 -type d | sort -r )"); do
+        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
+          if [ -f "$f"/config.json ]; then
             NAME=$(jq -r '.name' "$f"/config.json)
             if [[ "$f" != "$NAME" ]]; then
               echo "$f" > "$f"/oldname
               mv "$f" "$NAME"
             fi
+          fi
         done      
         
         # Populate template
-        for f in $(find -- */config.json -maxdepth 0 -type d | sort -r ); do
+        find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
           # $f is an addon directory
           if [ -f "$f/config.json" ]; then
           
@@ -70,7 +69,6 @@ jobs:
             if [ -f "$f/oldname" ]; then FOLDERNAME="$(cat "$f/oldname")"; else FOLDERNAME="$f"; fi
             NAME=$(jq -r '.name' "$f/config.json")
             DESCRIPTION=$(jq -r '.description' "$f/config.json")
-
             # Get icon
             if [ "$(jq '.panel_icon' "$f/config.json")" != null ]; then 
               ICON="$(jq -r '.panel_icon' "$f/config.json")"
@@ -79,7 +77,6 @@ jobs:
             else 
               ICON=""
             fi
-
             # Write infos
             sed -i "$ADDONSLINE"'{G;}' README2.md
             if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
@@ -95,7 +92,6 @@ jobs:
             sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION\\n" README2.md
           fi
         done
-
         # Restore folders name
         find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
           if [ -f "$f/oldname" ]; then
@@ -104,7 +100,6 @@ jobs:
             mv "$f" "$NAME"
           fi
         done
-
         # Replace template if change
         if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
           echo "no changes"
