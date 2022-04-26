@@ -1,3 +1,6 @@
+
+## 4.0.0 (26-04-2022)
+- Update to latest version from null
 - Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation
 
