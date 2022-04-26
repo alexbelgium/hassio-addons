@@ -30,15 +30,17 @@ fi
 
 LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
-for addons in $(bashio::config "addon|keys"); do
-    SLUG=$(bashio::config "addon[${addons}].slug")
-    REPOSITORY=$(bashio::config "addon[${addons}].repository")
-    UPSTREAM=$(bashio::config "addon[${addons}].upstream")
-    BETA=$(bashio::config "addon[${addons}].beta")
-    FULLTAG=$(bashio::config "addon[${addons}].fulltag")
-    HAVINGASSET=$(bashio::config "addon[${addons}].having_asset")
-    SOURCE=$(bashio::config "addon[${addons}].source")
-    FILTER_TEXT=$(bashio::config "addon[${addons}].filter")
+# Go through all folders, add to filters if not existing
+for f in $( find -- /data/* -maxdepth 0 -type d | sort -r ); do
+if [ -f "$f"/updater.json ]; then
+    SLUG=$f
+    REPOSITORY=$(jq -r .repository /data/"$f"/updater.json)
+    UPSTREAM=$(jq -r .upstream /data/"$f"/updater.json)
+    BETA=$(jq -r .beta /data/"$f"/updater.json)
+    FULLTAG=$(jq -r .github_fulltag /data/"$f"/updater.json)
+    HAVINGASSET=$(jq -r .github_havingasset /data/"$f"/updater.json)
+    SOURCE=$(jq -r .source /data/"$f"/updater.json)
+    FILTER_TEXT=$(jq -r .github_tagfilter /data/"$f"/updater.json)
     BASENAME=$(basename "https://github.com/$REPOSITORY")
     DATE="$(date '+%d-%m-%Y')"
 
@@ -60,7 +62,7 @@ for addons in $(bashio::config "addon|keys"); do
 
     #Find current version
     LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-    CURRENT=$(jq .upstream config.json) || { bashio::log.error "$SLUG addon upstream tag not found in config.json. Exiting."; continue; }
+    CURRENT=$(jq .upstream updater.json) || { bashio::log.error "$SLUG addon upstream tag not found in updater.json. Exiting."; continue; }
 
     if [ "$SOURCE" = "dockerhub" ]; then
         # Use dockerhub as upstream
@@ -150,6 +152,8 @@ for addons in $(bashio::config "addon|keys"); do
         LASTVERSION=${LASTVERSION//\"/}
         CURRENT=${CURRENT//\"/}
         jq --arg variable "$LASTVERSION" '.version = $variable' /data/"${BASENAME}"/"${SLUG}"/config.json | sponge /data/"${BASENAME}"/"${SLUG}"/config.json # Replace version tag
+        jq --arg variable "$LASTVERSION" '.upstream = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace upstream tag
+        jq --arg variable "$DATE" '.last_update = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace date tag
 
         #Update changelog
         touch "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
@@ -172,7 +176,7 @@ for addons in $(bashio::config "addon|keys"); do
     else
         bashio::log.green "... $SLUG is up-to-date ${CURRENT}"
     fi
-
+fi
 done || true # Continue even if issue
 
 bashio::log.info "Addons update completed"
