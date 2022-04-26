@@ -51,7 +51,7 @@ jobs:
         
         # Sort folders by addon name
        
-        for f in $(dirname $(find -- */config.json -maxdepth 0 -type d | sort -r )); do
+        for f in $(dirname "$(find -- */config.json -maxdepth 0 -type d | sort -r )"); do
             NAME=$(jq -r '.name' "$f"/config.json)
             if [[ "$f" != "$NAME" ]]; then
               echo "$f" > "$f"/oldname
@@ -60,7 +60,7 @@ jobs:
         done      
         
         # Populate template
-        for f in $(dirname $(find -- */config.json -maxdepth 0 -type d | sort -r )); do
+        for f in $(dirname "$(find -- */config.json -maxdepth 0 -type d | sort -r )"); do
           # $f is an addon directory
           if [ -f "$f/config.json" ]; then
           
