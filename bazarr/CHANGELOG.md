@@ -1,6 +1,3 @@
-
-## 4.0.0 (26-04-2022)
-- Update to latest version from null
 - Add codenotary sign
 
 ## 1.0.3 (27-02-2022)

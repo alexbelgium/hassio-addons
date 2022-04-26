@@ -4,6 +4,5 @@
   "slug": "bazarr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-bazarr",
-  "upstream_version": "1.0.3 ",
-  "upstream": "4.0.0"
+  "upstream_version": "1.0.3 "
 }
