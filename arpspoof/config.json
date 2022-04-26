@@ -33,6 +33,6 @@
   "slug": "arpspoof",
   "upstream": "1.0.0",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/arpsoof",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "webui": "http://[HOST]:[PORT:7022]"
 }
