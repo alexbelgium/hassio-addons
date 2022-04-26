@@ -1,0 +1,8 @@
+{
+  "last_update": "26-04-2022",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "arpspoof",
+  "source": "github",
+  "upstream_repo": "t0mer/Arpspoof-Docker",
+  "upstream_version": "1.0.0 "
+}
