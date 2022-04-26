@@ -47,7 +47,7 @@ LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$
 
 # Go through all folders, add to filters if not existing
 echo "go in folder"
-cd /data/$BASENAME || exit
+cd /data/"$BASENAME" || exit
 for f in *; do
 echo "folder $f"
 if [ -f "$f"/updater.json ]; then
