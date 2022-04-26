@@ -50,18 +50,17 @@ jobs:
         sed -i "/**ADDONS_LIST%%/d" README2.md
         
         # Sort folders by addon name
-        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
-          if [ -f "$f"/config.json ]; then
+       
+        for f in $(dirname $(find -- */config.json -maxdepth 0 -type d | sort -r )); do
             NAME=$(jq -r '.name' "$f"/config.json)
             if [[ "$f" != "$NAME" ]]; then
               echo "$f" > "$f"/oldname
               mv "$f" "$NAME"
             fi
-          fi
         done      
         
         # Populate template
-        find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
+        for f in $(dirname $(find -- */config.json -maxdepth 0 -type d | sort -r )); do
           # $f is an addon directory
           if [ -f "$f/config.json" ]; then
           
