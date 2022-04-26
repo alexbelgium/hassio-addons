@@ -1,4 +1,7 @@
 
+## 1.0.0 (26-04-2022)
+- Update to latest version from t0mer/Arpspoof-Docker
+
 - Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation
 
