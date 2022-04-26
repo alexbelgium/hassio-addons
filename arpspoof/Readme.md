@@ -69,4 +69,4 @@ Create an issue on github
 
 ## Illustration
 
-NO illustration
+No illustration
