@@ -1,2 +1,3 @@
+- New logic : uses updater.json instead of addons options
 - Add codenotary sign
 - Initial build
