@@ -48,11 +48,17 @@ LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$
 # Go through all folders, add to filters if not existing
 echo "go in folder"
 
-cd /data/"$BASENAME" || true
+cd /data/"$BASENAME" || exit
 for f in *; do
 echo "$f"
 if [ -f "$f"/updater.json ]; then
     SLUG=$f
+
+    # Rebase
+    LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+    cd "/data/$BASENAME" || exit
+    git pull --rebase &>/dev/null || git reset --hard &>/dev/null
+    git pull --rebase &>/dev/null
 
     #Define the folder addon
     LOGINFO="... $SLUG : checking slug exists in repo" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
