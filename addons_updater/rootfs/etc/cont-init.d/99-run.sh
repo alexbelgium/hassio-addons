@@ -31,8 +31,9 @@ fi
 LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
 # Go through all folders, add to filters if not existing
-cd /data/hassio-addons
+cd /data/hassio-addons || exit
 for f in $( dirname "$(find -- */updater.json -maxdepth 0 -type d | sort -r )" ); do
+    cd /
     SLUG=$f
     REPOSITORY=$(jq -r .repository /data/"$f"/updater.json)
     UPSTREAM=$(jq -r .upstream /data/"$f"/updater.json)
