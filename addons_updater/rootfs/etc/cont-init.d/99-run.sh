@@ -31,8 +31,10 @@ fi
 LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
 # Go through all folders, add to filters if not existing
+echo "go in folder"
 cd /data/hassio-addons || exit
 for f in *; do
+echo "folder $f"
 if [ -f "$f"/updater.json ]; then
     cd /
     SLUG=$f
