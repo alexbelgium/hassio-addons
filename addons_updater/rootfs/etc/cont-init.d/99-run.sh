@@ -49,9 +49,9 @@ LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$
 echo "go in folder"
 
 cd /data/"$BASENAME" || exit
-for f in *; do
-echo "$f"
-if [ -f "$f"/updater.json ]; then
+for f in */; do
+
+if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
     SLUG=$f
 
     # Rebase
