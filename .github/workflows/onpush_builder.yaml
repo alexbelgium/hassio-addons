@@ -28,6 +28,22 @@ jobs:
         with:
           filters: .github/paths-filter.yml
 
+  lint_config:
+    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
+    needs: check-addon-changes
+    runs-on: ubuntu-latest 
+    needs: check-addon-changes 
+    strategy: 
+      fail-fast: false 
+      matrix: 
+        addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }} 
+    steps: 
+      - name: ↩️ Checkout 
+        uses: actions/checkout@v3
+      - name: 🔎 Run Home Assistant Add-on Lint 
+        uses: frenck/action-addon-linter@v2 
+          with: path: "./${{ matrix.addon }}"
+
   build:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     needs: check-addon-changes
