@@ -14,7 +14,7 @@
   ],
   "name": "Wger",
   "ports": {
-    "8000/tcp": "9927"
+    "8000/tcp": 9927
   },
   "ports_description": {
     "8000/tcp": "Web interface"

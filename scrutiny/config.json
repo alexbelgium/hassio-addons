@@ -48,7 +48,6 @@
     "SCRUTINY_WEB": "true"
   },
   "ingress": true,
-  "map": [],
   "name": "Scrutiny",
   "options": {
     "PGID": 0,
@@ -81,7 +80,7 @@
   },
   "slug": "scrutiny",
   "startup": "services",
-  "udev": "true",
+  "udev": true,
   "url": "https://github.com/AnalogJ/scrutiny",
   "version": "0.3.13-7"
 }

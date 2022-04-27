@@ -65,6 +65,10 @@
     "443/tcp": 8099,
     "80/tcp": null
   },
+  "ports_description": {
+    "443/tcp": "Https web interface",
+    "80/tcp": "Web interface"
+  },
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH"

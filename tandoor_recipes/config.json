@@ -21,7 +21,7 @@
     "SECRET_KEY": "YOUR_SECRET_KEY"
   },
   "ports": {
-    "8080/tcp": "9928"
+    "8080/tcp": 9928
   },
   "ports_description": {
     "8080/tcp": "Web interface"

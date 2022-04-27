@@ -19,16 +19,16 @@
   ],
   "name": "Teamspeak server",
   "ports": {
-    "10011/tcp": "10011",
-    "30033/tcp": "30033",
+    "10011/tcp": 10011,
+    "30033/tcp": 30033,
     "41144/tcp": 41144,
-    "9987/udp": "9987"
+    "9987/udp": 9987
   },
   "ports_description": {
     "10011/tcp": "ServerQuery (raw)",
     "30033/tcp": "Filetransfer",
     "41144/tcp": "TSDNS",
-    "80/udp": "Voice"
+    "9987/udp": "Voice"
   },
   "slug": "teamspeak",
   "url": "https://github.com/alexbelgium/hassio-addons",

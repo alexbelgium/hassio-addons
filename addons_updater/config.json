@@ -6,6 +6,7 @@
   ],
   "boot": "manual",
   "codenotary": "alexandrep.github@gmail.com",
+  "description": "Automatic addons update by aligning version tag with upstream releases",
   "environment": {
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
