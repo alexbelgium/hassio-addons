@@ -108,8 +108,8 @@
     "whitelist": "str?"
   },
   "slug": "qbittorrent",
-  "upstream": "release-4.4.1-ls173",
+  "upstream": "4.4.2-r4-ls189",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "release-4.4.1-ls173-12",
+  "version": "4.4.2-r4-ls189",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
