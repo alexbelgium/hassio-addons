@@ -5,7 +5,7 @@
     "amd64",
     "armv7"
   ],
-  boot": "manual",
+  "boot": "manual",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Automatic addons update by aligning version tag with upstream releases",
   "environment": {
