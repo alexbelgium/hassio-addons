@@ -183,7 +183,7 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
         LOGINFO="... $SLUG : push to github" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
         
         # if API is set
-        if bashio::config.has_value 'gitmail'; then
+        if bashio::config.has_value 'gitapi'; then
             git remote set-url origin "https://${GITUSER}:${GITHUB_API_TOKEN}@github.com/${REPOSITORY}" &>/dev/null
         else        
             git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" &>/dev/null
