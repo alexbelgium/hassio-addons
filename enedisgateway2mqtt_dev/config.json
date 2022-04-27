@@ -18,9 +18,11 @@
     "CONFIG_LOCATION": "str",
     "TZ": "str?"
   },
-  "services": [ "mqtt:want" ],
+  "services": [
+    "mqtt:want"
+  ],
   "slug": "enedisgateway2mqtt_dev",
-  "upstream": "0.8.0-dev",
+  "upstream": "0.7.7",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.0-dev"
+  "version": "0.7.7"
 }
