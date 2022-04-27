@@ -76,68 +76,69 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
     LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
     CURRENT=$(jq .upstream_version updater.json) || { bashio::log.error "$SLUG addon upstream tag not found in updater.json. Exiting."; continue; }
 
-    if [ "$SOURCE" = "dockerhub" ]; then
-        # Use dockerhub as upstream
-        # shellcheck disable=SC2116
-        DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
-        DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
-        LASTVERSION=$(
-            curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
-            jq '.results | .[] | .name' -r |
-            sed -e '/.*latest.*/d' |
-            sed -e '/.*dev.*/d' |
-            sort -V |
-            tail -n 1
-        )
-        [ "${BETA}" = true ] &&
-        LASTVERSION=$(
-            curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
-            jq '.results | .[] | .name' -r |
-            sed -e '/.*latest.*/d' |
-            sed -e '/.*dev.*/!d' |
-            sort -V |
-            tail -n 1
-        )
-
+    if [[ "$SOURCE" = dockerhub ]]; then
+            # Use dockerhub as upstream
+            # shellcheck disable=SC2116
+            DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
+            DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
+            LASTVERSION=$(
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
+                jq '.results | .[] | .name' -r |
+                sed -e '/.*latest.*/d' |
+                sed -e '/.*dev.*/d' |
+                sort -V |
+                tail -n 1
+            )
+            [ "${BETA}" = true ] &&
+            LASTVERSION=$(
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
+                jq '.results | .[] | .name' -r |
+                sed -e '/.*latest.*/d' |
+                sed -e '/.*dev.*/!d' |
+                sort -V |
+                tail -n 1
+            )
     else
-        # Use github as upstream
-        ARGUMENTS=""
-        #Prepare tag flag
-        if [ "${FULLTAG}" = true ]; then
-            LOGINFO="... $SLUG : fulltag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-            ARGUMENTS="$ARGUMENTS --format tag"
-        else
-            LOGINFO="... $SLUG : fulltag is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-        fi
 
-        #Prepare tag flag
-        if [ "${HAVINGASSET}" = true ]; then
-            LOGINFO="... $SLUG : asset_only tag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-            ARGUMENTS="$ARGUMENTS --having-asset"
-        else
-            LOGINFO="... $SLUG : asset_only is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-        fi
+            # Use source as upstream
+            ARGUMENTS="--at $SOURCE"
+            
+            #Prepare tag flag
+            if [ "${FULLTAG}" = true ]; then
+                LOGINFO="... $SLUG : fulltag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                ARGUMENTS="$ARGUMENTS --format tag"
+            else
+                LOGINFO="... $SLUG : fulltag is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+            fi
 
-        #Prepare tag flag
-        if [ "${FILTER_TEXT}" = "null" ] || [ "${FILTER_TEXT}" = "" ]; then
-            FILTER_TEXT=""
-        else
-            LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-            ARGUMENTS="$ARGUMENTS --only $FILTER_TEXT"
-        fi
+            #Prepare tag flag
+            if [ "${HAVINGASSET}" = true ]; then
+                LOGINFO="... $SLUG : asset_only tag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                ARGUMENTS="$ARGUMENTS --having-asset"
+            else
+                LOGINFO="... $SLUG : asset_only is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+            fi
 
-        #If beta flag, select beta version
-        if [ "${BETA}" = true ]; then
-            LOGINFO="... $SLUG : beta is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-            # shellcheck disable=SC2086
-            LASTVERSION=$(lastversion --pre "https://github.com/$UPSTREAM" $ARGUMENTS) || continue
-        else
-            LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-            # shellcheck disable=SC2086
-            LASTVERSION=$(lastversion "https://github.com/$UPSTREAM" $ARGUMENTS) || continue
-        fi
+            #Prepare tag flag
+            if [ "${FILTER_TEXT}" = "null" ] || [ "${FILTER_TEXT}" = "" ]; then
+                FILTER_TEXT=""
+            else
+                LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                ARGUMENTS="$ARGUMENTS --only $FILTER_TEXT"
+            fi
 
+            #If beta flag, select beta version
+            if [ "${BETA}" = true ]; then
+                LOGINFO="... $SLUG : beta is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                # shellcheck disable=SC2086
+                LASTVERSION=$(lastversion --pre "$UPSTREAM" $ARGUMENTS) || continue
+            else
+                LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                # shellcheck disable=SC2086
+                LASTVERSION=$(lastversion "$UPSTREAM" $ARGUMENTS) || continue
+            fi
     fi
+
 
     # Add brackets
     LASTVERSION='"'${LASTVERSION}'"'
