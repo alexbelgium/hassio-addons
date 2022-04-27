@@ -3,8 +3,20 @@
 
 WEBUI_PORT=${WEBUI_PORT:-8080}
 
+if bashio::config.true 'silent'; then
+    sed -i 's|/proc/1/fd/1 hassio;|off;|g' /etc/nginx/nginx.conf
+fi
+
 if bashio::config.true 'openvpn_enabled'; then
-    exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh
+    if bashio::config.true 'silent'; then
+        exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh >/dev/null
+    else
+        exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh
+    fi
 else
-    exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"
+    if bashio::config.true 'silent'; then
+        exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" >/dev/null
+    else
+        exec s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"
+    fi    
 fi
