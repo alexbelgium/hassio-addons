@@ -38,7 +38,7 @@ No webUI. Configuration is set in 2 ways.
 
 ### Updater.json
 
-In the addon folder of your repository (where is located you config.json), create a "updater.json" file. 
+In the addon folder of your repository (where is located you config.json), create a "updater.json" file.
 This file will be used by the addon to fetch the addon upstream informations.
 Only addons with an updater.json file will be updated.
 Here is [an example](https://github.com/alexbelgium/hassio-addons/blob/master/arpspoof/updater.json).
