@@ -1,3 +1,7 @@
-- New logic : uses updater.json instead of addons options
+
+## 3.*
+- Breaking change : new logic. Please read Readme.
+
+## 2.*
 - Add codenotary sign
 - Initial build
