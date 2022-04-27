@@ -16,8 +16,7 @@
   "options": {
     "repository": "alexbelgium/hassio-addons",
     "gitpass": "gitpassword",
-    "gituser": "gituser",
-    "verbose": true
+    "gituser": "gituser"
   },
   "schema": {
     "repository": "str",
@@ -25,7 +24,7 @@
     "gitmail": "str?",
     "gitpass": "str",
     "gituser": "str",
-    "verbose": "bool"
+    "verbose": "bool?"
   },
   "slug": "updater",
   "startup": "once",
