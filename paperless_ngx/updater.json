@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "14-04-2022",
+  "last_update": "27-04-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "paperless_ngx",
   "source": "github",
   "upstream_repo": "linuxserver/docker-paperless-ngx",
-  "upstream_version": "ngx-1.6.0-ls4"
+  "upstream_version": "ngx-1.7.0-ls5"
 }
