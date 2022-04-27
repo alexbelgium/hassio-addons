@@ -177,6 +177,7 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
 
         #Git commit and push
         git add -A # add all modified files
+        SLUG=${SLUG//\/}
         git commit -m "Updater bot : $SLUG updated to ${LASTVERSION}" >/dev/null
 
         LOGINFO="... $SLUG : push to github" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
