@@ -15,7 +15,6 @@
   "name": "Repository Updater",
   "options": {
     "repository": "alexbelgium/hassio-addons",
-    "gitmail": "youremail@gmail.com",
     "gitpass": "gitpassword",
     "gituser": "gituser",
     "verbose": true
@@ -23,7 +22,7 @@
   "schema": {
     "repository": "str",
     "gitapi": "str?",
-    "gitmail": "str",
+    "gitmail": "str?",
     "gitpass": "str",
     "gituser": "str",
     "verbose": "bool"
