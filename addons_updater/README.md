@@ -35,17 +35,33 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-No webUI. Set everything through configuration.
+No webUI. Configuration is set in 2 xays.
+
+### Updater.json 
+
+In the addon folder of your repository (where is located you config.json), create a "updater.json" file. 
+This file will be used by the addon to fetch the addon upstream informations.
+Only addons with an updater.json file will be updated.
+Here is [an example](https://github.com/alexbelgium/hassio-addons/blob/master/arpspoof/updater.json).
+
+You can add the following tags in the file : 
+- beta: true/false ; should it look only for releases or prereleases ok
+- fulltag: true is for example "v3.0.1-ls67" false is "3.0.1"
+- github_havingasset : true if there is a requirement that a release has binaries and not just source
+- github_tagfilter: filter a text in the release name
+- last_update: automatically populated, date of last upstream update
+- repository: 'name/repo' coming from github
+- slug: the slug name from your addon
+- source: github or dockerhub
+- upstream_repo: name/repo, example is 'linuxserver/docker-emby'
+- upstream_version: automatically populated, corresponds to the current upstream version referenced in the addon
+
+### Addon configuration
+
+Here you define the values that will allow the addon to connect to your repository.
 
 ```yaml
-addon:
-  - slug: the slug name from your repo
-    beta: true/false ; should it look only for releases or prereleases ok
-    fulltag: true is for example "v3.0.1-ls67" false is "3.0.1"
-    repository: 'name/repo' coming from github
-    upstream: name/repo, example is 'linuxserver/docker-emby'
-    source: github or dockerhub
-    filter: filter a text in the release name
+repository: 'name/repo' coming from github
 gituser: your github username
 gitpass: your github password
 gitmail: your github email
@@ -56,22 +72,7 @@ gitapi: optional, it is the API key from your github repo
 Example:
 
 ```yaml
-addon:
-  - slug: sonarr
-    beta: false
-    fulltag: false
-    repository: alexbelgium/hassio-addons
-    upstream: linuxserver/docker-sonarr
-  - slug: transmission
-    beta: false
-    fulltag: true
-    repository: alexbelgium/hassio-addons
-    upstream: linuxserver/docker-transmission
-  - slug: ubooquity
-    beta: false
-    fulltag: false
-    repository: alexbelgium/hassio-addons
-    upstream: linuxserver/docker-ubooquity
+repository: alexbelgium/hassio-addons
 gituser: your github username
 gitpass: your github password
 gitmail: your github email
