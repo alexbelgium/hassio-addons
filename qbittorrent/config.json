@@ -45,7 +45,6 @@
     "WEBUI_PORT": "8080"
   },
   "ingress": true,
-  "ingress_port": 8099,
   "map": [
     "media:rw",
     "config:rw",
@@ -108,8 +107,6 @@
     "whitelist": "str?"
   },
   "slug": "qbittorrent",
-  "upstream": "4.4.2-r4-ls189",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.4.2-r4-ls189",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
+  "version": "4.4.2-r4-ls189"
 }
