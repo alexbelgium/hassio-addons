@@ -31,19 +31,19 @@ comparison to installing any other Hass.io add-on.
 1. Click the `Save` button to store your configuration.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
- 
+
 ## Configuration
 
-No webUI. Configuration is set in 2 xays.
+No webUI. Configuration is set in 2 ways.
 
-### Updater.json 
+### Updater.json
 
 In the addon folder of your repository (where is located you config.json), create a "updater.json" file. 
 This file will be used by the addon to fetch the addon upstream informations.
 Only addons with an updater.json file will be updated.
 Here is [an example](https://github.com/alexbelgium/hassio-addons/blob/master/arpspoof/updater.json).
 
-You can add the following tags in the file : 
+You can add the following tags in the file :
 - beta: true/false ; should it look only for releases or prereleases ok
 - fulltag: true is for example "v3.0.1-ls67" false is "3.0.1"
 - github_havingasset : true if there is a requirement that a release has binaries and not just source
