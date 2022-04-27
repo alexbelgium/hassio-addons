@@ -63,6 +63,7 @@ openvpn_username": USERNAME
 openvpn_password: YOURPASSWORD
 openvpn_alt_mode: bind at container level and not app level
 run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
+silent: true #suppresses debug messages
 ```
 
 ## Installation
