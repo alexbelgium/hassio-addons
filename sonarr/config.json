@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them",
   "devices": [
@@ -79,7 +78,6 @@
   },
   "slug": "sonarr_nas",
   "startup": "services",
-  "upstream": "3.0.8.1507",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
   "version": "3.0.8.1507",
   "webui": "http://[HOST]:[PORT:8989]"

@@ -9,7 +9,6 @@
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/spotweb-{arch}",
   "ingress": true,
-  "ingress_port": 8099,
   "init": false,
   "map": [
     "ssl",
@@ -46,7 +45,6 @@
   ],
   "slug": "spotweb",
   "startup": "services",
-  "upstream": "1.5.1",
   "url": "https://github.com/alexbelgium/hassio-addons/spotweb",
   "version": "1.5.1-7"
 }

@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
   "devices": [
@@ -39,7 +38,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {},
   "map": [
     "media:rw",
     "config:rw",
@@ -85,7 +83,6 @@
   },
   "slug": "ubooquity",
   "startup": "services",
-  "upstream": "2.1.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.1.2-8",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:2206]/ubooquity/admin"

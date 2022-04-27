@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A free and open source personal finance manager",
   "devices": [],
@@ -45,7 +44,6 @@
     "mysql:want"
   ],
   "slug": "fireflyiii",
-  "upstream": "5.7.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "5.7.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"

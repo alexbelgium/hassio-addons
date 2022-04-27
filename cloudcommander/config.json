@@ -39,9 +39,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {},
   "ingress": true,
-  "ingress_port": 8099,
   "ingress_stream": true,
   "map": [
     "ssl:rw",
@@ -52,7 +50,6 @@
     "addons:rw"
   ],
   "name": "Cloudcommander",
-  "options": {},
   "panel_icon": "mdi:file-search",
   "ports": {
     "8000/tcp": 8000
@@ -74,8 +71,6 @@
     "smbv1": "bool?"
   },
   "slug": "cloudcommander",
-  "upstream": "16.1.0",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander",
-  "version": "16.1.0",
-  "webui": "http://[HOST]:[PORT:8000]"
+  "version": "16.1.0"
 }

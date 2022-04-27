@@ -16,7 +16,6 @@
     "config:rw"
   ],
   "name": "Elasticsearch server",
-  "options": {},
   "ports": {
     "9200/tcp": 9200,
     "9300/tcp": 9300
@@ -25,9 +24,7 @@
     "9200/tcp": "API calls over HTTP",
     "9300/tcp": "custom binary protoco"
   },
-  "schema": {},
   "slug": "elasticsearch",
-  "upstream": "7.14.2",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/elasticsearch",
   "version": "7.14.2"
 }

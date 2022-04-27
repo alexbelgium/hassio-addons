@@ -6,22 +6,18 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "M3U Proxy for Plex DVR and Emby Live TV",
-  "environment": {},
   "map": [
     "config:rw",
     "share:rw"
   ],
   "name": "Xteve",
-  "options": {},
   "ports": {
     "34400/tcp": 34400
   },
   "ports_description": {
     "34400/tcp": "Web interface"
   },
-  "schema": {},
   "slug": "xteve",
-  "upstream": "2.2.0.200",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.2.0.200",
   "webui": "http://[HOST]:[PORT:34400]/web"

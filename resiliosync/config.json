@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted file share and collaboration platform on the web",
   "devices": [
@@ -40,7 +39,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {},
   "map": [
     "share:rw",
     "config:rw"
@@ -74,7 +72,6 @@
     "networkdisks": "str?"
   },
   "slug": "resiliosync",
-  "upstream": "2.7.3.1381",
   "url": "https://github.com/tyjtyj/hassio-addons",
   "version": "2.7.3.1381",
   "webui": "http://[HOST]:[PORT:8888]"

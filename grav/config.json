@@ -4,11 +4,9 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Fast, Simple, and Flexible, file-based Web-platform",
   "devices": [],
-  "environment": {},
   "map": [
     "share:rw",
     "media:rw",
@@ -32,7 +30,6 @@
     "TZ": "str?"
   },
   "slug": "grav",
-  "upstream": "1.7.33",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.7.33",
   "webui": "http://[HOST]:[PORT:80]"

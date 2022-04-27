@@ -22,7 +22,6 @@
     "mqtt:want"
   ],
   "slug": "enedisgateway2mqtt_dev",
-  "upstream": "0.8.0-dev",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "0.8.0-dev"
 }

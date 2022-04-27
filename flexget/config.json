@@ -33,7 +33,6 @@
     "WebuiPass": "str?"
   },
   "slug": "flexget",
-  "upstream": "3.3.8",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "3.3.8",
   "webui": "http://[HOST]:[PORT:5050]"

@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Piwigo is a photo gallery software for the web",
   "devices": [
@@ -74,7 +73,6 @@
   "slug": "piwigo",
   "stage": "experimental",
   "startup": "services",
-  "upstream": "12.2.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "12.2.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"

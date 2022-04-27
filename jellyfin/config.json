@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "devices": [
@@ -101,9 +100,7 @@
   },
   "slug": "jellyfin",
   "startup": "services",
-  "upstream": "10.7.7-1-ls157",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "10.7.7-1-ls157",
-  "video": true,
-  "webui": "http://[HOST]:[PORT:8096]"
+  "video": true
 }

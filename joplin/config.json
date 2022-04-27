@@ -43,7 +43,6 @@
     "data_location": "str?"
   },
   "slug": "joplin",
-  "upstream": "2.7.4",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.7.4-8",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:22300]"

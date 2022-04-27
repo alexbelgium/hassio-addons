@@ -6,18 +6,14 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Proxy server to bypass Cloudflare protection",
-  "environment": {},
   "name": "FlareSolverr",
-  "options": {},
   "ports": {
     "8191/tcp": 8191
   },
   "ports_description": {
     "8191/tcp": "Web interface"
   },
-  "schema": {},
   "slug": "flaresolverr",
-  "upstream": "2.2.4",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.2.4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8191]"

@@ -31,7 +31,6 @@
     "80/udp": "Voice"
   },
   "slug": "teamspeak",
-  "upstream": "3.13.6",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "3.13.6"
 }

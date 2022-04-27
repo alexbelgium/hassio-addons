@@ -4,11 +4,9 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
   "devices": [],
-  "environment": {},
   "map": [
     "config:rw"
   ],
@@ -58,7 +56,6 @@
     "WHOOGLE_USER": "str?"
   },
   "slug": "whoogle-search",
-  "upstream": "0.7.2",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
   "version": "0.7.2",
   "webui": "http://[HOST]:[PORT:5000]"

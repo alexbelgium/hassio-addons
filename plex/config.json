@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
   "devices": [
@@ -113,7 +112,6 @@
   },
   "slug": "plex_nas",
   "startup": "services",
-  "upstream": "1.26.0.5715-8cf78dab3-ls111",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex",
   "version": "1.26.0.5715-8cf78dab3-ls111",
   "video": true,

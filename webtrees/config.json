@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "web's leading on-line collaborative genealogy application",
   "devices": [
@@ -94,7 +93,6 @@
   ],
   "slug": "webtrees",
   "startup": "services",
-  "upstream": "v2.1.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.1.0",
   "webui": "http://[HOST]:[PORT:80]"

@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Data importer for Firefly III (separate addon)",
   "devices": [],
@@ -39,7 +38,6 @@
     "silent": "bool?"
   },
   "slug": "fireflyiii_data_importer",
-  "upstream": "version-0.9.8",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "version-0.9.8",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"

@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "usenet downloader",
   "devices": [
@@ -74,7 +73,6 @@
     "networkdisks": "str?"
   },
   "slug": "nzbget",
-  "upstream": "21.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "21.1",
   "webui": "http://[HOST]:[PORT:6789]"

@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Bittorrent client based on linuxserver image",
   "devices": [
@@ -40,7 +39,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {},
   "map": [
     "config:rw",
     "share:rw",
@@ -89,7 +87,6 @@
   },
   "slug": "transmission_ls",
   "startup": "services",
-  "upstream": "3.00-r5-ls121",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "3.00-r5-ls121",
   "webui": "http://[HOST]:[PORT:9091]"

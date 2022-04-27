@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Full linux desktop environment accessible via any modern web browser",
   "devices": [
@@ -109,9 +108,7 @@
   },
   "slug": "webtop-kde",
   "udev": true,
-  "upstream": "4.16-r0-ls53",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.16-r0-ls53",
-  "video": true,
-  "webui": "http://[HOST]:[PORT:3000]"
+  "video": true
 }

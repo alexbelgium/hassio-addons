@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Automated comic book downloader for use with NZB and torrents",
   "devices": [
@@ -74,7 +73,6 @@
     "networkdisks": "str?"
   },
   "slug": "mylar3",
-  "upstream": "0.6.7",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "0.6.7",
   "webui": "http://[HOST]:[PORT:8090]"

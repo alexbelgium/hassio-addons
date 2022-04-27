@@ -87,7 +87,6 @@
     "mysql:want"
   ],
   "slug": "photoprism",
-  "upstream": "220302-impish",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
   "version": "220302-impish",
   "webui": "http://[HOST]:[PORT:2342]"

@@ -9,7 +9,6 @@
     "**/logs/*",
     "**/MediaCover/*"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Companion application to Sonarr and Radarr to download subtitles",
   "devices": [
@@ -48,7 +47,6 @@
     "PGID": "0",
     "PUID": "0"
   },
-  "ingress": false,
   "map": [
     "config:rw",
     "share:rw",
@@ -80,7 +78,6 @@
   },
   "slug": "bazarr_nas",
   "startup": "services",
-  "upstream": "1.0.3",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bazarr",
   "version": "1.0.3",
   "webui": "http://[HOST]:[PORT:6767]"

@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "platform for accessing the audibooks you own wherever you are",
   "devices": [
@@ -75,7 +74,6 @@
     "networkdisks": "str?"
   },
   "slug": "booksonic-air_nas",
-  "upstream": "v2201.1.0-ls54",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/booksonic_air",
   "version": "v2201.1.0-ls54",
   "webui": "http://[HOST]:[PORT:4040]"

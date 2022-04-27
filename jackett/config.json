@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
   "environment": {
@@ -43,7 +42,6 @@
   },
   "slug": "jackett_nas",
   "startup": "services",
-  "upstream": "0.20.970",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jackett",
   "version": "0.20.970",
   "webui": "http://[HOST]:[PORT:9117]"

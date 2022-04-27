@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat",
   "environment": {
@@ -33,7 +32,6 @@
     "TZ": "str?"
   },
   "slug": "requestrr",
-  "upstream": "2.1.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.1.2",
   "webui": "http://[HOST]:[PORT:4545]"

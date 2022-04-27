@@ -4,11 +4,9 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Python script to update metadata information for movies, shows, and collections as well as automatically build collections",
   "devices": [],
-  "environment": {},
   "image": "ghcr.io/alexbelgium/plex-media-manager-{arch}",
   "map": [
     "config:rw"
@@ -34,7 +32,6 @@
     "TZ": "str?"
   },
   "slug": "plex-meta-manager",
-  "upstream": "v1.16.5-ls11",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex_meta_manager",
   "version": "v1.16.5-ls11"
 }

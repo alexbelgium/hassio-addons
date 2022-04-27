@@ -2,7 +2,6 @@
   "arch": [
     "amd64"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Import financial transactions from you FinTS enabled bank into Firefly III",
   "devices": [],
@@ -16,7 +15,6 @@
     "ssl"
   ],
   "name": "Firefly iii FinTS Importer",
-  "options": {},
   "ports": {
     "8080/tcp": 3476
   },
@@ -27,7 +25,6 @@
     "silent": "bool?"
   },
   "slug": "fireflyiii_fints_importer",
-  "upstream": "1.2",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.2-6",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"

@@ -44,7 +44,6 @@
     "PUID": "0"
   },
   "ingress": true,
-  "ingress_port": 8099,
   "ingress_stream": true,
   "map": [
     "media:rw",
@@ -86,8 +85,6 @@
   },
   "slug": "filebrowser",
   "startup": "services",
-  "upstream": "2.21.1",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.21.1-2",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
+  "version": "2.21.1-2"
 }

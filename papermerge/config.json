@@ -6,7 +6,6 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Open source document management system (DMS)",
-  "environment": {},
   "map": [
     "share:rw",
     "media:rw",
@@ -49,7 +48,6 @@
     "storage_dir": "str"
   },
   "slug": "papermerge",
-  "upstream": "v2.0.1-ls44",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "v2.0.1-ls44",
   "webui": "http://[HOST]:[PORT:8000]"

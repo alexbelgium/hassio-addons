@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "recipe manager",
   "environment": {
@@ -41,7 +40,6 @@
     "mysql:want"
   ],
   "slug": "tandoor_recipes",
-  "upstream": "1.1.4",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.1.4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
