@@ -27,12 +27,11 @@ comparison to installing any other Hass.io add-on.
 
 1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
 1. Install this add-on.
+1. Configure the add-on to your preferences, see below
 1. Click the `Save` button to store your configuration.
-1. Make sure that the two ports are open on your router
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
+ 
 ## Configuration
 
 No webUI. Configuration is set in 2 xays.
