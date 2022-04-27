@@ -20,7 +20,7 @@ git config --system http.sslVerify false
 git config --system credential.helper 'cache --timeout 7200'
 git config --system user.name "${GITUSER}"
 git config --system user.password "${GITPASS}"
-git config --system user.email "${GITMAIL}"
+if [[ "$GITMAIL" != "null" ]]; then git config --system user.email "${GITMAIL}"; fi
 
 if bashio::config.has_value 'gitapi'; then
     LOGINFO="... setting github API" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
