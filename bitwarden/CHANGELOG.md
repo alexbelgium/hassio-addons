@@ -1,3 +1,6 @@
+
+## 1.24.0 (27-04-2022)
+- Update to latest version from dani-garcia/bitwarden_rs
 - Add codenotary sign
 
 ## 1.24.0 (31-01-2022)
