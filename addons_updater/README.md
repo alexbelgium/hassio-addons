@@ -51,7 +51,7 @@ You can add the following tags in the file :
 - last_update: automatically populated, date of last upstream update
 - repository: 'name/repo' coming from github
 - slug: the slug name from your addon
-- source: github or dockerhub
+- source: github/gitlab/dockerhub
 - upstream_repo: name/repo, example is 'linuxserver/docker-emby'
 - upstream_version: automatically populated, corresponds to the current upstream version referenced in the addon
 
