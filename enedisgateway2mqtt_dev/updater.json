@@ -1,6 +1,6 @@
 {
   "github_beta": "true",
-  "last_update": "27-04-2022",
+  "last_update": "07-04-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "enedisgateway2mqtt_dev",
   "source": "dockerhub",
