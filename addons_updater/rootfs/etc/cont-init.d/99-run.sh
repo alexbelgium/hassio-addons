@@ -65,7 +65,7 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
 
     # Get variables
     UPSTREAM=$(jq -r .upstream_repo updater.json)
-    BETA=$(jq -r .beta updater.json)
+    BETA=$(jq -r .github_beta updater.json)
     FULLTAG=$(jq -r .github_fulltag updater.json)
     HAVINGASSET=$(jq -r .github_havingasset updater.json)
     SOURCE=$(jq -r .source updater.json)
