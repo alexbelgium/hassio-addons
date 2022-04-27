@@ -14,42 +14,22 @@
   "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "name": "Repository Updater",
   "options": {
-    "addon": [
-      {
-        "beta": false,
-        "fulltag": false,
-        "repository": "https://github.com/user/repo",
-        "slug": "addon slug",
-        "upstream": "github_user/repo_name"
-      }
-    ],
+    "repository": "alexbelgium/hassio-addons",
     "gitmail": "youremail@gmail.com",
     "gitpass": "gitpassword",
     "gituser": "gituser",
     "verbose": true
   },
   "schema": {
-    "addon": [
-      {
-        "beta": "bool",
-        "filter": "str?",
-        "fulltag": "bool",
-        "having_asset": "bool?",
-        "repository": "str",
-        "slug": "str",
-        "source": "str?",
-        "upstream": "str"
-      }
-    ],
+    "repository": "str",
     "gitapi": "str?",
     "gitmail": "str",
     "gitpass": "str",
     "gituser": "str",
-    "verbose": "bool",
-    "repository": "str"
+    "verbose": "bool"
   },
   "slug": "updater",
   "startup": "once",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater",
-  "version": "3.7"
+  "version": "3.8"
 }
