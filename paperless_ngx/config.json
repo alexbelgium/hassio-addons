@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "auto",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "scan, index and archive all your physical documents",
   "devices": [
@@ -78,7 +77,6 @@
     "networkdisks": "str?"
   },
   "slug": "paperless_ng",
-  "upstream": "ngx-1.7.0-ls5",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "ngx-1.7.0-ls5",
   "webui": "http://[HOST]:[PORT:8000]"
