@@ -117,6 +117,10 @@ mount: mounting /dev/sda1 on /mnt/sda1 failed: Invalid argument
 
 Try to mount by putting the partition label in the "localdisks" options instead of the hardware name
 
+### Loss of metadata fetching with openvpn after several days (@almico)
+
+Add ```ping-restart 60``` to your config.ovpn
+
 ## Support
 
 Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-qbittorrent/279247)
