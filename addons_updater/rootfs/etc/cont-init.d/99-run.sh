@@ -181,7 +181,15 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
         git commit -m "Updater bot : $SLUG updated to ${LASTVERSION}" >/dev/null
 
         LOGINFO="... $SLUG : push to github" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-        git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" &>/dev/null
+        
+        # if API is set
+        if bashio::config.has_value 'GITHUB_API_TOKEN'; then
+            git remote set-url origin "https://${GITUSER}:${GITHUB_API_TOKEN}@github.com/${REPOSITORY}" &>/dev/null
+        else        
+            git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" &>/dev/null
+        fi
+        
+        # Push
         git push &>/dev/null
 
         #Log
