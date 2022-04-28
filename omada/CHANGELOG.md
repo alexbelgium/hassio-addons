@@ -1,4 +1,7 @@
 
+## 5.1 (28-04-2022)
+- Update to latest version from mbentley/omada-controller
+
 ## 5.1-arm64 (27-04-2022)
 - Update to latest version from mbentley/omada-controller
 
