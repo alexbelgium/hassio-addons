@@ -131,13 +131,14 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
             #If beta flag, select beta version
             if [ "${BETA}" = true ]; then
                 LOGINFO="... $SLUG : beta is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-                # shellcheck disable=SC2086
-                LASTVERSION=$(lastversion --pre "$UPSTREAM" $ARGUMENTS) || continue
+                ARGUMENTS="$ARGUMENTS --pre"
             else
                 LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-                # shellcheck disable=SC2086
-                LASTVERSION=$(lastversion "$UPSTREAM" $ARGUMENTS) || continue
             fi
+            
+            #Execute version search
+            # shellcheck disable=SC2086
+            LASTVERSION=$(lastversion "$UPSTREAM" $ARGUMENTS) || continue
     fi
 
 
