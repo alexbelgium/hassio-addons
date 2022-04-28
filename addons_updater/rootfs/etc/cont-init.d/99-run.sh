@@ -102,6 +102,7 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
 
             # Use source as upstream
             ARGUMENTS="--at $SOURCE"
+            LOGINFO="... $SLUG : source is $SOURCE" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
             
             #Prepare tag flag
             if [ "${FULLTAG}" = true ]; then
