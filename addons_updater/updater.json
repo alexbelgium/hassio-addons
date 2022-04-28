@@ -1,0 +1,11 @@
+{
+  "github_fulltag": "true",
+  "last_update": "2022-03-15",
+  "repository": "jdeath/homeassistant-addons",
+  "slug": "earthwalker",
+  "source": "gitlab",
+  "upstream_repo": "glatteis/earthwalker",
+  "github_beta": true,
+  "github_havingasset" : false,
+  "upstream_version": "1"
+}
