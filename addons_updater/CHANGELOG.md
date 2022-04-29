@@ -1,3 +1,4 @@
+- Feat: "pause: true" pauses the updates for a specific addon
 
 ## 3.*
 - Breaking change : new logic. Please read Readme.
