@@ -50,6 +50,7 @@ You can add the following tags in the file :
 - github_tagfilter: filter a text in the release name
 - last_update: automatically populated, date of last upstream update
 - repository: 'name/repo' coming from github
+- paused: true # Pauses the updates
 - slug: the slug name from your addon
 - source: dockerhub/github,gitlab,bitbucket,pip,hg,sf,website-feed,local,helm_chart,wiki,system,wp
 - upstream_repo: name/repo, example is 'linuxserver/docker-emby'
