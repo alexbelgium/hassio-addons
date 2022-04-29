@@ -35,11 +35,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && usermod --home /config/addons_config/addons_config/calibre abc \
     \
     # Correct error in upstream image
-    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config \
-    \
-    # Update distribution
-    # hadolint ignore=DL3017
-    && apk upgrade --no-cache
+    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config
 
 ##################
 # 3 Install apps #
