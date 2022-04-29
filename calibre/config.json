@@ -64,7 +64,7 @@
     "8081/tcp": 8081
   },
   "ports_description": {
-    "8080/tcp": "Calibre desktop gui"
+    "8080/tcp": "Calibre desktop gui",
     "8081/tcp": "Calibre webserver gui"
   },
   "privileged": [],
