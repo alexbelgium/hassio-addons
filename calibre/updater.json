@@ -1,6 +1,7 @@
 {
   "github_fulltag": "true",
   "last_update": "29-04-2022",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "calibre",
   "source": "github",
