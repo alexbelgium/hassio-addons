@@ -19,15 +19,18 @@ PACKAGES="${*:-}"
 # CHECK WHICH BASE IS USED #
 ############################
 
-COMMAND="apk"
-if command -v "$COMMAND" &>/dev/null; then
+if command -v "apk" &>/dev/null; then
     # If apk based
     [ "$VERBOSE" = true ] && echo "apk based"
     PACKMANAGER="apk"
-else
+elif command -v "apt" &>/dev/null; then
     # If apt-get based
     [ "$VERBOSE" = true ] && echo "apt based"
     PACKMANAGER="apt"
+elif command -v "pacman" &>/dev/null; then
+    # If apt-get based
+    [ "$VERBOSE" = true ] && echo "apt based"
+    PACKMANAGER="pacman"
 fi
 
 ###################
@@ -53,6 +56,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES nginx"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES nginx"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES nginx"
         if ls /etc/nginx 1>/dev/null 2>&1; then mv /etc/nginx /etc/nginx2; fi
     fi
 
@@ -61,6 +65,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils ntfs-3g"
         #[ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils ntfs-3g"
+        #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils ntfs-3g"
     fi
 
     COMMAND="cifs"
@@ -68,6 +73,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
     fi
 
     COMMAND="smbclient"
@@ -75,6 +81,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES samba samba-client"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES samba smbclient"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES samba smbclient"
     fi
 
     COMMAND="openvpn"
@@ -82,6 +89,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES coreutils openvpn"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES coreutils openvpn"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES coreutils openvpn"
     fi
 
     COMMAND="jq"
@@ -89,6 +97,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES jq"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES jq"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES jq"
     fi
 
     COMMAND="yamllint"
@@ -96,6 +105,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES yamllint"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES yamllint"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES yamllint"
     fi
 
     COMMAND="git"
@@ -103,6 +113,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES git"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES git"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES git"
     fi
 
     COMMAND="sponge"
@@ -110,6 +121,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES moreutils"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES moreutils"
+        [ "$PACKMANAGER" = "pacman " ] && PACKAGES="$PACKAGES moreutils"
     fi
 
     COMMAND="sqlite3"
@@ -117,6 +129,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES sqlite"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES sqlite3"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES sqlite3"
     fi
 
     COMMAND="pip"
@@ -124,6 +137,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES py3-pip"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES pip"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES pip"
     fi
 
     COMMAND="wget"
@@ -131,6 +145,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES wget"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES wget"
+        [ "$PACKMANAGER" = "wget" ] && PACKAGES="$PACKAGES wget"
     fi
 
 done
@@ -142,6 +157,7 @@ done
 # Install apps
 [ "$VERBOSE" = true ] && echo "installing packages $PACKAGES"
 if [ "$PACKMANAGER" = "apt" ]; then apt-get update >/dev/null; fi
+if [ "$PACKMANAGER" = "pacman" ]; then pacman -Sy >/dev/null; fi
 
 # Install apps one by one to allow failures
 # shellcheck disable=SC2086
@@ -151,6 +167,8 @@ for packagestoinstall in $PACKAGES; do
         apk add --no-cache "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
     elif [ "$PACKMANAGER" = "apt" ]; then
         apt-get install -yqq --no-install-recommends "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
+    elif [ "$PACKMANAGER" = "pacman" ]; then
+        pacman --noconfirm -S "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
     fi
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall done"
 done
