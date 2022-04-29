@@ -10,7 +10,7 @@ LOCATION=$(bashio::config 'data_location')
 
 if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
     # Default location
-    LOCATION="/config/addons_config/addons_config/calibre"
+    LOCATION="/config/addons_config/calibre"
 else
     bashio::log.warning "Warning : a custom data location was selected, but the previous folder will NOT be copied. You need to do it manually"
 
@@ -33,9 +33,9 @@ fi
 bashio::log.info "Setting data location to $LOCATION"
 sed -i "1a export HOME=$LOCATION" /etc/services.d/web/run
 sed -i "1a export FM_HOME=$LOCATION" /etc/services.d/web/run
-sed -i "s|/config/addons_config/addons_config/calibre|$LOCATION|g" /defaults/*
-sed -i "s|/config/addons_config/addons_config/calibre|$LOCATION|g" /etc/cont-init.d/*
-sed -i "s|/config/addons_config/addons_config/calibre|$LOCATION|g" /etc/services.d/*/run
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /defaults/*
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/cont-init.d/*
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/services.d/*/run
 usermod --home "$LOCATION" abc
 
 # Create folder
