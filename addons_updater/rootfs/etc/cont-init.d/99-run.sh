@@ -70,7 +70,11 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
     HAVINGASSET=$(jq -r .github_havingasset updater.json)
     SOURCE=$(jq -r .source updater.json)
     FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
+    PAUSED=$(jq -r .paused updater.json)
     DATE="$(date '+%d-%m-%Y')"
+    
+    #Skip if paused
+    if [[ "$PAUSED" = true ]]; then bashio::log.error "$SLUG addon updates are paused, skipping"; continue; fi
 
     #Find current version
     LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
