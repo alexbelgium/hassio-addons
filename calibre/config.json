@@ -46,6 +46,7 @@
     "HOME": "/config/addons_config/calibre",
     "shm_size": "1gb"
   },
+  "image": "ghcr.io/alexbelgium/calibre-{arch}",
   "ingress": true,
   "map": [
     "media:rw",

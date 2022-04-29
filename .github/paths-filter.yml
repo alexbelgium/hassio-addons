@@ -5,6 +5,7 @@ addons_updater: addons_updater/config.* # Image : yes
 arpspoof: arpspoof/config.*
 bazarr: bazarr/config.*
 bitwarden: bitwarden/config.*
+calibre: calibre/config.*
 booksonic_air: booksonic_air/config.*
 cloudcommander: cloudcommander/config.*
 code-server: code-server/config.*
