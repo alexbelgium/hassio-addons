@@ -97,7 +97,7 @@
   },
   "slug": "tdarr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.00.18",
+  "version": "2.00.18.1",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8265]"
 }
