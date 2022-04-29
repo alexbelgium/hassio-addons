@@ -32,10 +32,7 @@ RUN sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's|/config|/config/addons_config/calibre|g' /defaults/* \
     && sed -i 's|/config|/config/addons_config/calibre|g' /etc/cont-init.d/* \
     && sed -i 's|/config|/config/addons_config/calibre|g' /etc/services.d/*/run \
-    && usermod --home /config/addons_config/calibre abc \
-    \
-    # Correct error in upstream image
-    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config
+    && usermod --home /config/addons_config/calibre abc
 
 ##################
 # 3 Install apps #
