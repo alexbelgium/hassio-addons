@@ -29,7 +29,7 @@ elif command -v "apt" &>/dev/null; then
     PACKMANAGER="apt"
 elif command -v "pacman" &>/dev/null; then
     # If apt-get based
-    [ "$VERBOSE" = true ] && echo "apt based"
+    [ "$VERBOSE" = true ] && echo "pacman based"
     PACKMANAGER="pacman"
 fi
 
