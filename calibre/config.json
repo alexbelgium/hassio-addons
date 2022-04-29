@@ -82,6 +82,5 @@
   "slug": "calibre",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
   "version": "1.29.1",
-  "webui": "http://[HOST]:[PORT:8080]",
   "video": true
 }
