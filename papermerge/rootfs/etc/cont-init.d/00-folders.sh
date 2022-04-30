@@ -11,4 +11,4 @@ bashio::log.info "Setting config location to $CONFIGLOCATION"
 sed -i "s|/data/config|$CONFIGLOCATION|g" /etc/cont-init.d/*
 
 # Avoid tamper issues
-chown -r root:root "$CONFIGLOCATION"/custom*
+chown -R root:root "$CONFIGLOCATION"/custom*
