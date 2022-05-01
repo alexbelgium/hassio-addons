@@ -1,5 +1,5 @@
-#!/usr/bin/with-contenv bashio 
-# shellcheck shell=bash 
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 # shellcheck disable=SC2015
 
 # Set TZ

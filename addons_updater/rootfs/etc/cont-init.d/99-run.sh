@@ -28,20 +28,20 @@ if bashio::config.has_value 'gitapi'; then
     export GITHUB_API_TOKEN
 fi
 
-    #Create or update local version
-    REPOSITORY=$(bashio::config 'repository')
-    BASENAME=$(basename "https://github.com/$REPOSITORY")
+#Create or update local version
+REPOSITORY=$(bashio::config 'repository')
+BASENAME=$(basename "https://github.com/$REPOSITORY")
 
-    if [ ! -d "/data/$BASENAME" ]; then
-        LOGINFO="... cloning ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-        cd /data/ || exit
-        git clone "https://github.com/${REPOSITORY}"
-    else
-        LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-        cd "/data/$BASENAME" || exit
-        git pull --rebase &>/dev/null || git reset --hard &>/dev/null
-        git pull --rebase &>/dev/null
-    fi
+if [ ! -d "/data/$BASENAME" ]; then
+    LOGINFO="... cloning ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+    cd /data/ || exit
+    git clone "https://github.com/${REPOSITORY}"
+else
+    LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+    cd "/data/$BASENAME" || exit
+    git pull --rebase &>/dev/null || git reset --hard &>/dev/null
+    git pull --rebase &>/dev/null
+fi
 
 LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
@@ -50,37 +50,37 @@ LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$
 cd /data/"$BASENAME" || exit
 for f in */; do
 
-if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
-    SLUG=${f//\/}
+    if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
+        SLUG=${f//\/}
 
-    # Rebase
-    LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-    cd "/data/$BASENAME" || exit
-    git pull --rebase &>/dev/null || git reset --hard &>/dev/null
-    git pull --rebase &>/dev/null
+        # Rebase
+        LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+        cd "/data/$BASENAME" || exit
+        git pull --rebase &>/dev/null || git reset --hard &>/dev/null
+        git pull --rebase &>/dev/null
 
-    #Define the folder addon
-    LOGINFO="... $SLUG : checking slug exists in repo" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-    cd /data/"${BASENAME}"/"${SLUG}" || { bashio::log.error "$SLUG addon not found in this repository. Exiting."; continue; }
+        #Define the folder addon
+        LOGINFO="... $SLUG : checking slug exists in repo" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+        cd /data/"${BASENAME}"/"${SLUG}" || { bashio::log.error "$SLUG addon not found in this repository. Exiting."; continue; }
 
-    # Get variables
-    UPSTREAM=$(jq -r .upstream_repo updater.json)
-    BETA=$(jq -r .github_beta updater.json)
-    FULLTAG=$(jq -r .github_fulltag updater.json)
-    HAVINGASSET=$(jq -r .github_havingasset updater.json)
-    SOURCE=$(jq -r .source updater.json)
-    FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
-    PAUSED=$(jq -r .paused updater.json)
-    DATE="$(date '+%d-%m-%Y')"
-    
-    #Skip if paused
-    if [[ "$PAUSED" = true ]]; then bashio::log.error "$SLUG addon updates are paused, skipping"; continue; fi
+        # Get variables
+        UPSTREAM=$(jq -r .upstream_repo updater.json)
+        BETA=$(jq -r .github_beta updater.json)
+        FULLTAG=$(jq -r .github_fulltag updater.json)
+        HAVINGASSET=$(jq -r .github_havingasset updater.json)
+        SOURCE=$(jq -r .source updater.json)
+        FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
+        PAUSED=$(jq -r .paused updater.json)
+        DATE="$(date '+%d-%m-%Y')"
 
-    #Find current version
-    LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-    CURRENT=$(jq .upstream_version updater.json) || { bashio::log.error "$SLUG addon upstream tag not found in updater.json. Exiting."; continue; }
+        #Skip if paused
+        if [[ "$PAUSED" = true ]]; then bashio::log.error "$SLUG addon updates are paused, skipping"; continue; fi
 
-    if [[ "$SOURCE" = dockerhub ]]; then
+        #Find current version
+        LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+        CURRENT=$(jq .upstream_version updater.json) || { bashio::log.error "$SLUG addon upstream tag not found in updater.json. Exiting."; continue; }
+
+        if [[ "$SOURCE" = dockerhub ]]; then
             # Use dockerhub as upstream
             # shellcheck disable=SC2116
             DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
@@ -102,12 +102,12 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
                 sort -V |
                 tail -n 1
             )
-    else
+        else
 
             # Use source as upstream
             ARGUMENTS="--at $SOURCE"
             LOGINFO="... $SLUG : source is $SOURCE" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-            
+
             #Prepare tag flag
             if [ "${FULLTAG}" = true ]; then
                 LOGINFO="... $SLUG : fulltag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
@@ -139,72 +139,72 @@ if [ -f /data/"$BASENAME"/"$f"/updater.json ]; then
             else
                 LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
             fi
-            
+
             #Execute version search
             # shellcheck disable=SC2086
             LASTVERSION=$(lastversion "$UPSTREAM" $ARGUMENTS) || continue
-    fi
-
-
-    # Add brackets
-    LASTVERSION='"'${LASTVERSION}'"'
-
-    # Do not compare with ls tag for linuxserver images (to avoid updating only for dependencies)
-    #LASTVERSION2=${LASTVERSION%-ls*}
-    #CURRENT2=${CURRENT%-ls*}
-    LASTVERSION2=${LASTVERSION}
-    CURRENT2=${CURRENT}
-
-    # Update if needed
-    if [ "${CURRENT2}" != "${LASTVERSION2}" ]; then
-        LOGINFO="... $SLUG : update from ${CURRENT} to ${LASTVERSION}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-
-        #Change all instances of version
-        LOGINFO="... $SLUG : updating files" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-        for files in "config.json" "config.yaml" "Dockerfile" "build.json" "build.yaml";do
-            if [ -f /data/"${BASENAME}"/"${SLUG}"/$files ]; then
-                sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/"${BASENAME}"/"${SLUG}"/"$files"
-            fi
-        done
-
-        # Remove " and modify version
-        LASTVERSION=${LASTVERSION//\"/}
-        CURRENT=${CURRENT//\"/}
-        jq --arg variable "$LASTVERSION" '.version = $variable' /data/"${BASENAME}"/"${SLUG}"/config.json | sponge /data/"${BASENAME}"/"${SLUG}"/config.json # Replace version tag
-        jq --arg variable "$LASTVERSION" '.upstream_version = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace upstream tag
-        jq --arg variable "$DATE" '.last_update = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace date tag
-
-        #Update changelog
-        touch "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
-        sed -i "1i - Update to latest version from $UPSTREAM" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
-        sed -i "1i ## ${LASTVERSION} (${DATE})" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
-        sed -i "1i " "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
-        LOGINFO="... $SLUG : files updated" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-
-        #Git commit and push
-        git add -A # add all modified files
-       
-        git commit -m "Updater bot : $SLUG updated to ${LASTVERSION}" >/dev/null
-
-        LOGINFO="... $SLUG : push to github" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-        
-        # if API is set
-        if bashio::config.has_value 'gitapi'; then
-            git remote set-url origin "https://${GITUSER}:${GITHUB_API_TOKEN}@github.com/${REPOSITORY}" &>/dev/null
-        else        
-            git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" &>/dev/null
         fi
-        
-        # Push
-        git push &>/dev/null
 
-        #Log
-        bashio::log.yellow "... $SLUG updated from ${CURRENT} to ${LASTVERSION}"
 
-    else
-        bashio::log.green "... $SLUG is up-to-date ${CURRENT}"
+        # Add brackets
+        LASTVERSION='"'${LASTVERSION}'"'
+
+        # Do not compare with ls tag for linuxserver images (to avoid updating only for dependencies)
+        #LASTVERSION2=${LASTVERSION%-ls*}
+        #CURRENT2=${CURRENT%-ls*}
+        LASTVERSION2=${LASTVERSION}
+        CURRENT2=${CURRENT}
+
+        # Update if needed
+        if [ "${CURRENT2}" != "${LASTVERSION2}" ]; then
+            LOGINFO="... $SLUG : update from ${CURRENT} to ${LASTVERSION}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+
+            #Change all instances of version
+            LOGINFO="... $SLUG : updating files" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+            for files in "config.json" "config.yaml" "Dockerfile" "build.json" "build.yaml";do
+                if [ -f /data/"${BASENAME}"/"${SLUG}"/$files ]; then
+                    sed -i "s/${CURRENT}/${LASTVERSION}/g" /data/"${BASENAME}"/"${SLUG}"/"$files"
+                fi
+            done
+
+            # Remove " and modify version
+            LASTVERSION=${LASTVERSION//\"/}
+            CURRENT=${CURRENT//\"/}
+            jq --arg variable "$LASTVERSION" '.version = $variable' /data/"${BASENAME}"/"${SLUG}"/config.json | sponge /data/"${BASENAME}"/"${SLUG}"/config.json # Replace version tag
+            jq --arg variable "$LASTVERSION" '.upstream_version = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace upstream tag
+            jq --arg variable "$DATE" '.last_update = $variable' /data/"${BASENAME}"/"${SLUG}"/updater.json | sponge /data/"${BASENAME}"/"${SLUG}"/updater.json # Replace date tag
+
+            #Update changelog
+            touch "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
+            sed -i "1i - Update to latest version from $UPSTREAM" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
+            sed -i "1i ## ${LASTVERSION} (${DATE})" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
+            sed -i "1i " "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
+            LOGINFO="... $SLUG : files updated" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+
+            #Git commit and push
+            git add -A # add all modified files
+
+            git commit -m "Updater bot : $SLUG updated to ${LASTVERSION}" >/dev/null
+
+            LOGINFO="... $SLUG : push to github" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+
+            # if API is set
+            if bashio::config.has_value 'gitapi'; then
+                git remote set-url origin "https://${GITUSER}:${GITHUB_API_TOKEN}@github.com/${REPOSITORY}" &>/dev/null
+            else
+                git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" &>/dev/null
+            fi
+
+            # Push
+            git push &>/dev/null
+
+            #Log
+            bashio::log.yellow "... $SLUG updated from ${CURRENT} to ${LASTVERSION}"
+
+        else
+            bashio::log.green "... $SLUG is up-to-date ${CURRENT}"
+        fi
     fi
-fi
 done || true # Continue even if issue
 
 bashio::log.info "Addons update completed"
