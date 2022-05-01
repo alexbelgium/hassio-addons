@@ -1,3 +1,6 @@
+
+## 1.2.0 (01-05-2022)
+- Update to latest version from TandoorRecipes/recipes
 - Add codenotary sign
 
 ## 1.1.4 (17-03-2022)
