@@ -74,7 +74,7 @@ for f in */; do
         DATE="$(date '+%d-%m-%Y')"
 
         #Skip if paused
-        if [[ "$PAUSED" = true ]]; then bashio::log.error "$SLUG addon updates are paused, skipping"; continue; fi
+        if [[ "$PAUSED" = true ]]; then bashio::log.magenta "... $SLUG addon updates are paused, skipping"; continue; fi
 
         #Find current version
         LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
