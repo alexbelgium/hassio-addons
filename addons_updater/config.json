@@ -13,16 +13,16 @@
   "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "name": "Repository Updater",
   "options": {
-    "repository": "alexbelgium/hassio-addons",
     "gitpass": "gitpassword",
-    "gituser": "gituser"
+    "gituser": "gituser",
+    "repository": "alexbelgium/hassio-addons"
   },
   "schema": {
-    "repository": "str",
     "gitapi": "str?",
     "gitmail": "str?",
     "gitpass": "str",
     "gituser": "str",
+    "repository": "str",
     "verbose": "bool?"
   },
   "slug": "updater",

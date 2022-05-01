@@ -39,11 +39,11 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PGID": "0",
-    "PUID": "0",
     "CALIBRE_CONFIG_DIRECTORY": "/config/addons_config/calibre",
     "FM_HOME": "/config/addons_config/calibre",
     "HOME": "/config/addons_config/calibre",
+    "PGID": "0",
+    "PUID": "0",
     "shm_size": "1gb"
   },
   "image": "ghcr.io/alexbelgium/calibre-{arch}",
@@ -70,11 +70,11 @@
   },
   "privileged": [],
   "schema": {
+    "CLI_ARGS": "str?",
+    "PASSWORD": "str?",
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
-    "PASSWORD": "str?",
-    "CLI_ARGS": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
