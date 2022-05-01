@@ -1,4 +1,7 @@
 
+## 1.0.4 (01-05-2022)
+- Update to latest version from linuxserver/docker-bazarr
+
 ## 1.0.3 (27-04-2022)
 - Update to latest version from linuxserver/docker-bazarr
 - Add codenotary sign
