@@ -16,8 +16,13 @@ if bashio::config.has_value 'DNS_server'; then
     # Get DNS servers
     # shellcheck disable=SC2086
     for server in ${DNSSERVER//,/ }; do # Separate comma separated values
-        DNS="${DNS}nameserver $server\n"
-        DNSLIST="$server $DNSLIST"
+        if ping -c 1 "$server" &> /dev/null
+        then
+            DNS="${DNS}nameserver $server\n"
+            DNSLIST="$server $DNSLIST"
+        else
+          bashio::log.warning "DNS $server was requested but can't be pinged. It won't be used"
+        fi
     done
 
     # Write resolv.conf
