@@ -53,6 +53,7 @@
   ],
   "name": "Qbittorrent",
   "options": {
+    "DNS_server": "8.8.8.8,1.1.1.1",
     "PGID": "0",
     "PUID": "0",
     "SavePath": "/share/qBittorrent",
