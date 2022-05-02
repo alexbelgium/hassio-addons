@@ -47,6 +47,9 @@ Webui can be found at <http://your-ip:PORT>.
 The default username/password : described in the startup log.
 Configurations can be done through the app webUI, except for the following options
 
+Default name : admin
+Default password : admin123
+
 ```yaml
 GUID: user
 GPID: user
