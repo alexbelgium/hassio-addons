@@ -5,7 +5,7 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "e-book manager",
+  "description": "web app providing a clean interface for browsing, reading and downloading eBooks using an existing Calibre database",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
@@ -54,7 +54,7 @@
     "config:rw",
     "ssl"
   ],
-  "name": "calibre-web",
+  "name": "Calibre web",
   "options": {
     "PGID": 0,
     "PUID": 0
@@ -81,7 +81,7 @@
     "networkdisks": "str?"
   },
   "slug": "calibre-web",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre-web",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre_web",
   "version": "v5.38",
   "video": true
 }
