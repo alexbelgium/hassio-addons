@@ -31,3 +31,5 @@ if bashio::config.has_value 'PASSWORD'; then
     bashio::log.info "Setting password to $PASSWORD"
     sed -i "1a export PASSWORD=$PASSWORD" /etc/services.d/web/run
 fi
+
+bashio::log.info "Default username:password is admin:admin123"
