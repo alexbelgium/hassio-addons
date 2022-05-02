@@ -1,4 +1,7 @@
 
+## 4.4.2-r4-ls190 (03-05-2022)
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ## 4.4.2-r4-ls189 (27-04-2022)
 - Update to latest version from linuxserver/docker-qbittorrent
 - New feature "silent" : true shows only error messages of qbittorrent and nginx
