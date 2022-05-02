@@ -7,6 +7,7 @@ bazarr: bazarr/config.*
 bitwarden: bitwarden/config.*
 booksonic_air: booksonic_air/config.*
 calibre: calibre/config.* # Image : yes
+calibre_web: calibre_web/config.* # Image : yes
 cloudcommander: cloudcommander/config.*
 code-server: code-server/config.*
 elasticsearch: elasticsearch/config.*
