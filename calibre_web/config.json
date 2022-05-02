@@ -54,7 +54,7 @@
     "config:rw",
     "ssl"
   ],
-  "name": "calibre-web",
+  "name": "Calibre-web",
   "options": {
     "PGID": 0,
     "PUID": 0
