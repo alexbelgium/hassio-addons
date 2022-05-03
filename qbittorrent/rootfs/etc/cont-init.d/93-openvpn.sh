@@ -94,10 +94,11 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Modify ovpn config
-    if ! grep -q route-nopull /etc/openvpn/config.ovpn; then
-        echo "... adding route-nopull to your config.ovpn"
-        echo "route-nopull" >>/etc/openvpn/config.ovpn
-    fi
+    sed -i 's|exec /usr/sbin/openvpn |exec /usr/sbin/openvpn --route-nopull |g' /etc/services.d/qbittorrent/run
+    #if ! grep -q route-nopull /etc/openvpn/config.ovpn; then
+    #    echo "... adding route-nopull to your config.ovpn"
+    #    echo "route-nopull" >>/etc/openvpn/config.ovpn
+    #fi
 
 else
 
