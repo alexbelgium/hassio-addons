@@ -71,9 +71,12 @@ if bashio::config.has_value 'networkdisks'; then
             bashio::log.fatal "Error, unable to mount $disk to /mnt/$diskname with username $CIFS_USERNAME, $CIFS_PASSWORD. Please check your remote share path, username, password, domain, try putting 0 in UID and GID"
             bashio::log.fatal "Here is some debugging info :"
 
+# Download smbclient
+if command -v "apk" &>/dev/null; then apk add --no-cache samba-client &>/dev/null; fi
+if command -v "apt" &>/dev/null; then apt-get install smbclient &>/dev/null; fi
+if command -v "pacman" &>/dev/null; then pacman -S smbclient; fi
+
             # Provide debugging info
-            smbclient -V &>/dev/null || apt-get install smbclient &>/dev/null || apk add --no-cache samba-client &>/dev/null || pacman -S smbclient
-            #smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
             smbclient -L $disk -U "$CIFS_USERNAME%$CIFS_PASSWORD" || true
 
             # Error code
