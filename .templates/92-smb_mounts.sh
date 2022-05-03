@@ -72,7 +72,7 @@ if bashio::config.has_value 'networkdisks'; then
             bashio::log.fatal "Here is some debugging info :"
 
             # Provide debugging info
-            smbclient -V &>/dev/null || apt-get install smbclient || apk add --no-cache samba-client
+            smbclient -V &>/dev/null || apt-get install smbclient &>/dev/null || apk add --no-cache samba-client &>/dev/null || pacman -S smbclient
             #smbclient $disk -U $CIFS_USERNAME%$CIFS_PASSWORD  || true
             smbclient -L $disk -U "$CIFS_USERNAME%$CIFS_PASSWORD" || true
 
