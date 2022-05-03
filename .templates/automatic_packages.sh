@@ -87,7 +87,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
     COMMAND="openvpn"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES coreutils openvpn=2.5.3-r0"
+        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES coreutils openvpn"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES coreutils openvpn"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES coreutils openvpn"
     fi
