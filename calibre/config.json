@@ -56,8 +56,8 @@
   ],
   "name": "Calibre",
   "options": {
-    "PGID": 0,
-    "PUID": 0
+    "PGID": 1000,
+    "PUID": 1000
   },
   "panel_icon": "mdi:book-multiple",
   "ports": {
