@@ -111,8 +111,6 @@ else
 
 fi
 
-if 
-
 # Test mode
 TZ=$(bashio::config "TZ")
 if [ "$TZ" = "test" ]; then
