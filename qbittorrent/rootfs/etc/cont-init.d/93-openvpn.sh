@@ -64,6 +64,9 @@ if bashio::config.true 'openvpn_enabled'; then
             sed -i '/route-nopull/d' /etc/openvpn/config.ovpn
         fi
 
+        # Get current ip
+        echo "$(curl ipecho.net/plain)" > /normalip
+
         # Exit
         exit 0
     fi
