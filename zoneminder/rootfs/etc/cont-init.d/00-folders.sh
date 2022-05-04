@@ -5,19 +5,27 @@
 #CONFIGSOURCE=$(dirname "$CONFIGSOURCE")
 CONFIGSOURCE="/config/addons_config/zoneminder"
 
+# Set image location
+if bashio::config.has_value "Images_location"; then
+  IMAGESOURCE=$(bashio::config "Images_location")
+else
+  IMAGESOURCE="$CONFIGSOURCE"/images
+fi
+
 # Create directory
 echo "... making sure $CONFIGSOURCE exists"
-mkdir -p "$CONFIGSOURCE"/{events,images,temp} || true
+if [ ! -d "$CONFIGSOURCE" ]; then mkdir "$CONFIGSOURCE"; fi
+if [ ! -d "$CONFIGSOURCE"/events ]; then mkdir "$CONFIGSOURCE"/events; fi
+if [ ! -d "$IMAGESOURCE" ]; then mkdir "$IMAGESOURCE"; fi
 
 # Make sure permissions are right
 echo "... checking permissions"
 chown -R "$(id -u):$(id -g)" "$CONFIGSOURCE"
+chown -R "$(id -u):$(id -g)" "$IMAGESOURCE"
 
 # Make symlinks
 echo "... making symlinks"
 rm -rf /var/cache/zoneminder/events
 rm -rf /var/cache/zoneminder/images
-rm -rf /var/cache/zoneminder/temp
 ln -s "$CONFIGSOURCE"/events /var/cache/zoneminder/events
-ln -s "$CONFIGSOURCE"/images /var/cache/zoneminder/images
-ln -s "$CONFIGSOURCE"/temp /var/cache/zoneminder/temp
+ln -s "$IMAGESOURCE" /var/cache/zoneminder/images
