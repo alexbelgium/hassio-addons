@@ -5,6 +5,13 @@
 # Wait for transmission to become available
 bashio::net.wait_for 8080 localhost 900
 
+if [ -f /currentip ]; then
+  if [[ "$(curl ipecho.net/plain)" = "$(cat /currentip)" ]]; then
+    bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
+    bashio::exit.nok
+  fi
+fi
+
 bashio::log.info "Starting NGinx..."
 
 exec nginx
