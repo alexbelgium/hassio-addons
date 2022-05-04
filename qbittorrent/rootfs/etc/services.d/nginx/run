@@ -9,6 +9,8 @@ if [ -f /currentip ]; then
   if [[ "$(curl ipecho.net/plain)" = "$(cat /currentip)" ]]; then
     bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
     bashio::exit.nok
+  else
+    bashio::log "VPN is up and running with ip $(curl ipecho.net/plain)"
   fi
 fi
 
