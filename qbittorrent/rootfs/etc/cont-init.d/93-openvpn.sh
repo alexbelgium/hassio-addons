@@ -8,14 +8,6 @@ declare openvpn_password
 
 QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
 
-# Test mode
-TZ=$(bashio::config "TZ")
-if [ "$TZ" = "test" ]; then
-    echo "secret mode found, launching script in /config/test.sh"
-    chmod 777 /config/test.sh
-    /./config/test.sh
-fi
-
 if bashio::config.true 'openvpn_enabled'; then
 
     bashio::log.info "Configuring openvpn"
@@ -65,7 +57,7 @@ if bashio::config.true 'openvpn_enabled'; then
         fi
 
         # Get current ip
-        echo "$(curl ipecho.net/plain)" > /normalip
+        echo "$(curl ipecho.net/plain)" > /currentip
 
         # Exit
         exit 0
