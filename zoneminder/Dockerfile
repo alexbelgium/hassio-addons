@@ -25,6 +25,8 @@ FROM tritruongtr/zoneminder:latest
 
 # Global variables
 ENV DZM_CONFIG_DIR="/config/addons_config/zoneminder"
+ENV DIR_IMAGES="/var/cache/zoneminder/images2"
+ENV ZM_DIR_EVENTS="/var/cache/zoneminder/events2"
 
 # Change config location
 # hadolint ignore=DL4006
