@@ -25,7 +25,5 @@ chown -R "$(id -u):$(id -g)" "$IMAGESOURCE"
 
 # Make symlinks
 echo "... making symlinks"
-rm -rf /var/cache/zoneminder/events
-rm -rf /var/cache/zoneminder/images
-ln -s "$CONFIGSOURCE"/events /var/cache/zoneminder/events
-ln -s "$IMAGESOURCE" /var/cache/zoneminder/images
+ln -s "$CONFIGSOURCE"/events /var/cache/zoneminder/events2
+ln -s "$IMAGESOURCE" /var/cache/zoneminder/images2
