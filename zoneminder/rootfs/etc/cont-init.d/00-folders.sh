@@ -16,6 +16,7 @@ fi
 echo "... making sure $CONFIGSOURCE exists"
 if [ ! -d "$CONFIGSOURCE" ]; then mkdir "$CONFIGSOURCE"; fi
 if [ ! -d "$CONFIGSOURCE"/events ]; then mkdir "$CONFIGSOURCE"/events; fi
+if [ ! -d "$CONFIGSOURCE"/sounds ]; then mkdir "$CONFIGSOURCE"/sounds; fi
 if [ ! -d "$IMAGESOURCE" ]; then mkdir "$IMAGESOURCE"; fi
 
 # Make sure permissions are right
@@ -26,4 +27,5 @@ chown -R "$(id -u):$(id -g)" "$IMAGESOURCE"
 # Make symlinks
 echo "... making symlinks"
 ln -s "$CONFIGSOURCE"/events /var/cache/zoneminder/events2
+ln -s "$CONFIGSOURCE"/sounds /var/cache/zoneminder/sounds2
 ln -s "$IMAGESOURCE" /var/cache/zoneminder/images2
