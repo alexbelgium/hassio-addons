@@ -57,7 +57,7 @@ if bashio::config.true 'openvpn_enabled'; then
         fi
 
         # Get current ip
-        echo "$(curl ipecho.net/plain)" > /currentip
+        echo "$(curl -s ipecho.net/plain)" > /currentip
 
         # Exit
         exit 0
