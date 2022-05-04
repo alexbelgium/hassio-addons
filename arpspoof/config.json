@@ -27,7 +27,7 @@
     "ROUTER_IP": "str"
   },
   "slug": "arpspoof",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/arpsoof",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/arpspoof",
   "version": "1.0.0",
   "webui": "http://[HOST]:[PORT:7022]"
 }
