@@ -1,4 +1,7 @@
 
+## 5.7.5 (05-05-2022)
+- Update to latest version from firefly-iii/firefly-iii
+
 ## 5.7.4 (03-05-2022)
 - Update to latest version from firefly-iii/firefly-iii
 
