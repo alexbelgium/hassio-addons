@@ -3,7 +3,7 @@
   "last_update": "26-10-2021",
   "repository": "alexbelgium/hassio-addons",
   "slug": "scrutiny",
-  "source": "github",
-  "upstream_repo": "linuxserver/docker-scrutiny",
+  "source": "dockerhub",
+  "upstream_repo": "linuxserver/scrutiny",
   "upstream_version": "0.3.13"
 }
