@@ -78,7 +78,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/library.svg) [Calibre-web](calibre_web/) : e-book manager
+&#10003; ![image](https://api.iconify.design/mdi/library.svg) [Calibre-web](calibre_web/) : browsing, reading and downloading eBooks using an existing Calibre database
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcalibre_web%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcalibre_web%2Fupdater.json)
