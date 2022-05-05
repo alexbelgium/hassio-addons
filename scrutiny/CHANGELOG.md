@@ -1,3 +1,6 @@
+
+## 8e34ef8d-ls35 (05-05-2022)
+- Update to latest version from linuxserver/scrutiny
 - Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation
 - Added : "/dev/nvme0"
