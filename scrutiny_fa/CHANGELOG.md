@@ -1,3 +1,6 @@
+
+## 8e34ef8d-ls35 (05-05-2022)
+- Update to latest version from linuxserver/scrutiny
 - Add codenotary sign
 - Require unprotected
 - Added full access. Use only if you can't connect without
