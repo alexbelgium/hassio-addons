@@ -14,16 +14,20 @@ if [ -f /currentip ]; then
   else
     curl -s ipecho.net/plain --interface tun0 > /vpnip
   fi
-
-  # Compare ip
+  
+  # Verify ip has changed
   if [[ "$(cat /vpnip)" = "$(cat /currentip)" ]]; then
     bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
     bashio::exit.nok
-  else
-    bashio::log.info "VPN is up and running with ip $(curl -s ipecho.net/plain)"
-    rm /vpnip
-    rm /currentip
   fi
+  
+  # Get ip location
+  COUNTRY=$"(curl -s https://ipinfo.io/"$(cat /vpnip)" | grep country -i -m 1 | cut -d ':' -f 2 |xargs | awk 'gsub(/,$/,x)' || true)"
+
+  # Inform by message
+  bashio::log.info "VPN is up and running with ip $(curl -s ipecho.net/plain), based in country : $COUNTRY"
+  rm /vpnip
+  rm /currentip
 
 fi
 
