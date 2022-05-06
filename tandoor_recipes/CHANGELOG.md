@@ -1,4 +1,7 @@
 
+## 1.2.4 (07-05-2022)
+- Update to latest version from TandoorRecipes/recipes
+
 ## 1.2.3 (05-05-2022)
 - Update to latest version from TandoorRecipes/recipes
 
