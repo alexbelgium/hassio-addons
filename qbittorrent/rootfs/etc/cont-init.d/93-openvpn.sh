@@ -74,6 +74,9 @@ if bashio::config.true 'openvpn_enabled'; then
     LINE=$((LINE + 1))
     SESSION=$(sed -n '/BitTorrent/=' "$QBT_CONFIG_FILE")
 
+    # Get current ip
+    echo "$(curl -s ipecho.net/plain)" > /currentip2
+
     # If qBittorrent.conf exists
     if [ -f "$QBT_CONFIG_FILE" ]; then
         # Remove previous line and bind tun0
