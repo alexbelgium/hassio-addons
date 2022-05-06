@@ -14,6 +14,15 @@ if [ -f /currentip ]; then
   fi
 fi
 
+if [ -f /currentip2 ]; then
+  if [[ "$(curl -s ipecho.net/plain --interface tun0)" = "$(cat /currentip2)" ]]; then
+    bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
+    bashio::exit.nok
+  else
+    bashio::log.info "VPN is up and running with ip $(curl -s ipecho.net/plain --interface tun0)"
+  fi
+fi
+
 bashio::log.info "Starting NGinx..."
 
 exec nginx
