@@ -1,4 +1,7 @@
 
+## v0.9.9 (06-05-2022)
+- Update to latest version from davidnewhall/unpackerr
+
 ## notifiarr-bot-184509568867368963 (06-05-2022)
 - Update to latest version from davidnewhall/unpackerr
 
