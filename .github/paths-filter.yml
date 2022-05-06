@@ -59,6 +59,7 @@ tdarr: tdarr/config.* # Image : yes
 teamspeak: teamspeak/config.*
 transmission: transmission/config.*
 ubooquity: ubooquity/config.*
+unpackerr: unpackerr/config.* # Image : yes
 webtop: webtop/config.*
 webtop_kde: webtop_kde/config.* # Image : yes
 webtrees: webtrees/config.* # Image : yes
