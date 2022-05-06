@@ -12,6 +12,9 @@ if bashio::config.true 'openvpn_enabled'; then
 
     bashio::log.info "Configuring openvpn"
 
+    # Get current ip
+    curl -s ipecho.net/plain > /currentip
+
     #####################
     # CONFIGURE OPENVPN #
     #####################
@@ -56,9 +59,6 @@ if bashio::config.true 'openvpn_enabled'; then
             sed -i '/route-nopull/d' /etc/openvpn/config.ovpn
         fi
 
-        # Get current ip
-        echo "$(curl -s ipecho.net/plain)" > /currentip
-
         # Exit
         exit 0
     fi
@@ -73,9 +73,6 @@ if bashio::config.true 'openvpn_enabled'; then
     LINE=$(sed -n '/Preferences/=' "$QBT_CONFIG_FILE")
     LINE=$((LINE + 1))
     SESSION=$(sed -n '/BitTorrent/=' "$QBT_CONFIG_FILE")
-
-    # Get current ip
-    echo "$(curl -s ipecho.net/plain)" > /currentip2
 
     # If qBittorrent.conf exists
     if [ -f "$QBT_CONFIG_FILE" ]; then
