@@ -1,4 +1,7 @@
 
+## 0.8.1.2135-ls82 (07-05-2022)
+- Update to latest version from linuxserver/docker-lidarr
+
 ## 0.8.1.2135-ls80 (01-05-2022)
 - Update to latest version from linuxserver/docker-lidarr
 
