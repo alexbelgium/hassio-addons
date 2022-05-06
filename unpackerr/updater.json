@@ -1,6 +1,7 @@
 {
   "github_beta": "true",
   "github_fulltag": "true",
+  "github_havingasset": "true",
   "last_update": "06-05-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "unpackerr",
