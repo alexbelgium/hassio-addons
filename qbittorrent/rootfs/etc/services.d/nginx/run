@@ -5,22 +5,26 @@
 # Wait for transmission to become available
 bashio::net.wait_for 8080 localhost 900
 
+# Check vpn is working
 if [ -f /currentip ]; then
-  if [[ "$(curl -s ipecho.net/plain)" = "$(cat /currentip)" ]]; then
+
+  # Get vpn ip
+  if bashio::config.true 'openvpn_alt_mode'; then
+    curl -s ipecho.net/plain > /vpnip
+  else
+    curl -s ipecho.net/plain --interface tun0 > /vpnip
+  fi
+
+  # Compare ip
+  if [[ "$(cat /vpnip)" = "$(cat /currentip)" ]]; then
     bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
     bashio::exit.nok
   else
     bashio::log.info "VPN is up and running with ip $(curl -s ipecho.net/plain)"
+    rm /vpnip
+    rm /currentip
   fi
-fi
 
-if [ -f /currentip2 ]; then
-  if [[ "$(curl -s ipecho.net/plain --interface tun0)" = "$(cat /currentip2)" ]]; then
-    bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
-    bashio::exit.nok
-  else
-    bashio::log.info "VPN is up and running with ip $(curl -s ipecho.net/plain --interface tun0)"
-  fi
 fi
 
 bashio::log.info "Starting NGinx..."
