@@ -27,6 +27,9 @@ jobs:
           
             # Clean variable
             OPENISSUES=""
+
+            # Rename Readme
+            [ -f "$f"/Readme.md ] && mv "$f"/Readme.md "$f"/README.md
           
             # Add to file
             if ! grep "$f:" ".github/paths-filter.yml"; then
