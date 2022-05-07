@@ -31,7 +31,16 @@ jobs:
             if [ "$(jq '.image' "$f/config.json")" != null ]; then
               sed -i "/$f/ s/ # Image : yes//g" ".github/paths-filter.yml"
               sed -i "/$f/ s/$/ # Image : yes/" ".github/paths-filter.yml"
-            fi            
+            fi
+
+            # If there is an issue, put a message
+            OPENISSUES="$(curl -s https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aopen+is%3Aissue+label%3Abug | grep $f)" 
+            if [ "$OPENISSUES" != "" ]; then
+              sed -i "1a Open Issue : $OPENISSUES" "$f/Readme.md"
+            else
+              sed -i "/Open Issues :/d" "$f/Readme.md"
+            fi
+     
           fi
         done
         # Sort yaml
