@@ -34,7 +34,7 @@ jobs:
             fi
 
             # If there is an issue, put a message
-            curl https://api.github.com/repos/alexbelgium/hassio-addons/issues
+            curl https://api.github.com/repos/alexbelgium/hassio-addons/issues | grep -iF "$f"
             #if [ "$OPENISSUES" != "" ]; then
             #  for item in ${OPENISSUES//\\n/ }
             #  do
