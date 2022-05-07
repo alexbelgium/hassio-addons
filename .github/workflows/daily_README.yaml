@@ -36,7 +36,7 @@ jobs:
             # If there is an issue, put a message
             OPENISSUES="$(curl -s "https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aopen+is%3Aissue+label%3Abug" | grep -iF "$f")" 
             if [ "$OPENISSUES" != "" ]; then
-              for item in ${list//\\n/ }
+              for item in ${OPENISSUES//\\n/ }
               do
                  sed -i "1a Open Issue : $item" "$f/README.md"
               done
