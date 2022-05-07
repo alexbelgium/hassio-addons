@@ -18,6 +18,9 @@ jobs:
         # Init
         echo "Starting"
         
+        # Get issues list
+        curl -s https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
+        
         # Go through all folders, add to filters if not existing
         for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           if [ -f "$f"/config.json ]; then
@@ -34,9 +37,8 @@ jobs:
             fi
 
             # If there is an issue, put a message
-            curl https://api.github.com/repos/alexbelgium/hassio-addons/issues
-            echo "$f"
-            echo "$f" | grep "$f"
+            OPENISSUES=$(sed -ni "/$f/p" issueslist)
+            echo "$OPENISSUES"
             #if [ "$OPENISSUES" != "" ]; then
             #  for item in ${OPENISSUES//\\n/ }
             #  do
