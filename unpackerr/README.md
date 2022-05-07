@@ -1,6 +1,4 @@
 Open Issue : [Request: Unpackerr](https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aissue+is%3Aopen+unpackerr)
-Open Issue : [Request: Unpackerr](https://github.com/alexbelgium/hassio-addons/issues)
-Open Issue : [](https://github.com/alexbelgium/hassio-addons/issues)
 # Home assistant add-on: Unpackerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

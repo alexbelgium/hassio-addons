@@ -1,5 +1,4 @@
 Open Issue : [[Zoneminder] Storage](https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aissue+is%3Aopen+zoneminder)
-Open Issue : [[Zoneminder] Storage](https://github.com/alexbelgium/hassio-addons/issues)
 # Home assistant add-on: Zoneminder
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
