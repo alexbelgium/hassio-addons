@@ -34,15 +34,16 @@ jobs:
             fi
 
             # If there is an issue, put a message
-            OPENISSUES="$(curl -s "https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aopen+is%3Aissue+label%3Abug" | grep "$f")" 
+            OPENISSUES="$(curl -s "https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aopen+is%3Aissue+label%3Abug" | grep -iF "$f")" 
             if [ "$OPENISSUES" != "" ]; then
-              sed -i "1a Open Issue : $OPENISSUES" "$f/Readme.md"
+              sed -i "1a Open Issue : $OPENISSUES" "$f/README.md"
             else
-              sed -i "/Open Issues :/d" "$f/Readme.md"
+              sed -i "/Open Issues :/d" "$f/README.md"
             fi
      
           fi
         done
+        
         # Sort yaml
         sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
       
