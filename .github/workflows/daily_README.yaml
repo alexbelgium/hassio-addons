@@ -37,7 +37,7 @@ jobs:
             fi
 
             # If there is an issue, put a message
-            OPENISSUES=$(sed -ni "/$f/p" issueslist)
+            OPENISSUES=$(sed -n "/$f/I p" issueslist)
             echo "$OPENISSUES"
             #if [ "$OPENISSUES" != "" ]; then
             #  for item in ${OPENISSUES//\\n/ }
