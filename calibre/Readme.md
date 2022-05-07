@@ -1,4 +1,3 @@
-Open Issue : "title": "Calibre Server",
 # Home assistant add-on: calibre
 Open Issue : Server",
 Open Issue : "Calibre
