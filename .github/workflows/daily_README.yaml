@@ -40,7 +40,7 @@ jobs:
             fi
 
             # Clean previously reported issues
-            find "$f" -iname readme.md -print0 | xargs -0 sed -i "/Open Issues :/d"
+            find "$f" -iname readme.md -print0 | xargs -0 sed -i "/Open Issue :/d"
 
             # If there is an issue with the addon name in title, put a message
             OPENISSUES=$(sed -n "/\"Title\".*$f/I p" issueslist)
