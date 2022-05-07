@@ -40,7 +40,7 @@ jobs:
             fi
 
             # Clean previously reported issues
-            find "$f" -iname readme.md | xargs sed -i "/Open Issues :/d"
+            find "$f" -iname readme.md -print0 | xargs -0 sed -i "/Open Issues :/d"
 
             # If there is an issue with the addon name in title, put a message
             OPENISSUES=$(sed -n "/\"Title\".*$f/I p" issueslist)
@@ -49,7 +49,7 @@ jobs:
               do
                 line=${line#* \"}
                 line=${line::-n}
-                find "$f" -iname readme.md | xargs sed -i "1i Open Issue : [$line](https://github.com/alexbelgium/hassio-addons/issues)"
+                find "$f" -iname readme.md -print0 | xargs -0 sed -i "1i Open Issue : [$line](https://github.com/alexbelgium/hassio-addons/issues)"
               done <<< "$OPENISSUES"
             fi
      
