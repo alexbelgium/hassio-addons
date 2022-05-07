@@ -25,6 +25,9 @@ jobs:
         for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           if [ -f "$f"/config.json ]; then
           
+            # Clean variable
+            OPENISSUES=""
+          
             # Add to file
             if ! grep "$f:" ".github/paths-filter.yml"; then
               echo "$f: $f/config.*" >> ".github/paths-filter.yml"
@@ -36,20 +39,23 @@ jobs:
               sed -i "/$f/ s/$/ # Image : yes/" ".github/paths-filter.yml"
             fi
 
+            # Clean previously reported issues
+            find "$f"/*.md | xargs sed -i "/Open Issues :/d"
+
             # If there is an issue with the addon name in title, put a message
             OPENISSUES=$(sed -n "/Title.*$f/I p" issueslist)
             if [ "$OPENISSUES" != "" ]; then
-              for item in ${OPENISSUES//\\n/ }
+              while read -r line
               do
-                 [ -f "$f"/README.md ] && sed -i "1a Open Issue : $item" "$f/README.md"
-                 [ -f "$f"/Readme.md ] && sed -i "1a Open Issue : $item" "$f/Readme.md"
-              done
-            else
-              sed -i "/Open Issues :/d" "$f/Readme.md" || sed -i "/Open Issues :/d" "$f/README.md"
+                find "$f"/*.md | xargs sed -i "1i Open Issue : $line"
+              done <<< "$OPENISSUES"
             fi
      
           fi
         done
+        
+        # Remove issues list
+        rm issueslist
         
         # Sort yaml
         sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
