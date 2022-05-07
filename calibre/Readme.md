@@ -1,4 +1,7 @@
 # Home assistant add-on: calibre
+Open Issue : Server",
+Open Issue : "Calibre
+Open Issue : "title":
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
