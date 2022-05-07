@@ -1,3 +1,4 @@
+Open Issue : [Calibre Server](https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aissue+is%3Aopen+calibre)
 Open Issue : [Calibre Server](https://github.com/alexbelgium/hassio-addons/issues)
 Open Issue : [](https://github.com/alexbelgium/hassio-addons/issues)
 # Home assistant add-on: calibre
