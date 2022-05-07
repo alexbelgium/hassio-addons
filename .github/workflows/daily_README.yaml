@@ -38,8 +38,8 @@ jobs:
             if [ "$OPENISSUES" != "" ]; then
               for item in ${OPENISSUES//\\n/ }
               do
-                 [ -f "$f/README.md ] && sed -i "1a Open Issue : $item" "$f/README.md"
-                 [ -f "$f/Readme.md ] && sed -i "1a Open Issue : $item" "$f/Readme.md"
+                 [ -f "$f"/README.md ] && sed -i "1a Open Issue : $item" "$f/README.md"
+                 [ -f "$f"/Readme.md ] && sed -i "1a Open Issue : $item" "$f/Readme.md"
               done
             else
               sed -i "/Open Issues :/d" "$f/Readme.md" || sed -i "/Open Issues :/d" "$f/README.md"
