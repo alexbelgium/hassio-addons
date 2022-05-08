@@ -47,9 +47,11 @@ jobs:
             COUNTER=0
             while [[ $(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist) != null ]]; do
               #Increment counter
-              let COUNTER=COUNTER+1
+              (( COUNTER=COUNTER+1 )) || true
+              echo "Counter = $COUNTER"
               #Get variables
               TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
+              echo "Title =$TITLE"
               #Check if relevant to addon
               if [[ "$TITLE" == *"$f"* ]]; then
                 REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
