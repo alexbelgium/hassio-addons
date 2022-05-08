@@ -1,4 +1,4 @@
-## &#9888; Open Issue : [[Fireflyiii] No ui in 5.7.5 (since 2022-05-06)](https://github.com/alexbelgium/hassio-addons/issues/316) by @tbaumann
+## &#9888; Open Issue : [[Fireflyiii] No ui in 5.7.5 (opened 2022-05-06)](https://github.com/alexbelgium/hassio-addons/issues/316) by [@tbaumann](https://github.com/tbaumann)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

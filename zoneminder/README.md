@@ -1,4 +1,4 @@
-## &#9888; Open Issue : [[Zoneminder] Storage (since 2022-05-04)](https://github.com/alexbelgium/hassio-addons/issues/314) by @snellie1972
+## &#9888; Open Issue : [[Zoneminder] Storage (opened 2022-05-04)](https://github.com/alexbelgium/hassio-addons/issues/314) by [@snellie1972](https://github.com/snellie1972)
 # Home assistant add-on: Zoneminder
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
