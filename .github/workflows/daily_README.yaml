@@ -60,15 +60,20 @@ jobs:
             # If there is an issue with the addon name in title, put a message
             COUNTER=0
             while [[ $(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist) != null ]]; do
+            
               #Increment counter
               let COUNTER=COUNTER+1
               echo "Counter = $COUNTER"
+              
               #Get variables
               TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
               echo "Title =$TITLE"
               echo "f = $f"
+              
               #Check if relevant to addon
-              if [[ "$TITLE" == *"$f"* ]]; then
+              TITLE2="${TITLE,,}"
+              f2="${f,,}"
+              if [[ "$TITLE2" == *"$f2"* ]]; then
                 echo "Title has an issue"
                 REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
                 URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].url" issueslist)"
