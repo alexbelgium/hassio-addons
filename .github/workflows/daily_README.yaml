@@ -51,7 +51,7 @@ jobs:
               while read -r line
               do
                 line=${line#* \"}
-                line=${line::-2)
+                line=${line::-2}
                 sed -i "1i ## Warning! Open Issue : [$line](https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aissue+is%3Aopen+$f)" "$f"/README.md
               done <<< "$OPENISSUES"
             fi
