@@ -73,14 +73,14 @@ jobs:
               if [[ "$TITLE2" == *"$f2"* ]]; then
                 echo "Title has an issue"
                 REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
-                URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].url" issueslist)"
+                URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].html_url" issueslist)"
                 LABEL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)"
                 DATEISSUE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].created_at" issueslist)"
                 DATEISSUE="${DATEISSUE%T*}"
                 if [[ "$LABEL" == *"bug"* ]]; then
-                  sed -i "1i ## &#9888; Open Issue : [$TITLE (by @${REQ} since ${DATEISSUE})]($URL)" "$f"/README.md
+                  sed -i "1i ## &#9888; Open Issue : [$TITLE (since ${DATEISSUE})]($URL) by @${REQ}" "$f"/README.md
                 elif [[ "$LABEL" == *"enhancement"* ]]; then
-                  sed -i "1i ## &#9888; Open Request : [$TITLE (by @${REQ} since ${DATEISSUE})]($URL)" "$f"/README.md
+                  sed -i "1i ## &#9888; Open Request : [$TITLE (since ${DATEISSUE})]($URL) by @${REQ}" "$f"/README.md
                 fi
               fi
             done
