@@ -1,4 +1,4 @@
-## &#9888; Open Request : [[Request] Calibre Server (by @phgsbr since 2022-04-28)](https://api.github.com/repos/alexbelgium/hassio-addons/issues/304)
+## &#9888; Open Request : [[Request] Calibre Server (since 2022-04-28)](https://github.com/alexbelgium/hassio-addons/issues/304) by @phgsbr
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
