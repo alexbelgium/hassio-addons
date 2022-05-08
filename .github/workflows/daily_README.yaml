@@ -75,7 +75,7 @@ jobs:
                 REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
                 URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].url" issueslist)"
                 LABEL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)"
-                DATEISSUE"$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)"
+                DATEISSUE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].created_at" issueslist)"
                 DATEISSUE="${DATEISSUE%T*}"
                 if [[ "$LABEL" == *"bug"* ]]; then
                   sed -i "1i ## Warning! Open Issue : [$TITLE (by ${REQ} since ${DATEISSUE})]($URL)" "$f"/README.md
