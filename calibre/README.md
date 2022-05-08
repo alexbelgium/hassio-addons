@@ -1,3 +1,4 @@
+## Warning! Open Request : [[Request] Calibre Server (by phgsbr since 2022-04-28)](https://api.github.com/repos/alexbelgium/hassio-addons/issues/304)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
