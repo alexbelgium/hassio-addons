@@ -41,7 +41,7 @@ jobs:
         # Sort yaml
         sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
 
-    - name: Create issues list
+    - name: Assign issues
       run: |
         # Init
         echo "Starting"
@@ -78,9 +78,9 @@ jobs:
                 DATEISSUE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].created_at" issueslist)"
                 DATEISSUE="${DATEISSUE%T*}"
                 if [[ "$LABEL" == *"bug"* ]]; then
-                  sed -i "1i ## Warning! Open Issue : [$TITLE (by ${REQ} since ${DATEISSUE})]($URL)" "$f"/README.md
+                  sed -i "1i ## Warning! Open Issue : [$TITLE (by @${REQ} since ${DATEISSUE})]($URL)" "$f"/README.md
                 elif [[ "$LABEL" == *"enhancement"* ]]; then
-                  sed -i "1i ## Warning! Open Request : [$TITLE (by ${REQ} since ${DATEISSUE})]($URL)" "$f"/README.md
+                  sed -i "1i ## Warning! Open Request : [$TITLE (by @${REQ} since ${DATEISSUE})]($URL)" "$f"/README.md
                 fi
               fi
             done
