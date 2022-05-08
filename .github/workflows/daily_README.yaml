@@ -18,9 +18,6 @@ jobs:
         # Init
         echo "Starting"
         
-        # Get issues list
-        curl -s https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
-        
         # Go through all folders, add to filters if not existing
         for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           if [ -f "$f"/config.json ]; then
@@ -38,7 +35,29 @@ jobs:
               sed -i "/$f/ s/ # Image : yes//g" ".github/paths-filter.yml"
               sed -i "/$f/ s/$/ # Image : yes/" ".github/paths-filter.yml"
             fi
+            
+            done
+          fi
+        done
+        
+        # Remove issues list
+        rm issueslist
+        
+        # Sort yaml
+        sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
 
+    - name: Create issues list
+      run: |
+        # Init
+        echo "Starting"
+        
+        # Get issues list
+        curl -s https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
+
+        # Go through all folders, add to filters if not existing
+        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
+          if [ -f "$f"/config.json ]; then
+          
             # Clean previously reported issues
             sed -i "/Open Issue :/d" "$f"/README.md
             sed -i "/Open Request :/d" "$f"/README.md
@@ -54,6 +73,7 @@ jobs:
               echo "Title =$TITLE"
               #Check if relevant to addon
               if [[ "$TITLE" == *"$f"* ]]; then
+                echo "Title has an issue"
                 REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
                 URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].url" issueslist)"
                 LABEL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)"
@@ -67,13 +87,7 @@ jobs:
             done
           fi
         done
-        
-        # Remove issues list
-        rm issueslist
-        
-        # Sort yaml
-        sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
-      
+
     - name: Create README file
       run: |
         # Init
