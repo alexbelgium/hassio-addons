@@ -78,9 +78,9 @@ jobs:
                 DATEISSUE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].created_at" issueslist)"
                 DATEISSUE="${DATEISSUE%T*}"
                 if [[ "$LABEL" == *"bug"* ]]; then
-                  sed -i "1i ## &#9888; Open Issue : [$TITLE (since ${DATEISSUE})]($URL) by @${REQ}" "$f"/README.md
+                  sed -i "1i ## &#9888; Open Issue : [$TITLE (opened ${DATEISSUE})]($URL) by [@${REQ}](https://github.com/$REQ)" "$f"/README.md
                 elif [[ "$LABEL" == *"enhancement"* ]]; then
-                  sed -i "1i ## &#9888; Open Request : [$TITLE (since ${DATEISSUE})]($URL) by @${REQ}" "$f"/README.md
+                  sed -i "1i ## &#9888; Open Request : [$TITLE (opened ${DATEISSUE})]($URL) by [@${REQ}](https://github.com/$REQ)" "$f"/README.md
                 fi
               fi
             done
