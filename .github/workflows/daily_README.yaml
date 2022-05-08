@@ -75,11 +75,12 @@ jobs:
                 REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
                 URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].url" issueslist)"
                 LABEL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)"
-                DATEISSUE"${$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)%T*}"
+                DATEISSUE"$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)"
+                DATEISSUE="${DATEISSUE%T*}"
                 if [[ "$LABEL" == *"bug"* ]]; then
-                  sed -i "1i ## Warning! Open Issue : [$TITLE (by ${REQ} since ${DATE})]($URL)" "$f"/README.md
+                  sed -i "1i ## Warning! Open Issue : [$TITLE (by ${REQ} since ${DATEISSUE})]($URL)" "$f"/README.md
                 elif [[ "$LABEL" == *"enhancement"* ]]; then
-                  sed -i "1i ## Warning! Open Request : [$TITLE (by ${REQ} since ${DATE})]($URL)" "$f"/README.md
+                  sed -i "1i ## Warning! Open Request : [$TITLE (by ${REQ} since ${DATEISSUE})]($URL)" "$f"/README.md
                 fi
               fi
             done
