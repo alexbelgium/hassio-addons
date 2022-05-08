@@ -22,7 +22,7 @@ if bashio::config.has_value 'DNS_server'; then
             DNS="${DNS}nameserver $server\n"
             DNSLIST="$server $DNSLIST"
         else
-          bashio::log.warning "DNS $server was requested but can't be pinged. It won't be used"
+            bashio::log.warning "DNS $server was requested but can't be pinged. It won't be used"
         fi
     done
 
@@ -37,7 +37,7 @@ if bashio::config.has_value 'DNS_server'; then
     else
         bashio::log.warning "No valid DNS were found. Using default router (or HA) dns servers."
     fi
-     
+
 else
     bashio::log.info "DNS Servers option empty. Using default router (or HA) dns servers."
 fi
