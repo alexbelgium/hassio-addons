@@ -1,4 +1,4 @@
-Open Issue : [Calibre Server](https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aissue+is%3Aopen+calibre)
+## Warning! Open Issue : [[Request] Calibre Server](https://github.com/alexbelgium/hassio-addons/issues?q=is%3Aissue+is%3Aopen+calibre)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
