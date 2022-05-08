@@ -24,9 +24,6 @@ jobs:
         # Go through all folders, add to filters if not existing
         for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           if [ -f "$f"/config.json ]; then
-          
-            # Clean variable
-            OPENISSUES=""
 
             # Rename Readme
             [ -f "$f"/Readme.md ] && mv "$f"/Readme.md "$f"/README.md
@@ -47,6 +44,7 @@ jobs:
 
             # If there is an issue with the addon name in title, put a message
             mapfile -t arr < <(jq -r 'keys[]' "${issueslist}")
+            # shellscript disable=SC2066
             for KEYS in "${arr[0]}"; do
               TITLE=$(jq ."$KEYS".[Title] "${issueslist}") 
               if [[ "$TITLE" == *"$f"* ]]; then
