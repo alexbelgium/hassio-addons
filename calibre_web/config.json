@@ -39,11 +39,11 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "calibre-web_CONFIG_DIRECTORY": "/config/addons_config/calibre-web",
     "FM_HOME": "/config/addons_config/calibre-web",
     "HOME": "/config/addons_config/calibre-web",
     "PGID": "0",
     "PUID": "0",
+    "calibre-web_CONFIG_DIRECTORY": "/config/addons_config/calibre-web",
     "shm_size": "1gb"
   },
   "image": "ghcr.io/alexbelgium/calibre-web-{arch}",
@@ -72,8 +72,8 @@
     "NET_ADMIN"
   ],
   "schema": {
-    "OAUTHLIB_RELAX_TOKEN_SCOPE": "str?",
     "DOCKER_MODS": "str?",
+    "OAUTHLIB_RELAX_TOKEN_SCOPE": "str?",
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",

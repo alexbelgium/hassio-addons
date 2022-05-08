@@ -68,7 +68,11 @@
     "8080/tcp": "Calibre desktop gui",
     "8081/tcp": "Calibre webserver gui, to be enabled within the desktop gui"
   },
-  "privileged": [ "SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN" ],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
+  ],
   "schema": {
     "CLI_ARGS": "str?",
     "PASSWORD": "str?",

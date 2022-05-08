@@ -7,15 +7,12 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "environment": {
-    "DZM_CONFIG_DIR": "/config/addons_config/zoneminder",
     "DIR_IMAGES": "/var/cache/zoneminder/images2",
-    "ZM_DIR_EVENTS": "/var/cache/zoneminder/events2",
-    "DIR_SOUNDS": "/var/cache/zoneminder/sounds2"
+    "DIR_SOUNDS": "/var/cache/zoneminder/sounds2",
+    "DZM_CONFIG_DIR": "/config/addons_config/zoneminder",
+    "ZM_DIR_EVENTS": "/var/cache/zoneminder/events2"
   },
   "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
-  "options": {
-    "Images_location": "/config/addons_config/zoneminder/images"
-  },
   "map": [
     "config:rw",
     "media:rw",
@@ -23,6 +20,9 @@
     "ssl"
   ],
   "name": "Zoneminder",
+  "options": {
+    "Images_location": "/config/addons_config/zoneminder/images"
+  },
   "ports": {
     "80/tcp": 3778
   },

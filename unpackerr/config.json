@@ -5,12 +5,12 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "image": "ghcr.io/alexbelgium/unpackerr-{arch}",
   "description": "Unpacks RARd files for Sonarr, Lidarr and Radarr",
   "environment": {
-    "UN_FOLDER_0_PATH": "/share/downloads_packed",
-    "UN_FOLDER_0_EXTRACT_PATH": "/share/downloads_unpacked"
+    "UN_FOLDER_0_EXTRACT_PATH": "/share/downloads_unpacked",
+    "UN_FOLDER_0_PATH": "/share/downloads_packed"
   },
+  "image": "ghcr.io/alexbelgium/unpackerr-{arch}",
   "map": [
     "config:rw",
     "share:rw",
