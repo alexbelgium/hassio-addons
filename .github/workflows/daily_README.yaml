@@ -66,6 +66,7 @@ jobs:
               #Get variables
               TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
               echo "Title =$TITLE"
+              echo "f = $f"
               #Check if relevant to addon
               if [[ "$TITLE" == *"$f"* ]]; then
                 echo "Title has an issue"
