@@ -41,16 +41,25 @@ jobs:
 
             # Clean previously reported issues
             sed -i "/Open Issue :/d" "$f"/README.md
+            sed -i "/Open Request :/d" "$f"/README.md
 
             # If there is an issue with the addon name in title, put a message
-            mapfile -t arr < <(jq -r 'keys[]' "${issueslist}")
-            # shellscript disable=SC2066
-            for KEYS in "${arr[0]}"; do
-              TITLE=$(jq ."$KEYS".[Title] "${issueslist}") 
+            while [[ $(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist) != null ]]; do
+              #Increment counter
+              let COUNTER=COUNTER+1
+              #Get variables
+              TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
+              #Check if relevant to addon
               if [[ "$TITLE" == *"$f"* ]]; then
-                URL=$(jq ."$KEYS".url "${issueslist}")
-                REQ=$(jq ."$KEYS".user.login "${issueslist}") 
-                sed -i "1i ## Warning! Open Issue : [$TITLE @${REQ}]($URL)" "$f"/README.md
+                REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
+                URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].url" issueslist)"
+                LABEL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)"
+                DATEISSUE"${$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)%T*}"
+                if [[ "$LABEL" == *"bug"* ]]; then
+                  sed -i "1i ## Warning! Open Issue : [$TITLE (by ${REQ} since ${DATE})]($URL)" "$f"/README.md
+                elif [[ "$LABEL" == *"enhancement"* ]]; then
+                  sed -i "1i ## Warning! Open Request : [$TITLE (by ${REQ} since ${DATE})]($URL)" "$f"/README.md
+                fi
               fi
             done
           fi
