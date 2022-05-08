@@ -44,6 +44,7 @@ jobs:
             sed -i "/Open Request :/d" "$f"/README.md
 
             # If there is an issue with the addon name in title, put a message
+            COUNTER=0
             while [[ $(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist) != null ]]; do
               #Increment counter
               let COUNTER=COUNTER+1
