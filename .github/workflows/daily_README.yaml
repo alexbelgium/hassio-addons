@@ -47,7 +47,7 @@ jobs:
             COUNTER=0
             while [[ $(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist) != null ]]; do
               #Increment counter
-              (( COUNTER=COUNTER+1 )) || true
+              let COUNTER=COUNTER+1
               echo "Counter = $COUNTER"
               #Get variables
               TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
