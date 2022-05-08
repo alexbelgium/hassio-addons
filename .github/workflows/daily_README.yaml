@@ -35,13 +35,8 @@ jobs:
               sed -i "/$f/ s/ # Image : yes//g" ".github/paths-filter.yml"
               sed -i "/$f/ s/$/ # Image : yes/" ".github/paths-filter.yml"
             fi
-            
-            done
           fi
         done
-        
-        # Remove issues list
-        rm issueslist
         
         # Sort yaml
         sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
@@ -87,6 +82,9 @@ jobs:
             done
           fi
         done
+
+        # Remove issues list
+        rm issueslist
 
     - name: Create README file
       run: |
