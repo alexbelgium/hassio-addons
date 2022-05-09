@@ -81,10 +81,11 @@
     "localdisks": "str?",
     "networkdisks": "str?",
     "smbv1": "bool?",
-    "ssl": "bool"
+    "ssl": "bool",
+    "TZ": "str?"
   },
   "slug": "filebrowser",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.21.1-2"
+  "version": "2.21.1-3"
 }
