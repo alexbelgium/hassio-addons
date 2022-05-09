@@ -85,6 +85,21 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Use the [qBittorrent integration](https://www.home-assistant.io/integrations/qbittorrent/)
 
+You can use the following snippets to check and set the alternate speeds (the HA integration above is not needed for this)
+```
+shell_command: 
+  toggle_torrent_speed: curl -X POST https://<YOUR HA IP>:8081/api/v2/transfer/toggleSpeedLimitsMode -k
+sensor:
+  - platform: command_line
+    name: get_torrent_speed
+    command: curl https://<YOUR HA IP>:8081/api/v2/transfer/speedLimitsMode -k
+```
+If you're not using the SSL option, you can skip the -k parameter and use http instead of https in the URL
+
+These lines will expose a `sensor.get_torrent_speed` that updates every 60 seconds and returns 1 if the alternate speed mode is enabled, 0 otherwise, and a `shell_command.toggle_torrent_speed` that you can call as a Service in your automations
+
+
+
 ## Common issues
 
 ### ipv6 issues with openvpn (@happycoo)
