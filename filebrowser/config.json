@@ -81,8 +81,7 @@
     "localdisks": "str?",
     "networkdisks": "str?",
     "smbv1": "bool?",
-    "ssl": "bool",
-    "TZ": "str?"
+    "ssl": "bool"
   },
   "slug": "filebrowser",
   "startup": "services",
