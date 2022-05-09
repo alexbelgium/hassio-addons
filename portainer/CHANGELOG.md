@@ -1,3 +1,6 @@
+
+## 2.13.0 (10-05-2022)
+- Update to latest version from portainer/portainer
 - Add codenotary sign
 - Reduce backup size (thanks @lmagyar)
 
