@@ -1,4 +1,7 @@
 
+## ngx-1.7.0-ls9 (10-05-2022)
+- Update to latest version from linuxserver/docker-paperless-ngx
+
 ## ngx-1.7.0-ls8 (06-05-2022)
 - Update to latest version from linuxserver/docker-paperless-ngx
 
