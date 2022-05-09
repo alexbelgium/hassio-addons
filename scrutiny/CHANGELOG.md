@@ -1,4 +1,7 @@
 
+## version-c397a323 (10-05-2022)
+- Update to latest version from linuxserver/scrutiny
+
 ## 8e34ef8d-ls35 (05-05-2022)
 - Update to latest version from linuxserver/scrutiny
 - Add codenotary sign
