@@ -1,3 +1,6 @@
+
+## 4.4.2-r4-ls191 (10-05-2022)
+- Update to latest version from linuxserver/docker-qbittorrent
 - Feature : message in log showing if vpn alt mode is working
 
 ## 4.4.2-r4-ls190 (03-05-2022)
