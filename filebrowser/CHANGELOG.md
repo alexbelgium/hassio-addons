@@ -1,3 +1,4 @@
+- Allow timezone setting
 - Add codenotary sign
 
 ## 2.21.1 (23-02-2022)
