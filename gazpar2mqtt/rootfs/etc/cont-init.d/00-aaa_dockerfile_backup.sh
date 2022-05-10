@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=SC2015
+
 # If dockerfile failed install manually
 
 ##############################
@@ -13,10 +13,8 @@ if [ -e "/MODULESFILE" ]; then
     if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
         && if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi \
         && mkdir -p /etc/cont-init.d \
-        && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" \
-            && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] \
-        && echo "setting permission" && chmod 755 /etc/cont-init.d/"$scripts" || (echo "script failed to install $scripts" && exit 1); done
-
+        && for scripts in $MODULES; do echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" && [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] || (echo "script failed to install $scripts" && exit 1); done \
+        && chmod -R 755 /etc/cont-init.d
 fi
 
 #######################
@@ -32,4 +30,14 @@ if [ -e "/ENVFILE" ]; then
         && chmod 777 /automatic_packages.sh \
         && eval /./automatic_packages.sh "${PACKAGES:-}" \
         && rm /automatic_packages.sh
+fi
+
+if [ -e "/MODULESFILE" ] && [ ! -f /entrypoint.sh ]; then
+    for scripts in $MODULES; do
+        echo "$scripts : executing"
+        chown "$(id -u)":"$(id -g)" /etc/cont-init.d/"$scripts"
+        chmod a+x /etc/cont-init.d/"$scripts"
+        /./etc/cont-init.d/"$scripts" || echo "/etc/cont-init.d/$scripts: exiting $?"
+        rm /etc/cont-init.d/"$scripts"
+    done | tac
 fi
