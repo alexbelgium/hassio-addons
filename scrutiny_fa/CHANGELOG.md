@@ -1,4 +1,7 @@
 
+## 2ab714f5-ls35 (11-05-2022)
+- Update to latest version from linuxserver/scrutiny
+
 ## version-c397a323 (10-05-2022)
 - Update to latest version from linuxserver/scrutiny
 
