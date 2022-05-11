@@ -5,7 +5,7 @@
 # Wait for transmission to become available
 bashio::net.wait_for 8080 localhost 900
 
-bashio::log.info "Default username: password is guacadmin:guacadmin"
+bashio::log.info "Default username:password is guacadmin:guacadmin"
 bashio::log.info "Starting NGinx..."
 
 exec nginx
