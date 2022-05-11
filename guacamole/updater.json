@@ -1,8 +1,8 @@
 {
-  "last_update": "07-12-2021",
+  "last_update": "11-05-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "guacamole",
   "source": "github",
   "upstream_repo": "MaxWaldorf/guacamole",
-  "upstream_version": "1.4.0"
+  "upstream_version": "1.4.1"
 }

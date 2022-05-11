@@ -1,8 +1,10 @@
 {
-  "arch": ["amd64", "aarch64"],
+  "arch": [
+    "amd64",
+    "aarch64"
+  ],
   "description": "Clientless remote desktop gateway",
-  "environment": {
-  },
+  "environment": {},
   "name": "Guacamole Client",
   "options": {
     "PGID": 0,
