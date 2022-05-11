@@ -1,5 +1,4 @@
 {
-  "apparmor": true,
   "arch": ["amd64", "aarch64"],
   "description": "Clientless remote desktop gateway",
   "environment": {
@@ -25,9 +24,7 @@
     "TZ": "str?"
   },
   "slug": "guacamole",
-  "upstream": "1.4.0",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.4",
-  "video": true,
-  "webui": "http://[HOST]:[PORT:8080]"
+  "video": true
 }
