@@ -42,10 +42,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {
-    "SCRUTINY_COLLECTOR": "true",
-    "SCRUTINY_WEB": "true"
-  },
   "ingress": true,
   "name": "Scrutiny",
   "options": {
