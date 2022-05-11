@@ -22,7 +22,7 @@ flaresolverr: flaresolverr/config.*
 flexget: flexget/config.*
 gazpar2mqtt: gazpar2mqtt/config.*
 grav: grav/config.*
-guacamole: guacamole/config.*
+guacamole: guacamole/config.* # Image : yes
 inadyn: inadyn/config.*
 jackett: jackett/config.*
 jellyfin: jellyfin/config.*
