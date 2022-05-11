@@ -1,0 +1,33 @@
+{
+  "apparmor": true,
+  "arch": ["amd64", "aarch64"],
+  "description": "Clientless remote desktop gateway",
+  "environment": {
+  },
+  "ingress": true,
+  "name": "Guacamole Client",
+  "options": {
+    "PGID": 0,
+    "PUID": 0
+  },
+  "panel_icon": "mdi:lan",
+  "ports": {
+    "8080/tcp": 4822
+  },
+  "ports_description": {
+    "8080/tcp": "web interface"
+  },
+  "image": "ghcr.io/alexbelgium/guacamole-{arch}",
+  "schema": {
+    "PGID": "int",
+    "PUID": "int",
+    "EXTENSIONS": "str?",
+    "TZ": "str?"
+  },
+  "slug": "guacamole",
+  "upstream": "1.4.0",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "1.4",
+  "video": true,
+  "webui": "http://[HOST]:[PORT:8080]"
+}
