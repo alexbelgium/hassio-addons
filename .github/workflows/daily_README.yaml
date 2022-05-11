@@ -41,55 +41,6 @@ jobs:
         # Sort yaml
         sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
 
-    - name: Assign issues
-      run: |
-        # Init
-        echo "Starting"
-        
-        # Get issues list
-        curl -s https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
-
-        # Go through all folders, add to filters if not existing
-        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
-          if [ -f "$f"/config.json ]; then
-          
-            # Clean previously reported issues
-            sed -i "/Open Issue :/d" "$f"/README.md
-            sed -i "/Open Request :/d" "$f"/README.md
-
-            # If there is an issue with the addon name in title, put a message
-            COUNTER=0
-            while [[ $(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist) != null ]]; do
-            
-              #Increment counter
-              (( COUNTER=COUNTER+1 )) || true
-              
-              #Get variables
-              TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
-              
-              #Check if relevant to addon
-              TITLE2="${TITLE,,}"
-              f2="${f,,}"
-              if [[ "$TITLE2" == *"$f2"* ]]; then
-                echo "Title has an issue"
-                REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
-                URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].html_url" issueslist)"
-                LABEL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)"
-                DATEISSUE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].created_at" issueslist)"
-                DATEISSUE="${DATEISSUE%T*}"
-                if [[ "$LABEL" == *"bug"* ]]; then
-                  sed -i "1i ## &#9888; Open Issue : [$TITLE (opened ${DATEISSUE})]($URL) by [@${REQ}](https://github.com/$REQ)" "$f"/README.md
-                elif [[ "$LABEL" == *"enhancement"* ]]; then
-                  sed -i "1i ## &#9888; Open Request : [$TITLE (opened ${DATEISSUE})]($URL) by [@${REQ}](https://github.com/$REQ)" "$f"/README.md
-                fi
-              fi
-            done
-          fi
-        done
-
-        # Remove issues list
-        rm issueslist
-
     - name: Create README file
       run: |
         # Init
