@@ -68,7 +68,7 @@ Configurations can be done through the app webUI, except for the following optio
 ssl: true/false
 certfile: fullchain.pem #ssl certificate, must be located in /ssl
 keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-password: define admin password. If kept blank, will allow manual restore of previous backup
+password: define admin password. If kept blank, will allow manual restore of previous backup. At least 12 characters.
 ```
 
 ## Support
