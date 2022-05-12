@@ -22,8 +22,8 @@ if bashio::config.true 'ssl'; then
 
     #Check if files exist
     echo "... checking if referenced certificates exist"
-    [ ! -f /ssl/"$CERTFILE" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$CERTFILE not found" && bashio::exit.nok
-    [ ! -f /ssl/"$KEYFILE" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$KEYFILE not found" && bashio::exit.nok
+    [ ! -f /ssl/"$certfile" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$certfile not found" && bashio::exit.nok
+    [ ! -f /ssl/"$keyfile" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$keyfile not found" && bashio::exit.nok
 
 
     sed -i "s|default_server|ssl|g" /etc/nginx/servers/ssl.conf
