@@ -96,6 +96,6 @@
   ],
   "slug": "photoprism",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "220302-impish",
+  "version": "220302-impish-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:2342]"
 }
