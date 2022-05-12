@@ -42,7 +42,6 @@
     "PHOTOPRISM_HTTP_PORT": "2341",
     "working_dir": "/data/photoprism"
   },
-  "ingress": true,
   "homeassistant": "0.92.0b2",
   "map": [
     "media:rw",
@@ -66,7 +65,6 @@
     "keyfile": "privkey.pem",
     "ssl": false
   },
-  "panel_icon": "mdi:photo",
   "ports": {
     "2342/tcp": 2342
   },
