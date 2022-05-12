@@ -24,7 +24,7 @@
   "options": {
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "password": "default",
+    "password": "homeassistant",
     "ssl": false
   },
   "panel_icon": "mdi:docker",
