@@ -1,3 +1,4 @@
+## &#9888; Open Request : [[Request] Apache Guacamole (Clientless remote desktop) (opened 2022-03-29)](https://github.com/alexbelgium/hassio-addons/issues/276) by [@KairuByte](https://github.com/KairuByte)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
