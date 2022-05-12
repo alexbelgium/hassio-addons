@@ -39,14 +39,16 @@
   ],
   "environment": {
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password",
+    "PHOTOPRISM_HTTP_PORT": 2341,
     "working_dir": "/data/photoprism"
   },
+  "ingress": true,
   "homeassistant": "0.92.0b2",
   "map": [
     "media:rw",
     "share:rw",
     "config:rw",
-    "ssl:r"
+    "ssl:ro"
   ],
   "name": "Photoprism",
   "options": {
@@ -64,6 +66,7 @@
     "keyfile": "privkey.pem",
     "ssl": false
   },
+  "panel_icon": "mdi:photo",
   "ports": {
     "2342/tcp": 2342
   },

@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+
+# Wait for transmission to become available
+bashio::net.wait_for 2341 localhost 900
+
+bashio::log.info "App launched..."
+
+exec nginx
