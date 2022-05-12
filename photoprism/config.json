@@ -45,7 +45,8 @@
   "map": [
     "media:rw",
     "share:rw",
-    "config:rw"
+    "config:rw",
+    "ssl:r"
   ],
   "name": "Photoprism",
   "options": {
@@ -58,7 +59,10 @@
     "UPLOAD_NSFW": "true",
     "cifspassword": "password",
     "cifsusername": "username",
-    "networkdisks": "//server/share"
+    "networkdisks": "//server/share",
+    "certfile": "fullchain.pem",
+    "keyfile": "privkey.pem",
+    "user_own_certificates": false
   },
   "ports": {
     "2342/tcp": 2342
@@ -81,13 +85,16 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?"
+    "networkdisks": "str?",
+    "user_own_certificates": "bool",
+    "certfile": "str",
+    "keyfile": "str"
   },
   "services": [
     "mysql:want"
   ],
   "slug": "photoprism",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "220302-impish",
+  "version": "220302-impish-2",
   "webui": "http://[HOST]:[PORT:2342]"
 }
