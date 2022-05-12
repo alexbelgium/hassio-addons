@@ -1,4 +1,3 @@
-## &#9888; Open Request : [[Photoprism] No https (opened 2022-05-10)](https://github.com/alexbelgium/hassio-addons/issues/327) by [@ivico94](https://github.com/ivico94)
 # Home assistant add-on: Photoprism
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
