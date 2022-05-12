@@ -46,6 +46,9 @@ Options can be configured through two ways :
 - Addon options
 
 ```yaml
+ssl: true/false
+certfile: fullchain.pem #ssl certificate, must be located in /ssl
+keyfile: privkey.pem #sslkeyfile, must be located in /ssl
 DB_TYPE: "list(sqlite|mariadb_addon)" # Mariadb is automatically configured is the addon is installed, sqlite does not need configuration
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
