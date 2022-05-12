@@ -1,4 +1,7 @@
 
+## 2.13.1 (12-05-2022)
+- Update to latest version from portainer/portainer
+
 ## 2.13.0 (10-05-2022)
 - Update to latest version from portainer/portainer
 - Add codenotary sign
