@@ -60,6 +60,6 @@
   },
   "slug": "whoogle-search",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
-  "version": "0.7.2",
+  "version": "0.7.2-1",
   "webui": "http://[HOST]:[PORT:5000]"
 }
