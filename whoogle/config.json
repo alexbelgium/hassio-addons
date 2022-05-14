@@ -7,7 +7,9 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
   "devices": [],
+  "host_network": true,
   "ingress": true,
+  "ingress_port": 0,
   "ingress_stream": true,
   "map": [
     "config:rw"
@@ -61,5 +63,4 @@
   "slug": "whoogle-search",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
   "version": "0.7.2-1",
-  "webui": "http://[HOST]:[PORT:5000]"
 }
