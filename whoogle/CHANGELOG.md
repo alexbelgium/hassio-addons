@@ -1,3 +1,4 @@
+- Addition of ingress
 
 ## 0.7.2 (27-04-2022)
 - Update to latest version from benbusby/whoogle-search
