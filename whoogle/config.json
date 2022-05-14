@@ -7,6 +7,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
   "devices": [],
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "config:rw"
   ],
@@ -16,6 +18,7 @@
     "WHOOGLE_CONFIG_LANGUAGE": "lang_en",
     "WHOOGLE_CONFIG_URL": "https://website.com"
   },
+  "panel_icon": "mdi:magnify",
   "ports": {
     "5000/tcp": 5000
   },
