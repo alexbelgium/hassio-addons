@@ -147,7 +147,9 @@ fi
 # Fix for 5.7.5 #
 #################
 
-sed -i 's|, $transaction[\'amount\'] ?? \'0\');|, (string)($transaction[\'amount\'] ?? \'0\'));|g' "$(find / -type f -name 'GroupCollector.php' 2>/dev/null)"
+PATH="$(find / -type f -name 'GroupCollector.php' 2>/dev/null)"
+sed -i "s#\'amount\'], \$transaction #\'amount\'], (string)(\$transaction#g" "$PATH"
+sed -i "s#\'0\');#\'0\'));#g" "$PATH"
 
 ##############
 # LAUNCH APP #
