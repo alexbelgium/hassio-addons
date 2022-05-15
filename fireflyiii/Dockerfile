@@ -17,7 +17,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="5.7.5"
-FROM fireflyiii/core:version-$BUILD_UPSTREAM
+FROM fireflyiii/core:version-latest
 
 ##################
 # 2 Modify Image #
