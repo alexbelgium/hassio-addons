@@ -147,7 +147,7 @@ fi
 # Fix for 5.7.5 #
 #################
 
-sed -i "s|$groups[$groudId]['sums'][$currencyId]['amount'] = bcadd($groups[$groudId]['sums'][$currencyId]['amount'], $transaction['amount'] ?? '0');|$groups[$groudId]['sums'][$currencyId]['amount'] = bcadd($groups[$groudId]['sums'][$currencyId]['amount'], (string)($transaction['amount'] ?? '0'));|g" "$(find / -type f -name 'GroupCollector.php' 2>/dev/null)"
+sed -i 's|, $transaction[\'amount\'] ?? \'0\');|, (string)($transaction[\'amount\'] ?? \'0\'));|g' "$(find / -type f -name 'GroupCollector.php' 2>/dev/null)"
 
 ##############
 # LAUNCH APP #
