@@ -143,14 +143,6 @@ if bashio::config.has_value 'Updates'; then
     service cron start
 fi
 
-#################
-# Fix for 5.7.5 #
-#################
-
-PATH="$(find / -type f -name 'GroupCollector.php' 2>/dev/null)"
-sed -i "s#\'amount\'], \$transaction #\'amount\'], (string)(\$transaction#g" "$PATH"
-sed -i "s#\'0\');#\'0\'));#g" "$PATH"
-
 ##############
 # LAUNCH APP #
 ##############
