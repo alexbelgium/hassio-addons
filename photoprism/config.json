@@ -58,11 +58,11 @@
     "ORIGINALS_PATH": "/share/photoprism/originals",
     "STORAGE_PATH": "/share/photoprism/storage",
     "UPLOAD_NSFW": "true",
+    "certfile": "fullchain.pem",
     "cifspassword": "password",
     "cifsusername": "username",
-    "networkdisks": "//server/share",
-    "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
+    "networkdisks": "//server/share",
     "ssl": false
   },
   "ports": {
@@ -83,13 +83,13 @@
     "ORIGINALS_PATH": "str",
     "STORAGE_PATH": "str",
     "UPLOAD_NSFW": "bool",
+    "certfile": "str",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "ssl": "bool",
-    "certfile": "str",
-    "keyfile": "str"
+    "ssl": "bool"
   },
   "services": [
     "mysql:want"
