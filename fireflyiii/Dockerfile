@@ -29,13 +29,13 @@ FROM fireflyiii/core:latest
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
 
-#RUN \
-#################
-# Fix for 5.7.5 #
-#################
-#PATH="$(find / -type f -name 'GroupCollector.php' 2>/dev/null)" \
-#&& sed -i "s#\'amount\'], \$transaction #\'amount\'], (string)(\$transaction#g" "$PATH" \
-#&& sed -i "s#\'0\');#\'0\'));#g" "$PATH"
+RUN \
+    #################
+    # Fix for 5.7.5 #
+    #################
+    PATH="/var/www/html/app/Helpers/Collector/GroupCollector.php" \
+    && sed -i "s#\'amount\'], \$transaction #\'amount\'], (string)(\$transaction#g" "$PATH" \
+    && sed -i "s#\'0\');#\'0\'));#g" "$PATH"
 
 ##################
 # 3 Install apps #
