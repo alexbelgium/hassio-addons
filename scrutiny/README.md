@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [[Scrutiny] No ui in latest version (opened 2022-05-12)](https://github.com/alexbelgium/hassio-addons/issues/328) by [@alexbelgium](https://github.com/alexbelgium)
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
