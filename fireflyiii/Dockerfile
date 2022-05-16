@@ -33,9 +33,8 @@ RUN \
     #################
     # Fix for 5.7.5 #
     #################
-    PATH="/var/www/html/app/Helpers/Collector/GroupCollector.php" \
-    && sed -i "s#\'amount\'], \$transaction #\'amount\'], (string)(\$transaction#g" "$PATH" \
-    && sed -i "s#\'0\');#\'0\'));#g" "$PATH"
+    sed -i "s#'amount'], \$transaction #'amount'], (string)(\$transaction#g" /var/www/html/app/Helpers/Collector/GroupCollector.php \
+    && sed -i "s#'0');#'0'));#g" /var/www/html/app/Helpers/Collector/GroupCollector.php
 
 ##################
 # 3 Install apps #
