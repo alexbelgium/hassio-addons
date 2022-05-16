@@ -16,7 +16,6 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ENV BUILD_UPSTREAM="5.7.5"
 FROM fireflyiii/core:latest
 
 ##################
@@ -29,6 +28,7 @@ FROM fireflyiii/core:latest
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
 
+ARG BUILD_UPSTREAM="5.7.5"
 RUN \
     #################
     # Fix for 5.7.5 #
