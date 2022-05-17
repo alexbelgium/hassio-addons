@@ -33,7 +33,7 @@ RUN \
     #################
     # Fix for 5.7.5 #
     #################
-    if [ "$BUILD_UPSTREAM" = "5.7.5" ] ; then \
+    if [ "$BUILD_UPSTREAM" == "5.7.5" ] ; then \
     sed -i "s|, \$transaction['amount'] ?? '0');|, (string)(\$transaction['amount'] ?? '0'));|g" /var/www/html/app/Helpers/Collector/GroupCollector.php; fi
 
 ##################
