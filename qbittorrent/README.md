@@ -86,7 +86,7 @@ The installation of this add-on is pretty straightforward and not different in c
 Use the [qBittorrent integration](https://www.home-assistant.io/integrations/qbittorrent/)
 
 You can use the following snippets to check and set the alternate speeds (the HA integration above is not needed for this)
-```
+```bash
 shell_command: 
   toggle_torrent_speed: curl -X POST https://<YOUR HA IP>:8081/api/v2/transfer/toggleSpeedLimitsMode -k
 sensor:
