@@ -34,7 +34,7 @@ RUN \
     # Fix for 5.7.5 #
     #################
     if [ "$BUILD_UPSTREAM" == "5.7.5" ] ; then \
-    sed -i "s|, \$transaction\[\x27amount\x27\] ?? \x270\x27);|, (string)(\$transaction\[\x27amount\x27\] ?? \x270\x27));|g" /var/www/html/app/Helpers/Collector/GroupCollector.php; fi
+    sed -i "s|, \$transaction\[\x27amount\x27\] ?? \x270\x27);|, (string)(\$transaction\[\x27amount\x27\] ?? \x270\x27));|g" /var/www/html/app/Helpers/Collector/GroupCollector.php; else echo "not 5.7.5"; fi
 
 ##################
 # 3 Install apps #
