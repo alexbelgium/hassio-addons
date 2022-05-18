@@ -1,3 +1,6 @@
+
+## 220517-jammy (19-05-2022)
+- Update to latest version from photoprism/photoprism
 - Implementation of ssl
 - Add codenotary sign
 
