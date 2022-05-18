@@ -41,6 +41,8 @@ RUN \
     # Correct sync folder
     && grep -rl "/sync/" /etc/cont-init.d | xargs sed -i 's|/sync/|/share/resiliosync|g' || true \
     && grep -rl " /sync" /etc/cont-init.d | xargs sed -i 's| /sync| /share/resiliosync|g' || true \
+    && grep -rl "/sync/" /etc/services.d | xargs sed -i 's|/sync/|/share/resiliosync|g' || true \
+    && grep -rl " /sync" /etc/services.d | xargs sed -i 's| /sync| /share/resiliosync|g' || true \
     && sed -i 's=/sync/=/share/resiliosync/=g' /defaults/*
 
 ##################
