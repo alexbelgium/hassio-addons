@@ -17,8 +17,6 @@ change_folders () {
   ORIGINALLOCATION=$2
   TYPE=$3
   
-  if [ ! -d "$CONFIGLOCATION" ]; then
-
     # Inform
     bashio::log.info "Setting $TYPE location to $CONFIGLOCATION"
 
@@ -39,10 +37,6 @@ change_folders () {
     # Set permissions
     echo "Setting ownership to $PUID:$PGID" && chown -R "$PUID":"$PGID" "$CONFIGLOCATION"
 
-  else
-    bashio::log.nok "Your $TYPE $CONFIGLOCATION doesn't exists"
-    exit 1
-  fi
 }
 
 ########################
