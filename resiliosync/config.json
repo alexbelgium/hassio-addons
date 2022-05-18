@@ -46,7 +46,9 @@
   "name": "ResilioSync",
   "options": {
     "PGID": 0,
-    "PUID": 0
+    "PUID": 0,
+    "data_location": "/config/resioliosync/sync",
+    "config_location": "/config/resioliosync/config"
   },
   "ports": {
     "55555/tcp": 55555,
@@ -69,7 +71,9 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?"
+    "networkdisks": "str?",
+    "data_location": "str",
+    "config_location": "str"    
   },
   "slug": "resiliosync",
   "url": "https://github.com/tyjtyj/hassio-addons",
