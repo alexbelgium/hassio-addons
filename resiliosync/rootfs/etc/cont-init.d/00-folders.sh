@@ -26,12 +26,16 @@ change_folders () {
     grep -rl "$ORIGINALLOCATION" /etc/services.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g"
     sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /etc/cont-init.d/10-adduser
     sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /defaults/*
-    #if [ -f $ORIGINALLOCATION/sync.conf ]; then
-    #  sed "s|$(jq -r .storage_path "$ORIGINALLOCATION"/sync.conf)||g" $ORIGINALLOCATION/sync.conf
-    #fi
-    #if [ -f $CONFIGLOCATION/sync.conf ]; then
-    #  sed "s|||g" $CONFIGLOCATION/sync.conf
-    #fi
+    if [ "$TYPE" = "config_location" ]; then
+      [ -f "$ORIGINALLOCATION"/sync.conf ] && sed "s|$(jq -r .storage_path "$ORIGINALLOCATION"/sync.conf)|$CONFIGLOCATION|g" $ORIGINALLOCATION/sync.conf
+      [ -f "$CONFIGLOCATION"/sync.conf ] && sed "s|$(jq -r .storage_path "$CONFIGLOCATIONLOCATION"/sync.conf)|$CONFIGLOCATION|g" CONFIGLOCATIONLOCATION/sync.conf
+      [ -f "/defaults/sync.conf" ] && sed "s|$(jq -r .storage_path "/defaults"/sync.conf)|$CONFIGLOCATION|g" /defaults/sync.conf    
+    fi
+    if [ "$TYPE" = "data_location" ]; then
+      [ -f "$ORIGINALLOCATION"/sync.conf ] && sed "s|$(jq -r .directory_root "$ORIGINALLOCATION"/sync.conf)|$CONFIGLOCATION/|g" $ORIGINALLOCATION/sync.conf
+      [ -f "$CONFIGLOCATION"/sync.conf ] && sed "s|$(jq -r .directory_root "$CONFIGLOCATIONLOCATION"/sync.conf)|$CONFIGLOCATION/|g" CONFIGLOCATIONLOCATION/sync.conf
+      [ -f "/defaults/sync.conf" ] && sed "s|$(jq -r .directory_root "/defaults"/sync.conf)|$CONFIGLOCATION/|g" /defaults/sync.conf    
+    fi
 
     # Create folders
     [ ! -d "$CONFIGLOCATION" ] && echo "Creating $CONFIGLOCATION" && mkdir -p "$CONFIGLOCATION"
