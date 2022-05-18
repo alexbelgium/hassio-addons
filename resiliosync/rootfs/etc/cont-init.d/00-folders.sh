@@ -48,5 +48,5 @@ change_folders () {
 # Change data location #
 ########################
 
-change_folders "$(bashio::config 'data_location')" "/share/resiliosync" "data_location"
 change_folders "$(bashio::config 'config_location')" "/share/resiliosync_config" "config_location"
+change_folders "$(bashio::config 'data_location')" "/share/resiliosync" "data_location"
