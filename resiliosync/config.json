@@ -47,8 +47,8 @@
   "options": {
     "PGID": 0,
     "PUID": 0,
-    "data_location": "/config/resioliosync/sync",
-    "config_location": "/config/resioliosync/config"
+    "data_location": "/share/resioliosync",
+    "config_location": "/config/addons_config/resioliosync"
   },
   "ports": {
     "55555/tcp": 55555,
