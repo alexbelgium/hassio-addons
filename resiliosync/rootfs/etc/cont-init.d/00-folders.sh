@@ -18,11 +18,10 @@ change_folders () {
   TYPE=$3
   
     # Inform
-    bashio::log.info "Setting $TYPE location to $CONFIGLOCATION"
+    bashio::log.info "Setting $TYPE to $CONFIGLOCATION"
 
     # Modify files
-    sed -i "s/$ORIGINALLOCATION/$CONFIGLOCATION|| true/g" /etc/cont-init.d/10-adduser || true
-
+    echo "Adapting files"
     grep -rl "$ORIGINALLOCATION" /etc/cont-init.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g"
     grep -rl "$ORIGINALLOCATION" /etc/services.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g"
     sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /etc/cont-init.d/10-adduser
