@@ -12,7 +12,7 @@ PGID=$(bashio::config "PGID")
 # Create function #
 ###################
 
-change_folders (change_fold) {
+change_folders () {
   CONFIGLOCATION=$1
   ORIGINALLOCATION=$2
   TYPE=$3
