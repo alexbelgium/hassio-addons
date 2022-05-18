@@ -46,6 +46,8 @@ networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separat
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
+data_location: where the synced files are found
+config_location: where the config files are found
 ```
 
 ## Support
