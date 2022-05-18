@@ -5,37 +5,67 @@
 echo "script is not enabled yet"
 exit 0
 
-# Define user
+###############
+# Define user #
+###############
+
 PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
 
-# Check data location
-DATALOCATION=$(bashio::config 'data_location')
-if [[ "$DATALOCATION" = "null" || -z "$DATALOCATION" ]]; then DATALOCATION=/config/addons_config/${HOSTNAME#*-}; fi
+#######################
+# Adapt data location #
+#######################
 
-# Check config location
-LOCATION=$(bashio::config 'config_location')
-if [[ "$CONFIGLOCATION" = "null" || -z "$CONFIGLOCATION" ]]; then CONFIGLOCATION=/config/addons_config/${HOSTNAME#*-}_config; fi
+CONFIGLOCATION=$(bashio::config 'data_location')
+ORIGINALLOCATION="/share/resiliosync"
 
+if [ ! -d "$CONFIGLOCATION" ]; then
 
-# Set data location
-bashio::log.info "Setting data location to $LOCATION"
-sed -i "s|/config|$LOCATION|g" /etc/services.d/jellyfin/run
-sed -i "s|/config|$LOCATION|g" /etc/cont-init.d/10-adduser
-sed -i "s|/config|$LOCATION|g" /etc/cont-init.d/30-config
+  # Inform
+  bashio::log.info "Setting config location to $CONFIGLOCATION"
 
-echo "Creating $LOCATION"
-mkdir -p "$LOCATION"
+  # Modify files
+  sed -i "s/$ORIGINALLOCATION/$CONFIGLOCATION|| true/g" /etc/cont-init.d/10-adduser || true
 
-bashio::log.info "Setting ownership to $PUID:$PGID"
-chown "$PUID":"$PGID" "$LOCATION"
+  # Create folders
+  [ ! -d "$CONFIGLOCATION" ] && echo "Creating $CONFIGLOCATION" && mkdir -p "$CONFIGLOCATION"
 
+  # Transfer files
+  [ -d "$,ORIGINALLOCATION" ] && echo "Moving synced files to $CONFIGLOCATION" && mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/ && rmdir "$ORIGINALLOCATION"
 
-echo "Checking folders"
-LOCATION="/share/resiliosync"
-mkdir -p "$LOCATION"/folders
-mkdir -p "$LOCATION"/mounted_folders
-mkdir -p /share/resiliosync_config
+  # Set permissions
+  echo "Setting ownership to $PUID:$PGID" && chown -R "$PUID":"$PGID" "$CONFIGLOCATION"
 
-echo "Checking permissions"
-chown -R "$(id -u):$(id -g)" "$LOCATION"
+else
+  bashio::log.nok "Your data_location $CONFIGLOCATION doesn't exists"
+  exit 1
+fi
+
+#########################
+# Adapt config location #
+#########################
+
+CONFIGLOCATION=$(bashio::config 'config_location')
+ORIGINALLOCATION="/share/resiliosync_config"
+
+if [ ! -d "$CONFIGLOCATION" ]; then
+
+  # Inform
+  bashio::log.info "Setting config location to $CONFIGLOCATION"
+
+  # Modify files
+  sed -i "s/$ORIGINALLOCATION/$CONFIGLOCATION|| true/g" /etc/cont-init.d/10-adduser || true
+
+  # Create folders
+  [ ! -d "$CONFIGLOCATION" ] && echo "Creating $CONFIGLOCATION" && mkdir -p "$CONFIGLOCATION"
+
+  # Transfer files
+  [ -d "$,ORIGINALLOCATION" ] && echo "Moving synced files to $CONFIGLOCATION" && mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/ && rmdir "$ORIGINALLOCATION"
+
+  # Set permissions
+  echo "Setting ownership to $PUID:$PGID" && chown -R "$PUID":"$PGID" "$CONFIGLOCATION"
+
+else
+  bashio::log.nok "Your config_location $CONFIGLOCATION doesn't exists"
+  exit 1
+fi
