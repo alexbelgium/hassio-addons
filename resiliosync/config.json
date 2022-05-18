@@ -77,6 +77,6 @@
   },
   "slug": "resiliosync",
   "url": "https://github.com/tyjtyj/hassio-addons",
-  "version": "2.7.3.1381",
+  "version": "2.7.3.1381-2",
   "webui": "http://[HOST]:[PORT:8888]"
 }
