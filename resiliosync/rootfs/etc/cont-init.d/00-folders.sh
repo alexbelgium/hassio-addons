@@ -26,33 +26,40 @@ change_folders () {
     grep -rl "$ORIGINALLOCATION" /etc/services.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g"
     sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /etc/cont-init.d/10-adduser
     sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /defaults/*
-    if [ "$TYPE" = "config_location" ]; then
-      [ -f "$ORIGINALLOCATION"/sync.conf ] && sed "s|$(jq -r .storage_path "$ORIGINALLOCATION"/sync.conf)|$CONFIGLOCATION|g" "$ORIGINALLOCATION"/sync.conf
-      [ -f "$CONFIGLOCATION"/sync.conf ] && sed "s|$(jq -r .storage_path "$CONFIGLOCATION"/sync.conf)|$CONFIGLOCATION|g" "$CONFIGLOCATION"/sync.conf
-      [ -f "/defaults/sync.conf" ] && sed "s|$(jq -r .storage_path "/defaults"/sync.conf)|$CONFIGLOCATION|g" /defaults/sync.conf    
-    fi
-    if [ "$TYPE" = "data_location" ]; then
-      [ -f "$ORIGINALLOCATION"/sync.conf ] && sed "s|$(jq -r .directory_root "$ORIGINALLOCATION"/sync.conf)|$CONFIGLOCATION/|g" "$ORIGINALLOCATION"/sync.conf
-      [ -f "$CONFIGLOCATION"/sync.conf ] && sed "s|$(jq -r .directory_root "$CONFIGLOCATION"/sync.conf)|$CONFIGLOCATION/|g" "$CONFIGLOCATION"/sync.conf
-      [ -f "/defaults/sync.conf" ] && sed "s|$(jq -r .directory_root "/defaults"/sync.conf)|$CONFIGLOCATION/|g" /defaults/sync.conf
-      mkdir -p "$CONFIGLOCATION"/folders
-      mkdir -p "$CONFIGLOCATION"/mounted_folders
-    fi
+    
+    # Adapt sync.conf
+      for FILE in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
+          if [ "$TYPE" = "config_location" ]; then 
+               [ -f "$FILE" ] && sed "s|$(jq -r .storage_path "$FILE")|$CONFIGLOCATION/|g" "$FILE"
+          fi
+          if [ "$TYPE" = "data_location" ]; then
+                    [ -f "$FILE" ] && sed "s|$(jq -r .directory_root "$FILE")|$CONFIGLOCATION/|g" "$FILE"
+                    [ -f "$FILE" ] && sed "s|$(jq -r .files_default_path "$FILE")|$CONFIGLOCATION/downloads|g" "$FILE"
+          fi
+      done
 
     # Create folders
-    [ ! -d "$CONFIGLOCATION" ] && echo "Creating $CONFIGLOCATION" && mkdir -p "$CONFIGLOCATION"
-
-    # Transfer files
-    [ -d "$,ORIGINALLOCATION" ] && echo "Moving files to $CONFIGLOCATION" && mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/ && rmdir "$ORIGINALLOCATION"
-
+    echo "Checking if folders exist"
+    for FOLDER in "$CONFIGSLOCATION" "$CONFIGSLOCATION"/folders "$CONFIGSLOCATION"/mounted_folders "$CONFIGSLOCATION"/downloads; do
+       [ ! -d "$FOLDER" ] && echo "Creating $FOLDER" && mkdir -p "$FOLDER"
+    done
+    
     # Set permissions
-    echo "Setting ownership to $PUID:$PGID" && chown -R "$PUID":"$PGID" "$CONFIGLOCATION"
-
+    echo "Setting ownership to $PUID:$PGID"
+    chown -R "$PUID":"$PGID" "$CONFIGLOCATION"
+    
+    # Transfer files
+    if [ -d "$ORIGINALLOCATION" ]; then
+      echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
+      mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
+      rmdir "$ORIGINALLOCATION"
+    fi
 }
 
 ########################
 # Change data location #
 ########################
 
+# Adapt files
 change_folders "$(bashio::config 'config_location')" "/share/resiliosync_config" "config_location"
 change_folders "$(bashio::config 'data_location')" "/share/resiliosync" "data_location"
