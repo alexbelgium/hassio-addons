@@ -22,10 +22,16 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# Allow UID and GID setting
+RUN \
+    # Change config location
+    sed -i 's|/config|/config/addons_config/guacamole|g' /etc/cont-init.d/* \
+    && sed -i 's|/config|/config/addons_config/guacamole|g' /etc/services.d/*/run
+
 # Avoid timeouts
 #RUN sed -i 's|-t3000|-t300000|g' /etc/s6-overlay/s6-rc.d/*/run
 
-# Allow UID and GID setting
+#Allow UID and GID setting
 #RUN sed -i 's|/config|/data|g' /etc/cont-init.d/* \
 #    && sed -i 's|/config|/data|g' /etc/services.d/*/run
     # Change log location
