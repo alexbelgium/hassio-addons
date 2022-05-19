@@ -33,10 +33,7 @@ RUN \
     /data/photoprism/storage/cache && \
     chmod -R 777 /data/photoprism && \
     chown -Rf photoprism:photoprism /data/photoprism && \
-    chmod -Rf a+rwx /data/photoprism && \
-    # rename entrypoint
-    mv /entrypoint.sh /entrypoint_photoprism.sh
-
+    chmod -Rf a+rwx /data/photoprism
 
 ##################
 # 3 Install apps #
