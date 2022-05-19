@@ -6,10 +6,12 @@
   "description": "Clientless remote desktop gateway",
   "environment": {},
   "image": "ghcr.io/alexbelgium/guacamole-{arch}",
+  "map": [
+    "config:rw",
+    "ssl:ro"
+  ],
   "name": "Guacamole Client",
   "options": {
-    "PGID": 0,
-    "PUID": 0
   },
   "panel_icon": "mdi:lan",
   "ports": {
@@ -20,8 +22,6 @@
   },
   "schema": {
     "EXTENSIONS": "str?",
-    "PGID": "int",
-    "PUID": "int",
     "TZ": "str?"
   },
   "slug": "guacamole",
