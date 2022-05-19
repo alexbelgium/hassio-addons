@@ -34,7 +34,9 @@ change_folders () {
     if [ "$TYPE" = "data_location" ]; then
       [ -f "$ORIGINALLOCATION"/sync.conf ] && sed "s|$(jq -r .directory_root "$ORIGINALLOCATION"/sync.conf)|$CONFIGLOCATION/|g" "$ORIGINALLOCATION"/sync.conf
       [ -f "$CONFIGLOCATION"/sync.conf ] && sed "s|$(jq -r .directory_root "$CONFIGLOCATION"/sync.conf)|$CONFIGLOCATION/|g" "$CONFIGLOCATION"/sync.conf
-      [ -f "/defaults/sync.conf" ] && sed "s|$(jq -r .directory_root "/defaults"/sync.conf)|$CONFIGLOCATION/|g" /defaults/sync.conf    
+      [ -f "/defaults/sync.conf" ] && sed "s|$(jq -r .directory_root "/defaults"/sync.conf)|$CONFIGLOCATION/|g" /defaults/sync.conf
+      mkdir -p "$CONFIGLOCATION"/folders
+      mkdir -p "$CONFIGLOCATION"/mounted_folders
     fi
 
     # Create folders
