@@ -31,8 +31,6 @@ The default username is guacadmin with password guacadmin.
 Addons options :
 ```yaml
 EXTENSIONS: auth-totp # see https://github.com/maxwaldorf/guacamole#enabling-extensions
-GUID: user # https://docs.linuxserver.io/general/understanding-puid-and-pgid
-GPID: user # https://docs.linuxserver.io/general/understanding-puid-and-pgid
 TZ: Europe/Paris # Sets a specific timezone
 ```
 
