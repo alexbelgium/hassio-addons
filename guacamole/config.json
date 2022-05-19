@@ -11,8 +11,6 @@
     "ssl:ro"
   ],
   "name": "Guacamole Client",
-  "options": {
-  },
   "panel_icon": "mdi:lan",
   "ports": {
     "8080/tcp": 4822
