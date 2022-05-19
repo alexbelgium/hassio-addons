@@ -32,6 +32,7 @@ RUN \
     sed -i 's|/config|/config/addons_config/guacamole|g' /etc/cont-init.d/* \
     && sed -i 's|/config|/config/addons_config/guacamole|g' /etc/services.d/*/run \
     # Enable extensions
+   # shellcheck disable=SC2016
     && sed -i 's|#!/usr/bin/with-contenv sh|#!/usr/bin/with-contenv bashio|g' /etc/cont-init.d/50-extensions \
     && sed -i 's|$EXTENSIONS|$(bashio::config "EXTENSIONS")|g' /etc/cont-init.d/50-extensions \
     # avoid error
