@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [[Photoprism] Can't install (opened 2022-05-18)](https://github.com/alexbelgium/hassio-addons/issues/335) by [@jasonmacdonald](https://github.com/jasonmacdonald)
 # Home assistant add-on: Photoprism
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
