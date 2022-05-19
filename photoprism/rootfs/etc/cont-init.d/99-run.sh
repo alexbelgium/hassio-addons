@@ -81,6 +81,6 @@ bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default username : admin, default password: "please_change_password"'
 
 cd /
-./entrypoint_photoprism.sh photoprism start & bashio::log.info "App launched..."
+./scripts/entrypoint.sh photoprism start & bashio::log.info "App launched..."
 
 exec nginx
