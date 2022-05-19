@@ -26,7 +26,7 @@ ENV PGDATA=/config/addons_config/guacamole/postgres
 ENV GUACAMOLE_HOME=/config/addons_config/guacamole
 WORKDIR /config/addons_config/guacamole
   
-# shellcheck disable=SC2016
+# hadolint ignore=SC2016
 RUN \
     # Change config location
     sed -i 's|/config|/config/addons_config/guacamole|g' /etc/cont-init.d/* \
