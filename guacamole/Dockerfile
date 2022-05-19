@@ -26,13 +26,12 @@ ENV PGDATA=/config/addons_config/guacamole/postgres
 ENV GUACAMOLE_HOME=/config/addons_config/guacamole
 WORKDIR /config/addons_config/guacamole
   
-# Allow UID and GID setting
+# shellcheck disable=SC2016
 RUN \
     # Change config location
     sed -i 's|/config|/config/addons_config/guacamole|g' /etc/cont-init.d/* \
     && sed -i 's|/config|/config/addons_config/guacamole|g' /etc/services.d/*/run \
     # Enable extensions
-    # shellcheck disable=SC2016
     && sed -i 's|#!/usr/bin/with-contenv sh|#!/usr/bin/with-contenv bashio|g' /etc/cont-init.d/50-extensions \
     && sed -i 's|$EXTENSIONS|$(bashio::config "EXTENSIONS")|g' /etc/cont-init.d/50-extensions \
     # Correct transfer
