@@ -32,9 +32,11 @@ RUN \
     sed -i 's|/config|/config/addons_config/guacamole|g' /etc/cont-init.d/* \
     && sed -i 's|/config|/config/addons_config/guacamole|g' /etc/services.d/*/run \
     # Enable extensions
-   # shellcheck disable=SC2016
+    # shellcheck disable=SC2016
     && sed -i 's|#!/usr/bin/with-contenv sh|#!/usr/bin/with-contenv bashio|g' /etc/cont-init.d/50-extensions \
     && sed -i 's|$EXTENSIONS|$(bashio::config "EXTENSIONS")|g' /etc/cont-init.d/50-extensions \
+    # Correct transfer
+    && sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
     # avoid error
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/cont-init.d/* \
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/services.d/*/run    
