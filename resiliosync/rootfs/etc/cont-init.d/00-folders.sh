@@ -30,11 +30,12 @@ change_folders () {
     # Adapt sync.conf
       for FILE in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
           if [ "$TYPE" = "config_location" ]; then 
-               [ -f "$FILE" ] && sed "s|$(jq -r .storage_path "$FILE")|$CONFIGLOCATION/|g" "$FILE"
+               [ -f "$FILE" ] && jq --arg variable "$CONFIGVERSION" '.storage_path = $variable' "$FILE" | sponge "$FILE"
           fi
           if [ "$TYPE" = "data_location" ]; then
-                    [ -f "$FILE" ] && sed "s|$(jq -r .directory_root "$FILE")|$CONFIGLOCATION/|g" "$FILE"
-                    [ -f "$FILE" ] && sed "s|$(jq -r .files_default_path "$FILE")|$CONFIGLOCATION/downloads|g" "$FILE"
+               [ -f "$FILE" ] && jq --arg variable "$CONFIGVERSION" '.directory_root = $variable' "$FILE" | sponge "$FILE"
+               [ -f "$FILE" ] && jq --arg variable "$CONFIGVERSION" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
+                                      
           fi
       done
 
