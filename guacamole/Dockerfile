@@ -23,7 +23,7 @@ FROM ${BUILD_FROM}
 ##################
 
 ENV PGDATA=/config/addons_config/guacamole/postgres
-ENV GUACAMOLE_HOME=/config/addons_config
+ENV GUACAMOLE_HOME=/config/addons_config/guacamole
 WORKDIR /config/addons_config/guacamole
   
 # Allow UID and GID setting
