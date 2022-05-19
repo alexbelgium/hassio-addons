@@ -26,8 +26,11 @@ FROM ${BUILD_FROM}
 RUN \
     # Change config location
     sed -i 's|/config|/config/addons_config/guacamole|g' /etc/cont-init.d/* \
-    && sed -i 's|/config|/config/addons_config/guacamole|g' /etc/services.d/*/run
-
+    && sed -i 's|/config|/config/addons_config/guacamole|g' /etc/services.d/*/run \
+    # Enable extensions
+    && sed -i 's|#!/usr/bin/with-contenv sh|#!/usr/bin/with-contenv bashio|g' /etc/cont-init.d/50-extensions \
+    && sed -i 's|$EXTENSIONS|$(bashio::config "extensions")|g' /etc/cont-init.d/50-extensions
+ 
 # Avoid timeouts
 #RUN sed -i 's|-t3000|-t300000|g' /etc/s6-overlay/s6-rc.d/*/run
 
@@ -45,7 +48,7 @@ RUN \
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 00-global_var.sh"
+ARG MODULES="00-banner.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
