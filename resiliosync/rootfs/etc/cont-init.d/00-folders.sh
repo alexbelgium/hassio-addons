@@ -40,7 +40,7 @@ change_folders () {
 
     # Create folders
     echo "Checking if folders exist"
-    for FOLDER in "$CONFIGSLOCATION" "$CONFIGSLOCATION"/folders "$CONFIGSLOCATION"/mounted_folders "$CONFIGSLOCATION"/downloads; do
+    for FOLDER in "$CONFIGLOCATION" "$CONFIGLOCATION"/folders "$CONFIGLOCATION"/mounted_folders "$CONFIGLOCATION"/downloads; do
        [ ! -d "$FOLDER" ] && echo "Creating $FOLDER" && mkdir -p "$FOLDER"
     done
     
