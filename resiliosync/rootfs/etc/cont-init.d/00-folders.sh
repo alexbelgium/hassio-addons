@@ -49,7 +49,7 @@ change_folders () {
     chown -R "$PUID":"$PGID" "$CONFIGLOCATION"
     
     # Transfer files
-    if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A $ORIGINALLOCATION 2>/dev/null)" ]; then
+    if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A "$ORIGINALLOCATION" 2>/dev/null)" ]; then
       echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
       mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
       rmdir "$ORIGINALLOCATION"
