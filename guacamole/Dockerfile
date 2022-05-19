@@ -29,7 +29,10 @@ RUN \
     && sed -i 's|/config|/config/addons_config/guacamole|g' /etc/services.d/*/run \
     # Enable extensions
     && sed -i 's|#!/usr/bin/with-contenv sh|#!/usr/bin/with-contenv bashio|g' /etc/cont-init.d/50-extensions \
-    && sed -i 's|$EXTENSIONS|$(bashio::config "extensions")|g' /etc/cont-init.d/50-extensions
+    && sed -i 's|$EXTENSIONS|$(bashio::config "EXTENSIONS")|g' /etc/cont-init.d/50-extensions \
+    # avoid error
+    && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/cont-init.d/* \
+    && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/services.d/*/run    
  
 # Avoid timeouts
 #RUN sed -i 's|-t3000|-t300000|g' /etc/s6-overlay/s6-rc.d/*/run
