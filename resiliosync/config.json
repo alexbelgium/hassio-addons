@@ -39,6 +39,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "ingress": true,
   "map": [
     "share:rw",
     "config:rw"
@@ -50,6 +51,7 @@
     "data_location": "/share/resioliosync",
     "config_location": "/config/addons_config/resioliosync"
   },
+  "panel_icon": "mdi:cloud-sync-outline",
   "ports": {
     "55555/tcp": 55555,
     "8888/tcp": 8888
@@ -73,7 +75,7 @@
     "localdisks": "str?",
     "networkdisks": "str?",
     "data_location": "str",
-    "config_location": "str"    
+    "config_location": "str"
   },
   "slug": "resiliosync",
   "url": "https://github.com/tyjtyj/hassio-addons",
