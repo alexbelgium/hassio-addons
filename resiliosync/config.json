@@ -48,8 +48,8 @@
   "options": {
     "PGID": 0,
     "PUID": 0,
-    "data_location": "/share/resioliosync",
-    "config_location": "/config/addons_config/resioliosync"
+    "config_location": "/config/addons_config/resioliosync",
+    "data_location": "/share/resioliosync"
   },
   "panel_icon": "mdi:cloud-sync-outline",
   "ports": {
@@ -72,10 +72,10 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?",
+    "config_location": "str",
     "data_location": "str",
-    "config_location": "str"
+    "localdisks": "str?",
+    "networkdisks": "str?"
   },
   "slug": "resiliosync",
   "url": "https://github.com/tyjtyj/hassio-addons",
