@@ -43,8 +43,9 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "COLLECTOR_API_ENDPOINT": "http://0.0.0.0:8080",
-    "SCRUTINY_COLLECTOR": "true"
+    "SCRUTINY_API_ENDPOINT": "http://localhost:8080",
+    "SCRUTINY_COLLECTOR": "true",
+    "SCRUTINY_WEB": "true"
   },
   "ingress": true,
   "name": "Scrutiny",
