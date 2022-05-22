@@ -13,9 +13,9 @@ PGID=$(bashio::config "PGID")
 ###################
 
 change_folders () {
-  CONFIGLOCATION=$1
-  ORIGINALLOCATION=$2
-  TYPE=$3
+    CONFIGLOCATION=$1
+    ORIGINALLOCATION=$2
+    TYPE=$3
 
     # Inform
     bashio::log.info "Setting $TYPE to $CONFIGLOCATION"
@@ -28,20 +28,20 @@ change_folders () {
     sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /defaults/* || true
 
     # Adapt sync.conf
-      for FILE in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
-          if [ "$TYPE" = "config_location" ]; then
-               [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.storage_path = $variable' "$FILE" | sponge "$FILE"
-          fi
-          if [ "$TYPE" = "data_location" ]; then
-               [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.directory_root = $variable' "$FILE" | sponge "$FILE"
-               [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION/downloads" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
-          fi
-      done
+    for FILE in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
+        if [ "$TYPE" = "config_location" ]; then
+            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.storage_path = $variable' "$FILE" | sponge "$FILE"
+        fi
+        if [ "$TYPE" = "data_location" ]; then
+            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.directory_root = $variable' "$FILE" | sponge "$FILE"
+            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION/downloads" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
+        fi
+    done
 
     # Create folders
     echo "Checking if folders exist"
     for FOLDER in "$CONFIGLOCATION" "$CONFIGLOCATION"/folders "$CONFIGLOCATION"/mounted_folders "$CONFIGLOCATION"/downloads; do
-       [ ! -d "$FOLDER" ] && echo "Creating $FOLDER" && mkdir -p "$FOLDER"
+        [ ! -d "$FOLDER" ] && echo "Creating $FOLDER" && mkdir -p "$FOLDER"
     done
 
     # Set permissions
@@ -50,9 +50,9 @@ change_folders () {
 
     # Transfer files
     if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A "$ORIGINALLOCATION" 2>/dev/null)" ]; then
-      echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
-      mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
-      rmdir "$ORIGINALLOCATION"
+        echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
+        mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
+        rmdir "$ORIGINALLOCATION"
     fi
 }
 
