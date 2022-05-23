@@ -94,6 +94,6 @@
   "slug": "webtrees",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v2.1.2",
+  "version": "v2.1.4",
   "webui": "http://[HOST]:[PORT:80]"
 }
