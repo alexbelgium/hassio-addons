@@ -59,10 +59,7 @@
     "STORAGE_PATH": "/share/photoprism/storage",
     "UPLOAD_NSFW": "true",
     "certfile": "fullchain.pem",
-    "cifspassword": "password",
-    "cifsusername": "username",
     "keyfile": "privkey.pem",
-    "networkdisks": "//server/share",
     "ssl": false
   },
   "ports": {
