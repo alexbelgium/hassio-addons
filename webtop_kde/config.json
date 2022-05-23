@@ -109,6 +109,6 @@
   "slug": "webtop-kde",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls56",
+  "version": "4.16-r0-ls57",
   "video": true
 }
