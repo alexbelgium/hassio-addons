@@ -1,7 +1,7 @@
 ---
 build_from:
-  aarch64: ghcr.io/hassio-addons/debian-base/aarch64:stable
-  amd64: ghcr.io/hassio-addons/debian-base/amd64:stable
-  armv7: ghcr.io/hassio-addons/debian-base/armv7:stable
+  aarch64: ghcr.io/hassio-addons/debian-base/aarch64:5.3.0
+  amd64: ghcr.io/hassio-addons/debian-base/amd64:5.3.0
+  armv7: ghcr.io/hassio-addons/debian-base/armv7:5.3.0
 codenotary:
   signer: alexandrep.github@gmail.com
