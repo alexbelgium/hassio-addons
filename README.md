@@ -367,13 +367,14 @@ If you want to do add the repository manually, please follow the procedure highl
 ![armv7][armv7-badge]
 ![smb][smb-badge]
 
-&#10003;  [Photoprism](photoprism/) : A server-based application for browsing, organizing and sharing your personal photo collection
+&#10003; ![image](https://api.iconify.design/mdi/camera.svg) [Photoprism](photoprism/) : A server-based application for browsing, organizing and sharing your personal photo collection
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fphotoprism%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fphotoprism%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
+![ingress][ingress-badge]
 ![MariaDB][mariadb-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
