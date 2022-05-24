@@ -1,6 +1,14 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
+############
+# Base url #
+############
+
+ #PHOTOPRISM_SITE_URL="$(bashio::config 'PHOTOPRISM_SITE_URL')$(bashio::addon.ingress_entry)"
+ #bashio::log.blue "Site url : $PHOTOPRISM_SITE_URL"
+ #export PHOTOPRISM_SITE_URL
+
 ###################
 # Define database #
 ###################
