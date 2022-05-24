@@ -1,5 +1,7 @@
+- Feat: ingress implementation. Bug : don't click on refresh (click cancel)
 
 ## 220517-jammy (19-05-2022)
+
 - Update to latest version from photoprism/photoprism
 - Implementation of ssl
 - Add codenotary sign

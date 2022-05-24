@@ -43,6 +43,8 @@
     "working_dir": "/data/photoprism"
   },
   "homeassistant": "0.92.0b2",
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "media:rw",
     "share:rw",
@@ -62,6 +64,7 @@
     "keyfile": "privkey.pem",
     "ssl": false
   },
+  "panel_icon": "mdi:camera",
   "ports": {
     "2342/tcp": 2342
   },
@@ -93,6 +96,5 @@
   ],
   "slug": "photoprism",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "220517-3",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:2342]"
+  "version": "220517-2"
 }
