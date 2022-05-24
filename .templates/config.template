@@ -4,7 +4,10 @@
 #
 # All env variables set in this file will be enabled in the app
 # This allows enabling more options that normally available in the addon options
-# This file must be filled according to the yaml format. If the format is invalid, the addon will note an error. To validate your yaml, you can use the free online tool http://www.yamllint.com/
+# This file must be filled according to the yaml format.
+# If the format is invalid, the addon will note an error.
+# To validate your yaml, you can use the free online tool http://www.yamllint.com/
 
 # EXAMPLE of the format (you need to remove the # for it to become active)
 # TZ: Europe/Paris
+
