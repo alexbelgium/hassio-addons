@@ -13,3 +13,6 @@ ingress_entry=$(bashio::addon.ingress_entry)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
+
+# Avoid error message
+grep -rnl "PhotoPrism has been updated…" /opt/photoprism | xargs sed -i "s|PhotoPrism has been updated…|Please click cancel|g"
