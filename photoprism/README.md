@@ -1,6 +1,5 @@
 # Known bugs with ingress
 - when opening ingress, click "cancel" on the message "Photoprism has been updated..."
-- videos don't play from ingress
 
 # Home assistant add-on: Photoprism
 
