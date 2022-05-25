@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="220517-jammy"
+ARG BUILD_UPSTREAM="220524-bookworm"
 FROM photoprism/photoprism:latest
 
 ##################
