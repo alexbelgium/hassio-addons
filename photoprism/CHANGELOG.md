@@ -1,7 +1,7 @@
 
 ## 220524-bookworm (26-05-2022)
 - Update to latest version from photoprism/photoprism
-- Feat: ingress implementation. Bug : don't click on refresh (click cancel)
+- Feat: ingress implementation
 
 ## 220517-jammy (19-05-2022)
 
