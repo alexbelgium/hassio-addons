@@ -1,6 +1,3 @@
-# Known bugs with ingress
-- when opening ingress, click "cancel" on the message "Photoprism has been updated..."
-
 # Home assistant add-on: Photoprism
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
