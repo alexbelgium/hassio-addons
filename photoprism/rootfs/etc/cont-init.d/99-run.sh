@@ -5,9 +5,9 @@
 # Base url #
 ############
 
- #PHOTOPRISM_SITE_URL="$(bashio::config 'PHOTOPRISM_SITE_URL')$(bashio::addon.ingress_entry)"
- #bashio::log.blue "Site url : $PHOTOPRISM_SITE_URL"
- #export PHOTOPRISM_SITE_URL
+#PHOTOPRISM_SITE_URL="$(bashio::config 'PHOTOPRISM_SITE_URL')$(bashio::addon.ingress_entry)"
+#bashio::log.blue "Site url : $PHOTOPRISM_SITE_URL"
+#export PHOTOPRISM_SITE_URL
 
 ###################
 # Define database #
@@ -94,7 +94,7 @@ bashio::log.info 'Default username : admin, default password: "please_change_pas
 cd /
 ./scripts/entrypoint.sh photoprism start & bashio::log.info "Starting, please wait for next green text..."
 
-bashio::net.wait_for 2341 localhost 900 
+bashio::net.wait_for 2341 localhost 900
 bashio::log.info "App launched"
 
 exec nginx
