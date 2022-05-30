@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "21-05-2022",
+  "last_update": "31-05-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "papermerge",
   "source": "github",
   "upstream_repo": "linuxserver/docker-papermerge",
-  "upstream_version": "v2.0.1-ls47"
+  "upstream_version": "v2.0.1-ls48"
 }
