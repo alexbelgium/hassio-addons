@@ -1,4 +1,7 @@
 
+## 10.7.7-1-ls161 (31-05-2022)
+- Update to latest version from linuxserver/docker-jellyfin
+
 ## 10.7.7-1-ls160 (21-05-2022)
 - Update to latest version from linuxserver/docker-jellyfin
 
