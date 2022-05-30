@@ -1,4 +1,7 @@
 
+## 1.36.16 (31-05-2022)
+- Update to latest version from zoneminder-containers/zoneminder-base
+
 ## 1.36.15 (14-05-2022)
 - Update to latest version from zoneminder-containers/zoneminder-base
 - Feature : set image location from addon options
