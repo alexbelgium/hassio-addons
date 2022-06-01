@@ -58,9 +58,7 @@
     "OPENVPN_USERNAME": "user",
     "OPENVPN_PASSWORD": "pass",
     "LOCAL_NETWORK": "192.168.178.0/16",
-    "TRANSMISSION_DOWNLOAD_DIR": "/addons_config/transmission/downloads",
-    "TRANSMISSION_INCOMPLETE_DIR": "/addons_config/transmission/incomplete",
-    "TRANSMISSION_WATCH_DIR": "/addons_config/transmission/watch_dir",
+    "TRANSMISSION_WATCH_DIR": "/share/watch_dir",
     "DEBUG": false
   },
   "ports": {
