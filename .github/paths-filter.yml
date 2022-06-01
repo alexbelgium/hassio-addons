@@ -58,6 +58,7 @@ tandoor_recipes: tandoor_recipes/config.*
 tdarr: tdarr/config.* # Image : yes
 teamspeak: teamspeak/config.*
 transmission: transmission/config.*
+transmission_openvpn: transmission_openvpn/config.* # Image : yes
 ubooquity: ubooquity/config.*
 unpackerr: unpackerr/config.* # Image : yes
 webtop: webtop/config.*
