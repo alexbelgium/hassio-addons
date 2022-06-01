@@ -39,7 +39,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "ingress": true,  
+  "ingress": true,
   "image": "ghcr.io/alexbelgium/transmission_openvpn-{arch}",
   "map": [
     "config:rw",
@@ -102,5 +102,5 @@
   "slug": "transmission_openvpn",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.0-ingress4"
+  "version": "4.0"
 }
