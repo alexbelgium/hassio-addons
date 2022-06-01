@@ -55,7 +55,6 @@
     "TRANSMISSION_DOWNLOAD_DIR": "/share/downloads",
     "TRANSMISSION_INCOMPLETE_DIR": "/share/incomplete",
     "OPENVPN_PROVIDER": "PIA",
-    "OPENVPN_CONFIG": "france",
     "OPENVPN_USERNAME": "user",
     "OPENVPN_PASSWORD": "pass",
     "LOCAL_NETWORK": "192.168.178.0/16",
