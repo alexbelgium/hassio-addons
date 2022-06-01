@@ -6,8 +6,8 @@
 
 echo "Exporting variables"
 for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
-    bashio::log.blue $k=$(bashio::config $k)
-    export $k=$(bashio::config $k)
+    bashio::log.blue "$k"="$(bashio::config "$k")"
+    export "$k"="$(bashio::config "$k")"
 done
 
 echo ""
@@ -21,4 +21,3 @@ bashio::net.wait_for 9091 localhost 900
 bashio::log.info "Ingress ready"
 
 exec nginx
-
