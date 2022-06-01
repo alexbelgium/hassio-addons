@@ -28,12 +28,12 @@ FROM fireflyiii/core:latest
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
 
-ARG BUILD_UPSTREAM="5.7.6"
+ARG BUILD_UPSTREAM="5.7.9"
 RUN \
     #################
     # Fix for 5.7.5 #
     #################
-    if [ "$BUILD_UPSTREAM" = "5.7.6" ] ; then \
+    if [ "$BUILD_UPSTREAM" = "5.7.9" ] ; then \
     sed -i "s|, \$transaction\[\x27amount\x27\] ?? \x270\x27);|, (string)(\$transaction\[\x27amount\x27\] ?? \x270\x27));|g" /var/www/html/app/Helpers/Collector/GroupCollector.php; else echo "not 5.7.5"; fi
 
 ##################
