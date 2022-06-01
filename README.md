@@ -557,6 +557,16 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
+&#10003;  [Transmission Openvpn](transmission_openvpn/) : Bittorrent client based on linuxserver image
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission_openvpn%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission_openvpn%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7][armv7-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
+
 &#10003;  [Ubooquity](ubooquity/) : Free, lightweight and easy-to-use home server for your comics and ebooks
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fubooquity%2Fconfig.json)
