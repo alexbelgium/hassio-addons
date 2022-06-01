@@ -39,6 +39,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "ingress": true,  
   "image": "ghcr.io/alexbelgium/transmission_openvpn-{arch}",
   "map": [
     "config:rw",
@@ -61,6 +62,7 @@
     "TRANSMISSION_WATCH_DIR": "/share/watch_dir",
     "DEBUG": false
   },
+  "panel_icon": "mdi:transmission-tower",
   "ports": {
     "51413/tcp": 51413,
     "51413/udp": 51413,
@@ -100,6 +102,5 @@
   "slug": "transmission_openvpn",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.0-new",
-  "webui": "http://[HOST]:[PORT:9091]"
+  "version": "4.0-ingress"
 }

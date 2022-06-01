@@ -11,5 +11,14 @@ for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
 done
 
 echo ""
+
 bashio::log.info "Starting app"
-/./etc/openvpn/start.sh
+
+/./etc/openvpn/start.sh & echo "Starting nginx"
+
+bashio::net.wait_for 9091 localhost 900
+
+bashio::log.info "Ingress ready"
+
+exec nginx
+
