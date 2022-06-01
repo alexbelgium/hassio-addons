@@ -39,6 +39,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "ingress": true,
   "map": [
     "config:rw",
     "share:rw",
@@ -88,6 +89,5 @@
   "slug": "transmission_ls",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.00-r5-ls125",
-  "webui": "http://[HOST]:[PORT:9091]"
+  "version": "3.00-r5-ls125"
 }
