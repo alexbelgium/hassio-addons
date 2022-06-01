@@ -1,4 +1,7 @@
 
+## 220528-jammy (31-05-2022)
+- Update to latest version from photoprism/photoprism
+
 ## 220524-bookworm (26-05-2022)
 - Update to latest version from photoprism/photoprism
 - Feat: ingress implementation
