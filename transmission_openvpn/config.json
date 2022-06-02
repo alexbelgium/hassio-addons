@@ -55,7 +55,6 @@
     "TRANSMISSION_WEB_UI": "transmission-web-control",
     "TRANSMISSION_DOWNLOAD_DIR": "/share/downloads",
     "TRANSMISSION_INCOMPLETE_DIR": "/share/incomplete",
-    "OPENVPN_PROVIDER": "PIA",
     "TRANSMISSION_HOME": "/config/addons_config/transmission",
     "OPENVPN_USERNAME": "user",
     "OPENVPN_PASSWORD": "pass",
