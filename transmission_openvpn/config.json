@@ -89,7 +89,7 @@
     "networkdisks": "str?",
     "pass": "str?",
     "user": "str?",
-    "OPENVPN_PROVIDER": "list(|anonine|anonvpn|blackvpn|btguard|bulletvpn|cryptostorm|expressvpn|fastestvpn|freevpn|froot|frostvpn|getflix|ghostpath|giganews|goosevpn|hideme|hidemyass|integrityvpn|ipvanish|ironsocket|ivacy|ivpn|mullvad|nordvpn|octanevpn|ovpn|pia|privado|privatevpn|protonvpn|proxpn|purevpn|ra4w|safervpn|slickvpn|slickvpncore|smartdnsproxy|smartvpn|surfshark|tiger|torguard|trustzone|tunnelbear|vpnac|vpnarea|vpnbook|vpnfacile|vpnht|vpntunnel|vpnunlimited|vyprvpn|wevpn|windscribe|zoogvpn)"
+    "OPENVPN_PROVIDER": "list(|anonine|anonvpn|blackvpn|btguard|bulletvpn|cryptostorm|expressvpn|fastestvpn|freevpn|froot|frostvpn|getflix|ghostpath|giganews|goosevpn|hideme|hidemyass|integrityvpn|ipvanish|ironsocket|ivacy|ivpn|mullvad|nordvpn|octanevpn|ovpn|pia|privado|privatevpn|protonvpn|proxpn|purevpn|ra4w|safervpn|slickvpn|slickvpncore|smartdnsproxy|smartvpn|surfshark|tiger|torguard|trustzone|tunnelbear|vpnac|vpnarea|vpnbook|vpnfacile|vpnht|vpntunnel|vpnunlimited|vyprvpn|wevpn|windscribe|zoogvpn)",
     "OPENVPN_CONFIG": "str?",
     "OPENVPN_USERNAME": "str",
     "OPENVPN_PASSWORD": "str",
