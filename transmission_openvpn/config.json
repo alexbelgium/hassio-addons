@@ -94,6 +94,7 @@
     "OPENVPN_USERNAME": "str",
     "OPENVPN_PASSWORD": "str",
     "LOCAL_NETWORK": "str",
+    "TRANSMISSION_HOME": "/config/addons_config/transmission",
     "TRANSMISSION_DOWNLOAD_DIR": "str",
     "TRANSMISSION_INCOMPLETE_DIR": "str",
     "TRANSMISSION_WATCH_DIR": "str",
