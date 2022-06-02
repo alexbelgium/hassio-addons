@@ -21,6 +21,7 @@ CONFIGDIR="/config/transmission"
 #Default folders
 echo "Updating folders"
 mkdir -p /config/transmission || true
+mkdir -p /watch || true
 chown -R abc:abc /config/transmission || true
 
 if ! bashio::fs.file_exists "$CONFIGDIR/settings.json"; then
