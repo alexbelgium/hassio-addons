@@ -547,23 +547,25 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003;  [Transmission NAS](transmission/) : Bittorrent client based on linuxserver image
+&#10003; ![image](https://api.iconify.design/mdi/transmission-tower.svg) [Transmission](transmission/) : Bittorrent client based on linuxserver image
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003;  [Transmission Openvpn](transmission_openvpn/) : Bittorrent client based on linuxserver image
+&#10003; ![image](https://api.iconify.design/mdi/transmission-tower.svg) [Transmission Openvpn](transmission_openvpn/) : Docker container running Transmission torrent client with WebUI over an OpenVPN tunnel
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission_openvpn%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission_openvpn%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
