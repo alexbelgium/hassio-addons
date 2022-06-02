@@ -54,7 +54,8 @@
     "customUI": "transmission-web-control",
     "download_dir": "/share/downloads",
     "incomplete_dir": "/share/incomplete"
-  },
+  },  
+  "panel_icon": "mdi:transmission-tower",
   "ports": {
     "51413/tcp": 51413,
     "51413/udp": 51413,
