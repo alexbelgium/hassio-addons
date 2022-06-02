@@ -46,7 +46,7 @@
     "media:rw",
     "ssl"
   ],
-  "name": "Transmission NAS",
+  "name": "Transmission",
   "options": {
     "DNS_server": "8.8.8.8,1.1.1.1",
     "PGID": 0,
