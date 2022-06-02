@@ -24,8 +24,7 @@ FROM ${BUILD_FROM}
 ##################
 
 # MOFIFY DATA PATH
-ENV TRANSMISSION_HOME="/addons_config/transmission" \
-    CREATE_TUN_DEVICE=false
+ENV CREATE_TUN_DEVICE=false
 
 ##################
 # 3 Install apps #
