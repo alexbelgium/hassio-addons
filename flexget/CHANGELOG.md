@@ -1,4 +1,7 @@
 
+## 3.3.15 (04-06-2022)
+- Update to latest version from flexget/flexget
+
 ## 3.3.14 (26-05-2022)
 - Update to latest version from flexget/flexget
 
