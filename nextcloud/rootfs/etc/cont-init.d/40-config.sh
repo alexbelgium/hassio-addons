@@ -10,7 +10,7 @@ mkdir -p \
     /data/config/www/nextcloud/config
 
 #permissions
-chown abc:abc \
+chown -R abc:abc \
     "$datadirectory" \
     /data/config/nextcloud/config \
     /data/config/nextcloud/data \
@@ -19,5 +19,5 @@ chown abc:abc \
 chown -R abc:abc \
     /var/lib/nginx
 
-rm -r /data/config/www/nextcloud/assets &>/dev/null
-chmod -R 777 /data/config
+rm -r /data/config/www/nextcloud/assets &>/dev/null || true
+chmod -R 777 /data/config 
