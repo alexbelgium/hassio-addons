@@ -11,8 +11,8 @@ mkdir -p \
 
 #permissions
 PUID="$(bashio::config 'PUID')"
-GUID="$(bashio::config 'GUID')"
-chown -R "$PUID":"$GUID" \
+GUID="$(bashio::config 'PGID')"
+chown -R "$PUID":"$PGID" \
     "$datadirectory" \
     /data/config/nextcloud/config \
     /data/config/nextcloud/data \
