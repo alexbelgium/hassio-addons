@@ -2,6 +2,7 @@
 # shellcheck shell=bash
 
 #create folders
+echo "Creating folders"
 datadirectory=$(bashio::config 'data_directory')
 mkdir -p \
     "$datadirectory" \
@@ -16,10 +17,14 @@ chown -R "$PUID":"$PGID" \
     "$datadirectory" \
     /data/config/nextcloud/config \
     /data/config/nextcloud/data \
-    /data/config/www/nextcloud/config
+    /data/config/www/nextcloud/config \
+    /data
 
 chown -R abc:abc \
     /var/lib/nginx
 
 rm -r /data/config/www/nextcloud/assets &>/dev/null || true
-chmod -R 777 /data/config 
+
+echo "Updating permissions"
+chmod -R 777 /data/config
+chmod -R 755 "$datadirectory" 
