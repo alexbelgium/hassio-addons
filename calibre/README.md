@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[calibre-web] Ingress doesn't work from a domain (opened 2022-06-03)](https://github.com/alexbelgium/hassio-addons/issues/345) by [@met67](https://github.com/met67)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
