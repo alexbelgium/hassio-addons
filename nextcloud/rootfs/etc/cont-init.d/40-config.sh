@@ -27,4 +27,4 @@ rm -r /data/config/www/nextcloud/assets &>/dev/null || true
 
 echo "Updating permissions"
 chmod -R 777 /data/config
-chmod -R 755 "$datadirectory" 
+chmod -R 755 "$datadirectory"
