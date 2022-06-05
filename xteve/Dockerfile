@@ -17,7 +17,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="2.2.0.200"
-FROM collelog/xteve:latest-alpine
+FROM scp002/xteve:latest
 
 ##################
 # 2 Modify Image #
