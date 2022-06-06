@@ -23,6 +23,8 @@ FROM scp002/xteve:latest
 # 2 Modify Image #
 ##################
 
+USER root
+
 RUN cp -vnpr /etc/opt/xteve* /data || true
 
 CMD ["-config", "/data", "-port", "34400"]
