@@ -3,6 +3,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "xteve",
   "source": "github",
-  "upstream_repo": "xteve-project/xteve",
+  "upstream_repo": "scp002/xteve",
   "upstream_version": "2.2.0.200"
 }
