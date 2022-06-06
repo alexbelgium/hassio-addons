@@ -1,0 +1,10 @@
+{
+ "build_from": {
+ "aarch64": "collelog/xteve:latest-alpine",
+ "amd64": "scp002/xteve:latest",
+ "armv7": "collelog/xteve:latest-alpine"
+ },
+ "codenotary": 
+{ 
+"signer": "alexandrep.github@gmail.com" }
+}
