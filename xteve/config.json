@@ -19,6 +19,6 @@
   },
   "slug": "xteve",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.5.0.0",
+  "version": "2.5.0.0-test",
   "webui": "http://[HOST]:[PORT:34400]/web"
 }
