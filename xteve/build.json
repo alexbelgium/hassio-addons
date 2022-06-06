@@ -1,7 +1,7 @@
 {
  "build_from": {
  "aarch64": "tinyserve/xteve:latest",
- "amd64": "scp002/xteve:latest",
+ "amd64": "tinyserve/xteve:latest",
  "armv7": "tinyserve/xteve:latest"
  },
  "codenotary": 
