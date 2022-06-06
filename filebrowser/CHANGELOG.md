@@ -1,3 +1,6 @@
+
+## 2.22.0 (06-06-2022)
+- Update to latest version from hurlenko/filebrowser-docker
 - Add codenotary sign
 
 ## 2.21.1 (23-02-2022)
