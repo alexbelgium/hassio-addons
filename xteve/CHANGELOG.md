@@ -1,3 +1,6 @@
+
+## 2.5.0.0 (06-06-2022)
+- Update to latest version from scp002/xteve
 - Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation
 
