@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[transmission] Watch directory inaccesible and can not configure it (opened 2022-06-07)](https://github.com/alexbelgium/hassio-addons/issues/351) by [@grunjol](https://github.com/grunjol)
 # Home assistant add-on: Transmission
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
