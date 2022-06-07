@@ -46,6 +46,7 @@
     "calibre-web_CONFIG_DIRECTORY": "/config/addons_config/calibre-web",
     "shm_size": "1gb"
   },
+  "hassio_api": true,
   "image": "ghcr.io/alexbelgium/calibre-web-{arch}",
   "ingress": true,
   "map": [
