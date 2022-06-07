@@ -12,7 +12,8 @@
   },
   "map": [
     "share:rw",
-    "config:rw"
+    "config:rw",
+    "media"
   ],
   "name": "Flexget",
   "options": {
