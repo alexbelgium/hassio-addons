@@ -1,9 +1,9 @@
 {
   "github_beta": "true",
-  "last_update": "06-06-2022",
+  "last_update": "09-06-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "filebrowser",
   "source": "github",
   "upstream_repo": "hurlenko/filebrowser-docker",
-  "upstream_version": "2.22.0"
+  "upstream_version": "2.22.1"
 }
