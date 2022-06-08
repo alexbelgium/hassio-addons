@@ -29,6 +29,7 @@ fi
 
 # Force scheme
 if bashio::config.true 'force_scheme_https'; then
+    # shellcheck disable=SC2016
     sed -i 's|$scheme|https|g' /etc/nginx/servers/ingress.conf
 fi
 
