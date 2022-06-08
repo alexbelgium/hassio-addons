@@ -60,6 +60,8 @@ localdisks: sda1 #put the hardware name of your drive to mount separated by comm
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
+force_scheme_https: if you have issues accessing ingress with https, check this box to force https
+force_external_port: if you have issues accessing ingress with https, note here your external port used to access HA
 ```
 
 ## Support
