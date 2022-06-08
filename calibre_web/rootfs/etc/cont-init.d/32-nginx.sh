@@ -30,8 +30,12 @@ fi
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 ha_port=$(bashio::core.port)
-ha_port=${ha_port:-8123}
+scheme=$(bashio::config 'force_https')
+
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%haport%%/${ha_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%UIPATH%%|$(bashio::addon.ingress_entry)|g" /etc/nginx/servers/ingress.conf
+if [ "$scheme" = true ]; then
+    sed -i 's|$scheme;|https;|g' /etc/nginx/servers/ingress.conf
+fi
