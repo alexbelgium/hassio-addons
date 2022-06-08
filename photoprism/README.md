@@ -40,6 +40,9 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
+Default user : admin
+Default password : please_change_password
+
 Options can be configured through two ways :
 
 - Addon options
