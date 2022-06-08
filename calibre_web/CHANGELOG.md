@@ -1,3 +1,6 @@
+
+## 0.6.18-ls164 (09-06-2022)
+- Update to latest version from linuxserver/docker-calibre-web
 - Fix : ingress (with @met67)
 
 ## 0.6.18-ls163 (26-05-2022)
