@@ -82,10 +82,10 @@
     "cifsusername": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "force_https": "bool?"
+    "force_scheme_https": "bool?"
   },
   "slug": "calibre-web",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre-web",
-  "version": "0.6.18-ls163-test5",
+  "version": "0.6.18-ls163-test6",
   "video": true
 }
