@@ -11,7 +11,7 @@ fi
 
 # Disable session protection 
 # https://forums.unraid.net/topic/71927-support-linuxserverio-calibre-web/page/5/#comment-1015352
-echo "**** patching calibre-web - removing session protection ****"
-sed -i "/lm.session_protection = 'strong'/d" /app/calibre-web/cps/__init__.py || true
+#echo "**** patching calibre-web - removing session protection ****"
+#sed -i "/lm.session_protection = 'strong'/d" /app/calibre-web/cps/__init__.py || true
 
 bashio::log.info "Default username:password is admin:admin123"
