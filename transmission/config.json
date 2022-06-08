@@ -82,6 +82,7 @@
     "incomplete_dir": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
+    "watch_dir": "str?",
     "pass": "str?",
     "smbv1": "bool?",
     "user": "str?",
