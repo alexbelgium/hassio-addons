@@ -38,5 +38,5 @@ sed -i "s|%%UIPATH%%|$(bashio::addon.ingress_entry)|g" /etc/nginx/servers/ingres
 
 # Force scheme
 if bashio::config.true 'force_scheme_https'; then
-    sed -i 's|$scheme;|https;|g' /etc/nginx/servers/ingress.conf
+    sed -i 's|$scheme|https|g' /etc/nginx/servers/ingress.conf
 fi
