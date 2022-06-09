@@ -57,8 +57,7 @@
     "seafile_admin_email": "me@example.com",
     "seafile_admin_password": "a_very_secret_password",
     "PUID": 0,
-    "GUID": 0,
-    "TZ": "Europe/Paris"
+    "GUID": 0
   },
   "panel_icon": "mdi:library",
   "ports": {
