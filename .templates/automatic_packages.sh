@@ -40,7 +40,7 @@ fi
 # ADD GENERAL ELEMENTS
 ######################
 
-PACKAGES="$PACKAGES jq curl vim"
+PACKAGES="$PACKAGES jq curl vim ca-certificates"
 
 # FOR EACH SCRIPT, SELECT PACKAGES
 ##################################
