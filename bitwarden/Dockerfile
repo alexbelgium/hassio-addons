@@ -30,6 +30,8 @@ COPY --from=vaultwarden /web-vault /opt/web-vault
 # 2 Modify Image #
 ##################
 
+RUN chmod 777 /etc/services.d/*/*
+
 ##################
 # 3 Install apps #
 ##################
