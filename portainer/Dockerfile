@@ -43,7 +43,9 @@ RUN \
     \
     && curl -f -L -s \
     "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
-    | tar zxvf - -C /opt/ || printf '%s\n' "${BUILD_UPSTREAM}" > /PORTFILE
+    | tar zxvf - -C /opt/ || printf '%s\n' "${BUILD_UPSTREAM}" > /PORTFILE \
+    \
+    && chmod 777 /etc/services.d/*/*
 
 
 ##################
