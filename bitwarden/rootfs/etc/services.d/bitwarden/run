@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/command/with-contenv bashio
 # shellcheck shell=bash
 # ==============================================================================
 # Home Assistant Community Add-on: Bitwarden
