@@ -50,6 +50,7 @@ radarr: radarr/config.*
 readarr: readarr/config.*
 requestrr: requestrr/config.*
 resiliosync: resiliosync/config.*
+seafile: seafile/config.* # Image : yes
 scrutiny: scrutiny/config.*
 scrutiny_fa: scrutiny_fa/config.* # Image : yes
 sonarr: sonarr/config.*
