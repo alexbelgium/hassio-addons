@@ -25,30 +25,31 @@ sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$(bashio::config 'data_location'/db)|g"
 ###################
 bashio::log.info "Defining database"
 case $(bashio::config 'database') in
-
+    
     # Use sqlite
-    sed -i "s|SQLITE=0|SQLITE=1|g" .env
     sqlite)
+        sed -i "s|SQLITE=0|SQLITE=1|g" .env
+    ;;
     
     # Use mariadb
     mariadb_addon)
         bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
         if ! bashio::services.available 'mysql'; then
             bashio::log.fatal \
-                "Local database access should be provided by the MariaDB addon"
+            "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok \
-                "Please ensure it is installed and started"
+            "Please ensure it is installed and started"
         fi
-
+        
         # Use values
         sed -i "s|MYSQL_HOST=db|MYSQL_HOST=$(bashio::services "mysql" "host")|g" .env
         sed -i "s|MYSQL_USER_PASSWD=secret|MYSQL_USER_PASSWD=$(bashio::services "mysql" "username")|g" .env
         sed -i "s|MYSQL_ROOT_PASSWD=secret|MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")|g" .env
-
+        
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
-        ;;
+    ;;
 esac
 
 ##############
