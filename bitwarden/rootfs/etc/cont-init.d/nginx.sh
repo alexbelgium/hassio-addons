@@ -28,5 +28,3 @@ if bashio::config.has_value 'request_size_limit'; then
 fi
 sed -i "s/%%max_body_size%%/${max_body_size}/g" \
     /etc/nginx/includes/server_params.conf
-    
-chmod 777 /etc/services.d/*/run
