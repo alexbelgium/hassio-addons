@@ -37,3 +37,7 @@ if bashio::supervisor.ping; then
     bashio::log.blue \
         '-----------------------------------------------------------'
 fi
+
+# Correct permissions
+[ -d /etc/services.d ] && chmod -R 777 /etc/services.d
+[ -d /etc/cont-init.d ] && chmod -R 777 /etc/cont-init.d
