@@ -9,9 +9,7 @@ if bashio::config.has_value 'TZ'; then
     ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime && echo "$TIMEZONE" >/etc/timezone
 fi
 
-# Disable session protection 
-# https://forums.unraid.net/topic/71927-support-linuxserverio-calibre-web/page/5/#comment-1015352
-#echo "**** patching calibre-web - removing session protection ****"
-#sed -i "/lm.session_protection = 'strong'/d" /app/calibre-web/cps/__init__.py || true
+# Set Ingress login
+sqlite3 /config/addons_config/calibre-web/app.db 'update settings set config_reverse_proxy_login_header_name="X-WebAuth-User",config_allow_reverse_proxy_header_login=1'
 
 bashio::log.info "Default username:password is admin:admin123"
