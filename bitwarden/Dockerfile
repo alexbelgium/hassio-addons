@@ -30,8 +30,6 @@ COPY --from=vaultwarden /web-vault /opt/web-vault
 # 2 Modify Image #
 ##################
 
-RUN chmod 777 /etc/services.d/*/*
-
 ##################
 # 3 Install apps #
 ##################
@@ -66,6 +64,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 # 4 Entrypoint #
 ################
+
+RUN chmod 777 /etc/services.d/*/*
 
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /
