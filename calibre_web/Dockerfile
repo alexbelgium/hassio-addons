@@ -62,6 +62,10 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
 
+# Install sqlite3 & set defaults
+RUN if ! command -v sqlite3 >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends sqlite3 || apk add --no-cache sqlite3) >/dev/null; fi \
+    && sqlite3 /defaults/app.db 'update settings set config_reverse_proxy_login_header_name="X-WebAuth-User",config_allow_reverse_proxy_header_login=1'
+
 ################
 # 4 Entrypoint #
 ################

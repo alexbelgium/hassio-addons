@@ -62,10 +62,10 @@
   },
   "panel_icon": "mdi:library",
   "ports": {
-    "8083/tcp": 8083
+    "8083/tcp": null
   },
   "ports_description": {
-    "8083/tcp": "calibre-web webui"
+    "8083/tcp": "Calibre-web webui (Not required for Ingress)"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -81,10 +81,11 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?"
+    "networkdisks": "str?",
+    "ingress_user": "str?"
   },
   "slug": "calibre-web",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre-web",
-  "version": "0.6.18-ls164",
+  "version": "0.6.18-ls164-test5",
   "video": true
 }
