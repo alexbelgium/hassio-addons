@@ -50,9 +50,9 @@ if bashio::config.has_value 'networkdisks'; then
 
         # if Fail test different smb and sec versions
         if [ "$MOUNTED" = false ]; then
-            for SMBVERS in ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs" ",uid=0,gid=0,forceuid,forcegid" ",noforceuid,noforcegid" ",${DOMAIN:-WORKGROUP}"; do
+            for SMBVERS in ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs" ",uid=0,gid=0,forceuid,forcegid" ",noforceuid,noforcegid" ",${DOMAIN:-WORKGROUP}" ",noserverino"; do
                 mount -t cifs -o "rw,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS" "$disk" /mnt/"$diskname" 2>/dev/null && MOUNTED=true && break || MOUNTED=false
-                for SECVERS in ",sec=ntlmi" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=ntlm" ",sec=krb5i" ",sec=krb5" ",iocharset=utf8"; do
+                for SECVERS in ",sec=ntlmi" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=ntlm" ",sec=krb5i" ",sec=krb5" ",iocharset=utf8" ",noserverino"; do
                     mount -t cifs -o "rw,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS" "$disk" /mnt/"$disk" name 2>/dev/null && MOUNTED=true && break 2 && break || MOUNTED=false
                 done
             done
