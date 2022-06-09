@@ -6,7 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Open source password management solution",
-  "init": true,
+  "init": false,
   "map": [
     "ssl"
   ],
