@@ -49,5 +49,5 @@
   "startup": "services",
   "url": "https://github.com/AnalogJ/scrutiny",
   "version": "2ab714f5-ls35",
-  "udev": true,
+  "udev": true
 }
