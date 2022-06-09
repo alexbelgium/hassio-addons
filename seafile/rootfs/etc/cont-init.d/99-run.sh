@@ -12,9 +12,9 @@ sed -i "s|USE_HTTPS=1|USE_HTTPS=0|g" /.env
 sed -i "s|SEAFILE_CONF_DIR=./seafile/conf|SEAFILE_CONF_DIR=$(bashio::config 'data_location')/conf|g" "$ENVFILE"
 sed -i "s|SEAFILE_LOGS_DIR=./seafile/logs|SEAFILE_LOGS_DIR=$(bashio::config 'data_location')/logs|g" "$ENVFILE"
 sed -i "s|SEAFILE_DATA_DIR=./seafile/seafile-data|SEAFILE_DATA_DIR=$(bashio::config 'data_location')/seafile-data|g" "$ENVFILE"
-sed -i "s|SEAFILE_SEAHUB_DIR=./seafile/seahub-data|SEAFILE_SEAHUB_DIR=$(bashio::config 'data_location'/seahub-data)|g" "$ENVFILE"
-sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SSEAFILE_SQLITE_DIR=$(bashio::config 'data_location'/sqlite)|g" "$ENVFILE"
-sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$(bashio::config 'data_location'/db)|g" "$ENVFILE"
+sed -i "s|SEAFILE_SEAHUB_DIR=./seafile/seahub-data|SEAFILE_SEAHUB_DIR=$(bashio::config 'data_location')/seahub-data|g" "$ENVFILE"
+sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SSEAFILE_SQLITE_DIR=$(bashio::config 'data_location')/sqlite|g" "$ENVFILE"
+sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$(bashio::config 'data_location')/db|g" "$ENVFILE"
 if bashio::config.has_value "PUID"; then sed -i "s|PUID=1000|PUID=$(bashio::config 'PUID')|g" "$ENVFILE"; fi
 if bashio::config.has_value "PGID"; then sed -i "s|PGID=1000|PGID=$(bashio::config 'PGID')|g" "$ENVFILE"; fi
 if bashio::config.has_value "TZ"; then sed -i "s|TZ=Europe/Zurich|TZ=$(bashio::config 'TZ')|g" "$ENVFILE"; fi
