@@ -1,10 +1,7 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
-echo "test ongoing"
-sleep 300
-
-cp /opt/seafile/.env.example /opt/seafile/.env
+cp /defaults/.env.example /.env
 
 ####################
 # GLOBAL VARIABLES #
