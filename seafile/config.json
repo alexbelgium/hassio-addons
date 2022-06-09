@@ -74,7 +74,7 @@
   "schema": {
     "PUID": "int",
     "PGID": "int",
-    "TZ": "str",
+    "TZ": "str?",
     "database": "list(sqlite|mariadb_addon)",
     "data_location": "str",
     "seafile_server_letsencrypt": "bool?",
