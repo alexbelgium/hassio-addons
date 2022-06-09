@@ -1,4 +1,5 @@
 #!/usr/bin/env bashio
+# shellcheck shell=bash
 
 cp /opt/seafile/.env.example /opt/seafile/.env
 
