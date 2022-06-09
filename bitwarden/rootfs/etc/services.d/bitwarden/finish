@@ -1,9 +1,12 @@
-#!/usr/bin/execlineb -S0
-# ==============================================================================
-# Home Assistant Community Add-on: Bitwarden
-# Take down the S6 supervision tree when the server fails
-# ==============================================================================
-if { s6-test ${1} -ne 0 }
-if { s6-test ${1} -ne 256 }
+#!/command/with-contenv bashio 
+# ============================================================================== 
+# Home Assistant Community Add-on: Vaultwarden 
+# Take down the S6 supervision tree when Nginx fails 
+# ============================================================================== 
 
-s6-svscanctl -t /var/run/s6/services
+if [[ "${1}" -ne 0 ]] && [[ "${1}" -ne 256 ]]; then 
+bashio::log.warning "NGINX crashed, halting add-on" 
+/run/s6/basedir/bin/halt 
+fi 
+
+bashio::log.info "NGINX stopped, restarting..." 
