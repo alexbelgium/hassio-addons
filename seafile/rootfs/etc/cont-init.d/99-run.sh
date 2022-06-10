@@ -1,5 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
+# shellcheck disable=SC2155
 
 ###################################
 # Export all addon options as env #
@@ -28,7 +29,7 @@ for KEYS in "${arr[@]}"; do
     export "${KEYS}=${VALUE//[\"\']/}"
     # Export the variable to run scripts
     sed -i "1a export $line" /home/seafile/*.sh 2>/dev/null    
-    find /opt/seafile -name *.sh | xargs sed -i "1a export $line"   
+    find /opt/seafile -name '*.sh' -print0 | xargs -0 sed -i "1a export $line"   
 done
 
 #################
