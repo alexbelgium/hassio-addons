@@ -67,7 +67,7 @@
   },
   "ports_description": {
     "8000/tcp": "Seahub",
-    "8000/tcp": "File server"
+    "8082/tcp": "File server"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -93,6 +93,6 @@
   ],
   "slug": "seafile",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
-  "version": "1.1",
-  "webui": "http://[HOST]:[PORT:8000]"
+  "version": "1.0",
+  "webui": "http://[HOST]:[PORT:80]"
 }
