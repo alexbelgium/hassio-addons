@@ -37,18 +37,19 @@ chmod -R 755 "$DATA_LOCATION"
 
 echo "Creating symlink"
 ln -sf "$DATA_LOCATION" /shared
-#cp -n /opt/seafile/data "$DATA_LOCATION"
-#rm -r /opt/seafile/data
-#ln -sf /shared /opt/seafile/data
 
-#sed -i "s|/shared|$DATA_LOCATION|g" "/docker_entrypoint.sh"
-#sed -i "s|/shared|$DATA_LOCATION|g" "/scripts/*"
 sed -i "s|SEAFILE_CONF_DIR=./seafile/conf|SEAFILE_CONF_DIR=$DATA_LOCATION/conf|g" "$ENVFILE"
+sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" *.sh
 sed -i "s|SEAFILE_LOGS_DIR=./seafile/logs|SEAFILE_LOGS_DIR=$DATA_LOCATION/logs|g" "$ENVFILE"
+sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" *.sh
 sed -i "s|SEAFILE_DATA_DIR=./seafile/seafile-data|SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data|g" "$ENVFILE"
+sed -i "1a export SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data" *.sh
 sed -i "s|SEAFILE_SEAHUB_DIR=./seafile/seahub-data|SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data|g" "$ENVFILE"
-sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SSEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite|g" "$ENVFILE"
+sed -i "1a export SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data" *.sh
+sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite|g" "$ENVFILE"
+sed -i "1a export SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite" *.sh
 sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$DATA_LOCATION/db|g" "$ENVFILE"
+sed -i "1a export DATABASE_DIR=$DATA_LOCATION/db" *.sh
 
 ###################
 # Define database #
@@ -61,6 +62,7 @@ case $(bashio::config 'database') in
     # Use sqlite
     sqlite)
         sed -i "s|SQLITE=0|SQLITE=1|g" "$ENVFILE"
+        sed -i "1a export SQLITE=1" *.sh
     ;;
     
     # Use mariadb
