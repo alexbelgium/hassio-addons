@@ -6,18 +6,17 @@
 #################
 
 bashio::log.info "Setting data location"
-
 DATA_LOCATION=$(bashio::config 'data_location')
-echo "Setting permissions"
+
+echo "Check $DATA_LOCATION folder exists"
 mkdir -p "$DATA_LOCATION"
+
+echo "Setting permissions"
 chown -R "$(bashio::config 'PUID'):$(bashio::config 'PGID')" "$DATA_LOCATION"
 chmod -R 755 "$DATA_LOCATION"
 
-echo "Copying data"
-cp -n /shared "$DATA_LOCATION"
-rm -r /shared
-
 echo "Creating symlink"
+[ -d /shared ] && rm -r /shared
 ln -sf "$DATA_LOCATION" /shared
 
 #sed -i "s|/shared|$DATA_LOCATION|g" "/docker_entrypoint.sh"
