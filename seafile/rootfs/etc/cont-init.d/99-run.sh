@@ -91,7 +91,7 @@ case $(bashio::config 'database') in
         
         # Mariadb has no root user
         sed -i 's|user="root"|user="${MYSQL_USER}"|g' /home/seafile/clean_db.sh
-        sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile-mysql.sh
+        sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /opt/seafile/seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile-mysql.*
         
         # Informations 
         bashio::log.warning "This addon is using the Maria DB addon"
