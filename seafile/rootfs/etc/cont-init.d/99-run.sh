@@ -17,8 +17,9 @@ sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SSEAFILE_SQLITE_DIR=$(bashio::conf
 sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$(bashio::config 'data_location')/db|g" "$ENVFILE"
 if bashio::config.has_value "PUID"; then sed -i "s|PUID=1000|PUID=$(bashio::config 'PUID')|g" "$ENVFILE"; fi
 if bashio::config.has_value "PGID"; then sed -i "s|PGID=1000|PGID=$(bashio::config 'PGID')|g" "$ENVFILE"; fi
+if bashio::config.has_value "GUID"; then sed -i "s|GUID=1000|GUID=$(bashio::config 'PGID')|g" "$ENVFILE"; fi
 if bashio::config.has_value "TZ"; then sed -i "s|TZ=Europe/Zurich|TZ=$(bashio::config 'TZ')|g" "$ENVFILE"; fi
-if bashio::config.has_value "SEAFILE_SERVER_HOSTNAME"; then sed -i "s|URL=your.domain|URL=$(bashio::config 'SEAFILE_SERVER_HOSTNAME')|g" "$ENVFILE"; fi
+if bashio::config.has_value "SERVER_IP"; then sed -i "s|URL=your.domain|URL=$(bashio::config 'SERVER_IP')|g" "$ENVFILE"; fi
 if bashio::config.has_value "SEAFILE_ADMIN_EMAIL"; then sed -i "s|SEAFILE_ADMIN_EMAIL=you@your.email|SEAFILE_ADMIN_EMAIL=$(bashio::config 'SEAFILE_ADMIN_EMAIL')|g" "$ENVFILE"; fi
 
 ###################
