@@ -18,11 +18,13 @@ chown -R "$(bashio::config 'PUID'):$(bashio::config 'PGID')" "$DATA_LOCATION"
 chmod -R 755 "$DATA_LOCATION"
 
 echo "Creating symlink"
-[ -d /shared ] && rm -r /shared
 ln -sf "$DATA_LOCATION" /shared
-
+#cp -n /opt/seafile/data "$DATA_LOCATION"
+#rm -r /opt/seafile/data
 #sed -i "s|/shared|$DATA_LOCATION|g" "/docker_entrypoint.sh"
 #sed -i "s|/shared|$DATA_LOCATION|g" "/scripts/*"
+#ln -sf /shared /opt/seafile/data
+
 #sed -i "s|SEAFILE_CONF_DIR=./seafile/conf|SEAFILE_CONF_DIR=$DATA_LOCATION/conf|g" "$ENVFILE"
 #sed -i "s|SEAFILE_LOGS_DIR=./seafile/logs|SEAFILE_LOGS_DIR=$DATA_LOCATION/logs|g" "$ENVFILE"
 #sed -i "s|SEAFILE_DATA_DIR=./seafile/seafile-data|SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data|g" "$ENVFILE"
