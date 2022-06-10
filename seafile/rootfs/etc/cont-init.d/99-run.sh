@@ -1,17 +1,39 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
-####################
-# GLOBAL VARIABLES #
-####################
+###################################
+# Export all addon options as env #
+###################################
 
 bashio::log.info "Setting variables"
 
+# For all keys in options.json
+JSONSOURCE="/data/options.json"
+
+# Export keys as env variables
+# echo "All addon options were exported as variables"
+mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
+
+for KEYS in "${arr[@]}"; do
+    # export key
+    VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
+    line="${KEYS}='${VALUE//[\"\']/}'"
+    # text
+    if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
+        bashio::log.blue "${KEYS}=******"
+    else
+        bashio::log.blue "$line"
+    fi
+    # Use locally
+    export "${KEYS}='${VALUE//[\"\']/}'"
+    # Export the variable to run scripts
+    sed -i "1a export $line" /home/seafile/*.sh 2>/dev/null    
+    find /opt/seafile -name *.sh | xargs sed -i "1a export $line"   
+done
+
 ENVFILE="/.env"
 ln -sf /.env /opt/seafile/.env
-
 cp /defaults/.env.example "$ENVFILE"
-
 sed -i "s|NOSWAG=0|NOSWAG=1|g" "$ENVFILE"
 sed -i "s|USE_HTTPS=1|USE_HTTPS=0|g" "$ENVFILE"
 if bashio::config.has_value "PUID"; then sed -i "s|PUID=1000|PUID=$(bashio::config 'PUID')|g" "$ENVFILE"; fi
@@ -39,17 +61,17 @@ echo "Creating symlink"
 ln -sf "$DATA_LOCATION" /shared
 
 sed -i "s|SEAFILE_CONF_DIR=./seafile/conf|SEAFILE_CONF_DIR=$DATA_LOCATION/conf|g" "$ENVFILE"
-sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
+#sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
 sed -i "s|SEAFILE_LOGS_DIR=./seafile/logs|SEAFILE_LOGS_DIR=$DATA_LOCATION/logs|g" "$ENVFILE"
-sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" /home/seafile/*.sh
+#sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" /home/seafile/*.sh
 sed -i "s|SEAFILE_DATA_DIR=./seafile/seafile-data|SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data|g" "$ENVFILE"
-sed -i "1a export SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data" /home/seafile/*.sh
+#sed -i "1a export SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data" /home/seafile/*.sh
 sed -i "s|SEAFILE_SEAHUB_DIR=./seafile/seahub-data|SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data|g" "$ENVFILE"
-sed -i "1a export SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data" /home/seafile/*.sh
+#sed -i "1a export SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data" /home/seafile/*.sh
 sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite|g" "$ENVFILE"
-sed -i "1a export SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite" /home/seafile/*.sh
+#sed -i "1a export SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite" /home/seafile/*.sh
 sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$DATA_LOCATION/db|g" "$ENVFILE"
-sed -i "1a export DATABASE_DIR=$DATA_LOCATION/db" /home/seafile/*.sh
+#sed -i "1a export DATABASE_DIR=$DATA_LOCATION/db" /home/seafile/*.sh
 
 ###################
 # Define database #
@@ -62,7 +84,7 @@ case $(bashio::config 'database') in
     # Use sqlite
     sqlite)
         sed -i "s|SQLITE=0|SQLITE=1|g" "$ENVFILE"
-        sed -i "1a export SQLITE=1" /home/seafile/*.sh
+        #sed -i "1a export SQLITE=1" /home/seafile/*.sh
     ;;
     
     # Use mariadb
@@ -82,11 +104,11 @@ case $(bashio::config 'database') in
         sed -i "s|MYSQL_USER_PASSWD=secret|MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")|g" "$ENVFILE"
         sed -i "s|MYSQL_ROOT_PASSWD=secret|MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")|g" "$ENVFILE"
 
-        sed -i "1a export MYSQL_HOST=$(bashio::services 'mysql' 'host')" /home/seafile/*.sh
-        sed -i "1a export MYSQL_PORT=$(bashio::services 'mysql' 'port')" /home/seafile/*.sh
-        sed -i "1a export MYSQL_USER=$(bashio::services "mysql" "username")" /home/seafile/*.sh
-        sed -i "1a export MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")" /home/seafile/*.sh
-        sed -i "1a export MYSQL_ROOT_PASSWD=$(bashio::services "mysql" "password")" /home/seafile/*.sh
+        #sed -i "1a export MYSQL_HOST=$(bashio::services 'mysql' 'host')" /home/seafile/*.sh
+        #sed -i "1a export MYSQL_PORT=$(bashio::services 'mysql' 'port')" /home/seafile/*.sh
+        #sed -i "1a export MYSQL_USER=$(bashio::services "mysql" "username")" /home/seafile/*.sh
+        #sed -i "1a export MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")" /home/seafile/*.sh
+        #sed -i "1a export MYSQL_ROOT_PASSWD=$(bashio::services "mysql" "password")" /home/seafile/*.sh
 
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
