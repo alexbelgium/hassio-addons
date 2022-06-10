@@ -15,8 +15,8 @@ echo "Setting permissions"
 chown -R "$(bashio::config 'PUID'):$(bashio::config 'PGID')" "$DATA_LOCATION"
 chmod -R 755 "$DATA_LOCATION"
 
-#echo "Creating symlink"
-#ln -sf "$DATA_LOCATION" /shared
+echo "Creating symlink"
+ln -sf "$DATA_LOCATION" /shared
 #cp -n /opt/seafile/data "$DATA_LOCATION"
 #rm -r /opt/seafile/data
 #ln -sf /shared /opt/seafile/data
