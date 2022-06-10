@@ -1,6 +1,36 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
+###################################
+# Export all addon options as env #
+###################################
+
+bashio::log.info "Setting variables"
+
+# For all keys in options.json
+JSONSOURCE="/data/options.json"
+
+# Export keys as env variables
+# echo "All addon options were exported as variables"
+mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
+
+for KEYS in "${arr[@]}"; do
+    # export key
+    VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
+    line="${KEYS}='${VALUE//[\"\']/}'"
+    # text
+    if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
+        bashio::log.blue "${KEYS}=******"
+    else
+        bashio::log.blue "$line"
+    fi
+    # Use locally
+    export "${KEYS}=${VALUE//[\"\']/}"
+    # Export the variable to run scripts
+    sed -i "1a export $line" /home/seafile/*.sh 2>/dev/null    
+    find /opt/seafile -name *.sh | xargs sed -i "1a export $line"   
+done
+
 #################
 # DATA_LOCATION #
 #################
@@ -18,12 +48,12 @@ chmod -R 755 "$DATA_LOCATION"
 echo "Creating symlink"
 ln -sf "$DATA_LOCATION" /shared
 
-sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
-sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" /home/seafile/*.sh
-sed -i "1a export SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data" /home/seafile/*.sh
-sed -i "1a export SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data" /home/seafile/*.sh
-sed -i "1a export SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite" /home/seafile/*.sh
-sed -i "1a export DATABASE_DIR=$DATA_LOCATION/db" /home/seafile/*.sh
+export SEAFILE_CONF_DIR="$DATA_LOCATION/conf" && sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
+export SEAFILE_LOGS_DIR="$DATA_LOCATION/logs" && sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" /home/seafile/*.sh
+export SEAFILE_DATA_DIR="$DATA_LOCATION/seafile-data" && sed -i "1a export SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data" /home/seafile/*.sh
+export SEAFILE_SEAHUB_DIR="$DATA_LOCATION/seahub-data" && sed -i "1a export SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data" /home/seafile/*.sh
+export SEAFILE_SQLITE_DIR="$DATA_LOCATION/sqlite" && sed -i "1a export SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite" /home/seafile/*.sh
+export DATABASE_DIR="$DATA_LOCATION/db" && sed -i "1a export DATABASE_DIR=$DATA_LOCATION/db" /home/seafile/*.sh
 
 ###################
 # Define database #
@@ -35,7 +65,7 @@ case $(bashio::config 'database') in
     
     # Use sqlite
     sqlite)
-        sed -i "1a export SQLITE=1" /home/seafile/*.sh
+        export "SQLITE=1" && sed -i "1a export SQLITE=1" /home/seafile/*.sh
     ;;
     
     # Use mariadb
@@ -49,11 +79,11 @@ case $(bashio::config 'database') in
         fi
         
         # Use values
-        sed -i "1a export MYSQL_HOST=$(bashio::services 'mysql' 'host')" /home/seafile/*.sh
-        sed -i "1a export MYSQL_PORT=$(bashio::services 'mysql' 'port')" /home/seafile/*.sh
-        sed -i "1a export MYSQL_USER=$(bashio::services "mysql" "username")" /home/seafile/*.sh
-        sed -i "1a export MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")" /home/seafile/*.sh
-        sed -i "1a export MYSQL_ROOT_PASSWD=$(bashio::services "mysql" "password")" /home/seafile/*.sh
+        export MYSQL_HOST="$(bashio::services 'mysql' 'host')" && sed -i "1a export MYSQL_HOST=$(bashio::services 'mysql' 'host')" /home/seafile/*.sh
+        export MYSQL_PORT="$(bashio::services 'mysql' 'port')" && sed -i "1a export MYSQL_PORT=$(bashio::services 'mysql' 'port')" /home/seafile/*.sh
+        export MYSQL_USER="$(bashio::services "mysql" "username")" && sed -i "1a export MYSQL_USER=$(bashio::services "mysql" "username")" /home/seafile/*.sh
+        export MYSQL_USER_PASSWD="$(bashio::services "mysql" "password")" && sed -i "1a export MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")" /home/seafile/*.sh
+        export MYSQL_ROOT_PASSWD="$(bashio::services "mysql" "password")" && sed -i "1a export MYSQL_ROOT_PASSWD=$(bashio::services "mysql" "password")" /home/seafile/*.sh
 
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
