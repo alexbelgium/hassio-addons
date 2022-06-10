@@ -1,4 +1,3 @@
-## &#9888; Open Request : [[Request] Mealie v1 (opened 2022-06-09)](https://github.com/alexbelgium/hassio-addons/issues/356) by [@Tommatheussen](https://github.com/Tommatheussen)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

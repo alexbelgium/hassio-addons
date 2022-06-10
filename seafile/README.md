@@ -1,3 +1,4 @@
+## &#9888; Open Request : [Req: SeaFile (opened 2022-06-05)](https://github.com/alexbelgium/hassio-addons/issues/348) by [@cokeman0](https://github.com/cokeman0)
 # Home assistant add-on: seafile
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
