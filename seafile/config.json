@@ -50,8 +50,8 @@
   ],
   "name": "Seafile",
   "options": {
-    "PUID": "1001",
-    "PGID": "1001",
+    "PUID": "1000",
+    "PGID": "1000",
     "database": "sqlite",
     "data_location": "/share/seafile",
     "URL": "seafile.example.com",
