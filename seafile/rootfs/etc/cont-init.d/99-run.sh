@@ -25,7 +25,7 @@ for KEYS in "${arr[@]}"; do
         bashio::log.blue "$line"
     fi
     # Use locally
-    export "${KEYS}='${VALUE//[\"\']/}'"
+    export "${KEYS}=${VALUE//[\"\']/}"
     # Export the variable to run scripts
     sed -i "1a export $line" /home/seafile/*.sh 2>/dev/null    
     find /opt/seafile -name *.sh | xargs sed -i "1a export $line"   
