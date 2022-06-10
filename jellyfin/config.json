@@ -101,6 +101,6 @@
   "slug": "jellyfin",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.7.7-1-ls161",
+  "version": "10.7.7-1-ls162",
   "video": true
 }
