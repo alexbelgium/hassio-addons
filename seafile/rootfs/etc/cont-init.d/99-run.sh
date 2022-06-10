@@ -44,8 +44,9 @@ case $(bashio::config 'database') in
         
         # Use values
         sed -i "s|MYSQL_HOST=db|MYSQL_HOST=$(bashio::services "mysql" "host")|g" "$ENVFILE"
-        sed -i "s|MYSQL_USER_PASSWD=secret|MYSQL_USER_PASSWD=$(bashio::services "mysql" "username")|g" "$ENVFILE"
         sed -i "s|MYSQL_ROOT_PASSWD=secret|MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")|g" "$ENVFILE"
+        sed -i "s|MARIADB_HOST=db|MYSQL_HOST=$(bashio::services "mysql" "host")|g" "$ENVFILE"
+        sed -i "s|MARIADB_ROOT_PASSWD=secret|MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")|g" "$ENVFILE"
         
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
