@@ -1,6 +1,26 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
+####################
+# GLOBAL VARIABLES #
+####################
+
+bashio::log.info "Setting variables"
+
+ENVFILE="/.env"
+ln -sf /.env /opt/seafile/.env
+
+cp /defaults/.env.example "$ENVFILE"
+
+sed -i "s|NOSWAG=0|NOSWAG=1|g" "$ENVFILE"
+sed -i "s|USE_HTTPS=1|USE_HTTPS=0|g" "$ENVFILE"
+if bashio::config.has_value "PUID"; then sed -i "s|PUID=1000|PUID=$(bashio::config 'PUID')|g" "$ENVFILE"; fi
+if bashio::config.has_value "PGID"; then sed -i "s|PGID=1000|PGID=$(bashio::config 'PGID')|g" "$ENVFILE"; fi
+if bashio::config.has_value "TZ"; then sed -i "s|TZ=Europe/Zurich|TZ=$(bashio::config 'TZ')|g" "$ENVFILE"; fi
+if bashio::config.has_value "URL"; then sed -i "s|URL=your.domain|URL=$(bashio::config 'URL')|g" "$ENVFILE"; fi
+if bashio::config.has_value "SEAFILE_ADMIN_EMAIL"; then sed -i "s|SEAFILE_ADMIN_EMAIL=you@your.email|SEAFILE_ADMIN_EMAIL=$(bashio::config 'SEAFILE_ADMIN_EMAIL')|g" "$ENVFILE"; fi
+if bashio::config.has_value "SEAFILE_ADMIN_PASSWORD"; then sed -i "s|SEAFILE_ADMIN_PASSWORD=secret|SEAFILE_ADMIN_PASSWORD=$(bashio::config 'SEAFILE_ADMIN_PASSWORD')|g" "$ENVFILE"; fi
+
 #################
 # DATA_LOCATION #
 #################
@@ -29,26 +49,6 @@ sed -i "s|SEAFILE_DATA_DIR=./seafile/seafile-data|SEAFILE_DATA_DIR=$DATA_LOCATIO
 sed -i "s|SEAFILE_SEAHUB_DIR=./seafile/seahub-data|SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data|g" "$ENVFILE"
 sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SSEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite|g" "$ENVFILE"
 sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$DATA_LOCATION/db|g" "$ENVFILE"
-
-####################
-# GLOBAL VARIABLES #
-####################
-
-bashio::log.info "Setting variables"
-
-ENVFILE="/.env"
-ln -sf /.env /opt/seafile/.env
-
-cp /defaults/.env.example "$ENVFILE"
-
-sed -i "s|NOSWAG=0|NOSWAG=1|g" "$ENVFILE"
-sed -i "s|USE_HTTPS=1|USE_HTTPS=0|g" "$ENVFILE"
-if bashio::config.has_value "PUID"; then sed -i "s|PUID=1000|PUID=$(bashio::config 'PUID')|g" "$ENVFILE"; fi
-if bashio::config.has_value "PGID"; then sed -i "s|PGID=1000|PGID=$(bashio::config 'PGID')|g" "$ENVFILE"; fi
-if bashio::config.has_value "TZ"; then sed -i "s|TZ=Europe/Zurich|TZ=$(bashio::config 'TZ')|g" "$ENVFILE"; fi
-if bashio::config.has_value "URL"; then sed -i "s|URL=your.domain|URL=$(bashio::config 'URL')|g" "$ENVFILE"; fi
-if bashio::config.has_value "SEAFILE_ADMIN_EMAIL"; then sed -i "s|SEAFILE_ADMIN_EMAIL=you@your.email|SEAFILE_ADMIN_EMAIL=$(bashio::config 'SEAFILE_ADMIN_EMAIL')|g" "$ENVFILE"; fi
-if bashio::config.has_value "SEAFILE_ADMIN_PASSWORD"; then sed -i "s|SEAFILE_ADMIN_PASSWORD=secret|SEAFILE_ADMIN_PASSWORD=$(bashio::config 'SEAFILE_ADMIN_PASSWORD')|g" "$ENVFILE"; fi
 
 ###################
 # Define database #
