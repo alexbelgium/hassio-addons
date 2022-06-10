@@ -88,6 +88,7 @@ case $(bashio::config 'database') in
 
         # Allow initial connection
         sed -i 's|port=${MYSQL_PORT})|port=${MYSQL_PORT}, user="${MYSQL_USER}")|g' /home/seafile/wait_for_db.sh
+        sed -i 's|user="root"|user="${MYSQL_USER}"|g' /home/seafile/clean_db.sh
 
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
