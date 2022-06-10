@@ -53,7 +53,7 @@ if bashio::config.has_value 'networkdisks'; then
             for SMBVERS in ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs" ",uid=0,gid=0,forceuid,forcegid" ",noforceuid,noforcegid" ",${DOMAIN:-WORKGROUP}" ",noserverino"; do
                 mount -t cifs -o "rw,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS" "$disk" /mnt/"$diskname" 2>/dev/null && MOUNTED=true && break || MOUNTED=false
                 for SECVERS in ",sec=ntlmi" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=ntlm" ",sec=krb5i" ",sec=krb5" ",iocharset=utf8" ",noserverino"; do
-                    mount -t cifs -o "rw,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS" "$disk" /mnt/"$disk" name 2>/dev/null && MOUNTED=true && break 2 && break || MOUNTED=false
+                    mount -t cifs -o "rw,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS" "$disk" /mnt/"$diskname" 2>/dev/null && MOUNTED=true && break 2 && break || MOUNTED=false
                 done
             done
         fi
@@ -65,6 +65,11 @@ if bashio::config.has_value 'networkdisks'; then
             touch "/mnt/$diskname/testaze" && rm "/mnt/$diskname/testaze" &&
             bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $SMBVERS$SECVERS" ||
             bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
+
+            # Test for serverino
+            # shellcheck disable=SC2015
+            touch "/mnt/$diskname/testaze" && cp "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" ||
+            (umount "/mnt/$diskname" && mount -t cifs -o "rw,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "noserverino option used")
 
         else
             # Mounting failed messages
