@@ -52,10 +52,9 @@
   "options": {
     "database": "sqlite",
     "data_location": "/share/seafile",
-    "seafile_server_letsencrypt": false,
     "SERVER_IP": "seafile.example.com",
-    "seafile_admin_email": "me@example.com",
-    "seafile_admin_password": "a_very_secret_password",
+    "SEAFILE_ADMIN_EMAIL": "me@example.com",
+    "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
     "PUID": 0,
     "PGID": 0,
     "TZ": "Europe/Paris"
