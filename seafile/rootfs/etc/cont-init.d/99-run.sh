@@ -21,8 +21,8 @@ ln -sf "$DATA_LOCATION" /shared
 #rm -r /opt/seafile/data
 #ln -sf /shared /opt/seafile/data
 
-sed -i "s|/shared|$DATA_LOCATION|g" "/docker_entrypoint.sh"
-sed -i "s|/shared|$DATA_LOCATION|g" "/scripts/*"
+#sed -i "s|/shared|$DATA_LOCATION|g" "/docker_entrypoint.sh"
+#sed -i "s|/shared|$DATA_LOCATION|g" "/scripts/*"
 sed -i "s|SEAFILE_CONF_DIR=./seafile/conf|SEAFILE_CONF_DIR=$DATA_LOCATION/conf|g" "$ENVFILE"
 sed -i "s|SEAFILE_LOGS_DIR=./seafile/logs|SEAFILE_LOGS_DIR=$DATA_LOCATION/logs|g" "$ENVFILE"
 sed -i "s|SEAFILE_DATA_DIR=./seafile/seafile-data|SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data|g" "$ENVFILE"
