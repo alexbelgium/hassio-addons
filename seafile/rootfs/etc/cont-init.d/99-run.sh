@@ -2,19 +2,21 @@
 # shellcheck shell=bash
 
 ENVFILE="/.env"
+DATA_LOCATION=$(bashio::config 'data_location')
 cp /defaults/.env.example "$ENVFILE"
+cp -n /share "$DATA_LOCATION"
 
 ####################
 # GLOBAL VARIABLES #
 ####################
 sed -i "s|NOSWAG=0|NOSWAG=1|g" /.env
 sed -i "s|USE_HTTPS=1|USE_HTTPS=0|g" /.env
-sed -i "s|SEAFILE_CONF_DIR=./seafile/conf|SEAFILE_CONF_DIR=$(bashio::config 'data_location')/conf|g" "$ENVFILE"
-sed -i "s|SEAFILE_LOGS_DIR=./seafile/logs|SEAFILE_LOGS_DIR=$(bashio::config 'data_location')/logs|g" "$ENVFILE"
-sed -i "s|SEAFILE_DATA_DIR=./seafile/seafile-data|SEAFILE_DATA_DIR=$(bashio::config 'data_location')/seafile-data|g" "$ENVFILE"
-sed -i "s|SEAFILE_SEAHUB_DIR=./seafile/seahub-data|SEAFILE_SEAHUB_DIR=$(bashio::config 'data_location')/seahub-data|g" "$ENVFILE"
-sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SSEAFILE_SQLITE_DIR=$(bashio::config 'data_location')/sqlite|g" "$ENVFILE"
-sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$(bashio::config 'data_location')/db|g" "$ENVFILE"
+sed -i "s|SEAFILE_CONF_DIR=./seafile/conf|SEAFILE_CONF_DIR=$DATA_LOCATION/conf|g" "$ENVFILE"
+sed -i "s|SEAFILE_LOGS_DIR=./seafile/logs|SEAFILE_LOGS_DIR=$DATA_LOCATION/logs|g" "$ENVFILE"
+sed -i "s|SEAFILE_DATA_DIR=./seafile/seafile-data|SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data|g" "$ENVFILE"
+sed -i "s|SEAFILE_SEAHUB_DIR=./seafile/seahub-data|SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data|g" "$ENVFILE"
+sed -i "s|SEAFILE_SQLITE_DIR=./seafile/sqlite|SSEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite|g" "$ENVFILE"
+sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$DATA_LOCATION/db|g" "$ENVFILE"
 if bashio::config.has_value "PUID"; then sed -i "s|PUID=1000|PUID=$(bashio::config 'PUID')|g" "$ENVFILE"; fi
 if bashio::config.has_value "PGID"; then sed -i "s|PGID=1000|PGID=$(bashio::config 'PGID')|g" "$ENVFILE"; fi
 if bashio::config.has_value "TZ"; then sed -i "s|TZ=Europe/Zurich|TZ=$(bashio::config 'TZ')|g" "$ENVFILE"; fi
@@ -22,7 +24,7 @@ if bashio::config.has_value "URL"; then sed -i "s|URL=your.domain|URL=$(bashio::
 if bashio::config.has_value "SEAFILE_ADMIN_EMAIL"; then sed -i "s|SEAFILE_ADMIN_EMAIL=you@your.email|SEAFILE_ADMIN_EMAIL=$(bashio::config 'SEAFILE_ADMIN_EMAIL')|g" "$ENVFILE"; fi
 
 # Correct data location
-sed -i "s|/shared|$(bashio::config 'data_location')|g" "/docker_entrypoint.sh"
+sed -i "s|/shared|$DATA_LOCATION|g" "/docker_entrypoint.sh"
 
 ###################
 # Define database #
