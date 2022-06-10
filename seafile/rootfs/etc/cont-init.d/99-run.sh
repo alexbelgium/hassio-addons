@@ -62,7 +62,7 @@ case $(bashio::config 'database') in
     # Use sqlite
     sqlite)
         sed -i "s|SQLITE=0|SQLITE=1|g" "$ENVFILE"
-        sed -i "1a export SQLITE=1" *.sh
+        sed -i "1a export SQLITE=1" /opt/seafile/sea*/*.sh
     ;;
     
     # Use mariadb
