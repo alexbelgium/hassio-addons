@@ -86,10 +86,14 @@ case $(bashio::config 'database') in
         export MYSQL_USER_PASSWD="$(bashio::services "mysql" "password")" && sed -i "1a export MYSQL_USER_PASSWD=$(bashio::services 'mysql' 'password')" /home/seafile/*.sh
         export MYSQL_ROOT_PASSWD="$(bashio::services "mysql" "password")" && sed -i "1a export MYSQL_ROOT_PASSWD=$(bashio::services 'mysql' 'password')" /home/seafile/*.sh
 
-        # Allow initial connection
+        # Mariadb requires a user
         sed -i 's|port=${MYSQL_PORT})|port=${MYSQL_PORT}, user="${MYSQL_USER}")|g' /home/seafile/wait_for_db.sh
+        
+        # Mariadb has no root user
         sed -i 's|user="root"|user="${MYSQL_USER}"|g' /home/seafile/clean_db.sh
-
+        sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile$MYSQL.sh
+        
+        # Informations 
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
