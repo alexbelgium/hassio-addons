@@ -21,6 +21,9 @@ if bashio::config.has_value "TZ"; then sed -i "s|TZ=Europe/Zurich|TZ=$(bashio::c
 if bashio::config.has_value "URL"; then sed -i "s|URL=your.domain|URL=$(bashio::config 'URL')|g" "$ENVFILE"; fi
 if bashio::config.has_value "SEAFILE_ADMIN_EMAIL"; then sed -i "s|SEAFILE_ADMIN_EMAIL=you@your.email|SEAFILE_ADMIN_EMAIL=$(bashio::config 'SEAFILE_ADMIN_EMAIL')|g" "$ENVFILE"; fi
 
+# Correct data location
+sed -i "s|/shared|$(bashio::config 'data_location')|g" "/docker_entrypoint.sh"
+
 ###################
 # Define database #
 ###################
