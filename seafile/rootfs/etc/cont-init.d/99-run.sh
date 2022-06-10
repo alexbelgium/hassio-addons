@@ -79,9 +79,11 @@ case $(bashio::config 'database') in
         sed -i "s|MYSQL_HOST=db|MYSQL_HOST=$(bashio::services "mysql" "host")|g" "$ENVFILE"
         sed -i "s|MYSQL_PORT=3306|MYSQL_PORT=$(bashio::services "mysql" "port")|g" "$ENVFILE"
         sed -i "s|MYSQL_ROOT_PASSWD=secret|MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")|g" "$ENVFILE"
+
         sed -i "1a export MYSQL_HOST=$(bashio::services 'mysql' 'host')" /home/seafile/*.sh
         sed -i "1a export MYSQL_PORT=$(bashio::services 'mysql' 'port')" /home/seafile/*.sh
-        sed -i "1a export MYSQL_USER_PASSWD=$(bashio::services "mysql" "password")" /home/seafile/*.sh
+        sed -i "1a export MYSQL_USER_PASSWD=$(bashio::services "mysql" "username")" /home/seafile/*.sh
+        sed -i "1a export MYSQL_USER=$(bashio::services "mysql" "user")" /home/seafile/*.sh
 
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
