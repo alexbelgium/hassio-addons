@@ -53,18 +53,21 @@
     "database": "sqlite",
     "data_location": "/share/seafile",
     "seafile_server_letsencrypt": false,
-    "seafile_server_hostname": "seafile.example.com",
+    "SERVER_IP": "seafile.example.com",
     "seafile_admin_email": "me@example.com",
     "seafile_admin_password": "a_very_secret_password",
     "PUID": 0,
-    "PGID": 0
+    "PGID": 0,
+    "TZ": "Europe/Paris"
   },
   "panel_icon": "mdi:library",
   "ports": {
-    "80/tcp": 8077
+    "8000/tcp": 8000,
+    "8082/tcp": 8082    
   },
   "ports_description": {
-    "80/tcp": "seafile webui"
+    "8000/tcp": "Seahub",
+    "8000/tcp": "File server"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -91,6 +94,6 @@
   ],
   "slug": "seafile",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
-  "version": "1.2",
+  "version": "1.0",
   "webui": "http://[HOST]:[PORT:80]"
 }
