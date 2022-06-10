@@ -50,13 +50,13 @@
   ],
   "name": "Seafile",
   "options": {
+    "PUID": "1001",
+    "PGID": "1001",
     "database": "sqlite",
     "data_location": "/share/seafile",
-    "SERVER_IP": "seafile.example.com",
+    "URL": "seafile.example.com",
     "SEAFILE_ADMIN_EMAIL": "me@example.com",
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
-    "PUID": 0,
-    "PGID": 0,
     "TZ": "Europe/Paris"
   },
   "panel_icon": "mdi:library",
@@ -80,8 +80,8 @@
     "database": "list(sqlite|mariadb_addon)",
     "data_location": "str",
     "URL": "str",
-    "seafile_admin_email": "email",
-    "seafile_admin_password": "str",
+    "SEAFILE_ADMIN_EMAIL": "email",
+    "SEAFILE_ADMIN_PASSWORD": "str",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
@@ -92,6 +92,6 @@
   ],
   "slug": "seafile",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
-  "version": "1.9",
+  "version": "2.0",
   "webui": "http://[HOST]:[PORT:80]"
 }
