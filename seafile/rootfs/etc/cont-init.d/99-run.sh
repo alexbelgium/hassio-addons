@@ -1,6 +1,8 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
+sleep 300
+
 #################
 # DATA_LOCATION #
 #################
