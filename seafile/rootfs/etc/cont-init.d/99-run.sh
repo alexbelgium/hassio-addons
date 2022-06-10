@@ -39,6 +39,7 @@ sed -i "s|DATABASE_DIR=./db|DATABASE_DIR=$DATA_LOCATION/db|g" "$ENVFILE"
 bashio::log.info "Setting variables"
 
 ENVFILE="/.env"
+ln -sf /.env /opt/seafile/.env
 
 cp /defaults/.env.example "$ENVFILE"
 
@@ -49,6 +50,7 @@ if bashio::config.has_value "PGID"; then sed -i "s|PGID=1000|PGID=$(bashio::conf
 if bashio::config.has_value "TZ"; then sed -i "s|TZ=Europe/Zurich|TZ=$(bashio::config 'TZ')|g" "$ENVFILE"; fi
 if bashio::config.has_value "URL"; then sed -i "s|URL=your.domain|URL=$(bashio::config 'URL')|g" "$ENVFILE"; fi
 if bashio::config.has_value "SEAFILE_ADMIN_EMAIL"; then sed -i "s|SEAFILE_ADMIN_EMAIL=you@your.email|SEAFILE_ADMIN_EMAIL=$(bashio::config 'SEAFILE_ADMIN_EMAIL')|g" "$ENVFILE"; fi
+if bashio::config.has_value "SEAFILE_ADMIN_PASSWORD"; then sed -i "s|SEAFILE_ADMIN_PASSWORD=secret|SEAFILE_ADMIN_PASSWORD=$(bashio::config 'SEAFILE_ADMIN_PASSWORD')|g" "$ENVFILE"; fi
 
 ###################
 # Define database #
