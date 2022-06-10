@@ -501,6 +501,17 @@ If you want to do add the repository manually, please follow the procedure highl
 ![ingress][ingress-badge]
 ![full_access][full_access-badge]
 
+&#10003; ![image](https://api.iconify.design/mdi/library.svg) [Seafile](seafile/) : High performance file syncing and sharing, with also Markdown WYSIWYG editing, Wiki, file label and other knowledge management features
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fseafile%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fseafile%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7][armv7-badge]
+![MariaDB][mariadb-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
+
 &#10003;  [Sonarr NAS](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsonarr%2Fconfig.json)
