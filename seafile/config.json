@@ -81,7 +81,7 @@
     "data_location": "str",
     "URL": "str",
     "SEAFILE_ADMIN_EMAIL": "email",
-    "SEAFILE_ADMIN_PASSWORD": "str",
+    "SEAFILE_ADMIN_PASSWORD": "password",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
