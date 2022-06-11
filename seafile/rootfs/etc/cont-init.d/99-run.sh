@@ -28,7 +28,7 @@ for KEYS in "${arr[@]}"; do
     # Use locally
     export "${KEYS}=${VALUE//[\"\']/}"
     # Export the variable to run scripts
-    sed -i "1a export $line" /home/seafile/*.sh 2>/dev/null    
+    sed -i "1a export $line" /home/seafile/*.sh 2>/dev/null
     find /opt/seafile -name '*.sh' -print0 | xargs -0 sed -i "1a export $line"   
 done
 
@@ -91,8 +91,8 @@ case $(bashio::config 'database') in
         
         # Mariadb has no root user
         sed -i 's|user="root"|user="${MYSQL_USER}"|g' /home/seafile/clean_db.sh
-        sed -i "s|root|${MYSQL_USER}|g" /opt/seafile/seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile-mysql.*
-        sed -i "s|root|${MYSQL_USER}|g" "/root/*"
+        sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /opt/seafile/seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile-mysql.sh
+        sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /opt/seafile/seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile-mysql.py
         
         # Informations 
         bashio::log.warning "This addon is using the Maria DB addon"
