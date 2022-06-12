@@ -50,14 +50,14 @@
   ],
   "name": "Seafile",
   "options": {
-    "PUID": "1000",
     "PGID": "1000",
-    "database": "sqlite",
-    "data_location": "/share/seafile",
-    "URL": "seafile.example.com",
+    "PUID": "1000",
     "SEAFILE_ADMIN_EMAIL": "me@example.com",
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
-    "TZ": "Europe/Paris"
+    "TZ": "Europe/Paris",
+    "URL": "seafile.example.com",
+    "data_location": "/share/seafile",
+    "database": "sqlite"
   },
   "panel_icon": "mdi:library",
   "ports": {
@@ -74,16 +74,16 @@
     "NET_ADMIN"
   ],
   "schema": {
-    "PUID": "int",
     "PGID": "int",
-    "TZ": "str?",
-    "database": "list(sqlite|mariadb_addon)",
-    "data_location": "str",
-    "URL": "str",
+    "PUID": "int",
     "SEAFILE_ADMIN_EMAIL": "email",
     "SEAFILE_ADMIN_PASSWORD": "password",
+    "TZ": "str?",
+    "URL": "str",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "data_location": "str",
+    "database": "list(sqlite|mariadb_addon)",
     "localdisks": "str?",
     "networkdisks": "str?"
   },

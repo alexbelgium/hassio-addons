@@ -80,9 +80,9 @@
     "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "ingress_user": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?",
-    "ingress_user": "str?"
+    "networkdisks": "str?"
   },
   "slug": "calibre-web",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre-web",
