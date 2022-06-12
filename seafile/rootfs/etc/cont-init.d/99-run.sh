@@ -29,7 +29,7 @@ for KEYS in "${arr[@]}"; do
     export "${KEYS}=${VALUE//[\"\']/}"
     # Export the variable to run scripts
     sed -i "1a export $line" /home/seafile/*.sh 2>/dev/null
-    find /opt/seafile -name '*.sh' -print0 | xargs -0 sed -i "1a export $line"   
+    find /opt/seafile -name '*.sh' -print0 | xargs -0 sed -i "1a export $line"
 done
 
 #################
@@ -63,22 +63,22 @@ export DATABASE_DIR="$DATA_LOCATION/db" && sed -i "1a export DATABASE_DIR=$DATA_
 bashio::log.info "Defining database"
 
 case $(bashio::config 'database') in
-    
-    # Use sqlite
+
+        # Use sqlite
     sqlite)
         export "SQLITE=1" && sed -i "1a export SQLITE=1" /home/seafile/*.sh
-    ;;
-    
-    # Use mariadb
+        ;;
+
+        # Use mariadb
     mariadb_addon)
         bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
         if ! bashio::services.available 'mysql'; then
             bashio::log.fatal \
-            "Local database access should be provided by the MariaDB addon"
+                "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok \
-            "Please ensure it is installed and started"
+                "Please ensure it is installed and started"
         fi
-        
+
         # Use values
         export MYSQL_HOST="$(bashio::services 'mysql' 'host')" && sed -i "1a export MYSQL_HOST=$(bashio::services 'mysql' 'host')" /home/seafile/*.sh
         export MYSQL_PORT="$(bashio::services 'mysql' 'port')" && sed -i "1a export MYSQL_PORT=$(bashio::services 'mysql' 'port')" /home/seafile/*.sh
@@ -88,17 +88,17 @@ case $(bashio::config 'database') in
 
         # Mariadb requires a user
         sed -i 's|port=${MYSQL_PORT})|port=${MYSQL_PORT}, user="${MYSQL_USER}")|g' /home/seafile/wait_for_db.sh
-        
+
         # Mariadb has no root user
         sed -i 's|user="root"|user="${MYSQL_USER}"|g' /home/seafile/clean_db.sh
         sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /opt/seafile/seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile-mysql.sh
         sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /opt/seafile/seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile-mysql.py
-        
-        # Informations 
+
+        # Informations
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
-    ;;
+        ;;
 esac
 
 ##############
