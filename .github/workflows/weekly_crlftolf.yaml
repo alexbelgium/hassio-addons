@@ -20,7 +20,7 @@ jobs:
         grep -rl '^M$' . | xargs sed 's/^M$//'
       shell: bash
     - name: Create New Pull Request If Needed
-      uses: peter-evans/create-pull-request@v3
+      uses: peter-evans/create-pull-request@v4
       with:
         title: "Github bot : crlf removed"
         branch-suffix: timestamp
