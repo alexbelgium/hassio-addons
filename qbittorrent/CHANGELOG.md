@@ -1,3 +1,6 @@
+
+## 4.4.3.1-r1-ls201 (14-06-2022)
+- Update to latest version from linuxserver/docker-qbittorrent
 - Addition of optional noserverino in smb mount code
 
 ## 4.4.3.1-r1-ls200 (06-06-2022)
