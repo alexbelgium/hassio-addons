@@ -93,7 +93,6 @@ case $(bashio::config 'database') in
         sed -i 's|user="root"|user="${MYSQL_USER}"|g' /home/seafile/clean_db.sh
         sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /opt/seafile/seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile-mysql.sh
         sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /opt/seafile/seafile-server-"$SEAFILE_SERVER_VERSION"/setup-seafile-mysql.py
-        sed -i "s|\'root\'|\'${MYSQL_USER}\'|g" /opt/seafile/seafile-server-"$SEAFILE_SERVER_VERSION"/*.sh
 
         # Informations
         bashio::log.warning "This addon is using the Maria DB addon"
