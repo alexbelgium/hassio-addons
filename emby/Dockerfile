@@ -25,6 +25,9 @@ FROM ${BUILD_FROM}
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \ 
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+ 
 RUN \
     # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
