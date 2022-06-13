@@ -51,11 +51,16 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "environment": {
+    "S6_CMD_WAIT_FOR_SERVICES": "1",
+    "S6_CMD_WAIT_FOR_SERVICES_MAXTIME": "10000"
+  },
   "host_dbus": true,
   "host_network": true,
   "ingress": true,
   "ingress_port": 0,
   "ingress_stream": true,
+  "init": false,
   "map": [
     "config:rw",
     "share:rw",
