@@ -61,6 +61,7 @@
   "ingress": true,
   "ingress_port": 0,
   "ingress_stream": true,
+  "init": false,
   "map": [
     "config:rw",
     "share:rw",
