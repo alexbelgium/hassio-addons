@@ -23,6 +23,10 @@ FROM anthonyraymond/joal:$BUILD_UPSTREAM
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 # Install Joal
 # spellcheck disable=SC2015
 # hadolint ignore=SC2015,DL4006

@@ -23,6 +23,10 @@ FROM tritruongtr/zoneminder:latest
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 # Change config location
 # hadolint ignore=DL4006
 RUN sed -i 's|/etc/zm.conf|/config/addons_config/zoneminder/zm.conf|g' /usr/local/bin/entrypoint.sh \

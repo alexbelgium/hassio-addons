@@ -21,6 +21,10 @@ FROM elasticsearch:$BUILD_UPSTREAM
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 # Data persistence
 # hadolint ignore=SC2016
 RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts..."' /usr/local/bin/docker-entrypoint.sh \

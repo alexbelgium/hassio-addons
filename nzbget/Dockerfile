@@ -22,6 +22,10 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 RUN sed -i "s|/config|/config/addons_config/nzbget|g" /etc/services.d/nzbget/run \
     && sed -i "s|/config|/config/addons_config/nzbget|g" /etc/cont-init.d/30-config \
     && sed -i "s|/config|/config/addons_config/nzbget|g" /etc/cont-init.d/10-adduser \

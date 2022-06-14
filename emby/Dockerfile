@@ -22,12 +22,13 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ENV S6_CMD_WAIT_FOR_SERVICES=1 \ 
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
- 
 RUN \
     # Allow UID and GID setting
     sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
@@ -38,7 +39,6 @@ RUN \
     # FOLDERS
     && sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
     && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config
-    #&& sed -i 's/bash/bashio/g' /etc/cont-init.d/40*
 
 ##################
 # 3 Install apps #

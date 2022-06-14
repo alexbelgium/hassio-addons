@@ -20,6 +20,10 @@ FROM troglobit/inadyn:latest
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 ARG BUILD_ARCH
 ENV LANG='C.UTF-8'\
     TERM='xterm-256color'\

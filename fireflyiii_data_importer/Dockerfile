@@ -23,6 +23,10 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 #ENV FIREFLY_III_PATH="/data/firefly"
 #WORKDIR $FIREFLY_III_PATH
 #RUN \

@@ -22,6 +22,10 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 # MOFIFY DATA PATH
 RUN sed -i "s|config|config/transmission|g" /etc/services.d/transmission/run \
     #&& sed -i "s|config|config/transmission|g" /etc/cont-init.d/20-config \

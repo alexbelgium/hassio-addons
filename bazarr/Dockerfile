@@ -22,6 +22,10 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
     # Correct config folder

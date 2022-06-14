@@ -22,6 +22,10 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+
 RUN \
     # use /data instead of /config for hass.io environment
     sed -i "s|/config|/share/grav|g" /etc/cont-init.d/50-config \
