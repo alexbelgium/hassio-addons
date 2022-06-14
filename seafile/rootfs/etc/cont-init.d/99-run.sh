@@ -94,7 +94,7 @@ case $(bashio::config 'database') in
         echo "Adapting root name"
         sed -i 's|user="root"|user="service"|g' /home/seafile/clean_db.sh
         sed -i "s|'root'|'service'|g" /opt/seafile/*/setup-seafile-mysql.sh
-        sed -i "s|'root'|'service'|g" /opt/seafile/*/setup-seafile-mysql.py 
+        sed -i "s|'root'|'service'|g" /opt/seafile/*/setup-seafile-mysql.py
 
         # Informations
         bashio::log.warning "This addon is using the Maria DB addon"
