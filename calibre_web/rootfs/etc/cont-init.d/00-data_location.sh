@@ -31,8 +31,8 @@ fi
 
 # Set data location
 bashio::log.info "Setting data location to $LOCATION"
-sed -i "1a export HOME=$LOCATION" /etc/services.d/web/run
-sed -i "1a export FM_HOME=$LOCATION" /etc/services.d/web/run
+sed -i "1a export HOME=$LOCATION" /etc/services.d/*/run
+sed -i "1a export FM_HOME=$LOCATION" /etc/services.d/*/run
 sed -i "s|/config/addons_config/calibre-web|$LOCATION|g" /defaults/*
 sed -i "s|/config/addons_config/calibre-web|$LOCATION|g" /etc/cont-init.d/*
 sed -i "s|/config/addons_config/calibre-web|$LOCATION|g" /etc/services.d/*/run
