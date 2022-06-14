@@ -6,6 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted Plex Request and user management system",
+  "init": false,
   "map": [
     "config:rw"
   ],

@@ -15,6 +15,7 @@
   "full_access": true,
   "image": "ghcr.io/alexbelgium/scrutiny-fa-{arch}",
   "ingress": true,
+  "init": false,
   "name": "Scrutiny (Full Access)",
   "options": {
     "PGID": 0,

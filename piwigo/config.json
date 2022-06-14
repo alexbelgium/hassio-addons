@@ -41,6 +41,7 @@
   "environment": {
     "PWG_LOCAL_DIR": "/data"
   },
+  "init": false,
   "map": [
     "media:rw",
     "share:rw",

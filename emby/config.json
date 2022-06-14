@@ -58,10 +58,10 @@
     "/dev/nvme2"
   ],
   "host_network": true,
+  "init": false,
   "ingress": true,
   "ingress_port": 0,
   "ingress_stream": true,
-  "init": false,
   "map": [
     "config:rw",
     "share:rw",

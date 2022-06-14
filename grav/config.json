@@ -7,6 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Fast, Simple, and Flexible, file-based Web-platform",
   "devices": [],
+  "init": false,
   "map": [
     "share:rw",
     "media:rw",

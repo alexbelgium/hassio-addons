@@ -54,6 +54,7 @@
     "version": "docker"
   },
   "host_network": true,
+  "init": false,
   "map": [
     "share:rw",
     "media:rw",

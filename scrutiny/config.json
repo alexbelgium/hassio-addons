@@ -48,6 +48,7 @@
     "SCRUTINY_WEB": "true"
   },
   "ingress": true,
+  "init": false,
   "name": "Scrutiny",
   "options": {
     "PGID": 0,

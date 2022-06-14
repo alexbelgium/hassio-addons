@@ -41,6 +41,7 @@
   ],
   "hassio_api": true,
   "ingress_port": 0,
+  "init": false,
   "map": [
     "share:rw",
     "media:rw",

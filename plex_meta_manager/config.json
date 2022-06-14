@@ -8,6 +8,7 @@
   "description": "Python script to update metadata information for movies, shows, and collections as well as automatically build collections",
   "devices": [],
   "image": "ghcr.io/alexbelgium/plex-media-manager-{arch}",
+  "init": false,
   "map": [
     "config:rw"
   ],

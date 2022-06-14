@@ -11,6 +11,7 @@
     "PGID": "0",
     "PUID": "0"
   },
+  "init": false,
   "map": [
     "config:rw"
   ],

@@ -43,6 +43,7 @@
     "PUID": "0"
   },
   "homeassistant": "0.92.0b2",
+  "init": false,
   "map": [
     "config:rw",
     "share:rw",

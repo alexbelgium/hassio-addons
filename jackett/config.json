@@ -6,6 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "translates queries from apps (Sonarr, SickRage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
+  "init": false,
   "environment": {
     "PGID": "0",
     "PUID": "0"

@@ -38,6 +38,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "init": false,
   "environment": {
     "CALIBRE_CONFIG_DIRECTORY": "/config/addons_config/calibre",
     "FM_HOME": "/config/addons_config/calibre",
