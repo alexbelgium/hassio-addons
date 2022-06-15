@@ -1,0 +1,29 @@
+# yamllint disable rule:line-length
+---
+name: Make scripts executable
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  chmod_execute:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+    - name: Run script file
+      id: chmod
+      run: |
+        find . -name *.sh -print0 | xargs -0 chmod +x && \
+        grep -r '#!/' . -print0 | xargs -0 chmod +x
+      shell: bash
+    - name: Commit if needed
+      if: steps.sort.outputs.changed != ''
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: "Github bot : script executable"
+        default_author: github_actions
