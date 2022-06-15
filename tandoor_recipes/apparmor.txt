@@ -21,12 +21,6 @@ profile tandoor_recipes_addon flags=(attach_disconnected,mediate_deleted) {
 
 
 # S6-Overlay
-  /init ix,
-  /run/{s6,s6-rc*,service}/** ix,
-  /package/** ix,
-  /command/** ix,,
-  /run/{,**} rwk,
-  /dev/tty rw,
   /bin/** ix,
   /usr/bin/** ix,
   /usr/lib/bashio/** ix,
