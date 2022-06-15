@@ -5,22 +5,8 @@ LOCATION=$(bashio::config 'data_location')
 
 # Data remanence for /teamspeak/save
 if [ -d /teamspeak/save ]; then
-  cp -rn /teamspeak/save/* "$LOCATION"/
+  cp -rn /teamspeak/save/* "$LOCATION"/ || true
   rm -r /teamspeak/save
 fi
-mkdir -p "$LOCATION"
-ln -sf "$LOCATION" /teamspeak/save
-
-# Data remanence for /data
-#if [ -d /data ]; then
-#  cp -rn /data/* "$LOCATION"/
-#  rm -r /data
-#fi
-#mkdir -p "$LOCATION"
-#rm -r /data
-#ln -sf "$LOCATION" /data
-
-# Persmissions
-chown -R 503:503 "$LOCATION"
-chmod -R 777 "$LOCATION"
-chmod 777 "${dirname LOCATION}"
+ln -sf /data /teamspeak/save
+chmod -R 777 /data
