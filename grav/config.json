@@ -32,6 +32,6 @@
   },
   "slug": "grav",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.7.33",
+  "version": "1.7.34",
   "webui": "http://[HOST]:[PORT:80]"
 }
