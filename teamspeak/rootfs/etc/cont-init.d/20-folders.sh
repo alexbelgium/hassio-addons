@@ -6,7 +6,7 @@ if [ -d /teamspeak/save ]; then
   cp -rn /teamspeak/save/* /data
   rm -r /teamspeak/save
 fi
-mkdir -p /teamspeak
+mkdir -p /teamspeak/save
 ln -sf /data /teamspeak/save
 #chown -R PUID:GUID /data
 chmod -R 777 /data
