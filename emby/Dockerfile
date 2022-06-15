@@ -38,7 +38,8 @@ RUN \
     \
     # FOLDERS
     && sed -i "s|/config|/emby|g" /etc/services.d/emby/run \
-    && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config
+    && sed -i "s|/config|/emby|g" /etc/cont-init.d/30-config \
+    && sed -i 's/bash/bashio/g' /etc/cont-init.d/*
 
 ##################
 # 3 Install apps #
