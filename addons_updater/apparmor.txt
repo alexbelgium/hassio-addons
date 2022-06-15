@@ -15,6 +15,12 @@ profile addon_updater flags=(attach_disconnected,mediate_deleted) {
   network netlink raw,
 
   # S6-Overlay
+  /init ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,,
+  /run/{,**} rwk,
+  /dev/tty rw,
   /init rix,
   /bin/** ix,
   /usr/bin/** ix,
