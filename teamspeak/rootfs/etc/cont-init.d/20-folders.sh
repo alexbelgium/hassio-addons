@@ -8,7 +8,7 @@ if [ -d /teamspeak/save ]; then
 fi
 mkdir /teamspeak
 ln -sf /data /teamspeak/save
-chown -R 533:533 /data
+chown -R PUID:GUID /data
 chmod -R 777 /data
-chown -R 533:533 /teamspeak
+chown -R PUID:GUID /data
 chmod -R 777 /teamspeak
