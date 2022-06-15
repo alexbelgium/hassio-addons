@@ -21,9 +21,11 @@ jobs:
         find . -name *.sh -print0 | xargs -0 chmod +x && \
         grep -rl '#!/' . | xargs chmod +x
       shell: bash
-    - name: Commit if needed
-      if: steps.sort.outputs.changed != ''
-      uses: EndBug/add-and-commit@v9
-      with:
-        message: "Github bot : script executable"
-        default_author: github_actions
+      - name: Create New Pull Request If Needed
+        if: steps.calibre.outputs.markdown != ''
+        uses: peter-evans/create-pull-request@v4
+        with:
+          title: "Github bot : script chmod"
+          branch-suffix: timestamp
+          commit-message: "Github bot : script chmod"
+          body: ${{ steps.calibre.outputs.markdown }}
