@@ -77,6 +77,6 @@
   "slug": "readarr_nas",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
-  "version": "nightly-0.1.1.1352-ls121",
+  "version": "nightly-0.1.1.1372-ls122",
   "webui": "http://[HOST]:[PORT:8787]"
 }
