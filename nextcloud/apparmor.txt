@@ -39,7 +39,6 @@ profile nextcloud_addon flags=(attach_disconnected,mediate_deleted) {
   /etc/services.d/** rwix,
   /etc/cont-init.d/** rwix,
   /etc/cont-finish.d/** rwix,
-  /init rix,
   /var/run/** mrwkl,
   /var/run/ mrwkl,
   /dev/i2c-1 mrwkl,
