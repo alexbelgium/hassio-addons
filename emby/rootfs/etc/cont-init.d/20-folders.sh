@@ -1,47 +1,32 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
-if [ ! -d /emby ]; then
-    echo "Creating /emby"
-    mkdir -p /emby
-    chown -R abc:abc /emby
-fi
+bashio::log.info "Updating folder structure and permission"
 
-if [ ! -d /share/storage/tv ]; then
-    echo "Creating /share/storage/tv"
-    mkdir -p /share/storage/tv
-    chown -R abc:abc /share/storage/tv
-fi
+echo "Internal location : /emby"
+mkdir -p /emby
+chown -R abc:abc /emby
 
-if [ ! -d /share/storage/movies ]; then
-    echo "Creating /share/storage/movies"
-    mkdir -p /share/storage/movies
-    chown -R abc:abc /share/storage/movies
-fi
+echo "Files location : /share/storage/tv"
+mkdir -p /share/storage/tv
+chown -R abc:abc /share/storage/tv
 
-if [ ! -d /share/emby ]; then
-    echo "Creating /share/emby"
-    mkdir -p /share/emby
-    chown -R abc:abc /share/emby
-fi
+echo "Files location : /share/storage/movies"
+mkdir -p /share/storage/movies
+chown -R abc:abc /share/storage/movies
 
-if [ -d /config/emby ] && [ ! -d /config/addons_config/emby ]; then
-    echo "Moving to new location /config/addons_config/emby"
-    mkdir -p /config/addons_config/emby
-    chown -R abc:abc /config/addons_config/emby
-    mv /config/emby/* /config/addons_config/emby/
-    rm -r /config/emby
-fi
+echo "Data location : /share/emby"
+mkdir -p /share/emby
+chown -R abc:abc /share/emby
 
-if [ ! -d /config/addons_config/emby ]; then
-    echo "Creating /config/addons_config/emby"
-    mkdir -p /config/addons_config/emby
-    chown -R abc:abc /config/addons_config/emby
-fi
+echo "Config location : /config/addons_config/emby"
+mkdir -p /config/addons_config/emby
+chown -R abc:abc /config/addons_config/emby
 
 # links
 
 if [ ! -d /emby/cache ]; then
-    echo "Creating link for /emby/cache"
+    echo "... link for /emby/cache"
     mkdir -p /share/emby/cache
     chown -R abc:abc /share/emby/cache
     ln -s /share/emby/cache /emby/cache
@@ -61,7 +46,6 @@ if [ ! -d /emby/data ]; then
     ln -s /share/emby/data /emby/data
 fi
 
-rm /emby/logs
 if [ ! -d /emby/logs ]; then
     echo "Creating link for /emby/logs"
     mkdir -p /share/emby/logs
