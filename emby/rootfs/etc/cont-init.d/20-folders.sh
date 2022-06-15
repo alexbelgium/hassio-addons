@@ -61,6 +61,7 @@ if [ ! -d /emby/data ]; then
     ln -s /share/emby/data /emby/data
 fi
 
+rm /emby/logs
 if [ ! -d /emby/logs ]; then
     echo "Creating link for /emby/logs"
     mkdir -p /share/emby/logs
