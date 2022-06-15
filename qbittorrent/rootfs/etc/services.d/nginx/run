@@ -25,7 +25,8 @@ if [ -f /currentip ]; then
   COUNTRY=$(curl -s https://ipinfo.io/$(cat /vpnip) | grep country -i -m 1 | cut -d ':' -f 2 |xargs | awk 'gsub(/,$/,x)' || true)
 
   # Inform by message
-  bashio::log.info "VPN is up and running with ip $(curl -s ipecho.net/plain), based in country : $COUNTRY"
+  bashio::log.info "VPN is up and running with ip $(cat /vpnip), based in country : $COUNTRY"
+  
   rm /vpnip
   rm /currentip
 
