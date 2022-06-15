@@ -25,6 +25,12 @@ profile calibre_addon flags=(attach_disconnected,mediate_deleted) {
   # capability sys_rawio,
 
 # S6-Overlay
+  /init ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /run/{,**} rwk,
+  /dev/tty rw,
   /bin/** ix,
   /usr/bin/** ix,
   /usr/lib/bashio/** ix,
