@@ -18,6 +18,9 @@
     "share:rw"
   ],
   "name": "Teamspeak server",
+  "options": {
+    "data_location": "/share/teamspeak"
+  },
   "ports": {
     "10011/tcp": 10011,
     "30033/tcp": 30033,
@@ -29,6 +32,9 @@
     "30033/tcp": "Filetransfer",
     "41144/tcp": "TSDNS",
     "9987/udp": "Voice"
+  },
+  "schema": {
+    "data_location": "str"
   },
   "slug": "teamspeak",
   "url": "https://github.com/alexbelgium/hassio-addons",
