@@ -19,7 +19,7 @@ jobs:
       id: chmod
       run: |
         find . -name *.sh -print0 | xargs -0 chmod +x && \
-        grep -r '#!/' . -print0 | xargs -0 chmod +x
+        grep -r '#!/' . | xargs chmod +x
       shell: bash
     - name: Commit if needed
       if: steps.sort.outputs.changed != ''
