@@ -22,4 +22,5 @@ ln -sf "$LOCATION" /teamspeak/save
 
 # Persmissions
 chown -R 503:503 "$LOCATION"
-chmod 777 "$LOCATION"
+chmod -R 777 "$LOCATION"
+chmod 777 "${dirname LOCATION}"
