@@ -1,4 +1,7 @@
 
+## 220614-jammy (16-06-2022)
+- Update to latest version from photoprism/photoprism
+
 ## 220528-jammy (31-05-2022)
 - Update to latest version from photoprism/photoprism
 
