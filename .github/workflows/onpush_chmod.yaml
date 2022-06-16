@@ -18,8 +18,9 @@ jobs:
     - name: Run script file
       id: chmod
       run: |
-        find . -name *.sh -print0 | xargs -0 chmod +x && \
-        grep -rl '#!/' . | xargs chmod +x
+        for f in `find . -name '*.sh' -o -regex './s?bin/[^/]+' -o -regex './usr/sbin/[^/]+' -o -regex './usr/lib/[^/]+' `;do 
+          ( cd `dirname $f` && git update-index --chmod=+x `basename $f` ) 
+        done 
       shell: bash
       - name: Create New Pull Request If Needed
         if: steps.calibre.outputs.markdown != ''
