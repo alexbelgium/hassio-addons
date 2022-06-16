@@ -97,10 +97,10 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Modify ovpn config
-    if ! grep -q route-nopull /etc/openvpn/config.ovpn; then
-        echo "... adding route-nopull to your config.ovpn"
-        sed -i "1a route-nopull" /etc/openvpn/config.ovpn
-    fi
+    #if ! grep -q route-nopull /etc/openvpn/config.ovpn; then
+    #    echo "... adding route-nopull to your config.ovpn"
+    #    sed -i "1a route-nopull" /etc/openvpn/config.ovpn
+    #fi
 
 else
 
