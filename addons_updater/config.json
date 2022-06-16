@@ -11,6 +11,7 @@
     "GIT_DISCOVERY_ACROSS_FILESYSTEM": "1"
   },
   "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
+  "init": false,
   "name": "Repository Updater",
   "options": {
     "gitpass": "gitpassword",
@@ -28,5 +29,5 @@
   "slug": "updater",
   "startup": "once",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater",
-  "version": "3.8.10"
+  "version": "3.8.11"
 }
