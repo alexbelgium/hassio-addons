@@ -30,8 +30,8 @@ bashio::log.info "Custom openvpn provider selected"
 
     # Copy ovpn file
     echo "Copying ovpn file to proper location"
-    mkdir /openvpn/"$OPENVPN_PROVIDER"
-    cp "$OVPNLOCATION" /openvpn/"$OPENVPN_PROVIDER"/
+    mkdir -p /etc/openvpn/"$OPENVPN_PROVIDER"
+    cp "$OVPNLOCATION" /etc/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn
 
     # Use custom provider
     echo "Exporting variable for custom provider : $OPENVPN_PROVIDER"
