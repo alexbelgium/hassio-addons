@@ -1,3 +1,4 @@
+- Use latest lastversion & base images
 - Feat: "pause: true" pauses the updates for a specific addon
 
 ## 3.*
