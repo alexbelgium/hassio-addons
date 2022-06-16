@@ -18,13 +18,15 @@ jobs:
     - name: Run script file
       id: chmod
       run: |
-        for f in `find . -name '*.sh' -o -regex './s?bin/[^/]+' -o -regex './usr/sbin/[^/]+' -o -regex './usr/lib/[^/]+' `;do ( cd `dirname $f` && git update-index --chmod=+x `basename $f` ); done
+        for f in `find . -name '*.sh' -o -regex './s?bin/[^/]+' -o -regex './usr/sbin/[^/]+' -o -regex './usr/lib/[^/]+' `;do 
+          ( cd `dirname $f` && git update-index --chmod=+x `basename $f` )
+        done
       shell: bash
-      - name: Create New Pull Request If Needed
-        if: steps.calibre.outputs.markdown != ''
-        uses: peter-evans/create-pull-request@v4
-        with:
-          title: "Github bot : script chmod"
-          branch-suffix: timestamp
-          commit-message: "Github bot : script chmod"
-          body: ${{ steps.calibre.outputs.markdown }}
+    - name: Create New Pull Request If Needed
+      if: steps.calibre.outputs.markdown != ''
+      uses: peter-evans/create-pull-request@v4
+      with:
+        title: "Github bot : script chmod"
+        branch-suffix: timestamp
+        commit-message: "Github bot : script chmod"
+        body: ${{ steps.calibre.outputs.markdown }}
