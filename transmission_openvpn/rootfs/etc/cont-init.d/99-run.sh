@@ -20,6 +20,7 @@ if bashio::config.true "OPENVPN_CUSTOM_PROVIDER"; then
 OVPNLOCATION="$(bashio::config "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION")"
 OPENVPN_PROVIDER="${OVPNLOCATION##*/}"
 OPENVPN_PROVIDER="${OPENVPN_PROVIDER%.*}"
+OPENVPN_PROVIDER="${OPENVPN_PROVIDER,,}"
 bashio::log.info "Custom openvpn provider selected"
 
     # Check that ovpn file exists
