@@ -1,10 +1,10 @@
 {
   "github_fulltag": "true",
-  "last_update": "11-06-2022",
+  "last_update": "18-06-2022",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "seafile",
   "source": "github",
   "upstream_repo": "haiwen/seahub",
-  "upstream_version": "v9.0.5-server"
+  "upstream_version": "v9.0.6-server"
 }
