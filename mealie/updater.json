@@ -1,8 +1,8 @@
 {
-  "last_update": "26-05-2022",
+  "last_update": "18-06-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "mealie",
   "source": "github",
   "upstream_repo": "hay-kot/mealie",
-  "upstream_version": "1.0.0.1"
+  "upstream_version": "1.0.0"
 }

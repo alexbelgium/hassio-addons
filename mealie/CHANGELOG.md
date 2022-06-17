@@ -1,4 +1,7 @@
 
+## 1.0.0 (18-06-2022)
+- Update to latest version from hay-kot/mealie
+
 ## 1.0.0.1 (26-05-2022)
 - Update to latest version from hay-kot/mealie
 - Add codenotary sign
