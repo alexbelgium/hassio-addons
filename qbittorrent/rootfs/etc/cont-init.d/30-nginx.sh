@@ -49,4 +49,4 @@ curl -f -s -S -O -J -L "$LATEST_RELEASE"
 unzip -o vuetorrent.zip -d / >/dev/null
 
 [ "$DEBUG" = "debug" ] && echo "Before rm"
-rm /vuetorrent.zip >/dev/null
+rm vuetorrent.zip >/dev/null
