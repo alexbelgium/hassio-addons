@@ -35,6 +35,6 @@
   "slug": "mealie",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.0",
+  "version": "1.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9925]"
 }
