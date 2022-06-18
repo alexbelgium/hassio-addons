@@ -40,6 +40,7 @@ LATEST_RELEASE=$(curl -f -s --retry 5 -L https://api.github.com/repos/wdaan/vuet
     cut -d : -f 2,3 |
     tr -d \" |
 xargs)
+[ "$DEBUG" = "debug" ] && echo "url: $LATEST_RELEASE"
 
 [ "$DEBUG" = "debug" ] && echo "Before curl"
 curl -f -s -S -O -J -L "$LATEST_RELEASE"
