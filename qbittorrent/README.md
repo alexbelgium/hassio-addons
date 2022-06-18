@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[Qbittorrent] No longer working with my VPN provider (opened 2022-06-16)](https://github.com/alexbelgium/hassio-addons/issues/368) by [@almico](https://github.com/almico)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
