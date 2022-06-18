@@ -23,7 +23,8 @@ FROM coderaiser/cloudcmd:latest
 
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=10000
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=300000 \
+    S6_SERVICES_GRACETIME=300000
 
 ##################
 # 3 Install apps #
