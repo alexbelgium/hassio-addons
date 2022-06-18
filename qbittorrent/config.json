@@ -42,7 +42,6 @@
   "environment": {
     "PGID": "0",
     "PUID": "0",
-    "S6_CMD_WAIT_FOR_SERVICES_MAXTIME": "0",
     "WEBUI_PORT": "8080"
   },
   "ingress": true,
@@ -110,5 +109,5 @@
   },
   "slug": "qbittorrent",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.4.3.1-r1-ls204"
+  "version": "4.4.3.1-r1-ls204-2"
 }
