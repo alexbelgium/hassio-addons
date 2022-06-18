@@ -1,4 +1,3 @@
-## &#9888; Open Request : [[transmission_openvpn] Support OVPN files out of the box (opened 2022-06-16)](https://github.com/alexbelgium/hassio-addons/issues/367) by [@almico](https://github.com/almico)
 # Home assistant add-on: Transmission
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
