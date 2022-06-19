@@ -27,13 +27,11 @@ jobs:
         done
       shell: bash
     - name: Create New Pull Request If Needed
-      if: steps.calibre.outputs.markdown != ''
       uses: peter-evans/create-pull-request@v4
       with:
         title: "Github bot : script chmod"
         branch-suffix: timestamp
         commit-message: "Github bot : script chmod"
-        body: ${{ steps.calibre.outputs.markdown }}
 
   run-lint:
     runs-on: ubuntu-latest
