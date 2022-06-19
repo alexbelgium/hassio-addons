@@ -3,8 +3,8 @@
 
 # Data remanence for /teamspeak/save
 if [ -d /teamspeak/save ]; then
-  cp -rn /teamspeak/save/* /data
-  rm -r /teamspeak/save
+    cp -rn /teamspeak/save/* /data
+    rm -r /teamspeak/save
 fi
 mkdir -p /teamspeak/save
 ln -sf /data /teamspeak/save

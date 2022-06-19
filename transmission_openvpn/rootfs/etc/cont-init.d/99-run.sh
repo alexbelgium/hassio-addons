@@ -17,11 +17,11 @@ echo ""
 
 if bashio::config.true "OPENVPN_CUSTOM_PROVIDER"; then
 
-OVPNLOCATION="$(bashio::config "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION")"
-OPENVPN_PROVIDER="${OVPNLOCATION##*/}"
-OPENVPN_PROVIDER="${OPENVPN_PROVIDER%.*}"
-OPENVPN_PROVIDER="${OPENVPN_PROVIDER,,}"
-bashio::log.info "Custom openvpn provider selected"
+    OVPNLOCATION="$(bashio::config "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION")"
+    OPENVPN_PROVIDER="${OVPNLOCATION##*/}"
+    OPENVPN_PROVIDER="${OPENVPN_PROVIDER%.*}"
+    OPENVPN_PROVIDER="${OPENVPN_PROVIDER,,}"
+    bashio::log.info "Custom openvpn provider selected"
 
     # Check that ovpn file exists
     if [ ! -f "$(bashio::config "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION")" ]; then
@@ -38,10 +38,10 @@ bashio::log.info "Custom openvpn provider selected"
     echo "Exporting variable for custom provider : $OPENVPN_PROVIDER"
     export OPENVPN_PROVIDER="$OPENVPN_PROVIDER"
     export OPENVPN_CONFIG="$OPENVPN_PROVIDER"
-    
+
 else
 
-bashio::log.info "Custom openvpn provider not selected, the provider $OPENVPN_PROVIDER will be used"
+    bashio::log.info "Custom openvpn provider not selected, the provider $OPENVPN_PROVIDER will be used"
 
 fi
 
