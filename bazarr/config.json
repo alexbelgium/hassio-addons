@@ -43,11 +43,11 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "init": false,
   "environment": {
     "PGID": "0",
     "PUID": "0"
   },
+  "init": false,
   "map": [
     "config:rw",
     "share:rw",
