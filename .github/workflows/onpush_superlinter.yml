@@ -1,5 +1,4 @@
 # This workflow executes several linters on changed files based on languages used in your code base whenever
-# shellcheck disable=SC2086,SC2046,SC2044
 # you push a code or open a pull request.
 #
 # You can adjust the behavior by modifying this file.
@@ -22,6 +21,7 @@ jobs:
     - name: Run script file
       id: chmod
       run: |
+        # shellcheck disable=SC2086,SC2046,SC2044
         for f in $(find . -name '*.sh' -o -regex './s?bin/[^/]+' -o -regex './usr/sbin/[^/]+' -o -regex './usr/lib/[^/]+'); do 
           ( cd "$(dirname $f)" && git update-index --chmod=+x "$(basename $f)" )
         done
