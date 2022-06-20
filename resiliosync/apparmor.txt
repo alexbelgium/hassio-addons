@@ -16,6 +16,7 @@ profile resiliosync_addon flags=(attach_disconnected,mediate_deleted) {
   network inet,
   network inet6,
   network netlink raw,
+  network unix dgram,
 
   capability setgid,
   capability setuid,

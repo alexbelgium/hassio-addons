@@ -13,6 +13,7 @@ profile addon_updater flags=(attach_disconnected,mediate_deleted) {
   network inet,
   network inet6,
   network netlink raw,
+  network unix dgram,
 
   # S6-Overlay
   /init ix,

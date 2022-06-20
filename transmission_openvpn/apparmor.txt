@@ -16,6 +16,7 @@ profile db21ed7f_transmission_openvpn flags=(attach_disconnected,mediate_deleted
   network inet,
   network inet6,
   network netlink raw,
+  network unix dgram,
 
   capability setgid,
   capability setuid,
