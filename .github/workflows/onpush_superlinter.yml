@@ -22,8 +22,7 @@ jobs:
       id: chmod
       run: |
         git ls-files --stage | grep  ".sh$" | cut -f2 | xargs -d '\n' git update-index --chmod=+x && \
-        git grep --files-with-matches 'bash' | cut -f2 | xargs -d '\n' git update-index --chmod=+x && \
-        git commit -m "Changing file permissions"
+        git grep --files-with-matches 'bash' | cut -f2 | xargs -d '\n' git update-index --chmod=+x
       shell: bash
     - name: Commit if needed
       if: steps.chmod.outputs.changed != ''
