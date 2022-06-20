@@ -26,7 +26,7 @@ jobs:
         git commit -m "Changing file permissions"
       shell: bash
     - name: Commit if needed
-      if: steps.sort.outputs.changed != ''
+      if: steps.chmod.outputs.changed != ''
       uses: EndBug/add-and-commit@v9
       with:
         message: "Github bot : script executable"
