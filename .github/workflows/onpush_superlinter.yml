@@ -21,10 +21,9 @@ jobs:
     - name: Run script file
       id: chmod
       run: |
-        # shellcheck disable=SC2086,SC2046,SC2044
-        for f in $(find . -name '*.sh' -o -regex './s?bin/[^/]+' -o -regex './usr/sbin/[^/]+' -o -regex './usr/lib/[^/]+'); do 
-          ( cd "$(dirname $f)" && git update-index --chmod=+x "$(basename $f)" )
-        done
+        git ls-files --stage | grep  ".sh$" | cut -f2 | xargs -d '\n' git update-index --chmod=+x && \
+        git grep --files-with-matches 'bash' | cut -f2 | xargs -d '\n' git update-index --chmod=+x && \
+        git commit -m "Changing file permissions"
       shell: bash
     - name: Commit if needed
       if: steps.sort.outputs.changed != ''
