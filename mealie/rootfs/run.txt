@@ -56,6 +56,13 @@ if [ -f /app/frontend/Caddyfile ]; then
     echo "Caddyfile adapted"
 fi
 
+#################
+# SET VARIABLES #
+#################
+
+PGID="$(bashio::config 'PGID')"
+PUID="$(bashio::config 'PUID')"
+
 ###############
 # PERMISSIONS #
 ###############
