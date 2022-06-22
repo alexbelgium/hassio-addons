@@ -22,6 +22,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family.
+This addon for mealie 1.0 is based on the combined [docker image](https://hub.docker.com/r/hendrix04/mealie-combined) from hendrix04.
 This addon is based on the [docker image](https://hub.docker.com/r/hkotel/mealie) from hay-kot.
 
 ## Installation
