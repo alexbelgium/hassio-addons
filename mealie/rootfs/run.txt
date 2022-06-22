@@ -50,6 +50,12 @@ if [ -f /app/Caddyfile ]; then
     echo "Caddyfile adapted"
 fi
 
+#Sets caddyfile to 9925 as default port
+if [ -f /app/frontend/Caddyfile ]; then
+    sed -i "s/3000/9925/g" /app/frontend/Caddyfile
+    echo "Caddyfile adapted"
+fi
+
 #######
 # SSL #
 #######
