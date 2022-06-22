@@ -56,6 +56,13 @@ if [ -f /app/frontend/Caddyfile ]; then
     echo "Caddyfile adapted"
 fi
 
+###############
+# PERMISSIONS #
+###############
+
+echo "Permissions adapted"
+chmod -R 777 /data
+
 #######
 # SSL #
 #######
