@@ -66,19 +66,17 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 
 RUN \
     # Add custom instructions to run.sh on armv7
-    if [ -f /app/mealie/run.sh ]; then \
-    sed -i '1d' /app/mealie/run.sh \
-    && cat /app/mealie/run.sh >> /run.txt \
-    && cat /run.txt > /app/mealie/run.sh \
-    && chmod +x /app/mealie/run.sh; fi && \
-    \
-    # Add custom instructions to run.sh on other aarch
     if [ -f /app/run.sh ]; then \
     sed -i '1d' /app/run.sh \
     && cat /app/run.sh >> /run.txt \
     && cat /run.txt > /app/run.sh \
-    && chmod +x /app/run.sh; fi
-
+    && chmod +x /app/run.sh; \
+    # Add custom instructions to run.sh on other aarch
+    elif [ -f /app/mealie/run.sh ]; then \
+    sed -i '1d' /app/mealie/run.sh \
+    && cat /app/mealie/run.sh >> /run.txt \
+    && cat /run.txt > /app/mealie/run.sh \
+    && chmod +x /app/mealie/run.sh; fi
 
 ############
 # 5 Labels #
