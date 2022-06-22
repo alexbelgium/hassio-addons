@@ -18,7 +18,9 @@
   "options": {
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "ssl": false
+    "ssl": false,
+    "PGID": 1000,
+    "PUID": 1000    
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
@@ -30,7 +32,9 @@
   "schema": {
     "certfile": "str",
     "keyfile": "str",
-    "ssl": "bool"
+    "ssl": "bool",
+    "PGID": "int",
+    "PUID": "int"
   },
   "slug": "mealie",
   "startup": "services",
