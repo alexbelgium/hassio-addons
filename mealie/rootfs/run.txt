@@ -56,12 +56,15 @@ if [ -f /app/frontend/Caddyfile ]; then
     echo "Caddyfile adapted"
 fi
 
-#################
-# SET VARIABLES #
-#################
+####################
+# Export variables #
+####################
 
-PGID="$(bashio::config 'PGID')"
-PUID="$(bashio::config 'PUID')"
+bashio::log.info "Exporting variables"
+for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
+    bashio::log.blue "$k"="$(bashio::config "$k")"
+    export "$k"="$(bashio::config "$k")"
+done
 
 ###############
 # PERMISSIONS #
