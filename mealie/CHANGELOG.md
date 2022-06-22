@@ -1,3 +1,5 @@
+- BACKUP BEFORE UPDATE
+- Breaking change : amd64 updated to mealie 1.0
 
 ## 1.0.0 (18-06-2022)
 - Update to latest version from hay-kot/mealie
