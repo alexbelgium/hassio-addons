@@ -34,7 +34,8 @@
     "keyfile": "str",
     "ssl": "bool",
     "PGID": "int",
-    "PUID": "int"
+    "PUID": "int",
+    "BASE_URL": "str?"
   },
   "slug": "mealie",
   "startup": "services",
