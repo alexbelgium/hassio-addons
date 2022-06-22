@@ -46,7 +46,6 @@ fi
 
 #Sets caddyfile to 9925 as default port
 if [ -f /app/Caddyfile ]; then sed -i "s/80/9925/g" /app/Caddyfile; fi
-if [ -f /app/frontend/Caddyfile ]; then sed -i "s/3000/9925/g" /app/frontend/Caddyfile; fi
 
 #######
 # SSL #
