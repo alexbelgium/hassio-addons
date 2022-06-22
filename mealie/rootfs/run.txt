@@ -57,5 +57,6 @@ if bashio::config.true 'ssl'; then
    bashio::log.info "Configuring ssl"
    CERTFILE=$(bashio::config 'certfile')
    KEYFILE=$(bashio::config 'keyfile')
-   sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/Caddyfile
+   if [ -f /app/Caddyfile ]; then sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/Caddyfile; fi
+   if [ -f /app/frontend/Caddyfile ]; then sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/frontend/Caddyfile; fi
 fi
