@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [[Nextcloud] Crashes out of nowhere (opened 2022-06-15)](https://github.com/alexbelgium/hassio-addons/issues/366) by [@Neotastisch](https://github.com/Neotastisch)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

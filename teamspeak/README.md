@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [Teamspeak: Addon data do not survive addon restart (opened 2022-06-14)](https://github.com/alexbelgium/hassio-addons/issues/365) by [@ogajduse](https://github.com/ogajduse)
 # Hass.io Add-ons: Teamspeak
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
