@@ -19,7 +19,9 @@ if bashio::config.has_value 'localdisks'; then
         devpath=/dev
 
         # Mount as label
-        [ "${disk:0:2}" != "sd" ] && devpath=/dev/disk/by-label
+        if [ "${disk:0:2}" != "sd" ] && [ "${disk:0:4}" != "nvme" ] ; then
+            devpath=/dev/disk/by-label
+        fi
 
         # Creates dir
         mkdir -p /mnt/"$disk"
