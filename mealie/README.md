@@ -1,4 +1,6 @@
 ## &#9888; Open Request : [[Request] Mealie v1 (opened 2022-06-09)](https://github.com/alexbelgium/hassio-addons/issues/356) by [@Tommatheussen](https://github.com/Tommatheussen)
+## Breaking change : no database migration with v1.0. Please backup your database from within Mealie before upgrading, then restore the database after upgrading. Infos here : https://hay-kot.github.io/mealie/documentation/getting-started/updating/
+
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
