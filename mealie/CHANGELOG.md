@@ -1,5 +1,5 @@
-- BACKUP BEFORE UPDATE
 - Breaking change : amd64 updated to mealie 1.0
+- You'll lose your database : first do a backup from within mealie, then restore after upgrading
 
 ## 1.0.0 (18-06-2022)
 - Update to latest version from hay-kot/mealie
