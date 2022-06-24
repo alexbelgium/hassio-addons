@@ -1,4 +1,7 @@
 
+## 3.3.18 (25-06-2022)
+- Update to latest version from flexget/flexget
+
 ## 3.3.17 (14-06-2022)
 - Update to latest version from flexget/flexget
 - Addition of media folder mapping
