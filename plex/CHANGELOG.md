@@ -1,4 +1,7 @@
 
+## 1.27.1.5916-6b0e31a64-ls121 (25-06-2022)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.27.0.5897-3940636f2-ls120 (16-06-2022)
 - Update to latest version from linuxserver/docker-plex
 
