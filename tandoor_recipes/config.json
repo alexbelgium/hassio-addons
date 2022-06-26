@@ -11,6 +11,7 @@
     "DEBUG": "0",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db"
   },
+  "ingress": true,
   "map": [
     "config:rw"
   ],
