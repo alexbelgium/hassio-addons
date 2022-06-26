@@ -16,11 +16,11 @@
   ],
   "name": "Mealie",
   "options": {
+    "PGID": 1000,
+    "PUID": 1000,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "ssl": false,
-    "PGID": 1000,
-    "PUID": 1000    
+    "ssl": false
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
@@ -30,12 +30,12 @@
     "9925/tcp": "Web interface"
   },
   "schema": {
-    "certfile": "str",
-    "keyfile": "str",
-    "ssl": "bool",
+    "BASE_URL": "str?",
     "PGID": "int",
     "PUID": "int",
-    "BASE_URL": "str?"
+    "certfile": "str",
+    "keyfile": "str",
+    "ssl": "bool"
   },
   "slug": "mealie",
   "startup": "services",
