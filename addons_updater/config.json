@@ -29,5 +29,5 @@
   "slug": "updater",
   "startup": "once",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater",
-  "version": "3.8.11"
+  "version": "3.8.12"
 }
