@@ -90,6 +90,7 @@ for f in */; do
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
+                sed -e '/.*nightly.*/d' |
                 sort -V |
                 tail -n 1
             )
