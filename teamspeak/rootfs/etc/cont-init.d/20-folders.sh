@@ -2,13 +2,12 @@
 # shellcheck shell=bash
 
 # Data remanence for /teamspeak/save
-if [ -d /teamspeak/save ]; then
-    cp -rn /teamspeak/save/* /data
-    rm -r /teamspeak/save
+if [ -d /teamspeak ]; then
+    cp -rn /teamspeak/* /data
+    rm -r /teamspeak
+    ln -sf /data /teamspeak
+    chmod -R 777 /teamspeak
 fi
-mkdir -p /teamspeak
-ln -sf /data /teamspeak/save
+
 #chown -R PUID:GUID /data
 chmod -R 777 /data
-#chown -R PUID:GUID /data
-chmod -R 777 /teamspeak
