@@ -38,6 +38,8 @@ comparison to installing any other Hass.io add-on.
 
 - Start the addon. Wait a while and check the log for any errors.
 
+In order to get the credentials for your TS server, check the container logs as it will output the serveradmin password and your ServerAdmin privilege key.
+
 ## Support
 
 If you have in issue with your installation, please be sure to checkout github.
