@@ -532,13 +532,14 @@ If you want to do add the repository manually, please follow the procedure highl
 ![ingress][ingress-badge]
 ![MariaDB][mariadb-badge]
 
-&#10003;  [Tandoor recipes](tandoor_recipes/) : recipe manager
+&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Tandoor recipes](tandoor_recipes/) : recipe manager
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftandoor_recipes%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftandoor_recipes%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+![ingress][ingress-badge]
 ![MariaDB][mariadb-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Tdarr](tdarr/) : Distributed transcode automation using FFmpeg/HandBrake
