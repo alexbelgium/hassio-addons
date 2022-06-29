@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/bashio
 # shellcheck shell=bash
 
 slug="tandoor_recipes"
