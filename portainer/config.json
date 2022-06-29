@@ -45,5 +45,5 @@
   "slug": "portainer",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.13.1-3"
+  "version": "2.14.0"
 }

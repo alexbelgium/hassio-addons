@@ -1,4 +1,7 @@
 
+## 2.14.0 (30-06-2022)
+- Update to latest version from portainer/portainer
+
 ## 2.13.1 (12-05-2022)
 - BREAKING CHANGE : database is reset and password reset to homeassistant (new portainer stronger password requirement)
 - Update to latest version from portainer/portainer
