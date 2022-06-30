@@ -9,6 +9,16 @@
 export ALLOWED_HOSTS=$(bashio::config 'ALLOWED_HOSTS') && bashio::log.blue "ALLOWED_HOSTS=$ALLOWED_HOSTS"
 export SECRET_KEY=$(bashio::config 'SECRET_KEY') && bashio::log.blue "SECRET_KEY=$SECRET_KEY"
 
+#################
+# Allow ingress #
+#################
+
+ingress_entry="$(bashio::addon.ingress_entry)"
+SCRIPT_NAME="$ingress_entry"
+JS_REVERSE_SCRIPT_PREFIX="$ingress_entry"/
+STATIC_URL="$ingress_entry"/static/
+MEDIA_URL="$ingress_entry"/media/
+
 ###################
 # Define database #
 ###################
