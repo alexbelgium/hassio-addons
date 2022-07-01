@@ -30,7 +30,7 @@
   },
   "schema": {
     "ALLOWED_HOSTS": "str?",
-    "DB_TYPE": "list(sqlite|postgresql_external|mariadb_addon)",
+    "DB_TYPE": "list(sqlite|postgresql_external)",
     "POSTGRES_DB": "str?",
     "POSTGRES_HOST": "str?",
     "POSTGRES_PASSWORD": "str?",
