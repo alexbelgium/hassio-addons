@@ -1,3 +1,6 @@
+
+## 12.3.0 (02-07-2022)
+- Update to latest version from linuxserver/docker-piwigo
 - Add codenotary sign
 
 ## 12.2.0 (04-01-2022)
