@@ -71,12 +71,16 @@
   "ports": {
     "59595/tcp": 59595,
     "59595/udp": 59595,
+    "6882/tcp": null,
+    "6882/udp": null,
     "8080/tcp": 8081
   },
   "ports_description": {
-    "6881/tcp": "Peer port",
-    "6881/udp": "Peer port",
-    "8080/tcp": "Web UI port (nor required for Ingress)"
+    "59595/tcp": "Peer port, do not change",
+    "59595/udp": "Peer port, do not change",
+    "6882/tcp": "Alternative peer port, do not change",
+    "6882/udp": "Alternative peer port, do not change",
+    "8080/tcp": "Web UI port (not required for Ingress)"
   },
   "privileged": [
     "SYS_ADMIN",
