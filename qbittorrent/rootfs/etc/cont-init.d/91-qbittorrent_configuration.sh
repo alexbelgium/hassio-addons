@@ -70,6 +70,7 @@ sed -i "$LINE i\WebUI\\\Address=*" qBittorrent.conf
 
 # sed -i '/PortRangeMin/d' qBittorrent.conf
 # sed -i "$LINE i\Connection\\\PortRangeMin=6881" qBittorrent.conf
+sed -i "s|6881|59595|g" qBittorrent.conf # Correction if required
 
 ################
 # SSL CONFIG   #
