@@ -51,11 +51,9 @@ case $(bashio::config 'DB_TYPE') in
         export DB_ENGINE=django.db.backends.mysql
         export POSTGRES_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
         export POSTGRES_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
-
-        .db && bashio::log.blue "POSTGRES_DB=$POSTGRES_DB"
         export POSTGRES_USER=$(bashio::services "mysql" "username") && bashio::log.blue "POSTGRES_USER=$POSTGRES_USER"
         export POSTGRES_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
-        export POSTGRES_DB=$(bashio::config "POSTGRES_DB") && bashio::log.blue "POSTGRES_DB=$POSTGRES_DB"
+        export POSTGRES_DB="tandoor" && bashio::log.blue "POSTGRES_DB=tandoor"
 
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
