@@ -69,8 +69,8 @@
   },
   "panel_icon": "mdi:progress-download",
   "ports": {
-    "6881/tcp": 6881,
-    "6881/udp": 6881,
+    "59595/tcp": 59595,
+    "59595/udp": 59595,
     "8080/tcp": 8081
   },
   "ports_description": {
