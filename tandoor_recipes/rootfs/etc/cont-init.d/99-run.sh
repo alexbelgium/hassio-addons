@@ -58,6 +58,14 @@ case $(bashio::config 'DB_TYPE') in
         export POSTGRES_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
         export POSTGRES_DB="tandoor" && bashio::log.blue "POSTGRES_DB=tandoor"
 
+sed -i "s|\${DB_ENGINE}|${DB_ENGINE|g" /opt/recipes/boot.sh
+sed -i "s|\${POSTGRES_HOST}|${POSTGRES_HOST}|g" /opt/recipes/boot.sh
+sed -i "s|\${POSTGRES_PORT}|${POSTGRES_PORT}|g" /opt/recipes/boot.sh
+sed -i "s|\${POSTGRES_USER}|${POSTGRES_USER}|g" /opt/recipes/boot.sh
+sed -i "s|\${POSTGRES_PASSWORD}|${POSTGRES_PASSWORD}|g" /opt/recipes/boot.sh
+sed -i "s|\${POSTGRES_DB}|${POSTGRES_DB}|g" /opt/recipes/boot.sh
+
+
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
