@@ -44,6 +44,9 @@ case $(bashio::config 'DB_TYPE') in
                 "Please ensure it is installed and started"
         fi
 
+        # Install apps
+        apk add --no-cache postgresql-libs gettext zlib libjpeg libxml2-dev libxslt-dev mysql-client mariadb-connector-c-dev mariadb-dev 
+
         # Install mysqlclient
         pip install pymysql &>/dev/null
 
