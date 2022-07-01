@@ -16,9 +16,9 @@ export SECRET_KEY=$(bashio::config 'SECRET_KEY') && bashio::log.blue "SECRET_KEY
 bashio::log.info "Setting ingress"
 ingress_entry="$(bashio::addon.ingress_entry)"
 #export SCRIPT_NAME="$ingress_entry"
-export JS_REVERSE_SCRIPT_PREFIX="${ingress_entry}/"
-export STATIC_URL="${ingress_entry}/static/"
-export MEDIA_URL="${ingress_entry}/media/"
+#export JS_REVERSE_SCRIPT_PREFIX="${ingress_entry}/"
+#export STATIC_URL="${ingress_entry}/static/"
+#export MEDIA_URL="${ingress_entry}/media/"
 
 ###################
 # Define database #
