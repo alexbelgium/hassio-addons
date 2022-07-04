@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.22.1"
+ARG BUILD_UPSTREAM="2.22.2"
 FROM hurlenko/filebrowser:v${BUILD_UPSTREAM}
 
 ##################
