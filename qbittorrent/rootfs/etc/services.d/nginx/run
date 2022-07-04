@@ -26,12 +26,30 @@ if [ -f /currentip ]; then
 
   # Inform by message
   bashio::log.info "VPN is up and running with ip $(cat /vpnip), based in country : $COUNTRY"
-  
-  rm /vpnip
-  rm /currentip
 
 fi
 
 bashio::log.info "Starting NGinx..."
 
-exec nginx
+# Check vpn is working
+if [ -f /currentip ]; then
+  exec nginx & \
+  while true; do
+    sleep 15m
+    # Get vpn ip
+    if bashio::config.true 'openvpn_alt_mode'; then
+      curl -s ipecho.net/plain > /vpnip
+    else
+      curl -s ipecho.net/plain --interface tun0 > /vpnip
+    fi
+
+    # Verify ip has changed
+    if [[ "$(cat /vpnip)" = "$(cat /currentip)" ]]; then
+      bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
+      bashio::exit.nok
+    fi
+    true
+  done
+else
+  exec nginx
+fi
