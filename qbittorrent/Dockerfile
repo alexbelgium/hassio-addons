@@ -46,7 +46,7 @@ RUN \
     \
     # Correct permissions
     && sed -i 's=/config=/config/qBittorrent || true=g' /etc/cont-init.d/10-adduser \
-    && sed -i 's=	/config=/config/qBittorrent || true=g' /etc/cont-init.d/30-config \
+    && sed -i 's=    /config=    /config/qBittorrent || true=g' /etc/cont-init.d/30-config \
     \
     # Set download folder to /share
     && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
