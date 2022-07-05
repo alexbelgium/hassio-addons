@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[Qbittorrent] Using a VPN, I can see my real IP in peers (opened 2022-07-03)](https://github.com/alexbelgium/hassio-addons/issues/377) by [@almico](https://github.com/almico)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
