@@ -43,9 +43,8 @@ xargs) || LATEST_RELEASE=$(curl -f -s --retry 5 -L https://api.github.com/repos/
     grep "browser_download_url.*zip" |
     cut -d : -f 2,3 |
     tr -d \" |
+    head -n 1 |
 xargs)
-
-LATEST_RELEASE="$(echo "${LATEST_RELEASE}" | head -1)"
 
 [ "$DEBUG" = "debug" ] && echo "url: $LATEST_RELEASE"
 
