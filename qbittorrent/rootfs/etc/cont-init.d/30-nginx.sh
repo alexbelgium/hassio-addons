@@ -39,7 +39,13 @@ LATEST_RELEASE=$(curl -f -s --retry 5 -L https://api.github.com/repos/wdaan/vuet
     grep "browser_download_url.*zip" |
     cut -d : -f 2,3 |
     tr -d \" |
+xargs) || \
+LATEST_RELEASE=$(curl -f -s --retry 5 -L https://api.github.com/repos/wdaan/vuetorrent/releases |
+    grep "browser_download_url.*zip" |
+    cut -d : -f 2,3 |
+    tr -d \" |
 xargs)
+
 [ "$DEBUG" = "debug" ] && echo "url: $LATEST_RELEASE"
 
 [ "$DEBUG" = "debug" ] && echo "Before curl"
