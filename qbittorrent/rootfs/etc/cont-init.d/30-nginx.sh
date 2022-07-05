@@ -34,21 +34,8 @@ sed -i "s|{{ .ssl }}|$(bashio::config 'ssl')|g" /etc/nginx/servers/ingress.conf
 # VUETORRENT INSTALL #
 ######################
 
-[ "$DEBUG" = "debug" ] && echo "Before var"
-LATEST_RELEASE=$(curl -f -s --retry 5 -L https://api.github.com/repos/wdaan/vuetorrent/releases/latest |
-    grep "browser_download_url.*zip" |
-    cut -d : -f 2,3 |
-    tr -d \" |
-xargs) || LATEST_RELEASE=$(curl -f -s --retry 5 -L https://api.github.com/repos/wdaan/vuetorrent/releases |
-    grep "browser_download_url.*zip" |
-    cut -d : -f 2,3 |
-    tr -d \" |
-    head -n 1)
-
-[ "$DEBUG" = "debug" ] && echo "url: $LATEST_RELEASE"
-
 [ "$DEBUG" = "debug" ] && echo "Before curl"
-curl -f -s -S -O -J -L "$LATEST_RELEASE"
+curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null  
 
 [ "$DEBUG" = "debug" ] && echo "Before unzip"
 unzip -o vuetorrent.zip -d / >/dev/null
