@@ -1,3 +1,4 @@
+- Allow import of /config/addons_config/spotweb/ownsettings.php
 - Add codenotary sign
 - Show cron jobs status in log
 - Run check-cache at bootup
