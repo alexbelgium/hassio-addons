@@ -1,4 +1,7 @@
 
+## 0.10.1 (07-07-2022)
+- Update to latest version from davidnewhall/unpackerr
+
 ## 0.10.0 (10-05-2022)
 - Update to latest version from davidnewhall/unpackerr
 
