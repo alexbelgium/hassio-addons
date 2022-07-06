@@ -51,6 +51,8 @@ Thanks to Ingress support, security and authentication is handled by Home Assist
 Spots are retrieved every hour by a background task.
 Restart the addon after entering your credentials to force the first sync of spots.
 
+To import you ownsettings.php, place the file in "/config/addons_config/ownsettings.php".
+
 [repository]: https://github.com/alexbelgium/hassio-addons
 [spotnet]: https://github.com/spotnet/spotnet/wiki
 [spotweb]: https://github.com/spotweb/spotweb
