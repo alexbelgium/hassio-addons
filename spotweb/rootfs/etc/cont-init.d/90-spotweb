@@ -74,9 +74,9 @@ fi
 } > /app/dbsettings.inc.php
 
 # Import settings if existing
-if [ -f /config/addons_config/ownsettings.php ]; then
+if [ -f /config/addons_config/spotweb/ownsettings.php ]; then
   bashio::log.warning "A file named ownsettings.php was found in /config/addons_config. It will be used instead of the addons options."
-  ln -s /config/addons_config/ownsettings.php /app/ownsettings.php
+  ln -s /config/addons_config/spotweb/ownsettings.php /app/ownsettings.php
 fi
 
 # cat /app/dbsettings.inc.php
