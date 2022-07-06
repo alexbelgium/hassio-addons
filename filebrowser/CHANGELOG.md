@@ -1,4 +1,7 @@
 
+## 2.22.3 (07-07-2022)
+- Update to latest version from hurlenko/filebrowser-docker
+
 ## 2.22.2 (05-07-2022)
 - Update to latest version from hurlenko/filebrowser-docker
 
