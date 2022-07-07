@@ -37,6 +37,8 @@ comparison to installing any other Hass.io add-on.
 
 Webui can be found at `<your-ip>:8000`.
 
+Default name `admin` password `admin`
+
 Options can be configured through two ways :
 
 - Addon options
