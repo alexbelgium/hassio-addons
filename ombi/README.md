@@ -18,8 +18,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-Self-hosted Plex Request and user management system.
-This addon is based on the [docker image](https://github.com/linuxserver/ombi) from linuxserver.io.
+[Ombi](https://github.com/Ombi-app/Ombi) is a self-hosted Plex Request and user management system.
+This addon is based on the [docker image](https://github.com/linuxserver/docker-ombi) from linuxserver.io.
 
 ## Installation
 
