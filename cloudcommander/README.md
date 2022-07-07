@@ -18,7 +18,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-Cloud Commander a file manager for the web with console and editor.
+[Cloud Commander](https://github.com/coderaiser/cloudcmd) is a file manager for the web with console and editor.
 This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cloudcmd).
 
 ## Configuration
