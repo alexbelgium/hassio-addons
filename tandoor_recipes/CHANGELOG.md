@@ -1,4 +1,3 @@
-- Ingress addition
 
 ## 1.2.7 (26-05-2022)
 - Update to latest version from TandoorRecipes/recipes
