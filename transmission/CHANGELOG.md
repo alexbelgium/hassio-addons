@@ -1,3 +1,6 @@
+
+## 3.00-r5-ls126 (09-07-2022)
+- Update to latest version from linuxserver/docker-transmission
 - Ingress addition
 
 ## 3.00-r5-ls125 (21-05-2022)
