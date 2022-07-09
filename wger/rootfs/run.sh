@@ -1,4 +1,4 @@
-#!/bin/bashio
+#!/usr/bin/env bashio
 
 chmod +x /etc/cont-init.d/*
 sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/cont-init.d/*
