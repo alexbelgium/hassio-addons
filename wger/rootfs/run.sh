@@ -14,4 +14,4 @@ ln -s "$LOCATION"/database.sqlite /home/wger/db
 python3 manage.py migrate || true
 
 echo "Launch app"
-sudo -H -u wger bash -c 'exec /home/wger/entrypoint.sh'
+su -l wger -s /bin/bash -c "exec /home/wger/entrypoint.sh"
