@@ -28,7 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 VOLUME [ "/data" ]
 
-USER root
+#USER root
 ENV FROM_EMAIL='wger Workout Manager <wger@example.com>'
 
 RUN sed -i "1a python3 manage.py migrate || true" /home/wger/entrypoint.sh \
