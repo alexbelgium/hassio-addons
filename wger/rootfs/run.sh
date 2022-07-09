@@ -14,7 +14,5 @@ ln -s "$LOCATION"/database.sqlite /home/wger/db
 
 python3 manage.py migrate || true
 
-cp -rn /home/wger/src /home/wger
-
 echo "Launch app"
-su -l wger -s /bin/sh -c "export WORKDIR=/home/wger/src && export FROM_EMAIL='wger Workout Manager <wger@example.com>' && /./home/wger/entrypoint.sh"
+su -l wger -s --preserve-environment -c "cd /home/wger/src && export FROM_EMAIL='wger Workout Manager <wger@example.com>' && exec /home/wger/entrypoint.sh"
