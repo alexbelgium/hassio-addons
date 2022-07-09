@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_VERSION
-FROM wger/devel:latest
+FROM wger/server:latest
 
 ##################
 # 2 Modify Image #
