@@ -28,7 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 VOLUME [ "/data" ]
 
-#USER root
+USER root
 
 RUN sed -i "1a ln -s /data/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
     && sed -i "1a rm /home/wger/db/database.sqlite &>/dev/null || true" /home/wger/entrypoint.sh \
