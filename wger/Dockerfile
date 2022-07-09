@@ -29,6 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 VOLUME [ "/data" ]
 
 USER root
+ENV FROM_EMAIL='wger Workout Manager <wger@example.com>'
 
 RUN sed -i "1a ls /home/wger/src" /home/wger/entrypoint.sh \
     && sed -i "1a ln -s /data/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
