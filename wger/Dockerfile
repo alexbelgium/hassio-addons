@@ -31,7 +31,7 @@ VOLUME [ "/data" ]
 USER root
 ENV FROM_EMAIL='wger Workout Manager <wger@example.com>'
 
-RUN sed -i "1a python manage.py migrate" /home/wger/entrypoint.sh \
+RUN sed -i "1a python3 manage.py migrate || true" /home/wger/entrypoint.sh \
     && sed -i "1a ln -s /data/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
     && sed -i "1a rm /home/wger/db/database.sqlite &>/dev/null || true" /home/wger/entrypoint.sh \
     && sed -i "1a touch /data/database.sqlite && chown -R wger /data && chmod -R 777 /data" /home/wger/entrypoint.sh
