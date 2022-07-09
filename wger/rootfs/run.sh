@@ -1,16 +1,16 @@
 #!/bin/bashio
 
 chmod +x /etc/cont-init.d/*
-/./etc/cont-init.d/*
+/./etc/cont-init.d/00-banner.sh
 
 LOCATION=/data
-python3 manage.py migrate || true
 mkdir -p "$LOCATION"
 touch "$LOCATION"/database.sqlite || true
 chown -R wger "$LOCATION" || true
 chmod -R 777 "$LOCATION" || true
 rm /home/wger/db/database.sqlite &>/dev/null || true
 ln -s "$LOCATION"/database.sqlite /home/wger/db
+python3 manage.py migrate || true
 
 echo "Launch app"
-su -c "/./home/wger/entrypoint.sh" -s /bin/bash wger
+sudo -H -u wger bash -c 'exec /home/wger/entrypoint.sh'
