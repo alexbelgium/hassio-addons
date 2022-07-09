@@ -13,4 +13,4 @@ rm /home/wger/db/database.sqlite &>/dev/null || true
 ln -s "$LOCATION"/database.sqlite /home/wger/db
 
 echo "Launch app"
-su -u wger bash -c /./home/wger/entrypoint.sh
+su -c "/./home/wger/entrypoint.sh" -s /bin/bash wger
