@@ -46,6 +46,9 @@ RUN sed -i "1a python3 manage.py migrate || true" /home/wger/entrypoint.sh \
 # 4 Entrypoint #
 ################
 
+RUN chmod 777 /run.sh
+CMD [ "/run.sh" ]
+
 ############
 # 5 Labels #
 ############
