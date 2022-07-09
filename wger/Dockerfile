@@ -32,7 +32,8 @@ USER root
 
 RUN sed -i "1a ln -s /data/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
     && sed -i "1a rm /home/wger/db/database.sqlite &>/dev/null || true" /home/wger/entrypoint.sh \
-    && sed -i "1a touch /data/database.sqlite && chown -R wger /data && chmod -R 777 /data" /home/wger/entrypoint.sh
+    && sed -i "1a touch /data/database.sqlite && chown -R wger /data && chmod -R 777 /data" /home/wger/entrypoint.sh \
+    && if [ ! -f /home/wger/src/settings.py ]; then cp /home/wger/src/settings*.py /home/wger/src/settings.py; fi
 
 ##################
 # 3 Install apps #
