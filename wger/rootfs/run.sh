@@ -12,7 +12,7 @@ chmod -R 777 "$LOCATION" || true
 rm /home/wger/db/database.sqlite &>/dev/null || true
 ln -s "$LOCATION"/database.sqlite /home/wger/db
 
-python3 /home/wger/src/manage.py migrate || true
+python3 manage.py migrate || true
 
 echo "Launch app"
-su -l wger -s /bin/bash -c "exec /home/wger/entrypoint.sh"
+su -l wger -s /bin/sh -c "/./home/wger/entrypoint.sh"
