@@ -19,4 +19,4 @@ chown -R wger:wger "/home/wger"
 chmod -R 777 "$LOCATION"
 
 echo "Launch app"
-su -l wger -c "/bin/sh /home/wger/entrypoint.sh"
+su -l wger -c "/usr/bin/env bash /home/wger/entrypoint.sh"
