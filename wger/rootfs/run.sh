@@ -17,7 +17,7 @@ fi
 
 chown -R wger "$LOCATION"
 chmod -R 777 "$LOCATION"
-rm /home/wger/db/database.sqlite &>/dev/null || true
+rm /home/wger/db/database.sqlite || true
 ln -s "$LOCATION"/database.sqlite /home/wger/db
 
 python3 manage.py migrate || true
