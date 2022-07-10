@@ -29,8 +29,16 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 VOLUME [ "/data" ]
 
 USER root
-ENV FROM_EMAIL='wger Workout Manager <wger@example.com>'
-ENV LOCATION=/data
+ENV FROM_EMAIL='wger Workout Manager <wger@example.com>' \
+    DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH=/home/wger/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    LOCATION=/data
+WORKDIR /home/wger/src
 
 #RUN sed -i "1a python3 manage.py migrate || true" /home/wger/entrypoint.sh \
 #    && sed -i "1a ln -s $LOCATION/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
