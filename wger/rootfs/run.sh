@@ -13,7 +13,7 @@ chmod -R 777 "$LOCATION"
 ln -s "$LOCATION"/database.sqlite /home/wger/db
 
 echo "Launch app"
-su -m wger -c "\
+su -l wger -c "\
 python3 manage.py migrate || true && \
 DOCKER_DIR=./extras/docker/development && \
 if [ -f ~/.bashrc ]; then source ~/.bashrc; fi && \
