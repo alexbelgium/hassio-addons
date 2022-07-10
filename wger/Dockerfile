@@ -42,6 +42,17 @@ export PYTHONUNBUFFERED=1 && \
 export PATH=/home/wger/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin && \
 export LOCATION=/data" /home/wger/entrypoint.sh
 
+ENV FROM_EMAIL='wger Workout Manager <wger@example.com>' \
+ENV LOCATION=/data
+    DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH=/home/wger/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    LOCATION=/data
+
 #RUN sed -i "1a python3 manage.py migrate || true" /home/wger/entrypoint.sh \
 #    && sed -i "1a ln -s $LOCATION/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
 #    && sed -i "1a if [ -f /data/database.sqlite ]; then mv -f /data/database.sqlite $LOCATION/database.sqlite; fi" /home/wger/entrypoint.sh \
