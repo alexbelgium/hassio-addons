@@ -19,7 +19,7 @@ chown -R wger:wger "/home/wger"
 chmod -R 777 "$LOCATION"
 
 echo "Launch app"
-#pip install -e .
+#pip install -e . &>/dev/null
 #exec /home/wger/entrypoint.sh
 sed -i "1a cd /home/wger/src" /home/wger/entrypoint.sh
 #sed -i "s|manage.py|/home/wger/src/manage.py|g" /home/wger/entrypoint.sh
