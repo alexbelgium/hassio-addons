@@ -10,13 +10,11 @@ mkdir -p "$LOCATION"
 touch "$LOCATION"/database.sqlite
 chown -R wger "$LOCATION"
 chmod -R 777 "$LOCATION"
-rm /home/wger/db/database.sqlite || true
 ln -s "$LOCATION"/database.sqlite /home/wger/db
-
-python3 manage.py migrate || true
 
 echo "Launch app"
 su -m wger -c "\
+python3 manage.py migrate || true && \
 DOCKER_DIR=./extras/docker/development && \
 pip3 install -e .     && \
 if [ -f ~/.bashrc ]; then source ~/.bashrc; fi && \
