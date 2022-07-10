@@ -6,16 +6,18 @@ sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/cont-init.d/*
 
 LOCATION=/data
 mkdir -p "$LOCATION"
-chown -R wger "$LOCATION"
+echo "Defining database"
+touch "$LOCATION"/database.sqlite
+ln -s "$LOCATION"/database.sqlite /home/wger/db
+echo "Defining permissions"
+chown -R wger:wger "$LOCATION"
+chown -R wger:wger "/home/wger"
 chmod -R 777 "$LOCATION"
 
 echo "Launch app"
 su -l wger -c "\
 export WORKDIR="/home/wger/src" && \
 cd /home/wger/src && \
-echo "Defining database" && \
-touch "$LOCATION"/database.sqlite && \
-ln -s "$LOCATION"/database.sqlite /home/wger/db && \
 echo "Updating database" && \
 python3 /home/wger/src/manage.py migrate || true && \
 echo "Starting app" && \
