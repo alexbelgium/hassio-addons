@@ -19,4 +19,6 @@ chown -R wger:wger "/home/wger"
 chmod -R 777 "$LOCATION"
 
 echo "Launch app"
-su -l wger -c "/usr/bin/env bash /home/wger/entrypoint.sh"
+cd /home/wger/src || true
+sed -i "s|manage.py|/home/wger/src/manage.py|g" /home/wger/entrypoint.sh
+su wger -c "/usr/bin/env bash /home/wger/entrypoint.sh"
