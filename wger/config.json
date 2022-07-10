@@ -1,7 +1,6 @@
 {
   "arch": [
-    "amd64",
-    "aarch64"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "manage your personal workouts, weight and diet plans",
