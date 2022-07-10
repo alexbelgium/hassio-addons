@@ -11,15 +11,16 @@ chmod -R 777 "$LOCATION"
 
 echo "Launch app"
 su -l wger -c "\
+export WORKDIR="/home/wger/src" && \
+cd /home/wger/src && \
 echo "Defining database" && \
 touch "$LOCATION"/database.sqlite && \
 ln -s "$LOCATION"/database.sqlite /home/wger/db && \
 echo "Updating database" && \
-python3 manage.py migrate || true && \
+python3 /home/wger/src/manage.py migrate || true && \
 echo "Starting app" && \
 DOCKER_DIR=./extras/docker/development && \
 if [ -f ~/.bashrc ]; then source ~/.bashrc; fi && \
-cd /home/wger/src && \
 export FROM_EMAIL='wger Workout Manager <wger@example.com>' && \
 export DJANGO_DB_DATABASE=/data/database.sqlite && \
 export DEBIAN_FRONTEND=noninteractive && \
