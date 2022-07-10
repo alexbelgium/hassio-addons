@@ -32,11 +32,11 @@ USER root
 ENV FROM_EMAIL='wger Workout Manager <wger@example.com>'
 ENV LOCATION=/data
 
-RUN sed -i "1a python3 manage.py migrate || true" /home/wger/entrypoint.sh \
-    && sed -i "1a ln -s $LOCATION/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
-    #&& sed -i "1a if [ -f /data/database.sqlite ]; then mv -f /data/database.sqlite $LOCATION/database.sqlite; fi" /home/wger/entrypoint.sh \
-    && sed -i "1a rm /home/wger/db/database.sqlite &>/dev/null || true" /home/wger/entrypoint.sh \
-    && sed -i "1a mkdir -p $LOCATION && touch $LOCATION/database.sqlite || true && chown -R wger $LOCATION || true && chmod -R 777 $LOCATION || true" /home/wger/entrypoint.sh
+#RUN sed -i "1a python3 manage.py migrate || true" /home/wger/entrypoint.sh \
+#    && sed -i "1a ln -s $LOCATION/database.sqlite /home/wger/db" /home/wger/entrypoint.sh \
+#    && sed -i "1a if [ -f /data/database.sqlite ]; then mv -f /data/database.sqlite $LOCATION/database.sqlite; fi" /home/wger/entrypoint.sh \
+#    && sed -i "1a rm /home/wger/db/database.sqlite &>/dev/null || true" /home/wger/entrypoint.sh \
+#    && sed -i "1a mkdir -p $LOCATION && touch $LOCATION/database.sqlite || true && chown -R wger $LOCATION || true && chmod -R 777 $LOCATION || true" /home/wger/entrypoint.sh
     
 ##################
 # 3 Install apps #
