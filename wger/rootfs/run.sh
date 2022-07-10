@@ -7,14 +7,7 @@ sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/cont-init.d/*
 LOCATION=/data
 mkdir -p "$LOCATION"
 
-if [ ! -f "$LOCATION"/database.sqlite ]; then
-  if [ -f "/home/wger/db/database.sqlite" ]; then
-    cp /home/wger/db/database.sqlite "$LOCATION"/database.sqlite
-  else
-    touch "$LOCATION"/database.sqlite
-  fi
-fi
-
+touch "$LOCATION"/database.sqlite
 chown -R wger "$LOCATION"
 chmod -R 777 "$LOCATION"
 rm /home/wger/db/database.sqlite || true
