@@ -35,7 +35,7 @@ sed -i "s|{{ .ssl }}|$(bashio::config 'ssl')|g" /etc/nginx/servers/ingress.conf
 ######################
 
 [ "$DEBUG" = "debug" ] && echo "Before curl"
-curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null  
+curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
 
 [ "$DEBUG" = "debug" ] && echo "Before unzip"
 unzip -o vuetorrent.zip -d / >/dev/null
