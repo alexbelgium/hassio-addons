@@ -9,6 +9,10 @@ mkdir -p "$LOCATION"
 echo "Defining database"
 touch "$LOCATION"/database.sqlite
 ln -s "$LOCATION"/database.sqlite /home/wger/db
+
+echo "Updating database"
+python3 manage.py migrate || true
+
 echo "Defining permissions"
 chown -R wger:wger "$LOCATION"
 chown -R wger:wger "/home/wger"
@@ -18,8 +22,6 @@ echo "Launch app"
 su -l wger -c "\
 export WORKDIR="/home/wger/src" && \
 cd /home/wger/src && \
-echo "Updating database" && \
-python3 /home/wger/src/manage.py migrate || true && \
 echo "Starting app" && \
 DOCKER_DIR=./extras/docker/development && \
 if [ -f ~/.bashrc ]; then source ~/.bashrc; fi && \
