@@ -6,15 +6,17 @@ sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/cont-init.d/*
 
 LOCATION=/data
 mkdir -p "$LOCATION"
-
-touch "$LOCATION"/database.sqlite
 chown -R wger "$LOCATION"
 chmod -R 777 "$LOCATION"
-ln -s "$LOCATION"/database.sqlite /home/wger/db
 
 echo "Launch app"
 su -l wger -c "\
+echo "Defining database" && \
+touch "$LOCATION"/database.sqlite && \
+ln -s "$LOCATION"/database.sqlite /home/wger/db && \
+echo "Updating database" && \
 python3 manage.py migrate || true && \
+echo "Starting app" && \
 DOCKER_DIR=./extras/docker/development && \
 if [ -f ~/.bashrc ]; then source ~/.bashrc; fi && \
 cd /home/wger/src && \
