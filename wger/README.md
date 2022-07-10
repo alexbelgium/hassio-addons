@@ -1,3 +1,4 @@
+# Addon currently broken
 # Hass.io Add-ons: Wger
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
