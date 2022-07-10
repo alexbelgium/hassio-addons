@@ -18,7 +18,5 @@ chown -R wger:wger "$LOCATION"
 chown -R wger:wger "/home/wger"
 chmod -R 777 "$LOCATION"
 
-/./home/wger/entrypoint.sh
-
 echo "Launch app"
 su wger -c "/bin/sh /home/wger/entrypoint.sh"
