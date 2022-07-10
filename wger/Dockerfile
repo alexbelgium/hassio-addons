@@ -28,8 +28,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 VOLUME [ "/data" ]
 
-#USER root
-#WORKDIR /home/wger/src
+USER root
+WORKDIR /home/wger/src
 
 #RUN sed -i "1a export FROM_EMAIL='wger Workout Manager <wger@example.com>' && \
 #export DEBIAN_FRONTEND=noninteractive && \
@@ -91,8 +91,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-#RUN chmod 777 /run.sh
-#CMD [ "/run.sh" ]
+RUN chmod 777 /run.sh
+CMD [ "/run.sh" ]
 
 ############
 # 5 Labels #
