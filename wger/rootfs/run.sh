@@ -18,11 +18,7 @@ python3 manage.py migrate || true
 echo "Launch app"
 su -m wger -c "\
 DOCKER_DIR=./extras/docker/development && \
-/bin/sh -c mkdir ~/media     && \
 pip3 install -e .     && \
-mkdir ~/static     && \
-mkdir ~/db/ && \
-if [ -f .env ]; then export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst); fi && \
 if [ -f ~/.bashrc ]; then source ~/.bashrc; fi && \
 cd /home/wger/src && \
 export FROM_EMAIL='wger Workout Manager <wger@example.com>' && \
