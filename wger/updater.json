@@ -1,8 +1,0 @@
-{
-  "last_update": "27-04-2022",
-  "repository": "alexbelgium/hassio-addons",
-  "slug": "wger",
-  "source": "dockerhub",
-  "upstream_repo": "wger/devel",
-  "upstream_version": "1.9"
-}
