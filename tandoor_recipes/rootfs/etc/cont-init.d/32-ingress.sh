@@ -1,5 +1,6 @@
 #!/usr/bin/bashio
 # shellcheck shell=bash
+exit 0
 
 #################
 # NGINX SETTING #
