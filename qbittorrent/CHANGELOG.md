@@ -1,4 +1,7 @@
 
+## 4.4.3.1-r1-ls206 (12-07-2022)
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ## 4.4.3.1-r1-ls205 (05-07-2022)
 - Update to latest version from linuxserver/docker-qbittorrent
 - Default port changed from 6881 to 59595 ; reset your port settings if it doesn't change
