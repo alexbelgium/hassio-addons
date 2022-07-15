@@ -35,6 +35,6 @@
   },
   "slug": "flexget",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.3.19",
+  "version": "3.3.21",
   "webui": "http://[HOST]:[PORT:5050]"
 }
