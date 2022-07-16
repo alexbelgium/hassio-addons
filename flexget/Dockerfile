@@ -27,6 +27,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=300000 \
     S6_SERVICES_GRACETIME=300000
 
+ENV FG_PLUGINS=""
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=SC2016
