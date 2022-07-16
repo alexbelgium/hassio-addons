@@ -27,8 +27,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=300000 \
     S6_SERVICES_GRACETIME=300000
 
-ENV FG_PLUGINS=""
-
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=SC2016
@@ -46,7 +44,7 @@ RUN \
     # Set password
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/20-config \
     && sed -i 's/# set FG_WEBUI_PASSWD/if bashio::config.has_value "WebuiPass"; then FG_WEBUI_PASSWD=$(bashio::config "WebuiPass"); fi/g' /etc/cont-init.d/20-config \
-    && sed -i 's/# install custom plugins/if bashio::config.has_value "FG_PLUGINS"; then FG_PLUGINS=$(bashio::config "FG_PLUGINS"); fi/g' /etc/cont-init.d/20-config
+    && sed -i 's/# install custom plugins/if bashio::config.has_value "FG_PLUGINS"; then FG_PLUGINS=$(bashio::config "FG_PLUGINS"); else FG_PLUGINS=""; fi/g' /etc/cont-init.d/20-config
 
 ##################
 # 3 Install apps #
