@@ -1,3 +1,6 @@
+
+## 0.8.2 (17-07-2022)
+- Update to latest version from yukulehe/gazpar2mqtt
 - Add codenotary sign
 - New logic for non HAos systems
 
