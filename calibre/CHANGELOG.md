@@ -1,4 +1,7 @@
 
+## v6.1.0-ls172 (17-07-2022)
+- Update to latest version from linuxserver/docker-calibre
+
 ## v6.0.0-ls172 (12-07-2022)
 - Update to latest version from linuxserver/docker-calibre
 
