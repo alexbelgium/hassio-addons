@@ -37,6 +37,8 @@ comparison to installing any other Hass.io add-on.
 
 Options : see https://github.com/haugene/docker-transmission-openvpn for documentation
 
+TRANSMISSION_V3_UPDATE: updates to v3. Remove and add all torrents due to transmission changes
+
 For setting a custom openvpn file, you should flag the "OPENVPN_CUSTOM_PROVIDER" field and reference the path of the *.ovpn file in the "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION" field.
 
 Complete transmission options are in /config/addons_config/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
