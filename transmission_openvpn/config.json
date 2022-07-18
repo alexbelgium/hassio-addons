@@ -62,7 +62,7 @@
     "TRANSMISSION_HOME": "/config/addons_config/transmission",
     "TRANSMISSION_INCOMPLETE_DIR": "/share/incomplete",
     "TRANSMISSION_WATCH_DIR": "/share/watch_dir",
-    "TRANSMISSION_WEB_UI": "transmission-web-control"
+    "TRANSMISSION_WEB_UI": "flood-for-transmission"
   },
   "panel_icon": "mdi:transmission-tower",
   "ports": {
