@@ -108,5 +108,5 @@
   "slug": "transmission_openvpn",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.0-v8"
+  "version": "4.0-v7"
 }
