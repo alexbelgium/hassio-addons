@@ -97,6 +97,7 @@
     "TRANSMISSION_INCOMPLETE_DIR": "str",
     "TRANSMISSION_WATCH_DIR": "str",
     "TRANSMISSION_WEB_UI": "list(standard|combustion|kettu|transmission-web-control|flood-for-transmission|shift)",
+    "TRANSMISSION_V3_UPDATE": "bool?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
