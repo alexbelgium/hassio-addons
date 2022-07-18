@@ -1,3 +1,4 @@
+- Optional transmission v3 (remove and readd torrents)
 - Allow using custom ovpn file
 
 ## 4.0 (02-06-2022)
