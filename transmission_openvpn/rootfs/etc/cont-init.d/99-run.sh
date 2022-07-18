@@ -6,7 +6,9 @@
 
 if bashio::config.true "TRANSMISSION_V3_UPDATE"; then
 
-Transmission cannot connect to UDP trackers. · Issue #2209 · haugene/docker-transmission-openvpn
+bashio::log.info "Updating transmission to v3"
+bashio::log.warning "If your previous version was v2, remove and add torrents again"
+
 # see https://github.com/haugene/docker-transmission-openvpn/discussions/1937
 wget -O 976b5901365c5ca1.key "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa37da909ae70535824d82620976b5901365c5ca1"
 
