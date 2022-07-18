@@ -1,5 +1,26 @@
 #!/usr/bin/bashio
 
+#################
+# Update to v3 #
+################
+
+if bashio::config.true "TRANSMISSION_V3_UPDATE"; then
+
+Transmission cannot connect to UDP trackers. · Issue #2209 · haugene/docker-transmission-openvpn
+# see https://github.com/haugene/docker-transmission-openvpn/discussions/1937
+wget -O 976b5901365c5ca1.key "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa37da909ae70535824d82620976b5901365c5ca1"
+
+cat > /etc/apt/sources.list.d/transmission.list <<EOF
+# Transmission PPA https://launchpad.net/~transmissionbt/+archive/ubuntu/ppa
+deb [signed-by=/976b5901365c5ca1.key] http://ppa.launchpad.net/transmissionbt/ppa/ubuntu focal main
+#deb-src http://ppa.launchpad.net/transmissionbt/ppa/ubuntu focal main
+EOF
+
+apt update -o Dir::Etc::sourcelist="sources.list.d/transmission.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
+apt install -y transmission-daemon transmission-cli
+
+fi
+
 ####################
 # Export variables #
 ####################
