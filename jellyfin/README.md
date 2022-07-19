@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[Jellyfin] Can't start the addon (opened 2022-07-17)](https://github.com/alexbelgium/hassio-addons/issues/399) by [@txitxo0](https://github.com/txitxo0)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
