@@ -31,6 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 RUN sed -i "s|/config|/config/addons_config/Jackett|g" /etc/cont-init.d/30-config \
     \
     # Allow UID and GID setting
+    && if [ -f /etc/cont-init.d/02-tamper-check ]; then rm /etc/cont-init.d/02-tamper-check; fi \
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
     && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
