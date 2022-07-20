@@ -1,6 +1,6 @@
 {
   "apparmor": "true",
-  "arch": [
+"arch2": [
     "aarch64",
     "amd64",
     "armv7"
