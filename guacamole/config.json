@@ -1,5 +1,6 @@
 {
   "arch": [
+    "aarch64",
     "amd64",
     "aarch64"
   ],
