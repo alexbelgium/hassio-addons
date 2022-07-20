@@ -24,8 +24,8 @@ FROM ${BUILD_FROM}
 
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=300000 \
-    S6_SERVICES_GRACETIME=300000
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_SERVICES_GRACETIME=0
 
 RUN sed -i "s|/config|/data|g" /etc/services.d/*/run \
     && sed -i "s|/config|/data|g" /etc/cont-init.d/* \
