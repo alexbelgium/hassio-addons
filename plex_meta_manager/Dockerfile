@@ -51,6 +51,13 @@ RUN \
 # Add rootfs
 COPY rootfs/ /
 
+# Corrects permissions for s6 v3
+RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
+    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
+    # Remove linuxserver tamper check that creates new folders at each boot
+    if [ -f /etc/cont-init.d/02-tamper-check ]; then rm /etc/cont-init.d/02-tamper-check; fi
+
 # Modules
 ARG MODULES="00-banner.sh 00-global_var.sh"
 
