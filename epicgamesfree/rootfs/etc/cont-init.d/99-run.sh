@@ -22,9 +22,6 @@ for i in *.json; do # Whitespace-safe but not recursive.
     ln -s "$i" /usr/app/config
 done
 
-# Copy config files
-cp -Rn /usr/app/config/. $HOME/
-
 ##############
 # Launch App #
 ##############
@@ -32,5 +29,7 @@ cp -Rn /usr/app/config/. $HOME/
 echo " "
 bashio::log.info "Starting the app"
 echo " "
+
+cd /usr/app/config || true
 
 /./usr/local/bin/docker-entrypoint.sh
