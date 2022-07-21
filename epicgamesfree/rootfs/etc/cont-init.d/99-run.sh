@@ -30,10 +30,6 @@ chmod -R 777 "$HOME"
 # Launch App #
 ##############
 
-# Update npm
-echo "Updating software"
-npm update --no-save 
-
 echo " "
 bashio::log.info "Starting the app"
 echo " "
