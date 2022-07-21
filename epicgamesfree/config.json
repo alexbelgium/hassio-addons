@@ -12,12 +12,13 @@
   ],
   "name": "Epic Games Free",
   "ports": {
-    "3000/tcp": null
+    "3000/tcp": 3001
   },
   "ports_description": {
     "3000/tcp": "web interface"
   },
   "slug": "epicgamesfree",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.1.0"
+  "version": "4.1.0",
+  "webui": "http://[HOST]:[PORT:3000]"
 }
