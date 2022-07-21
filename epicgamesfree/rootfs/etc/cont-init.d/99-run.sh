@@ -19,8 +19,7 @@ bashio::log.info "The following json files were found in $HOME and will be used 
 cd "$HOME" || true
 for i in *.json; do # Whitespace-safe but not recursive.
     echo "... processing $i"
-    ln -sf "$i" /usr/app/config
-    # cp "$i" /usr/app/config
+    cp "$i" /usr/app/config
 done
 
 # Permissions
