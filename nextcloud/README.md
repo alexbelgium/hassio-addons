@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [[Nextcloud] Not load after last update (opened 2022-07-19)](https://github.com/alexbelgium/hassio-addons/issues/401) by [@davoloko](https://github.com/davoloko)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
