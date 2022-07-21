@@ -14,6 +14,8 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+
 ## About
 
 Joplin Server is a free, open source note taking and to-do Sync application, which can handle a large number of notes organised into notebooks.
