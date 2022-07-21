@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [[Zoneminder] Storage (opened 2022-05-04)](https://github.com/alexbelgium/hassio-addons/issues/314) by [@snellie1972](https://github.com/snellie1972)
+
 # Home assistant add-on: Zoneminder
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -15,7 +16,7 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 ## About
 

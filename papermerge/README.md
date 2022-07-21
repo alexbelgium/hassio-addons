@@ -14,7 +14,7 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 ## About
 
@@ -52,10 +52,10 @@ networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
 storage_dir: storage dir location (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html)
-import_dir: import dir location (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html) 
-imaphost: import from email (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html#imap-email) 
-imapusername: import from email (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html#imap-email) 
-imappassword: import from email (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html#imap-email) 
+import_dir: import dir location (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html)
+imaphost: import from email (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html#imap-email)
+imapusername: import from email (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html#imap-email)
+imappassword: import from email (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html#imap-email)
 CONFIG_LOCATION: location of the papermerge.conf.py (see below)
 ```
 

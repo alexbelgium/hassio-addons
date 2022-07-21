@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [[Request] Mealie v1 (opened 2022-06-09)](https://github.com/alexbelgium/hassio-addons/issues/356) by [@Tommatheussen](https://github.com/Tommatheussen)
+
 ## Breaking change : no database migration with v1.0. Please backup your database from within Mealie before upgrading, then restore the database after upgrading. Infos here : https://hay-kot.github.io/mealie/documentation/getting-started/updating/. Something to note however about the database migration is that only the recipe data gets migrated. Not user data or other settings, and the favorite recipes are also no longer listed as such so they need to be selected again (Thanks @SeeThisIsMe)
 
 Thanks for your help! Now I'll get a regular scheduled recipe backup sorted out ;)
@@ -21,7 +22,7 @@ Warning : armv7 only supported up to version 0.4.3! It won't be updated with lat
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 ## About
 

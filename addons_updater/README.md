@@ -14,7 +14,7 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 ## About
 
@@ -44,6 +44,7 @@ Only addons with an updater.json file will be updated.
 Here is [an example](https://github.com/alexbelgium/hassio-addons/blob/master/arpspoof/updater.json).
 
 You can add the following tags in the file :
+
 - fulltag: true is for example "v3.0.1-ls67" false is "3.0.1"
 - github_beta: true/false ; should it look only for releases or prereleases ok
 - github_havingasset : true if there is a requirement that a release has binaries and not just source

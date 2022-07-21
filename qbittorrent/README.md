@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [[Qbittorrent] Using a VPN, I can see my real IP in peers (opened 2022-07-03)](https://github.com/alexbelgium/hassio-addons/issues/377) by [@almico](https://github.com/almico)
+
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -15,7 +16,7 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 ## About
 
@@ -87,25 +88,26 @@ The installation of this add-on is pretty straightforward and not different in c
 Use the [qBittorrent integration](https://www.home-assistant.io/integrations/qbittorrent/)
 
 You can use the following snippets to check and set the alternate speeds (the HA integration above is not needed for this)
+
 ```bash
-shell_command: 
+shell_command:
   toggle_torrent_speed: curl -X POST https://<YOUR HA IP>:8081/api/v2/transfer/toggleSpeedLimitsMode -k
 sensor:
   - platform: command_line
     name: get_torrent_speed
     command: curl https://<YOUR HA IP>:8081/api/v2/transfer/speedLimitsMode -k
 ```
+
 If you're not using the SSL option, you can skip the -k parameter and use http instead of https in the URL
 
 These lines will expose a `sensor.get_torrent_speed` that updates every 60 seconds and returns 1 if the alternate speed mode is enabled, 0 otherwise, and a `shell_command.toggle_torrent_speed` that you can call as a Service in your automations
-
-
 
 ## Common issues
 
 ### ipv6 issues with openvpn (@happycoo)
 
 Add this code to your .ovpn config
+
 ```bash
 # don't route lan through vpn
 route 192.168.1.0 255.255.255.0 net_gateway
@@ -118,29 +120,28 @@ pull-filter ignore "ifconfig-ipv6"
 
 ### nginx error code (@Nanianmichaels)
 
->[cont-init.d] 30-nginx.sh: executing...
->[cont-init.d] 30-nginx.sh: exited 1.
+> [cont-init.d] 30-nginx.sh: executing...
+> [cont-init.d] 30-nginx.sh: exited 1.
 
 Wait a couple minutes and restart addon, it could be a temporary unavailability of github
 
 ### Local mount with invalid argument (@antonio1475)
 
->[cont-init.d] 92-local_mounts.sh: executing...
-Local Disks mounting...
-mount: mounting /dev/sda1 on /mnt/sda1 failed: Invalid argument
->[19:19:44] FATAL: Unable to mount local drives! Please check the name.
->[cont-init.d] 92-local_mounts.sh: exited 0.
+> [cont-init.d] 92-local_mounts.sh: executing...
+> Local Disks mounting...
+> mount: mounting /dev/sda1 on /mnt/sda1 failed: Invalid argument
+> [19:19:44] FATAL: Unable to mount local drives! Please check the name.
+> [cont-init.d] 92-local_mounts.sh: exited 0.
 
 Try to mount by putting the partition label in the "localdisks" options instead of the hardware name
 
 ### Loss of metadata fetching with openvpn after several days (@almico)
 
-Add ```ping-restart 60``` to your config.ovpn
+Add `ping-restart 60` to your config.ovpn
 
 ## Support
 
 Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-qbittorrent/279247)
-
 
 ---
 

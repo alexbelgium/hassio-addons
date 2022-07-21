@@ -14,7 +14,7 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 ## About
 
@@ -39,7 +39,7 @@ Options : see https://github.com/haugene/docker-transmission-openvpn for documen
 
 TRANSMISSION_V3_UPDATE: updates to v3. Remove and add all torrents due to transmission changes
 
-For setting a custom openvpn file, you should flag the "OPENVPN_CUSTOM_PROVIDER" field and reference the path of the *.ovpn file in the "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION" field.
+For setting a custom openvpn file, you should flag the "OPENVPN_CUSTOM_PROVIDER" field and reference the path of the \*.ovpn file in the "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION" field.
 
 Complete transmission options are in /config/addons_config/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
 
