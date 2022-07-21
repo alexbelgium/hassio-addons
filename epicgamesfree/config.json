@@ -12,7 +12,7 @@
   ],
   "name": "Epic Games Free",
   "ports": {
-    "3000/tcp": 3000
+    "3000/tcp": 3001
   },
   "ports_description": {
     "3000/tcp": "web interface"
