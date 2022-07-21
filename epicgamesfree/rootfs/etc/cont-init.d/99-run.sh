@@ -20,6 +20,7 @@ cd "$HOME" || true
 for i in *.json; do # Whitespace-safe but not recursive.
     echo "... processing $i"
     ln -sf "$i" /usr/app/config
+    chmod 777 /usr/app/config/"$i"
 done
 
 ##############
