@@ -22,6 +22,9 @@ for i in *.json; do # Whitespace-safe but not recursive.
     ln -s "$i" /usr/app/config
 done
 
+# Copy config files
+cp -Rn /usr/app/config/. $HOME/
+
 ##############
 # Launch App #
 ##############
