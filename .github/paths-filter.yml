@@ -14,6 +14,7 @@ elasticsearch: elasticsearch/config.*
 emby: emby/config.*
 enedisgateway2mqtt: enedisgateway2mqtt/config.*
 enedisgateway2mqtt_dev: enedisgateway2mqtt_dev/config.*
+epicgamesfree: epicgamesfree:/config.* # Image : yes
 filebrowser: filebrowser/config.*
 fireflyiii: fireflyiii/config.*
 fireflyiii_data_importer: fireflyiii_data_importer/config.*
