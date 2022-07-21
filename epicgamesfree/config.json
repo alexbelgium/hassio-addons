@@ -5,6 +5,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Automatically login and redeem promotional free games from the Epic Games Store",
+  "init": false,
   "map": [
     "config:rw"
   ],
