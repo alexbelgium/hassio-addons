@@ -25,7 +25,7 @@ This addon is based on the docker image https://hub.docker.com/r/charlocharlie/e
 
 Webui can be found at <http://your-ip:PORT>.
 
-There are no addon options. All configuration is done through the config.json file located in /config/addons_config/epicgamesfree/config.json
+There are no addon options. All configuration files in json format (config and cookies) must be manually added in /config/addons_config/epicgamesfree/ according to the documentation here for config files (https://github.com/claabs/epicgames-freegames-node#json-configuration) and cookies (https://github.com/claabs/epicgames-freegames-node#cookie-import)
 
 If this file doesn't exist, it will be created at first boot.
 
