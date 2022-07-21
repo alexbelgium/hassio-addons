@@ -36,4 +36,4 @@ echo " "
 
 cd /usr/app/config || true
 
-/./usr/local/bin/docker-entrypoint.sh
+#/./usr/local/bin/docker-entrypoint.sh
