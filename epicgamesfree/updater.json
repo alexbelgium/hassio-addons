@@ -1,0 +1,9 @@
+{
+  "github_fulltag": "false",
+  "last_update": "19-07-2022",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "epicgamesfree",
+  "source": "github",
+  "upstream_repo": "claabs/epicgames-freegames-node",
+  "upstream_version": "4.1.0"
+}
