@@ -63,3 +63,4 @@ jobs:
       with:
         message: "Github bot : issues linked to readme"
         default_author: github_actions
+        tag_push: '--force'
