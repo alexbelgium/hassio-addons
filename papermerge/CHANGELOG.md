@@ -1,4 +1,7 @@
 
+## v2.0.1-ls56 (23-07-2022)
+- Update to latest version from linuxserver/docker-papermerge
+
 ## v2.0.1-ls55 (16-07-2022)
 - Update to latest version from linuxserver/docker-papermerge
 
