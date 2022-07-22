@@ -45,6 +45,6 @@
   ],
   "slug": "fireflyiii",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.7.9",
+  "version": "5.7.10",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
