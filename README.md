@@ -146,7 +146,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![armv7][armv7-badge]
 ![mqtt][mqtt-badge]
 
-&#10003;  [Epic Games Free](epicgamesfree/) : Automatically login and redeem promotional free games from the Epic Games Store 
+&#10003;  [Epic Games Free](epicgamesfree/) : Automatically login and redeem promotional free games from the Epic Games Store
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fepicgamesfree%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fepicgamesfree%2Fupdater.json)
