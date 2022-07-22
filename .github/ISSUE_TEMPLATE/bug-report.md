@@ -1,7 +1,7 @@
 ---
-name: Bug report
+name: "\U0001F41B Bug report"
 about: Create a report to help us improve
-title: "[Addon name] Issue description"
+title: "\U0001F41B [Addon name] Issue description"
 labels: bug
 assignees: ""
 ---
