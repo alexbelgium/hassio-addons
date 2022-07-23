@@ -45,10 +45,10 @@ done
 # CONFIG YAML #
 ###############
 
-CONFIGSOURCE="/config/addons_config/mealie/config.yml"
+CONFIGSOURCE="/config/addons_config/mealie"
 
-if [ -f "$CONFIGSOURCE" ]; then
-bashio::log.info "Config.yml found in $CONFIGSOURCE, exporting variables"
+if [ -f "$CONFIGSOURCE/config.yaml" ]; then
+bashio::log.info "config.yaml found in $CONFIGSOURCE, exporting variables"
 
 # Helper function
 function parse_yaml {
@@ -98,7 +98,7 @@ while IFS= read -r line; do
 done <"/tmpfile"
 
 else
-bashio::log.info "No config.yml found in $CONFIGSOURCE, using default parameters"
+bashio::log.info "No config.yaml found in $CONFIGSOURCE, using default parameters"
 fi
 
 ###############
