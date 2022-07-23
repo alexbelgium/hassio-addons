@@ -45,9 +45,9 @@ done
 # CONFIG YAML #
 ###############
 
-CONFIGSOURCE="/config/addons_config/mealie"
+CONFIGSOURCE="/config/addons_config/mealie/config.yaml"
 
-if [ -f "$CONFIGSOURCE/config.yaml" ]; then
+if [ -f "$CONFIGSOURCE" ]; then
 bashio::log.info "config.yaml found in $CONFIGSOURCE, exporting variables"
 
 # Helper function
