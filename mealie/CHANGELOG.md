@@ -1,3 +1,4 @@
+- Optional passing of env variables by adding them in a config.yml file (see readme)
 - Breaking change : amd64 updated to mealie 1.0
 - You'll lose your database : first do a backup from within mealie, then restore after upgrading
 
