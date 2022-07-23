@@ -48,13 +48,22 @@ comparison to installing any other Hass.io add-on.
 - Open yourdomain.com:9925 (where ":9925" is the port configured in the addon).
 - Default
   - Username: changeme@email.com
-  - Password: MyPassword
+  - Password: MyPassword 
+
+Options can be configured through two ways :
+
+- Addon options
 
 ```yaml
 ssl: true/false
 certfile: fullchain.pem #ssl certificate, must be located in /ssl
 keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-```
+``` 
+
+- Config.yaml
+  Additional options can be configured using the config.yaml file found in /config/addons_config/mealie/config.yaml
+
+The complete list of options can be seen here : https://nightly.mealie.io/documentation/getting-started/installation/backend-config/
 
 ## Support
 
