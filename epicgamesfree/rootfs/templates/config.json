@@ -3,7 +3,7 @@
   "cronSchedule": "5 16 * * *",
   "logLevel": "info",
   "webPortalConfig": {
-    "baseUrl": "https://epic.exmaple.com",
+    "baseUrl": "https://epic.exmaple.com"
   },
   "accounts": [
     {
