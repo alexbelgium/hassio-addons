@@ -6,22 +6,22 @@
 
 if bashio::config.true "TRANSMISSION_V3_UPDATE"; then
 
-(
-bashio::log.info "Updating transmission to v3"
-bashio::log.warning "If your previous version was v2, remove and add torrents again"
+    (
+        bashio::log.info "Updating transmission to v3"
+        bashio::log.warning "If your previous version was v2, remove and add torrents again"
 
-# see https://github.com/haugene/docker-transmission-openvpn/discussions/1937
-wget -O 976b5901365c5ca1.key "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa37da909ae70535824d82620976b5901365c5ca1"
+        # see https://github.com/haugene/docker-transmission-openvpn/discussions/1937
+        wget -O 976b5901365c5ca1.key "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa37da909ae70535824d82620976b5901365c5ca1"
 
-cat > /etc/apt/sources.list.d/transmission.list <<EOF
+        cat > /etc/apt/sources.list.d/transmission.list <<EOF
 # Transmission PPA https://launchpad.net/~transmissionbt/+archive/ubuntu/ppa
 deb [signed-by=/976b5901365c5ca1.key] http://ppa.launchpad.net/transmissionbt/ppa/ubuntu focal main
 #deb-src http://ppa.launchpad.net/transmissionbt/ppa/ubuntu focal main
 EOF
 
-apt-get update -o Dir::Etc::sourcelist="sources.list.d/transmission.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
-apt-get install -y transmission-daemon transmission-cli 
-) >/dev/null
+        apt-get update -o Dir::Etc::sourcelist="sources.list.d/transmission.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
+        apt-get install -y transmission-daemon transmission-cli
+    ) >/dev/null
 
 fi
 
