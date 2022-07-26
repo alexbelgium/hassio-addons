@@ -1,3 +1,4 @@
+- Corrects permissions for s6 v3
 - Avoid mixed content error
 - Allow import of /config/addons_config/spotweb/ownsettings.php
 - Add codenotary sign
