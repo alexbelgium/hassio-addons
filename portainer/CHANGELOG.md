@@ -1,4 +1,7 @@
 
+## 2.14.2 (28-07-2022)
+- Update to latest version from portainer/portainer
+
 ## 2.14.1 (14-07-2022)
 - Update to latest version from portainer/portainer
 
