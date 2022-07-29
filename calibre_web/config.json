@@ -46,7 +46,8 @@
     "PGID": "0",
     "PUID": "0",
     "calibre-web_CONFIG_DIRECTORY": "/config/addons_config/calibre-web",
-    "shm_size": "1gb"
+    "shm_size": "1gb",
+    "DOCKER_MODS": "linuxserver/mods:universal-calibre"
   },
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/calibre-web-{arch}",
@@ -89,6 +90,6 @@
   },
   "slug": "calibre-web",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre-web",
-  "version": "0.6.18-ls170",
+  "version": "0.6.18-ls170-2",
   "video": true
 }
