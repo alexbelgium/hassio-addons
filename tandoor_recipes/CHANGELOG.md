@@ -1,3 +1,4 @@
+- Align armv7 with latest
 
 ## 1.3.2 (14-07-2022)
 - Update to latest version from TandoorRecipes/recipes
