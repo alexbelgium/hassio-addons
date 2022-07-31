@@ -43,7 +43,7 @@
     "ssl": "bool"
   },
   "slug": "portainer",
-
+  "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.14.2"
 }

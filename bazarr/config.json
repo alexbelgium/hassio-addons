@@ -80,7 +80,7 @@
     "networkdisks": "str?"
   },
   "slug": "bazarr_nas",
-
+  "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bazarr",
   "version": "1.1.0",
   "webui": "http://[HOST]:[PORT:6767]"

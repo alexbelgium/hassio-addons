@@ -114,7 +114,7 @@
     "smbv1": "bool?"
   },
   "slug": "plex_nas",
-
+  "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex",
   "version": "1.27.2.5929-a806c5905-ls125",
   "video": true,

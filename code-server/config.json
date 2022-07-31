@@ -73,7 +73,7 @@
     "networkdisks": "str?"
   },
   "slug": "code-server",
-
+  "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/coder-server",
   "version": "4.5.1",
   "webui": "http://[HOST]:[PORT:8443]"
