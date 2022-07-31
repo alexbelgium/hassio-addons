@@ -95,7 +95,6 @@
     "mysql:want"
   ],
   "slug": "webtrees",
-  "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "v2.1.6",
   "webui": "http://[HOST]:[PORT:80]"

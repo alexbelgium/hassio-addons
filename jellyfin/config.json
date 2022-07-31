@@ -102,7 +102,6 @@
     "smbv1": "bool?"
   },
   "slug": "jellyfin",
-  "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "10.8.1-1-ls171",
   "video": true

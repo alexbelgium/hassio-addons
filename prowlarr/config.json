@@ -45,7 +45,6 @@
     "smbv1": "bool?"
   },
   "slug": "prowlarr",
-  "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "nightly-0.4.4.1922-ls390",
   "webui": "http://[HOST]:[PORT:9696]"

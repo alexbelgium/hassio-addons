@@ -80,7 +80,6 @@
     "smbv1": "bool?"
   },
   "slug": "radarr_nas",
-  "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
   "version": "4.1.0.6175",
   "webui": "http://[HOST]:[PORT:7878]"
