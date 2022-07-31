@@ -92,7 +92,7 @@
     "whitelist": "str?"
   },
   "slug": "transmission_ls",
-  "startup": "services",
+
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "3.00-r5-ls129"
 }

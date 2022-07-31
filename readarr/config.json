@@ -77,7 +77,7 @@
     "networkdisks": "str?"
   },
   "slug": "readarr_nas",
-  "startup": "services",
+
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
   "version": "nightly-0.1.1.1394-ls128",
   "webui": "http://[HOST]:[PORT:8787]"
