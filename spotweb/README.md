@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Spotweb] CSS (and maybe more) breaks via Nabu Casa (opened 2022-07-29)](https://github.com/alexbelgium/hassio-addons/issues/408) by [@fbloemhof](https://github.com/fbloemhof)
 # Home Assistant Add-ons: Spotweb
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
