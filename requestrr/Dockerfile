@@ -29,8 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 RUN \
     # use /data instead of /config for hass.io environment
-    sed -i "s|/config|/data|g" /etc/services.d/requestrr/run \
-    && sed -i "s|/config|/data|g" /etc/cont-init.d/30-config \
+    sed -i "s|/config \|/data \|g" /etc/cont-init.d/30-config \
     \
     # Allow UID and GID setting
     && if [ -f /etc/cont-init.d/02-tamper-check ]; then rm /etc/cont-init.d/02-tamper-check; fi \
