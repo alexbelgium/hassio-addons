@@ -94,4 +94,7 @@ if bashio::config.has_value 'networkdisks'; then
         fi
 
     done
+
+if [ -f ERRORCODE ]; then rm ERRORCODE; fi
+
 fi
