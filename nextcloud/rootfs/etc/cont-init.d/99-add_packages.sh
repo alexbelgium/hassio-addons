@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 # Install specific packages
 if [ ! -d /data/config/www/nextcloud/apps/pdfannotate ]; then
