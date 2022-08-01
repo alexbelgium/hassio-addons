@@ -51,7 +51,7 @@
   ],
   "name": "Nextcloud",
   "options": {
-    "additional_apps": "engrampa,libreoffice",
+    "additional_apps": "libinofity",
     "Full_Text_Search": false,
     "OCR": false,
     "OCRLANG": "fra",
