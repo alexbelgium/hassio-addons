@@ -51,7 +51,7 @@
   ],
   "name": "Nextcloud",
   "options": {
-    "additional_apps": "libinofity",
+    "additional_apps": "libnotify-dev",
     "Full_Text_Search": false,
     "OCR": false,
     "OCRLANG": "fra",
