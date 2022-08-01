@@ -51,6 +51,7 @@
   ],
   "name": "Nextcloud",
   "options": {
+    "additional_apps": "engrampa,libreoffice",
     "Full_Text_Search": false,
     "OCR": false,
     "OCRLANG": "fra",
@@ -83,6 +84,7 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "additional_apps": "str?",
     "certfile": "str",
     "cifspassword": "str?",
     "cifsusername": "str?",
