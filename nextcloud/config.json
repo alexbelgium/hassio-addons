@@ -51,7 +51,7 @@
   ],
   "name": "Nextcloud",
   "options": {
-    "additional_apps": "libnotify-dev",
+    "additional_apps": "inotify-tools",
     "Full_Text_Search": false,
     "OCR": false,
     "OCRLANG": "fra",
@@ -102,6 +102,6 @@
   "slug": "nextcloud_ocr",
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "24.0.3-3",
+  "version": "24.0.3-4",
   "webui": "https://[HOST]:[PORT:443]"
 }
