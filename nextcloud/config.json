@@ -45,6 +45,7 @@
   "ingress_port": 0,
   "init": false,
   "map": [
+    "config:rw",
     "share:rw",
     "media:rw",
     "ssl:rw"
