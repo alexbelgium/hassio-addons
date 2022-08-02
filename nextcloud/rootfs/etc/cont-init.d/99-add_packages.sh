@@ -15,16 +15,19 @@ fi
 if bashio::config.has_value 'additional_apps'; then
     bashio::log.info "Installing additional apps :"
     NEWAPPS="$(bashio::config 'additional_apps')"
+    OIFS=$IFS
     IFS=","
     re='^( *).*'
     read -ra array <<< "$NEWAPPS"
+    IFS=$OIFS
     for element in "${array[@]}"
     do
-        # shellcheck disable=SC2295
-        APP="${element#${BASH_REMATCH[1]}}"
-        # shellcheck disable=SC2015
-        [[ $element =~ $re ]] && \
-        bashio::log.green "... $APP" && \
-        apk add --no-cache "$APP" || bashio::log.red "... not successful, please check $APP package name"
+        if [[ $element =~ $re ]]; then
+           # shellcheck disable=SC2295
+           APP="${element#${BASH_REMATCH[1]}}"
+           bashio::log.green "... $APP"
+           # shellcheck disable=SC2015
+           apk add --no-cache $APP || bashio::log.red "... not successful, please check $APP package name"
+        fi
     done
 fi
