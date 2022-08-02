@@ -1,7 +1,10 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
- 
-if [ -f /config/addons_config/nextcloud/*.sh ]; then
-bashio::log.info "Scripts found in /config/addons_config/nextcloud, executing"
-bash /config/addons_config/nextcloud/*.sh
-fi
+
+for file in /config/addons_config/nextcloud/*.sh
+do
+  if [ -e "$file" ]; then
+  bashio::log.info "Executing $file"
+  bash "$file"
+  fi
+done
