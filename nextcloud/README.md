@@ -26,6 +26,8 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
+Scripts with .sh ending located in /config/addons_config/nextcloud will be executed at boot
+
 ```yaml
 additional_apps: vim,nextcloud #specify additional apk files to install ; separated by commas
 PGID/PUID: 1000 #allows setting user.
