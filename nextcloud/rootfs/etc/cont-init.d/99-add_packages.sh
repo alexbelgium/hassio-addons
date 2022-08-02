@@ -20,9 +20,11 @@ if bashio::config.has_value 'additional_apps'; then
     read -ra array <<< "$NEWAPPS"
     for element in "${array[@]}"
     do
+        # shellcheck disable=SC2295
         APP="${element#${BASH_REMATCH[1]}}"
         [[ $element =~ $re ]] && \
         bashio::log.green "... $APP" && \
+        # shellcheck disable=SC2015
         apk add --no-cache "$APP" || bashio::log.red "... not successful, please check $APP package name"
     done
 fi
