@@ -1,4 +1,7 @@
 
+## 2.1.31 (04-08-2022)
+- Update to latest version from anthonyraymond/joal
+
 ## 2.1.30 (19-04-2022)
 - Update to latest version from anthonyraymond/joal
 - Add codenotary sign
