@@ -1,3 +1,6 @@
+
+## v21.1-ls118 (04-08-2022)
+- Update to latest version from linuxserver/docker-nzbget
 - Ingress addition
 - Add codenotary sign
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
