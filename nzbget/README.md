@@ -1,4 +1,3 @@
-## &#9888; Open Request : [[Request] nzbget HA ingress  (opened 2022-07-29)](https://github.com/alexbelgium/hassio-addons/issues/407) by [@fbloemhof](https://github.com/fbloemhof)
 # Home assistant add-on: nzbget
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
