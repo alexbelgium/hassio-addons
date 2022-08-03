@@ -1,3 +1,4 @@
+- Ingress addition
 - Add codenotary sign
 - Cleanup: config base folder changed to /config/addons_config (thanks @bruvv)
 

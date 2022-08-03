@@ -44,6 +44,7 @@
     "PGID": "0",
     "PUID": "0"
   },
+  "ingress": true,
   "init": false,
   "map": [
     "config:rw",
@@ -56,6 +57,7 @@
     "PGID": 0,
     "PUID": 0
   },
+  "panel_icon": "mdi:arrow-down-bold-circle-outline",
   "ports": {
     "6789/tcp": 6789
   },
@@ -77,6 +79,6 @@
   },
   "slug": "nzbget",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "21.1",
+  "version": "21.1-2",
   "webui": "http://[HOST]:[PORT:6789]"
 }
