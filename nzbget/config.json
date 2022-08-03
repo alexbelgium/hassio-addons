@@ -79,6 +79,5 @@
   },
   "slug": "nzbget",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "21.1-2",
-  "webui": "http://[HOST]:[PORT:6789]"
+  "version": "21.1-2"
 }
