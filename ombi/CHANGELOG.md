@@ -1,4 +1,7 @@
 
+## 4.22.5 (06-08-2022)
+- Update to latest version from linuxserver/docker-ombi
+
 ## 4.16.12 (20-04-2022)
 - Update to latest version from linuxserver/docker-ombi
 
