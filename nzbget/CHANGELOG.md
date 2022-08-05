@@ -1,4 +1,7 @@
 
+## v21.1-ls119 (06-08-2022)
+- Update to latest version from linuxserver/docker-nzbget
+
 ## v21.1-ls118 (04-08-2022)
 - Update to latest version from linuxserver/docker-nzbget
 - Ingress addition
