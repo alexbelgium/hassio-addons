@@ -33,15 +33,15 @@ if [ -e "/ENVFILE" ]; then
         && rm /automatic_packages.sh
 fi
 
-if [ -e "/MODULESFILE" ] && [ ! -f /entrypoint.sh ]; then
-    for scripts in $MODULES; do
-        echo "$scripts : executing"
-        chown "$(id -u)":"$(id -g)" /etc/cont-init.d/"$scripts"
-        chmod a+x /etc/cont-init.d/"$scripts"
-        /./etc/cont-init.d/"$scripts" || echo "/etc/cont-init.d/$scripts: exiting $?"
-        rm /etc/cont-init.d/"$scripts"
-    done | tac
-fi
+#if [ -e "/MODULESFILE" ] && [ ! -f /entrypoint.sh ]; then
+#    for scripts in $MODULES; do
+#        echo "$scripts : executing"
+#        chown "$(id -u)":"$(id -g)" /etc/cont-init.d/"$scripts"
+#        chmod a+x /etc/cont-init.d/"$scripts"
+#        /./etc/cont-init.d/"$scripts" || echo "/etc/cont-init.d/$scripts: exiting $?"
+#        rm /etc/cont-init.d/"$scripts"
+#    done | tac
+#fi
 
 #######################
 # Correct permissions #
