@@ -72,7 +72,7 @@ Browser settings:
   - Previous versions
     - Navigate to your app's url, and click the 3 dot menu in the address bar. At the bottom, there should be an option to "Add Search Engine".
   - Once you've added the new search engine, open your Firefox Preferences menu, click "Search" in the left menu, and use the available dropdown to select "Whoogle" from the list.
-  - **Note**: If your Whoogle instance uses Firefox Containers, you'll need to [go through the steps here](#using-with-firefox-containers) to get it working properly.
+  - **Note**: If your Whoogle instance uses Firefox Containers, you'll need to [go through the steps here](https://github.com/benbusby/whoogle-search/blob/main/README.md#using-with-firefox-containers) to get it working properly.
 - Firefox (iOS)
   - In the mobile app Settings page, tap "Search" within the "General" section. There should be an option titled "Add Search Engine" to select. It should prompt you to enter a title and search query url - use the following elements to fill out the form:
     - Title: "Whoogle"
