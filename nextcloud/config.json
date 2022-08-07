@@ -52,12 +52,12 @@
   ],
   "name": "Nextcloud",
   "options": {
-    "additional_apps": "inotify-tools",
     "Full_Text_Search": false,
     "OCR": false,
     "OCRLANG": "fra",
     "PGID": 1000,
     "PUID": 1000,
+    "additional_apps": "inotify-tools",
     "certfile": "fullchain.pem",
     "data_directory": "/share/nextcloud",
     "elasticsearch_server": "<ip:port>",
