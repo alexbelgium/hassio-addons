@@ -27,6 +27,7 @@ MD013: false    # Line length
 MD025: false    # Multiple top level headings in the same document
 MD034: false    # Bare url
 MD041: false    # First line in file should be a top level header
+MD053: false    # Check links are used
 
 #################
 # Rules by tags #
