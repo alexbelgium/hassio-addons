@@ -23,11 +23,11 @@ if bashio::config.has_value 'additional_apps'; then
     for element in "${array[@]}"
     do
         if [[ $element =~ $re ]]; then
-           # shellcheck disable=SC2295
-           APP="${element#${BASH_REMATCH[1]}}"
-           bashio::log.green "... $APP"
-           # shellcheck disable=SC2015,SC2086
-           apk add --no-cache $APP || bashio::log.red "... not successful, please check $APP package name"
+            # shellcheck disable=SC2295
+            APP="${element#${BASH_REMATCH[1]}}"
+            bashio::log.green "... $APP"
+            # shellcheck disable=SC2015,SC2086
+            apk add --no-cache $APP || bashio::log.red "... not successful, please check $APP package name"
         fi
     done
 fi
