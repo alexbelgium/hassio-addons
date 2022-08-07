@@ -16,8 +16,8 @@ if [ -e "/PORTFILE" ]; then
     if [[ "${BUILD_ARCH}" == arm ]]; then ARCH="arm"; fi
     if [[ "${BUILD_ARCH}" == *x86* ]]; then ARCH="amd64"; fi
 
-    curl -f -L -s \
+    curl -f -L -s -S \
         "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" |
-    tar zxvf - -C /opt/
+    tar zxvf - -C /opt/ >/dev/null
     echo "... success!"
 fi
