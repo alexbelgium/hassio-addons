@@ -81,6 +81,6 @@
   },
   "slug": "sonarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
-  "version": "3.0.8.1507",
+  "version": "3.0.9.1549",
   "webui": "http://[HOST]:[PORT:8989]"
 }
