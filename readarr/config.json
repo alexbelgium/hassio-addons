@@ -52,7 +52,7 @@
   ],
   "name": "Readarr NAS",
   "options": {
-    "CONFIG_LOCATION": "/config/readarr",
+    "CONFIG_LOCATION": "/config/addons_config/readarr",
     "PGID": 0,
     "PUID": 0
   },
