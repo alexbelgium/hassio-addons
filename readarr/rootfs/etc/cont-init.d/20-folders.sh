@@ -25,3 +25,8 @@ if [ ! -d /config/addons_config/readarr ]; then
     mkdir -p /config/addons_config/readarr
     chown -R abc:abc /config/addons_config/readarr
 fi
+
+if [ -d /config/addons_config/radarr/readarr ]; then
+    mv /config/addons_config/radarr/readarr/{.,}* /config/addons_config/readarr/
+    rmdir /config/addons_config/radarr/readarr
+fi
