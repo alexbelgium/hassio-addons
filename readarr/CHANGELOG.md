@@ -1,3 +1,4 @@
+- Config changed to /config/addons_config/readarr
 
 ## nightly-0.1.1.1402-ls130 (06-08-2022)
 - Update to latest version from linuxserver/docker-readarr
