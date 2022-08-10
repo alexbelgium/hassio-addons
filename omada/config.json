@@ -24,7 +24,7 @@
   ],
   "name": "Omada",
   "ports": {
-    "29810/tcp": 29810,
+    "29810/udp": 29810,
     "29811/tcp": 29811,
     "29812/tcp": 29812,
     "29813/tcp": 29813,
@@ -34,14 +34,14 @@
     "8843/tcp": 8843
   },
   "ports_description": {
-    "29810/tcp": "omada port",
-    "29811/tcp": "omada port",
-    "29812/tcp": "omada port",
-    "29813/tcp": "omada port",
-    "29814/tcp": "omada port",
+    "29810/udp": "device discovery port",
+    "29811/tcp": "legacy device discovery port",
+    "29812/tcp": "legacy device discovery port",
+    "29813/tcp": "legacy device upgrade port",
+    "29814/tcp": "device adoption port",
     "8043/tcp": "web interface https",
-    "8088/tcp": "web interface",
-    "8843/tcp": "portal http"
+    "8088/tcp": "web interface http",
+    "8843/tcp": "portal https"
   },
   "slug": "omada",
   "url": "https://github.com/alexbelgium/hassio-addons",
