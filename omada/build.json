@@ -1,8 +1,7 @@
 {
   "build_from": {
     "aarch64": "mbentley/omada-controller:latest-arm64",
-    "amd64": "mbentley/omada-controller:latest-amd64",
-    "armv7": "mbentley/omada-controller:latest-armv7l"
+    "amd64": "mbentley/omada-controller:latest-amd64"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
