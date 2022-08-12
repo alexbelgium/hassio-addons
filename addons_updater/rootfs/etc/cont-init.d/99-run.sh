@@ -72,6 +72,8 @@ for f in */; do
         FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
         PAUSED=$(jq -r .paused updater.json)
         DATE="$(date '+%d-%m-%Y')"
+        LASTUPDATE=$(jq -r .last_update updater.json)        
+        BYDATE=$(jq -r .github_beta updater.json)
 
         #Skip if paused
         if [[ "$PAUSED" = true ]]; then bashio::log.magenta "... $SLUG addon updates are paused, skipping"; continue; fi
@@ -103,6 +105,15 @@ for f in */; do
                 sort -V |
                 tail -n 1
             )
+            [ "${BYDATE}" = true ] &&
+            DATE=$(
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
+                jq '.results | .[] | .last_updated' -r |
+                sort -V |
+                tail -n 1
+            ) && \
+            LASTVERSION="$LASTVERSION-$DATE"
+
         else
 
             # Use source as upstream
