@@ -72,7 +72,6 @@ for f in */; do
         FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
         PAUSED=$(jq -r .paused updater.json)
         DATE="$(date '+%d-%m-%Y')"
-        LASTUPDATE=$(jq -r .last_update updater.json)        
         BYDATE=$(jq -r .by_date updater.json)
 
         #Skip if paused
