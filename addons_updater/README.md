@@ -57,6 +57,7 @@ You can add the following tags in the file :
 - source: dockerhub/github,gitlab,bitbucket,pip,hg,sf,website-feed,local,helm_chart,wiki,system,wp
 - upstream_repo: name/repo, example is 'linuxserver/docker-emby'
 - upstream_version: automatically populated, corresponds to the current upstream version referenced in the addon
+- by_date: in dockerhub, uses the last_update date instead of the version
 
 ### Addon configuration
 
