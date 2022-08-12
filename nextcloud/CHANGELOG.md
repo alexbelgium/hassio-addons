@@ -1,3 +1,6 @@
+
+## 24.0.4 (13-08-2022)
+- Update to latest version from linuxserver/docker-nextcloud
 - Allow installation of custom apk files with parameter "additional_apps"
 
 ## 24.0.3 (19-07-2022)
