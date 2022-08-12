@@ -1,5 +1,6 @@
 {
   "last_update": "11-08-2022",
+  "by_date": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "omada",
   "source": "dockerhub",
