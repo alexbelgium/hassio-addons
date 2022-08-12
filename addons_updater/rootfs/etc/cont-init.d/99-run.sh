@@ -111,7 +111,7 @@ for f in */; do
                 sort -V |
                 tail -n 1
             ) && \
-            DATE="${DATE%T*}"
+            DATE="${DATE%T*}" && \
             LASTVERSION="$LASTVERSION-$DATE"
 
         else
