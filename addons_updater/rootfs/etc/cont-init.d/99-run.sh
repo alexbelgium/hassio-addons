@@ -73,7 +73,7 @@ for f in */; do
         PAUSED=$(jq -r .paused updater.json)
         DATE="$(date '+%d-%m-%Y')"
         LASTUPDATE=$(jq -r .last_update updater.json)        
-        BYDATE=$(jq -r .github_beta updater.json)
+        BYDATE=$(jq -r .by_date updater.json)
 
         #Skip if paused
         if [[ "$PAUSED" = true ]]; then bashio::log.magenta "... $SLUG addon updates are paused, skipping"; continue; fi
