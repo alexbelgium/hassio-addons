@@ -1,3 +1,4 @@
+- New by_date tag for dockerhub
 - Nightly tag only for beta
 - Use latest lastversion & base images
 - Feat: "pause: true" pauses the updates for a specific addon
