@@ -17,3 +17,8 @@ if [ ! -d /config/addons_config/$slug ]; then
     mkdir -p /config/addons_config/$slug
     chmod 777 /config/addons_config/$slug
 fi
+
+# Remove empty config file
+if [ ! -s /config/addons_config/$slug/preferences.json ] ; then
+  rm /config/addons_config/$slug/preferences.json || true
+fi
