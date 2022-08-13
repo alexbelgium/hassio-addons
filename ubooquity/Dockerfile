@@ -30,7 +30,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 RUN \
     # Set config directory
-    sed -i 's|config|config/ubooquity|g' /etc/cont-init.d/10-adduser \
+    sed -i 's|config|config/addons_config/ubooquity|g' /etc/cont-init.d/10-adduser \
     && sed -i 's|config|config/addons_config/ubooquity|g' /etc/cont-init.d/30-config \
     && sed -i 's|config|config/addons_config/ubooquity|g' /etc/services.d/ubooquity/run \
     # Allow UID and GID setting
