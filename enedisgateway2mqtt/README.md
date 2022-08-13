@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Enedisgateway2mqtt] Issue description (opened 2022-08-12)](https://github.com/alexbelgium/hassio-addons/issues/426) by [@foXaCe](https://github.com/foXaCe)
 # Home assistant add-on: Enedisgateway2mqtt
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
