@@ -23,6 +23,10 @@ if bashio::config.has_value 'theme'; then
             #    && mv /config/addons_config/ubooquity/themes/plextheme-master/ /config/addons_config/ubooquity/themes/
             ;;
 
+        "default")
+            exit 0
+            ;;
+
     esac
 
     ### Clean files
