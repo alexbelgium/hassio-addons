@@ -20,5 +20,5 @@ fi
 
 # Remove empty config file
 if [ ! -s /config/addons_config/$slug/preferences.json ] ; then
-  rm /config/addons_config/$slug/preferences.json || true
+    rm /config/addons_config/$slug/preferences.json || true
 fi
