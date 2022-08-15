@@ -1,4 +1,7 @@
 
+## 1.0.2.2592-ls94 (16-08-2022)
+- Update to latest version from linuxserver/docker-lidarr
+
 ## 1.0.2.2592-ls93 (09-08-2022)
 - Update to latest version from linuxserver/docker-lidarr
 
