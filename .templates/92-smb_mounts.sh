@@ -68,7 +68,7 @@ if bashio::config.has_value 'networkdisks'; then
 
             # Test for serverino
             # shellcheck disable=SC2015
-            touch "/mnt/$diskname/testaze" && cp "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" ||
+            touch "/mnt/$diskname/testaze" && mv "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" ||
             (umount "/mnt/$diskname" && mount -t cifs -o "rw,file_mode=0777,dir_mode=0777,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "noserverino option used")
 
         else
