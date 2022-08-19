@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Unpackerr (opened 2022-08-16)](https://github.com/alexbelgium/hassio-addons/issues/430) by [@crowley666x](https://github.com/crowley666x)
 # Home assistant add-on: Unpackerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
