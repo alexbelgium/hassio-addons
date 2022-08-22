@@ -56,8 +56,8 @@
     "LOCAL_NETWORK": "192.168.178.0/16",
     "OPENVPN_PASSWORD": "pass",
     "OPENVPN_USERNAME": "user",
-    "PGID": "1000",
-    "PUID": "1000",
+    "PGID": "0",
+    "PUID": "0",
     "TRANSMISSION_DOWNLOAD_DIR": "/share/downloads",
     "TRANSMISSION_HOME": "/config/addons_config/transmission",
     "TRANSMISSION_INCOMPLETE_DIR": "/share/incomplete",
@@ -107,5 +107,5 @@
   },
   "slug": "transmission_openvpn",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.0-v8"
+  "version": "4.0-v9"
 }
