@@ -36,6 +36,14 @@ for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
 done
 echo ""
 
+###########################
+# Correct download folder #
+###########################
+
+if [ -f "$TRANSMISSION_HOME"/settings.json ]; then
+    sed -i "/download-dir/d" "$TRANSMISSION_HOME"/settings.json
+fi
+
 ###################
 # Custom provider #
 ###################
