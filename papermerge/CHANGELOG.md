@@ -1,56 +1,73 @@
-
 ## v2.0.1-ls59 (20-08-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls58 (06-08-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls57 (30-07-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls56 (23-07-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls55 (16-07-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls53 (09-07-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls52 (02-07-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls51 (25-06-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls50 (18-06-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls49 (11-06-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls48 (31-05-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls47 (21-05-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls46 (14-05-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls45 (06-05-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls44 (16-04-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls43 (09-04-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls42 (02-04-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 
 ## v2.0.1-ls41 (25-03-2022)
+
 - Update to latest version from linuxserver/docker-papermerge
 - Add codenotary sign
 
@@ -122,6 +139,6 @@
 ## v2.0.0rc35-ls28
 
 - Update to latest version from linuxserver/docker-papermerge
-- Enables PUID/GUID options
+- Enables PUID/PGID options
 - Enables english/french OCR
 - Enables mounting of local hdd or smb share

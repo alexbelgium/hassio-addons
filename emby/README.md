@@ -29,7 +29,7 @@ Inital addon version : https://github.com/petersendev/hassio-addons
 Webui can be found at `<your-ip>:8096`, or within Home Assistant through Ingress.
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 TZ: timezone
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...

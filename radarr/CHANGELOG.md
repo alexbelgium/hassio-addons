@@ -1,5 +1,5 @@
-
 ## 4.1.0.6175 (16-04-2022)
+
 - Update to latest version from linuxserver/docker-radarr
 - Add codenotary sign
 
@@ -38,4 +38,4 @@
 ## 3.0.2.4552
 
 - Update to latest version from linuxserver/docker-radarr
-- Enables PUID/GUID options
+- Enables PUID/PGID options

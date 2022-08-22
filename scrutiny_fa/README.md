@@ -41,7 +41,7 @@ It automatically mounts all local drives.
 Enable full access only if you are encountering issues. SMART access should work without full access in all other scenarios.
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 ssl: true/false (for Ingress)
 certfile: fullchain.pem #ssl certificate

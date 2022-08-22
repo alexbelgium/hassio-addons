@@ -48,7 +48,7 @@ The default username/password : described in the startup log.
 Configurations can be done through the app webUI, except for the following options
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 TZ: timezone
 ```

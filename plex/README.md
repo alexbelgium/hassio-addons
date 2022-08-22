@@ -33,7 +33,7 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 Webui can be found at `<your-ip>:8096`.
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 TZ: timezone
 claim: claim code for plex server # see https://github.com/linuxserver/docker-plex

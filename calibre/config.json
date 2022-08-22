@@ -59,8 +59,8 @@
   ],
   "name": "Calibre",
   "options": {
-    "PGID": 1000,
-    "PUID": 1000
+    "PGID": 0,
+    "PUID": 0
   },
   "panel_icon": "mdi:book-multiple",
   "ports": {
@@ -89,6 +89,6 @@
   },
   "slug": "calibre",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
-  "version": "v6.3.0-ls176",
+  "version": "v6.3.0-ls176-2",
   "video": true
 }

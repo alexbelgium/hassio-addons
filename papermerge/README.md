@@ -45,7 +45,7 @@ Options can be configured through two ways :
 - Addon options
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 ocrlang: Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...

@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [[Scrutiny] Help needed to migrate to the official Scrutiny Image? (opened 2022-08-05)](https://github.com/alexbelgium/hassio-addons/issues/416) by [@AnalogJ](https://github.com/AnalogJ)
+
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -42,7 +43,7 @@ It automatically mounts all local drives.
 Enable full access only if you are encountering issues. SMART access should work without full access in all other scenarios.
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 ssl: true/false (for Ingress)
 certfile: fullchain.pem #ssl certificate

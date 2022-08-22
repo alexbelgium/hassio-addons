@@ -52,7 +52,7 @@ You can place the user folder from the theme/skeleton in /share/grav/www/user,
 ## Options
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 TZ: timezone
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...

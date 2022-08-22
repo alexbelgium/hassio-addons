@@ -14,9 +14,9 @@
   ],
   "name": "Plex meta manager",
   "options": {
-    "PGID": 1000,
+    "PGID": 0,
     "PMM_CONFIG": "/config/addons_config/plex-data-manager/config.yml",
-    "PUID": 1000
+    "PUID": 0
   },
   "privileged": [
     "SYS_ADMIN",
@@ -34,5 +34,5 @@
   },
   "slug": "plex-meta-manager",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex_meta_manager",
-  "version": "v1.17.3-ls24"
+  "version": "v1.17.3-ls24-2"
 }

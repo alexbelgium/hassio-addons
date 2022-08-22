@@ -9,5 +9,5 @@ if [ -d /teamspeak ]; then
     chmod -R 777 /teamspeak
 fi
 
-#chown -R PUID:GUID /data
+#chown -R PUID:PGID /data
 chmod -R 777 /data

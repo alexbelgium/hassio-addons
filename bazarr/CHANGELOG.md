@@ -1,11 +1,13 @@
-
 ## 1.1.0 (05-07-2022)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.0.4 (01-05-2022)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.0.3 (27-04-2022)
+
 - Update to latest version from linuxserver/docker-bazarr
 - Add codenotary sign
 
@@ -70,4 +72,4 @@
 ## 3.0.2.4552
 
 - Update to latest version from linuxserver/docker-bazarr
-- Enables PUID/GUID options
+- Enables PUID/PGID options

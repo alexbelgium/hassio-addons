@@ -1,63 +1,82 @@
-
 ## 10.8.4-1-ls177 (20-08-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.4-1-ls176 (16-08-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.3-1-ls175 (11-08-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.3-1-ls174 (06-08-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.3-1-ls173 (04-08-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.1-1-ls171 (23-07-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.1-1-ls170 (16-07-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.1-1-ls169 (09-07-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.1-1-ls168 (02-07-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.1-1-ls167 (28-06-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.0-1-ls166 (25-06-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.0-1-ls165 (18-06-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.0-1-ls164 (14-06-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls162 (11-06-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls161 (31-05-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls160 (21-05-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls159 (12-05-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls158 (05-05-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.7.7-1-ls157 (02-04-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 - Ingress port changed to avoid conflicts
 
 ## 10.7.7-1-ls156 (24-03-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 - Add codenotary sign
 - Addition of ingress
@@ -130,7 +149,7 @@
 ## 10.7.2-1-ls109
 
 - Update to latest version from linuxserver/docker-jellyfin
-- Enables PUID/GUID options
+- Enables PUID/PGID options
 - New feature : mount smb share in protected mode
 - New feature : mount multiple smb shares
 - New config/feature : mount smbv1

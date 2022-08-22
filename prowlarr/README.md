@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Prowlarr (opened 2022-08-16)](https://github.com/alexbelgium/hassio-addons/issues/429) by [@crowley666x](https://github.com/crowley666x)
+
 # Home assistant add-on: Prowlarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -49,7 +50,7 @@ The default username/password : described in the startup log.
 Configurations can be done through the app webUI, except for the following options
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 TZ: timezone
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...

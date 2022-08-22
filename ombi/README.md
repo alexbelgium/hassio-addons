@@ -39,7 +39,7 @@ comparison to installing any other Hass.io add-on.
 Webui can be found at <http://your-ip:3579>.
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 ```
 

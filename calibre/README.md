@@ -51,7 +51,7 @@ Please read the upstream container documentation for further info : https://gith
 In particular, the webserver needs to be manually enabled from the desktop app with port 8081 to be able to access it.
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 TZ: timezone
 PASSWORD: Optionally set a password for the gui

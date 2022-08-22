@@ -1,11 +1,13 @@
-
 ## 2ab714f5-ls35 (11-05-2022)
+
 - Update to latest version from linuxserver/scrutiny
 
 ## version-c397a323 (10-05-2022)
+
 - Update to latest version from linuxserver/scrutiny
 
 ## 8e34ef8d-ls35 (05-05-2022)
+
 - Update to latest version from linuxserver/scrutiny
 - Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation
@@ -37,5 +39,5 @@
 
 ## 27b923b5-ls11
 
-- Enables PUID/GUID options
+- Enables PUID/PGID options
 - Daily update of values

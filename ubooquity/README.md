@@ -54,7 +54,7 @@ Configurations can be done through the app webUI, except for the following optio
 Network disk is mounted to /mnt/share name
 
 ```yaml
-GUID: user # https://docs.linuxserver.io/general/understanding-puid-and-pgid
+PGID: user # https://docs.linuxserver.io/general/understanding-puid-and-pgid
 GPID: user # https://docs.linuxserver.io/general/understanding-puid-and-pgid
 maxmem: 200 # IMPORTANT read above. 200 is default for rpi3b+ ; 512 recommended if more 2gb RAM.
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)

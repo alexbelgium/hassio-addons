@@ -28,7 +28,7 @@ This addon is based on the [docker image](https://github.com/linuxserver/code-se
 Webui can be found at `<your-ip>:8443`.
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 TZ: timezone
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...

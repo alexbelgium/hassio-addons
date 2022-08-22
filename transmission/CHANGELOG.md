@@ -1,54 +1,70 @@
-
 ## 3.00-r5-ls133 (13-08-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls132 (11-08-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls131 (09-08-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls130 (06-08-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls129 (30-07-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls128 (23-07-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls127 (16-07-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls126 (09-07-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 - Ingress addition
 
 ## 3.00-r5-ls125 (21-05-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls124 (12-05-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls123 (05-05-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls122 (28-04-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls121 (16-04-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls120 (14-04-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls119 (09-04-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls118 (02-04-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls117 (24-03-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 - Add codenotary sign
 
@@ -137,4 +153,4 @@
 ## 3.00-r2-ls77
 
 - Update to latest version from linuxserver/docker-transmission
-- Enables PUID/GUID options
+- Enables PUID/PGID options

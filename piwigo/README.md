@@ -45,7 +45,7 @@ comparison to installing any other Hass.io add-on.
 Webui can be found at <http://your-ip:81>.
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
 networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)

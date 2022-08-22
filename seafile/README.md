@@ -52,7 +52,7 @@ Default name : admin
 Default password : admin123
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 TZ: timezone
 PASSWORD: Optionally set a password for the gui

@@ -28,7 +28,7 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 Configurations can be done through the app webUI, except for the following options :
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 TZ: timezone
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...

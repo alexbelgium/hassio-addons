@@ -1,4 +1,3 @@
-
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -45,7 +44,7 @@ Configurations can be done through the app webUI, except for the following optio
 Network disk is mounted to /mnt/share name
 
 ```yaml
-GUID: user
+PGID: user
 GPID: user
 ssl: true/false
 certfile: fullchain.pem #ssl certificate, must be located in /ssl

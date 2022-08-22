@@ -17,8 +17,8 @@
   ],
   "name": "Mealie",
   "options": {
-    "PGID": 1000,
-    "PUID": 1000,
+    "PGID": 0,
+    "PUID": 0,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "ssl": false

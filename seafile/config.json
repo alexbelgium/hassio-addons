@@ -52,8 +52,8 @@
   ],
   "name": "Seafile",
   "options": {
-    "PGID": "1000",
-    "PUID": "1000",
+    "PGID": "0",
+    "PUID": "0",
     "SEAFILE_ADMIN_EMAIL": "me@example.com",
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
     "TZ": "Europe/Paris",
@@ -94,6 +94,6 @@
   ],
   "slug": "seafile",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
-  "version": "v9.0.7-server",
+  "version": "v9.0.7-server2",
   "webui": "http://[HOST]:[PORT:8000]"
 }

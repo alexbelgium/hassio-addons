@@ -40,7 +40,7 @@ Webui can be found at <http://your-ip:80>.
 Create the db in /data/...
 
 ```yaml
-GUID: user, can't be 0
+PGID: user, can't be 0
 GPID: user, can't be 0
 ```
 
