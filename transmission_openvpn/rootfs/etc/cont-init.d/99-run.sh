@@ -41,17 +41,20 @@ echo ""
 ###########################
 
 if [ -f "$TRANSMISSION_HOME"/settings.json ]; then
+    echo "Updating variables"
     line="$(grep -n 'download-dir' "$TRANSMISSION_HOME"/settings.json)"
+    echo 2
     sed -i "${line}d" "$TRANSMISSION_HOME"/settings.json
-    sed -i "${line}i     \"download-dir\": \"$(bashio::config 'TRANSMISSION_DOWNLOAD_DIR')\"," "$TRANSMISSION_HOME"/settings.json
+    echo 3
+    sed -i "${line} i     \"download-dir\": \"$(bashio::config 'TRANSMISSION_DOWNLOAD_DIR')\"," "$TRANSMISSION_HOME"/settings.json
 
     line="$(grep -n 'incomplete-dir' "$TRANSMISSION_HOME"/settings.json)"
     sed -i "${line}d" "$TRANSMISSION_HOME"/settings.json
-    sed -i "${line}i     \"incomplete-dir\": \"$(bashio::config 'TRANSMISSION_INCOMPLETE_DIR')\"," "$TRANSMISSION_HOME"/settings.json
+    sed -i "${line} i     \"incomplete-dir\": \"$(bashio::config 'TRANSMISSION_INCOMPLETE_DIR')\"," "$TRANSMISSION_HOME"/settings.json
 
     line="$(grep -n 'watch-dir' "$TRANSMISSION_HOME"/settings.json)"
     sed -i "${line}d" "$TRANSMISSION_HOME"/settings.json
-    sed -i "${line}i     \"watch-dir\": \"$(bashio::config 'TRANSMISSION_WATCH_DIR')\"," "$TRANSMISSION_HOME"/settings.json
+    sed -i "${line} i     \"watch-dir\": \"$(bashio::config 'TRANSMISSION_WATCH_DIR')\"," "$TRANSMISSION_HOME"/settings.json
 
 fi
 
