@@ -1,4 +1,4 @@
-## &#9888; Open Request : [✨ [REQUEST] bazarr (opened 2022-08-16)](https://github.com/alexbelgium/hassio-addons/issues/428) by [@crowley666x](https://github.com/crowley666x)
+## &#9888; Open Request : [✨ [REQUEST] bazarr add localdisk (opened 2022-08-16)](https://github.com/alexbelgium/hassio-addons/issues/428) by [@crowley666x](https://github.com/crowley666x)
 
 # Home assistant add-on: bazarr
 
