@@ -101,9 +101,7 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?",
-    "pass": "str?",
-    "user": "str?"
+    "networkdisks": "str?"
   },
   "slug": "transmission_openvpn",
   "url": "https://github.com/alexbelgium/hassio-addons",
