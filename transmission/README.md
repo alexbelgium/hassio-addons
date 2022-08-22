@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Transmission Openvpn] Unable to change default download path (opened 2022-08-19)](https://github.com/alexbelgium/hassio-addons/issues/432) by [@almico](https://github.com/almico)
-## &#9888; Open Issue : [🐛 [Transmission Openvpn] Unable to use Samba shared folder for storing files (opened 2022-08-20)](https://github.com/alexbelgium/hassio-addons/issues/433) by [@almico](https://github.com/almico)
 # Home assistant add-on: Transmission
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
