@@ -31,8 +31,8 @@ if bashio::config.has_value 'networkdisks'; then
         PUID=",uid=$(bashio::config 'PUID')"
         PGID=",gid=$(bashio::config 'PGID')"
     else
-        PUID=""
-        PGID=""
+        PUID=",uid=$(id -u)"
+        PGID=",gid=$(id -g)"
     fi
 
     # Mounting disks
