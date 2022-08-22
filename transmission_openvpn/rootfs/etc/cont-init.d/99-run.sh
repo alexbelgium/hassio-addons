@@ -55,8 +55,6 @@ if [ -f "$TRANSMISSION_HOME"/settings.json ]; then
 
 fi
 
-
-
 ###################
 # Custom provider #
 ###################
