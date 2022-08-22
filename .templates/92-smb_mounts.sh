@@ -19,6 +19,7 @@ if bashio::config.has_value 'networkdisks'; then
     echo 'Mounting smb share(s)...'
 
     if bashio::config.has_value 'cifsdomain'; then
+        echo "Using domain $(bashio::config 'cifsdomain')"
         DOMAIN=",domain=$(bashio::config 'cifsdomain')"
     else
         DOMAIN=""
@@ -26,6 +27,7 @@ if bashio::config.has_value 'networkdisks'; then
 
     # Mount using UID/GID values
     if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+        echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
         PUID=",uid=$(bashio::config 'PUID')"
         PGID=",gid=$(bashio::config 'PGID')"
     else
