@@ -35,6 +35,11 @@ if bashio::config.has_value 'networkdisks'; then
         PGID=",gid=$(id -g)"
     fi
 
+    # Clean data
+    MOREDISKS=${MOREDISKS// \/\//\/\/}
+    MOREDISKS=${MOREDISKS//, /,}
+    MOREDISKS=${MOREDISKS// /"\040"}
+
     # Mounting disks
     # shellcheck disable=SC2086
     for disk in ${MOREDISKS//,/ }; do # Separate comma separated values
