@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Nextcloud] Unable to mount SMB share with spaces in name (opened 2022-08-23)](https://github.com/alexbelgium/hassio-addons/issues/436) by [@nkm8](https://github.com/nkm8)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
