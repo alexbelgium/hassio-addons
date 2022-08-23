@@ -36,7 +36,7 @@ if bashio::config.has_value 'networkdisks'; then
     fi
 
     # Clean data
-    MOREDISKS=${MOREDISKS// \/\//\/\/}
+    MOREDISKS=${MOREDISKS// \/\//,\/\/}
     MOREDISKS=${MOREDISKS//, /,}
     MOREDISKS=${MOREDISKS// /"\040"}
 
