@@ -35,7 +35,7 @@ if bashio::config.has_value 'localdisks'; then
 
         # Creates dir
         mkdir -p /mnt/"$disk"
-        chown -R "PUID:PGID" /mnt/"$disk"
+        chown -R "$PUID:$PGID" /mnt/"$disk"
         # Legacy mounting : mount to share if still exists (avoid breaking changes)
         # shellcheck disable=SC2015
         [ -d /share/"$disk" ] && mount "$devpath"/"$disk" /share/"$disk" || true
