@@ -8,7 +8,7 @@ assignees: ""
 
 <!-- markdownlint-disable MD036 -->
 
-!!! I have a real life job in parallel to this addon, and don't think I'll be able to add new addons for the moment
+!!! I have a real life job in parallel to this addon, and don't think I'll be able to add new addons for the moment. You can still however express your interest in case someone would do it
 
 **Which addon?**
 
