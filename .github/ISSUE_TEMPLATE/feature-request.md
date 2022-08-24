@@ -8,6 +8,8 @@ assignees: ""
 
 <!-- markdownlint-disable MD036 -->
 
+!!! I have a real job in parallel to this addon, and don't think I'll be able to add new addons for the moment
+
 **Which addon?**
 
 <!--The title of the addon the new feature is for.-->
