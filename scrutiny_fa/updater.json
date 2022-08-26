@@ -4,7 +4,7 @@
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "scrutiny_fa",
-  "source": "dockerhub",
-  "upstream_repo": "linuxserver/scrutiny",
+  "source": "github",
+  "upstream_repo": "analogj/scrutiny",
   "upstream_version": "145c819f-ls37"
 }
