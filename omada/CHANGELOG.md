@@ -1,4 +1,7 @@
 
+## 5.5-chromium-amd64-2022-08-26 (2022-08-26)
+- Update to latest version from mbentley/omada-controller
+
 ## 5.5-chromium-2022-08-24 (2022-08-24)
 - Update to latest version from mbentley/omada-controller
 
