@@ -30,7 +30,7 @@ Features :
 - SMART monitoring
 - Automatic addition of local drives
 - Hourly updates
-- Ingress with/without ssl
+- Ingress
 - Automatic upstream updates
 
 ## Configuration
@@ -43,11 +43,8 @@ It automatically mounts all local drives.
 Enable full access only if you are encountering issues. SMART access should work without full access in all other scenarios.
 
 ```yaml
-PGID: user
-GPID: user
-ssl: true/false (for Ingress)
-certfile: fullchain.pem #ssl certificate
-keyfile: privkey.pem #sslkeyfile
+Updates : Hourly, Daily, Weekly
+TZ : timezone
 ```
 
 ## Installation
