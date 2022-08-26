@@ -23,7 +23,7 @@
   "panel_icon": "mdi:glasses",
   "ports": {
     "8080/tcp": 8086,
-    "8086/tcp": 8087
+    "8086/tcp": null
   },
   "ports_description": {
     "8080/tcp": "Web UI port",
