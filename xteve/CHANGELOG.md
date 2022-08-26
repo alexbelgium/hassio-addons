@@ -1,3 +1,6 @@
+
+## 2.5.1 (26-08-2022)
+- Update to latest version from SenexCrenshaw/xTeVe
 - BREAKING CHANGE, please backup
 
 ## 2.5.0.0 (06-06-2022)
