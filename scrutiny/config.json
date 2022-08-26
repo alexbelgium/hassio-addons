@@ -71,7 +71,7 @@
   ],
   "schema": {
     "TZ": "str?",
-    "Updates": "list(|Hourly|Daily|Weekly)"
+    "Updates": "list(Hourly|Daily|Weekly)"
   },
   "slug": "scrutiny",
   "udev": true,
