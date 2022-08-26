@@ -36,7 +36,7 @@
   ],
   "schema": {
     "TZ": "str?",
-    "Updates": "list(|Hourly|Daily|Weekly)"
+    "Updates": "list(Hourly|Daily|Weekly)"
   },
   "slug": "scrutiny_fa",
   "udev": true,
