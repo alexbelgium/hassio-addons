@@ -1,5 +1,4 @@
 
-- Update to latest version from linuxserver/scrutiny
 - BACKUP BEFORE UPDATE : major version change
 - PUID/PGID, ssl values deprecated
 
