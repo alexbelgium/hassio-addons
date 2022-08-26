@@ -51,6 +51,9 @@
   },
   "ingress": true,
   "init": false,
+  "map": [
+    "config:rw"
+  ],
   "name": "Scrutiny",
   "options": {
     "PGID": 0,
