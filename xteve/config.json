@@ -12,21 +12,11 @@
     "ssl:ro"
   ],
   "name": "Xteve",
-  "options": {
-    "certfile": "fullchain.pem",
-    "keyfile": "privkey.pem",
-    "ssl": false
-  },
   "ports": {
     "34400/tcp": 34400
   },
   "ports_description": {
     "34400/tcp": "Web interface"
-  },
-  "schema": {
-    "certfile": "str",
-    "keyfile": "str",
-    "custom_ssl": "bool"
   },
   "slug": "xteve",
   "url": "https://github.com/alexbelgium/hassio-addons",
