@@ -1,3 +1,6 @@
+
+## 145c819f-ls37 (26-08-2022)
+- Update to latest version from linuxserver/scrutiny
 - BACKUP BEFORE UPDATE : major version change
 - PUID/PGID, ssl values deprecated
 
