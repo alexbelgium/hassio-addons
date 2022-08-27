@@ -19,7 +19,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[Tandoor recipes](https://github.com/TandoorRecipes/recipes) is meant for people with a collection of recipes they want to share with family and friends or simply store them in a nicely organized way. A basic permission system exists but this application is not meant to be run as a public page.
+[Tandoor recipes](https://github.com/TandoorRecipes/recipes), made by [vabene1111](https://github.com/vabene1111) is meant for people with a collection of recipes they want to share with family and friends or simply store them in a nicely organized way. A basic permission system exists but this application is not meant to be run as a public page.
 
 ## Configuration
 
