@@ -1,4 +1,3 @@
-## &#9888; Open Request : [[Scrutiny] Help needed to migrate to the official Scrutiny Image? (opened 2022-08-05)](https://github.com/alexbelgium/hassio-addons/issues/416) by [@AnalogJ](https://github.com/AnalogJ)
 
 # Home assistant add-on: Scrutiny
 
