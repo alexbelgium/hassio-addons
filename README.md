@@ -499,7 +499,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/glasses.svg) [Scrutiny (Full Access)](scrutiny_fa/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)
@@ -508,7 +508,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_fa%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 ![full_access][full_access-badge]
 
