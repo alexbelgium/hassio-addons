@@ -7,8 +7,15 @@
 #####################
 
 export ALLOWED_HOSTS=$(bashio::config 'ALLOWED_HOSTS') && bashio::log.blue "ALLOWED_HOSTS=$ALLOWED_HOSTS"
-#export CSRF_TRUSTED_ORIGINS=$(bashio::config 'ALLOWED_HOSTS')
 export SECRET_KEY=$(bashio::config 'SECRET_KEY') && bashio::log.blue "SECRET_KEY=$SECRET_KEY"
+
+CSRF_TRUSTED_ORIGINS=""
+for element in ${ALLOWED_HOSTS//,/ }; do # Separate comma separated values
+  element="${element#"https://"}"
+  element="${element#"http://"}"
+  CSRF_TRUSTED_ORIGINS="http://$element,https://$element,$CSRF_TRUSTED_ORIGINS"
+done
+export CSRF_TRUSTED_ORIGINS
 
 #################
 # Allow ingress #
