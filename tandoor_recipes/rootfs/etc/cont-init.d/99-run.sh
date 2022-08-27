@@ -13,12 +13,7 @@ export SECRET_KEY=$(bashio::config 'SECRET_KEY') && bashio::log.blue "SECRET_KEY
 # Allow ingress #
 #################
 
-#bashio::log.info "Setting ingress"
-#ingress_entry="$(bashio::addon.ingress_entry)"
-#export SCRIPT_NAME="$ingress_entry"
-#export JS_REVERSE_SCRIPT_PREFIX="${ingress_entry}/"
-#export STATIC_URL="${ingress_entry}/static/"
-#export MEDIA_URL="${ingress_entry}/media/"
+sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
 
 ###################
 # Define database #
@@ -93,8 +88,8 @@ chmod 755 /data/recipes/staticfiles
 ln -s /config/addons_config/tandoor_recipes/mediafiles /opt/recipes
 ln -s /data/recipes/staticfiles /opt/recipes
 
-#bashio::log.info "Launching nginx"
-#exec nginx & echo "done"
+bashio::log.info "Launching nginx"
+exec nginx & echo "done"
 
 bashio::log.info "Launching app"
 cd /opt/recipes || exit
