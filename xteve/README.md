@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] XTEVE (opened 2022-08-26)](https://github.com/alexbelgium/hassio-addons/issues/442) by [@thetux07](https://github.com/thetux07)
 # Home assistant add-on: xTeVe
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
