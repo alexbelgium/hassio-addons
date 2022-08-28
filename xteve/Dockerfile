@@ -30,7 +30,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 USER root
 
-RUN cp -vnpr /etc/opt/xteve* /data || true
+RUN cp -vnpr /etc/opt/xteve* /data \
+    && cp -vnpr /home/xteve* /data || true
 
 CMD ["-config", "/data", "-port", "34400"]
 
