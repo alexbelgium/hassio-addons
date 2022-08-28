@@ -47,7 +47,7 @@ if bashio::config.has_value 'networkdisks'; then
         # Clean name of network share
         # shellcheck disable=SC2116,SC2001
         disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
-        disk="${disk//"\040"/ }"            #replace \040 with         
+        disk="${disk//"\040"/ }"            #replace \040 with
         diskname="${disk//\\//}"            #replace \ with /
         diskname="${diskname##*/}"          # Get only last part of the name
 

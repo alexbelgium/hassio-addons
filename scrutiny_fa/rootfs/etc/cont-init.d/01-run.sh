@@ -25,9 +25,9 @@ ln -s "$DATABASELOCATION"/influxdb /opt/scrutiny
 ###############################
 
 if [ -f /data/scrutiny.db ]; then
-bashio::log.warning "Previous database detected, migration will start. Backup stored in /share/scrutiny.db.bak"
-cp /data/scrutiny.db /share/scrutiny.db.bak
-mv /data/scrutiny.db "$DATABASELOCATION"/config/
+    bashio::log.warning "Previous database detected, migration will start. Backup stored in /share/scrutiny.db.bak"
+    cp /data/scrutiny.db /share/scrutiny.db.bak
+    mv /data/scrutiny.db "$DATABASELOCATION"/config/
 fi
 
 ######
@@ -36,9 +36,9 @@ fi
 
 # Align timezone with options
 if bashio::config.has_value "TZ"; then
-TZ="$(bashio::config 'TZ')"
-bashio::log.info "Timezone : $TZ"
-sed -i "1a export TZ=$TZ" /etc/cont-init.d/10-timezone
+    TZ="$(bashio::config 'TZ')"
+    bashio::log.info "Timezone : $TZ"
+    sed -i "1a export TZ=$TZ" /etc/cont-init.d/10-timezone
 fi
 
 ################

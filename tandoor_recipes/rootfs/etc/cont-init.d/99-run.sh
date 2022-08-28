@@ -11,9 +11,9 @@ export SECRET_KEY=$(bashio::config 'SECRET_KEY') && bashio::log.blue "SECRET_KEY
 
 CSRF_TRUSTED_ORIGINS="http://localhost"
 for element in ${ALLOWED_HOSTS//,/ }; do # Separate comma separated values
-  element="${element#"https://"}"
-  element="${element#"http://"}"
-  CSRF_TRUSTED_ORIGINS="http://$element,https://$element,$CSRF_TRUSTED_ORIGINS"
+    element="${element#"https://"}"
+    element="${element#"http://"}"
+    CSRF_TRUSTED_ORIGINS="http://$element,https://$element,$CSRF_TRUSTED_ORIGINS"
 done
 export CSRF_TRUSTED_ORIGINS
 
