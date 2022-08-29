@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [XTEVE] database don't update (opened 2022-08-28)](https://github.com/alexbelgium/hassio-addons/issues/445) by [@thetux07](https://github.com/thetux07)
 # Home assistant add-on: xTeVe
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
