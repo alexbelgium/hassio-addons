@@ -5,5 +5,5 @@
   "slug": "omada",
   "source": "dockerhub",
   "upstream_repo": "mbentley/omada-controller",
-  "upstream_version": "5.5-chromium-amd64-2022-08-26"
+  "upstream_version": "5.5-chromium-2022-08-29"
 }
