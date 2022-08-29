@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Doplarr addon, replacement for depricated Requestrr (opened 2022-08-28)](https://github.com/alexbelgium/hassio-addons/issues/446) by [@Calimerorulez](https://github.com/Calimerorulez)
 # Home assistant add-on: requestrr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
