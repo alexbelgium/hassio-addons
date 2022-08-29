@@ -1,4 +1,4 @@
-## 5.5.1-chromium-amd64-2022-08-26 (2022-08-26)
+## 5.5.1-chromium-amd64-2022-08-26 (2022-08-29)
 - run add_on on host network so controller can outgres to physical 
   network properly
 
