@@ -8,6 +8,7 @@
   "description": "recipe manager",
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
+    "TRUSTED_PROXIES": "**",
     "DEBUG": "1",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db"
   },
