@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Emby] Library not loading (opened 2022-08-30)](https://github.com/alexbelgium/hassio-addons/issues/450) by [@skank01](https://github.com/skank01)
 # Home assistant add-on: emby
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
