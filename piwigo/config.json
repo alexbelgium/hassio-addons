@@ -43,6 +43,7 @@
   "environment": {
     "PWG_LOCAL_DIR": "/data"
   },
+  "image": "ghcr.io/alexbelgium/piwigo-{arch}",
   "init": false,
   "map": [
     "media:rw",
