@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile nextcloud_addon flags=(attach_disconnected,mediate_deleted) {
+profile gitea_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,
