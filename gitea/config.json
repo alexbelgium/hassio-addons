@@ -19,7 +19,7 @@
   },
   "ports": {
     "3000/tcp": 3000,
-    "2222/tcp": 2222
+    "22/tcp": 2222
   },
   "ports_description": {
     "3000/tcp": "Http web interface",
