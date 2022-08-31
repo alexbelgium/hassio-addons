@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Transmission Openvpn] Unable to change default download path (opened 2022-08-19)](https://github.com/alexbelgium/hassio-addons/issues/432) by [@almico](https://github.com/almico)
 ## &#9888; Open Issue : [🐛 [Transmission Openvpn] Transmission client is killed upon VPN restart (because of inactivity) (opened 2022-08-22)](https://github.com/alexbelgium/hassio-addons/issues/435) by [@almico](https://github.com/almico)
 # Home assistant add-on: Transmission
 
