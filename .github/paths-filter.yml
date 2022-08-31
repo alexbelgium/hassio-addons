@@ -41,7 +41,7 @@ overseerr: overseerr/config.* # Image : yes
 paperless_ngx: paperless_ngx/config.*
 papermerge: papermerge/config.*
 photoprism: photoprism/config.*
-piwigo: piwigo/config.*
+piwigo: piwigo/config.* # Image : yes
 plex: plex/config.*
 plex_meta_manager: plex_meta_manager/config.* # Image : yes
 portainer: portainer/config.*

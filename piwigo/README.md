@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[Piwigo] Docker service error during update from 12.2.0 to 12.3.0 (opened 2022-08-30)](https://github.com/alexbelgium/hassio-addons/issues/451) by [@jordanauge](https://github.com/jordanauge)
 # Home assistant add-on: Piwigo
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

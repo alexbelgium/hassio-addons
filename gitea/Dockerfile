@@ -23,8 +23,7 @@ FROM ${BUILD_FROM}
 ##################
 
 ENV USER git
-ENV GITEA_WORK_DIR /share
-ENV GITEA_CUSTOM /gitea/data
+ENV GITEA_CUSTOM /share/gitea/data
 
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
