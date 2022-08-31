@@ -22,6 +22,7 @@ fireflyiii_fints_importer: fireflyiii_fints_importer/config.* # Image : yes
 flaresolverr: flaresolverr/config.*
 flexget: flexget/config.*
 gazpar2mqtt: gazpar2mqtt/config.*
+gitea: gitea/config.* # Image : yes
 grav: grav/config.*
 guacamole: guacamole/config.* # Image : yes
 inadyn: inadyn/config.*
