@@ -1,4 +1,7 @@
 
+## 4.4-arm64-2022-08-31 (2022-08-31)
+- Update to latest version from mbentley/omada-controller
+
 ## 5.5-chromium-2022-08-29 (2022-08-29)
 - Update to latest version from mbentley/omada-controller
 - run add_on on host network so controller can outgres to physical
