@@ -53,7 +53,7 @@
   "environment": {
     "PGID": "0",
     "PUID": "0",
-    "version": "docker"
+    "VERSION": "docker"
   },
   "host_network": true,
   "init": false,
