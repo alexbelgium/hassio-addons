@@ -1,11 +1,11 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
-    "armv7"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Gitea for Home Assistant",
+  "image": "ghcr.io/alexbelgium/gitea-{arch}",
   "init": false,
   "map": [
     "share:rw",
