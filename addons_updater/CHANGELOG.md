@@ -1,3 +1,4 @@
+- Look for last 100 elements instead of 10
 - New by_date tag for dockerhub
 - Nightly tag only for beta
 - Use latest lastversion & base images
