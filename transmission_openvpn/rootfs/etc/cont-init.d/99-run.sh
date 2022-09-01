@@ -48,6 +48,32 @@ if [ -f "$TRANSMISSION_HOME"/settings.json ]; then
     sed -i.bak ':begin;$!N;s/,\n}/\n}/g;tbegin;P;D' "$TRANSMISSION_HOME"/settings.json
 fi
 
+#######################
+# Correct permissions #
+#######################
+
+# Get variables
+DOWNLOAD_DIR="$(bashio::config 'TRANSMISSION_DOWNLOAD_DIR')"
+INCOMPLETE_DIR="$(bashio::config 'TRANSMISSION_INCOMPLETE_DIR')"
+WATCH_DIR="$(bashio::config 'TRANSMISSION_WATCH_DIR')"
+TRANSMISSION_HOME="$(bashio::config 'TRANSMISSION_HOME')"
+
+# Get id
+if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+    echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
+    PUID="$(bashio::config 'PUID')"
+    PGID="$(bashio::config 'PGID')"
+else
+    PUID="$(id -u)"
+    PGID="$(id -g)"
+fi
+
+# Update permissions
+for folder in "$DOWNLOAD_DIR" "$INCOMPLETE_DIR" "$WATCH_DIR" "$TRANSMISSION_HOME"; do
+    mkdir -p "$folder"
+    chown -R "$PUID:$PGID" "$folder"
+done
+
 ###################
 # Custom provider #
 ###################
