@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [qBittorrent] Abnormal CPU usage after update (4.4.5-r0-ls213) (opened 2022-09-01)](https://github.com/alexbelgium/hassio-addons/issues/458) by [@jojolll](https://github.com/jojolll)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
