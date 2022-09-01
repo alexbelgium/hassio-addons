@@ -87,7 +87,7 @@ for f in */; do
             DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
             DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
             LASTVERSION=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=100" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
@@ -97,19 +97,27 @@ for f in */; do
             )
             [ "${BETA}" = true ] &&
             LASTVERSION=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=100" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/!d' |
                 sort -V |
                 tail -n 1
             )
+            
             [ "${BYDATE}" = true ] &&
-            DATE=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=10" |
-                jq '.results | .[] | .last_updated' -r |
+            LASTVERSION=$(
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=100" |
+                jq '.results | .[] | .name' -r |
+                sed -e '/.*latest.*/d' |
+                sed -e '/.*dev.*/d' |
+                sed -e '/.*nightly.*/d' |
                 sort -V |
                 tail -n 1
+            ) && \
+            DATE=$(
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=100" |
+                jq '.results[] | select(.name==$LASTVERSION) | .last_updated' -r --arg LASTVERSION "$LASTVERSION"
             ) && \
                 DATE="${DATE%T*}" && \
                 LASTVERSION="$LASTVERSION-$DATE"
