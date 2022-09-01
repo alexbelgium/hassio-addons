@@ -1,8 +1,8 @@
 {
-  "last_update": "26-08-2022",
+  "last_update": "01-09-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "xteve",
   "source": "github",
   "upstream_repo": "SenexCrenshaw/xTeVe",
-  "upstream_version": "2.5.1"
+  "upstream_version": "2.5.2"
 }
