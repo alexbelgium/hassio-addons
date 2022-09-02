@@ -72,8 +72,15 @@ for f in */; do
         FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
         PAUSED=$(jq -r .paused updater.json)
         DATE="$(date '+%d-%m-%Y')"
-        BYDATE=$(jq -r .by_date updater.json)
+        BYDATE=$(jq -r .dockerhub_by_date updater.json)
 
+        # Number of elements to check in dockerhub
+        if grep -Fxq "dockerhub_list_size" updater.json then 
+          LISTSIZE=$(jq -r .dockerhub_list_size updater.json) 
+        else
+          LISTSIZE=100
+        fi
+        
         #Skip if paused
         if [[ "$PAUSED" = true ]]; then bashio::log.magenta "... $SLUG addon updates are paused, skipping"; continue; fi
 
@@ -87,7 +94,7 @@ for f in */; do
             DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
             DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
             LASTVERSION=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=100" |
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
@@ -97,7 +104,7 @@ for f in */; do
             )
             [ "${BETA}" = true ] &&
             LASTVERSION=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=100" |
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/!d' |
@@ -107,7 +114,7 @@ for f in */; do
             
             [ "${BYDATE}" = true ] &&
             LASTVERSION=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=100" |
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
