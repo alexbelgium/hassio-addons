@@ -75,7 +75,7 @@ for f in */; do
         BYDATE=$(jq -r .dockerhub_by_date updater.json)
 
         # Number of elements to check in dockerhub
-        if grep -Fxq "dockerhub_list_size" updater.json then 
+        if grep -Fxq "dockerhub_list_size" updater.json; then 
           LISTSIZE=$(jq -r .dockerhub_list_size updater.json) 
         else
           LISTSIZE=100
