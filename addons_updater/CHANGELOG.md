@@ -1,5 +1,6 @@
+- New dockerhub_list_size tag for dockerhub
 - Look for last 100 elements instead of 10
-- New by_date tag for dockerhub
+- New dockerhub_by_date tag for dockerhub
 - Nightly tag only for beta
 - Use latest lastversion & base images
 - Feat: "pause: true" pauses the updates for a specific addon
