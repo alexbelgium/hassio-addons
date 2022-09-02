@@ -1,5 +1,5 @@
 {
-  "dockerhub_list_size": true,
+  "dockerhub_by_date": true,
   "last_update": "2022-08-28",
   "repository": "alexbelgium/hassio-addons",
   "slug": "omada",
