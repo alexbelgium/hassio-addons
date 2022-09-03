@@ -7,6 +7,11 @@
 
 # Define preferences line
 mkdir -p /config/qBittorrent
+
+# copy default config
+[[ ! -e /config/qBittorrent/qBittorrent.conf ]] && \ 
+cp /defaults/qBittorrent.conf /config/qBittorrent/qBittorrent.conf 
+
 cd /config/qBittorrent/ || true
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$((LINE + 1))
