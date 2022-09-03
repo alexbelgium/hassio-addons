@@ -9,7 +9,7 @@
 mkdir -p /config/qBittorrent
 
 # copy default config
-if [ ! -e /config/qBittorrent/qBittorrent.conf ]; then
+if [ ! -f /config/qBittorrent/qBittorrent.conf ]; then
   cp /defaults/qBittorrent.conf /config/qBittorrent/qBittorrent.conf 
 fi
 
