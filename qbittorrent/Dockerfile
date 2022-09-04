@@ -40,7 +40,7 @@ ENV \
 # SPECIFIC IMAGES MODIFICATIONS
 RUN \
     # Correction for s6v3
-    mv /etc/services.d/qbittorrent/run /etc/s6-overlay/s6-rc.d/svc-qbittorrent/run \
+    mv /etc/services.d/qbittorrent /etc/s6-overlay/s6-rc.d/svc-qbittorrent \
     \
     # Set download folder to /share
     && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
