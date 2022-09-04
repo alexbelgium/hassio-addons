@@ -35,6 +35,7 @@ RUN sed -i "s|/config|/config/addons_config/Jackett|g" /etc/cont-init.d/30-confi
     \
     # Prevent changing ownership of /config
     && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
+    && if [ -f /etc/s6-overlay/s6-rc.d/init-adduser/run ]; then sed -i "/config/d" /etc/s6-overlay/s6-rc.d/init-adduser/run; fi \
     \
     # Allow UID and GID setting
     && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
