@@ -39,12 +39,8 @@ ENV \
 
 # SPECIFIC IMAGES MODIFICATIONS
 RUN \
-    # Correction for s6v3
-    mv /etc/services.d/qbittorrent/* /etc/s6-overlay/s6-rc.d/svc-qbittorrent/ \
-    && rmdir /etc/services.d/qbittorrent \
-    \
     # Set download folder to /share
-    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
+    sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
     \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \
@@ -72,11 +68,6 @@ RUN \
 ##################
 # Copy local files
 COPY rootfs/ /
-
-# Corrects permissions for s6 v3
-RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
-    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
 # Modules
 ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh 90-dns_set.sh"
@@ -109,6 +100,13 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # Switch scripts from s6 v2 to v3
 #RUN if [ -f /etc/s6-overlay/s6-rc.d/init-custom-files/run ]; then mkdir "/custom-cont-init.d" && for SCRIPTS in /etc/cont-init.d/*; do [ -e "$SCRIPTS" ] || continue \
 #    && mv "$SCRIPTS" /custom-cont-init.d && chmod a+x /custom-cont-init.d/*; done; fi
+
+# Corrects permissions for s6 v3
+RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
+    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
+    mv /etc/services.d/qbittorrent/* /etc/s6-overlay/s6-rc.d/svc-qbittorrent/ && \
+    rmdir /etc/services.d/qbittorrent \
 
 ################
 # 4 Entrypoint #
