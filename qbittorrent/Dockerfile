@@ -106,7 +106,7 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
     mv /etc/services.d/qbittorrent/* /etc/s6-overlay/s6-rc.d/svc-qbittorrent/ && \
-    rmdir /etc/services.d/qbittorrent \
+    rmdir /etc/services.d/qbittorrent
 
 ################
 # 4 Entrypoint #
