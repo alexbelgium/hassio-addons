@@ -18,12 +18,12 @@
     "ssl": false
   },
   "ports": {
-    "3000/tcp": 3000,
-    "22/tcp": 2222
+    "22/tcp": 2222,
+    "3000/tcp": 3000
   },
   "ports_description": {
-    "3000/tcp": "Http web interface",
-    "22/tcp": "Ssh"
+    "22/tcp": "Ssh",
+    "3000/tcp": "Http web interface"
   },
   "schema": {
     "certfile": "str",

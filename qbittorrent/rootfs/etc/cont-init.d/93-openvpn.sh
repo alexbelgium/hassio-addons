@@ -110,7 +110,7 @@ else
 
     # Ensure no redirection by removing the direction tag
     if [ -f "$QBT_CONFIG_FILE" ]; then
-      sed -i '/Interface/d' "$QBT_CONFIG_FILE"
+        sed -i '/Interface/d' "$QBT_CONFIG_FILE"
     fi
     bashio::log.info "Direct connection without VPN enabled"
 
