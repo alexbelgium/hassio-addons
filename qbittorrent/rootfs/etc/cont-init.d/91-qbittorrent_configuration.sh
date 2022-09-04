@@ -22,9 +22,9 @@ LINE=$((LINE + 1))
 ###########
 
 if bashio::config.has_value 'run_duration'; then
-    mv /etc/services.d/qbittorrent/timer /etc/s6-overlay/s6-rc.d/svc-qbittorrent/run
+    mv /etc/s6-overlay/s6-rc.d/svc-qbittorrent/timer /etc/s6-overlay/s6-rc.d/svc-qbittorrent/timer
 else
-    rm /etc/services.d/qbittorrent/timer
+    rm /etc/s6-overlay/s6-rc.d/svc-qbittorrent/timer
 fi
 
 ##################
