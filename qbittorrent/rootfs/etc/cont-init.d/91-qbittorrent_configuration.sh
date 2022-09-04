@@ -22,9 +22,7 @@ LINE=$((LINE + 1))
 ###########
 
 if bashio::config.has_value 'run_duration'; then
-    rm /etc/services.d/qbittorrent/run
-    mv /etc/services.d/qbittorrent/timer /etc/services.d/qbittorrent/run
-    chmod +x /etc/services.d/qbittorrent/run
+    mv /etc/services.d/qbittorrent/timer /etc/s6-overlay/s6-rc.d/svc-qbittorrent/run
 else
     rm /etc/services.d/qbittorrent/timer
 fi
