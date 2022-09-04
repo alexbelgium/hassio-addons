@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="latest"
+ARG BUILD_UPSTREAM="4.4.3.1-r1-ls208"
 FROM ${BUILD_FROM}-$BUILD_UPSTREAM
 
 ##################
@@ -39,8 +39,11 @@ ENV \
 
 # SPECIFIC IMAGES MODIFICATIONS
 RUN \
+    # Correction for s6v3
+    ln -sf /etc/services.d/qbittorrent/run /etc/s6-overlay/s6-rc.d/svc-qbittorrent/run \
+    \
     # Set download folder to /share
-    sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
+    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
     \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \
