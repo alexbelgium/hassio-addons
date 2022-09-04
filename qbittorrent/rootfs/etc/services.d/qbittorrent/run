@@ -11,7 +11,7 @@ if bashio::config.true 'openvpn_enabled'; then
     exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh
 else
     if bashio::config.true 'silent'; then
-        s6-notifyoncheck -d -n 12 -c "nc -z 127.0.0.1 ${WEBUI_PORT}" \ 
+        s6-notifyoncheck -d -n 12 -c "nc -z 127.0.0.1 ${WEBUI_PORT}" \
         s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" >/dev/null
     else
         s6-notifyoncheck -d -n 12 -c "nc -z 127.0.0.1 ${WEBUI_PORT}" \
