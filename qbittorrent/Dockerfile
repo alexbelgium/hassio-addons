@@ -52,7 +52,7 @@ RUN \
 ARG CONFIGLOCATION="/config/qBittorrent"
 RUN \
     # Avoid custom-init.d duplications
-    grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs -r rm \
+    rm -f $(grep -sril "Potential tampering with custom" /a /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
     \
     # change config folder
     && grep -sril "/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs sed -i "s=/config=$CONFIGLOCATION || true=g" \
