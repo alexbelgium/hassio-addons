@@ -1,3 +1,4 @@
+DO NOT INSTALL, BROKEN
 
 ## 4.4.5-r0-ls213 (01-09-2022)
 - Update to latest version from linuxserver/docker-qbittorrent
