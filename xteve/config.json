@@ -7,8 +7,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "M3U Proxy for Plex DVR and Emby Live TV",
   "environment": {
-    "XTEVE_HOME": "/data",
-    "XTEVE_CONF": "/data/conf"
+    "XTEVE_CONF": "/data/conf",
+    "XTEVE_HOME": "/data"
   },
   "map": [
     "config:rw",
