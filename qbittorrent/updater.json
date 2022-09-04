@@ -6,5 +6,5 @@
   "slug": "qbittorrent",
   "source": "github",
   "upstream_repo": "linuxserver/docker-qbittorrent",
-  "upstream_version": "4.4.5-r0-ls213"
+  "upstream_version": "4.4.3.1-r1-ls208"
 }
