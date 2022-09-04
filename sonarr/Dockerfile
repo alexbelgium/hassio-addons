@@ -34,16 +34,16 @@ RUN \
     && sed -i "s|/config|/config/addons_config/sonarr|g" /etc/cont-init.d/30-config \
     \
     # Avoid custom-init.d duplications
-    && if [ -f /etc/cont-init.d/02-tamper-check ]; then rm /etc/cont-init.d/02-tamper-check; fi \
+    && grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs -r rm \
     \
     # Prevent changing ownership of /config
-    && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
-    && if [ -f /etc/s6-overlay/s6-rc.d/init-adduser/run ]; then sed -i "/config/d" /etc/s6-overlay/s6-rc.d/init-adduser/run; fi \
+    && grep -sril "/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs -r rm \
     \
     # Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser
+    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
+    sed -i 's/bash/bashio/g' "$file" && \
+    sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
+    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done
 
 ##################
 # 3 Install apps #

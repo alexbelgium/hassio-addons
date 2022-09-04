@@ -37,31 +37,31 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     TERM="xterm-256color"
 
-# hadolint ignore=SC2015
+# SPECIFIC IMAGES MODIFICATIONS
 RUN \
-    # Avoid custom-init.d duplications
-    if [ -f /etc/cont-init.d/02-tamper-check ]; then rm /etc/cont-init.d/02-tamper-check; fi \
-    \
-    # Prevent changing ownership of /config
-    && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
-    && if [ -f /etc/s6-overlay/s6-rc.d/init-adduser/run ]; then sed -i "/config/d" /etc/s6-overlay/s6-rc.d/init-adduser/run; fi \
-    \
-    # Allow UID and GID setting
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' /etc/cont-init.d/10-adduser \
-    && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' /etc/cont-init.d/10-adduser \
-    \
-    # Correct permissions
-    && sed -i 's=/config=/config/qBittorrent || true=g' /etc/cont-init.d/10-adduser \
-    && sed -i 's=    /config=    /config/qBittorrent || true=g' /etc/cont-init.d/30-config \
-    \
     # Set download folder to /share
-    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
+    sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
     \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf || true
+
+# GLOBAL LSIO MODIFICATIONS
+# hadolint ignore=SC2015
+ARG CONFIGLOCATION="/config/qBittorrent"
+RUN \
+    # Avoid custom-init.d duplications
+    grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs -r rm \
+    \
+    # change config folder
+    && grep -sril "/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs sed -i "s=/config=$CONFIGLOCATION || true=g" \
+    \
+    # Allow UID and GID setting
+    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
+    sed -i 's/bash/bashio/g' "$file" && \
+    sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
+    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done
 
 ##################
 # 3 Install apps #
