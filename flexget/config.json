@@ -8,7 +8,7 @@
   "description": "FlexGet is a multipurpose automation tool for all of your media",
   "environment": {
     "FG_PLUGINS": "",
-    "FG_WEBUI_PASSWD": ""
+    "FG_WEBUI_PASSWD": "homeassistant123"
   },
   "init": false,
   "map": [
@@ -19,7 +19,8 @@
   "name": "Flexget",
   "options": {
     "PGID": 0,
-    "PUID": 0
+    "PUID": 0,
+    "WebuiPass": "homeassistant123"
   },
   "ports": {
     "5050/tcp": 5050
