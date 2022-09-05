@@ -32,9 +32,10 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # hadolint ignore=SC2016
 RUN \
     # Set password
-    sed -i 's/bash/bashio/g' /etc/cont-init.d/20-config \
-    && sed -i 's/# set FG_WEBUI_PASSWD/if bashio::config.has_value "WebuiPass"; then FG_WEBUI_PASSWD=$(bashio::config "WebuiPass"); else FG_WEBUI_PASSWD=""; fi/g' /etc/cont-init.d/20-config \
-    && sed -i 's/# install custom plugins/if bashio::config.has_value "FG_PLUGINS"; then FG_PLUGINS=$(bashio::config "FG_PLUGINS"); else FG_PLUGINS=""; fi/g' /etc/cont-init.d/20-config
+    files="$(grep -sril "set FG_WEBUI_PASSWD" /etc/cont-init.d /etc/s6-overlay/s6-rc.d)" \
+    && sed -i 's/bash/bashio/g' "$files" \
+    && sed -i 's/# set FG_WEBUI_PASSWD/if bashio::config.has_value "WebuiPass"; then FG_WEBUI_PASSWD=$(bashio::config "WebuiPass"); else FG_WEBUI_PASSWD=""; fi/g' "$files" \
+    && sed -i 's/# install custom plugins/if bashio::config.has_value "FG_PLUGINS"; then FG_PLUGINS=$(bashio::config "FG_PLUGINS"); else FG_PLUGINS=""; fi/g' "$files"
 
 # GLOBAL LSIO MODIFICATIONS
 # hadolint ignore=SC2015
