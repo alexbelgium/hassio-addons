@@ -55,7 +55,8 @@ RUN \
     rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
     \
     # change config folder
-    && grep -sril "/config" /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs sed -i "s=/config=$CONFIGLOCATION || true=g" \
+    && files=$(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
+    && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' $files \
     \
     # Allow UID and GID setting
     && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
