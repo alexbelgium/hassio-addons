@@ -31,27 +31,26 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=SC2016
 RUN \
+    # Set password
+    sed -i 's/bash/bashio/g' /etc/cont-init.d/20-config \
+    && sed -i 's/# set FG_WEBUI_PASSWD/if bashio::config.has_value "WebuiPass"; then FG_WEBUI_PASSWD=$(bashio::config "WebuiPass"); else FG_WEBUI_PASSWD=""; fi/g' /etc/cont-init.d/20-config \
+    && sed -i 's/# install custom plugins/if bashio::config.has_value "FG_PLUGINS"; then FG_PLUGINS=$(bashio::config "FG_PLUGINS"); else FG_PLUGINS=""; fi/g' /etc/cont-init.d/20-config
+
+# GLOBAL LSIO MODIFICATIONS
+# hadolint ignore=SC2015
+ARG CONFIGLOCATION="/config/addons_config/flexget"
+RUN \
     # Avoid custom-init.d duplications
-    grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs -r rm \
+    rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
     \
-    # Prevent changing ownership of /config
-    && grep -sril "/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs -r rm \
+    # change config folder
+    && grep -sril "/config" /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs sed -i "s=/config=$CONFIGLOCATION || true=g" \
     \
     # Allow UID and GID setting
     && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
     sed -i 's/bash/bashio/g' "$file" && \
     sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
-    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
-    \
-    # Correct config folder
-    && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /config/addons_config/flexget|g' \
-    && grep -rl " /config" /etc/services.d | xargs sed -i 's| /config| /config/addons_config/flexget|g' \
-    && sed -i 's=/config/flexget=/config/addons_config/flexget || true=g' /etc/cont-init.d/10-adduser \
-    \
-    # Set password
-    && sed -i 's/bash/bashio/g' /etc/cont-init.d/20-config \
-    && sed -i 's/# set FG_WEBUI_PASSWD/if bashio::config.has_value "WebuiPass"; then FG_WEBUI_PASSWD=$(bashio::config "WebuiPass"); else FG_WEBUI_PASSWD=""; fi/g' /etc/cont-init.d/20-config \
-    && sed -i 's/# install custom plugins/if bashio::config.has_value "FG_PLUGINS"; then FG_PLUGINS=$(bashio::config "FG_PLUGINS"); else FG_PLUGINS=""; fi/g' /etc/cont-init.d/20-config
+    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done
 
 ##################
 # 3 Install apps #
