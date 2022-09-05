@@ -21,12 +21,15 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 FlexGet is a multipurpose automation tool for all of your media. See https://flexget.com/
 
+Default password is blank, or can be set from the addons options
+
 ## Requirements
 
 ## Config
 
     "PUID": custom user (default root)
     "PGID": custom user (default root)
+    "WebuiPass": webui password définition
     "FG_PLUGINS": Plugins addition
     "FG_LOG_LEVEL": Log level (critical|error|warning|info|verbose|debug|trace)
 
