@@ -57,7 +57,7 @@ RUN \
     \
     # change config folder
     && files=$(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
-    && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' $files \
+    && sed -i "s=/config=$CONFIGLOCATION || true=g" $files \
     \
     # Allow UID and GID setting
     && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
