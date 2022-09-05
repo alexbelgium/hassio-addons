@@ -21,7 +21,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 FlexGet is a multipurpose automation tool for all of your media. See https://flexget.com/
 
-Default password is blank, or can be set from the addons options
+Default password is 'homeassistant123' , or can be set from the addons options
 
 ## Requirements
 
