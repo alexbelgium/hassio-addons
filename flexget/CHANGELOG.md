@@ -1,3 +1,4 @@
+- Default password homeassistant123
 
 ## 3.3.25 (03-09-2022)
 - Update to latest version from wiserain/flexget
