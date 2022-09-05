@@ -38,6 +38,7 @@ ENV \
     TERM="xterm-256color"
 
 # SPECIFIC IMAGES MODIFICATIONS
+# hadolint ignore=SC2015
 RUN \
     # Set download folder to /share
     sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
