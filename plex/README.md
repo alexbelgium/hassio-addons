@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Plex] Upgrade failure (opened 2022-09-05)](https://github.com/alexbelgium/hassio-addons/issues/463) by [@pssc](https://github.com/pssc)
 # Home assistant add-on: plex
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
