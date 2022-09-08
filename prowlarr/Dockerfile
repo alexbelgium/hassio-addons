@@ -27,31 +27,28 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# GLOBAL LSIO MODIFICATIONS
+# hadolint ignore=SC2015
+ARG CONFIGLOCATION="/config/addons_config/prowlarr"
 RUN \
     # Avoid custom-init.d duplications
-    grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs -r rm \
+    rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
     \
-    # Prevent changing ownership of /config
-    #&& grep -sril "/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs -r rm \
-    && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
+    # change config folder
+    && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
     \
     # Allow UID and GID setting
     && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
     sed -i 's/bash/bashio/g' "$file" && \
     sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
     sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
-    \
-    # Correct permissions
-    && sed -i 's|/config|-R /config/addons_config/prowlarr|g' /etc/cont-init.d/10-adduser \
-    && sed -i 's=	/config=/config/addons_config/prowlarr || true=g' /etc/cont-init.d/30-config \
-    && sed -i 's|/config|/config/addons_config/prowlarr|g' /etc/services.d/prowlarr/run
 
-##################
-# 3 Install apps #
-##################
+    ##################
+    # 3 Install apps #
+    ##################
 
-# Add rootfs
-COPY rootfs/ /
+    # Add rootfs
+    COPY rootfs/ /
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \

@@ -27,17 +27,16 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 # GLOBAL LSIO MODIFICATIONS
 # hadolint ignore=SC2015
 ARG CONFIGLOCATION="/config/addons_config/bazarr"
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
     # Avoid custom-init.d duplications
-    grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs -r rm \
+    rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
     \
     # change config folder
-    && grep -sril "/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs sed -i "s=/config=$CONFIGLOCATION || true=g" \
+    && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
     \
     # Allow UID and GID setting
     && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
