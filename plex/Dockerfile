@@ -32,30 +32,23 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=SC2016
 RUN \
-    \
-    ######################
-    # CORRECT PLEX CLAIM #
-    ######################
-    \
-    sed -i 's/with-contenv bash/with-contenv bashio/g' /etc/cont-init.d/45-plex-claim \
-    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' /etc/cont-init.d/45-plex-claim \
-    && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' /etc/cont-init.d/45-plex-claim
-
-# GLOBAL LSIO MODIFICATIONS
-# hadolint ignore=SC2015
-ARG CONFIGLOCATION="/config"
-RUN \
     # Avoid custom-init.d duplications
     rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
     \
-    # change config folder
-    && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
+    # Prevent changing ownership of /config
+    && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
     \
     # Allow UID and GID setting
     && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
     sed -i 's/bash/bashio/g' "$file" && \
     sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
-    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done
+    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
+    \
+    # CORRECT PLEX CLAIM
+    \
+    && sed -i 's/with-contenv bash/with-contenv bashio/g' /etc/cont-init.d/45-plex-claim \
+    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' /etc/cont-init.d/45-plex-claim \
+    && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' /etc/cont-init.d/45-plex-claim
 
 ##################
 # 3 Install apps #
