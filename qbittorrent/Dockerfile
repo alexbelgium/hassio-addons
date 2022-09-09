@@ -38,6 +38,7 @@ ENV \
     TERM="xterm-256color"
 
 # hadolint ignore=SC2015
+ARG CONFIGLOCATION="/config/qBittorrent"
 RUN \
     # Avoid custom-init.d duplications
     rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
@@ -49,8 +50,7 @@ RUN \
     sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
     \
     # Correct permissions
-    && sed -i 's=/config=/config/qBittorrent || true=g' /etc/cont-init.d/10-adduser \
-    && sed -i 's=    /config=    /config/qBittorrent || true=g' /etc/cont-init.d/30-config \
+    && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
     \
     # Set download folder to /share
     && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
