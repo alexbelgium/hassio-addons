@@ -37,8 +37,19 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     TERM="xterm-256color"
 
+# Image specific modifications
+RUN \
+    # Set download folder to /share
+    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
+    \
+    # Remove fixed folders, allows connection to webUI
+    && sed '11,13d' /defaults/qBittorrent.conf \
+    && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
+
+# Global LSIO modifications
 # hadolint ignore=SC2015
-ARG CONFIGLOCATION="/config/qBittorrent"
+ARG CONFIGLOCATION="/config"
 RUN \
     # Avoid custom-init.d duplications
     rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
@@ -49,16 +60,11 @@ RUN \
     sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
     sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
     \
-    # Correct permissions
+    # Correct config location
     && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
     \
-    # Set download folder to /share
-    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
-    \
-    # Remove fixed folders, allows connection to webUI
-    && sed '11,13d' /defaults/qBittorrent.conf \
-    && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
+    # Avoid changing /config permissions
+    && sed -i "/chown abc:abc \/config/d" $(grep -sril 'chown abc:abc /config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d)
 
 ##################
 # 3 Install apps #
