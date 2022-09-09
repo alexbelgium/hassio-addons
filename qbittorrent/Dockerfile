@@ -42,10 +42,6 @@ RUN \
     # Avoid custom-init.d duplications
     rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
     \
-    # Prevent changing ownership of /config
-    && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
-    && if [ -f /etc/s6-overlay/s6-rc.d/init-adduser/run ]; then sed -i "/config/d" /etc/s6-overlay/s6-rc.d/init-adduser/run; fi \
-    \
     # Allow UID and GID setting
     && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
     sed -i 's/bash/bashio/g' "$file" && \
