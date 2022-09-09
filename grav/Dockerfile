@@ -27,23 +27,21 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# Global LSIO modifications
+ARG CONFIGLOCATION="/share/grav"
+# hadolint ignore=SC2015, SC2013
 RUN \
-    # use /data instead of /config for hass.io environment
-    sed -i "s|/config|/share/grav|g" /etc/cont-init.d/50-config \
-    && sed -i "s|/share/grav/nginx|/config/nginx|g" /etc/cont-init.d/50-config \
-    \
     # Avoid custom-init.d duplications
-    && grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs -r rm \
-    \
-    # Prevent changing ownership of /config
-    #&& grep -sril "/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs -r rm \
-    && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
+    for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f "$file"; done \
     \
     # Allow UID and GID setting
-    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
-    sed -i 's/bash/bashio/g' "$file" && \
-    sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
-    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done
+    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's/bash/bashio/g' "$file" && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
+    \
+    # Correct config location
+    && for file in $(grep -sril '/config[ /$]' /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/config=$CONFIGLOCATION=g" "$file"; done \
+    \
+    # Avoid changing /config permissions
+    && for file in $(grep -srl "chown abc:abc \/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i "/chown abc:abc \/config/d" "$file"; done
 
 ##################
 # 3 Install apps #

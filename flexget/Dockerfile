@@ -37,21 +37,21 @@ RUN \
     && sed -i 's/# set FG_WEBUI_PASSWD/if bashio::config.has_value "WebuiPass"; then FG_WEBUI_PASSWD=$(bashio::config "WebuiPass"); else FG_WEBUI_PASSWD=""; fi/g' "$files" \
     && sed -i 's/# install custom plugins/if bashio::config.has_value "FG_PLUGINS"; then FG_PLUGINS=$(bashio::config "FG_PLUGINS"); else FG_PLUGINS=""; fi/g' "$files"
 
-# GLOBAL LSIO MODIFICATIONS
+# Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/flexget"
-# hadolint ignore=SC2015
+# hadolint ignore=SC2015, SC2013
 RUN \
     # Avoid custom-init.d duplications
-    rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
-    \
-    # change config folder
-    && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
+    for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f "$file"; done \
     \
     # Allow UID and GID setting
-    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
-    sed -i 's/bash/bashio/g' "$file" && \
-    sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
-    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done
+    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's/bash/bashio/g' "$file" && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
+    \
+    # Correct config location
+    && for file in $(grep -sril '/config[ /$]' /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/config=$CONFIGLOCATION=g" "$file"; done \
+    \
+    # Avoid changing /config permissions
+    && for file in $(grep -srl "chown abc:abc \/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i "/chown abc:abc \/config/d" "$file"; done
 
 ##################
 # 3 Install apps #
