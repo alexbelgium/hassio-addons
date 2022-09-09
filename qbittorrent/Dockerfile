@@ -40,7 +40,7 @@ ENV \
 # Image specific modifications
 RUN \
     # Set download folder to /share
-    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
+    sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
     \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \
