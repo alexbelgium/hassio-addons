@@ -54,6 +54,9 @@ RUN \
     # Avoid custom-init.d duplications
     for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f "$file"; done \
     \
+    # Create new config folder if needed
+    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i "1a mkdir -p $CONFIGLOCATION" "$file"; done \
+    \
     # Allow UID and GID setting
     && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's/bash/bashio/g' "$file" && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
     \
