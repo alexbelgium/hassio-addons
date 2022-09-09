@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [RESILIOSYNC] Write permission denied - readonly (opened 2022-09-06)](https://github.com/alexbelgium/hassio-addons/issues/466) by [@AzonInc](https://github.com/AzonInc)
 # Home assistant add-on: Resilio Sync
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
