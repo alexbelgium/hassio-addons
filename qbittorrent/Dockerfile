@@ -37,32 +37,32 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     TERM="xterm-256color"
 
-# SPECIFIC IMAGES MODIFICATIONS
 # hadolint ignore=SC2015
-RUN \
-    # Set download folder to /share
-    sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
-    \
-    # Remove fixed folders, allows connection to webUI
-    && sed '11,13d' /defaults/qBittorrent.conf \
-    && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf || true
-
-# GLOBAL LSIO MODIFICATIONS
-# hadolint ignore=SC2015
-ARG CONFIGLOCATION="/config/qBittorrent"
 RUN \
     # Avoid custom-init.d duplications
     rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
     \
-    # change config folder
-    && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
+    # Prevent changing ownership of /config
+    && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
+    && if [ -f /etc/s6-overlay/s6-rc.d/init-adduser/run ]; then sed -i "/config/d" /etc/s6-overlay/s6-rc.d/init-adduser/run; fi \
     \
     # Allow UID and GID setting
     && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
     sed -i 's/bash/bashio/g' "$file" && \
     sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
-    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done
+    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
+    \
+    # Correct permissions
+    && sed -i 's=/config=/config/qBittorrent || true=g' /etc/cont-init.d/10-adduser \
+    && sed -i 's=    /config=    /config/qBittorrent || true=g' /etc/cont-init.d/30-config \
+    \
+    # Set download folder to /share
+    && sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
+    \
+    # Remove fixed folders, allows connection to webUI
+    && sed '11,13d' /defaults/qBittorrent.conf \
+    && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
 
 ##################
 # 3 Install apps #
