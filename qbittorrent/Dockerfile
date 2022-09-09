@@ -51,6 +51,7 @@ RUN \
 # hadolint ignore=SC2015
 ARG CONFIGLOCATION="/config"
 RUN \
+    echo "Running LSIO modifications" \
     # Avoid custom-init.d duplications
     && for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f "$file"; done \
     \
