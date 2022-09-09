@@ -28,6 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Image specific modifications
+# hadolint ignore=SC2016
 RUN \
     # CORRECT PLEX CLAIM
     file="$(grep -sril 'Server claimed successfully, navigate to http://serverip:32400/web to complete plex setup' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d)" \
