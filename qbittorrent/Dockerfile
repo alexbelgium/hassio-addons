@@ -52,19 +52,16 @@ RUN \
 ARG CONFIGLOCATION="/config"
 RUN \
     # Avoid custom-init.d duplications
-    rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
+    && for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f "$file"; done \
     \
     # Allow UID and GID setting
-    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
-    sed -i 's/bash/bashio/g' "$file" && \
-    sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
-    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
+    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's/bash/bashio/g' "$file" && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
     \
     # Correct config location
-    && sed -i "s=/config=$CONFIGLOCATION || true=g" $(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d) \
+    && for file in $(grep -sril '/config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/config=$CONFIGLOCATION=g" "$file"; done \
     \
     # Avoid changing /config permissions
-    && sed -i "/chown abc:abc \/config/d" $(grep -sril 'chown abc:abc /config[ /$]' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d)
+    && for file in $(grep -srl "chown abc:abc \/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i "/chown abc:abc \/config/d" "$file"; done
 
 ##################
 # 3 Install apps #
