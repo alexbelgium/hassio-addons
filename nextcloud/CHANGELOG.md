@@ -1,3 +1,6 @@
+
+## 24.0.5 (09-09-2022)
+- Update to latest version from linuxserver/docker-nextcloud
 ## 24.0.4 (13-08-2022)
 
 - Update to latest version from linuxserver/docker-nextcloud
