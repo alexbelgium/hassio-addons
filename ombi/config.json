@@ -27,6 +27,6 @@
   },
   "slug": "ombi",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/ombi",
-  "version": "4.22.5",
+  "version": "4.22.5-bugfix",
   "webui": "http://[HOST]:[PORT:3579]"
 }

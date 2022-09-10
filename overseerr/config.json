@@ -36,6 +36,6 @@
   },
   "slug": "overseerr",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/overseerr",
-  "version": "1.29.1",
+  "version": "1.29.1-bugfix",
   "webui": "http://[HOST]:[PORT:5055]"
 }

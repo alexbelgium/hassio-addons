@@ -34,6 +34,6 @@
   },
   "slug": "requestrr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.2-3",
+  "version": "2.1.2-3-bugfix",
   "webui": "http://[HOST]:[PORT:4545]"
 }

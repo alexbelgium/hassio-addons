@@ -86,6 +86,6 @@
   },
   "slug": "ubooquity",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.2-10",
+  "version": "2.1.2-10-bugfix",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:2206]/ubooquity/admin"
 }
