@@ -45,7 +45,10 @@ RUN \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
+    \
+    # Change location of config
+    && for file in $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' /etc/services.d/*/run /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/run); do sed -i "s|/config|/config/qBittorrent|g" "$file"; done
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config"
