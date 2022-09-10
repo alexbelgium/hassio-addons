@@ -1,6 +1,9 @@
+- New feature : localdisks mounting added
 
 ## 1.1.1 (01-09-2022)
+
 - Update to latest version from linuxserver/docker-bazarr
+
 ## 1.1.0 (05-07-2022)
 
 - Update to latest version from linuxserver/docker-bazarr
