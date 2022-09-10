@@ -49,6 +49,7 @@ RUN \
     \
     # Correct config location
     && for file in $(grep -Esril '/config[ /]|/config$' /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/config=$CONFIGLOCATION=g" "$file"; done
+
 ##################
 # 3 Install apps #
 ##################
