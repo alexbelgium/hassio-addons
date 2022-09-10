@@ -26,9 +26,12 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 Please check Tandoor Recipes documentation : https://docs.tandoor.dev/install/docker/
 
 ```yaml
-    "SECRET_KEY": "str",
-    "DB_TYPE": "list(sqlite|postgresql_external|mariadb_addon)" # Mariadb is automatically configured is the addon is installed, sqlite does not need configuration
-    "ALLOWED_HOSTS": "str?",
+Required :
+    "ALLOWED_HOSTS": "your system url", # You need to input your homeassistant urls (comma separated, without space) to allow ingress to work
+    "DB_TYPE": "list(sqlite|postgresql_external|mariadb_addon)" # Type of database to use. Mariadb_addon allows to be automatically configured if the maria_db addon is already installed on your system. Sqlite is an internal database. For postgresql_external, you'll need to fill the below settings
+    "SECRET_KEY": "str", # Your secret key
+    "PORT": 9928 # By default, the webui is available on http://HAurl:9928. If you ever need to change the port, you should never do it within the app, but only through this option
+Optional :
     "POSTGRES_HOST": "str?", # Needed for postgresql_external
     "POSTGRES_PORT": "str?", # Needed for postgresql_external
     "POSTGRES_USER": "str?", # Needed for postgresql_external
