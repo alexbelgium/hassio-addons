@@ -27,6 +27,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# hadolint ignore=SC2015,DL4006,SC2013
 RUN \
     # use /data instead of /config for hass.io environment
     sed -i 's|/config \\|/data \\|g' /etc/cont-init.d/30-config \

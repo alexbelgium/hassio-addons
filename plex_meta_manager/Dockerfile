@@ -29,6 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV HOME=/config/addons_config/plex-data-manager
 
+# hadolint ignore=SC2015,DL4006,SC2013
 RUN \
     # use /data instead of /config for hass.io environment
     sed -i "s|/config|/config/addons_config/plex-meta-manager|g" /etc/services.d/*/run \

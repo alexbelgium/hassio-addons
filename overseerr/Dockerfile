@@ -28,6 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# hadolint ignore=DL4006,SC2013
 RUN sed -i "s|/config|/config/addons_config/addons_config/overseerr|g" /etc/services.d/overseerr/run \
     && sed -i "s|/config|/config/addons_config/addons_config/overseerr|g" /etc/cont-init.d/30-config \
     \

@@ -29,7 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng
 # spellcheck disable=SC2015
-# hadolint ignore=SC2015
+# hadolint ignore=DL4006,SC2013
 RUN \
     #################
     # Correct image #

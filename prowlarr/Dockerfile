@@ -28,7 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # GLOBAL LSIO MODIFICATIONS
-# hadolint ignore=SC2015
+# hadolint ignore=SC2015,DL4006,SC2013
 ARG CONFIGLOCATION="/config/addons_config/prowlarr"
 RUN \
     # Avoid custom-init.d duplications
@@ -43,12 +43,12 @@ RUN \
     sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
     sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done
 
-    ##################
-    # 3 Install apps #
-    ##################
+##################
+# 3 Install apps #
+##################
 
-    # Add rootfs
-    COPY rootfs/ /
+# Add rootfs
+COPY rootfs/ /
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \

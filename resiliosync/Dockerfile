@@ -28,7 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-# hadolint ignore=DL4006
+# hadolint ignore=SC2015,DL4006,SC2013
 RUN \
     ###############
     # Adapt image #
