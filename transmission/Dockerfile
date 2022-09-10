@@ -28,6 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # MOFIFY DATA PATH
+# hadolint ignore=SC2015,DL4006,SC2013
 RUN sed -i "s|config|config/transmission|g" /etc/services.d/transmission/run \
     #&& sed -i "s|config|config/transmission|g" /etc/cont-init.d/20-config \
     # Avoid custom-init.d duplications

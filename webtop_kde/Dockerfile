@@ -28,6 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Allow UID and GID setting
+# hadolint ignore=SC2015,DL4006,SC2013
 RUN grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs -r rm \
     \
     # Prevent changing ownership of /config
