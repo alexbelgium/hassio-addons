@@ -30,34 +30,31 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # hadolint ignore=SC2015,DL4006,SC2013
 RUN \
-    ###############
-    # Adapt image #
-    ###############
-    # Avoid custom-init.d duplications
-    grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs -r rm \
-    \
-    # Prevent changing ownership of /config
-    #&& grep -sril "/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d | xargs grep -riL "/config/" | xargs -r rm \
-    && if [ -f /etc/cont-init.d/10-adduser ]; then sed -i "/chown abc:abc \/config$/d" /etc/cont-init.d/10-adduser; fi \
-    \
-    # Allow UID and GID setting
-    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do \
-    sed -i 's/bash/bashio/g' "$file" && \
-    sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && \
-    sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
-    \
-    # Correct config folder
-    && grep -rl " /config" /etc/cont-init.d | xargs sed -i 's| /config| /share/resiliosync_config|g' || true \
-    && grep -rl " /config" /etc/services.d | xargs sed -i 's| /config| /share/resiliosync_config|g' || true \
-    && sed -i 's=/config/resiliosync=/share/resiliosync_config || true=g' /etc/cont-init.d/10-adduser || true \
-    && sed -i 's="/config="/share/resiliosync_config=g' /defaults/* \
-    \
     # Correct sync folder
-    && grep -rl "/sync/" /etc/cont-init.d | xargs sed -i 's|/sync/|/share/resiliosync|g' || true \
+    grep -rl "/sync/" /etc/cont-init.d | xargs sed -i 's|/sync/|/share/resiliosync|g' || true \
     && grep -rl " /sync" /etc/cont-init.d | xargs sed -i 's| /sync| /share/resiliosync|g' || true \
     && grep -rl "/sync/" /etc/services.d | xargs sed -i 's|/sync/|/share/resiliosync|g' || true \
     && grep -rl " /sync" /etc/services.d | xargs sed -i 's| /sync| /share/resiliosync|g' || true \
     && sed -i 's=/sync/=/share/resiliosync/=g' /defaults/*
+
+# Global LSIO modifications
+ARG CONFIGLOCATION="/share/resiliosync_config"
+# hadolint ignore=SC2015, SC2013
+RUN \
+    # Avoid custom-init.d duplications
+    for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f "$file"; done \
+    \
+    # Create new config folder if needed
+    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i "1a mkdir -p $CONFIGLOCATION" "$file"; done \
+    \
+    # Allow UID and GID setting
+    && for file in $(grep -srl "PUID:-911" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's/bash/bashio/g' "$file" && sed -i 's/{PUID:-911}/(bashio::config "PUID")/g' "$file" && sed -i 's/{PGID:-911}/(bashio::config "PGID")/g' "$file"; done \
+    \
+    # Correct config location
+    && for file in $(grep -sril '/config[ /$]' /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/config=$CONFIGLOCATION=g" "$file"; done \
+    \
+    # Avoid changing /config permissions
+    && for file in $(grep -srl "chown abc:abc \/config" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i "/chown abc:abc \/config/d" "$file"; done
 
 ##################
 # 3 Install apps #
