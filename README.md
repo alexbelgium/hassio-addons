@@ -57,6 +57,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 ![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003;  [Booksonic-air](booksonic_air/) : platform for accessing the audibooks you own wherever you are
 
@@ -443,6 +444,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 ![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/progress-download.svg) [Qbittorrent](qbittorrent/) : qBittorrent is a bittorrent client
 
