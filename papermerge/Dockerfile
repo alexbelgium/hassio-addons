@@ -51,7 +51,7 @@ RUN \
     && for file in $(grep -Esril '/config[ /]|/config$' /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/config=$CONFIGLOCATION=g" "$file"; done \
     \
     # Avoid changing /config permissions
-    &&     && for file in $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' /etc/services.d/*/run /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/run); do sed -i "/abc:abc/d" "$file" && sed -i "/\/config$/d" "$file"; done
+    && for file in $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' /etc/services.d/*/run /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/run); do sed -i "/abc:abc/d" "$file" && sed -i "/\/config$/d" "$file"; done
 
 ##################
 # 3 Install apps #
