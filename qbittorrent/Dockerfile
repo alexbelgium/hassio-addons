@@ -48,7 +48,7 @@ RUN \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
     \
     # Change location of config
-    && sed -i "s|/config$|/config/qBittorrent$|g" "/etc/s6-overlay/s6-rc.d/init-qbittorrent/run"
+    && sed -i "s|/config$|/config/qBittorrent|g" "/etc/s6-overlay/s6-rc.d/init-qbittorrent/run"
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config"
