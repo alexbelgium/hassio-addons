@@ -28,8 +28,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # GLOBAL LSIO MODIFICATIONS
-# hadolint ignore=SC2015,DL4006,SC2013
 ARG CONFIGLOCATION="/config/addons_config/prowlarr"
+# hadolint ignore=SC2015,DL4006,SC2013
 RUN \
     # Avoid custom-init.d duplications
     rm -f $(grep -sril "Potential tampering with custom" /etc/cont-init.d /etc/s6-overlay/s6-rc.d) \
