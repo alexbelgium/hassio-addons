@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Qbittorrent] New build ignores config/save path (opened 2022-09-09)](https://github.com/alexbelgium/hassio-addons/issues/470) by [@deku-m](https://github.com/deku-m)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
