@@ -28,7 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Global LSIO modifications
-ARG CONFIGLOCATION="/config/addons_config/transmission"
+ARG CONFIGLOCATION="/config/transmission"
 # hadolint ignore=SC2015, SC2013
 RUN \
     # Avoid custom-init.d duplications
