@@ -1,5 +1,5 @@
 # Home assistant add-on: code-server (not recommended)
-A better alternative exists here : https://github.com/hassio-addons/addon-vscode
+## A better alternative exists here : https://github.com/hassio-addons/addon-vscode
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
