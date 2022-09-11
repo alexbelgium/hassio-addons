@@ -1,12 +1,17 @@
+- Config folder moved to /config/addons_config/qBittorrent
 
 ## 4.4.5-r0-ls214 (09-09-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r0-ls213 (01-09-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.3.1-r1-ls211 (30-08-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
+
 ## 4.4.3.1-r1-ls210 (13-08-2022)
 
 - Update to latest version from linuxserver/docker-qbittorrent

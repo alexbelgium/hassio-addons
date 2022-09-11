@@ -35,7 +35,10 @@ ENV \
     PS1="$(whoami)@$(hostname):$(pwd)$ " \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     S6_CMD_WAIT_FOR_SERVICES=1 \
-    TERM="xterm-256color"
+    TERM="xterm-256color" \
+    HOME="/config/addons_config" \
+    XDG_CONFIG_HOME="/config/addons_config" \
+    XDG_DATA_HOME="/config/addons_config"
 
 # Image specific modifications
 RUN \
@@ -45,13 +48,10 @@ RUN \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
-    \
-    # Change location of config
-    && sed -i "s|/config$|/config/qBittorrent|g" "/etc/s6-overlay/s6-rc.d/init-qbittorrent/run"
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
 
 # Global LSIO modifications
-ARG CONFIGLOCATION="/config"
+ARG CONFIGLOCATION="/config/addons_config/qBittorrent"
 # hadolint ignore=SC2015, SC2013
 RUN \
     # Avoid custom-init.d duplications

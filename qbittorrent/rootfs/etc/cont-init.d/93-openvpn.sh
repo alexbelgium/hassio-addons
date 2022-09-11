@@ -6,7 +6,7 @@ declare openvpn_config
 declare openvpn_username
 declare openvpn_password
 
-QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
+QBT_CONFIG_FILE="/config/addons_config/qBittorrent/qBittorrent.conf"
 
 if bashio::config.true 'openvpn_enabled'; then
 
@@ -69,7 +69,7 @@ if bashio::config.true 'openvpn_enabled'; then
     echo "Using interface binding in the qBittorrent app"
 
     # Define preferences line
-    cd /config/qBittorrent/ || exit 1
+    cd /config/addons_config/qBittorrent/ || exit 1
     LINE=$(sed -n '/Preferences/=' "$QBT_CONFIG_FILE")
     LINE=$((LINE + 1))
     SESSION=$(sed -n '/BitTorrent/=' "$QBT_CONFIG_FILE")
