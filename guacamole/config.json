@@ -26,5 +26,5 @@
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.4.2-7",
   "video": true,
-  "webui": "http://[HOST]:[PORT:8080]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

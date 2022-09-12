@@ -78,5 +78,5 @@
   "slug": "mylar3",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "0.6.9-bugfix",
-  "webui": "http://[HOST]:[PORT:8090]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8090]"
 }

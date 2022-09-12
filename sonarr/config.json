@@ -82,5 +82,5 @@
   "slug": "sonarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
   "version": "3.0.9.1549-2-bugfix",
-  "webui": "http://[HOST]:[PORT:8989]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8989]"
 }

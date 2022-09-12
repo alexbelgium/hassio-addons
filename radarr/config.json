@@ -82,5 +82,5 @@
   "slug": "radarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
   "version": "4.1.0.6175-bugfix",
-  "webui": "http://[HOST]:[PORT:7878]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:7878]"
 }

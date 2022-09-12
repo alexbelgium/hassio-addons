@@ -79,5 +79,5 @@
   "slug": "booksonic-air_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/booksonic_air",
   "version": "v2201.1.0-ls68-bugfix",
-  "webui": "http://[HOST]:[PORT:4040]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:4040]"
 }

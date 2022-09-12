@@ -94,5 +94,5 @@
   "slug": "bazarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bazarr",
   "version": "1.1.1-bugfix",
-  "webui": "http://[HOST]:[PORT:6767]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:6767]"
 }
