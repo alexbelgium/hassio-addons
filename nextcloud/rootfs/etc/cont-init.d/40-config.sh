@@ -33,6 +33,6 @@ chmod -R 770 "$datadirectory"
 for files in /defaults/config.php /data/config/www/nextcloud/config/config.php
 if [ -f "$files" ]; then
 sed -i "/check_data_directory_permissions/d" "$files"
-sed -i "1a 'check_data_directory_permissions' => true" "$files"
+sed -i "/datadirectory/a 'check_data_directory_permissions' => true," "$files"
 fi
 done
