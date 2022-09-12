@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [gitea] Enabling ssl in the addon config does not enable ssl (opened 2022-09-12)](https://github.com/alexbelgium/hassio-addons/issues/474) by [@financelurker](https://github.com/financelurker)
 # Home assistant add-on: Gitea
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
