@@ -28,3 +28,11 @@ rm -r /data/config/www/nextcloud/assets &>/dev/null || true
 echo "Updating permissions"
 chmod -R 770 /data/config
 chmod -R 770 "$datadirectory"
+
+#Prevent permissions check
+for files in /defaults/config.php /data/config/www/nextcloud/config/config.php
+if [ -f "$files" ]; then
+sed -i "/check_data_directory_permissions/d" "$files"
+sed -i "1a 'check_data_directory_permissions' => true" "$files"
+fi
+done
