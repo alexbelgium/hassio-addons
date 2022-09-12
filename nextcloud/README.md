@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Nextcloud] folder mounted in /mnt/Nextcloud does not exist, Nextcloud giving "Your data directory is readable by other users.  Please change the permissions to 0770 so that the directory cannot be listed by other users." (opened 2022-09-11)](https://github.com/alexbelgium/hassio-addons/issues/473) by [@bobloadmire](https://github.com/bobloadmire)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
