@@ -89,7 +89,7 @@ RUN apk -U update && \
 COPY rootfs/ /
 
 # Corrects permissions for /app directory
-RUN if [ -d /app ]; then chown -R nginx /app; fi 
+RUN if [ -d /app ]; then chown -R nginx /app; fi
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
@@ -116,7 +116,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh \
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
-    && rm /automatic_packages.sh || printf '%s\n' "${PACKAGES:-}" > /ENVFILE
+    && rm /automatic_packages.sh || (printf '%s\n' "${PACKAGES:-}" > /ENVFILE; \
+    if [ -f /etc/s6-overlay/s6-rc.d/init-migrations/run ]; then chmod /etc/cont-init.d/00-aaa_dockerfile_backup.sh && sed -i "1a /./etc/cont-init.d/00-aaa_dockerfile_backup.sh" /etc/s6-overlay/s6-rc.d/init-migrations/run;fi)
 
 ################
 # 4 Entrypoint #
