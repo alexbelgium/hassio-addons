@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Transmission] Transmission not properly working due to port-forwarding issues (opened 2022-09-11)](https://github.com/alexbelgium/hassio-addons/issues/471) by [@financelurker](https://github.com/financelurker)
 # Home assistant add-on: Transmission
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
