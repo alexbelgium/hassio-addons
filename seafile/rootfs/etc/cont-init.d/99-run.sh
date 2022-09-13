@@ -41,6 +41,7 @@ DATA_LOCATION=$(bashio::config 'data_location')
 
 echo "Check $DATA_LOCATION folder exists"
 mkdir -p "$DATA_LOCATION"
+mkdir -p "$DATA_LOCATION"/media
 
 echo "Setting permissions"
 if bashio::config.has_value 'PUID'; then
