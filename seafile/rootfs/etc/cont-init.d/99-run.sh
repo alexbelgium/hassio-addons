@@ -41,15 +41,16 @@ DATA_LOCATION=$(bashio::config 'data_location')
 
 echo "Check $DATA_LOCATION folder exists"
 mkdir -p "$DATA_LOCATION"
-mkdir -p "$DATA_LOCATION"/media
+mkdir -p /shared/media
+
+chmod -R 777 "$DATA_LOCATION"
+chmod -R 777 "/shared"
 
 echo "Setting permissions"
 if bashio::config.has_value 'PUID'; then
     chown -R "$(bashio::config 'PUID'):$(bashio::config 'PGID')" "$DATA_LOCATION"
     chown -R "$(bashio::config 'PUID'):$(bashio::config 'PGID')" /shared
 fi || true
-
-chmod -R 755 "$DATA_LOCATION"
 
 echo "Creating symlink"
 ln -sf "$DATA_LOCATION" /shared
