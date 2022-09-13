@@ -46,8 +46,9 @@ echo "Setting permissions"
 if bashio::config.has_value 'PUID'; then
     chown -R "$(bashio::config 'PUID'):$(bashio::config 'PGID')" "$DATA_LOCATION"
     chown -R "$(bashio::config 'PUID'):$(bashio::config 'PGID')" /shared
-    chmod -R 755 "$DATA_LOCATION"
-fi
+fi || true
+
+chmod -R 755 "$DATA_LOCATION"
 
 echo "Creating symlink"
 ln -sf "$DATA_LOCATION" /shared
