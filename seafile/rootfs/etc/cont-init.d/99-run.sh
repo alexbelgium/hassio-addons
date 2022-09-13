@@ -40,8 +40,8 @@ bashio::log.info "Setting data location"
 DATA_LOCATION=$(bashio::config 'data_location')
 
 echo "Check $DATA_LOCATION folder exists"
-mkdir -p "$DATA_LOCATION"
-mkdir -p /shared/media
+mkdir -p "$DATA_LOCATION"/media
+mkdir -p /shared
 
 chmod -R 777 "$DATA_LOCATION"/media
 chmod -R 777 "/shared"
@@ -53,7 +53,7 @@ if bashio::config.has_value 'PUID'; then
 fi || true
 
 echo "Creating symlink"
-ln -sf "$DATA_LOCATION"/media /shared/media
+ln -sf "$DATA_LOCATION"/media /shared
 
 #export SEAFILE_CONF_DIR="$DATA_LOCATION/conf" && sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
 #export SEAFILE_LOGS_DIR="$DATA_LOCATION/logs" && sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" /home/seafile/*.sh
