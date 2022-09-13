@@ -46,6 +46,7 @@
   "image": "ghcr.io/alexbelgium/seafile-{arch}",
   "map": [
     "config:rw",
+    "share:rw",
     "ssl"
   ],
   "name": "Seafile",
