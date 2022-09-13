@@ -45,15 +45,11 @@
   },
   "image": "ghcr.io/alexbelgium/seafile-{arch}",
   "map": [
-    "media:rw",
-    "share:rw",
     "config:rw",
     "ssl"
   ],
   "name": "Seafile",
   "options": {
-    "PGID": "0",
-    "PUID": "0",
     "SEAFILE_ADMIN_EMAIL": "me@example.com",
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
     "TZ": "Europe/Paris",
@@ -76,8 +72,6 @@
     "NET_ADMIN"
   ],
   "schema": {
-    "PGID": "int",
-    "PUID": "int",
     "SEAFILE_ADMIN_EMAIL": "email",
     "SEAFILE_ADMIN_PASSWORD": "password",
     "TZ": "str?",
