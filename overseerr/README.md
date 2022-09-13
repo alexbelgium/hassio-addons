@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 Overseerr configfile location unwritable (opened 2022-09-13)](https://github.com/alexbelgium/hassio-addons/issues/478) by [@rjgout](https://github.com/rjgout)
 # Home assistant add-on: overseerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
