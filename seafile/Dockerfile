@@ -30,6 +30,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV LANG C.UTF-8
 
+USER root
+
 ##################
 # 3 Install apps #
 ##################
