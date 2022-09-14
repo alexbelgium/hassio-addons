@@ -1,4 +1,7 @@
 
+## nightly-0.4.6.1969-ls408 (15-09-2022)
+- Update to latest version from linuxserver/docker-prowlarr
+
 ## nightly-0.4.6.1965-ls406 (13-09-2022)
 - Update to latest version from linuxserver/docker-prowlarr
 - New feature : localdisks mounting added
