@@ -56,11 +56,14 @@ do
     mkdir -p "$DATA_LOCATION/$dir"
     chown -R seafile:seafile "$DATA_LOCATION/$dir"
     ln -fs "$DATA_LOCATION/$dir" /shared
+    rm /shared/"$dir"
 done
 
+
+
 echo "... correcting official script"
-sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
-sed -i "s|cp -r ./media /shared/|true|g" /home/seafile/*.sh
+#sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
+#sed -i "s|cp -r ./media /shared/|true|g" /home/seafile/*.sh
 
 ###################
 # Define database #
