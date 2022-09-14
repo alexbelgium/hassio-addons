@@ -39,20 +39,25 @@ done
 bashio::log.info "Setting data location"
 DATA_LOCATION=$(bashio::config 'data_location')
 
-echo "Check $DATA_LOCATION folder exists"
-mkdir -p "$DATA_LOCATION"/media
-mkdir -p /shared
+echo "... check $DATA_LOCATION folder exists"
+mkdir -p "$DATA_LOCATION"
 
-chmod -R 777 "$DATA_LOCATION"/media
-chmod -R 777 "/shared"
+echo "... setting permissions"
+chown -R seafile:seafile "$DATA_LOCATION"
 
-echo "Setting permissions"
-if bashio::config.has_value 'PUID'; then
-    chown -R "$(bashio::config 'PUID'):$(bashio::config 'PGID')" "$DATA_LOCATION"
-    chown -R "$(bashio::config 'PUID'):$(bashio::config 'PGID')" /shared
-fi || true
+echo "... exporting variables symlink"
+export SEAFILE_CONF_DIR="$DATA_LOCATION/conf"
+export SEAFILE_LOGS_DIR="$DATA_LOCATION/logs"
+export SEAFILE_DATA_DIR="$DATA_LOCATION/seafile-data"
+export SEAFILE_SEAHUB_DIR="$DATA_LOCATION/seahub-data"
+export SEAFILE_SQLITE_DIR="$DATA_LOCATION/sqlite"
+export DATABASE_DIR="$DATA_LOCATION/db"
 
-echo "Creating symlink"
+#for folder in "/conf" "/logs" "/media" "/seafile-data" "/seahub-data" "/sqlite"; do
+#ln -sf "$DATA_LOCATION"/media /opt/
+#
+#done
+
 #ln -sf "$DATA_LOCATION"/media /shared
 
 #export SEAFILE_CONF_DIR="$DATA_LOCATION/conf" && sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
@@ -60,7 +65,7 @@ echo "Creating symlink"
 #export SEAFILE_DATA_DIR="$DATA_LOCATION/seafile-data" && sed -i "1a export SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data" /home/seafile/*.sh
 #export SEAFILE_SEAHUB_DIR="$DATA_LOCATION/seahub-data" && sed -i "1a export SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data" /home/seafile/*.sh
 #export SEAFILE_SQLITE_DIR="$DATA_LOCATION/sqlite" && sed -i "1a export SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite" /home/seafile/*.sh
-export DATABASE_DIR="$DATA_LOCATION/db" && sed -i "1a export DATABASE_DIR=$DATA_LOCATION/db" /home/seafile/*.sh
+#export DATABASE_DIR="$DATA_LOCATION/db" && sed -i "1a export DATABASE_DIR=$DATA_LOCATION/db" /home/seafile/*.sh
 
 ###################
 # Define database #
