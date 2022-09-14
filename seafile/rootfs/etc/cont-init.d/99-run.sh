@@ -52,7 +52,6 @@ do
     mkdir -p "$DATA_LOCATION/$dir"
     chown -R seafile:seafile "$DATA_LOCATION/$dir"
     ln -s "$DATA_LOCATION/$dir" /shared
-    chown -R seafile:seafile "/shared/$dir"
 done
 
 echo "... correcting official script"
