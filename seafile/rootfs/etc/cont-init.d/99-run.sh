@@ -46,8 +46,8 @@ echo "... setting permissions"
 chown -R seafile:seafile "$DATA_LOCATION"
 
 echo "... copy media files"
-cp -rnf /opt/seafile/media/* "$DATA_LOCATION"/media
-rm -r /opt/seafile/media
+#cp -rnf /opt/seafile/media/* "$DATA_LOCATION"/media
+#rm -r /opt/seafile/media
 
 #echo "... creating symlink"
 #dirs=("conf" "logs" "media" "seafile-data" "seahub-data" "sqlite")
