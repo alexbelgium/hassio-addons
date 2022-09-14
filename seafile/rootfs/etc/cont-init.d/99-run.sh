@@ -55,9 +55,12 @@ do
     ln -s "$DATA_LOCATION/$dir" /shared
 done
 
+echo "... copy media files"
+cp -rnf /opt/seafile/media/* "$DATA_LOCATION"/media
+
 echo "... correcting official script"
 sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
-sed -i "s|cp -r ./media /shared/|cp ./media/* /shared/media/*|g" /home/seafile/*.sh
+sed -i "s|cp -r ./media /shared/|true|g" /home/seafile/*.sh
 
 ###################
 # Define database #
