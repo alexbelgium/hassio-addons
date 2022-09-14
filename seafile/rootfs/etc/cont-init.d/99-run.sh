@@ -57,7 +57,7 @@ done
 
 echo "... correcting official script"
 sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
-sed -i "s|cp -r ./media /shared/|cp -r ./media/* /shared/media/*|g" /home/seafile/*.sh
+sed -i "s|cp -r ./media /shared/|cp ./media/* /shared/media/*|g" /home/seafile/*.sh
 
 ###################
 # Define database #
