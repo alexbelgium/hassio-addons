@@ -45,6 +45,10 @@ mkdir -p "$DATA_LOCATION"
 echo "... setting permissions"
 chown -R seafile:seafile "$DATA_LOCATION"
 
+echo "... copy media files"
+cp -rnf /opt/seafile/media/* "$DATA_LOCATION"/media
+rm -r /shared/media
+
 echo "... creating symlink"
 dirs=("conf" "logs" "media" "seafile-data" "seahub-data" "sqlite")
 for dir in "${dirs[@]}"
@@ -54,9 +58,6 @@ do
     if [ -d /shared/"$dir" ]; then rm /shared/"$dir"; fi
     ln -s "$DATA_LOCATION/$dir" /shared
 done
-
-echo "... copy media files"
-cp -rnf /opt/seafile/media/* "$DATA_LOCATION"/media
 
 echo "... correcting official script"
 sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
