@@ -54,7 +54,6 @@ do
     rm /shared/"$dir"
     ln -s "$DATA_LOCATION/$dir" /shared
     chown -R seafile:seafile "/shared/$dir"
-fi
 done
 
 echo "... correcting official script"
