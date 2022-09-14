@@ -53,7 +53,7 @@ if bashio::config.has_value 'PUID'; then
 fi || true
 
 echo "Creating symlink"
-ln -sf "$DATA_LOCATION"/media /shared
+#ln -sf "$DATA_LOCATION"/media /shared
 
 #export SEAFILE_CONF_DIR="$DATA_LOCATION/conf" && sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
 #export SEAFILE_LOGS_DIR="$DATA_LOCATION/logs" && sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" /home/seafile/*.sh
