@@ -47,7 +47,7 @@ chown -R seafile:seafile "$DATA_LOCATION"
 
 echo "... copy media files"
 cp -rnf /opt/seafile/media/* "$DATA_LOCATION"/media
-rm -r /shared/media || true
+rm -r /opt/seafile/media
 
 echo "... creating symlink"
 dirs=("conf" "logs" "media" "seafile-data" "seahub-data" "sqlite")
@@ -55,7 +55,7 @@ for dir in "${dirs[@]}"
 do
     mkdir -p "$DATA_LOCATION/$dir"
     chown -R seafile:seafile "$DATA_LOCATION/$dir"
-    ln -s "$DATA_LOCATION/$dir" /shared
+    ln -fs "$DATA_LOCATION/$dir" /shared
 done
 
 echo "... correcting official script"
