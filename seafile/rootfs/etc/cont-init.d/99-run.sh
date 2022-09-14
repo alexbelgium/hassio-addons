@@ -45,27 +45,20 @@ mkdir -p "$DATA_LOCATION"
 echo "... setting permissions"
 chown -R seafile:seafile "$DATA_LOCATION"
 
-echo "... exporting variables symlink"
-export SEAFILE_CONF_DIR="$DATA_LOCATION/conf"
-export SEAFILE_LOGS_DIR="$DATA_LOCATION/logs"
-export SEAFILE_DATA_DIR="$DATA_LOCATION/seafile-data"
-export SEAFILE_SEAHUB_DIR="$DATA_LOCATION/seahub-data"
-export SEAFILE_SQLITE_DIR="$DATA_LOCATION/sqlite"
-export DATABASE_DIR="$DATA_LOCATION/db"
+echo "... creating symlink"
+dirs=("conf" "logs" "media" "seafile-data" "seahub-data" "sqlite")
+for dir in "${dirs[@]}"
+do
+    mkdir -R "$DATA_LOCATION/$dir"
+    chown -R seafile:seafile "$DATA_LOCATION/$dir"
+    rm /shared/"$dir"
+    ln -s "$DATA_LOCATION/$dir" /shared
+    chown -R seafile:seafile "/shared/$dir"
+fi
+done
 
-#for folder in "/conf" "/logs" "/media" "/seafile-data" "/seahub-data" "/sqlite"; do
-#ln -sf "$DATA_LOCATION"/media /opt/
-#
-#done
-
-#ln -sf "$DATA_LOCATION"/media /shared
-
-#export SEAFILE_CONF_DIR="$DATA_LOCATION/conf" && sed -i "1a export SEAFILE_CONF_DIR=$DATA_LOCATION/conf" /home/seafile/*.sh
-#export SEAFILE_LOGS_DIR="$DATA_LOCATION/logs" && sed -i "1a export SEAFILE_LOGS_DIR=$DATA_LOCATION/logs" /home/seafile/*.sh
-#export SEAFILE_DATA_DIR="$DATA_LOCATION/seafile-data" && sed -i "1a export SEAFILE_DATA_DIR=$DATA_LOCATION/seafile-data" /home/seafile/*.sh
-#export SEAFILE_SEAHUB_DIR="$DATA_LOCATION/seahub-data" && sed -i "1a export SEAFILE_SEAHUB_DIR=$DATA_LOCATION/seahub-data" /home/seafile/*.sh
-#export SEAFILE_SQLITE_DIR="$DATA_LOCATION/sqlite" && sed -i "1a export SEAFILE_SQLITE_DIR=$DATA_LOCATION/sqlite" /home/seafile/*.sh
-#export DATABASE_DIR="$DATA_LOCATION/db" && sed -i "1a export DATABASE_DIR=$DATA_LOCATION/db" /home/seafile/*.sh
+echo "... correcting official script"
+sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
 
 ###################
 # Define database #
