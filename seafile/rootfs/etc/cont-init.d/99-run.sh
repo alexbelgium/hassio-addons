@@ -51,7 +51,6 @@ for dir in "${dirs[@]}"
 do
     mkdir -p "$DATA_LOCATION/$dir"
     chown -R seafile:seafile "$DATA_LOCATION/$dir"
-    rm /shared/"$dir"
     ln -s "$DATA_LOCATION/$dir" /shared
     chown -R seafile:seafile "/shared/$dir"
 done
