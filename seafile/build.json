@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "seafileltd/seafile-mc:latest",
-    "amd64": "seafileltd/seafile-mc:latest"
+    "aarch64": "franchetti/seafile-arm:latest",
+    "amd64": "franchetti/seafile-arm:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
