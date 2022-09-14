@@ -62,7 +62,7 @@ rm -r /opt/seafile/media
 echo "... correcting official script"
 sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
 sed -i "s|/shared|$DATA_LOCATION|g" /home/seafile/*.sh
-#sed -i "s|cp -r ./media /shared/|true|g" /home/seafile/*.sh
+sed -i "s|cp -r ./media $DATA_LOCATION/|cp -r ./media/. $DATA_LOCATION/media|g" /home/seafile/*.sh
 
 ###################
 # Define database #
