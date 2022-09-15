@@ -17,9 +17,7 @@
   ],
   "name": "Overseerr",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/overseerr",
-    "PGID": 0,
-    "PUID": 0
+    "CONFIG_LOCATION": "/config/addons_config/overseerr"
   },
   "ports": {
     "5055/tcp": 5055
@@ -30,8 +28,6 @@
   "privileged": [],
   "schema": {
     "CONFIG_LOCATION": "str",
-    "PGID": "int",
-    "PUID": "int",
     "TZ": "str?"
   },
   "slug": "overseerr",
