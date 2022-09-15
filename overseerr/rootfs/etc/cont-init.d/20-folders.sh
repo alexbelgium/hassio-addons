@@ -12,4 +12,3 @@ fi
 
 yarn config set global-folder /config/addons_config/overseerr/yarn
 chown -R abc:abc /config/addons_config/overseerr
-chmod -R 777 /config/.config/yarn
