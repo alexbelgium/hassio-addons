@@ -42,8 +42,8 @@
   ],
   "environment": {
     "NOSWAG": "1",
-    "PUID": 0,
-    "GUID": 0
+    "PUID": "0",
+    "GUID": "0"
   },
   "image": "ghcr.io/alexbelgium/seafile-{arch}",
   "map": [
