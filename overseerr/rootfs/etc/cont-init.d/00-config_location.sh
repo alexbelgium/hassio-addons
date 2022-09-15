@@ -7,5 +7,6 @@ bashio::log.info "Config stored in $CONFIG_LOCATION"
 mkdir -p "$CONFIG_LOCATION"
 chown -R abc:abc "$CONFIG_LOCATION"
 
-sed -i "s|/config/addons_config/overseerr|$CONFIG_LOCATION|g" /etc/services.d/overseerr/run
-sed -i "s|/config/addons_config/overseerr|$CONFIG_LOCATION|g" /etc/cont-init.d/30-config
+for file in $(grep -Esril '/config[ /]|/config$' /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do 
+  sed -i "s=/config/addons_config/overseerr=$CONFIGLOCATION=g" "$file"
+done
