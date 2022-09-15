@@ -11,3 +11,4 @@ if [ -d /config/addons_config/addons_config/overseerr ]; then
 fi
 
 chown -R abc:abc /config/addons_config/overseerr
+chmod -R 777 /config/.config/yarn
