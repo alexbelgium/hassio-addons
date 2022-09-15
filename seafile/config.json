@@ -41,7 +41,9 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "NOSWAG": "1"
+    "NOSWAG": "1",
+    "PUID": 0,
+    "GUID": 0
   },
   "image": "ghcr.io/alexbelgium/seafile-{arch}",
   "map": [
@@ -89,6 +91,6 @@
   ],
   "slug": "seafile",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
-  "version": "v9.0.8-pro_testdonotupdate17",
+  "version": "v9.0.8-pro_testdonotupdate18",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
 }
