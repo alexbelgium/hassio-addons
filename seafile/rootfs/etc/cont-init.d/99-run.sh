@@ -2,10 +2,6 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2155,SC2016
 
-if [ -f /config/test.sh ]; then
-/./config/test.sh
-fi
-
 ###################################
 # Export all addon options as env #
 ###################################
@@ -66,7 +62,7 @@ echo "... copy media files"
 echo "... correcting official script"
 sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
 sed -i "s|/shared|$DATA_LOCATION|g" /home/seafile/*.sh
-sed -i "s=cp -r ./media $DATA_LOCATION/=chown -R seafile:seafile $DATA_LOCATION/* && chmod -R 777 $DATA_LOCATION/media && cp -rnf ./media/. $DATA_LOCATION/media ||true=g" /home/seafile/*.sh
+#sed -i "s=cp -r ./media $DATA_LOCATION/=chown -R seafile:seafile $DATA_LOCATION/* && chmod -R 777 $DATA_LOCATION/media && cp -rnf ./media/. $DATA_LOCATION/media ||true=g" /home/seafile/*.sh
 
 ###################
 # Define database #
