@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [[flexget] installation (opened 2022-09-13)](https://github.com/alexbelgium/hassio-addons/issues/481) by [@alexbelgium](https://github.com/alexbelgium)
 # Hass.io Add-ons: Flexget
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
