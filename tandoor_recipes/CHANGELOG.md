@@ -1,3 +1,4 @@
+- Allow nabucasa url
 - Ingress addition
 
 ## 1.3.3 (04-08-2022)
