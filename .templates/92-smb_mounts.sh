@@ -26,7 +26,7 @@ if bashio::config.has_value 'networkdisks'; then
     fi
 
     # Mount using UID/GID values
-    if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+    if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID' && [ -z ${ROOTMOUNT+x} ]; then
         echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
         PUID=",uid=$(bashio::config 'PUID')"
         PGID=",gid=$(bashio::config 'PGID')"
