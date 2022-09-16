@@ -42,8 +42,9 @@
   ],
   "environment": {
     "NOSWAG": "1",
-    "PUID": "0",
-    "GUID": "0"
+    "PUID": "1000",
+    "PGID": "1000",
+    "ROOTMOUNT": "true"
   },
   "image": "ghcr.io/alexbelgium/seafile-{arch}",
   "map": [
