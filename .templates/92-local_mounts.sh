@@ -17,8 +17,8 @@ if bashio::config.has_value 'localdisks'; then
         PUID="$(bashio::config 'PUID')"
         PGID="$(bashio::config 'PGID')"
     else
-        PUID="$(id -u)"
-        PGID="$(id -g)"
+        PUID="0"
+        PGID="0"
     fi
 
     # Separate comma separated values
