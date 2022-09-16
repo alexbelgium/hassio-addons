@@ -43,8 +43,7 @@
   "environment": {
     "NOSWAG": "1",
     "PUID": "1000",
-    "PGID": "1000",
-    "ROOTMOUNT": "true"
+    "PGID": "1000"
   },
   "image": "ghcr.io/alexbelgium/seafile-{arch}",
   "map": [
@@ -92,6 +91,6 @@
   ],
   "slug": "seafile",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
-  "version": "v9.0.8-pro_testdonotupdate20",
+  "version": "v9.0.8-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
 }
