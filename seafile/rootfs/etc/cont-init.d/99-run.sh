@@ -53,8 +53,8 @@ echo "... copy media files"
 #dirs=("conf" "logs" "media" "seafile-data" "seahub-data" "sqlite")
 #for dir in "${dirs[@]}"
 #do
- #   mkdir -p "$DATA_LOCATION/$dir"
- #   chown -R seafile:seafile "$DATA_LOCATION/$dir"
+#   mkdir -p "$DATA_LOCATION/$dir"
+#   chown -R seafile:seafile "$DATA_LOCATION/$dir"
 #    ln -fs "$DATA_LOCATION/$dir" /shared
 #    rm /shared/"$dir"
 #done
