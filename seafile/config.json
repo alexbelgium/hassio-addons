@@ -42,8 +42,8 @@
   ],
   "environment": {
     "NOSWAG": "1",
-    "PUID": "1000",
-    "PGID": "1000"
+    "PGID": "1000",
+    "PUID": "1000"
   },
   "image": "ghcr.io/alexbelgium/seafile-{arch}",
   "map": [
@@ -53,8 +53,8 @@
   ],
   "name": "Seafile",
   "options": {
-    "PUID": 1000, 
     "PGID": 1000,
+    "PUID": 1000,
     "SEAFILE_ADMIN_EMAIL": "me@example.com",
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
     "TZ": "Europe/Paris",
@@ -77,12 +77,12 @@
     "NET_ADMIN"
   ],
   "schema": {
+    "PGID": "int",
+    "PUID": "int",
     "SEAFILE_ADMIN_EMAIL": "email",
     "SEAFILE_ADMIN_PASSWORD": "password",
     "TZ": "str?",
     "URL": "str",
-    "PUID": "int", 
-    "PGID": "int",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str",
