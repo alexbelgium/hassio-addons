@@ -2,36 +2,35 @@
 # shellcheck shell=bash
 
 for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
-PROTOCOL = http
+
+##############
+# OTHER CONF #
+##############
+
+for param in APP_NAME DOMAIN ROOT_URL; do
+  if bashio::config.has_value "$param"; then
+    echo "parameter set : $param=$(bashio::config '$param')"
+    sed -i "/$param/d" "$file"
+    sed -i "/server/a $param = $(bashio::config '$param')" "$file"
+  fi
 done
-
-SITE_TITLE=$(bashio::config 'SITE_TITLE')
-SERVER_DOMAIN=$(bashio::config 'SERVER_DOMAIN')
-BASE_URL=$(bashio::config 'BASE_URL')
-
-echo "site tile $SITE_TITLE"
-echo "server domain $SERVER_DOMAIN"
-echo "base url $BASE_URL"
-
-# sed "s/^APP.*/APP      = $SITE_TITLE/" /data/gitea/conf/app.ini
-# sed "s/^DOMAIN.*/DOMAIN      = $SERVER_DOMAIN/" /data/gitea/conf/app.ini
-# sed "s/^ROOT_URL.*/ROOT_URL       = $BASE_URL/" /data/gitea/conf/app.ini
-
-
-for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
 
 ##############
 # SSL CONFIG #
 ##############
 
 # Clean values
-sed -i "/PROTOCOL/d" 
+sed -i "/PROTOCOL/d" "$file"
+sed -i "/CERT_FILE/d" "$file"
+sed -i "/KEY_FILE/d" "$file"
 
 # Add ssl
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
-bashio::log.info "Ssl is enabled"
+bashio::log.info "ssl is enabled"
 sed -i "/server/a PROTOCOL = https" "$file"
+sed -i "/server/a CERT_FILE = /ssl/$(bashio::config 'certfile'" "$file"
+sed -i "/server/a KEY_FILE = /ssl/$(bashio::config 'keyfile'" "$file"
 else
 sed -i "/server/a PROTOCOL = http" "$file"
 fi
