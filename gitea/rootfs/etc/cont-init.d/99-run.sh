@@ -29,8 +29,8 @@ bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
 bashio::log.info "ssl is enabled"
 sed -i "/server/a PROTOCOL = https" "$file"
-sed -i "/server/a CERT_FILE = /ssl/$(bashio::config 'certfile'" "$file"
-sed -i "/server/a KEY_FILE = /ssl/$(bashio::config 'keyfile'" "$file"
+sed -i "/server/a CERT_FILE = /ssl/$(bashio::config 'certfile')" "$file"
+sed -i "/server/a KEY_FILE = /ssl/$(bashio::config 'keyfile')" "$file"
 else
 sed -i "/server/a PROTOCOL = http" "$file"
 fi
