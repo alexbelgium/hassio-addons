@@ -5,4 +5,13 @@ if [ ! -d /config/addons_config/overseerr ]; then
     mkdir -p /config/addons_config/overseerr
 fi
 
+if [ -d /config/addons_config/addons_config/overseerr ]; then
+    echo "Migrating data to /config/addons_config/overseerr"
+    mv /config/addons_config/addons_config/overseerr /config/addons_config/overseerr
+fi
+
+for file in $(grep -Esril "/config/.config/yarn" /usr /etc /defaults); do
+    sed -i "s=/config/.config/yarn=/config/addons_config/overseerr/yarn=g" "$file"
+done
+yarn config set global-folder /config/addons_config/overseerr/yarn
 chown -R abc:abc /config/addons_config/overseerr

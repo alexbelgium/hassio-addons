@@ -12,13 +12,13 @@ if bashio::config.has_value 'localdisks'; then
     echo "Local Disks mounting..."
 
     # Mount using UID/GID values
-    if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+    if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID' && [ -z ${ROOTMOUNT+x} ]; then
         echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
         PUID="$(bashio::config 'PUID')"
         PGID="$(bashio::config 'PGID')"
     else
-        PUID="$(id -u)"
-        PGID="$(id -g)"
+        PUID="0"
+        PGID="0"
     fi
 
     # Separate comma separated values
@@ -35,7 +35,7 @@ if bashio::config.has_value 'localdisks'; then
 
         # Creates dir
         mkdir -p /mnt/"$disk"
-        chown -R "$PUID:$PGID" /mnt/"$disk"
+        chown "$PUID:$PGID" /mnt/"$disk"
         # Legacy mounting : mount to share if still exists (avoid breaking changes)
         # shellcheck disable=SC2015
         [ -d /share/"$disk" ] && mount "$devpath"/"$disk" /share/"$disk" || true
