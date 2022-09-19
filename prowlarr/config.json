@@ -92,6 +92,6 @@
   },
   "slug": "prowlarr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "nightly-0.4.6.1969-ls408",
+  "version": "nightly-0.4.7.1978-ls411",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9696]"
 }
