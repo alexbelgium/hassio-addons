@@ -14,7 +14,8 @@
   "options": {
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "ssl": false
+    "ssl": false,
+    "DOMAIN": "homeassistant.local"
   },
   "ports": {
     "22/tcp": 2222,
@@ -29,7 +30,7 @@
     "keyfile": "str",
     "ssl": "bool",
     "APP_NAME": "str?",
-    "DOMAIN": "str?",
+    "DOMAIN": "str",
     "ROOT_URL": "str?"
   },
   "slug": "gitea",
