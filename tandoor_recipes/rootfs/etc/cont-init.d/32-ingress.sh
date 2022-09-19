@@ -1,16 +1,6 @@
 #!/usr/bin/bashio
 # shellcheck shell=bash
 
-########
-# TEST #
-########
-if [ -f /config/tandooringress.conf ]; then
-    echo "running test file"
-    rm /etc/nginx/servers/ingress.conf
-    cp /config/tandooringress.conf /etc/nginx/servers/ingress.conf
-    chmod 775 /etc/nginx/servers/ingress.conf
-fi
-
 #################
 # NGINX SETTING #
 #################
