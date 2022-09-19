@@ -8,6 +8,13 @@ continue
 fi
 
 ##############
+# ADAPT PORT #
+##############
+
+sed -i "/HTTP_PORT/d" "$file"
+sed -i "/server/a HTTP_PORT = $(bashio::addon.port 3000)" "$file"
+  
+##############
 # OTHER CONF #
 ##############
 
