@@ -45,6 +45,7 @@ bashio::log.info "ssl is enabled"
 sed -i "/server/a PROTOCOL = https" "$file"
 sed -i "/server/a CERT_FILE = /ssl/$(bashio::config 'certfile')" "$file"
 sed -i "/server/a KEY_FILE = /ssl/$(bashio::config 'keyfile')" "$file"
+chmod 744 /ssl/*
 else
 sed -i "/server/a PROTOCOL = http" "$file"
 fi
