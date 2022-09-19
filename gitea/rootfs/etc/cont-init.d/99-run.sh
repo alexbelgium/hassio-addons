@@ -3,6 +3,10 @@
 
 for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
 
+if [ ! -f "$file" ]; then
+continue
+fi
+
 ##############
 # OTHER CONF #
 ##############
