@@ -8,7 +8,7 @@
   "init": false,
   "map": [
     "share:rw",
-    "ssl:ro"
+    "ssl:rw"
   ],
   "name": "Gitea",
   "options": {
