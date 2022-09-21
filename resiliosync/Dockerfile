@@ -36,7 +36,7 @@ RUN \
     && for file in $(grep -Esril "/downloads[ '\"/]|/downloads\$" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/downloads=/share/resiliosync_downloads=g" "$file"; done \
     # Adapt sync.conf
     && sed -i 's|"directory_root_policy" : "belowroot"|"directory_root_policy" : "all"|g' /defaults/sync.conf \
-    && sed -i 's|"allow_empty_password" : false|"allow_empty_password" : true|g' /defaults/sync.conf
+    && sed -i 's|"allow_empty_password" : false|"allow_empty_password" : true|g' /defaults/sync.conf \
     \
     && sed -i 's|"/sync",|"/", "/sync",|g' /defaults/sync.conf
 
