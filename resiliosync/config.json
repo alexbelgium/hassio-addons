@@ -53,7 +53,7 @@
     "PUID": 0,
     "config_location": "/config/addons_config/resiliosync",
     "data_location": "/share/resiliosync",
-    "downloads_location": "/share/resiliosync_downloads",
+    "downloads_location": "/share/resiliosync_downloads"
   },
   "panel_icon": "mdi:cloud-sync-outline",
   "ports": {
