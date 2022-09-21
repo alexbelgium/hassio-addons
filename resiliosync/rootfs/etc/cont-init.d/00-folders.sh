@@ -34,7 +34,9 @@ change_folders () {
         fi
         if [ "$TYPE" = "data_location" ]; then
             [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.directory_root = $variable' "$FILE" | sponge "$FILE"
-            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION/downloads" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
+        fi
+        if [ "$TYPE" = "downloads_location" ]; then
+            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
         fi
     done
 
