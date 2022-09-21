@@ -47,6 +47,7 @@ change_folders () {
     # Set permissions
     echo "Setting ownership to $PUID:$PGID"
     chown -R "$PUID":"$PGID" "$CONFIGLOCATION"
+    chmod -R 777 "$CONFIGLOCATION"
 
     # Transfer files
     if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A "$ORIGINALLOCATION" 2>/dev/null)" ]; then
