@@ -33,7 +33,7 @@ RUN \
     # Correct sync folder
     for file in $(grep -Esril "/sync[ '\"/]|/sync\$" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/sync=/share/resiliosync=g" "$file"; done \
     # Correct sync folder
-    && for file in $(grep -Esril "/downloads[ '\"/]|/downloads\$" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/downloads=/share/resiliosync-downloads=g" "$file"; done
+    && for file in $(grep -Esril "/downloads[ '\"/]|/downloads\$" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/downloads=/share/resiliosync_downloads=g" "$file"; done
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/share/resiliosync_config"
