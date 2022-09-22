@@ -10,7 +10,7 @@ if [ -d /config/addons_config/addons_config/overseerr ]; then
     mv /config/addons_config/addons_config/overseerr /config/addons_config/overseerr
 fi
 
-# shellcheck ignore=SC2013
+# shellcheck disable=SC2013
 for file in $(grep -Esril "/config/.config/yarn" /usr /etc /defaults); do
     sed -i "s=/config/.config/yarn=/config/addons_config/overseerr/yarn=g" "$file"
 done
