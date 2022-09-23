@@ -1,9 +1,9 @@
 {
   "github_beta": "true",
-  "last_update": "16-08-2022",
+  "last_update": "24-09-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "emby",
   "source": "github",
   "upstream_repo": "linuxserver/docker-emby",
-  "upstream_version": "4.8.0.8"
+  "upstream_version": "4.8.0.9"
 }
