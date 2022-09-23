@@ -16,11 +16,13 @@ cp -rnf /opt/tplink/EAPController/data/* "$CONFIGSOURCE"
 echo "Updating permissions"
 chown -R "508:508" "$CONFIGSOURCE"
 
-for d in /opt/tplink/EAPController/data/*/ ; do
-    echo "Moving $d"
-    rm -r "$d"
-    mkdir -p "$CONFIGSOURCE/$(basename "$d")"
-    ln -s "$CONFIGSOURCE/$(basename "$d")" "$d"
+for d in /opt/tplink/EAPController/data/* ; do
+    if [ -d "$d" ]; then
+      echo "Moving $d"
+      rm -r "$d"
+      mkdir -p "$CONFIGSOURCE/$(basename "$d")"
+      ln -s "$CONFIGSOURCE/$(basename "$d")" "$d"
+    fi
 done
 
 ln -s "$CONFIGSOURCE"/pdf /opt/tplink/EAPController/data/pdf || true
