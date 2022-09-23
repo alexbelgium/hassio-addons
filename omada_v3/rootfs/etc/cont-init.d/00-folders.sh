@@ -16,15 +16,13 @@ cp -rnf /opt/tplink/EAPController/data/* "$CONFIGSOURCE"
 echo "Updating permissions"
 chown -R "508:508" "$CONFIGSOURCE"
 
-for d in /opt/tplink/EAPController/data/* ; do
-    if [ -d "$d" ]; then
-      echo "Moving $d"
-      rm -r "$d"
-      mkdir -p "$CONFIGSOURCE/$(basename "$d")"
-      ln -s "$CONFIGSOURCE/$(basename "$d")" "$d"
-    fi
-done
+echo "Creating symlink"
+rm -r /opt/tplink/EAPController/data/*
 
-ln -s "$CONFIGSOURCE"/pdf /opt/tplink/EAPController/data/pdf || true
-ln -s "$CONFIGSOURCE"/omada/html /opt/tplink/EAPController/data/html || true
-ln -s "$CONFIGSOURCE"/db /opt/tplink/EAPController/data/db || true
+mkdir -p "$CONFIGSOURCE"/pdf
+mkdir -p "$CONFIGSOURCE"/omada/html
+mkdir -p "$CONFIGSOURCE"/db
+
+ln -s "$CONFIGSOURCE"/pdf /opt/tplink/EAPController/data/pdf
+ln -s "$CONFIGSOURCE"/omada/html /opt/tplink/EAPController/data/html
+ln -s "$CONFIGSOURCE"/db /opt/tplink/EAPController/data/db
