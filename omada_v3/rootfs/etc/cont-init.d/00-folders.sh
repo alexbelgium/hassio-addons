@@ -22,7 +22,11 @@ rm -r /opt/tplink/EAPController/data/*
 mkdir -p "$CONFIGSOURCE"/pdf
 mkdir -p "$CONFIGSOURCE"/omada/html
 mkdir -p "$CONFIGSOURCE"/db
+mkdir -p "$CONFIGSOURCE"/map
+mkdir -p "$CONFIGSOURCE"/portal
 
 ln -s "$CONFIGSOURCE"/pdf /opt/tplink/EAPController/data/pdf
 ln -s "$CONFIGSOURCE"/omada/html /opt/tplink/EAPController/data/html
 ln -s "$CONFIGSOURCE"/db /opt/tplink/EAPController/data/db
+ln -s "$CONFIGSOURCE"/map /opt/tplink/EAPController/data/map
+ln -s "$CONFIGSOURCE"/portal /opt/tplink/EAPController/data/portal
