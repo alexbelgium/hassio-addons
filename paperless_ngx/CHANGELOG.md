@@ -1,4 +1,7 @@
 
+## v1.8.0-ls30 (24-09-2022)
+- Update to latest version from linuxserver/docker-paperless-ngx
+
 ## v1.8.0-ls29 (17-09-2022)
 - Update to latest version from linuxserver/docker-paperless-ngx
 
