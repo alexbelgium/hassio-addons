@@ -36,6 +36,7 @@ mylar3: mylar3/config.*
 nextcloud: nextcloud/config.*
 nzbget: nzbget/config.*
 omada: omada/config.* # Image : yes
+omada_v3: omada_v3/config.* # Image : yes
 ombi: ombi/config.*
 organizr: organizr/config.*
 overseerr: overseerr/config.* # Image : yes
