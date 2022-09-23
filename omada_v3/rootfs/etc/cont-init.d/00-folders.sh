@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck shell=bash
 
-CONFIGSOURCE="/config/addons_config/omada"
+CONFIGSOURCE="/config/addons_config/omada_v3"
 
 # Create directory
 if [ ! -f "$CONFIGSOURCE" ]; then
@@ -25,6 +25,6 @@ rm -r /opt/tplink/EAPController/data/db
 
 # Create symlink
 echo "Creating symlink"
-ln -s /config/addons_config/omada/pdf /opt/tplink/EAPController/data/pdf
-ln -s /config/addons_config/omada/html /opt/tplink/EAPController/data/html
-ln -s /config/addons_config/omada/db /opt/tplink/EAPController/data/db
+ln -s "$CONFIGSOURCE"/pdf /opt/tplink/EAPController/data/pdf
+ln -s "$CONFIGSOURCE"/omada/html /opt/tplink/EAPController/data/html
+ln -s "$CONFIGSOURCE"/db /opt/tplink/EAPController/data/db
