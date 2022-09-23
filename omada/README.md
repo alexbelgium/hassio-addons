@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Omada: add option for older versions (V3.2) (opened 2022-09-23)](https://github.com/alexbelgium/hassio-addons/issues/488) by [@andynbaker](https://github.com/andynbaker)
 # Home assistant add-on: Omada controller
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
