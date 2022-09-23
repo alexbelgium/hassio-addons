@@ -19,8 +19,8 @@ chown -R "508:508" "$CONFIGSOURCE"
 for d in /opt/tplink/EAPController/data/*/ ; do
     echo "Moving $d"
     rm -r "$d"
-    mkdir -p "$CONFIGSOURCE/$(basename $d)"
-    ln -s "$CONFIGSOURCE/$(basename $d)" "$d"
+    mkdir -p "$CONFIGSOURCE/$(basename "$d")"
+    ln -s "$CONFIGSOURCE/$(basename "$d")" "$d"
 done
 
 ln -s "$CONFIGSOURCE"/pdf /opt/tplink/EAPController/data/pdf || true
