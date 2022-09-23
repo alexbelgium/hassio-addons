@@ -22,3 +22,7 @@ for d in /opt/tplink/EAPController/data/*/ ; do
     mkdir -p "$CONFIGSOURCE/$(basename $d)"
     ln -s "$CONFIGSOURCE/$(basename $d)" "$d"
 done
+
+ln -s "$CONFIGSOURCE"/pdf /opt/tplink/EAPController/data/pdf || true
+ln -s "$CONFIGSOURCE"/omada/html /opt/tplink/EAPController/data/html || true
+ln -s "$CONFIGSOURCE"/db /opt/tplink/EAPController/data/db || true
