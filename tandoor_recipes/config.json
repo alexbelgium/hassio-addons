@@ -8,7 +8,7 @@
   "description": "recipe manager",
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
-    "DEBUG": "1",
+    "DEBUG": "0",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
     "TRUSTED_PROXIES": "**"
   },
@@ -45,5 +45,5 @@
   ],
   "slug": "tandoor_recipes",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.3.3-ingress2"
+  "version": "1.4.1-2"
 }
