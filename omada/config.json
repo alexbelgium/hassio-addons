@@ -12,8 +12,8 @@
     "PORTAL_HTTP_PORT": "8088",
     "SHOW_MONGODB_LOGS": "false",
     "SHOW_SERVER_LOGS": "true",
-    "SSL_CERT_NAME": "tls.crt",
-    "SSL_KEY_NAME": "tls.key",
+    "SSL_CERT_NAME": "fullchain.pem",
+    "SSL_KEY_NAME": "privkey.pem",
     "TZ": "Etc/UTC"
   },
   "host_network": true,
