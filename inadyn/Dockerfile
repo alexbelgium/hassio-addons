@@ -82,6 +82,7 @@ RUN apk add --no-cache \
     build-base\
     git\
     go &&\
+    go env -w GO111MODULE=off &&\
     go get -u github.com/quantumew/mustache-cli &&\
     cp "$GOPATH"/bin/* /usr/bin/ && \
     rm -rf "$GOPATH" /var/cache/apk/* /tmp/src &&\
