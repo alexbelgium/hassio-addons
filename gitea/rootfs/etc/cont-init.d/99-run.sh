@@ -47,12 +47,12 @@ for param in APP_NAME DOMAIN ROOT_URL; do
 
   # Define parameter
   if bashio::config.has_value "$param"; then
-    echo "parameter set : $param=$(bashio::config '$param')"
-    sed -i "/server/a $param=$(bashio::config '$param')" "$file"
+    echo "parameter set : $param=$(bashio::config "$param")"
+    sed -i "/server/a $param=$(bashio::config "$param")" "$file"
   fi
 
   # Allow at setup
-  sed -i "1a $param = $(bashio::config '$param')" /etc/s6/gitea/setup
+  sed -i "1a $param = $(bashio::config "$param")" /etc/s6/gitea/setup
 
 done
 
