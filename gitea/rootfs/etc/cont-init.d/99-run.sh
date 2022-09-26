@@ -8,13 +8,6 @@ continue
 fi
 
 ##############
-# ADAPT PORT #
-##############
-
-sed -i "/HTTP_PORT/d" "$file"
-sed -i "/server/a HTTP_PORT=$(bashio::addon.port 3000)" "$file"
-
-##############
 # SSL CONFIG #
 ##############
 
@@ -26,16 +19,30 @@ sed -i "/KEY_FILE/d" "$file"
 # Add ssl
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
+PROTOCOL=https
 bashio::log.info "ssl is enabled"
 sed -i "/server/a PROTOCOL=https" "$file"
 sed -i "/server/a CERT_FILE=/ssl/$(bashio::config 'certfile')" "$file"
 sed -i "/server/a KEY_FILE=/ssl/$(bashio::config 'keyfile')" "$file"
 chmod 744 /ssl/*
 else
+PROTOCOL=http
 sed -i "/server/a PROTOCOL=http" "$file"
 fi
 
 done
+
+##################
+# ADAPT ROOT_URL #
+##################
+
+if bashio::config.true 'ROOT_URL'; then
+  bashio::log.blue "ROOT_URL set, using value : $(bashio::addon.value 'ROOT_URL')"
+else
+  ROOT_URL="$PROTOCOL://$(bashio::addon.value 'DOMAIN'):$(bashio::addon.port 3000)"
+  bashio::log.blue "ROOT_URL not set, using extrapolated value : $ROOT_URL"
+  sed -i "/server/a ROOT_URL=$ROOT_URL" "$file"
+fi
 
 ####################
 # ADAPT PARAMETERS #
