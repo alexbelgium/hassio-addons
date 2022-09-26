@@ -32,7 +32,7 @@
     "keyfile": "str",
     "ssl": "bool",
     "APP_NAME": "str?",
-    "DOMAIN": "str",
+    "DOMAIN": "str?",
     "ROOT_URL": "str?"
   },
   "slug": "gitea",
