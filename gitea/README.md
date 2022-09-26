@@ -25,6 +25,10 @@ This addon is based on the [docker image](https://hub.docker.com/r/gitea/gitea).
 ```yaml
 certfile: fullchain.pem #ssl certificate, must be located in /ssl
 keyfile: privkey.pem #sslkeyfile, must be located in /ssl
+ssl: should the app use https or not
+APP_NAME: name of the app
+DOMAIN: domain to be reached # default : homeassistant.local
+ROOT_URL: customize root_url, should not be needed unless specific needs
 ```
 
 Webui can be found at `<your-ip>:port`.
