@@ -1,3 +1,6 @@
+
+## 4.2.4.6635 (27-09-2022)
+- Update to latest version from linuxserver/docker-radarr
 ## 4.1.0.6175 (16-04-2022)
 
 - Update to latest version from linuxserver/docker-radarr
