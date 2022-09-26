@@ -14,7 +14,9 @@
   "options": {
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "ssl": false
+    "ssl": false,
+    "APP_NAME": "Gitea for Homeassistant",
+    "DOMAIN": "homeassistant.local"
   },
   "ports": {
     "22/tcp": 2222,
@@ -27,7 +29,10 @@
   "schema": {
     "certfile": "str",
     "keyfile": "str",
-    "ssl": "bool"
+    "ssl": "bool",
+    "APP_NAME": "str?",
+    "DOMAIN": "str",
+    "ROOT_URL": "str?"
   },
   "slug": "gitea",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/gitea",
