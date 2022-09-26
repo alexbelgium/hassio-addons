@@ -34,7 +34,9 @@ change_folders () {
         fi
         if [ "$TYPE" = "data_location" ]; then
             [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.directory_root = $variable' "$FILE" | sponge "$FILE"
-            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION/downloads" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
+        fi
+        if [ "$TYPE" = "downloads_location" ]; then
+            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
         fi
     done
 
@@ -47,6 +49,7 @@ change_folders () {
     # Set permissions
     echo "Setting ownership to $PUID:$PGID"
     chown -R "$PUID":"$PGID" "$CONFIGLOCATION"
+    chmod -R 777 "$CONFIGLOCATION"
 
     # Transfer files
     if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A "$ORIGINALLOCATION" 2>/dev/null)" ]; then
@@ -63,3 +66,4 @@ change_folders () {
 # Adapt files
 change_folders "$(bashio::config 'config_location')" "/share/resiliosync_config" "config_location"
 change_folders "$(bashio::config 'data_location')" "/share/resiliosync" "data_location"
+change_folders "$(bashio::config 'downloads_location')" "/share/resiliosync_downloads" "downloads_location"

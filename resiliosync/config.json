@@ -51,8 +51,9 @@
   "options": {
     "PGID": 0,
     "PUID": 0,
-    "config_location": "/config/addons_config/resioliosync",
-    "data_location": "/share/resioliosync"
+    "config_location": "/config/addons_config/resiliosync",
+    "data_location": "/share/resiliosync",
+    "downloads_location": "/share/resiliosync_downloads"
   },
   "panel_icon": "mdi:cloud-sync-outline",
   "ports": {
@@ -77,6 +78,7 @@
     "cifsusername": "str?",
     "config_location": "str",
     "data_location": "str",
+    "downloads_location": "str",
     "localdisks": "str?",
     "networkdisks": "str?"
   },

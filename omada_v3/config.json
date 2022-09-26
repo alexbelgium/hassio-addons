@@ -1,0 +1,50 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "TP-Link Omada Controller",
+  "environment": {
+    "MANAGE_HTTPS_PORT": "8043",
+    "MANAGE_HTTP_PORT": "8088",
+    "PORTAL_HTTPS_PORT": "8843",
+    "PORTAL_HTTP_PORT": "8088",
+    "SHOW_MONGODB_LOGS": "false",
+    "SHOW_SERVER_LOGS": "true",
+    "SSL_CERT_NAME": "fullchain.pem",
+    "SSL_KEY_NAME": "privkey.pem",
+    "TZ": "Etc/UTC"
+  },
+  "host_network": true,
+  "image": "ghcr.io/alexbelgium/omada_v3-{arch}",
+  "map": [
+    "config:rw",
+    "ssl:ro"
+  ],
+  "name": "Omada v3.2",
+  "ports": {
+    "29810/udp": 29810,
+    "29811/tcp": 29811,
+    "29812/tcp": 29812,
+    "29813/tcp": 29813,
+    "29814/tcp": 29814,
+    "8043/tcp": 8043,
+    "8088/tcp": 8088,
+    "8843/tcp": 8843
+  },
+  "ports_description": {
+    "29810/udp": "device discovery port",
+    "29811/tcp": "legacy device discovery port",
+    "29812/tcp": "legacy device discovery port",
+    "29813/tcp": "legacy device upgrade port",
+    "29814/tcp": "device adoption port",
+    "8043/tcp": "web interface https",
+    "8088/tcp": "web interface http",
+    "8843/tcp": "portal https"
+  },
+  "slug": "omada_v3",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "5.5-chromium-amd64-2022-09-23-2",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8088]"
+}

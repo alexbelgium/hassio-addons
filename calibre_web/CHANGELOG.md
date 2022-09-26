@@ -1,4 +1,7 @@
 
+## 0.6.19-ls175 (22-09-2022)
+- Update to latest version from linuxserver/docker-calibre-web
+
 ## 0.6.19-ls174 (15-09-2022)
 - Update to latest version from linuxserver/docker-calibre-web
 

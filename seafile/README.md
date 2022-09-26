@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [SEAFILE] Error: Failed to prepare seahub avatars dir: [Errno 95] Operation not supported: '../../../seahub-data/avatars' -> '/opt/seafile/seafile-server-9.0.8/seahub/media/avatars' (opened 2022-09-12)](https://github.com/alexbelgium/hassio-addons/issues/475) by [@bobloadmire](https://github.com/bobloadmire)
 # Home assistant add-on: seafile
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Prowlarr add localdisk (opened 2022-08-16)](https://github.com/alexbelgium/hassio-addons/issues/429) by [@crowley666x](https://github.com/crowley666x)
 
 # Home assistant add-on: Prowlarr
 
