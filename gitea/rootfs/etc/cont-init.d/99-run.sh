@@ -37,9 +37,9 @@ done
 ##################
 
 if bashio::config.true 'ROOT_URL'; then
-  bashio::log.blue "ROOT_URL set, using value : $(bashio::addon.value 'ROOT_URL')"
+  bashio::log.blue "ROOT_URL set, using value : $(bashio::config 'ROOT_URL')"
 else
-  ROOT_URL="$PROTOCOL://$(bashio::addon.value 'DOMAIN'):$(bashio::addon.port 3000)"
+  ROOT_URL="$PROTOCOL://$(bashio::config 'DOMAIN'):$(bashio::addon.port 3000)"
   bashio::log.blue "ROOT_URL not set, using extrapolated value : $ROOT_URL"
   sed -i "/server/a ROOT_URL=$ROOT_URL" "$file"
 fi
