@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [omada] SSL certificate not loading (opened 2022-09-23)](https://github.com/alexbelgium/hassio-addons/issues/490) by [@r15ch13](https://github.com/r15ch13)
 # Home assistant add-on: Omada controller
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
