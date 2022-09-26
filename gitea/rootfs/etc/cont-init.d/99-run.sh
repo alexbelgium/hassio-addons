@@ -12,7 +12,7 @@ fi
 ##############
 
 sed -i "/HTTP_PORT/d" "$file"
-sed -i "/server/a HTTP_PORT = $(bashio::addon.port 3000)" "$file"
+sed -i "/server/a HTTP_PORT=$(bashio::addon.port 3000)" "$file"
 
 ##############
 # SSL CONFIG #
@@ -27,12 +27,12 @@ sed -i "/KEY_FILE/d" "$file"
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
 bashio::log.info "ssl is enabled"
-sed -i "/server/a PROTOCOL = https" "$file"
-sed -i "/server/a CERT_FILE = /ssl/$(bashio::config 'certfile')" "$file"
-sed -i "/server/a KEY_FILE = /ssl/$(bashio::config 'keyfile')" "$file"
+sed -i "/server/a PROTOCOL=https" "$file"
+sed -i "/server/a CERT_FILE=/ssl/$(bashio::config 'certfile')" "$file"
+sed -i "/server/a KEY_FILE=/ssl/$(bashio::config 'keyfile')" "$file"
 chmod 744 /ssl/*
 else
-sed -i "/server/a PROTOCOL = http" "$file"
+sed -i "/server/a PROTOCOL=http" "$file"
 fi
 
 done
@@ -48,7 +48,7 @@ for param in APP_NAME DOMAIN ROOT_URL; do
   # Define parameter
   if bashio::config.has_value "$param"; then
     echo "parameter set : $param=$(bashio::config '$param')"
-    sed -i "/server/a $param = $(bashio::config '$param')" "$file"
+    sed -i "/server/a $param=$(bashio::config '$param')" "$file"
   fi
 
   # Allow at setup
