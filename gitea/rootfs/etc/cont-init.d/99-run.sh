@@ -13,21 +13,6 @@ fi
 
 sed -i "/HTTP_PORT/d" "$file"
 sed -i "/server/a HTTP_PORT = $(bashio::addon.port 3000)" "$file"
-  
-##############
-# OTHER CONF #
-##############
-
-for param in APP_NAME DOMAIN ROOT_URL; do
-  # Remove parameter
-  sed -i "/$param/d" "$file"
-
-  # Define parameter
-  if bashio::config.has_value "$param"; then
-    echo "parameter set : $param=$(bashio::config '$param')"
-    sed -i "/server/a $param = $(bashio::config '$param')" "$file"
-  fi
-done
 
 ##############
 # SSL CONFIG #
