@@ -4,11 +4,10 @@
 ########
 # TEST #
 ########
-if [ -f /config/tandooringress.conf ]; then
+if [ -f /config/tandoortest.sh ]; then
     echo "running test file"
-    rm /etc/nginx/servers/ingress.conf
-    cp /config/tandooringress.conf /etc/nginx/servers/ingress.conf
-    chmod 775 /etc/nginx/servers/ingress.conf
+    chmod +x /config/tandoortest.sh
+    /./config/tandoortest.sh
 fi
 
 #################
