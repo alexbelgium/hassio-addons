@@ -3,6 +3,13 @@
 
 CONFIGSOURCE="/config/addons_config/omada"
 
+# Use ssl
+if [ -d /ssl ]; then
+  mkdir -p /cert
+  cp /ssl/* /cert
+  chown -R 508:508 /cert
+fi
+
 # Create directory
 if [ ! -f "$CONFIGSOURCE" ]; then
     echo "Creating directory"
