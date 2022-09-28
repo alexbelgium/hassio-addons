@@ -91,6 +91,8 @@ for f in */; do
         if [[ "$SOURCE" = dockerhub ]]; then
             # Use dockerhub as upstream
             # shellcheck disable=SC2116
+            LOGINFO="... Source is dockerhub" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+
             DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
             DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
             LASTVERSION=$(
@@ -102,7 +104,8 @@ for f in */; do
                 sort -V |
                 tail -n 1
             )
-            [ "${BETA}" = true ] &&
+
+            [ "${BETA}" = true ] && \
             LASTVERSION=$(
                 curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
                 jq '.results | .[] | .name' -r |
@@ -112,7 +115,7 @@ for f in */; do
                 tail -n 1
             )
 
-            [ "${BYDATE}" = true ] &&
+            [ "${BYDATE}" = true ] && \
             LASTVERSION=$(
                 curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
                 jq '.results | .[] | .name' -r |
