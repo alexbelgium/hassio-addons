@@ -1,4 +1,7 @@
 
+## 0.20.2015 (29-09-2022)
+- Update to latest version from linuxserver/docker-jackett
+
 ## 0.20.2013 (28-09-2022)
 - Update to latest version from linuxserver/docker-jackett
 
