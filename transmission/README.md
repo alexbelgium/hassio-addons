@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Transmission Openvpn] Transmission client is killed upon VPN restart (because of inactivity) (opened 2022-08-22)](https://github.com/alexbelgium/hassio-addons/issues/435) by [@almico](https://github.com/almico)
+## &#9888; Open Issue : [🐛 [Transmission OpenVPN] Mullvad provider does not work without ipv6 enabled (opened 2022-09-26)](https://github.com/alexbelgium/hassio-addons/issues/494) by [@AndrewVos](https://github.com/AndrewVos)
 # Home assistant add-on: Transmission
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
