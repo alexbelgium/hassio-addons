@@ -128,6 +128,7 @@ for f in */; do
             ) && \
                 DATE="${DATE%T*}" && \
                 LASTVERSION="$LASTVERSION-$DATE"
+                LOGINFO="... $SLUG : bydate is true, version is $LASTVERSION" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
         else
 
