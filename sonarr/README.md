@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Sonarr Ingress (opened 2022-09-28)](https://github.com/alexbelgium/hassio-addons/issues/495) by [@MiguelAngelLV](https://github.com/MiguelAngelLV)
 # Home assistant add-on: Sonarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
