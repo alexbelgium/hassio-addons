@@ -116,8 +116,7 @@ for f in */; do
             )
 
             [ "${BYDATE}" = true ] && \
-            LASTVERSION=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
+            LASTVERSION=$(curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=${LISTSIZE}&ordering=last_updated" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
@@ -125,8 +124,7 @@ for f in */; do
                 sort -V |
                 tail -n 1
             ) && \
-                DATE=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
+                DATE=$(curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=${LISTSIZE}&ordering=last_updated" |
                 jq '.results[] | select(.name==$LASTVERSION) | .last_updated' -r --arg LASTVERSION "$LASTVERSION"
             ) && \
                 DATE="${DATE%T*}" && \
