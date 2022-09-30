@@ -74,6 +74,6 @@
   },
   "slug": "code-server",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/coder-server",
-  "version": "4.7.0-bugfix",
+  "version": "4.7.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8443]"
 }
