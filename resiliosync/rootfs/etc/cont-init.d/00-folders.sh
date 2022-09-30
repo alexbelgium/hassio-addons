@@ -21,6 +21,8 @@ change_folders () {
 
     # Inform
     bashio::log.info "Setting $TYPE to $CONFIGLOCATION"
+    
+    if [ "$CONFIGLOCATION" != "$ORIGINALLOCATION" ]; then
 
     # Modify files
     echo "Adapting files"
@@ -41,6 +43,14 @@ change_folders () {
             [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
         fi
     done
+    
+    # Transfer files
+    if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A "$ORIGINALLOCATION" 2>/dev/null)" ]; then
+        echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
+        mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
+        rmdir "$ORIGINALLOCATION"
+    fi 2>/dev/null || true
+    fi
 
     # Create folders
     echo "Checking if folders exist"
@@ -53,12 +63,6 @@ change_folders () {
     chown -R "$PUID":"$PGID" "$CONFIGLOCATION"
     chmod -R 777 "$CONFIGLOCATION"
 
-    # Transfer files
-    if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A "$ORIGINALLOCATION" 2>/dev/null)" ]; then
-        echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
-        mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
-        rmdir "$ORIGINALLOCATION"
-    fi 2>/dev/null || true
 }
 
 ########################
