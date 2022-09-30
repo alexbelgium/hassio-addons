@@ -56,7 +56,7 @@ change_folders () {
         echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
         mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
         rmdir "$ORIGINALLOCATION"
-    fi || true
+    fi 2>/dev/null || true
 }
 
 ########################
