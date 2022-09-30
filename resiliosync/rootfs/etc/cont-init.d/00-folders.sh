@@ -64,6 +64,6 @@ change_folders () {
 ########################
 
 # Adapt files
-change_folders "$(bashio::config 'config_location')" "/config/addons_config/resiliosync" "config_location"
+change_folders "$(bashio::config 'config_location')" "/share/resiliosync_config" "config_location"
 change_folders "$(bashio::config 'data_location')" "/share/resiliosync" "data_location"
 change_folders "$(bashio::config 'downloads_location')" "/share/resiliosync_downloads" "downloads_location"
