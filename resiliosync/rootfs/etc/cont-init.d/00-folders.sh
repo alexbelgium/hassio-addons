@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+cp /defaults/sync.conf /share/test1
+
 ###############
 # Define user #
 ###############
