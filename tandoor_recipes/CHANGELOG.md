@@ -1,3 +1,4 @@
+- Ingress broken due to "spaces" feature, dev ongoing
 
 ## 1.4.4 (01-10-2022)
 - Update to latest version from TandoorRecipes/recipes
