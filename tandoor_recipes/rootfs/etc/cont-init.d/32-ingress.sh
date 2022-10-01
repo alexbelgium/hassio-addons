@@ -1,6 +1,9 @@
 #!/usr/bin/bashio
 # shellcheck shell=bash
 
+rm /etc/nginx/servers/ingress.conf
+exit 0
+
 ########
 # TEST #
 ########
