@@ -106,7 +106,7 @@ for f in */; do
             )
 
             [ "${BETA}" = true ] && \
-            LASTVERSION=$(
+                LASTVERSION=$(
                 curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
@@ -116,7 +116,7 @@ for f in */; do
             )
 
             [ "${BYDATE}" = true ] && \
-            LASTVERSION=$(curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=${LISTSIZE}&ordering=last_updated" |
+                LASTVERSION=$(curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=${LISTSIZE}&ordering=last_updated" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
@@ -129,7 +129,7 @@ for f in */; do
             ) && \
                 DATE="${DATE%T*}" && \
                 LASTVERSION="$LASTVERSION-$DATE"
-                LOGINFO="... $SLUG : bydate is true, version is $LASTVERSION" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+            LOGINFO="... $SLUG : bydate is true, version is $LASTVERSION" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
         else
 

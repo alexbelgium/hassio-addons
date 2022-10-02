@@ -31,7 +31,7 @@ if bashio::config.has_value 'localdisks'; then
         # Mount as uuid
         if [ ${#disk} == 36 ] ; then
             devpath=/dev/disk/by-uuid
-        # Mount as label
+            # Mount as label
         elif [ "${disk:0:2}" != "sd" ] && [ "${disk:0:4}" != "nvme" ] ; then
             devpath=/dev/disk/by-label
         fi

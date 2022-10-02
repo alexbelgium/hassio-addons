@@ -19,35 +19,35 @@ change_folders () {
 
     # Inform
     bashio::log.info "Setting $TYPE to $CONFIGLOCATION"
-    
+
     if [ "$CONFIGLOCATION" != "$ORIGINALLOCATION" ]; then
 
-    # Modify files
-    echo "Adapting files"
-    grep -rl "$ORIGINALLOCATION" /etc/cont-init.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g" || true
-    grep -rl "$ORIGINALLOCATION" /etc/services.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g" || true
-    sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /etc/cont-init.d/10-adduser || true
-    sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /defaults/* || true
+        # Modify files
+        echo "Adapting files"
+        grep -rl "$ORIGINALLOCATION" /etc/cont-init.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g" || true
+        grep -rl "$ORIGINALLOCATION" /etc/services.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g" || true
+        sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /etc/cont-init.d/10-adduser || true
+        sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /defaults/* || true
 
-    # Adapt sync.conf
-    for FILE in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
-        if [ "$TYPE" = "config_location" ]; then
-            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.storage_path = $variable' "$FILE" | sponge "$FILE"
-        fi
-        if [ "$TYPE" = "data_location" ]; then
-            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.directory_root = $variable' "$FILE" | sponge "$FILE"
-        fi
-        if [ "$TYPE" = "downloads_location" ]; then
-            [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
-        fi
-    done
-    
-    # Transfer files
-    if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A "$ORIGINALLOCATION" 2>/dev/null)" ]; then
-        echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
-        mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
-        rmdir "$ORIGINALLOCATION"
-    fi 2>/dev/null || true
+        # Adapt sync.conf
+        for FILE in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
+            if [ "$TYPE" = "config_location" ]; then
+                [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.storage_path = $variable' "$FILE" | sponge "$FILE"
+            fi
+            if [ "$TYPE" = "data_location" ]; then
+                [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.directory_root = $variable' "$FILE" | sponge "$FILE"
+            fi
+            if [ "$TYPE" = "downloads_location" ]; then
+                [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
+            fi
+        done
+
+        # Transfer files
+        if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A "$ORIGINALLOCATION" 2>/dev/null)" ]; then
+            echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
+            mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
+            rmdir "$ORIGINALLOCATION"
+        fi 2>/dev/null || true
     fi
 
     # Create folders
