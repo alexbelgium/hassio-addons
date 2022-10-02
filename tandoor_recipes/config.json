@@ -12,7 +12,6 @@
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
     "TRUSTED_PROXIES": "**"
   },
-  "ingress": false,
   "map": [
     "config:rw"
   ],
