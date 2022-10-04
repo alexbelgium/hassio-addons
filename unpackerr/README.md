@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Unpackerr add localdisk (opened 2022-08-16)](https://github.com/alexbelgium/hassio-addons/issues/430) by [@crowley666x](https://github.com/crowley666x)
+## &#9888; Open Issue : [🐛 [unpackerr] Unable to change default Folder path  (opened 2022-10-04)](https://github.com/alexbelgium/hassio-addons/issues/502) by [@nathang21](https://github.com/nathang21)
 # Home assistant add-on: Unpackerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
