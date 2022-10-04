@@ -1,3 +1,4 @@
+- Breaking change : remove default folders config (see Readme)
 
 ## 0.10.1 (07-07-2022)
 - Update to latest version from davidnewhall/unpackerr
