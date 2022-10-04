@@ -51,8 +51,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "UN_FOLDER_0_EXTRACT_PATH": "/share/downloads_unpacked",
-    "UN_FOLDER_0_PATH": "/share/downloads_packed"
+    "UN_FOLDER_0_EXTRACT_PATH": "",
+    "UN_FOLDER_0_PATH": ""
   },
   "image": "ghcr.io/alexbelgium/unpackerr-{arch}",
   "map": [
@@ -64,5 +64,5 @@
   "name": "Unpackerr",
   "slug": "unpackerr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.10.1"
+  "version": "0.10.1-2"
 }
