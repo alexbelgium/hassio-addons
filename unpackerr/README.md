@@ -49,7 +49,7 @@ No webui.
 Create a file named "unpackerr.conf" in /config.
 In /config/unpackerr.conf you can set all variables according to this list of environment variables : https://github.com/davidnewhall/unpackerr
 
-Folders must be custimozed in the conf file with the lines :
+Folders must be customized in the conf file with the lines :
 ```
 [[folder]]
 ## Windows paths must use two backslashes: "C:\\Some\\Folder\\To\\Watch"
