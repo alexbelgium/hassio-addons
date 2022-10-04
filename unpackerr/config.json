@@ -50,10 +50,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {
-    "UN_FOLDER_0_EXTRACT_PATH": "",
-    "UN_FOLDER_0_PATH": ""
-  },
   "image": "ghcr.io/alexbelgium/unpackerr-{arch}",
   "map": [
     "config:rw",
