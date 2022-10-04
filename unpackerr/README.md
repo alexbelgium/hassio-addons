@@ -51,7 +51,7 @@ In /config/unpackerr.conf you can set all variables according to this list of en
 
 Folders must be custimozed in the conf file with the lines :
 ```
-#[[folder]]
+[[folder]]
 ## Windows paths must use two backslashes: "C:\\Some\\Folder\\To\\Watch"
 path = "/share/downloads_packed"
 ## Path to extract files to. The default (leaving this blank) is the same as `path` (above).
