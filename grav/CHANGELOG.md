@@ -1,4 +1,7 @@
 
+## 1.7.37.1 (06-10-2022)
+- Update to latest version from linuxserver/docker-grav
+
 ## 1.7.36 (09-09-2022)
 - Update to latest version from linuxserver/docker-grav
 
