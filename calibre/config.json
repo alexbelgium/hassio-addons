@@ -1,4 +1,4 @@
-{
+Ê{
   "arch": [
     "aarch64",
     "amd64"
@@ -88,6 +88,6 @@
   },
   "slug": "calibre",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
-  "version": "DONOTUPDATE",
+  "version": "DONOTUPDATE2",
   "video": true
 }
