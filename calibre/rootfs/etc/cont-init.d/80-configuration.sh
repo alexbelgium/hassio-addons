@@ -7,14 +7,14 @@ if bashio::config.has_value 'TZ'; then
     TIMEZONE=$(bashio::config 'TZ')
     bashio::log.info "Setting timezone to $TIMEZONE"
     ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime && echo "$TIMEZONE" >/etc/timezone
-fi
+fi || true
 
 # Set keyboard
 if bashio::config.has_value 'KEYBOARD'; then
     KEYBOARD=$(bashio::config 'KEYBOARD')
     bashio::log.info "Setting keyboard to $KEYBOARD"
     sed -i "1a export KEYBOARD=$KEYBOARD" /etc/s6-overlay/s6-rc.d/svc-web/run
-fi
+fi || true
 
 # Set cli args
 if bashio::config.has_value 'CLI_ARGS'; then
@@ -22,7 +22,7 @@ if bashio::config.has_value 'CLI_ARGS'; then
     CLI_ARGS=$(bashio::config 'CLI_ARGS')
     bashio::log.info "Setting arguments to $CLI_ARGS"
     sed -i "1a export CLI_ARGS=$CLI_ARGS" /etc/s6-overlay/s6-rc.d/svc-web/run
-fi
+fi || true
 
 # Set password
 if bashio::config.has_value 'PASSWORD'; then
@@ -30,4 +30,4 @@ if bashio::config.has_value 'PASSWORD'; then
     PASSWORD=$(bashio::config 'PASSWORD')
     bashio::log.info "Setting password to $PASSWORD"
     sed -i "1a export PASSWORD=$PASSWORD" /etc/s6-overlay/s6-rc.d/svc-web/run
-fi
+fi || true
