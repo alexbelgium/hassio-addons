@@ -39,10 +39,10 @@ sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/*
 sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/run || true
 
 sed -i "1a export HOME=$LOCATION" /etc/services.d/web/run || true
-sed -i "1a export FM_HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run || true
+sed -i "1a export FM_HOME=$LOCATION" /etc/services.d/web/run || true
 sed -i "s|/config/addons_config/calibre|$LOCATION|g" /defaults/* || true
-sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/* || true
-sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/run || true
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/cont-init.d/* || true
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/services.d/*/run || true
 
 usermod --home "$LOCATION" abc
 
