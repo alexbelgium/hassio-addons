@@ -31,11 +31,19 @@ fi
 
 # Set data location
 bashio::log.info "Setting data location to $LOCATION"
-sed -i "1a export HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run
-sed -i "1a export FM_HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run
-sed -i "s|/config/addons_config/calibre|$LOCATION|g" /defaults/*
-sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/*
-sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/run
+
+sed -i "1a export HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run || true
+sed -i "1a export FM_HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run || true
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /defaults/* || true
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/* || true
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/run || true
+
+sed -i "1a export HOME=$LOCATION" /etc/services.d/web/run || true
+sed -i "1a export FM_HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run || true
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /defaults/* || true
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/* || true
+sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/run || true
+
 usermod --home "$LOCATION" abc
 
 # Create folder
