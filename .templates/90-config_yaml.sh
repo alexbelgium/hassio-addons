@@ -84,9 +84,12 @@ function parse_yaml {
 }
 
 # Get variables and export
-bashio::log.info "Starting the app with the variables in in $CONFIGSOURCE"
+bashio::log.info "Starting the app with the variables in $CONFIGSOURCE"
 # Get list of parameters in a file
 parse_yaml "$CONFIGSOURCE" "" >/tmpfile
+# Escape dollars
+sed -i 's|$.|\$|g' /tmpfile
+
 while IFS= read -r line; do
     # Clean output
     line="${line//[\"\']/}"
