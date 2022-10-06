@@ -49,7 +49,8 @@ RUN \
 
 # Specific images modifications
 RUN \
-    usermod --home /config/addons_config/calibre abc
+    usermod --home /config/addons_config/calibre abc \
+    && mkdir -p /opt/calibre
 
 ##################
 # 3 Install apps #
