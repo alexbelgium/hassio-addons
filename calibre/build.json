@@ -2,7 +2,7 @@
   "build_from": {
     "aarch64": "lscr.io/linuxserver/calibre:arm64v8-latest",
     "amd64": "lscr.io/linuxserver/calibre:amd64-latest",
-    "armv7": "lscr.io/linuxserver/calibre:arm32v7-latest"
+    "armv7": "lscr.io/linuxserver/calibre:arm32v7-arch-version-79d7ec5e"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
