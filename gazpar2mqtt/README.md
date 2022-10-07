@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Gazpar2mqtt] Error with mqtt broker password (opened 2022-10-06)](https://github.com/alexbelgium/hassio-addons/issues/507) by [@o0larrylurex0o](https://github.com/o0larrylurex0o)
 # Home assistant add-on: gazpar2mqtt
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
