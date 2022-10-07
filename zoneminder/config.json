@@ -30,13 +30,14 @@
     "80/tcp": "web interface"
   },
   "schema": {
-    "Images_location": "str"
+    "Images_location": "str",
+    "database": "list(internal|mariadb_addon)"
   },
   "services": [
     "mysql:want"
   ],
   "slug": "zoneminder",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.36.26",
+  "version": "1.36.26-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]/zm"
 }
