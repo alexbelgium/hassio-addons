@@ -31,7 +31,7 @@
   },
   "schema": {
     "Images_location": "str",
-    "database": "list(internal|mariadb_addon)"
+    "DB_CONNECTION": "list(internal|mariadb_addon)"
   },
   "services": [
     "mysql:want"
