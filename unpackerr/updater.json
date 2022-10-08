@@ -1,6 +1,6 @@
 {
   "dockerhub_by_date": "true",
-  "dockerhub_list_size": "100",
+  "dockerhub_list_size": "10",
   "github_beta": "true",
   "last_update": "2022-09-17",
   "repository": "alexbelgium/hassio-addons",
