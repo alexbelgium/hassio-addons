@@ -1,3 +1,6 @@
+
+##  (08-10-2022)
+- Update to latest version from hotio/unpackerr
 - Changed upstream image to hotio
 - Breaking change : remove default folders config (see Readme)
 
