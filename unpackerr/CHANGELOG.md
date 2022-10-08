@@ -1,3 +1,4 @@
+- Changed upstream image to hotio
 - Breaking change : remove default folders config (see Readme)
 
 ## 0.10.1 (07-07-2022)
