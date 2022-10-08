@@ -2,11 +2,11 @@
 #  ALEXBELGIUM'S DOCKERFILE  #
 #============================#
 #           _.------.
-#       _.-`    ('>.-`"testing-abb5d4e-2022-09-21""-.
+#       _.-`    ('>.-`"""-.
 # '.--'`       _'`   _ .--.)
 #    -'         '-.-';`   `
 #    ' -      _.'  ``'--.
-#        '---`    .-'"testing-abb5d4e-2022-09-21"`
+#        '---`    .-'""`
 #               /`
 #=== Home Assistant Addon ===#
 
@@ -51,7 +51,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 #    && chmod a+x /etc/s6-overlay/s6-rc.d/$SCRIPTSNAME/* ; done; fi
 
 # Manual apps
-ARG PACKAGES="testing-abb5d4e-2022-09-21"
+ARG PACKAGES=""
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015
