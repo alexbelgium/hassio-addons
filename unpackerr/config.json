@@ -50,6 +50,7 @@
     "/dev/nvme2"
   ],
   "image": "ghcr.io/alexbelgium/unpackerr-{arch}",
+  "init": false,
   "map": [
     "config:rw",
     "share:rw",
