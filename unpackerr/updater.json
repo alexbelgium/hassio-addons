@@ -1,8 +1,6 @@
 {
-  "dockerhub_list_size": "10",
+  "dockerhub_list_size": "100",
   "github_beta": "true",
-  "github_fulltag": "false",
-  "github_havingasset": "true",
   "last_update": "08-10-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "unpackerr",
