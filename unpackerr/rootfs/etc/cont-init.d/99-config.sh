@@ -1,11 +1,11 @@
 #!/usr/bin/bashio
 
 # Set user
-if bashio::config_has.value 'PUID'; then PUID = "$(bashio::config 'PUID')"; fi
-if bashio::config_has.value 'PGID'; then PGID = "$(bashio::config 'PGID')"; fi
+if bashio::config.has_value 'PUID'; then PUID = "$(bashio::config 'PUID')"; fi
+if bashio::config.has_value 'PGID'; then PGID = "$(bashio::config 'PGID')"; fi
 
 # Enable watch folder
-if bashio::config_has.value "watch_path"; then
+if bashio::config.has_value "watch_path"; then
   # Enables folders
   sed -i "/[[folder]]/c [[folder]]" /config/unpackerr.conf
   # Set downloads path
@@ -19,7 +19,7 @@ if bashio::config_has.value "watch_path"; then
 fi
 
 # Enable extraction folder
-if bashio::config_has.value "extraction_path"; then
+if bashio::config.has_value "extraction_path"; then
   # Enables folders
   sed -i "/[[folder]]/c [[folder]]" /config/unpackerr.conf
   # Set extraction path
