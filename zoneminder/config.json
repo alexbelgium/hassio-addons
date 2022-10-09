@@ -30,7 +30,6 @@
     "80/tcp": "web interface"
   },
   "schema": {
-    "DB_CONNECTION": "list(internal|mariadb_addon)",
     "Images_location": "str"
   },
   "services": [
