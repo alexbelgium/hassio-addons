@@ -50,7 +50,7 @@ RUN \
 # 3 Install apps #
 ##################
 # Copy local files
-#COPY rootfs/ /
+COPY rootfs/ /
 
 # Modules
 ARG MODULES="00-banner.sh"
