@@ -58,11 +58,19 @@
     "ssl"
   ],
   "name": "Unpackerr",
+  "options": {
+    "PGID": 1000,
+    "PUID": 1000,
+    "extraction_path": "/share/downloads_packed",
+    "watch_path": "/share/downloads_unpacked"
+  },
   "schema": {
     "PGID": "int",
-    "PUID": "int"
+    "PUID": "int",
+    "extraction_path": "str?",
+    "watch_path": "str?"
   },
   "slug": "unpackerr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.10.1-4"
+  "version": "0.10.1-5"
 }
