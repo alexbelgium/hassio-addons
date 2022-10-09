@@ -1,3 +1,4 @@
+- Feat : allow changing puid pgid
 
 ## 0.10.1-2 (08-10-2022)
 - Update to latest version from hotio/unpackerr
