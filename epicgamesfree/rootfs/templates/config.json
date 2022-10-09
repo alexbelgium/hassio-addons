@@ -38,7 +38,7 @@
       },
       {
          "type":"telegram",
-         "token":"644739147:AAGMPo-Jz3mKRnHRTnrPEDi7jUF1vqNOD5k",
+         "token":"to_fill",
          "chatId":"-987654321"
       },
       {
@@ -48,8 +48,8 @@
       },
       {
          "type":"pushover",
-         "token":"a172fyyl9gw99p2xi16tq8hnib48p2",
-         "userKey":"uvgidym7l5ggpwu2r8i1oy6diaapll"
+         "token":"to_fill",
+         "userKey":"to_fill"
       },
       {
          "type":"gotify",
