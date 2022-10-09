@@ -93,7 +93,7 @@ for f in */; do
             # shellcheck disable=SC2116
             LOGINFO="... Source is dockerhub" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
-            DOCKERHUB_REPO=$(echo "${UPSTREAM%%/*}")
+            DOCKERHUB_REPO="${UPSTREAM%%/*}"
             DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
             LASTVERSION=$(
                 curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
