@@ -1,3 +1,4 @@
+- Breaking change : define downloads and extraction folder from options
 - Feat : allow changing puid pgid
 
 ## 0.10.1-2 (08-10-2022)
