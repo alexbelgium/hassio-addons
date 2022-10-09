@@ -58,6 +58,10 @@
     "ssl"
   ],
   "name": "Unpackerr",
+  "schema": {
+    "PGID": "int",
+    "PUID": "int"
+  },
   "slug": "unpackerr",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "0.10.1-2"
