@@ -28,7 +28,7 @@ Please check Tandoor Recipes documentation : https://docs.tandoor.dev/install/do
 ```yaml
 Required :
     "ALLOWED_HOSTS": "your system url", # You need to input your homeassistant urls (comma separated, without space) to allow ingress to work
-    "DB_TYPE": "list(sqlite|postgresql_external|mariadb_addon)" # Type of database to use. Mariadb_addon allows to be automatically configured if the maria_db addon is already installed on your system. Sqlite is an internal database. For postgresql_external, you'll need to fill the below settings
+    "DB_TYPE": "list(sqlite|postgresql_external)" # Type of database to use.
     "SECRET_KEY": "str", # Your secret key
     "PORT": 9928 # By default, the webui is available on http://HAurl:9928. If you ever need to change the port, you should never do it within the app, but only through this option
 Optional :
