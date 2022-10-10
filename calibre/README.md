@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[Calibre] 502 Bad Gateway (opened 2022-10-05)](https://github.com/alexbelgium/hassio-addons/issues/506) by [@LoganJFisher](https://github.com/LoganJFisher)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
