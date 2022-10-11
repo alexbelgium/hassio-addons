@@ -63,7 +63,7 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Tries to mount with default options
         # shellcheck disable=SC2140
-        mount -t cifs -o rw,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}$DOMAIN$PUID$PGID" "$disk" /mnt/"$diskname" 2>ERRORCODE1 && MOUNTED=true || MOUNTED=false
+        mount -t cifs -o rw,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}$DOMAIN$PUID$PGID" "$disk" /mnt/"$diskname" 2>ERRORCODE && MOUNTED=true || MOUNTED=false
 
         # if Fail test different smb and sec versions
         if [ "$MOUNTED" = false ]; then
@@ -114,7 +114,7 @@ if bashio::config.has_value 'networkdisks'; then
             # Error code
             bashio::log.fatal "Error read : $(<ERRORCODE1)"
             bashio::log.fatal "Additional read : $(<ERRORCODE)"
-            rm ERRORCODE*
+            rm ERRORCODE
 
             # clean folder
             umount "/mnt/$diskname" 2>/dev/null || true
@@ -123,6 +123,6 @@ if bashio::config.has_value 'networkdisks'; then
 
     done
 
-    if [ -f ERRORCODE ]; then rm ERRORCODE*; fi
+    if [ -f ERRORCODE ]; then rm ERRORCODE; fi
 
 fi
