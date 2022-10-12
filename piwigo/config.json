@@ -77,6 +77,6 @@
   "slug": "piwigo",
   "stage": "experimental",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "12.3.0-bugfix",
+  "version": "13.0.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
