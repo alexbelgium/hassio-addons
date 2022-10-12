@@ -1,3 +1,6 @@
+
+## 2.9.5 (13-10-2022)
+- Update to latest version from etechonomy/joplin-server
 - Add codenotary sign
 - Data location can be set either in /config, /data or /share
 - FIX BUG : Allow sqlite persistance
