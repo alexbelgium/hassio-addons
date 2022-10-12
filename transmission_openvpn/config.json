@@ -41,6 +41,8 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "docker_api": true,
+  "hassio_api": true,
   "image": "ghcr.io/alexbelgium/transmission_openvpn-{arch}",
   "ingress": true,
   "map": [
@@ -105,5 +107,5 @@
   },
   "slug": "transmission_openvpn",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.0-v22"
+  "version": "4.0-v23"
 }
