@@ -1,4 +1,7 @@
 
+## v9.0.10-pro (13-10-2022)
+- Update to latest version from haiwen/seahub
+
 ## v9.0.9-pro (24-09-2022)
 - Update to latest version from haiwen/seahub
 
