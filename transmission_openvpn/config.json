@@ -41,8 +41,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "docker_api": true,
-  "hassio_api": true,
   "image": "ghcr.io/alexbelgium/transmission_openvpn-{arch}",
   "ingress": true,
   "map": [
