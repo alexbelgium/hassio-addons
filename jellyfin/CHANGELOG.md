@@ -1,4 +1,7 @@
 
+## 10.8.5-1-ls182 (15-10-2022)
+- Update to latest version from linuxserver/docker-jellyfin
+
 ## 10.8.5-1-ls181 (30-09-2022)
 - Update to latest version from linuxserver/docker-jellyfin
 
