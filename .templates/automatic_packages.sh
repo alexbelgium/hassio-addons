@@ -79,8 +79,8 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
     COMMAND="smbclient"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES samba samba-client"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES samba smbclient"
+        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES samba samba-client ntfs-3g"
+        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES samba smbclient ntfs-3g"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES samba smbclient"
     fi
 
