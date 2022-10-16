@@ -113,9 +113,9 @@ fi
 ################
 
 sed -i "1d" /etc/openvpn/tunnelDown.sh
-sed -i "1i #!/usr/bin/sudo bashio" /etc/openvpn/tunnelDown.sh
-sed -i "1a bashio::log.warning 'Tunnel down, addon restarting'" /etc/openvpn/tunnelDown.sh
-sed -i "1a bashio::addon.restart" /etc/openvpn/tunnelDown.sh
+sed -i "1i #!/usr/bin/bashio" /etc/openvpn/tunnelDown.sh
+sed -i "1a bashio::log.fatal 'Tunnel down, addon restarting'" /etc/openvpn/tunnelDown.sh
+sed -i "2a sudo su -s /usr/bin/bashio bashio::addon.restart" /etc/openvpn/tunnelDown.sh
 
 #######################
 # Run haugene scripts #
