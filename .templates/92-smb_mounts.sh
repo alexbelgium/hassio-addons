@@ -77,7 +77,7 @@ if bashio::config.has_value 'networkdisks'; then
 
         # if Fail test without PUID and PGID
         if [ "$MOUNTED" = false ]; then
-          mount -t cifs -o rw,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}" "$disk" /mnt/"$diskname" && MOUNTED=true || MOUNTED=false
+            mount -t cifs -o rw,username="$CIFS_USERNAME",password="${CIFS_PASSWORD}" "$disk" /mnt/"$diskname" && MOUNTED=true || MOUNTED=false
         fi
 
         # Messages
