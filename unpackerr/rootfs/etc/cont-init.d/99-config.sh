@@ -15,7 +15,7 @@ if bashio::config.has_value "watch_path"; then
     # Make path
     mkdir -p "$(bashio::config 'watch_path')"
     # Set permission
-    chown -R $PUID:$PGID "$(bashio::config 'watch_path')"
+    chown -R "$PUID":"$PGID" "$(bashio::config 'watch_path')"
 fi
 
 # Enable extraction folder
@@ -27,5 +27,5 @@ if bashio::config.has_value "extraction_path"; then
     # Make path
     mkdir -p "$(bashio::config 'extraction_path')"
     # Set permission
-    chown -R $PUID:$PGID "$(bashio::config 'extraction_path')"
+    chown -R "$PUID":"$PGID" "$(bashio::config 'extraction_path')"
 fi
