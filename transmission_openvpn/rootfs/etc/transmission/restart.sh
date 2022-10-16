@@ -2,4 +2,5 @@
 
 bashio::log.fatal 'Tunnel down, addon restarting in 15 seconds'
 sleep 15
-bashio::addon.restart
+
+bashio::api.supervisor POST "/addons/transmission_openvpn/restart
