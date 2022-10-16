@@ -112,10 +112,8 @@ fi
 # Auto restart #
 ################
 
-sed -i "1d" /etc/openvpn/tunnelDown.sh
-sed -i "1i #!/usr/bin/bashio" /etc/openvpn/tunnelDown.sh
-sed -i "1a bashio::log.fatal 'Tunnel down, addon restarting'" /etc/openvpn/tunnelDown.sh
-sed -i "2a bashio::addon.restart" /etc/openvpn/tunnelDown.sh
+chmod +x /etc/transmission/restart.sh
+sed -i "1a ./etc/transmission/restart.sh" /etc/openvpn/tunnelDown.sh
 
 #######################
 # Run haugene scripts #
