@@ -113,7 +113,7 @@ fi
 ################
 
 chmod +x /etc/transmission/restart.sh
-sed -i "1a ./etc/transmission/restart.sh" /etc/openvpn/tunnelDown.sh
+sed -i "1a sudo ./etc/transmission/restart.sh" /etc/openvpn/tunnelDown.sh
 
 #######################
 # Run haugene scripts #
