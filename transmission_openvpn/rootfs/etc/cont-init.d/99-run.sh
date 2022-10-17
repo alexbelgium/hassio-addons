@@ -112,7 +112,7 @@ fi
 # Auto restart #
 ################
 
-chmod +x /etc/transmission/restart.sh
+chmod +x /usr/bin/restart_addon
 sed -i "1a sudo /usr/bin/restart_addon" /etc/openvpn/tunnelDown.sh
 
 #######################
