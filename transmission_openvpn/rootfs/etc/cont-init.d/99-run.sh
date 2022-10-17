@@ -113,7 +113,7 @@ fi
 ################
 
 chmod +x /usr/bin/restart_addon
-sed -i "1a sudo /usr/bin/restart_addon" /etc/openvpn/tunnelDown.sh
+sed -i "1a /./usr/bin/restart_addon" /etc/openvpn/tunnelDown.sh
 
 #######################
 # Run haugene scripts #
