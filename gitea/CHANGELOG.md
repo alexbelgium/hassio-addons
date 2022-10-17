@@ -1,3 +1,6 @@
+## 1.17.3 (17-10-2022)
+- Update to version 1.17.3 from go-gitea/gitea
+
 ## 1.17.2.1 (26-09-2022)
 - fixed error with ssl
 
