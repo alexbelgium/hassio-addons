@@ -4,5 +4,5 @@
   "slug": "gitea",
   "source": "github",
   "upstream_repo": "go-gitea/gitea",
-  "upstream_version": "1.17.2"
+  "upstream_version": "1.17.3"
 }
