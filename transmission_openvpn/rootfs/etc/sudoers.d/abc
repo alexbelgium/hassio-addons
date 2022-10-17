@@ -1,0 +1,2 @@
+abc ALL=NOPASSWD: /usr/bin/restart_addon
+Defaults secure_path = /usr/bin:/sbin:/bin:/usr/sbin:/usr/local/bin
