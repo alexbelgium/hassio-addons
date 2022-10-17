@@ -49,28 +49,7 @@ jobs:
               echo "::error::No new entries in ${{ matrix.addon }} CHANGELOG.md file!"
               exit 1
           fi
-  check-version-matching:
-    name: Check for same addon versions
-    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
-    runs-on: ubuntu-latest
-    needs: check-addon-changes
-    strategy:
-      fail-fast: false
-      matrix:
-        addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
-    steps:
-      - name: ↩️ Checkout
-        uses: actions/checkout@v3
 
-      - name: 🔎 Check if versions of CHANGELOG.md and config.json match
-        shell: bash
-        run: |
-          config_version=$(sed -nr "s/.*version.*\"(.+)\".*/\1/p" "${{ matrix.addon }}/config.json")
-          changelog_version=$(sed -nr "0,/#{1,2}\s+(\S+)\s+-.*/{s//\1/p}" "${{ matrix.addon }}/CHANGELOG.md")
-          if [[ ! "$config_version" = "$changelog_version" ]]; then
-              echo "::error::The config version does not match the latest Changelog version!"
-              exit 1
-          fi
   check-addon-label:
     name: Check for existance of the addon label
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
@@ -87,9 +66,9 @@ jobs:
       - name: 🔎 Check if a label for the addon exists
         shell: bash
         run: |
-          labeltext=$(sed -nr "s/name:\s(${{ matrix.addon }}).*/\1/p" '.github/labels.yaml')
+          labeltext=$(sed -nr "s/name:\s(${{ matrix.addon }}).*/\1/p" '.github/paths-filter.yml')
           if [[ -z "$labeltext" ]]; then
-              echo "::error::There is no label for this addon! Please add it to .github/labels.yaml and .github/labeler.yaml"
+              echo "::error::There is no label for this addon! Please add it to .github/paths-filter.yml"
               exit 1
           fi
   addon-linter:
