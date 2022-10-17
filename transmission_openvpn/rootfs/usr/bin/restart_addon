@@ -4,4 +4,9 @@ bashio::log.fatal 'Tunnel down, addon restarting in 15 seconds'
 
 sleep 15
 
+# force container environment
+for i in $(/usr/bin/env); do
+export "$i"
+done
+
 bashio::addon.restart
