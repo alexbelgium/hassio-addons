@@ -6,7 +6,7 @@ sleep 15
 
 # force container environment
 for i in $(/usr/bin/env); do
-export "$i"
+export "$i" || true
 done
 
 bashio::addon.restart
