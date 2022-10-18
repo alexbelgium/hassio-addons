@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [tandoor_recipes] No mariadb_addon as DB_TYPE (opened 2022-10-10)](https://github.com/alexbelgium/hassio-addons/issues/510) by [@IonutNeagu](https://github.com/IonutNeagu)
 # Hass.io Add-ons: Tandoor recipes
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
