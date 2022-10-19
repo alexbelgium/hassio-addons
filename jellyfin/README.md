@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Jellyfin database location (opened 2022-10-18)](https://github.com/alexbelgium/hassio-addons/issues/514) by [@basziee](https://github.com/basziee)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
