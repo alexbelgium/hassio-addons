@@ -115,7 +115,7 @@
   },
   "slug": "plex_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex",
-  "version": "1.29.0.6244-819d3678c-ls134",
+  "version": "1.29.1.6313-f4cdfea9c-ls135",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:32400]/web"
 }
