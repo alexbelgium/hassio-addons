@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [FlexGet] Can't start the addon (opened 2022-10-19)](https://github.com/alexbelgium/hassio-addons/issues/515) by [@txitxo0](https://github.com/txitxo0)
 # Hass.io Add-ons: Flexget
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
