@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Nextcloud] Stange version of update pop up  (opened 2022-10-20)](https://github.com/alexbelgium/hassio-addons/issues/518) by [@michelebossa](https://github.com/michelebossa)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
