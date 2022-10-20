@@ -31,6 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
+# shellcheck disable=SC2046
 RUN \
     # Remove upstream files
     rm -rf /etc/cont-init.d/10-adduser /etc/cont-init.d/30-keygen /etc/cont-init.d/40-config /etc/cont-init.d/50-install /etc/cont-init.d/60-memcache /etc/cont-init.d/70-aliases \
