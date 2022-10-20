@@ -43,6 +43,7 @@ RUN \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" $(find /defaults -type f) \
+    && sed -i "s|config|data/config|g" $(find /etc/nginx -type f) \
     # modify data limits files
     # -e 's/memory_limit=512M/memory_limit=1024M/g' \
     && sed -i \
