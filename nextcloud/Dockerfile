@@ -31,6 +31,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
+# Global LSIO modifications
+ARG CONFIGLOCATION="/data/config"
 # shellcheck disable=SC2046
 RUN \
     # Remove upstream files
@@ -38,14 +40,9 @@ RUN \
     # Make permissions
     && chmod +x /defaults/nextcloud-perms.sh \
     # default folders
-    && sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
-    && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
-    && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
-    && sed -i "s|config|data/config|g" /etc/services.d/nginx/* \
-    && sed -i "s|config|data/config|g" $(find /defaults -type f) \
-    && sed -i "s|config|data/config|g" $(find /etc/nginx -type f) \
+    && for file in $(grep -Esril "/data[ '\"/]|/data\$" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=/share/nextcloud\2=g" "$file"; done \    
+    && for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" "$file"; done \    
     # modify data limits files
-    # -e 's/memory_limit=512M/memory_limit=1024M/g' \
     && sed -i \
     -e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
     -e 's/post_max_size=1024M/post_max_size=10240M/g' \
