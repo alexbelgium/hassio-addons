@@ -25,7 +25,7 @@ fi
 #Sets certificates
 echo "... adding ssl certs in files"
 #Sets certificates
-for NGINXFILE in "/defaults/default" "/config/nginx/site-confs/default" "/data/config/nginx/site-confs/default"; do
+for NGINXFILE in "/data/config/nginx/nginx.conf" "/defaults/default" "/config/nginx/site-confs/default" "/data/config/nginx/site-confs/default"; do
     if [ -f $NGINXFILE ]; then
         LINE=$(sed -n "/ssl_certificate /=" $NGINXFILE)
         if [[ -n "$LINE" ]]; then
