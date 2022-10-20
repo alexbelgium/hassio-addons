@@ -41,7 +41,7 @@ RUN \
     && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
     && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
     && sed -i "s|config|data/config|g" /etc/services.d/nginx/* \
-    && sed -i "s|config|data/config|g" /defaults/* \
+    && for i in $(find /defaults -type f); do sed -i "s|config|data/config|g" $i; done \
     # modify data limits files
     # -e 's/memory_limit=512M/memory_limit=1024M/g' \
     && sed -i \
