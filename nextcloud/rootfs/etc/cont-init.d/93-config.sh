@@ -34,5 +34,7 @@ for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; 
     if [ -f "$files" ]; then
         sed -i "/check_data_directory_permissions/d" "$files"
         sed -i "/datadirectory/a 'check_data_directory_permissions' => false," "$files"
+        sed -i "/allow_local_remote_servers/d" "$files"
+        sed -i "/datadirectory/a 'allow_local_remote_servers' => true," "$files"
     fi
 done
