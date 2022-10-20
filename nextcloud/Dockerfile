@@ -48,14 +48,13 @@ RUN \
     -e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
     -e 's/post_max_size=1024M/post_max_size=10240M/g' \
     /etc/php*/php.ini \
-    && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/default \
     # Correct initial directory
     && sed -i "s|/data|%%datadirectory%%|g" /defaults/config.php
 
 RUN \
     # Correct ssl path
-    sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/default \
-    || sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /root/defaults/nginx/site-confs/default.conf.sample
+    sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /root/defaults/nginx/site-confs/default.conf.sample \
+    && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/default \
 
 ##################
 # 3 Install apps #
