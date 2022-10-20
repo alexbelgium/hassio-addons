@@ -55,7 +55,7 @@ RUN \
 RUN \
     # Correct ssl path
     sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/default \
-    && sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /root/defaults/nginx/site-confs/default.conf.sample
+    || sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /root/defaults/nginx/site-confs/default.conf.sample
 
 ##################
 # 3 Install apps #
