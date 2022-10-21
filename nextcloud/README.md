@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Nextcloud] Stange version of update pop up  (opened 2022-10-20)](https://github.com/alexbelgium/hassio-addons/issues/518) by [@michelebossa](https://github.com/michelebossa)
 ## &#9888; Open Issue : [🐛 [Nextcloud] Addon fails to start fater update to 25.0.0 (opened 2022-10-20)](https://github.com/alexbelgium/hassio-addons/issues/519) by [@kulmegil](https://github.com/kulmegil)
 # Home assistant add-on: Nextcloud
 
