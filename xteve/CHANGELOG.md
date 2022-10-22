@@ -1,4 +1,7 @@
 
+## 2.5.3 (22-10-2022)
+- Update to latest version from SenexCrenshaw/xTeVe
+
 ## 2.5.2 (01-09-2022)
 - Update to latest version from SenexCrenshaw/xTeVe
 
