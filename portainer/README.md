@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [portainer] Addon fails to start (opened 2022-10-20)](https://github.com/alexbelgium/hassio-addons/issues/522) by [@cuihaijun](https://github.com/cuihaijun)
 # Home assistant add-on: Portainer
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
