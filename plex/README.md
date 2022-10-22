@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Plex NAS] Issue description (opened 2022-10-22)](https://github.com/alexbelgium/hassio-addons/issues/525) by [@NPC-112](https://github.com/NPC-112)
 # Home assistant add-on: plex
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
