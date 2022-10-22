@@ -31,7 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # hadolint ignore=SC2016
 RUN \
     # CORRECT PLEX CLAIM
-    file=$(grep -sril 'Server claimed successfully) \
+    file=$(grep -sril 'Server claimed successfully' /etc) \
     && sed -i 's/bash/bashio/g' $file \
     && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' $file \
     && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' $file
