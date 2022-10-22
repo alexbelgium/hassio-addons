@@ -10,6 +10,7 @@
     "XTEVE_CONF": "/data/conf",
     "XTEVE_HOME": "/data"
   },
+  "host_network": "true",
   "map": [
     "config:rw",
     "share:rw",
