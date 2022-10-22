@@ -31,10 +31,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # hadolint ignore=SC2016
 RUN \
     # CORRECT PLEX CLAIM
-    file="$(grep -sril 'Server claimed successfully, navigate to http://serverip:32400/web to complete plex setup' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d)" \
-    && sed -i 's/with-contenv bash/with-contenv bashio/g' "$file" \
-    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' "$file" \
-    && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' "$file"
+    file=$(grep -sril 'Server claimed successfully) \
+    && sed -i 's/bash/bashio/g' $file \
+    && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' $file \
+    && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' $file
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config"
