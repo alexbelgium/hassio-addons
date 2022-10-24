@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck shell=bash
 
-CONFIGSOURCE="/config/addons_config/omada"
+CONFIGSOURCE="/data"
 
 # Use ssl
 if [ -d /ssl ]; then
