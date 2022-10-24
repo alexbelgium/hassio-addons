@@ -15,6 +15,6 @@
   },
   "slug": "flaresolverr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.2.9",
+  "version": "2.2.10",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8191]"
 }
