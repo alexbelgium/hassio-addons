@@ -34,7 +34,7 @@ RUN \
     usermod --home /share/webtop_kde abc \
     \
     # Correct error in upstream image
-    && sed -i 's|startwm |startwm.sh |g' /etc/cont-init.d/30-config \
+    && for file in $(grep -srl "startwm " /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's/startwm /startwm.sh /g' "$file"; done \
     \
     # Update distribution
     # hadolint ignore=DL3017
