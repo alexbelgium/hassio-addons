@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [2 "Bug" for the QBitTorrent web ui (opened 2022-10-25)](https://github.com/alexbelgium/hassio-addons/issues/527) by [@SiriosDev](https://github.com/SiriosDev)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
