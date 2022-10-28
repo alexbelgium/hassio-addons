@@ -137,7 +137,7 @@ mkdir -p /webui
 chown abc:abc /webui
 
 CUSTOMUI=$(bashio::config 'customUI')
-if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ]; then
+if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$CUSTOMUI" = custom ]; then
     ### Variables
     bashio::log.info "Alternate UI enabled : $CUSTOMUI. If webui don't work, disable this option"
 
@@ -163,6 +163,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ]; then
     rm /webui/*.zip
     CUSTOMUIDIR="$(dirname "$(find /webui/"$CUSTOMUI" -iname "public" -type d)")"
     # Set qbittorrent
+    if [[ 
     sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/addons_config/qBittorrent/qBittorrent.conf
     sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/addons_config/qBittorrent/qBittorrent.conf
     # Set nginx
