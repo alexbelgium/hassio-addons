@@ -98,7 +98,7 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "customUI": "list(default|vuetorrent|qbit-matUI|qb-web)?",
+    "customUI": "list(default|vuetorrent|qbit-matUI|qb-web|custom)?",
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
