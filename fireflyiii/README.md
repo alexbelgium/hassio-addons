@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [fireflyiii] Attachments are not stored in a persistent storage (opened 2022-10-29)](https://github.com/alexbelgium/hassio-addons/issues/530) by [@SilvioMessi](https://github.com/SilvioMessi)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
