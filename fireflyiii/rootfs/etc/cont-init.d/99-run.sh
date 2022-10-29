@@ -121,6 +121,24 @@ case $(bashio::config 'DB_CONNECTION') in
 
 esac
 
+########################
+# Define upload folder #
+########################
+
+bashio::log.info "Defining upload folder"
+
+# Creating folder
+if [ ! -d /config/addons_config/fireflyiii/upload ]; then
+    mkdir -p /config/addons_config/fireflyiii/upload
+    chown -R www-data:www-data /config/addons_config/fireflyiii/upload
+fi
+
+# Creating symlink
+if [ -d /var/www/html/storage/ha_upload ]; then
+    rm -r /var/www/html/storage/ha_upload
+fi
+ln -s /config/addons_config/fireflyiii/upload /var/www/html/storage/ha_upload
+
 ################
 # CRON OPTIONS #
 ################
