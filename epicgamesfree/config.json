@@ -1,24 +1,19 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
-  "codenotary": "alexandrep.github@gmail.com",
-  "description": "Automatically login and redeem promotional free games from the Epic Games Store",
-  "image": "ghcr.io/alexbelgium/epicgamesfree-{arch}",
-  "init": false,
-  "map": [
-    "config:rw"
-  ],
-  "name": "Epic Games Free",
-  "ports": {
-    "3000/tcp": 3000
-  },
-  "ports_description": {
-    "3000/tcp": "web interface"
-  },
-  "slug": "epicgamesfree",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "ee3dff4b29757e28282cada9bcb3e8f84f1c3041-2022-10-23",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
+	"arch": ["aarch64", "amd64"],
+	"codenotary": "alexandrep.github@gmail.com",
+	"description": "Automatically login and redeem promotional free games from the Epic Games Store",
+	"image": "ghcr.io/alexbelgium/epicgamesfree-{arch}",
+	"init": false,
+	"map": ["config:rw"],
+	"name": "Epic Games Free",
+	"ports": {
+		"3000/tcp": 3000
+	},
+	"ports_description": {
+		"3000/tcp": "web interface"
+	},
+	"slug": "epicgamesfree",
+	"url": "https://github.com/alexbelgium/hassio-addons",
+	"version": "ee3dff4b29757e28282cada9bcb3e8f84f1c3041-2022-10-23",
+	"webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
