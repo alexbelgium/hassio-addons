@@ -1,5 +1,5 @@
 {
-	"runOnStartup": true,
+  "runOnStartup": true,
 	"cronSchedule": "5 16 * * *",
 	"logLevel": "info",
 	"webPortalConfig": {
