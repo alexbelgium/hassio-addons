@@ -34,10 +34,8 @@ bashio::log.info "Setting data location to $LOCATION"
 
 sed -i "1a export HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run || true
 sed -i "1a export FM_HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" /defaults/* || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/* || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" /etc/s6-overlay/s6-rc.d/*/run || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" /etc/cont-init.d/*
+sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /defaults -type f) || true
+sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc -type f) || true
 usermod --home "$LOCATION" abc
 
 # Create folder
