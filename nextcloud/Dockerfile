@@ -33,7 +33,7 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
-# shellcheck disable=SC2046
+# shellcheck disable=SC2046,SC2013
 RUN \
     # Remove upstream files
     rm -rf /etc/cont-init.d/10-adduser /etc/cont-init.d/30-keygen /etc/cont-init.d/40-config /etc/cont-init.d/50-install /etc/cont-init.d/60-memcache /etc/cont-init.d/70-aliases \
