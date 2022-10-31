@@ -42,11 +42,11 @@ CURRENTPASSWORD=$( cat /data/portainer_password )
 
 # Reset password if not first run
 if bashio::fs.file_exists "/data/hidden"; then
-	if [ "$CURRENTPASSWORD" != "$PASSWORD" ]; then
-		mv -f /data/portainer.db /data/portainer.old || true
-		rm /data/hidden || true
-		bashio::log.warning "... password changed, database reseted. Previous version stored in /data/portainer.old"
-	fi
+  if [ "$CURRENTPASSWORD" != "$PASSWORD" ]; then
+    mv -f /data/portainer.db /data/portainer.old || true
+    rm /data/hidden || true
+    bashio::log.warning "... password changed, database reseted. Previous version stored in /data/portainer.old"
+  fi
 fi
 
 # Define option
