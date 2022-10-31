@@ -29,7 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# hadolint ignore=SC2016
+# hadolint ignore=SC2016,SC2086
 RUN \
     # Set password
     files=$(grep -sril "set FG_WEBUI_PASSWD" /etc/s6-overlay/s6-rc.d) \
@@ -39,7 +39,7 @@ RUN \
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/flexget"
-# hadolint ignore=SC2015, SC2013
+# hadolint ignore=SC2015,SC2013,SC2236
 RUN \
     # Avoid custom-init.d duplications
     for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f "$file"; done \
