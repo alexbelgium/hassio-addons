@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Nextcloud] Addon fails to start fater update to 25.0.0 (opened 2022-10-20)](https://github.com/alexbelgium/hassio-addons/issues/519) by [@kulmegil](https://github.com/kulmegil)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
