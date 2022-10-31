@@ -7,4 +7,4 @@ useDefault = false
 
 [allowlist]
 description = "global allowlist. whitelisting paths"
-paths = ['''**/epicgamesfree/rootfs/templates/config.json''']
+paths = ['''**/templates/config.json''']
