@@ -33,6 +33,7 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
+# hadolint ignore=SC2013
 # shellcheck disable=SC2046,SC2013
 RUN \
     # Remove upstream files
