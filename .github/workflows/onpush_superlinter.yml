@@ -47,3 +47,4 @@ jobs:
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_NATURAL_LANGUAGE: false
+          GITLEAKS_CONFIG_FILE: /hassio-addons/.github/linters/gitleaks.toml
