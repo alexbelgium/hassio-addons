@@ -29,7 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data"
-# hadolint ignore=SC2015, SC2013
+# hadolint ignore=SC2015, SC2013, SC2086
 RUN \
     # Avoid custom-init.d duplications
     for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f $file; done \
