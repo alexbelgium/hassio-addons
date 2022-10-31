@@ -28,7 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-# hadolint ignore=SC2015,DL4006,SC2013
+# hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
     # Correct sync folder
     for file in $(grep -Esril "/sync[ '\"/]|/sync\$" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/sync=/share/resiliosync=g" $file; done \
