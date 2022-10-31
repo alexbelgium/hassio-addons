@@ -40,8 +40,8 @@ RUN \
     # Make permissions
     && chmod +x /defaults/nextcloud-perms.sh \
     # default folders
-    && for file in $(grep -Esril "/data[ '\"/]|/data\$" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=/share/nextcloud\2=g" "$file"; done \    
-    && for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" "$file"; done \    
+    && for file in $(grep -Esril "/data[ '\"/]|/data\$" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=/share/nextcloud\2=g" "$file"; done \
+    && for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" "$file"; done \
     # modify data limits files
     && sed -i \
     -e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
