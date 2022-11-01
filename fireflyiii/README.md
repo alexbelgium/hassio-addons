@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [FireflyIII] Unable to create a directory at /var/www/html/storage/ha_upload (opened 2022-10-31)](https://github.com/alexbelgium/hassio-addons/issues/534) by [@diamant-x](https://github.com/diamant-x)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
