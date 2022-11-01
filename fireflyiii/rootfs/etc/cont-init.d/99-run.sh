@@ -48,6 +48,7 @@ case $(bashio::config 'DB_CONNECTION') in
 
         # Set variable
         export DB_CONNECTION=sqlite
+        export DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
 
         # Creating folders
         mkdir -p /config/addons_config/fireflyiii/database
@@ -66,7 +67,7 @@ case $(bashio::config 'DB_CONNECTION') in
 
         # Creating symlink
         rm -r /var/www/html/storage/database
-        ln -s /config/addons_config/fireflyiii/database /var/www/html/storage/database
+        ln /config/addons_config/fireflyiii/database /var/www/html/storage
 
         # Updating permissions
         chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
