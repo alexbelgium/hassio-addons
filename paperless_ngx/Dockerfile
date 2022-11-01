@@ -45,6 +45,7 @@ ENV \
     PAPERLESS_CONSUMPTION_DIR=/config/addons_config/paperless_ng/consume
 
 # Modify image
+# hadolint ignore=SC2016
 RUN \
     sed -i 's|usr/bin/env bash|usr/bin/env bashio|g' /sbin/docker-entrypoint.sh && \
     # Run entrypoint
