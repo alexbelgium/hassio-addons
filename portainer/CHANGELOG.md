@@ -1,4 +1,7 @@
 
+## 2.16.0 (01-11-2022)
+- Update to latest version from portainer/portainer
+
 ## 2.15.1 (17-09-2022)
 - Update to latest version from portainer/portainer
 
