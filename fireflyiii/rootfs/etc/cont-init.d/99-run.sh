@@ -139,6 +139,11 @@ if [ -d /var/www/html/storage/ha_upload ]; then
 fi
 ln -s /config/addons_config/fireflyiii/upload /var/www/html/storage/ha_upload
 
+# Updating permissions
+chown -R www-data:www-data /config/addons_config/fireflyiii
+chown -R www-data:www-data /var/www/html/storage
+chmod -R 775 /config/addons_config/fireflyiii
+
 ################
 # CRON OPTIONS #
 ################
