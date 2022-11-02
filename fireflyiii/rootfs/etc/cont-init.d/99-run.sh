@@ -67,7 +67,7 @@ case $(bashio::config 'DB_CONNECTION') in
 
         # Creating symlink
         rm -r /var/www/html/storage/database
-        ln /config/addons_config/fireflyiii/database /var/www/html/storage
+        ln -s /config/addons_config/fireflyiii/database /var/www/html/storage
 
         # Updating permissions
         chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
