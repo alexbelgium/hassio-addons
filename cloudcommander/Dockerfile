@@ -15,7 +15,8 @@
 #################
 
 ARG BUILD_VERSION
-FROM coderaiser/cloudcmd:latest
+ARG BUILD_UPSTREAM="16.6.0"
+FROM coderaiser/cloudcmd:${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #
