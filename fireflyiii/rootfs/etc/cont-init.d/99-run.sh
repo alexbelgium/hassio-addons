@@ -48,6 +48,7 @@ case $(bashio::config 'DB_CONNECTION') in
 
         # Set variable
         export DB_CONNECTION=sqlite
+        export DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
 
         # Creating folders
         mkdir -p /config/addons_config/fireflyiii/database
@@ -66,7 +67,7 @@ case $(bashio::config 'DB_CONNECTION') in
 
         # Creating symlink
         rm -r /var/www/html/storage/database
-        ln -s /config/addons_config/fireflyiii/database /var/www/html/storage/database
+        ln -s /config/addons_config/fireflyiii/database /var/www/html/storage
 
         # Updating permissions
         chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
@@ -120,6 +121,29 @@ case $(bashio::config 'DB_CONNECTION') in
         ;;
 
 esac
+
+########################
+# Define upload folder #
+########################
+
+bashio::log.info "Defining upload folder"
+
+# Creating folder
+if [ ! -d /config/addons_config/fireflyiii/upload ]; then
+    mkdir -p /config/addons_config/fireflyiii/upload
+    chown -R www-data:www-data /config/addons_config/fireflyiii/upload
+fi
+
+# Creating symlink
+if [ -d /var/www/html/storage/ha_upload ]; then
+    rm -r /var/www/html/storage/ha_upload
+fi
+ln -s /config/addons_config/fireflyiii/upload /var/www/html/storage/ha_upload
+
+# Updating permissions
+chown -R www-data:www-data /config/addons_config/fireflyiii
+chown -R www-data:www-data /var/www/html/storage
+chmod -R 775 /config/addons_config/fireflyiii
 
 ################
 # CRON OPTIONS #

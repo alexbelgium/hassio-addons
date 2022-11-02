@@ -1,4 +1,25 @@
 
+## 0.20.2186 (02-11-2022)
+- Update to latest version from linuxserver/docker-jackett
+
+## 0.20.2180 (01-11-2022)
+- Update to latest version from linuxserver/docker-jackett
+
+## 0.20.2171 (29-10-2022)
+- Update to latest version from linuxserver/docker-jackett
+
+## 0.20.2167 (27-10-2022)
+- Update to latest version from linuxserver/docker-jackett
+
+## 0.20.2158 (25-10-2022)
+- Update to latest version from linuxserver/docker-jackett
+
+## 0.20.2134 (22-10-2022)
+- Update to latest version from linuxserver/docker-jackett
+
+## 0.20.2124 (20-10-2022)
+- Update to latest version from linuxserver/docker-jackett
+
 ## 0.20.2122 (18-10-2022)
 - Update to latest version from linuxserver/docker-jackett
 

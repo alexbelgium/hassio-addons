@@ -41,3 +41,4 @@ chown abc:abc /data/config
 chown abc:abc /defaults
 
 rm /config/nginx/site-confs/default 2>/dev/null || true
+rm /data/config/nginx/nginx.conf || true

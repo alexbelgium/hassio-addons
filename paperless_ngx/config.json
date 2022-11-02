@@ -56,7 +56,9 @@
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/paperless_ng/config.yaml",
     "PGID": 0,
-    "PUID": 0
+    "PUID": 0,
+    "PAPERLESS_OCR_MODE": "skip",
+    "OCRLANG": "ENG"
   },
   "ports": {
     "8000/tcp": 8011
@@ -74,6 +76,7 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "PAPERLESS_OCR_MODE": "list(skip|redo|force|skip_noarchive)?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
@@ -81,6 +84,6 @@
   },
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v1.8.0-ls30",
+  "version": "1.9.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
 }

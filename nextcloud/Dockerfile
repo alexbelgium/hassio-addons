@@ -17,8 +17,8 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_ARCH
-ARG BUILD_UPSTREAM="24.0.6"
-FROM ${BUILD_FROM}
+ARG BUILD_UPSTREAM="25.0.0"
+FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #
@@ -31,28 +31,29 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 
+# Global LSIO modifications
+ARG CONFIGLOCATION="/data/config"
+# hadolint ignore=SC2046,SC2013,SC2086
 RUN \
     # Remove upstream files
     rm -rf /etc/cont-init.d/10-adduser /etc/cont-init.d/30-keygen /etc/cont-init.d/40-config /etc/cont-init.d/50-install /etc/cont-init.d/60-memcache /etc/cont-init.d/70-aliases \
     # Make permissions
     && chmod +x /defaults/nextcloud-perms.sh \
     # default folders
-    && sed -i "s|data|share/nextcloud|g" /etc/cont-init.d/* \
-    && sed -i "s|config|data/config|g" /etc/cont-init.d/* \
-    && sed -i "s|data|share/nextcloud|g" /etc/services.d/nginx/* \
-    && sed -i "s|config|data/config|g" /etc/services.d/nginx/* \
-    && sed -i "s|config|data/config|g" /defaults/* \
+    && for file in $(grep -Esril "/data[ '\"/]|/data\$" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=/share/nextcloud\2=g" $file; done \
+    && for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done \
     # modify data limits files
-    # -e 's/memory_limit=512M/memory_limit=1024M/g' \
     && sed -i \
     -e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
     -e 's/post_max_size=1024M/post_max_size=10240M/g' \
-    /etc/php7/php.ini \
-    && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/default \
-    # Correct ssl path
-    && sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/default \
+    /etc/php*/php.ini \
     # Correct initial directory
     && sed -i "s|/data|%%datadirectory%%|g" /defaults/config.php
+
+RUN \
+    # Correct ssl path
+    sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/nginx/site-confs/default.conf.sample \
+    && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/nginx/site-confs/default.conf.sample
 
 ##################
 # 3 Install apps #

@@ -40,7 +40,7 @@ else
     fi
     # Need to restart
     bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
-    # bashio::exit.nok
+    bashio::addon.stop
 fi
 
 # Permissions

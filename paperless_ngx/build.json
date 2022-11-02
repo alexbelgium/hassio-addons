@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "aarch64": "lscr.io/linuxserver/paperless-ngx:arm64v8-latest",
-    "amd64": "lscr.io/linuxserver/paperless-ngx:amd64-latest",
-    "armv7": "lscr.io/linuxserver/paperless-ngx:arm32v7-latest"
+    "aarch64": "ghcr.io/paperless-ngx/paperless-ngx:",
+    "amd64": "ghcr.io/paperless-ngx/paperless-ngx:",
+    "armv7": "ghcr.io/paperless-ngx/paperless-ngx:"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"

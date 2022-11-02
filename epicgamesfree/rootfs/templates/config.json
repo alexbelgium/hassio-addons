@@ -1,60 +1,62 @@
 {
-   "runOnStartup":true,
-   "cronSchedule":"5 16 * * *",
-   "logLevel":"info",
-   "webPortalConfig":{
-      "baseUrl":"https://epic.exmaple.com"
-   },
-   "accounts":[
-      {
-         "email":"example@gmail.com",
-         "password":"abc1234",
-         "totp":"EMNCAZE234AZEEMNCAZE234AZEEMNCAZE234AZEEMNCAZE234AZEEMNCAZE234AZEEMNCAZE234AZEEMNCAZE234AZEEMNCAZE234AZE"
+  "runOnStartup": true,
+  "cronSchedule": "5 16 * * *",
+  "logLevel": "info",
+  "webPortalConfig": {
+    "baseUrl": "https://localhost:3000"
+  },
+  "accounts": [
+    {
+      "email": "example@gmail.com",
+      "password": "abc1234",
+      "totp": "EMNCF83ULU3K3PXPJBSWY3DPEHPK3PXPJWY3DPEHPK3YI69R39NE"
+    }
+  ],
+  "notifiers": [
+    {
+      "type": "email",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "emailSenderAddress": "hello@gmail.com",
+      "emailSenderName": "Epic Games Captchas",
+      "emailRecipientAddress": "hello@gmail.com",
+      "secure": false,
+      "auth": {
+        "user": "hello@gmail.com",
+        "pass": "abc123"
       }
-   ],
-   "notifiers":[
-      {
-         "type":"email",
-         "smtpHost":"smtp.gmail.com",
-         "smtpPort":587,
-         "emailSenderAddress":"hello@gmail.com",
-         "emailSenderName":"Epic Games Captchas",
-         "emailRecipientAddress":"hello@gmail.com",
-         "secure":false,
-         "auth":{
-            "user":"hello@gmail.com",
-            "pass":"abc123"
-         }
-      },
-      {
-         "type":"discord",
-         "webhookUrl":"https://discord.com/api/webhooks/123456789123456789/A-abcdefghijklmn-abcdefghijklmnopqrst12345678-abcdefghijklmnop123456",
-         "mentionedUsers":[
-            "914360712086843432"
-         ],
-         "mentionedRoles":[
-            "734548250895319070"
-         ]
-      },
-      {
-         "type":"telegram",
-         "token":"to_fill",
-         "chatId":"-987654321"
-      },
-      {
-         "type":"apprise",
-         "apiUrl":"http://192.168.1.2:8000",
-         "urls":"mailto://user:pass@gmail.com"
-      },
-      {
-         "type":"pushover",
-         "token":"to_fill",
-         "userKey":"to_fill"
-      },
-      {
-         "type":"gotify",
-         "apiUrl":"https://gotify.net",
-         "token":"SnL-wAvmfo_QT"
-      }
-   ]
+    },
+    {
+      "type": "discord",
+      "webhookUrl": "https://discord.com/api/webhooks/123456789123456789/A-abcdefghijklmn-abcdefghijklmnopqrst12345678-abcdefghijklmnop123456",
+      "mentionedUsers": ["914360712086843432"],
+      "mentionedRoles": ["734548250895319070"]
+    },
+    {
+      "type": "telegram",
+      "token": "644739147:AAGMPo-Jz3mKRnHRTnrPEDi7jUF1vqNOD5k",
+      "chatId": "-987654321"
+    },
+    {
+      "type": "apprise",
+      "apiUrl": "http://192.168.1.2:8000",
+      "urls": "mailto://user:pass@gmail.com"
+    },
+    {
+      "type": "pushover",
+      "token": "a172fyyl9gw99p2xi16tq8hnib48p2",
+      "userKey": "uvgidym7l5ggpwu2r8i1oy6diaapll"
+    },
+    {
+      "type": "gotify",
+      "apiUrl": "https://gotify.net",
+      "token": "SnL-wAvmfo_QT"
+    },
+    {
+      "type": "homeassistant",
+      "instance": "https://homeassistant.example.com",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+      "notifyservice": "mobile_app_smartphone_name"
+    }
+  ]
 }

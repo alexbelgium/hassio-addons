@@ -98,7 +98,7 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "customUI": "list(default|vuetorrent|qbit-matUI|qb-web)?",
+    "customUI": "list(default|vuetorrent|qbit-matUI|qb-web|custom)?",
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
@@ -115,5 +115,5 @@
   },
   "slug": "qbittorrent",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.4.5-r0-ls222"
+  "version": "4.4.5-r2-ls226"
 }

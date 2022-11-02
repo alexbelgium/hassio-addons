@@ -1,7 +1,6 @@
 # Home assistant add-on: Vaultwarden (Bitwarden RS)
 
-IT IS RECOMMENDED TO USE THE OFFICIAL ADDON (https://github.com/hassio-addons/addon-bitwarden) INSTEAD OF THIS FORK.
-THE ONLY BENEFIT OF THIS FORK IS AUTOMATED RELEASES, NOW IMPLEMENTED IN THE OFFICAL ONE.
+# ⚠️ It is recommended to use the official addon (https://github.com/hassio-addons/addon-bitwarden) instead of this fork. The only benefit of this fork is automated releases, now implemented in the offical one. ⚠️
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -16,7 +15,6 @@ THE ONLY BENEFIT OF THIS FORK IS AUTOMATED RELEASES, NOW IMPLEMENTED IN THE OFFI
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
-
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 

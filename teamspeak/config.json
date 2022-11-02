@@ -7,7 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "voice communication for online gaming, education and training",
   "environment": {
-    "DIST_UPDATE": "1",
+    "DIST_UPDATE": "0",
     "GUID": "503",
     "INIFILE": "1",
     "PGID": "503",
@@ -34,5 +34,5 @@
   },
   "slug": "teamspeak",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.13.6-4"
+  "version": "3.13.6-6"
 }
