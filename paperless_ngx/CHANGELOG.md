@@ -1,6 +1,3 @@
-
-## v1.8.2 (01-11-2022)
-
 - BACKUP BEFORE UPDATE : switch to paperless-ngx image. Please backup before switch.
 
 ## v1.8.0-ls30 (24-09-2022)
