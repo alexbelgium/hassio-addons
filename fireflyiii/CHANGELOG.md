@@ -1,3 +1,6 @@
+
+## 5.7.15 (02-11-2022)
+- Update to latest version from firefly-iii/firefly-iii
 ## 5.7.14-2 (29-10-2022)
 - Fix bug #530
 

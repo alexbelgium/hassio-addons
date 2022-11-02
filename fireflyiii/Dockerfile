@@ -33,12 +33,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
 
-ARG BUILD_UPSTREAM="5.7.14"
+ARG BUILD_UPSTREAM="5.7.15"
 RUN \
     #################
     # Fix for 5.7.5 #
     #################
-    if [ "$BUILD_UPSTREAM" = "5.7.14" ] ; then \
+    if [ "$BUILD_UPSTREAM" = "5.7.15" ] ; then \
     sed -i "s|, \$transaction\[\x27amount\x27\] ?? \x270\x27);|, (string)(\$transaction\[\x27amount\x27\] ?? \x270\x27));|g" /var/www/html/app/Helpers/Collector/GroupCollector.php; else echo "not 5.7.5"; fi
 RUN \
     # Change upload folder to "ha_upload" since the default one is binded to a volume (see base image)
