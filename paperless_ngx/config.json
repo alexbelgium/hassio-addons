@@ -56,7 +56,9 @@
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/paperless_ng/config.yaml",
     "PGID": 0,
-    "PUID": 0
+    "PUID": 0,
+    "PAPERLESS_OCR_MODE": "skip",
+    "OCRLANG": "ENG"
   },
   "ports": {
     "8000/tcp": 8011
