@@ -1,3 +1,6 @@
+
+## 1.9.2 (02-11-2022)
+- Update to latest version from paperless-ngx/paperless-ngx
 - BACKUP BEFORE UPDATE : switch to paperless-ngx image. Please backup before switch.
 
 ## v1.8.0-ls30 (24-09-2022)

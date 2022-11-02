@@ -5,5 +5,5 @@
   "slug": "paperless_ngx",
   "source": "github",
   "upstream_repo": "paperless-ngx/paperless-ngx",
-  "upstream_version": "v1.9.2"
+  "upstream_version": "1.9.2"
 }
