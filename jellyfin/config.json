@@ -54,7 +54,7 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "DOCKER_MODS"= "linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg"
+    "DOCKER_MODS": "linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg"
   },
   "host_dbus": true,
   "host_network": true,
