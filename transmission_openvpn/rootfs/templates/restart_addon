@@ -1,10 +1,8 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
-(
 if [ -f /vpn_stopped ]; then
-  bashio::log.fatal 'Tunnel down, addon restarting in 15 seconds'
+  bashio::log.fatal 'Tunnel down, addon restarting in 15 seconds' &>/proc/1/fd/1
   sleep 15
-  bashio::addon.restart
+  bashio::addon.restart &>/proc/1/fd/1
 fi
-) &>/proc/1/fd/1
