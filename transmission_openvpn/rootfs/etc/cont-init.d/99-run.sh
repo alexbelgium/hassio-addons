@@ -121,7 +121,7 @@ if bashio::config.true 'auto_restart'; then
 
     # Sets cron // do not delete this message
     cp /templates/restart_addon /etc/cron.hourly
-    chmod 777 /etc/cron.hourly/cronupdate
+    chmod 777 /etc/cron.hourly/restart_addon
 
     # Starts cron
     service cron start
