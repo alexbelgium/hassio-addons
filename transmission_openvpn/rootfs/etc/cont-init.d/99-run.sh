@@ -120,10 +120,8 @@ if bashio::config.true 'auto_restart'; then
     sed -i "1a touch /vpn_stopped" /etc/openvpn/tunnelDown.sh
 
     # Sets cron // do not delete this message
-    crontab /etc/crontab
     chmod 744 /templates/restart_addon
-    (crontab -l; echo "*/15 * * * * root /templates/restart_addon")|awk '!x[$0]++'|crontab -
-    crontab /etc/crontab
+    cp /templates/restart_addon /etc/cron.hourly
 
     # Starts cron
     service cron start
