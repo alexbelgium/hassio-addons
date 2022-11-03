@@ -115,7 +115,10 @@ fi
 if bashio::config.has_value 'auto_restart'; then
 
     bashio::log.info "Auto restarting addon if openvpn down for more than 1h"
-    
+
+    # Create file if vpn down
+    sed -i "1a touch /vpn_stopped" /etc/openvpn/tunnelDown.sh
+
     # Sets cron // do not delete this message
     cp /templates/restart_addon /etc/cron.hourly
     chmod 777 /etc/cron.hourly/cronupdate
