@@ -121,7 +121,7 @@ if bashio::config.true 'auto_restart'; then
 
     # Sets cron // do not delete this message
     crontab /etc/crontab
-    (crontab -l; echo "30 */15 * * * root /templates/restart_addon")|awk '!x[$0]++'|crontab -
+    (crontab -l; echo "*/15 * * * * root /templates/restart_addon")|awk '!x[$0]++'|crontab -
     chmod +x /templates/restart_addon
 
     # Starts cron
