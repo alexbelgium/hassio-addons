@@ -112,7 +112,7 @@ fi
 # Auto restart #
 ################
 
-if bashio::config.has_value 'auto_restart'; then
+if bashio::config.true 'auto_restart'; then
 
     bashio::log.info "Auto restarting addon if openvpn down for more than 1h"
 
