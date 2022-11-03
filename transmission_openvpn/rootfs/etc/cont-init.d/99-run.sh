@@ -112,8 +112,17 @@ fi
 # Auto restart #
 ################
 
-chmod +x /usr/bin/restart_addon
-sed -i "1a /./usr/bin/restart_addon" /etc/openvpn/tunnelDown.sh
+if bashio::config.has_value 'auto_restart'; then
+
+    bashio::log.info "Auto restarting addon if openvpn down for more than 1h"
+    
+    # Sets cron // do not delete this message
+    cp /templates/restart_addon /etc/cron.hourly
+    chmod 777 /etc/cron.hourly/cronupdate
+
+    # Starts cron
+    service cron start
+fi
 
 #######################
 # Run haugene scripts #
