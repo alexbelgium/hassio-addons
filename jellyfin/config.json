@@ -53,9 +53,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {
-    "DOCKER_MODS": "linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd"
-  },
   "host_dbus": true,
   "host_network": true,
   "ingress": true,
@@ -93,6 +90,7 @@
     "NET_ADMIN"
   ],
   "schema": {
+    "DOCKER_MODS": "list(linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg)?",
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
