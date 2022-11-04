@@ -44,7 +44,7 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "COLLECTOR_API_ENDPOINT": "http://192.168.178.23:8086"
+    "COLLECTOR_API_ENDPOINT": "http://localhost:8080"
   },
   "ingress": true,
   "init": false,
