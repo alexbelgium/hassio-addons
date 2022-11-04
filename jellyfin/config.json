@@ -54,7 +54,7 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "DOCKER_MODS": "linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg"
+    "DOCKER_MODS": "linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd"
   },
   "host_dbus": true,
   "host_network": true,
@@ -106,6 +106,6 @@
   },
   "slug": "jellyfin",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.8.7-1-ls186-4",
+  "version": "10.8.7-1-ls186-5",
   "video": true
 }
