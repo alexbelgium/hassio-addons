@@ -48,7 +48,7 @@ RUN \
     && for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*;do if [ -f $files ] && [[ ! -z $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' $file) ]] ; then sed -i "s|/config$|/data|g" $file; fi ;done \
     \
     # Docker mods addition
-    && for file in $(grep -srl 'DOCKER_MODS=(${DOCKER_MODS})' /); do sed -i 's/bash/bashio/g' $file && sed -i 's|DOCKER_MODS=(${DOCKER_MODS})|DOCKER_MODS=$(bashio::config "DOCKER_MODS")|g' $file; done
+    && if [ -f /docker-mods ]; then sed -i '1a if bashio::config.has_value "DOCKER_MODS"; then DOCKER_MODS=$(bashio::config "DOCKER_MODS"); fi' /docker-mods; fi; done
 
 ##################
 # 3 Install apps #
