@@ -30,7 +30,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=0 \
 
 RUN \
     apt-get update \
-    apt-get -yqq intel-media-va-driver-non-free
+    && apt-get -yqq intel-media-va-driver-non-free
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config"
