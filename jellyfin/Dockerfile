@@ -30,7 +30,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=0 \
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config"
-# hadolint ignore=SC2015, SC2013, SC2086
+# hadolint ignore=SC2015, SC2013, SC2086, SC2016
 RUN \
     # Avoid custom-init.d duplications
     for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f $file; done \
@@ -48,7 +48,7 @@ RUN \
     && for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*;do if [ -f $files ] && [[ ! -z $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' $file) ]] ; then sed -i "s|/config$|/data|g" $file; fi ;done \
     \
     # Docker mods addition
-    && if [ -f /docker-mods ]; then sed -i 's|bash|bashio|g' /docker-mods && sed -i '1a if bashio::config.has_value "DOCKER_MODS"; then DOCKER_MODS=$(bashio::config "DOCKER_MODS"); fi' /docker-mods; fi
+    && if [ -f /docker-mods ]; then sed -i 's|bash|bashio|g' /docker-mods && sed -i "1a if bashio::config.has_value \"DOCKER_MODS\"; then DOCKER_MODS=\$(bashio::config \"DOCKER_MODS\"); fi" /docker-mods; fi
 
 ##################
 # 3 Install apps #
