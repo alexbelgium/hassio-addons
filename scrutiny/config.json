@@ -58,12 +58,10 @@
   "panel_icon": "mdi:glasses",
   "ports": {
     "8080/tcp": 8086,
-    "8081/tcp": null,
     "8086/tcp": null
   },
   "ports_description": {
     "8080/tcp": "Web UI port",
-    "8081/tcp": "Collector port",
     "8086/tcp": "InfluxDB admin"
   },
   "privileged": [
