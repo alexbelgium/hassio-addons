@@ -1,3 +1,4 @@
+- Collector exposed on port 8081
 
 ## v0.5.0 (26-08-2022)
 - Update to latest version from analogj/scrutiny
