@@ -42,7 +42,8 @@
   ],
   "environment": {
     "PGID": "0",
-    "PUID": "0"
+    "PUID": "0",
+    "DOCKER_MODS": "linuxserver/mods:lidarr-flac2mp3"
   },
   "init": false,
   "map": [
