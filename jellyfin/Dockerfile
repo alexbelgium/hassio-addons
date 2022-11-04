@@ -28,10 +28,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=0 \
     S6_SERVICES_GRACETIME=0 \
     S6_READ_ONLY_ROOT=1
 
-RUN \
-    apt-get update \
-    && apt-get -yqq intel-media-va-driver-non-free
-
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config"
 # hadolint ignore=SC2015, SC2013, SC2086
@@ -78,7 +74,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d || printf '%s\n' "${MODULES}" >/MODULESFILE
 
 # Manual apps
-ENV PACKAGES="nginx"
+ENV PACKAGES="nginx intel-media-va-driver-non-free"
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015
