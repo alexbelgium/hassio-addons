@@ -124,17 +124,9 @@ ip route add 172.30.0.0/16 via 172.30.32.1
 if bashio::config.true 'auto_restart'; then
 
     bashio::log.info "Auto restarting addon if openvpn down for more than 1h"
+    chmod +x /usr/bin/restart_addon
+    sed -i "1a /./usr/bin/restart_addon" /etc/openvpn/tunnelDown.sh
 
-    # Create file if vpn down
-    sed -i "1a touch /vpn_stopped" /etc/openvpn/tunnelDown.sh
-
-    # Sets cron // do not delete this message
-    env >> /etc/bashioenv
-    chmod 744 /templates/restart_addon
-    cp /templates/restart_addon /etc/cron.hourly
-
-    # Starts cron
-    service cron start
 fi
 
 #######################
