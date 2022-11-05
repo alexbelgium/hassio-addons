@@ -68,8 +68,8 @@ case "$graphic_driver" in
   aarch64_rpi)
     if [[ "$BUILD_ARCH" != arm64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $BUILD_ARCH"; fi
     bashio::log.info "Installing Rpi graphic drivers"
-    [ -f /usr/bin/apk ] && "$PACKAGE" mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev >/dev/null && bashio::log.green "... done"
-    [ -f /usr/bin/apt ] && "$PACKAGE" libgles2-mesa libgles2-mesa-dev xorg-dev >/dev/null && bashio::log.green "... done"
+    [ -f /usr/bin/apk ] && apk add --no-cache mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev >/dev/null && bashio::log.green "... done"
+    [ -f /usr/bin/apt ] && apt-get -yqq install libgles2-mesa libgles2-mesa-dev xorg-dev >/dev/null && bashio::log.green "... done"
   ;;
 
 esac
