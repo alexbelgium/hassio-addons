@@ -1,4 +1,7 @@
 
+## 2.1.32 (05-11-2022)
+- Update to latest version from anthonyraymond/joal
+
 ## 2.1.31 (04-08-2022)
 - Update to latest version from anthonyraymond/joal
 
