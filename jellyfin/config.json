@@ -90,7 +90,7 @@
     "NET_ADMIN"
   ],
   "schema": {
-    "DOCKER_MODS": "list(linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg)?",
+    "DOCKER_MODS": "list(linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg|)?",
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
