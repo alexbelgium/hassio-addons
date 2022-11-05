@@ -20,6 +20,7 @@ fi
 # shellcheck disable=SC2207
 GPU_DETECTED=($(lshw -c display -json 2>/dev/null | jq -r '.[].configuration.driver'))
 bashio::log.info "... GPU detected: ${GPU_DETECTED[*]}"
+graphic_driver=""
 
 # Get arch type
 BUILD_ARCH="$(uname -m)"
@@ -30,10 +31,12 @@ case "$BUILD_ARCH" in
 
   arm64 | ARM64 | aarch64)
     BUILD_ARCH=arm64
+    graphic_driver=aarch64_rpi
     ;;
 
   arm | ARM | aarch | armv7l | armhf)
-    BUILD_ARCH=arm
+    bashio::log.fatal "Unsupported Machine Architecture: $BUILD_ARCH" 1>&2
+    exit 1
     ;;
 
   *)
@@ -43,7 +46,7 @@ case "$BUILD_ARCH" in
 esac
 bashio::log.info "... architecture detected: ${BUILD_ARCH}"
 
-graphic_driver="$(bashio::config "graphic_driver")"
+#graphic_driver="$(bashio::config "graphic_driver")"
 case "$graphic_driver" in
   x64_AMD)
     if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $BUILD_ARCH"; fi
