@@ -45,28 +45,28 @@ case "$BUILD_ARCH" in
 esac
 bashio::log.info "... architecture detected: ${BUILD_ARCH}"
 
-
-case "$(bashio::config "graphic_driver")" in
+graphic_driver="$(bashio::config "graphic_driver")"
+case "$graphic_driver" in
   x64_AMD)
-    if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $addon_arch"; fi
+    if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $BUILD_ARCH"; fi
     [ -f /usr/bin/apt ] && DOCKER_MODS=linuxserver/mods:jellyfin-amd && run_mods
     [ -f /usr/bin/apk ] && apk add --no-cache mesa-dri-classic mesa-vdpau-gallium linux-firmware-radeon
   ;;
 
   x64_NVIDIA)
-    if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $addon_arch"; fi
+    if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $BUILD_ARCH"; fi
     [ -f /usr/bin/apk ] && bashio::log.fatal "Not configured yet"
     [ -f /usr/bin/apt ] && apt-get -yqq install libcuda1 libnvcuvid1 libnvidia-encode1 nvidia-opencl-icd nvidia-vdpau-driver nvidia-driver-libs nvidia-kernel-dkms libva2 vainfo libva-wayland2
   ;;
 
   x64_Intel)
-    if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $addon_arch"; fi
+    if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $BUILD_ARCH"; fi
     [ -f /usr/bin/apk ] && apk add --no-cache opencl mesa-vulkan-intel mesa-dri-intel intel-media-driver
     [ -f /usr/bin/apt ] && apt-get -yqq install intel-opencl-icd intel-media-va-driver-non-free i965-va-driver-shaders mesa-va-drivers libmfx1 libva2 vainfo libva-wayland2 &>/dev/null
   ;;
 
   aarch64_rpi)
-    if [[ "$BUILD_ARCH" != arm64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $addon_arch"; fi
+    if [[ "$BUILD_ARCH" != arm64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $BUILD_ARCH"; fi
     bashio::log.info "Installing Rpi graphic drivers"
     [ -f /usr/bin/apk ] && "$PACKAGE" mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev >/dev/null && bashio::log.green "... done"
     [ -f /usr/bin/apt ] && "$PACKAGE" libgles2-mesa libgles2-mesa-dev xorg-dev >/dev/null && bashio::log.green "... done"
