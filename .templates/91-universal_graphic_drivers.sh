@@ -13,7 +13,7 @@ fi
 if [ -f /usr/bin/apt ]; then
   PACKAGE="apk add --no-cache"
   bashio::log.info "... Distribution detected : Debian/Ubuntu"
-elif if [ -f /usr/bin/apk ]; then
+elif [ -f /usr/bin/apk ]; then
   PACKAGE="apt-get update && apt-get install -yq "
   bashio::log.info "... Distribution detected : Alpine"
 fi
