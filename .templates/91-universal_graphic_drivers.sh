@@ -47,20 +47,20 @@ graphic_driver="$(bashio::config "graphic_driver")"
 case "$graphic_driver" in
   x64_AMD)
     if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $BUILD_ARCH"; fi
-    [ -f /usr/bin/apt ] && DOCKER_MODS=linuxserver/mods:jellyfin-amd && run_mods
-    [ -f /usr/bin/apk ] && apk add --no-cache mesa-dri-classic mesa-vdpau-gallium linux-firmware-radeon
+    [ -f /usr/bin/apt ] && DOCKER_MODS=linuxserver/mods:jellyfin-amd && run_mods >/dev/null && bashio::log.green "... done"
+    [ -f /usr/bin/apk ] && apk add --no-cache mesa-dri-classic mesa-vdpau-gallium linux-firmware-radeon >/dev/null && bashio::log.green "... done"
   ;;
 
   x64_NVIDIA)
     if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $BUILD_ARCH"; fi
-    [ -f /usr/bin/apk ] && bashio::log.fatal "Not configured yet"
-    [ -f /usr/bin/apt ] && apt-get -yqq install libcuda1 libnvcuvid1 libnvidia-encode1 nvidia-opencl-icd nvidia-vdpau-driver nvidia-driver-libs nvidia-kernel-dkms libva2 vainfo libva-wayland2
+    [ -f /usr/bin/apk ] && apk add --no-cache linux-firmware-radeon >/dev/null && bashio::log.green "... done"
+    [ -f /usr/bin/apt ] && apt-get -yqq install libcuda1 libnvcuvid1 libnvidia-encode1 nvidia-opencl-icd nvidia-vdpau-driver nvidia-driver-libs nvidia-kernel-dkms libva2 vainfo libva-wayland2 >/dev/null && bashio::log.green "... done"
   ;;
 
   x64_Intel)
     if [[ "$BUILD_ARCH" != amd64 ]]; then bashio::log.fatal "Wrong architecture, $graphic_driver doesn't support $BUILD_ARCH"; fi
-    [ -f /usr/bin/apk ] && apk add --no-cache opencl mesa-vulkan-intel mesa-dri-intel intel-media-driver
-    [ -f /usr/bin/apt ] && apt-get -yqq install intel-opencl-icd intel-media-va-driver-non-free i965-va-driver-shaders mesa-va-drivers libmfx1 libva2 vainfo libva-wayland2 &>/dev/null
+    [ -f /usr/bin/apk ] && apk add --no-cache opencl mesa-dri-gallium mesa-vulkan-intel mesa-dri-intel intel-media-driver >/dev/null && bashio::log.green "... done"
+    [ -f /usr/bin/apt ] && DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel && run_mods && apt-get -yqq install intel-opencl-icd intel-media-va-driver-non-free i965-va-driver-shaders mesa-va-drivers libmfx1 libva2 vainfo libva-wayland2 >/dev/null && bashio::log.green "... done"
   ;;
 
   aarch64_rpi)
