@@ -62,3 +62,14 @@ case "$FREQUENCY" in
         sed -i "1a export COLLECTOR_CRON_SCHEDULE=\"0 0 * * 0\"" /etc/cont-init.d/50-cron-config
         ;;
 esac
+
+########
+# MODE #
+########
+
+if [[ "$(bashio::config "Mode")" == Collector ]]; then
+  bashio::log.warning "Collector only mode. WebUI and Influxdb will be disabled"
+  rm -r /etc/services.d/influxdb
+  rm -r /etc/services.d/scrutiny
+fi
+
