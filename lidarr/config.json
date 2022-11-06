@@ -41,9 +41,9 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "DOCKER_MODS": "linuxserver/mods:lidarr-flac2mp3",
     "PGID": "0",
-    "PUID": "0",
-    "DOCKER_MODS": "linuxserver/mods:lidarr-flac2mp3"
+    "PUID": "0"
   },
   "init": false,
   "map": [

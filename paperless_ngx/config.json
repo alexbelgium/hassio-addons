@@ -55,10 +55,10 @@
   "name": "Paperless NGX",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/paperless_ng/config.yaml",
-    "PGID": 0,
-    "PUID": 0,
+    "OCRLANG": "ENG",
     "PAPERLESS_OCR_MODE": "skip",
-    "OCRLANG": "ENG"
+    "PGID": 0,
+    "PUID": 0
   },
   "ports": {
     "8000/tcp": 8011
@@ -73,10 +73,10 @@
   "schema": {
     "CONFIG_LOCATION": "str",
     "OCRLANG": "str?",
+    "PAPERLESS_OCR_MODE": "list(skip|redo|force|skip_noarchive)?",
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
-    "PAPERLESS_OCR_MODE": "list(skip|redo|force|skip_noarchive)?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
