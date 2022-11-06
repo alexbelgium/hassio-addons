@@ -1,3 +1,4 @@
+- New option "Mode" : Collector+WebUI or Collector only
 
 ## v0.5.0 (26-08-2022)
 - Update to latest version from analogj/scrutiny
