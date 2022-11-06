@@ -12,6 +12,10 @@ if bashio::config.has_value "graphic_driver"; then
     # Get installer type
     if [ -f /usr/bin/apt ]; then
         bashio::log.info "... Distribution detected : Debian/Ubuntu"
+        apt-get install -yqq software-properties-common >/dev/null
+        add-apt-repository ppa:kisak/kisak-mesa >/dev/null
+        apt-get update >/dev/null
+        apt-get install -yqq mesa
     elif [ -f /usr/bin/apk ]; then
         bashio::log.info "... Distribution detected : Alpine"
     fi
