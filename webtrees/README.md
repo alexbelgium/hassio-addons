@@ -42,6 +42,7 @@ networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separat
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 trusted_headers: single address, or a range of addresses in CIDR format
+base_url_portless: base url without port
 ```
 
 - Config.yaml
