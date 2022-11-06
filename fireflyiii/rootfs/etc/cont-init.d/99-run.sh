@@ -145,6 +145,10 @@ chown -R www-data:www-data /config/addons_config/fireflyiii
 chown -R www-data:www-data /var/www/html/storage
 chmod -R 775 /config/addons_config/fireflyiii
 
+# Test
+f=/config/addons_config/fireflyiii
+while [[ $f != / ]]; do chmod 755 "$f"; f=$(dirname "$f"); done;
+
 ################
 # CRON OPTIONS #
 ################
