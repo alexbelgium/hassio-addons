@@ -124,12 +124,12 @@ fi || true
 
 if bashio::config.has_value "trusted_headers" && [ -f "$WEBTREES_HOME"/data/config.ini.php ]; then
     bashio::log.info "Aligning trusted_headers addon config (use single address, or a range of addresses in CIDR format)"
-    sed -i "/trusted_headers/ d" "$WEBTREES_HOME" /data/config.ini.php
-    sed -i "1a trusted_headers=\"$(bashio::config 'trusted_headers')\""/data/config.ini.php
+    sed -i "/trusted_headers/ d" "$WEBTREES_HOME"/data/config.ini.php
+    sed -i "1a trusted_headers=\"$(bashio::config 'trusted_headers')\"" "$WEBTREES_HOME"/data/config.ini.php
 elif [ -f "$WEBTREES_HOME"/data/config.ini.php ]; then
     bashio::log.info "Aligning trusted_headers addon config with cf-connecting-ip"
-    sed -i "/trusted_headers/ d" "$WEBTREES_HOME" /data/config.ini.php
-    sed -i "1a trusted_headers=\"cf-connecting-ip\"" /data/config.ini.php
+    sed -i "/trusted_headers/ d" "$WEBTREES_HOME"/data/config.ini.php
+    sed -i "1a trusted_headers=\"cf-connecting-ip\"" "$WEBTREES_HOME"/data/config.ini.php
 fi
 
 ############
