@@ -139,6 +139,7 @@ if [ -d /var/www/html/storage/ha_upload ]; then
     rm -r /var/www/html/storage/ha_upload
 fi
 ln -s /config/addons_config/fireflyiii/upload /var/www/html/storage/ha_upload
+rm /var/www/html/storage/ha_upload
 
 # Updating permissions
 chown -R www-data:www-data /config/addons_config/fireflyiii
