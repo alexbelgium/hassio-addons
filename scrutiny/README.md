@@ -44,6 +44,7 @@ Enable full access only if you are encountering issues. SMART access should work
 ```yaml
 Updates : Hourly, Daily, Weekly
 TZ : timezone
+Mode : Collector+WebUI or Collector only
 ```
 
 ## Installation
