@@ -147,7 +147,7 @@ chmod -R 775 /config/addons_config/fireflyiii
 
 # Test
 f=/config/addons_config/fireflyiii
-while [[ $f != / ]]; do chmod 755 "$f"; f=$(dirname "$f"); done;
+while [[ $f != / ]]; do chmod 777 "$f"; f=$(dirname "$f"); done;
 
 ################
 # CRON OPTIONS #
