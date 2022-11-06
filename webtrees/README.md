@@ -41,6 +41,7 @@ localdisks: sda1 #put the hardware name of your drive to mount separated by comm
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
+trusted_headers: single address, or a range of addresses in CIDR format
 ```
 
 - Config.yaml
