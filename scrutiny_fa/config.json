@@ -36,7 +36,8 @@
   ],
   "schema": {
     "TZ": "str?",
-    "Updates": "list(Hourly|Daily|Weekly)"
+    "Updates": "list(Hourly|Daily|Weekly)",
+    "Mode": "list(Collector+WebUI|Collector)?"
   },
   "slug": "scrutiny_fa",
   "udev": true,
