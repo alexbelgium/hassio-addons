@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[qbittorrent] VPN "configured properly" but not also "Options error: Unrecognized option or missing or extra parameter(s)" (opened 2022-11-05)](https://github.com/alexbelgium/hassio-addons/issues/539) by [@Stooovie](https://github.com/Stooovie)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
