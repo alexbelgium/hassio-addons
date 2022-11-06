@@ -124,6 +124,7 @@ ip route add 172.30.0.0/16 via 172.30.32.1
 if bashio::config.true 'auto_restart'; then
 
     bashio::log.info "Auto restarting addon if openvpn down"
+    (set -o posix; export -p) > /env.sh
     chmod +x /usr/bin/restart_addon
     sed -i "1a /./usr/bin/restart_addon" /etc/openvpn/tunnelDown.sh
 
