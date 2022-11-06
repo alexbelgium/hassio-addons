@@ -1,6 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
-bashio::log.fatal 'Tunnel down, addon restarting in 15 seconds' &>/proc/1/fd/1
+bashio::log.fatal 'Tunnel down, addon restarting in 15 seconds'
 sleep 15
-bashio::addon.restart &>/proc/1/fd/1
+bashio::addon.restart
