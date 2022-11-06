@@ -89,13 +89,14 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?"
+    "networkdisks": "str?",
+    "trusted_headers": "str?"
   },
   "services": [
     "mysql:want"
   ],
   "slug": "webtrees",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v2.1.7",
+  "version": "v2.1.7-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
