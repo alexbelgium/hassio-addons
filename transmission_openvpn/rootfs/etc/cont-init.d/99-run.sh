@@ -125,6 +125,7 @@ if bashio::config.true 'auto_restart'; then
 
     bashio::log.info "Auto restarting addon if openvpn down"
     (set -o posix; export -p) > /env.sh
+    chmod 777 /env.sh
     chmod +x /usr/bin/restart_addon
     sed -i "1a . /env.sh; /usr/bin/restart_addon >/proc/1/fd/1 2>/proc/1/fd/2" /etc/openvpn/tunnelDown.sh
 
