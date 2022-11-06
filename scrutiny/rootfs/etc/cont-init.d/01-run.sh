@@ -65,6 +65,7 @@ if [[ "$(bashio::config "Mode")" == Collector ]]; then
   bashio::log.warning "Collector only mode. WebUI and Influxdb will be disabled"
   rm -r /etc/services.d/influxdb
   rm -r /etc/services.d/scrutiny
+  rm -r /etc/services.d/nginx
   sed -i "/wait/d" /etc/services.d/collector-once/run
   sed -i "/scrutiny api not ready/d" /etc/services.d/collector-once/run
 fi
