@@ -10,7 +10,7 @@ exec redis-server & bashio::log.info "Starting redis"
 # Avoid overcommit memory #
 ###########################
 bashio::log.info "Avoid overcommit memory"
-sysctl vm.overcommit_memory=1
+echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf || true
 
 ###############################
 # Create user if not existing #
