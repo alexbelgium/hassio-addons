@@ -131,6 +131,11 @@ if bashio::config.true 'auto_restart'; then
 
 fi
 
+if [ -f /data/addonrestarted ]; then
+    bashio::log.warning "Warning, transmission had failed and the addon has self-rebooted as 'auto_restart' option was on. Please check that it is still running"
+    rm /data/addonrestarted
+fi
+
 #######################
 # Run haugene scripts #
 #######################
