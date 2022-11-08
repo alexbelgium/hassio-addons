@@ -17,7 +17,7 @@ echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf || true
 ###############################
 # Origin : https://github.com/linuxserver/docker-paperless-ngx/blob/main/root/etc/cont-init.d/99-migrations
 bashio::log.info "Creating default user"
-cat << EOF | python3 /app/paperless/src/manage.py shell
+cat << EOF | python3 $(find /app -name manage.py) shell
 from django.contrib.auth import get_user_model
 
 # see ref. below
