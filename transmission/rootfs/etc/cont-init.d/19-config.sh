@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-rm -rf /etc/cont-init.d/20-config || true
+#rm -rf /etc/cont-init.d/20-config || true
 
 declare CONFIG
 #declare incomplete_bool
