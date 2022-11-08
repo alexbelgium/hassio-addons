@@ -1,4 +1,7 @@
 
+## 2.9.7 (08-11-2022)
+- Update to latest version from etechonomy/joplin-server
+
 ## 2.9.5 (13-10-2022)
 - Update to latest version from etechonomy/joplin-server
 - Add codenotary sign
