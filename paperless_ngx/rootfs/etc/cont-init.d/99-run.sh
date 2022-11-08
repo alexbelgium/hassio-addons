@@ -6,18 +6,12 @@
 #################
 exec redis-server & bashio::log.info "Starting redis"
 
-###########################
-# Avoid overcommit memory #
-###########################
-bashio::log.info "Avoid overcommit memory"
-echo "vm.overcommit_memory = 1" >> /etc/sysctl.conf || true
-
 ###############################
 # Create user if not existing #
 ###############################
-# Origin : https://github.com/linuxserver/docker-paperless-ngx/blob/main/root/etc/cont-init.d/99-migrations
+# Origin : https://github.com/linuxserver/docker-paperless-ngx/blob/main/root/etc/cont-init.d/99-migrations 
 bashio::log.info "Creating default user"
-cat << EOF | python3 $(find / -name manage.py) shell
+cat << EOF | python3 manage.py shell
 from django.contrib.auth import get_user_model
 
 # see ref. below
