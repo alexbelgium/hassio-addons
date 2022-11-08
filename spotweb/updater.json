@@ -1,8 +1,8 @@
 {
-  "last_update": "22-01-2022",
+  "last_update": "08-11-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "spotweb",
   "source": "github",
   "upstream_repo": "spotweb/spotweb",
-  "upstream_version": "1.5.1"
+  "upstream_version": "1.5.2"
 }

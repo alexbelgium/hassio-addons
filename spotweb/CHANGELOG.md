@@ -1,3 +1,6 @@
+
+## 1.5.2 (08-11-2022)
+- Update to latest version from spotweb/spotweb
 - Avoid base_url
 - Corrects permissions for s6 v3
 - Avoid mixed content error
