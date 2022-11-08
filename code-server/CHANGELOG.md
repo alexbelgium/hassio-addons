@@ -1,4 +1,7 @@
 
+## 4.8.3 (08-11-2022)
+- Update to latest version from linuxserver/docker-code-server
+
 ## 4.8.2 (05-11-2022)
 - Update to latest version from linuxserver/docker-code-server
 
