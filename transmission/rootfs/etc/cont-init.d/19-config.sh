@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+echo '#!/usr/bin/with-contenv bash' > /etc/s6-overlay/s6-rc.d/init-transmission-config/run
+
 declare CONFIG
 #declare incomplete_bool
 declare download_dir
