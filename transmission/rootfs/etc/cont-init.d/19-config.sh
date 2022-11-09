@@ -47,7 +47,7 @@ fi
 
 if bashio::config.has_value 'customUI'; then
     CUSTOMUI=$(bashio::config 'customUI')
-    [ "$CUSTOMUI" != "standard" ] && sed -i "1a export TRANSMISSION_WEB_HOME=\"/$CUSTOMUI/\"" /etc/s6-overlay/s6-rc.d/svc-transmission/run
+    [ "$CUSTOMUI" != "standard" ] && sed -i "1a export TRANSMISSION_WEB_HOME=\"/$CUSTOMUI/\"" /etc/s6-overlay/s6-rc.d/*/run
 
     # Enable transmission-web-control return to default UI
     if [ ! -f "/transmission-web-control/index.original.html" ]; then
