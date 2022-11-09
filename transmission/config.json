@@ -41,9 +41,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {
-    "FILE__TRANSMISSION_WEB_HOME": "/TRANSMISSION_WEB_HOME"
-  },
   "ingress": true,
   "init": false,
   "map": [
