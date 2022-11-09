@@ -12,7 +12,16 @@ declare PASS
 declare WHITELIST
 #declare HOST_WHITELIST
 
-CONFIGDIR="/config/transmission"
+CONFIGDIR="/config/addons_config/transmission"
+
+####################
+#  Migrate folders #
+####################
+
+if [ -d /config/transmission ]; then
+    cp -r /config/transmission /config/addons_config/transmission
+    rm -r /config/transmission
+fi
 
 ###############
 # PERMISSIONS #
@@ -20,9 +29,9 @@ CONFIGDIR="/config/transmission"
 
 #Default folders
 echo "Updating folders"
-mkdir -p /config/transmission || true
+mkdir -p "$CONFIGDIR"
 mkdir -p /watch || true
-chown -R abc:abc /config/transmission || true
+chown -R abc:abc "$CONFIGDIR"
 
 if ! bashio::fs.file_exists "$CONFIGDIR/settings.json"; then
     echo "Creating default config"
