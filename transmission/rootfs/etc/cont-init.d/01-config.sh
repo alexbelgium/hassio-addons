@@ -1,8 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-echo '#!/usr/bin/with-contenv bash' > /etc/s6-overlay/s6-rc.d/init-transmission-config/run
-
 declare CONFIG
 #declare incomplete_bool
 declare download_dir
@@ -47,7 +45,6 @@ fi
 
 if bashio::config.has_value 'customUI'; then
     CUSTOMUI=$(bashio::config 'customUI')
-    [ "$CUSTOMUI" != "standard" ] && sed -i "1a export TRANSMISSION_WEB_HOME=\"/$CUSTOMUI/\"" /etc/s6-overlay/s6-rc.d/*/run
 
     # Enable transmission-web-control return to default UI
     if [ ! -f "/transmission-web-control/index.original.html" ]; then
