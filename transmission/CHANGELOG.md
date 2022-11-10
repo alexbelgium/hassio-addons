@@ -1,4 +1,3 @@
-- New alternative webui : transmissionic
 
 ## 3.00-r6-ls140 (05-11-2022)
 - Update to latest version from linuxserver/docker-transmission
