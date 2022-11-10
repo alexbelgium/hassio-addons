@@ -34,7 +34,8 @@ RUN \
     echo '#!/usr/bin/with-contenv bash' > /etc/s6-overlay/s6-rc.d/init-transmission-config/run \
     # Allow webui change
     && sed -i "s|bash|bashio|g" /etc/s6-overlay/s6-rc.d/svc-transmission/run \
-    && sed -i "1a if bashio::config.has_value 'customUI'; then TRANSMISSION_WEB_HOME=/\$(bashio::config 'customUI')/; fi" /etc/s6-overlay/s6-rc.d/svc-transmission/run
+    && sed -i "1a if bashio::config.has_value 'customUI'; then TRANSMISSION_WEB_HOME=/\$(bashio::config 'customUI'); fi" /etc/s6-overlay/s6-rc.d/svc-transmission/run \
+    && ln -s /usr/share/transmission/web /standard
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/transmission"
