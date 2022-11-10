@@ -27,6 +27,15 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# Modify image
+
+RUN \
+    # Disable normal config
+    echo '#!/usr/bin/with-contenv bash' > /etc/s6-overlay/s6-rc.d/init-transmission-config/run \
+    # Allow webui change
+    && sed -i "s|bash|bashio|g" /etc/s6-overlay/s6-rc.d/svc-transmission/run \
+    && sed -i "1a if bashio::config.has_value 'customUI'; then TRANSMISSION_WEB_HOME=\$(bashio::config 'customUI'); fi" /etc/s6-overlay/s6-rc.d/svc-transmission/run
+
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/transmission"
 # hadolint ignore=SC2015, SC2013, SC2086
