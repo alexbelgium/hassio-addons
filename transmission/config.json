@@ -83,7 +83,7 @@
     "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "customUI": "list(standard|combustion-release|transmission-web-control|kettu|flood-for-transmission|transmissionic)",
+    "customUI": "list(standard|combustion-release|transmission-web-control|kettu|flood-for-transmission)",
     "download_dir": "str",
     "incomplete_dir": "str?",
     "localdisks": "str?",
