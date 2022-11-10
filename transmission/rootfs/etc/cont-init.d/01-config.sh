@@ -55,6 +55,7 @@ if bashio::config.has_value 'customUI'; then
     fi
 fi
 bashio::log.info "UI selected : $CUSTOMUI"
+bashio::log.warning "If UI was changed, you need to clear browser cache for it to show in Ingress"
 
 # INCOMPLETE DIR
 ################
