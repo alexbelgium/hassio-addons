@@ -24,6 +24,6 @@ if len(UserModel.objects.all()) == 1:
     user.is_superuser = True
     user.is_staff = True
     user.save()
-EOF" >> /sbin/docker-entrypoint.sh
+EOF" >> /usr/local/bin/paperless_cmd.sh
 
 bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
