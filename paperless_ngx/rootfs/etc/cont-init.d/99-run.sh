@@ -27,7 +27,4 @@ if len(UserModel.objects.all()) == 1:
     user.save()
 EOF
 
-#########
-# Start #
-#########
 bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
