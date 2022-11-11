@@ -5,5 +5,5 @@
   "slug": "jellyfin",
   "source": "github",
   "upstream_repo": "linuxserver/docker-jellyfin",
-  "upstream_version": "10.8.7-1-ls186"
+  "upstream_version": "10.8.7-1-ls187"
 }
