@@ -10,7 +10,6 @@ exec redis-server & bashio::log.info "Starting redis"
 # Create user if not existing #
 ###############################
 # Origin : https://github.com/linuxserver/docker-paperless-ngx/blob/main/root/etc/cont-init.d/99-migrations
-bashio::net.wait_for 8000 localhost 900
 
 bashio::log.info "Creating default user"
 cat << EOF | python3 manage.py shell
