@@ -80,8 +80,6 @@ done
 
 if bashio::config.true "OPENVPN_CUSTOM_PROVIDER"; then
 
-   sed -i "s|config_repo_temp_dir=$(mktemp -d)|config_repo_temp_dir=/tmp|g" /etc/openvpn/fetch-external-configs.sh
-
     OVPNLOCATION="$(bashio::config "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION")"
     OPENVPN_PROVIDER="${OVPNLOCATION##*/}"
     OPENVPN_PROVIDER="${OPENVPN_PROVIDER%.*}"
