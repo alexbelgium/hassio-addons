@@ -5,7 +5,7 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Docker container running Transmission torrent client with WebUI over an OpenVPN tunnel ",
+  "description": "Docker container running Transmission torrent client with WebUI over an OpenVPN tunnel",
   "devices": [
     "/dev/net/tun",
     "/dev/sda",
