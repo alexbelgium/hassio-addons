@@ -6,6 +6,11 @@
 #################
 exec redis-server & bashio::log.info "Starting redis"
 
+################
+# Starting app #
+################
+/./usr/local/bin/paperless_cmd.sh & bashio::log.info "Starting app"
+
 ###############################
 # Create user if not existing #
 ###############################
