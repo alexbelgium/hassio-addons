@@ -12,7 +12,7 @@ exec redis-server & bashio::log.info "Starting redis"
 # Origin : https://github.com/linuxserver/docker-paperless-ngx/blob/main/root/etc/cont-init.d/99-migrations
 
 # Store last line
-LASTLINE="$(ls -ltr | sed '$!d' /usr/local/bin/paperless_cmd.sh)"
+LASTLINE="$(tail -1 /usr/local/bin/paperless_cmd.sh)"
 
 # Delete last line
 sed -i '$d' /usr/local/bin/paperless_cmd.sh
