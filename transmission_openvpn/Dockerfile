@@ -31,9 +31,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # MOFIFY DATA PATH
 ENV CREATE_TUN_DEVICE=false
 
-RUN \
-    sed -i "s|config_repo_temp_dir=$(mktemp -d)|config_repo_temp_dir=/tmp|g" /etc/openvpn/fetch-external-configs.sh
-
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/transmission_openvpn"
 # hadolint ignore=SC2015, SC2013, SC2086
