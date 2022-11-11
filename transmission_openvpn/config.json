@@ -56,6 +56,7 @@
     "LOCAL_NETWORK": "192.168.178.0/16",
     "OPENVPN_PASSWORD": "pass",
     "OPENVPN_USERNAME": "user",
+    "TRANSMISSION_V3_UPDATE": "true",
     "PGID": "0",
     "PUID": "0",
     "TRANSMISSION_DOWNLOAD_DIR": "/share/downloads",
