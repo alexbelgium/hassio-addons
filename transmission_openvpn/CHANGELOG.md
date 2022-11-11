@@ -1,3 +1,6 @@
+
+## 4.2 (11-11-2022)
+- Update to latest version from haugene/docker-transmission-openvpn
 - Auto addon restart if tunnel down
 - If no ui after install, please delete your settings.json file and restart
 - Allows changing default download folder without deleting settings.json

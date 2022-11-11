@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "02-06-2022",
+  "last_update": "11-11-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "transmission_openvpn",
   "source": "github",
   "upstream_repo": "haugene/docker-transmission-openvpn",
-  "upstream_version": "4.0"
+  "upstream_version": "4.2"
 }
