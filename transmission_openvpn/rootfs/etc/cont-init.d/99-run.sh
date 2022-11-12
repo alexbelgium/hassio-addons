@@ -96,9 +96,8 @@ if bashio::config.true "OPENVPN_CUSTOM_PROVIDER"; then
     sed -i "s|config_repo_temp_dir=\$(mktemp -d)|config_repo_temp_dir=/tmp/tmp2|g" /etc/openvpn/fetch-external-configs.sh
     echo "Copying ovpn file to proper location"
     mkdir -p /etc/openvpn/"$OPENVPN_PROVIDER"
-    mkdir -p /tmp/tmp2/openvpn/"$OPENVPN_PROVIDER"
-    cp "$OVPNLOCATION" /etc/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn
-    cp "$OVPNLOCATION" /tmp/tmp2/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn
+    mkdir -p /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"
+    cp "$OVPNLOCATION" /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn
 
     # Use custom provider
     echo "Exporting variable for custom provider : $OPENVPN_PROVIDER"
