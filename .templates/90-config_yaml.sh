@@ -120,6 +120,8 @@ while IFS= read -r line; do
         fi
         # set .env
         echo "$line" >> /.env || true
+        mkdir /etc || true
+        echo "$line" >> /etc/environmemt
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
     else
