@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Transmission] Can't configure alternative frontend (opened 2022-11-08)](https://github.com/alexbelgium/hassio-addons/issues/541) by [@KrzysztofHajdamowicz](https://github.com/KrzysztofHajdamowicz)
 # Home assistant add-on: Transmission
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
