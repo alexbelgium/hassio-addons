@@ -11,6 +11,8 @@ exec redis-server & bashio::log.info "Starting redis"
 ###############################
 # Origin : https://github.com/linuxserver/docker-paperless-ngx/blob/main/root/etc/cont-init.d/99-migrations
 
+if [ ! -f /data/adminuser ]; then
+
 # Store last line
 LASTLINE="$(tail -1 /usr/local/bin/paperless_cmd.sh)"
 
@@ -35,5 +37,10 @@ EOF" >> /usr/local/bin/paperless_cmd.sh
 
 # Restore last line
 echo "$LASTLINE" >> /usr/local/bin/paperless_cmd.sh
+
+# Say admin created
+touch /data/adminuser
+
+fi
 
 bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
