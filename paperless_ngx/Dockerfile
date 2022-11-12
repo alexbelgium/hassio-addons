@@ -50,9 +50,7 @@ ENV \
 RUN \
     sed -i 's|usr/bin/env bash|usr/bin/env bashio|g' /sbin/docker-entrypoint.sh && \
     # Run entrypoint
-    sed -i '2i /./entrypoint.sh' /sbin/docker-entrypoint.sh && \
-    # Source variables
-    sed -i "/entrypoint.sh/a configyaml() { source /etc/cont-init.d/90-config_yaml.sh }" /sbin/docker-entrypoint.sh && \
+    sed -i '2i source /entrypoint.sh' /sbin/docker-entrypoint.sh && \
     # Set variables
     sed -i '2i bashio::log.info "Defining variables"' /sbin/docker-entrypoint.sh && \
     sed -i '2i if bashio::config.has_value "PUID"; then export USERMAP_UID=$(bashio::config "PUID"); fi' /sbin/docker-entrypoint.sh && \
