@@ -10,8 +10,3 @@ fi
 
 chmod -R 755 /config/addons_config/$slug
 chown -R paperless:paperless /config/addons_config/$slug
-
-if [ -f /etc/cont-init.d/90-config_yaml.sh ]; then
-     sed -i "/# Export the variable/a sed -i \"/entrypoint.sh/a export \$line\" /sbin/docker-entrypoint.sh" /etc/cont-init.d/90-config_yaml.sh
-     echo "config.yaml enabled"
-fi
