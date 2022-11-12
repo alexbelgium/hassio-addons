@@ -28,13 +28,6 @@ for KEYS in "${arr[@]}"; do
     if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
     if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
 
-    # export on python
-    if command -v "python3" &>/dev/null; then
-      [ ! -f /env.py ] && echo "import os" > /env.py
-      echo "os.environ['${line%%=*}'] = '${line#*=}'" >> /env.py
-      python3 /env.py
-      rm /env.py
-    fi
 done
 
 ################
