@@ -112,6 +112,12 @@ while IFS= read -r line; do
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
         sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
         sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
+        # export on python
+        if command -v "python3" &>/dev/null; then
+          [ ! -f /env.py ] && echo "import os" > /env.py
+          echo "os.environ['${line%%=*}'] = '${line#*=}'" >> /env.py
+          python3 /env.py
+        fi
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
     else
