@@ -1,3 +1,4 @@
+- BREAKING CHANGE : update your "LOCAL_NETWORK" from "192.168.178.0/16" to "192.168.178.0/24"
 
 ## 4.2 (11-11-2022)
 - Update to latest version from haugene/docker-transmission-openvpn
