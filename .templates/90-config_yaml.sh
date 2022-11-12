@@ -117,6 +117,7 @@ while IFS= read -r line; do
           [ ! -f /env.py ] && echo "import os" > /env.py
           echo "os.environ['${line%%=*}'] = '${line#*=}'" >> /env.py
           python3 /env.py
+          rm /env.py
         fi
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
