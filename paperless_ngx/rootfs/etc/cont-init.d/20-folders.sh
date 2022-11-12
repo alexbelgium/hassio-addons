@@ -11,8 +11,3 @@ fi
 chmod -R 755 /config/addons_config/$slug
 chown -R paperless:paperless /config/addons_config/$slug
 
-# Enable variables acceptation with the specific entrypoint
-if [ -f /etc/cont-init.d/90-config_yaml.sh ]; then
-    sed -i "/import os/a os.environ[\'\${line%%=*}\'] = \'\${line#*=}\'" settings.py
-    echo "config.yaml enabled"
-fi
