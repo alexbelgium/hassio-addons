@@ -53,7 +53,7 @@
   "options": {
     "DEBUG": false,
     "DNS_server": "8.8.8.8,1.1.1.1",
-    "LOCAL_NETWORK": "192.168.178.0/16",
+    "LOCAL_NETWORK": "192.168.178.0/24",
     "OPENVPN_PASSWORD": "pass",
     "OPENVPN_USERNAME": "user",
     "TRANSMISSION_V3_UPDATE": "true",
@@ -107,5 +107,5 @@
   },
   "slug": "transmission_openvpn",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.2-test5"
+  "version": "4.2-3"
 }
