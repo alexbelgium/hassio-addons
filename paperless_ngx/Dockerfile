@@ -50,6 +50,8 @@ ENV \
 RUN \
     # Run entrypoint
     sed -i '2i /./entrypoint.sh' /sbin/docker-entrypoint.sh && \
+    # Source bashio
+    sed -i "/entrypoint.sh/a source $(find / -name bashio.sh)" /sbin/docker-entrypoint.sh && \
     # Source config.yaml
     sed -i "/entrypoint.sh/a source /etc/cont-init.d/90-config_yaml.sh" /sbin/docker-entrypoint.sh && \
     # Source variables
