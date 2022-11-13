@@ -14,7 +14,7 @@ export BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
 ##############
 
 if bashio::config.true "base_url_portless"; then
-  export BASE_URL=$(bashio::config 'BASE_URL')
+    export BASE_URL=$(bashio::config 'BASE_URL')
 fi
 
 ###################

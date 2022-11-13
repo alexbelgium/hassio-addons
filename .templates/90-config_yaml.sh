@@ -114,9 +114,9 @@ while IFS= read -r line; do
         sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
         # export on python
         if command -v "python3" &>/dev/null; then
-          [ ! -f /env.py ] && echo "import os" > /env.py
-          echo "os.environ['${line%%=*}'] = '${line#*=}'" >> /env.py
-          python3 /env.py
+            [ ! -f /env.py ] && echo "import os" > /env.py
+            echo "os.environ['${line%%=*}'] = '${line#*=}'" >> /env.py
+            python3 /env.py
         fi
         # set .env
         echo "$line" >> /.env || true
