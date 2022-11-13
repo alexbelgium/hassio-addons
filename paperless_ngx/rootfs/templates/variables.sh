@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/env bashio
 # shellcheck shell=bash
 
 bashio::log.info "Defining variables"
