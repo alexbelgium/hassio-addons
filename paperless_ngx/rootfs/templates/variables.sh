@@ -1,4 +1,4 @@
-#!usr/bin/env bashio
+#!/usr/bin/env bashio
 
 bashio::log.info "Defining variables"
 
