@@ -52,10 +52,10 @@ RUN \
     sed -i '2i /./entrypoint.sh' /sbin/docker-entrypoint.sh && \
     # Source bashio
     sed -i "/entrypoint.sh/a source /usr/lib/bashio/bashio.sh" /sbin/docker-entrypoint.sh && \
-    # Source config.yaml
-    sed -i "/entrypoint.sh/a source /usr/lib/bashio/bashio /etc/cont-init.d/90-config_yaml.sh" /sbin/docker-entrypoint.sh && \
     # Source variables
-    sed -i "/entrypoint.sh/a source /usr/lib/bashio/bashio /templates/variables.sh" /sbin/docker-entrypoint.sh
+    sed -i "/entrypoint.sh/a source /usr/lib/bashio/bashio /templates/variables.sh || true" /sbin/docker-entrypoint.sh && \
+    # Source config.yaml
+    sed -i "/entrypoint.sh/a source /usr/lib/bashio/bashio /etc/cont-init.d/90-config_yaml.sh || true" /sbin/docker-entrypoint.sh
  
 # Modules
 ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh 90-config_yaml.sh"
