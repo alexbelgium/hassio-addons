@@ -1,7 +1,5 @@
 #!/usr/bin/env bashio
 
-source "$(find / -name bashio.sh)"
-
 bashio::log.info "Defining variables"
 
 if bashio::config.has_value "PUID"; then export USERMAP_UID=$(bashio::config "PUID"); fi
