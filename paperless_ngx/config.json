@@ -41,10 +41,10 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PGID": "0",
-    "PUID": "0",
+    "PAPERLESS_ADMIN_PASSWORD": "admin",
     "PAPERLESS_ADMIN_USER": "admin",
-    "PAPERLESS_ADMIN_PASSWORD": "admin"
+    "PGID": "0",
+    "PUID": "0"
   },
   "homeassistant": "0.92.0b2",
   "init": false,

@@ -70,9 +70,9 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
+    "Mode": "list(Collector+WebUI|Collector)?",
     "TZ": "str?",
-    "Updates": "list(Hourly|Daily|Weekly)",
-    "Mode": "list(Collector+WebUI|Collector)?"
+    "Updates": "list(Hourly|Daily|Weekly)"
   },
   "slug": "scrutiny",
   "udev": true,

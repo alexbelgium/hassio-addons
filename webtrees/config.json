@@ -86,12 +86,12 @@
     "BASE_URL": "url",
     "CONFIG_LOCATION": "str",
     "DB_TYPE": "list(sqlite|external|mariadb_addon)",
+    "base_url_portless": "bool?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "trusted_headers": "str?",
-    "base_url_portless": "bool?"
+    "trusted_headers": "str?"
   },
   "services": [
     "mysql:want"

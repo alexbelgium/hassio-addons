@@ -56,12 +56,12 @@
     "LOCAL_NETWORK": "192.168.178.0/24",
     "OPENVPN_PASSWORD": "pass",
     "OPENVPN_USERNAME": "user",
-    "TRANSMISSION_V3_UPDATE": "true",
     "PGID": "0",
     "PUID": "0",
     "TRANSMISSION_DOWNLOAD_DIR": "/share/downloads",
     "TRANSMISSION_HOME": "/config/addons_config/transmission",
     "TRANSMISSION_INCOMPLETE_DIR": "/share/incomplete",
+    "TRANSMISSION_V3_UPDATE": "true",
     "TRANSMISSION_WATCH_DIR": "/share/watch_dir",
     "TRANSMISSION_WEB_UI": "flood-for-transmission"
   },
