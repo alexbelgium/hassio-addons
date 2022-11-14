@@ -44,22 +44,6 @@ ENV \
     PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng \
     PAPERLESS_MEDIA_ROOT=/config/addons_config/paperless_ng/media \
     PAPERLESS_CONSUMPTION_DIR=/config/addons_config/paperless_ng/consume
-
-# Modify image
-# hadolint ignore=SC2016
-RUN \
-    sed -i 's|usr/bin/env bash|usr/bin/env bashio|g' /sbin/docker-entrypoint.sh && \
-    # Run entrypoint
-    sed -i '2i /./entrypoint.sh' /sbin/docker-entrypoint.sh && \
-    # Source variables
-    sed -i "/\/entrypoint.sh/a source /etc/cont-init.d/90-config_yaml.sh" /sbin/docker-entrypoint.sh && \
-    # Set variables
-    sed -i '2i bashio::log.info "Defining variables"' /sbin/docker-entrypoint.sh && \
-    sed -i '2i if bashio::config.has_value "PUID"; then export USERMAP_UID=$(bashio::config "PUID"); fi' /sbin/docker-entrypoint.sh && \
-    sed -i '2i if bashio::config.has_value "PGID"; then export USERMAP_GID=$(bashio::config "PGID"); fi' /sbin/docker-entrypoint.sh && \
-    sed -i '2i if bashio::config.has_value "TZ"; then export PAPERLESS_TIME_ZONE=$(bashio::config "TZ"); fi' /sbin/docker-entrypoint.sh && \
-    sed -i '2i if bashio::config.has_value "OCRLANG"; then export PAPERLESS_OCR_LANGUAGES=$(bashio::config "OCRLANG"); fi' /sbin/docker-entrypoint.sh && \
-    sed -i '2i if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE"); fi' /sbin/docker-entrypoint.sh
  
 # Modules
 ARG MODULES="00-banner.sh 92-local_mounts.sh 92-smb_mounts.sh 90-config_yaml.sh"
@@ -90,10 +74,9 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 RUN chmod 777 /entrypoint.sh
-RUN chmod 777 /templates/variables.sh
 #WORKDIR /
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
