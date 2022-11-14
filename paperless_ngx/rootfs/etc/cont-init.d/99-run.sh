@@ -2,6 +2,10 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2155
 
+####################
+# Define variables #
+####################
+
 bashio::log.info "Defining variables"
 
 if bashio::config.has_value "PUID"; then export USERMAP_UID=$(bashio::config "PUID"); fi
@@ -15,6 +19,9 @@ if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE
 #################
 exec redis-server & bashio::log.info "Starting redis"
 
+###############
+# Staring app #
+###############
 bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
 
 /./sbin/docker-entrypoint.sh /usr/local/bin/paperless_cmd.sh
