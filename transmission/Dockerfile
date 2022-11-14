@@ -58,6 +58,7 @@ RUN \
     \
     # Docker mods addition
     && if [ -f /docker-mods ]; then sed -i 's|bash|bashio|g' /docker-mods && sed -i "1a if bashio::config.has_value \"DOCKER_MODS\"; then DOCKER_MODS=\$(bashio::config \"DOCKER_MODS\"); fi" /docker-mods; fi \
+    \
     # Replace lsiown if not found
     && if [ ! -f /usr/bin/lsiown ]; then sed -i "s|lsiown|chown|g" /etc/s6-overlay/s6-rc.d/*/run; fi
 
