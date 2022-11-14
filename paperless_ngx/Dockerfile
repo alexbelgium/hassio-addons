@@ -48,7 +48,7 @@ ENV \
 # Modify image
 # hadolint ignore=SC2016
 RUN \
-    exit 0 && sed -i 's|usr/bin/env bash|usr/bin/env bashio|g' /sbin/docker-entrypoint.sh && \
+    sed -i 's|usr/bin/env bash|usr/bin/env bashio|g' /sbin/docker-entrypoint.sh && \
     # Run entrypoint
     sed -i '2i /./entrypoint.sh' /sbin/docker-entrypoint.sh && \
     # Source variables
@@ -92,8 +92,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 RUN chmod 777 /entrypoint.sh
 RUN chmod 777 /templates/variables.sh
 #WORKDIR /
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/entrypoint.sh" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
