@@ -27,10 +27,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-RUN \
-    # Specific modifications
-    sed -i '1a mkdir -p /config/addons_config/nzbget' /etc/cont-init.d/10-adduser
-
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/nzbget"
 # hadolint ignore=SC2015, SC2013, SC2086
