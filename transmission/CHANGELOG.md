@@ -1,4 +1,7 @@
 
+## 3.00-r6-ls142 (14-11-2022)
+- Update to latest version from linuxserver/docker-transmission
+
 ## 3.00-r6-ls141 (11-11-2022)
 - Update to latest version from linuxserver/docker-transmission
 - New alternative webui : transmissionic
