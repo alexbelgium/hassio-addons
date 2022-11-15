@@ -14,6 +14,9 @@ if bashio::config.has_value "TZ"; then export PAPERLESS_TIME_ZONE=$(bashio::conf
 if bashio::config.has_value "OCRLANG"; then export PAPERLESS_OCR_LANGUAGES=$(bashio::config "OCRLANG"); fi
 if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE"); fi
 
+export PAPERLESS_ADMIN_PASSWORD="admin"
+export PAPERLESS_ADMIN_USER="admin"
+
 #################
 # Staring redis #
 #################
