@@ -51,7 +51,7 @@ RUN \
     && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
 
 # Global LSIO modifications
-ARG CONFIGLOCATION="/config/addons_config/qBittorrent"
+ARG CONFIGLOCATION="/config/addons_config/${HOSTNAME#*-}"
 # hadolint ignore=SC2015, SC2013, SC2086
 RUN \
     # Avoid custom-init.d duplications
