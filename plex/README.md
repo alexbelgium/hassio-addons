@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [plex] issue with networkdisks (opened 2022-11-15)](https://github.com/alexbelgium/hassio-addons/issues/554) by [@bilak](https://github.com/bilak)
 # Home assistant add-on: plex
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
