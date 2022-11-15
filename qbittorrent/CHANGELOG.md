@@ -1,40 +1,51 @@
-
 ## 4.4.5-r3-ls229 (14-11-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r2-ls227 (08-11-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r2-ls226 (01-11-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r2-ls224 (25-10-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r1-ls223 (20-10-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r0-ls222 (18-10-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r0-ls221 (11-10-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r0-ls219 (04-10-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r0-ls218 (27-09-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r0-ls217 (22-09-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r0-ls216 (20-09-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.4.5-r0-ls215 (13-09-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
-- Config folder moved to /config/addons_config/qBittorrent
+- Config folder moved to /config/addons_config/qbittorrent
 
 ## 4.4.5-r0-ls214 (09-09-2022)
 

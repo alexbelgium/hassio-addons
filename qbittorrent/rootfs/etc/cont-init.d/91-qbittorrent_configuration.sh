@@ -6,14 +6,14 @@
 ##########
 
 # Define preferences line
-mkdir -p /config/addons_config/qBittorrent
+mkdir -p /config/addons_config/qbittorrent
 
 # copy default config
-if [ ! -f /config/addons_config/qBittorrent/qBittorrent.conf ]; then
-    cp /defaults/qBittorrent.conf /config/addons_config/qBittorrent/qBittorrent.conf
+if [ ! -f /config/addons_config/qbittorrent/qBittorrent.conf ]; then
+    cp /defaults/qBittorrent.conf /config/addons_config/qbittorrent/qBittorrent.conf
 fi
 
-cd /config/addons_config/qBittorrent/ || true
+cd /config/addons_config/qbittorrent/ || true
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$((LINE + 1))
 
@@ -101,7 +101,7 @@ fi
 # WHITELIST    #
 ################
 
-cd /config/addons_config/qBittorrent/ || true
+cd /config/addons_config/qbittorrent/ || true
 if bashio::config.has_value 'whitelist'; then
     WHITELIST=$(bashio::config 'whitelist')
     #clean data
@@ -115,7 +115,7 @@ fi
 # USERNAME    #
 ###############
 
-cd /config/addons_config/qBittorrent/ || true
+cd /config/addons_config/qbittorrent/ || true
 if bashio::config.has_value 'Username'; then
     USERNAME=$(bashio::config 'Username')
     #clean data
@@ -167,8 +167,8 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     rm /webui/*.zip
     CUSTOMUIDIR="$(dirname "$(find /webui/"$CUSTOMUI" -iname "public" -type d)")"
     # Set qbittorrent
-    sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/addons_config/qBittorrent/qBittorrent.conf
-    sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/addons_config/qBittorrent/qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/addons_config/qbittorrent/qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/addons_config/qbittorrent/qBittorrent.conf
     # Set nginx
     #sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
     #sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf
@@ -180,4 +180,4 @@ fi
 ##########
 
 bashio::log.info "Default username/password : admin/adminadmin"
-bashio::log.info "Configuration can be found in /config/addons_config/qBittorrent"
+bashio::log.info "Configuration can be found in /config/addons_config/qbittorrent"
