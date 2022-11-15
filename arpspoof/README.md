@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Arpspoof] Failed to install (opened 2022-11-15)](https://github.com/alexbelgium/hassio-addons/issues/555) by [@hrubosz](https://github.com/hrubosz)
 # Home assistant add-on: Arpspoof
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
