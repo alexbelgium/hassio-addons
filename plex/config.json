@@ -66,10 +66,7 @@
   "options": {
     "PGID": 0,
     "PUID": 0,
-    "cifspassword": "password",
-    "cifsusername": "username",
-    "claim": "Get_from_https://www.plex.tv/claim",
-    "networkdisks": "//server/share"
+    "claim": "Get_from_https://www.plex.tv/claim"
   },
   "ports": {
     "1900/udp": 1900,
