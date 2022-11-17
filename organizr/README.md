@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Organizrr] Failed to install add-on (opened 2022-11-16)](https://github.com/alexbelgium/hassio-addons/issues/559) by [@Test-subj](https://github.com/Test-subj)
 # Home assistant add-on: Organizr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
