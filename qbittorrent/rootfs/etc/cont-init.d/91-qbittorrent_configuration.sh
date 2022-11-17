@@ -168,8 +168,8 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     rm /webui/*.zip
     CUSTOMUIDIR="$(dirname "$(find /webui/"$CUSTOMUI" -iname "public" -type d)")"
     # Set qbittorrent
-    sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" /config/addons_config/qbittorrent/qBittorrent.conf
-    sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" /config/addons_config/qbittorrent/qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" "$CONFIG_LOCATION"/qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" "$CONFIG_LOCATION"/qBittorrent.conf
     # Set nginx
     #sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
     #sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf
