@@ -27,6 +27,6 @@
   },
   "slug": "organizr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.90-bugfix",
+  "version": "1.90-bugfix2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
