@@ -6,14 +6,15 @@
 ##########
 
 # Define preferences line
-mkdir -p /config/addons_config/qbittorrent
+CONFIG_LOCATION=/config/addons_config/qBittorrent
+mkdir -p "$CONFIG_LOCATION"
 
 # copy default config
-if [ ! -f /config/addons_config/qbittorrent/qBittorrent.conf ]; then
-    cp /defaults/qBittorrent.conf /config/addons_config/qbittorrent/qBittorrent.conf
+if [ ! -f "$CONFIG_LOCATION"/qBittorrent.conf ]; then
+    cp /defaults/qBittorrent.conf "$CONFIG_LOCATION"/qBittorrent.conf
 fi
 
-cd /config/addons_config/qbittorrent/ || true
+cd "$CONFIG_LOCATION"/ || true
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$((LINE + 1))
 
@@ -101,7 +102,7 @@ fi
 # WHITELIST    #
 ################
 
-cd /config/addons_config/qbittorrent/ || true
+cd "$CONFIG_LOCATION"/ || true
 if bashio::config.has_value 'whitelist'; then
     WHITELIST=$(bashio::config 'whitelist')
     #clean data
@@ -115,7 +116,7 @@ fi
 # USERNAME    #
 ###############
 
-cd /config/addons_config/qbittorrent/ || true
+cd "$CONFIG_LOCATION"/ || true
 if bashio::config.has_value 'Username'; then
     USERNAME=$(bashio::config 'Username')
     #clean data
@@ -180,4 +181,4 @@ fi
 ##########
 
 bashio::log.info "Default username/password : admin/adminadmin"
-bashio::log.info "Configuration can be found in /config/addons_config/qbittorrent"
+bashio::log.info "Configuration can be found in $CONFIG_LOCATION"
