@@ -2,9 +2,10 @@
 # shellcheck shell=bash
 
 slug="${HOSTNAME#*-}"
-bashio::log.info "Execute if existing custom script /config/${slug}.sh"
+bashio::log.info "Execute /config/${slug}.sh if existing"
 
 if [ -f /config/"${slug}".sh ]; then
+  bashio::log.info "... script found, executing"
   chmod +x /config/"${slug}".sh
   /./config/"${slug}".sh
 else
