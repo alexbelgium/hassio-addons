@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [transmission_openvpn] /./etc/openvpn/start.sh OPENVPN_OPTS: unbound variable (opened 2022-11-16)](https://github.com/alexbelgium/hassio-addons/issues/557) by [@kmorrow429](https://github.com/kmorrow429)
 # Home assistant add-on: Transmission Openvpn
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
