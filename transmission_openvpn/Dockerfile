@@ -29,7 +29,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # MOFIFY DATA PATH
-ENV CREATE_TUN_DEVICE=false
+ENV CREATE_TUN_DEVICE=false \
+    OPENVPN_OPTS=""
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/transmission_openvpn"
