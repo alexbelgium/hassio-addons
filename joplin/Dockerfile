@@ -31,6 +31,9 @@ USER root
 # Prevent curl issue
 RUN echo insecure >> ~/.curlrc
 
+ENV \
+    MAX_TIME_DRIFT=0
+
 ##################
 # 3 Install apps #
 ##################
