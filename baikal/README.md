@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQ] Baikal (opened 2022-03-08)](https://github.com/alexbelgium/hassio-addons/issues/242) by [@lbouriez](https://github.com/lbouriez)
 
 # Home assistant add-on: Baikal
 
