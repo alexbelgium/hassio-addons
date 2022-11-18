@@ -3,8 +3,8 @@
 # name: slug/filename ; could be slug/config.* for all files
 addons_updater: addons_updater/config.* # Image : yes
 arpspoof: arpspoof/config.*
-bazarr: bazarr/config.*
 baikal: baikal/config.* # Image : yes
+bazarr: bazarr/config.*
 bitwarden: bitwarden/config.*
 booksonic_air: booksonic_air/config.*
 calibre: calibre/config.* # Image : yes
