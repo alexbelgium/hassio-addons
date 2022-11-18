@@ -45,7 +45,8 @@ if bashio::config.has_value 'localdisks'; then
         # Mount
         # shellcheck disable=SC2015
         mount "$devpath"/"$disk" -o "uid=$PUID,gid=$PGID" /mnt/"$disk" && bashio::log.info "Success! $disk mounted to /mnt/$disk" || \
-        (mount "$devpath"/"$disk" /mnt/"$disk" && bashio::log.info "Success! $disk mounted to /mnt/$disk") || (bashio::log.fatal "Unable to mount local drives! Please check the name." && rmdir /mnt/$disk)
+        (mount "$devpath"/"$disk" /mnt/"$disk" && bashio::log.info "Success! $disk mounted to /mnt/$disk") || \
+        (bashio::log.fatal "Unable to mount local drives! Please check the name." && rmdir /mnt/$disk)
 
     done
 
