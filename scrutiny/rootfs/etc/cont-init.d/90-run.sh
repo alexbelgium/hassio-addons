@@ -15,10 +15,10 @@ if [[ "$(bashio::config "Mode")" == Collector ]]; then
     sed -i "/scrutiny api not ready/d" /etc/services.d/collector-once/run
 
     # Check collector
-    if bashio::config.has_value "COLECTORCOLLECTOR_API_ENDPOINT"; then
-      echo "export COLECTORCOLLECTOR_API_ENDPOINT=$(bashio::config "COLLECTOR_API_ENDPOINT")" >> /env.sh
+    if bashio::config.has_value "COLLECTOR_API_ENDPOINT"; then
+      echo "export COLLECTOR_API_ENDPOINT=$(bashio::config "COLLECTOR_API_ENDPOINT")" >> /env.sh
     else
-      bashio::exit.nok "Mode is set to 'Collector', but 'COLECTORCOLLECTOR_API_ENDPOINT' is not defined"
+      bashio::exit.nok "Mode is set to 'Collector', but 'COLLECTOR_API_ENDPOINT' is not defined"
     fi
 fi
 
