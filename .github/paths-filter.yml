@@ -4,6 +4,7 @@
 addons_updater: addons_updater/config.* # Image : yes
 arpspoof: arpspoof/config.*
 bazarr: bazarr/config.*
+baikal: baikal/config.* # Image : yes
 bitwarden: bitwarden/config.*
 booksonic_air: booksonic_air/config.*
 calibre: calibre/config.* # Image : yes
