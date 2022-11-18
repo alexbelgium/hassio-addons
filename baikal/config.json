@@ -6,40 +6,6 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Baïkal is a Calendar+Contacts server",
-  "devices": [
-    "/dev/sda",
-    "/dev/sdb",
-    "/dev/sdc",
-    "/dev/sdd",
-    "/dev/sde",
-    "/dev/sdf",
-    "/dev/sdg",
-    "/dev/nvme",
-    "/dev/nvme0n1p1",
-    "/dev/nvme0n1p2",
-    "/dev/mmcblk",
-    "/dev/sda1",
-    "/dev/sdb1",
-    "/dev/sdc1",
-    "/dev/sdd1",
-    "/dev/sde1",
-    "/dev/sdf1",
-    "/dev/sdg1",
-    "/dev/sda2",
-    "/dev/sdb2",
-    "/dev/sdc2",
-    "/dev/sdd2",
-    "/dev/sde2",
-    "/dev/sdf2",
-    "/dev/sdg2",
-    "/dev/sda3",
-    "/dev/sdb3",
-    "/dev/sda4",
-    "/dev/sdb4",
-    "/dev/nvme0",
-    "/dev/nvme1",
-    "/dev/nvme2"
-  ],
   "image": "ghcr.io/alexbelgium/baikal-{arch}",
   "map": [
     "config:rw",
@@ -53,11 +19,7 @@
   "ports_description": {
     "80/tcp": "Web UI port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
   "slug": "baikal",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.9.2-test"
+  "version": "0.9.2-test2"
 }
