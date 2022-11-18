@@ -1,3 +1,4 @@
+- New option, define COLLECTOR_API_ENDPOINT when in Collector mode
 - New option "Mode" : Collector+WebUI or Collector only
 
 ## v0.5.0 (26-08-2022)
