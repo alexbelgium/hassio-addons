@@ -1,3 +1,4 @@
+- Use nobrl (#556)
 
 ## 0.6.19-ls183 (11-11-2022)
 - Update to latest version from linuxserver/docker-calibre-web
