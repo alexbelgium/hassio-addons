@@ -8,8 +8,7 @@
   "description": "Request management and media discovery tool built to work with your existing Plex ecosystem",
   "devices": [],
   "environment": {
-    "PGID": "0",
-    "PUID": "0"
+
   },
   "init": false,
   "map": [
@@ -17,6 +16,8 @@
   ],
   "name": "Overseerr",
   "options": {
+    "PGID": "0",
+    "PUID": "0",
     "CONFIG_LOCATION": "/config/addons_config/overseerr"
   },
   "ports": {
@@ -28,6 +29,8 @@
   "privileged": [],
   "schema": {
     "CONFIG_LOCATION": "str",
+    "PGID": "int",
+    "PUID": "int",
     "TZ": "str?"
   },
   "slug": "overseerr",
