@@ -1,0 +1,10 @@
+{
+  "build_from": {
+    "aarch64": "ckulka/baikal:nginx",
+    "amd64": "ckulka/baikal:nginx",
+    "armv7": "ckulka/baikal:nginx"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
