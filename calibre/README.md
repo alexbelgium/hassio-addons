@@ -1,3 +1,4 @@
+## &#9888; Open Request : [[calibre/calibre-web] Add network shares with nobrl option (opened 2022-11-15)](https://github.com/alexbelgium/hassio-addons/issues/556) by [@Fabenissimo](https://github.com/Fabenissimo)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
