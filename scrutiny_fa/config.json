@@ -35,6 +35,7 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
+    "COLLECTOR_API_ENDPOINT": "str?",
     "Mode": "list(Collector+WebUI|Collector)?",
     "TZ": "str?",
     "Updates": "list(Hourly|Daily|Weekly)"
