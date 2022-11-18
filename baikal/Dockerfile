@@ -72,6 +72,11 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
 # 4 Entrypoint #
 ################
 
+WORKDIR "/data"
+RUN chmod 777 /entrypoint.sh
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ]
+
 ############
 # 5 Labels #
 ############
