@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Overseerr] can't set user/group ID (opened 2022-11-18)](https://github.com/alexbelgium/hassio-addons/issues/563) by [@Test-subj](https://github.com/Test-subj)
 # Home assistant add-on: overseerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
