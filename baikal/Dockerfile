@@ -31,7 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # Image specific modifications
 # hadolint ignore=SC2015, SC2013, SC2086
 RUN \
-    for file in $(grep -sril "/var/www/baikal" /); do sed -i "s=/var/www/baikal=/data=g" $file || true; done
+    for file in $(grep -sril "/var/www/baikal" /etc /var /usr); do sed -i "s=/var/www/baikal=/data=g" $file || true; done
 
 ##################
 # 3 Install apps #
