@@ -5,7 +5,7 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Free, lightweight and easy-to-use home server for your comics and ebooks",
+  "description": "Free, lightweight, and easy-to-use home server for your comics and ebooks",
   "devices": [
     "/dev/sda",
     "/dev/sdb",
