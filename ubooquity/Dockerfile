@@ -35,7 +35,7 @@ RUN \
     && sed -i 's|/books|/share/ubooquity/books|g' /defaults/preferences.json \
     # Allow maximum memory setting
     && sed -i 's|bash|bashio|g' /etc/services.d/ubooquity/run \
-    && sed -i 's|{MAXMEM:-512}|(bashio::config "maxmem")|g' /etc/services.d/ubooquity/run
+    && sed -i 's|{MAXMEM:-512}|(bashio::config "maxmem")|g' /etc/s6-overlay/s6-rc.d/svc-ubooquity/run
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/ubooquity"
