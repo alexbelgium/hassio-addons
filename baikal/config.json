@@ -41,16 +41,12 @@
     "/dev/nvme2"
   ],
   "image": "ghcr.io/alexbelgium/baikal-{arch}",
-  "environment": {
-  },
   "map": [
     "config:rw",
     "share:rw",
     "ssl:ro"
   ],
   "name": "Baikal",
-  "options": {
-  },
   "ports": {
     "80/tcp": 8013
   },
@@ -61,8 +57,6 @@
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
-  "schema": {
-  },
   "slug": "baikal",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "0.9.2-test"
