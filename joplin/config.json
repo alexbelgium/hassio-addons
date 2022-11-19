@@ -24,6 +24,9 @@
   "ports_description": {
     "22300/tcp": "Web interface"
   },
+  "privileged": [
+    "SYS_TIME"
+  ],
   "schema": {
     "APP_BASE_URL": "str",
     "DB_CLIENT": "str?",
@@ -44,6 +47,6 @@
   },
   "slug": "joplin",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.9.7-2",
+  "version": "2.9.7-3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:22300]"
 }
