@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "14-11-2022",
+  "last_update": "19-11-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "nzbget",
   "source": "github",
   "upstream_repo": "linuxserver/docker-nzbget",
-  "upstream_version": "v21.1-ls131"
+  "upstream_version": "v21.1-ls132"
 }
