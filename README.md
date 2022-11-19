@@ -52,6 +52,7 @@ If you want to do add the repository manually, please follow the procedure highl
 &#10003;  [Baikal](baikal/) : Baïkal is a Calendar+Contacts server
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbaikal%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbaikal%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
