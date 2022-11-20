@@ -9,6 +9,7 @@
     "APP_PORT": "9925",
     "DB_ENGINE": "sqlite"
   },
+  "init": false,
   "map": [
     "config:rw",
     "share:rw",
