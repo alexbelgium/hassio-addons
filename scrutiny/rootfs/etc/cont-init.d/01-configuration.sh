@@ -56,3 +56,29 @@ case "$FREQUENCY" in
         sed -i "1a export COLLECTOR_CRON_SCHEDULE=\"0 0 * * 0\"" /etc/cont-init.d/50-cron-config
         ;;
 esac
+############################
+# SMARTCTL COMMAND OPTIONS #
+############################
+
+# Alignt with smartctl commands options
+if bashio::config.has_value "SMARTCTL_COMMAND_DEVICE_TYPE"; then
+    device_type="$(bashio::config 'SMARTCTL_COMMAND_DEVICE_TYPE')"
+    if ! bashio::config.has_value "SMARTCTL_MEGARAID_DISK_NUM"; then
+        megaraid_disk_num="$(bashio::config 'SMARTCTL_MEGARAID_DISK_NUM')"
+        {
+        echo "commands:"
+        echo "  metrics_smartctl_bin: '/usr/sbin/smartctl'"
+        echo "  metrics_scan_args: '--scan --json --dev ${device_type}'"
+        echo "  metrics_info_args: '--info --json --dev ${device_type}'"
+        echo "  metrics_smart_args: '--xall --json --dev ${device_type}'"
+        } > /opt/scrutiny/config/collector.yaml
+    else
+        {
+        echo "commands:"
+        echo "  metrics_smartctl_bin: '/usr/sbin/smartctl'"
+        echo "  metrics_scan_args: '--scan --json --dev ${device_type},${megaraid_disk_num}'"
+        echo "  metrics_info_args: '--info --json --dev ${device_type},${megaraid_disk_num}'"
+        echo "  metrics_smart_args: '--xall --json --dev ${device_type},${megaraid_disk_num}'"
+        } > /opt/scrutiny/config/collector.yaml
+    fi
+fi
