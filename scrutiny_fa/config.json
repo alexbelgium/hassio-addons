@@ -38,10 +38,12 @@
     "COLLECTOR_API_ENDPOINT": "str?",
     "Mode": "list(Collector+WebUI|Collector)?",
     "TZ": "str?",
-    "Updates": "list(Hourly|Daily|Weekly)"
+    "Updates": "list(Hourly|Daily|Weekly)",
+    "SMARTCTL_COMMAND_DEVICE_TYPE": "list(auto|ata|scsi|sat|usbcypress|usbjmicron|usbsunplus|marvell|megaraid)?",
+    "SMARTCTL_MEGARAID_DISK_NUM":"int?"
   },
   "slug": "scrutiny_fa",
   "udev": true,
   "url": "https://github.com/AnalogJ/scrutiny",
-  "version": "v0.5.0-4"
+  "version": "v0.5.0-5"
 }

@@ -1,3 +1,4 @@
+- New options SMARTCTL_COMMAND_DEVICE_TYPE & SMARTCTL_MEGARAID_DISK_NUM (@scavara)
 - New option "Mode" : Collector+WebUI or Collector only
 
 ## v0.5.0 (26-08-2022)
