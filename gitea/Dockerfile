@@ -26,7 +26,7 @@ FROM ${BUILD_FROM}
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
-    
+
 USER root
 
 ##################
@@ -63,7 +63,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh || (printf '%s\n' "${PACKAGES:-}" > /ENVFILE; \
-    if [ -f /etc/s6-overlay/s6-rc.d/init-migrations/run ]; then chmod +x /etc/cont-init.d/00-aaa_dockerfile_backup.sh && sed -i "1a /./etc/cont-init.d/00-aaa_dockerfile_backup.sh" /etc/s6-overlay/s6-rc.d/init-migrations/run;fi)
+    if [ -f /etc/s6-overlay/s6-rc.d/00-legacy/up ]; then chmod +x /etc/cont-init.d/00-aaa_dockerfile_backup.sh && sed -i "1i /./etc/cont-init.d/00-aaa_dockerfile_backup.sh" /etc/s6-overlay/s6-rc.d/00-legacy/up;fi)
 
 EXPOSE 22 3000
 
