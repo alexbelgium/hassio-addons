@@ -83,7 +83,6 @@ You should not fill in all of these, only use what is necessary. A typical examp
       "username": "your-token",
       "hostname": "sub.duckdns.org"
     }
-  ]
 }
 ```
 
@@ -121,5 +120,36 @@ for a custom provider that is not supported by inadyn you can do:
 ```
 
 the tokens in ddns_path are outlined in the `inadyn.conf(5)` man page.
+
+### Multiple subdomains with same provider
+
+Related to https://github.com/troglobit/inadyn#example
+
+If you want use this add-on with several subdomains with the same provider, you have to enumerate domains like:
+
+```json
+{
+    "providers": [
+        {
+            "hostname": "first.mydomain.dev",
+            "provider": "domains.google.com:1",
+            "username": "xxxxxxxxxxxxxxxx",
+            "password": "xxxxxxxxxxxxxxxx"
+        },
+        {
+            "hostname": "second.mydomain.dev",
+            "provider": "domains.google.com:2",
+            "username": "xxxxxxxxxxxxxxxx",
+            "password": "xxxxxxxxxxxxxxxx"
+        },
+        {
+            "hostname": "another.mydomain.dev",
+            "provider": "domains.google.com:3",
+            "username": "xxxxxxxxxxxxxxxx",
+            "password": "xxxxxxxxxxxxxxxx"
+        }
+    ],
+}
+```
 
 [repository]: https://github.com/alexbelgium/hassio-addons
