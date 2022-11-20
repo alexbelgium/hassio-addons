@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "hkotel/mealie:latest",
+    "aarch64": "ghcr.io/alexbelgium/mealie-combined:nightly@sha256:37a5aed4a36060fee77da3cc198e5722d6561249d3b15915e6c403c21b600162",
     "amd64": "hendrix04/mealie-combined:nightly"
   },
   "codenotary": {
