@@ -89,7 +89,7 @@ RUN false && if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update &
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh || (printf '%s\n' "${PACKAGES:-}" > /ENVFILE; \
-    if [ -f /etc/s6-overlay/s6-rc.d/00-legacy/up ]; then chmod +x /etc/cont-init.d/00-aaa_dockerfile_backup.sh && sed -i "1i /./etc/cont-init.d/00-aaa_dockerfile_backup.sh" /etc/s6-overlay/s6-rc.d/00-legacy/up;fi)
+    if [ -f /etc/s6-overlay/s6-rc.d/*/run ]; then chmod +x /etc/cont-init.d/00-aaa_dockerfile_backup.sh && sed -i "1i /./etc/cont-init.d/00-aaa_dockerfile_backup.sh" /etc/s6-overlay/s6-rc.d/*/run)
 
 ################
 # 4 Entrypoint #
