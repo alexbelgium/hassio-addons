@@ -19,8 +19,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[Paperless NGX](https://github.com/paperless-ngx/paperless-ngx) is a cross-platform free and open-source BitTorrent client.
-This addon is based on the docker image from [linuxserver.io](https://www.linuxserver.io/).
+[Paperless NGX](https://github.com/paperless-ngx/paperless-ngx) is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.
 
 ## Configuration
 
