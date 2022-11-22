@@ -1,4 +1,7 @@
 
+## 4.16-r0-ls78 (22-11-2022)
+- Update to latest version from linuxserver/docker-webtop
+
 ## 4.16-r0-ls77 (14-11-2022)
 - Update to latest version from linuxserver/docker-webtop
 
