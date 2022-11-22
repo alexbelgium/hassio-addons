@@ -1,8 +1,8 @@
 {
-  "last_update": "20-10-2022",
+  "last_update": "22-11-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "zoneminder",
   "source": "github",
   "upstream_repo": "zoneminder-containers/zoneminder-base",
-  "upstream_version": "1.36.31"
+  "upstream_version": "1.36.32"
 }
