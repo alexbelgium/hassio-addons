@@ -1,4 +1,7 @@
 
+## f025957b56716edbe2de12dddbe078a1e4dc445e-2022-11-20 (2022-11-20)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## 190b56c58e1a3303cd16dd99b2e557cc9c866fad-2022-11-17 (2022-11-17)
 - Update to latest version from charlocharlie/epicgames-freegames
 
