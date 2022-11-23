@@ -56,6 +56,7 @@ case "$FREQUENCY" in
         sed -i "1a export COLLECTOR_CRON_SCHEDULE=\"0 0 * * 0\"" /etc/cont-init.d/50-cron-config
         ;;
 esac
+
 ############################
 # SMARTCTL COMMAND OPTIONS #
 ############################
@@ -81,4 +82,13 @@ if bashio::config.has_value "SMARTCTL_COMMAND_DEVICE_TYPE"; then
         echo "  metrics_smart_args: '--xall --json --dev ${device_type},${megaraid_disk_num}'"
         } > /opt/scrutiny/config/collector.yaml
     fi
+fi
+
+#########################
+# EXPOSE COLLECTOR.YAML #
+#########################
+
+if bashio::config.true "expose_config"; then
+  bastion::log.info "collector.yaml exposed in /share. It will only be accessible if the addon is running"
+  ln -s "$DATABASELOCATION"/config/collector.yaml /share/collector.yaml
 fi
