@@ -89,6 +89,6 @@ fi
 #########################
 
 if bashio::config.true "expose_config"; then
-  bashio::log.info "collector.yaml exposed in /share. It will only be accessible if the addon is running"
-  ln -s "$DATABASELOCATION"/config/collector.yaml /share/collector.yaml
+  #bashio::log.info "collector.yaml exposed in /share. It will only be accessible if the addon is running"
+  #ln -s /share/collector.yaml "$DATABASELOCATION"/config/collector.yaml
 fi
