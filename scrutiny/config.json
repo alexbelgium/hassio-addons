@@ -44,7 +44,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "COLLECTOR_API_ENDPOINT": "http://localhost:8080"
+    "COLLECTOR_API_ENDPOINT": "http://localhost:8080",
+    "COLLECTOR_HOST_ID": "home_assistant"
   },
   "ingress": true,
   "init": false,
@@ -71,6 +72,7 @@
   ],
   "schema": {
     "COLLECTOR_API_ENDPOINT": "str?",
+    "COLLECTOR_HOST_ID": "str?",
     "expose_config": "bool?",
     "Mode": "list(Collector+WebUI|Collector)?",
     "TZ": "str?",

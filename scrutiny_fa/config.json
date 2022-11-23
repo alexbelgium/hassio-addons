@@ -7,7 +7,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)",
   "environment": {
-    "COLLECTOR_API_ENDPOINT": "http://localhost:8080"
+    "COLLECTOR_API_ENDPOINT": "http://localhost:8080",
+    "COLLECTOR_HOST_ID": "home_assistant"
   },
   "full_access": true,
   "image": "ghcr.io/alexbelgium/scrutiny-fa-{arch}",
@@ -36,6 +37,7 @@
   ],
   "schema": {
     "COLLECTOR_API_ENDPOINT": "str?",
+    "COLLECTOR_HOST_ID": "str?",
     "Mode": "list(Collector+WebUI|Collector)?",
     "TZ": "str?",
     "Updates": "list(Hourly|Daily|Weekly)",
@@ -45,5 +47,5 @@
   "slug": "scrutiny_fa",
   "udev": true,
   "url": "https://github.com/AnalogJ/scrutiny",
-  "version": "v0.5.0-5"
+  "version": "v0.5.0-6"
 }
