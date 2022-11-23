@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Scrutiny (FA) - Add Host to Collector Information (opened 2022-11-23)](https://github.com/alexbelgium/hassio-addons/issues/571) by [@proffalken](https://github.com/proffalken)
 
 # Home assistant add-on: Scrutiny
 
