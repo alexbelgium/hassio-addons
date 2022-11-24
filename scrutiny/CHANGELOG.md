@@ -1,3 +1,4 @@
+- New option: "expose_collector" exposés collector.yaml in /share/scrutiny
 - New options SMARTCTL_COMMAND_DEVICE_TYPE & SMARTCTL_MEGARAID_DISK_NUM (@scavara)
 - New option, define COLLECTOR_API_ENDPOINT when in Collector mode
 - New option "Mode" : Collector+WebUI or Collector only
