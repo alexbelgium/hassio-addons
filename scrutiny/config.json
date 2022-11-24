@@ -73,7 +73,7 @@
   "schema": {
     "COLLECTOR_API_ENDPOINT": "str?",
     "COLLECTOR_HOST_ID": "str?",
-    "expose_config": "bool?",
+    "expose_collector": "bool?",
     "Mode": "list(Collector+WebUI|Collector)?",
     "TZ": "str?",
     "Updates": "list(Hourly|Daily|Weekly)",
