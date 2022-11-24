@@ -1,19 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-#########################
-# EXPOSE COLLECTOR.YAML #
-#########################
-
-if bashio::config.true "expose_collector"; then
-  bashio::log.info "collector.yaml exposed in /share/scrutiny. It will only be accessible if the addon is running"
-  mkdir -p /share/scrutiny
-  cp -rnf /opt/scrutiny/config /share/scrutiny
-  rm -R /opt/scrutiny/config
-  ln -s /share/scrutiny /opt/scrutiny/config
-  chmod 777 -R /share/scrutiny
-fi
-
 ########
 # MODE #
 ########
