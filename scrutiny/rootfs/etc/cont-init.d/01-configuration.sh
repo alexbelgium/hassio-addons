@@ -1,12 +1,24 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+#########################
+# EXPOSE COLLECTOR.YAML #
+#########################
+
+if bashio::config.true "expose_collector"; then
+  bashio::log.info "collector.yaml exposed in /share/scrutiny. It will only be accessible if the addon is running"
+  mkdir -p /share/scrutiny
+  cp -rnf /opt/scrutiny/config/collector.yaml /share/scrutiny/collector.yaml
+  ln -s /share/scrutiny/collector.yaml /opt/scrutiny/config
+  chmod 777 -R /share/scrutiny
+fi
+
 #################
 # Create folder #
 #################
 
-echo "Updating folders structure"
 DATABASELOCATION="/data"
+echo "Updating folders structure"
 mkdir -p "$DATABASELOCATION"/config
 mkdir -p "$DATABASELOCATION"/influxdb
 if [ -d /opt/scrutiny/config ]; then rm -r /opt/scrutiny/config; fi
@@ -82,13 +94,4 @@ if bashio::config.has_value "SMARTCTL_COMMAND_DEVICE_TYPE"; then
         echo "  metrics_smart_args: '--xall --json --dev ${device_type},${megaraid_disk_num}'"
         } > /opt/scrutiny/config/collector.yaml
     fi
-fi
-
-#########################
-# EXPOSE COLLECTOR.YAML #
-#########################
-
-if bashio::config.true "expose_config"; then
-  #bashio::log.info "collector.yaml exposed in /share. It will only be accessible if the addon is running"
-  #ln -s /share/collector.yaml "$DATABASELOCATION"/config/collector.yaml
 fi
