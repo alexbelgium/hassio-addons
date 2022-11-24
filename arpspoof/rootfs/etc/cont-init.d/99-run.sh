@@ -1,6 +1,9 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
+# Avoid unbound variables
+set +u
+
 # Autodefine if not defined
 if [ -n "$INTERFACE_NAME" ]; then
     # shellcheck disable=SC2155
