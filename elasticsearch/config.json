@@ -12,6 +12,7 @@
     "discovery.type": "single-node"
   },
   "host_network": true,
+  "image": "ghcr.io/alexbelgium/elasticsearch-{arch}",
   "map": [
     "config:rw"
   ],
