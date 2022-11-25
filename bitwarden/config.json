@@ -6,6 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Open source password management solution",
+  "image": "ghcr.io/alexbelgium/vaultwarden-{arch}",
   "init": false,
   "map": [
     "ssl"
