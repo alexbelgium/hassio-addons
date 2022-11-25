@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Arpspoof] Addon won't start (opened 2022-11-24)](https://github.com/alexbelgium/hassio-addons/issues/575) by [@martindinicolino](https://github.com/martindinicolino)
 # Home assistant add-on: Arpspoof
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
