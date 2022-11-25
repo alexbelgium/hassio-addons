@@ -41,6 +41,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "image": "ghcr.io/alexbelgium/cloudcommander-{arch}",
   "ingress": true,
   "ingress_stream": true,
   "map": [
