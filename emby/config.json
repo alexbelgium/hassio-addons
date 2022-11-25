@@ -60,6 +60,7 @@
     "/dev/nvme2"
   ],
   "host_network": true,
+  "image": "ghcr.io/alexbelgium/emby-{arch}",
   "ingress": true,
   "ingress_port": 0,
   "ingress_stream": true,
