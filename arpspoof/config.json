@@ -7,6 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "block internet connection for local network devices",
   "host_network": true,
+  "image": "ghcr.io/alexbelgium/arpspoof-{arch}",
   "map": [],
   "name": "Arpspoof",
   "options": {
