@@ -46,6 +46,7 @@
     "PUID": "0",
     "WEBUI_PORT": "8080"
   },
+  "image": "ghcr.io/alexbelgium/qbittorrent-{arch}",
   "ingress": true,
   "init": false,
   "map": [
