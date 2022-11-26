@@ -29,8 +29,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 RUN \
-    apt-get update && \
-    apt-get install -y cron
+    apk update && \
+    apk add -y cron
 
 ##################
 # 3 Install apps #

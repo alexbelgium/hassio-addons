@@ -3,7 +3,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Import financial transactions from you FinTS enabled bank into Firefly III",
+  "description": "Import financial transactions from your FinTS enabled bank into Firefly III",
   "devices": [],
   "environment": {
     "TRUSTED_PROXIES": "**"
