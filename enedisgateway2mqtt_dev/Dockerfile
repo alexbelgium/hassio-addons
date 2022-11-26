@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_UPSTREAM="0.8.0-dev"
+ARG BUILD_UPSTREAM="0.8.2-dev"
 FROM m4dm4rtig4n/enedisgateway2mqtt:$BUILD_UPSTREAM
 
 

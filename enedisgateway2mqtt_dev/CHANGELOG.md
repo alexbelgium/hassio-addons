@@ -1,4 +1,7 @@
 
+## 0.8.2-dev (26-11-2022)
+- Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
+
 ## 0.8.0-dev (27-04-2022)
 - Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
 
