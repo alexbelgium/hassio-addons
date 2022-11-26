@@ -2,17 +2,17 @@
 # From https://github.com/Poeschl/Hassio-Addons
 # name: slug/filename ; could be slug/config.* for all files
 addons_updater: addons_updater/config.* # Image : yes
-arpspoof: arpspoof/config.*
+arpspoof: arpspoof/config.* # Image : yes
 baikal: baikal/config.* # Image : yes
-bazarr: bazarr/config.*
-bitwarden: bitwarden/config.*
-booksonic_air: booksonic_air/config.*
+bazarr: bazarr/config.* # Image : yes
+bitwarden: bitwarden/config.* # Image : yes
+booksonic_air: booksonic_air/config.* # Image : yes
 calibre: calibre/config.* # Image : yes
 calibre_web: calibre_web/config.* # Image : yes
-cloudcommander: cloudcommander/config.*
-code-server: code-server/config.*
-elasticsearch: elasticsearch/config.*
-emby: emby/config.*
+cloudcommander: cloudcommander/config.* # Image : yes
+code-server: code-server/config.* # Image : yes
+elasticsearch: elasticsearch/config.* # Image : yes
+emby: emby/config.* # Image : yes
 enedisgateway2mqtt: enedisgateway2mqtt/config.*
 enedisgateway2mqtt_dev: enedisgateway2mqtt_dev/config.*
 epicgamesfree: epicgamesfree/config.* # Image : yes
@@ -49,7 +49,7 @@ plex: plex/config.*
 plex_meta_manager: plex_meta_manager/config.* # Image : yes
 portainer: portainer/config.*
 prowlarr: prowlarr/config.*
-qbittorrent: qbittorrent/config.*
+qbittorrent: qbittorrent/config.* # Image : yes
 radarr: radarr/config.*
 readarr: readarr/config.*
 requestrr: requestrr/config.*
