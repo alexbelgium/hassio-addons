@@ -1,4 +1,7 @@
 
+## 0.8.0 (26-11-2022)
+- Update to latest version from benbusby/whoogle-search
+
 ## 0.7.4 (14-06-2022)
 - Update to latest version from benbusby/whoogle-search
 
