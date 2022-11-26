@@ -1,6 +1,6 @@
 {
   "apparmor": "true",
-  "arch": [
+  "barch": [
     "aarch64",
     "amd64"
   ],
@@ -42,7 +42,7 @@
     "TZ": "str?",
     "Updates": "list(Hourly|Daily|Weekly)",
     "SMARTCTL_COMMAND_DEVICE_TYPE": "list(auto|ata|scsi|sat|usbcypress|usbjmicron|usbsunplus|marvell|megaraid)?",
-    "SMARTCTL_MEGARAID_DISK_NUM":"int?"
+    "SMARTCTL_MEGARAID_DISK_NUM": "int?"
   },
   "slug": "scrutiny_fa",
   "udev": true,
