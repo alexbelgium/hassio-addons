@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 - Ingress addition
 - Set config and sync folders from options
 

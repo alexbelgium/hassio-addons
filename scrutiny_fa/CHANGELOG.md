@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 - New options SMARTCTL_COMMAND_DEVICE_TYPE & SMARTCTL_MEGARAID_DISK_NUM (@scavara)
 - New option "Mode" : Collector+WebUI or Collector only
 

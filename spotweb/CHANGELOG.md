@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 1.5.2 (08-11-2022)
 - Update to latest version from spotweb/spotweb

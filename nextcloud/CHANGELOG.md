@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 25.0.0 (20-10-2022)
 - Update to latest version from linuxserver/docker-nextcloud

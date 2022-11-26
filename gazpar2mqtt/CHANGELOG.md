@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 0.8.2 (17-07-2022)
 - Update to latest version from yukulehe/gazpar2mqtt

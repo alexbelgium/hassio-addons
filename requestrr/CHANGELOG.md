@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 2.1.2 (11-04-2022)
 - Update to latest version from linuxserver/docker-requestrr

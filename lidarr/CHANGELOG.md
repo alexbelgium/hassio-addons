@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 1.0.2.2592-ls103 (14-11-2022)
 - Update to latest version from linuxserver/docker-lidarr

@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## f025957b56716edbe2de12dddbe078a1e4dc445e-2022-11-20 (2022-11-20)
 - Update to latest version from charlocharlie/epicgames-freegames

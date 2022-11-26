@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 1.26.0 (15-10-2022)
 - Update to latest version from dani-garcia/bitwarden_rs

@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 1.9.2 (02-11-2022)
 - Update to latest version from paperless-ngx/paperless-ngx

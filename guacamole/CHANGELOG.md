@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 1.4.2 (14-05-2022)
 - Update to latest version from MaxWaldorf/guacamole

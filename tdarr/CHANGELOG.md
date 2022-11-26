@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 2.00.18.2 (21-05-2022)
 - Update to latest version from haveagitgat/tdarr

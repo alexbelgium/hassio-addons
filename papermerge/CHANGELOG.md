@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## v2.0.1-ls60 (26-08-2022)
 - Update to latest version from linuxserver/docker-papermerge

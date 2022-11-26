@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## v21.1-ls132 (19-11-2022)
 - Update to latest version from linuxserver/docker-nzbget

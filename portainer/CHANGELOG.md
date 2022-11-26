@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 2.16.2 (22-11-2022)
 - Update to latest version from portainer/portainer

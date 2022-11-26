@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 3.00-r6-ls143 (19-11-2022)
 - Update to latest version from linuxserver/docker-transmission

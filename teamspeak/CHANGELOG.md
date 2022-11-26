@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 - Allow persistence on arm devices
 - Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation

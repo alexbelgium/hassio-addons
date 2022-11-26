@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 2.5.3 (22-10-2022)
 - Update to latest version from SenexCrenshaw/xTeVe

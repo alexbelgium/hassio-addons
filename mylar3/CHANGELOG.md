@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 0.6.9 (11-08-2022)
 - Update to latest version from linuxserver/docker-mylar3

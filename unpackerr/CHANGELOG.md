@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 - Breaking change : define downloads and extraction folder from options
 - Feat : allow changing puid pgid
 

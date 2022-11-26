@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 0.8.2-dev (26-11-2022)
 - Update to latest version from m4dm4rtig4n/enedisgateway2mqtt

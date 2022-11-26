@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## v6.9.0-ls194 (26-11-2022)
 - Update to latest version from linuxserver/docker-calibre

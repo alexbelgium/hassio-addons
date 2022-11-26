@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 2.1.32 (05-11-2022)
 - Update to latest version from anthonyraymond/joal

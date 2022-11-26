@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 4.2.4.6635 (27-09-2022)
 - Update to latest version from linuxserver/docker-radarr

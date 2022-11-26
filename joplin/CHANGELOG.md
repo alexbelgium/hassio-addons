@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 - Add access to systime
 
 ## 2.9.7 (08-11-2022)

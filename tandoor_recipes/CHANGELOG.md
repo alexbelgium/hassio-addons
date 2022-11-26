@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 1.4.5 (11-11-2022)
 - Update to latest version from TandoorRecipes/recipes

@@ -1,3 +1,4 @@
+- WARNING : update to supervisor 2022.11 before installing
 
 ## 4.8.0.19 (22-11-2022)
 - Update to latest version from linuxserver/docker-emby
