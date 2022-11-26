@@ -6,6 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Open source document management system (DMS)",
+  "image": "ghcr.io/alexbelgium/papermerge-{arch}",
   "init": false,
   "map": [
     "share:rw",

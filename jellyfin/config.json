@@ -55,6 +55,7 @@
   ],
   "host_dbus": true,
   "host_network": true,
+  "image": "ghcr.io/alexbelgium/jellyfin-{arch}",
   "ingress": true,
   "ingress_port": 0,
   "ingress_stream": true,

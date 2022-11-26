@@ -8,6 +8,7 @@
   "description": "Request management and media discovery tool built to work with your existing Plex ecosystem",
   "devices": [],
   "environment": {},
+  "image": "ghcr.io/alexbelgium/overseerr-{arch}",
   "init": false,
   "map": [
     "config:rw"

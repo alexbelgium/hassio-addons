@@ -6,6 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Proxy server to bypass Cloudflare protection",
+  "image": "ghcr.io/alexbelgium/flaresolverr-{arch}",
   "name": "FlareSolverr",
   "ports": {
     "8191/tcp": 8191

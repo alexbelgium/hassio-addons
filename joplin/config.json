@@ -9,6 +9,7 @@
   "environment": {
     "APP_PORT": "22300"
   },
+  "image": "ghcr.io/alexbelgium/joplin-{arch}",
   "map": [
     "config:rw",
     "share:rw"

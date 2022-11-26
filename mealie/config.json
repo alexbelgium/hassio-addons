@@ -9,6 +9,7 @@
     "APP_PORT": "9925",
     "DB_ENGINE": "sqlite"
   },
+  "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "map": [
     "config:rw",
     "share:rw",

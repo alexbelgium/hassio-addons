@@ -15,6 +15,7 @@
     "TS3SERVER_LICENSE": "accept",
     "TS_UPDATE": "1"
   },
+  "image": "ghcr.io/alexbelgium/teamspeak-{arch}",
   "init": false,
   "map": [
     "share:rw"

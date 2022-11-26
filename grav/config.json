@@ -6,7 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Fast, Simple, and Flexible, file-based Web-platform",
-  "devices": [],
+  "image": "ghcr.io/alexbelgium/grav-{arch}",
   "init": false,
   "map": [
     "share:rw",
@@ -24,7 +24,6 @@
   "ports_description": {
     "80/tcp": "web interface"
   },
-  "privileged": [],
   "schema": {
     "PGID": "int",
     "PUID": "int",

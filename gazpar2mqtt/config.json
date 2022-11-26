@@ -6,6 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "fetch GRDF data and publish data to a mqtt broker",
+  "image": "ghcr.io/alexbelgium/gazpar2mqtt-{arch}",
   "map": [
     "config:rw",
     "share:rw"

@@ -45,6 +45,7 @@
     "working_dir": "/data/photoprism"
   },
   "homeassistant": "0.92.0b2",
+  "image": "ghcr.io/alexbelgium/photoprism-{arch}",
   "ingress": true,
   "ingress_stream": true,
   "map": [

@@ -12,6 +12,7 @@
   "description": "Manage your Docker environment with ease",
   "docker_api": true,
   "hassio_api": true,
+  "image": "ghcr.io/alexbelgium/portainer-{arch}",
   "ingress": true,
   "ingress_port": 1337,
   "ingress_stream": true,

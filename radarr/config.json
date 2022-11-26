@@ -44,6 +44,7 @@
     "PGID": "0",
     "PUID": "0"
   },
+  "image": "ghcr.io/alexbelgium/radarr_nas-{arch}",
   "init": false,
   "map": [
     "config:rw",

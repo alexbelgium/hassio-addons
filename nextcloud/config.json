@@ -42,6 +42,7 @@
     "/dev/nvme2"
   ],
   "hassio_api": true,
+  "image": "ghcr.io/alexbelgium/nextcloud_ocr-{arch}",
   "ingress_port": 0,
   "init": false,
   "map": [

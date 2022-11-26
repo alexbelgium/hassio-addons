@@ -11,6 +11,7 @@
     "XTEVE_HOME": "/data"
   },
   "host_network": true,
+  "image": "ghcr.io/alexbelgium/xteve-{arch}",
   "map": [
     "config:rw",
     "share:rw",

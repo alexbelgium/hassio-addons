@@ -12,6 +12,7 @@
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
     "TRUSTED_PROXIES": "**"
   },
+  "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
   "map": [
     "config:rw"
   ],

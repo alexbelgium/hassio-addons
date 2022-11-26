@@ -7,6 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
   "devices": [],
+  "image": "ghcr.io/alexbelgium/whoogle-search-{arch}",
   "ingress": true,
   "ingress_stream": true,
   "map": [

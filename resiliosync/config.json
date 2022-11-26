@@ -41,6 +41,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "image": "ghcr.io/alexbelgium/resiliosync-{arch}",
   "ingress": true,
   "init": false,
   "map": [

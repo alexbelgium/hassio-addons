@@ -44,6 +44,7 @@
   "environment": {
     "TRANSMISSION_WEB_HOME": "/transmission-web-control/"
   },
+  "image": "ghcr.io/alexbelgium/transmission_ls-{arch}",
   "ingress": true,
   "init": false,
   "map": [

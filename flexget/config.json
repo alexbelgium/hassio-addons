@@ -10,6 +10,7 @@
     "FG_PLUGINS": "",
     "FG_WEBUI_PASSWD": "homeassistant123"
   },
+  "image": "ghcr.io/alexbelgium/flexget-{arch}",
   "init": false,
   "map": [
     "share:rw",
