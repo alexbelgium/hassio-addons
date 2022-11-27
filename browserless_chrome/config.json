@@ -1,0 +1,27 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "Chrome as a service container",
+  "environment": {
+    "DEFAULT_USER_DATA_DIR": "/data/profile"
+  },
+  "image": "ghcr.io/alexbelgium/browserless_chrome-{arch}",
+  "init": false,
+  "map": [
+    "ssl"
+  ],
+  "name": "Browserless Chrome",
+  "ports": {
+    "3000/tcp": 3000
+  },
+  "ports_description": {
+    "3000/tcp": "Main port"
+  },
+  "slug": "browserless_chrome",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/browserless_chrome",
+  "version": "19.2.2",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:6767]"
+}
