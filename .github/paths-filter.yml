@@ -6,71 +6,71 @@ arpspoof: arpspoof/config.* # Image : yes
 baikal: baikal/config.* # Image : yes
 bazarr: bazarr/config.* # Image : yes
 bitwarden: bitwarden/config.* # Image : yes
-browserless_chrome: browserless_chrome/config.*
 booksonic_air: booksonic_air/config.* # Image : yes
+browserless_chrome: browserless_chrome/config.* # Image : yes
 calibre: calibre/config.* # Image : yes
 calibre_web: calibre_web/config.* # Image : yes
 cloudcommander: cloudcommander/config.* # Image : yes
 code-server: code-server/config.* # Image : yes
 elasticsearch: elasticsearch/config.* # Image : yes
 emby: emby/config.* # Image : yes
-enedisgateway2mqtt: enedisgateway2mqtt/config.*
-enedisgateway2mqtt_dev: enedisgateway2mqtt_dev/config.*
+enedisgateway2mqtt: enedisgateway2mqtt/config.* # Image : yes
+enedisgateway2mqtt_dev: enedisgateway2mqtt_dev/config.* # Image : yes
 epicgamesfree: epicgamesfree/config.* # Image : yes
-filebrowser: filebrowser/config.*
-fireflyiii: fireflyiii/config.*
-fireflyiii_data_importer: fireflyiii_data_importer/config.*
+filebrowser: filebrowser/config.* # Image : yes
+fireflyiii: fireflyiii/config.* # Image : yes
+fireflyiii_data_importer: fireflyiii_data_importer/config.* # Image : yes
 fireflyiii_fints_importer: fireflyiii_fints_importer/config.* # Image : yes
-flaresolverr: flaresolverr/config.*
-flexget: flexget/config.*
-gazpar2mqtt: gazpar2mqtt/config.*
+flaresolverr: flaresolverr/config.* # Image : yes
+flexget: flexget/config.* # Image : yes
+gazpar2mqtt: gazpar2mqtt/config.* # Image : yes
 gitea: gitea/config.* # Image : yes
-grav: grav/config.*
+grav: grav/config.* # Image : yes
 guacamole: guacamole/config.* # Image : yes
-inadyn: inadyn/config.*
-jackett: jackett/config.*
-jellyfin: jellyfin/config.*
-joal: joal/config.*
-joplin: joplin/config.*
-lidarr: lidarr/config.*
-mealie: mealie/config.*
-mylar3: mylar3/config.*
-nextcloud: nextcloud/config.*
-nzbget: nzbget/config.*
+inadyn: inadyn/config.* # Image : yes
+jackett: jackett/config.* # Image : yes
+jellyfin: jellyfin/config.* # Image : yes
+joal: joal/config.* # Image : yes
+joplin: joplin/config.* # Image : yes
+lidarr: lidarr/config.* # Image : yes
+mealie: mealie/config.* # Image : yes
+mylar3: mylar3/config.* # Image : yes
+nextcloud: nextcloud/config.* # Image : yes
+nzbget: nzbget/config.* # Image : yes
 omada: omada/config.* # Image : yes
 omada_v3: omada_v3/config.* # Image : yes
-ombi: ombi/config.*
-organizr: organizr/config.*
+ombi: ombi/config.* # Image : yes
+organizr: organizr/config.* # Image : yes
 overseerr: overseerr/config.* # Image : yes
-paperless_ngx: paperless_ngx/config.*
-papermerge: papermerge/config.*
-photoprism: photoprism/config.*
+paperless_ngx: paperless_ngx/config.* # Image : yes
+papermerge: papermerge/config.* # Image : yes
+photoprism: photoprism/config.* # Image : yes
 piwigo: piwigo/config.* # Image : yes
-plex: plex/config.*
+plex: plex/config.* # Image : yes
 plex_meta_manager: plex_meta_manager/config.* # Image : yes
-portainer: portainer/config.*
-prowlarr: prowlarr/config.*
+portainer: portainer/config.* # Image : yes
+prowlarr: prowlarr/config.* # Image : yes
 qbittorrent: qbittorrent/config.* # Image : yes
-radarr: radarr/config.*
-readarr: readarr/config.*
-requestrr: requestrr/config.*
-resiliosync: resiliosync/config.*
-scrutiny: scrutiny/config.*
+radarr: radarr/config.* # Image : yes
+readarr: readarr/config.* # Image : yes
+requestrr: requestrr/config.* # Image : yes
+resiliosync: resiliosync/config.* # Image : yes
+scrutiny: scrutiny/config.* # Image : yes
 scrutiny_fa: scrutiny_fa/config.* # Image : yes
 seafile: seafile/config.* # Image : yes
-sonarr: sonarr/config.*
+sonarr: sonarr/config.* # Image : yes
 spotweb: spotweb/config.* # Image : yes
-tandoor_recipes: tandoor_recipes/config.*
+tandoor_recipes: tandoor_recipes/config.* # Image : yes
 tdarr: tdarr/config.* # Image : yes
-teamspeak: teamspeak/config.*
-transmission: transmission/config.*
+teamspeak: teamspeak/config.* # Image : yes
+transmission: transmission/config.* # Image : yes
 transmission_openvpn: transmission_openvpn/config.* # Image : yes
-ubooquity: ubooquity/config.*
+ubooquity: ubooquity/config.* # Image : yes
 unpackerr: unpackerr/config.* # Image : yes
 webtop: webtop/config.*
 webtop_kde: webtop_kde/config.* # Image : yes
 webtrees: webtrees/config.* # Image : yes
 wger: wger/config.*
-whoogle: whoogle/config.*
-xteve: xteve/config.*
+whoogle: whoogle/config.* # Image : yes
+xteve: xteve/config.* # Image : yes
 zoneminder: zoneminder/config.* # Image : yes
