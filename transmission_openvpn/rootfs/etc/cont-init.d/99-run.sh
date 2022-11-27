@@ -149,7 +149,7 @@ echo ""
 
 # Correct mullvad
 if [ "$(bashio::config "OPENVPN_PROVIDER)" eq "mullvad" ]; then
-  for folder in $(find / -type d -name "mullvad"); then
+  for folder in $(find / -type d -name "mullvad"); do
     echo "pull-filter ignore \"route-ipv6\"" >> "$folder"/*.ovpn
     echo "pull-filter ignore \"ifconfig-ipv6\"" >> "$folder"/*.ovpn
   fi
