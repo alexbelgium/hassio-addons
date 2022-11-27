@@ -1,3 +1,6 @@
+
+## v2201.1.0-ls75 (27-11-2022)
+- Update to latest version from linuxserver/docker-booksonic-air
 - WARNING : update to supervisor 2022.11 before installing
 
 ## v2201.1.0-ls74 (14-11-2022)
