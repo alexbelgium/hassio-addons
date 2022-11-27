@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "browserless/chrome:latest",
+    "amd64": "browserless/chrome:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
