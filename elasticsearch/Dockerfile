@@ -45,7 +45,7 @@ RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts
 ##################
 
 # Copy local files
-#COPY rootfs/ /
+COPY rootfs/ /
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
