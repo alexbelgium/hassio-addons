@@ -6,6 +6,7 @@ arpspoof: arpspoof/config.* # Image : yes
 baikal: baikal/config.* # Image : yes
 bazarr: bazarr/config.* # Image : yes
 bitwarden: bitwarden/config.* # Image : yes
+browserless_chrome: browserless_chrome/config.*
 booksonic_air: booksonic_air/config.* # Image : yes
 calibre: calibre/config.* # Image : yes
 calibre_web: calibre_web/config.* # Image : yes
