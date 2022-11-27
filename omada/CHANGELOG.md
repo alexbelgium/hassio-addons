@@ -1,3 +1,6 @@
+
+## 5.7-chromium-amd64-2022-11-26 (2022-11-26)
+- Update to latest version from mbentley/omada-controller
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 5.7-chromium-amd64-2022-11-24 (2022-11-24)
