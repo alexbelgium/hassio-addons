@@ -1,6 +1,6 @@
 {
   "apparmor": "true",
-  "arch": [
+  "barch": [
     "aarch64",
     "amd64"
   ],
