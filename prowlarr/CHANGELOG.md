@@ -1,3 +1,6 @@
+
+## nightly-0.4.10.2099-ls446 (27-11-2022)
+- Update to latest version from linuxserver/docker-prowlarr
 - WARNING : update to supervisor 2022.11 before installing
 
 ## nightly-0.4.10.2096-ls445 (26-11-2022)
