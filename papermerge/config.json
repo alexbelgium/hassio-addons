@@ -1,5 +1,5 @@
 {
-  "barch": [
+  "arch": [
     "aarch64",
     "amd64",
     "armv7"
