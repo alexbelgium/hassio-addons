@@ -30,12 +30,14 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 USER root
 
+RUN sed -i "2a /./entrypoint.sh" start.sh
+
 ##################
 # 3 Install apps #
 ##################
 
 # Add rootfs
-#COPY rootfs/ /
+COPY rootfs/ /
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
