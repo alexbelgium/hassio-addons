@@ -9,10 +9,7 @@
     "DEFAULT_USER_DATA_DIR": "/data/profile"
   },
   "image": "ghcr.io/alexbelgium/browserless_chrome-{arch}",
-  "init": false,
-  "map": [
-    "ssl"
-  ],
+  "init": "false",
   "name": "Browserless Chrome",
   "ports": {
     "3000/tcp": 3000
