@@ -147,6 +147,14 @@ chmod +x /etc/transmission/userSetup.sh
 /./etc/transmission/userSetup.sh
 echo ""
 
+# Correct mullvad
+if [ "$(bashio::config "OPENVPN_PROVIDER)" eq "mullvad" ]; then
+  for folder in $(find / -type d -name "mullvad"); then
+    echo "pull-filter ignore \"route-ipv6\"" >> "$folder"/*.ovpn
+    echo "pull-filter ignore \"ifconfig-ipv6\"" >> "$folder"/*.ovpn
+  fi
+fi
+
 bashio::log.info "Starting app"
 /./etc/openvpn/start.sh & echo ""
 
