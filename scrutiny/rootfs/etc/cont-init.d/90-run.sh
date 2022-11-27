@@ -6,12 +6,12 @@
 #########################
 
 if bashio::config.true "expose_collector"; then
-  bashio::log.info "collector.yaml exposed in /share/scrutiny. It will only be accessible if the addon is running"
-  mkdir -p /share/scrutiny
-  cp -rnf /data/config/collector.yaml /share/scrutiny || true
-  rm -R /data/config/collector.yaml
-  ln -s /share/scrutiny/collector.yaml /data/config
-  chmod 777 -R /share/scrutiny
+    bashio::log.info "collector.yaml exposed in /share/scrutiny. It will only be accessible if the addon is running"
+    mkdir -p /share/scrutiny
+    cp -rnf /data/config/collector.yaml /share/scrutiny || true
+    rm -R /data/config/collector.yaml
+    ln -s /share/scrutiny/collector.yaml /data/config
+    chmod 777 -R /share/scrutiny
 fi
 
 ########
