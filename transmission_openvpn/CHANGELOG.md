@@ -1,3 +1,4 @@
+- Try disabling IPv6 for mullvad
 - WARNING : update to supervisor 2022.11 before installing
 
 ## v4.3.2 (19-11-2022)
