@@ -87,6 +87,6 @@
   },
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.9.2-11",
+  "version": "1.10.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
 }
