@@ -1,4 +1,7 @@
 
+## 0.20.2297 (28-11-2022)
+- Update to latest version from linuxserver/docker-jackett
+
 ## 0.20.2291 (27-11-2022)
 - Update to latest version from linuxserver/docker-jackett
 - WARNING : update to supervisor 2022.11 before installing
