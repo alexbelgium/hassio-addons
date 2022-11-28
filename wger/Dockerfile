@@ -24,9 +24,8 @@ FROM wger/server:latest
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=300000 \
-    S6_SERVICES_GRACETIME=300000
-
-ENV \
+    S6_SERVICES_GRACETIME=300000 \
+    \
     SYNC_EXERCISES_ON_STARTUP=True \
     DOWNLOAD_EXERCISE_IMAGES_ON_STARTUP=True \
     FROM_EMAIL='wger Workout Manager <wger@example.com>' \
@@ -35,11 +34,8 @@ ENV \
 
 USER root
 
-RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-#RUN sed -i "s|wger:x:1000:1000|wger:x:0:0|g" /etc/passwd
-RUN sed -i "1a sudo -E '/./entrypoint.sh' || true" /home/wger/entrypoint.sh
-#/home/wger/src/settings.py
+RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    sed -i "1a sudo -E '/./entrypoint.sh' || true" /home/wger/entrypoint.sh
 
 ##################
 # 3 Install apps #
