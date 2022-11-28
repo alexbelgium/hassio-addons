@@ -1,10 +1,10 @@
 {
   "github_beta": "true",
   "github_fulltag": "true",
-  "last_update": "04-08-2022",
+  "last_update": "28-11-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "webtrees",
   "source": "github",
   "upstream_repo": "nathanvaughn/webtrees-docker",
-  "upstream_version": "v2.1.7"
+  "upstream_version": "2.1.8"
 }
