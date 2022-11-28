@@ -70,7 +70,7 @@ unpackerr: unpackerr/config.* # Image : yes
 webtop: webtop/config.*
 webtop_kde: webtop_kde/config.* # Image : yes
 webtrees: webtrees/config.* # Image : yes
-wger: wger/config.*
+wger: wger/config.* # Image : yes
 whoogle: whoogle/config.* # Image : yes
 xteve: xteve/config.* # Image : yes
 zoneminder: zoneminder/config.* # Image : yes
