@@ -1,0 +1,26 @@
+{
+  "arch": [
+    "amd64",
+    "aarch64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "manage your personal workouts, weight and diet plans",
+  "image": "ghcr.io/alexbelgium/wger-{arch}",
+  "map": [
+    "share:rw",
+    "config:rw",
+    "ssl:ro"
+  ],
+  "name": "Wger",
+  "ports": {
+    "80/tcp": 9927
+  },
+  "ports_description": {
+    "80/tcp": "Web interface"
+  },
+  "slug": "wger",
+  "startup": "services",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "test1",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
+}
