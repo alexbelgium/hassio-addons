@@ -81,6 +81,8 @@ jobs:
             else 
               ICON=""
             fi
+            # Get number of downloads
+            #curl -s https://api.github.com/repos/alexbelgium/hassio-addons/releases | egrep '"name"|"download_count"'
             # Write infos
             sed -i "$ADDONSLINE"'{G;}' README2.md
             if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
