@@ -150,11 +150,7 @@ echo ""
 # Correct mullvad
 if [ "$(bashio::config "OPENVPN_PROVIDER")" == "mullvad" ]; then
   bashio::log.info "Removing IPv6 from mullvad"
-  # shellcheck disable=SC2044
-  for folder in $(find / -type d -name "mullvad"); do
-    echo "pull-filter ignore \"route-ipv6\"" | tee -a "$folder/"*.ovpn > /dev/null
-    echo "pull-filter ignore \"ifconfig-ipv6\"" | tee -a "$folder/"*.ovpn > /dev/null
-  done
+  sed -i '$i/opt/modify-mullvad.sh' /etc/openvpn/start.sh
 fi
 
 bashio::log.info "Starting app"
