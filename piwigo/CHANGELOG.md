@@ -1,3 +1,6 @@
+
+## 13.3.0 (29-11-2022)
+- Update to latest version from linuxserver/docker-piwigo
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 13.2.0 (19-11-2022)
