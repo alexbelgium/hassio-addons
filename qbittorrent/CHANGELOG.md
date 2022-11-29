@@ -1,3 +1,6 @@
+
+## 4.5.0-r0-ls231 (29-11-2022)
+- Update to latest version from linuxserver/docker-qbittorrent
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 4.4.5-r3-ls230 (22-11-2022)
