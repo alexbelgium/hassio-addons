@@ -152,8 +152,8 @@ if [ "$(bashio::config "OPENVPN_PROVIDER")" == "mullvad" ]; then
   bashio::log.info "Removing IPv6 from mullvad"
   # shellcheck disable=SC2044
   for folder in $(find / -type d -name "mullvad"); do
-    echo "pull-filter ignore \"route-ipv6\"" >> "$folder"/*.ovpn
-    echo "pull-filter ignore \"ifconfig-ipv6\"" >> "$folder"/*.ovpn
+    echo "pull-filter ignore \"route-ipv6\"" | tee -a "$folder/"*.ovpn > /dev/null
+    echo "pull-filter ignore \"ifconfig-ipv6\"" | tee -a "$folder/"*.ovpn > /dev/null
   done
 fi
 
