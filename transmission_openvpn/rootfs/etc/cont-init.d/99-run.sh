@@ -150,9 +150,8 @@ echo ""
 # Correct mullvad
 if [ "$(bashio::config "OPENVPN_PROVIDER")" == "mullvad" ]; then
 #  bashio::log.info "Removing IPv6 from mullvad"
-#  sed -i '$i/opt/modify-mullvad.sh' /etc/openvpn/start.sh
-  chown "$PUID:$PGID" /opt/modify-mullvad.sh
-  chmod +x /opt/modify-mullvad.sh
+  chown "$PUID:$PGID" /etc/openvpn/mullvad/configure-openvpn.sh
+  chmod +x /etc/openvpn/mullvad/configure-openvpn.sh
 fi
 
 bashio::log.info "Starting app"
