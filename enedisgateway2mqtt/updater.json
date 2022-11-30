@@ -3,6 +3,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "enedisgateway2mqtt",
   "source": "dockerhub",
-  "upstream_repo": "m4dm4rtig4n/enedisgateway2mqtt",
+  "upstream_repo": "m4dm4rtig4n/myelectricaldata",
   "upstream_version": "0.7.7"
 }
