@@ -1,15 +1,22 @@
+- Migration to MyElectricalData
 - WARNING : update to supervisor 2022.11 before installing
+- Add codenotary sign
+- New standardized logic for Dockerfile build and packages installation
 
 ## 0.8.2-dev (26-11-2022)
+
 - Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
 
 ## 0.8.0-dev (27-04-2022)
+
 - Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
 
 ## 0.7.7 (27-04-2022)
+
 - Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
 
 ## 0.8.0-dev (07-04-2022)
+
 - Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
 - Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation

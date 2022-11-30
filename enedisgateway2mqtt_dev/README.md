@@ -1,10 +1,10 @@
-# Home assistant add-on: Enedisgateway2mqtt
+# Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fconfig.json)
-![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fconfig.json)
-![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fconfig.json)
+![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fconfig.json)
+![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fconfig.json)
+![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fconfig.json)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
 [![GitHub Super-Linter](https://github.com/alexbelgium/hassio-addons/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
@@ -20,12 +20,24 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Enedisgateway2mqtt use Enedis Gateway API to send data in your MQTT Broker.
-See its github for all informations : https://github.com/m4dm4rtig4n/enedisgateway2mqtt/blob/master/README.md
+See its github for all informations : https://github.com/m4dm4rtig4n/myelectricaldata
 
 ## Configuration
 
 Install, then start the addon a first time to initialize the templates.
-Everything is configured using the config.yaml file found in /config/enedisgateway2mqtt/enedisgateway2mqtt.conf.
+
+Options can be configured through two ways :
+
+- Addon options
+
+```yaml
+CONFIG_LOCATION: /config/enedisgateway2mqtt/enedisgateway2mqtt.conf # Sets the location of the config.yaml (see below)
+mqtt_autodiscover: true # Shows in the log the detail of the mqtt local server (if available). It can then be added to the config.yaml file.
+TZ: Europe/Paris # Sets a specific timezone
+```
+
+- Config.yaml
+  Everything is configured using the config.yaml file found in /config/enedisgateway2mqtt/enedisgateway2mqtt.conf.
 
 The complete list of options can be seen here : https://github.com/m4dm4rtig4n/enedisgateway2mqtt#environment-variable
 

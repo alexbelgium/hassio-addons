@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_UPSTREAM="0.8.2-dev"
-FROM m4dm4rtig4n/enedisgateway2mqtt:$BUILD_UPSTREAM
+FROM m4dm4rtig4n/myelectricaldata:dev-latest
 
 
 ##################

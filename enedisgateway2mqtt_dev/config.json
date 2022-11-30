@@ -5,19 +5,23 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "use Enedis Gateway API to send data in your MQTT Broker (latest-dev channel)",
+  "description": "use Enedis Gateway API to send data in your MQTT Broker (latest channel)",
   "image": "ghcr.io/alexbelgium/enedisgateway2mqtt_dev-{arch}",
   "map": [
     "config:rw"
   ],
-  "name": "Enedisgateway2mqtt Dev",
+  "name": "MyElectricalData Dev",
   "options": {
     "CONFIG_LOCATION": "/config/enedisgateway2mqtt_dev/config.yaml",
-    "TZ": "Europe/Paris"
+    "TZ": "Europe/Paris",
+    "mqtt_autodiscover": true,
+    "verbose": true
   },
   "schema": {
     "CONFIG_LOCATION": "str",
-    "TZ": "str?"
+    "TZ": "str?",
+    "mqtt_autodiscover": "bool",
+    "verbose": "bool"
   },
   "services": [
     "mqtt:want"
