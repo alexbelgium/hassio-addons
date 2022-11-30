@@ -10,7 +10,7 @@
   "map": [
     "config:rw"
   ],
-  "name": "Enedisgateway2mqtt",
+  "name": "MyElectricalData",
   "options": {
     "CONFIG_LOCATION": "/config/enedisgateway2mqtt/config.yaml",
     "TZ": "Europe/Paris",
