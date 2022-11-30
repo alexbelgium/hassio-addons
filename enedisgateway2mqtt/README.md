@@ -1,4 +1,4 @@
-# Home assistant add-on: Enedisgateway2mqtt
+# Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -20,7 +20,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Enedisgateway2mqtt use Enedis Gateway API to send data in your MQTT Broker.
-See its github for all informations : https://github.com/m4dm4rtig4n/enedisgateway2mqtt/blob/master/README.md
+See its github for all informations : https://github.com/m4dm4rtig4n/myelectricaldata
 
 ## Configuration
 
