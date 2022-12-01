@@ -1,4 +1,7 @@
 
+## 2.1.9 (01-12-2022)
+- Update to latest version from nathanvaughn/webtrees-docker
+
 ## 2.1.8 (28-11-2022)
 - Update to latest version from nathanvaughn/webtrees-docker
 - WARNING : update to supervisor 2022.11 before installing
