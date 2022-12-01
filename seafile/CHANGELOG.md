@@ -1,3 +1,6 @@
+
+## v9.0.14-pro (01-12-2022)
+- Update to latest version from haiwen/seahub
 - WARNING : update to supervisor 2022.11 before installing
 
 ## v9.0.13-pro (11-11-2022)
