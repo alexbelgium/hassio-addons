@@ -5,5 +5,5 @@
   "slug": "enedisgateway2mqtt",
   "source": "dockerhub",
   "upstream_repo": "m4dm4rtig4n/myelectricaldata",
-  "upstream_version": ""
+  "upstream_version": "0.8.3-dev"
 }
