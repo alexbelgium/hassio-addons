@@ -1,8 +1,8 @@
 {
-  "last_update": "05-11-2022",
+  "last_update": "01-12-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "joal",
   "source": "github",
   "upstream_repo": "anthonyraymond/joal",
-  "upstream_version": "2.1.32"
+  "upstream_version": "2.1.33"
 }
