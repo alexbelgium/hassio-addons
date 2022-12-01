@@ -81,8 +81,12 @@ jobs:
             else 
               ICON=""
             fi
-            # Get number of downloads
-            #curl -s https://api.github.com/repos/alexbelgium/hassio-addons/releases | egrep '"name"|"download_count"'
+
+#ARCH=amd64
+#SLUG=epicgamesfree
+#DOWNLOADS="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
+#echo "$DOWNLOADS"
+
             # Write infos
             sed -i "$ADDONSLINE"'{G;}' README2.md
             if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
@@ -91,9 +95,12 @@ jobs:
             if [[ $(jq '.services[]' "$f/config.json") == *"mqtt"* ]]; then sed -i "$ADDONSLINE"'a ![mqtt][mqtt-badge]' README2.md; fi
             if [[ $(jq '.services[]' "$f/config.json") == *"mysql"* ]]; then sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md; fi
             if [[ $(jq '.ingress' "$f/config.json") == "true" ]]; then sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md; fi
-            if [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]]; then sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi
-            if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi
-            if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi
+            if [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]]; then 
+              sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi
+            if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then 
+              sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi
+            if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then 
+              sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi
             if [[ -f "$f/updater.json" ]]; then sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md; fi
             sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.json)' README2.md || true
             sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION\\n" README2.md
