@@ -52,7 +52,7 @@ Options can be configured through two ways :
 ssl: true/false
 certfile: fullchain.pem #ssl certificate, must be located in /ssl
 keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-DB_TYPE: "list(sqlite|mariadb_addon)" # Mariadb is automatically configured is the addon is installed, sqlite does not need configuration
+DB_TYPE: "list(sqlite|mariadb_addon|external)" # Mariadb is automatically configured is the addon is installed, sqlite does not need configuration
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
@@ -71,6 +71,18 @@ CONFIG_LOCATION: "/config/addons_config/config.yaml" # Sets the location of the 
 Configuration is done by customizing the config.yaml that can be found in /config/addons_config/config.yaml
 
 The complete list of options can be seen here : https://github.com/photoprism/photoprism/blob/develop/docker-compose.yml
+
+- External db setting (@wesleygas)
+
+Allow for the use of an external database. This can be done in photoprism by correctly setting the following options on the addons_config/photoprism/config.yaml file:
+
+```
+PHOTOPRISM_DATABASE_DRIVER: "mysql"
+PHOTOPRISM_DATABASE_SERVER: "IP:PORT"
+PHOTOPRISM_DATABASE_NAME: "photoprism"
+PHOTOPRISM_DATABASE_USER: "USERNAME"
+PHOTOPRISM_DATABASE_PASSWORD: "PASSWORD
+```
 
 ## Illustration
 

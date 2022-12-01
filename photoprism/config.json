@@ -81,7 +81,7 @@
   "schema": {
     "BACKUP_PATH": "str",
     "CONFIG_LOCATION": "str",
-    "DB_TYPE": "list(sqlite|mariadb_addon)",
+    "DB_TYPE": "list(sqlite|mariadb_addon|external)",
     "IMPORT_PATH": "str",
     "ORIGINALS_PATH": "str",
     "STORAGE_PATH": "str",
@@ -99,5 +99,5 @@
   ],
   "slug": "photoprism",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "20220121-2"
+  "version": "20220121-3"
 }
