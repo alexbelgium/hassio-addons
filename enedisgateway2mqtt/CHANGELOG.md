@@ -1,3 +1,6 @@
+
+##  (01-12-2022)
+- Update to latest version from m4dm4rtig4n/myelectricaldata
 - Migration to MyElectricalData
 - WARNING : update to supervisor 2022.11 before installing
 - Add codenotary sign
