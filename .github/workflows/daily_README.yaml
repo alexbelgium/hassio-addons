@@ -46,6 +46,8 @@ jobs:
         # Init
         echo "Starting"
         
+        DOWNLOADS=0
+        
         # Prepare template
         cp .templates/.README.md README2.md
         ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README2.md)
@@ -95,6 +97,9 @@ jobs:
             if [[ $(jq '.services[]' "$f/config.json") == *"mysql"* ]]; then sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md; fi
             if [[ $(jq '.ingress' "$f/config.json") == "true" ]]; then sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md; fi
             if [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]]; then 
+              ARCH=armv7 && SLUG=$(jq -r '.image' "$f/config.json" | awk -F 'alexbelgium/|-{arch' '{print $2}') && \
+              COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && \
+              DOWNLOADS="$(($DOWNLOADS + $COUNT))" && \
               sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi
             if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then 
               sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md; else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi
