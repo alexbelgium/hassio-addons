@@ -82,9 +82,9 @@ jobs:
               ICON=""
             fi
 
-#ARCH=amd64 && SLUG=$(jq -r '.image' "$f/config.json" | awk -F 'alexbelgium/|-{arch' '{print $2}') && \
-#DOWNLOADS="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && \
-#echo "$DOWNLOADS users"
+            ARCH=amd64 && SLUG=$(jq -r '.image' "$f/config.json" | awk -F 'alexbelgium/|-{arch' '{print $2}') && \
+            DOWNLOADS="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && \
+            echo "$DOWNLOADS users"
 
             # Write infos
             sed -i "$ADDONSLINE"'{G;}' README2.md
