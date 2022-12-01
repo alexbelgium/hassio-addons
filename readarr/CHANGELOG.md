@@ -1,4 +1,7 @@
 
+## nightly-0.1.1.1504-ls146 (01-12-2022)
+- Update to latest version from linuxserver/docker-readarr
+
 ## nightly-0.1.1.1494-ls145 (27-11-2022)
 - Update to latest version from linuxserver/docker-readarr
 - WARNING : update to supervisor 2022.11 before installing
