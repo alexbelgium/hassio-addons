@@ -1,4 +1,7 @@
 
+## 0.8.6-dev (02-12-2022)
+- Update to latest version from m4dm4rtig4n/myelectricaldata
+
 ## 0.8.3-dev (01-12-2022)
 - Update to latest version from m4dm4rtig4n/myelectricaldata
 - Migration to MyElectricalData
