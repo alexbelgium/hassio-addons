@@ -112,7 +112,8 @@ jobs:
               if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then 
                 sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md
                 ARCH=amd64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-                if [ -z "$COUNT" ]; then echo "$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}')"; fi                echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
+                if [ -z "$COUNT" ]; then echo "$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}')"; fi
+                echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
               else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi || true
               if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then 
                 sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md
