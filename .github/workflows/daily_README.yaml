@@ -49,7 +49,7 @@ jobs:
 
           cp .templates/.README.md README2.md
 
-          ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README2.md)
+          ADDONSLINE="$(sed -n '/%%ADDONS_LIST%%/=' README2.md)"
 
           sed -i "/**ADDONS_LIST%%/d" README2.md
 
