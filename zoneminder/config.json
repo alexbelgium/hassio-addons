@@ -1,7 +1,8 @@
 {
   "arch": [
     "aarch64",
-    "amd64"
+    "amd64",
+    "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
