@@ -1,146 +1,156 @@
 # yamllint disable rule:line-length
 ---
 name: Generate README
-
 on:
   schedule:
-    - cron: '0 17 * * *'
-  workflow_dispatch:
-
+    - cron: 0 17 * * *
+  workflow_dispatch: null
 jobs:
   README_updater:
     runs-on: ubuntu-20.04
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v3
-    - name: Update path_filters
-      run: |
-        # Init
-        echo "Starting"
-        
-        # Go through all folders, add to filters if not existing
-        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
-          if [ -f "$f"/config.json ]; then
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Update path_filters
+        run: |
+          # Init
+          echo "Starting"
 
-            # Rename Readme
-            [ -f "$f"/Readme.md ] && mv "$f"/Readme.md "$f"/README.md
-          
-            # Add to file
-            if ! grep "$f:" ".github/paths-filter.yml"; then
-              echo "$f: $f/config.*" >> ".github/paths-filter.yml"
-            fi
+          # Go through all folders, add to filters if not existing
+          for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
+            if [ -f "$f"/config.json ]; then
+
+              # Rename Readme
+              [ -f "$f"/Readme.md ] && mv "$f"/Readme.md "$f"/README.md
             
-            # Identify addons with true images
-            if [ "$(jq '.image' "$f/config.json")" != null ]; then
-              sed -i "/$f/ s/ # Image : yes//g" ".github/paths-filter.yml"
-              sed -i "/$f/ s/$/ # Image : yes/" ".github/paths-filter.yml"
+              # Add to file
+              if ! grep "$f:" ".github/paths-filter.yml"; then
+                echo "$f: $f/config.*" >> ".github/paths-filter.yml"
+              fi
+              
+              # Identify addons with true images
+              if [ "$(jq '.image' "$f/config.json")" != null ]; then
+                sed -i "/$f/ s/ # Image : yes//g" ".github/paths-filter.yml"
+                sed -i "/$f/ s/$/ # Image : yes/" ".github/paths-filter.yml"
+              fi
             fi
-          fi
-        done
-        
-        # Sort yaml
-        sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
+          done
 
-    - name: Create README file
-      run: |
-        # Init
-        echo "Starting"
-        
-        # Prepare template
-        cp .templates/.README.md README2.md
-        ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README2.md)
-        sed -i "/**ADDONS_LIST%%/d" README2.md
-        
-        # Sort folders by addon name
-        for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
-          if [ -f "$f"/config.json ]; then
-            NAME=$(jq -r '.name' "$f"/config.json)
-            if [[ "$f" != "$NAME" ]]; then
-              echo "$f" > "$f"/oldname
+          # Sort yaml
+          sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
+      - name: Create README file
+        run: >
+          # Init
+
+          echo "Starting"
+
+
+          # Prepare template
+
+          cp .templates/.README.md README2.md
+
+          ADDONSLINE=$(sed -n '/%%ADDONS_LIST%%/=' README2.md)
+
+          sed -i "/**ADDONS_LIST%%/d" README2.md
+
+
+          # Sort folders by addon name
+
+          for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
+            if [ -f "$f"/config.json ]; then
+              NAME=$(jq -r '.name' "$f"/config.json)
+              if [[ "$f" != "$NAME" ]]; then
+                echo "$f" > "$f"/oldname
+                mv "$f" "$NAME"
+              fi
+            fi
+          done      
+
+
+          # Populate template
+
+          find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
+            # $f is an addon directory
+            if [ -f "$f/config.json" ]; then
+            
+              echo "Project $f"
+              
+              # Get variables
+              if [ -f "$f/oldname" ]; then FOLDERNAME="$(cat "$f/oldname")"; else FOLDERNAME="$f"; fi
+              NAME=$(jq -r '.name' "$f/config.json")
+              DESCRIPTION=$(jq -r '.description' "$f/config.json")
+              # Get icon
+              if [ "$(jq '.panel_icon' "$f/config.json")" != null ]; then 
+                ICON="$(jq -r '.panel_icon' "$f/config.json")"
+                ICON=${ICON#*:}
+                ICON="![image](https://api.iconify.design/mdi/$ICON.svg)"
+              else 
+                ICON=""
+              fi
+
+              # Number of users
+              DOWNLOADS=0
+              COUNT=0
+              ARCH=amd64 && SLUG=$(jq -r '.image' "$f/config.json" | awk -F 'alexbelgium/|-{arch' '{print $2}') && \
+              COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && \
+              DOWNLOADS=$(( $DOWNLOADS + $COUNT))
+              echo "$DOWNLOADS amd64 users"
+              ARCH=aarch64
+              COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && \
+              echo "$COUNT aarch64 users"
+              DOWNLOADS=$(( $DOWNLOADS + $COUNT))
+
+              # Write infos
+              sed -i "$ADDONSLINE"'{G;}' README2.md
+              if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
+              if [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]]; then sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md; fi
+              if [[ $(jq '.full_access' "$f/config.json") == "true" ]]; then sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md; fi
+              if [[ $(jq '.services[]' "$f/config.json") == *"mqtt"* ]]; then sed -i "$ADDONSLINE"'a ![mqtt][mqtt-badge]' README2.md; fi
+              if [[ $(jq '.services[]' "$f/config.json") == *"mysql"* ]]; then sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md; fi
+              if [[ $(jq '.ingress' "$f/config.json") == "true" ]]; then sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md; fi
+              if [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]]; then
+                sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md
+                ARCH=armv7 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
+                echo "$COUNT armv7 users with $SLUG" && DOWNLOADS=$(( $DOWNLOADS + $COUNT))
+              else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi
+              if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then 
+                sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md
+                ARCH=amd64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
+                echo "$COUNT armv7 users with $SLUG" && DOWNLOADS=$(( $DOWNLOADS + $COUNT))
+              else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi
+              if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then 
+                sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md
+                ARCH=aarch64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
+                echo "$COUNT armv7 users with $SLUG" && DOWNLOADS=$(( $DOWNLOADS + $COUNT))
+              else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi
+              if [[ -f "$f/updater.json" ]]; then sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md; fi
+              sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.json)' README2.md || true
+              sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION ($DOWNLOADS users)\\n" README2.md
+            fi
+          done
+
+          # Restore folders name
+
+          find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
+            if [ -f "$f/oldname" ]; then
+              NAME="$(cat "$f/oldname")"
+              rm "$f/oldname"
               mv "$f" "$NAME"
             fi
-          fi
-        done      
-        
-        # Populate template
-        find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
-          # $f is an addon directory
-          if [ -f "$f/config.json" ]; then
-          
-            echo "Project $f"
-            
-            # Get variables
-            if [ -f "$f/oldname" ]; then FOLDERNAME="$(cat "$f/oldname")"; else FOLDERNAME="$f"; fi
-            NAME=$(jq -r '.name' "$f/config.json")
-            DESCRIPTION=$(jq -r '.description' "$f/config.json")
-            # Get icon
-            if [ "$(jq '.panel_icon' "$f/config.json")" != null ]; then 
-              ICON="$(jq -r '.panel_icon' "$f/config.json")"
-              ICON=${ICON#*:}
-              ICON="![image](https://api.iconify.design/mdi/$ICON.svg)"
-            else 
-              ICON=""
-            fi
+          done
 
-            # Number of users
-            DOWNLOADS=0
-            COUNT=0
-            ARCH=amd64 && SLUG=$(jq -r '.image' "$f/config.json" | awk -F 'alexbelgium/|-{arch' '{print $2}') && \
-            COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && \
-            DOWNLOADS=$(( $DOWNLOADS + $COUNT))
-            echo "$DOWNLOADS amd64 users"
-            ARCH=aarch64
-            COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && \
-            echo "$COUNT aarch64 users"
-            DOWNLOADS=$(( $DOWNLOADS + $COUNT))
+          # Replace template if change
 
-            # Write infos
-            sed -i "$ADDONSLINE"'{G;}' README2.md
-            if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
-            if [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]]; then sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md; fi
-            if [[ $(jq '.full_access' "$f/config.json") == "true" ]]; then sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md; fi
-            if [[ $(jq '.services[]' "$f/config.json") == *"mqtt"* ]]; then sed -i "$ADDONSLINE"'a ![mqtt][mqtt-badge]' README2.md; fi
-            if [[ $(jq '.services[]' "$f/config.json") == *"mysql"* ]]; then sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md; fi
-            if [[ $(jq '.ingress' "$f/config.json") == "true" ]]; then sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md; fi
-            if [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]]; then
-              sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md
-              ARCH=armv7 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-              echo "$COUNT armv7 users with $SLUG" && DOWNLOADS=$(( $DOWNLOADS + $COUNT))
-            else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi
-            if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then 
-              sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md
-              ARCH=amd64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-              echo "$COUNT armv7 users with $SLUG" && DOWNLOADS=$(( $DOWNLOADS + $COUNT))
-            else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi
-            if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then 
-              sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md
-              ARCH=aarch64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-              echo "$COUNT armv7 users with $SLUG" && DOWNLOADS=$(( $DOWNLOADS + $COUNT))
-            else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi
-            if [[ -f "$f/updater.json" ]]; then sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md; fi
-            sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.json)' README2.md || true
-            sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION ($DOWNLOADS users)\\n" README2.md
+          if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
+            echo "no changes"
+            rm README2.md
+          else
+            rm README.md
+            mv README2.md README.md
           fi
-        done
-        # Restore folders name
-        find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
-          if [ -f "$f/oldname" ]; then
-            NAME="$(cat "$f/oldname")"
-            rm "$f/oldname"
-            mv "$f" "$NAME"
-          fi
-        done
-        # Replace template if change
-        if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
-          echo "no changes"
-          rm README2.md
-        else
-          rm README.md
-          mv README2.md README.md
-        fi
-      shell: bash
-    - name: Commit if needed
-      uses: EndBug/add-and-commit@v9
-      with:
-        message: "GitHub bot : README updated"
-        default_author: github_actions
+        shell: bash
+      - name: Commit if needed
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "GitHub bot : README updated"
+          default_author: github_actions
