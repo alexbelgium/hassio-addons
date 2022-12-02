@@ -95,27 +95,19 @@ jobs:
               # Write infos
               echo "Writing infos"
               sed -i "$ADDONSLINE"'{G;}' README2.md
-              echo "1"
               if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
-              echo "2"
               if [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]]; then sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md; fi
-              echo "2"
               if [[ $(jq '.full_access' "$f/config.json") == "true" ]]; then sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md; fi
               if [[ $(jq '.services[]' "$f/config.json") == *"mqtt"* ]]; then sed -i "$ADDONSLINE"'a ![mqtt][mqtt-badge]' README2.md; fi
               if [[ $(jq '.services[]' "$f/config.json") == *"mysql"* ]]; then sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md; fi
               if [[ $(jq '.ingress' "$f/config.json") == "true" ]]; then sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md; fi
-              echo "3"
               if [[ $(jq '.arch[]' "$f/config.json") == *"armv7"* ]]; then
                 sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md
-                echo "6"
                 ARCH=armv7
-                curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $2}'
                 COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
                 echo "$COUNT armv7 users with $SLUG"
-                echo "5"
                 DOWNLOADS="$(( DOWNLOADS + COUNT))"
               else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi || true
-              echo "4"
               if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then 
                 sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md
                 ARCH=amd64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
