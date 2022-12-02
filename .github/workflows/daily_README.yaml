@@ -92,6 +92,7 @@ jobs:
               fi
 
               # Write infos
+              echo "Writing infos"
               sed -i "$ADDONSLINE"'{G;}' README2.md
               if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
               if [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]]; then sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md; fi
