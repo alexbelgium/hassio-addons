@@ -18,6 +18,7 @@ jobs:
           
           declare -i DOWNLOADS
           declare -i COUNT
+          TOTALUSERS=0
 
           # Go through all folders, add to filters if not existing
           for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
@@ -107,25 +108,29 @@ jobs:
                 sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md
                 ARCH=armv7 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
                 if [ -z "$COUNT" ]; then echo "$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}')"; fi
-                echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
+                echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))" && TOTALUSERS="$(( TOTALUSERS + DOWNLOADS))"
               else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi || true
               if [[ $(jq '.arch[]' "$f/config.json") == *"amd64"* ]]; then 
                 sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md
                 ARCH=amd64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
                 until [ ! -z "$COUNT" ]; do COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; done
-                echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
+                echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))" && TOTALUSERS="$(( TOTALUSERS + DOWNLOADS))"
               else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi || true
               if [[ $(jq '.arch[]' "$f/config.json") == *"aarch64"* ]]; then 
                 sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md
                 ARCH=aarch64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
                 if [ -z "$COUNT" ]; then echo "$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}')"; fi
-                echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
+                echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))" && TOTALUSERS="$(( TOTALUSERS + DOWNLOADS))"
               else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi || true
               if [[ -f "$f/updater.json" ]]; then sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md; fi
               sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.json)' README2.md || true
               sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION ($DOWNLOADS users)\\n" README2.md
             fi
           done
+          
+          # Total users
+          
+          sed -i "s|## Add-ons provided by this repository|## Add-ons provided by this repository ($TOTALUSERS addons being used)|g" README2.md
 
           # Restore folders name
           
