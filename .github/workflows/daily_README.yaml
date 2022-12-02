@@ -83,6 +83,8 @@ jobs:
               NAME=$(jq -r '.name' "$f/config.json")
               DESCRIPTION=$(jq -r '.description' "$f/config.json")
               SLUG=$(jq -r '.image' "$f/config.json" | awk -F 'alexbelgium/|-{arch' '{print $2}')
+              DOWNLOADS=0
+              COUNT=0
               # Get icon
               if [ "$(jq '.panel_icon' "$f/config.json")" != null ]; then 
                 ICON="$(jq -r '.panel_icon' "$f/config.json")"
