@@ -94,8 +94,11 @@ jobs:
               # Write infos
               echo "Writing infos"
               sed -i "$ADDONSLINE"'{G;}' README2.md
+              echo "1"
               if [[ $(jq '.schema' "$f/config.json") == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
+              echo "2"
               if [[ $(jq '.schema' "$f/config.json") == *"networkdisks"* ]]; then sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md; fi
+              echo "2"
               if [[ $(jq '.full_access' "$f/config.json") == "true" ]]; then sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md; fi
               if [[ $(jq '.services[]' "$f/config.json") == *"mqtt"* ]]; then sed -i "$ADDONSLINE"'a ![mqtt][mqtt-badge]' README2.md; fi
               if [[ $(jq '.services[]' "$f/config.json") == *"mysql"* ]]; then sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md; fi
