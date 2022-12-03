@@ -1,5 +1,5 @@
 {
-  "github_beta": "true",
+  "github_beta": "false",
   "last_update": "03-12-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "enedisgateway2mqtt",
