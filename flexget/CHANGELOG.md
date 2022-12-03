@@ -1,3 +1,6 @@
+
+## 3.5.6 (03-12-2022)
+- Update to latest version from wiserain/flexget
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 3.5.5 (12-11-2022)
