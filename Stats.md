@@ -1,5 +1,5 @@
 
-14 arpspoof (/8/6)
+14 arpspoof (0/8/6)
 
 10 baikal (1/5/4)
 
@@ -7,33 +7,33 @@
 
 18 calibre_web (1/9/8)
 
-21 browserless_chrome (0/14/7)
+22 browserless_chrome (0/15/7)
 
-77 calibre (2/35/40)
+78 calibre (2/35/41)
 
-45 calibre-web (1/22/22)
+49 calibre-web (2/23/24)
 
 10 cloudcommander (0/8/2)
 
-9 code_server (/6/3)
+10 code_server (1/6/3)
 
-5 elasticsearch (0/5/)
+7 elasticsearch (0/5/2)
 
 44 emby (1/24/19)
 
-264 epicgamesfree (0/157/107)
+266 epicgamesfree (0/157/109)
 
-86 filebrowser (3/43/40)
+92 filebrowser (3/47/42)
 
-24 fireflyiii (0/15/9)
+25 fireflyiii (0/16/9)
 
-11 fireflyiii_data_importer (0/6/5)
+12 fireflyiii_data_importer (0/7/5)
 
-4 fireflyiii_fints_importer (0/4/0)
+5 fireflyiii_fints_importer (0/5/0)
 
 2 flaresolverr (0/0/2)
 
-15 flexget (1/8/6)
+16 flexget (1/9/6)
 
 3 gazpar2mqtt (1/2/0)
 
@@ -41,59 +41,59 @@
 
 7 grav (0/2/5)
 
-28 guacamole (0/21/7)
+31 guacamole (0/24/7)
 
 4 inadyn (0/0/4)
 
-78 jackett_nas (2/52/24)
+2 jackett_nas (0/2/0)
 
-138 jellyfin (9/79/50)
+132 jellyfin (/82/50)
 
-14 joal (/7/7)
+14 joal (0/7/7)
 
 8 joplin (1/5/2)
 
-10 lidarr_nas (0/9/1)
+1 lidarr_nas (0/1/0)
 
 19 mealie (0/14/5)
 
-180 enedisgateway2mqtt (19/76/85)
+10 enedisgateway2mqtt (1/3/6)
 
-25 enedisgateway2mqtt_dev (3/8/14)
+29 enedisgateway2mqtt_dev (3/10/16)
 
 1 mylar3 (0/1/0)
 
-39 nextcloud_ocr (1/18/20)
+40 nextcloud_ocr (1/18/21)
 
 42 nzbget (1/26/15)
 
-34 omada (0/20/14)
+35 omada (0/20/15)
 
-4 omada_v3 (0/1/3)
+5 omada_v3 (0/1/4)
 
-2 ombi (0/1/1)
+3 ombi (0/1/2)
 
-11 organizr (1/7/3)
+12 organizr (1/8/3)
 
 20 overseerr (3/11/6)
 
-59 paperless_ng (2/31/26)
+61 paperless_ng (2/33/26)
 
-6 papermerge (0/5/1)
+6 papermerge (/5/1)
 
-0 photoprism (0/0/0)
+1 photoprism (0/0/1)
 
-8 piwigo (2/6/)
+15 piwigo (2/6/7)
 
-144 plex_nas (7/83/54)
+147 plex_nas (9/84/54)
 
 11 plex-media-manager (0/9/2)
 
-305 portainer (24/162/119)
+322 portainer (26/172/124)
 
 93 prowlarr (3/63/27)
 
-243 qbittorrent (9/120/114)
+246 qbittorrent (9/122/115)
 
 18 radarr_nas (0/11/7)
 
@@ -109,37 +109,37 @@
 
 10 scrutiny-fa (0/9/1)
 
-9 seafile (2/4/3)
+10 seafile (2/5/3)
 
-28 sonarr_nas (0/18/10)
+29 sonarr_nas (1/18/10)
 
-21 spotweb (/10/11)
+21 spotweb (0/10/11)
 
-13 tandoor_recipes (0/13/)
+21 tandoor_recipes (0/14/7)
 
 5 tdarr (0/5/0)
 
-7 teamspeak (0/1/6)
+9 teamspeak (0/3/6)
 
-145 transmission_ls (4/84/57)
+147 transmission_ls (5/84/58)
 
 42 transmission_openvpn (2/27/13)
 
 6 ubooquity (0/1/5)
 
-3 unpackerr (0/2/1)
+4 unpackerr (0/3/1)
 
 3 vaultwarden (0/1/2)
 
-2 webtop_kde (0/2/0)
+3 webtop_kde (0/3/0)
 
 25 webtrees (0/12/13)
 
-13 wger (0/9/4)
+15 wger (0/9/6)
 
-17 whoogle-search (0/11/6)
+19 whoogle-search (0/13/6)
 
 4 xteve (1/2/1)
 
-2 zoneminder (0/1/1)
+3 zoneminder (0/2/1)
 
