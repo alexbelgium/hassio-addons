@@ -136,7 +136,7 @@ jobs:
           done
 
           # Make stats
-  
+
           echo "1"
           sort -k2,2 -n Stats > tmp && mv tmp Stats
           echo "2"
@@ -147,13 +147,13 @@ jobs:
           TOTAL2="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           TOTAL3="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           echo "4"
-          
+         
           # Make plot
           #apt-get install gnuplot -y
           #https://www.xmodulo.com/draw-stacked-histogram-gnuplot.html
 
           # Restore folders name
-          
+     
           find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
             if [ -f "$f/oldname" ]; then
               NAME="$(cat "$f/oldname")"
