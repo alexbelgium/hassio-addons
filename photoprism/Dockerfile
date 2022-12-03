@@ -116,4 +116,5 @@ LABEL \
     org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
-    org.opencontainers.image.version=${BUILD_VERSION}
+    org.opencontainers.image.version=${BUILD_VERSION} \
+    traefik.http.middlewares.test-compress.compress=false
