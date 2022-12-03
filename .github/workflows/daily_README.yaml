@@ -18,7 +18,7 @@ jobs:
           
           declare -i DOWNLOADS
           declare -i COUNT
-          echo "" > Stats.md
+          rm Stats.md
 
           # Go through all folders, add to filters if not existing
           for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
@@ -131,13 +131,12 @@ jobs:
               if [[ -f "$f/updater.json" ]]; then sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md; fi
               sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.json)' README2.md || true
               sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION\\n" README2.md
-              sed -i "1a $SLUG $DOWNLOADS $COUNT1 $COUNT2 $COUNT3\\n" Stats.md
+              echo "$SLUG $DOWNLOADS $COUNT1 $COUNT2 $COUNT3" >> Stats.md
             fi
           done
           
           # Make stats
-          sed '/^$/d' Stats.md
-          sort -k1 -n Stats.md > tmp && mv tmp Stats.md
+          sort -k2 -n Stats.md > tmp && mv tmp Stats.md
           sed -i "1i Name Total armv7 amd64 aarch64" Stats.md
           TOTAL="$(awk '{SUM+=$2}END{print SUM}')"
           TOTAL1="$(awk '{SUM+=$2}END{print SUM}')"
