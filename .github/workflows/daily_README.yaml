@@ -138,10 +138,10 @@ jobs:
           # Make stats
           sort -k2,2 -n Stats.md > tmp && mv tmp Stats
           sed -i "1i Name Total armv7 amd64 aarch64" Stats
-          TOTAL="$(awk '{SUM+=$2}END{print SUM}')"
-          TOTAL1="$(awk '{SUM+=$2}END{print SUM}')"
-          TOTAL2="$(awk '{SUM+=$2}END{print SUM}')"
-          TOTAL3="$(awk '{SUM+=$2}END{print SUM}')"
+          TOTAL="$(awk '{SUM+=$2}END{print SUM}' Stats)"
+          TOTAL1="$(awk '{SUM+=$2}END{print SUM}' Stats)"
+          TOTAL2="$(awk '{SUM+=$2}END{print SUM}' Stats)"
+          TOTAL3="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           
           # Make plot
           
