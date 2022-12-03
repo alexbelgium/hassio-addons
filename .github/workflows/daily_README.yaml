@@ -137,7 +137,7 @@ jobs:
           
           # Make stats
           cp Stats.md Stats2.md
-          sort -k 1 -t Stats.md -o Stats.md
+          sort -k1 -n Stats.md
 
           # Restore folders name
           
