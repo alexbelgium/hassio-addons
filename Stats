@@ -6,15 +6,15 @@ webtrees 25 0 12 13
 webtop_kde 5 0 5 0
 vaultwarden 3 0 1 2
 unpackerr 6 0 4 2
-ubooquity 1 0 1 
-transmission_openvpn 40  27 13
+ubooquity 6 0 1 5
+transmission_openvpn 42 2 27 13
 transmission_ls 149 6 84 59
 teamspeak 9 0 3 6
 tdarr 6 0 6 0
 tandoor_recipes 22 0 15 7
 spotweb 21 0 10 11
 sonarr_nas 29 1 18 10
-seafile 8 2 6 
+seafile 9  6 3
 scrutiny-fa 11 0 10 1
 scrutiny 10 0 6 4
 resiliosync 4 0 3 1
@@ -24,38 +24,38 @@ readarr_nas 33 2 22 9
 radarr_nas 18 0 11 7
 qbittorrent 248 9 124 115
 prowlarr 93 3 63 27
-portainer 322 26 172 124
+portainer 323 26 173 124
 plex-media-manager 11 0 9 2
-plex_nas 148 9 84 55
+plex_nas 149 9 84 56
 piwigo 15 2 6 7
 photoprism 2 0 1 1
 papermerge 6 0 5 1
-paperless_ng 63 2 34 27
-overseerr 17  11 6
+paperless_ng 61  34 27
+overseerr 20 3 11 6
 organizr 13 1 9 3
 ombi 3 0 1 2
 omada_v3 5 0 1 4
 omada 35 0 20 15
-nzbget 42 1 26 15
+nzbget 43 1 26 16
 nextcloud_ocr 41 1 19 21
 mylar3 1 0 1 0
-enedisgateway2mqtt_dev 13 3 10 
-enedisgateway2mqtt 30  14 16
+enedisgateway2mqtt_dev 30 3 10 17
+enedisgateway2mqtt 39 6 16 17
 mealie 20 0 15 5
-lidarr_nas 5 0 4 1
+lidarr_nas 7 0 5 2
 joplin 9 1 6 2
 joal 15 0 8 7
 jellyfin 143 9 83 51
-jackett_nas 14 1 11 2
+jackett_nas 17 1 13 3
 inadyn 4 0 0 4
 guacamole 31 0 24 7
 grav 7 0 2 5
 gitea 7 0 5 2
 gazpar2mqtt 3 1 2 0
-flexget 16  10 6
+flexget 18 1 10 7
 flaresolverr 2 0 0 2
 fireflyiii_fints_importer 6 0 6 0
-fireflyiii_data_importer 13 0 8 5
+fireflyiii_data_importer 13  8 5
 fireflyiii 26 0 17 9
 filebrowser 99 3 52 44
 epicgamesfree 267 0 157 110
@@ -63,10 +63,10 @@ emby 44 1 24 19
 elasticsearch 7 0 5 2
 code_server 10 1 6 3
 cloudcommander 10 0 8 2
-calibre-web 49 2 23 24
-calibre 77  36 41
+calibre-web 47  23 24
+calibre 79 2 36 41
 browserless_chrome 25 0 16 9
 calibre_web 18 1 9 8
 bazarr 8 0 6 2
-baikal 10 1 5 4
+baikal 11 1 6 4
 arpspoof 15 0 9 6
