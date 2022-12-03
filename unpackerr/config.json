@@ -7,6 +7,9 @@
   "description": "Unpacks RARd files for Sonarr, Lidarr and Radarr",
   "devices": [
     "/dev/dri",
+    "/dev/dri/card0",
+    "/dev/dri/card1",
+    "/dev/dri/renderD128",
     "/dev/vchiq",
     "/dev/video10",
     "/dev/video11",
@@ -67,10 +70,15 @@
   "schema": {
     "PGID": "int",
     "PUID": "int",
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
     "extraction_path": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?",
     "watch_path": "str?"
   },
   "slug": "unpackerr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.10.1-8"
+  "version": "0.10.1-9"
 }
