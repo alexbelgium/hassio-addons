@@ -136,9 +136,7 @@ jobs:
           done
           
           # Make stats
-          cp Stats.md Stats2.md
-          sort -k1 -t -n Stats.md <(tail -n+1 Stats.md) > /tmp.txt
-          rm /tmp.txt
+          sort -k1 -n Stats.md > tmp && mv tmp Stats.md
 
           # Restore folders name
           
