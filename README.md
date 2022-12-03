@@ -642,6 +642,8 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003;  [Vaultwarden (Bitwarden)](bitwarden/) : Open source password management solution
 
