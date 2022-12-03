@@ -134,8 +134,9 @@ jobs:
               echo "$SLUG $DOWNLOADS $COUNT1 $COUNT2 $COUNT3" >> Stats
             fi
           done
-          
+
           # Make stats
+  
           echo "1"
           sort -k2,2 -n Stats > tmp && mv tmp Stats
           echo "2"
@@ -148,10 +149,8 @@ jobs:
           echo "4"
           
           # Make plot
-          
           #apt-get install gnuplot -y
           #https://www.xmodulo.com/draw-stacked-histogram-gnuplot.html
-          
 
           # Restore folders name
           
