@@ -72,16 +72,12 @@ jobs:
 
           # Make stats
 
-          echo "1"
           sort -k2,2 -n Stats > tmp && mv tmp Stats
-          echo "2"
           sed -i "1i Name Total armv7 amd64 aarch64" Stats
-          echo "3"
           TOTAL="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           TOTAL1="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           TOTAL2="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           TOTAL3="$(awk '{SUM+=$2}END{print SUM}' Stats)"
-          echo "4"
 
           # Make plot
 
