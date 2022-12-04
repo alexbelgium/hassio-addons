@@ -40,8 +40,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PHOTOPRISM_ADMIN_USER": "admin",
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password",
+    "PHOTOPRISM_ADMIN_USER": "admin",
     "PHOTOPRISM_HTTP_COMPRESSION": "none",
     "PHOTOPRISM_HTTP_PORT": "2341",
     "working_dir": "/data/photoprism"
