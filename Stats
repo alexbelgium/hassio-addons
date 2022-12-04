@@ -1,73 +1,73 @@
 Name Total armv7 amd64 aarch64
+portainer 305  177 128
+qbittorrent 252 9 127 116
+epicgamesfree 160 - 160 
+transmission_ls 153 7 86 60
+plex_nas 151 9 85 57
+jellyfin 147 9 86 52
+filebrowser 109 4 56 49
+enedisgateway2mqtt 99 11 39 49
+prowlarr 96 3 65 28
+paperless_ng 65 2 36 27
+calibre-web 50 2 24 24
+jackett_nas 48 2 31 15
+nzbget 44 1 27 16
+emby 44 1 24 19
+transmission_openvpn 43 2 28 13
+nextcloud_ocr 42 1 20 21
+calibre 40 2 38 
+omada 37 - 22 15
+readarr_nas 35 2 24 9
+guacamole 33 - 26 7
+sonarr_nas 29 1 18 10
+enedisgateway2mqtt_dev 28  11 17
+fireflyiii 26 0 17 9
+browserless_chrome 26 - 17 9
+webtrees 25 0 12 13
+tandoor_recipes 23 0 16 7
+spotweb 21 0 10 11
+whoogle-search 20 0 13 7
+mealie 20 - 15 5
+lidarr_nas 20 0 14 6
+radarr_nas 19 1 11 7
+flexget 19 1 11 7
+calibre_web 18 1 9 8
+wger 17 - 11 6
+piwigo 15 2 6 7
+joal 15 0 8 7
+arpspoof 15 0 9 6
+overseerr 14 3 11 
+fireflyiii_data_importer 13 0 8 5
+plex-media-manager 12 0 10 2
+organizr 12  9 3
+scrutiny-fa 11 - 10 1
+code_server 11 2 6 3
+cloudcommander 11 0 8 3
+baikal 11 1 6 4
+unpackerr 10 - 7 3
+scrutiny 10 - 6 4
+teamspeak 9 0 3 6
+joplin 9 1 6 2
+seafile 8 2 6 
+gitea 8 - 6 2
+bazarr 8 0 6 2
+xteve 7 1 4 2
+tdarr 7 0 7 0
+grav 7 0 2 5
+elasticsearch 7 - 5 2
+webtop_kde 6 0 5 1
+ubooquity 6 0 1 5
+papermerge 6 0 5 1
+fireflyiii_fints_importer 6 - 6 -
+addons_updater 6 1 4 1
+omada_v3 5 - 1 4
 zoneminder 4 0 2 2
-xteve 11 1 4 2
-whoogle-search 31 0 13 7
-wger 48 0 11 6
-webtrees 73 0 12 13
-webtop_kde 79 0 5 1
-unpackerr 88 0 6 3
-ubooquity 89 0 1 
-transmission_openvpn 130  28 13
-transmission_ls 281 7 85 59
-teamspeak 290 0 3 6
-tdarr 296 0 6 0
-tandoor_recipes 319 0 16 7
-spotweb 340 0 10 11
-sonarr_nas 369 1 18 10
-seafile 377 2 6 
-scrutiny-fa 388 2 10 1
-scrutiny 398 2 6 4
-resiliosync 402 0 3 1
-requestrr 403 0 1 0
-readarr_nas 438 2 24 9
-radarr_nas 457 1 11 7
-qbittorrent 708 9 127 115
-prowlarr 774 3 63 
-portainer 1076  177 125
-plex-media-manager 1088 0 10 2
-plex_nas 1238 9 84 57
-piwigo 1253 2 6 7
-photoprism 1255 2 1 1
-papermerge 1261 0 5 1
-paperless_ng 1326 2 36 27
-overseerr 1340 3 11 
-organizr 1352  9 3
-ombi 1355 0 1 2
-omada_v3 1360 0 1 4
-omada 1397 0 22 15
-nzbget 1441 1 27 16
-nextcloud_ocr 1483 1 20 21
-mylar3 1484 0 1 0
-mealie 1504 0 15 5
-lidarr_nas 1521 0 12 5
-joplin 1529  6 2
-joal 1544 0 8 7
-jellyfin 1689 9 84 52
-jackett_nas 1730 1 30 10
-inadyn 1734 0 0 4
-guacamole 1767 0 26 7
-grav 1774 0 2 5
-gitea 1782 0 6 2
-gazpar2mqtt 1786 1 3 0
-flexget 1805 1 11 7
-flaresolverr 1807 0 0 2
-fireflyiii_fints_importer 1813 0 6 2
-fireflyiii_data_importer 1826 0 8 5
-fireflyiii 1852 0 17 9
-filebrowser 1961 4 56 49
-epicgamesfree 2233 4 160 112
-enedisgateway2mqtt_dev 2246 3 10 
-enedisgateway2mqtt 2319  32 41
-emby 2363 1 24 19
-elasticsearch 2370 1 5 2
-code_server 2381 2 6 3
-cloudcommander 2392 0 8 3
-calibre-web 2442 2 24 24
-calibre 2523 2 38 41
-browserless_chrome 2548 2 16 9
-calibre_web 2566 1 9 8
-vaultwarden 2570 0 2 2
-bazarr 2578 0 6 2
-baikal 2589 1 6 4
-arpspoof 2604 0 9 6
-addons_updater 2610 1 4 1
+vaultwarden 4 0 2 2
+resiliosync 4 0 3 1
+inadyn 4 0 0 4
+gazpar2mqtt 4 1 3 0
+ombi 3 0 1 2
+flaresolverr 3 0 1 2
+photoprism 2 - 1 1
+requestrr 1 0 1 0
+mylar3 1 0 1 0
