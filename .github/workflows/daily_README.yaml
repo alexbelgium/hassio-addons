@@ -39,6 +39,7 @@ jobs:
           # Sort yaml
           sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
       - name: Create stats
+        run: |
           rm Stats
           echo "Starting"
           COUNT=0
@@ -90,7 +91,7 @@ jobs:
           sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
 
       - name: Create README file
-        run: >
+        run: |
           # Init
 
           echo "Starting"
