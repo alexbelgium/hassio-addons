@@ -61,7 +61,7 @@ if bashio::config.true "ingress_disabled"; then
 else
   PHOTOPRISM_SITE_URL="$(bashio::addon.ingress_entry)/"
   export PHOTOPRISM_SITE_URL
-  bashio::log.warning "Ingress is enabled. To connect, you must add $PHOTOPRISM_SITE_URL/ to the end of your access point. Example : http://my-url:8123$PHOTOPRISM_SITE_URL/"
+  bashio::log.warning "Ingress is enabled. To connect, you must add $PHOTOPRISM_SITE_URL to the end of your access point. Example : http://my-url:8123$PHOTOPRISM_SITE_URL"
 fi
 
 ##############
