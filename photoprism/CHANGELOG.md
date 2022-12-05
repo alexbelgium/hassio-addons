@@ -1,4 +1,4 @@
-- BREAKING CHANGE : url for direct access to be updated
+- BREAKING CHANGE : url for direct access to be updated, check logs for url to use
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 20220121 (01-09-2022)
