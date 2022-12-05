@@ -57,6 +57,13 @@ case $(bashio::config 'DB_TYPE') in
         ;;
 esac
 
+############
+# Base url #
+############
+
+PHOTOPRISM_SITE_URL="$(bashio::addon.ingress_entry)/"
+export PHOTOPRISM_SITE_URL
+
 ##############
 # LAUNCH APP #
 ##############

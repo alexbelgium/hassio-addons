@@ -42,7 +42,6 @@
   "environment": {
     "PHOTOPRISM_ADMIN_PASSWORD": "please_change_password",
     "PHOTOPRISM_ADMIN_USER": "admin",
-    "PHOTOPRISM_HTTP_COMPRESSION": "none",
     "PHOTOPRISM_HTTP_PORT": "2341",
     "working_dir": "/data/photoprism"
   },
@@ -101,5 +100,5 @@
   ],
   "slug": "photoprism",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "20220121-3"
+  "version": "20220121-4"
 }
