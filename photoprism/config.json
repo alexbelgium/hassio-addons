@@ -65,6 +65,7 @@
     "STORAGE_PATH": "/share/photoprism/storage",
     "UPLOAD_NSFW": "true",
     "certfile": "fullchain.pem",
+    "ingress_disabled": false,
     "keyfile": "privkey.pem",
     "ssl": false
   },
@@ -90,6 +91,7 @@
     "certfile": "str",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "ingress_disabled": "bool?",
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
@@ -100,5 +102,5 @@
   ],
   "slug": "photoprism",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "20220121-4"
+  "version": "20220121-5"
 }
