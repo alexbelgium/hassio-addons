@@ -1,14 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
-############
-# Base url #
-############
-
-#PHOTOPRISM_SITE_URL="$(bashio::config 'PHOTOPRISM_SITE_URL')$(bashio::addon.ingress_entry)"
-#bashio::log.blue "Site url : $PHOTOPRISM_SITE_URL"
-#export PHOTOPRISM_SITE_URL
-
 ###################
 # Define database #
 ###################
@@ -57,12 +49,20 @@ case $(bashio::config 'DB_TYPE') in
         ;;
 esac
 
-############
-# Base url #
-############
+###########
+# Ingress #
+###########
 
-PHOTOPRISM_SITE_URL="$(bashio::addon.ingress_entry)/"
-export PHOTOPRISM_SITE_URL
+if bashio::config.true "ingress_disabled"; then
+  bashio::log.warning "Ingress is disabled. You'll need to connect using ip:port"
+  sed -i "s|$(bashio::addon.ingress_entry)||g" /etc/nginx/servers/ssl.conf
+  sed -i "7,9d" /etc/nginx/servers/ssl.conf
+  rm /etc/nginx/servers/ingress.conf
+else
+  PHOTOPRISM_SITE_URL="$(bashio::addon.ingress_entry)/"
+  export PHOTOPRISM_SITE_URL
+  bashio::log.warning "Ingress is enabled. To connect, you must add $PHOTOPRISM_SITE_URL/ to the end of your access point. Example : http://my-url:8123$PHOTOPRISM_SITE_URL/"
+fi
 
 ##############
 # LAUNCH APP #
