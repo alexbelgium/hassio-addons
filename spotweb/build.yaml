@@ -6,5 +6,3 @@ build_from:
   i386: ghcr.io/hassio-addons/base/i386:stable
 codenotary:
   signer: alexandrep.github@gmail.com
-
-
