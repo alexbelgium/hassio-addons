@@ -1,3 +1,6 @@
+
+## v1.18.0-ls38 (06-12-2022)
+- Update to latest version from linuxserver/docker-plex-meta-manager
 - WARNING : update to supervisor 2022.11 before installing
 
 ## v1.18.0-ls37 (22-11-2022)
