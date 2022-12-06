@@ -98,6 +98,6 @@
   ],
   "slug": "webtrees",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.9",
+  "version": "2.1.11",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
