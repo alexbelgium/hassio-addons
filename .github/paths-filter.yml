@@ -34,6 +34,8 @@ joal: joal/config.* # Image : yes
 joplin: joplin/config.* # Image : yes
 lidarr: lidarr/config.* # Image : yes
 mealie: mealie/config.* # Image : yes
+myelectricaldata: myelectricaldata/config.* # Image : yes
+myelectricaldata_dev: myelectricaldata_dev/config.* # Image : yes
 mylar3: mylar3/config.* # Image : yes
 nextcloud: nextcloud/config.* # Image : yes
 nzbget: nzbget/config.* # Image : yes
@@ -67,6 +69,7 @@ transmission: transmission/config.* # Image : yes
 transmission_openvpn: transmission_openvpn/config.* # Image : yes
 ubooquity: ubooquity/config.* # Image : yes
 unpackerr: unpackerr/config.* # Image : yes
+vaultwarden: vaultwarden/config.* # Image : yes
 webtop: webtop/config.*
 webtop_kde: webtop_kde/config.* # Image : yes
 webtrees: webtrees/config.* # Image : yes
