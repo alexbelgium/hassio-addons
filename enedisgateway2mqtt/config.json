@@ -5,7 +5,7 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "use Enedis Gateway API to send data in your MQTT Broker (latest channel)",
+  "description": "Use Enedis Gateway API to send data in your MQTT Broker (latest channel)",
   "image": "ghcr.io/alexbelgium/enedisgateway2mqtt-{arch}",
   "map": [
     "config:rw"
