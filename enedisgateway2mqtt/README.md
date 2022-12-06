@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛Enedisgateway2mqtt token_bad_formatted (opened 2022-11-29)](https://github.com/alexbelgium/hassio-addons/issues/582) by [@data-source](https://github.com/data-source)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

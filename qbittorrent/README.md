@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [qBittorrent] Addon not working, log stuck (opened 2022-11-24)](https://github.com/alexbelgium/hassio-addons/issues/574) by [@alvarossac](https://github.com/alvarossac)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
