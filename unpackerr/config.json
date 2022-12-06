@@ -67,6 +67,10 @@
     "extraction_path": "/share/downloads_packed",
     "watch_path": "/share/downloads_unpacked"
   },
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -80,5 +84,5 @@
   },
   "slug": "unpackerr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.10.1-9"
+  "version": "0.10.1-10"
 }
