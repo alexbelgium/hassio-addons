@@ -77,7 +77,7 @@ The complete list of options can be seen here : https://github.com/photoprism/ph
 
 Allow for the use of an external database. This can be done in photoprism by correctly setting the following options on the addons_config/photoprism/config.yaml file:
 
-```
+```yaml
 PHOTOPRISM_DATABASE_DRIVER: "mysql"
 PHOTOPRISM_DATABASE_SERVER: "IP:PORT"
 PHOTOPRISM_DATABASE_NAME: "photoprism"
