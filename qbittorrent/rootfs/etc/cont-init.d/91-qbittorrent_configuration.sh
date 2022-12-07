@@ -18,6 +18,10 @@ cd "$CONFIG_LOCATION"/ || true
 LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
 LINE=$((LINE + 1))
 
+# Remove unused folders
+if [ -d "$CONFIG_LOCATION"/addons_config ]; then rm -r "$CONFIG_LOCATION"/addons_config; fi
+if [ -d "$CONFIG_LOCATION"/qBittorrent ]; then rm -r "$CONFIG_LOCATION"/qBittorrent; fi
+
 ###########
 # TIMEOUT #
 ###########
