@@ -46,7 +46,7 @@ DOWNLOADS=$(bashio::config 'SavePath')
     # Replace session save path
     CURRENTSAVEPATH=$(sed -n '/Session\DefaultSavePath/p' qBittorrent.conf)
     sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf || \
-        sed -i "1a [BitTorrent] qBittorrent.conf;
+        sed -i "1a [BitTorrent]" qBittorrent.conf;
         sed -i "2a Session\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
 
     # Info
