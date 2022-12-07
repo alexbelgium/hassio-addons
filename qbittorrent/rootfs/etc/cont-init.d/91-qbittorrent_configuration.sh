@@ -32,11 +32,11 @@ fi
 # Default folder #
 ##################
 
-# Set variable
-DOWNLOADS=$(bashio::config 'SavePath')
-
 # Set configuration
 if bashio::config.has_value 'SavePath'; then
+
+# Set variable
+DOWNLOADS=$(bashio::config 'SavePath')
 
     # Replace save path
     CURRENTSAVEPATH=$(sed -n '/Downloads\SavePath/p' qBittorrent.conf)
@@ -45,7 +45,9 @@ if bashio::config.has_value 'SavePath'; then
 
     # Replace session save path
     CURRENTSAVEPATH=$(sed -n '/Session\DefaultSavePath/p' qBittorrent.conf)
-    sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf || true
+    sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf || \
+        sed -i "1a [BitTorrent] qBittorrent.conf;
+        sed -i "2a Session\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
 
     # Info
     bashio::log.info "Downloads can be found in $DOWNLOADS"
