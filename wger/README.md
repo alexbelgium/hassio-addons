@@ -22,6 +22,12 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## Configuration
 
+- Start the addon. Wait a while and check the log for any errors.
+- Open yourdomain.com:8000 (where ":8000" is the port configured in the addon).
+- Default
+  - Username: `admin`
+  - Password: `adminadmin`
+
 Options can be configured through two ways :
 
 - Addon options
@@ -47,14 +53,6 @@ comparison to installing any other Hass.io add-on.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
-## Configuration
-
-- Start the addon. Wait a while and check the log for any errors.
-- Open yourdomain.com:8000 (where ":8000" is the port configured in the addon).
-- Default
-  - Username: `admin`
-  - Password: `adminadmin`
 
 ## Support
 
