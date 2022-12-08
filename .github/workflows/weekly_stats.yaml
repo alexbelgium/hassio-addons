@@ -56,7 +56,7 @@ jobs:
               echo "$SLUG $DOWNLOADS $COUNT1 $COUNT2 $COUNT3" >> "$file"2
               # Create line if not existing
               if ! grep -q "$SLUG" "$file"; then
-                sed -ie "\$a$SLUG" "$file"
+                sed -i "\$a$SLUG" "$file"
                 # shellcheck disable=SC2046
                 for i in $(seq $(head -n 1 $file | tr -cd ' \t' | wc -c )); do
                   echo "$i"
