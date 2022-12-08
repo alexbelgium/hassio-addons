@@ -45,7 +45,7 @@ RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh 90-config_yaml.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
