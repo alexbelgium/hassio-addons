@@ -56,8 +56,10 @@ jobs:
               # Create line if not existing
               if ! grep -q "$SLUG" Stats; then
                 sed -ie "\$a$SLUG" Stats
+                # shellcheck disable=SC2046
                 for i in $(seq $(head -n 1 Stats | tr -cd ' \t' | wc -c )); do
-                sed -i "/$slug/s|^|- |" Stats
+                  echo "$i"
+                  sed -i "/$slug/s|^|- |" Stats
                 done
               fi
               # Add data
