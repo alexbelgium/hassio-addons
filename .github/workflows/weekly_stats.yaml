@@ -60,7 +60,7 @@ jobs:
                 # shellcheck disable=SC2046
                 for i in $(seq $(head -n 1 $file | tr -cd ' \t' | wc -c )); do
                   echo "$i"
-                  sed -i "/$slug/s|^|- |" "$file"
+                  sed -i "/$SLUG/s|^|- |" "$file"
                 done
               fi
               # Add data
