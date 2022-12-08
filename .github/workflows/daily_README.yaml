@@ -40,12 +40,20 @@ jobs:
           sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
       - name: Create stats
         run: |
-          rm Stats
           echo "Starting"
           COUNT=0
           COUNT1=0
           COUNT2=0
           COUNT3=0
+          # Make sure file exists
+          touch Stats
+          if ! grep -q "Date" Stats; then
+            sed -i "1i Date" Stats
+          fi
+          # Add new column
+          sed -i 's/^/- /' a
+          # Add date
+          sed -i "/Date/s|^-|$(date '+%Y-%m-%d')|" a
 
           # Go through all folders, add to filters if not existing
           # shellcheck disable=SC2086
@@ -72,13 +80,21 @@ jobs:
                 echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
               else COUNT3="-";fi
               echo "$SLUG $DOWNLOADS $COUNT1 $COUNT2 $COUNT3" >> Stats
+              # Create line if not existing
+              if ! grep -q "$SLUG" Stats; then
+                sed -ie "\$a$SLUG" Stats
+                for i in $(seq $(head -n 1 Stats | tr -cd ' \t' | wc -c )); do
+                sed -i "/$slug/s|^|- |" Stats
+                done
+              fi
+              # Add data
+              sed -i "/$SLUG/s|^-|$DOWNLOADS|" a
             fi
           done
 
           # Make stats
-
-          sort -k2,2 -r -n Stats > tmp && mv tmp Stats
-          sed -i "1i Name Total armv7 amd64 aarch64" Stats
+          sort -k1 -r -n Stats > tmp && mv tmp Stats
+          #sed -i "1i Name Total armv7 amd64 aarch64" Stats
           #TOTAL="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           #TOTAL1="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           #TOTAL2="$(awk '{SUM+=$2}END{print SUM}' Stats)"
