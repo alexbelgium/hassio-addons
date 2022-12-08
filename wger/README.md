@@ -20,6 +20,22 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [wger](https://github.com/wger-project/wger) Workout Manager is a free, open source web application that helps you manage your personal workouts, weight and diet plans and can also be used as a simple gym management utility. It offers a REST API as well, for easy integration with other projects and tools.
 
+## Configuration
+
+Options can be configured through two ways :
+
+- Addon options
+
+```yaml
+"CONFIG_LOCATION": location of the config.yaml # Sets the location of the config.yaml (see below)
+```
+
+- Config.yaml
+
+Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options
+
+The complete list of ENV variables can be seen here : not available
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in
