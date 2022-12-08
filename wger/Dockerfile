@@ -15,7 +15,8 @@
 #################
 
 ARG BUILD_VERSION
-FROM wger/server:latest
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
 ##################
 # 2 Modify Image #
