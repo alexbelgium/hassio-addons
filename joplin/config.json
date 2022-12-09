@@ -38,7 +38,7 @@
     "MAILER_NOREPLY_EMAIL": "str?",
     "MAILER_NOREPLY_NAME": "str?",
     "MAILER_PORT": "int?",
-    "MAILER_SECURITY": "str?",
+    "MAILER_SECURITY": "list(none|tls|starttls)?",
     "POSTGRES_DATABASE": "str?",
     "POSTGRES_HOST": "str?",
     "POSTGRES_PASSWORD": "str?",
