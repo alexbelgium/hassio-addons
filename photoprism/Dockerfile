@@ -16,8 +16,8 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="20220121"
-FROM photoprism/photoprism:latest
+ARG BUILD_UPSTREAM="221105-jammy"
+FROM photoprism/photoprism:$BUILD_UPSTREAM
 
 ##################
 # 2 Modify Image #
