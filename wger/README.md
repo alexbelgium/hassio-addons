@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] wger - custom env variables (opened 2022-12-07)](https://github.com/alexbelgium/hassio-addons/issues/591) by [@christophermichaelshaw](https://github.com/christophermichaelshaw)
 # Hass.io Add-ons: Wger
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
