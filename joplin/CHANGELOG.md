@@ -1,3 +1,4 @@
+- Breaking change: MAILER_SECURE replaced by MAILER_SECURITY
 - WARNING : update to supervisor 2022.11 before installing
 - Add access to systime
 
