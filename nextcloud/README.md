@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [NEXTCLOUD] Nextcloud not installed (opened 2022-12-09)](https://github.com/alexbelgium/hassio-addons/issues/595) by [@malosaa](https://github.com/malosaa)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
