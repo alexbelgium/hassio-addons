@@ -9,9 +9,10 @@
 195 195 plex_nas
 124 94 nextcloud_ocr
 114 113 prowlarr
-107 14 calibre_web
+107 107 calibre_web
 95 95 jackett_nas
 86 80 paperless_ng
+81 81 photoprism
 73 69 calibre-web
 72 66 emby
 69 68 bazarr
@@ -62,7 +63,6 @@
 7 7 elasticsearch
 7 6 flaresolverr
 7 5 enedisgateway2mqtt_dev
-6 81 photoprism
 4 4 vaultwarden
 4 4 ombi
 3 3 mylar3
