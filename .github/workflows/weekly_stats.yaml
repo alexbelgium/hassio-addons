@@ -68,8 +68,22 @@ jobs:
             fi
           done
 
-          # Make stats
+          # Add total
+          SLUG=TOTAL
+          if ! grep -q "$SLUG" "$file"; then
+            sed -i "1a$SLUG" "$file"
+            # shellcheck disable=SC2046
+            for i in $(seq $(head -n 1 $file | tr -cd ' \t' | wc -c )); do
+              echo "$i"
+              sed -i "/$SLUG/s|^|- |" "$file"
+            done
+          fi
+          DOWNLOADS="$(awk 'FNR > 2 {SUM+=$1}END{print SUM}' Stats)"
+          sed -i "/$SLUG/s|^-|$DOWNLOADS|" "$file"
+
+          # Sort file
           sort -k1 -r -n "$file" > tmp && mv tmp "$file"
+
           #sed -i "1i Name Total armv7 amd64 aarch64" "$file"
           #TOTAL="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           #TOTAL1="$(awk '{SUM+=$2}END{print SUM}' Stats)"
