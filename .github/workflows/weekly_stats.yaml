@@ -3,7 +3,7 @@
 name: Generate weekly stats
 on:
   schedule:
-    - cron: "0 23 * * 5"
+    - cron: "0 12 * * 5"
   workflow_dispatch: null
 jobs:
   stats_updater:
