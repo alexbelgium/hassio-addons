@@ -1,4 +1,7 @@
 
+## 3.00-r6-ls145 (10-12-2022)
+- Update to latest version from linuxserver/docker-transmission
+
 ## 3.00-r6-ls144 (01-12-2022)
 - Update to latest version from linuxserver/docker-transmission
 - WARNING : update to supervisor 2022.11 before installing
