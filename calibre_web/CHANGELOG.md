@@ -1,4 +1,7 @@
 
+## 0.6.19-ls187 (10-12-2022)
+- Update to latest version from linuxserver/docker-calibre-web
+
 ## 0.6.19-ls186 (01-12-2022)
 - Update to latest version from linuxserver/docker-calibre-web
 - WARNING : update to supervisor 2022.11 before installing
