@@ -1,4 +1,7 @@
 
+## 80a651a060bb4c2313886bfa4bbffb7a0683b028-2022-12-07 (2022-12-07)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## bullseye-slim-2022-11-26 (2022-11-26)
 - Update to latest version from charlocharlie/epicgames-freegames
 - WARNING : update to supervisor 2022.11 before installing
