@@ -1,3 +1,6 @@
+
+## 4.9.0 (10-12-2022)
+- Update to latest version from linuxserver/docker-code-server
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 4.8.3 (08-11-2022)
