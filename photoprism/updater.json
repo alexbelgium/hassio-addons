@@ -6,5 +6,5 @@
   "slug": "photoprism",
   "source": "dockerhub",
   "upstream_repo": "photoprism/photoprism",
-  "upstream_version": "20220121"
+  "upstream_version": "221105-jammy"
 }
