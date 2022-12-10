@@ -44,6 +44,9 @@ comparison to installing any other Hass.io add-on.
 Default user : admin
 Default password : please_change_password
 
+To access webdav, use as url : http://local-ip:addon-port/api/hassio.../originals
+The second part (/api.../originals) Is described in the log when starting the addons
+
 Options can be configured through two ways :
 
 - Addon options
