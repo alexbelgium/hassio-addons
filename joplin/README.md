@@ -66,7 +66,7 @@ To use email service, set the follow variables in the config:
 1 = true, 0 = false
 MAILER_HOST=mail.example.com
 MAILER_PORT=995
-MAILER_SECURE=1
+MAILER_SECURITY=none, tls, starttls
 MAILER_AUTH_USER=info@example.com
 MAILER_AUTH_PASSWORD=your_password
 MAILER_NOREPLY_NAME=from_name

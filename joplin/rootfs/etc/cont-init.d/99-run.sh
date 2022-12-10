@@ -53,7 +53,7 @@ fi
 # Configure app
 bashio::config.has_value 'MAILER_HOST' && export MAILER_HOST=$(bashio::config 'MAILER_HOST') && bashio::log.info 'Mailer Host set'
 bashio::config.has_value 'MAILER_PORT' && export MAILER_PORT=$(bashio::config 'MAILER_PORT') && bashio::log.info 'Mailer Port set'
-bashio::config.has_value 'MAILER_SECURE' && export MAILER_SECURE=$(bashio::config 'MAILER_SECURE') && bashio::log.info 'Mailer Secure set'
+bashio::config.has_value 'MAILER_SECURITY' && export MAILER_SECURITY=$(bashio::config 'MAILER_SECURITY') && bashio::log.info 'Mailer Security set'
 bashio::config.has_value 'MAILER_AUTH_USER' && export MAILER_AUTH_USER=$(bashio::config 'MAILER_AUTH_USER') && bashio::log.info 'Mailer User set'
 bashio::config.has_value 'MAILER_AUTH_PASSWORD' && export MAILER_AUTH_PASSWORD=$(bashio::config 'MAILER_AUTH_PASSWORD') && bashio::log.info 'Mailer Password set'
 bashio::config.has_value 'MAILER_NOREPLY_NAME' && export MAILER_NOREPLY_NAME=$(bashio::config 'MAILER_NOREPLY_NAME') && bashio::log.info 'Mailer Noreply Name set'
