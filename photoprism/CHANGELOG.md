@@ -1,3 +1,6 @@
+
+## 20220121 (10-12-2022)
+- Update to latest version from photoprism/photoprism
 - BREAKING CHANGE : url for direct access to be updated, check logs for url to use
 - WARNING : update to supervisor 2022.11 before installing
 
