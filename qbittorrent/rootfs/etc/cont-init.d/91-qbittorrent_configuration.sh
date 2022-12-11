@@ -39,8 +39,8 @@ fi
 # Set configuration
 if bashio::config.has_value 'SavePath'; then
 
-# Set variable
-DOWNLOADS=$(bashio::config 'SavePath')
+    # Set variable
+    DOWNLOADS=$(bashio::config 'SavePath')
 
     # Replace save path
     CURRENTSAVEPATH=$(sed -n '/Downloads\\\SavePath/p' qBittorrent.conf)
