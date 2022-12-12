@@ -41,14 +41,14 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Statistics
 
-Number of addons in the repository : 0
+Number of addons in the repository : %%STATS_ADDONS%%
 
-Total number of addons installed : 3908
+Total number of addons installed : %%STATS_DOWNLOADS%%
 
 Top 3 most installed addons :
-  1. Portainer
-  2. Epicgamesfree
-  3. Filebrowser
+  1. 
+  2. 
+  3. 
 
 ## Add-ons provided by this repository
 
