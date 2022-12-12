@@ -37,7 +37,7 @@ networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
 cifsusername: "username" # smb username (optional)
 cifspassword: "password" # smb password (optional)
 CONFIG_LOCATION: Location of the config.yaml (see below)
-OCRLANG: ENG FRA #Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
+OCRLANG: eng fra #Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
 TZ: Europe/Paris # Sets a specific timezone
 ```
 
