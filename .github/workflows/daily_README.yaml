@@ -73,9 +73,8 @@ jobs:
           find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
             # $f is an addon directory
             if [ -f "$f/config.json" ]; then
-            
-              echo "Project $f"
               
+              echo "Project $f"
               NUMBERADDONS="$((NUMBERADDONS + 1))"
               
               # Get variables
