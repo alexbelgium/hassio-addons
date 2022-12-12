@@ -39,6 +39,15 @@ home to the next level.
 
 If you want to do add the repository manually, please follow the procedure highlighted in the [Home Assistant website](https://home-assistant.io/hassio/installing_third_party_addons). Use the following URL to add this repository: https://github.com/alexbelgium/hassio-addons
 
+## Statistics
+
+Total number of addons installed : 3908
+Number of addons in the repository : 0
+Top 3 most installed addons :
+  1. portainer
+  2. epicgamesfree
+  3. filebrowser
+
 ## Add-ons provided by this repository
 
 
