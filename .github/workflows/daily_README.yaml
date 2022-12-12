@@ -129,9 +129,12 @@ jobs:
           # Write stats
           sed -i "s|%%STATS_DOWNLOADS%%|$(cat Stats | awk 'NR==2{print $1}')|g" README2.md
           sed -i "s|%%STATS_ADDONS%%|$NUMBERADDONS|g" README2.md
-          sed -i "s|%%STATS_ONE%%|$(cat Stats | awk 'NR==3{print $(NF)}')|g" README2.md
-          sed -i "s|%%STATS_TWO%%|$(cat Stats | awk 'NR==4{print $(NF)}')|g" README2.md
-          sed -i "s|%%STATS_THREE%%|$(cat Stats | awk 'NR==5{print $(NF)}')|g" README2.md
+          STATS_ONE="$(cat Stats | awk 'NR==3{print $(NF)}')"
+          STATS_TWO="$(cat Stats | awk 'NR==4{print $(NF)}')"
+          STATS_THREE="$(cat Stats | awk 'NR==5{print $(NF)}')"
+          sed -i "s|%%STATS_ONE%%|${STATS_ONE^}|g" README2.md
+          sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
+          sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
 
           # Replace template if change
 
