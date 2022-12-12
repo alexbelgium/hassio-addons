@@ -124,8 +124,9 @@ jobs:
           done
 
           # Write stats
+
           # shellcheck disable=SC2002
-          12sed -i "s|%%STATS_DOWNLOADS%%|$(cat Stats | awk 'NR==2{print $1}')|g" README2.md && \
+          sed -i "s|%%STATS_DOWNLOADS%%|$(cat Stats | awk 'NR==2{print $1}')|g" README2.md && \
           sed -i "s|%%STATS_ADDONS%%|$(find . -name "config.json" | wc -l)|g" README2.md && \
           STATS_ONE="$(cat Stats | awk 'NR==3{print $(NF)}')" && \
           STATS_TWO="$(cat Stats | awk 'NR==4{print $(NF)}')" && \
