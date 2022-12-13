@@ -141,7 +141,7 @@ jobs:
            # shellcheck disable=SC2002
             for i in $(sed -n "/$var/p" Stats); do
               k="$((k+1))"
-              if [ "$k" -eq 3 ]; then break; fi
+              if [ "$k" -eq 2 ]; then break; fi
               if [ "$i" -gt "$j" 2>/dev/null ]; then j="$i"; fi
             done
             sed -i "s|${var^}|${var^} ($i)|g" README2.md
