@@ -14,14 +14,6 @@ if [ ! -f "$HOME"/config.json ]; then
     bashio::exit.nok
 fi
 
-# Make symlink for cookies
-bashio::log.info "The following json files were found in $HOME and will be used in the app. Changing those files will require to restart the addon."
-cd "$HOME" || true
-for i in *.json; do # Whitespace-safe but not recursive.
-    echo "... processing $i"
-    cp "$i" /usr/app/config
-done
-
 # Permissions
 chmod -R 777 "$HOME"
 
@@ -33,6 +25,4 @@ echo " "
 bashio::log.info "Starting the app"
 echo " "
 
-cd /usr/app/config || true
-
-#/./usr/local/bin/docker-entrypoint.sh
+cd "/usr/app/config" || true
