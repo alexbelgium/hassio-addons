@@ -22,6 +22,6 @@
   },
   "slug": "epicgamesfree",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "DO_NOT_UPDATE-80a651a060bb4c2313886bfa4bbffb7a0683b028-2022-12-07",
+  "version": "80a651a060bb4c2313886bfa4bbffb7a0683b028-2022-12-07",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
