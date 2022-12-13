@@ -136,7 +136,7 @@ jobs:
           sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
 
           # shellcheck disable=SC2002
-          for var in "${STATS_ONE}" "${STATS_TWO}" "${STATS_THREE}"; do
+          for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
             j=0; k=0
            # shellcheck disable=SC2002
             for i in $(sed -n "/$var/p" Stats); do
@@ -144,7 +144,7 @@ jobs:
               if [ "$k" -eq 3 ]; then break; fi
               if [ "$i" -gt "$j" ]; then j="$i"; fi
             done
-            sed -i "s|$var|$var ($i)|g" README2.md
+            sed -i "s|${var^}|${var^} ($i)|g" README2.md
           done
           
           # Replace template if change
