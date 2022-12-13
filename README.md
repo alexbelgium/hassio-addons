@@ -43,7 +43,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 Number of addons in the repository : 73
 
-Total number of addons installed : 3908
+Total number of addons installed : 3908 (amd64 60%,aarch64 99%,armv7 3%)
 
 Top 3 most installed addons :
   1. Portainer (555)
