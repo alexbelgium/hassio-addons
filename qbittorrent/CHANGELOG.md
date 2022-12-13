@@ -1,3 +1,6 @@
+
+## 4.5.0-r0-ls234 (13-12-2022)
+- Update to latest version from linuxserver/docker-qbittorrent
 - Fix : using options Savepath for download folder
 
 ## 4.5.0-r0-ls233 (06-12-2022)
