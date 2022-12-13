@@ -133,10 +133,10 @@ jobs:
           STATS_THREE="$(cat Stats | awk 'NR==5{print $(NF)}')"
           sed -i "s|%%STATS_ONE%%|${STATS_ONE^}|g" README2.md
           sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
-          sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md && \
+          sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
+
           # shellcheck disable=SC2002
-          echo "yes"
-          for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
+          for var in "${STATS_ONE^}" "${STATS_TWO^}" "${STATS_THREE^}"; do
             j=0; k=0
            # shellcheck disable=SC2002
             for i in $(sed -n "/$var/p" README2.md); do
@@ -146,7 +146,6 @@ jobs:
             done
             sed -i "s|$var|$var ($i)|g" README2.md
           done
-          echo "done"
           
           # Replace template if change
 
