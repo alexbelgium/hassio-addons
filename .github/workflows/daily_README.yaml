@@ -126,7 +126,11 @@ jobs:
           # Write stats
 
           # shellcheck disable=SC2002
-          sed -i "s|%%STATS_DOWNLOADS%%|$(cat Stats | awk 'NR==2{print $1}')|g" README2.md && \
+          STATS_ARMV7="$(awk '{SUM+=$3}END{print SUM}' Stats2)"
+          STATS_AMD64="$(awk '{SUM+=$4}END{print SUM}' Stats2)"
+          STATS_AARCH64="$(awk '{SUM+=$5}END{print SUM}' Stats2)"
+          STATS_DOWNLOADS="$(cat Stats | awk 'NR==2{print $1}')"
+          sed -i "s|%%STATS_DOWNLOADS%%|$STATS_DOWNLOADS ($STATS_AMD64 amd64, $STATS_AARCH64 aarch64, $STATS_ARMV7 armv7)|g" README2.md && \
           sed -i "s|%%STATS_ADDONS%%|$(find . -name "config.json" | wc -l)|g" README2.md && \
           STATS_ONE="$(cat Stats | awk 'NR==3{print $(NF)}')" && \
           STATS_TWO="$(cat Stats | awk 'NR==4{print $(NF)}')" && \
