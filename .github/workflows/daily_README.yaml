@@ -135,6 +135,7 @@ jobs:
           sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
           sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md && \
           # shellcheck disable=SC2002
+          echo "yes"
           for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
             j=0; k=0
            # shellcheck disable=SC2002
@@ -145,6 +146,7 @@ jobs:
             done
             sed -i "s|$var|$var ($i)|g" README2.md
           done
+          echo "done"
           
           # Replace template if change
 
