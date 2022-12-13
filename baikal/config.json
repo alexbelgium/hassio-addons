@@ -21,6 +21,6 @@
   },
   "slug": "baikal",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
