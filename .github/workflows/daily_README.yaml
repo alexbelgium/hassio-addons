@@ -134,16 +134,16 @@ jobs:
           sed -i "s|%%STATS_ONE%%|${STATS_ONE^}|g" README2.md
           sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
           sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
-
+          
           # Get max of downloads
           for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
             j=0; k=0
             # shellcheck disable=SC2002
-            for i in $(sed -n "/$var/p" README2.md); do
-            k="$((k+1))"
-            if [ "$k" -eq 3 ]; then break; fi
+            #for i in $(sed -n "/$var/p" README2.md); do
+            #k="$((k+1))"
+            #if [ "$k" -eq 3 ]; then break; fi
             #if [ "$i" -gt "$j" 2>/dev/null ]; then j="$i"; fi
-            done
+            #done
             sed -i "s|$var|$var ($i)|g" README2.md
           done
 
