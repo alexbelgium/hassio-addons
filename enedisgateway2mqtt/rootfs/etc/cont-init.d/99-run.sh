@@ -7,7 +7,7 @@
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-DATABASESOURCE="$(dirname "${CONFIGSOURCE}")/enedisgateway.db"
+DATABASESOURCE="$(dirname "${CONFIGSOURCE}")/cache.db"
 
 # Make sure folder exist
 mkdir -p "$(dirname "${CONFIGSOURCE}")"
@@ -44,14 +44,18 @@ else
     bashio::log.fatal "Config file not found. The addon will create a new one, then stop. Please customize the file in $CONFIGSOURCE before restarting."
 fi
 
-# Remove previous link or file
-[ -f /data/enedisgateway.db ] && rm /data/enedisgateway.db
+# Fetch the migrated versions and copy it in the new database location
+if [ -f /data/enedisgateway.db.migrate ]; then
+    bashio::log.warning "Migration performed, enedisgateway.db.migrate copied in $(dirname "${CONFIGSOURCE}")"
+    mv /data/enedisgateway.db.migrate "$(dirname "${CONFIGSOURCE}")"
+    mv /data/cache.db "$(dirname "${CONFIGSOURCE}")"
+fi
 
 # Check if database is here or create symlink
 if [ -f "$DATABASESOURCE" ]; then
     # Create symlink if not existing yet
     ln -sf "${DATABASESOURCE}" /data && echo "creating symlink"
-    bashio::log.info "Using database file found in $DATABASESOURCE"
+    bashio::log.info "Using database file found in $(dirname "${CONFIGSOURCE}")"
 else
     # Create symlink for addon to create database
     touch "${DATABASESOURCE}"
