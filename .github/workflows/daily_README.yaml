@@ -142,7 +142,7 @@ jobs:
             for i in $(sed -n "/$var/p" README2.md); do
             k="$((k+1))"
             if [ "$k" -eq 3 ]; then break; fi
-            if [ "$i" -gt "$j" 2>/dev/null ]; then j="$i"; fi
+            #if [ "$i" -gt "$j" 2>/dev/null ]; then j="$i"; fi
             done
             sed -i "s|$var|$var ($i)|g" README2.md
           done
