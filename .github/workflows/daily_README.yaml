@@ -135,6 +135,17 @@ jobs:
           sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
           sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
 
+          # Get max of downloads
+          for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
+            j=0; k=0
+            for i in $(sed -n "/$var/p" a); do
+              k=$((k+1))
+              if [ "$k" -eq 3 ]; then break; fi
+              if [ "$i" -gt "$j" 2>/dev/null ]; then j="$i";fi
+            done
+            sed -i "s|$var|$var ($i)|g" README2.md
+          done
+
           # Replace template if change
 
           echo "Replace template"
