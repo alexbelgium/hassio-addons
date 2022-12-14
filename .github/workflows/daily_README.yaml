@@ -152,7 +152,7 @@ jobs:
               if [ "$k" -eq 2 ]; then break; fi
               if [ "$i" -gt "$j" 2>/dev/null ]; then j="$i"; fi
             done
-            sed -i "s|${var^}|${var^} ($i)|g" README2.md
+            sed -i "s|${var^}|${var^} (${i}x)|g" README2.md
           done
           
           # Replace template if change
