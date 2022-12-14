@@ -126,9 +126,9 @@ jobs:
           # Write stats
 
           # shellcheck disable=SC2002
-          STATS_ARMV7="$(awk 'FNR > 2 {SUM+=$3}END{print SUM}' Stats2)"
-          STATS_AMD64="$(awk 'FNR > 2 {SUM+=$4}END{print SUM}' Stats2)"
-          STATS_AARCH64="$(awk 'FNR > 2 {SUM+=$5}END{print SUM}' Stats2)"
+          STATS_ARMV7="$(sed -e '1,2d' Stats2 | awk '{SUM+=$3}END{print SUM}')"
+          STATS_AMD64="$(sed -e '1,2d' Stats2 | awk '{SUM+=$4}END{print SUM}')"
+          STATS_AARCH64="$(sed -e '1,2d' Stats2 | awk '{SUM+=$5}END{print SUM}')"
           STATS_DOWNLOADS="$(cat Stats | awk 'NR==2{print $1}')"
           STATS_ARMV7="$(awk -v t1="$STATS_ARMV7" -v t2="$STATS_AMD64" -v t3="$STATS_AARCH64" -v t4="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", t1/t4 * 100}')"
           STATS_AMD64="$(awk -v t1="$STATS_ARMV7" -v t2="$STATS_AMD64" -v t3="$STATS_AARCH64" -v t4="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", t2/t4 * 100}')"
