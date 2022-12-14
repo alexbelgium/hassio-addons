@@ -126,15 +126,8 @@ jobs:
           # Write stats
 
           # shellcheck disable=SC2002
-          STATS_ARMV7="$(awk '{SUM+=$3}END{print SUM}' Stats2)"
-          STATS_AMD64="$(awk '{SUM+=$4}END{print SUM}' Stats2)"
-          STATS_AARCH64="$(awk '{SUM+=$5}END{print SUM}' Stats2)"
           STATS_DOWNLOADS="$(cat Stats | awk 'NR==2{print $1}')"
-          STATS_ARMV7="$(awk -v t1="$STATS_ARMV7" -v t2="$STATS_AMD64" -v t3="$STATS_AARCH64" -v t4="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", t1/t4 * 100}')"
-          STATS_AMD64="$(awk -v t1="$STATS_ARMV7" -v t2="$STATS_AMD64" -v t3="$STATS_AARCH64" -v t4="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", t2/t4 * 100}')"
-          STATS_AARCH64="$(awk -v t1="$STATS_ARMV7" -v t2="$STATS_AMD64" -v t3="$STATS_AARCH64" -v t4="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", t3/t4 * 100}')"
-          #echo $((100*$STATS_THREE/($STATS_ONE+$STATS_TWO+$STATS_THREE)))
-          sed -i "s|%%STATS_DOWNLOADS%%|$STATS_DOWNLOADS (amd64 $STATS_AMD64%, aarch64 $STATS_AARCH64%, armv7 $STATS_ARMV7%)|g" README2.md && \
+          sed -i "s|%%STATS_DOWNLOADS%%|$STATS_DOWNLOADS|g" README2.md && \
           sed -i "s|%%STATS_ADDONS%%|$(find . -name "config.json" | wc -l)|g" README2.md && \
           STATS_ONE="$(cat Stats | awk 'NR==3{print $(NF)}')" && \
           STATS_TWO="$(cat Stats | awk 'NR==4{print $(NF)}')" && \
@@ -142,6 +135,19 @@ jobs:
           sed -i "s|%%STATS_ONE%%|${STATS_ONE^}|g" README2.md
           sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
           sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
+
+          # Breakdown per arch
+          STATS_ARMV7="$(awk '{SUM+=$3}END{print SUM}' Stats2)"
+          STATS_AMD64="$(awk '{SUM+=$4}END{print SUM}' Stats2)"
+          STATS_AARCH64="$(awk '{SUM+=$5}END{print SUM}' Stats2)"
+          STATS_DOWNLOADS="$(cat Stats | awk 'NR==2{print $1}')"
+          STATS_ARMV7="$(awk -v t1="$STATS_ARMV7" -v t2="$STATS_AMD64" -v t3="$STATS_AARCH64" -v t4="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", t1/t4 * 100}')"
+          STATS_AMD64="$(awk -v t1="$STATS_ARMV7" -v t2="$STATS_AMD64" -v t3="$STATS_AARCH64" -v t4="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", t2/t4 * 100}')"
+          STATS_AARCH64="$(awk -v t1="$STATS_ARMV7" -v t2="$STATS_AMD64" -v t3="$STATS_AARCH64" -v t4="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", t3/t4 * 100}')"
+          sed -i "s|%%STATS_ARMV7%%|armv7: ${STATS_ARMV7}%|g" README2.md
+          sed -i "s|%%STATS_AMD64%%|amd64: ${STATS_AMD64}%|g" README2.md
+          sed -i "s|%%STATS_AARCH64%%|aarch64: ${STATS_AARCH64}%|g" README2.md
+          #echo $((100*$STATS_THREE/($STATS_ONE+$STATS_TWO+$STATS_THREE)))
 
           # shellcheck disable=SC2002
           for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
