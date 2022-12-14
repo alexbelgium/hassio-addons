@@ -30,8 +30,7 @@ if [ -f /data/enedisgateway.db.migrate ]; then
 fi
 
 # If migration was performed, save file in config folder
-if [ -f /data/cache.db ]; then
-    if [ -f "$DATABASESOURCE" ]; then cp "$DATABASESOURCE" "$DATABASESOURCE".bak2; fi
+if [ -f /data/cache.db ] && [ ! -f "$DATABASESOURCE" ]; then
     if [ -f "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db ]; then mv "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db.bak2; fi
     mv /data/cache.db "$(dirname "${CONFIGSOURCE}")"
 fi
