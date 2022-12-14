@@ -19,14 +19,6 @@ if [ -f /data/config.yaml ] && [ ! -L /data/config.yaml ]; then
     mv /data/config.yaml "$CONFIGSOURCE".bak
 fi
 
-###################
-# Migrate folders #
-###################
-
-if [ -f /config/enedisgateway2mqtt/config.yaml ]; then
-    mv /config/enedisgateway2mqtt/ "$(dirname "${CONFIGSOURCE}")"/
-fi
-
 ############
 # DATABASE #
 ############
