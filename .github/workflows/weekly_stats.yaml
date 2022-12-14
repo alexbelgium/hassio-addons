@@ -84,7 +84,7 @@ jobs:
           # Sort file
           (head -n 2 "$file" && tail -n +3 "$file" | sort -k1 -r -n) > tmp && mv tmp "$file"
 
-          #sed -i "1i Name Total armv7 amd64 aarch64" "$file"
+          sed -i "1i Name Total armv7 amd64 aarch64" "Stats2"
           #TOTAL="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           #TOTAL1="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           #TOTAL2="$(awk '{SUM+=$2}END{print SUM}' Stats)"
