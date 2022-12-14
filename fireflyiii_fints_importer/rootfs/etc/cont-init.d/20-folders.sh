@@ -7,11 +7,11 @@ CONFIGSOURCE="/config/addons_config/fireflyiii_fints_importer"
 mkdir -p "$CONFIGSOURCE"
 
 # If no file, provide example
-[ ! "$(ls -A "${CONFIGSOURCE}")" ] && cp -rn /app/configurations/* "$CONFIGSOURCE"/
+[ ! "$(ls -A "${CONFIGSOURCE}")" ] && cp -rn /data/configurations/* "$CONFIGSOURCE"/
 
 # Create symlinks
-rm -r /app/configurations
-ln -sf "$CONFIGSOURCE" /app/configurations
+rm -r /data/configurations
+ln -sf "$CONFIGSOURCE" /data/configurations
 
 # Make sure permissions are right
 chown -R "$(id -u):$(id -g)" "$CONFIGSOURCE"
