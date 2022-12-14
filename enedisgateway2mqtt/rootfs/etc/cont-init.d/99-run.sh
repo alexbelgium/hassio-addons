@@ -24,6 +24,7 @@ fi
 ###################
 
 if [ -f /config/enedisgateway2mqtt/config.yaml ]; then
+    echo "Files migrated to $(dirname "${CONFIGSOURCE}")" > /config/enedisgateway2mqtt/files_migrated
     mv /config/enedisgateway2mqtt/ "$(dirname "${CONFIGSOURCE}")"/
 fi
 
