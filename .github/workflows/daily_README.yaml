@@ -114,7 +114,7 @@ jobs:
 
           # Restore folders name
 
-          echo "Restore structure"
+          echo "Restore structure..."
           find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
             if [ -f "$f/oldname" ]; then
               NAME="$(cat "$f/oldname")"
@@ -122,10 +122,12 @@ jobs:
               mv "$f" "$NAME"
             fi
           done
+          echo "... done"
 
           # Write stats
 
           # shellcheck disable=SC2002
+          echo "Global stats..."
           STATS_DOWNLOADS="$(cat Stats | awk 'NR==2{print $1}')"
           sed -i "s|%%STATS_DOWNLOADS%%|$STATS_DOWNLOADS|g" README2.md && \
           sed -i "s|%%STATS_ADDONS%%|$(find . -name "config.json" | wc -l)|g" README2.md && \
@@ -135,8 +137,10 @@ jobs:
           sed -i "s|%%STATS_ONE%%|${STATS_ONE^}|g" README2.md
           sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
           sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
+          echo "... done"
 
           # Breakdown per arch
+          echo "Breakdown per arch..."
           STATS_ARMV7="$(awk '{SUM+=$3}END{print SUM}' Stats2)"
           STATS_AMD64="$(awk '{SUM+=$4}END{print SUM}' Stats2)"
           STATS_AARCH64="$(awk '{SUM+=$5}END{print SUM}' Stats2)"
@@ -148,8 +152,10 @@ jobs:
           sed -i "s|%%STATS_AMD64%%|amd64: ${STATS_AMD64}%|g" README2.md
           sed -i "s|%%STATS_AARCH64%%|aarch64: ${STATS_AARCH64}%|g" README2.md
           #echo $((100*$STATS_THREE/($STATS_ONE+$STATS_TWO+$STATS_THREE)))
+          echo "... done"
 
           # shellcheck disable=SC2002
+          echo "Total downloads..."
           for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
             j=0; k=0
            # shellcheck disable=SC2002
@@ -160,10 +166,11 @@ jobs:
             done
             sed -i "s|${var^}|${var^} (${i}x)|g" README2.md
           done
+          echo "... done"
           
           # Replace template if change
 
-          echo "Replace template"
+          echo "Replace template..."
           if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
             echo "no changes"
             rm README2.md
@@ -171,6 +178,8 @@ jobs:
             rm README.md
             mv README2.md README.md
           fi
+          echo "... done"
+
         shell: bash
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
