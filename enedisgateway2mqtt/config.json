@@ -12,7 +12,7 @@
   ],
   "name": "MyElectricalData",
   "options": {
-    "CONFIG_LOCATION": "/config/enedisgateway2mqtt/config.yaml",
+    "CONFIG_LOCATION": "/config/addons_config/myelectricaldata/config.yaml",
     "TZ": "Europe/Paris",
     "mqtt_autodiscover": true,
     "verbose": true
@@ -28,5 +28,5 @@
   ],
   "slug": "enedisgateway2mqtt",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.10-2"
+  "version": "0.8.10-3"
 }
