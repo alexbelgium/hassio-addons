@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛Enedisgateway2mqtt token_bad_formatted (opened 2022-11-29)](https://github.com/alexbelgium/hassio-addons/issues/582) by [@data-source](https://github.com/data-source)
 ## &#9888; Open Issue : [🐛 [EnedisGateway2MQTT => MyElectricalData] Migration (opened 2022-12-13)](https://github.com/alexbelgium/hassio-addons/issues/600) by [@m4dm4rtig4n](https://github.com/m4dm4rtig4n)
 # Home assistant add-on: MyElectricalData
 
