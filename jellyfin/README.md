@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Jellyfin mount web folder to addons_config/jellyfin (opened 2022-12-13)](https://github.com/alexbelgium/hassio-addons/issues/602) by [@Martrijn](https://github.com/Martrijn)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
