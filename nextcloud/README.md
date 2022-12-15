@@ -27,7 +27,11 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
+### Custom scripts
+
 Scripts with .sh ending located in /config/addons_config/nextcloud will be executed at boot
+
+### Addon options
 
 ```yaml
 additional_apps: vim,nextcloud #specify additional apk files to install ; separated by commas
@@ -46,6 +50,32 @@ cifspassword: "password" # optional, smb password, same for all smb shares)
 ```
 
 Webui can be found at `<your-ip>:port`.
+
+### Use mariadb as the main database (Thanks @amaciuc)
+
+If you notice the following warning at your first `webui` running:
+```
+Performance warning
+You chose SQLite as database.
+
+SQLite should only be used for minimal and development instances. For production we recommend a different database backend.
+
+If you use clients for file syncing, the use of SQLite is highly discouraged.
+```
+and you want to overcome this, follow the below steps:
+
+1. Install `mariadb` add-on, configure it with some random infos and start it. It is important to start it successfully in order to be seen by `nextcloud` in the network.
+2. Install `nextcloud` add-on (or restart it if you have already installed), watch the logs until you will notice the following `warning`:
+```
+WARNING: MariaDB addon was found! It can't be configured automatically due to the way Nextcloud works, but you can configure it manually when running the web UI for the first time using those values :
+Database user : service
+Database password : Eangohyuchae6aif7saich2nies8xaivaejaNgaev6gi3yohy8ha2aexaetei6oh
+Database name : nextcloud
+Host-name : core-mariadb:3306
+```
+3. Go back at `mariadb` add-on, configure it with above credentials and restart it. Make sure the add-on is creating the `netxcloud` database.
+4. Go in the webui and fill all required info. Here you can view an example:
+![image](https://user-images.githubusercontent.com/19391765/207888717-50b43002-a5e2-4782-b5c9-1f582309df2b.png)
 
 ## Installation
 
