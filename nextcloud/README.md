@@ -27,9 +27,11 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
+
 ### Custom scripts
 
 Scripts with .sh ending located in /config/addons_config/nextcloud will be executed at boot
+
 
 ### Addon options
 
@@ -50,6 +52,7 @@ cifspassword: "password" # optional, smb password, same for all smb shares)
 ```
 
 Webui can be found at `<your-ip>:port`.
+
 
 ### Use mariadb as the main database (Thanks @amaciuc)
 
@@ -75,6 +78,7 @@ Host-name : core-mariadb:3306
 ```
 3. Go back at `mariadb` add-on, configure it with above credentials and restart it. Make sure the add-on is creating the `netxcloud` database.
 4. Go in the webui and fill all required info. Here you can view an example:
+
 ![image](https://user-images.githubusercontent.com/19391765/207888717-50b43002-a5e2-4782-b5c9-1f582309df2b.png)
 
 ## Installation
