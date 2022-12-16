@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] PlexTraktSync (opened 2022-12-16)](https://github.com/alexbelgium/hassio-addons/issues/604) by [@cronner](https://github.com/cronner)
 # Home assistant add-on: plex
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
