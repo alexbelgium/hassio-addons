@@ -26,6 +26,6 @@
   },
   "slug": "fireflyiii_fints_importer",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.2-7",
+  "version": "1.2-8",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
