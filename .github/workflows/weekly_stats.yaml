@@ -4,7 +4,8 @@ name: Generate weekly stats
 on:
   schedule:
     - cron: "0 12 * * 5"
-  workflow_dispatch: null
+  workflow_dispatch:
+
 jobs:
   stats_updater:
     runs-on: ubuntu-20.04
