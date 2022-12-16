@@ -7,7 +7,7 @@ CONFIGSOURCE="/config/addons_config/fireflyiii_fints_importer"
 mkdir -p "$CONFIGSOURCE"
 
 # If no file, provide example
-[ ! "$(ls -A "${CONFIGSOURCE}")" ] && cp -rn /data/configurations/* "$CONFIGSOURCE"/
+[ ! "$(ls -A "${CONFIGSOURCE}")" ] && cp -r /data/configurations/* "$CONFIGSOURCE"/
 
 # Create symlinks
 rm -r /data/configurations
