@@ -66,6 +66,10 @@ keyfile: privkey.pem #sslkeyfile, must be located in /ssl
 
 The complete list of options can be seen here : https://nightly.mealie.io/documentation/getting-started/installation/backend-config/
 
+## Integration with HA
+
+Read here : https://hay-kot.github.io/mealie/documentation/community-guide/home-assistant/
+
 ## Support
 
 If you have in issue with your installation, please be sure to checkout github.
