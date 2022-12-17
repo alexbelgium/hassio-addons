@@ -11,9 +11,7 @@ if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then LOCATION=/config/addons_co
 
 # Set data location
 bashio::log.info "Setting data location to $LOCATION"
-sed -i "s|/config|$LOCATION|g" /etc/services.d/jellyfin/run
-sed -i "s|/config|$LOCATION|g" /etc/cont-init.d/10-adduser
-sed -i "s|/config|$LOCATION|g" /etc/cont-init.d/30-config
+for file in $(grep -sril "/config" /etc /defaults); do sed -i "s=/config=$LOCATION=g" $file; done
 
 echo "Creating $LOCATION"
 mkdir -p "$LOCATION"
