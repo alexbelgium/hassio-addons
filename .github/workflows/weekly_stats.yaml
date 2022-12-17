@@ -66,22 +66,22 @@ jobs:
                 done
               fi
               # Add data
-              sed -i "/$SLUG/s|^-|$DOWNLOADS|" "$file"
+              sed -i "/${SLUG}$/s|^-|$DOWNLOADS|" "$file"
             fi
           done
 
           # Add total
           SLUG=TOTAL
-          if ! grep -q "$SLUG" "$file"; then
+          if ! grep -q "$SLUG$" "$file"; then
             sed -i "1a$SLUG" "$file"
             # shellcheck disable=SC2046
             for i in $(seq $(head -n 1 $file | tr -cd ' \t' | wc -c )); do
               echo "$i"
-              sed -i "/$SLUG/s|^|- |" "$file"
+              sed -i "/$SLUG$/s|^|- |" "$file"
             done
           fi
           DOWNLOADS="$(awk 'FNR > 2 {SUM+=$1}END{print SUM}' Stats)"
-          sed -i "/$SLUG/s|^-|$DOWNLOADS|" "$file"
+          sed -i "/$SLUG$/s|^-|$DOWNLOADS|" "$file"
 
           # Sort file
           (head -n 2 "$file" && tail -n +3 "$file" | sort -k1 -r -n) > tmp && mv tmp "$file"
