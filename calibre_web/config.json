@@ -50,7 +50,7 @@
     "shm_size": "1gb"
   },
   "hassio_api": true,
-  "image": "ghcr.io/alexbelgium/calibre-web-{arch}",
+  "image": "ghcr.io/alexbelgium/calibre_web-{arch}",
   "ingress": true,
   "init": false,
   "map": [
