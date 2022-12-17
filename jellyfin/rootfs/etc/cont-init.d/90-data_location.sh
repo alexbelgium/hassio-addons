@@ -19,7 +19,7 @@ echo "Creating $LOCATION"
 mkdir -p "$LOCATION" "$LOCATION"/data "$LOCATION"/cache "$LOCATION"/log "$LOCATION"/web
 
 # Custom web location
-cp -rn /usr/share/jellyfin/web/ "$LOCATION"/web/
+cp -rn /usr/share/jellyfin/web/* "$LOCATION"/web/
 sed -i "s|/usr/share/jellyfin|$LOCATION|g" /etc/nginx/servers/ingress.conf
 
 # Permissions
