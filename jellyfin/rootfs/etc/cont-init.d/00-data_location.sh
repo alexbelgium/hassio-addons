@@ -17,5 +17,7 @@ for file in $(grep -sril "/usr/share/jellyfin/web" /etc /defaults); do sed -i "s
 echo "Creating $LOCATION"
 mkdir -p "$LOCATION" "$LOCATION"/data "$LOCATION"/cache "$LOCATION"/log "$LOCATION"/web
 
+cp -rn /usr/share/jellyfin/web/* "$LOCATION"/web/ || true
+
 bashio::log.info "Setting ownership to $PUID:$PGID"
-chown "$PUID":"$PGID" "$LOCATION"
+chown -R "$PUID":"$PGID" "$LOCATION"
