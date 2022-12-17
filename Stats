@@ -11,27 +11,26 @@
 100 114 113 prowlarr
 91 59 57 guacamole
 91 321 313 epicgamesfree
-86 - - calibre
-86 - - 69 73 69 calibre-web
-86 - - - 107 107 calibre_web
+86 73 69 calibre
+107 107 107 calibre_web
 82 17 17 code_server
 79 67 65 webtop_kde
 78 81 81 photoprism
 75 69 68 bazarr
-68 - - fireflyiii
-68 - - 5 7 7 fireflyiii_fints_importer
-68 - - 23 16 15 fireflyiii_data_importer
+68 68 68 fireflyiii
+5 7 7 fireflyiii_fints_importer
+23 16 15 fireflyiii_data_importer
 67 54 54 transmission_openvpn
 61 43 40 browserless_chrome
 60 72 66 emby
-58 - - scrutiny
-58 - - 38 22 20 scrutiny-fa
+58 58 58 scrutiny
+38 22 20 scrutiny-fa
 57 86 80 paperless_ng
 57 50 50 nzbget
 55 37 35 sonarr_nas
 53 38 35 mealie
 53 - - omada
-53 - - 7 13 11 omada_v3
+7 13 11 omada_v3
 51 45 44 lidarr_nas
 49 42 41 readarr_nas
 48 24 23 joplin
