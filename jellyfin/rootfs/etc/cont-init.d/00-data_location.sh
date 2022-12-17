@@ -11,7 +11,7 @@ if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then LOCATION=/config/addons_co
 
 # Set data location
 bashio::log.info "Setting data location to $LOCATION"
-for file in $(grep -sril "/config" /etc /defaults); do sed -i "s=/config=$LOCATION=g" $file; done
+for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do sed -Ei "s=(/config)+(/| |$|\"|\')=$LOCATION\2=g" $file; done
 
 echo "Creating $LOCATION"
 mkdir -p "$LOCATION"
