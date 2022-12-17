@@ -12,12 +12,15 @@ if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then LOCATION=/config/addons_co
 # Set data location
 bashio::log.info "Setting data location to $LOCATION"
 for file in $(grep -sril "/config" /etc /defaults); do sed -i "s=/config=$LOCATION=g" $file; done
-for file in $(grep -sril "/usr/share/jellyfin/web" /etc /defaults); do sed -i "s=/usr/share/jellyfin/web=$LOCATION/web=g" $file; done
 
+# Create folders
 echo "Creating $LOCATION"
 mkdir -p "$LOCATION" "$LOCATION"/data "$LOCATION"/cache "$LOCATION"/log "$LOCATION"/web
 
-cp -rn /usr/share/jellyfin/web/* "$LOCATION"/web/ || true
+# Custom web location
+cp -rn /usr/share/jellyfin/web/ "$LOCATION"/web/
+sed -i "s|/usr/share/jellyfin|$LOCATION|g" /etc/nginx/servers/ingress.conf
 
+# Permissions
 bashio::log.info "Setting ownership to $PUID:$PGID"
 chown -R "$PUID":"$PGID" "$LOCATION"
