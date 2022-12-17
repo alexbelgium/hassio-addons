@@ -1,9 +1,12 @@
 #!/bin/bash
 
+LOCATION=$(bashio::config 'data_location')
+if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then LOCATION=/config/addons_config/${HOSTNAME#*-}; fi
+
 #Set variable
-db=/config/addons_config/jellyfin/data/data/library.db
+db="$LOCATION"/data/data/library.db
 
 #Modify base
 if [ -f $db ]; then
-    sqlite3 -quote ${db} "UPDATE 'TypedBaseItems' SET data = replace( data, '/config/jellyfin/', '/config/addons_config/jellyfin/' ), path = replace( path, '/config/jellyfin/', '/config/addons_config/jellyfin/' ) WHERE type='MediaBrowser.Controller.Entities.CollectionFolder';"
+    sqlite3 -quote ${db} "UPDATE 'TypedBaseItems' SET data = replace( data, '/config/jellyfin/', "$LOCATION" ), path = replace( path, '/config/jellyfin/', "$LOCATION" ) WHERE type='MediaBrowser.Controller.Entities.CollectionFolder';"
 fi
