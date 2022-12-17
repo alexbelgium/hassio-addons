@@ -7,7 +7,7 @@
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-DATABASESOURCE="$(dirname "${CONFIGSOURCE}")/enedisgateway.db"
+DATABASESOURCE="$(dirname "${CONFIGSOURCE}")/cache.db"
 
 # Make sure folder exist
 mkdir -p "$(dirname "${CONFIGSOURCE}")"
@@ -18,6 +18,43 @@ if [ -f /data/config.yaml ] && [ ! -L /data/config.yaml ]; then
     bashio::log.warning "A current config was found in /data, it is backuped to ${CONFIGSOURCE}.bak"
     mv /data/config.yaml "$CONFIGSOURCE".bak
 fi
+
+############
+# DATABASE #
+############
+
+# If migration was performed, save file in config folder
+if [ -f /data/enedisgateway.db.migrate ]; then
+    bashio::log.warning "Migration performed, enedisgateway.db.migrate copied in $(dirname "${CONFIGSOURCE}")"
+    mv /data/enedisgateway.db.migrate "$(dirname "${CONFIGSOURCE}")"
+fi
+
+# If migration was performed, save file in config folder
+if [ -f /data/cache.db ] && [ ! -f "$DATABASESOURCE" ]; then
+    if [ -f "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db ]; then mv "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db.bak2; fi
+    mv /data/cache.db "$(dirname "${CONFIGSOURCE}")"
+fi
+
+# If migration was not performed, enable migration
+if [ -f "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db ]; then 
+  mv "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db /data
+fi
+
+# Check if database is here or create symlink
+if [ -f "$DATABASESOURCE" ]; then
+    # Create symlink if not existing yet
+    ln -sf "${DATABASESOURCE}" /data && echo "creating symlink"
+    bashio::log.info "Using database file found in $(dirname "${CONFIGSOURCE}")"
+else
+    # Create symlink for addon to create database
+    touch "${DATABASESOURCE}"
+    ln -sf "$DATABASESOURCE" /data
+    rm "$DATABASESOURCE"
+fi
+
+##########
+# CONFIG #
+##########
 
 # Check if config file is there, or create one from template
 if [ -f "$CONFIGSOURCE" ]; then
@@ -42,21 +79,6 @@ else
     rm "$CONFIGSOURCE"
     # Need to restart
     bashio::log.fatal "Config file not found. The addon will create a new one, then stop. Please customize the file in $CONFIGSOURCE before restarting."
-fi
-
-# Remove previous link or file
-[ -f /data/enedisgateway.db ] && rm /data/enedisgateway.db
-
-# Check if database is here or create symlink
-if [ -f "$DATABASESOURCE" ]; then
-    # Create symlink if not existing yet
-    ln -sf "${DATABASESOURCE}" /data && echo "creating symlink"
-    bashio::log.info "Using database file found in $DATABASESOURCE"
-else
-    # Create symlink for addon to create database
-    touch "${DATABASESOURCE}"
-    ln -sf "$DATABASESOURCE" /data
-    rm "$DATABASESOURCE"
 fi
 
 ##############

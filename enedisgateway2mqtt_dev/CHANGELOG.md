@@ -1,4 +1,17 @@
 
+## 0.8.11-beta1 (17-12-2022)
+- Update to latest version from m4dm4rtig4n/myelectricaldata
+- Export 5000 port
+
+## 0.8.10 (13-12-2022)
+- Update to latest version from m4dm4rtig4n/myelectricaldata
+
+## 0.8.8 (10-12-2022)
+- Update to latest version from m4dm4rtig4n/myelectricaldata
+
+## 0.8.7 (03-12-2022)
+- Update to latest version from m4dm4rtig4n/myelectricaldata
+
 ## 0.8.8-dev (03-12-2022)
 - Update to latest version from m4dm4rtig4n/myelectricaldata
 
@@ -12,24 +25,9 @@
 - Add codenotary sign
 - New standardized logic for Dockerfile build and packages installation
 
-## 0.8.2-dev (26-11-2022)
+## 0.7.7 (25-11-2021)
 
 - Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
-
-## 0.8.0-dev (27-04-2022)
-
-- Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
-
-## 0.7.7 (27-04-2022)
-
-- Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
-
-## 0.8.0-dev (07-04-2022)
-
-- Update to latest version from m4dm4rtig4n/enedisgateway2mqtt
-- Add codenotary sign
-- New standardized logic for Dockerfile build and packages installation
-- Always aligned with dev versions
 
 ## 0.7.8-dev (23-11-2021)
 

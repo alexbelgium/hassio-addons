@@ -17,6 +17,12 @@
     "mqtt_autodiscover": true,
     "verbose": true
   },
+  "ports": {
+    "5000/tcp": 5000
+  },
+  "ports_description": {
+    "5000/tcp": "Portail"
+  },
   "schema": {
     "CONFIG_LOCATION": "str",
     "TZ": "str?",
@@ -28,5 +34,5 @@
   ],
   "slug": "enedisgateway2mqtt_dev",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.8-dev"
+  "version": "0.8.11-beta1"
 }
