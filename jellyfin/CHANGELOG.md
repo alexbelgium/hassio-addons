@@ -1,48 +1,64 @@
+- Fixed ingress
 - Expose web folder to /config/addons_config/jellyfin/web
 
 ## 10.8.8-1-ls192 (13-12-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.8-1-ls191 (10-12-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.8-1-ls190 (01-12-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 10.8.7-1-ls189 (26-11-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.7-1-ls188 (19-11-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 - Addition of hardware drivers for AMD, intel, RFFMPEG
 
 ## 10.8.7-1-ls186 (02-11-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.6-1-ls185 (01-11-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.5-1-ls184 (29-10-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.5-1-ls183 (22-10-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.5-1-ls182 (15-10-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.5-1-ls181 (30-09-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.5-1-ls180 (27-09-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.4-1-ls179 (24-09-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.4-1-ls178 (09-09-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
+
 ## 10.8.4-1-ls177 (20-08-2022)
 
 - Update to latest version from linuxserver/docker-jellyfin
