@@ -1,11 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-#LOCATION=$(bashio::config 'data_location')
-#if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then LOCATION=/config/addons_config/${HOSTNAME#*-}; fi
-
 #Set variable
-db=/config/jellyfin/data/data/library.db
+db=%%LOCATION%%/data/data/library.db
 
 #Modify base
 if [ -f $db ]; then
