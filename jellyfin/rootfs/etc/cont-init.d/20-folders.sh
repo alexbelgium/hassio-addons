@@ -58,11 +58,11 @@ if [ ! -d /jellyfin/data ]; then
     ln -s "$LOCATION"/data /jellyfin/data
 fi
 
-if [ ! -d /jellyfin/logs ]; then
-    echo "Creating link for /jellyfin/logs"
-    mkdir -p "$LOCATION"/logs
-    chown -R abc:abc "$LOCATION"/logs
-    ln -s "$LOCATION"/logs /jellyfin/logs
+if [ ! -d /jellyfin/log ]; then
+    echo "Creating link for /jellyfin/log"
+    mkdir -p "$LOCATION"/log
+    chown -R abc:abc "$LOCATION"/log
+    ln -s "$LOCATION"/log /jellyfin/log
 fi
 
 if [ ! -d /jellyfin/metadata ]; then
