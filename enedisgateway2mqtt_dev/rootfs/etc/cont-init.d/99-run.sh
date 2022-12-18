@@ -36,8 +36,8 @@ if [ -f /data/cache.db ] && [ ! -f "$DATABASESOURCE" ]; then
 fi
 
 # If migration was not performed, enable migration
-if [ -f "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db ]; then 
-  mv "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db /data
+if [ -f "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db ]; then
+    mv "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db /data
 fi
 
 # Check if database is here or create symlink
