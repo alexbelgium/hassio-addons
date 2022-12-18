@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Jellyfin mount web folder to addons_config/jellyfin (opened 2022-12-13)](https://github.com/alexbelgium/hassio-addons/issues/602) by [@Martrijn](https://github.com/Martrijn)
+## &#9888; Open Issue : [🐛 [Jellyfin] 10.8.8-1-ls192 (13-12-2022) - Can't connect anymore after update (opened 2022-12-16)](https://github.com/alexbelgium/hassio-addons/issues/607) by [@Valdun](https://github.com/Valdun)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
