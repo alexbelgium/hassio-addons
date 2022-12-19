@@ -11,7 +11,7 @@ if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then LOCATION=/config/addons_co
 
 # Set data location
 bashio::log.info "Setting data location to $LOCATION"
-# shellscript disable=SC2013
+# shellcheck disable=SC2013
 for file in $(grep -sril "/config" /etc /defaults); do sed -i "s=/config=$LOCATION=g" $file; done
 # Modify new location for database
 sed -i "s|%%LOCATION%%|$LOCATION|g" /etc/cont-init.d/99-database_clean.sh
