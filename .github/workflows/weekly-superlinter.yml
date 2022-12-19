@@ -22,7 +22,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  make_executable:
+  make-executable:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout Repo
