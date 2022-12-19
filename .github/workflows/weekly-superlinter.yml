@@ -19,11 +19,10 @@ name: Generate weekly stats
 on:
   schedule:
     - cron: "0 12 * * 5"
-  workflow_dispatch:
+  workflow_dispatch: null
 
 jobs:
   make-executable:
-    name: Make scripts executable
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
