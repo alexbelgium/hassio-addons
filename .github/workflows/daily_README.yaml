@@ -155,18 +155,19 @@ jobs:
           echo "... done"
 
           # shellcheck disable=SC2002
-          #for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
-          #  j=0; k=0
-           # shellcheck disable=SC2002
-           # for i in $(sed -n "/$var/p" Stats); do
-         #     k="$((k+1))"
-         #     if [ "$k" -eq 3 ]; then break; fi
-          #    if [ "$i" -eq "$i" 2>/dev/null ] && [ "$i" -gt "$j" ]; then j="$i"; fi
-      #      done
+          for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
+          j=0
+          k=0
+          # shellcheck disable=SC2002
+            for i in $(sed -n "/$var/p" Stats); do
+              k="$((k+1))"
+              if [ "$k" -eq 3 ]; then break; fi
+              if [ "$i" -eq "$i" 2>/dev/null ] && [ "$i" -gt "$j" ]; then j="$i"; fi
+            done
           sed -i "s|${var^}|${var^} (${j}x)|g" README2.md
-     #     done
+          done
           echo "... done"
-          
+
           # Replace template if change
 
           echo "Replace template..."
