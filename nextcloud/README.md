@@ -57,19 +57,19 @@ Webui can be found at `<your-ip>:port`.
 ### Use mariadb as the main database (Thanks @amaciuc)
 
 If you notice the following warning at your first `webui` running:
-```
+```bash
 Performance warning
 You chose SQLite as database.
 
 SQLite should only be used for minimal and development instances. For production we recommend a different database backend.
 
 If you use clients for file syncing, the use of SQLite is highly discouraged.
-```
+```bash
 and you want to overcome this, follow the below steps:
 
 1. Install `mariadb` add-on, configure it with some random infos and start it. It is important to start it successfully in order to be seen by `nextcloud` in the network.
 2. Install `nextcloud` add-on (or restart it if you have already installed), watch the logs until you will notice the following `warning`:
-```
+```bash
 WARNING: MariaDB addon was found! It can't be configured automatically due to the way Nextcloud works, but you can configure it manually when running the web UI for the first time using those values :
 Database user : service
 Database password : Eangohyuchae6aif7saich2nies8xaivaejaNgaev6gi3yohy8ha2aexaetei6oh
