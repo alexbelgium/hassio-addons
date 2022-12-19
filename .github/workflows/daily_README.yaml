@@ -159,7 +159,7 @@ jobs:
           i=0
           j=0
           k=0
-          # shellcheck disable=SC2002
+            # shellcheck disable=SC2002
             for i in $(sed -n "/$var/p" Stats); do
               k="$((k+1))"
               if [ "$k" -eq 3 ]; then break; fi
