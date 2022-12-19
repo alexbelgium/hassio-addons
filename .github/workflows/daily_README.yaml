@@ -162,7 +162,7 @@ jobs:
             for i in $(sed -n "/$var/p" Stats); do
               k="$((k+1))"
               if [ "$k" -eq 3 ]; then break; fi
-              if [ "$i" -eq "$i" 2>/dev/null ] && [ "$i" -gt "$j" ]; then j="$i"; fi
+              if [ "$i" -eq "$i" ] && [ "$i" -gt "$j" ]; then j="$i"; fi
             done
           sed -i "s|${var^}|${var^} (${j}x)|g" README2.md
           done
