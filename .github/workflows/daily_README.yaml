@@ -154,12 +154,11 @@ jobs:
           #echo $((100*$STATS_THREE/($STATS_ONE+$STATS_TWO+$STATS_THREE)))
           echo "... done"
 
-          # shellcheck disable=SC2002
           for var in "$STATS_ONE" "$STATS_TWO" "$STATS_THREE"; do
           i=0
           j=0
           k=0
-            # shellcheck disable=SC2002
+            # shellcheck disable=SC2013
             for i in $(sed -n "/$var/p" Stats); do
               k="$((k+1))"
               if [ "$k" -eq 3 ]; then break; fi
