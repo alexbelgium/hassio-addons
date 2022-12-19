@@ -38,7 +38,6 @@ jobs:
         with:
           message: "GitHub bot : scripts executable"
           default_author: github_actions
-
   run-lint:
     runs-on: ubuntu-latest
     steps:
@@ -62,7 +61,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_NATURAL_LANGUAGE: false
           ACTION_ACTIONLINT_DISABLE_ERRORS: true
-
   check_crlf:
     name: Check CRLF action
     runs-on: ubuntu-latest
