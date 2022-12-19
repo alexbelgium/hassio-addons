@@ -22,7 +22,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
   make-executable:
     name: Make scripts executable
     runs-on: ubuntu-latest
