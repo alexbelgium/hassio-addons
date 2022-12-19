@@ -46,14 +46,14 @@ Number of addons in the repository : 73
 Total number of addons installed : 5195
 
 Top 3 most installed addons :
-  1. Portainer (847x)
-  2. Filebrowser (477x)
-  3. Qbittorrent (266x)
+1. Portainer (847x)
+2. Filebrowser (477x)
+3. Qbittorrent (266x)
 
 Most used architectures :
-  - amd64: 57%
-  - aarch64: 39%
-  - armv7: 4%
+- amd64: 57%
+- aarch64: 39%
+- armv7: 4%
 
 ## Add-ons provided by this repository
 
