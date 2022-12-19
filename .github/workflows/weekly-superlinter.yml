@@ -22,7 +22,9 @@ on:
   workflow_dispatch:
 
 jobs:
+
   make-executable:
+    name: Make scripts executable
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout Repo
