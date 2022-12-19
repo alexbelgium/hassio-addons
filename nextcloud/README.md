@@ -64,7 +64,7 @@ You chose SQLite as database.
 SQLite should only be used for minimal and development instances. For production we recommend a different database backend.
 
 If you use clients for file syncing, the use of SQLite is highly discouraged.
-```bash
+```
 and you want to overcome this, follow the below steps:
 
 1. Install `mariadb` add-on, configure it with some random infos and start it. It is important to start it successfully in order to be seen by `nextcloud` in the network.
