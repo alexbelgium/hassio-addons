@@ -42,6 +42,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       ##########################
+# This workflow executes several linters on changed files based on languages used in your code base whenever
+# you push a code or open a pull request.
+#
+# You can adjust the behavior by modifying this file.
+# For more information, see:
+# https://github.com/github/super-linter
+---
+name: Lint Code Base
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+jobs:
+  run-lint:
+    runs-on: ubuntu-latest
+    steps:
+      ##########################
       # Checkout the code base #
       ##########################
       - name: Checkout the code base
@@ -61,6 +80,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_NATURAL_LANGUAGE: false
           ACTION_ACTIONLINT_DISABLE_ERRORS: true
+
+
   check_crlf:
     name: Check CRLF action
     runs-on: ubuntu-latest
