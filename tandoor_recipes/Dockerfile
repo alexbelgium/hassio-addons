@@ -27,7 +27,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
 ##################
 # 3 Install apps #
 ##################
@@ -41,7 +40,7 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
 # Modules
-ARG MODULES="00-banner.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -52,7 +51,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d
 
 # Manual apps
-ENV PACKAGES="nginx"
+ENV PACKAGES="nginx mysql-client"
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015
@@ -62,7 +61,6 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod 777 /automatic_packages.sh \
     && eval /./automatic_packages.sh "${PACKAGES:-}" \
     && rm /automatic_packages.sh
-
 ################
 # 4 Entrypoint #
 ################

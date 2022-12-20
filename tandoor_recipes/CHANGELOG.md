@@ -1,19 +1,25 @@
+- Readd Ingress feature
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 1.4.5 (11-11-2022)
+
 - Update to latest version from TandoorRecipes/recipes
 - Ingress broken due to "spaces" feature, dev ongoing
 
 ## 1.4.4 (01-10-2022)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.4.3 (28-09-2022)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.4.2 (24-09-2022)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.4.1 (22-09-2022)
+
 - Update to latest version from TandoorRecipes/recipes
 - Allow nabucasa url
 - Ingress addition

@@ -13,6 +13,7 @@
     "TRUSTED_PROXIES": "**"
   },
   "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
+  "ingress": true,
   "map": [
     "config:rw"
   ],
@@ -45,5 +46,5 @@
   ],
   "slug": "tandoor_recipes",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4.5"
+  "version": "1.4.5-2"
 }

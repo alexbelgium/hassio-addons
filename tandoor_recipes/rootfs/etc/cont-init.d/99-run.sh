@@ -16,12 +16,13 @@ for element in ${ALLOWED_HOSTS//,/ }; do # Separate comma separated values
     CSRF_TRUSTED_ORIGINS="http://$element,https://$element,$CSRF_TRUSTED_ORIGINS"
 done
 export CSRF_TRUSTED_ORIGINS
+export ALLOWED_HOSTS="*"
 
 #################
 # Allow ingress #
 #################
 
-sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
+#sed -i "s|href=\"{% base_path request \'base\' %}\"|href=\"{% base_path request \'base\' %}/\"|g" /opt/recipes/cookbook/templates/base.html
 
 ###################
 # Define database #
@@ -71,6 +72,13 @@ case $(bashio::config 'DB_TYPE') in
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
+
+        bashio::log.info "Creating database if required"
+
+        mysql \
+          -u "${POSTGRES_USER}" -p"${POSTGRES_PASSWORD}" \
+          -h "${POSTGRES_HOST}" -P "${POSTGRES_PORT}" \
+          -e "CREATE DATABASE IF NOT EXISTS \`${POSTGRES_DB}\` ;"
         ;;
 
     postgresql_external)
