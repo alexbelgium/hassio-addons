@@ -55,7 +55,7 @@ RUN \
 
 RUN \
     sed -i "s|contenv bash|contenv bashio|g" /etc/s6-overlay/s6-rc.d/svc-jellyfin/run && \
-    sed -i "1a if [[ "\$LOCATION" = "null" || -z "\$LOCATION" ]]; then LOCATION=/config/addons_config/\${HOSTNAME#*-}; fi" /etc/s6-overlay/s6-rc.d/svc-jellyfin/run && \
+    sed -i "1a if [[ \"\$LOCATION\" = \"null\" || -z \"\$LOCATION\" ]]; then LOCATION=/config/addons_config/\${HOSTNAME#*-}; fi" /etc/s6-overlay/s6-rc.d/svc-jellyfin/run && \
     sed -i "1a LOCATION=\$(bashio::config 'data_location')" etc/s6-overlay/s6-rc.d/svc-jellyfin/run && \
     sed -i "s|/config|\$LOCATION|g" /etc/s6-overlay/s6-rc.d/svc-jellyfin/run && \
     sed -i "s|/usr/share/jellyfin|\$LOCATION|g" /etc/s6-overlay/s6-rc.d/svc-jellyfin/run
