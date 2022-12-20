@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "Starting"
           git config core.filemode true
-          # shellcheck disable=SC2086
+          # shellcheck disable=SC2086,SC2046
           git update-index --chmod=+x $(find . -type f -iname "*.sh")
           
       - name: Commit if needed
