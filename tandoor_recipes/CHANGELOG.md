@@ -1,3 +1,4 @@
+- Ingress removed
 - Readd Ingress feature
 - WARNING : update to supervisor 2022.11 before installing
 
