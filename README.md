@@ -601,7 +601,6 @@ Most used architectures :
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
-![ingress][ingress-badge]
 ![MariaDB][mariadb-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Tdarr](tdarr/) : Distributed transcode automation using FFmpeg/HandBrake
