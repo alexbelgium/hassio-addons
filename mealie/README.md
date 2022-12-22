@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [Request] Mealie v1 (opened 2022-06-09)](https://github.com/alexbelgium/hassio-addons/issues/356) by [@Tommatheussen](https://github.com/Tommatheussen)
-## &#9888; Open Issue : [🐛 [Mealie] Incomplete? (opened 2022-12-16)](https://github.com/alexbelgium/hassio-addons/issues/606) by [@chicknlil](https://github.com/chicknlil)
 
 ## Breaking change : no database migration with v1.0. Please backup your database from within Mealie before upgrading, then restore the database after upgrading. Infos here : https://hay-kot.github.io/mealie/documentation/getting-started/updating/. Something to note however about the database migration is that only the recipe data gets migrated. Not user data or other settings, and the favorite recipes are also no longer listed as such so they need to be selected again (Thanks @SeeThisIsMe)
 
