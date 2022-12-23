@@ -6,10 +6,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Test, do not use",
   "environment": {
-    "APP_PORT": "9000",
     "DB_ENGINE": "sqlite"
   },
-  "image": "ghcr.io/alexbelgium/mealie_api-{arch}",
   "map": [
     "config:rw",
     "share:rw",
