@@ -15,8 +15,8 @@
   ],
   "name": "Do not use (Mealie API)",
   "options": {
-    "PGID": 0,
-    "PUID": 0,
+    "PGID": 1000,
+    "PUID": 1000,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "ssl": false
