@@ -33,7 +33,7 @@ ENV HOME=/config/addons_config/plex-data-manager
 RUN \
     # Add template config.yaml
     mkdir /templates \
-    && curl -f -L -s -S "https://github.com/meisnate12/Plex-Meta-Manager/blob/master/config/config.yml.template" -o /templates/config.yml
+    && curl -f -L -s -S "https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager/master/config/config.yml.template" -o /templates/config.yml
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/plex-meta-manager"
