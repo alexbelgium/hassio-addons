@@ -6,7 +6,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Test, do not use",
   "environment": {
-    "APP_PORT": "9925",
+    "APP_PORT": "9000",
     "DB_ENGINE": "sqlite"
   },
   "image": "ghcr.io/alexbelgium/mealie_api-{arch}",
@@ -25,10 +25,10 @@
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
-    "9925/tcp": 9925
+    "9000/tcp": 9000
   },
   "ports_description": {
-    "9925/tcp": "API port"
+    "9000/tcp": "API port"
   },
   "schema": {
     "BASE_URL": "str?",
