@@ -6,7 +6,11 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Test, do not use",
   "environment": {
-    "DB_ENGINE": "sqlite"
+    "DB_ENGINE": "sqlite",
+    "WEB_GUNICORN": "true",
+    "WORKERS_PER_CORE: "0.5",
+    "MAX_WORKERS: "1",
+    "WEB_CONCURRENCY: "1"
   },
   "map": [
     "config:rw",
