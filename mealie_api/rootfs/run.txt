@@ -1,6 +1,10 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
+if [ ! -f /started ]; then
+
+touch /started
+
 ####################
 # Starting scripts #
 ####################
@@ -107,3 +111,5 @@ fi
 
 
 bashio::log.info "Starting app"
+
+fi
