@@ -73,8 +73,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 RUN \
     # Add custom instructions to run.sh
     sed -i '1d' /app/mealie/run.sh \
-    && cat /app/mealie/run.sh >> /run.sh \
-    && mv -f /run.sh /app/mealie/run.sh \
+    && cat /app/mealie/run.sh >> /run.txt \
+    && cat /run.txt > /app/mealie/run.sh \
     && chmod +x /app/mealie/run.sh
 
 ############
