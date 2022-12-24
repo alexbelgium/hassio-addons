@@ -9,6 +9,7 @@
     "DB_ENGINE": "sqlite",
     "WEB_GUNICORN": "true"
   },
+  "image": "ghcr.io/alexbelgium/mealie_api-{arch}",
   "map": [
     "config:rw",
     "share:rw",
