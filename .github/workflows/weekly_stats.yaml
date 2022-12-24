@@ -35,7 +35,7 @@ jobs:
           # shellcheck disable=SC2086
           for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
             DOWNLOADS=0
-            if grep -Fxq "image" "$f"/config.json; then
+            if [ -f "$f"/config.json ]; then
               SLUG="$(jq -r '.image' "$f/config.json" | awk -F 'alexbelgium/|-{arch' '{print $2}')"
               if [[ "$(jq '.arch[]' "$f/config.json")" == *"armv7"* ]]; then
                 ARCH=armv7 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
