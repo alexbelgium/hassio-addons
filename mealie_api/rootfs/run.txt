@@ -96,7 +96,8 @@ fi
 ###############
 
 echo "Permissions adapted"
-chmod -R 777 /data
+chmod 777 /data
+chown -R "$(bashio::config "PUID"):$(bashio::config "PGID")" /data
 
 #######
 # SSL #
