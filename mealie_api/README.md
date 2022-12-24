@@ -24,8 +24,7 @@ This addon contains only the API, the frontend is installed with another addon.
 
 ## Installation
 
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Hass.io add-on.
+The installation of this add-on is pretty straightforward and not different in comparison to installing any other Hass.io add-on.
 
 1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
 1. Install this add-on.
@@ -62,4 +61,4 @@ Read here : https://hay-kot.github.io/mealie/documentation/community-guide/home-
 
 If you have in issue with your installation, please be sure to checkout github.
 
-[repository]: https://github.com/alexbelgium/hassio-addons 
+[repository]: https://github.com/alexbelgium/hassio-addons
