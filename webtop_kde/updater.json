@@ -5,5 +5,5 @@
   "slug": "webtop_kde",
   "source": "github",
   "upstream_repo": "linuxserver/docker-webtop",
-  "upstream_version": "4.16-r0-ls82"
+  "upstream_version": "4.16-r0-ls83"
 }
