@@ -1,3 +1,6 @@
+
+## 10.8.8-1-ls193 (25-12-2022)
+- Update to latest version from linuxserver/docker-jellyfin
 - Fixed ingress
 - Expose web folder to /config/addons_config/jellyfin/web
 
