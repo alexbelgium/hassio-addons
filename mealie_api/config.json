@@ -40,6 +40,6 @@
   },
   "slug": "mealie_api",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "DO_NOT_USE",
+  "version": "1.0.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9000]"
 }
