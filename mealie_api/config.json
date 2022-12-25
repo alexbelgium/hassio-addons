@@ -42,4 +42,4 @@
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "DO_NOT_USE",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9000]"
-} 
+}
