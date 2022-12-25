@@ -1,3 +1,6 @@
+
+## 2.10.4 (25-12-2022)
+- Update to latest version from etechonomy/joplin-server
 - Breaking change: MAILER_SECURE replaced by MAILER_SECURITY
 - WARNING : update to supervisor 2022.11 before installing
 - Add access to systime
