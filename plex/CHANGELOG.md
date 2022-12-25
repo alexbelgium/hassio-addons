@@ -1,4 +1,7 @@
 
+## 1.30.0.6486-629d58034-ls147 (25-12-2022)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.29.2.6364-6d72b0cf6-ls145 (01-12-2022)
 - Update to latest version from linuxserver/docker-plex
 - WARNING : update to supervisor 2022.11 before installing
