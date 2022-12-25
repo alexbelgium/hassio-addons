@@ -1,3 +1,6 @@
+
+## 0.8.1 (25-12-2022)
+- Update to latest version from benbusby/whoogle-search
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 0.8.0 (26-11-2022)
