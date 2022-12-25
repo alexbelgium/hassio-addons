@@ -39,8 +39,8 @@ if [ ! -d "/data/$BASENAME" ]; then
 else
     LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
     cd "/data/$BASENAME" || exit
-    git pull --rebase &>/dev/null || git reset --hard &>/dev/null
-    git pull --rebase &>/dev/null
+    git pull --rebase >/dev/null || git reset --hard >/dev/null
+    git pull --rebase >/dev/null
 fi
 
 LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
