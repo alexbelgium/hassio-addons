@@ -1,6 +1,6 @@
 {
-  "fulltag": "true",
   "github_beta": "true",
+  "github_fulltag": "true",
   "last_update": "25-12-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "mealie_api",
