@@ -6,5 +6,5 @@
   "slug": "webtrees",
   "source": "github",
   "upstream_repo": "nathanvaughn/webtrees-docker",
-  "upstream_version": "2.1.14"
+  "upstream_version": "2.1.15"
 }
