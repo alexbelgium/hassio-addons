@@ -17,6 +17,7 @@
   ],
   "name": "Do not use (Mealie frontend)",
   "options": {
+    "API_URL": "http://homeassistant.local:9000",
     "PGID": 1000,
     "PUID": 1000,
     "certfile": "fullchain.pem",
@@ -25,12 +26,13 @@
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
-    "9000/tcp": 9000
+    "3000/tcp": 3000
   },
   "ports_description": {
-    "9000/tcp": "frontend port"
+    "3000/tcp": "Webui"
   },
   "schema": {
+    "API_URL": "str",
     "BASE_URL": "str?",
     "PGID": "int",
     "PUID": "int",
