@@ -1,0 +1,10 @@
+{
+  "github_beta": "true",
+  "github_fulltag": "true",
+  "last_update": "25-12-2022",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "mealie_frontend",
+  "source": "github",
+  "upstream_repo": "hay-kot/mealie",
+  "upstream_version": "v1.0.0-beta-1"
+}
