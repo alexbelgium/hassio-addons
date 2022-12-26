@@ -15,7 +15,7 @@
     "share:rw",
     "ssl:rw"
   ],
-  "name": "Mealie",
+  "name": "Obsolete : Mealie",
   "options": {
     "PGID": 0,
     "PUID": 0,
