@@ -5,10 +5,6 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A Self Hosted Recipe Manager (frontend)",
-  "environment": {
-    "DB_ENGINE": "sqlite",
-    "WEB_GUNICORN": "true"
-  },
   "image": "ghcr.io/alexbelgium/mealie_frontend-{arch}",
   "map": [
     "config:rw",
@@ -18,15 +14,13 @@
   "name": "Do not use (Mealie frontend)",
   "options": {
     "API_URL": "http://homeassistant.local:9000",
-    "PGID": 1000,
-    "PUID": 1000,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "ssl": false
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
-    "3000/tcp": 3000
+    "3000/tcp": 3012
   },
   "ports_description": {
     "3000/tcp": "Webui"
@@ -34,8 +28,6 @@
   "schema": {
     "API_URL": "str",
     "BASE_URL": "str?",
-    "PGID": "int",
-    "PUID": "int",
     "certfile": "str",
     "keyfile": "str",
     "ssl": "bool"
