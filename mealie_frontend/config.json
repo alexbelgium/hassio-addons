@@ -11,7 +11,7 @@
     "share:rw",
     "ssl:rw"
   ],
-  "name": "Do not use (Mealie frontend)",
+  "name": "Mealie (frontend)",
   "options": {
     "API_URL": "http://homeassistant.local:9000",
     "PGID": 1000,
