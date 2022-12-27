@@ -17,9 +17,9 @@ if bashio::config.true "expose_collector"; then
       rm /opt/scrutiny/config/collector.yaml
     fi
     touch /share/scrutiny/collector.yaml
-    ln -s /share/scrutiny/collector.yaml /data/config
+    ln -sf /share/scrutiny/collector.yaml /data/config || true
     mkdir -p /opt/scrutiny/config
-    ln -s /share/scrutiny/collector.yaml /opt/scrutiny/config/collector.yaml
+    ln -sf /share/scrutiny/collector.yaml /opt/scrutiny/config/collector.yaml || true
     chmod 777 -R /share/scrutiny
 fi
 
