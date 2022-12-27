@@ -11,6 +11,8 @@ if bashio::config.true "expose_collector"; then
     if [ -f /data/config/collector.yaml ] ; then
       cp -rnf /data/config/collector.yaml /share/scrutiny || true
       rm -R /data/config/collector.yaml
+    elif [ -f /opt/scrutiny/config/collector.yaml ] ; then
+      cp -rnf /opt/scrutiny/config/collector.yaml /share/scrutiny || true
     else
       touch /share/scrutiny/collector.yaml
     fi
