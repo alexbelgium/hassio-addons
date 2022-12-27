@@ -15,7 +15,7 @@
     "share:rw",
     "ssl:rw"
   ],
-  "name": "Do not use (Mealie API)",
+  "name": "Mealie (API)",
   "options": {
     "PGID": 1000,
     "PUID": 1000,
