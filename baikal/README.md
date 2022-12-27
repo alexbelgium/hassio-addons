@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Baikal: Using let's encrypt SSL certificates (opened 2022-12-21)](https://github.com/alexbelgium/hassio-addons/issues/609) by [@financelurker](https://github.com/financelurker)
 
 # Home assistant add-on: Baikal
 
