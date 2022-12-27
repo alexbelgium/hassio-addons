@@ -36,7 +36,10 @@ The installation of this add-on is pretty straightforward and not different in c
 ## Configuration
 
 - Start the addon. Wait a while and check the log for any errors.
-- Install the Mealie Frontend Addon, configure it and start it
+- Open yourdomain.com:9925 (where ":9925" is the port configured in the addon).
+- Default
+  - Username: changeme@email.com
+  - Password: MyPassword
 
 Options can be configured through two ways :
 
