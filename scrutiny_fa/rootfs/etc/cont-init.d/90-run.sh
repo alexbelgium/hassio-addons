@@ -1,6 +1,23 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+#########################
+# EXPOSE COLLECTOR.YAML #
+#########################
+
+if bashio::config.true "expose_collector"; then
+    bashio::log.info "collector.yaml exposed in /share/scrutiny"
+    mkdir -p /share/scrutiny
+    if [ -f /data/config/collector.yaml] ; then
+      cp -rnf /data/config/collector.yaml /share/scrutiny || true
+      rm -R /data/config/collector.yaml
+    else
+      touch /share/scrutiny/collector.yaml
+    fi
+    ln -s /share/scrutiny/collector.yaml /data/config
+    chmod 777 -R /share/scrutiny
+fi
+
 ########
 # MODE #
 ########
