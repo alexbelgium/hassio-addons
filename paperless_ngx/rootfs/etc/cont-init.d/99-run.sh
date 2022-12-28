@@ -26,6 +26,11 @@ export PAPERLESS_ALLOWED_HOSTS="*"
 #################
 exec redis-server & bashio::log.info "Starting redis"
 
+#################
+# Staring nginx #
+#################
+exec nginx & bashio::log.info "Starting nginx"
+
 ###############
 # Staring app #
 ###############

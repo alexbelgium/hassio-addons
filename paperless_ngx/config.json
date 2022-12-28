@@ -54,7 +54,8 @@
     "config:rw",
     "share:rw",
     "media:rw",
-    "config:rw"
+    "config:rw",
+    "ssl"
   ],
   "name": "Paperless NGX",
   "options": {
@@ -94,6 +95,6 @@
   },
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.10.2-4",
+  "version": "1.10.2-5",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8001]"
 }
