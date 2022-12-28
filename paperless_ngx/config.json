@@ -81,12 +81,14 @@
   "schema": {
     "CONFIG_LOCATION": "str",
     "OCRLANG": "str?",
+    "PAPERLESS_URL": "str?",
     "PAPERLESS_OCR_MODE": "list(skip|redo|force|skip_noarchive)?",
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "database": "list(|sqlite|mariadb_addon)?",
     "localdisks": "str?",
     "networkdisks": "str?",
     "certfile": "str",
@@ -99,5 +101,5 @@
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.10.2-5",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8001]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
 }
