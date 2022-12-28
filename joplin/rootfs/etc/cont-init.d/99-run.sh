@@ -60,6 +60,7 @@ bashio::config.has_value 'MAILER_NOREPLY_NAME' && export MAILER_NOREPLY_NAME=$(b
 bashio::config.has_value 'MAILER_NOREPLY_EMAIL' && export MAILER_NOREPLY_EMAIL=$(bashio::config 'MAILER_NOREPLY_EMAIL') && bashio::log.info 'Mailer Noreply Email set'
 bashio::config.has_value 'MAILER_ENABLED' && export MAILER_ENABLED=$(bashio::config 'MAILER_ENABLED') && bashio::log.info 'Mailer Enabled set'
 export APP_BASE_URL=$(bashio::config 'APP_BASE_URL')
+export ALLOWED_HOSTS="*"
 
 bashio::log.info 'Starting Joplin. Initial user is "admin@localhost" with password "admin"'
 
