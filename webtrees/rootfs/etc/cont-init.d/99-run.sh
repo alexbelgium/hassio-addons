@@ -71,8 +71,8 @@ if bashio::config.true 'ssl'; then
     KEYFILE=$(bashio::config 'keyfile')
 
     #Replace variables
-    export SSL_CERT_FILE="$CERTFILE"
-    export SSL_CERT_KEY_FILE="$KEYFILE"
+    export SSL_CERT_FILE="/ssl/$CERTFILE"
+    export SSL_CERT_KEY_FILE="/ssl/$KEYFILE"
 
     #Send env variables
     export HTTPS=true
