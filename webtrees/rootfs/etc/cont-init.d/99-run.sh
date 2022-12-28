@@ -82,6 +82,11 @@ if bashio::config.true 'ssl'; then
 
     #Communication
     bashio::log.info "Ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+
+else
+
+export HTTPS=false
+
 fi
 
 ##############
