@@ -6,7 +6,8 @@
 # GLOBAL VARIABLES #
 ####################
 
-export BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
+BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
+export BASE_URL="${BASE_URL/https:/http:}"
 #export LANG=$(bashio::config 'LANG')
 
 ##############
@@ -78,7 +79,7 @@ if bashio::config.true 'ssl'; then
     export HTTPS=true
     export SSL=true
     export HTTPS_REDIRECT=true
-    BASE_URL="$BASE_URL":$(bashio::addon.port 443)
+    BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 443)
     export BASE_URL="${BASE_URL/http:/https:}"
 
     #Communication
