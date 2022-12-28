@@ -1,15 +1,20 @@
+- Allow ssl
 
 ## 1.10.2 (06-12-2022)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 1.10.1 (02-12-2022)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 1.10.0 (28-11-2022)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 1.9.2 (02-11-2022)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 - BACKUP BEFORE UPDATE : switch to paperless-ngx image. Please backup before switch.
 
