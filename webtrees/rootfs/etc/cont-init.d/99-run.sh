@@ -77,6 +77,7 @@ if bashio::config.true 'ssl'; then
     #Send env variables
     export HTTPS=true
     export SSL=true
+    export HTTPS_REDIRECT=true
     BASE_URL="$BASE_URL":$(bashio::addon.port 443)
     export BASE_URL="${BASE_URL/http:/https:}"
 
