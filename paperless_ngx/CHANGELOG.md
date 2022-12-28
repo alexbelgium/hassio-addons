@@ -1,3 +1,4 @@
+- Allow mariadb
 - Allow ssl
 
 ## 1.10.2 (06-12-2022)
