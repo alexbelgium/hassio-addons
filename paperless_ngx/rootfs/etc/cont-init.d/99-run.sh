@@ -21,6 +21,45 @@ export PAPERLESS_ADMIN_PASSWORD="admin"
 export PAPERLESS_ADMIN_USER="admin"
 export PAPERLESS_ALLOWED_HOSTS="*"
 
+###################
+# Define database #
+###################
+
+bashio::log.info "Defining database"
+
+case $(bashio::config 'database') in
+
+    # Use mariadb
+    mariadb_addon)
+        bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
+        if ! bashio::services.available 'mysql'; then
+            bashio::log.fatal \
+                "Local database access should be provided by the MariaDB addon"
+            bashio::exit.nok \
+                "Please ensure it is installed and started"
+        fi
+
+        # Use values
+        export PAPERLESS_DBENGINE=mariadb
+        export PAPERLESS_DBHOST="$(bashio::services 'mysql' 'host')"
+        export PAPERLESS_DBPORT="$(bashio::services 'mysql' 'port')"
+        export PAPERLESS_DBNAME=paperless
+        export PAPERLESS_DBUSER="$(bashio::services "mysql" "username")"
+        export PAPERLESS_DBPASS="$(bashio::services "mysql" "password")"
+
+        # Informations
+        bashio::log.warning "This addon is using the Maria DB addon"
+        bashio::log.warning "Please ensure this is included in your backups"
+        bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
+        ;;
+
+
+    # Use sqlite
+    *)
+        bashio::log.info "Using sqlite as database driver"
+        ;;
+esac
+
 #################
 # Staring redis #
 #################
