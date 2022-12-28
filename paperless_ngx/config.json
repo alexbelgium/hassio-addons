@@ -93,6 +93,9 @@
     "keyfile": "str",
     "ssl": "bool"
   },
+  "services": [
+    "mysql:want"
+  ],
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.10.2-5",
