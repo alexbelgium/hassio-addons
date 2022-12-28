@@ -87,6 +87,10 @@ else
 
 fi
 
+if bashio::config.true "base_url_portless"; then
+    export BASE_URL=$(bashio::config 'BASE_URL')
+fi
+
 ##############
 # LAUNCH APP #
 ##############
