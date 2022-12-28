@@ -43,7 +43,6 @@
   "environment": {
     "PAPERLESS_ADMIN_PASSWORD": "admin",
     "PAPERLESS_ADMIN_USER": "admin",
-    "PAPERLESS_PORT": "8001",
     "PGID": "0",
     "PUID": "0"
   },
@@ -69,10 +68,12 @@
     "ssl": true
   },
   "ports": {
-    "8000/tcp": 8011
+    "8000/tcp": 8011,
+    "8443/tcp": null
   },
   "ports_description": {
-    "8000/tcp": "web interface"
+    "8000/tcp": "Http web interface",
+    "8443/tcp": "Https web interface"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -100,6 +101,6 @@
   ],
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.10.2-5",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
+  "version": "1.10.2-6",
+  "webui": "http://[HOST]:[PORT:8000]"
 }
