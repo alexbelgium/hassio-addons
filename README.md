@@ -145,22 +145,6 @@ Most used architectures :
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Do not use (Mealie API)](mealie_api/) : A Self Hosted Recipe Manager (API)
-
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_api%2Fconfig.json)
-![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_api%2Fupdater.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7no][armv7no-badge]
-
-&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Do not use (Mealie frontend)](mealie_frontend/) : A Self Hosted Recipe Manager (frontend)
-
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_frontend%2Fconfig.json)
-![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_frontend%2Fupdater.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7no][armv7no-badge]
-
 &#10003;  [Elasticsearch server](elasticsearch/) : Free and Open, Distributed, RESTful Search Engine
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Felasticsearch%2Fconfig.json)
@@ -326,6 +310,22 @@ Most used architectures :
 ![armv7][armv7-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Mealie (API)](mealie_api/) : A Self Hosted Recipe Manager (API)
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_api%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_api%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7no][armv7no-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Mealie (frontend)](mealie_frontend/) : A Self Hosted Recipe Manager (frontend)
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_frontend%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_frontend%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [MyElectricalData](enedisgateway2mqtt/) : Use Enedis Gateway API to send data in your MQTT Broker (latest channel)
 
