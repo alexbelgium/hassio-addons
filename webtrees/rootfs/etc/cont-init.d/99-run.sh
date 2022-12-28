@@ -2,14 +2,6 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2155
 
-####################
-# GLOBAL VARIABLES #
-####################
-
-BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
-export BASE_URL="${BASE_URL/https:/http:}"
-#export LANG=$(bashio::config 'LANG')
-
 ##############
 # CLOUDFLARE #
 ##############
@@ -87,7 +79,11 @@ if bashio::config.true 'ssl'; then
 
 else
 
-export HTTPS=false
+  export HTTPS=false
+  export SSL=false
+  export HTTPS_REDIRECT=false
+  BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
+  export BASE_URL="${BASE_URL/https:/http:}"
 
 fi
 
