@@ -71,10 +71,8 @@ if bashio::config.true 'ssl'; then
     KEYFILE=$(bashio::config 'keyfile')
 
     #Replace variables
-    sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/default-ssl.conf
-    sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/default-ssl.conf
-    sed -i "s|/certs/webtrees.crt|/ssl/$CERTFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
-    sed -i "s|/certs/webtrees.key|/ssl/$KEYFILE|g" /etc/apache2/sites-available/webtrees-ssl.conf
+    export SSL_CERT_FILE="$CERTFILE"
+    export SSL_CERT_KEY_FILE="$KEYFILE"
 
     #Send env variables
     export HTTPS=true
