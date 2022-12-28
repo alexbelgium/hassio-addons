@@ -48,6 +48,9 @@ case $(bashio::config 'database') in
         export PAPERLESS_DBUSER="$(bashio::services "mysql" "username")"
         export PAPERLESS_DBPASS="$(bashio::services "mysql" "password")"
 
+        # Create database
+        mysql --host="$PAPERLESS_DBHOST" --port="$PAPERLESS_DBPORT" --user="$PAPERLESS_DBUSER" --password="$PAPERLESS_DBPASS" -e"CREATE DATABASE IF NOT EXISTS $PAPERLESS_DBNAME;"
+
         # Informations
         bashio::log.warning "This addon is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
