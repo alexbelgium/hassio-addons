@@ -46,7 +46,8 @@
   "init": false,
   "map": [
     "share:rw",
-    "config:rw"
+    "config:rw",
+    "media:rw"
   ],
   "name": "ResilioSync",
   "options": {
@@ -85,5 +86,5 @@
   },
   "slug": "resiliosync",
   "url": "https://github.com/tyjtyj/hassio-addons",
-  "version": "2.7.3-5"
+  "version": "2.7.3-6"
 }
