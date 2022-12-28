@@ -70,4 +70,6 @@ change_folders "$(bashio::config 'config_location')" "/share/resiliosync_config"
 change_folders "$(bashio::config 'data_location')" "/share/resiliosync" "data_location"
 change_folders "$(bashio::config 'downloads_location')" "/share/resiliosync_downloads" "downloads_location"
 
-mkdir -p /share/resiliosync
+if [[ ! -e "$(bashio::config 'config_location')"/sync.conf ]]; then
+    cp /defaults/sync.conf "$(bashio::config 'config_location')"/sync.conf
+fi
