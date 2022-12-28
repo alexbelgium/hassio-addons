@@ -1,3 +1,5 @@
+edit : wait for full transfer before deleting this app (keep backups!)
+
 App is obsolete. Please backup all your data, and migrate to the new addons with separate Frontend and API.
 
 1. Backup all your data from this addon
