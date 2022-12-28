@@ -24,10 +24,7 @@ change_folders () {
 
         # Modify files
         echo "Adapting files"
-        grep -rl "$ORIGINALLOCATION" /etc/cont-init.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g" || true
-        grep -rl "$ORIGINALLOCATION" /etc/services.d | xargs sed -i "s|$ORIGINALLOCATION|$CONFIGLOCATION|g" || true
-        sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /etc/cont-init.d/10-adduser || true
-        sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" /defaults/* || true
+        for file in $(grep -sril "$ORIGINALLOCATION" /etc /defaults); do sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" $file; done
 
         # Adapt sync.conf
         for FILE in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
@@ -71,3 +68,5 @@ change_folders () {
 change_folders "$(bashio::config 'config_location')" "/share/resiliosync_config" "config_location"
 change_folders "$(bashio::config 'data_location')" "/share/resiliosync" "data_location"
 change_folders "$(bashio::config 'downloads_location')" "/share/resiliosync_downloads" "downloads_location"
+
+mkdir -p /share/resiliosync
