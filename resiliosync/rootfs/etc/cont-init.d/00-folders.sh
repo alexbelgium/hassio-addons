@@ -25,7 +25,7 @@ change_folders () {
         # Modify files
         echo "Adapting files"
         # shellcheck disable=SC2013,SC2086                                                                                           
-        for file in $(grep -sril "$ORIGINALLOCATION" /etc /defaults); do sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" $file; done
+        for file in $(grep -ril "$ORIGINALLOCATION" /etc /defaults); do sed -i "s=$ORIGINALLOCATION=$CONFIGLOCATION=g" $file; done
 
         # Adapt sync.conf
         for FILE in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
