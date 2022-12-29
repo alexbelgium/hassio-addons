@@ -30,8 +30,11 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
+    sed -i "s|bash|bashio|g" /etc/s6-overlay/s6-rc.d/svc-resilio-sync/run \
+    && sed -i "s|/config/sync.conf|\$(bashio::config 'config_location')/sync.conf|g" /etc/s6-overlay/s6-rc.d/svc-resilio-sync/run \
+    \
     # Correct sync folder
-    for file in $(grep -Esril "/sync[ '\"/]|/sync\$" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/sync=/share/resiliosync=g" $file; done \
+    && for file in $(grep -Esril "/sync[ '\"/]|/sync\$" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/sync=/share/resiliosync=g" $file; done \
     && for file in $(grep -ril "/share/resiliosync.conf" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/share/resiliosync.conf=/sync.conf=g" $file; done \
     # Correct sync folder
     && for file in $(grep -Esril "/downloads[ '\"/]|/downloads\$" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/downloads=/share/resiliosync_downloads=g" $file; done \
@@ -39,9 +42,7 @@ RUN \
     && sed -i 's|"directory_root_policy" : "belowroot"|"directory_root_policy" : "all"|g' /defaults/sync.conf \
     && sed -i 's|"allow_empty_password" : false|"allow_empty_password" : true|g' /defaults/sync.conf \
     \
-    && sed -i 's|"/sync",|"/", "/sync",|g' /defaults/sync.conf \
-    \
-    && sed -i "1a /./etc/cont-init.d/00-folders.sh" /etc/s6-overlay/s6-rc.d/init-resilio-sync-config/run
+    && sed -i 's|"/sync",|"/", "/sync",|g' /defaults/sync.conf
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/share/resiliosync_config"
