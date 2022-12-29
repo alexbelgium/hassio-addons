@@ -41,7 +41,7 @@ RUN \
     \
     && sed -i 's|"/sync",|"/", "/sync",|g' /defaults/sync.conf \
     \
-    && sed -i "1a /./etc-cont-init.d/00-folders.sh" /etc/s6-overlay/s6-rc.d/init-resilio-sync-config/run
+    && sed -i "1a /./etc/cont-init.d/00-folders.sh" /etc/s6-overlay/s6-rc.d/init-resilio-sync-config/run
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/share/resiliosync_config"
