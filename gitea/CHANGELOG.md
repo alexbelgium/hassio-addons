@@ -1,3 +1,6 @@
+
+## 1.18.0 (31-12-2022)
+- Update to latest version from go-gitea/gitea
 - WARNING : update to supervisor 2022.11 before installing
 ## 1.17.4 (22-12-2022)
 - Update to version 1.17.4 from go-gitea/gitea
