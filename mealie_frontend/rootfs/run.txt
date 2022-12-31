@@ -96,8 +96,11 @@ fi
 ###############
 
 echo "Permissions adapted"
-chmod 777 /data
-chown -R "$(bashio::config "PUID"):$(bashio::config "PGID")" /data
+mkdir -p /config/addons_config/mealie_data
+cp -rnf /data/* /config/addons_config/mealie_data/
+rm /config/addons_config/mealie_data/options.json || true
+chmod 777 /config/addons_config/mealie_data 
+chown -R "$(bashio::config "PUID"):$(bashio::config "PGID")" /config/addons_config/mealie_data
 
 #######
 # SSL #
