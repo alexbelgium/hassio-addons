@@ -38,6 +38,6 @@
   },
   "slug": "mealie_frontend",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v1.0.0-beta-1b",
+  "version": "v1.0.0-beta-1b-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
