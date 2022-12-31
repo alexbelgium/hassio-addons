@@ -1,4 +1,7 @@
 
+## 2.10.5 (31-12-2022)
+- Update to latest version from etechonomy/joplin-server
+
 ## 2.10.4 (25-12-2022)
 - Update to latest version from etechonomy/joplin-server
 - Breaking change: MAILER_SECURE replaced by MAILER_SECURITY
