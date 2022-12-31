@@ -1,3 +1,6 @@
+
+## 1.36.33 (31-12-2022)
+- Update to latest version from zoneminder-containers/zoneminder-base
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 1.36.32 (22-11-2022)
