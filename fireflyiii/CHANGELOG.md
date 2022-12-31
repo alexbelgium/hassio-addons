@@ -1,4 +1,7 @@
 
+## 5.7.17 (31-12-2022)
+- Update to latest version from firefly-iii/firefly-iii
+
 ## 5.7.16 (25-12-2022)
 - Update to latest version from firefly-iii/firefly-iii
 - WARNING : update to supervisor 2022.11 before installing
