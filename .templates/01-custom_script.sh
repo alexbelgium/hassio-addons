@@ -8,7 +8,7 @@ mkdir -p /config/addons_autoscripts
 
 # Migrate scripts
 if [ -f /config/"${slug}".sh ]; then
-  mv -f /config/"${slug}".sh /config/addons_autoscripts/"${slug}".sh
+    mv -f /config/"${slug}".sh /config/addons_autoscripts/"${slug}".sh
 fi
 
 # Execute scripts

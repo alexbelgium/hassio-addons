@@ -30,7 +30,7 @@ bashio::log.info "Defining database"
 
 case $(bashio::config 'database') in
 
-    # Use mariadb
+        # Use mariadb
     mariadb_addon)
         bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
         if ! bashio::services.available 'mysql'; then
@@ -58,7 +58,7 @@ case $(bashio::config 'database') in
         ;;
 
 
-    # Use sqlite
+        # Use sqlite
     *)
         bashio::log.info "Using sqlite as database driver"
         ;;

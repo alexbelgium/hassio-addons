@@ -79,11 +79,11 @@ if bashio::config.true 'ssl'; then
 
 else
 
-  export HTTPS=false
-  export SSL=false
-  export HTTPS_REDIRECT=false
-  BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
-  export BASE_URL="${BASE_URL/https:/http:}"
+    export HTTPS=false
+    export SSL=false
+    export HTTPS_REDIRECT=false
+    BASE_URL=$(bashio::config 'BASE_URL'):$(bashio::addon.port 80)
+    export BASE_URL="${BASE_URL/https:/http:}"
 
 fi
 
