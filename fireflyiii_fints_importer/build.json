@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "amd64": "benkl/firefly-iii-fints-importer:latest",
-    "aarch64": "benkl/firefly-iii-fints-importer:latest"
+    "aarch64": "benkl/firefly-iii-fints-importer:latest",
+    "amd64": "benkl/firefly-iii-fints-importer:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
