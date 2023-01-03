@@ -112,6 +112,8 @@ chmod -R 777 /data
 # MIGRATE DATA #
 ################
 
+bashio::log.warning "Data migration for amd64"
+bashio::log.warning "Data migrated to /config/addons_config/mealie_data ; you can now use the new addons. For aarch64, you need to do a manual backup and restore"
 cp -r /data/* /config/addons_config/mealie_data/
 
 #######
