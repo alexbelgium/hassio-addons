@@ -1,5 +1,8 @@
-# App is obsolete
+# Test of new omni app
 
+This will replace the 2 other addons.
+
+Instructions to migrate to the 2 addons system below.
 Please backup all your data, and migrate to the new addons with separate Frontend and API.
 
 ## Migrating from <1.0 (aarch64) :
