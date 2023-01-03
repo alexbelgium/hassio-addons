@@ -6,7 +6,6 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Mealie is a self hosted recipe manager and meal planner built in Vue",
   "environment": {
-    "APP_PORT": "9925",
     "DB_ENGINE": "sqlite",
     "WEB_GUNICORN": "true"
   },
@@ -26,10 +25,10 @@
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
-    "9925/tcp": 9925
+    "9000": 9000
   },
   "ports_description": {
-    "9925/tcp": "Web interface"
+    "9000/tcp": "Web interface"
   },
   "schema": {
     "BASE_URL": "str?",
@@ -42,5 +41,5 @@
   "slug": "mealie",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "Omni-test2",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:9925]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:9000]"
 }
