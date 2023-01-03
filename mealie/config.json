@@ -7,7 +7,8 @@
   "description": "Mealie is a self hosted recipe manager and meal planner built in Vue",
   "environment": {
     "APP_PORT": "9925",
-    "DB_ENGINE": "sqlite"
+    "DB_ENGINE": "sqlite",
+    "WEB_GUNICORN": "true"
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "map": [
