@@ -31,6 +31,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # MOFIFY DATA PATH
 ENV CREATE_TUN_DEVICE=false \
     OPENVPN_OPTS=""
+    
+# ENABLE WEB PROXY FOR PROWLARR TO USE VPN
+ENV WEBPROXY_ENABLED=false \
+    WEBPROXY_PORT=8118 \
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/transmission_openvpn"
