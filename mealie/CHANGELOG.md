@@ -1,3 +1,5 @@
+## 1.0.1 (03-01-2023)
+- Migrates data to cp -r /data/* /config/addons_config/mealie_data/ to enable usage of new addons
 - WARNING : update to supervisor 2022.11 before installing
 - Optional passing of env variables by adding them in a config.yml file (see readme)
 - Breaking change : amd64 updated to mealie 1.0
