@@ -1,6 +1,9 @@
-App is obsolete. Please backup all your data, and migrate to the new addons with separate Frontend and API.
+# App is obsolete
 
-Migrating from <1.0 (aarch64) :
+Please backup all your data, and migrate to the new addons with separate Frontend and API.
+
+## Migrating from <1.0 (aarch64) :
+
 1. Backup all your data from this addon
 2. Install the Mealie API addon
 3. Configure your base url if needed, and launch it
@@ -10,7 +13,8 @@ Migrating from <1.0 (aarch64) :
 7. Import the database
 8. Uninstall the previous addon
 
-Migrating from >1.0 (amd64) (thanks @jdeath) : 
+## Migrating from >1.0 (amd64) (thanks @jdeath) :
+
 While you cannot update from >1.0 to the new version, you can move your database.
 1. Start new API and front end addon.
 2. Stop new API and front end addon
