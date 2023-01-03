@@ -108,6 +108,12 @@ fi
 echo "Permissions adapted"
 chmod -R 777 /data
 
+################
+# MIGRATE DATA #
+################
+
+cp -r /data/* /config/addons_config/mealie_data/
+
 #######
 # SSL #
 #######
