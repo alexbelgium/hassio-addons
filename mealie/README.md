@@ -1,6 +1,6 @@
 App is obsolete. Please backup all your data, and migrate to the new addons with separate Frontend and API.
 
-Migrating from <1.0 :
+Migrating from <1.0 (aarch64) :
 1. Backup all your data from this addon
 2. Install the Mealie API addon
 3. Configure your base url if needed, and launch it
@@ -10,4 +10,9 @@ Migrating from <1.0 :
 7. Import the database
 8. Uninstall the previous addon
 
-Migrating from >1.0 : not supported by developer...
+Migrating from >1.0 (amd64) (thanks @jdeath) : 
+While you cannot update from >1.0 to the new version, you can move your database.
+1. Start new API and front end addon.
+2. Stop new API and front end addon
+3. Start the old mealie addon, log in to the docker container, and cp -r /data/* /config/addons_config/mealie_data/
+4. Start new API and front end addon, and everything should be working
