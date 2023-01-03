@@ -41,6 +41,6 @@
   },
   "slug": "mealie",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "Omni-test",
+  "version": "Omni-test2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9925]"
 }
