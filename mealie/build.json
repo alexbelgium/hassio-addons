@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "hkotel/mealie:omni-nightly",
-    "amd64": "hkotel/mealie:omni-nightly"
+    "aarch64": "hkotel/mealie:latest",
+    "amd64": "hendrix04/mealie-combined:nightly"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
