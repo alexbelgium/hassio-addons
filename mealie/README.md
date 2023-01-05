@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Mealie] Server Error (opened 2023-01-04)](https://github.com/alexbelgium/hassio-addons/issues/629) by [@chicknlil](https://github.com/chicknlil)
 Instructions to migrate to the 2 addons system below.
 Please backup all your data, and migrate to the new addons with separate Frontend and API.
 
