@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Joplin] Access-Control-Allow-Origin calls for Joplin URL instead of APP_BASE_URL (opened 2022-12-28)](https://github.com/alexbelgium/hassio-addons/issues/617) by [@kayserlein](https://github.com/kayserlein)
 # Home assistant add-on: Joplin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

@@ -1,5 +1,6 @@
 ## &#9888; Open Request : [✨ [REQUEST] PlexTraktSync (opened 2022-12-16)](https://github.com/alexbelgium/hassio-addons/issues/604) by [@cronner](https://github.com/cronner)
 ## &#9888; Open Request : [✨ [REQUEST] Plex year wrapped (like spotify) (opened 2022-12-25)](https://github.com/alexbelgium/hassio-addons/issues/613) by [@bruvv](https://github.com/bruvv)
+## &#9888; Open Issue : [🐛 [Plex] Unable to add network storage (opened 2023-01-05)](https://github.com/alexbelgium/hassio-addons/issues/631) by [@CZonin](https://github.com/CZonin)
 # Home assistant add-on: plex
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
