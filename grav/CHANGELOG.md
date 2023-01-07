@@ -1,3 +1,6 @@
+
+## 1.7.38 (07-01-2023)
+- Update to latest version from linuxserver/docker-grav
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 1.7.37.1 (06-10-2022)
