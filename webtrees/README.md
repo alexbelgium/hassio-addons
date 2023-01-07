@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Webtrees] Configuration "BASE_URL" cannot be modified (opened 2023-01-06)](https://github.com/alexbelgium/hassio-addons/issues/633) by [@thorschtn](https://github.com/thorschtn)
 # Home assistant add-on: Webtrees
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
