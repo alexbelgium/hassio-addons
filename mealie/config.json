@@ -7,8 +7,7 @@
   "description": "Mealie is a self hosted recipe manager and meal planner built in Vue",
   "environment": {
     "DB_ENGINE": "sqlite",
-    "WEB_GUNICORN": "true",
-    "ALLOW_SIGNUP": "true"
+    "WEB_GUNICORN": "true"
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "map": [
@@ -18,6 +17,7 @@
   ],
   "name": "Obsolete : Mealie",
   "options": {
+    "ALLOW_SIGNUP": true,
     "PGID": 0,
     "PUID": 0,
     "certfile": "fullchain.pem",
@@ -37,7 +37,8 @@
     "PUID": "int",
     "certfile": "str",
     "keyfile": "str",
-    "ssl": "bool"
+    "ssl": "bool",
+    "ALLOW_SIGNUP": "bool"
   },
   "slug": "mealie",
   "url": "https://github.com/alexbelgium/hassio-addons",
