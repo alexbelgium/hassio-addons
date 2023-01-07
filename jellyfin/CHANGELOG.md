@@ -1,4 +1,7 @@
 
+## 10.8.8-1-ls194 (07-01-2023)
+- Update to latest version from linuxserver/docker-jellyfin
+
 ## 10.8.8-1-ls193 (25-12-2022)
 - Update to latest version from linuxserver/docker-jellyfin
 - Fixed ingress
