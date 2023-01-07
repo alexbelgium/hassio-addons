@@ -1,4 +1,7 @@
 
+## 1.11.3 (07-01-2023)
+- Update to latest version from paperless-ngx/paperless-ngx
+
 ## 1.11.2 (31-12-2022)
 - Update to latest version from paperless-ngx/paperless-ngx
 - Allow mariadb
