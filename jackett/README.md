@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Jackett Nas] Unable to mount local drives! Please check the name. (opened 2023-01-02)](https://github.com/alexbelgium/hassio-addons/issues/624) by [@furang](https://github.com/furang)
 # Home assistant add-on: jackett
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
