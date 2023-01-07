@@ -27,7 +27,7 @@
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
     "3000/tcp": 9090,
-    "9000/tcp": 9091
+    "9000/tcp": null
   },
   "ports_description": {
     "3000/tcp": "Web interface",
