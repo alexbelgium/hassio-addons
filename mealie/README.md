@@ -52,9 +52,13 @@ Options can be configured through two ways :
 - Addon options
 
 ```yaml
-ssl: true/false
-certfile: fullchain.pem #ssl certificate, must be located in /ssl
-keyfile: privkey.pem #sslkeyfile, must be located in /ssl
+    "BASE_URL": Optional, external base url
+    "PGID": user ID
+    "PUID": "group ID
+    "certfile": fullchain.pem #ssl certificate, must be located in /ssl
+    "keyfile": privkey.pem #sslkeyfile, must be located in /ssl
+    "ssl": ssl: true/false
+    "ALLOW_SIGNUP": Allow signup of users
 ```
 
 - Config.yaml
