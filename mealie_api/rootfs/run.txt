@@ -99,6 +99,7 @@ echo "Permissions adapted"
 mkdir -p /config/addons_config/mealie_data
 cp -rnf /data/* /config/addons_config/mealie_data/
 chown -R "$(bashio::config "PUID"):$(bashio::config "PGID")" /config/addons_config/mealie_data
+touch /config/addons_config/mealie_data/.secret
 chmod -R 777 /config/addons_config/mealie_data 
 
 #######
