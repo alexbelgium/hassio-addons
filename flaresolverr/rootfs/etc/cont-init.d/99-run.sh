@@ -7,4 +7,4 @@ bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores a
 # LAUNCH APP #
 ##############
 
-node ./dist/server.js
+python -u /app/flaresolverr.py
