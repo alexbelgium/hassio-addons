@@ -15,7 +15,7 @@
     "share:rw",
     "ssl:rw"
   ],
-  "name": "Mealie (API)",
+  "name": "Obsolete : Mealie API",
   "options": {
     "PGID": 1000,
     "PUID": 1000,
