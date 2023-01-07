@@ -78,7 +78,7 @@ RUN apk -U update && \
     && git clone --depth=1 https://github.com/spotweb/spotweb.git /app \
     # spotweb needs a timezone set in the php.ini
     # TODO: Can we dynamically set the correct timezone here ?
-    && sed -i "s/;date.timezone =/date.timezone = \"Europe\/Amsterdam\"/g" /etc/php8/php.ini \
+    && sed -i "s/;date.timezone =/date.timezone = \"Europe\/Amsterdam\"/g" /etc/php*/php.ini \
     && mkdir /app/cache \
     && mkdir /var/tmp/nginx
 
