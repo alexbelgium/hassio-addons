@@ -1,3 +1,6 @@
+
+## 3.0.1 (07-01-2023)
+- Update to latest version from FlareSolverr/FlareSolverr
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 2.2.10 (25-10-2022)
