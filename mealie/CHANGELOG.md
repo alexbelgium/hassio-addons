@@ -1,3 +1,6 @@
+
+## v1.0.0-beta-1 (07-01-2023)
+- Update to latest version from hay-kot/mealie
 ## 1.0.1 (03-01-2023)
 - Migrates data to cp -r /data/* /config/addons_config/mealie_data/ to enable usage of new addons
 - WARNING : update to supervisor 2022.11 before installing

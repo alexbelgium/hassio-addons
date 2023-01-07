@@ -44,6 +44,6 @@
   },
   "slug": "mealie",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "Omni",
+  "version": "v1.0.0-beta-1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
