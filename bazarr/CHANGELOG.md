@@ -1,4 +1,7 @@
 
+## 1.1.4 (07-01-2023)
+- Update to latest version from linuxserver/docker-bazarr
+
 ## 1.1.3 (06-12-2022)
 - Update to latest version from linuxserver/docker-bazarr
 - WARNING : update to supervisor 2022.11 before installing
