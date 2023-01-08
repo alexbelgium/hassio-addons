@@ -19,7 +19,7 @@ jobs:
         for files in */*.json; do
           echo "Sorting $files"
           jq --sort-keys . "$files" > config2.json && cat config2.json > "$files" && rm config2.json
-          echo "changed=1" >> $GITHUB_OUTPUT
+          echo "changed=1" >> "$GITHUB_OUTPUT"
         done
       shell: bash
     - name: Commit if needed
