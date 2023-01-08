@@ -41,36 +41,36 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 # hadolint ignore=DL3003
 # Install app dependencies
-ARG PHPVERS="php81"
+ENV PHPVERS="81"
 RUN apk -U update && \
     # hadolint ignore=DL3017
     apk -U upgrade && \
     apk -U add --no-cache \
     git \
     nginx \
-    $PHPVERS \
-    $PHPVERS-fpm \
-    $PHPVERS-curl \
-    $PHPVERS-dom \
-    $PHPVERS-gettext \
-    $PHPVERS-xml \
-    $PHPVERS-simplexml \
-    $PHPVERS-zip \
-    $PHPVERS-zlib \
-    $PHPVERS-gd \
-    $PHPVERS-openssl \
-    $PHPVERS-mysqli \
-    $PHPVERS-pdo \
-    $PHPVERS-pdo_mysql \
-    $PHPVERS-pgsql \
-    $PHPVERS-pdo_pgsql \
-    $PHPVERS-sqlite3 \
-    $PHPVERS-pdo_sqlite \
-    $PHPVERS-json \
-    $PHPVERS-mbstring \
-    $PHPVERS-ctype \
-    $PHPVERS-opcache \
-    $PHPVERS-session \
+    php$PHPVERS \
+    php$PHPVERS-fpm \
+    php$PHPVERS-curl \
+    php$PHPVERS-dom \
+    php$PHPVERS-gettext \
+    php$PHPVERS-xml \
+    php$PHPVERS-simplexml \
+    php$PHPVERS-zip \
+    php$PHPVERS-zlib \
+    php$PHPVERS-gd \
+    php$PHPVERS-openssl \
+    php$PHPVERS-mysqli \
+    php$PHPVERS-pdo \
+    php$PHPVERS-pdo_mysql \
+    php$PHPVERS-pgsql \
+    php$PHPVERS-pdo_pgsql \
+    php$PHPVERS-sqlite3 \
+    php$PHPVERS-pdo_sqlite \
+    php$PHPVERS-json \
+    php$PHPVERS-mbstring \
+    php$PHPVERS-ctype \
+    php$PHPVERS-opcache \
+    php$PHPVERS-session \
     mariadb-client \
     \
     && mkdir -p /app \
