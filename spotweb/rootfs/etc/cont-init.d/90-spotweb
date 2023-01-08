@@ -93,11 +93,11 @@ RESULT=`mysql -u "${username}" -p"${password}" -h "${host}" -P "${port}" --skip-
 if [ "$RESULT" == "$dbname" ]; then
     # database already exists, do healthcheck with upgrade-db
     bashio::log.info "Existing database, checking health with upgrade-db...."
-    s6-setuidgid nginx php8 /app/bin/upgrade-db.php>/dev/null
+    s6-setuidgid nginx php /app/bin/upgrade-db.php>/dev/null
     # database already exists, do healthcheck with upgrade-db
     bashio::log.info "Existing database, clearing cache with upgrade-db"
     bashio::log.info "to fix potential cache corruption..."
-    s6-setuidgid nginx php8 /app/bin/upgrade-db.php --clear-cache -yes >/dev/null
+    s6-setuidgid nginx php /app/bin/upgrade-db.php --clear-cache -yes >/dev/null
 else
     # database does not yet exist
     bashio::log.info "Creating database with default settings...."
@@ -106,9 +106,9 @@ else
         -h "${host}" -P "${port}" \
         -e "CREATE DATABASE ${dbname};"
     # init database with default values
-    s6-setuidgid nginx php8 /app/bin/upgrade-db.php
+    s6-setuidgid nginx php /app/bin/upgrade-db.php
     # set systemtype to public (as we're behind ingress)
-    s6-setuidgid nginx php8 /app/bin/upgrade-db.php --set-systemtype public
+    s6-setuidgid nginx php /app/bin/upgrade-db.php --set-systemtype public
     # we also set some sane default settings
     mysql \
         -u "${username}" -p"${password}" \
@@ -122,4 +122,4 @@ else
 fi
 
 # Run check-cache at boot to fix potential cache problems
-s6-setuidgid nginx php8 /app/bin/check-cache.php
+s6-setuidgid nginx php /app/bin/check-cache.php

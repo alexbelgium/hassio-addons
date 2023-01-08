@@ -6,4 +6,4 @@
 
 bashio::log.info "Running hourly cron job" &>/proc/1/fd/1
 
-s6-setuidgid nginx php8 /app/retrieve.php &>/proc/1/fd/1
+s6-setuidgid nginx php /app/retrieve.php &>/proc/1/fd/1
