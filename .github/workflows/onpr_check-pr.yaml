@@ -1,5 +1,5 @@
 # yamllint disable rule:line-length
-# shellcheck disable=SC2043
+# shellcheck disable=SC2043,SC2129
 ---
 name: Check PR Build
 on:
