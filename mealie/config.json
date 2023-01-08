@@ -34,13 +34,13 @@
     "9000/tcp": "API port"
   },
   "schema": {
+    "ALLOW_SIGNUP": "bool",
     "BASE_URL": "str?",
     "PGID": "int",
     "PUID": "int",
     "certfile": "str",
     "keyfile": "str",
-    "ssl": "bool",
-    "ALLOW_SIGNUP": "bool"
+    "ssl": "bool"
   },
   "slug": "mealie",
   "url": "https://github.com/alexbelgium/hassio-addons",
