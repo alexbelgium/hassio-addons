@@ -107,9 +107,30 @@ jobs:
         uses: actions/checkout@v3
       - name: Create stats
         run: |
+          # Prepare data
           cp Stats Stats3
+          # Inverse file
           gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
+          # Only totals
           echo "$(head -n 2 Stats3)" > Stats3
+          # Transpose data
+          awk '
+          { 
+            for (i=1; i<=NF; i++)  {
+            a[NR,i] = $i
+            }
+          }
+          NF>p { p = NF }
+          END {    
+            for(j=1; j<=p; j++) {
+              str=a[1,j]
+              for(i=2; i<=NR; i++){
+                str=str" "a[i,j];
+              }
+            print str
+            }
+          }' Stats3
+          # Plot graph
           sudo apt-get install gnuplot -y
           gnuplot -persist <<-EOFMarker
             plot for [i=1:*] 'Stats3' using 0:i with lines title 'Column '.i
