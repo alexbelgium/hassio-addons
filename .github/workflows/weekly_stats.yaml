@@ -112,12 +112,14 @@ jobs:
           echo "$(head -n 2 Stats3)" > Stats3
           sudo apt-get install gnuplot -y
           N=`awk 'NR==1 {print NF}' Stats3`
+          gnuplot
           plot for [i=2:N] "Stats3" u 1:i
           set term png
           set output "stats.png"
           replot
           set term x11
           #https://www.xmodulo.com/draw-stacked-histogram-gnuplot.html
+          exit
           rm Stats3
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
