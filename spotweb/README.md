@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Spotweb] cannot start spotweb due php8 error (opened 2023-01-08)](https://github.com/alexbelgium/hassio-addons/issues/636) by [@remb0](https://github.com/remb0)
 # Home Assistant Add-ons: Spotweb
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
