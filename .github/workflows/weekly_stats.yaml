@@ -110,7 +110,7 @@ jobs:
           printf "$(sed "2d" Stats)" \
           | awk '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' > Stats3
           head -n 2 Stats3 > Stats3
-          apt-get install gnuplot -y
+          sudo apt-get install gnuplot -y
           plot for [n=1:*] "Stats3" using 1:n title sprintf("Column %d",n)
           set term png
           set output "stats.png"
