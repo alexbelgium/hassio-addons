@@ -11,7 +11,7 @@ if [ -f "${JSONTOCHECK}" ]; then
 
     # Check if json file valid or not
     jq . -S "${JSONTOCHECK}" &>/dev/null && ERROR=false || ERROR=true
-    if [ $ERROR = true ]; then
+    if [ "$ERROR" = true ]; then
         bashio::log.fatal "Settings.json structure is abnormal, restoring options from scratch. Your old file is renamed as settings.json_old"
         mv "${JSONSOURCE}" "${JSONSOURCE}"_old
         cp "${JSONSOURCE}" "${JSONTOCHECK}"
