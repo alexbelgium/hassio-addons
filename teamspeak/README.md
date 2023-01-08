@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Teamspeak Server] Unable to find privilege key (opened 2023-01-06)](https://github.com/alexbelgium/hassio-addons/issues/632) by [@hacshacdgacs](https://github.com/hacshacdgacs)
 # Hass.io Add-ons: Teamspeak
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
