@@ -93,11 +93,30 @@ jobs:
           #TOTAL2="$(awk '{SUM+=$2}END{print SUM}' Stats)"
           #TOTAL3="$(awk '{SUM+=$2}END{print SUM}' Stats)"
 
-          # Make plot
+      - name: Commit if needed
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "GitHub bot : README updated"
+          default_author: github_actions
 
-          #apt-get install gnuplot -y
+  stats_graphs:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Create stats
+        run: |
+          printf "$(sed "2d" Stats)" \
+          | awk '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' > Stats3
+          head -n 2 Stats3 > Stats3
+          apt-get install gnuplot -y
+          plot for [n=1:*] "Stats3" using 1:n title sprintf("Column %d",n)
+          set term png
+          set output "stats.png"
+          replot
+          set term x11
           #https://www.xmodulo.com/draw-stacked-histogram-gnuplot.html
-
+          rm Stats3
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
