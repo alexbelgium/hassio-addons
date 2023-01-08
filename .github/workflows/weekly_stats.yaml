@@ -113,7 +113,8 @@ jobs:
           cat Stats3
           sudo apt-get install gnuplot -y
           echo "installed"
-          plot for [n=1:*] "Stats3" using 1:n title sprintf("Column %d",n)
+          N=`awk 'NR==1 {print NF}' Stats3`
+          plot for [i=2:N] "Stats3" u 1:i
           set term png
           set output "stats.png"
           replot
