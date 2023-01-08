@@ -1,5 +1,5 @@
 # yamllint disable rule:line-length
-# shellcheck disable=SC2043,SC2129
+# shellcheck disable=SC2043
 ---
 name: Check PR Build
 on:
@@ -122,10 +122,15 @@ jobs:
           imagetemplate=${{ steps.information.outputs.image }}
           version=${{ steps.information.outputs.version }}
           echo "Using imagetemplate '$imagetemplate'"
+          # shellcheck disable=SC2129
           echo "armhf=${imagetemplate/\{arch\}/armhf}:${version}" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "armv7=${imagetemplate/\{arch\}/armv7}:${version}" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "aarch64=${imagetemplate/\{arch\}/aarch64}:${version}" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "amd64=${imagetemplate/\{arch\}/amd64}:${version}" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "i386=${imagetemplate/\{arch\}/i386}:${version}" >> "$GITHUB_OUTPUT"
       - name: 🏷️ Create addon labels
         id: labels
@@ -157,19 +162,29 @@ jobs:
           aarch64_labels="${aarch64_labels//$'\n'/'%0A'}"
           amd64_labels="${amd64_labels//$'\n'/'%0A'}"
           i386_labels="${i386_labels//$'\n'/'%0A'}"
+          # shellcheck disable=SC2129
           echo "armhf=$armhf_labels" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "armv7=$armv7_labels" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "aarch64=$aarch64_labels" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "amd64=$amd64_labels" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "i386=$i386_labels" >> "$GITHUB_OUTPUT"
       - name: 💽 Create addon build-args
         id: build_args
         shell: bash
         run: |
+          # shellcheck disable=SC2129
           echo "armhf=BUILD_FROM=$(jq -r .build_from.armhf // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "armv7=BUILD_FROM=$(jq -r .build_from.armv7 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "aarch64=BUILD_FROM=$(jq -r .build_from.aarch64 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "amd64=BUILD_FROM=$(jq -r .build_from.amd64 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
+          # shellcheck disable=SC2129
           echo "i386=BUILD_FROM=$(jq -r .build_from.i386 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
 
       - name: 🏗️ Set up QEMU
