@@ -111,7 +111,7 @@ jobs:
           gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
           echo "$(head -n 2 Stats3)" > Stats3
           sudo apt-get install gnuplot -y
-          N=`awk 'NR==1 {print NF}' Stats3`
+          N="$(awk 'NR==1 {print NF}' Stats3)"
           gnuplot -persist <<-EOFMarker
             plot for [i=2:N] "Stats3" u 1:i
             set term png
