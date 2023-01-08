@@ -112,8 +112,7 @@ jobs:
           echo "$(head -n 2 Stats3)" > Stats3
           sudo apt-get install gnuplot -y
           gnuplot -persist <<-EOFMarker
-            N="$(awk 'NR==1 {print NF}' Stats3)"
-            plot for [i=2:N] "Stats3" u 1:i
+            plot for [i=1:*] 'Stats3' using 0:i with lines title 'Column '.i
             set term png
             set output "stats.png"
             replot
