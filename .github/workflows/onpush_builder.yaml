@@ -72,14 +72,14 @@ jobs:
         run: |
           # shellcheck disable=SC2157,SC2086 
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
-             echo "::set-output name=build_arch::true";
-             echo "::set-output name=image::$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f3)";
+             echo "build_arch=true";
+             echo "image=$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f3)";
              if [[ -z "$HEAD" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
                  echo "BUILD_ARGS=" >> $GITHUB_ENV;
              fi
            else
              echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
-             echo "::set-output name=build_arch::false";
+             echo "build_arch=false";
           fi
       - name: Login to GitHub Container Registry
         if: env.BUILD_ARGS != '--test'
