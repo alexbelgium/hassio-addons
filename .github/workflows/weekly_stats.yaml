@@ -133,13 +133,11 @@ jobs:
           }' Stats3 > StatsTmp && mv StatsTmp Stats3 && rm StatsTmp
           # Plot graph
           sudo apt-get install gnuplot -y
-          gnuplot -persist <<-EOFMarker
+          gnuplot-nox -persist <<-EOFMarker
             plot for [i=1:*] 'Stats3' using 0:i with lines title 'Column '.i
             set term png
             set output "stats.png"
             replot
-            set term x11
-          #https://www.xmodulo.com/draw-stacked-histogram-gnuplot.html
           EOFMarker
           rm Stats3
       - name: Commit if needed
