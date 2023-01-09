@@ -41,24 +41,24 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Statistics
 
-**Number of addons in the repository** : 75
+Number of addons in the repository : 75
 
-**Total number of addons installed** : 9777
+Total number of addons installed : 9777
 
-**Top 3 most installed addons** :
+Top 3 most installed addons :
 1. Portainer (1630x)
 2. Filebrowser (1070x)
 3. Nextcloud_ocr (405x)
 
-**Most used architectures** :
+Most used architectures :
 - amd64: 56%
 - aarch64: 39%
 - armv7: 5%
 
-**Downloads evolution** :
+Downloads evolution :
 
 ![Downloads graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats.png)
-![Evolution graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png)
+![Addons graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png)
 
 ## Add-ons provided by this repository
 
