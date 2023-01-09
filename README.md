@@ -56,6 +56,7 @@ Most used architectures :
 - armv7: 5%
 
 Downloads evolution :
+
 ![Downloads graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats.png)
 
 ## Add-ons provided by this repository
