@@ -138,6 +138,8 @@ jobs:
             set xdata date
             set timefmt "%y-%m-%d"
             set format x "%y-%m-%d"
+            set ylabel 
+            show ylabel "Total installed addons"
             plot for [i=1:*] 'Stats3'
             set term png
             set output "stats.png"
