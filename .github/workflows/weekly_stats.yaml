@@ -185,7 +185,6 @@ jobs:
             set timefmt "%Y-%m-%d"
             set format x "%y-%m-%d"
             set datafile sep ' '
-            set key top left autotitle columnheader
             set autoscale
             set terminal png size 500,300
             set output 'stats_addons.png'
