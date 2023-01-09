@@ -189,7 +189,8 @@ jobs:
             set autoscale
             set terminal png size 500,300
             set output 'stats_addons.png'
-            plot for [i=2:*] 'Stats3' using 0:i
+            plot 'Stats3' using 1:10
+            #plot for [i=2:*] 'Stats3' using 0:i
           EOFMarker
           rm Stats3
       - name: Commit if needed
