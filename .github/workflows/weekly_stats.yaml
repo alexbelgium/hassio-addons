@@ -190,8 +190,8 @@ jobs:
             set terminal png size 500,300
             set output 'stats_addons.png'
             plot 'Stats3' using 1:10
-            #plot for [i=2:*] 'Stats3' using 0:i
           EOFMarker
+          #plot for [i=2:*] 'Stats3' using 0:i
           rm Stats3
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
