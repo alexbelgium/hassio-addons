@@ -175,7 +175,6 @@ jobs:
             print str
             }
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
-          sed -i "1d" Stats3
           # Plot graph
           gnuplot-nox -persist <<-EOFMarker
             set title 'Total addons'
