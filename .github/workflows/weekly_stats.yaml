@@ -132,7 +132,7 @@ jobs:
             }
           }' Stats3 > StatsTmp && mv StatsTmp Stats3 && rm StatsTmp
           # Plot graph
-          sudo apt-get install gnuplot -y
+          sudo apt-get install gnuplot-nox -y
           gnuplot-nox -persist <<-EOFMarker
             plot for [i=1:*] 'Stats3' using 0:i with lines title 'Column '.i
             set term png
