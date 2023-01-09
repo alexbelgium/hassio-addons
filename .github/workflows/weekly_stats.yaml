@@ -135,7 +135,7 @@ jobs:
           # Plot graph
           sudo apt-get install gnuplot-nox -y
           gnuplot-nox -persist <<-EOFMarker
-            set xdata time
+            set xdata date
             set timefmt "%y-%m-%d"
             set format x "%y-%m-%d"
             plot for [i=1:*] 'Stats3'
