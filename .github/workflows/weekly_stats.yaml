@@ -131,13 +131,14 @@ jobs:
             print str
             }
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
+          sed -i "1d" Stats3
           # Plot graph
           sudo apt-get install gnuplot-nox -y
           gnuplot-nox -persist <<-EOFMarker
             set xdata time
             set timefmt "%y-%m-%d"
             set format x "%y-%m-%d"
-            plot for [i=1:*] 'Stats3' using 0:i with lines title 'Column '.i
+            plot for [i=1:*] 'Stats3'
             set term png
             set output "stats.png"
             replot
