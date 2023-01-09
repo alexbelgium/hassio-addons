@@ -134,7 +134,10 @@ jobs:
           # Plot graph
           sudo apt-get install gnuplot-nox -y
           gnuplot-nox -persist <<-EOFMarker
-            plot for [i=1:*] 'Stats3' using 0:i with lines title 'Column '.i
+            set xdata time
+            set timefmt "%y-%m-%d"
+            set format x "%y-%m-%d"
+            plot for [i=1:*] 'Stats3' using 1:i with lines title 'Column '.i
             set term png
             set output "stats.png"
             replot
