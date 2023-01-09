@@ -130,7 +130,7 @@ jobs:
               }
             print str
             }
-          }' Stats3 > StatsTmp && mv StatsTmp Stats3 && rm StatsTmp
+          }' Stats3 > StatsTmp && mv StatsTmp Stats3
           # Plot graph
           sudo apt-get install gnuplot-nox -y
           gnuplot-nox -persist <<-EOFMarker
