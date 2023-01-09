@@ -135,7 +135,7 @@ jobs:
           # Plot graph
           sudo apt-get install gnuplot-nox -y
           gnuplot-nox -persist <<-EOFMarker
-            set xdata date
+            set xdata time
             set timefmt "%y-%m-%d"
             set format x "%y-%m-%d"
             set ylabel "Total installed addons"
