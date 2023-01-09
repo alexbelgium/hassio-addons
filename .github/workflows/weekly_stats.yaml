@@ -140,6 +140,7 @@ jobs:
             set title 'Total addons'
             set ylabel 'Number of installations'
             set xdata time
+            set datafile missing "-"
             set timefmt "%Y-%m-%d"
             set format x "%y-%m-%d"
             set datafile sep ' '
@@ -180,6 +181,7 @@ jobs:
             set title 'Total addons'
             set ylabel 'Number of installations'
             set xdata time
+            set datafile missing "-"
             set timefmt "%Y-%m-%d"
             set format x "%y-%m-%d"
             set datafile sep ' '
