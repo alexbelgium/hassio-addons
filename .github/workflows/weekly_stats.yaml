@@ -140,7 +140,7 @@ jobs:
             set format x "%y-%m-%d"
             set ylabel "Total installed addons"
             show ylabel
-            plot for [i=1:*] 'Stats3'
+            plot 'Stats3'
             set term png
             set output "stats.png"
             replot
