@@ -58,6 +58,7 @@ If you want to do add the repository manually, please follow the procedure highl
 **Downloads evolution** :
 
 ![Downloads graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats.png)
+![Evolution graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png)
 
 ## Add-ons provided by this repository
 
