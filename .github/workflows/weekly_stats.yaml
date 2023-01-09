@@ -109,6 +109,7 @@ jobs:
         run: |
           # Prepare data
           cp Stats Stats3
+          sudo apt-get install gawk -y
           # Inverse file
           gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
           # Only totals
@@ -129,7 +130,7 @@ jobs:
               }
             print str
             }
-          }' Stats3
+          }' Stats3 > StatsTmp && mv StatsTmp Stats3 && rm StatsTmp
           # Plot graph
           sudo apt-get install gnuplot -y
           gnuplot -persist <<-EOFMarker
