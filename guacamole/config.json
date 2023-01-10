@@ -26,6 +26,5 @@
   "slug": "guacamole",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.4.2-7_ingresstest",
-  "video": true,
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
+  "video": true
 }
