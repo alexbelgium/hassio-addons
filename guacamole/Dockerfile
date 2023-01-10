@@ -78,7 +78,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d
 
 # Manual apps
-ENV PACKAGES=""
+ENV PACKAGES="nginx"
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015
