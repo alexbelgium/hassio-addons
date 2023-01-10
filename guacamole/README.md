@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] guacamole - ingress functionality (opened 2022-12-14)](https://github.com/alexbelgium/hassio-addons/issues/603) by [@0bimaster](https://github.com/0bimaster)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
