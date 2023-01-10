@@ -259,6 +259,7 @@ Downloads evolution :
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
+![ingress][ingress-badge]
 
 &#10003;  [Inadyn](inadyn/) : Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)
 
