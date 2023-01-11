@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Flaresolverr] Fails on startup (opened 2023-01-07)](https://github.com/alexbelgium/hassio-addons/issues/634) by [@almico](https://github.com/almico)
 # Home assistant add-on: Flaresolver
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
