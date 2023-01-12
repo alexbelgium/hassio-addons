@@ -19,3 +19,6 @@ chown -R "$PUID":"$PGID" "$DATA_LOCATION"
 
 echo "... correcting official script"
 for file in $(grep -sril '/photos' /etc); do sed -i "s|/photos|$DATA_LOCATION|g" "$file"; done
+rm /photos
+ln -sf "$DATA_LOCATION" /photos
+chown -R "$PUID":"$PGID" /photos
