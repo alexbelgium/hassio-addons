@@ -90,10 +90,11 @@
     "DB_PORT": "int?",
     "DB_PASSWORD": "str?",
     "DB_DATABASE_NAME": "str?",
+    "UPLOAD_LOCATION": "str?",
     "JWT_SECRET": "str"
   },
   "slug": "immich",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0",
+  "version": "1.1",
   "webui": "http://[HOST]:[PORT:8080]"
 }
