@@ -71,8 +71,8 @@ case $(bashio::config 'database') in
         # Settings files & permissions
         ln -s /usr/lib/postgresql/14/bin/postgres /usr/bin || true
         ln -s /usr/lib/postgresql/14/bin/psql /usr/psql || true
-        cp -rnf /var/lib/postgresql/14/main/* /data/postgresql/
         mkdir -p /data/postgresql
+        cp -rnf /var/lib/postgresql/14/main/* /data/postgresql/
         chown -R postgres /data/postgresql
         chmod -R 700 /data/postgresql
 
