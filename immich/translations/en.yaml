@@ -16,8 +16,8 @@ configuration:
     name: cifspassword
     description: >-
       Your password to access your SMB share
-  cifspassword:
-    name: cifspassword
+  cifsusername:
+    name: cifsusername
     description: >-
       Your username to access your SMB share
   database:
