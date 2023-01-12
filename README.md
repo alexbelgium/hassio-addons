@@ -41,7 +41,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Statistics
 
-Number of addons in the repository : 75
+Number of addons in the repository : 76
 
 Total number of addons installed : 9777
 
@@ -260,6 +260,17 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Immich](immich/) : Self-hosted photo and video backup solution directly from your mobile phone
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7][armv7-badge]
+![MariaDB][mariadb-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003;  [Inadyn](inadyn/) : Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)
 
