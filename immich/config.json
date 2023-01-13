@@ -90,6 +90,7 @@
     "DB_PORT": "int?",
     "DB_PASSWORD": "str?",
     "DB_DATABASE_NAME": "str?",
+    "DISABLE_MACHINE_LEARNING": "bool?",
     "UPLOAD_LOCATION": "str?",
     "JWT_SECRET": "str"
   },
