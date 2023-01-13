@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "martabal/immich:v1.41.0_64-dev",
-    "amd64": "martabal/immich:v1.41.0_64-dev"
+    "aarch64": "martabal/immich:v1.40",
+    "amd64": "martabal/immich:v1.40"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
