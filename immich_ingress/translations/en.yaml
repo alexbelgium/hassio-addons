@@ -64,3 +64,7 @@ configuration:
     name: JWT_SECRET
     description: >-
      Used to sign the authentication keys for user login
+  DISABLE_MACHINE_LEARNING:
+    name: DISABLE_MACHINE_LEARNING
+    description: >-     
+     if you don't want the machine-learning or if your cpu don't support AVX / AVX2, set it to true
