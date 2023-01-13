@@ -90,7 +90,7 @@
     "DB_PORT": "int?",
     "DB_PASSWORD": "str?",
     "DB_DATABASE_NAME": "str?",
-    "UPLOAD_LOCATION": "str?",
+    "DISABLE_MACHINE_LEARNING": "bool?",
     "JWT_SECRET": "str"
   },
   "slug": "immich",
