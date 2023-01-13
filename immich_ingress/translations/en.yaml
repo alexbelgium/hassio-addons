@@ -1,0 +1,66 @@
+---
+configuration:
+  PGID:
+    name: PGID
+    description: >-
+      The user group ID, as described in https://docs.linuxserver.io/general/understanding-puid-and-pgid
+  PUID:
+    name: PUID
+    description: >-
+      The user group ID, as described in https://docs.linuxserver.io/general/understanding-puid-and-pgid
+  TZ:
+    name: TZ
+    description: >-
+      The timezone, as described in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  cifspassword:
+    name: cifspassword
+    description: >-
+      Your password to access your SMB share
+  cifsusername:
+    name: cifsusername
+    description: >-
+      Your username to access your SMB share
+  database:
+    name: database
+    description: >-
+      Type of database to use
+  data_location:
+    name: data_location
+    description: >-
+     Where do you want your data stored
+  localdisks:
+    name: localdisks
+    description: >-
+     Physical name of the partition (ex. sda1) or the share (ex. SharedFiles) to mount
+  networkdisks:
+    name: networkdisks
+    description: >-
+     URL of your SMB mount (//xxx.xx.xx.xx/share)
+  DB_HOSTNAME:
+    name: DB_HOSTNAME
+    description: >-
+     If using external postgresql
+  DB_USERNAME:
+    name: DB_USERNAME
+    description: >-
+     If using external postgresql
+  DB_PORT:
+    name: DB_PORT
+    description: >-
+     If using external postgresql
+  DB_PASSWORD:
+    name: DB_PASSWORD
+    description: >-
+     If using external postgresql
+  DB_DATABASE_NAME:
+    name: DB_DATABASE_NAME
+    description: >-
+     If using external postgresql
+  UPLOAD_LOCATION:
+    name: UPLOAD_LOCATION
+    description: >-
+     This is the location where uploaded files are stored
+  JWT_SECRET:
+    name: JWT_SECRET
+    description: >-
+     Used to sign the authentication keys for user login
