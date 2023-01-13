@@ -1,75 +1,75 @@
-2023-01-13 2023-01-06 2022-12-30 2022-12-24 2022-12-16 2022-12-09 2022-12-08 Date
-2419 9777 7647 7966 4937 3908 3691 TOTAL
-321 337 312 407 266 240 225 qbittorrent
-252 294 218 282 205 204 195 transmission_ls
-200 128 95 91 47 31 29 radarr_nas
-145 126 80 97 67 54 54 transmission_openvpn
-142 121 90 88 55 37 35 sonarr_nas
-128 120 114 142 100 114 113 prowlarr
-122 120 86 122 79 67 65 webtop_kde
-119 97 82 72 41 32 29 whoogle-search
-116 117 123 104 45 19 14 zoneminder
-113 94 73 52 44 34 32 tandoor_recipes
-97 80 66 51 23 15 14 xteve
-88 71 43 60 38 22 20 scrutiny-fa
-80 67 48 84 58 58 58 scrutiny
-74 65 55 46 29 17 15 wger
-67 57 41 37 19 10 9 ubooquity
-61 50 49 43 21 17 17 seafile
-52 43 39 65 49 42 41 readarr_nas
-51 46 43 37 19 13 13 teamspeak
-44 40 31 30 12 8 7 tdarr
-37 19 11 28 12 10 8 resiliosync
-32 21 22 20 11 9 9 unpackerr
-29 20 8 44 28 26 26 webtrees
-25 55 49 45 27 23 22 spotweb
-24 25 22 18 4 1 1 requestrr
-- 99 73 64 33 27 27 overseerr
-- 98 88 75 39 30 29 arpspoof
-- 94 106 136 104 95 95 jackett_nas
-- 93 88 78 53 51 51 omada
-- 87 72 61 33 22 20 cloudcommander
-- 85 78 70 37 25 22 organizr
-- 8 24 18 5 7 7 fireflyiii_fints_importer
-- 76 61 84 57 50 50 nzbget
-- 73 72 81 69 73 69 calibre_web
-- 69 74 81 48 24 23 joplin
-- 67 56 49 24 20 18 baikal
-- 62 51 47 23 16 15 fireflyiii_data_importer
-- 55 48 43 21 10 9 grav
-- 53 42 35 16 11 9 papermerge
-- 52 42 68 51 45 44 lidarr_nas
-- 50 39 26 7 4 4 vaultwarden
-- 49 103 98 75 69 68 bazarr
-- 47 38 29 13 7 7 gazpar2mqtt
-- 45 31 31 13 7 7 elasticsearch
-- 44 39 34 11 7 6 flaresolverr
-- 42 33 63 33 32 31 plex-media-manager
-- 41 28 45 18 7 5 enedisgateway2mqtt_dev
-- 405 328 283 193 124 94 nextcloud_ocr
-- 403 272 289 35 59 39 enedisgateway2mqtt
-- 40 34 29 12 7 7 inadyn
-- 39 30 24 9 4 4 ombi
-- 38 45 32 21 14 12 gitea
-- 377 98 359 91 321 313 epicgamesfree
-- 34 30 24 7 13 11 omada_v3
-- 31 32 32 20 18 18 joal
-- 24 22 19 6 3 3 mylar3
-- 237 181 298 226 195 195 plex_nas
-- 225 172 181 156 201 196 jellyfin
-- 22 19 53 33 27 26 piwigo
-- 20 24 38 22 26 26 flexget
-- 176 150 131 91 59 57 guacamole
-- 1630 1327 1176 847 588 555 portainer
-- 163 144 110 68 47 47 fireflyiii
-- 145 127 99 60 72 66 emby
-- 142 7 90 53 38 35 mealie
-- 139 109 97 61 43 40 browserless_chrome
-- 134 110 95 82 17 17 code_server
-- 125 98 112 86 107 69 calibre
-- 123 84 104 57 86 80 paperless_ng
-- 121 112 103 78 81 81 photoprism
-- 1070 888 727 477 285 264 filebrowser
-- 107 17 0 - - - mealie_api
-- 103 14 0 - - - mealie_frontend
-- 102 87 80 45 21 19 addons_updater
+2023-01-06 2022-12-30 2022-12-24 2022-12-16 2022-12-09 2022-12-08 Date
+9777 7647 7966 4937 3908 3691 TOTAL
+1630 1327 1176 847 588 555 portainer
+1070 888 727 477 285 264 filebrowser
+405 328 283 193 124 94 nextcloud_ocr
+403 272 289 35 59 39 enedisgateway2mqtt
+377 98 359 91 321 313 epicgamesfree
+337 312 407 266 240 225 qbittorrent
+294 218 282 205 204 195 transmission_ls
+237 181 298 226 195 195 plex_nas
+225 172 181 156 201 196 jellyfin
+176 150 131 91 59 57 guacamole
+163 144 110 68 47 47 fireflyiii
+145 127 99 60 72 66 emby
+142 7 90 53 38 35 mealie
+139 109 97 61 43 40 browserless_chrome
+134 110 95 82 17 17 code_server
+128 95 91 47 31 29 radarr_nas
+126 80 97 67 54 54 transmission_openvpn
+125 98 112 86 107 69 calibre
+123 84 104 57 86 80 paperless_ng
+121 90 88 55 37 35 sonarr_nas
+121 112 103 78 81 81 photoprism
+120 86 122 79 67 65 webtop_kde
+120 114 142 100 114 113 prowlarr
+117 123 104 45 19 14 zoneminder
+107 17 0 - - - mealie_api
+103 14 0 - - - mealie_frontend
+102 87 80 45 21 19 addons_updater
+99 73 64 33 27 27 overseerr
+98 88 75 39 30 29 arpspoof
+97 82 72 41 32 29 whoogle-search
+94 73 52 44 34 32 tandoor_recipes
+94 106 136 104 95 95 jackett_nas
+93 88 78 53 51 51 omada
+87 72 61 33 22 20 cloudcommander
+85 78 70 37 25 22 organizr
+80 66 51 23 15 14 xteve
+76 61 84 57 50 50 nzbget
+73 72 81 69 73 69 calibre_web
+71 43 60 38 22 20 scrutiny-fa
+69 74 81 48 24 23 joplin
+67 56 49 24 20 18 baikal
+67 48 84 58 58 58 scrutiny
+65 55 46 29 17 15 wger
+62 51 47 23 16 15 fireflyiii_data_importer
+57 41 37 19 10 9 ubooquity
+55 49 45 27 23 22 spotweb
+55 48 43 21 10 9 grav
+53 42 35 16 11 9 papermerge
+52 42 68 51 45 44 lidarr_nas
+50 49 43 21 17 17 seafile
+50 39 26 7 4 4 vaultwarden
+49 103 98 75 69 68 bazarr
+47 38 29 13 7 7 gazpar2mqtt
+46 43 37 19 13 13 teamspeak
+45 31 31 13 7 7 elasticsearch
+44 39 34 11 7 6 flaresolverr
+43 39 65 49 42 41 readarr_nas
+42 33 63 33 32 31 plex-media-manager
+41 28 45 18 7 5 enedisgateway2mqtt_dev
+40 34 29 12 7 7 inadyn
+40 31 30 12 8 7 tdarr
+39 30 24 9 4 4 ombi
+38 45 32 21 14 12 gitea
+34 30 24 7 13 11 omada_v3
+31 32 32 20 18 18 joal
+25 22 18 4 1 1 requestrr
+24 22 19 6 3 3 mylar3
+22 19 53 33 27 26 piwigo
+21 22 20 11 9 9 unpackerr
+20 8 44 28 26 26 webtrees
+20 24 38 22 26 26 flexget
+19 11 28 12 10 8 resiliosync
+8 24 18 5 7 7 fireflyiii_fints_importer
