@@ -104,12 +104,12 @@ jobs:
 
   stats_graphs:
     runs-on: ubuntu-20.04
-    needs: stats_updater
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
       - name: Install apps
         run: |
+          exit 0
           sudo apt-get install gawk -y
           sudo apt-get install gnuplot-nox -y
       - name: Create global stats
