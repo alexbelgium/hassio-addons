@@ -41,19 +41,19 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Statistics
 
-Number of addons in the repository : 77
+Number of addons in the repository : 74
 
-Total number of addons installed : 9777
+Total number of addons installed : 10919
 
 Top 3 most installed addons :
-1. Portainer (1630x)
-2. Filebrowser (1070x)
-3. Nextcloud_ocr (405x)
+1. Portainer (1987x)
+2. Filebrowser (1359x)
+3. Nextcloud_ocr (468x)
 
 Most used architectures :
-- amd64: 60%
-- aarch64: 37%
-- armv7: 3%
+- amd64: 57%
+- aarch64: 39%
+- armv7: 4%
 
 Downloads evolution :
 
@@ -176,7 +176,7 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (1070x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
+&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (1359x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fupdater.json)
@@ -265,17 +265,6 @@ Downloads evolution :
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich%2Fupdater.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7][armv7-badge]
-![MariaDB][mariadb-badge]
-![smb][smb-badge]
-![localdisks][localdisks-badge]
-
-&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Immich Ingress test](immich_ingress/) : Self-hosted photo and video backup solution directly from your mobile phone
-
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich_ingress%2Fconfig.json)
-![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich_ingress%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
@@ -397,22 +386,6 @@ Downloads evolution :
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Obsolete : Mealie (frontend)](mealie_frontend/) : A Self Hosted Recipe Manager (frontend)
-
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_frontend%2Fconfig.json)
-![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_frontend%2Fupdater.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7no][armv7no-badge]
-
-&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Obsolete : Mealie API](mealie_api/) : A Self Hosted Recipe Manager (API)
-
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_api%2Fconfig.json)
-![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie_api%2Fupdater.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7no][armv7no-badge]
-
 &#10003;  [Omada](omada/) : TP-Link Omada Controller
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fomada%2Fconfig.json)
@@ -513,7 +486,7 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (1630x)](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (1987x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
