@@ -1,9 +1,9 @@
 {
   "github_beta": "true",
-  "last_update": "08-11-2022",
+  "last_update": "14-01-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich",
   "source": "github",
   "upstream_repo": "immich-app/immich",
-  "upstream_version": "1.0"
+  "upstream_version": "1.41.1"
 }
