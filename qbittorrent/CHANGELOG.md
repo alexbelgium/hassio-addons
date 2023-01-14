@@ -1,4 +1,7 @@
 
+## 4.5.0-r1-ls239 (14-01-2023)
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ## 4.5.0-r1-ls238 (07-01-2023)
 - Update to latest version from linuxserver/docker-qbittorrent
 
