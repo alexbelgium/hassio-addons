@@ -1,4 +1,7 @@
 
+## nightly-0.1.1.1526-ls151 (14-01-2023)
+- Update to latest version from linuxserver/docker-readarr
+
 ## nightly-0.1.1.1504-ls149 (31-12-2022)
 - Update to latest version from linuxserver/docker-readarr
 
