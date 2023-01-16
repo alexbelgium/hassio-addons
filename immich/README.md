@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] immich (Google photo alternative)  (opened 2022-11-23)](https://github.com/alexbelgium/hassio-addons/issues/573) by [@idarius](https://github.com/idarius)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

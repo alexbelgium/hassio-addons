@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [fireflyiii] Error 500, Firefly III broke (opened 2022-12-31)](https://github.com/alexbelgium/hassio-addons/issues/623) by [@OrangEnerIgel](https://github.com/OrangEnerIgel)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
