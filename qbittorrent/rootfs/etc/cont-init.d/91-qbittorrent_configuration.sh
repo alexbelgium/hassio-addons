@@ -108,13 +108,18 @@ fi
 ################
 
 cd "$CONFIG_LOCATION"/ || true
-if bashio::config.has_value 'whitelist'; then
-    WHITELIST=$(bashio::config 'whitelist')
-    #clean data
-    sed -i '/AuthSubnetWhitelist/d' qBittorrent.conf
+
+WHITELIST=$(bashio::config 'whitelist')
+#clean data
+sed -i '/AuthSubnetWhitelist/d' qBittorrent.conf
+
+if [[ ${#WHITELIST} -gt 5 ]]; then
     sed -i "$LINE i\WebUI\\\AuthSubnetWhitelistEnabled=true" qBittorrent.conf
     sed -i "$LINE i\WebUI\\\AuthSubnetWhitelist=$WHITELIST" qBittorrent.conf
     bashio::log.info "Whitelisted subsets will not require a password : $WHITELIST"
+else
+    sed -i "$LINE i\WebUI\\\AuthSubnetWhitelistEnabled=false" qBittorrent.conf
+    bashio::log.info "Whitelisted subsets deactivated"
 fi
 
 ###############
