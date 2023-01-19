@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Seafile] Cannot change or download files (opened 2023-01-18)](https://github.com/alexbelgium/hassio-addons/issues/647) by [@ElVit](https://github.com/ElVit)
 # Home assistant add-on: seafile
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
