@@ -180,7 +180,7 @@ jobs:
             }
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
           # Plot graph
-          gnuplot-nox -persist <<-EOFMarker
+          ( gnuplot-nox -persist <<-EOFMarker
             set title 'Total addons'
             set ylabel 'Number of installations'
             set xdata time
@@ -193,6 +193,7 @@ jobs:
             set output 'stats_addons.png'
             plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i) smooth csplines
           EOFMarker
+          ) || true
           #plot for [i=1:*] 'Stats3' using 0:i
           rm Stats3
       - name: Commit if needed
