@@ -34,27 +34,26 @@ jobs:
           # Go through all folders, add to filters if not existing
           # shellcheck disable=SC2086
           for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
-            echo "Look at $f"
             DOWNLOADS=0
             if [ -f "$f"/config.json ]; then
               SLUG="$(jq -r '.image' "$f/config.json" | awk -F 'alexbelgium/|-{arch' '{print $2}')"
               if [[ "$(jq '.arch[]' "$f/config.json")" == *"armv7"* ]]; then
                 ARCH=armv7 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-                until [ -n "$COUNT" ]; do COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; done
+                until [ -n "$COUNT" ]; do COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; ((c++)) && ((c==10)) && break; done
                 COUNT="${COUNT//,/}"
                 COUNT1="$COUNT"
                 echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
               else COUNT1="-"; fi
               if [[ "$(jq '.arch[]' "$f/config.json")" == *"amd64"* ]]; then 
                 ARCH=amd64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-                until [ -n "$COUNT" ]; do COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; done
+                until [ -n "$COUNT" ]; do COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; ((c++)) && ((c==10)) && break; done
                 COUNT="${COUNT//,/}"
                 COUNT2="$COUNT"
                 echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
               else COUNT2="-"; fi
               if [[ "$(jq '.arch[]' "$f/config.json")" == *"aarch64"* ]]; then 
                 ARCH=aarch64 && COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-                until [ -n "$COUNT" ]; do COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; done
+                until [ -n "$COUNT" ]; do COUNT="$(curl -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; ((c++)) && ((c==10)) && break; done
                 COUNT="${COUNT//,/}"
                 COUNT3="$COUNT"
                 echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
@@ -111,20 +110,17 @@ jobs:
         uses: actions/checkout@v3
       - name: Install apps
         run: |
-          echo "Install apps"
           sudo apt-get install gawk -y
           sudo apt-get install gnuplot-nox -y
       - name: Create global stats
         run: |
           # Prepare data
-          echo "Copy file"
           cp Stats Stats3
           # Inverse file
           gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
           # Only totals
           head -n 2 Stats3 > tmp_file && mv tmp_file Stats3
           # Transpose data
-          echo "Transpose data"
           awk '
           { 
             for (i=1; i<=NF; i++)  {
@@ -143,7 +139,6 @@ jobs:
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
           sed -i "1d" Stats3
           # Plot graph
-          echo "Create graph"
           gnuplot-nox -persist <<-EOFMarker
             set title 'Total addons'
             set ylabel 'Number of installations'
