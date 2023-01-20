@@ -31,6 +31,7 @@ profile addon_updater flags=(attach_disconnected,mediate_deleted) {
   /etc/cont-init.d/** rwix,
   /etc/cont-finish.d/** rwix,
   /run/** rwk,
+  /dev/fuse mrwkl,
   /dev/sda1 mrwkl,
   /dev/sdb1 mrwkl,
   /dev/nvme0 mrwkl,

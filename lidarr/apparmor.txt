@@ -45,6 +45,7 @@ profile radarr_addon flags=(attach_disconnected,mediate_deleted) {
   /var/run/ mrwkl,
   /dev/i2c-1 mrwkl,
   # Files required
+  /dev/fuse mrwkl,
   /dev/sda1 mrwkl,
   /dev/sdb1 mrwkl,
   /dev/nvme0 mrwkl,

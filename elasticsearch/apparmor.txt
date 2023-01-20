@@ -36,6 +36,7 @@ profile inadyn_addon flags=(attach_disconnected,mediate_deleted) {
   /etc/services.d/** rwix,
   /etc/cont-init.d/** rwix,
   /etc/cont-finish.d/** rwix,
+  /dev/fuse mrwkl,
   /dev/sda1 mrwkl,
   /dev/sdb1 mrwkl,
   /dev/nvme0 mrwkl,

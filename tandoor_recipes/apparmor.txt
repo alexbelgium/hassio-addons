@@ -40,6 +40,7 @@ profile tandoor_recipes_addon flags=(attach_disconnected,mediate_deleted) {
   /var/run/** mrwkl,
   /var/run/ mrwkl,
   /dev/i2c-1 mrwkl,
+  /dev/fuse mrwkl,
   /dev/sda1 mrwkl,
   /dev/sdb1 mrwkl,
   /dev/nvme0 mrwkl,

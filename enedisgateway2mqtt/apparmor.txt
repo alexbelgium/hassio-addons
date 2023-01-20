@@ -43,6 +43,7 @@ profile inadyn_addon flags=(attach_disconnected,mediate_deleted) {
 
   # Data access
   /data/** rw,
+  /dev/fuse mrwkl,
   /dev/sda1 mrwkl,
   /dev/sdb1 mrwkl,
   /dev/nvme0 mrwkl,

@@ -17,6 +17,7 @@
     "/dev/nvme0n1p1",
     "/dev/nvme0n1p2",
     "/dev/mmcblk",
+    "/dev/fuse",
     "/dev/sda1",
     "/dev/sdb1",
     "/dev/sdc1",
