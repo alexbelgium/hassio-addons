@@ -1,3 +1,6 @@
+
+## 16.10.0 (21-01-2023)
+- Update to latest version from coderaiser/cloudcmd
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 16.6.1 (22-10-2022)
