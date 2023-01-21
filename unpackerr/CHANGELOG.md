@@ -1,3 +1,6 @@
+
+## 0.11.1 (21-01-2023)
+- Update to latest version from davidnewhall/unpackerr
 - Add local & smb disks mounting
 - WARNING : update to supervisor 2022.11 before installing
 - Breaking change : define downloads and extraction folder from options
