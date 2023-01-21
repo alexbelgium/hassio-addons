@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "maxwaldorf/guacamole:latest",
-    "amd64": "maxwaldorf/guacamole:latest"
+    "aarch64": "abesnier/guacamole:latest",
+    "amd64": "abesnier/guacamole:latest"
   }
 }
