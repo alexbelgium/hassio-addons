@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [enedisgateway2mqtt] addon crashes during startup if the location of config.yaml is changed (opened 2023-01-21)](https://github.com/alexbelgium/hassio-addons/issues/654) by [@chrsc59](https://github.com/chrsc59)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
