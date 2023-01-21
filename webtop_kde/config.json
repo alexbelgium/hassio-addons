@@ -7,7 +7,6 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Full linux desktop environment accessible via any modern web browser",
   "devices": [
-    "/dev/fuse",
     "/dev/dri",
     "/dev/dri/card0",
     "/dev/dri/card1",
@@ -113,6 +112,6 @@
   "slug": "webtop-kde",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls85",
+  "version": "4.16-r0-ls85-2",
   "video": true
 }
