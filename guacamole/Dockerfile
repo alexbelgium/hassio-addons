@@ -49,7 +49,7 @@ RUN \
     # Allow syslog
     && mkdir -p /tmp \
     && python3 -c "import socket as s; sock = s.socket(s.AF_UNIX); sock.bind('/tmp/syslog')" \
-    && && sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /tmp/syslog|g" /etc/s6-overlay/s6-rc.d/syslogd/run
+    && sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /tmp/syslog|g" /etc/s6-overlay/s6-rc.d/syslogd/run
 
 ##################
 # 3 Install apps #
