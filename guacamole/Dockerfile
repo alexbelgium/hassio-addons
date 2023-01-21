@@ -45,8 +45,7 @@ RUN \
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/cont-init.d/* \
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/services.d/*/run \
     # Change syslogd location
-    && sed -i "/s6-socklog/d" /etc/s6-overlay/s6-rc.d/syslogd/run
-    #&& sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /dev/stdout|g" /etc/s6-overlay/s6-rc.d/syslogd/run
+    && sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /dev/null|g" /etc/s6-overlay/s6-rc.d/syslogd/run
 
 ##################
 # 3 Install apps #
