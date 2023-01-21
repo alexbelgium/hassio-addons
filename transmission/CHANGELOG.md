@@ -1,4 +1,7 @@
 
+## 3.00-r8-ls149 (21-01-2023)
+- Update to latest version from linuxserver/docker-transmission
+
 ## 3.00-r8-ls148 (14-01-2023)
 - Update to latest version from linuxserver/docker-transmission
 
