@@ -27,18 +27,6 @@ Mealie is a self hosted recipe manager and meal planner with a RestAPI backend a
 This addon for mealie 1.0 is based on the combined [docker image](https://hub.docker.com/r/hendrix04/mealie-combined) from hendrix04.
 This addon is based on the [docker image](https://hub.docker.com/r/hkotel/mealie) from hay-kot.
 
-## Installation
-
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Hass.io add-on.
-
-1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
-1. Install this add-on.
-1. Click the `Save` button to store your configuration.
-1. Start the add-on.
-1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences, see the official documentation for for that.
-
 ## Configuration
 
 - Start the addon. Wait a while and check the log for any errors.
@@ -68,7 +56,59 @@ The complete list of options can be seen here : https://nightly.mealie.io/docume
 
 ## Integration with HA
 
+### Detailed infos (Thanks @michelangelonz)
+
+Create a restful sensor
+sensor:
+  - platform: rest
+    resource: 'http://###.###.#.#:9090/api/groups/mealplans/today'
+    method: GET
+    name: Mealie todays meal 
+    headers:
+      Authorization: Bearer <put  auth here> 
+    value_template: "{{ value_json.value }}"
+    json_attributes_path: $..recipe
+    json_attributes:
+      - name
+      - id
+      - totalTime
+      - prepTime
+      - performTime
+      - description
+      - slug
+
+Create template sensors from attributes
+     - name: TodaysDinner
+       unique_id: sensor.TodaysDinner
+       state: "{{ state_attr('sensor.mealie_todays_meal', 'name') }}"
+     - name: TodaysDinnerDescription
+       unique_id: sensor.DinnerDescription
+       state: "{{ state_attr('sensor.mealie_todays_meal', 'description') }}"
+     - name: TodaysDinnerSlug
+       unique_id: sensor.DinnerSlug
+       state: "{{ state_attr('sensor.mealie_todays_meal', 'slug') }}"
+     - name: TodaysDinnerID
+       unique_id: sensor.DinnerID
+       state: "{{ state_attr('sensor.mealie_todays_meal', 'id') }}"
+
+Add a generic camera for image
+http://###.###.#.#:9090/api/media/recipes/{{ state_attr('sensor.mealie_todays_meal', 'id') }}/images/min-original.webp
+
+### Global infos 
+
 Read here : https://hay-kot.github.io/mealie/documentation/community-guide/home-assistant/
+
+## Installation
+
+The installation of this add-on is pretty straightforward and not different in
+comparison to installing any other Hass.io add-on.
+
+1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
+1. Install this add-on.
+1. Click the `Save` button to store your configuration.
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 ## Support
 
