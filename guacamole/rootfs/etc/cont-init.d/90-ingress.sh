@@ -33,4 +33,6 @@ sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 
 # Implement SUBFOLDER value
-sed -i "1a SUBFOLDER=$(bashio::addon.ingress_url)" /etc/s6-overlay/s6-rc.d/svc-autostart/run
+if [ -f /etc/s6-overlay/s6-rc.d/svc-autostart/run ]; then sed -i "1a SUBFOLDER=$(bashio::addon.ingress_url)" /etc/s6-overlay/s6-rc.d/svc-autostart/run; fi
+if [ -f /etc/services.d/guacamole/run ]; then sed -i "2a SUBFOLDER=$(bashio::addon.ingress_url)" /etc/services.d/guacamole/run; fi
+if [ -f /etc/services.d/guacd/run ]; then sed -i "2a SUBFOLDER=$(bashio::addon.ingress_url)" /etc/services.d/guacd/run; fi
