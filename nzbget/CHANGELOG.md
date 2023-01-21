@@ -1,4 +1,7 @@
 
+## v21.1-ls138 (21-01-2023)
+- Update to latest version from linuxserver/docker-nzbget
+
 ## v21.1-ls137 (07-01-2023)
 - Update to latest version from linuxserver/docker-nzbget
 
