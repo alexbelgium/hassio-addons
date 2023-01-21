@@ -24,7 +24,7 @@ readarr_nas 4 0 4 0
 radarr_nas 5 0 4 1
 qbittorrent 19 1 7 11
 prowlarr 2 0 1 1
-portainer 2238 116 1214 908
+portainer 2239 116 1214 909
 plex-media-manager 59 1 42 16
 plex_nas 10 1 7 2
 piwigo 0 0 0 0
