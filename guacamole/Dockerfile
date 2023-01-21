@@ -43,16 +43,9 @@ RUN \
     && sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
     # avoid error
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/cont-init.d/* \
-    && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/services.d/*/run
-
-# Avoid timeouts
-#RUN sed -i 's|-t3000|-t300000|g' /etc/s6-overlay/s6-rc.d/*/run
-
-#Allow UID and GID setting
-#RUN sed -i 's|/config|/data|g' /etc/cont-init.d/* \
-#    && sed -i 's|/config|/data|g' /etc/services.d/*/run
-# Change log location
-#    && find / -name *syslog* -type f | xargs sed -i "s|/dev/log|/data/log|g"
+    && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/services.d/*/run \
+    # Change syslogd location
+    && sed "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /dev/stdout|g" /etc/s6*/s6*/syslogd/run
 
 ##################
 # 3 Install apps #
