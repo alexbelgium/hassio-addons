@@ -25,7 +25,8 @@ FROM ${BUILD_FROM}
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
+    S6_SERVICES_GRACETIME=0 \
+    S6_READ_ONLY_ROOT=1
 
 ENV PGDATA=/config/addons_config/guacamole/postgres
 ENV GUACAMOLE_HOME=/config/addons_config/guacamole
@@ -43,9 +44,9 @@ RUN \
     && sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
     # avoid error
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/cont-init.d/* \
-    && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/services.d/*/run \
+    && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/services.d/*/run
     # Change syslogd location
-    && sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /dev/null|g" /etc/s6-overlay/s6-rc.d/syslogd/run
+    #&& sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /dev/null|g" /etc/s6-overlay/s6-rc.d/syslogd/run
 
 ##################
 # 3 Install apps #
