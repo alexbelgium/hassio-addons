@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [guacamole] only PEM ssh keys supported (fixed in abesnier/guacamole) (opened 2023-01-21)](https://github.com/alexbelgium/hassio-addons/issues/652) by [@fischer-felix](https://github.com/fischer-felix)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
