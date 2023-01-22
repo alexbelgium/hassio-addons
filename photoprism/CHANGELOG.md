@@ -1,3 +1,4 @@
+- Add "video": true
 
 ## 20220121 (10-12-2022)
 - Update to latest version from photoprism/photoprism
