@@ -4,10 +4,10 @@
   "fulltag": true,
   "github_beta": "true",
   "github_tagfilter": "release-0",
-  "last_update": "21-01-2023",
+  "last_update": "2023-01-16",
   "repository": "alexbelgium/hassio-addons",
   "slug": "unpackerr",
   "source": "dockerhub",
   "upstream_repo": "hotio/unpackerr",
-  "upstream_version": "0.11.1"
+  "upstream_version": "release-a17d885-2023-01-16"
 }

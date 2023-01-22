@@ -1,4 +1,7 @@
 
+## release-a17d885-2023-01-16 (2023-01-16)
+- Update to latest version from hotio/unpackerr
+
 ## 0.11.1 (21-01-2023)
 - Update to latest version from davidnewhall/unpackerr
 - Add local & smb disks mounting
