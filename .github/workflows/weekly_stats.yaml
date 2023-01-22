@@ -187,7 +187,7 @@ jobs:
             }
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
           # Add download count to names
-          for var in $(head -n 1 Stats3); do
+          for var in $(awk '{ print $1, $NF }' Stats3); do
           i=0
           j=0
           k=0
