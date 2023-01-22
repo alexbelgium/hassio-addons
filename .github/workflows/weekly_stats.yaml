@@ -169,7 +169,7 @@ jobs:
           # Inverse file
           gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
           # Only top 10
-          head -n 12 Stats3 > tmp_file && mv tmp_file Stats3
+          head -n 11 Stats3 > tmp_file && mv tmp_file Stats3
           # Transpose data
           awk '
           { 
