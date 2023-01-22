@@ -5,9 +5,9 @@
   ],
   "description": "Clientless remote desktop gateway",
   "environment": {},
-  "init": false,
   "image": "ghcr.io/alexbelgium/guacamole-{arch}",
   "ingress": true,
+  "init": false,
   "map": [
     "config:rw",
     "ssl:ro"

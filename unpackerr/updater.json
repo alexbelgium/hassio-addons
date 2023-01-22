@@ -1,10 +1,10 @@
 {
   "dockerhub_by_date": true,
-  "fulltag": true,
   "dockerhub_list_size": 2,
+  "fulltag": true,
   "github_beta": "true",
-  "last_update": "21-01-2023",
   "github_tagfilter": "release-0",
+  "last_update": "21-01-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "unpackerr",
   "source": "dockerhub",
