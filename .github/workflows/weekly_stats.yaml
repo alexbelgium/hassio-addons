@@ -168,6 +168,8 @@ jobs:
           sed -i "2d" Stats3
           # Inverse file
           gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
+          # Only top 10
+          head -n 12 Stats3 > tmp_file && mv tmp_file Stats3
           # Transpose data
           awk '
           { 
@@ -187,7 +189,7 @@ jobs:
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
           # Plot graph
           ( gnuplot-nox -persist <<-EOFMarker
-            set title 'Total addons'
+            set title 'Top 10 addons'
             set ylabel 'Number of installations'
             set xdata time
             set datafile missing "-"
