@@ -45,9 +45,9 @@ RUN \
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/cont-init.d/* \
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/services.d/*/run \
     # Allow syslog
-    && mkdir -p /tmp \
-    && python3 -c "import socket as s; sock = s.socket(s.AF_UNIX); sock.bind('/tmp/syslog')" \
-    && sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /tmp/syslog|g" /etc/s6-overlay/s6-rc.d/syslogd/run \
+    && mkdir -p /tmpsock \
+    && python3 -c "import socket as s; sock = s.socket(s.AF_UNIX); sock.bind('/tmpsock/syslog')" \
+    && sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /tmpsock/syslog|g" /etc/s6-overlay/s6-rc.d/syslogd/run \
     # Allow custom fonts
     && sed -i '\|<dir>/usr/share/fonts</dir>|a\ \ \ \ \ \ \ \ <dir>/config/addons_config/guacamole/fonts</dir>' /etc/fonts/fonts.conf
 
