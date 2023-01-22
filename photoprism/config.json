@@ -88,7 +88,7 @@
     "ORIGINALS_PATH": "str",
     "STORAGE_PATH": "str",
     "UPLOAD_NSFW": "bool",
-    "graphic_drivers": "list(|mesa|nvidia|radeon)?",
+    "graphic_drivers": "list(|mesa)?",
     "certfile": "str",
     "cifspassword": "str?",
     "cifsusername": "str?",
