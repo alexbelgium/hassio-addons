@@ -21,7 +21,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [Apache Guacamole](https://guacamole.apache.org/) is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH. This container is only the backend server component needed to use The official or 3rd party HTML5 frontends.
 
-This addon is based on the docker image https://github.com/maxwaldorf/guacamole
+This addon is based on the docker image here https://hub.docker.com/r/abesnier/guacamole
 
 ## Configuration
 
