@@ -98,7 +98,7 @@ Create template sensors from attributes
 Add a generic camera for image
 http://###.###.#.#:9090/api/media/recipes/{{ state_attr('sensor.mealie_todays_meal', 'id') }}/images/min-original.webp
 
-### Global infos 
+### Global infos
 
 Read here : https://hay-kot.github.io/mealie/documentation/community-guide/home-assistant/
 
