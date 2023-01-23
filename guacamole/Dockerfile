@@ -36,20 +36,28 @@ RUN \
     # Change config location
     sed -i 's|/config|/config/addons_config/guacamole|g' /etc/cont-init.d/* \
     && sed -i 's|/config|/config/addons_config/guacamole|g' /etc/services.d/*/run \
+    \
     # Enable extensions
     && sed -i 's|#!/usr/bin/with-contenv sh|#!/usr/bin/with-contenv bashio|g' /etc/cont-init.d/50-extensions \
     && sed -i 's|$EXTENSIONS|$(bashio::config "EXTENSIONS")|g' /etc/cont-init.d/50-extensions \
+    \
     # Correct transfer
     && sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
+    \
     # avoid error
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/cont-init.d/* \
     && sed -i 's|(cat /config/.database-version)|(cat /config/.database-version &>/dev/null)|g' /etc/services.d/*/run \
+    \
     # Allow syslog
     && mkdir -p /tmpsock \
     && python3 -c "import socket as s; sock = s.socket(s.AF_UNIX); sock.bind('/tmpsock/syslog')" \
     && sed -i "s|s6-socklog -d3 -U -t3000|s6-socklog -d3 -U -t3000 -x /tmpsock/syslog|g" /etc/s6-overlay/s6-rc.d/syslogd/run \
+    \
     # Allow custom fonts
-    && sed -i '\|<dir>/usr/share/fonts</dir>|a\ \ \ \ \ \ \ \ <dir>/config/addons_config/guacamole/fonts</dir>' /etc/fonts/fonts.conf
+    && sed -i '\|<dir>/usr/share/fonts</dir>|a\ \ \ \ \ \ \ \ <dir>/config/addons_config/guacamole/fonts</dir>' /etc/fonts/fonts.conf \
+    \
+    # Avoid https://github.com/alexbelgium/hassio-addons/issues/659
+    && rm -r /run/shm
 
 ##################
 # 3 Install apps #
