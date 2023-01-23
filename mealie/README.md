@@ -59,6 +59,7 @@ The complete list of options can be seen here : https://nightly.mealie.io/docume
 ### Detailed infos (Thanks @michelangelonz)
 
 Create a restful sensor
+```yaml
 sensor:
   - platform: rest
     resource: 'http://###.###.#.#:9090/api/groups/mealplans/today'
@@ -76,8 +77,10 @@ sensor:
       - performTime
       - description
       - slug
+```
 
 Create template sensors from attributes
+```yaml
      - name: TodaysDinner
        unique_id: sensor.TodaysDinner
        state: "{{ state_attr('sensor.mealie_todays_meal', 'name') }}"
@@ -90,6 +93,7 @@ Create template sensors from attributes
      - name: TodaysDinnerID
        unique_id: sensor.DinnerID
        state: "{{ state_attr('sensor.mealie_todays_meal', 'id') }}"
+```
 
 Add a generic camera for image
 http://###.###.#.#:9090/api/media/recipes/{{ state_attr('sensor.mealie_todays_meal', 'id') }}/images/min-original.webp
