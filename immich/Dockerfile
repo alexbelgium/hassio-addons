@@ -33,8 +33,8 @@ USER root
 # Install PostgreSQL
 ENV DEBIAN_FRONTEND=noninteractive
 
+# shellcheck disable=SC2013,DL3015,DL4006
 RUN \
-    # shellcheck disable=SC2013,DL3015,DL4006
     apt-get update && \
     apt-get install -y gnupg gnupg2 gnupg1 wget lsb-core && \
     sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
