@@ -33,12 +33,15 @@ USER root
 # Install PostgreSQL
 ENV DEBIAN_FRONTEND=noninteractive
 
-# shellcheck disable=SC2013,DL3015,DL4006
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# hadolint ignore=SC2013
 RUN \
     apt-get update && \
-    apt-get install -y gnupg gnupg2 gnupg1 wget lsb-core && \
+    apt-get install -y gnupg gnupg2 gnupg1 wget lsb-core --no-install-recommends && \
     sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    curl -s -S https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d && \
     apt-get update -y && \
     apt-get install postgresql-14 libpq-dev postgresql-common -y && \
