@@ -187,7 +187,7 @@ jobs:
             }
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
           # Add download count to names
-          build_list="(head -n 1 Stats3)"
+          build_list="$(head -n 1 Stats3)"
           build_list=($build_list)
           # shellcheck disable=SC2013
           for var in "${build_list[@]:1}"; do
@@ -219,7 +219,7 @@ jobs:
           EOFMarker
           ) || true
           #plot for [i=1:*] 'Stats3' using 0:i
-          #rm Stats3
+          rm Stats3
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
