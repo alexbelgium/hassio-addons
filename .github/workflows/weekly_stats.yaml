@@ -203,7 +203,7 @@ jobs:
           EOFMarker
           ) || true
           #plot for [i=1:*] 'Stats3' using 0:i
-          rm Stats3
+          #rm Stats3
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
