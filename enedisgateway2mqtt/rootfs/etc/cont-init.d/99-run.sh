@@ -59,7 +59,8 @@ fi
 # Check if config file is there, or create one from template
 if [ -f "$CONFIGSOURCE" ]; then
     # Create symlink if not existing yet
-    [ ! -L /data/config.yaml ] && ln -sf "$CONFIGSOURCE" /data
+    [ -f /data/config.yaml ] && rm /data/config.yaml || true
+    ln -sf "$CONFIGSOURCE" /data || true
     bashio::log.info "Using config file found in $CONFIGSOURCE"
 
     # Check if yaml is valid
@@ -87,14 +88,5 @@ fi
 echo " "
 bashio::log.info "Starting the app"
 echo " "
-
-# Test mode
-TZ=$(bashio::config "TZ")
-if [ "$TZ" = "test" ]; then
-    echo "secret mode found, launching script in /config/test.sh"
-    cd /config || exit
-    chmod 777 test.sh
-    ./test.sh
-fi
 
 python -u /app/main.py || bashio::log.fatal "The app has crashed. Are you sure you entered the correct config options?"
