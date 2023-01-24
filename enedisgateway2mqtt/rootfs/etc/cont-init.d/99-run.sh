@@ -19,6 +19,15 @@ if [ -f /data/config.yaml ] && [ ! -L /data/config.yaml ]; then
     mv /data/config.yaml "$CONFIGSOURCE".bak
 fi
 
+######################################
+# MIGRATE FOLDER TO MYELECTRICALDATA #
+######################################
+
+if [ -f /config/addons_config/enedisgateway2mqtt/config.yaml ]; then
+    mv /config/addons_config/enedisgateway2mqtt/* "$(dirname "${CONFIGSOURCE}")"/
+    rm -r /config/addons_config/enedisgateway2mqtt
+fi
+
 ############
 # DATABASE #
 ############
