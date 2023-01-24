@@ -19,8 +19,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-Enedisgateway2mqtt use Enedis Gateway API to send data in your MQTT Broker.
-See its github for all informations : https://github.com/m4dm4rtig4n/myelectricaldata
+MyElectricalData allows an automated access to your Enedis data. See its github for all informations : https://github.com/m4dm4rtig4n/myelectricaldata
 
 ## Configuration
 
@@ -31,15 +30,15 @@ Options can be configured through two ways :
 - Addon options
 
 ```yaml
-CONFIG_LOCATION: /config/enedisgateway2mqtt/enedisgateway2mqtt.conf # Sets the location of the config.yaml (see below)
+CONFIG_LOCATION: /config/myelectricaldata/config.yaml # Sets the location of the config.yaml (see below)
 mqtt_autodiscover: true # Shows in the log the detail of the mqtt local server (if available). It can then be added to the config.yaml file.
 TZ: Europe/Paris # Sets a specific timezone
 ```
 
 - Config.yaml
-  Everything is configured using the config.yaml file found in /config/enedisgateway2mqtt/enedisgateway2mqtt.conf.
+  Everything is configured using the config.yaml file found in /config/myelectricaldata/config.yaml.
 
-The complete list of options can be seen here : https://github.com/m4dm4rtig4n/enedisgateway2mqtt#environment-variable
+The complete list of options can be seen here : https://github.com/m4dm4rtig4n/myelectricaldata/wiki/03.-Configuration
 
 ## Installation
 

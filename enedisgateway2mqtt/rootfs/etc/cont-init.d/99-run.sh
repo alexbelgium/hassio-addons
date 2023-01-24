@@ -19,9 +19,14 @@ if [ -f /data/config.yaml ] && [ ! -L /data/config.yaml ]; then
     mv /data/config.yaml "$CONFIGSOURCE".bak
 fi
 
-############
-# DATABASE #
-############
+#########################################################
+# MIGRATION FROM ENEDISGATEWAY2MQTT TO MYELECTRICALDATA #
+#########################################################
+
+if [ -f /config/addons_config/enedisgateway2mqtt/config.yaml ]; then
+    mv /config/addons_config/enedisgateway2mqtt/* "$(dirname "${CONFIGSOURCE}")"/
+    rm -r /config/addons_config/enedisgateway2mqtt
+fi
 
 # If migration was performed, save file in config folder
 if [ -f /data/enedisgateway.db.migrate ]; then
@@ -31,7 +36,6 @@ fi
 
 # If migration was performed, save file in config folder
 if [ -f /data/cache.db ] && [ ! -f "$DATABASESOURCE" ]; then
-    if [ -f "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db ]; then mv "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db.bak2; fi
     mv /data/cache.db "$(dirname "${CONFIGSOURCE}")"
 fi
 
@@ -39,6 +43,10 @@ fi
 if [ -f "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db ]; then
     mv "$(dirname "${CONFIGSOURCE}")"/enedisgateway.db /data
 fi
+
+############
+# DATABASE #
+############
 
 # Check if database is here or create symlink
 if [ -f "$DATABASESOURCE" ]; then

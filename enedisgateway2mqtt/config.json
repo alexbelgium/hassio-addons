@@ -6,13 +6,13 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Use Enedis Gateway API to send data in your MQTT Broker (latest channel)",
-  "image": "ghcr.io/alexbelgium/enedisgateway2mqtt-{arch}",
+  "image": "ghcr.io/alexbelgium/myelectricaldata-{arch}",
   "map": [
     "config:rw"
   ],
   "name": "MyElectricalData",
   "options": {
-    "CONFIG_LOCATION": "/config/enedisgateway2mqtt/config.yaml",
+    "CONFIG_LOCATION": "/config/myelectricaldata/config.yaml",
     "TZ": "Europe/Paris",
     "mqtt_autodiscover": true,
     "verbose": true
@@ -34,5 +34,5 @@
   ],
   "slug": "enedisgateway2mqtt",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.13-2"
+  "version": "0.8.13-3"
 }
