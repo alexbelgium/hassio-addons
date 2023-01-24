@@ -17,10 +17,10 @@ configuration:
       https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   cifspassword:
     name: cifspassword
-    description: 'Your password to access your SMB share, same for all smb shares'
+    description: "Your password to access your SMB share, same for all smb shares"
   cifsusername:
     name: cifsusername
-    description: 'Your username to access your SMB share, same for all smb shares'
+    description: "Your username to access your SMB share, same for all smb shares"
   cifsdomain:
     name: cifsdomain
     description: Allow setting the domain for the smb share
@@ -37,7 +37,7 @@ configuration:
       to mount separated by commas (ex: sda1,sdb1,MYNAS)
   networkdisks:
     name: networkdisks
-    description: 'list of smb servers to mount, separated by commas (//xxx.xx.xx.xx/share)'
+    description: "list of smb servers to mount, separated by commas (//xxx.xx.xx.xx/share)"
   DB_HOSTNAME:
     name: DB_HOSTNAME
     description: If using external postgresql
@@ -59,6 +59,10 @@ configuration:
   JWT_SECRET:
     name: JWT_SECRET
     description: Used to sign the authentication keys for user login
+  CONFIG_LOCATION:
+    name: CONFIG_LOCATION
+    description: >-
+      Location of the config.yaml file. Additional ENV variables set in this file will be added to the addon environment
   run_duration:
     name: run_duration
     description: >-
@@ -66,16 +70,16 @@ configuration:
       unit (ex : 5s, or 2m, or 12h, or 5d...)
   silent:
     name: silent
-    description: 'true #suppresses debug messages'
+    description: "true #suppresses debug messages"
   ssl:
     name: ssl
-    description: 'true/false : enables ssl. Need certfile and keyfile filled'
+    description: "true/false : enables ssl. Need certfile and keyfile filled"
   certfile:
     name: certfile
-    description: 'fullchain.pem #ssl certificate, must be located in /ssl'
+    description: "fullchain.pem #ssl certificate, must be located in /ssl"
   keyfile:
     name: keyfile
-    description: 'privkey.pem #sslkeyfile, must be located in /ssl'
+    description: "privkey.pem #sslkeyfile, must be located in /ssl"
   whitelist:
     name: whitelist
     description: '"localhost,192.168.0.0/16" # list ip subnets that won''t need a password'

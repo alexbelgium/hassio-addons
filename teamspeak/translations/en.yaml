@@ -59,6 +59,10 @@ configuration:
   JWT_SECRET:
     name: JWT_SECRET
     description: Used to sign the authentication keys for user login
+  CONFIG_LOCATION:
+    name: CONFIG_LOCATION
+    description: >-
+      Location of the config.yaml file. Additional ENV variables set in this file will be added to the addon environment
   run_duration:
     name: run_duration
     description: >-
