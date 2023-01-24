@@ -59,6 +59,7 @@ fi
 # Check if config file is there, or create one from template
 if [ -f "$CONFIGSOURCE" ]; then
     # Create symlink if not existing yet
+    # shellcheck disable=SC2015
     [ -f /data/config.yaml ] && rm /data/config.yaml || true
     ln -sf "$CONFIGSOURCE" /data || true
     bashio::log.info "Using config file found in $CONFIGSOURCE"
