@@ -3,108 +3,95 @@ configuration:
   PGID:
     name: PGID
     description: >-
-      The user group ID, as described in https://docs.linuxserver.io/general/understanding-puid-and-pgid
+      The user group ID, as described in
+      https://docs.linuxserver.io/general/understanding-puid-and-pgid
   PUID:
     name: PUID
     description: >-
-      The user group ID, as described in https://docs.linuxserver.io/general/understanding-puid-and-pgid
+      The user group ID, as described in
+      https://docs.linuxserver.io/general/understanding-puid-and-pgid
   TZ:
     name: TZ
     description: >-
-      The timezone, as described in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+      The timezone, as described in
+      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   cifspassword:
     name: cifspassword
-    description: >-
-      Your password to access your SMB share, same for all smb shares
+    description: "Your password to access your SMB share, same for all smb shares"
   cifsusername:
     name: cifsusername
-    description: >-
-      Your username to access your SMB share, same for all smb shares
+    description: "Your username to access your SMB share, same for all smb shares"
   cifsdomain:
     name: cifsdomain
-    description: >-
-      Allow setting the domain for the smb share
+    description: Allow setting the domain for the smb share
   database:
     name: database
-    description: >-
-      Type of database to use
+    description: Type of database to use
   data_location:
     name: data_location
-    description: >-
-      Where do you want your data stored
+    description: Where do you want your data stored
   localdisks:
     name: localdisks
     description: >-
-      Physical name of the partition (ex. sda1) or the share (ex. SharedFiles) to mount separated by commas (ex: sda1,sdb1,MYNAS)
+      Physical name of the partition (ex. sda1) or the share (ex. SharedFiles)
+      to mount separated by commas (ex: sda1,sdb1,MYNAS)
   networkdisks:
     name: networkdisks
-    description: >-
-      list of smb servers to mount, separated by commas (//xxx.xx.xx.xx/share)
+    description: "list of smb servers to mount, separated by commas (//xxx.xx.xx.xx/share)"
   DB_HOSTNAME:
     name: DB_HOSTNAME
-    description: >-
-      If using external postgresql
+    description: If using external postgresql
   DB_USERNAME:
     name: DB_USERNAME
-    description: >-
-      If using external postgresql
+    description: If using external postgresql
   DB_PORT:
     name: DB_PORT
-    description: >-
-      If using external postgresql
+    description: If using external postgresql
   DB_PASSWORD:
     name: DB_PASSWORD
-    description: >-
-      If using external postgresql
+    description: If using external postgresql
   DB_DATABASE_NAME:
     name: DB_DATABASE_NAME
-    description: >-
-      If using external postgresql
+    description: If using external postgresql
   UPLOAD_LOCATION:
     name: UPLOAD_LOCATION
-    description: >-
-      This is the location where uploaded files are stored
+    description: This is the location where uploaded files are stored
   JWT_SECRET:
     name: JWT_SECRET
-    description: >-
-      Used to sign the authentication keys for user login
+    description: Used to sign the authentication keys for user login
   run_duration:
     name: run_duration
     description: >-
-      12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
+      12h #for how long should the addon run. Must be formatted as number + time
+      unit (ex : 5s, or 2m, or 12h, or 5d...)
   silent:
     name: silent
-    description: >-
-      true #suppresses debug messages
+    description: "true #suppresses debug messages"
   ssl:
     name: ssl
-    description: >-
-      true/false : enables ssl. Need certfile and keyfile filled
+    description: "true/false : enables ssl. Need certfile and keyfile filled"
   certfile:
     name: certfile
-    description: >-
-      fullchain.pem #ssl certificate, must be located in /ssl
+    description: "fullchain.pem #ssl certificate, must be located in /ssl"
   keyfile:
     name: keyfile
-    description: >-
-      privkey.pem #sslkeyfile, must be located in /ssl
+    description: "privkey.pem #sslkeyfile, must be located in /ssl"
   whitelist:
     name: whitelist
-    description: >-
-      "localhost,192.168.0.0/16" # list ip subnets that won't need a password
+    description: '"localhost,192.168.0.0/16" # list ip subnets that won''t need a password'
   customUI:
     name: customUI
     description: >-
-      selection from list # alternative webUI can be set here. Latest version set at each addon start
+      selection from list # alternative webUI can be set here. Latest version
+      set at each addon start
   DNS_servers:
     name: DNS_servers
     description: >-
-      8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
+      8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to
+      avoid spamming in case of local DNS ad-remover
   openvpn_alt_mode:
     name: openvpn_alt_mode
-    description: >-
-      bind at container level and not app level
+    description: bind at container level and not app level
   openvpn_config:
     name: openvpn_config
-    description: >-
-      for example "config.ovpn" # name of the file located in /config/openvpn
+    description: 'for example "config.ovpn" # name of the file located in /config/openvpn'
