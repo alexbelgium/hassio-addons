@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Guacamole] postgred could not access directory (opened 2023-01-23)](https://github.com/alexbelgium/hassio-addons/issues/660) by [@MarcelW85](https://github.com/MarcelW85)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
