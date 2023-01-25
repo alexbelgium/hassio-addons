@@ -22,7 +22,7 @@ for KEYS in "${arr[@]}"; do
         secret=${line#*secret }
         # Check if single match
         secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
-        [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+        [[ "$secretnum" == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
