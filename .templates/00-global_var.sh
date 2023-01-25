@@ -16,6 +16,18 @@ for KEYS in "${arr[@]}"; do
     # export key
     VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
     line="${KEYS}='${VALUE//[\"\']/}'"
+    # Check if secret
+    if [[ "${line}" == *'!secret '* ]]; then
+        echo "secret detected"
+        secret=${line#*secret }
+        # Check if single match
+        secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
+        [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+        # Get text
+        secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
+        secret=${secret#*: }
+        line="${line%%=*}='$secret'"
+    fi
     # text
     if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
         bashio::log.blue "${KEYS}=******"
