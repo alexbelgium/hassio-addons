@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Nextcloud - Enable antivirus (opened 2023-01-25)](https://github.com/alexbelgium/hassio-addons/issues/669) by [@amaciuc](https://github.com/amaciuc)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
