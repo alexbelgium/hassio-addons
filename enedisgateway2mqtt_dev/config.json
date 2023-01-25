@@ -34,5 +34,6 @@
   ],
   "slug": "enedisgateway2mqtt_dev",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.14-beta1"
+  "version": "0.8.14-beta1",
+  "webui": "http://[HOST]:[PORT:5000]"
 }
