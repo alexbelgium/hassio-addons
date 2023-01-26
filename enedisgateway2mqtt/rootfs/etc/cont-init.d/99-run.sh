@@ -95,6 +95,8 @@ fi
 # Launch App #
 ##############
 echo " "
+nginx & bashio::log.info "Starting nginx"
+echo " "
 bashio::log.info "Starting the app"
 echo " "
 
