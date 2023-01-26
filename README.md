@@ -336,22 +336,24 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 
-&#10003;  [MyElectricalData](enedisgateway2mqtt/) : Use Enedis Gateway API to send data in your MQTT Broker (latest channel)
+&#10003; ![image](https://api.iconify.design/mdi/lightning-bolt-outline.svg) [MyElectricalData](enedisgateway2mqtt/) : Use Enedis Gateway API to send data in your MQTT Broker (latest channel)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 
-&#10003;  [MyElectricalData Dev](enedisgateway2mqtt_dev/) : Use Enedis Gateway API to send data in your MQTT Broker (dev channel)
+&#10003; ![image](https://api.iconify.design/mdi/lightning-bolt-outline.svg) [MyElectricalData Dev](enedisgateway2mqtt_dev/) : Use Enedis Gateway API to send data in your MQTT Broker (dev channel)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 
 &#10003;  [Mylar3](mylar3/) : Automated comic book downloader for use with NZB and torrents
