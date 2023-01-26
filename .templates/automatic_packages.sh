@@ -64,8 +64,8 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils ntfs-3g fuse"
-        #[ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils ntfs-3g fuse"
-        #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils ntfs-3g fuse"
+        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat* ntfs*"
+        #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES ntfs-3g"
     fi
 
     COMMAND="cifs"
