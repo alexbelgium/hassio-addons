@@ -7,6 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Use Enedis Gateway API to send data in your MQTT Broker (dev channel)",
   "image": "ghcr.io/alexbelgium/myelectricaldata_dev-{arch}",
+  "ingress": true,
   "map": [
     "config:rw"
   ],
@@ -17,6 +18,7 @@
     "mqtt_autodiscover": true,
     "verbose": true
   },
+  "panel_icon": "mdi:lightning-bolt-outline",
   "ports": {
     "5000/tcp": 5000
   },
@@ -34,6 +36,5 @@
   ],
   "slug": "enedisgateway2mqtt_dev",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.14-beta1-2",
-  "webui": "http://[HOST]:[PORT:5000]"
+  "version": "0.8.14-beta1-3"
 }
