@@ -153,7 +153,7 @@ jobs:
             set autoscale
             set terminal png size 500,300
             set output 'stats.png'
-            set term png tiny
+            set term png small
             plot 'Stats3' using 1:2 lt rgb 'red' w l title 'Total addons' smooth csplines
           EOFMarker
           rm Stats3
@@ -214,7 +214,7 @@ jobs:
             set autoscale
             set terminal png size 500,300
             set output 'stats_addons.png'
-            set term png tiny
+            set term png small
             plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i) smooth csplines
           EOFMarker
           ) || ( gnuplot-nox -persist <<-EOFMarker
@@ -228,7 +228,7 @@ jobs:
             set autoscale
             set terminal png size 500,300
             set output 'stats_addons.png'
-            set term png tiny
+            set term png small
             plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i)
           EOFMarker
           )
