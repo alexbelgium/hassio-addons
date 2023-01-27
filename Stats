@@ -6,7 +6,7 @@
 328 276 192 142 7 90 53 38 35 mealie
 325 323 323 337 312 407 266 240 225 qbittorrent
 277 254 254 294 218 282 205 204 195 transmission_ls
-254 - - - - - - - - myelectricaldata
+254 504 397 403 272 289 35 59 39 myelectricaldata
 251 207 169 163 144 110 68 47 47 fireflyiii
 251 193 193 225 172 181 156 201 196 jellyfin
 243 288 288 237 181 298 226 195 195 plex_nas
@@ -70,7 +70,5 @@
 26 32 32 22 19 53 33 27 26 piwigo
 25 61 61 50 49 43 21 17 17 seafile
 25 32 32 21 22 20 11 9 9 unpackerr
+22 69 62 41 28 45 18 7 5 myelectricaldata_dev
 20 25 25 24 22 19 6 3 3 mylar3
-- 69 62 41 28 45 18 7 5 enedisgateway2mqtt_dev
-- 504 397 403 272 289 35 59 39 enedisgateway2mqtt
-- - - - - - - - - 22 - - - - - - - - myelectricaldata_dev
