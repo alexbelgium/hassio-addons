@@ -15,10 +15,6 @@ jobs:
       - name: Create stats
         run: |
           echo "Starting"
-          # Exit if stats file younger than 3 days
-          if [[ ! $(find "Stats" -mtime +3 -print) ]]; then
-            exit 0
-          fi
           COUNT=0
           COUNT1=0
           COUNT2=0
