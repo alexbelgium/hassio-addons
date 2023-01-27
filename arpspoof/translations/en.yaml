@@ -500,7 +500,7 @@ additional_apps:
     description: See upstream app documentation
   whitelist:
     name: whitelist
-    description: ""localhost,192.168.0.0/16"" # list ip subnets that won''t need a password
+    description: '"localhost,192.168.0.0/16" # list ip subnets that do no need a password'
   WHOOGLE_ALT_IG:
     name: WHOOGLE_ALT_IG
     description: See upstream app documentation
