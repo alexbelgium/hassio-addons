@@ -264,7 +264,7 @@
     description: See upstream app documentation
   localdisks:
     name: localdisks
-    description: Physical name of the partition (ex. sda1) or the share (ex. SharedFiles) to mount separated by commas (ex: sda1,sdb1,MYNAS)
+    description: Physical name of the partition (ex. sda1) or the share (ex. SharedFiles) to mount separated by commas (ex. sda1,sdb1,MYNAS)
   log_level:
     name: log_level
     description: See upstream app documentation
