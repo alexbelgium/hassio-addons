@@ -1,4 +1,4 @@
-  additional_apps:
+additional_apps:
     name: additional_apps
     description: Additional apps to install at boot
   allow_ipv6:
@@ -419,7 +419,7 @@
     description: See upstream app documentation
   ssl:
     name: ssl
-    description: true/false : enables ssl. Need certfile and keyfile filled'
+    description: true/false.  enables ssl. Need certfile and keyfile filled'
   storage_dir:
     name: storage_dir
     description: See upstream app documentation
