@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/claabs/epicgames-freegames-node:latest",
-    "amd64": "ghcr.io/claabs/epicgames-freegames-node:latest"
+    "aarch64": "charlocharlie/epicgames-freegames:latest",
+    "amd64": "charlocharlie/epicgames-freegames:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
