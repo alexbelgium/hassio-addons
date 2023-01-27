@@ -15,7 +15,6 @@ jobs:
       - name: Create stats
         run: |
           echo "Starting"
-          exit 0
           COUNT=0
           COUNT1=0
           COUNT2=0
