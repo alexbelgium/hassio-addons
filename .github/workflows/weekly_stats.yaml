@@ -15,7 +15,6 @@ jobs:
       - name: Create stats
         run: |
           echo "Starting"
-          exit 0
           COUNT=0
           COUNT1=0
           COUNT2=0
@@ -153,7 +152,7 @@ jobs:
             set autoscale
             set terminal png size 500,300
             set output 'stats.png'
-            set tics font "Helvetica,10"
+            set tics font "Helvetica,8"
             plot 'Stats3' using 1:2 lt rgb 'red' w l title 'Total addons' smooth csplines
           EOFMarker
           rm Stats3
@@ -214,7 +213,7 @@ jobs:
             set autoscale
             set terminal png size 500,300
             set output 'stats_addons.png'
-            set tics font "Helvetica,10"
+            set tics font "Helvetica,8"
             plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i) smooth csplines
           EOFMarker
           ) || ( gnuplot-nox -persist <<-EOFMarker
@@ -228,7 +227,7 @@ jobs:
             set autoscale
             set terminal png size 500,300
             set output 'stats_addons.png'
-            set tics font "Helvetica,10"
+            set tics font "Helvetica,8"
             plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i)
           EOFMarker
           )
