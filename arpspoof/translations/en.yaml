@@ -1,4 +1,4 @@
-additional_apps:
+  additional_apps:
     name: additional_apps
     description: Additional apps to install at boot
   allow_ipv6:
