@@ -1,6 +1,8 @@
 
 ## 9.0.10 (28-01-2023)
 - Update to latest version from franchetti/seafile-arm
+- Allow setting server url
+- Allow custom env variables through config.yaml
 
 ## v9.0.14-pro (01-12-2022)
 - Update to latest version from haiwen/seahub
