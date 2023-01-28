@@ -4,7 +4,7 @@
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "seafile",
-  "source": "github",
-  "upstream_repo": "haiwen/seahub",
+  "source": "Dockerhub",
+  "upstream_repo": "franchetti/seafile-arm",
   "upstream_version": "v9.0.14-pro"
 }
