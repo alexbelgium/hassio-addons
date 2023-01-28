@@ -1,4 +1,7 @@
 
+## 9.0.10 (28-01-2023)
+- Update to latest version from franchetti/seafile-arm
+
 ## v9.0.14-pro (01-12-2022)
 - Update to latest version from haiwen/seahub
 - WARNING : update to supervisor 2022.11 before installing
