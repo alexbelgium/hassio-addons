@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "21-01-2023",
+  "last_update": "28-01-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "plex_meta_manager",
   "source": "github",
   "upstream_repo": "linuxserver/docker-plex-meta-manager",
-  "upstream_version": "v1.18.3-ls44"
+  "upstream_version": "v1.18.3-ls45"
 }
