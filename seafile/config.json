@@ -67,6 +67,7 @@
   ],
   "name": "Seafile",
   "options": {
+    "CONFIG_LOCATION": "/config/addons_config/seafile/config.yaml",
     "PGID": 1000,
     "PUID": 1000,
     "SEAFILE_ADMIN_EMAIL": "me@example.com",
@@ -94,6 +95,7 @@
     "NET_ADMIN"
   ],
   "schema": {
+    "CONFIG_LOCATION": "str?",
     "PGID": "int",
     "PUID": "int",
     "SEAFILE_ADMIN_EMAIL": "email",
