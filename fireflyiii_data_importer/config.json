@@ -40,6 +40,6 @@
   },
   "slug": "fireflyiii_data_importer",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "version-v1.0.0",
+  "version": "version-v1.0.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

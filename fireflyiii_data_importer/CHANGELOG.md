@@ -1,4 +1,7 @@
 
+## version-v1.0.2 (28-01-2023)
+- Update to latest version from fireflyiii/data-importer
+
 ## version-v1.0.0 (22-01-2023)
 - Update to latest version from fireflyiii/data-importer
 - WARNING : update to supervisor 2022.11 before installing

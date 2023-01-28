@@ -43,17 +43,17 @@ If you want to do add the repository manually, please follow the procedure highl
 
 Number of addons in the repository : 74
 
-Total number of addons installed : 11500
+Total number of addons installed : 12065
 
 Top 3 most installed addons :
-1. Portainer (2238x)
+1. Portainer (2538x)
 2. Filebrowser (1359x)
-3. Enedisgateway2mqtt (504x)
+3. Epicgamesfree (493x)
 
 Most used architectures :
-- amd64: 57%
+- amd64: 56%
 - aarch64: 38%
-- armv7: 4%
+- armv7: 6%
 
 Downloads evolution :
 
@@ -336,22 +336,24 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 
-&#10003;  [MyElectricalData](enedisgateway2mqtt/) : Use Enedis Gateway API to send data in your MQTT Broker (latest channel)
+&#10003; ![image](https://api.iconify.design/mdi/lightning-bolt-outline.svg) [MyElectricalData](enedisgateway2mqtt/) : Use Enedis Gateway API to send data in your MQTT Broker (latest channel)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 
-&#10003;  [MyElectricalData Dev](enedisgateway2mqtt_dev/) : Use Enedis Gateway API to send data in your MQTT Broker (dev channel)
+&#10003; ![image](https://api.iconify.design/mdi/lightning-bolt-outline.svg) [MyElectricalData Dev](enedisgateway2mqtt_dev/) : Use Enedis Gateway API to send data in your MQTT Broker (dev channel)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 
 &#10003;  [Mylar3](mylar3/) : Automated comic book downloader for use with NZB and torrents
@@ -486,7 +488,7 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (2238x)](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (2538x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)

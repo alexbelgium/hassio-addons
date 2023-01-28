@@ -1,97 +1,656 @@
----
-configuration:
-  PGID:
-    name: PGID
-    description: >-
-      The user group ID, as described in
-      https://docs.linuxserver.io/general/understanding-puid-and-pgid
-  PUID:
-    name: PUID
-    description: >-
-      The user group ID, as described in
-      https://docs.linuxserver.io/general/understanding-puid-and-pgid
-  TZ:
-    name: TZ
-    description: >-
-      The timezone, as described in
-      https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  cifspassword:
-    name: cifspassword
-    description: 'Your password to access your SMB share, same for all smb shares'
-  cifsusername:
-    name: cifsusername
-    description: 'Your username to access your SMB share, same for all smb shares'
+  additional_apps:
+    name: additional_apps
+    description: Additional apps to install at boot
+  allow_ipv6:
+    name: allow_ipv6
+    description: Enables ipv6 in the addon
+  ALLOW_SIGNUP:
+    name: ALLOW_SIGNUP
+    description: See upstream app documentation
+  ALLOWED_HOSTS:
+    name: ALLOWED_HOSTS
+    description: See upstream app documentation
+  APP_BASE_URL:
+    name: APP_BASE_URL
+    description: See upstream app documentation
+  APP_KEY:
+    name: APP_KEY
+    description: See upstream app documentation
+  APP_NAME:
+    name: APP_NAME
+    description: See upstream app documentation
+  append_myip:
+    name: append_myip
+    description: See upstream app documentation
+  auto_restart:
+    name: auto_restart
+    description: See upstream app documentation
+  BACKUP_PATH:
+    name: BACKUP_PATH
+    description: See upstream app documentation
+  base_folder:
+    name: base_folder
+    description: See upstream app documentation
+  BASE_URL:
+    name: BASE_URL
+    description: See upstream app documentation
+  base_url_portless:
+    name: base_url_portless
+    description: See upstream app documentation
+  certfile:
+    name: certfile
+    description: fullchain.pem #ssl certificate, must be located in /ssl
+  checkip_command:
+    name: checkip_command
+    description: See upstream app documentation
+  checkip_path:
+    name: checkip_path
+    description: See upstream app documentation
+  checkip_server:
+    name: checkip_server
+    description: See upstream app documentation
+  checkip_ssl:
+    name: checkip_ssl
+    description: See upstream app documentation
   cifsdomain:
     name: cifsdomain
     description: Allow setting the domain for the smb share
-  database:
-    name: database
-    description: Type of database to use
+  cifspassword:
+    name: cifspassword
+    description: Your password to access your SMB share, same for all smb shares
+  cifsusername:
+    name: cifsusername
+    description: Your username to access your SMB share, same for all smb shares
+  claim:
+    name: claim
+    description: See upstream app documentation
+  CLI_ARGS:
+    name: CLI_ARGS
+    description: See upstream app documentation
+  COLLECTOR_API_ENDPOINT:
+    name: COLLECTOR_API_ENDPOINT
+    description: See upstream app documentation
+  COLLECTOR_HOST_ID:
+    name: COLLECTOR_HOST_ID
+    description: See upstream app documentation
+  CONFIG_LOCATION:
+    name: CONFIG_LOCATION
+    description: See upstream app documentation
+  CUSTOM_OPTIONS:
+    name: CUSTOM_OPTIONS
+    description: See upstream app documentation
+  custom_provider:
+    name: custom_provider
+    description: See upstream app documentation
+  customUI:
+    name: customUI
+    description: selection from list # alternative webUI can be set here
+  data_directory:
+    name: data_directory
+    description: See upstream app documentation
   data_location:
     name: data_location
     description: Where do you want your data stored
-  localdisks:
-    name: localdisks
-    description: >-
-      Physical name of the partition (ex. sda1) or the share (ex. SharedFiles)
-      to mount separated by commas (ex: sda1,sdb1,MYNAS)
-  networkdisks:
-    name: networkdisks
-    description: 'list of smb servers to mount, separated by commas (//xxx.xx.xx.xx/share)'
-  DB_HOSTNAME:
-    name: DB_HOSTNAME
-    description: If using external postgresql
-  DB_USERNAME:
-    name: DB_USERNAME
-    description: If using external postgresql
-  DB_PORT:
-    name: DB_PORT
-    description: If using external postgresql
-  DB_PASSWORD:
-    name: DB_PASSWORD
-    description: If using external postgresql
+  database:
+    name: database
+    description: Type of database to use
+  DB_CLIENT:
+    name: DB_CLIENT
+    description: See upstream app documentation
+  DB_CONNECTION:
+    name: DB_CONNECTION
+    description: See upstream app documentation
+  DB_DATABASE:
+    name: DB_DATABASE
+    description: See upstream app documentation
   DB_DATABASE_NAME:
     name: DB_DATABASE_NAME
     description: If using external postgresql
-  UPLOAD_LOCATION:
-    name: UPLOAD_LOCATION
-    description: This is the location where uploaded files are stored
+  DB_HOST:
+    name: DB_HOST
+    description: See upstream app documentation
+  DB_HOSTNAME:
+    name: DB_HOSTNAME
+    description: If using external database
+  DB_PASSWORD:
+    name: DB_PASSWORD
+    description: If using external database
+  DB_PORT:
+    name: DB_PORT
+    description: If using external database
+  DB_TYPE:
+    name: DB_TYPE
+    description: See upstream app documentation
+  DB_USERNAME:
+    name: DB_USERNAME
+    description: If using external database
+  ddns_path:
+    name: ddns_path
+    description: See upstream app documentation
+  ddns_server:
+    name: ddns_server
+    description: See upstream app documentation
+  DEBUG:
+    name: DEBUG
+    description: See upstream app documentation
+  DISABLE_MACHINE_LEARNING:
+    name: DISABLE_MACHINE_LEARNING
+    description: See upstream app documentation
+  DNS_server:
+    name: DNS_server
+    description: See upstream app documentation
+  DOCKER_MODS:
+    name: DOCKER_MODS
+    description: See upstream app documentation
+  DOMAIN:
+    name: DOMAIN
+    description: See upstream app documentation
+  download_dir:
+    name: download_dir
+    description: See upstream app documentation
+  downloads_location:
+    name: downloads_location
+    description: See upstream app documentation
+  DROPBOX_TOKEN:
+    name: DROPBOX_TOKEN
+    description: See upstream app documentation
+  edge_repositories:
+    name: edge_repositories
+    description: See upstream app documentation
+  elasticsearch_server:
+    name: elasticsearch_server
+    description: See upstream app documentation
+  expose_collector:
+    name: expose_collector
+    description: See upstream app documentation
+  EXTENSIONS:
+    name: EXTENSIONS
+    description: See upstream app documentation
+  extraction_path:
+    name: extraction_path
+    description: See upstream app documentation
+  fake_address:
+    name: fake_address
+    description: See upstream app documentation
+  FG_LOG_LEVEL:
+    name: FG_LOG_LEVEL
+    description: See upstream app documentation
+  FG_PLUGINS:
+    name: FG_PLUGINS
+    description: See upstream app documentation
+  FIREFLY_III_ACCESS_TOKEN:
+    name: FIREFLY_III_ACCESS_TOKEN
+    description: See upstream app documentation
+  FIREFLY_III_CLIENT_ID:
+    name: FIREFLY_III_CLIENT_ID
+    description: See upstream app documentation
+  FIREFLY_III_URL:
+    name: FIREFLY_III_URL
+    description: See upstream app documentation
+  forced_update:
+    name: forced_update
+    description: See upstream app documentation
+  Full_Text_Search:
+    name: Full_Text_Search
+    description: See upstream app documentation
+  gitapi:
+    name: gitapi
+    description: See upstream app documentation
+  gitmail:
+    name: gitmail
+    description: See upstream app documentation
+  gitpass:
+    name: gitpass
+    description: See upstream app documentation
+  gituser:
+    name: gituser
+    description: See upstream app documentation
+  graphic_drivers:
+    name: graphic_drivers
+    description: See upstream app documentation
+  hostname:
+    name: hostname
+    description: See upstream app documentation
+  HTTPS_ONLY:
+    name: HTTPS_ONLY
+    description: See upstream app documentation
+  iface:
+    name: iface
+    description: See upstream app documentation
+  Images_location:
+    name: Images_location
+    description: See upstream app documentation
+  imaphost:
+    name: imaphost
+    description: See upstream app documentation
+  imappassword:
+    name: imappassword
+    description: See upstream app documentation
+  imapusername:
+    name: imapusername
+    description: See upstream app documentation
+  import_dir:
+    name: import_dir
+    description: See upstream app documentation
+  IMPORT_PATH:
+    name: IMPORT_PATH
+    description: See upstream app documentation
+  incomplete_dir:
+    name: incomplete_dir
+    description: See upstream app documentation
+  ingress_disabled:
+    name: ingress_disabled
+    description: See upstream app documentation
+  ingress_user:
+    name: ingress_user
+    description: See upstream app documentation
+  INTERFACE_NAME:
+    name: INTERFACE_NAME
+    description: See upstream app documentation
+  iterations:
+    name: iterations
+    description: See upstream app documentation
   JWT_SECRET:
     name: JWT_SECRET
     description: Used to sign the authentication keys for user login
-  run_duration:
-    name: run_duration
-    description: >-
-      12h #for how long should the addon run. Must be formatted as number + time
-      unit (ex : 5s, or 2m, or 12h, or 5d...)
-  silent:
-    name: silent
-    description: 'true #suppresses debug messages'
-  ssl:
-    name: ssl
-    description: 'true/false : enables ssl. Need certfile and keyfile filled'
-  certfile:
-    name: certfile
-    description: 'fullchain.pem #ssl certificate, must be located in /ssl'
+  KEYBOARD:
+    name: KEYBOARD
+    description: See upstream app documentation
   keyfile:
     name: keyfile
-    description: 'privkey.pem #sslkeyfile, must be located in /ssl'
+    description: privkey.pem #sslkeyfile, must be located in /ssl
+  LOCAL_NETWORK:
+    name: LOCAL_NETWORK
+    description: See upstream app documentation
+  localdisks:
+    name: localdisks
+    description: Physical name of the partition (ex. sda1) or the share (ex. SharedFiles) to mount separated by commas (ex. sda1,sdb1,MYNAS)
+  log_level:
+    name: log_level
+    description: See upstream app documentation
+  MAILER_AUTH_PASSWORD:
+    name: MAILER_AUTH_PASSWORD
+    description: See upstream app documentation
+  MAILER_AUTH_USER:
+    name: MAILER_AUTH_USER
+    description: See upstream app documentation
+  MAILER_ENABLED:
+    name: MAILER_ENABLED
+    description: See upstream app documentation
+    name: OPENVPN_PROVIDER
+    description: See upstream app documentation
+  OPENVPN_USERNAME:
+    name: OPENVPN_USERNAME
+    description: See upstream app documentation
+  ORIGINALS_PATH:
+    name: ORIGINALS_PATH
+    description: See upstream app documentation
+  PAPERLESS_OCR_MODE:
+    name: PAPERLESS_OCR_MODE
+    description: See upstream app documentation
+  PAPERLESS_URL:
+    name: PAPERLESS_URL
+    description: See upstream app documentation
+  pass:
+    name: pass
+    description: See upstream app documentation
+  password:
+    name: password
+    description: See upstream app documentation
+  period:
+    name: period
+    description: See upstream app documentation
+  PGID:
+    name: PGID
+    description: The user group ID, as described in https://docs.linuxserver.io/general/understanding-puid-and-pgid
+  PMM_CONFIG:
+    name: PMM_CONFIG
+    description: See upstream app documentation
+  PMM_NO_MISSING:
+    name: PMM_NO_MISSING
+    description: See upstream app documentation
+  PMM_RUN:
+    name: PMM_RUN
+    description: See upstream app documentation
+  PMM_TEST:
+    name: PMM_TEST
+    description: See upstream app documentation
+  PMM_TIME:
+    name: PMM_TIME
+    description: See upstream app documentation
+  POSTGRES_DATABASE:
+    name: POSTGRES_DATABASE
+    description: See upstream app documentation
+  POSTGRES_DB:
+    name: POSTGRES_DB
+    description: See upstream app documentation
+  POSTGRES_HOST:
+    name: POSTGRES_HOST
+    description: See upstream app documentation
+  POSTGRES_PASSWORD:
+    name: POSTGRES_PASSWORD
+    description: See upstream app documentation
+  POSTGRES_PORT:
+    name: POSTGRES_PORT
+    description: See upstream app documentation
+  POSTGRES_USER:
+    name: POSTGRES_USER
+    description: See upstream app documentation
+  provider:
+    name: provider
+    description: See upstream app documentation
+  providers:
+    name: providers
+    description: See upstream app documentation
+  proxied:
+    name: proxied
+    description: See upstream app documentation
+  PUID:
+    name: PUID
+    description: The user group ID, as described in https://docs.linuxserver.io/general/understanding-puid-and-pgid
+  remote_mysql_database:
+    name: remote_mysql_database
+    description: See upstream app documentation
+  remote_mysql_host:
+    name: remote_mysql_host
+    description: See upstream app documentation
+  remote_mysql_password:
+    name: remote_mysql_password
+    description: See upstream app documentation
+  remote_mysql_port:
+    name: remote_mysql_port
+    description: See upstream app documentation
+  remote_mysql_username:
+    name: remote_mysql_username
+    description: See upstream app documentation
+  repository:
+    name: repository
+    description: See upstream app documentation
+  request_size_limit:
+    name: request_size_limit
+    description: See upstream app documentation
+  ROOT_URL:
+    name: ROOT_URL
+    description: See upstream app documentation
+  ROUTER_IP:
+    name: ROUTER_IP
+    description: See upstream app documentation
+  rpi_video_drivers:
+    name: rpi_video_drivers
+    description: See upstream app documentation
+  run_duration:
+    name: run_duration
+    description: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
+  SavePath:
+    name: SavePath
+    description: See upstream app documentation
+  SEAFILE_ADMIN_EMAIL:
+    name: SEAFILE_ADMIN_EMAIL
+    description: See upstream app documentation
+  SEAFILE_ADMIN_PASSWORD:
+    name: SEAFILE_ADMIN_PASSWORD
+    description: See upstream app documentation
+  SECRET_KEY:
+    name: SECRET_KEY
+    description: See upstream app documentation
+  secret_token:
+    name: secret_token
+    description: See upstream app documentation
+  secure_ssl:
+    name: secure_ssl
+    description: See upstream app documentation
+  silent:
+    name: silent
+    description: true #suppresses debug messages
+  SMARTCTL_COMMAND_DEVICE_TYPE:
+    name: SMARTCTL_COMMAND_DEVICE_TYPE
+    description: See upstream app documentation
+  SMARTCTL_MEGARAID_DISK_NUM:
+    name: SMARTCTL_MEGARAID_DISK_NUM
+    description: See upstream app documentation
+  smbv1:
+    name: smbv1
+    description: See upstream app documentation
+  SPECTRE_APP_ID:
+    name: SPECTRE_APP_ID
+    description: See upstream app documentation
+  SPECTRE_SECRET:
+    name: SPECTRE_SECRET
+    description: See upstream app documentation
+  ssl:
+    name: ssl
+    description: true/false.  enables ssl. Need certfile and keyfile filled'
+  storage_dir:
+    name: storage_dir
+    description: See upstream app documentation
+  STORAGE_PATH:
+    name: STORAGE_PATH
+    description: See upstream app documentation
+  theme:
+    name: theme
+    description: See upstream app documentation
+  TRANSMISSION_DOWNLOAD_DIR:
+    name: TRANSMISSION_DOWNLOAD_DIR
+    description: See upstream app documentation
+  TRANSMISSION_HOME:
+    name: TRANSMISSION_HOME
+    description: See upstream app documentation
+  TRANSMISSION_INCOMPLETE_DIR:
+    name: TRANSMISSION_INCOMPLETE_DIR
+    description: See upstream app documentation
+  TRANSMISSION_V3_UPDATE:
+    name: TRANSMISSION_V3_UPDATE
+    description: See upstream app documentation
+  TRANSMISSION_WATCH_DIR:
+    name: TRANSMISSION_WATCH_DIR
+    description: See upstream app documentation
+  TRANSMISSION_WEB_UI:
+    name: TRANSMISSION_WEB_UI
+    description: See upstream app documentation
+  trusted_domains:
+    name: trusted_domains
+    description: See upstream app documentation
+  trusted_headers:
+    name: trusted_headers
+    description: See upstream app documentation
+  ttl:
+    name: ttl
+    description: See upstream app documentation
+  TZ:
+    name: TZ
+    description: The timezone, as described in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  ui_path:
+    name: ui_path
+    description: See upstream app documentation
+  Updates:
+    name: Updates
+    description: See upstream app documentation
+  UPLOAD_NSFW:
+    name: UPLOAD_NSFW
+    description: See upstream app documentation
+  URL:
+    name: URL
+    description: See upstream app documentation
+  use_own_certs:
+    name: use_own_certs
+    description: See upstream app documentation
+  user:
+    name: user
+    description: See upstream app documentation
+  user_agent:
+    name: user_agent
+    description: See upstream app documentation
+  username:
+    name: username
+    description: See upstream app documentation
+  verbose:
+    name: verbose
+    description: See upstream app documentation
+  verify_address:
+    name: verify_address
+    description: See upstream app documentation
+  watch_dir:
+    name: watch_dir
+    description: See upstream app documentation
+  watch_path:
+    name: watch_path
+    description: See upstream app documentation
+  WebuiPass:
+    name: WebuiPass
+    description: See upstream app documentation
   whitelist:
     name: whitelist
-    description: '"localhost,192.168.0.0/16" # list ip subnets that won''t need a password'
-  customUI:
-    name: customUI
-    description: >-
-      selection from list # alternative webUI can be set here. Latest version
-      set at each addon start
-  DNS_servers:
-    name: DNS_servers
-    description: >-
-      8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to
-      avoid spamming in case of local DNS ad-remover
+    description: '"localhost,192.168.0.0/16" # list ip subnets that do no need a password'
+  WHOOGLE_ALT_IG:
+    name: WHOOGLE_ALT_IG
+    description: See upstream app documentation
+  WHOOGLE_ALT_MD:
+    name: WHOOGLE_ALT_MD
+    description: See upstream app documentation
+  WHOOGLE_ALT_RD:
+    name: WHOOGLE_ALT_RD
+    description: See upstream app documentation
+  WHOOGLE_ALT_TL:
+    name: WHOOGLE_ALT_TL
+    description: See upstream app documentation
+  WHOOGLE_ALT_TW:
+    name: WHOOGLE_ALT_TW
+    description: See upstream app documentation
+  WHOOGLE_ALT_YT:
+    name: WHOOGLE_ALT_YT
+    description: See upstream app documentation
+  WHOOGLE_AUTOCOMPLETE:
+    name: WHOOGLE_AUTOCOMPLETE
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_ALTS:
+    name: WHOOGLE_CONFIG_ALTS
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_BLOCK:
+    name: WHOOGLE_CONFIG_BLOCK
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_COUNTRY:
+    name: WHOOGLE_CONFIG_COUNTRY
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_DISABLE:
+    name: WHOOGLE_CONFIG_DISABLE
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_GET_ONLY:
+    name: WHOOGLE_CONFIG_GET_ONLY
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_LANGUAGE:
+    name: WHOOGLE_CONFIG_LANGUAGE
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_NEAR:
+    name: WHOOGLE_CONFIG_NEAR
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_NEW_TAB:
+    name: WHOOGLE_CONFIG_NEW_TAB
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_SAFE:
+    name: WHOOGLE_CONFIG_SAFE
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_SEARCH_LANGUAGE:
+    name: WHOOGLE_CONFIG_SEARCH_LANGUAGE
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_THEME:
+    name: WHOOGLE_CONFIG_THEME
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_URL:
+    name: WHOOGLE_CONFIG_URL
+    description: See upstream app documentation
+  WHOOGLE_CONFIG_VIEW_IMAGE:
+    name: WHOOGLE_CONFIG_VIEW_IMAGE
+    description: See upstream app documentation
+  WHOOGLE_CSP:
+    name: WHOOGLE_CSP
+    description: See upstream app documentation
+  WHOOGLE_MINIMAL:
+    name: WHOOGLE_MINIMAL
+    description: See upstream app documentation
+  WHOOGLE_PASS:
+    name: WHOOGLE_PASS
+    description: See upstream app documentation
+  WHOOGLE_PROXY_LOC:
+    name: WHOOGLE_PROXY_LOC
+    description: See upstream app documentation
+  WHOOGLE_PROXY_PASS:
+    name: WHOOGLE_PROXY_PASS
+    description: See upstream app documentation
+  WHOOGLE_PROXY_TYPE:
+    name: WHOOGLE_PROXY_TYPE
+    description: See upstream app documentation
+  WHOOGLE_PROXY_USER:
+    name: WHOOGLE_PROXY_USER
+    description: See upstream app documentation
+  WHOOGLE_RESULTS_PER_PAGE:
+    name: WHOOGLE_RESULTS_PER_PAGE
+    description: See upstream app documentation
+  WHOOGLE_USER:
+    name: WHOOGLE_USER
+    description: See upstream app documentation
+  wildcard:
+    name: wildcard
+    description: See upstream app documentation"
+  MAILER_HOST:
+    name: MAILER_HOST
+    description: See upstream app documentation
+  MAILER_NOREPLY_EMAIL:
+    name: MAILER_NOREPLY_EMAIL
+    description: See upstream app documentation
+  MAILER_NOREPLY_NAME:
+    name: MAILER_NOREPLY_NAME
+    description: See upstream app documentation
+  MAILER_PORT:
+    name: MAILER_PORT
+    description: See upstream app documentation
+  MAILER_SECURITY:
+    name: MAILER_SECURITY
+    description: See upstream app documentation
+  maxmem:
+    name: maxmem
+    description: See upstream app documentation
+  Mode:
+    name: Mode
+    description: See upstream app documentation
+  mqtt_autodiscover:
+    name: mqtt_autodiscover
+    description: See upstream app documentation
+  networkdisks:
+    name: networkdisks
+    description: list of smb servers to mount, separated by commas (//xxx.xx.xx.xx/share)
+  NoAuth:
+    name: NoAuth
+    description: See upstream app documentation
+  NORDIGEN_ID:
+    name: NORDIGEN_ID
+    description: See upstream app documentation
+  NORDIGEN_KEY:
+    name: NORDIGEN_KEY
+    description: See upstream app documentation
+  OAUTHLIB_RELAX_TOKEN_SCOPE:
+    name: OAUTHLIB_RELAX_TOKEN_SCOPE
+    description: See upstream app documentation
+  OCR:
+    name: OCR
+    description: See upstream app documentation
+  ocrlang:
+    name: ocrlang
+    description: See upstream app documentation
   openvpn_alt_mode:
     name: openvpn_alt_mode
     description: bind at container level and not app level
   openvpn_config:
     name: openvpn_config
-    description: 'for example "config.ovpn" # name of the file located in /config/openvpn'
+    description: for example ""config.ovpn"" # name of the file located in /config/openvpn
+  OPENVPN_CUSTOM_PROVIDER:
+    name: OPENVPN_CUSTOM_PROVIDER
+    description: See upstream app documentation
+  OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION:
+    name: OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION
+    description: See upstream app documentation
+  openvpn_enabled:
+    name: openvpn_enabled
+    description: See upstream app documentation
+  OPENVPN_PASSWORD:
+    name: OPENVPN_PASSWORD
+    description: See upstream app documentation

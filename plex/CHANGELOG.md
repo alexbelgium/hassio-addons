@@ -1,4 +1,7 @@
 
+## 1.30.2.6563-3d4dc0cce-ls150 (28-01-2023)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.30.1.6562-915986d62-ls148 (14-01-2023)
 - Update to latest version from linuxserver/docker-plex
 
@@ -153,7 +156,7 @@
 ## 1.25.1.5286-34f965be8-ls91 (07-12-2021)
 
 - Update to latest version from linuxserver/docker-plex
-- localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
+- localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
 
 ## 1.25.0.5282-2edd3c44d-ls89 (02-12-2021)
 

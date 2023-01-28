@@ -35,7 +35,7 @@ certfile: fullchain.pem #ssl certificate
 keyfile: privkey.pem #sslkeyfile
 NoAuth: true/false #Remove password. Resets database when changed.
 smbv1: false # Should smbv1 be used instead of 2.1+?
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. Ex: sda1, sdb1, MYNAS...
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password, same for all smb shares)

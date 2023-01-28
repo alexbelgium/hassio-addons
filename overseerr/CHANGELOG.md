@@ -1,4 +1,7 @@
 
+## 1.32.2 (28-01-2023)
+- Update to latest version from linuxserver/docker-overseerr
+
 ## 1.31.0 (25-12-2022)
 - Update to latest version from linuxserver/docker-overseerr
 - WARNING : update to supervisor 2022.11 before installing
