@@ -1,5 +1,6 @@
 - Switch build to preview
 - Add "video": true
+- Default PHOTOPRISM_DETECT_NSFW true
 
 ## 20220121 (10-12-2022)
 - Update to latest version from photoprism/photoprism
