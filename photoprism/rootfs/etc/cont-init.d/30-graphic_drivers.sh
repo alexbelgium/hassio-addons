@@ -19,16 +19,16 @@ if bashio::config.has_value 'graphic_drivers'; then
             apt-get update
             apt-get install -yqq -- *nvidia* >/dev/null
             echo "... done"
-            ;;     
+            ;;
 
         "radeon")
             apt-get update
             apt-get install -yqq -- *radeon* >/dev/null
             echo "... done"
-            ;;     
+            ;;
 
         *)
-            echo "... no drivers selected"            
+            echo "... no drivers selected"
             ;;
 
     esac
