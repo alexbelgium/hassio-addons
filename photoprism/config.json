@@ -92,6 +92,7 @@
   },
   "privileged": [
     "SYS_ADMIN",
+    "SYS_RAWIO",
     "DAC_READ_SEARCH"
   ],
   "schema": {
