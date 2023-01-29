@@ -1,6 +1,9 @@
+
+## Preview (27-01-2023)
 - Switch build to preview
 - Add "video": true
 - Default PHOTOPRISM_DETECT_NSFW true
+- Add sys_rawio
 
 ## 20220121 (10-12-2022)
 - Update to latest version from photoprism/photoprism
