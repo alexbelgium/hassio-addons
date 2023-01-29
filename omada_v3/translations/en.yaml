@@ -41,7 +41,7 @@ configuration:
     description: See upstream app documentation
   certfile:
     name: certfile
-    description: fullchain.pem #ssl certificate, must be located in /ssl
+    description: "fullchain.pem #ssl certificate, must be located in /ssl"
   checkip_command:
     name: checkip_command
     description: See upstream app documentation
@@ -404,7 +404,7 @@ configuration:
     description: See upstream app documentation
   silent:
     name: silent
-    description: true #suppresses debug messages
+    description: "true #suppresses debug messages"
   SMARTCTL_COMMAND_DEVICE_TYPE:
     name: SMARTCTL_COMMAND_DEVICE_TYPE
     description: See upstream app documentation
