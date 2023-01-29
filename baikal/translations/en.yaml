@@ -279,7 +279,7 @@ configuration:
   MAILER_ENABLED:
     name: MAILER_ENABLED
     description: See upstream app documentation
-  OPENVPN_PROVIDER
+  OPENVPN_PROVIDER:
     name: OPENVPN_PROVIDER
     description: See upstream app documentation
   OPENVPN_USERNAME:
