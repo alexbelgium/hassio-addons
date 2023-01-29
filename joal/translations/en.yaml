@@ -1,3 +1,5 @@
+---
+configuration:
   additional_apps:
     name: additional_apps
     description: Additional apps to install at boot
@@ -277,6 +279,7 @@
   MAILER_ENABLED:
     name: MAILER_ENABLED
     description: See upstream app documentation
+  OPENVPN_PROVIDER
     name: OPENVPN_PROVIDER
     description: See upstream app documentation
   OPENVPN_USERNAME:
