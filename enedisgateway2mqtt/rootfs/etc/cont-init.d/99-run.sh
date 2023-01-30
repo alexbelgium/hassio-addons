@@ -7,6 +7,10 @@
 
 # Where is the config
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
+# Check CONFIGSOURCE ends with config.yaml
+if [ "$(basename "$CONFIGSOURCE")" != "config.yaml" ]; then
+    bashio::log.error "Watchout: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
+fi
 DATABASESOURCE="$(dirname "${CONFIGSOURCE}")/cache.db"
 
 # Make sure folder exist
