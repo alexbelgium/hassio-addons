@@ -29,9 +29,9 @@ fi
 # MIGRATION FROM ENEDISGATEWAY2MQTT TO MYELECTRICALDATA #
 #########################################################
 
-if [ -f /config/addons_config/enedisgateway2mqtt/config.yaml ]; then
-    mv /config/addons_config/enedisgateway2mqtt/* "$(dirname "${CONFIGSOURCE}")"/
-    rm -r /config/addons_config/enedisgateway2mqtt
+if [ -f /config/addons_config/enedisgateway2mqtt_dev/config.yaml ]; then
+    mv /config/addons_config/enedisgateway2mqtt_dev/* "$(dirname "${CONFIGSOURCE}")"/
+    rm -r /config/addons_config/enedisgateway2mqtt_dev
 fi
 
 # If migration was performed, save file in config folder
@@ -61,6 +61,7 @@ if [ -f "$DATABASESOURCE" ]; then
     bashio::log.info "Using database file found in $(dirname "${CONFIGSOURCE}")"
 else
     # Create symlink for addon to create database
+    mkdir -p "$(dirname "$DATABASESOURCE")"
     touch "${DATABASESOURCE}"
     ln -sf "$DATABASESOURCE" /data
     rm "$DATABASESOURCE"
