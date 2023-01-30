@@ -19,7 +19,7 @@ if bashio::config.true 'mqtt_autodiscover'; then
     export MQTT_PASSWORD=$(bashio::services mqtt "password") || bashio::log.error "can't fetch bashio::services mqtt 'password'"
     # Export variables
     for variables in "MQTT_HOST=$MQTT_HOST" "MQTT_PORT=$MQTT_PORT" "MQTT_SSL=$MQTT_SSL" "MQTT_USERNAME=$MQTT_USERNAME" "MQTT_PASSWORD=$MQTT_PASSWORD"; do
-        sed -i "1a export $variables" /etc/services.d/*/*run* 2>/dev/null
+        sed -i "1a export $variables" /etc/cont-init.d/*/*run* 2>/dev/null || true
         # Log
         bashio::log.blue "$variables"
     done
