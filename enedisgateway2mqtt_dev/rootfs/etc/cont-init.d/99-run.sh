@@ -61,6 +61,7 @@ if [ -f "$DATABASESOURCE" ]; then
     bashio::log.info "Using database file found in $(dirname "${CONFIGSOURCE}")"
 else
     # Create symlink for addon to create database
+    mkdir -p "$(dirname "$DATABASESOURCE")"
     touch "${DATABASESOURCE}"
     ln -sf "$DATABASESOURCE" /data
     rm "$DATABASESOURCE"
