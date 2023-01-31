@@ -44,7 +44,7 @@ if bashio::config.has_value 'localdisks'; then
         [ -d /share/"$disk" ] && mount "$devpath"/"$disk" /share/"$disk" || true
         # Mount
         # Mount if ntfs
-        if [[ command -v "apk" &>/dev/null && "$(fdisk -l "$devpath"/"$disk")" == *NTFS* ]]; then
+        if command -v "apk" &>/dev/null && [[ "$(fdisk -l "$devpath"/"$disk")" == *NTFS* ]]; then
             bashio::log.info "NTFS on Alpine detected, mounting with ntfs-3g"
             ntfs-3g "$devpath"/"$disk" /mnt/"$disk" || true
         fi
