@@ -43,6 +43,11 @@ if bashio::config.has_value 'localdisks'; then
         # shellcheck disable=SC2015
         [ -d /share/"$disk" ] && mount "$devpath"/"$disk" /share/"$disk" || true
         # Mount
+        # Mount if ntfs
+        if [[ command -v "apk" &>/dev/null && "$(fdisk -l "$devpath"/"$disk")" == *NTFS* ]]; then
+            bashio::log.info "NTFS on Alpine detected, mounting with ntfs-3g"
+            ntfs-3g "$devpath"/"$disk" /mnt/"$disk" || true
+        fi
         # shellcheck disable=SC2015
         mount "$devpath"/"$disk" -o "uid=$PUID,gid=$PGID" /mnt/"$disk" && bashio::log.info "Success! $disk mounted to /mnt/$disk" || \
             (mount "$devpath"/"$disk" /mnt/"$disk" && bashio::log.info "Success! $disk mounted to /mnt/$disk") || \
