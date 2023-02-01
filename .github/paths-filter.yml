@@ -62,6 +62,7 @@ readarr: readarr/config.* # Image : yes
 requestrr: requestrr/config.* # Image : yes
 resiliosync: resiliosync/config.* # Image : yes
 sabnzb: sabnzb/config.* # Image : yes
+sabnzbd: sabnzbd/config.* # Image : yes
 scrutiny: scrutiny/config.* # Image : yes
 scrutiny_fa: scrutiny_fa/config.* # Image : yes
 seafile: seafile/config.* # Image : yes
