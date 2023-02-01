@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Jackett NAS] PUID/PGID config not working (opened 2023-01-31)](https://github.com/alexbelgium/hassio-addons/issues/678) by [@fcps3](https://github.com/fcps3)
 # Home assistant add-on: jackett
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
