@@ -1,3 +1,4 @@
+- Enable PUID
 
 ## 0.20.2741 (29-01-2023)
 - Update to latest version from linuxserver/docker-jackett
