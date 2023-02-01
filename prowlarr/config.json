@@ -66,10 +66,7 @@
   "name": "Prowlarr NAS",
   "options": {
     "PGID": 0,
-    "PUID": 0,
-    "cifspassword": "<password>",
-    "cifsusername": "<username>",
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
+    "PUID": 0
   },
   "ports": {
     "9696/tcp": 9696
@@ -94,6 +91,6 @@
   },
   "slug": "prowlarr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "nightly-1.1.2.2439-ls538",
+  "version": "nightly-1.1.2.2439-ls538-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9696]"
 }

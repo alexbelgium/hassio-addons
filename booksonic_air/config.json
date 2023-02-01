@@ -54,10 +54,7 @@
   "name": "Booksonic-air",
   "options": {
     "PGID": 0,
-    "PUID": 0,
-    "cifspassword": "<password>",
-    "cifsusername": "<username>",
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
+    "PUID": 0
   },
   "ports": {
     "4040/tcp": 4040
@@ -80,6 +77,6 @@
   },
   "slug": "booksonic-air_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/booksonic_air",
-  "version": "v2201.1.0-ls78-2",
+  "version": "v2201.1.0-ls78-3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:4040]"
 }

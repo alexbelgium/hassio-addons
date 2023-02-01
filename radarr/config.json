@@ -56,10 +56,7 @@
   "name": "Radarr NAS",
   "options": {
     "PGID": 0,
-    "PUID": 0,
-    "cifspassword": "<password>",
-    "cifsusername": "<username>",
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
+    "PUID": 0
   },
   "ports": {
     "7878/tcp": 7878
@@ -83,6 +80,6 @@
   },
   "slug": "radarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
-  "version": "4.3.2.6857-2",
+  "version": "4.3.2.6857-3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7878]"
 }

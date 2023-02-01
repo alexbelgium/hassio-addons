@@ -57,10 +57,7 @@
   "name": "Lidarr NAS",
   "options": {
     "PGID": 0,
-    "PUID": 0,
-    "cifspassword": "<password>",
-    "cifsusername": "<username>",
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
+    "PUID": 0
   },
   "ports": {
     "8686/tcp": 8686
@@ -83,6 +80,6 @@
   },
   "slug": "lidarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/Readme.md",
-  "version": "1.0.2.2592-ls109",
+  "version": "1.0.2.2592-ls109-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8686]"
 }

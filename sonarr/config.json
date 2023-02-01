@@ -56,10 +56,7 @@
   "name": "Sonarr NAS",
   "options": {
     "PGID": 0,
-    "PUID": 0,
-    "cifspassword": "<password>",
-    "cifsusername": "<username>",
-    "networkdisks": "<//SERVER/SHARE>,<//SERVER2/SHARE2>"
+    "PUID": 0
   },
   "ports": {
     "8989/tcp": 8989
@@ -83,6 +80,6 @@
   },
   "slug": "sonarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
-  "version": "3.0.9.1549-2-bugfix-2",
+  "version": "3.0.9.1549-2-bugfix-3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8989]"
 }
