@@ -45,6 +45,7 @@
     "PGID": "0",
     "PUID": "0"
   },
+  "image": "ghcr.io/alexbelgium/sabnzbd-{arch}",
   "ingress": true,
   "init": false,
   "map": [
@@ -60,7 +61,7 @@
   },
   "panel_icon": "mdi:arrow-down-bold-circle-outline",
   "ports": {
-    "8080/tcp": 8080
+    "8080/tcp": 8089
   },
   "ports_description": {
     "8080/tcp": "web interface"
@@ -80,5 +81,6 @@
   },
   "slug": "sabnzbd",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "test"
+  "version": "test",
+  "webui": "http://[HOST]:[PORT:8080]"
 }
