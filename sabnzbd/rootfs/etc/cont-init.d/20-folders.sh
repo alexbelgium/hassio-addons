@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-slug=sabnzb
+slug=sabnzbd
 
 if [ ! -d /config/addons_config/$slug ]; then
 

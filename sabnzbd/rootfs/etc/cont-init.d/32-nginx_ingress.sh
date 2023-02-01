@@ -11,7 +11,7 @@ sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 
 # Allows serving js
-sed -i 's/<!-- %if-not-debug% -->/<!-- %if-not-debug%  /g' /app/sabnzb/webui/index.html
-sed -i 's/<!-- %end% -->/   %end% -->/g' /app/sabnzb/webui/index.html
-sed -i 's/<!-- %if-debug%/<!-- %if-debug% -->/g' /app/sabnzb/webui/index.html
-sed -i 's/	%end% -->/<!-- 	%end% -->/g' /app/sabnzb/webui/index.html
+sed -i 's/<!-- %if-not-debug% -->/<!-- %if-not-debug%  /g' /app/sabnzbd/webui/index.html
+sed -i 's/<!-- %end% -->/   %end% -->/g' /app/sabnzbd/webui/index.html
+sed -i 's/<!-- %if-debug%/<!-- %if-debug% -->/g' /app/sabnzbd/webui/index.html
+sed -i 's/	%end% -->/<!-- 	%end% -->/g' /app/sabnzbd/webui/index.html

@@ -28,7 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Global LSIO modifications
-ARG CONFIGLOCATION="/config/addons_config/sabnzb"
+ARG CONFIGLOCATION="/config/addons_config/sabnzbd"
 # hadolint ignore=SC2015, SC2013, SC2086
 RUN \
     # Avoid custom-init.d duplications

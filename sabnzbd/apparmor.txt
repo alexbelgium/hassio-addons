@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile sabnzb_addon flags=(attach_disconnected,mediate_deleted) {
+profile sabnzbd_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,
