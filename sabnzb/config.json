@@ -53,7 +53,7 @@
     "media:rw",
     "config:rw"
   ],
-  "name": "sabnzb",
+  "name": "Sabnzb",
   "options": {
     "PGID": 0,
     "PUID": 0
