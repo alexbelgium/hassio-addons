@@ -46,7 +46,6 @@
     "PUID": "0"
   },
   "image": "ghcr.io/alexbelgium/sabnzbd-{arch}",
-  "ingress": true,
   "init": false,
   "map": [
     "config:rw",
