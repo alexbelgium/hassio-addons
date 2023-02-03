@@ -46,6 +46,7 @@
     "PUID": "0"
   },
   "image": "ghcr.io/alexbelgium/sonarr_nas-{arch}",
+  "ingress": true,
   "init": false,
   "map": [
     "config:rw",
@@ -80,6 +81,5 @@
   },
   "slug": "sonarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
-  "version": "3.0.9.1549-2-bugfix-3",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8989]"
+  "version": "test_do_not_use"
 }
