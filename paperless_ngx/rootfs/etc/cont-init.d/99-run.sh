@@ -26,9 +26,9 @@ export PAPERLESS_DATA_DIR="/config/addons_config/paperless_ng"
 export PAPERLESS_MEDIA_ROOT="/config/addons_config/paperless_ng/media"
 export PAPERLESS_CONSUMPTION_DIR="/config/addons_config/paperless_ng/consume"
 
-if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_URL=$(bashio::config "PAPERLESS_DATA_DIR"); fi
-if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_URL=$(bashio::config "PAPERLESS_MEDIA_ROOT"); fi
-if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_URL=$(bashio::config "PAPERLESS_CONSUMPTION_DIR"); fi
+if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR=$(bashio::config "PAPERLESS_DATA_DIR"); fi
+if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT=$(bashio::config "PAPERLESS_MEDIA_ROOT"); fi
+if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR=$(bashio::config "PAPERLESS_CONSUMPTION_DIR"); fi
 
 ###################
 # Define database #
