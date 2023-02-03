@@ -43,17 +43,17 @@ If you want to do add the repository manually, please follow the procedure highl
 
 Number of addons in the repository : 75
 
-Total number of addons installed : 12065
+Total number of addons installed : 12886
 
 Top 3 most installed addons :
-1. Portainer (2538x)
-2. Filebrowser (1359x)
-3. Epicgamesfree (493x)
+1. Portainer (2786x)
+2. Filebrowser (1730x)
+3. Mealie (368x)
 
 Most used architectures :
 - amd64: 56%
-- aarch64: 38%
-- armv7: 6%
+- aarch64: 39%
+- armv7: 5%
 
 Downloads evolution :
 
@@ -176,7 +176,7 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (1359x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
+&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (1730x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fupdater.json)
@@ -328,7 +328,7 @@ Downloads evolution :
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Mealie (Omni):](mealie/) : Mealie is a self hosted recipe manager and meal planner built in Vue
+&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Mealie (368x) (Omni):](mealie/) : Mealie (368x) is a self hosted recipe manager and meal planner built in Vue
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmealie%2Fupdater.json)
@@ -488,7 +488,7 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (2538x)](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (2786x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
@@ -571,7 +571,6 @@ Downloads evolution :
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
-![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
@@ -612,6 +611,7 @@ Downloads evolution :
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
