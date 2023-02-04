@@ -47,6 +47,7 @@
   },
   "image": "ghcr.io/alexbelgium/sonarr_nas-{arch}",
   "ingress": true,
+  "ingress_entry": "/sonarr",
   "init": false,
   "map": [
     "config:rw",
