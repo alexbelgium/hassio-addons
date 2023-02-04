@@ -80,6 +80,6 @@
   },
   "slug": "readarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
-  "version": "nightly-0.1.2.1544-ls158",
+  "version": "nightly-0.1.2.1558-ls159",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8787]"
 }
