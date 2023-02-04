@@ -13,12 +13,6 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
   if [ -f "$CONFIG_LOCATION" ]; then CONFIG_LOCATION="$(dirname $CONFIG_LOCATION)/config.xml"; fi
 fi
 
-while ! [ -f "$CONFIG_LOCATION" ];
-do
-    echo "Waiting for $CONFIG_LOCATION to be created"
-    sleep 1
-done
-
 if ! grep -q "<UrlBase>/radarr</UrlBase>" "$CONFIG_LOCATION"; then
   bashio::log.warning "BaseUrl not set properly, restarting"
   sed -i "/UrlBase/d" "$CONFIG_LOCATION"
