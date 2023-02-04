@@ -6,7 +6,7 @@
 bashio::net.wait_for 7878 localhost 900
 
 # Set base url
-CONFIG_LOCATION=/config/addons_config/sonarr/config.xml
+CONFIG_LOCATION=/config/addons_config/radarr/config.xml
 while ! [ -f "$CONFIG_LOCATION" ];
 do
     echo "Waiting for $CONFIG_LOCATION to be created"
