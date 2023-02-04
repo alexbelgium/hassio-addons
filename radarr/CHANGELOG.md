@@ -1,4 +1,5 @@
 - Ingress addition
+- BaseUrl definition to "radarr"
 
 ## 4.3.2.6857 (07-01-2023)
 
