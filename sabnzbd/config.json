@@ -47,8 +47,6 @@
   },
   "image": "ghcr.io/alexbelgium/sabnzbd-{arch}",
   "init": false,
-  "init": false,
-  "ingress": true,
   "ingress_entry": "sabnzbd",
   "map": [
     "config:rw",

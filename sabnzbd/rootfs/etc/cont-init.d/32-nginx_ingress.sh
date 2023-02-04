@@ -5,6 +5,8 @@
 # NGINX SETTING #
 #################
 
+exit 0
+
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
