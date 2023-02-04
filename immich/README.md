@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Immich ] It doesn't start (opened 2023-02-04)](https://github.com/alexbelgium/hassio-addons/issues/686) by [@IonutNeagu](https://github.com/IonutNeagu)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
