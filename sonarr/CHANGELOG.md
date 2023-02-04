@@ -1,4 +1,4 @@
-- Ingress test. If not working, connect with ip:port
+- Ingress addition
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 3.0.9.1549 (09-08-2022)
