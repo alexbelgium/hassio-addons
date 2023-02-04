@@ -47,7 +47,7 @@
   },
   "image": "ghcr.io/alexbelgium/sonarr_nas-{arch}",
   "ingress": true,
-  "ingress_entry": "/sonarr",
+  "ingress_entry": "sonarr",
   "init": false,
   "map": [
     "config:rw",
@@ -82,5 +82,5 @@
   },
   "slug": "sonarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
-  "version": "test_do_not_use5"
+  "version": "3.0.9.1549-2"
 }
