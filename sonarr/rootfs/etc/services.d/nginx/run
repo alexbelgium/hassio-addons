@@ -7,6 +7,11 @@ bashio::net.wait_for 8989 localhost 900
 
 # Set base url
 CONFIG_LOCATION=/config/addons_config/sonarr/config.xml
+while ! [ -f "$CONFIG_LOCATION" ];
+do
+    echo "Waiting for $CONFIG_LOCATION to be created"
+    sleep 1
+done
 if ! grep -q "<UrlBase>/sonarr</UrlBase>" "$CONFIG_LOCATION"; then
   bashio::log.warning "BaseUrl not set properly, restarting"
   sed -i "/UrlBase/d" "$CONFIG_LOCATION"
