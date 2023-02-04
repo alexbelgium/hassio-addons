@@ -20,7 +20,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Web based files browser.
-This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/immich) from hurlenko.
+This addon is based on .
 
 ## Configuration
 
