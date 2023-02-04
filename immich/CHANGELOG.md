@@ -1,4 +1,7 @@
 
+## 1.45.0 (04-02-2023)
+- Update to latest version from immich-app/immich
+
 ## 1.43.1 (28-01-2023)
 - Update to latest version from immich-app/immich
 
