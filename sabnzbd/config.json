@@ -47,6 +47,9 @@
   },
   "image": "ghcr.io/alexbelgium/sabnzbd-{arch}",
   "init": false,
+  "init": false,
+  "ingress": true,
+  "ingress_entry": "sabnzbd",
   "map": [
     "config:rw",
     "share:rw",
@@ -80,6 +83,6 @@
   },
   "slug": "sabnzbd",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.7.1-ls89",
+  "version": "do_not_install",
   "webui": "http://[HOST]:[PORT:8080]"
 }
