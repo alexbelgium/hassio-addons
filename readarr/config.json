@@ -47,17 +47,20 @@
   },
   "image": "ghcr.io/alexbelgium/readarr_nas-{arch}",
   "init": false,
+  "ingress": true,
+  "ingress_entry": "readarr",
   "map": [
     "config:rw",
     "share:rw",
     "media:rw"
   ],
-  "name": "Readarr NAS",
+  "name": "Readarr",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/readarr",
     "PGID": 0,
     "PUID": 0
   },
+  "panel_icon": "mdi:download-circle",
   "ports": {
     "8787/tcp": 8787
   },
@@ -80,6 +83,5 @@
   },
   "slug": "readarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
-  "version": "nightly-0.1.2.1558-ls159",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8787]"
+  "version": "nightly-0.1.2.1558-ls159-2"
 }

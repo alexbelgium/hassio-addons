@@ -1,6 +1,12 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+if bashio::config.has_value 'CONFIG_LOCATION'; then
+  CONFIG_LOCATION="$(bashio::config 'CONFIG_LOCATION')"
+  # Modify if it is a base directory
+  if [ -f "$CONFIG_LOCATION" ]; then CONFIG_LOCATION="$(dirname $CONFIG_LOCATION)"; fi
+fi
+
 CONFIG_LOCATION=$(bashio::config 'CONFIG_LOCATION')
 bashio::log.info "Config stored in $CONFIG_LOCATION"
 
