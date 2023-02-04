@@ -1,3 +1,6 @@
+
+## 1.4.6 (04-02-2023)
+- Update to latest version from TandoorRecipes/recipes
 - Ingress removed
 - Readd Ingress feature
 - WARNING : update to supervisor 2022.11 before installing
