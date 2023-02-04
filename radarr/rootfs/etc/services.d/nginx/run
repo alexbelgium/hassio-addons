@@ -3,7 +3,7 @@
 # ==============================================================================
 
 # Wait for transmission to become available
-bashio::net.wait_for 8989 localhost 900
+bashio::net.wait_for 7878 localhost 900
 
 # Set base url
 CONFIG_LOCATION=/config/addons_config/radarr/config.xml
