@@ -45,6 +45,6 @@
   },
   "slug": "omada_v3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.7-chromium-amd64-2023-01-26",
+  "version": "5.8-chromium-amd64-2023-02-03",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8088]"
 }
