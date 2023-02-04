@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+
+# Wait for transmission to become available
+bashio::net.wait_for 8989 localhost 900
+
+# Set base url
+CONFIG_LOCATION=/config/addons_config/radarr/config.xml
+sed -i "/UrlBase/d" "$CONFIG_LOCATION"
+sed -i "/<Config>/a <UrlBase>\/radarr<\/UrlBase>" "$CONFIG_LOCATION"
+
+bashio::log.info "Starting NGinx..."
+exec nginx

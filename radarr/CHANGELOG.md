@@ -1,10 +1,14 @@
+- Ingress addition
 
 ## 4.3.2.6857 (07-01-2023)
+
 - Update to latest version from linuxserver/docker-radarr
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 4.2.4.6635 (27-09-2022)
+
 - Update to latest version from linuxserver/docker-radarr
+
 ## 4.1.0.6175 (16-04-2022)
 
 - Update to latest version from linuxserver/docker-radarr

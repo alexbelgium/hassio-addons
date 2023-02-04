@@ -55,11 +55,12 @@
     "media:rw",
     "ssl"
   ],
-  "name": "Sonarr NAS",
+  "name": "Sonarr",
   "options": {
     "PGID": 0,
     "PUID": 0
   },
+  "panel_icon": "mdi:download-circle-outline",
   "ports": {
     "8989/tcp": 8989
   },

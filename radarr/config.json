@@ -47,17 +47,20 @@
   },
   "image": "ghcr.io/alexbelgium/radarr_nas-{arch}",
   "init": false,
+  "ingress": true,
+  "ingress_entry": "radarr",
   "map": [
     "config:rw",
     "share:rw",
     "media:rw",
     "ssl"
   ],
-  "name": "Radarr NAS",
+  "name": "Radarr",
   "options": {
     "PGID": 0,
     "PUID": 0
   },
+  "panel_icon": "mdi:download-circle",
   "ports": {
     "7878/tcp": 7878
   },
@@ -80,6 +83,6 @@
   },
   "slug": "radarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
-  "version": "4.3.2.6857-3",
+  "version": "4.3.2.6857-4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7878]"
 }
