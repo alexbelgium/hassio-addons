@@ -7,8 +7,12 @@ bashio::net.wait_for 8989 localhost 900
 
 # Set base url
 CONFIG_LOCATION=/config/addons_config/sonarr/config.xml
-sed -i "/UrlBase/d" "$CONFIG_LOCATION"
-sed -i "/<Config>/a <UrlBase>\/sonarr<\/UrlBase>" "$CONFIG_LOCATION"
+if ! grep -q "<UrlBase>/sonarr</UrlBase>" "$CONFIG_LOCATION"; then
+  bashio::log.warning "BaseUrl not set properly, restarting"
+  sed -i "/UrlBase/d" "$CONFIG_LOCATION"
+  sed -i "/<Config>/a <UrlBase>\/sonarr<\/UrlBase>" "$CONFIG_LOCATION"
+  bashio::addon.restart
+fi
 
 bashio::log.info "Starting NGinx..."
 exec nginx
