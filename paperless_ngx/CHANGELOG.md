@@ -2,6 +2,9 @@
 ## 1.12.2 (04-02-2023)
 - Update to latest version from paperless-ngx/paperless-ngx
 
+- Added consumption/media/data paths to addon config screen.
+
+
 ## 1.12.1 (28-01-2023)
 - Update to latest version from paperless-ngx/paperless-ngx
 

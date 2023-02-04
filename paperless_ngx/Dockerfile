@@ -40,11 +40,6 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
-ENV \
-    PAPERLESS_DATA_DIR=/config/addons_config/paperless_ng \
-    PAPERLESS_MEDIA_ROOT=/config/addons_config/paperless_ng/media \
-    PAPERLESS_CONSUMPTION_DIR=/config/addons_config/paperless_ng/consume
-
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 92-local_mounts.sh 92-smb_mounts.sh 90-config_yaml.sh"
 

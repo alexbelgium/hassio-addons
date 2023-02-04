@@ -85,6 +85,9 @@
     "OCRLANG": "str?",
     "PAPERLESS_OCR_MODE": "list(skip|redo|force|skip_noarchive)?",
     "PAPERLESS_URL": "str?",
+    "PAPERLESS_DATA_DIR": "str?",
+    "PAPERLESS_MEDIA_ROOT": "str?",
+    "PAPERLESS_CONSUMPTION_DIR": "str?",
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
@@ -102,6 +105,6 @@
   ],
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.12.2",
+  "version": "1.12.2-1",
   "webui": "http://[HOST]:[PORT:8000]"
 }
