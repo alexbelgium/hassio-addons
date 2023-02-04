@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Omada_v3 AddOn upgrade from v5.7 to v5.8 (opened 2023-02-02)](https://github.com/alexbelgium/hassio-addons/issues/683) by [@DanielTheCoder](https://github.com/DanielTheCoder)
 # Home assistant add-on: Omada controller
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
