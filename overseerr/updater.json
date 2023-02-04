@@ -1,8 +1,8 @@
 {
-  "last_update": "28-01-2023",
+  "last_update": "04-02-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "overseerr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-overseerr",
-  "upstream_version": "1.32.2"
+  "upstream_version": "1.32.5"
 }

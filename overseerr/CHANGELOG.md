@@ -1,4 +1,7 @@
 
+## 1.32.5 (04-02-2023)
+- Update to latest version from linuxserver/docker-overseerr
+
 ## 1.32.2 (28-01-2023)
 - Update to latest version from linuxserver/docker-overseerr
 

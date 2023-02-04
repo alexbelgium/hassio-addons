@@ -1,4 +1,7 @@
 
+## 0.8.14b2 (04-02-2023)
+- Update to latest version from m4dm4rtig4n/myelectricaldata
+
 ## 0.8.14b1 (28-01-2023)
 - Update to latest version from m4dm4rtig4n/myelectricaldata
 - Ingress addition

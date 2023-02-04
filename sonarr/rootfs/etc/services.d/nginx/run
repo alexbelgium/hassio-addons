@@ -5,6 +5,10 @@
 # Wait for transmission to become available
 bashio::net.wait_for 8989 localhost 900
 
-bashio::log.info "Starting NGinx..."
+# Set base url
+CONFIG_LOCATION=/config/addons_config/sonarr/config.xml
+sed -i "/UrlBase/d" "$CONFIG_LOCATION"
+sed -i "/<Config>/a <UrlBase>\/sonarr<\/UrlBase>" "$CONFIG_LOCATION"
 
+bashio::log.info "Starting NGinx..."
 exec nginx

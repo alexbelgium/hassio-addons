@@ -1,9 +1,9 @@
 {
   "dockerhub_by_date": true,
-  "last_update": "2023-01-26",
+  "last_update": "2023-02-03",
   "repository": "alexbelgium/hassio-addons",
   "slug": "omada_v3",
   "source": "dockerhub",
   "upstream_repo": "mbentley/omada-controller",
-  "upstream_version": "5.7-chromium-amd64-2023-01-26"
+  "upstream_version": "5.8-chromium-amd64-2023-02-03"
 }
