@@ -46,9 +46,9 @@
     "PUID": "0"
   },
   "image": "ghcr.io/alexbelgium/radarr_nas-{arch}",
-  "init": false,
   "ingress": true,
   "ingress_entry": "radarr",
+  "init": false,
   "map": [
     "config:rw",
     "share:rw",
