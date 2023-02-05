@@ -24,8 +24,10 @@ jobs:
           echo "Starting"
           git config core.filemode true
           # shellcheck disable=SC2086,SC2046
-          git update-index --chmod=+x $(find . -type f -iname "*.sh")
-          
+          #git update-index --chmod=+x $(find . -type f -iname "*.sh")
+          chmod u+x $(find . -type f -iname "*.sh") 
+          git commit -am "fixing the script permissions..."
+
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
