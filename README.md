@@ -573,7 +573,6 @@ Downloads evolution :
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
-![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
