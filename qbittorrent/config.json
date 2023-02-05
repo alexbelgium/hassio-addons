@@ -73,8 +73,8 @@
   "ports": {
     "59595/tcp": 59595,
     "59595/udp": 59595,
-    "6882/tcp": null,
-    "6882/udp": null,
+    "6882/tcp": 6882,
+    "6882/udp": 6882,
     "8080/tcp": 8081
   },
   "ports_description": {
@@ -117,5 +117,5 @@
   },
   "slug": "qbittorrent",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.5.0-r1-ls242"
+  "version": "4.5.0-r1-ls242-2"
 }
