@@ -4,7 +4,7 @@
 if bashio::config.has_value 'CONFIG_LOCATION'; then
     CONFIG_LOCATION="$(bashio::config 'CONFIG_LOCATION')"
     # Modify if it is a base directory
-    if [[ "$CONFIG_LOCATION" == *.* ]]; then CONFIG_LOCATION="$(dirname $CONFIG_LOCATION)/config.xmlif [[ "$CONFIG_LOCATION" == *.* ]]; then CONFIG_LOCATION="$(dirname $CONFIG_LOCATION)"; fi
+    if [[ "$CONFIG_LOCATION" == *.* ]]; then CONFIG_LOCATION="$(dirname $CONFIG_LOCATION)"; fi
 ; fi
 fi
 
