@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [readarr] Won't run after first install (opened 2023-02-04)](https://github.com/alexbelgium/hassio-addons/issues/690) by [@stu1811](https://github.com/stu1811)
 # Home assistant add-on: readarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
