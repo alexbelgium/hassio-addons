@@ -67,7 +67,7 @@
   },
   "panel_icon": "mdi:library",
   "ports": {
-    "8083/tcp": null
+    "8083/tcp": 8084
   },
   "ports_description": {
     "8083/tcp": "Calibre-web webui (Not required for Ingress)"
@@ -91,6 +91,6 @@
   },
   "slug": "calibre-web",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre-web",
-  "version": "0.6.19-ls194",
+  "version": "0.6.19-ls194-2",
   "video": true
 }
