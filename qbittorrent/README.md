@@ -43,6 +43,8 @@ Configurations can be done through the app webUI, except for the following optio
 
 Network disk is mounted to /mnt/share name
 
+You need to map the exposed port in your router if you want the best speed and connectivity.
+
 ```yaml
 PGID: user
 GPID: user
