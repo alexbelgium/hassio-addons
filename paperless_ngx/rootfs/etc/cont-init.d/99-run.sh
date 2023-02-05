@@ -31,9 +31,9 @@ if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_
 if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR=$(bashio::config "PAPERLESS_CONSUMPTION_DIR"); fi
 
 for folder in "$PAPERLESS_DATA_DIR" "$PAPERLESS_MEDIA_ROOT" "$PAPERLESS_CONSUMPTION_DIR"; do
-  mkdir -p "$folder"
-  chmod -R 755 "$folder"
-  chown -R paperless:paperless "$folder"
+    mkdir -p "$folder"
+    chmod -R 755 "$folder"
+    chown -R paperless:paperless "$folder"
 done
 
 ###################
