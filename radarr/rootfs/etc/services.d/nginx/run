@@ -24,12 +24,7 @@ fi
 
 # Disable Ingress
 if bashio::config.true "ingress_disabled"; then
-    bashio::log.warning "Ingress is disabled. You'll need to connect using ip:port"
-
-    # Adapt ingress.conf
-    sed -i "/proxy_pass/i root /etc;" /etc/nginx/servers/ingress.conf
-    sed -i "/proxy_pass/i try_files '' /index.html =404;" /etc/nginx/servers/ingress.conf
-    sed -i "/proxy_pass/d" /etc/nginx/servers/ingress.conf
+    bashio::log.info "Ingress is disabled, removing base url"
 
     # Remove BaseUrl
     if grep -q "radarr" "$CONFIG_LOCATION"; then
