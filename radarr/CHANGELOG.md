@@ -1,3 +1,4 @@
+- Add ingress_disabled option
 - Ingress addition
 - BaseUrl definition to "radarr"
 
