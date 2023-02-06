@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [Calibre_web does not expose Port 8083 (opened 2023-02-05)](https://github.com/alexbelgium/hassio-addons/issues/692) by [@blackshoals](https://github.com/blackshoals)
 # Home assistant add-on: Calibre-web
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
