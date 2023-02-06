@@ -5,7 +5,7 @@
 # Wait for transmission to become available
 bashio::net.wait_for 7878 localhost 900
 
-# Set base url
+# Set Config location
 CONFIG_LOCATION=/config/addons_config/radarr/config.xml
 if bashio::config.has_value 'CONFIG_LOCATION'; then
   CONFIG_LOCATION="$(bashio::config 'CONFIG_LOCATION')"
@@ -14,11 +14,29 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
   CONFIG_LOCATION="$CONFIG_LOCATION"/config.xml
 fi
 
-if ! grep -q "<UrlBase>/radarr</UrlBase>" "$CONFIG_LOCATION"; then
+# Set UrlBase
+if ! grep -q "<UrlBase>/radarr</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then
   bashio::log.warning "BaseUrl not set properly, restarting"
   sed -i "/UrlBase/d" "$CONFIG_LOCATION"
   sed -i "/<Config>/a <UrlBase>\/radarr<\/UrlBase>" "$CONFIG_LOCATION"
   bashio::addon.restart
+fi
+
+# Disable Ingress
+if bashio::config.true "ingress_disabled"; then
+    bashio::log.warning "Ingress is disabled. You'll need to connect using ip:port"
+
+    # Adapt ingress.conf
+    sed -i "proxy_pass/i root /etc;" /etc/nginx/servers/ingress.conf
+    sed -i "proxy_pass/i root /index.html;" /etc/nginx/servers/ingress.conf
+    sed -i "/proxy_pass/" /etc/nginx/servers/ingress.conf
+
+    # Remove BaseUrl
+    if grep -q "UrlBase" "$CONFIG_LOCATION" || true; then
+      bashio::log.warning "BaseUrl removed, restarting"
+      sed -i "/UrlBase/d" "$CONFIG_LOCATION"
+      bashio::addon.restart
+    fi
 fi
 
 bashio::log.info "Starting NGinx..."
