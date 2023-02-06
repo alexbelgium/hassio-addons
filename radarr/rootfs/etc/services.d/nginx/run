@@ -32,7 +32,7 @@ if bashio::config.true "ingress_disabled"; then
     sed -i "/proxy_pass/d" /etc/nginx/servers/ingress.conf
 
     # Remove BaseUrl
-    if grep -q "UrlBase" "$CONFIG_LOCATION" || true; then
+    if grep -q "UrlBase" "$CONFIG_LOCATION"; then
       bashio::log.warning "BaseUrl removed, restarting"
       sed -i "/UrlBase/d" "$CONFIG_LOCATION"
       bashio::addon.restart
