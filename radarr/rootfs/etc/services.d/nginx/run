@@ -28,7 +28,7 @@ if bashio::config.true "ingress_disabled"; then
 
     # Adapt ingress.conf
     sed -i "/proxy_pass/i root /etc;" /etc/nginx/servers/ingress.conf
-    sed -i "/proxy_pass/i try_files /index.html;" /etc/nginx/servers/ingress.conf
+    sed -i "/proxy_pass/i try_files /404 /index.html;" /etc/nginx/servers/ingress.conf
     sed -i "/proxy_pass/d" /etc/nginx/servers/ingress.conf
 
     # Remove BaseUrl
