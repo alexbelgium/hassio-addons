@@ -1,3 +1,4 @@
+- Add message if ingress disabled
 
 ## Preview (27-01-2023)
 - Switch build to preview
