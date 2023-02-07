@@ -56,7 +56,8 @@ esac
 if bashio::config.true "ingress_disabled"; then
     bashio::log.warning "Ingress is disabled. You'll need to connect using ip:port"
     sed -i "s|$(bashio::addon.ingress_entry)||g" /etc/nginx/servers/ssl.conf
-    sed -i "7,10d" /etc/nginx/servers/ssl.conf
+    sed -i "s|location = /|location = /null|g" /etc/nginx/servers/ssl.conf
+    # sed -i "7,10d" /etc/nginx/servers/ssl.conf
     # rm /etc/nginx/servers/ingress.conf
 else
     PHOTOPRISM_SITE_URL="$(bashio::addon.ingress_entry)/"
