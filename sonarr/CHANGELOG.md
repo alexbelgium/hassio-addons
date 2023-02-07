@@ -1,3 +1,4 @@
+- Add ingress_disabled option
 - Ingress addition
 - BaseUrl definition to "sonarr"
 - WARNING : update to supervisor 2022.11 before installing

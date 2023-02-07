@@ -77,11 +77,12 @@
     "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "ingress_disabled": "bool?",
     "localdisks": "str?",
     "networkdisks": "str?",
     "smbv1": "bool?"
   },
   "slug": "sonarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
-  "version": "3.0.9.1549-7"
+  "version": "3.0.9.1549-8"
 }

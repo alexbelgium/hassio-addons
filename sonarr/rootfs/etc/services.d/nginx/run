@@ -2,11 +2,14 @@
 # shellcheck shell=bash
 # ==============================================================================
 
-# Wait for transmission to become available
-bashio::net.wait_for 8989 localhost 900
+# Set variables
+slug=sonarr
+port=8989
+CONFIG_LOCATION=/config/addons_config/"$slug"/config.xml
 
-# Set base url
-CONFIG_LOCATION=/config/addons_config/sonarr/config.xml
+# Wait for transmission to become available
+bashio::net.wait_for "$port" localhost 900
+
 if bashio::config.has_value 'CONFIG_LOCATION'; then
   CONFIG_LOCATION="$(bashio::config 'CONFIG_LOCATION')"
   # Modify if it is a base directory
@@ -14,11 +17,24 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
   CONFIG_LOCATION="$CONFIG_LOCATION"/config.xml
 fi
 
-if ! grep -q "<UrlBase>/sonarr</UrlBase>" "$CONFIG_LOCATION"; then
+# Set UrlBase
+if ! grep -q "<UrlBase>/$slug</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then; then
   bashio::log.warning "BaseUrl not set properly, restarting"
   sed -i "/UrlBase/d" "$CONFIG_LOCATION"
-  sed -i "/<Config>/a <UrlBase>\/sonarr<\/UrlBase>" "$CONFIG_LOCATION"
+  sed -i "/<Config>/a <UrlBase>\/$slug<\/UrlBase>" "$CONFIG_LOCATION"
   bashio::addon.restart
+fi
+
+# Disable Ingress
+if bashio::config.true "ingress_disabled"; then
+    bashio::log.info "Ingress is disabled, removing base url"
+
+    # Remove BaseUrl
+    if grep -q "$slug" "$CONFIG_LOCATION"; then
+      bashio::log.warning "BaseUrl removed, restarting"
+      sed -i "/$slug/d" "$CONFIG_LOCATION"
+      bashio::addon.restart
+    fi
 fi
 
 bashio::log.info "Starting NGinx..."

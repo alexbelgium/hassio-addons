@@ -2,12 +2,13 @@
 # shellcheck shell=bash
 # ==============================================================================
 
-# Wait for transmission to become available
-bashio::net.wait_for 7878 localhost 900
-
 # Set variables
 slug=radarr
+port=7878
 CONFIG_LOCATION=/config/addons_config/"$slug"/config.xml
+
+# Wait for transmission to become available
+bashio::net.wait_for "$port" localhost 900
 
 if bashio::config.has_value 'CONFIG_LOCATION'; then
   CONFIG_LOCATION="$(bashio::config 'CONFIG_LOCATION')"

@@ -242,7 +242,7 @@ configuration:
     description: See upstream app documentation
   ingress_disabled:
     name: ingress_disabled
-    description: See upstream app documentation
+    description: Remove baseurl and disable ingress
   ingress_user:
     name: ingress_user
     description: See upstream app documentation
