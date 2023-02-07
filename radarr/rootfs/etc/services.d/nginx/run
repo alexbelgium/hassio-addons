@@ -18,7 +18,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
 fi
 
 # Set UrlBase
-if ! grep -q "<UrlBase>/$slug</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then; then
+if ! grep -q "<UrlBase>/$slug</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then
   bashio::log.warning "BaseUrl not set properly, restarting"
   sed -i "/UrlBase/d" "$CONFIG_LOCATION"
   sed -i "/<Config>/a <UrlBase>\/$slug<\/UrlBase>" "$CONFIG_LOCATION"
