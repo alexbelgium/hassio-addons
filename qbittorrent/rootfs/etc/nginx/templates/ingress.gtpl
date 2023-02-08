@@ -6,6 +6,10 @@ server {
 
   location / {
     root /vuetorrent/public/;
+    # avoid cache
+    expires -1;               # kill cache
+    proxy_no_cache 1;         # don't cache it
+    proxy_cache_bypass 1;     # even if cached, don't try to use it
   }
 
   location /api {
