@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [paperless_ngx] Doesn't start after latest update (opened 2023-02-06)](https://github.com/alexbelgium/hassio-addons/issues/698) by [@DaJonas94](https://github.com/DaJonas94)
 # Home assistant add-on: Paperless NGX
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
