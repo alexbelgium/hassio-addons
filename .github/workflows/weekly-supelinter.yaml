@@ -37,7 +37,7 @@ jobs:
 
   run-lint:
     runs-on: ubuntu-latest
-    need: make-executable
+    needs: make-executable
     steps:
       ##########################
       # Checkout the code base #
