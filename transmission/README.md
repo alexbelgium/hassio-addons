@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Transmission] It doesn't start  (opened 2023-02-11)](https://github.com/alexbelgium/hassio-addons/issues/702) by [@IonutNeagu](https://github.com/IonutNeagu)
 # Home assistant add-on: Transmission
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
