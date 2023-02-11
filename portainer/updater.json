@@ -1,9 +1,9 @@
 {
   "github_havingasset": "true",
-  "last_update": "22-11-2022",
+  "last_update": "11-02-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "portainer",
   "source": "github",
   "upstream_repo": "portainer/portainer",
-  "upstream_version": "2.16.2"
+  "upstream_version": "2.17.0"
 }
