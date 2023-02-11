@@ -1,7 +1,4 @@
 
-## beta-4.8.0.21-ls202 (11-02-2023)
-- Update to latest version from linuxserver/docker-emby
-
 ## 4.8.0.21 (13-12-2022)
 - Update to latest version from linuxserver/docker-emby
 - WARNING : update to supervisor 2022.11 before installing
