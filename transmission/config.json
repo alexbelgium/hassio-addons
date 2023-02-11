@@ -45,6 +45,7 @@
   "environment": {
     "TRANSMISSION_WEB_HOME": "/transmission-web-control/"
   },
+  "image": "ghcr.io/alexbelgium/transmission_ls-{arch}",
   "ingress": true,
   "init": false,
   "map": [
@@ -97,5 +98,5 @@
   },
   "slug": "transmission_ls",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "NOT_WORKING_DONT_UPDATE2"
+  "version": "NOT_WORKING_DONT_UPDATE3"
 }
