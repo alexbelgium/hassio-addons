@@ -1,3 +1,6 @@
+
+## nightly-0.1.3.1573-ls161 (11-02-2023)
+- Update to latest version from linuxserver/docker-readarr
 - Add ingress_disabled option
 - Ingress addition
 - Base url set to "readarr"
