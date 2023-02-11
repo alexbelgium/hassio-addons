@@ -51,7 +51,7 @@ RUN \
     | tar zxvf - -C /opt/ || printf '%s\n' "${BUILD_UPSTREAM}" > /PORTFILE
 
 # Remove banner
-RUN sed -i "s|(0,B\.jsxs)(B\.Fragment,{children:\[(0,B\.jsxs)("button",{type:"button",className:"border-0 bg-warning-5 text-warning-9 w-full py-2 font-semibold flex justify-center items-center gap-3",onClick:function(){t(e?"portainer-upgrade-admin":"portainer-upgrade-non-admin",{category:"portainer",metadata:d}),o(!0)},children:\[n\&\&(0,B\.jsx)(B\.Fragment,{children:"Upgrade to Business Edition"}),(0,B\.jsx)(Js\.Z,{className:"text-lg lucide"})\]}),s\&\&(0,B\.jsx)(kg,{onDismiss:function(){return o(!1)}})\]})|null|g" /opt/portainer/public/main.238cdfbf7e0dc1135a28.js
+RUN sed -i 's|(0,B\.jsxs)(B\.Fragment,{children:\[(0,B\.jsxs)("button",{type:"button",className:"border-0 bg-warning-5 text-warning-9 w-full py-2 font-semibold flex justify-center items-center gap-3",onClick:function(){t(e?"portainer-upgrade-admin":"portainer-upgrade-non-admin",{category:"portainer",metadata:d}),o(!0)},children:\[n\&\&(0,B\.jsx)(B\.Fragment,{children:"Upgrade to Business Edition"}),(0,B\.jsx)(Js\.Z,{className:"text-lg lucide"})\]}),s\&\&(0,B\.jsx)(kg,{onDismiss:function(){return o(!1)}})\]})|null|g' /opt/portainer/public/main.238cdfbf7e0dc1135a28.js
 
 ##################
 # 3 Install apps #
