@@ -42,8 +42,8 @@ ARG CONFIGLOCATION="/config/addons_config/transmission"
 # hadolint ignore=SC2015, SC2013, SC2086
 RUN \
     # Avoid custom-init.d duplications
-    exit 0 && for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f $file; done \
-    \
+    for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f $file; done \
+    exit 0 && \
     # Create new config folder if needed
     && for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i "1a mkdir -p $CONFIGLOCATION" $file; done \
     \
