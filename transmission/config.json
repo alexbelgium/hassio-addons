@@ -43,7 +43,6 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "TRANSMISSION_WEB_HOME": "/transmission-web-control/"
   },
   "image": "ghcr.io/alexbelgium/transmission_ls-{arch}",
   "ingress": true,
@@ -59,7 +58,6 @@
     "DNS_server": "8.8.8.8,1.1.1.1",
     "PGID": 0,
     "PUID": 0,
-    "customUI": "transmission-web-control",
     "download_dir": "/share/downloads",
     "incomplete_dir": "/share/incomplete"
   },
@@ -85,7 +83,6 @@
     "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "customUI": "list(standard|combustion-release|transmission-web-control|kettu|flood-for-transmission|transmissionic)",
     "download_dir": "str",
     "incomplete_dir": "str?",
     "localdisks": "str?",
@@ -98,5 +95,5 @@
   },
   "slug": "transmission_ls",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "NOT_WORKING_DONT_UPDATE4"
+  "version": "4.0.0-r0-ls152-2"
 }
