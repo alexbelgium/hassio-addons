@@ -37,6 +37,50 @@ RUN \
     && sed -i "1a if bashio::config.has_value 'customUI'; then TRANSMISSION_WEB_HOME=/\$(bashio::config 'customUI'); fi" /etc/s6-overlay/s6-rc.d/svc-transmission/run \
     && ln -s /usr/share/transmission/web /standard
 
+# Add customui
+RUN \
+  echo "**** install third party themes ****" && \
+  TRANSMISSIONIC_VERSION=$(curl -s "https://api.github.com/repos/6c65726f79/Transmissionic/releases/latest" | jq -r .tag_name) && \
+  curl -o \
+    /tmp/transmissionic.zip -L \
+    "https://github.com/6c65726f79/Transmissionic/releases/download/${TRANSMISSIONIC_VERSION}/Transmissionic-webui-${TRANSMISSIONIC_VERSION}.zip" && \
+  unzip \
+    /tmp/transmissionic.zip -d \
+    /tmp && \
+  mv /tmp/web /transmissionic && \
+  curl -o \
+    /tmp/combustion.zip -L \
+    "https://github.com/Secretmapper/combustion/archive/release.zip" && \
+  unzip \
+    /tmp/combustion.zip -d \
+    / && \
+  mkdir -p /tmp/twctemp && \
+  TWCVERSION=$(curl -s "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" | jq -r .tag_name) && \
+  curl -o \
+    /tmp/twc.tar.gz -L \
+    "https://github.com/ronggang/transmission-web-control/archive/${TWCVERSION}.tar.gz" && \
+  tar xf \
+    /tmp/twc.tar.gz -C \
+    /tmp/twctemp --strip-components=1 && \
+  mv /tmp/twctemp/src /transmission-web-control && \
+  # Enables the original UI button in transmission-web-control
+  ln -s /usr/share/transmission/web/style /transmission-web-control && \
+  ln -s /usr/share/transmission/web/images /transmission-web-control && \
+  ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
+  ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html && \
+  mkdir -p /kettu && \
+  curl -o \
+    /tmp/kettu.tar.gz -L \
+    "https://github.com/endor/kettu/archive/master.tar.gz" && \
+  tar xf \
+    /tmp/kettu.tar.gz -C \
+    /kettu --strip-components=1 && \
+  curl -o \
+    /tmp/flood-for-transmission.tar.gz -L \
+    "https://github.com/johman10/flood-for-transmission/releases/download/latest/flood-for-transmission.tar.gz" && \
+  tar xf \
+    /tmp/flood-for-transmission.tar.gz -C
+
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/transmission"
 # hadolint ignore=SC2015, SC2013, SC2086
