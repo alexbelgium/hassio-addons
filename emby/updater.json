@@ -1,5 +1,6 @@
 {
   "github_beta": "true",
+  "github_fulltag": "true",
   "last_update": "13-12-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "emby",
