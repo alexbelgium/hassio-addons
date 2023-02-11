@@ -33,16 +33,16 @@ RUN \
     # Disable normal config
     echo '#!/usr/bin/with-contenv bash' > /etc/s6-overlay/s6-rc.d/init-transmission-config/run \
     # Allow webui change
-    sed -i "s|bash|bashio|g" /etc/s6-overlay/s6-rc.d/svc-transmission/run \
-#    && sed -i "1a if bashio::config.has_value 'customUI'; then TRANSMISSION_WEB_HOME=/\$(bashio::config 'customUI'); fi" /etc/s6-overlay/s6-rc.d/svc-transmission/run \
-#    && ln -s /usr/share/transmission/web /standard
+    && sed -i "s|bash|bashio|g" /etc/s6-overlay/s6-rc.d/svc-transmission/run \
+    && sed -i "1a if bashio::config.has_value 'customUI'; then TRANSMISSION_WEB_HOME=/\$(bashio::config 'customUI'); fi" /etc/s6-overlay/s6-rc.d/svc-transmission/run \
+    && ln -s /usr/share/transmission/web /standard
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/transmission"
 # hadolint ignore=SC2015, SC2013, SC2086
 RUN \
     # Avoid custom-init.d duplications
-    for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f $file; done \
+    exit 0 && for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f $file; done \
     \
     # Create new config folder if needed
     && for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i "1a mkdir -p $CONFIGLOCATION" $file; done \
