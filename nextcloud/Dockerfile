@@ -35,16 +35,16 @@ ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
 ARG CONFIGLOCATION="/data/config"
 # hadolint ignore=SC2046,SC2013,SC2086
 RUN \
-    # Remove upstream files
+    # Remove upstream file
     rm -rf /etc/cont-init.d/10-adduser /etc/cont-init.d/30-keygen /etc/cont-init.d/40-config /etc/cont-init.d/50-install /etc/cont-init.d/60-memcache /etc/cont-init.d/70-aliases \
     # Make permissions
     && chmod +x /defaults/nextcloud-perms.sh \
     # default folders
     && for file in $(grep -Esril "/data[ '\"/]|/data\$" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=/share/nextcloud\2=g" $file; done \
     && for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done \
-    # modify data limits files
+    # modify data limits file
     && sed -i \
-    -e 's/upload_max_filesize=1024M/upload_max_filesize=10240M/g' \
+    -e 's/upload_max_fileize=1024M/upload_max_fileize=10240M/g' \
     -e 's/post_max_size=1024M/post_max_size=10240M/g' \
     /etc/php*/php.ini \
     # Correct initial directory

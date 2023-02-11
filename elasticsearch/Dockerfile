@@ -31,10 +31,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 RUN sed -i '5a echo "Data location moved. Please wait while elasticsearch starts..."' /usr/local/bin/docker-entrypoint.sh \
     && sed -i '5a chown -R $(id -u):$(id -g) $HOME' /usr/local/bin/docker-entrypoint.sh \
     && sed -i '5a done' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a ln -s $NEWHOME/$files /usr/share/elasticsearch || true' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a rm -r /usr/share/elasticsearch/$files || true' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a cp -rn /usr/share/elasticsearch/$files $NEWHOME || true' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i '5a for files in "data" "config"; do' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a ln -s $NEWHOME/$file /usr/share/elasticsearch || true' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a rm -r /usr/share/elasticsearch/$file || true' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a cp -rn /usr/share/elasticsearch/$file $NEWHOME || true' /usr/local/bin/docker-entrypoint.sh \
+    && sed -i '5a for file in "data" "config"; do' /usr/local/bin/docker-entrypoint.sh \
     && sed -i '5a mkdir -p $NEWHOME' /usr/local/bin/docker-entrypoint.sh \
     && sed -i '5a NEWHOME="/data"' /usr/local/bin/docker-entrypoint.sh \
     # Install plugins
