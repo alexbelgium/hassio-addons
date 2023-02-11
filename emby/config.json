@@ -109,6 +109,6 @@
   },
   "slug": "emby_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby",
-  "version": "4.8.0.21-3",
+  "version": "beta-4.8.0.21-ls202",
   "video": true
 }
