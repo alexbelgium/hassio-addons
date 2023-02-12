@@ -14,6 +14,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
 
     # Clean folders
     if [ -d /"$CUSTOMUI" ]; then rm -r /"$CUSTOMUI"; fi
+    if [ -f /"$CUSTOMUI" ]; then rm -r /"$CUSTOMUI"; fi
 
     ### Download WebUI
     case $CUSTOMUI in
