@@ -112,12 +112,13 @@ while IFS= read -r line; do
     # Data validation
     if [[ "$line" =~ ^.+[=].+$ ]]; then
         export "$line"
-        # Export the variable
+        # Export to scripts
         sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
         sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
         sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
-        if cat /etc/s6-overlay/s6-rc.d/svc-*/*run* &>/dev/null; then sed -i "1a export $line" /etc/s6-overlay/s6-rc.d/svc-*/*run* 2>/dev/null; fi
-        # export on python
+        # Export to s6
+        if [ -d /var/run/s6/container_environment ]; then printf "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
+        # export to python
         if command -v "python3" &>/dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py
             echo "os.environ['${line%%=*}'] = '${line#*=}'" >> /env.py
