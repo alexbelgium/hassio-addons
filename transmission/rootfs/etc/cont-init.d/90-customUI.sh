@@ -9,8 +9,11 @@ CUSTOMUI=$(bashio::config 'customUI')
 
 # Install webui
 if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$CUSTOMUI" = custom ]; then
-    ### Variables
+    # Variables
     bashio::log.info "Alternate UI enabled : $CUSTOMUI. If webui don't work, disable this option"
+
+    # Clean folders
+    if [ -d /"$CUSTOMUI" ]; then rm -r /"$CUSTOMUI"; fi
 
     ### Download WebUI
     case $CUSTOMUI in
