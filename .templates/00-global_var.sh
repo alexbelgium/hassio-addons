@@ -40,7 +40,7 @@ for KEYS in "${arr[@]}"; do
     ######################################
     # Export the variable to run scripts #
     ######################################
-    export "${KEYS}='${VALUE//[\"\']/}'"
+    export "${KEYS}='${VALUE}'"
 
     # For non s6
     if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
