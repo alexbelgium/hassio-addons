@@ -82,6 +82,7 @@
     "TZ": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "customUI": "list(standard|combustion-release|transmission-web-control|kettu|flood-for-transmission|transmissionic)",
     "download_dir": "str",
     "incomplete_dir": "str?",
     "localdisks": "str?",
@@ -94,5 +95,5 @@
   },
   "slug": "transmission_ls",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.0.0-r0-ls152-3"
+  "version": "4.0.0-r0-ls152-4"
 }
