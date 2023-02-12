@@ -46,7 +46,7 @@
     "REDIS_PORT": "6379"
   },
   "image": "ghcr.io/alexbelgium/immich-{arch}",
-  "ini": false,
+  "init": false,
   "map": [
     "media:rw",
     "config:rw",
