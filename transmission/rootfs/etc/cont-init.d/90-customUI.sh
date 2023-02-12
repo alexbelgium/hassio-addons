@@ -7,10 +7,6 @@
 
 CUSTOMUI=$(bashio::config 'customUI')
 
-combustion-release|transmission-web-control|kettu|flood-for-transmission|transmissionic
-
-
-
 # Install webui
 if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$CUSTOMUI" = custom ]; then
     ### Variables
