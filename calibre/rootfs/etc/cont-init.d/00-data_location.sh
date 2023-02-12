@@ -44,6 +44,11 @@ sed -i "s|/config/addons_config/calibre|$LOCATION|g" /defaults/* || true
 sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/cont-init.d/* || true
 sed -i "s|/config/addons_config/calibre|$LOCATION|g" /etc/services.d/*/run || true
 
+if [ -d /var/run/s6/container_environment ]; then
+    printf "$LOCATION" > /var/run/s6/container_environment/HOME
+    printf "$LOCATION" > /var/run/s6/container_environment/FM_HOME
+fi
+
 usermod --home "$LOCATION" abc
 
 # Create folder

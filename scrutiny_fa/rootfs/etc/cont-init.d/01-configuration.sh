@@ -62,6 +62,7 @@ case "$FREQUENCY" in
         sed -i "1a export COLLECTOR_CRON_SCHEDULE=\"0 0 * * 0\"" /etc/cont-init.d/50-cron-config
         ;;
 esac
+
 ############################
 # SMARTCTL COMMAND OPTIONS #
 ############################
