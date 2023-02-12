@@ -104,9 +104,3 @@ esac
 # Starting redis #
 ##################
 exec redis-server & bashio::log.info "Starting redis"
-
-################
-# Starting app #
-################
-bashio::log.info "Starting app"
-/./usr/bin/supervisord
