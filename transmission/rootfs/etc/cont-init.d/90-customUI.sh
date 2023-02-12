@@ -13,8 +13,8 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     bashio::log.info "Alternate UI enabled : $CUSTOMUI. If webui don't work, disable this option"
 
     # Clean folders
-    if [ -d /"$CUSTOMUI" ]; then rm -r /"$CUSTOMUI"; fi
-    if [ -f /"$CUSTOMUI" ]; then rm -r /"$CUSTOMUI"; fi
+    if [ -d /"$CUSTOMUI" ]; then rm -r /"${CUSTOMUI:?}"; fi
+    if [ -f /"$CUSTOMUI" ]; then rm -r /"${CUSTOMUI:?}; fi
 
     ### Download WebUI
     case $CUSTOMUI in
@@ -61,7 +61,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     esac
 
     # Define variable
-    if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
-    if [ -d /var/run/s6/container_environment ]; then printf "%s" "/$CUSTOMUI/" > /var/run/s6/container_environment/TRANSMISSION_WEB_HOME; fi
+    if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export TRANSMISSION_WEB_HOME=$CUSTOMUI" /etc/services.d/*/*run* 2>/dev/null; fi
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "$CUSTOMUI" > /var/run/s6/container_environment/TRANSMISSION_WEB_HOME; fi
 
 fi
