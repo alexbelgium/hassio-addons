@@ -17,7 +17,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_ARCH
-ARG BUILD_UPSTREAM="25.0.0"
+ARG BUILD_UPSTREAM="25.0.3"
 FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
 ##################
@@ -29,31 +29,48 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-ENV NEXTCLOUD_PATH="/data/config/www/nextcloud"
+# Specific modifications
+ARG CONFIGLOCATION="/share/nextcloud"
+RUN \
+    # Change default data location
+    for file in $(grep -Esril "/data" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
+    \
+    # modify data limits file
+    sed -i \
+    -e 's/upload_max_fileize=1024M/upload_max_fileize=10240M/g' \
+    -e 's/post_max_size=1024M/post_max_size=10240M/g' \
+    /etc/php*/php.ini || true
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
-# hadolint ignore=SC2046,SC2013,SC2086
+# hadolint ignore=SC2015, SC2013, SC2086
 RUN \
-    # Remove upstream file
-    rm -rf /etc/cont-init.d/10-adduser /etc/cont-init.d/30-keygen /etc/cont-init.d/40-config /etc/cont-init.d/50-install /etc/cont-init.d/60-memcache /etc/cont-init.d/70-aliases \
-    # Make permissions
-    && chmod +x /defaults/nextcloud-perms.sh \
-    # default folders
-    && for file in $(grep -Esril "/data[ '\"/]|/data\$" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=/share/nextcloud\2=g" $file; done \
-    && for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done \
-    # modify data limits file
-    && sed -i \
-    -e 's/upload_max_fileize=1024M/upload_max_fileize=10240M/g' \
-    -e 's/post_max_size=1024M/post_max_size=10240M/g' \
-    /etc/php*/php.ini \
-    # Correct initial directory
-    && sed -i "s|/data|%%datadirectory%%|g" /defaults/config.php
+    # Avoid custom-init.d duplications
+    for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do rm -f $file; done \
+    \
+    # Create new config folder if needed
+    && for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i "1a mkdir -p $CONFIGLOCATION" $file; done \
+    \
+    # Allow UID and GID setting
+    && for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do sed -i 's/bash/bashio/g' $file && sed -i '1a PUID="$(if bashio::config.has_value "PUID"; then bashio::config "PUID"; else echo "0"; fi)"' $file && sed -i '1a PGID="$(if bashio::config.has_value "PGID"; then bashio::config "PGID"; else echo "0"; fi)"' $file; done \
+    \
+    # Search occurences of /config and change it to the expected new config
+    && for file in $(grep -Esril "/config" /etc /defaults); do sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done \
+    \
+    # Avoid chmod /config
+    && for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*;do if [ -f $file ] && [[ ! -z $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' $file) ]] ; then sed -i "s|/config$|/data|g" $file; fi ;done \
+    \
+    # Docker mods addition
+    #&& if [ -f /docker-mods ]; then sed -i 's|bash|bashio|g' /docker-mods && sed -i "1a if bashio::config.has_value \"DOCKER_MODS\"; then DOCKER_MODS=\$(bashio::config \"DOCKER_MODS\"); fi" /docker-mods; fi \
+    \
+    # Replace lsiown if not found
+    && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
+# Correct modifications
+ARG CONFIGLOCATION="/www/nextcloud/config"
+# hadolint ignore=SC2015, SC2013, SC2086
 RUN \
-    # Correct ssl path
-    sed -i "s|/data/config/keys|/ssl/nextcloud/keys|g" /defaults/nginx/site-confs/default.conf.sample \
-    && sed -i "s|client_max_body_size 512M;|client_max_body_size 10240M;|g" /defaults/nginx/site-confs/default.conf.sample
+    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done
 
 ##################
 # 3 Install apps #
@@ -79,7 +96,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d
 
 # Manual apps
-ENV PACKAGES="gcompat wget"
+ENV PACKAGES="gcompat"
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015
