@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [epicgamesfree] Login returned error: Incorrect response (opened 2023-02-05)](https://github.com/alexbelgium/hassio-addons/issues/694) by [@dominikhoebert](https://github.com/dominikhoebert)
 # Home assistant add-on: Epic Games Free
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
