@@ -36,8 +36,8 @@ sed -i "1a export FM_HOME=$LOCATION" /etc/services.d/*/run
 sed -i "s|/config/addons_config/calibre-web|$LOCATION|g" /defaults/*
 sed -i "s|/config/addons_config/calibre-web|$LOCATION|g" /etc/cont-init.d/*
 sed -i "s|/config/addons_config/calibre-web|$LOCATION|g" /etc/services.d/*/run
-if [ -d /var/run/s6/container_environment ]; then printf "$LOCATION" > /var/run/s6/container_environment/HOME; fi
-if [ -d /var/run/s6/container_environment ]; then printf "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
+if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
+if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
 
 usermod --home "$LOCATION" abc
 

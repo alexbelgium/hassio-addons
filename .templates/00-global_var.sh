@@ -46,7 +46,7 @@ for KEYS in "${arr[@]}"; do
     if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
     if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
     # For s6
-    if [ -d /var/run/s6/container_environment ]; then printf "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
 
 done
 

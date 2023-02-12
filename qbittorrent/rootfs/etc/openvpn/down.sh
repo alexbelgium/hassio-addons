@@ -25,7 +25,7 @@ if [ -n "${RC_SVCNAME}" ]; then
     # Re-enter the init script to start any dependant services
     if /etc/init.d/"${RC_SVCNAME}" --quiet status ; then
         export IN_BACKGROUND=true
-        if [ -d /var/run/s6/container_environment ]; then printf "true" > /var/run/s6/container_environment/IN_BACKGROUND; fi
+        if [ -d /var/run/s6/container_environment ]; then printf "%s" "true" > /var/run/s6/container_environment/IN_BACKGROUND; fi
         /etc/init.d/"${RC_SVCNAME}" --quiet stop
     fi
 fi

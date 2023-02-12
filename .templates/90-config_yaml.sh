@@ -117,7 +117,7 @@ while IFS= read -r line; do
         sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
         sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
         # Export to s6
-        if [ -d /var/run/s6/container_environment ]; then printf "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
+        if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
         # export to python
         if command -v "python3" &>/dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py

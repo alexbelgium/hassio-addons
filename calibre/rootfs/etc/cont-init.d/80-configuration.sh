@@ -14,7 +14,7 @@ if bashio::config.has_value 'KEYBOARD'; then
     KEYBOARD=$(bashio::config 'KEYBOARD')
     bashio::log.info "Setting keyboard to $KEYBOARD"
     sed -i "1a export KEYBOARD=$KEYBOARD" /etc/s6-overlay/s6-rc.d/svc-web/run
-    if [ -d /var/run/s6/container_environment ]; then printf "$KEYBOARD" > /var/run/s6/container_environment/KEYBOARD; fi
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "$KEYBOARD" > /var/run/s6/container_environment/KEYBOARD; fi
 fi || true
 
 # Set cli args
@@ -23,7 +23,7 @@ if bashio::config.has_value 'CLI_ARGS'; then
     CLI_ARGS=$(bashio::config 'CLI_ARGS')
     bashio::log.info "Setting arguments to $CLI_ARGS"
     sed -i "1a export CLI_ARGS=$CLI_ARGS" /etc/s6-overlay/s6-rc.d/svc-web/run
-    if [ -d /var/run/s6/container_environment ]; then printf "$CLI_ARGS" > /var/run/s6/container_environment/CLI_ARGS; fi
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "$CLI_ARGS" > /var/run/s6/container_environment/CLI_ARGS; fi
 fi || true
 
 # Set password
@@ -32,5 +32,5 @@ if bashio::config.has_value 'PASSWORD'; then
     PASSWORD=$(bashio::config 'PASSWORD')
     bashio::log.info "Setting password to $PASSWORD"
     sed -i "1a export PASSWORD=$PASSWORD" /etc/s6-overlay/s6-rc.d/svc-web/run
-    if [ -d /var/run/s6/container_environment ]; then printf "$PASSWORD" > /var/run/s6/container_environment/PASSWORD; fi
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "$PASSWORD" > /var/run/s6/container_environment/PASSWORD; fi
 fi || true
