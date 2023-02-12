@@ -15,7 +15,8 @@ mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 for KEYS in "${arr[@]}"; do
     # export key
     VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
-    line="${KEYS}='${VALUE//[\"\']/}'"
+    VALUE="${VALUE//[\"\']/}"
+    line="${KEYS}='${VALUE}'"
     # Check if secret
     if [[ "${line}" == *'!secret '* ]]; then
         echo "secret detected"
@@ -27,6 +28,7 @@ for KEYS in "${arr[@]}"; do
         secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
         secret=${secret#*: }
         line="${line%%=*}='$secret'"
+        VALUE="$secret"
     fi
     # text
     if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
@@ -34,11 +36,17 @@ for KEYS in "${arr[@]}"; do
     else
         bashio::log.blue "$line"
     fi
-    # Use locally
+
+    ###################################### 
+    # Export the variable to run scripts #
+    ###################################### 
     export "${KEYS}='${VALUE//[\"\']/}'"
-    # Export the variable to run scripts
+
+    # For non s6
     if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
     if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
+    # For s6
+    if [ -d /var/run/s6/container_environment ]; then printf "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
     if cat /etc/s6-overlay/s6-rc.d/svc-*/*run* &>/dev/null; then sed -i "1a export $line" /etc/s6-overlay/s6-rc.d/svc-*/*run* 2>/dev/null; fi
 
 done
