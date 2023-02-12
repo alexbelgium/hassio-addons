@@ -14,7 +14,7 @@ if bashio::config.true 'use_own_certs'; then
 
     [[ -f /config/keys/cert.key ]] && rm /config/keys/cert.key
     [[ -f /config/keys/cert.crt ]] && rm /config/keys/cert.crt
-    cp /ssl/"$CERTFILE" config/keys/cert.crt
-    cp /ssl/"$CERTFILE" config/keys/cert.key
+    cp /ssl/"$CERTFILE" /config/keys/cert.crt
+    cp /ssl/"$CERTFILE" /config/keys/cert.key
 
 fi
