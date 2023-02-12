@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-# Disables ingress and sets a default index 
+# Disables ingress and sets a default index
 
 # Disable Ingress
 if bashio::config.true "ingress_disabled"; then
@@ -31,4 +31,4 @@ if bashio::config.true "ingress_disabled"; then
 </html>
 
 EOF
-fi 
+fi
