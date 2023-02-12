@@ -42,8 +42,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {
-  },
+  "environment": {},
   "ingress": true,
   "init": false,
   "map": [
