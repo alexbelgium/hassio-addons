@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Jellyfin NAS] Addon fails to start (opened 2023-02-12)](https://github.com/alexbelgium/hassio-addons/issues/706) by [@wlad128](https://github.com/wlad128)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
