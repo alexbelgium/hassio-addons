@@ -23,6 +23,7 @@ if [ "$(bashio::config 'OCR')" = "true" ]; then
         occ app:enable files_fulltextsearch_tesseract &>/dev/null || true
 
         echo "Installing OCR"
+        apk add --quite --no-cache ocrmypdf
         apk add --quiet --no-cache tesseract-ocr || apk add --quiet --no-cache tesseract-ocr@community
         # Install additional language if requested
         if bashio::config.has_value 'OCRLANG'; then
