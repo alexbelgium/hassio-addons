@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [epicgamesfree] Needs update, throws error (opened 2023-02-13)](https://github.com/alexbelgium/hassio-addons/issues/708) by [@nstrelow](https://github.com/nstrelow)
 # Home assistant add-on: Epic Games Free
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
