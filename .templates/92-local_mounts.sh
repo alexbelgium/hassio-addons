@@ -40,19 +40,19 @@ if bashio::config.has_value 'localdisks'; then
         fstype=$(lsblk "$devpath"/"$disk" -no fstype)
         options="nosuid,relatime,noexec"
         type="auto"
+        bashio::log.info "Mounting ${disk} of type ${fstype}"
 
         case "$fstype" in
         exfat | vfat | msdos)
-               bashio::log.warning "${disk} is ${fstype}. Permissions and ACL don't works and this is an EXPERIMENTAL support"
+               bashio::log.warning "${fstype} permissions and ACL don't works and this is an EXPERIMENTAL support"
                options="${options},umask=000"
                ;;
         ntfs)
-               bashio::log.warning "${disk} is ${fstype}. This is an EXPERIMENTAL support"
+               bashio::log.warning "${fstype} is an EXPERIMENTAL support"
                options="${options},umask=000"
                type="ntfs3"
                ;;
         *)
-               bashio::log.info "Mounting ${mdisk} of type ${fstype}"
                if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
                    echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
                    options="$options,uid=$(bashio::config 'PUID'),gid=$(bashio::config 'PGID')"
