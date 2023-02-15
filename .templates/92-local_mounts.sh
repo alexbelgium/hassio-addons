@@ -37,17 +37,17 @@ if bashio::config.has_value 'localdisks'; then
         fi
         
         # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)    
-        fstype=$(lsblk $dev -no fstype)
+        fstype=$(lsblk "$devpath"/"$disk" -no fstype)
         options="nosuid,relatime,noexec"
         type="auto"
 
         case "$fstype" in
         exfat | vfat | msdos)
-               bashio::log.warning "Your ${mdisk} is ${fstype}. Permissions and ACL don't works and this is an EXPERIMENTAL support"
+               bashio::log.warning "${disk} is ${fstype}. Permissions and ACL don't works and this is an EXPERIMENTAL support"
                options="${options},umask=000"
                ;;
         ntfs)
-               bashio::log.warning "Your ${mdisk} is ${fstype}. This is an EXPERIMENTAL support"
+               bashio::log.warning "${disk} is ${fstype}. This is an EXPERIMENTAL support"
                options="${options},umask=000"
                type="ntfs3"
                ;;
@@ -62,8 +62,9 @@ if bashio::config.has_value 'localdisks'; then
         
         # Legacy mounting : mount to share if still exists (avoid breaking changes)        
         dirpath="/mnt"
-        if [ -d /share/"$disk" ]; then dirpath ="/share"; fi
+        if [ -d /share/"$disk" ]; then dirpath="/share"; fi
         
+        # shellcheck disable=SC2015
         mount -t $type "$devpath"/"$disk" "$dirpath"/"$disk" -o $options && bashio::log.info "Success! $disk mounted to /mnt/$disk" || \
             (bashio::log.fatal "Unable to mount local drives! Please check the name." && rmdir /mnt/$disk)
     done
