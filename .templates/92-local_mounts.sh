@@ -50,7 +50,7 @@ if bashio::config.has_value 'localdisks'; then
         ntfs)
                bashio::log.warning "${fstype} is an EXPERIMENTAL support"
                options="${options},umask=000"
-               type="ntfs3"
+               type="ntfs"
                ;;
         *)
                if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
