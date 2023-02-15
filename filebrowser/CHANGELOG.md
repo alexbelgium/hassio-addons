@@ -1,3 +1,4 @@
+- Add NTFS support
 - Disable external port by default
 - WARNING : update to supervisor 2022.11 before installing
 
