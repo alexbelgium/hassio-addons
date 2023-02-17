@@ -60,7 +60,7 @@
     "PGID": 0,
     "PUID": 0
   },
-  "panel_icon": "mdi:download-circle-outline",
+  "panel_icon": "mdi:television-classic",
   "ports": {
     "8989/tcp": 8989
   },
