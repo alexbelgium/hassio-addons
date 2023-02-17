@@ -43,16 +43,16 @@ If you want to do add the repository manually, please follow the procedure highl
 
 Number of addons in the repository : 75
 
-Total number of addons installed : 14133
+Total number of addons installed : 13610
 
 Top 3 most installed addons :
 1. Portainer (3080x)
 2. Filebrowser (2036x)
-3. Epicgamesfree (437x)
+3. Myelectricaldata (416x)
 
 Most used architectures :
-- amd64: 56%
-- aarch64: 39%
+- amd64: 58%
+- aarch64: 38%
 - armv7: 5%
 
 Downloads evolution :
