@@ -60,7 +60,7 @@
     "PGID": 0,
     "PUID": 0
   },
-  "panel_icon": "mdi:download-circle",
+  "panel_icon": "mdi:movie-outline",
   "ports": {
     "7878/tcp": 7878
   },
