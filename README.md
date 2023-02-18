@@ -518,7 +518,7 @@ Downloads evolution :
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/download-circle.svg) [Radarr](radarr/) : A fork of Sonarr to work with movies like Couchpotato
+&#10003; ![image](https://api.iconify.design/mdi/movie-outline.svg) [Radarr](radarr/) : A fork of Sonarr to work with movies like Couchpotato
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fradarr%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fradarr%2Fupdater.json)
@@ -606,7 +606,7 @@ Downloads evolution :
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/download-circle-outline.svg) [Sonarr](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them
+&#10003; ![image](https://api.iconify.design/mdi/television-classic.svg) [Sonarr](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsonarr%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsonarr%2Fupdater.json)
