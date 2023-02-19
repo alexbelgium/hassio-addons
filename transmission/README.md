@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Transmission add Tailmission Web UI (opened 2023-02-19)](https://github.com/alexbelgium/hassio-addons/issues/719) by [@DarkoMir](https://github.com/DarkoMir)
 # Home assistant add-on: Transmission
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
