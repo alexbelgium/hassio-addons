@@ -1,4 +1,7 @@
 
+## 1.4.7 (19-02-2023)
+- Update to latest version from TandoorRecipes/recipes
+
 ## 1.4.6 (04-02-2023)
 - Update to latest version from TandoorRecipes/recipes
 - Ingress removed
