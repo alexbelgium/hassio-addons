@@ -51,6 +51,6 @@
   },
   "slug": "papermerge",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v2.0.1-ls60-bugfix",
+  "version": "v2.1.5-ls61",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8000]"
 }
