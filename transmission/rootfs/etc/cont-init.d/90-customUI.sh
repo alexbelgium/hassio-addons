@@ -25,20 +25,20 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
 
         "transmission-web-control")
             mkdir -p /tmp/twctemp && \
-            TWCVERSION=$(curl -s "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" | jq -r .tag_name)
+                TWCVERSION=$(curl -s "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" | jq -r .tag_name)
             curl -o /tmp/twc.tar.gz -L "https://github.com/ronggang/transmission-web-control/archive/${TWCVERSION}.tar.gz"
             tar xf /tmp/twc.tar.gz -C /tmp/twctemp --strip-components=1
             mv /tmp/twctemp/src /transmission-web-control
             # Enables the original UI button in transmission-web-control
             ln -s /usr/share/transmission/web/style /transmission-web-control && \
-            ln -s /usr/share/transmission/web/images /transmission-web-control && \
-            ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
-            ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
+                ln -s /usr/share/transmission/web/images /transmission-web-control && \
+                ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
+                ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
             ;;
 
         "kettu")
             mkdir -p /kettu && \
-            curl -o /tmp/kettu.tar.gz -L "https://github.com/endor/kettu/archive/master.tar.gz"
+                curl -o /tmp/kettu.tar.gz -L "https://github.com/endor/kettu/archive/master.tar.gz"
             tar xf /tmp/kettu.tar.gz -C /kettu --strip-components=1
             ;;
 
