@@ -1,4 +1,7 @@
 
+##  (19-02-2023)
+- Update to latest version from imagegenius/immich
+
 ## 1.45.0 (04-02-2023)
 - Update to latest version from immich-app/immich
 
