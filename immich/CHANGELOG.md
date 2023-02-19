@@ -1,4 +1,7 @@
 
+## 1.47.3 (19-02-2023)
+- Update to latest version from imagegenius/docker-immich
+
 ##  (19-02-2023)
 - Update to latest version from imagegenius/immich
 
