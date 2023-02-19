@@ -1,4 +1,7 @@
 
+## 4.0.0-r6-ls155 (19-02-2023)
+- Update to latest version from linuxserver/docker-transmission
+
 ## 4.0.0-r0-ls152 (11-02-2023)
 - Update to latest version from linuxserver/docker-transmission
 
