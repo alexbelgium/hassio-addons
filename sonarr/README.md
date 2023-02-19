@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Sonarr Ingress (opened 2022-09-28)](https://github.com/alexbelgium/hassio-addons/issues/495) by [@MiguelAngelLV](https://github.com/MiguelAngelLV)
 ## &#9888; Open Request : [✨ [REQUEST] AutoBrr (companion to Radarr an Sonarr) (opened 2022-11-29)](https://github.com/alexbelgium/hassio-addons/issues/581) by [@hacshacdgacs](https://github.com/hacshacdgacs)
 # Home assistant add-on: Sonarr
 
