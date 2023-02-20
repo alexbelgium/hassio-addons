@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [Location of Calibre Database (opened 2023-02-20)](https://github.com/alexbelgium/hassio-addons/issues/723) by [@FancyNerd92](https://github.com/FancyNerd92)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
