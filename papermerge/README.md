@@ -1,4 +1,4 @@
-## &#9888; Open Request : [🐛 [Papermerge] Switch to papermerge:papermerge (opened 2023-02-19)](https://github.com/alexbelgium/hassio-addons/issues/720) by [@kolossboss](https://github.com/kolossboss)
+## &#9888; Open Request : [✨ [REQUEST] Switch to papermerge:papermerge (opened 2023-02-19)](https://github.com/alexbelgium/hassio-addons/issues/720) by [@kolossboss](https://github.com/kolossboss)
 # Home assistant add-on: Papermerge
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
