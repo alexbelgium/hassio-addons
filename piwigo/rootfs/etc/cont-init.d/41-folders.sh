@@ -15,6 +15,7 @@ else
     chown -R abc:abc /share/piwigo
 fi
 
+mkdir -p /config/www/local 
 if [ ! -d /share/piwigo/config ] && [ -d /config/www/local/config ]; then
     echo "moving config folder"
     mv /config/www/local/config /share/piwigo
