@@ -27,6 +27,7 @@ else
     echo "Using existing config"
 fi
 
+mkdir -p /config/keys
 if [ ! -d /share/piwigo/keys ]; then
     echo "moving keys folder"
     mv /config/keys /share/piwigo
