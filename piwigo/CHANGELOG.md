@@ -1,3 +1,4 @@
+- Realign to upstream folders
 
 ## 13.5.0 (28-01-2023)
 - Update to latest version from linuxserver/docker-piwigo
