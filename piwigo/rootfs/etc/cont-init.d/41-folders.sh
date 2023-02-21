@@ -21,7 +21,7 @@ if [ ! -d /share/piwigo/config ] && [ -d /config/www/local/config ]; then
     ln -s /share/piwigo/config /config/www/local
     echo "links done"
 else
-    rm -r /config/www/local/config
+    if [ -d /config/www/local/config ]; then rm -r /config/www/local/config; fi
     ln -s /share/piwigo/config /config/www/local
     echo "Using existing config"
 fi
