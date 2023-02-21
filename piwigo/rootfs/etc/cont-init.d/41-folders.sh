@@ -17,12 +17,12 @@ fi
 
 if [ ! -d /share/piwigo/config ]; then
     echo "moving config folder"
-    mv /gallery/local/config /share/piwigo
-    ln -s /share/piwigo/config /gallery/local
+    mv /config/www/local/config /share/piwigo
+    ln -s /share/piwigo/config /config/www/local
     echo "links done"
 else
-    rm -r /gallery/local/config
-    ln -s /share/piwigo/config /gallery/local
+    rm -r /config/www/local/config
+    ln -s /share/piwigo/config /config/www/local
     echo "Using existing config"
 fi
 
