@@ -66,11 +66,13 @@
   "panel_icon": "mdi:book-multiple",
   "ports": {
     "8080/tcp": 8080,
-    "8081/tcp": 8081
+    "8081/tcp": 8081,
+    "9090/tcp": 9090
   },
   "ports_description": {
     "8080/tcp": "Calibre desktop gui",
-    "8081/tcp": "Calibre webserver gui, to be enabled within the desktop gui"
+    "8081/tcp": "Calibre webserver gui, to be enabled within the desktop gui",
+    "9090/tcp": "Calibre wireless connection port, to be enabled within the desktop gui"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -89,7 +91,7 @@
     "networkdisks": "str?"
   },
   "slug": "calibre",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
+  "url": "https://github.com/danbruno/hassio-addons/tree/calibre-wireless-port/calibre",
   "version": "v6.13.0-ls203",
   "video": true
 }

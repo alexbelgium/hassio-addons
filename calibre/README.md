@@ -49,7 +49,7 @@ Webui can be found at <http://your-ip:PORT>.
 Configurations can be done through the app webUI, except for the following options.
 Please read the upstream container documentation for further info : https://github.com/linuxserver/docker-calibre/blob/35b5e3ae06ba95f666687150ca5fd632b8db9e87/README.md#application-setup
 
-In particular, the webserver needs to be manually enabled from the desktop app with port 8081 to be able to access it.
+In particular, the webserver and wireless connections needs to be manually enabled from the desktop app to be able to access it, with ports 8081 and 9090 respectively.
 
 ```yaml
 PGID: user
