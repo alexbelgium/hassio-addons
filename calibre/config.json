@@ -72,7 +72,7 @@
   "ports_description": {
     "8080/tcp": "Calibre desktop gui",
     "8081/tcp": "Calibre webserver gui, to be enabled within the desktop gui",
-    "9090/tcp": "Calibre wireless connection port, to be enabled within the desktop gui"
+    "9090/tcp": "Calibre wireless connection, to be enabled within the desktop gui"
   },
   "privileged": [
     "SYS_ADMIN",
