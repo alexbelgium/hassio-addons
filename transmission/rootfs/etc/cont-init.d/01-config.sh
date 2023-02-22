@@ -46,13 +46,6 @@ fi
 if bashio::config.has_value 'customUI'; then
     CUSTOMUI=$(bashio::config 'customUI')
 
-    # Enable transmission-web-control return to default UI
-    if [ ! -f "/transmission-web-control/index.original.html" ]; then
-        ln -s /usr/share/transmission/web/style /transmission-web-control
-        ln -s /usr/share/transmission/web/images /transmission-web-control
-        ln -s /usr/share/transmission/web/javascript /transmission-web-control
-        ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
-    fi || true
 fi
 bashio::log.info "UI selected : $CUSTOMUI"
 bashio::log.warning "If UI was changed, you need to clear browser cache for it to show in Ingress"
