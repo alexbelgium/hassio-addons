@@ -36,7 +36,7 @@ if bashio::config.has_value 'localdisks'; then
 
         # Install lsblk
         if ! command -v "lsblk" &>/dev/null; then
-            if command -v "apk" &>/dev/null; then apk add --no-cache lsblk; fi
+            if command -v "apk" &>/dev/null; then apk add --no-cache lsblk >/dev/null; fi
             if command -v "apt" &>/dev/null; then apt-get update && apt-get install -yqq util-linux; fi
         fi
 
