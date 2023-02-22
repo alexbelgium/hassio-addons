@@ -91,7 +91,7 @@
     "networkdisks": "str?"
   },
   "slug": "calibre",
-  "url": "https://github.com/danbruno/hassio-addons/tree/calibre-wireless-port/calibre",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
   "version": "v6.13.0-ls203",
   "video": true
 }
