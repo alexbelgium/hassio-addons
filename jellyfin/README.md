@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Jellyfin NAS] Local disk is not mounted. PUID: unbound variable (opened 2023-02-22)](https://github.com/alexbelgium/hassio-addons/issues/726) by [@furang](https://github.com/furang)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
