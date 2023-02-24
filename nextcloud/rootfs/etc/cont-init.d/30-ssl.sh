@@ -12,9 +12,9 @@ if bashio::config.true 'use_own_certs'; then
     [ ! -f /ssl/"$CERTFILE" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$CERTFILE not found" && bashio::exit.nok
     [ ! -f /ssl/"$KEYFILE" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$KEYFILE not found" && bashio::exit.nok
 
-    [[ -f /config/keys/cert.key ]] && rm /config/keys/cert.key
-    [[ -f /config/keys/cert.crt ]] && rm /config/keys/cert.crt
-    cp /ssl/"$CERTFILE" /config/keys/cert.crt
-    cp /ssl/"$CERTFILE" /config/keys/cert.key
+    [[ -f /data/config/keys/cert.key ]] && rm /data/config/keys/cert.key
+    [[ -f /data/config/keys/cert.crt ]] && rm /data/config/keys/cert.crt
+    cp /ssl/"$CERTFILE" /data/config/keys/cert.crt
+    cp /ssl/"$CERTFILE" /data/config/keys/cert.key
 
 fi
