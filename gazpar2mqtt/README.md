@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Gazpar2mqtt] Error with GRDF password (opened 2023-02-24)](https://github.com/alexbelgium/hassio-addons/issues/729) by [@alexballow](https://github.com/alexballow)
 # Home assistant add-on: gazpar2mqtt
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
