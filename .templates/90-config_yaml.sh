@@ -112,12 +112,6 @@ while IFS= read -r line; do
     # Data validation
     if [[ "$line" =~ ^.+[=].+$ ]]; then
         export "$line"
-        # Export to scripts
-        sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
-        sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
-        sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
-        # Export to s6
-        if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
         # export to python
         if command -v "python3" &>/dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py
@@ -128,6 +122,14 @@ while IFS= read -r line; do
         echo "$line" >> /.env || true
         mkdir -p /etc
         echo "$line" >> /etc/environmemt
+        # Escape dollars
+        line="${line//$/\\$}" 
+        # Export to scripts
+        sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
+        sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
+        sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
+        # Export to s6
+        if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
     else
