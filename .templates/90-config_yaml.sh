@@ -121,7 +121,7 @@ while IFS= read -r line; do
         # set .env
         echo "$line" >> /.env || true
         mkdir -p /etc
-        echo "$KEYS=\'$VALUE\'" >> /etc/environmemt
+        echo "$KEYS=$VALUE" >> /etc/environmemt
         # Export to scripts
         sed -i "1a export $KEYS=\'$VALUE\'" /etc/services.d/*/*run* 2>/dev/null || true
         sed -i "1a export $KEYS=\'$VALUE\'" /etc/cont-init.d/*run* 2>/dev/null || true
@@ -135,11 +135,3 @@ while IFS= read -r line; do
     fi
 done <"/tmpfile"
 
-# Test mode
-TZ=$(bashio::config "TZ")
-if [ "$TZ" = "test" ]; then
-    echo "secret mode found, launching script in /config/test.sh"
-    cd /config || exit
-    chmod 777 test.sh
-    ./test.sh
-fi
