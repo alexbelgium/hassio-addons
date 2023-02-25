@@ -121,17 +121,15 @@ while IFS= read -r line; do
         # set .env
         echo "$line" >> /.env || true
         mkdir -p /etc
-        echo "$line" >> /etc/environmemt
-        # Escape dollars
-        line="${line//$/\\$}" 
+        echo "$KEYS=\'$VALUE\'" >> /etc/environmemt
         # Export to scripts
-        sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
-        sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
-        sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
+        sed -i "1a export $KEYS=\'$VALUE\'" /etc/services.d/*/*run* 2>/dev/null || true
+        sed -i "1a export $KEYS=\'$VALUE\'" /etc/cont-init.d/*run* 2>/dev/null || true
+        sed -i "1a export $KEYS=\'$VALUE\'" /scripts/*run* 2>/dev/null || true
         # Export to s6
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
         # Show in log
-        if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
+        if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS=\'$VALUE\'"; fi
     else
         bashio::exit.nok "$line does not follow the correct structure. Please check your yaml file."
     fi
