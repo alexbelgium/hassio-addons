@@ -52,6 +52,8 @@ Configurations can be done through the app webUI, except for the following optio
 Default name : me@example.com
 Default password : a_very_secret_password
 
+If you store your database on a mounted drive, make sure to also host your sqlite database there : otherwise if there is an issue with the mount you'll lose your whole database (thanks @cokeman0)
+
 ```yaml
 PGID: user
 GPID: user
