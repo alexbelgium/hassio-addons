@@ -122,7 +122,7 @@ while IFS= read -r line; do
             python3 /env.py
         fi
         # set .env
-        echo "$line" >> /.env || true
+        echo "$KEYS=$VALUE" >> /.env || true
         mkdir -p /etc
         echo "$KEYS=$VALUE" >> /etc/environmemt
         # Export to scripts
