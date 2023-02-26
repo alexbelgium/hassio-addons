@@ -48,7 +48,12 @@ RUN \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
+    \
+    # Add vuetorrent
+    && curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null \
+    && unzip -o vuetorrent.zip -d / >/dev/null \
+    && rm vuetorrent.zip >/dev/null
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/qBittorrent"
