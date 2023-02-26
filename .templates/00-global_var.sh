@@ -41,7 +41,11 @@ for KEYS in "${arr[@]}"; do
     # Export the variable to run scripts #
     ######################################
     export "${KEYS}='${VALUE}'"
-
+    # set .env
+    echo "$KEYS=$VALUE" >> /.env || true
+    # set /etc/environmemt
+    mkdir -p /etc
+    echo "$KEYS=$VALUE" >> /etc/environmemt
     # For non s6
     if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
     if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
