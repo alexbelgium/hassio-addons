@@ -60,12 +60,10 @@
     "BINANCE_AUTHENTICATION_PASSWORD": null
   },
   "ports": {
-    "80/tcp": 8081,
-    "8080/tcp": 8082
+    "80/tcp": 8081
   },
   "ports_description": {
-    "80/tcp": "Bot port",
-    "8080/tcp": "Web UI port"
+    "80/tcp": "Webui port"
   },
   "privileged": [
     "SYS_ADMIN",
