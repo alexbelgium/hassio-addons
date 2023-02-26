@@ -112,6 +112,9 @@ while IFS= read -r line; do
     # Data validation
     if [[ "$line" =~ ^.+[=].+$ ]]; then
         export "$line"
+        # extract keys and values
+        KEYS="${line%=*}"
+        VALUE="${line#*=}"
         # export to python
         if command -v "python3" &>/dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py
