@@ -1,4 +1,4 @@
-# Home assistant add-on: Binance Trading Bot
+# Home assistant add-on: Binance Trading Bot (do not use with real money!)
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
