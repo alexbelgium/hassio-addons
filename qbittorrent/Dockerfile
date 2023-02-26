@@ -41,6 +41,7 @@ ENV \
     XDG_DATA_HOME="/config/addons_config"
 
 # Image specific modifications
+# hadolint ignore=DL4006
 RUN \
     # Set download folder to /share
     sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
