@@ -113,7 +113,7 @@ while IFS= read -r line; do
     if [[ "$line" =~ ^.+[=].+$ ]]; then
         export "$line"
         # extract keys and values
-        KEYS="${line%=*}"
+        KEYS="${line%%=*}"
         VALUE="${line#*=}"
         # export to python
         if command -v "python3" &>/dev/null; then
