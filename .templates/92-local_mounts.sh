@@ -29,9 +29,9 @@ if bashio::config.has_value 'localdisks'; then
         # Creates dir
         mkdir -p /mnt/"$disk"
         if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
-          PUID="$(bashio::config 'PUID')"
-          PGID="$(bashio::config 'PGID')"
-          chown "$PUID:$PGID" /mnt/"$disk"
+            PUID="$(bashio::config 'PUID')"
+            PGID="$(bashio::config 'PGID')"
+            chown "$PUID:$PGID" /mnt/"$disk"
         fi
 
         # Install lsblk
