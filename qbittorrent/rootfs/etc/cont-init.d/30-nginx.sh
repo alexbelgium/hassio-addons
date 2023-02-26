@@ -29,16 +29,3 @@ sed -i "s|{{ .protocol }}|${qbittorrent_protocol}|g" /etc/nginx/servers/ingress.
 sed -i "s|{{ .certfile }}|$(bashio::config 'certfile')|g" /etc/nginx/servers/ingress.conf
 sed -i "s|{{ .keyfile }}|$(bashio::config 'keyfile')|g" /etc/nginx/servers/ingress.conf
 sed -i "s|{{ .ssl }}|$(bashio::config 'ssl')|g" /etc/nginx/servers/ingress.conf
-
-######################
-# VUETORRENT INSTALL #
-######################
-
-[ "$DEBUG" = "debug" ] && echo "Before curl"
-curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
-
-[ "$DEBUG" = "debug" ] && echo "Before unzip"
-unzip -o vuetorrent.zip -d / >/dev/null
-
-[ "$DEBUG" = "debug" ] && echo "Before rm"
-rm vuetorrent.zip >/dev/null
