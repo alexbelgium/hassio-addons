@@ -24,7 +24,7 @@
   "panel_icon": "mdi:chart-timeline",
   "panel_title": "Spotweb",
   "ports": {
-    "80/tcp": null
+    "80/tcp": 9999
   },
   "ports_description": {
     "80/tcp": "Not required for Ingress"
@@ -45,5 +45,5 @@
   ],
   "slug": "spotweb",
   "url": "https://github.com/alexbelgium/hassio-addons/spotweb",
-  "version": "1.5.4-7"
+  "version": "1.5.4-8"
 }
