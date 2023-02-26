@@ -46,7 +46,7 @@ ENV FLASK_ENV=production
 RUN \
     apk add --no-cache --quiet python3 py3-pip curl \
     && curl -o requirements.txt https://raw.githubusercontent.com/chrisleekr/binance-trading-bot/master/tradingview/requirements.txt \
-    && pip install -r requirements.txt \
+    && pip install --no-cache-dir -r requirements.txt \
     && rm requirements.txt \
     && curl -o /srv/main.py https://raw.githubusercontent.com/chrisleekr/binance-trading-bot/master/tradingview/main.py
 
