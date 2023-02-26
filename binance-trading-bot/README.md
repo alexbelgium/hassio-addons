@@ -21,6 +21,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 Automated Binance trading bot - Trade multiple cryptocurrencies. Buy low/sell high with Grid Trading. Integrated with TradingView technical analysis.
 This addon is based on https://github.com/chrisleekr/binance-trading-bot.
 
+This is a test app ; for any issues please contact the link above.
+
 ## Configuration
 
 Webui can be found at <http://your-ip:80>.

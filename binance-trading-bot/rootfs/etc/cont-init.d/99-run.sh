@@ -25,5 +25,9 @@ npm start docker-entrypoint.sh & bashio::log.info "Starting binance bot"
 #########################
 # Starting Trading View #
 #########################
-bashio::log.info "Starting trading view"
-python main.py
+python main.py & bashio::log.info "Starting trading view"
+
+##################
+# Starting nginx #
+##################
+nginx
