@@ -42,11 +42,11 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PWG_LOCAL_DIR": "/data"
+    "PWG_LOCAL_DIR": "/config/addons_config/piwigo"
   },
-  "image": "ghcr.io/alexbelgium/piwigo-{arch}",
   "init": false,
   "map": [
+    "config:rw",
     "media:rw",
     "share:rw",
     "ssl"
@@ -78,6 +78,6 @@
   "slug": "piwigo",
   "stage": "experimental",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "13.6.0-not_working",
+  "version": "13.6.0-not_working2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
