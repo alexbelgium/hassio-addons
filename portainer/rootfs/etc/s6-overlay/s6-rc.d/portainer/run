@@ -1,0 +1,87 @@
+#!/usr/bin/env bashio
+# shellcheck shell=bash
+
+bashio::log.info "Starting Portainer..."
+
+##################
+# DEFINE OPTIONS #
+##################
+declare -a options
+options+=(--data /data)
+options+=(--bind 0.0.0.0:9000)
+#options+=(--templates /opt/portainer/templates.json)
+options+=(--host unix:///var/run/docker.sock)
+
+##############
+# SSL CONFIG #
+##############
+
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+  bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+  #set variables
+  CERTFILE="$(bashio::config 'certfile')"
+  KEYFILE="$(bashio::config 'keyfile')"
+  options+=(--sslcert /ssl/$CERTFILE)
+  options+=(--sslkey /ssl/$KEYFILE)
+  bashio::log.info "... ssl activated"
+fi
+
+################
+# SET PASSWORD #
+################
+
+# Set password
+CURRENTPASSWORD=""
+PASSWORD=$(bashio::config 'password')
+if ! bashio::config.has_value 'password'; then
+  PASSWORD="empty"
+fi
+touch "/data/portainer_password"
+CURRENTPASSWORD=$( cat /data/portainer_password )
+
+# Reset password if not first run
+if bashio::fs.file_exists "/data/hidden"; then
+  if [ "$CURRENTPASSWORD" != "$PASSWORD" ]; then
+    mv -f /data/portainer.db /data/portainer.old || true
+    rm /data/hidden || true
+    bashio::log.warning "... password changed, database reseted. Previous version stored in /data/portainer.old"
+  fi
+fi
+
+# Define option
+if bashio::config.has_value 'password' ; then
+  echo -n $PASSWORD > /data/portainer_password
+  options+=(--admin-password-file /data/portainer_password)
+  bashio::log.info "... password set to $PASSWORD"
+else
+  echo -n $PASSWORD > /data/portainer_password
+  bashio::log.info "... starting without predefined password"
+fi
+
+###################
+# HIDE CONTAINERS #
+###################
+
+# Hide Hassio containers by default, but only enforce on first run
+if ! bashio::fs.file_exists "/data/hidden"; then
+    options+=(--hide-label io.hass.type=supervisor)
+    options+=(--hide-label io.hass.type=homeassistant)
+    options+=(--hide-label io.hass.type=base)
+    options+=(--hide-label io.hass.type=core)
+    # options+=(--hide-label io.hass.type=addon)
+    options+=(--hide-label io.hass.type=audio)
+    options+=(--hide-label io.hass.type=cli)
+    options+=(--hide-label io.hass.type=dns)
+    options+=(--hide-label io.hass.type=multicast)
+    options+=(--hide-label io.hass.type=observer)
+    bashio::log.info "... non-addon containers hidden"
+    touch /data/hidden
+fi
+
+####################
+# LAUNCH PORTAINER #
+####################
+bashio::log.info "... portainer launched"
+
+exec /opt/portainer/portainer "${options[@]}"
