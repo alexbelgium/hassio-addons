@@ -89,15 +89,20 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-RUN chmod 777 /etc/services.d/*/*
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+#################
+# 5 Healthcheck #
+#################
+
+HEALTHCHECK CMD curl --fail http://127.0.0.1:9000 || exit 1
+
 ############
-# 5 Labels #
+# 6 Labels #
 ############
 
 ARG BUILD_ARCH
