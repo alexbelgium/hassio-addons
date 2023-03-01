@@ -1,0 +1,11 @@
+#!/command/with-contenv bashio
+# ==============================================================================
+# Home Assistant Community Add-on: AdGuard Home
+# Runs the Nginx daemon
+# ==============================================================================
+
+# Wait for adguard to become available
+bashio::net.wait_for 9000 localhost 900
+
+bashio::log.info "Starting NGinx..."
+exec nginx
