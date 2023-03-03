@@ -30,3 +30,4 @@ jobs:
         days-before-stale: '5'
         days-before-close: '2'
         exempt-issue-labels: 'prevent stale'
+        remove-stale-when-updated: true
