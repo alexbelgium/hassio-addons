@@ -5,8 +5,7 @@
 # LIST LOCAL DISKS #
 ####################
 
-function list_drives (\
-bashio::log.info "List of available labels (@dianlight)"
+function list_drives (bashio::log.info "List of available labels (@dianlight)"
 bashio::log.blue "---------------------------------------------------"
 #autodisks=($(lsblk -E label -n -o label | sed -r '/^\s*$/d' | grep -v hassos | grep pp))
 readarray -t autodisks < <(lsblk -E label -n -o label -i | sed -r '/^\s*$/d' | grep -v hassos)
@@ -18,8 +17,7 @@ else
   bashio::log.info "\t${disk}[$(lsblk $(blkid -L "$disk") -no fstype)]"
   done
 fi
-bashio::log.blue "---------------------------------------------------"
-)
+bashio::log.blue "---------------------------------------------------")
 
 ######################
 # MOUNT LOCAL SHARES #
