@@ -1,5 +1,6 @@
 
 ## 6.0.0 (04-03-2023)
+- MAJOR CHANGE, BACKUP DATABASE AND ADDON BEFORE UPDATING
 - Update to latest version from firefly-iii/firefly-iii
 
 ## 5.7.18 (07-01-2023)
