@@ -14,7 +14,9 @@ if [ ${#autodisks[@]} -eq 0 ]; then
   bashio::log.info "No Disk with labels."
 else
   bashio::log.info "Available Disk Labels:"
+  # shellcheck disable=SC2068
   for disk in ${autodisks[@]}; do
+  # shellcheck disable=SC2046
   bashio::log.info "\t${disk}[$(lsblk $(blkid -L "$disk") -no fstype)]"
   done
 fi
