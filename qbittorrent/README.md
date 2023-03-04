@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Transmition and Qbittorrent] big RAM usage (opened 2023-03-01)](https://github.com/alexbelgium/hassio-addons/issues/743) by [@gajotnt](https://github.com/gajotnt)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
