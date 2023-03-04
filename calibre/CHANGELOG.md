@@ -1,3 +1,6 @@
+
+## v6.13.0-ls204 (04-03-2023)
+- Update to latest version from linuxserver/docker-calibre
 ## v6.13.0-ls204 (21-02-2023)
 - Add wireless connection port
 
