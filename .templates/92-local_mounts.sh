@@ -5,7 +5,7 @@
 # LIST LOCAL DISKS #
 ####################
 
-function list_drives (
+function list_drives (\
 bashio::log.info "List of available labels (@dianlight)"
 bashio::log.blue "---------------------------------------------------"
 #autodisks=($(lsblk -E label -n -o label | sed -r '/^\s*$/d' | grep -v hassos | grep pp))
