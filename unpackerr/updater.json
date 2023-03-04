@@ -1,10 +1,10 @@
 {
   "dockerhub_by_date": true,
   "fulltag": true,
-  "last_update": "",
+  "last_update": "2023-02-10",
   "repository": "alexbelgium/hassio-addons",
   "slug": "unpackerr",
   "source": "dockerhub",
   "upstream_repo": "hotio/unpackerr",
-  "upstream_version": "-"
+  "upstream_version": "testing-958c97f-514-linux-arm64-2023-02-10"
 }
