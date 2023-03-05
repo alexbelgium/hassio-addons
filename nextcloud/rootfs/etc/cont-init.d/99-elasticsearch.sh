@@ -56,7 +56,7 @@ if bashio::config.true 'Full_Text_Search'; then
     # Final setup
     echo "... settings apps"
     #occ fulltextsearch:configure '{"search_platform":"ElasticSearchPlatform"}'
-    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"http://$HOST:9200\"}" &>/dev/null
+    $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_host\":\"$HOST\"}" &>/dev/null
     $LAUNCHER fulltextsearch_elasticsearch:configure "{\"elastic_index\":\"my_index\"}" &>/dev/null
     $LAUNCHER fulltextsearch_elasticsearch:configure "{\"analyzer_tokenizer\":\"standard\"}" &>/dev/null
     $LAUNCHER fulltextsearch:configure '{"search_platform":"OCA\\FullTextSearch_Elasticsearch\\Platform\\ElasticSearchPlatform"}' &>/dev/null || true
