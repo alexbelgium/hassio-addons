@@ -7,8 +7,8 @@
   "description": "Automated Binance trading bot - Trade multiple cryptocurrencies. Buy low/sell high with Grid Trading. Integrated with TradingView technical analysis",
   "environment": {
     "BINANCE_REDIS_HOST": "localhost",
-    "BINANCE_REDIS_PORT": "6379",
     "BINANCE_REDIS_PASSWORD": "",
+    "BINANCE_REDIS_PORT": "6379",
     "PYTHONUNBUFFERED": "1",
     "TRADINGVIEW_LOG_LEVEL": "INFO"
   },
@@ -20,10 +20,10 @@
   ],
   "name": "Binance Trading Bot",
   "options": {
-    "BINANCE_MODE": "test",
-    "BINANCE_SLACK_ENABLED": false,
     "BINANCE_AUTHENTICATION_ENABLED": true,
-    "BINANCE_AUTHENTICATION_PASSWORD": null
+    "BINANCE_AUTHENTICATION_PASSWORD": null,
+    "BINANCE_MODE": "test",
+    "BINANCE_SLACK_ENABLED": false
   },
   "panel_icon": "mdi:bitcoin",
   "ports": {
@@ -39,19 +39,19 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "BINANCE_MODE": "list(live|test)",
+    "BINANCE_AUTHENTICATION_ENABLED": "bool",
+    "BINANCE_AUTHENTICATION_PASSWORD": "str",
     "BINANCE_LIVE_API_KEY": "str?",
     "BINANCE_LIVE_SECRET_KEY": "str?",
-    "BINANCE_TEST_API_KEY": "str?",
-    "BINANCE_TEST_SECRET_KEY": "str?",
-    "BINANCE_SLACK_ENABLED": "bool?",
-    "BINANCE_SLACK_WEBHOOK_URL": "str?",
-    "BINANCE_SLACK_CHANNEL": "str?",
-    "BINANCE_SLACK_USERNAME": "str?",
     "BINANCE_LOCAL_TUNNEL_ENABLED": "bool?",
     "BINANCE_LOCAL_TUNNEL_SUBDOMAIN": "str?",
-    "BINANCE_AUTHENTICATION_ENABLED": "bool",
-    "BINANCE_AUTHENTICATION_PASSWORD": "str"
+    "BINANCE_MODE": "list(live|test)",
+    "BINANCE_SLACK_CHANNEL": "str?",
+    "BINANCE_SLACK_ENABLED": "bool?",
+    "BINANCE_SLACK_USERNAME": "str?",
+    "BINANCE_SLACK_WEBHOOK_URL": "str?",
+    "BINANCE_TEST_API_KEY": "str?",
+    "BINANCE_TEST_SECRET_KEY": "str?"
   },
   "slug": "binance-trading-bot",
   "url": "https://github.com/alexbelgium/hassio-addons",
