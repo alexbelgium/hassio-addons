@@ -94,7 +94,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 RUN \
-    for file in $(grep -Esril "/local/config/addons_config/piwigo" /etc /defaults); do sed -i "s=/local/config/addons_config/piwigo=/local/config=g" $file; done
+    for file in $(grep -Esril "/local/config/addons_config/piwigo" /etc /defaults); do sed -i "s=/local/config/addons_config/piwigo=/local/config=g" "$file"; done
 
 
 #RUN chmod 777 /entrypoint.sh
