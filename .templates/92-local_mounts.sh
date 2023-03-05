@@ -6,21 +6,21 @@
 ####################
 
 function list_drives () {
-bashio::log.info "List of available labels (@dianlight)"
-bashio::log.blue "---------------------------------------------------"
-#autodisks=($(lsblk -E label -n -o label | sed -r '/^\s*$/d' | grep -v hassos | grep pp))
-readarray -t autodisks < <(lsblk -E label -n -o label -i | sed -r '/^\s*$/d' | grep -v hassos)
-if [ ${#autodisks[@]} -eq 0 ]; then
-  bashio::log.info "No Disk with labels."
-else
-  bashio::log.info "Available Disk Labels:"
-  # shellcheck disable=SC2068
-  for disk in ${autodisks[@]}; do
-  # shellcheck disable=SC2046
-  bashio::log.info "\t${disk}[$(lsblk $(blkid -L "$disk") -no fstype)]"
-  done
-fi
-bashio::log.blue "---------------------------------------------------"
+    bashio::log.info "List of available labels (@dianlight)"
+    bashio::log.blue "---------------------------------------------------"
+    #autodisks=($(lsblk -E label -n -o label | sed -r '/^\s*$/d' | grep -v hassos | grep pp))
+    readarray -t autodisks < <(lsblk -E label -n -o label -i | sed -r '/^\s*$/d' | grep -v hassos)
+    if [ ${#autodisks[@]} -eq 0 ]; then
+        bashio::log.info "No Disk with labels."
+    else
+        bashio::log.info "Available Disk Labels:"
+        # shellcheck disable=SC2068
+        for disk in ${autodisks[@]}; do
+            # shellcheck disable=SC2046
+            bashio::log.info "\t${disk}[$(lsblk $(blkid -L "$disk") -no fstype)]"
+        done
+    fi
+    bashio::log.blue "---------------------------------------------------"
 }
 
 ######################
@@ -95,7 +95,7 @@ if bashio::config.has_value 'localdisks'; then
             (bashio::log.fatal "Unable to mount local drives! Please check the name."
             rmdir /mnt/$disk
             list_drives
-            bashio::addon.stop)
+        bashio::addon.stop)
     done
 
 fi
