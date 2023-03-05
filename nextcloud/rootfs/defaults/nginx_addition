@@ -1,3 +1,5 @@
+add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;"
+
 location = /.well-known/host-meta {
 return 301 $scheme://$http_hostpublic.php?service=host-meta;
 }
