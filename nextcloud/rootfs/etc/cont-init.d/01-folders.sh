@@ -12,8 +12,3 @@ chmod 755 -R "$datadirectory"
 chmod 755 -R /data/config
 chown -R "$PUID:$PGID" "$datadirectory"
 chown -R "$PUID:$PGID" "/data/config"
-
-# Clean nginx files at each reboot
-if [ -d /data/config/nginx ]; then
-  rm -r /data/config/nginx
-fi
