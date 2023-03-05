@@ -1,4 +1,5 @@
 - Optimized nginx code to remove server error messages
+- Allows calling directly occ instead of needing full path
 
 ## 25.0.4 (25-02-2023)
 - Update to latest version from linuxserver/docker-nextcloud
