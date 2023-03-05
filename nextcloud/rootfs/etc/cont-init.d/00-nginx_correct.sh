@@ -7,8 +7,9 @@ if [ -d /data/config/nginx ]; then
 fi
 
 # Prepare file
-sed -i "/Strict-Transport-Security/d" /nginx/site-confs/default.conf.sample
-sed -i '$d' /nginx/site-confs/default.conf.sample
+sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample
+# Delete end of file
+sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample
 
 # Append lines
-cat /defaults/nginx_addition >> /nginx/site-confs/default.conf.sample
+cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
