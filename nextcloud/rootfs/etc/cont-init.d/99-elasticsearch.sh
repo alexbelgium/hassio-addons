@@ -67,7 +67,7 @@ if bashio::config.true 'Full_Text_Search'; then
     # Wait further for cache for index to work
     echo "Waiting for a few seconds before indexing starts..."
     sleep 10s
-    if $LAUNCHER fulltextsearch:index &>/dev/null; then
+    if $LAUNCHER fulltextsearch:test &>/dev/null; then
         bashio::log.info "Full Text Search was successfully installed using elasticsearch server $HOST!"
 
     else
