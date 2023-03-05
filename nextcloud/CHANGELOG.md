@@ -1,3 +1,4 @@
+- Optimized nginx code to remove server error messages
 
 ## 25.0.4 (25-02-2023)
 - Update to latest version from linuxserver/docker-nextcloud
