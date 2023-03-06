@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 Calibre Docker version out of date (opened 2023-03-06)](https://github.com/alexbelgium/hassio-addons/issues/748) by [@blackshoals](https://github.com/blackshoals)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
