@@ -119,7 +119,7 @@ if bashio::config.has_value 'networkdisks'; then
 
     if [ -f ERRORCODE ]; then
         rm ERRORCODE*
-        bashio::addon.stop
+
     fi
 
 fi
