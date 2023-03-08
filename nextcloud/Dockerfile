@@ -74,17 +74,6 @@ RUN \
     # Replace lsiown if not found
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
-# Correct modifications
-ARG CONFIGLOCATION="/www/nextcloud/config"
-# hadolint ignore=SC2015, SC2013, SC2086
-RUN \
-    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
-    \
-    # Correct nginx files
-    sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
-    sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
-    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
-
 ##################
 # 3 Install apps #
 ##################
@@ -125,6 +114,17 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 ################
 # 4 Entrypoint #
 ################
+
+# Correct modifications
+ARG CONFIGLOCATION="/www/nextcloud/config"
+# hadolint ignore=SC2015, SC2013, SC2086
+RUN \
+    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
+    \
+    # Correct nginx files
+    sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
+    sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
+    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
 
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /
