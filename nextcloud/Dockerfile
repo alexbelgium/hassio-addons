@@ -43,7 +43,10 @@ RUN \
     /etc/php*/php.ini || true && \
     \
     # Change location of executable
-    sed -i "s|/config|/data/config|g" /usr/bin/occ
+    sed -i "s|/config|/data/config|g" /usr/bin/occ && \
+    \
+    # Change location of log
+    sed -i "s|www/nextcloud/cron.php|www/nextcloud/cron.php &>/proc/1/fd/1|g" /etc/crontabs/root
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
