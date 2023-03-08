@@ -46,8 +46,8 @@ RUN \
     sed -i "s|/config|/data/config|g" /usr/bin/occ && \
     \
     # Change location of log
-    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(echo \"$(date '+%Y-%m-%d %H:%M:%S') Starting periodic job\" && s6-setuidgid abc php -f /data/config/www/nextcloud/cron.php) &>/proc/1/fd/1|g" /etc/crontabs/root && \
-    sed -i "s|s6-setuidgid abc php[78] -f /config/www/nextcloud/cron.php|(echo \"$(date '+%Y-%m-%d %H:%M:%S') Starting periodic job\" && s6-setuidgid abc php -f /data/config/www/nextcloud/cron.php) &>/proc/1/fd/1|g" /etc/crontabs/root
+    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /data/config/www/nextcloud/cron.php) &>/proc/1/fd/1|g" /etc/crontabs/root && \
+    sed -i "s|s6-setuidgid abc php[78] -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /data/config/www/nextcloud/cron.php) &>/proc/1/fd/1|g" /etc/crontabs/root
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
@@ -81,7 +81,6 @@ RUN \
     for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
     \
     # Correct nginx files
-    sed -i "/error_log/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
     cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
