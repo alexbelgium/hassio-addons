@@ -1,3 +1,4 @@
+- Code rollback from 2.17.1-4 to 2.17.1-2 due to reported issues with addon entities reporting
 
 ## 2.17.1 (25-02-2023)
 - Update to latest version from portainer/portainer
