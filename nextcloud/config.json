@@ -4,7 +4,6 @@
     "amd64",
     "armv7"
   ],
-  "boot": "manual",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Nextcloud for Home Assistant",
   "devices": [
