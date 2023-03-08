@@ -81,6 +81,7 @@ RUN \
     for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
     \
     # Correct nginx files
+    sed -i "/error_log/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
     cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
