@@ -1,4 +1,4 @@
-#!/command/with-contenv bashio
+#!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
 #################
@@ -30,5 +30,3 @@ bashio::var.json \
 tempio \
     -template /etc/nginx/templates/ingress.gtpl \
     -out /etc/nginx/servers/ingress.conf
-
-bashio::require.unprotected

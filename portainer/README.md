@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Portainer Agent (opened 2022-11-19)](https://github.com/alexbelgium/hassio-addons/issues/565) by [@rikardronnkvist](https://github.com/rikardronnkvist)
+## &#9888; Open Issue : [Installed Portainer Add-on but it does not start (opened 2023-02-27)](https://github.com/alexbelgium/hassio-addons/issues/736) by [@deltabert](https://github.com/deltabert)
 # Home assistant add-on: Portainer
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

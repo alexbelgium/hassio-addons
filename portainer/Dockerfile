@@ -63,7 +63,7 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
 # Modules
-ARG MODULES="01-custom_script.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -89,20 +89,15 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
+RUN chmod 777 /etc/services.d/*/*
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-#################
-# 5 Healthcheck #
-#################
-
-HEALTHCHECK CMD curl --fail http://127.0.0.1:9000 || exit 1
-
 ############
-# 6 Labels #
+# 5 Labels #
 ############
 
 ARG BUILD_ARCH
