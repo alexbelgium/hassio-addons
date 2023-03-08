@@ -27,3 +27,6 @@ for var in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
   sed -i "2a\ \ 'log_type' => 'file'," "$var"
   sed -i "2a\ \ 'log_rotate_size' => 0," "$var"
 done
+
+# Correct log search
+sed -i 's|!file_exists($this->logFile)|!is_link($this->logFile)|g' /data/config/www/nextcloud/lib/private/Log/File.php
