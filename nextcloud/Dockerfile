@@ -46,8 +46,7 @@ RUN \
     sed -i "s|/config|/data/config|g" /usr/bin/occ && \
     \
     # Change location of log
-    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /data/config/www/nextcloud/cron.php) &>/proc/1/fd/1|g" /etc/crontabs/root && \
-    sed -i "s|s6-setuidgid abc php[78] -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /data/config/www/nextcloud/cron.php) &>/proc/1/fd/1|g" /etc/crontabs/root
+    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /data/config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
