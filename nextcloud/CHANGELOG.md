@@ -1,4 +1,4 @@
-- Links logs with addon logs (nginx, nextcloud, php)
+- Links nginx & php logs with addon logs
 - Optimized nginx code to remove server error messages
 - Allows calling directly occ instead of needing full path
 - Corrected elastisearch server definition and test
