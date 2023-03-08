@@ -9,7 +9,7 @@ done
 
 # Make links between logs and docker
 echo "Setting logs"
-for var in /data/config/log/nginx/error.log /data/config/log/nginx/access.log /data/config/log/php/error.log /data/config/log/nextcloud.log; do
+for var in /data/config/log/nginx/error.log /data/config/log/nginx/access.log /data/config/log/php/error.log; do
   # Make sure directory exists
   mkdir -p "$(dirname "$var")"
   # Clean files
