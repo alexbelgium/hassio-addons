@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] Portainer Agent (opened 2022-11-19)](https://github.com/alexbelgium/hassio-addons/issues/565) by [@rikardronnkvist](https://github.com/rikardronnkvist)
-## &#9888; Open Issue : [🐛 [Portainer] Unreliable since v2.17.1-4 - supervisor entities regularly unavailable (opened 2023-03-04)](https://github.com/alexbelgium/hassio-addons/issues/745) by [@bcutter](https://github.com/bcutter)
 # Home assistant add-on: Portainer
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
