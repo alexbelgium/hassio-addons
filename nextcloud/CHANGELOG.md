@@ -1,3 +1,4 @@
+- Show cron messages on addon log
 - Optimized nginx code to remove server error messages
 - Allows calling directly occ instead of needing full path
 - Corrected elastisearch server definition and test
