@@ -24,5 +24,3 @@ location = /.well-known/nodeinfo{
 return 301 $scheme://$http_host/index.php/.well-known/nodeinfo;
 }
 }
-
-error_log /proc/1/fd/1 error;
