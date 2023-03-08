@@ -22,6 +22,8 @@ done
 for var in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
   sed -i "/logfile/d" "$var"
   sed -i "/log_type/d" "$var"
+  sed -i "/log_rotate_size/d" "$var"  
   sed -i "2a\ \ 'logfile' => '/data/config/log/nextcloud.log'," "$var"
   sed -i "2a\ \ 'log_type' => 'file'," "$var"
+  sed -i "2a\ \ 'log_rotate_size' => 0," "$var"
 done
