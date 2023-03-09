@@ -130,4 +130,5 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-HEALTHCHECK CMD wget --no-verbose --tries=1 --spider http://localhost:9000 || exit 1
+ARG WEBUI_PORT="9000"
+HEALTHCHECK CMD wget --no-verbose --tries=1 --spider http://localhost:"$WEBUI_PORT" || exit 1
