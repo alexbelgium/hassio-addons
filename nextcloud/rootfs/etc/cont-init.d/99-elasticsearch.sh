@@ -30,12 +30,12 @@ if bashio::config.true 'Full_Text_Search'; then
 
     echo "Installing Full Text Search"
     # Reset Full Text Search to be able to index again, and also remove the app to be able to install it again
-    occ fulltextsearch:reset &>/dev/null || true
-    APPS=(fulltextsearch fulltextsearch_elasticsearch files_fulltextsearch)
-    for app in "${APPS[@]}"; do
-        # If app exists, remove it
-        [ -n $($LAUNCHER app:getpath $app) ] && $LAUNCHER app:remove $app &>/dev/null
-    done
+    # occ fulltextsearch:reset &>/dev/null || true
+    # APPS=(fulltextsearch fulltextsearch_elasticsearch files_fulltextsearch)
+    # for app in "${APPS[@]}"; do
+    #    # If app exists, remove it
+    #    [ -n $($LAUNCHER app:getpath $app) ] && $LAUNCHER app:remove $app &>/dev/null
+    # done
 
     # Get Full Text Search app for nextcloud
     for app in "${APPS[@]}"; do
