@@ -125,3 +125,9 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+#################
+# 6 Healthcheck #
+#################
+
+HEALTHCHECK CMD curl --fail http://127.0.0.1:9000 || exit 1
