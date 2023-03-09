@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_UPSTREAM="8.6.2"
+ARG BUILD_UPSTREAM="7.17.9"
 FROM elasticsearch:$BUILD_UPSTREAM
 
 ##################
