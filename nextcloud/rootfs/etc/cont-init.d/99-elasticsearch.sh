@@ -49,8 +49,9 @@ if bashio::config.true 'Full_Text_Search'; then
         HOST=$(bashio::config 'elasticsearch_server')
     else
         bashio::log.warning 'Please define elasticsearch server url in addon options with the format "ip:port" such as "192.168.178.1:9200"'
-        HOST=$(bashio::network.ipv4_address)
-        HOST="${HOST%/*}:9200"
+        HOST=http://db21ed7f-elasticsearch:9200
+        #HOST=$(bashio::network.ipv4_address)
+        #HOST="${HOST%/*}:9200"
     fi
 
     # Final setup
