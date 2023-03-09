@@ -1,3 +1,4 @@
+- Improve elasticsearch integration
 - Links nginx & php logs with addon logs
 - Optimized nginx code to remove server error messages
 - Allows calling directly occ instead of needing full path
