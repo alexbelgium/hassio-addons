@@ -131,4 +131,9 @@ LABEL \
 #################
 
 ARG WEBUI_PORT="9000"
-HEALTHCHECK CMD curl --fail http://127.0.0.1:"$WEBUI_PORT" || exit 1
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD curl --fail http://127.0.0.1:"$WEBUI_PORT" || exit 1
