@@ -131,4 +131,4 @@ LABEL \
 #################
 
 ARG WEBUI_PORT="9000"
-HEALTHCHECK CMD wget --no-verbose --tries=1 --spider http://localhost:"$WEBUI_PORT" || exit 1
+HEALTHCHECK CMD curl --fail http://127.0.0.1:"$WEBUI_PORT" || exit 1
