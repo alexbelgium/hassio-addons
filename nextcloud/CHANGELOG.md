@@ -1,3 +1,4 @@
+- Redirect crond errors to addon logs
 - Improve elasticsearch integration
 - Links nginx & php logs with addon logs
 - Optimized nginx code to remove server error messages
