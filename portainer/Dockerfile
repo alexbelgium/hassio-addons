@@ -130,4 +130,4 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-HEALTHCHECK CMD curl --fail http://127.0.0.1:9000 || exit 1
+HEALTHCHECK CMD wget --no-verbose --tries=1 --spider http://localhost:9000 || exit 1
