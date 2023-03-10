@@ -1,65 +1,87 @@
+- Implemented healthcheck
 
 ## 4.0.1-r0-ls158 (04-03-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.1-r0-ls156 (25-02-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.0-r6-ls155 (19-02-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.0-r0-ls152 (11-02-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r8-ls150 (28-01-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r8-ls149 (21-01-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r8-ls148 (14-01-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r8-ls147 (07-01-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r6-ls146 (25-12-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r6-ls145 (10-12-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r6-ls144 (01-12-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 3.00-r6-ls143 (19-11-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r6-ls142 (14-11-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r6-ls141 (11-11-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 - New alternative webui : transmissionic
 
 ## 3.00-r6-ls140 (05-11-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls138 (29-10-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls137 (30-09-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls136 (24-09-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls135 (09-09-2022)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 3.00-r5-ls134 (26-08-2022)
+
 - Update to latest version from linuxserver/docker-transmission
+
 ## 3.00-r5-ls133 (13-08-2022)
 
 - Update to latest version from linuxserver/docker-transmission

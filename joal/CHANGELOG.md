@@ -1,15 +1,20 @@
+- Implemented healthcheck
 
 ## 2.1.33 (01-12-2022)
+
 - Update to latest version from anthonyraymond/joal
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 2.1.32 (05-11-2022)
+
 - Update to latest version from anthonyraymond/joal
 
 ## 2.1.31 (04-08-2022)
+
 - Update to latest version from anthonyraymond/joal
 
 ## 2.1.30 (19-04-2022)
+
 - Update to latest version from anthonyraymond/joal
 - Add codenotary sign
 

@@ -1,11 +1,14 @@
+- Implemented healthcheck
 
 ## v0.6.0 (14-01-2023)
+
 - Update to latest version from analogj/scrutiny
 - WARNING : update to supervisor 2022.11 before installing
 - New options SMARTCTL_COMMAND_DEVICE_TYPE & SMARTCTL_MEGARAID_DISK_NUM (@scavara)
 - New option "Mode" : Collector+WebUI or Collector only
 
 ## v0.5.0 (26-08-2022)
+
 - Update to latest version from analogj/scrutiny
 
 - BACKUP BEFORE UPDATE : major version change

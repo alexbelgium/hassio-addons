@@ -118,3 +118,12 @@ LABEL \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION} \
     traefik.http.middlewares.test-compress.compress=false
+
+ARG WEBUI_PORT=""
+ARG URL=""
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD photoprism status || exit 1

@@ -116,9 +116,10 @@ LABEL \
     org.opencontainers.image.version=${BUILD_VERSION}
 
 ARG WEBUI_PORT="80"
+ARG URL=""
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD curl --fail http://127.0.0.1:"$WEBUI_PORT" || curl --fail http://127.0.0.1:443 || exit 1
+    CMD curl --fail http://127.0.0.1:"$WEBUI_PORT$URL" || curl --fail http://127.0.0.1:443 || exit 1
