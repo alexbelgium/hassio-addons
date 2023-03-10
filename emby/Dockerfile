@@ -126,7 +126,7 @@ LABEL \
 #################
 
 ARG WEBUI_PORT="8096"
-ARG URL=""
+ARG URL="/emby/system/info/public?format=json"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
