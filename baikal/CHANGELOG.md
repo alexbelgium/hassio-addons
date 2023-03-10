@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 0.9.3 (13-12-2022)
 - Update to latest version from ckulka/baikal-docker

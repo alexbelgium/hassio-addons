@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 0.7.0 (10-12-2022)
 - Update to latest version from linuxserver/docker-mylar3

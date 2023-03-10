@@ -122,6 +122,6 @@ ARG URL="/joal/ui"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
-    --start-period=30s \
+    --start-period=60s \
     --timeout=25s \
-    CMD curl --fail http://127.0.0.1:"$WEBUI_PORT$URL" || exit 1
+    CMD curl --fail http://127.0.0.1:"$WEBUI_PORT$URL" &>/dev/null || exit 1

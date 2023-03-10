@@ -113,3 +113,16 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+#################
+# 6 Healthcheck #
+#################
+
+ARG WEBUI_PORT=""
+ARG URL=""
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=60s \
+    --timeout=25s \
+    CMD python $MEALIE_HOME/mealie/scripts/healthcheck.py || exit 1

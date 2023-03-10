@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 16.13.1 (04-02-2023)
 - Update to latest version from coderaiser/cloudcmd

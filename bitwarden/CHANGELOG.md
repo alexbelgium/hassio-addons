@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 1.27.0 (25-12-2022)
 - Update to latest version from dani-garcia/bitwarden_rs

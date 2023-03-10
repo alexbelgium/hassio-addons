@@ -119,11 +119,15 @@ LABEL \
     org.opencontainers.image.version=${BUILD_VERSION} \
     traefik.http.middlewares.test-compress.compress=false
 
+#################
+# 6 Healthcheck #
+#################
+
 ARG WEBUI_PORT=""
 ARG URL=""
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
-    --start-period=30s \
+    --start-period=60s \
     --timeout=25s \
     CMD photoprism status || exit 1

@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 1.2.0 (04-03-2023)
 - Update to latest version from linuxserver/docker-bazarr

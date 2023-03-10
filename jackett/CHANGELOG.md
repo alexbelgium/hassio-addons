@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 0.20.3444 (04-03-2023)
 - Update to latest version from linuxserver/docker-jackett

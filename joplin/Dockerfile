@@ -109,3 +109,16 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+#################
+# 6 Healthcheck #
+#################
+
+ARG WEBUI_PORT="22300"
+ARG URL="/health"
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=60s \
+    --timeout=25s \
+    CMD [[ $(curl -s http://127.0.0.1:"$WEBUI_PORT$URL") == *"Invalid"* ]] || exit 1

@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 3.0.2 (14-01-2023)
 - Update to latest version from FlareSolverr/FlareSolverr

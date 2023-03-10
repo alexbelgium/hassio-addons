@@ -1,3 +1,4 @@
+- Implemented healthcheck
 - Ingress addition
 
 ## 0.8.13 (22-01-2023)

@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## v6.13.0-ls204 (04-03-2023)
 - Update to latest version from linuxserver/docker-calibre

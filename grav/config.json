@@ -15,8 +15,8 @@
   ],
   "name": "Grav web server",
   "options": {
-    "PGID": 0,
-    "PUID": 0
+    "PGID": 1000,
+    "PUID": 1000
   },
   "ports": {
     "80/tcp": 9191

@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 0.0.0 (19-02-2023)
 - Update to latest version from browserless/chrome

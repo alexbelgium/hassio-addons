@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 1.4.3 (04-03-2023)
 - Update to latest version from MaxWaldorf/guacamole

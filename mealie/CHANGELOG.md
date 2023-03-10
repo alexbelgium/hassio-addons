@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## v1.0.0-beta-1 (07-01-2023)
 - Update to latest version from hay-kot/mealie
