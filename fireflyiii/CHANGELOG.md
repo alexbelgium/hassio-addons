@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 6.0.0 (04-03-2023)
 - MAJOR CHANGE, BACKUP DATABASE AND ADDON BEFORE UPDATING
