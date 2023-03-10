@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [Tandoor_Recipes] Enable ingress (opened 2022-09-19)](https://github.com/alexbelgium/hassio-addons/issues/484) by [@alexbelgium](https://github.com/alexbelgium)
 # Hass.io Add-ons: Tandoor recipes
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
