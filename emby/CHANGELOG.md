@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 4.8.0.21 (13-12-2022)
 - Update to latest version from linuxserver/docker-emby
