@@ -123,6 +123,6 @@ ARG URL=""
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
-    --start-period=60s \
+    --start-period=30s \
     --timeout=25s \
     CMD python $MEALIE_HOME/mealie/scripts/healthcheck.py || exit 1
