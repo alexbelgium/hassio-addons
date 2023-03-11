@@ -1,5 +1,7 @@
+
+## 2.17.1-6 (25-02-2023)
 - Implemented healthcheck
-- Code rollback from 2.17.1-4 to 2.17.1-2 due to reported issues with addon entities reporting
+- Rollback implementation of s6-rc.d from 2.17.1-4 to 2.17.1-2 due to reported issues with addon entities reporting
 
 ## 2.17.1 (25-02-2023)
 - Update to latest version from portainer/portainer
