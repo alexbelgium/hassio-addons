@@ -158,3 +158,16 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+#################
+# 6 Healthcheck #
+#################
+
+ARG WEBUI_PORT="9091"
+ARG URL=""
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD pgrep qbittorrent-nox || exit 1
