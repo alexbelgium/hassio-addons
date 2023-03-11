@@ -1,3 +1,6 @@
+ 
+ ### Minor : 2.2-dev-3 ()
+ - Bug updates
 - Implement healthcheck
 
 ## 2.2-dev (10-12-2022)
