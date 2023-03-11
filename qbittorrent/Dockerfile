@@ -163,11 +163,11 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-ARG WEBUI_PORT="9091"
+ARG WEBUI_PORT=""
 ARG URL=""
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD pgrep qbittorrent-nox || exit 1
+    CMD pgrep qbittorrent || exit 1
