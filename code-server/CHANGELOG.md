@@ -1,3 +1,6 @@
+
+## 4.10.1 (11-03-2023)
+- Update to latest version from linuxserver/docker-code-server
 - Implemented healthcheck
 
 ## 4.10.0 (19-02-2023)
