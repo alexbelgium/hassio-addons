@@ -1,3 +1,6 @@
+
+## 3.0.4 (11-03-2023)
+- Update to latest version from FlareSolverr/FlareSolverr
 - Implemented healthcheck
 
 ## 3.0.2 (14-01-2023)
