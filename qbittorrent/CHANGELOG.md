@@ -1,4 +1,4 @@
-###   "version": "4.5.2-r0-ls250-2" (11-03-2023)
+### 4.5.2-r0-ls250-2 (11-03-2023)
 - Bug updates
 - Add lsio branding
 - Implement healthcheck
