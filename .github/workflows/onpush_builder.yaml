@@ -16,7 +16,6 @@ on:
 jobs:
   check-addon-changes:
     runs-on: ubuntu-latest
-    needs: make-executable
     outputs:
       changedAddons: ${{ steps.filter.outputs.changes }}
     steps:
