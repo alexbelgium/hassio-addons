@@ -1,3 +1,6 @@
+
+## 0.6.19-ls198 (11-03-2023)
+- Update to latest version from linuxserver/docker-calibre-web
 - Implemented healthcheck
 
 ## 0.6.19-ls197 (04-03-2023)
