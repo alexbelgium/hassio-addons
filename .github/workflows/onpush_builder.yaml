@@ -103,7 +103,6 @@ jobs:
           if ! grep -q "$version" CHANGELOG.md; then
             sed -i "1i\- Bug updates" CHANGELOG.md
             sed -i "1i\### Minor : $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
-            sed -i "1i\" CHANGELOG.md
           fi
         env: 
           path: "./${{ matrix.addon }}"
