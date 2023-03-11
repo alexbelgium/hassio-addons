@@ -1,3 +1,6 @@
+
+## 10.8.9-1-ls203 (11-03-2023)
+- Update to latest version from linuxserver/docker-jellyfin
 - Implemented healthcheck
 
 ## 10.8.9-1-ls202 (04-03-2023)
