@@ -91,7 +91,8 @@ jobs:
           if [ -f config.yaml ]; then
             version="$(sed -e '/version/!d' -e 's/.*version: //' config.yaml)"
           elif [ -f config.json ]; then
-            version="$(sed -e '/version/!d' -e 's/.*[^"]*"\([^"]*\)",/\1/' config.json)"
+            version="$(sed -e '/version/!d' -e 's/.*[^"]*"\([^"]*\)"/\1/' config.json)"
+            version="${version//,}"
           else
             exit 1
           fi
