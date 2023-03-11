@@ -92,13 +92,13 @@ jobs:
             version=$(sed -e '/version/!d' -e 's/.*version: //' config.yaml)
           elif [ -f config.json ]; then
             version=$(sed -e '/version/!d' -e 's/.*[^"]*"\([^"]*\)",/\1/' config.json)
-          else
+          else; then
             exit 1
           fi
           # Create changelog
           touch CHANGELOG.md
           # Check version or create it
-          if ! grep -q "$version" CHANGELOG.md, then
+          if ! grep -q "$version" CHANGELOG.md; then
             sed -i "1i - Minor bug updates" CHANGELOG.md
             sed -i "1i ## $version (${DATE})" CHANGELOG.md
             sed -i "1i " CHANGELOG.md
