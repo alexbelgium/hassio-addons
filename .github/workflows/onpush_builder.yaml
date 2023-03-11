@@ -99,10 +99,16 @@ jobs:
           if [[ "$version" == *"test"* ]]; then exit 0; fi
           # Create changelog
           touch CHANGELOG.md
-          # Check version or create it
+          # If the version does not exist
           if ! grep -q "$version" CHANGELOG.md; then
-            sed -i "1i\- Bug updates" CHANGELOG.md
-            sed -i "1i\### Minor : $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
+            # And if latest wasn't a minor version
+            if [ ! "$(sed -n '/^###/p;q' CHANGELOG.md)" ]; then 
+              sed -i "1d" CHANGELOG.md
+              sed -i "1i\### $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
+            else
+              sed -i "1i\- Bug updates" CHANGELOG.md
+              sed -i "1i\### $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
+            fi
           fi
         env: 
           path: "./${{ matrix.addon }}"
