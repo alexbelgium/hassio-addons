@@ -1,3 +1,5 @@
+### 2.17.1-8 (11-03-2023)
+- Minor bugs solved
 - Improve healthcheck with /api/status
 ## 2.17.1-6 (11-03-2023)
 - Implemented healthcheck
