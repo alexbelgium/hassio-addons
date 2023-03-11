@@ -1,3 +1,4 @@
+- Revert : disable healthcheck
 ### 2.17.1-8 (11-03-2023)
 - Minor bugs solved
 - Improve healthcheck with /api/status
