@@ -1,3 +1,6 @@
+
+## v2201.1.0-ls84 (11-03-2023)
+- Update to latest version from linuxserver/docker-booksonic-air
 - Implemented healthcheck
 
 ## v2201.1.0-ls83 (04-03-2023)
