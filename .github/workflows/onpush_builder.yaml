@@ -107,7 +107,7 @@ jobs:
             #  sed -i "1d" CHANGELOG.md
             #  sed -i "1i\### $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
             #else
-            sed -i "1i\- Bug updates" CHANGELOG.md
+            sed -i "1i\- Minor bugs solved" CHANGELOG.md
             sed -i "1i\### $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
             #fi
           fi
