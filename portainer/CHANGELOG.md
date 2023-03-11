@@ -1,4 +1,4 @@
-
+- Improve healthcheck
 ## 2.17.1-6 (11-03-2023)
 - Implemented healthcheck
 - Rollback implementation of s6-rc.d from 2.17.1-4 to 2.17.1-2 due to reported issues with addon entities reporting
