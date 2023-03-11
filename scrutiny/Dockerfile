@@ -106,7 +106,7 @@ LABEL \
 #################
 
 ARG WEBUI_PORT="8080"
-ARG URL=""
+ARG URL="/api/health"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
