@@ -1,3 +1,5 @@
+### Minor : 2.2-dev-4 (11-03-2023)
+- Bug updates
 
 - Bug updates
 - Implement healthcheck
