@@ -101,9 +101,9 @@ jobs:
           touch CHANGELOG.md
           # Check version or create it
           if ! grep -q "$version" CHANGELOG.md; then
-            sed -i "1i - Minor bug updates" CHANGELOG.md
-            sed -i "1i ## $version (${DATE})" CHANGELOG.md
-            sed -i "1i " CHANGELOG.md
+            sed -i "1i\ - Bug updates" CHANGELOG.md
+            sed -i "1i\ ### Minor : $version (${DATE})" CHANGELOG.md
+            sed -i "1i\ " CHANGELOG.md
           fi
         env: 
           path: "./${{ matrix.addon }}"
