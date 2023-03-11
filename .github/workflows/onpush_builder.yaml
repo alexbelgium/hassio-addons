@@ -83,7 +83,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-      - name: Make scripts executable
+      - name: Update changelog for minor versions
         run: |
           echo "Starting"
           cd "$path"
@@ -92,7 +92,7 @@ jobs:
             version=$(sed -e '/version/!d' -e 's/.*version: //' config.yaml)
           elif [ -f config.json ]; then
             version=$(sed -e '/version/!d' -e 's/.*[^"]*"\([^"]*\)",/\1/' config.json)
-          else; then
+          else
             exit 1
           fi
           # Exit if test
