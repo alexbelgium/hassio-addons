@@ -74,7 +74,7 @@ jobs:
 
   make-changelog:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
-    needs: check-addon-changes
+    needs: [check-addon-changes, make-executable]
     runs-on: ubuntu-latest
     strategy: 
       fail-fast: false 
