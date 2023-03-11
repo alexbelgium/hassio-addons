@@ -95,6 +95,8 @@ jobs:
           else; then
             exit 1
           fi
+          # Exit if test
+          if [[ "$version" == *"test"* ]]; then exit 0; fi
           # Create changelog
           touch CHANGELOG.md
           # Check version or create it
