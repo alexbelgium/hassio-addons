@@ -102,7 +102,7 @@ jobs:
           # Check version or create it
           if ! grep -q "$version" CHANGELOG.md; then
             sed -i "1i\ - Bug updates" CHANGELOG.md
-            sed -i "1i\ ### Minor : $version (${DATE})" CHANGELOG.md
+            sed -i "1i\ ### Minor : $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
             sed -i "1i\ " CHANGELOG.md
           fi
         env: 
@@ -111,7 +111,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           commit: -u
-          message: "GitHub bot : scripts executable"
+          message: "GitHub bot : changelog"
           default_author: github_actions
 
 
