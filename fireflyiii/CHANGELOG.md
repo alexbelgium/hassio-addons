@@ -1,3 +1,6 @@
+
+## 6.0.1 (11-03-2023)
+- Update to latest version from firefly-iii/firefly-iii
 - Implemented healthcheck
 
 ## 6.0.0 (04-03-2023)
