@@ -26,6 +26,6 @@
   },
   "slug": "wger",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.2-dev-4",
+  "version": "2.2-dev-5",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
