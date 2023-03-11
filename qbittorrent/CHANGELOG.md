@@ -1,3 +1,4 @@
+- Add lsio branding
 - Implement healthcheck
 
 ## 4.5.2-r0-ls250 (11-03-2023)
