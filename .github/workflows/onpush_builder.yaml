@@ -33,6 +33,10 @@ jobs:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     needs: check-addon-changes
     runs-on: ubuntu-latest
+    strategy: 
+      fail-fast: false 
+      matrix: 
+        addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }} 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
