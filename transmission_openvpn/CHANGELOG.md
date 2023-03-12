@@ -1,3 +1,4 @@
+- Implemented healthcheck
 - Mullvad fix @Blogshot
 - WARNING : update to supervisor 2022.11 before installing
 

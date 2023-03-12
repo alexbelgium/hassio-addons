@@ -1,3 +1,4 @@
+- Implemented healthcheck
 
 ## 3.0.10.1566 (11-03-2023)
 - Update to latest version from linuxserver/docker-sonarr
