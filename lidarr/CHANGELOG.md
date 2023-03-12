@@ -1,3 +1,5 @@
+### 1.0.2.2592-ls113-2 (12-03-2023)
+- Minor bugs fixed
 - Implemented healthcheck
 
 ## 1.0.2.2592-ls113 (11-03-2023)
