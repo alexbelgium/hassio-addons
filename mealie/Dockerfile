@@ -118,8 +118,8 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-ARG WEBUI_PORT=""
-ARG URL=""
+ENV HEALTH_PORT="" \
+    HEALTH_URL=""
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \

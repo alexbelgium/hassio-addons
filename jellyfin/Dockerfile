@@ -139,11 +139,11 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-ARG WEBUI_PORT="8096"
-ARG URL="/health"
+ENV HEALTH_PORT="8096" \
+    HEALTH_URL="/health"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD curl --fail http://127.0.0.1:"$WEBUI_PORT$URL" &>/dev/null || exit 1
+    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1

@@ -114,11 +114,11 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-ARG WEBUI_PORT="22300"
-ARG URL="/health"
+ENV HEALTH_PORT="22300" \
+    HEALTH_URL="/health"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD [[ $(curl -s http://127.0.0.1:"$WEBUI_PORT$URL") == *"Invalid"* ]] || exit 1
+    CMD [[ $(curl -s "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}") == *"Invalid"* ]] || exit 1
