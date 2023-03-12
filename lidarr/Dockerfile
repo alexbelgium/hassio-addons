@@ -130,6 +130,10 @@ LABEL \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
 
+#################
+# 6 Healthcheck #
+#################
+
 ENV HEALTH_PORT="8686" \
     HEALTH_URL=""
 HEALTHCHECK \
