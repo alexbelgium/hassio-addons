@@ -14,7 +14,7 @@ if [[ $($LAUNCHER -V) == *"not installed"* ]]; then
 fi
 
 if $LAUNCHER fulltextsearch:test &>/dev/null; then
-  echo "Full Text Search is already working"
+    echo "Full Text Search is already working"
 
     ############
     # BASED ON #
