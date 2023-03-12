@@ -107,3 +107,5 @@ LABEL \
 ####################
 # 6 HealthcheckNOT #
 ####################
+
+# Can't be implemented as container is optimized for memory usage, so the webserver and Node are spun down during idle
