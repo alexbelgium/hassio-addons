@@ -78,12 +78,6 @@ if bashio::config.has_value 'localdisks'; then
                 options="${options},umask=000"
                 type="ntfs"
                 ;;
-            *)
-                if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
-                    echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
-                    options="$options,uid=$(bashio::config 'PUID'),gid=$(bashio::config 'PGID')"
-                fi
-                ;;
         esac
 
         # Legacy mounting : mount to share if still exists (avoid breaking changes)
