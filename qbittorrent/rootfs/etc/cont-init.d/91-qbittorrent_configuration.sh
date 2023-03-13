@@ -15,7 +15,7 @@ if [ ! -f "$CONFIG_LOCATION"/qBittorrent.conf ]; then
 fi
 
 cd "$CONFIG_LOCATION"/ || true
-LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
+LINE=$(sed -n '/Preferences/=' qBittorrent.conf) || bashio::exit.nok "qBittorrent.conf not valid"
 LINE=$((LINE + 1))
 
 # Remove unused folders
@@ -44,13 +44,19 @@ if bashio::config.has_value 'SavePath'; then
 
     # Replace save path
     CURRENTSAVEPATH=$(sed -n '/Downloads\\\SavePath/p' qBittorrent.conf)
-    sed -i "s=${CURRENTSAVEPATH#*=}=$DOWNLOADS=g" qBittorrent.conf || \
+    if [[ ${#CURRENTSAVEPATH} -gt 1 ]]; then
+        sed -i "s=${CURRENTSAVEPATH#*=}=$DOWNLOADS=g" qBittorrent.conf
+    else
         sed -i "${LINE}a Downloads\\\SavePath=$DOWNLOADS" qBittorrent.conf
+    fi
 
     # Replace session save path
     CURRENTSAVEPATH=$(sed -n '/Session\\\DefaultSavePath/p' qBittorrent.conf)
-    sed -i "s=${CURRENTSAVEPATH#*=}=$DOWNLOADS=g" qBittorrent.conf || \
+    if [[ ${#CURRENTSAVEPATH} -gt 1 ]]; then
+        sed -i "s=${CURRENTSAVEPATH#*=}=$DOWNLOADS=g" qBittorrent.conf
+    else
         sed -i "2a Session\\\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
+    fi
 
     # Info
     bashio::log.info "Downloads can be found in $DOWNLOADS"
