@@ -15,7 +15,7 @@ if [ ! -f "$CONFIG_LOCATION"/qBittorrent.conf ]; then
 fi
 
 cd "$CONFIG_LOCATION"/ || true
-LINE=$(sed -n '/Preferences/=' qBittorrent.conf) || bashio::exit.nok "qBittorrent.conf not valid"
+LINE=$(sed -n '/\[Preferences\]/=' qBittorrent.conf) || bashio::exit.nok "qBittorrent.conf not valid"
 LINE=$((LINE + 1))
 
 # Remove unused folders
@@ -61,16 +61,16 @@ chown -R abc:abc "$DOWNLOADS" || bashio::log.fatal "Error, please check default 
 # Avoid bugs #
 ##############
 
-sed -i '/CSRFProtection/d' qBittorrent.conf
-sed -i '/ClickjackingProtection/d' qBittorrent.conf
-sed -i '/HostHeaderValidation/d' qBittorrent.conf
-sed -i '/WebUI\Address/d' qBittorrent.conf
+sed -i -e '/CSRFProtection/d' \
+    -e '/ClickjackingProtection/d' \
+    -e '/HostHeaderValidation/d' \
+    -e '/WebUI\Address/d' \
 #sed -i '/WebUI\ReverseProxySupportEnabled/d' qBittorrent.conf
-sed -i "$LINE i\WebUI\\\CSRFProtection=false" qBittorrent.conf
-sed -i "$LINE i\WebUI\\\ClickjackingProtection=false" qBittorrent.conf
+    -e "$LINE i\WebUI\\\CSRFProtection=false" \
+    -e "$LINE i\WebUI\\\ClickjackingProtection=false" \
 #sed -i "$LINE i\WebUI\\\ReverseProxySupportEnabled=true" qBittorrent.conf
-sed -i "$LINE i\WebUI\\\HostHeaderValidation=false" qBittorrent.conf
-sed -i "$LINE i\WebUI\\\Address=*" qBittorrent.conf
+    -e "$LINE i\WebUI\\\HostHeaderValidation=false" \
+    -e "$LINE i\WebUI\\\Address=*" qBittorrent.conf
 
 ################
 # Correct Port #
