@@ -1,4 +1,4 @@
-- Try solving sed error message @755
+- Try solving sed error message #755
 ### 4.5.2-r0-ls250-3 (13-03-2023)
 - Minor bugs fixed
 ### 4.5.2-r0-ls250-2 (11-03-2023)
