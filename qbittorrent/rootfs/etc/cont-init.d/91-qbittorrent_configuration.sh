@@ -65,12 +65,12 @@ sed -i -e '/CSRFProtection/d' \
     -e '/ClickjackingProtection/d' \
     -e '/HostHeaderValidation/d' \
     -e '/WebUI\Address/d' \
-#sed -i '/WebUI\ReverseProxySupportEnabled/d' qBittorrent.conf
     -e "$LINE i\WebUI\\\CSRFProtection=false" \
     -e "$LINE i\WebUI\\\ClickjackingProtection=false" \
-#sed -i "$LINE i\WebUI\\\ReverseProxySupportEnabled=true" qBittorrent.conf
     -e "$LINE i\WebUI\\\HostHeaderValidation=false" \
     -e "$LINE i\WebUI\\\Address=*" qBittorrent.conf
+#sed -i '/WebUI\ReverseProxySupportEnabled/d' qBittorrent.conf
+#sed -i "$LINE i\WebUI\\\ReverseProxySupportEnabled=true" qBittorrent.conf
 
 ################
 # Correct Port #
