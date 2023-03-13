@@ -1,3 +1,5 @@
+### 4.5.2-r0-ls250-3 (13-03-2023)
+- Minor bugs fixed
 ### 4.5.2-r0-ls250-2 (11-03-2023)
 - Bug updates
 - Add lsio branding
