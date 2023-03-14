@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_FROM
-FROM ghcr.io/nichobi/sponsorblockcast:latest
+FROM $BUILD_FROM
 VOLUME [ "/data" ]
 
 ##################
