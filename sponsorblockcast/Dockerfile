@@ -22,6 +22,12 @@ VOLUME [ "/data" ]
 # 2 Modify Image #
 ##################
 
+# Add the BuildKit global arch args to get the correct go-chromecast release
+# go-chromecast package linux architectures: linux_386, linux_amd64, linux_arm64, linux_armv6, linux_armv7
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT
+
 # shellcheck ignore=DL4006
 RUN apk --no-cache add jq bc grep curl \
     && GC_URL=$(wget https://api.github.com/repos/vishen/go-chromecast/releases/latest -O - | jq -r '.assets[].browser_download_url' | grep ${TARGETOS}_${TARGETARCH}${TARGETVARIANT}) \
