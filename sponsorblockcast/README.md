@@ -2,9 +2,9 @@
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Femby%2Fconfig.json)
-![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Femby%2Fconfig.json)
-![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Femby%2Fconfig.json)
+![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsponsorblockcast %2Fconfig.json)
+![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsponsorblockcast %2Fconfig.json)
+![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsponsorblockcast%2Fconfig.json)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
 [![GitHub Super-Linter](https://github.com/alexbelgium/hassio-addons/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
@@ -18,25 +18,13 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[Sponsorblockcast](https://github.com/nichobi/sponsorblockcast) is a POSIX shell script that skips sponsored YouTube content and skippable ads on all local Chromecasts, using the SponsorBlock API. It was inspired by CastBlock but written from scratch to avoid some of its pitfalls (see Differences from CastBlock).
+Sponsorblockcast is a POSIX shell script that skips sponsored YouTube content and skippable ads on all local Chromecasts, using the SponsorBlock API. It was inspired by CastBlock but written from scratch to avoid some of its pitfalls (see Differences from CastBlock).
 
 This app is developed by @nichobi here : https://github.com/nichobi/sponsorblockcast
 
 ## Configuration
 
-Webui can be found at `<your-ip>:8096`, or within Home Assistant through Ingress.
-
-```yaml
-PGID: user
-GPID: user
-TZ: timezone
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-cifsdomain: "domain" # optional, allow setting the domain for the smb share
-silent: true #suppresses debug messages
-```
+See https://github.com/nichobi/sponsorblockcast
 
 ## Installation
 
