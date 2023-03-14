@@ -1,0 +1,30 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "skips sponsored YouTube content on all local Chromecasts",
+  "environment": {
+    "SBCDIR": "/tmp/sponsorblockcast"
+  },
+  "host_network": true,
+  "image": "ghcr.io/alexbelgium/sponsorblockcast-{arch}",
+  "init": false,
+  "name": "Sponsorblockcast",
+  "options": {
+    "SBCPOLLINTERVAL": "1",
+    "SBCSCANINTERVAL": "300",
+    "SBCCATEGORIES": "sponsor"
+  },
+  "schema": {
+    "SBCPOLLINTERVAL": "int",
+    "SBCSCANINTERVAL": "int",
+    "SBCCATEGORIES": "str",
+    "SBCYOUTUBEAPIKEY": "str?"
+  },
+  "slug": "sponsorblockcast",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast",
+  "version": "1.0"
+}

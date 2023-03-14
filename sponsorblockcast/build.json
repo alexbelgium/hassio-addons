@@ -1,0 +1,10 @@
+{
+  "build_from": {
+    "aarch64": "ghcr.io/hassio-addons/base/aarch64:stable",
+    "amd64": "ghcr.io/hassio-addons/base/amd64:stable",
+    "armv7": "ghcr.io/hassio-addons/base/armv7:stable"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
