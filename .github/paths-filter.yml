@@ -68,6 +68,7 @@ scrutiny: scrutiny/config.* # Image : yes
 scrutiny_fa: scrutiny_fa/config.* # Image : yes
 seafile: seafile/config.* # Image : yes
 sonarr: sonarr/config.* # Image : yes
+sponsorblockcast: sponsorblockcast/config.* # Image : yes
 spotweb: spotweb/config.* # Image : yes
 tandoor_recipes: tandoor_recipes/config.* # Image : yes
 tdarr: tdarr/config.* # Image : yes
