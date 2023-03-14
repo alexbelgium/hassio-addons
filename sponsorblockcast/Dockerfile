@@ -28,7 +28,8 @@ RUN apk --no-cache add jq bc grep curl \
     && tar xzf /root/go-chromecast.tgz -C /usr/bin \
     && rm -rf /root/* \
     && chmod +x /usr/bin/go-chromecast \
-    && curl https://raw.githubusercontent.com/nichobi/sponsorblockcast/main/sponsorblockcast.sh -o /usr/bin/sponsorblockcast
+    && curl https://raw.githubusercontent.com/nichobi/sponsorblockcast/main/sponsorblockcast.sh -o /usr/bin/sponsorblockcast \
+    && chmod +x /usr/bin/sponsorblockcast
 
 ##################
 # 3 Install apps #
