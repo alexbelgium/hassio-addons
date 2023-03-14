@@ -29,7 +29,7 @@ RUN apk --no-cache add jq bc grep curl \
     && tar xzf /root/go-chromecast.tgz -C /usr/bin \
     && rm -rf /root/* \
     && chmod +x /usr/bin/go-chromecast \
-    && wget https://raw.githubusercontent.com/nichobi/sponsorblockcast/main/sponsorblockcast.sh -O /usr/bin/sponsorblockcast
+    && wget https://raw.githubusercontent.com/nichobi/sponsorblockcast/main/sponsorblockcast.sh -O /usr/bin/sponsorblockcast \
     && chmod +x /usr/bin/sponsorblockcast
 
 ##################
