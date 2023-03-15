@@ -41,12 +41,12 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Statistics
 
-Number of addons in the repository : 76
+Number of addons in the repository : 77
 
 Total number of addons installed : 15701
 
 Top 3 most installed addons :
-1. Portainer (2542x)
+1. Portainer (3000x)
 2. Filebrowser (2532x)
 3. Myelectricaldata (607x)
 
@@ -497,7 +497,7 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (2542x)](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (3000x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
@@ -625,6 +625,13 @@ Downloads evolution :
 ![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003;  [Sponsorblockcast](sponsorblockcast/) : skips sponsored YouTube content on all local Chromecasts
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsponsorblockcast%2Fconfig.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7][armv7-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/chart-timeline.svg) [Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
 
