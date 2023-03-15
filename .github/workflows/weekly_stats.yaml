@@ -201,6 +201,8 @@ jobs:
           sed -i "s|${var}|${var}_(${j}x)|g" Stats3
           done
           echo "... done"
+          # Remove series with less than 4 points
+          sed -i "/^[0-9|-]* [0-9*|-]* [0-9*|-]* -/d" Stats3
           # Plot graph
           ( gnuplot-nox -persist <<-EOFMarker
             set title 'Top 10 addons'
