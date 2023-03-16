@@ -19,6 +19,7 @@
     "repository": "alexbelgium/hassio-addons"
   },
   "schema": {
+    "dry_run": "bool?",
     "gitapi": "str?",
     "gitmail": "str?",
     "gitpass": "str",
