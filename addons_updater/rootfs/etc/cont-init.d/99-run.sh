@@ -7,6 +7,10 @@
 
 bashio::log.info "Starting $(lastversion --version)"
 
+if bashio::config.true "dry_run"; then
+    bashio::log.warning "Dry run mode : on"
+fi
+
 bashio::log.info "Checking status of referenced repositoriess..."
 VERBOSE=$(bashio::config 'verbose')
 
@@ -225,7 +229,9 @@ for f in */; do
             fi
 
             # Push
-            git push &>/dev/null
+            if ! bashio::config.true "dry_run"; then
+               git push &>/dev/null
+            fi
 
             #Log
             bashio::log.yellow "... $SLUG updated from ${CURRENT} to ${LASTVERSION}"
