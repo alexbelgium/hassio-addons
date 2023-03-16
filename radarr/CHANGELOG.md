@@ -1,3 +1,4 @@
+- Solve signalr error https://github.com/alexbelgium/hassio-addons/issues/757
 - Implemented healthcheck
 - Add ingress_disabled option
 - Ingress addition
