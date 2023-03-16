@@ -1,3 +1,8 @@
+## 3.10
+- Add dry run mode (test but does not commit)
+
+## 3.9.9
+- Add mode
 - WARNING : update to supervisor 2022.11 before installing
 - Fix : dockerhub_list_size corrected
 - New dockerhub_list_size tag for dockerhub
