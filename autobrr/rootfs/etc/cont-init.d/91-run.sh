@@ -10,10 +10,10 @@ port=7474
 CONFIG_LOCATION=/config/addons_config/"$slug"/config.toml
 
 # Set UrlBase
-if ! grep -q "<UrlBase>/hassioautobrr</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then
+if ! grep -q "hassioautobrr" /config/addons_config/autobrr/config.toml; then
   bashio::log.warning "BaseUrl not set properly, restarting"
   sed -i "/baseUrl/d" /config/addons_config/autobrr/config.toml
-  sed -i "/# Base url/a baseUrl = \"/hassioautobrr/\"" /config/addons_config/autobrr/config.toml
+  sed -i "/# Base url/a baseUrl = \"\/hassioautobrr\/\"" /config/addons_config/autobrr/config.toml
   bashio::addon.restart
 fi
 
