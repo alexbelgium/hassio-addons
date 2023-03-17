@@ -4,10 +4,6 @@
 ###############
 # Start nginx #
 ###############
-# Set variables
-slug=autobrr
-port=7474
-CONFIG_LOCATION=/config/addons_config/"$slug"/config.toml
 
 # Set UrlBase
 if ! grep -q "hassioautobrr" /config/addons_config/autobrr/config.toml; then
@@ -18,7 +14,7 @@ if ! grep -q "hassioautobrr" /config/addons_config/autobrr/config.toml; then
 fi
 
 bashio::log.info "Starting NGinx..."
-exec nginx
+exec nginx & true
 
 #############
 # Start app #
