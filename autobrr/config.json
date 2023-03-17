@@ -59,8 +59,7 @@
   "name": "Autobrr",
   "options": {
     "PGID": 0,
-    "PUID": 0,
-    "WEBUI_USERNAME": "admin",
+    "PUID": 0
   },
   "panel_icon": "mdi:television-classic",
   "ports": {
