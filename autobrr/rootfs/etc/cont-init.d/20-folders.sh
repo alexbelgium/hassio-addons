@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 if [ ! -d /data/autobrr ]; then
     echo "Creating /data/autobrr"
