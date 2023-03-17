@@ -14,7 +14,7 @@ if ! grep -q "hassioautobrr" /config/addons_config/autobrr/config.toml; then
 fi
 
 bashio::log.info "Starting NGinx..."
-exec nginx & true
+nginx & true
 
 #############
 # Start app #
