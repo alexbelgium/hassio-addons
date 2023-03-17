@@ -5,7 +5,7 @@
 # Set variables
 slug=autobrr
 port=7474
-CONFIG_LOCATION=/config/addons_config/"$slug"/config.xml
+CONFIG_LOCATION=/config/addons_config/"$slug"/config.toml
 
 # Wait for transmission to become available
 bashio::net.wait_for "$port" localhost 900
@@ -14,14 +14,14 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
   CONFIG_LOCATION="$(bashio::config 'CONFIG_LOCATION')"
   # Modify if it is a base directory
   if [[ "$CONFIG_LOCATION" == *.* ]]; then CONFIG_LOCATION="$(dirname $CONFIG_LOCATION)"; fi
-  CONFIG_LOCATION="$CONFIG_LOCATION"/config.xml
+  CONFIG_LOCATION="$CONFIG_LOCATION"/config.toml
 fi
 
 # Set UrlBase
 if ! grep -q "<UrlBase>/hassioautobrr</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then
   bashio::log.warning "BaseUrl not set properly, restarting"
-  sed -i "/UrlBase/d" "$CONFIG_LOCATION"
-  sed -i "/<Config>/a <UrlBase>\/hassioautobrr<\/UrlBase>" "$CONFIG_LOCATION"
+  sed -i "/baseUrl/d" "$CONFIG_LOCATION"
+  sed -i "/# Base url/a baseUrl = \"/hassioautobrr/\"" "$CONFIG_LOCATION"
   bashio::addon.restart
 fi
 
