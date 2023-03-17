@@ -47,6 +47,7 @@
     "WEBUI_PORT": "7474",
     "BASE_DOCKER_DATA_PATH": "/data/autobrr"
   },
+  "image": "ghcr.io/alexbelgium/autobrr-{arch}",
   "ingress": true,
   "ingress_entry": "hassioautobrr",
   "init": false,
