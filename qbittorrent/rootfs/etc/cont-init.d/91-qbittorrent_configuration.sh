@@ -48,7 +48,9 @@ if bashio::config.has_value 'SavePath'; then
         -e "/\[Preferences\]/a Downloads\\\SavePath=$DOWNLOADS" \
         -e "/\[AutoRun\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" \
         -e "/\[Preferences\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" \
-        -e "/\[BitTorrent\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
+        -e "/\[BitTorrent\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" \
+        -e "/\[BitTorrent\]/a Session\\\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
+
 
     # Info
     bashio::log.info "Downloads can be found in $DOWNLOADS"
