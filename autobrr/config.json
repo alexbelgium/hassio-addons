@@ -79,9 +79,7 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?",
-    "WEBUI_USERNAME": "str",
-    "WEBUI_PASSWORD": "str"
+    "networkdisks": "str?"
   },
   "slug": "autobrr",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/autobrr",
