@@ -1,3 +1,5 @@
+### 4.3.2.6857-21 (17-03-2023)
+- Minor bugs fixed
 - Solve signalr error https://github.com/alexbelgium/hassio-addons/issues/757
 - Implemented healthcheck
 - Add ingress_disabled option
