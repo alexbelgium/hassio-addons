@@ -6,15 +6,15 @@
 ###############
 
 # Set UrlBase
-if ! grep -q "hassioautobrr" /config/addons_config/autobrr/config.toml; then
-  bashio::log.warning "BaseUrl not set properly, restarting"
-  sed -i "/baseUrl/d" /config/addons_config/autobrr/config.toml
-  sed -i "/# Base url/a baseUrl = \"\/hassioautobrr\/\"" /config/addons_config/autobrr/config.toml
-  bashio::addon.restart
-fi
+#if ! grep -q "hassioautobrr" /config/addons_config/autobrr/config.toml; then
+#  bashio::log.warning "BaseUrl not set properly, restarting"
+#  sed -i "/baseUrl/d" /config/addons_config/autobrr/config.toml
+#  sed -i "/# Base url/a baseUrl = \"\/hassioautobrr\/\"" /config/addons_config/autobrr/config.toml
+#  bashio::addon.restart
+#fi
 
-bashio::log.info "Starting NGinx..."
-nginx & true
+#bashio::log.info "Starting NGinx..."
+#nginx & true
 
 #############
 # Start app #

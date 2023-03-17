@@ -48,7 +48,6 @@
     "BASE_DOCKER_DATA_PATH": "/data/autobrr"
   },
   "image": "ghcr.io/alexbelgium/autobrr-{arch}",
-  "ingress": true,
   "ingress_entry": "hassioautobrr",
   "init": false,
   "map": [
@@ -86,5 +85,5 @@
   },
   "slug": "autobrr",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/autobrr",
-  "version": "1.9.0"
+  "version": "v1.9.0"
 }
