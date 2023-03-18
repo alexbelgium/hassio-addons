@@ -1,4 +1,7 @@
 
+## 4.0.2-r2-ls161 (18-03-2023)
+- Update to latest version from linuxserver/docker-transmission
+
 ## 4.0.1-r0-ls159 (11-03-2023)
 - Update to latest version from linuxserver/docker-transmission
 - Implemented healthcheck
