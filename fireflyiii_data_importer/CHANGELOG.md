@@ -1,3 +1,6 @@
+
+## version-1.2.1 (18-03-2023)
+- Update to latest version from fireflyiii/data-importer
 - Implemented healthcheck
 
 ## version-v1.0.2 (28-01-2023)
