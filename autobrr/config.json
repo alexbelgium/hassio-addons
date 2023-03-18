@@ -83,6 +83,6 @@
   },
   "slug": "autobrr",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/autobrr",
-  "version": "v1.9.0",
+  "version": "1.19.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7474]"
 }
