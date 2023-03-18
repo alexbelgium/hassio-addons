@@ -11,6 +11,11 @@ if bashio::config.true "dry_run"; then
     bashio::log.warning "Dry run mode : on"
 fi
 
+# Clean previous data
+mv /data/config.json /
+rm -r /data/*
+mv /config.json /data
+
 bashio::log.info "Checking status of referenced repositoriess..."
 VERBOSE=$(bashio::config 'verbose')
 
@@ -43,8 +48,8 @@ if [ ! -d "/data/$BASENAME" ]; then
 else
     LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
     cd "/data/$BASENAME" || exit
-    git pull --rebase origin/master >/dev/null || git reset --hard origin/master >/dev/null
-    git pull --rebase origin/master >/dev/null
+    git pull --rebase >/dev/null || git reset --hard >/dev/null
+    git pull --rebase >/dev/null
 fi
 
 LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
