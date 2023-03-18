@@ -12,9 +12,9 @@ if bashio::config.true "dry_run"; then
 fi
 
 # Clean previous data
-mv /data/config.json /
+mv /data/*.json /
 rm -r /data/*
-mv /config.json /data
+mv /*.json /data/
 
 bashio::log.info "Checking status of referenced repositoriess..."
 VERBOSE=$(bashio::config 'verbose')
