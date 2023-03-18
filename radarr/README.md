@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] AutoBrr (companion to Radarr an Sonarr) (opened 2022-11-29)](https://github.com/alexbelgium/hassio-addons/issues/581) by [@hacshacdgacs](https://github.com/hacshacdgacs)
+## &#9888; Open Issue : [🐛 [Radarr] Could not connect to SignalR, UI won't update (opened 2023-03-15)](https://github.com/alexbelgium/hassio-addons/issues/757) by [@steve28](https://github.com/steve28)
 # Home assistant add-on: Radarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
