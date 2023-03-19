@@ -42,10 +42,10 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "BASE_DOCKER_DATA_PATH": "/data/autobrr",
     "PGID": "0",
     "PUID": "0",
-    "WEBUI_PORT": "7474",
-    "BASE_DOCKER_DATA_PATH": "/data/autobrr"
+    "WEBUI_PORT": "7474"
   },
   "image": "ghcr.io/alexbelgium/autobrr-{arch}",
   "ingress_entry": "hassioautobrr",

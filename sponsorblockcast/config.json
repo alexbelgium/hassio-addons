@@ -14,14 +14,14 @@
   "init": false,
   "name": "Sponsorblockcast",
   "options": {
+    "SBCCATEGORIES": "sponsor",
     "SBCPOLLINTERVAL": "1",
-    "SBCSCANINTERVAL": "300",
-    "SBCCATEGORIES": "sponsor"
+    "SBCSCANINTERVAL": "300"
   },
   "schema": {
+    "SBCCATEGORIES": "str",
     "SBCPOLLINTERVAL": "int",
     "SBCSCANINTERVAL": "int",
-    "SBCCATEGORIES": "str",
     "SBCYOUTUBEAPIKEY": "str?"
   },
   "slug": "sponsorblockcast",
