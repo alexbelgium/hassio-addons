@@ -230,7 +230,7 @@ for f in */; do
 
             # Push
             if ! bashio::config.true "dry_run"; then
-               git push &>/dev/null
+                git push &>/dev/null
             fi
 
             #Log
