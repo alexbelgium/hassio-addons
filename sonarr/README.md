@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] AutoBrr (companion to Radarr an Sonarr) (opened 2022-11-29)](https://github.com/alexbelgium/hassio-addons/issues/581) by [@hacshacdgacs](https://github.com/hacshacdgacs)
-## &#9888; Open Issue : [🐛 [Sonarr] 502 Bad Gateway via Ingress (opened 2023-03-18)](https://github.com/alexbelgium/hassio-addons/issues/758) by [@antonio1475](https://github.com/antonio1475)
 # Home assistant add-on: Sonarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
