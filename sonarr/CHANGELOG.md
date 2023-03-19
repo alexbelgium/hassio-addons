@@ -1,4 +1,5 @@
--Corrected ingress bug
+- Corrected ingress bug https://github.com/alexbelgium/hassio-addons/issues/758
+
 ## 3.0.10.1567 (18-03-2023)
 - Update to latest version from linuxserver/docker-sonarr
 - Implemented healthcheck
