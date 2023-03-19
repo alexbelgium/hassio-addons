@@ -1,3 +1,4 @@
+- Align exec code with upstream
 
 ## 4.5.2 (18-03-2023)
 - Update to latest version from linuxserver/docker-qbittorrent
