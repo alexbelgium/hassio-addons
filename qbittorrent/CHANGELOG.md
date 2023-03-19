@@ -1,3 +1,5 @@
+### 4.5.2-2 (19-03-2023)
+- Minor bugs fixed
 - Align exec code with upstream
 
 ## 4.5.2 (18-03-2023)
