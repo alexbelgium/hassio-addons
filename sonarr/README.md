@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] AutoBrr (companion to Radarr an Sonarr) (opened 2022-11-29)](https://github.com/alexbelgium/hassio-addons/issues/581) by [@hacshacdgacs](https://github.com/hacshacdgacs)
-## &#9888; Open Issue : [🐛 [sonarr radarr ] missing root folder (opened 2023-03-19)](https://github.com/alexbelgium/hassio-addons/issues/759) by [@pbvdven](https://github.com/pbvdven)
 # Home assistant add-on: Sonarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

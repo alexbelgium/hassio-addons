@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [[Wger] - 500 Internal Server Error on adding exercise (opened 2023-03-10)](https://github.com/alexbelgium/hassio-addons/issues/753) by [@paulgbrichardson](https://github.com/paulgbrichardson)
 # Hass.io Add-ons: Wger
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

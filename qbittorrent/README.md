@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Qbittorrent] Login via Ingress fails (opened 2023-03-19)](https://github.com/alexbelgium/hassio-addons/issues/760) by [@antonio1475](https://github.com/antonio1475)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
