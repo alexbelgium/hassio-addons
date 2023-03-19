@@ -1,4 +1,4 @@
-
+-Corrected ingress bug
 ## 3.0.10.1567 (18-03-2023)
 - Update to latest version from linuxserver/docker-sonarr
 - Implemented healthcheck
