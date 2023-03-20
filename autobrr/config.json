@@ -45,10 +45,12 @@
     "BASE_DOCKER_DATA_PATH": "/data/autobrr",
     "PGID": "0",
     "PUID": "0",
-    "WEBUI_PORT": "7474"
+    "WEBUI_PASSWORD": "password",
+    "WEBUI_PORT": "7474",
+    "WEBUI_USERNAME": "admin"
   },
   "image": "ghcr.io/alexbelgium/autobrr-{arch}",
-  "ingress_entry": "hassioautobrr",
+  "ingress": true,
   "init": false,
   "map": [
     "config:rw",
@@ -83,6 +85,6 @@
   },
   "slug": "autobrr",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/autobrr",
-  "version": "1.19.0",
+  "version": "1.19.0-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7474]"
 }
