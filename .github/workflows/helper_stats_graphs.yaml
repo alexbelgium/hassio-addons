@@ -153,7 +153,7 @@ jobs:
           # For each addon
           for line in $(awk '{ print $1 }' Stats3); do
             TITLE="${line%% *}"
-            FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" hassio-addons | xargs -r dirname)"
+            FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs -r dirname)"
             echo "$TITLE foudn in $FOLDER"
             # If non null
             if [[ ${#FOLDER} -gt 2 ]]; then
