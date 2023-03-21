@@ -144,6 +144,8 @@ jobs:
 
       - name: Create individual stats
         run: |
+          echo "list"
+          ls
           # Prepare data
           cp Stats Stats3
           # Remove Totals
