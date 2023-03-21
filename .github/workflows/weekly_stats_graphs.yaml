@@ -185,7 +185,7 @@ jobs:
                 set output "$FOLDER/stats.png"
                 set term png tiny
                 plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i) smooth csplines
-                EOFMarker
+          EOFMarker
           ) || ( gnuplot-nox -persist <<-EOFMarker
                 set title "$TITLE"
                 set ylabel 'Number of installations'
@@ -199,8 +199,8 @@ jobs:
                 set output "$FOLDER/stats.png"
                 set term png tiny
                 plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i)
-                EOFMarker
-            )
+          EOFMarker
+          )
             fi
           done < "$input"
           # Clean files
