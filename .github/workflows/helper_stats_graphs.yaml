@@ -178,6 +178,7 @@ jobs:
               echo "$TITLE"
               head -1 Stats3 > StatsTmp
               grep "$TITLE" Stats3 >> StatsTmp
+              cat StatsTmp
           # Plot graph          
           ( gnuplot-nox -persist <<-EOFMarker
             set title "$TITLE"
