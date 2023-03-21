@@ -157,7 +157,6 @@ jobs:
             }
           }
           NF>p { p = NF }
-          echo "2"
           END {
             for(j=1; j<=p; j++) {
               str=a[1,j]
