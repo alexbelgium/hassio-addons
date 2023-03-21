@@ -45,12 +45,12 @@ If you want to do add the repository manually, please follow the procedure highl
 - In the repository : 78
 - Installed : 16127
 
-### Top 3 most installed addons
+### Top 3
 1. Filebrowser (2810x)
 2. Portainer (2542x)
 3. Myelectricaldata (672x)
 
-### Most used architectures
+### Architectures used
 - amd64: 58%
 - aarch64: 38%
 - armv7: 4%
@@ -60,7 +60,9 @@ If you want to do add the repository manually, please follow the procedure highl
 <img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png" width=500px>
 
 ### Stars evolution
-<img src="https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date" width=500px>
+<a href="https://star-history.com">
+  <img src="https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date" width=500px>
+</a>
 
 ## Add-ons provided by this repository
 
