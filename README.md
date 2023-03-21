@@ -60,6 +60,12 @@ Downloads evolution :
 ![Downloads graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats.png)
 ![Addons graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png)
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date)](https://star-history.com/#alexbelgium/hassio-addons&Date)
+
+
+
 ## Add-ons provided by this repository
 
 
