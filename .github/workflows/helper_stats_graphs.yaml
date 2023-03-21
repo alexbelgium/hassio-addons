@@ -150,35 +150,31 @@ jobs:
           sed -i "2d" Stats3
           # Inverse file
           gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
-          # Transpose data
-          echo "1"
-          awk '
-          {
-            for (i=1; i<=NF; i++)  {
-            a[NR,i] = $i
-            }
-          }
-          NF>p { p = NF }
-          END {
-            for(j=1; j<=p; j++) {
-              str=a[1,j]
-              for(i=2; i<=NR; i++){
-                str=str" "a[i,j];
-              }
-            print str
-            }
-          }' Stats3 > StatsTmp && mv StatsTmp Stats3
-          # For each addon, create graph
-          echo "3"
-          for line in $(head -1 Stats3); do
+          # For each addon
+          for line in $(awk '{ print $1 }' Stats3); do
             TITLE="${line%% *}"
-            FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs dirname)" || echo "$TITLE not found"
-            # if folder exists
-            if [ -d "$FOLDER" ]; then
-              echo "$TITLE"
-              head -1 Stats3 > StatsTmp
-              grep "$TITLE" Stats3 >> StatsTmp
-              cat StatsTmp
+            FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs -r dirname)"
+            # If non null
+            if [[ ${#FOLDER} -gt 2 ]]; then
+              cp Stats3 StatsTmp
+              sed -i "/$TITLE/!d" StatsTmp
+              # Transpose data
+              awk '
+              {
+                for (i=1; i<=NF; i++)  {
+                a[NR,i] = $i
+                }
+              }
+              NF>p { p = NF }
+              END {
+                for(j=1; j<=p; j++) {
+                  str=a[1,j]
+                  for(i=2; i<=NR; i++){
+                    str=str" "a[i,j];
+                  }
+                print str
+                }
+              }' StatsTmp > StatsTmp2 && mv StatsTmp2 StatsTmp
           # Plot graph          
           ( gnuplot-nox -persist <<-EOFMarker
             set title "$TITLE"
