@@ -142,11 +142,12 @@ jobs:
 
       - name: Create individual stats
         run: |
-          # Prepare dagta
+          # Prepare data
           cp Stats Stats3
           # Remove Totals
           sed -i "2d" Stats3
           # Transpose data
+          echo "1"
           awk '
           {
             for (i=1; i<=NF; i++)  {
@@ -154,6 +155,7 @@ jobs:
             }
           }
           NF>p { p = NF }
+          echo "2"
           END {
             for(j=1; j<=p; j++) {
               str=a[1,j]
@@ -164,6 +166,7 @@ jobs:
             }
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
           # For each addon, create graph
+          echo "3"
           #input="Stats3"
           for line in $(head -1 Stats3); do
             TITLE="${line%% *}"
