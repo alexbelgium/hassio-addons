@@ -151,6 +151,7 @@ jobs:
           # Inverse file
           gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
           # For each addon
+          # shellcheck disable=SC2013
           for line in $(awk '{ print $1 }' Stats3); do
             TITLE="${line%% *}"
             FOLDER="$(grep -irl "ghcr.io/alexbelgium/$TITLE-{arch}" --include="config.*" . | xargs -r dirname)"
