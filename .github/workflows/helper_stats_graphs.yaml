@@ -153,7 +153,7 @@ jobs:
           # For each addon
           for line in $(awk '{ print $1 }' Stats3); do
             TITLE="${line%% *}"
-            FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs -r dirname)"
+            FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-{arch}" . | xargs -r dirname)"
             FOLDER="${FOLDER:2}"
             echo "$TITLE found in $FOLDER"
             # If non null
