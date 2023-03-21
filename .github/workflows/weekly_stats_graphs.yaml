@@ -139,7 +139,43 @@ jobs:
           )
           #plot for [i=1:*] 'Stats3' using 0:i
           rm Stats3
-                   
+      - name: Create individual stats
+        run: |
+          # Prepare data
+          cp Stats Stats3
+          # Remove Totals
+          sed -i "2d" Stats3
+          # Transpose data
+          awk '
+          { 
+            for (i=1; i<=NF; i++)  {
+            a[NR,i] = $i
+            }
+          }
+          NF>p { p = NF }
+          END {    
+            for(j=1; j<=p; j++) {
+              str=a[1,j]
+              for(i=2; i<=NR; i++){
+                str=str" "a[i,j];
+              }
+            print str
+            }
+          }' Stats3 > StatsTmp && mv StatsTmp Stats3
+          # For each addon, create graph
+          input="Stats3"
+          while IFS= read -r line
+          do
+            TITLE="${line%% *}"
+            FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" */* | xargs dirname)"
+            # if folder exists
+            if [ -d "$FOLDER" ]; then
+              echo "$TITLE"
+            fi
+          done < "$input"
+          # Clean files
+          rm Stats3
+          
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
