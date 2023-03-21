@@ -27,13 +27,13 @@ jobs:
           head -n 2 Stats3 > tmp_file && mv tmp_file Stats3
           # Transpose data
           awk '
-          { 
+          {
             for (i=1; i<=NF; i++)  {
             a[NR,i] = $i
             }
           }
           NF>p { p = NF }
-          END {    
+          END {
             for(j=1; j<=p; j++) {
               str=a[1,j]
               for(i=2; i<=NR; i++){
@@ -72,13 +72,13 @@ jobs:
           head -n 11 Stats3 > tmp_file && mv tmp_file Stats3
           # Transpose data
           awk '
-          { 
+          {
             for (i=1; i<=NF; i++)  {
             a[NR,i] = $i
             }
           }
           NF>p { p = NF }
-          END {    
+          END {
             for(j=1; j<=p; j++) {
               str=a[1,j]
               for(i=2; i<=NR; i++){
@@ -139,7 +139,7 @@ jobs:
           )
           #plot for [i=1:*] 'Stats3' using 0:i
           rm Stats3
-          
+
       - name: Create individual stats
         run: |
           # Prepare dagta
@@ -148,13 +148,13 @@ jobs:
           sed -i "2d" Stats3
           # Transpose data
           awk '
-          { 
+          {
             for (i=1; i<=NF; i++)  {
             a[NR,i] = $i
             }
           }
           NF>p { p = NF }
-          END {    
+          END {
             for(j=1; j<=p; j++) {
               str=a[1,j]
               for(i=2; i<=NR; i++){
@@ -199,13 +199,13 @@ jobs:
                 set output "$FOLDER/stats.png"
                 set term png tiny
                 plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i)
-          EOFMarker
-          )
+            EOFMarker
+            )
             fi
           done < "$input"
           # Clean files
           rm Stats3
-          
+
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
