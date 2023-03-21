@@ -167,7 +167,7 @@ jobs:
           input="Stats3"
           while IFS= read -r line; do
             TITLE="${line%% *}"
-            FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs dirname) || true"
+            FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs dirname)" || echo "$TITLE not found"
             # if folder exists
             if [ -d "$FOLDER" ]; then
           echo "$TITLE"
