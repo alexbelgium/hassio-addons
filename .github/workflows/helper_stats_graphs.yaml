@@ -154,7 +154,8 @@ jobs:
           for line in $(awk '{ print $1 }' Stats3); do
             TITLE="${line%% *}"
             FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs -r dirname)"
-            echo "$TITLE foudn in $FOLDER"
+            FOLDER="${FOLDER:2}"
+            echo "$TITLE found in $FOLDER"
             # If non null
             if [[ ${#FOLDER} -gt 2 ]]; then
               cp Stats3 StatsTmp
