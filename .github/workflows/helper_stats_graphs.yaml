@@ -212,7 +212,7 @@ jobs:
           )
             rm StatsTmp
             cd .. || true
-            fi
+          fi || true
           done
           # Clean files
           rm Stats3
