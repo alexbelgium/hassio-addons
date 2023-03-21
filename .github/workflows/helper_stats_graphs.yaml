@@ -157,12 +157,13 @@ jobs:
             FOLDER="${FOLDER:2}"
             echo "$TITLE found in $FOLDER"
             # If non null
-            if [[ ${#FOLDER} -gt 2 ]]; then
+            if [[ "${#FOLDER}" -gt 2 ]]; then
               cp Stats3 StatsTmp
               sed -n "/Date/p" Stats3 > "$FOLDER"/StatsTmp
               sed -n "/$TITLE/p" Stats3 >> "$FOLDER"/StatsTmp
             # Go in folder
-            cd $FOLDER || true
+            cd "$FOLDER" || true
+            cat StatsTmp
             # Transpose data
               awk '
               {
