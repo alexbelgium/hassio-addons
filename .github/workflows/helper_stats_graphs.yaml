@@ -176,6 +176,8 @@ jobs:
             # if folder exists
             if [ -d "$FOLDER" ]; then
               echo "$TITLE"
+              head -1 Stats3 > StatsTmp
+              grep "$TITLE" Stats3 >> StatsTmp
           # Plot graph          
           ( gnuplot-nox -persist <<-EOFMarker
             set title "$TITLE"
@@ -189,7 +191,7 @@ jobs:
             set terminal png size 500,300
             set output "$FOLDER/stats.png"
             set term png tiny
-            plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i) smooth csplines
+            plot for [i=2:*] 'StatsTmp' using 1:i w l title columnhead(i) smooth csplines
           EOFMarker
           ) || ( gnuplot-nox -persist <<-EOFMarker
             set title "$TITLE"
@@ -203,13 +205,14 @@ jobs:
             set terminal png size 500,300
             set output "$FOLDER/stats.png"
             set term png tiny
-            plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i)
+            plot for [i=2:*] 'StatsTmp' using 1:i w l title columnhead(i)
           EOFMarker
           )
             fi
           done
           # Clean files
           rm Stats3
+          rm StatsTmp
 
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
