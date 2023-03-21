@@ -164,8 +164,8 @@ jobs:
             }
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
           # For each addon, create graph
-          input="Stats3"
-          while IFS= read -r line; do
+          #input="Stats3"
+          for line in $(head -1 Stats3); do
             TITLE="${line%% *}"
             FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs dirname)" || echo "$TITLE not found"
             # if folder exists
