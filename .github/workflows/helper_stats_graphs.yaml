@@ -223,4 +223,3 @@ jobs:
           message: "GitHub bot : graphs updated"
           default_author: github_actions
 
-          default_author: github_actions
