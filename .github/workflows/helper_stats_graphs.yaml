@@ -193,7 +193,7 @@ jobs:
             set terminal png size 500,300
             set output "stats.png"
             set term png tiny
-            plot for [i=2:*] 'StatsTmp' using 1:i w l title columnhead(i) smooth csplines
+            plot for [i=2:*] 'StatsTmp' using 1:i w l title columnhead(i) smooth bezier
           EOFMarker
           ) || ( gnuplot-nox -persist <<-EOFMarker
             set title "$TITLE"
