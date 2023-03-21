@@ -167,7 +167,6 @@ jobs:
           }' Stats3 > StatsTmp && mv StatsTmp Stats3
           # For each addon, create graph
           echo "3"
-          #input="Stats3"
           for line in $(head -1 Stats3); do
             TITLE="${line%% *}"
             FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs dirname)" || echo "$TITLE not found"
@@ -205,7 +204,6 @@ jobs:
           EOFMarker
           )
             fi
-          done < "$input"
           # Clean files
           rm Stats3
 
