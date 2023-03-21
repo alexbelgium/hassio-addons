@@ -209,8 +209,8 @@ jobs:
             set term png tiny
             plot for [i=2:*] 'StatsTmp' using 1:i w l title columnhead(i)
           EOFMarker
-          )
-            rm StatsTmp
+          ) || true
+            rm StatsTmp || true
             cd .. || true
           fi || true
           done
