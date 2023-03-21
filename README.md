@@ -41,30 +41,26 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Statistics
 
-Number of addons in the repository : 78
+### Number of addons
+- In the repository : 78
+- Installed : 16127
 
-Total number of addons installed : 16127
-
-Top 3 most installed addons :
+### Top 3 most installed addons
 1. Filebrowser (2810x)
 2. Portainer (2542x)
 3. Myelectricaldata (672x)
 
-Most used architectures :
+### Most used architectures
 - amd64: 58%
 - aarch64: 38%
 - armv7: 4%
 
-Downloads evolution :
+### Downloads evolution
+<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats.png" width=500px>
+<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png" width=500px>
 
-![Downloads graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats.png)
-![Addons graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png)
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date)](https://star-history.com/#alexbelgium/hassio-addons&Date)
-
-
+### Stars evolution
+<img src="https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date" width=500px>
 
 ## Add-ons provided by this repository
 
