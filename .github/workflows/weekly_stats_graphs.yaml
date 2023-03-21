@@ -170,9 +170,9 @@ jobs:
             FOLDER="$(grep -rl "ghcr.io/alexbelgium/$TITLE-" . | xargs dirname)"
             # if folder exists
             if [ -d "$FOLDER" ]; then
-              echo "$TITLE"
-              # Plot graph
-              ( gnuplot-nox -persist <<-EOFMarker
+          echo "$TITLE"
+          # Plot graph
+          ( gnuplot-nox -persist <<-EOFMarker
                 set title "$TITLE"
                 set ylabel 'Number of installations'
                 set xdata time
@@ -185,8 +185,8 @@ jobs:
                 set output "$FOLDER/stats.png"
                 set term png tiny
                 plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i) smooth csplines
-              EOFMarker
-              ) || ( gnuplot-nox -persist <<-EOFMarker
+          EOFMarker
+          ) || ( gnuplot-nox -persist <<-EOFMarker
                 set title "$TITLE"
                 set ylabel 'Number of installations'
                 set xdata time
@@ -199,8 +199,8 @@ jobs:
                 set output "$FOLDER/stats.png"
                 set term png tiny
                 plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i)
-              EOFMarker
-              )
+          EOFMarker
+          )
             fi
           done < "$input"
           # Clean files
