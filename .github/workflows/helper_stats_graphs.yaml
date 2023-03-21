@@ -59,7 +59,7 @@ jobs:
             set terminal png size 500,300
             set output 'stats.png'
             set term png tiny
-            plot 'Stats3' using 1:2 lt rgb 'red' w l title 'Total addons' smooth csplines
+            plot 'Stats3' using 1:2 lt rgb 'red' w l title 'Total addons' smooth bezier
           EOFMarker
           rm Stats3
       - name: Create addons stats
@@ -122,7 +122,7 @@ jobs:
             set terminal png size 500,300
             set output 'stats_addons.png'
             set term png tiny
-            plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i) smooth csplines
+            plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i) smooth bezier
           EOFMarker
           ) || ( gnuplot-nox -persist <<-EOFMarker
             set title 'Top 10 addons'
