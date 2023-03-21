@@ -180,6 +180,7 @@ jobs:
                 print str
                 }
               }' StatsTmp > StatsTmp2 && mv StatsTmp2 StatsTmp
+            cd $FOLDER || true
           # Plot graph          
           ( gnuplot-nox -persist <<-EOFMarker
             set title "$TITLE"
@@ -191,7 +192,7 @@ jobs:
             set datafile sep ' '
             set autoscale
             set terminal png size 500,300
-            set output "$FOLDER/stats.png"
+            set output "stats.png"
             set term png tiny
             plot for [i=2:*] 'StatsTmp' using 1:i w l title columnhead(i) smooth csplines
           EOFMarker
@@ -205,11 +206,12 @@ jobs:
             set datafile sep ' '
             set autoscale
             set terminal png size 500,300
-            set output "$FOLDER/stats.png"
+            set output "stats.png"
             set term png tiny
             plot for [i=2:*] 'StatsTmp' using 1:i w l title columnhead(i)
           EOFMarker
           )
+            cd .. || true
             fi
           done
           # Clean files
