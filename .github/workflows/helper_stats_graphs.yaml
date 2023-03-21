@@ -157,7 +157,8 @@ jobs:
             # If non null
             if [[ ${#FOLDER} -gt 2 ]]; then
               cp Stats3 StatsTmp
-              sed -i "/$TITLE/!d" StatsTmp
+              sed -n "/Date/p" Stats3 > StatsTmp
+              sed -n "/$TITLE/p" Stats3 >> StatsTmp
               # Transpose data
               awk '
               {
