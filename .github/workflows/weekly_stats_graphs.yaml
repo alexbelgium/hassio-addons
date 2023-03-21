@@ -142,7 +142,7 @@ jobs:
           
       - name: Create individual stats
         run: |
-          # Prepare data
+          # Prepare dagta
           cp Stats Stats3
           # Remove Totals
           sed -i "2d" Stats3
