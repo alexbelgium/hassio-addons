@@ -144,8 +144,6 @@ jobs:
 
       - name: Create individual stats
         run: |
-          echo "list"
-          ls
           # Prepare data
           cp Stats Stats3
           # Remove Totals
@@ -163,7 +161,9 @@ jobs:
               cp Stats3 StatsTmp
               sed -n "/Date/p" Stats3 > "$FOLDER"/StatsTmp
               sed -n "/$TITLE/p" Stats3 >> "$FOLDER"/StatsTmp
-              # Transpose data
+            # Go in folder
+            cd $FOLDER || true
+            # Transpose data
               awk '
               {
                 for (i=1; i<=NF; i++)  {
@@ -180,7 +180,6 @@ jobs:
                 print str
                 }
               }' StatsTmp > StatsTmp2 && mv StatsTmp2 StatsTmp
-            cd $FOLDER || true
           # Plot graph          
           ( gnuplot-nox -persist <<-EOFMarker
             set title "$TITLE"
