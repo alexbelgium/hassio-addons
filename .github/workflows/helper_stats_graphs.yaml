@@ -138,6 +138,8 @@ jobs:
                 print str
                 }
               }' StatsTmp > StatsTmp2 && mv StatsTmp2 StatsTmp
+              #Normalize data
+              awk 'FNR==NR{max=($2+0>max)?$2:max;next} {print $1,$2/max}' StatsTmp StatsTmp
           # Plot graph          
           ( gnuplot-nox -persist <<-EOFMarker
             set title "$TITLE"
