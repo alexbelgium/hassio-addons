@@ -203,25 +203,7 @@ jobs:
             )
             fi
           done < "$input"
-
-          # Plot graph
-          ( 
-          ) || ( gnuplot-nox -persist <<-EOFMarker
-            set title 'Top 10 addons'
-            set ylabel 'Number of installations'
-            set xdata time
-            set datafile missing "-"
-            set timefmt "%Y-%m-%d"
-            set format x "%y-%m-%d"
-            set datafile sep ' '
-            set autoscale
-            set terminal png size 500,300
-            set output 'stats_addons.png'
-            set term png tiny
-            plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i)
-          EOFMarker
-          )
-          #plot for [i=1:*] 'Stats3' using 0:i
+          # Clean files
           rm Stats3
           
       - name: Commit if needed
