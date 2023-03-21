@@ -148,6 +148,8 @@ jobs:
           cp Stats Stats3
           # Remove Totals
           sed -i "2d" Stats3
+          # Inverse file
+          gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
           # Transpose data
           echo "1"
           awk '
