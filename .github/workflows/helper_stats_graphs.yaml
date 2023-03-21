@@ -158,8 +158,7 @@ jobs:
             echo "$TITLE found in $FOLDER"
             # If non null
             if [[ "${#FOLDER}" -gt 2 ]]; then
-              cp Stats3 StatsTmp
-              sed -n "/Date/p" Stats3 > "$FOLDER"/StatsTmp
+              sed -n "/Date /p" Stats3 > "$FOLDER"/StatsTmp
               sed -n "/$TITLE /p" Stats3 >> "$FOLDER"/StatsTmp
             # Go in folder
             cd "$FOLDER" || true
