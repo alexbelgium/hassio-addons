@@ -56,8 +56,8 @@ If you want to do add the repository manually, please follow the procedure highl
 - armv7: 4%
 
 ### Downloads evolution
-<img src="stats.png" width=500px>
-<img src="stats_addons.png" width=500px>
+<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats.png" width=500px>
+<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png" width=500px>
 
 ### Stars evolution
 <a href="https://star-history.com">
