@@ -1,5 +1,7 @@
 ## &#9888; Open Request : [✨ [REQUEST] PlexTraktSync (opened 2022-12-16)](https://github.com/alexbelgium/hassio-addons/issues/604) by [@cronner](https://github.com/cronner)
+
 ## &#9888; Open Request : [✨ [REQUEST] Plex year wrapped (like spotify) (opened 2022-12-25)](https://github.com/alexbelgium/hassio-addons/issues/613) by [@bruvv](https://github.com/bruvv)
+
 # Home assistant add-on: plex
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -16,12 +18,9 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-Downloads evolution
-
-<img src="stats.png" width=500px>
+![downloads evolution](stats.png)
 
 ## About
 

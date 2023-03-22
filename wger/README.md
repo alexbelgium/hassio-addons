@@ -16,9 +16,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-Downloads evolution
-
-<img src="stats.png" width=500px>
+![downloads evolution](stats.png)
 
 ## About
 

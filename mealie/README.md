@@ -18,12 +18,9 @@ Warning : armv7 only supported up to version 0.4.3! It won't be updated with lat
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-Downloads evolution
-
-<img src="stats.png" width=500px>
+![downloads evolution](stats.png)
 
 ## About
 
@@ -63,10 +60,11 @@ The complete list of options can be seen here : https://nightly.mealie.io/docume
 ### Detailed infos (Thanks @michelangelonz)
 
 Create a restful sensor
+
 ```yaml
 sensor:
   - platform: rest
-    resource: 'http://###.###.#.#:9090/api/groups/mealplans/today'
+    resource: "http://###.###.#.#:9090/api/groups/mealplans/today"
     method: GET
     name: Mealie todays meal
     headers:
@@ -84,19 +82,20 @@ sensor:
 ```
 
 Create template sensors from attributes
+
 ```yaml
-     - name: TodaysDinner
-       unique_id: sensor.TodaysDinner
-       state: "{{ state_attr('sensor.mealie_todays_meal', 'name') }}"
-     - name: TodaysDinnerDescription
-       unique_id: sensor.DinnerDescription
-       state: "{{ state_attr('sensor.mealie_todays_meal', 'description') }}"
-     - name: TodaysDinnerSlug
-       unique_id: sensor.DinnerSlug
-       state: "{{ state_attr('sensor.mealie_todays_meal', 'slug') }}"
-     - name: TodaysDinnerID
-       unique_id: sensor.DinnerID
-       state: "{{ state_attr('sensor.mealie_todays_meal', 'id') }}"
+- name: TodaysDinner
+  unique_id: sensor.TodaysDinner
+  state: "{{ state_attr('sensor.mealie_todays_meal', 'name') }}"
+- name: TodaysDinnerDescription
+  unique_id: sensor.DinnerDescription
+  state: "{{ state_attr('sensor.mealie_todays_meal', 'description') }}"
+- name: TodaysDinnerSlug
+  unique_id: sensor.DinnerSlug
+  state: "{{ state_attr('sensor.mealie_todays_meal', 'slug') }}"
+- name: TodaysDinnerID
+  unique_id: sensor.DinnerID
+  state: "{{ state_attr('sensor.mealie_todays_meal', 'id') }}"
 ```
 
 Add a generic camera for image

@@ -14,12 +14,9 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-Downloads evolution
-
-<img src="stats.png" width=500px>
+![downloads evolution](stats.png)
 
 ## About
 
@@ -133,26 +130,26 @@ If you want use this add-on with several subdomains with the same provider, you 
 
 ```json
 {
-    "providers": [
-        {
-            "hostname": "first.mydomain.dev",
-            "provider": "domains.google.com:1",
-            "username": "xxxxxxxxxxxxxxxx",
-            "password": "xxxxxxxxxxxxxxxx"
-        },
-        {
-            "hostname": "second.mydomain.dev",
-            "provider": "domains.google.com:2",
-            "username": "xxxxxxxxxxxxxxxx",
-            "password": "xxxxxxxxxxxxxxxx"
-        },
-        {
-            "hostname": "another.mydomain.dev",
-            "provider": "domains.google.com:3",
-            "username": "xxxxxxxxxxxxxxxx",
-            "password": "xxxxxxxxxxxxxxxx"
-        }
-    ],
+  "providers": [
+    {
+      "hostname": "first.mydomain.dev",
+      "provider": "domains.google.com:1",
+      "username": "xxxxxxxxxxxxxxxx",
+      "password": "xxxxxxxxxxxxxxxx"
+    },
+    {
+      "hostname": "second.mydomain.dev",
+      "provider": "domains.google.com:2",
+      "username": "xxxxxxxxxxxxxxxx",
+      "password": "xxxxxxxxxxxxxxxx"
+    },
+    {
+      "hostname": "another.mydomain.dev",
+      "provider": "domains.google.com:3",
+      "username": "xxxxxxxxxxxxxxxx",
+      "password": "xxxxxxxxxxxxxxxx"
+    }
+  ]
 }
 ```
 
