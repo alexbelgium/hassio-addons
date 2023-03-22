@@ -18,6 +18,13 @@ for var in /data/config/log/nginx/error.log /data/config/log/nginx/access.log /d
     ln -sf /proc/1/fd/1 "$var"
 done
 
+# Check if issues with installation
+if [[ "$(occ)" == *"Composer autoloader not found"* ]]; then
+    bashio::log.fatal "Issue with installation detected, reinstallation will proceed"
+    if [ -f /data/config/www/nextcloud/index.php ]; then rm -r /data/config/www/nextcloud/index.php; fi
+    bashio::addon.restart
+fi
+
 # Add new log info to config.php
 #for var in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
 #  sed -i "/logfile/d" "$var"

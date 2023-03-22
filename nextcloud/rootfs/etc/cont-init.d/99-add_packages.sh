@@ -4,7 +4,7 @@
 # Install specific packages
 if [ ! -d /data/config/www/nextcloud/apps/pdfannotate ]; then
     CURRENT="$PWD"
-    cd /data/config/www/nextcloud/apps || exit
+    cd /data/config/www/nextcloud/apps &>/dev/null || exit
     git clone https://gitlab.com/nextcloud-other/nextcloud-annotate pdfannotate
     cd "$CURRENT" || exit
     apk add --no-cache ghostscript >/dev/null

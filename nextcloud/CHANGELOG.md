@@ -1,3 +1,4 @@
+- Implemented safety check that reinstalls nextcloud if issue detected https://github.com/alexbelgium/hassio-addons/issues/764
 - Implemented healthcheck
 - Redirect crond errors to addon logs
 - Improve elasticsearch integration
@@ -7,7 +8,9 @@
 - Corrected elastisearch server definition and test
 
 ## 25.0.4 (25-02-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
+
 ## 25.0.3 (12-02-2023)
 
 - WARNING! : this is a major code update. Make sure to have a full update of /config, /share and your nextcloud addon before updating. I take no responsibility for lost data!
