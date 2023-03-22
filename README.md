@@ -23,10 +23,6 @@ _Thanks to all contributors !_
 
 [![contributors](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)
 
-Downloads evolution
-
-<img src="stats.png" width=500px>
-
 ## About
 
 Home Assistant allows anyone to create add-on repositories to share their
@@ -60,8 +56,8 @@ If you want to do add the repository manually, please follow the procedure highl
 - armv7: 4%
 
 ### Downloads evolution
-<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats.png" width=500px>
-<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png" width=500px>
+<img src="stats.png" width=500px>
+<img src="stats_addons.png" width=500px>
 
 ### Stars evolution
 <a href="https://star-history.com">
