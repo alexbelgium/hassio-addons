@@ -1,10 +1,21 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ" || bashio::log.info "/data/config/www/nextcloud/occ not found"
+if ! bashio::fs.file_exists '/data/config/www/nextcloud/occ'; then
+    LAUNCHER=$(find / -name "occ" -print -quit)
+fi || bashio::log.info "occ not found"
+
+# Make sure there is an Nextcloud installation
+if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]]; then
+    bashio::log.warning "It seems there is no Nextcloud server installed. Please restart the addon after initialization of the user."
+    exit 0
+fi
+
 # Install specific packages
 if [ ! -d /data/config/www/nextcloud/apps/pdfannotate ]; then
     CURRENT="$PWD"
-    cd /data/config/www/nextcloud/apps &>/dev/null || exit
+    cd /data/config/www/nextcloud/apps || exit
     git clone https://gitlab.com/nextcloud-other/nextcloud-annotate pdfannotate
     cd "$CURRENT" || exit
     apk add --no-cache ghostscript >/dev/null

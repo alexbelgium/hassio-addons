@@ -7,7 +7,7 @@ if ! bashio::fs.file_exists '/data/config/www/nextcloud/occ'; then
 fi || bashio::log.info "occ not found"
 
 # Make sure there is an Nextcloud installation
-if [[ $($LAUNCHER -V) == *"not installed"* ]]; then
+if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]]; then
     bashio::log.warning "It seems there is no Nextcloud server installed. Please restart the addon after initialization of the user."
     exit 0
 fi
