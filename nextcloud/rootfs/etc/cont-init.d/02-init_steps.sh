@@ -19,7 +19,8 @@ for var in /data/config/log/nginx/error.log /data/config/log/nginx/access.log /d
 done
 
 # Check if issues with installation
-if [[ "$(occ)" == *"Composer autoloader not found"* ]]; then
+echo "Checking installation"
+if [[ "$(occ --version)" == *"Composer autoloader not found"* ]]; then
     bashio::log.fatal "Issue with installation detected, reinstallation will proceed"
     if [ -f /data/config/www/nextcloud/index.php ]; then rm -r /data/config/www/nextcloud/index.php; fi
     bashio::addon.restart
