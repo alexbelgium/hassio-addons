@@ -69,7 +69,7 @@ Integration with HA can be done with the [rest platform](https://www.home-assist
 Two types of api endpoints are available:
 
 - Summary data : http://YOURIP:ADDONPORT/api/summary
-- Detailed data : http://YOURIP:ADDONPORT/api/WWN/details
+- Detailed data : http://YOURIP:ADDONPORT/api/device/WWN/details
 
 For the detailed data, wmn can be found for each hdd within the scrutiny app. For example for me : http://192.168.178.23:8086/api/device/0x50014ee606c14537/details
 
