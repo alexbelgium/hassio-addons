@@ -17,6 +17,10 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
+Downloads evolution
+
+<img src="stats.png" width=500px>
+
 ## About
 
 [jellyfin](https://jellyfin.media/) organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone jellyfin Media Server.

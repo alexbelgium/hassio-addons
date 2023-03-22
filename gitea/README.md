@@ -14,6 +14,10 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
+Downloads evolution
+
+<img src="stats.png" width=500px>
+
 ## About
 
 Various tweaks and configuration options addition.

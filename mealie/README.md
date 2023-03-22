@@ -21,6 +21,10 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
+Downloads evolution
+
+<img src="stats.png" width=500px>
+
 ## About
 
 Mealie is a self hosted recipe manager and meal planner with a RestAPI backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family.
@@ -64,9 +68,9 @@ sensor:
   - platform: rest
     resource: 'http://###.###.#.#:9090/api/groups/mealplans/today'
     method: GET
-    name: Mealie todays meal 
+    name: Mealie todays meal
     headers:
-      Authorization: Bearer <put  auth here> 
+      Authorization: Bearer <put  auth here>
     value_template: "{{ value_json.value }}"
     json_attributes_path: $..recipe
     json_attributes:

@@ -17,6 +17,10 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
+Downloads evolution
+
+<img src="stats.png" width=500px>
+
 ## About
 
 [Tandoor recipes](https://github.com/TandoorRecipes/recipes), made by [vabene1111](https://github.com/vabene1111) is meant for people with a collection of recipes they want to share with family and friends or simply store them in a nicely organized way. A basic permission system exists but this application is not meant to be run as a public page.

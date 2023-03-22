@@ -17,6 +17,10 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
+Downloads evolution
+
+<img src="stats.png" width=500px>
+
 ## About
 
 TeamSpeak offers the ideal voice communication for online gaming, education and training, internal business communication, and staying in touch with friends and family. Our primary focus is delivering a solution that is easy to use, with high security standards, excellent voice quality, and low system and bandwidth usage.

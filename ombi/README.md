@@ -17,6 +17,10 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
+Downloads evolution
+
+<img src="stats.png" width=500px>
+
 ## About
 
 [Ombi](https://github.com/Ombi-app/Ombi) is a self-hosted Plex Request and user management system.

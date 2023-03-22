@@ -23,6 +23,10 @@ _Thanks to all contributors !_
 
 [![contributors](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)
 
+Downloads evolution
+
+<img src="stats.png" width=500px>
+
 ## About
 
 Home Assistant allows anyone to create add-on repositories to share their

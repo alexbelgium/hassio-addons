@@ -17,6 +17,10 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
+Downloads evolution
+
+<img src="stats.png" width=500px>
+
 ## About
 
 [Tdarr](https://tdarr.io) is a closed-source distributed transcoding system for automating media library transcode/remux management and making sure your files are exactly how you need them to be in terms of codecs/streams/containers and so on. Put your spare hardware to use with Tdarr Nodes for Windows, Linux (including Linux arm) and macOS.
