@@ -14,7 +14,7 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/hassio-addons/gitea/stats.png)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/gitea/stats.png)
 
 ## About
 
