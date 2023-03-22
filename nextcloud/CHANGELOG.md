@@ -1,3 +1,5 @@
+### 25.0.4-10 (22-03-2023)
+- Minor bugs fixed
 - Implemented safety check that reinstalls nextcloud if issue detected https://github.com/alexbelgium/hassio-addons/issues/764
 - Implemented healthcheck
 - Redirect crond errors to addon logs
