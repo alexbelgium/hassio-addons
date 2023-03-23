@@ -47,7 +47,8 @@ if [[ "$(occ --version)" == *"Composer autoloader not found"* ]]; then
         bashio::log.fatal "Version installed is : $CURRENTVERSION and version bundled is : $ADDONVERSION, need to redownload files"
         bashio::log.fatal "... download nextcloud version"
         rm /app/nextcloud.tar.bz2
-        curl -o /app/nextcloud.tar.bz2 -L https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_RELEASE}.tar.bz2
+        curl -o /app/nextcloud.tar.bz2 -L https://download.nextcloud.com/server/releases/nextcloud-${CURRENTVERSION}.tar.bz2 || \
+        (bashio::log.fatal "Your version doesn't exist... Please restore backup or fully uninstall addon" && exit 1)
     fi
 
     bashio::log.fatal "Reinstall ongoing, please wait..."
