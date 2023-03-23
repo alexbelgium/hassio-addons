@@ -49,7 +49,8 @@ if [ -f /reinstall ]; then
     bashio::log.fatal "... done"
 
 else
-    if [[ ! "$CURRENTVERSION" == "$(cat /nextcloudversion)" ]]; then
+    function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+    if [ "$(version "$(cat /nextcloudversion)")" -ge "$(version "$CURRENTVERSION") ]; then
         bashio::log.warning "Nexctloud $CURRENTVERSION is installed but $(cat /nextcloudversion) is in this container"
         if bashio::config.true 'auto_updater'; then
             bashio::log.warning "auto_updater configured, update starts now"
@@ -57,7 +58,7 @@ else
         else
             bashio::log.warning "auto_updater not set in addon options, please update from nextcloud settings"
         fi
-    fi
+    fi || true
 fi
 
 ######################################
