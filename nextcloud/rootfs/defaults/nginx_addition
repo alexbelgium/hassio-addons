@@ -1,5 +1,13 @@
 add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;";
 
+location = /healthcheck {
+    access_log    off;
+    try_files $uri $uri/ /index.php$request_uri;
+
+
+    log_not_found off;
+}
+
 location = /.well-known/host-meta {
 return 301 $scheme://$http_hostpublic.php?service=host-meta;
 }
