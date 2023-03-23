@@ -1,12 +1,6 @@
 ### 25.0.5-14 (23-03-2023)
 - Minor bugs fixed
-### 26.0-2 (23-03-2023)
-- Minor bugs fixed
-### 26.0-1 (23-03-2023)
-- Minor bugs fixed
-### 26.0 (23-03-2023)
-- Minor bugs fixed
-
+- Revert version number to align with container
 ### 25.0.4-11 (22-03-2023)
 - Minor bugs fixed
 - Implemented safety check that reinstalls nextcloud if issue detected https://github.com/alexbelgium/hassio-addons/issues/764
