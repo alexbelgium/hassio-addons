@@ -174,7 +174,7 @@ LABEL \
 #################
 
 ENV HEALTH_PORT="80" \
-    HEALTH_URL="/ping"
+    HEALTH_URL="/status.php"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
