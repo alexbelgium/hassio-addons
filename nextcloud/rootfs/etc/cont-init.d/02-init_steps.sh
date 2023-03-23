@@ -15,7 +15,12 @@ done
 ######################
 
 echo "Checking installation"
-if [[ "$(occ -V)" == *"Composer autoloader not found"* ]]; then
+(if [[ "$(occ -V)" == *"Composer autoloader not found"* ]]; then
+  touch /reinstall
+fi) &> /dev/null
+
+if [ -f /reinstall ]; then
+    rm /reinstall
     bashio::log.fatal "Issue with installation detected, reinstallation will proceed"
     bashio::log.fatal "-------------------------------------------------------------."
     bashio::log.fatal " "
