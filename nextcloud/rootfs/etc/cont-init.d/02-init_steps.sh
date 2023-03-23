@@ -35,7 +35,7 @@ if [[ "$(occ --version >/dev/null)" == *"Composer autoloader not found"* ]]; the
     bashio::log.fatal " "
 
     # Check currently installed version
-    if [ -f /data/config/www/nextcloud/version.php]; then
+    if [ -f /data/config/www/nextcloud/version.php ]; then
         CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
     else
         if [ -d /data/config/www/nextcloud ]; then rm -r /data/config/www/nextcloud; fi
