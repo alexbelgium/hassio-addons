@@ -174,7 +174,7 @@ LABEL \
 #################
 
 ENV HEALTH_PORT="80" \
-    HEALTH_URL=""
+    HEALTH_URL="/ping"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
