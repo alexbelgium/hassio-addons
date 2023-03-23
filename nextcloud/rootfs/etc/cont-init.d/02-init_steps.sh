@@ -29,7 +29,7 @@ done
 ######################
 
 echo "Checking installation"
-if [[ "$(occ --version)" == *"Composer autoloader not found"* ]]; then
+if [[ "$(occ --version >/dev/null)" == *"Composer autoloader not found"* ]]; then
     bashio::log.fatal "Issue with installation detected, reinstallation will proceed"
     bashio::log.fatal "-------------------------------------------------------------."
     bashio::log.fatal " "
