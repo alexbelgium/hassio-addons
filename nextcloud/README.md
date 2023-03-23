@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Nextcloud - Enable antivirus (opened 2023-01-25)](https://github.com/alexbelgium/hassio-addons/issues/669) by [@amaciuc](https://github.com/amaciuc)
+
 ## &#9888; Open Issue : [🐛 [Nextcloud] Addon won't run with error about Composer autoloader not found or app directory not found (opened 2023-03-20)](https://github.com/alexbelgium/hassio-addons/issues/764) by [@Adsero110](https://github.com/Adsero110)
 
 # Home assistant add-on: Nextcloud
@@ -19,7 +20,7 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 ![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/nextcloud/stats.png)
 
