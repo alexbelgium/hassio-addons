@@ -128,7 +128,7 @@ RUN \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
-    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample \
+    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Correct config.yaml
     sed -i 's|CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")|CONFIGSOURCE=/config/addons_config/nextcloud/config.yaml|g' /etc/cont-init.d/90-config_yaml.sh
