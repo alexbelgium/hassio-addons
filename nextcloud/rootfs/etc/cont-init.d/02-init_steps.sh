@@ -21,9 +21,10 @@ done
 # Check if issues with installation
 echo "Checking installation"
 if [[ "$(occ --version)" == *"Composer autoloader not found"* ]]; then
-    bashio::log.fatal "Issue with installation detected, reinstallation will proceed. Your files are copied in /share/nextcloud_backup_$(date +%F)"
-    mv /data/config/www/nextcloud /share/nextcloud_backup_$(date +%F)
-    bashio::addon.restart
+    bashio::log.fatal "Issue with installation detected, reinstallation will proceed. Your files are copied in /share/nextcloud_$(date +%F)"
+    cp /data/config/www/nextcloud /share/nextcloud_"$(date +%F)"
+    rm /data/config/www/nextcloud/index.php
+    /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
 fi
 
 # Add new log info to config.php

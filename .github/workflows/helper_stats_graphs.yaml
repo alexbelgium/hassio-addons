@@ -1,7 +1,9 @@
 # yamllint disable rule:line-length
 ---
-name: Generate weekly stats graphs
+name: Generate weekly graphs
 on:
+  schedule:
+    - cron: 0 18 * * *
   workflow_run:
     workflows: ["weekly_stats.yaml"]
     types:
@@ -10,7 +12,7 @@ on:
 
 jobs:
   stats_graphs:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -219,6 +221,13 @@ jobs:
             plot 'Stats3' using 1:2 lt rgb 'red' w l title 'Total addons' smooth bezier
           EOFMarker
           rm Stats3
+      - name: Update stars
+        run: |
+          echo "Starting run"
+          # Get stars
+          wget -S -O .github/stars.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons || true
+          # Get stars2          
+          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30 || true
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
