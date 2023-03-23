@@ -1,6 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Nextcloud - Enable antivirus (opened 2023-01-25)](https://github.com/alexbelgium/hassio-addons/issues/669) by [@amaciuc](https://github.com/amaciuc)
 ## &#9888; Open Issue : [🐛 [Nextcloud] Addon won't run with error about Composer autoloader not found or app directory not found (opened 2023-03-20)](https://github.com/alexbelgium/hassio-addons/issues/764) by [@Adsero110](https://github.com/Adsero110)
-## &#9888; Open Issue : [🐛 [NextCloud] Missing APACHE_IP_BINDING for running behind a reverse proxy.  (opened 2023-03-23)](https://github.com/alexbelgium/hassio-addons/issues/768) by [@Deckoz2302](https://github.com/Deckoz2302)
 
 
 # Home assistant add-on: Nextcloud
