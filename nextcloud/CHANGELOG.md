@@ -1,9 +1,6 @@
 ### 26.0 (23-03-2023)
 - Minor bugs fixed
 
-### 25.0.4-12 (23-03-2023)
-- Minor bugs fixed
-- Add config.yaml : any variable pushed inside should be exported as an environment variable
 ### 25.0.4-11 (22-03-2023)
 - Minor bugs fixed
 - Implemented safety check that reinstalls nextcloud if issue detected https://github.com/alexbelgium/hassio-addons/issues/764
