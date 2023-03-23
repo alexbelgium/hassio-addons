@@ -46,7 +46,12 @@ RUN \
     sed -i "s|/config|/data/config|g" /usr/bin/occ && \
     \
     # Change location of log
-    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
+    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root \
+    \
+    # Check bundled version and store it in /nextcloudversion
+    mkdir -p /tmp2 && tar xf /app/nextcloud.tar.bz2 -C /tmp2 --strip-components=1 && \
+    sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /tmp2/version.php > /nextcloudversion && \
+    rm -r /tmp2
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
