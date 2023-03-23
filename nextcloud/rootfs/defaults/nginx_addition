@@ -1,10 +1,8 @@
 add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;";
 
-location = /healthcheck {
-    access_log    off;
+location = /status.php {
     try_files $uri $uri/ /index.php$request_uri;
-
-
+    access_log    off;
     log_not_found off;
 }
 
