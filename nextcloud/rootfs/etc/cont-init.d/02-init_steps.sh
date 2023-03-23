@@ -10,20 +10,6 @@ for var in /data/config/nginx /data/config/crontabs /data/config/logs; do
     if [ -d "$var" ]; then rm -r "$var"; fi
 done
 
-######################################
-# Make links between logs and docker #
-######################################
-
-echo "Setting logs"
-for var in /data/config/log/nginx/error.log /data/config/log/nginx/access.log /data/config/log/php/error.log; do
-    # Make sure directory exists
-    mkdir -p "$(dirname "$var")"
-    # Clean files
-    if [ -f "$var" ]; then rm -r "$var"; fi
-    # Create symlink
-    ln -sf /proc/1/fd/1 "$var"
-done
-
 ######################
 # REINSTALL IF ISSUE #
 ######################
@@ -56,3 +42,17 @@ if [[ "$(occ -V)" == *"Composer autoloader not found"* ]]; then
     /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
     bashio::log.fatal "... done"
 fi
+
+######################################
+# Make links between logs and docker #
+######################################
+
+echo "Setting logs"
+for var in /data/config/log/nginx/error.log /data/config/log/nginx/access.log /data/config/log/php/error.log; do
+    # Make sure directory exists
+    mkdir -p "$(dirname "$var")"
+    # Clean files
+    if [ -f "$var" ]; then rm -r "$var"; fi
+    # Create symlink
+    ln -sf /proc/1/fd/1 "$var"
+done
