@@ -121,7 +121,7 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 
 # Correct modifications
 ARG CONFIGLOCATION="/www/nextcloud/config"
-# hadolint ignore=SC2015, SC2013, SC2086
+# hadolint ignore=SC2015, SC2013, SC2086, SC2016
 RUN \
     for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
     \
