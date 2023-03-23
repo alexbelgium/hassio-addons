@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] sponsorblockcast (opened 2023-03-14)](https://github.com/alexbelgium/hassio-addons/issues/756) by [@ankushg](https://github.com/ankushg)
 
 # Home assistant add-on: Sponsorblockcast
 
