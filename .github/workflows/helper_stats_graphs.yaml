@@ -227,7 +227,7 @@ jobs:
           # Get stars
           wget -S -O .github/stars.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons
           # Get stars2          
-          wget -S -O .github/stars2.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons          
+          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30          
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
