@@ -89,6 +89,7 @@
     "PUID": "int",
     "TZ": "str?",
     "additional_apps": "str?",
+    "auto_update": "bool?",
     "certfile": "str",
     "cifspassword": "str?",
     "cifsusername": "str?",
