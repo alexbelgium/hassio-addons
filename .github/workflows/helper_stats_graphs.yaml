@@ -2,6 +2,8 @@
 ---
 name: Generate weekly stats graphs
 on:
+  schedule:
+    - cron: 0 18 * * *
   workflow_run:
     workflows: ["weekly_stats.yaml"]
     types:
@@ -9,8 +11,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  stars_graphs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Update stars
+        run: |
+          echo "Starting run"
+          # Get stars
+          curl -o .github/starstmp.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons
+          FILESIZE=$(stat -c%s ".github/starstmp.svg")
+          if (( FILESIZE > MAXSIZE)); then mv .github/starstmp.svg .github/stars.svg; fi
+      - name: Commit if needed
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "GitHub bot : graphs updated"
+          default_author: github_actions
+    
   stats_graphs:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
