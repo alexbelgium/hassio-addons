@@ -20,9 +20,9 @@ jobs:
         run: |
           echo "Starting run"
           # Get stars
-          curl -o .github/starstmp.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons
-          FILESIZE=$(stat -c%s ".github/starstmp.svg")
-          if (( FILESIZE > MAXSIZE)); then mv .github/starstmp.svg .github/stars.svg; fi
+          wget -S -O .github/stars.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons
+          # Get stars2          
+          wget -S -O .github/stars2.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
