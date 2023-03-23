@@ -1,13 +1,19 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-# Clean nginx files at each reboot
+####################################
+# Clean nginx files at each reboot #
+####################################
+
 echo "Cleaning files"
 for var in /data/config/nginx /data/config/crontabs /data/config/logs; do
     if [ -d "$var" ]; then rm -r "$var"; fi
 done
 
-# Make links between logs and docker
+######################################
+# Make links between logs and docker #
+######################################
+
 echo "Setting logs"
 for var in /data/config/log/nginx/error.log /data/config/log/nginx/access.log /data/config/log/php/error.log; do
     # Make sure directory exists
@@ -18,24 +24,34 @@ for var in /data/config/log/nginx/error.log /data/config/log/nginx/access.log /d
     ln -sf /proc/1/fd/1 "$var"
 done
 
-# Check if issues with installation
+######################
+# REINSTALL IF ISSUE #
+######################
+
 echo "Checking installation"
 if [[ "$(occ --version)" == *"Composer autoloader not found"* ]]; then
-    bashio::log.fatal "Issue with installation detected, reinstallation will proceed. Your files are copied in /share/nextcloud_$(date +%F)"
-    cp /data/config/www/nextcloud /share/nextcloud_"$(date +%F)"
+    bashio::log.fatal "Issue with installation detected, reinstallation will proceed"
+    bashio::log.fatal "-------------------------------------------------------------."
+    bashio::log.fatal " "
+
+    # Check currently installed version
+    if [ -f /data/config/www/nextcloud/version.php]; then
+        CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
+    else
+        if [ -d /data/config/www/nextcloud ]; then rm -r /data/config/www/nextcloud; fi
+        CURRENTVERSION="$(cat /nextcloudversion)"
+    fi
+
+    # Redownload nextcloud if wrong version
+    if [[ ! "$CURRENTVERSION" == "$(cat /nextcloudversion)" ]]; then
+        bashio::log.fatal "Version installed is : $CURRENTVERSION and version bundled is : $ADDONVERSION, need to redownload files"
+        bashio::log.fatal "... download nextcloud version"
+        rm /app/nextcloud.tar.bz2
+        curl -o /app/nextcloud.tar.bz2 -L https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_RELEASE}.tar.bz2
+    fi
+
+    bashio::log.fatal "Reinstall ongoing, please wait..."
     rm /data/config/www/nextcloud/index.php
     /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
+    bashio::log.fatal "... done"
 fi
-
-# Add new log info to config.php
-#for var in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
-#  sed -i "/logfile/d" "$var"
-#  sed -i "/log_type/d" "$var"
-#  sed -i "/log_rotate_size/d" "$var"
-#  sed -i "2a\ \ 'logfile' => '/data/config/log/nextcloud.log'," "$var"
-#  sed -i "2a\ \ 'log_type' => 'file'," "$var"
-#  sed -i "2a\ \ 'log_rotate_size' => 0," "$var"
-#done
-
-# Correct log search
-#sed -i 's|!file_exists($this->logFile)|!is_link($this->logFile)|g' /data/config/www/nextcloud/lib/private/Log/File.php
