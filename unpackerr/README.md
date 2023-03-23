@@ -62,10 +62,4 @@ extract_path = "/share/downloads_unpacked"
 
 Create an issue on github
 
-## Illustration
-
----
-
-![illustration](https://wiki.servarr.com/assets/unpackerr/hist_1_history.png)
-
 [repository]: https://github.com/alexbelgium/hassio-addons
