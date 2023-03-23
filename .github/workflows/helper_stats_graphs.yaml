@@ -1,6 +1,6 @@
 # yamllint disable rule:line-length
 ---
-name: Generate weekly stats graphs
+name: Generate weekly graphs
 on:
   schedule:
     - cron: 0 18 * * *
