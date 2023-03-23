@@ -1,5 +1,4 @@
-### 26.0 (23-03-2023)
-- Minor bugs fixed
+
 ### 25.0.4-12 (23-03-2023)
 - Minor bugs fixed
 - Add config.yaml : any variable pushed inside should be exported as an environment variable
