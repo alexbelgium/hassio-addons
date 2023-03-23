@@ -226,6 +226,11 @@ jobs:
           EOFMarker
           rm Stats3
           cd .. || true
+      - name: Clean
+        run: |
+          echo "Starting run"
+          if [ -f stats.png ]; then rm stats.png; fi
+          if [ -f Stats3 ]; then rm Stats3; fi
       - name: Update stars
         run: |
           echo "Starting run"
