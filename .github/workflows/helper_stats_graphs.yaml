@@ -11,24 +11,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  stars_graphs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-      - name: Update stars
-        run: |
-          echo "Starting run"
-          # Get stars
-          wget -S -O .github/stars.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons
-          # Get stars2          
-          wget -S -O .github/stars2.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons
-      - name: Commit if needed
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: "GitHub bot : graphs updated"
-          default_author: github_actions
-    
   stats_graphs:
     runs-on: ubuntu-latest
     steps:
@@ -239,6 +221,13 @@ jobs:
             plot 'Stats3' using 1:2 lt rgb 'red' w l title 'Total addons' smooth bezier
           EOFMarker
           rm Stats3
+      - name: Update stars
+        run: |
+          echo "Starting run"
+          # Get stars
+          wget -S -O .github/stars.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons
+          # Get stars2          
+          wget -S -O .github/stars2.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons          
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
