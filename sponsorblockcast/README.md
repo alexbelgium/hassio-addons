@@ -26,6 +26,12 @@ Sponsorblockcast is a POSIX shell script that skips sponsored YouTube content an
 
 This app is developed by @nichobi here : https://github.com/nichobi/sponsorblockcast
 
+Feedback from @diamant-x :
+```
+Special attention that it only works when casting to a chromecast a youtube video. It mostly removes manual interaction, can't magically skip ads when they are forced to be viewed.
+Also, it doesn't seem to work when playing on an android tv through native youtube app, which would be a great addition, or on a smartphone.
+```
+
 ## Configuration
 
 See https://github.com/nichobi/sponsorblockcast
