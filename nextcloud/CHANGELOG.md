@@ -1,3 +1,6 @@
+
+## 26.0.0 (24-03-2023)
+- Update to latest version from linuxserver/docker-nextcloud
 - auto_update boolean option : automatically updates the nextcloud instance with the container version
 ### 25.0.5-14 (23-03-2023)
 - Minor bugs fixed
