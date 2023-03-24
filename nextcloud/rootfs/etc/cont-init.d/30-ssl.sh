@@ -3,7 +3,7 @@
 
 if bashio::config.true 'use_own_certs'; then
 
-    bashio::log.info "Using referenced ssl certificates..."
+    bashio::log.info "... using referenced ssl certificates"
     CERTFILE=$(bashio::config 'certfile')
     KEYFILE=$(bashio::config 'keyfile')
 
