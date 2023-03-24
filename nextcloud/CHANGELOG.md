@@ -1,3 +1,4 @@
+- auto_update boolean option : automatically updates the nextcloud instance with the container version
 ### 25.0.5-14 (23-03-2023)
 - Minor bugs fixed
 - Revert version number to align with container
