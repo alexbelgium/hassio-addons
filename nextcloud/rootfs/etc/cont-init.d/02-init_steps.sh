@@ -37,9 +37,9 @@ if [ -f /data/config/www/nextcloud/version.php ]; then
 else
     if [ -d /data/config/www/nextcloud ]; then rm -r /data/config/www/nextcloud; fi
     CURRENTVERSION="$(cat /nextcloudversion)"
-    bashio::log.info "---------------------------------------------------------------------------------------------------------------"
-    bashio::log.info "No Nextcloud version installed, please wait for startup, login Webui, install Nextcloud, then restart the addon"
-    bashio::log.info "---------------------------------------------------------------------------------------------------------------"
+    bashio::log.warning "--------------------------------------------------------------------------------------------------------------"
+    bashio::log.warning "Nextcloud not installed, please wait for addon startup, login Webui, install Nextcloud, then restart the addon"
+    bashio::log.warning "--------------------------------------------------------------------------------------------------------------"
     exit 0
 fi
 
