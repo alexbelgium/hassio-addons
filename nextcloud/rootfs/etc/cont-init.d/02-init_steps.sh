@@ -66,7 +66,7 @@ fi
 
 # Check if issue in installation
 echo "... checking installation"
-(if [[ "$(occ -V)" == *"Composer autoloader not found"* ]]; then
+(if [[ "$(occ -V 2>&1)" == *"Composer autoloader not found"* ]]; then
   touch /reinstall
 fi) &> /dev/null
 
