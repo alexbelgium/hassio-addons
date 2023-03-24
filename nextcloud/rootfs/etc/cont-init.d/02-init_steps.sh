@@ -51,7 +51,7 @@ fi
 
 # Inform if new version available
 function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
-if [ "$(version "$CONTAINERVERSION")" -ge "$(version "$CURRENTVERSION")" ]; then
+if [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
     bashio::log.warning " "
     bashio::log.warning "New version available : $CONTAINERVERSION"
     if bashio::config.true 'auto_updater'; then
