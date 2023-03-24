@@ -40,6 +40,7 @@ else
     bashio::log.warning "--------------------------------------------------------------------------------------------------------------"
     bashio::log.warning "Nextcloud not installed, please wait for addon startup, login Webui, install Nextcloud, then restart the addon"
     bashio::log.warning "--------------------------------------------------------------------------------------------------------------"
+    bashio::log.warning " "
     exit 0
 fi
 
@@ -65,16 +66,15 @@ fi
 ######################
 
 # Check if issue in installation
-echo "... checking installation"
-(if [[ "$(occ -V 2>&1)" == *"Composer autoloader not found"* ]]; then
+bashio::log.info "Checking installation"
+( if [[ "$(occ -V 2>&1)" == *"Composer autoloader not found"* ]]; then
   touch /reinstall
-fi) &> /dev/null
+fi ) &> /dev/null
 
 # Reinstall if needed
 if [ -f /reinstall ]; then
     rm /reinstall
     bashio::log.error "... issue with installation detected, reinstallation will proceed"
-    bashio::log.error "-----------------------------------------------------------------"
 
     # Redownload nextcloud if wrong version
     if [[ ! "$CURRENTVERSION" == "$(cat /nextcloudversion)" ]]; then
@@ -89,5 +89,6 @@ if [ -f /reinstall ]; then
     bashio::log.warning "... reinstall ongoing, please wait"
     rm /data/config/www/nextcloud/index.php && \
     /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
-    bashio::log.fatal "... done"
 fi
+
+bashio::log.info "... done"
