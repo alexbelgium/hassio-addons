@@ -90,7 +90,8 @@ if [ -f /reinstall ]; then
     # Reinstall
     bashio::log.warning "... reinstall ongoing, please wait"
     rm /data/config/www/nextcloud/index.php && \
-    /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
+    /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
+
 fi
 
 bashio::log.info "... done"
