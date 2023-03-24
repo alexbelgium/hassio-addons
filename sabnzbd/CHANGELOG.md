@@ -1,4 +1,7 @@
 
+## 3.7.2-ls98 (24-03-2023)
+- Update to latest version from linuxserver/docker-sabnzbd
+
 ## 3.7.2-ls97 (18-03-2023)
 - Update to latest version from linuxserver/docker-sabnzbd
 
