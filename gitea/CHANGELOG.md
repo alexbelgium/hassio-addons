@@ -1,3 +1,6 @@
+
+## 1.19.0 (24-03-2023)
+- Update to latest version from go-gitea/gitea
 - Implemented healthcheck
 ## 1.18.5 (23-02-2023)
 - Update to latest version from go-gitea/gitea
