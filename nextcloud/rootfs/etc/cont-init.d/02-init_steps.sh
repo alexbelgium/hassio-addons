@@ -31,16 +31,17 @@ done
 # Check currently installed version
 if [ -f /data/config/www/nextcloud/version.php ]; then
     CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
+    bashio::log.info "--------------------------------------"
+    bashio::log.info "Nextcloud $CURRENTVERSION is installed"
+    bashio::log.info "--------------------------------------"
 else
     if [ -d /data/config/www/nextcloud ]; then rm -r /data/config/www/nextcloud; fi
     CURRENTVERSION="$(cat /nextcloudversion)"
+    bashio::log.info "---------------------------------------------------------------------------------------------------------------"
+    bashio::log.info "No Nextcloud version installed, please wait for startup, login Webui, install Nextcloud, then restart the addon"
+    bashio::log.info "---------------------------------------------------------------------------------------------------------------"
     exit 0
 fi
-
-# Inform in log
-bashio::log.info "--------------------------------------"
-bashio::log.info "Nextcloud $CURRENTVERSION is installed"
-bashio::log.info "--------------------------------------"
 
 #########################
 # INFORM IF NEW VERSION #
