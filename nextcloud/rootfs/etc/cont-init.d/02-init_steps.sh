@@ -29,6 +29,7 @@ done
 ###########################
 
 # Check currently installed version
+CONTAINERVERSION="$(cat /nextcloudversion)"
 if [ -f /data/config/www/nextcloud/version.php ]; then
     CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
     bashio::log.info "--------------------------------------"
@@ -36,7 +37,7 @@ if [ -f /data/config/www/nextcloud/version.php ]; then
     bashio::log.info "--------------------------------------"
 else
     if [ -d /data/config/www/nextcloud ]; then rm -r /data/config/www/nextcloud; fi
-    CURRENTVERSION="$(cat /nextcloudversion)"
+    CURRENTVERSION="$CONTAINERVERSION"
     bashio::log.warning "--------------------------------------------------------------------------------------------------------------"
     bashio::log.warning "Nextcloud not installed, please wait for addon startup, login Webui, install Nextcloud, then restart the addon"
     bashio::log.warning "--------------------------------------------------------------------------------------------------------------"
@@ -50,10 +51,11 @@ fi
 
 # Inform if new version available
 function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
-if [ "$(version "$(cat /nextcloudversion)")" -ge "$(version "$CURRENTVERSION")" ]; then
+if [ "$(version "$CONTAINERVERSION")" -ge "$(version "$CURRENTVERSION")" ]; then
     bashio::log.warning " "
-    bashio::log.warning "New version available : $(cat /nextcloudversion)"
+    bashio::log.warning "New version available : $CONTAINERVERSION"
     if bashio::config.true 'auto_updater'; then
+        if [[ $((CONTAINERVERSION-CURRENTVERSION)) = 1 ]]; then echo "nok"; fi
         bashio::log.warning "... auto_updater configured, update starts now"
         updater.phar &>/proc/1/fd/1
     else
@@ -77,8 +79,8 @@ if [ -f /reinstall ]; then
     bashio::log.error "... issue with installation detected, reinstallation will proceed"
 
     # Redownload nextcloud if wrong version
-    if [[ ! "$CURRENTVERSION" == "$(cat /nextcloudversion)" ]]; then
-        basio::log.fatal "... version installed is : $CURRENTVERSION and version bundled is : $ADDONVERSION, need to redownload files"
+    if [[ ! "$CURRENTVERSION" == "$CONTAINERVERSION" ]]; then
+        basio::log.fatal "... version installed is : $CURRENTVERSION and version bundled is : $CONTAINERVERSION, need to redownload files"
         bashio::log.fatal "... download nextcloud version"
         rm /app/nextcloud.tar.bz2
         curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/nextcloud-${CURRENTVERSION}.tar.bz2" --progress-bar || \
