@@ -61,7 +61,7 @@ else
     bashio::log.red "Error message:"
     bashio::log.red "$($LAUNCHER -V 2>&1)"
     bashio::log.red "------------------------------------------------------------------"
-    bashio::addon.exit.nok
+    bashio::exit.nok
 fi
 
 #########################
