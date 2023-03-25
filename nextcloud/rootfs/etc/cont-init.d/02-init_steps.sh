@@ -28,6 +28,11 @@ done
 # CHECK STATUS #
 ################
 
+# Clean remnant files
+if [ -f /notinstalled ]; then
+    rm /notinstalled
+fi
+
 # Get launcher
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
 if [ ! -f /data/config/www/nextcloud/occ ]; then
@@ -47,6 +52,7 @@ if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/ne
     bashio::log.yellow "Nextcloud not installed, please wait for addon startup, login Webui, install Nextcloud, then restart the addon"
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
     bashio::log.green " "
+    touch /notinstalled
     exit 0
 elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]]; then
     # Log

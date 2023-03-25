@@ -1,11 +1,18 @@
+- Improve : status check code
+- Fix : reinstallation code
 
 ## 26.0.0 (24-03-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
 - auto_update boolean option : automatically updates the nextcloud instance with the container version
+
 ### 25.0.5-14 (23-03-2023)
+
 - Minor bugs fixed
 - Revert version number to align with container
+
 ### 25.0.4-11 (22-03-2023)
+
 - Minor bugs fixed
 - Implemented safety check that reinstalls nextcloud if issue detected https://github.com/alexbelgium/hassio-addons/issues/764
 - Implemented healthcheck

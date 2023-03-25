@@ -2,16 +2,11 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2086
 
-LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ" || bashio::log.info "/data/config/www/nextcloud/occ not found"
-if ! bashio::fs.file_exists '/data/config/www/nextcloud/occ'; then
-    LAUNCHER=$(find / -name "occ" -print -quit)
-fi || bashio::log.info "occ not found"
+# Only execute if installed
+if [ -f /notinstalled ]; then exit 0; fi
 
-# Make sure there is an Nextcloud installation
-if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]]; then
-    echo "... please install first Nextcloud through the webui"
-    exit 0
-fi
+# Specify launcher
+LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
 
 if $LAUNCHER fulltextsearch:test &>/dev/null; then
     echo "Full Text Search is already working"
