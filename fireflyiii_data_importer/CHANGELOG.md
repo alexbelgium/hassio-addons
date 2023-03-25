@@ -1,3 +1,4 @@
+- Allow IMPORT_DIR_ALLOWLIST
 
 ## version-1.2.2 (24-03-2023)
 - Update to latest version from fireflyiii/data-importer
