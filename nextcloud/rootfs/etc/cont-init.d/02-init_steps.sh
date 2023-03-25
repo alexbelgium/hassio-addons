@@ -28,6 +28,10 @@ done
 # CHECK STATUS #
 ################
 
+# Get launcher
+LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
+LAUNCHER="${LAUNCHER:-occ}"
+
 # If not installed, or files not available
 if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/nextcloud/version.php ]; then
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
