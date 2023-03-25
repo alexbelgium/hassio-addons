@@ -30,7 +30,7 @@ done
 
 # Get launcher
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
-if [ ! -f "$LAUNCHER" ]; then
+if [ ! -f /data/config/www/nextcloud/occ ]; then
 LAUNCHER="apk"
 fi
 
