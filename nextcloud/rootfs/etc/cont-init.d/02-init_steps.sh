@@ -30,11 +30,20 @@ done
 
 # Check currently installed version
 CONTAINERVERSION="$(cat /nextcloudversion)"
+
+if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]]; then
+    bashio::log.yellow "--------------------------------------------------------------------"
+    bashio::log.yellow "Nextcloud is not installed, please install through webui then reboot"
+    bashio::log.yellow "--------------------------------------------------------------------"
+    exit 0
+fi
+    
 if [ -f /data/config/www/nextcloud/version.php ]; then
     CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
     bashio::log.green "--------------------------------------"
     bashio::log.green "Nextcloud $CURRENTVERSION is installed"
     bashio::log.green "--------------------------------------"
+
 else
     if [ -d /data/config/www/nextcloud ]; then rm -r /data/config/www/nextcloud; fi
     CURRENTVERSION="$CONTAINERVERSION"
@@ -43,6 +52,7 @@ else
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
     bashio::log.green " "
     exit 0
+
 fi
 
 #########################
