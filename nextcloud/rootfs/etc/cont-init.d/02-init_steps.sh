@@ -28,36 +28,28 @@ done
 # CHECK INSTALLED VERSION #
 ###########################
 
-# Check currently installed version
-CONTAINERVERSION="$(cat /nextcloudversion)"
-
-if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]]; then
-    bashio::log.yellow "--------------------------------------------------------------------"
-    bashio::log.yellow "Nextcloud is not installed, please install through webui then reboot"
-    bashio::log.yellow "--------------------------------------------------------------------"
-    exit 0
-fi
-    
-if [ -f /data/config/www/nextcloud/version.php ]; then
-    CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
-    bashio::log.green "--------------------------------------"
-    bashio::log.green "Nextcloud $CURRENTVERSION is installed"
-    bashio::log.green "--------------------------------------"
-
-else
-    if [ -d /data/config/www/nextcloud ]; then rm -r /data/config/www/nextcloud; fi
-    CURRENTVERSION="$CONTAINERVERSION"
+# If not installed, or files not available
+if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/nextcloud/version.php ]; then
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
     bashio::log.yellow "Nextcloud not installed, please wait for addon startup, login Webui, install Nextcloud, then restart the addon"
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
     bashio::log.green " "
     exit 0
-
+else
+    # Check current version
+    CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
+    # Log
+    bashio::log.green "--------------------------------------"
+    bashio::log.green "Nextcloud $CURRENTVERSION is installed"
+    bashio::log.green "--------------------------------------"
 fi
 
 #########################
 # INFORM IF NEW VERSION #
 #########################
+
+# Check container version
+CONTAINERVERSION="$(cat /nextcloudversion)"
 
 # Inform if new version available
 function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
