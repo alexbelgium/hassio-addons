@@ -103,7 +103,8 @@ if [ -f /reinstall ]; then
     if [[ ! "$CURRENTVERSION" == "$CONTAINERVERSION" ]]; then
         bashio::log.red "... version installed is : $CURRENTVERSION and version bundled is : $CONTAINERVERSION, need to redownload files"
         bashio::log.green "... download nextcloud version"
-        rm /app/nextcloud.tar.bz2
+        mkdir -p /app
+        if [ -f rm /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
         curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/nextcloud-${CURRENTVERSION}.tar.bz2" --progress-bar || \
         (bashio::log.fatal "Your version doesn't exist... Please restore backup or fully uninstall addon" && exit 1)
     fi
