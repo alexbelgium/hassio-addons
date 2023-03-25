@@ -35,9 +35,6 @@ fi
 
 # Get launcher
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
-if [ ! -f /data/config/www/nextcloud/occ ]; then
-LAUNCHER="apk"
-fi
 
 # Check current version
 if [ -f /data/config/www/nextcloud/version.php ]; then
@@ -110,7 +107,7 @@ if [ -f /reinstall ]; then
         bashio::log.red "... version installed is : $CURRENTVERSION and version bundled is : $CONTAINERVERSION, need to redownload files"
         bashio::log.green "... download nextcloud version"
         mkdir -p /app
-        if [ -f rm /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
+        if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
         curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/nextcloud-${CURRENTVERSION}.tar.bz2" --progress-bar || \
         (bashio::log.fatal "Your version doesn't exist... Please restore backup or fully uninstall addon" && exit 1)
     fi

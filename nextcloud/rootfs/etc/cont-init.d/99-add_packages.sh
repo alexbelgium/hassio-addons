@@ -4,9 +4,6 @@
 # Only execute if installed
 if [ -f /notinstalled ]; then exit 0; fi
 
-# Specify launcher
-LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
-
 # Install specific packages
 if [ ! -d /data/config/www/nextcloud/apps/pdfannotate ]; then
     CURRENT="$PWD"

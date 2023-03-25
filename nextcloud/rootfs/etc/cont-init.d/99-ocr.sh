@@ -4,9 +4,6 @@
 # Only execute if installed
 if [ -f /notinstalled ]; then exit 0; fi
 
-# Specify launcher
-LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
-
 # Install OCR if requested
 if [ "$(bashio::config 'OCR')" = "true" ]; then
     # Install package
