@@ -34,6 +34,13 @@ if [ ! -f /data/config/www/nextcloud/occ ]; then
 LAUNCHER="apk"
 fi
 
+# Check current version
+if [ -f /data/config/www/nextcloud/version.php]; then
+    CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
+else
+    CURRENTVERSION="Not found"
+fi
+
 # If not installed, or files not available
 if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/nextcloud/version.php ]; then
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
@@ -42,8 +49,6 @@ if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/ne
     bashio::log.green " "
     exit 0
 elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]]; then
-    # Check current version
-    CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
     # Log
     bashio::log.green "--------------------------------------"
     bashio::log.green "Nextcloud $CURRENTVERSION is installed"
