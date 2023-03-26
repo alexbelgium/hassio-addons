@@ -51,18 +51,18 @@ if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/ne
     bashio::log.green " "
     touch /notinstalled
     exit 0
-elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]]; then
-    # Log
-    bashio::log.green "--------------------------------------"
-    bashio::log.green "Nextcloud $CURRENTVERSION is installed"
-    bashio::log.green "--------------------------------------"
     # Is there an error
 elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
     bashio::log.red "--------------------------------------------------------"
     bashio::log.red "Issue in installation detected, Nextcloud will reinstall"
     bashio::log.red "--------------------------------------------------------"
     touch /reinstall
-else
+elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]] || grep -q "/mnt/" /data/config/www/nextcloud/config/config.php &>/dev/null; then
+    # Log
+    bashio::log.green "--------------------------------------"
+    bashio::log.green "Nextcloud $CURRENTVERSION is installed"
+    bashio::log.green "--------------------------------------"
+elif ! grep -q "/mnt/" /data/config/www/nextcloud/config/config.php; then
     bashio::log.red "------------------------------------------------------------------"
     bashio::log.red "Unknown error detected, please create issue in github or reinstall"
     bashio::log.red "------------------------------------------------------------------"

@@ -1,6 +1,9 @@
+- Fix : bug in launcher script status detector if data is in a mounted directory
+### 26.0.0-2 (26-03-2023)
+- Minor bugs fixed
 - Fix : connection with desktop client https://github.com/alexbelgium/hassio-addons/issues/771
-- Improve : status check code
-- Fix : reinstallation code
+- Improve : status check code https://github.com/alexbelgium/hassio-addons/issues/768
+- Fix : reinstallation code https://github.com/alexbelgium/hassio-addons/issues/764
 
 ## 26.0.0 (24-03-2023)
 
@@ -17,7 +20,7 @@
 - Minor bugs fixed
 - Implemented safety check that reinstalls nextcloud if issue detected https://github.com/alexbelgium/hassio-addons/issues/764
 - Implemented healthcheck
-- Redirect crond errors to addon logs
+- Redirect crond errors to addon logs https://github.com/alexbelgium/hassio-addons/issues/752
 - Improve elasticsearch integration
 - Links nginx & php logs with addon logs
 - Optimized nginx code to remove server error messages
