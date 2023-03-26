@@ -62,14 +62,14 @@ elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
     bashio::log.red "Issue in installation detected, Nextcloud will reinstall"
     bashio::log.red "--------------------------------------------------------"
     touch /reinstall
-else
-    bashio::log.red "------------------------------------------------------------------"
-    bashio::log.red "Unknown error detected, please create issue in github or reinstall"
-    bashio::log.red "------------------------------------------------------------------"
-    bashio::log.red "Error message:"
-    bashio::log.red "$($LAUNCHER -V 2>&1)"
-    bashio::log.red "------------------------------------------------------------------"
-    bashio::exit.nok
+#else
+#    bashio::log.red "------------------------------------------------------------------"
+#    bashio::log.red "Unknown error detected, please create issue in github or reinstall"
+#    bashio::log.red "------------------------------------------------------------------"
+#    bashio::log.red "Error message:"
+#    bashio::log.red "$($LAUNCHER -V 2>&1)"
+#    bashio::log.red "------------------------------------------------------------------"
+#    bashio::exit.nok
 fi
 
 #########################
