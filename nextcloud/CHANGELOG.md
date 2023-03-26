@@ -1,3 +1,4 @@
+- Fix : connection with desktop client https://github.com/alexbelgium/hassio-addons/issues/771
 - Improve : status check code
 - Fix : reinstallation code
 
