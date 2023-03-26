@@ -121,5 +121,3 @@ if [ -f /reinstall ]; then
     if [ -f /data/config/www/nextcloud/index.php ]; then rm /data/config/www/nextcloud/index.php; fi && \
         /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
 fi
-
-bashio::log.green "... done"
