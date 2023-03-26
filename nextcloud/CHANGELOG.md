@@ -1,3 +1,5 @@
+### 26.0.0-4 (26-03-2023)
+- Minor bugs fixed
 - Fix : solve AGAIN spam of healthcheck in logs
 ### 26.0.0-3 (26-03-2023)
 - Minor bugs fixed
