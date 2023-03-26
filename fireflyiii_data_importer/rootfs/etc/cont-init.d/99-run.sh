@@ -14,6 +14,9 @@ if [ "$(ls -A "$CONFIGSOURCE/configurations")" ]; then
     export JSON_CONFIGURATION_DIR
 fi
 
+# Allow config dir
+export IMPORT_DIR_ALLOWLIST="$CONFIGSOURCE"
+
 ################
 # CRON OPTIONS #
 ################
