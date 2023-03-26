@@ -1,3 +1,4 @@
+- Fix : solve AGAIN spam of healthcheck in logs
 ### 26.0.0-3 (26-03-2023)
 - Minor bugs fixed
 - Fix : bug in launcher script status detector if data is in a mounted directory

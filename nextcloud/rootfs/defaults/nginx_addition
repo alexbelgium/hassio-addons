@@ -1,11 +1,5 @@
 add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;";
 
-location /healthcheck {
-    proxy_pass http://127.0.0.1:80/status.php;
-    access_log    off;
-    log_not_found off;
-}
-
 location = /.well-known/host-meta {
 return 301 $scheme://$http_hostpublic.php?service=host-meta;
 }

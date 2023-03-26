@@ -172,7 +172,7 @@ LABEL \
 #################
 
 ENV HEALTH_PORT="80" \
-    HEALTH_URL="/healthcheck"
+    HEALTH_URL="/robots.txt"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
