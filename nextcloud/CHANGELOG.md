@@ -1,3 +1,5 @@
+### 26.0.0-2 (26-03-2023)
+- Minor bugs fixed
 - Fix : connection with desktop client https://github.com/alexbelgium/hassio-addons/issues/771
 - Improve : status check code
 - Fix : reinstallation code
