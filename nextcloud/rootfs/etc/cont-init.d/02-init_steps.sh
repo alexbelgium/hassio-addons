@@ -56,12 +56,12 @@ elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]]; then
     bashio::log.green "--------------------------------------"
     bashio::log.green "Nextcloud $CURRENTVERSION is installed"
     bashio::log.green "--------------------------------------"
-# Is there an error
+    # Is there an error
 elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
     bashio::log.red "--------------------------------------------------------"
     bashio::log.red "Issue in installation detected, Nextcloud will reinstall"
     bashio::log.red "--------------------------------------------------------"
-  touch /reinstall
+    touch /reinstall
 else
     bashio::log.red "------------------------------------------------------------------"
     bashio::log.red "Unknown error detected, please create issue in github or reinstall"
@@ -109,13 +109,13 @@ if [ -f /reinstall ]; then
         mkdir -p /app
         if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
         curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/nextcloud-${CURRENTVERSION}.tar.bz2" --progress-bar || \
-        (bashio::log.fatal "Your version doesn't exist... Please restore backup or fully uninstall addon" && exit 1)
+            (bashio::log.fatal "Your version doesn't exist... Please restore backup or fully uninstall addon" && exit 1)
     fi
 
     # Reinstall
     bashio::log.green "... reinstall ongoing, please wait"
     if [ -f /data/config/www/nextcloud/index.php ]; then rm /data/config/www/nextcloud/index.php; fi && \
-    /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
+        /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
 fi
 
 bashio::log.green "... done"
