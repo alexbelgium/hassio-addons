@@ -172,7 +172,7 @@ LABEL \
 #################
 
 ENV HEALTH_PORT="80" \
-    HEALTH_URL="/status.php"
+    HEALTH_URL="/healthcheck"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
