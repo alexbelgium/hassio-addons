@@ -1,3 +1,4 @@
+- Fix : bug in launcher script status detector if data is in a mounted directory
 ### 26.0.0-2 (26-03-2023)
 - Minor bugs fixed
 - Fix : connection with desktop client https://github.com/alexbelgium/hassio-addons/issues/771
