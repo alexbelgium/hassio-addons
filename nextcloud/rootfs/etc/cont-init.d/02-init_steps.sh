@@ -43,6 +43,8 @@ else
     CURRENTVERSION="Not found"
 fi
 
+echo " "
+
 # If not installed, or files not available
 if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/nextcloud/version.php ]; then
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
@@ -71,6 +73,8 @@ elif ! grep -q "/mnt/" /data/config/www/nextcloud/config/config.php; then
     bashio::log.red "------------------------------------------------------------------"
     bashio::exit.nok
 fi
+
+echo " "
 
 #########################
 # INFORM IF NEW VERSION #
