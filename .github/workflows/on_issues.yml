@@ -38,7 +38,9 @@ jobs:
               TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
               
               #Check if relevant to addon
+              # Make lowercase
               TITLE2="${TITLE,,}"
+              # Make lowercase
               f2="${f,,}"
               if [[ "$TITLE2" == *"$f2"* ]]; then
                 echo "Title has an issue"
