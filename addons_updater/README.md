@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Repository Updater (opened 2022-10-19)](https://github.com/alexbelgium/hassio-addons/issues/516) by [@ChristoffBo](https://github.com/ChristoffBo)
 # Home assistant add-on: addons updater
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
