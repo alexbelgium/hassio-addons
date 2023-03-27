@@ -120,4 +120,5 @@ if [ -f /reinstall ]; then
     bashio::log.green "... reinstall ongoing, please wait"
     if [ -f /data/config/www/nextcloud/index.php ]; then rm /data/config/www/nextcloud/index.php; fi && \
         /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
+        occ upgrade &>/proc/1/fd/1 || true
 fi
