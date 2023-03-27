@@ -36,11 +36,11 @@ jobs:
               
               #Get variables
               TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
-              
               #Check if relevant to addon
-              f3="$(jq -r --arg f $f ".slug" "$f"/config.json)"
-              if [[ "${TITLE,,}" == *"${f,,}"* ]] || [[ "${TITLE2,,}" == *"${f3,,}"* ]]; then
-                echo "Title has an issue"
+              SLUG="$(jq -r --arg f $f ".slug" "$f"/config.json)"
+              NAME="$(jq -r --arg f $f ".slug" "$f"/config.json)"
+              if [[ "${TITLE,,}" == *"${f,,}"* ]] || [[ "${TITLE,,}" == *"${SLUG,,}"* ]] || [[ "${TITLE,,}" == *"${NAME,,}"* ]]; then
+                echo "Project $TITLE, $SLUG, $NAME has an issue"
                 REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
                 URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].html_url" issueslist)"
                 LABEL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].labels[].name" issueslist)"
