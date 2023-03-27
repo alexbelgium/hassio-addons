@@ -42,7 +42,10 @@ jobs:
               TITLE2="${TITLE,,}"
               # Make lowercase
               f2="${f,,}"
-              if [[ "$TITLE2" == *"$f2"* ]]; then
+              # Get slug
+              f3="$(jq -r --arg f $f ".slug" "$f"/config.json)"
+              f3="${f3,,}"
+              if [[ "$TITLE2" == *"$f2"* ]] || [[ "$TITLE2" == *"$f3"* ]]; then
                 echo "Title has an issue"
                 REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
                 URL="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].html_url" issueslist)"
