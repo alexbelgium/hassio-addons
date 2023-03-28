@@ -1,3 +1,5 @@
+### version-1.2.2-3 (28-03-2023)
+- Minor bugs fixed
 - Allow IMPORT_DIR_WHITELIST
 - ### version-1.2.2-2 (25-03-2023)
 - Minor bugs fixed
