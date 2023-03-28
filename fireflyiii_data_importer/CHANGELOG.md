@@ -1,6 +1,7 @@
-### version-1.2.2-2 (25-03-2023)
+- Allow IMPORT_DIR_WHITELIST
+- ### version-1.2.2-2 (25-03-2023)
 - Minor bugs fixed
-- Allow IMPORT_DIR_ALLOWLIST
+- Allow IMPORT_DIR_ALLOWLIST https://github.com/alexbelgium/hassio-addons/issues/770
 
 ## version-1.2.2 (24-03-2023)
 - Update to latest version from fireflyiii/data-importer
