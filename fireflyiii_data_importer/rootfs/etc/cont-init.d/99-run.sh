@@ -16,7 +16,8 @@ fi
 
 # Allow config dir
 export IMPORT_DIR_ALLOWLIST="$CONFIGSOURCE"
-
+export IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"
+    
 ################
 # CRON OPTIONS #
 ################
