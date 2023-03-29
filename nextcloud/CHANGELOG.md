@@ -1,5 +1,6 @@
 - MAJOR UPDATE, PLEASE BACKUP NEXTCLOUD & MARIADB ADDONS !
-- Improve updater code, and enable by default
+- Enables by default updater
+- Improved updater code
 
 ### 26.0.0-4 (26-03-2023)
 - Minor bugs fixed
