@@ -98,12 +98,13 @@ if [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
     bashio::log.yellow "New version available : $CONTAINERVERSION"
     if bashio::config.true 'auto_updater'; then
         bashio::log.green "... auto_updater configured, update starts now"
+        updater.phar --no-interaction &>/proc/1/fd/1
+        occ upgrade &>/proc/1/fd/1
         # For all versions, update
-        for VERSION in seq "${CURRENTVERSION%%.*}" "${CONTAINERVERSION%%.*}"; do
-            bashio::log.green "... installing version $VERSION"
-            nextcloud_download "latest-$VERSION"
-            updater.phar --no-interaction &>/proc/1/fd/1
-        done
+        #for VERSION in seq "${CURRENTVERSION%%.*}" "${CONTAINERVERSION%%.*}"; do
+        #    bashio::log.green "... installing version $VERSION"
+        #    nextcloud_download "latest-$VERSION"
+        #done
     else
         bashio::log.yellow "...auto_updater not set in addon options, please update from nextcloud settings"
     fi
