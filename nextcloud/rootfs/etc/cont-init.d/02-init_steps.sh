@@ -102,7 +102,7 @@ if [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
         for VERSION in seq "${CURRENTVERSION%%.*}" "${CONTAINERVERSION%%.*}"; do
             bashio::log.green "... installing version $VERSION"
             nextcloud_download "latest-$VERSION"
-            updater.phar &>/proc/1/fd/1
+            updater.phar --no-interaction &>/proc/1/fd/1
         done
     else
         bashio::log.yellow "...auto_updater not set in addon options, please update from nextcloud settings"
