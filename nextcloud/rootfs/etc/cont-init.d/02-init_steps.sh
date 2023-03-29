@@ -85,13 +85,25 @@ CONTAINERVERSION="$(cat /nextcloudversion)"
 
 # Inform if new version available
 function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+# Inform if new version available
+function nextcloud_download { 
+    mkdir -p /app
+    if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
+    curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/$1.tar.bz2" --progress-bar
+    } 
+
+# Updater code
 if [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
     bashio::log.yellow " "
     bashio::log.yellow "New version available : $CONTAINERVERSION"
     if bashio::config.true 'auto_updater'; then
-        if [[ $((CONTAINERVERSION-CURRENTVERSION)) = 1 ]]; then echo "nok"; fi
         bashio::log.green "... auto_updater configured, update starts now"
-        updater.phar &>/proc/1/fd/1
+        # For all versions, update
+        for VERSION in seq "${CURRENTVERSION%%.*}" "${CONTAINERVERSION%%.*}"; do
+            bashio::log.green "... installing version $VERSION"
+            nextcloud_download "latest-$VERSION"
+            updater.phar &>/proc/1/fd/1
+        done
     else
         bashio::log.yellow "...auto_updater not set in addon options, please update from nextcloud settings"
     fi
@@ -110,10 +122,7 @@ if [ -f /reinstall ]; then
     if [[ ! "$CURRENTVERSION" == "$CONTAINERVERSION" ]]; then
         bashio::log.red "... version installed is : $CURRENTVERSION and version bundled is : $CONTAINERVERSION, need to redownload files"
         bashio::log.green "... download nextcloud version"
-        mkdir -p /app
-        if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
-        curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/nextcloud-${CURRENTVERSION}.tar.bz2" --progress-bar || \
-            (bashio::log.fatal "Your version doesn't exist... Please restore backup or fully uninstall addon" && exit 1)
+        nextcloud_download "nextcloud-${CURRENTVERSION}" || (bashio::log.fatal "Your version doesn't exist... Please restore backup or fully uninstall addon" && exit 1)
     fi
 
     # Reinstall
