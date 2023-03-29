@@ -96,6 +96,9 @@ configuration:
   database:
     name: database
     description: Type of database to use
+  disable_updates:
+    name: disable_updates
+    description: App updates won't be done automatically but must be done with the webui
   DB_CLIENT:
     name: DB_CLIENT
     description: See upstream app documentation
