@@ -98,8 +98,8 @@ if bashio::config.true 'auto_updater'; then
     while [[ $(occ update:check 2>&1) == *"update available"* ]]; do
         bashio::log.yellow " "
         bashio::log.yellow "... new version available, updating. Please do not turn off your addon!"
-        updater.phar --no-interaction &>/proc/1/fd/1
-        occ upgrade &>/proc/1/fd/1
+        updater.phar --no-interaction
+        occ upgrade
     done
 elif [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
     bashio::log.yellow " "
