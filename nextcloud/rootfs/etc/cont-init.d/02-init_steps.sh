@@ -76,37 +76,6 @@ fi
 
 echo " "
 
-#########################
-# INFORM IF NEW VERSION #
-#########################
-
-# Check container version
-CONTAINERVERSION="$(cat /nextcloudversion)"
-
-# Inform if new version available
-function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
-# Inform if new version available
-function nextcloud_download { 
-    mkdir -p /app
-    if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
-    curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/$1.tar.bz2"
-    } 
-
-# Updater code
-if bashio::config.true 'auto_updater'; then
-    bashio::log.green "Auto_updater set, checking for updates"
-    while [[ $(occ update:check 2>&1) == *"update available"* ]]; do
-        bashio::log.yellow " "
-        bashio::log.yellow "... new version available, updating. Please do not turn off your addon!"
-        updater.phar --no-interaction
-        occ upgrade
-    done
-elif [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
-    bashio::log.yellow " "
-    bashio::log.yellow "New version available : $CONTAINERVERSION"
-    bashio::log.yellow "...auto_updater not set in addon options, please update from nextcloud settings"
-fi
-
 ######################
 # REINSTALL IF ISSUE #
 ######################
