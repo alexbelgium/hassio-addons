@@ -93,21 +93,18 @@ function nextcloud_download {
     } 
 
 # Updater code
-if [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
-    bashio::log.yellow " "
-    bashio::log.yellow "New version available : $CONTAINERVERSION"
-    if bashio::config.true 'auto_updater'; then
-        bashio::log.green "... auto_updater configured, update starts now"
+if bashio::config.true 'auto_updater'; then
+    bashio::log.green "Auto_updater set, checking for updates"
+    while [[ $(occ update:check 2>&1) == *"update available"* ]]; do
+        bashio::log.yellow " "
+        bashio::log.yellow "New version available"
         updater.phar --no-interaction &>/proc/1/fd/1
         occ upgrade &>/proc/1/fd/1
-        # For all versions, update
-        #for VERSION in seq "${CURRENTVERSION%%.*}" "${CONTAINERVERSION%%.*}"; do
-        #    bashio::log.green "... installing version $VERSION"
-        #    nextcloud_download "latest-$VERSION"
-        #done
-    else
-        bashio::log.yellow "...auto_updater not set in addon options, please update from nextcloud settings"
-    fi
+    done
+elif [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
+    bashio::log.yellow " "
+    bashio::log.yellow "New version available : $CONTAINERVERSION"
+    bashio::log.yellow "...auto_updater not set in addon options, please update from nextcloud settings"
 fi
 
 ######################
