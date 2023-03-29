@@ -38,7 +38,7 @@ jobs:
               TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
               #Check if relevant to addon
               SLUG="$(jq -r --arg f "$f" ".slug" "$f"/config.json)"
-              NAME="$(jq -r --arg f "$f" ".slug" "$f"/config.json)"
+              NAME="$(jq -r --arg f "$f" ".name" "$f"/config.json)"
               if [[ "${TITLE,,}" == *"${f,,}"* ]] || [[ "${TITLE,,}" == *"${SLUG,,}"* ]] || [[ "${TITLE,,}" == *"${NAME,,}"* ]]; then
                 echo "Project $TITLE, $SLUG, $NAME has an issue"
                 REQ="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].user.login" issueslist)"
