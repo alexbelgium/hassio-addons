@@ -129,3 +129,19 @@ if [ -f /reinstall ]; then
         /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
         occ upgrade &>/proc/1/fd/1 || true
 fi
+
+#####################
+# RESET PERMISSIONS #
+#####################
+
+PUID=$(bashio::config "PUID")
+PGID=$(bashio::config "PGID")
+datadirectory=$(bashio::config 'data_directory')
+
+echo "Checking permissions"
+mkdir -p /data/config
+mkdir -p "$datadirectory"
+chmod 755 -R "$datadirectory"
+chmod 755 -R /data/config
+chown -R "$PUID:$PGID" "$datadirectory"
+chown -R "$PUID:$PGID" "/data/config"
