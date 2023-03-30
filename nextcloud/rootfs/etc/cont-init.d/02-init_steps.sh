@@ -100,6 +100,9 @@ if [ -f /reinstall ]; then
     rm /reinstall
     bashio::log.red "... issue with installation detected, reinstallation will proceed"
 
+    # Check container version
+    CONTAINERVERSION="$(cat /nextcloudversion)"
+
     # Redownload nextcloud if wrong version
     if [[ ! "$CURRENTVERSION" == "$CONTAINERVERSION" ]]; then
         bashio::log.red "... version installed is : $CURRENTVERSION and version bundled is : $CONTAINERVERSION, need to redownload files"
