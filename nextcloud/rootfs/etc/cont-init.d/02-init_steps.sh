@@ -36,6 +36,13 @@ fi
 # Get launcher
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
 
+# Inform if new version available
+function nextcloud_download {
+    mkdir -p /app
+    if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
+    curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/$1.tar.bz2"
+    }
+
 # Check current version
 if [ -f /data/config/www/nextcloud/version.php ]; then
     CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
@@ -55,23 +62,31 @@ if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/ne
     exit 0
     # Is there an error
 elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
-    bashio::log.red "--------------------------------------------------------"
-    bashio::log.red "Issue in installation detected, Nextcloud will reinstall"
-    bashio::log.red "--------------------------------------------------------"
+    bashio::log.red "--------------------------------------------------"
+    bashio::log.red " Missing files detected, Nextcloud will reinstall "
+    bashio::log.red "--------------------------------------------------"
     touch /reinstall
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]] || grep -q "/mnt/" /data/config/www/nextcloud/config/config.php &>/dev/null; then
     # Log
-    bashio::log.green "--------------------------------------"
-    bashio::log.green "Nextcloud $CURRENTVERSION is installed"
-    bashio::log.green "--------------------------------------"
+    bashio::log.green "----------------------------------------"
+    bashio::log.green " Nextcloud $CURRENTVERSION is installed "
+    bashio::log.green "----------------------------------------"
 elif ! grep -q "/mnt/" /data/config/www/nextcloud/config/config.php; then
-    bashio::log.red "------------------------------------------------------------------"
-    bashio::log.red "Unknown error detected, please create issue in github or reinstall"
-    bashio::log.red "------------------------------------------------------------------"
+    bashio::log.red "-------------------------------------------------"
+    bashio::log.red " Unknown error detected, auto-repair will launch "
+    bashio::log.red "-------------------------------------------------"
     bashio::log.red "Error message:"
     bashio::log.red "$($LAUNCHER -V 2>&1)"
     bashio::log.red "------------------------------------------------------------------"
     bashio::exit.nok
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 fi
 
 echo " "
@@ -95,22 +110,12 @@ if [ -f /reinstall ]; then
     # Reinstall
     bashio::log.green "... reinstall ongoing, please wait"
     if [ -f /data/config/www/nextcloud/index.php ]; then rm /data/config/www/nextcloud/index.php; fi && \
-        /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
-        occ upgrade &>/proc/1/fd/1 || true
+    # INSTALL
+    /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
+    # RESET PERMISSIONS
+    /./etc/cont-init.d/01-folders.sh
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 fi
-
-#####################
-# RESET PERMISSIONS #
-#####################
-
-PUID=$(bashio::config "PUID")
-PGID=$(bashio::config "PGID")
-datadirectory=$(bashio::config 'data_directory')
-
-echo "Checking permissions"
-mkdir -p /data/config
-mkdir -p "$datadirectory"
-chmod 755 -R "$datadirectory"
-chmod 755 -R /data/config
-chown -R "$PUID:$PGID" "$datadirectory"
-chown -R "$PUID:$PGID" "/data/config"

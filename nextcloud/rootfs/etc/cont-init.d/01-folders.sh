@@ -3,14 +3,24 @@
 
 PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
-datadirectory=$(bashio::config 'data_directory')
 
-echo "Checking permissions"
+# Check current version
+if [ -f /data/config/www/nextcloud/config/config.php ]; then
+    datadirectory="$(sed -n "s|.*datadirectory' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
+else
+    datadirectory=/share/nextcloud
+fi
+
+echo "Updating permissions..."
+echo "... Config directory : /data"
 mkdir -p /data/config
+chmod 755 -R /data/config
+chown -R "$PUID:$PGID" "/data/config"
+
+echo "... Data directory detected : $datadirectory"
 mkdir -p "$datadirectory"
 chmod 755 -R "$datadirectory"
-chmod 755 -R /data/config
 chown -R "$PUID:$PGID" "$datadirectory"
-chown -R "$PUID:$PGID" "/data/config"
+
 echo "...done"
 echo " "
