@@ -75,7 +75,7 @@ elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]] || grep -q "/mnt/" /data/config
     bashio::log.green "----------------------------------------"
     bashio::log.green " Nextcloud $CURRENTVERSION is installed "
     bashio::log.green "----------------------------------------"
-elif ! grep -q "/mnt/" /data/config/www/nextcloud/config/config.php; then
+else
     bashio::log.red "-------------------------------------------------"
     bashio::log.red " Unknown error detected, auto-repair will launch "
     bashio::log.red "-------------------------------------------------"
