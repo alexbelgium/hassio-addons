@@ -1,6 +1,7 @@
-- MAJOR UPDATE, PLEASE BACKUP NEXTCLOUD & MARIADB ADDONS !
-- Enables by default updater
+- WARNING : PLEASE BACKUP NEXTCLOUD & MARIADB ADDONS BEFORE UPDATING !
+- WARNING : Enables by default updater ; you can disable it with the option "disable_updates"
 - Improved updater code
+- Autocorrection of permission errors in data directory
 
 ### 26.0.0-4 (26-03-2023)
 - Minor bugs fixed
