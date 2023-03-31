@@ -132,14 +132,8 @@ RUN \
     cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Rename smb files
-    mv 92-local_mounts.sh 00-local_mounts.sh && \
-    mv 92-smb_mounts.sh 00-smb_mounts.sh 
-
-#RUN chmod 777 /entrypoint.sh
-#WORKDIR /
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ]
-#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+    mv /etc/cont-init.d/92-local_mounts.sh /etc/cont-init.d/00-local_mounts.sh && \
+    mv /etc/cont-init.d/92-smb_mounts.sh /etc/cont-init.d/00-smb_mounts.sh
 
 ############
 # 5 Labels #
