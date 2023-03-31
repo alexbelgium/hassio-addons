@@ -1,3 +1,4 @@
+### 26.0.0-5 (31-03-2023)
 - WARNING : PLEASE BACKUP NEXTCLOUD & MARIADB ADDONS BEFORE UPDATING !
 - WARNING : Enables by default updater ; you can disable it with the option "disable_updates"
 - Improved updater code
