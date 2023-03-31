@@ -1,4 +1,7 @@
 
+## 1.52.1 (31-03-2023)
+- Update to latest version from imagegenius/docker-immich
+
 ## 1.51.2 (24-03-2023)
 - Update to latest version from imagegenius/docker-immich
 - Implemented healthcheck
