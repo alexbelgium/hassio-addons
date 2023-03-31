@@ -6,7 +6,6 @@ if [ -f /notinstalled ]; then exit 0; fi
 
 # Specify launcher
 PUID=$(bashio::config "PUID")
-PGID=$(bashio::config "PGID")
 
 # Check current version
 if [ -f /data/config/www/nextcloud/version.php ]; then

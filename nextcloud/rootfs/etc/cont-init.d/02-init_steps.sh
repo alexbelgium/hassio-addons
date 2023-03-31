@@ -35,8 +35,7 @@ fi
 
 # Specify launcher
 PUID=$(bashio::config "PUID")
-PGID=$(bashio::config "PGID")
-LAUNCHER="sudo -u \#"$PUID" php /data/config/www/nextcloud/occ"
+LAUNCHER="sudo -u \#$PUID php /data/config/www/nextcloud/occ"
 
 # Inform if new version available
 function nextcloud_download {
