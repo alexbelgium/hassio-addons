@@ -5,7 +5,9 @@
 if [ -f /notinstalled ]; then exit 0; fi
 
 # Specify launcher
-LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
+PUID=$(bashio::config "PUID")
+PGID=$(bashio::config "PGID")
+LAUNCHER="sudo -u \#"$PUID" php /data/config/www/nextcloud/occ"
 
 ####################
 # Initialization   #

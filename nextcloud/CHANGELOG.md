@@ -1,20 +1,20 @@
-### 26.0.0-6_updater (31-03-2023)
-- Minor bugs fixed
-### 26.0.0-5 (31-03-2023)
 - &#9888; WARNING : PLEASE BACKUP NEXTCLOUD & MARIADB ADDONS BEFORE UPDATING !
 - &#9888; WARNING : Enables by default updater ; you can disable it with the option "disable_updates"
 - Improved updater code
 - Autocorrection of permission errors in data directory
 
 ### 26.0.0-4 (26-03-2023)
+
 - Minor bugs fixed
 - Fix : solve AGAIN spam of healthcheck in logs
 
 ### 26.0.0-3 (26-03-2023)
+
 - Minor bugs fixed
 - Fix : bug in launcher script status detector if data is in a mounted directory
 
 ### 26.0.0-2 (26-03-2023)
+
 - Minor bugs fixed
 - Fix : connection with desktop client https://github.com/alexbelgium/hassio-addons/issues/771
 - Improve : status check code https://github.com/alexbelgium/hassio-addons/issues/768
