@@ -1,4 +1,7 @@
 
+## 3.1.1 (31-03-2023)
+- Update to latest version from FlareSolverr/FlareSolverr
+
 ## 3.1.0 (24-03-2023)
 - Update to latest version from FlareSolverr/FlareSolverr
 
