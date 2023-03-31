@@ -32,7 +32,7 @@ if ! bashio::config.true "disable_updates"; then
         sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     done
     # Reset permissions
-    /./01-folders.sh
+    /./etc/cont-init.d/01-folders.sh
 elif bashio::config.true "disable_updates" && [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
     bashio::log.yellow " "
     bashio::log.yellow "New version available : $CONTAINERVERSION"
