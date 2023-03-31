@@ -1,10 +1,10 @@
 {
   "github_fulltag": "true",
-  "last_update": "31-03-2023",
+  "last_update": "01-04-2023",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "calibre-web",
   "source": "github",
   "upstream_repo": "linuxserver/docker-calibre-web",
-  "upstream_version": "0.6.20-ls202"
+  "upstream_version": "0.6.20-ls203"
 }
