@@ -1,3 +1,6 @@
+
+## 1.0.2.2592-ls114 (31-03-2023)
+- Update to latest version from linuxserver/docker-lidarr
 ### 1.0.2.2592-ls113-2 (12-03-2023)
 - Minor bugs fixed
 - Implemented healthcheck
