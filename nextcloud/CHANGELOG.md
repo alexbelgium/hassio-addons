@@ -1,7 +1,7 @@
 ### 26.0.0-7_updater (31-03-2023)
-- Minor bugs fixed
 - &#9888; WARNING : PLEASE BACKUP NEXTCLOUD & MARIADB ADDONS BEFORE UPDATING !
 - &#9888; WARNING : Enables by default updater ; you can disable it with the option "disable_updates"
+- Minor bugs fixed
 - Improved updater code
 - Autocorrection of permission errors in data directory
 
