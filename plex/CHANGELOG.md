@@ -1,4 +1,7 @@
 
+## 1.31.3.6868-28fc46b27-ls159 (31-03-2023)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.31.2.6810-a607d384f-ls157 (18-03-2023)
 - Update to latest version from linuxserver/docker-plex
 - Implement healthcheck
