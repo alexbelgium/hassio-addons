@@ -1,3 +1,5 @@
+### 26.0.0-9_updater (01-04-2023)
+- Minor bugs fixed
 - &#9888; WARNING : PLEASE BACKUP NEXTCLOUD & MARIADB ADDONS BEFORE UPDATING !
 - &#9888; WARNING : Enables by default updater at addon start; you can disable it with the option "disable_updates"
 - Improved updater code
