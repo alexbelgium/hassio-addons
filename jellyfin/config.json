@@ -4,6 +4,12 @@
     "amd64",
     "armv7"
   ],
+  "backup_exclude": [
+    "*/cache/",
+    "*/logs/",
+    "*/transcoding-temp/",
+    "*/metadata/"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "devices": [
