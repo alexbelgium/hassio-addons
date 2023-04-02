@@ -41,7 +41,7 @@ fi
 # ==============================================================================
 # Global actions for all addons
 # ==============================================================================
-if bashio::config.has_value "PUID" && bashio::config.has_value "GUID"; then
+if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     bashio::log.green "Defining permissions for main user :"
     bashio::log.blue "User UID: $PUID"
     bashio::log.blue "User GID : $PGID"
