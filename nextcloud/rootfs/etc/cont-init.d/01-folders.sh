@@ -1,10 +1,11 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-PUID="$(bashio::config "PUID")"
-PGID="$(bashio::config "PGID")"
-groupmod -o -g "$PGID" abc
-usermod -o -u "$PUID" abc
+if bashio::config.has_value "PUID" && bashio::config.has_value "GUID"; then
+    bashio::log.green "Setting user to $PUID:$PGID"
+    groupmod -o -g "$PGID" abc
+    usermod -o -u "$PUID" abc
+fi
 
 echo "Updating permissions..."
 echo "... Config directory : /data"

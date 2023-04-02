@@ -35,7 +35,7 @@ fi
 
 # Specify launcher
 PUID=$(bashio::config "PUID")
-LAUNCHER="sudo -u \#$PUID php /data/config/www/nextcloud/occ"
+LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
 
 # Inform if new version available
 function nextcloud_download {
@@ -67,10 +67,10 @@ elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
     bashio::log.red " Missing files detected, Nextcloud will reinstall "
     bashio::log.red "--------------------------------------------------"
     touch /reinstall
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]]; then
     # Log
     bashio::log.green "----------------------------------------"
@@ -84,10 +84,10 @@ else
     bashio::log.red "$($LAUNCHER -V 2>&1)"
     bashio::log.red "------------------------------------------------------------------"
     bashio::exit.nok
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 fi
 
 echo " "
@@ -118,8 +118,8 @@ if [ -f /reinstall ]; then
     /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
     # RESET PERMISSIONS
     /./etc/cont-init.d/01-folders.sh
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 fi

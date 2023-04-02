@@ -24,15 +24,15 @@ function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4
 if ! bashio::config.true "disable_updates"; then
     bashio::log.green "Auto_updater set, checking for updates"
     # Install new version
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/updater/updater.phar --no-interaction"
-    sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/updater/updater.phar --no-interaction"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     # Install additional versions
     while [[ $(occ update:check 2>&1) == *"update available"* ]]; do
         bashio::log.yellow "-----------------------------------------------------------------------"
         bashio::log.yellow "  new version available, updating. Please do not turn off your addon!  "
         bashio::log.yellow "-----------------------------------------------------------------------"
-        sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/updater/updater.phar --no-interaction"
-        sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+        sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/updater/updater.phar --no-interaction"
+        sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     done
     # Reset permissions
     /./etc/cont-init.d/01-folders.sh
