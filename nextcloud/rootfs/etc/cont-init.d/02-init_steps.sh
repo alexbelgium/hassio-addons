@@ -71,7 +71,7 @@ elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
     sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
     sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     sudo -u \#"$PUID" -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
-elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]] || grep -q "/mnt/" /data/config/www/nextcloud/config/config.php &>/dev/null; then
+elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]]; then
     # Log
     bashio::log.green "----------------------------------------"
     bashio::log.green " Nextcloud $CURRENTVERSION is installed "
