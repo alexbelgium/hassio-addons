@@ -52,8 +52,3 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     bashio::log.blue \
         '-----------------------------------------------------------'
 fi
-
-───────────────────────────────────────
-User UID:    1000
-User GID:    1000
-───────────────────────────────────────
