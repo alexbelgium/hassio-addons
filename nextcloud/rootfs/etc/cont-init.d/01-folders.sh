@@ -5,8 +5,8 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     PUID="$(bashio::config "PUID")"
     PGID="$(bashio::config "PGID")"
     bashio::log.green "Setting user to $PUID:$PGID"
-    groupmod -o -g "$PGID" abc
-    usermod -o -u "$PUID" abc
+    id -u abc &>/dev/null || usermod -o -u "$PUID" abc || true
+    id -g abc &>/dev/null || groupmod -o -g "$PGID" abc || true
 fi
 
 echo "Updating permissions..."

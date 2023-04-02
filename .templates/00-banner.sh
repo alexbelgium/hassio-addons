@@ -47,8 +47,8 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     PGID="$(bashio::config "PGID")"
     bashio::log.blue "User UID: $PUID"
     bashio::log.blue "User GID : $PGID"
-    groupmod -o -g "$PGID" abc &>/dev/null || true
-    usermod -o -u "$PUID" abc &>/dev/null || true
+    id -u abc &>/dev/null || usermod -o -u "$PUID" abc &>/dev/null || true
+    id -g abc &>/dev/null || groupmod -o -g "$PGID" abc &>/dev/null || true
     bashio::log.blue \
         '-----------------------------------------------------------'
 fi
