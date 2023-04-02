@@ -1,3 +1,5 @@
+### 26.0.0-12 (02-04-2023)
+- Minor bugs fixed
 - &#9888; WARNING : please read warning on previous versions before updating
 - Prevent downgrades, and instead reinstall the correct version
 - Improve PUID/PGID code setting, and avoid minor issues
