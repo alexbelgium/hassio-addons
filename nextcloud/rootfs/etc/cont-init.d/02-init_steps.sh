@@ -42,7 +42,7 @@ function nextcloud_download {
     mkdir -p /app
     if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
     curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/$1.tar.bz2"
-    }
+}
 
 # Check current version
 if [ -f /data/config/www/nextcloud/version.php ]; then
@@ -114,7 +114,7 @@ if [ -f /reinstall ]; then
     # Reinstall
     bashio::log.green "... reinstall ongoing, please wait"
     if [ -f /data/config/www/nextcloud/index.php ]; then rm /data/config/www/nextcloud/index.php; fi && \
-    # INSTALL
+        # INSTALL
     /./etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
     # RESET PERMISSIONS
     /./etc/cont-init.d/01-folders.sh
