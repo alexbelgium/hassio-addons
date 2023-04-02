@@ -1,3 +1,5 @@
+### 26.0.0-10 (02-04-2023)
+- Minor bugs fixed
 - Improve PUID/PGID code setting, and avoid minor issues
 
 ### 26.0.0-9_updater (01-04-2023)
