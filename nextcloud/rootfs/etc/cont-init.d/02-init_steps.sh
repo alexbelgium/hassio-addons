@@ -40,7 +40,7 @@ LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
 function nextcloud_download {
     mkdir -p /app
     if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
-    curl -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/$1.tar.bz2"
+    curl -s -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/$1.tar.bz2"
 }
 
 # Check current version
