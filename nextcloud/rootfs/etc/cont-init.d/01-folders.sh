@@ -2,9 +2,9 @@
 # shellcheck shell=bash
 
 if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
-    bashio::log.green "Setting user to $PUID:$PGID"
     PUID="$(bashio::config "PUID")"
     PGID="$(bashio::config "PGID")"
+    bashio::log.green "Setting user to $PUID:$PGID"
     groupmod -o -g "$PGID" abc
     usermod -o -u "$PUID" abc
 fi
