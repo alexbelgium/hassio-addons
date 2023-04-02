@@ -1,4 +1,7 @@
+- Prevent downgrades
+
 ### 26.0.0-11 (02-04-2023)
+
 - Minor bugs fixed
 - Improve PUID/PGID code setting, and avoid minor issues
 
