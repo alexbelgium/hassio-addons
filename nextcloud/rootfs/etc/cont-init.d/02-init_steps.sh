@@ -36,13 +36,6 @@ fi
 # Specify launcher
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
 
-# Inform if new version available
-function nextcloud_download {
-    mkdir -p /app
-    if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
-    curl -s -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/$1.tar.bz2"
-}
-
 # Check current version
 if [ -f /data/config/www/nextcloud/version.php ]; then
     CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
@@ -60,7 +53,7 @@ if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/ne
     bashio::log.green " "
     touch /notinstalled
     exit 0
-    # Is there an error
+# Is there missing files
 elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
     bashio::log.red "--------------------------------------------------"
     bashio::log.red " Missing files detected, Nextcloud will reinstall "
@@ -70,11 +63,28 @@ elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
+# Everything is fine
 elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]]; then
     # Log
     bashio::log.green "----------------------------------------"
     bashio::log.green " Nextcloud $CURRENTVERSION is installed "
     bashio::log.green "----------------------------------------"
+# Tentative to downgrade
+elif [[ $($LAUNCHER -V 2>&1) == *"Downgrading"* ]]; then
+    # Get currently installed version
+    version="$($LAUNCHER -V 2>&1)"
+    version="${version% to *}"
+    version="${version#*from }"
+    until [ "$(echo "$version" | awk -F. '{ print NF - 1 }')" -le "2" ]; do
+        version="${version%\.*}"
+    done
+    # Inform
+    bashio::log.red "-----------------------------------------------------------------------------------------------------"
+    bashio::log.red " Error : a downgrade was detected. This is not possible. The current version $version will reinstall "
+    bashio::log.red "-----------------------------------------------------------------------------------------------------"
+    # Reinstall current version
+    CURRENTVERSION="$version"
+    touch /reinstall
 else
     bashio::log.red "-------------------------------------------------"
     bashio::log.red " Unknown error detected, auto-repair will launch "
@@ -102,6 +112,13 @@ if [ -f /reinstall ]; then
 
     # Check container version
     CONTAINERVERSION="$(cat /nextcloudversion)"
+
+    # Downloader function
+    function nextcloud_download {
+        mkdir -p /app
+        if [ -f /app/nextcloud.tar.bz2 ]; then rm /app/nextcloud.tar.bz2; fi
+        curl -s -o /app/nextcloud.tar.bz2 -L "https://download.nextcloud.com/server/releases/$1.tar.bz2"
+    }
 
     # Redownload nextcloud if wrong version
     if [[ ! "$CURRENTVERSION" == "$CONTAINERVERSION" ]]; then
