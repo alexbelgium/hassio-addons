@@ -4,9 +4,6 @@
 # Only execute if installed
 if [ -f /notinstalled ]; then exit 0; fi
 
-# Specify launcher
-PUID=$(bashio::config "PUID")
-
 # Check current version
 if [ -f /data/config/www/nextcloud/version.php ]; then
     CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"

@@ -34,7 +34,6 @@ if [ -f /notinstalled ]; then
 fi
 
 # Specify launcher
-PUID=$(bashio::config "PUID")
 LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
 
 # Inform if new version available

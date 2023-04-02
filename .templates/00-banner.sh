@@ -43,6 +43,8 @@ fi
 # ==============================================================================
 if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     bashio::log.green "Defining permissions for main user :"
+    PUID="$(bashio::config "PUID")"
+    PGID="$(bashio::config "PGID")"
     bashio::log.blue "User UID: $PUID"
     bashio::log.blue "User GID : $PGID"
     groupmod -o -g "$PGID" abc
