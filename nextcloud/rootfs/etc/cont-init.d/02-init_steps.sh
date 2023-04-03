@@ -54,7 +54,7 @@ if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/ne
     touch /notinstalled
     exit 0
 # Is there missing files
-elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
+elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]] || [[ $($LAUNCHER -V 2>&1) == *"No such file"* ]] ; then
     bashio::log.red "--------------------------------------------------"
     bashio::log.red " Missing files detected, Nextcloud will reinstall "
     bashio::log.red "--------------------------------------------------"
@@ -64,7 +64,7 @@ elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]]; then
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 # Everything is fine
-elif [[ $($LAUNCHER -V 2>&1) == *"Nextcloud"* ]]; then
+elif [[ $($LAUNCHER -V 2>&1) =~ ^"Nextcloud "[0-9].* ]]; then
     # Log
     bashio::log.green "----------------------------------------"
     bashio::log.green " Nextcloud $CURRENTVERSION is installed "
