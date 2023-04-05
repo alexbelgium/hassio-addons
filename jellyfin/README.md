@@ -1,4 +1,4 @@
-## &#9888; Open Request : [✨ [REQUEST] Jellyfin customize transcodes folder location (inside data) to a separate folder (opened 2023-03-31)](https://github.com/alexbelgium/hassio-addons/issues/777) by [@cali15](https://github.com/cali15)
+## &#9888; Open Issue : [✨ [REQUEST] Jellyfin customize transcodes folder location (inside data) to a separate folder (opened 2023-03-31)](https://github.com/alexbelgium/hassio-addons/issues/777) by [@cali15](https://github.com/cali15)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
