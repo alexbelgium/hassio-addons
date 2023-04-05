@@ -72,23 +72,24 @@ if bashio::config.has_value 'networkdisks'; then
             ####################################
             for DOMAINVAR in "$DOMAIN" ",domain=WORKGROUP"; do
 
-            # Test with PUIDPGID, remove otherwise
-            ######################################
-            for PUIDPGID in "$PUID$PGID" "$PUID$PGID,forceuid,forcegid" ""; do
-            
-                # Test with iocharset utf8, remove otherwise
-                ############################################
-                for CHARSET in ",iocharset=utf8" ""; do
-                
-                    # Test with different SMB versions
-                    ##################################
-                    for SMBVERS in ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs"; do
-                        
-                        # Test with different security versions
-                        #######################################
-                        for SECVERS in "" ",sec=ntlm" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
-                            mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" 2>/dev/null \
-                                && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" && break 2 && break || MOUNTED=false
+                # Test with PUIDPGID, remove otherwise
+                ######################################
+                for PUIDPGID in "$PUID$PGID" "$PUID$PGID,forceuid,forcegid" ""; do
+
+                    # Test with iocharset utf8, remove otherwise
+                    ############################################
+                    for CHARSET in ",iocharset=utf8" ""; do
+
+                        # Test with different SMB versions
+                        ##################################
+                        for SMBVERS in ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs"; do
+
+                            # Test with different security versions
+                            #######################################
+                            for SECVERS in "" ",sec=ntlm" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
+                                mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" 2>/dev/null \
+                                    && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" && break 2 && break || MOUNTED=false
+                            done
                         done
                     done
                 done
