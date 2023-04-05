@@ -61,16 +61,12 @@ if bashio::config.has_value 'networkdisks'; then
         mkdir -p /mnt/"$diskname"
         chown -R root:root /mnt/"$diskname"
 
-        # Tries to mount with default options
-        # shellcheck disable=SC2140
-        mount -t cifs -o iocharset=utf8,rw,username="$CIFS_USERNAME",password="$CIFS_PASSWORD$DOMAIN$PUID$PGID" "$disk" /mnt/"$diskname" 2>ERRORCODE && MOUNTED=true || MOUNTED=false
-
         # if Fail test different smb and sec versions
         if [ "$MOUNTED" = false ]; then
         
             # Test with domain, remove otherwise
             ####################################
-            for DOMAINVAR in "$DOMAIN" ",domain=WORKGROUP"; do
+            for DOMAINVAR in "$DOMAIN" ",domain=WORKGROUP" ""; do
 
                 # Test with PUIDPGID, remove otherwise
                 ######################################
@@ -82,7 +78,7 @@ if bashio::config.has_value 'networkdisks'; then
 
                         # Test with different SMB versions
                         ##################################
-                        for SMBVERS in ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs"; do
+                        for SMBVERS in "" ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs"; do
 
                             # Test with different security versions
                             #######################################
