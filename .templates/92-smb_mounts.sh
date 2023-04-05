@@ -68,9 +68,13 @@ if bashio::config.has_value 'networkdisks'; then
         # if Fail test different smb and sec versions
         if [ "$MOUNTED" = false ]; then
         
+            # Test with domain, remove otherwise
+            ####################################
+            for DOMAINVAR in "$DOMAIN" ",domain=WORKGROUP"; do
+
             # Test with PUIDPGID, remove otherwise
             ######################################
-            for PUIDPGID in "$PUID$PGID" ""; do
+            for PUIDPGID in "$PUID$PGID" "$PUID$PGID,forceuid,forcegid" ""; do
             
                 # Test with iocharset utf8, remove otherwise
                 ############################################
@@ -78,13 +82,13 @@ if bashio::config.has_value 'networkdisks'; then
                 
                     # Test with different SMB versions
                     ##################################
-                    for SMBVERS in ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs" ",uid=0,gid=0,forceuid,forcegid" ",noforceuid,noforcegid" ",domain=${DOMAIN:-WORKGROUP}"; do
-                        mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$CHARSET$SMBVERS$PUIDPGID" "$disk" /mnt/"$diskname" 2>/dev/null && MOUNTED=true && break || MOUNTED=false
+                    for SMBVERS in ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs"; do
                         
                         # Test with different security versions
                         #######################################
-                        for SECVERS in ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
-                            mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$CHARSET$SMBVERS$SECVERS$PUIDPGID$CHARSET" "$disk" /mnt/"$diskname" 2>/dev/null && MOUNTED=true && break 2 && break || MOUNTED=false
+                        for SECVERS in "" ",sec=ntlm" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
+                            mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" 2>/dev/null \
+                                && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" && break 2 && break || MOUNTED=false
                         done
                     done
                 done
@@ -96,13 +100,13 @@ if bashio::config.has_value 'networkdisks'; then
             #Test write permissions
             # shellcheck disable=SC2015
             touch "/mnt/$diskname/testaze" && rm "/mnt/$diskname/testaze" &&
-            bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $SMBVERS$SECVERS" ||
+            bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $MOUNTOPTIONS" ||
             bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
 
             # Test for serverino
             # shellcheck disable=SC2015
             touch "/mnt/$diskname/testaze" && mv "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" ||
-            (umount "/mnt/$diskname" && mount -t cifs -o "iocharset=utf8,rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "noserverino option used")
+            (umount "/mnt/$diskname" && mount -t cifs -o "iocharset=utf8,rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$MOUNTOPTIONS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "noserverino option used")
 
         else
             # Mounting failed messages
