@@ -1,5 +1,4 @@
-Portainer can be used to execute custom commands in a docker container. It is an open-source lightweight management UI which allows you to
-easily manage a Docker host(s) or Docker swarm clusters.
+Portainer can be used to execute custom commands in a docker container. It is an open-source lightweight management UI which allows you to easily manage a Docker host(s) or Docker swarm clusters.
 
 # Quick start
 - Add my repository using this link
@@ -23,6 +22,9 @@ easily manage a Docker host(s) or Docker swarm clusters.
 
 ## Reset database
 Just change the password in your addon options and the database will be reset
+
+## Timeout of 60s
+The addon includes a very long timeout. However, if you use another layer of proxy such as the addon nginx proxy manager, it will default to a timeout of 60s. You'll have to adapt the proxy layer to increase timeout. More details here : https://github.com/portainer/portainer/issues/2953#issuecomment-1235795256
 
 ## Further reference
 - Here is a full guide on using it : https://codeopolis.com/posts/beginners-guide-to-portainer/
