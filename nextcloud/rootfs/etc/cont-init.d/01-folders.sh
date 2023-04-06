@@ -17,10 +17,11 @@ chown -R "$PUID:$PGID" "/data/config"
 
 # Check current version
 if [ -f /data/config/www/nextcloud/config/config.php ]; then
-    datadirectory="$(sed -n "s|.*datadirectory' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
+    datadirectory="$(sed -n "s|.*datadirectory.*' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
     echo "... Data directory detected : $datadirectory"
 else
     datadirectory=/share/nextcloud
+    echo "Nextcloud is not installed yet, the default data directory is : $datadirectory. You can change it during nextcloud installation."
 fi
 
 # Is the directory valid
