@@ -190,6 +190,10 @@ fi
 # INSTALL MANUAL APPS #
 #######################
 
+# Install micro texteditor
+cd /usr/bin || true
+curl https://getmic.ro | bash || true
+
 for files in "/etc/services.d" "/etc/cont-init.d"; do
 
     # Next directory if does not exists
