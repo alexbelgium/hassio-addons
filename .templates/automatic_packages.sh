@@ -191,8 +191,8 @@ fi
 #######################
 
 # Install micro texteditor
-cd /usr/bin || true
-curl https://getmic.ro | bash || true
+curl https://getmic.ro | bash
+mv micro /usr/bin || true
 
 for files in "/etc/services.d" "/etc/cont-init.d"; do
 
