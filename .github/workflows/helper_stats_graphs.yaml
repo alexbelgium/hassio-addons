@@ -4,10 +4,7 @@ name: Generate weekly graphs
 on:
   schedule:
     - cron: 0 18 * * *
-  workflow_run:
-    workflows: ["weekly_stats.yaml"]
-    types:
-      - completed
+  workflow_call:
   workflow_dispatch:
 
 jobs:
