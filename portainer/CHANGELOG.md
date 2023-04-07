@@ -1,60 +1,82 @@
+- Feat : addition of Micro Editor to all addons
+
 ### 2.17.1-9 (11-03-2023)
+
 - Minor bugs solved
 - Revert : disable healthcheck (caused unhealthy status)
+
 ### 2.17.1-8 (11-03-2023)
+
 - Minor bugs solved
 - Improve healthcheck with /api/status
+
 ### 2.17.1-6 (11-03-2023)
+
 - Implemented healthcheck
 - Rollback implementation of s6-rc.d from 2.17.1-4 to 2.17.1-2 due to reported issues with addon entities reporting
 
 ## 2.17.1 (25-02-2023)
+
 - Update to latest version from portainer/portainer
 
 ## 2.17.0 (11-02-2023)
+
 - Update to latest version from portainer/portainer
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 2.16.2 (22-11-2022)
+
 - Update to latest version from portainer/portainer
 
 ## 2.16.1 (11-11-2022)
+
 - Update to latest version from portainer/portainer
 
 ## 2.16.0 (01-11-2022)
+
 - Update to latest version from portainer/portainer
 
 ## 2.15.1 (17-09-2022)
+
 - Update to latest version from portainer/portainer
 
 ## 2.15.0 (09-09-2022)
+
 - Update to latest version from portainer/portainer
 
 ## 2.14.2 (28-07-2022)
+
 - Update to latest version from portainer/portainer
 
 ## 2.14.1 (14-07-2022)
+
 - Update to latest version from portainer/portainer
 
 ## 2.14.0 (30-06-2022)
+
 - Update to latest version from portainer/portainer
 
 ## 2.13.1 (12-05-2022)
+
 - BREAKING CHANGE : database is reset and password reset to homeassistant (new portainer stronger password requirement)
 - Update to latest version from portainer/portainer
 
 ## 2.13.0 (10-05-2022)
+
 - Update to latest version from portainer/portainer
 - Add codenotary sign
 - Reduce backup size (thanks @lmagyar)
 
 ## 2.11.1 (10-02-2022)
+
 - Update to latest version from portainer/portaine@
 
 ## 2.11.0 (08-02-2022)
+
 - Update to latest version from portainer/portainer
 
 ## 2.11.1 (08-02-2022)
+
 - Update to latest version from portainer/portainer
 - New standardized logic for Dockerfile build and packages installation
 - Improve architecture detection
