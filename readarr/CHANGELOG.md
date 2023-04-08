@@ -1,4 +1,7 @@
 
+## develop-0.1.4.1596-ls39 (08-04-2023)
+- Update to latest version from linuxserver/docker-readarr
+
 ## develop-0.1.4.1596-ls38 (31-03-2023)
 - Update to latest version from linuxserver/docker-readarr
 
