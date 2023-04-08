@@ -43,17 +43,17 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 78
-- Installed : 16127
+- Installed : 19253
 
 ### Top 3
 
-1. Filebrowser (2810x)
-2. Portainer (2542x)
-3. Myelectricaldata (672x)
+1. Portainer (3527x)
+2. Filebrowser (3498x)
+3. Myelectricaldata (803x)
 
 ### Architectures used
 
-- amd64: 58%
+- amd64: 59%
 - aarch64: 38%
 - armv7: 4%
 
@@ -207,7 +207,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (2810x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
+&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (3498x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fupdater.json)
@@ -519,7 +519,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (2542x)](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (3527x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
