@@ -130,11 +130,6 @@ RUN \
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
     cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
-    #&& \
-    ##\
-    # Rename smb files
-    #mv /etc/cont-init.d/00-local_mounts.sh /etc/cont-init.d/00-local_mounts.sh && \
-    ##v /etc/cont-init.d/00-smb_mounts.sh /etc/cont-init.d/00-smb_mounts.sh
 
 ############
 # 5 Labels #
