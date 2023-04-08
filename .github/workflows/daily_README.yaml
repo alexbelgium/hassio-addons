@@ -173,13 +173,8 @@ jobs:
           # Replace template if change
 
           echo "Replace template..."
-          if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
-            echo "no changes"
-            rm README2.md
-          else
-            rm README.md
-            mv README2.md README.md
-          fi
+          mv README2.md README.md
+
           echo "... done"
 
         shell: bash
