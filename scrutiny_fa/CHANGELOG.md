@@ -1,3 +1,6 @@
+
+## v0.7.0 (08-04-2023)
+- Update to latest version from analogj/scrutiny
 - Implemented healthcheck
 
 ## v0.6.0 (14-01-2023)
