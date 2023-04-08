@@ -92,7 +92,7 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 92-local_mounts.sh 92-smb_mounts.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -129,11 +129,12 @@ RUN \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
-    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample && \
-    \
+    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
+    #&& \
+    ##\
     # Rename smb files
-    mv /etc/cont-init.d/92-local_mounts.sh /etc/cont-init.d/00-local_mounts.sh && \
-    mv /etc/cont-init.d/92-smb_mounts.sh /etc/cont-init.d/00-smb_mounts.sh
+    #mv /etc/cont-init.d/00-local_mounts.sh /etc/cont-init.d/00-local_mounts.sh && \
+    ##v /etc/cont-init.d/00-smb_mounts.sh /etc/cont-init.d/00-smb_mounts.sh
 
 ############
 # 5 Labels #

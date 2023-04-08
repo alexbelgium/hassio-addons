@@ -129,11 +129,11 @@ Wait a couple minutes and restart addon, it could be a temporary unavailability 
 
 ### Local mount with invalid argument (@antonio1475)
 
-> [cont-init.d] 92-local_mounts.sh: executing...
+> [cont-init.d] 00-local_mounts.sh: executing...
 > Local Disks mounting...
 > mount: mounting /dev/sda1 on /mnt/sda1 failed: Invalid argument
 > [19:19:44] FATAL: Unable to mount local drives! Please check the name.
-> [cont-init.d] 92-local_mounts.sh: exited 0.
+> [cont-init.d] 00-local_mounts.sh: exited 0.
 
 Try to mount by putting the partition label in the "localdisks" options instead of the hardware name
 
