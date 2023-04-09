@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Whoogle] Not updated to 0.8.2 remote (opened 2023-04-09)](https://github.com/alexbelgium/hassio-addons/issues/784) by [@bruvv](https://github.com/bruvv)
 # Home assistant add-on: whoogle-search
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
