@@ -136,7 +136,6 @@ jobs:
             --addon
 
   make-changelog:
-    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     needs: [check-addon-changes, build]
     runs-on: ubuntu-latest
     steps:
