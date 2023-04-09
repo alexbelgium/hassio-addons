@@ -137,12 +137,8 @@ jobs:
 
   make-changelog:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
-    needs: build
+    needs: [check-addon-changes, build]
     runs-on: ubuntu-latest
-    strategy: 
-      fail-fast: false 
-      matrix: 
-        addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }} 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
