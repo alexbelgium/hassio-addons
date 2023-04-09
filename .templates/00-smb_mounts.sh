@@ -63,7 +63,7 @@ if bashio::config.has_value 'networkdisks'; then
 
         # if Fail test different smb and sec versions
         if [ "$MOUNTED" = false ]; then
-        
+
             # Test with domain, remove otherwise
             ####################################
             for DOMAINVAR in "$DOMAIN" ",domain=WORKGROUP" ""; do
@@ -85,16 +85,16 @@ if bashio::config.has_value 'networkdisks'; then
                             for SECVERS in "" ",sec=ntlm" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
                                 if [ "$MOUNTED" = false ]; then
                                     mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" 2>/dev/null \
-                                    && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" || MOUNTED=false
+                                        && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" || MOUNTED=false
                                 fi
                             done
-                        
+
                         done
-                    
+
                     done
-                
+
                 done
-            
+
             done
         fi
 

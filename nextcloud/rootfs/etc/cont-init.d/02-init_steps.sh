@@ -53,7 +53,7 @@ if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/ne
     bashio::log.green " "
     touch /notinstalled
     exit 0
-# Is there missing files
+    # Is there missing files
 elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]] || [[ $($LAUNCHER -V 2>&1) == *"No such file"* ]] ; then
     bashio::log.red "--------------------------------------------------"
     bashio::log.red " Missing files detected, Nextcloud will reinstall "
@@ -63,13 +63,13 @@ elif [[ $($LAUNCHER -V 2>&1) == *"Composer autoloader not found"* ]] || [[ $($LA
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
-# Everything is fine
+    # Everything is fine
 elif [[ $($LAUNCHER -V 2>&1) =~ ^"Nextcloud "[0-9].* ]]; then
     # Log
     bashio::log.green "----------------------------------------"
     bashio::log.green " Nextcloud $CURRENTVERSION is installed "
     bashio::log.green "----------------------------------------"
-# Tentative to downgrade
+    # Tentative to downgrade
 elif [[ $($LAUNCHER -V 2>&1) == *"Downgrading"* ]]; then
     # Get currently installed version
     version="$($LAUNCHER -V 2>&1)"
