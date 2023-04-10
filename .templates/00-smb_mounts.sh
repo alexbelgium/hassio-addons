@@ -58,6 +58,13 @@ if bashio::config.has_value 'networkdisks'; then
             exit 0
         fi
 
+        # Does server exists
+        server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
+        if [ -f /usr/bin/ping ]; then
+          ping "$server" >/dev/null || \
+          bashio::log.fatal "Your server $server from $disk doesn't ping, is it correct?"
+        fi
+
         # Prepare mount point
         mkdir -p /mnt/"$diskname"
         chown -R root:root /mnt/"$diskname"
