@@ -55,14 +55,15 @@ if bashio::config.has_value 'networkdisks'; then
         # Data validation
         if [[ ! $disk =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
             bashio::log.fatal "The structure of your \"networkdisks\" option : \"$disk\" doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2. If you don't use it, you can simply remove the text, this will avoid this error message in the future."
-            exit 0
+            break
         fi
 
         # Does server exists
         server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
         if [ -f /usr/bin/ping ]; then
-          ping "$server" >/dev/null || \
-          bashio::log.fatal "Your server $server from $disk doesn't ping, is it correct?"
+            ping "$server" >/dev/null || \
+            bashio::log.fatal "Your server $server from $disk doesn't ping, is it correct?"
+            break
         fi
 
         # Prepare mount point
