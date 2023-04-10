@@ -68,6 +68,14 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES ntfs-3g"
     fi
 
+    COMMAND="ping"
+    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
+        [ "$VERBOSE" = true ] && echo "$COMMAND required"
+        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES iputils"
+        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES iputils-ping"
+        #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES iputils"
+    fi
+
     COMMAND="cifs"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
