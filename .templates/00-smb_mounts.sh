@@ -11,7 +11,7 @@ if bashio::config.has_value 'networkdisks'; then
     MOREDISKS=$(bashio::config 'networkdisks')
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
-    MOUNTED=false
+
     SMBVERS=""
     SECVERS=""
 
@@ -50,6 +50,7 @@ if bashio::config.has_value 'networkdisks'; then
         disk="${disk//"\040"/ }"            #replace \040 with
         diskname="${disk//\\//}"            #replace \ with /
         diskname="${diskname##*/}"          # Get only last part of the name
+        MOUNTED=false
 
         # Data validation
         if [[ ! $disk =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
