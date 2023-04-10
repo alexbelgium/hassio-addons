@@ -1,3 +1,4 @@
+- Fix issue with smb
 
 ## 4.8.0.29 (08-04-2023)
 - Update to latest version from linuxserver/docker-emby
