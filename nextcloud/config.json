@@ -42,7 +42,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "NEXTCLOUD_PATH": "/data/config/www/nextcloud"
+    "NEXTCLOUD_PATH": "/data/config/www/nextcloud",
+    "SKIP_DATA_DIRECTORY_PERMISSION_CHECK": "yes"
   },
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/nextcloud_ocr-{arch}",
@@ -106,6 +107,6 @@
   "slug": "nextcloud_ocr",
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "26.0.0-14",
+  "version": "26.0.0-15",
   "webui": "https://[HOST]:[PORT:443]"
 }
