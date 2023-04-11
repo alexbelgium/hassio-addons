@@ -181,3 +181,4 @@ jobs:
           commit: -u
           message: "GitHub bot : changelog"
           default_author: github_actions
+          pull: --rebase
