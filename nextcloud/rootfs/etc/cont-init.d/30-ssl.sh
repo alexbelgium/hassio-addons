@@ -7,6 +7,9 @@ if bashio::config.true 'use_own_certs'; then
     CERTFILE=$(bashio::config 'certfile')
     KEYFILE=$(bashio::config 'keyfile')
 
+    # Validate ssl
+    bashio::config.require.ssl
+
     #Check if files exist
     echo "... checking if referenced files exist"
     [ ! -f /ssl/"$CERTFILE" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$CERTFILE not found" && bashio::exit.nok
