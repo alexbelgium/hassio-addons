@@ -1,3 +1,5 @@
+### v1.0.0-beta-3 (11-04-2023)
+- Minor bugs fixed
 ## v1.0.0-beta-2 (11-04-2023)
 
 - Fix : ssl (https://github.com/alexbelgium/hassio-addons/issues/782)
