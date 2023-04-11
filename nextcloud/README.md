@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] Nextcloud - Enable antivirus (opened 2023-01-25)](https://github.com/alexbelgium/hassio-addons/issues/669) by [@amaciuc](https://github.com/amaciuc)
-## &#9888; Open Issue : [Nextcloud : One of the updates over the last couple of weeks is causing permission denied error (opened 2023-03-28)](https://github.com/alexbelgium/hassio-addons/issues/775) by [@bobloadmire](https://github.com/bobloadmire)
 
 
 # Home assistant add-on: Nextcloud
