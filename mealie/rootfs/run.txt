@@ -108,5 +108,7 @@ chmod -R 777 /config/addons_config/mealie_data
 cp -r /data/* /config/addons_config/mealie_data/
 
 bashio::log.info "Starting app"
+nginx & true
 
+bashio::log.info "Starting app"
 fi
