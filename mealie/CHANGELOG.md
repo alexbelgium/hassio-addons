@@ -1,3 +1,5 @@
+## v1.0.0-beta-2 (11-04-2023)
+
 - Fix : ssl (https://github.com/alexbelgium/hassio-addons/issues/782)
 - Implemented healthcheck
 
