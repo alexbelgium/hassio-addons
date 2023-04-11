@@ -1,3 +1,5 @@
+- Implement check_data_directory_permissions for data folders in mounted drives
+
 ### 26.0.0-12 (02-04-2023)
 - Minor bugs fixed
 - &#9888; WARNING : please read warning on previous versions before updating
