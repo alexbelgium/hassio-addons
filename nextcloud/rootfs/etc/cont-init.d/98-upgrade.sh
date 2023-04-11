@@ -23,6 +23,7 @@ if ! bashio::config.true "disable_updates"; then
     # Install new version
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/updater/updater.phar --no-interaction"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ app:update --all"
     # Install additional versions
     while [[ $(occ update:check 2>&1) == *"update available"* ]]; do
         bashio::log.yellow "-----------------------------------------------------------------------"
