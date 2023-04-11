@@ -1,3 +1,4 @@
+- Automatic app updates
 ### 26.0.0-16 (11-04-2023)
 - Minor bugs fixed
 ### 26.0.0-15 (11-04-2023)
