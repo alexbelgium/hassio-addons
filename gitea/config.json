@@ -37,6 +37,10 @@
   },
   "slug": "gitea",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/gitea",
+<<<<<<< Updated upstream
   "version": "1.18.4",
+=======
+  "version": "1.19.1",
+>>>>>>> Stashed changes
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
