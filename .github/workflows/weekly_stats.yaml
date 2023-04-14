@@ -102,4 +102,5 @@ jobs:
           default_author: github_actions
           message : "Github bot : stats updated"
   Generate_graphs:
+   needs: stats_updater
    uses: ./.github/workflows/helper_stats_graphs.yaml
