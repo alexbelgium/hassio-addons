@@ -1,4 +1,7 @@
 
+## 10.0.0 (24-03-2023)
+- Update to latest version from franchetti/seafile-arm
+
 ## 9.0.10 (28-01-2023)
 - Update to latest version from franchetti/seafile-arm
 - Allow setting server url

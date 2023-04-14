@@ -103,3 +103,9 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+####################
+# 6 HealthcheckNOT #
+####################
+
+# Can't be implemented as container is optimized for memory usage, so the webserver and Node are spun down during idle

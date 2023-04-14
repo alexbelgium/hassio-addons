@@ -1,4 +1,11 @@
 
+## 2.10.11 (18-03-2023)
+- Update to latest version from etechonomy/joplin-server
+
+## 2.10.10 (11-03-2023)
+- Update to latest version from etechonomy/joplin-server
+- Implemented healthcheck
+
 ## 2.10.9 (11-02-2023)
 - Update to latest version from etechonomy/joplin-server
 

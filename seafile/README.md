@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Seafile] localdisk mount, does not work (opened 2023-02-14)](https://github.com/alexbelgium/hassio-addons/issues/710) by [@cokeman0](https://github.com/cokeman0)
 # Home assistant add-on: seafile
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -15,8 +14,9 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/seafile/stats.png)
 
 ## About
 
@@ -51,6 +51,8 @@ Configurations can be done through the app webUI, except for the following optio
 
 Default name : me@example.com
 Default password : a_very_secret_password
+
+If you store your database on a mounted drive, make sure to also host your sqlite database there : otherwise if there is an issue with the mount you'll lose your whole database (thanks @cokeman0)
 
 ```yaml
 PGID: user

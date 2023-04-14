@@ -1,3 +1,8 @@
+### 0.8.2-2 (09-04-2023)
+- Minor bugs fixed
+
+## 0.8.2 (08-04-2023)
+- Update to latest version from benbusby/whoogle-search
 
 ## 0.8.1 (25-12-2022)
 - Update to latest version from benbusby/whoogle-search

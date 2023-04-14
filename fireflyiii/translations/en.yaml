@@ -96,6 +96,9 @@ configuration:
   database:
     name: database
     description: Type of database to use
+  disable_updates:
+    name: disable_updates
+    description: App updates won't be done automatically but must be done with the webui
   DB_CLIENT:
     name: DB_CLIENT
     description: See upstream app documentation
@@ -503,7 +506,7 @@ configuration:
     description: See upstream app documentation
   whitelist:
     name: whitelist
-    description: '"localhost,192.168.0.0/16" # list ip subnets that do no need a password'
+    description: '"localhost,192.168.0.0/16" # list ip subnets that that can access the webui'
   WHOOGLE_ALT_IG:
     name: WHOOGLE_ALT_IG
     description: See upstream app documentation

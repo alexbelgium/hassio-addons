@@ -1,4 +1,8 @@
 
+## 2.00.20.1 (08-04-2023)
+- Update to latest version from haveagitgat/tdarr
+- Implement healthcheck
+
 ## 2.00.19.1 (19-02-2023)
 - Update to latest version from haveagitgat/tdarr
 - WARNING : update to supervisor 2022.11 before installing

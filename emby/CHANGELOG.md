@@ -1,3 +1,11 @@
+- Fix issue with smb
+
+## 4.8.0.29 (08-04-2023)
+- Update to latest version from linuxserver/docker-emby
+
+## 4.8.0.28 (31-03-2023)
+- Update to latest version from linuxserver/docker-emby
+- Implemented healthcheck
 
 ## 4.8.0.21 (13-12-2022)
 - Update to latest version from linuxserver/docker-emby

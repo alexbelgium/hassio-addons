@@ -3,5 +3,6 @@
 
 WEBUI_PORT=${WEBUI_PORT:-8080}
 
-s6-notifyoncheck -d -n 12 -c "nc -z 127.0.0.1 ${WEBUI_PORT}" \
+exec \
+    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
     s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"

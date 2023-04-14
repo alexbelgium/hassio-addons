@@ -14,8 +14,9 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/qbittorrent/stats.png)
 
 ## About
 
@@ -128,11 +129,11 @@ Wait a couple minutes and restart addon, it could be a temporary unavailability 
 
 ### Local mount with invalid argument (@antonio1475)
 
-> [cont-init.d] 92-local_mounts.sh: executing...
+> [cont-init.d] 00-local_mounts.sh: executing...
 > Local Disks mounting...
 > mount: mounting /dev/sda1 on /mnt/sda1 failed: Invalid argument
 > [19:19:44] FATAL: Unable to mount local drives! Please check the name.
-> [cont-init.d] 92-local_mounts.sh: exited 0.
+> [cont-init.d] 00-local_mounts.sh: exited 0.
 
 Try to mount by putting the partition label in the "localdisks" options instead of the hardware name
 

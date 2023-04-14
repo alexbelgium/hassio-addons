@@ -16,12 +16,11 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 _Thanks to all contributors !_
 
-[![contributors](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)
+[![contributors](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/graphs/contributors)
 
 ## About
 
@@ -41,24 +40,36 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Statistics
 
-Number of addons in the repository : 75
+### Number of addons
 
-Total number of addons installed : 13610
+- In the repository : 78
+- Installed : 19253
 
-Top 3 most installed addons :
-1. Portainer (3080x)
-2. Filebrowser (2036x)
-3. Myelectricaldata (416x)
+### Top 3
 
-Most used architectures :
-- amd64: 58%
+1. Portainer (3527x)
+2. Filebrowser (3498x)
+3. Myelectricaldata (803x)
+
+### Architectures used
+
+- amd64: 59%
 - aarch64: 38%
-- armv7: 5%
+- armv7: 4%
 
-Downloads evolution :
+### Total downloads evolution
 
-![Downloads graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats.png)
-![Addons graph](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/stats_addons.png)
+<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stats.png" width=500px>
+
+### Specific downloads evolution
+
+<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stats_addons.png" width=500px>
+
+### Stars evolution
+
+<a href="https://star-history.com">
+  <img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/starsevol.svg" width=500px>
+</a>
 
 ## Add-ons provided by this repository
 
@@ -70,6 +81,17 @@ Downloads evolution :
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/television-classic.svg) [Autobrr](autobrr/) : Automation for downloads
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fautobrr%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fautobrr%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7][armv7-badge]
+![ingress][ingress-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003;  [Baikal](baikal/) : Baïkal is a Calendar+Contacts server
 
@@ -88,6 +110,15 @@ Downloads evolution :
 ![armv7][armv7-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/bitcoin.svg) [Binance Trading Bot](binance-trading-bot/) : Automated Binance trading bot - Trade multiple cryptocurrencies. Buy low/sell high with Grid Trading. Integrated with TradingView technical analysis
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbinance-trading-bot%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbinance-trading-bot%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7no][armv7no-badge]
+![ingress][ingress-badge]
 
 &#10003;  [Booksonic-air](booksonic_air/) : platform for accessing the audibooks you own wherever you are
 
@@ -113,7 +144,7 @@ Downloads evolution :
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fcalibre%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
@@ -176,7 +207,7 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (2036x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
+&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (3498x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fupdater.json)
@@ -488,7 +519,7 @@ Downloads evolution :
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (3080x)](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (3527x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
@@ -616,6 +647,13 @@ Downloads evolution :
 ![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003;  [Sponsorblockcast](sponsorblockcast/) : skips sponsored YouTube content on all local Chromecasts
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsponsorblockcast%2Fconfig.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7][armv7-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/chart-timeline.svg) [Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
 

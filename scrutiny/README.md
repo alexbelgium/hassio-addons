@@ -1,4 +1,3 @@
-
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -15,8 +14,9 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/scrutiny/stats.png)
 
 ## About
 
@@ -42,9 +42,9 @@ It automatically mounts all local drives.
 Enable full access only if you are encountering issues. SMART access should work without full access in all other scenarios.
 
 ```yaml
-Updates : Hourly, Daily, Weekly
-TZ : timezone
-Mode : Collector+WebUI or Collector only
+Updates: Hourly, Daily, Weekly
+TZ: timezone
+Mode: Collector+WebUI or Collector only
 ```
 
 ## Installation
@@ -70,7 +70,7 @@ Integration with HA can be done with the [rest platform](https://www.home-assist
 Two types of api endpoints are available:
 
 - Summary data : http://YOURIP:ADDONPORT/api/summary
-- Detailed data : http://YOURIP:ADDONPORT/api/WWN/details
+- Detailed data : http://YOURIP:ADDONPORT/api/device/WWN/details
 
 For the detailed data, wmn can be found for each hdd within the scrutiny app. For example for me : http://192.168.178.23:8086/api/device/0x50014ee606c14537/details
 

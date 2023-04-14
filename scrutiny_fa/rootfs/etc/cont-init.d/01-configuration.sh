@@ -51,15 +51,15 @@ bashio::log.info "$FREQUENCY updates"
 
 case "$FREQUENCY" in
     "Hourly")
-        sed -i "1a export COLLECTOR_CRON_SCHEDULE=\"0 * * * *\"" /etc/cont-init.d/50-cron-config
+        sed -i "/customize the cron schedule/a export COLLECTOR_CRON_SCHEDULE=\"0 * * * *\"" /etc/cont-init.d/50-cron-config
         ;;
 
     "Daily")
-        sed -i "1a export COLLECTOR_CRON_SCHEDULE=\"0 0 * * *\"" /etc/cont-init.d/50-cron-config
+        sed -i "/customize the cron schedule/a export COLLECTOR_CRON_SCHEDULE=\"0 0 * * *\"" /etc/cont-init.d/50-cron-config
         ;;
 
     "Weekly")
-        sed -i "1a export COLLECTOR_CRON_SCHEDULE=\"0 0 * * 0\"" /etc/cont-init.d/50-cron-config
+        sed -i "/customize the cron schedule/a export COLLECTOR_CRON_SCHEDULE=\"0 0 * * 0\"" /etc/cont-init.d/50-cron-config
         ;;
 esac
 

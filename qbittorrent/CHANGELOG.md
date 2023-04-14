@@ -1,3 +1,26 @@
+### 4.5.2-2 (19-03-2023)
+- Minor bugs fixed
+- Align exec code with upstream
+
+## 4.5.2 (18-03-2023)
+- Update to latest version from linuxserver/docker-qbittorrent
+- Correct downloads folder
+### 4.5.2-r0-ls250-2 (13-03-2023)
+- Minor bug fixes
+- Try solving sed error message #755
+### 4.5.2-r0-ls250-2 (11-03-2023)
+- Bug updates
+- Add lsio branding
+- Implement healthcheck
+
+## 4.5.2-r0-ls250 (11-03-2023)
+- Update to latest version from linuxserver/docker-qbittorrent
+
+## 4.5.2-r0-ls249 (04-03-2023)
+- Update to latest version from linuxserver/docker-qbittorrent
+
+## 4.5.1-r1-ls246 (25-02-2023)
+- Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.1-r1-ls245 (19-02-2023)
 - Update to latest version from linuxserver/docker-qbittorrent

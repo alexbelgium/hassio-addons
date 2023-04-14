@@ -1,5 +1,3 @@
-## Breaking change : no database migration with v1.0. Please backup your database from within Mealie before upgrading, then restore the database after upgrading. Infos here : https://hay-kot.github.io/mealie/documentation/getting-started/updating/. Something to note however about the database migration is that only the recipe data gets migrated. Not user data or other settings, and the favorite recipes are also no longer listed as such so they need to be selected again (Thanks @SeeThisIsMe)
-
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -18,8 +16,9 @@ Warning : armv7 only supported up to version 0.4.3! It won't be updated with lat
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/mealie/stats.png)
 
 ## About
 
@@ -59,14 +58,15 @@ The complete list of options can be seen here : https://nightly.mealie.io/docume
 ### Detailed infos (Thanks @michelangelonz)
 
 Create a restful sensor
+
 ```yaml
 sensor:
   - platform: rest
-    resource: 'http://###.###.#.#:9090/api/groups/mealplans/today'
+    resource: "http://###.###.#.#:9090/api/groups/mealplans/today"
     method: GET
-    name: Mealie todays meal 
+    name: Mealie todays meal
     headers:
-      Authorization: Bearer <put  auth here> 
+      Authorization: Bearer <put  auth here>
     value_template: "{{ value_json.value }}"
     json_attributes_path: $..recipe
     json_attributes:
@@ -80,19 +80,20 @@ sensor:
 ```
 
 Create template sensors from attributes
+
 ```yaml
-     - name: TodaysDinner
-       unique_id: sensor.TodaysDinner
-       state: "{{ state_attr('sensor.mealie_todays_meal', 'name') }}"
-     - name: TodaysDinnerDescription
-       unique_id: sensor.DinnerDescription
-       state: "{{ state_attr('sensor.mealie_todays_meal', 'description') }}"
-     - name: TodaysDinnerSlug
-       unique_id: sensor.DinnerSlug
-       state: "{{ state_attr('sensor.mealie_todays_meal', 'slug') }}"
-     - name: TodaysDinnerID
-       unique_id: sensor.DinnerID
-       state: "{{ state_attr('sensor.mealie_todays_meal', 'id') }}"
+- name: TodaysDinner
+  unique_id: sensor.TodaysDinner
+  state: "{{ state_attr('sensor.mealie_todays_meal', 'name') }}"
+- name: TodaysDinnerDescription
+  unique_id: sensor.DinnerDescription
+  state: "{{ state_attr('sensor.mealie_todays_meal', 'description') }}"
+- name: TodaysDinnerSlug
+  unique_id: sensor.DinnerSlug
+  state: "{{ state_attr('sensor.mealie_todays_meal', 'slug') }}"
+- name: TodaysDinnerID
+  unique_id: sensor.DinnerID
+  state: "{{ state_attr('sensor.mealie_todays_meal', 'id') }}"
 ```
 
 Add a generic camera for image

@@ -1,4 +1,19 @@
 
+## develop-0.1.4.1596-ls39 (08-04-2023)
+- Update to latest version from linuxserver/docker-readarr
+
+## develop-0.1.4.1596-ls38 (31-03-2023)
+- Update to latest version from linuxserver/docker-readarr
+
+## nightly-0.1.4.1596-ls167 (24-03-2023)
+- Update to latest version from linuxserver/docker-readarr
+
+## nightly-0.1.4.1596-ls166 (04-03-2023)
+- Update to latest version from linuxserver/docker-readarr
+
+## nightly-0.1.4.1591-ls165 (25-02-2023)
+- Update to latest version from linuxserver/docker-readarr
+
 ## nightly-0.1.3.1584-ls163 (19-02-2023)
 - Update to latest version from linuxserver/docker-readarr
 

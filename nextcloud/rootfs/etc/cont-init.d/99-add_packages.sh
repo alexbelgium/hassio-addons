@@ -1,6 +1,9 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+# Only execute if installed
+if [ -f /notinstalled ]; then exit 0; fi
+
 # Install specific packages
 if [ ! -d /data/config/www/nextcloud/apps/pdfannotate ]; then
     CURRENT="$PWD"
@@ -27,7 +30,7 @@ if bashio::config.has_value 'additional_apps'; then
             APP="${element#${BASH_REMATCH[1]}}"
             bashio::log.green "... $APP"
             # shellcheck disable=SC2015,SC2086
-            apk add --no-cache $APP || bashio::log.red "... not successful, please check $APP package name"
+            apk add --no-cache $APP >/dev/null || bashio::log.red "... not successful, please check $APP package name"
         fi
     done
 fi

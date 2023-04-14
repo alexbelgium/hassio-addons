@@ -15,8 +15,8 @@
   ],
   "name": "Grav web server",
   "options": {
-    "PGID": 0,
-    "PUID": 0
+    "PGID": 1000,
+    "PUID": 1000
   },
   "ports": {
     "80/tcp": 9191
@@ -31,6 +31,6 @@
   },
   "slug": "grav",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.7.38",
+  "version": "1.7.40",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }

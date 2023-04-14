@@ -1,0 +1,246 @@
+# yamllint disable rule:line-length
+---
+name: Generate weekly graphs
+on:
+  schedule:
+    - cron: 0 18 * * *
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  stats_graphs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Install apps
+        run: |
+          git pull --rebase origin master
+          sudo apt-get install gawk -y
+          sudo apt-get install gnuplot-nox -y
+      - name: Create addons stats
+        run: |
+          # Prepare data
+          cp Stats Stats3
+          # Remove Totals
+          sed -i "2d" Stats3
+          # Inverse file
+          gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
+          # Only top 10
+          head -n 11 Stats3 > tmp_file && mv tmp_file Stats3
+          # Transpose data
+          awk '
+          {
+            for (i=1; i<=NF; i++)  {
+            a[NR,i] = $i
+            }
+          }
+          NF>p { p = NF }
+          END {
+            for(j=1; j<=p; j++) {
+              str=a[1,j]
+              for(i=2; i<=NR; i++){
+                str=str" "a[i,j];
+              }
+            print str
+            }
+          }' Stats3 > StatsTmp && mv StatsTmp .github/Stats3
+          cd .github || true
+          # Add download count to names
+          #build_list="$(head -n 1 Stats3)"
+          # shellcheck disable=SC2206
+          #build_list=($build_list)
+          # shellcheck disable=SC2013
+          #for var in "${build_list[@]:1}"; do
+          #i=0
+          #j=0
+          #k=0
+          # shellcheck disable=SC2013
+          #  for i in $(sed -n "/${var}/p" Stats); do
+          #    k="$((k+1))"
+          #    if [ "$k" -eq 3 ]; then break; fi
+          #    if [ "$i" -eq "$i" ] && [ "$i" -gt "$j" ]; then j="$i"; fi
+          #  done
+          #sed -i "s|${var}|${var}_(${j}x)|g" Stats3
+          #done
+          echo "... done"
+          # Remove series with less than 4 points
+          sed -i "/^[0-9|-]* [0-9*|-]* [0-9*|-]* -/d" Stats3
+          # Plot graph
+          ( gnuplot-nox -persist <<-EOFMarker
+            set title 'Top 10 addons'
+            set ylabel 'Number of installations'
+            set xdata time
+            set datafile missing "-"
+            set timefmt "%Y-%m-%d"
+            set format x "%y-%m-%d"
+            set datafile sep ' '
+            set autoscale
+            set terminal png size 500,300
+            set output 'stats_addons.png'
+            set term png tiny
+            plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i) smooth bezier
+          EOFMarker
+          ) || ( gnuplot-nox -persist <<-EOFMarker
+            set title 'Top 10 addons'
+            set ylabel 'Number of installations'
+            set xdata time
+            set datafile missing "-"
+            set timefmt "%Y-%m-%d"
+            set format x "%y-%m-%d"
+            set datafile sep ' '
+            set autoscale
+            set terminal png size 500,300
+            set output 'stats_addons.png'
+            set term png tiny
+            plot for [i=2:*] 'Stats3' using 1:i w l title columnhead(i)
+          EOFMarker
+          )
+          #plot for [i=1:*] 'Stats3' using 0:i
+          rm Stats3
+          cd .. || true
+
+      - name: Create individual stats
+        run: |
+          # Prepare data
+          cp Stats Stats3
+          # Remove Totals
+          sed -i "2d" Stats3
+          # Inverse file
+          gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
+          # For each addon
+          # shellcheck disable=SC2013
+          for line in $(awk '{ print $1 }' Stats3); do
+            TITLE="${line%% *}"
+            FOLDER="$(grep -irl "ghcr.io/alexbelgium/$TITLE-{arch}" --include="config.*" . | xargs -r dirname)"
+            FOLDER="${FOLDER:2}"
+            echo "$TITLE found in $FOLDER"
+            # If non null
+            if [[ "${#FOLDER}" -gt 2 ]]; then
+              sed -n "/Date /p" Stats3 > "$FOLDER"/StatsTmp
+              sed -n "/$TITLE /p" Stats3 >> "$FOLDER"/StatsTmp
+            # Go in folder
+            cd "$FOLDER" || true
+            cat StatsTmp
+            # Transpose data
+              awk '
+              {
+                for (i=1; i<=NF; i++)  {
+                a[NR,i] = $i
+                }
+              }
+              NF>p { p = NF }
+              END {
+                for(j=1; j<=p; j++) {
+                  str=a[1,j]
+                  for(i=2; i<=NR; i++){
+                    str=str" "a[i,j];
+                  }
+                print str
+                }
+              }' StatsTmp > StatsTmp2 && mv StatsTmp2 StatsTmp
+              #Normalize data
+              #awk 'FNR==NR{max=($2+0>max)?$2:max;next} {print $1,$2/max}' StatsTmp StatsTmp
+          # Plot graph
+          ( gnuplot-nox -persist <<-EOFMarker
+            set title "$TITLE"
+            set ylabel 'Number of installations'
+            set xdata time
+            set datafile missing "-"
+            set timefmt "%Y-%m-%d"
+            set format x "%y-%m-%d"
+            set datafile sep ' '
+            set autoscale
+            set terminal png size 500,150
+            set output "stats.png"
+            set term png tiny
+            plot for [i=2:*] 'StatsTmp' using 1:i w l title columnhead(i) smooth bezier
+          EOFMarker
+          ) || ( gnuplot-nox -persist <<-EOFMarker
+            set title "$TITLE"
+            set ylabel 'Number of installations'
+            set xdata time
+            set datafile missing "-"
+            set timefmt "%Y-%m-%d"
+            set format x "%y-%m-%d"
+            set datafile sep ' '
+            set autoscale
+            set terminal png size 500,150
+            set output "stats.png"
+            set term png tiny
+            plot for [i=2:*] 'StatsTmp' using 1:i w l title columnhead(i)
+          EOFMarker
+          ) || true
+            rm StatsTmp || true
+            cd .. || true
+          fi || true
+          done
+          # Clean files
+          rm StatsTmp2
+          rm Stats3
+      - name: Create global stats
+        run: |
+          # Prepare data
+          cp Stats Stats3
+          # Inverse file
+          gawk -i inplace '{for(i=NF;i>1;i--)printf "%s ",$i;printf "%s",$1;print ""}' Stats3
+          # Only totals
+          head -n 2 Stats3 > tmp_file && mv tmp_file Stats3
+          # Transpose data
+          awk '
+          {
+            for (i=1; i<=NF; i++)  {
+            a[NR,i] = $i
+            }
+          }
+          NF>p { p = NF }
+          END {
+            for(j=1; j<=p; j++) {
+              str=a[1,j]
+              for(i=2; i<=NR; i++){
+                str=str" "a[i,j];
+              }
+            print str
+            }
+          }' Stats3 > StatsTmp && mv StatsTmp .github/Stats3
+          cd .github || true
+          sed -i "1d" Stats3
+          # Plot graph
+          gnuplot-nox -persist <<-EOFMarker
+            set title 'Total addons'
+            set ylabel 'Number of installations'
+            set xdata time
+            set datafile missing "-"
+            set timefmt "%Y-%m-%d"
+            set format x "%y-%m-%d"
+            set datafile sep ' '
+            set key top left autotitle columnheader
+            set autoscale
+            set terminal png size 500,300
+            set output 'stats.png'
+            set term png tiny
+            plot 'Stats3' using 1:2 lt rgb 'red' w l title 'Total addons' smooth bezier
+          EOFMarker
+          rm Stats3
+          cd .. || true
+      - name: Clean
+        run: |
+          echo "Starting run"
+          if [ -f stats.png ]; then rm stats.png; fi
+          if [ -f Stats3 ]; then rm Stats3; fi
+      - name: Update stars
+        run: |
+          echo "Starting run"
+          # Get stars
+          wget -S -O .github/stars.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons || true
+          # Get stars2
+          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30 || \
+          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons || \
+          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=31 || true
+          # Get stars evolution
+          wget -S -O .github/starsevol.svg "https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date"
+      - name: Commit if needed
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "GitHub bot : graphs updated"
+          default_author: github_actions

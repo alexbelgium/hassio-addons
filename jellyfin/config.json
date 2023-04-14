@@ -4,6 +4,12 @@
     "amd64",
     "armv7"
   ],
+  "backup_exclude": [
+    "*/cache/",
+    "*/logs/",
+    "*/transcoding-temp/",
+    "*/metadata/"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
   "devices": [
@@ -106,6 +112,6 @@
   },
   "slug": "jellyfin",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.8.9-1-ls200-2",
+  "version": "10.8.9",
   "video": true
 }

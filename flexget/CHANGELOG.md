@@ -1,4 +1,23 @@
 
+## 3.5.36 (08-04-2023)
+- Update to latest version from wiserain/flexget
+
+## 3.5.34 (25-03-2023)
+- Update to latest version from wiserain/flexget
+
+## 3.5.32 (18-03-2023)
+- Update to latest version from wiserain/flexget
+
+## 3.5.30 (11-03-2023)
+- Update to latest version from wiserain/flexget
+- Implemented healthcheck
+
+## 3.5.29 (04-03-2023)
+- Update to latest version from wiserain/flexget
+
+## 3.5.27 (25-02-2023)
+- Update to latest version from wiserain/flexget
+
 ## 3.5.25 (19-02-2023)
 - Update to latest version from wiserain/flexget
 

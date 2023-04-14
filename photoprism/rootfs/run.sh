@@ -6,7 +6,7 @@
 # SCRIPTS #
 ###########
 
-for SCRIPTS in "/00-banner.sh" "/92-local_mounts.sh" "/92-smb_mounts.sh"; do
+for SCRIPTS in "/00-banner.sh" "/00-local_mounts.sh" "/00-smb_mounts.sh"; do
     echo $SCRIPTS
     chown "$(id -u)":"$(id -g)" "$SCRIPTS"
     chmod a+x $SCRIPTS

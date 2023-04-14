@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="5.8-chromium-amd64-2023-02-17"
+ARG BUILD_UPSTREAM="5.9-chromium-amd64-2023-04-06"
 FROM ${BUILD_FROM}
 
 ##################
@@ -107,3 +107,7 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+####################
+# 6 HealthcheckNOT #
+####################

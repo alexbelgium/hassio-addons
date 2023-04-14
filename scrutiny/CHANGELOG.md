@@ -1,5 +1,10 @@
 
+## v0.7.0 (08-04-2023)
+- Update to latest version from analogj/scrutiny
+- Implemented healthcheck
+
 ## v0.6.0 (14-01-2023)
+
 - Update to latest version from analogj/scrutiny
 - WARNING : update to supervisor 2022.11 before installing
 - New options SMARTCTL_COMMAND_DEVICE_TYPE & SMARTCTL_MEGARAID_DISK_NUM (@scavara)

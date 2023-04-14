@@ -112,12 +112,9 @@ while IFS= read -r line; do
     # Data validation
     if [[ "$line" =~ ^.+[=].+$ ]]; then
         export "$line"
-        # Export to scripts
-        sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null || true
-        sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null || true
-        sed -i "1a export $line" /scripts/*run* 2>/dev/null || true
-        # Export to s6
-        if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
+        # extract keys and values
+        KEYS="${line%%=*}"
+        VALUE="${line#*=}"
         # export to python
         if command -v "python3" &>/dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py
@@ -125,21 +122,19 @@ while IFS= read -r line; do
             python3 /env.py
         fi
         # set .env
-        echo "$line" >> /.env || true
+        echo "$KEYS=$VALUE" >> /.env || true
         mkdir -p /etc
-        echo "$line" >> /etc/environmemt
+        echo "$KEYS=$VALUE" >> /etc/environmemt
+        # Export to scripts
+        sed -i "1a export $KEYS=\'$VALUE\'" /etc/services.d/*/*run* 2>/dev/null || true
+        sed -i "1a export $KEYS=\'$VALUE\'" /etc/cont-init.d/*run* 2>/dev/null || true
+        sed -i "1a export $KEYS=\'$VALUE\'" /scripts/*run* 2>/dev/null || true
+        # Export to s6
+        if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
         # Show in log
-        if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
+        if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS=\'$VALUE\'"; fi
     else
         bashio::exit.nok "$line does not follow the correct structure. Please check your yaml file."
     fi
 done <"/tmpfile"
 
-# Test mode
-TZ=$(bashio::config "TZ")
-if [ "$TZ" = "test" ]; then
-    echo "secret mode found, launching script in /config/test.sh"
-    cd /config || exit
-    chmod 777 test.sh
-    ./test.sh
-fi

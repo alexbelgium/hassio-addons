@@ -64,6 +64,7 @@
   },
   "host_dbus": true,
   "image": "ghcr.io/alexbelgium/tdarr-{arch}",
+  "init": false,
   "map": [
     "media:rw",
     "config:rw",
@@ -100,7 +101,7 @@
   },
   "slug": "tdarr",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.00.19.1",
+  "version": "2.00.20.1",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8265]"
 }

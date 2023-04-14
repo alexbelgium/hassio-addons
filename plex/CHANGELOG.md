@@ -1,3 +1,25 @@
+### 1.31.3.6868-28fc46b27-ls160-2 (10-04-2023)
+- Minor bugs fixed
+- Fix issue with smb
+
+## 1.31.3.6868-28fc46b27-ls160 (08-04-2023)
+- Update to latest version from linuxserver/docker-plex
+
+## 1.31.3.6868-28fc46b27-ls159 (31-03-2023)
+- Update to latest version from linuxserver/docker-plex
+
+## 1.31.2.6810-a607d384f-ls157 (18-03-2023)
+- Update to latest version from linuxserver/docker-plex
+- Implement healthcheck
+
+## 1.31.1.6782-77dfff442-ls156 (11-03-2023)
+- Update to latest version from linuxserver/docker-plex
+
+## 1.31.1.6733-bc0674160-ls154 (04-03-2023)
+- Update to latest version from linuxserver/docker-plex
+
+## 1.31.0.6654-02189b09f-ls153 (25-02-2023)
+- Update to latest version from linuxserver/docker-plex
 
 ## 1.31.0.6654-02189b09f-ls152 (19-02-2023)
 - Update to latest version from linuxserver/docker-plex

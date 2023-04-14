@@ -1,3 +1,4 @@
+- Enable external port by default (9999)
 
 ## 1.5.4 (07-01-2023)
 - Update to latest version from spotweb/spotweb

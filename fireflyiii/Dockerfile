@@ -33,16 +33,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
 
-ARG BUILD_UPSTREAM="5.7.18"
-RUN \
-    #################
-    # Fix for 5.7.5 #
-    #################
-    if [ "$BUILD_UPSTREAM" = "5.7.18" ] ; then \
-    sed -i "s|, \$transaction\[\x27amount\x27\] ?? \x270\x27);|, (string)(\$transaction\[\x27amount\x27\] ?? \x270\x27));|g" /var/www/html/app/Helpers/Collector/GroupCollector.php; else echo "not 5.7.5"; fi
+ARG BUILD_UPSTREAM="6.0.6"
 RUN \
     # Change upload folder to "ha_upload" since the default one is binded to a volume (see base image)
-    sed -i "s/'root'   => storage_path('upload'),/'root'   => storage_path('ha_upload'),/g" /var/www/html/config/fileystems.php
+    sed -i "s/'root'   => storage_path('upload'),/'root'   => storage_path('ha_upload'),/g" /var/www/html/config/filesystems.php
 
 ##################
 # 3 Install apps #
@@ -116,3 +110,16 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+#################
+# 6 Healthcheck #
+#################
+
+ENV HEALTH_PORT="8080" \
+    HEALTH_URL="/health"
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1

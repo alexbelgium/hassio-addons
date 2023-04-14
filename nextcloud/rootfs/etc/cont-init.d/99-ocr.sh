@@ -1,16 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ" || bashio::log.info "/data/config/www/nextcloud/occ not found"
-if ! bashio::fs.file_exists '/data/config/www/nextcloud/occ'; then
-    LAUNCHER=$(find / -name "occ" -print -quit)
-fi || bashio::log.info "occ not found"
-
-# Make sure there is an Nextcloud installation
-if [[ $($LAUNCHER -V) == *"not installed"* ]]; then
-    bashio::log.warning "It seems there is no Nextcloud server installed. Please restart the addon after initialization of the user."
-    exit 0
-fi
+# Only execute if installed
+if [ -f /notinstalled ]; then exit 0; fi
 
 # Install OCR if requested
 if [ "$(bashio::config 'OCR')" = "true" ]; then
@@ -23,7 +15,7 @@ if [ "$(bashio::config 'OCR')" = "true" ]; then
         occ app:enable files_fulltextsearch_tesseract &>/dev/null || true
 
         echo "Installing OCR"
-        apk add --quite --no-cache ocrmypdf
+        apk add --quiet --no-cache ocrmypdf
         apk add --quiet --no-cache tesseract-ocr || apk add --quiet --no-cache tesseract-ocr@community
         # Install additional language if requested
         if bashio::config.has_value 'OCRLANG'; then

@@ -1,4 +1,6 @@
 ## &#9888; Open Request : [✨ [REQUEST] Nextcloud - Enable antivirus (opened 2023-01-25)](https://github.com/alexbelgium/hassio-addons/issues/669) by [@amaciuc](https://github.com/amaciuc)
+
+
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -17,8 +19,9 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/nextcloud/stats.png)
 
 ## About
 
@@ -28,15 +31,14 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
-
 ### Custom scripts
 
 Scripts with .sh ending located in /config/addons_config/nextcloud will be executed at boot
 
-
 ### Addon options
 
 ```yaml
+disable_updates : prevent automatic nextcloud updating along addon
 additional_apps: vim,nextcloud #specify additional apk files to install ; separated by commas
 PGID/PUID: 1000 #allows setting user.
 trusted_domains: your-domain.com #allows to select the trusted domains. Domains not in this lis will be removed, except for the first one used in the initial configuration.
@@ -54,20 +56,22 @@ cifspassword: "password" # optional, smb password, same for all smb shares)
 
 Webui can be found at `<your-ip>:port`.
 
-
 ### Use mariadb as the main database (Thanks @amaciuc)
 
 If you notice the following warning at your first `webui` running:
+
 ```bash
 Performance warning
 You chose SQLite as database.
 SQLite should only be used for minimal and development instances. For production we recommend a different database backend.
 If you use clients for file syncing, the use of SQLite is highly discouraged.
 ```
+
 and you want to overcome this, follow the below steps:
 
 - 1. Install `mariadb` add-on, configure it with some random infos and start it. It is important to start it successfully in order to be seen by `nextcloud` in the network.
 - 2. Install `nextcloud` add-on (or restart it if you have already installed), watch the logs until you will notice the following `warning`:
+
   ```bash
   WARNING: MariaDB addon was found! It can't be configured automatically due to the way Nextcloud works, but you can configure it manually when running the web UI for the first time using those values :
   Database user : service

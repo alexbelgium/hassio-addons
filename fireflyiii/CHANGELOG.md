@@ -1,4 +1,21 @@
 
+## 6.0.6 (08-04-2023)
+- Update to latest version from firefly-iii/firefly-iii
+
+## 6.0.5 (24-03-2023)
+- Update to latest version from firefly-iii/firefly-iii
+
+## 6.0.4 (18-03-2023)
+- Update to latest version from firefly-iii/firefly-iii
+
+## 6.0.1 (11-03-2023)
+- Update to latest version from firefly-iii/firefly-iii
+- Implemented healthcheck
+
+## 6.0.0 (04-03-2023)
+- MAJOR CHANGE, BACKUP DATABASE AND ADDON BEFORE UPDATING
+- Update to latest version from firefly-iii/firefly-iii
+
 ## 5.7.18 (07-01-2023)
 - Update to latest version from firefly-iii/firefly-iii
 

@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="4.5.1-r1-ls245"
+ARG BUILD_UPSTREAM="4.5.2"
 FROM ${BUILD_FROM}-$BUILD_UPSTREAM
 
 ##################
@@ -41,6 +41,7 @@ ENV \
     XDG_DATA_HOME="/config/addons_config"
 
 # Image specific modifications
+# hadolint ignore=DL4006
 RUN \
     # Set download folder to /share
     sed -i 's|/downloads/|/share/qBittorrent/|g' /defaults/qBittorrent.conf \
@@ -48,7 +49,12 @@ RUN \
     # Remove fixed folders, allows connection to webUI
     && sed '11,13d' /defaults/qBittorrent.conf \
     && echo 'WebUI\HostHeaderValidation=false' >> /defaults/qBittorrent.conf \
-    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf
+    && echo 'WebUI\LocalHostAuth=false' >> /defaults/qBittorrent.conf \
+    \
+    # Add vuetorrent
+    && curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null \
+    && unzip -o vuetorrent.zip -d / >/dev/null \
+    && rm vuetorrent.zip >/dev/null
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/qBittorrent"
@@ -82,7 +88,7 @@ RUN \
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 92-local_mounts.sh 92-smb_mounts.sh 90-dns_set.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-dns_set.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -152,3 +158,16 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+#################
+# 6 Healthcheck #
+#################
+
+ENV HEALTH_PORT="" \
+    HEALTH_URL=""
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD pgrep qbittorrent || exit 1

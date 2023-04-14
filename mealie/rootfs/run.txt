@@ -19,22 +19,6 @@ for SCRIPTS in /etc/cont-init.d/*; do
     /."$SCRIPTS" || echo "$SCRIPTS: exiting $?"
 done
 
-################
-# MODIFY IMAGE #
-################
-
-#Sets caddyfile to 9925 as default port
-if [ -f /app/Caddyfile ]; then
-    sed -i "s/80/9925/g" /app/Caddyfile
-    echo "Caddyfile adapted"
-fi
-
-#Sets caddyfile to 9925 as default port
-if [ -f /app/frontend/Caddyfile ]; then
-    sed -i "s/3000/9925/g" /app/frontend/Caddyfile
-    echo "Caddyfile adapted"
-fi
-
 ####################
 # Export variables #
 ####################
@@ -123,19 +107,8 @@ touch /config/addons_config/mealie_data/.secret
 chmod -R 777 /config/addons_config/mealie_data
 cp -r /data/* /config/addons_config/mealie_data/
 
-#######
-# SSL #
-#######
-
-bashio::config.require.ssl
-if bashio::config.true 'ssl'; then
-   bashio::log.info "Configuring ssl"
-   CERTFILE=$(bashio::config 'certfile')
-   KEYFILE=$(bashio::config 'keyfile')
-   if [ -f /app/Caddyfile ]; then sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/Caddyfile; fi
-   if [ -f /app/frontend/Caddyfile ]; then sed -i "7 i tls /ssl/$CERTFILE /ssl/$KEYFILE" /app/frontend/Caddyfile; fi
-fi
+bashio::log.info "Starting app"
+nginx & true
 
 bashio::log.info "Starting app"
-
 fi

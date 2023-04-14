@@ -1,6 +1,28 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+####################
+# LIST LOCAL DISKS #
+####################
+
+function list_drives () {
+    bashio::log.info "List of available labels (@dianlight)"
+    bashio::log.blue "---------------------------------------------------"
+    #autodisks=($(lsblk -E label -n -o label | sed -r '/^\s*$/d' | grep -v hassos | grep pp))
+    readarray -t autodisks < <(lsblk -E label -n -o label -i | sed -r '/^\s*$/d' | grep -v hassos)
+    if [ ${#autodisks[@]} -eq 0 ]; then
+        bashio::log.info "No Disk with labels."
+    else
+        bashio::log.info "Available Disk Labels:"
+        # shellcheck disable=SC2068
+        for disk in ${autodisks[@]}; do
+            # shellcheck disable=SC2046
+            bashio::log.info "\t${disk}[$(lsblk $(blkid -L "$disk") -no fstype)]"
+        done
+    fi
+    bashio::log.blue "---------------------------------------------------"
+}
+
 ######################
 # MOUNT LOCAL SHARES #
 ######################
@@ -29,9 +51,9 @@ if bashio::config.has_value 'localdisks'; then
         # Creates dir
         mkdir -p /mnt/"$disk"
         if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
-          PUID="$(bashio::config 'PUID')"
-          PGID="$(bashio::config 'PGID')"
-          chown "$PUID:$PGID" /mnt/"$disk"
+            PUID="$(bashio::config 'PUID')"
+            PGID="$(bashio::config 'PGID')"
+            chown "$PUID:$PGID" /mnt/"$disk"
         fi
 
         # Install lsblk
@@ -56,12 +78,6 @@ if bashio::config.has_value 'localdisks'; then
                 options="${options},umask=000"
                 type="ntfs"
                 ;;
-            *)
-                if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
-                    echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
-                    options="$options,uid=$(bashio::config 'PUID'),gid=$(bashio::config 'PGID')"
-                fi
-                ;;
         esac
 
         # Legacy mounting : mount to share if still exists (avoid breaking changes)
@@ -70,7 +86,10 @@ if bashio::config.has_value 'localdisks'; then
 
         # shellcheck disable=SC2015
         mount -t $type "$devpath"/"$disk" "$dirpath"/"$disk" -o $options && bashio::log.info "Success! $disk mounted to /mnt/$disk" || \
-            (bashio::log.fatal "Unable to mount local drives! Please check the name." && rmdir /mnt/$disk)
+            (bashio::log.fatal "Unable to mount local drives! Please check the name."
+            rmdir /mnt/$disk
+            list_drives
+        bashio::addon.stop)
     done
 
 fi

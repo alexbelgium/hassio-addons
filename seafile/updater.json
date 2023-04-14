@@ -1,10 +1,10 @@
 {
   "github_fulltag": "true",
-  "last_update": "28-01-2023",
+  "last_update": "24-03-2023",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "seafile",
   "source": "dockerhub",
   "upstream_repo": "franchetti/seafile-arm",
-  "upstream_version": "9.0.10"
+  "upstream_version": "10.0.0"
 }

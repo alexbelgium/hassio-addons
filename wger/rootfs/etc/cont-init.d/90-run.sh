@@ -3,7 +3,6 @@
 ############################
 # Change database location #
 ############################
-touch /data/database.sqlite
 sed -i "s|/home/wger/db/database.sqlite|/data/database.sqlite|g" /home/wger/src/settings.py
 
 #####################

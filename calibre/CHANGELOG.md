@@ -1,3 +1,21 @@
+### v6.14.1-ls210 (09-04-2023)
+- Minor bugs fixed
+
+## v6.15.0-ls211 (08-04-2023)
+- Update to latest version from linuxserver/docker-calibre
+
+## v6.14.1-ls208 (31-03-2023)
+- Update to latest version from linuxserver/docker-calibre
+
+## v6.14.1-ls207 (18-03-2023)
+- Update to latest version from linuxserver/docker-calibre
+
+## v6.14.0-ls206 (11-03-2023)
+- Update to latest version from linuxserver/docker-calibre
+- Implemented healthcheck
+
+## v6.13.0-ls204 (04-03-2023)
+- Update to latest version from linuxserver/docker-calibre
 ## v6.13.0-ls204 (21-02-2023)
 - Add wireless connection port
 

@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "chrisleekr/binance-trading-bot:latest",
+    "amd64": "chrisleekr/binance-trading-bot:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}

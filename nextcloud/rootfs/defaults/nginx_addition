@@ -1,0 +1,26 @@
+add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;";
+
+location = /.well-known/host-meta {
+return 301 $scheme://$http_hostpublic.php?service=host-meta;
+}
+
+location = /.well-known/host-meta.json {
+return 301 $scheme://$http_host/public.php?service=host-meta-json;
+}
+
+location = /.well-known/carddav {
+return 301 $scheme://$http_host/remote.php/dav;
+}
+
+location = /.well-known/caldav {
+return 301 $scheme://$http_host/remote.php/dav;
+}
+
+location = /.well-known/webfinger{
+return 301 $scheme://$http_host/index.php/.well-known/webfinger;
+}
+
+location = /.well-known/nodeinfo{
+return 301 $scheme://$http_host/index.php/.well-known/nodeinfo;
+}
+}

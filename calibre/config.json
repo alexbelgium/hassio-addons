@@ -1,8 +1,7 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
-    "armv7"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "e-book manager",
@@ -92,6 +91,6 @@
   },
   "slug": "calibre",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
-  "version": "v6.13.0-ls203-2",
+  "version": "v6.14.1-ls210_reverted",
   "video": true
 }

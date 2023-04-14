@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Firefly iii Data Importer - upload Json config file for auto import (opened 2023-02-16)](https://github.com/alexbelgium/hassio-addons/issues/712) by [@MaoZ1993](https://github.com/MaoZ1993)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -14,8 +15,9 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/fireflyiii/stats.png)
 
 ## About
 

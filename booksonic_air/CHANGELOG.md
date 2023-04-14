@@ -1,4 +1,20 @@
 
+## v2201.1.0-ls87 (08-04-2023)
+- Update to latest version from linuxserver/docker-booksonic-air
+
+## v2201.1.0-ls85 (31-03-2023)
+- Update to latest version from linuxserver/docker-booksonic-air
+
+## v2201.1.0-ls84 (11-03-2023)
+- Update to latest version from linuxserver/docker-booksonic-air
+- Implemented healthcheck
+
+## v2201.1.0-ls83 (04-03-2023)
+- Update to latest version from linuxserver/docker-booksonic-air
+
+## v2201.1.0-ls82 (25-02-2023)
+- Update to latest version from linuxserver/docker-booksonic-air
+
 ## v2201.1.0-ls81 (19-02-2023)
 - Update to latest version from linuxserver/docker-booksonic-air
 

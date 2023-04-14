@@ -30,7 +30,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-ARG BUILD_UPSTREAM="2.17.0"
+ARG BUILD_UPSTREAM="2.17.1"
 
 # spellcheck disable=SC2015
 # hadolint ignore=SC2015
@@ -48,10 +48,7 @@ RUN \
     \
     && curl -f -L -s \
     "https://github.com/portainer/portainer/releases/download/${BUILD_UPSTREAM}/portainer-${BUILD_UPSTREAM}-linux-${ARCH}.tar.gz" \
-    | tar zxvf - -C /opt/ || printf '%s\n' "${BUILD_UPSTREAM}" > /PORTFILE
-
-# Remove banner
-RUN sed -i 's|(0,B\.jsxs)(B\.Fragment,{children:\[(0,B\.jsxs)("button",{type:"button",className:"border-0 bg-warning-5 text-warning-9 w-full py-2 font-semibold flex justify-center items-center gap-3",onClick:function(){t(e?"portainer-upgrade-admin":"portainer-upgrade-non-admin",{category:"portainer",metadata:d}),o(!0)},children:\[n\&\&(0,B\.jsx)(B\.Fragment,{children:"Upgrade to Business Edition"}),(0,B\.jsx)(Js\.Z,{className:"text-lg lucide"})\]}),s\&\&(0,B\.jsx)(kg,{onDismiss:function(){return o(!1)}})\]})|null|g' /opt/portainer/public/main.238cdfbf7e0dc1135a28.js
+    | tar zxvf - -C /opt/
 
 ##################
 # 3 Install apps #
@@ -128,3 +125,16 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+#################
+# 6 Healthcheck #
+#################
+
+ENV HEALTH_PORT="9000" \
+    HEALTH_URL="/api/system/status"
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1

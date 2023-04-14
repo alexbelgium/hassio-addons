@@ -1,4 +1,11 @@
 
+## 1.7.40 (24-03-2023)
+- Update to latest version from linuxserver/docker-grav
+- Implemented healthcheck
+
+## 1.7.39.4 (25-02-2023)
+- Update to latest version from linuxserver/docker-grav
+
 ## 1.7.38 (07-01-2023)
 - Update to latest version from linuxserver/docker-grav
 - WARNING : update to supervisor 2022.11 before installing

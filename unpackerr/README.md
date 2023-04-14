@@ -14,8 +14,9 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30)](https://github.com/alexbelgium/hassio-addons/stargazers)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/unpackerr/stats.png)
 
 ## About
 
@@ -48,6 +49,7 @@ Create a file named "unpackerr.conf" in /config.
 In /config/unpackerr.conf you can set all variables according to this list of environment variables : https://github.com/davidnewhall/unpackerr
 
 Folders must be customized in the conf file with the lines :
+
 ```yaml
 [[folder]]
 ## Windows paths must use two backslashes: "C:\\Some\\Folder\\To\\Watch"
@@ -59,11 +61,5 @@ extract_path = "/share/downloads_unpacked"
 ## Support
 
 Create an issue on github
-
-## Illustration
-
----
-
-![illustration](https://wiki.servarr.com/assets/unpackerr/hist_1_history.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons

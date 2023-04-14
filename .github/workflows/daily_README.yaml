@@ -134,6 +134,7 @@ jobs:
           STATS_ONE="$(awk 'NR==3{print $(NF)}' Stats)" && \
           STATS_TWO="$(awk 'NR==4{print $(NF)}' Stats)" && \
           STATS_THREE="$(awk 'NR==5{print $(NF)}' Stats)"
+          echo "Best addon is $STATS_ONE"
           sed -i "s|%%STATS_ONE%%|${STATS_ONE^}|g" README2.md
           sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
           sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
@@ -165,19 +166,15 @@ jobs:
               if [ "$i" -eq "$i" ] && [ "$i" -gt "$j" ]; then j="$i"; fi
             done
           sed -i "s|${var^}|${var^} (${j}x)|g" README2.md
+          echo "$STATS_ONE has $j downloads"
           done
           echo "... done"
 
           # Replace template if change
 
           echo "Replace template..."
-          if [[ "$(stat -c%s "README2.md")" == "$(stat -c%s "README.md")" ]]; then
-            echo "no changes"
-            rm README2.md
-          else
-            rm README.md
-            mv README2.md README.md
-          fi
+          mv README2.md README.md
+
           echo "... done"
 
         shell: bash

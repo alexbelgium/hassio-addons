@@ -1,4 +1,8 @@
 
+## 0.7.1 (24-03-2023)
+- Update to latest version from linuxserver/docker-mylar3
+- Implemented healthcheck
+
 ## 0.7.0 (10-12-2022)
 - Update to latest version from linuxserver/docker-mylar3
 - WARNING : update to supervisor 2022.11 before installing

@@ -1,4 +1,11 @@
 
+## 16.14.1 (24-03-2023)
+- Update to latest version from coderaiser/cloudcmd
+
+## 16.14.0 (11-03-2023)
+- Update to latest version from coderaiser/cloudcmd
+- Implemented healthcheck
+
 ## 16.13.1 (04-02-2023)
 - Update to latest version from coderaiser/cloudcmd
 

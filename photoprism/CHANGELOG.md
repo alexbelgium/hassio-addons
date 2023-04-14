@@ -1,3 +1,4 @@
+- Implemented healthcheck
 - Add message if ingress disabled
 
 ## Preview (27-01-2023)

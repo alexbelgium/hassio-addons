@@ -1,3 +1,13 @@
+### 3.0.10.1567-2 (19-03-2023)
+- Minor bugs fixed
+- Corrected ingress bug https://github.com/alexbelgium/hassio-addons/issues/758
+
+## 3.0.10.1567 (18-03-2023)
+- Update to latest version from linuxserver/docker-sonarr
+- Implemented healthcheck
+
+## 3.0.10.1566 (11-03-2023)
+- Update to latest version from linuxserver/docker-sonarr
 - Add ingress_disabled option
 - Ingress addition
 - BaseUrl definition to "sonarr"

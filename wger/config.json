@@ -25,8 +25,7 @@
     "CONFIG_LOCATION": "str"
   },
   "slug": "wger",
-  "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.2-dev",
+  "version": "2.2-dev-5",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }

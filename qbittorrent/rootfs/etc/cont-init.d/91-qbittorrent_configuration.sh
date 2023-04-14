@@ -15,7 +15,7 @@ if [ ! -f "$CONFIG_LOCATION"/qBittorrent.conf ]; then
 fi
 
 cd "$CONFIG_LOCATION"/ || true
-LINE=$(sed -n '/Preferences/=' qBittorrent.conf)
+LINE=$(sed -n '/\[Preferences\]/=' qBittorrent.conf) || bashio::exit.nok "qBittorrent.conf not valid"
 LINE=$((LINE + 1))
 
 # Remove unused folders
@@ -41,16 +41,16 @@ if bashio::config.has_value 'SavePath'; then
 
     # Set variable
     DOWNLOADS=$(bashio::config 'SavePath')
+    DOWNLOADS=${DOWNLOADS:-/share/downloads} # Default if not set
 
     # Replace save path
-    CURRENTSAVEPATH=$(sed -n '/Downloads\\\SavePath/p' qBittorrent.conf)
-    sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf || \
-        sed -i "${LINE}a Downloads\\\SavePath=$DOWNLOADS" qBittorrent.conf
+    sed -i -e "/SavePath/d" \
+        -e "/\[Preferences\]/a Downloads\\\SavePath=$DOWNLOADS" \
+        -e "/\[AutoRun\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" \
+        -e "/\[Preferences\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" \
+        -e "/\[BitTorrent\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" \
+        -e "/\[BitTorrent\]/a Session\\\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
 
-    # Replace session save path
-    CURRENTSAVEPATH=$(sed -n '/Session\\\DefaultSavePath/p' qBittorrent.conf)
-    sed -i "s|${CURRENTSAVEPATH#*=}|$DOWNLOADS|g" qBittorrent.conf || \
-        sed -i "2a Session\\\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
 
     # Info
     bashio::log.info "Downloads can be found in $DOWNLOADS"
@@ -64,16 +64,16 @@ chown -R abc:abc "$DOWNLOADS" || bashio::log.fatal "Error, please check default 
 # Avoid bugs #
 ##############
 
-sed -i '/CSRFProtection/d' qBittorrent.conf
-sed -i '/ClickjackingProtection/d' qBittorrent.conf
-sed -i '/HostHeaderValidation/d' qBittorrent.conf
-sed -i '/WebUI\Address/d' qBittorrent.conf
+sed -i -e '/CSRFProtection/d' \
+    -e '/ClickjackingProtection/d' \
+    -e '/HostHeaderValidation/d' \
+    -e '/WebUI\Address/d' \
+    -e "$LINE i\WebUI\\\CSRFProtection=false" \
+    -e "$LINE i\WebUI\\\ClickjackingProtection=false" \
+    -e "$LINE i\WebUI\\\HostHeaderValidation=false" \
+    -e "$LINE i\WebUI\\\Address=*" qBittorrent.conf
 #sed -i '/WebUI\ReverseProxySupportEnabled/d' qBittorrent.conf
-sed -i "$LINE i\WebUI\\\CSRFProtection=false" qBittorrent.conf
-sed -i "$LINE i\WebUI\\\ClickjackingProtection=false" qBittorrent.conf
 #sed -i "$LINE i\WebUI\\\ReverseProxySupportEnabled=true" qBittorrent.conf
-sed -i "$LINE i\WebUI\\\HostHeaderValidation=false" qBittorrent.conf
-sed -i "$LINE i\WebUI\\\Address=*" qBittorrent.conf
 
 ################
 # Correct Port #

@@ -17,7 +17,7 @@
 ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_ARCH
-ARG BUILD_UPSTREAM="25.0.3"
+ARG BUILD_UPSTREAM="26.0.0"
 FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 
 ##################
@@ -31,7 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Specific modifications
 ARG CONFIGLOCATION="/share/nextcloud"
-# hadolint ignore=SC2015
+# hadolint ignore=SC2015,SC2086
 RUN \
     # Change default data location
     for file in $(grep -Esril "/data" /etc /defaults); do sed -Ei "s=(/data)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
@@ -40,7 +40,19 @@ RUN \
     sed -i \
     -e 's/upload_max_fileize=1024M/upload_max_fileize=10240M/g' \
     -e 's/post_max_size=1024M/post_max_size=10240M/g' \
-    /etc/php*/php.ini || true
+    /etc/php*/php.ini || true && \
+    \
+    # Change location of executable
+    sed -i "s|/config|/data/config|g" /usr/bin/occ && \
+    sed -i "s|/config|/data/config|g" /usr/bin/updater.phar && \
+    \
+    # Change location of log
+    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
+    \
+    # Check bundled version and store it in /nextcloudversion
+    mkdir -p /tmp2 && tar xf /app/nextcloud.tar.bz2 -C /tmp2 --strip-components=1 && \
+    sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /tmp2/version.php > /nextcloudversion && \
+    rm -r /tmp2
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
@@ -67,12 +79,6 @@ RUN \
     # Replace lsiown if not found
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
-# Correct modifications
-ARG CONFIGLOCATION="/www/nextcloud/config"
-# hadolint ignore=SC2015, SC2013, SC2086
-RUN \
-    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done
-
 ##################
 # 3 Install apps #
 ##################
@@ -86,7 +92,7 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 92-local_mounts.sh 92-smb_mounts.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh"
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -114,11 +120,16 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 # 4 Entrypoint #
 ################
 
-#RUN chmod 777 /entrypoint.sh
-#WORKDIR /
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ]
-#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# Correct modifications
+ARG CONFIGLOCATION="/www/nextcloud/config"
+# hadolint ignore=SC2015, SC2013, SC2086, SC2016
+RUN \
+    for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
+    \
+    # Correct nginx files
+    sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
+    sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
+    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
 
 ############
 # 5 Labels #
@@ -149,3 +160,16 @@ LABEL \
     org.opencontainers.image.created=${BUILD_DATE} \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
+
+#################
+# 6 Healthcheck #
+#################
+
+ENV HEALTH_PORT="80" \
+    HEALTH_URL="/robots.txt"
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || curl --fail http://127.0.0.1:443 || exit 1

@@ -1,4 +1,17 @@
 
+## 10.8.9 (25-03-2023)
+- Update to latest version from linuxserver/docker-jellyfin
+
+## 10.8.9-1-ls203 (11-03-2023)
+- Update to latest version from linuxserver/docker-jellyfin
+- Implemented healthcheck
+
+## 10.8.9-1-ls202 (04-03-2023)
+- Update to latest version from linuxserver/docker-jellyfin
+
+## 10.8.9-1-ls201 (25-02-2023)
+- Update to latest version from linuxserver/docker-jellyfin
+
 ## 10.8.9-1-ls200 (19-02-2023)
 - Update to latest version from linuxserver/docker-jellyfin
 
