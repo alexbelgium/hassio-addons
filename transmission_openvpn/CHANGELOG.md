@@ -1,3 +1,6 @@
+
+## v5.0.0 (15-04-2023)
+- Update to latest version from haugene/docker-transmission-openvpn
 - Implemented healthcheck
 - Mullvad fix @Blogshot
 - WARNING : update to supervisor 2022.11 before installing
