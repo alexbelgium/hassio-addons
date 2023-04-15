@@ -62,8 +62,8 @@ if bashio::config.has_value 'networkdisks'; then
         server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
         if ping -w 1 -c 1 8.8.8.8 >/dev/null; then
             ping -w 5 -c 1 "$server" >/dev/null || \
-            bashio::log.fatal "Your server $server from $disk doesn't ping, is it correct?"
-            break
+            ( bashio::log.fatal "Your server $server from $disk doesn't ping, is it correct?" && \
+            break )
         fi
 
         # Prepare mount point
