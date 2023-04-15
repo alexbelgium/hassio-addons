@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [enedisgateway2mqtt : version 8.14 impossible to install HassIO (opened 2023-04-14)](https://github.com/alexbelgium/hassio-addons/issues/794) by [@LGO44](https://github.com/LGO44)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
