@@ -44,7 +44,7 @@ for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; 
         sed -i "/datadirectory/a 'check_data_directory_permissions' => false," "$files"
     fi
 done
-sudo -u abc php /data/config/www/nextcloud/occ config:system:set check_data_directory_permissions --value=false --type=bool || echo "Please install nextcloud first" 
+sudo -u abc php /data/config/www/nextcloud/occ config:system:set check_data_directory_permissions --value=false --type=bool || echo "Please install nextcloud first"
 
 echo "...done"
 echo " "
