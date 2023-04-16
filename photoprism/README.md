@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Photoprism] Cannot add user in Photoprism Preview-6 (opened 2023-04-15)](https://github.com/alexbelgium/hassio-addons/issues/798) by [@MiSebCo](https://github.com/MiSebCo)
 # Home assistant add-on: Photoprism
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
