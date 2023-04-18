@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [QBittorrent] Downloads info are empty on small scale window (opened 2023-04-18)](https://github.com/alexbelgium/hassio-addons/issues/801) by [@aviadlevy](https://github.com/aviadlevy)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
