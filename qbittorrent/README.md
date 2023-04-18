@@ -142,6 +142,11 @@ Try to mount by putting the partition label in the "localdisks" options instead 
 
 Add `ping-restart 60` to your config.ovpn
 
+### Downloads info are empty on small scale window (@aviadlevy)
+
+When my window size width is lower than 960 pixels my downloads are empty.
+Solution is to reset the Vuetorrent settings.
+
 ## Support
 
 Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-qbittorrent/279247)
