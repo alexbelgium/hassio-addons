@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Immich] 502 Bad Gateway (opened 2023-04-18)](https://github.com/alexbelgium/hassio-addons/issues/802) by [@peeter22](https://github.com/peeter22)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
