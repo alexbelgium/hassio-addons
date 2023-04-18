@@ -1,3 +1,4 @@
+- Fix : add option `TYPESENSE_ENABLED` https://github.com/alexbelgium/hassio-addons/issues/802
 
 ## 1.53.0 (08-04-2023)
 - Update to latest version from imagegenius/docker-immich
