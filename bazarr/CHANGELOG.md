@@ -1,3 +1,5 @@
+### 1.2.0-1 (21-04-2023)
+- Minor bugs fixed
 - Implemented healthcheck
 
 ## 1.2.0 (04-03-2023)
