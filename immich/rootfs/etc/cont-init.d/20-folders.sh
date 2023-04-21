@@ -10,6 +10,10 @@ PGID="$(bashio::config 'PGID')"
 
 bashio::log.info "Setting data location"
 DATA_LOCATION="$(bashio::config 'data_location')"
+export IMMICH_MEDIA_LOCATION="$DATA_LOCATION"
+if [ -d /var/run/s6/container_environment ]; then
+    printf "%s" "$DATA_LOCATION" > /var/run/s6/container_environment/IMMICH_MEDIA_LOCATION
+fi
 
 echo "... check $DATA_LOCATION folder exists"
 mkdir -p "$DATA_LOCATION"
@@ -20,6 +24,6 @@ chown -R "$PUID":"$PGID" "$DATA_LOCATION"
 echo "... correcting official script"
 # shellcheck disable=SC2013
 for file in $(grep -sril '/photos' /etc); do sed -i "s|/photos|$DATA_LOCATION|g" "$file"; done
-rm -r /photos
+if [-f / photos ]; then rm -r /photos; fi
 ln -sf "$DATA_LOCATION" /photos
 chown -R "$PUID":"$PGID" /photos
