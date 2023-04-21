@@ -1,3 +1,6 @@
+
+## 2.18.1 (21-04-2023)
+- Update to latest version from portainer/portainer
 - Feat : addition of Micro Editor to all addons
 
 ### 2.17.1-9 (11-03-2023)
