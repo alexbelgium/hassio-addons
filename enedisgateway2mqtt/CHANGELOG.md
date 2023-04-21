@@ -1,4 +1,7 @@
 
+## 0.8.16 (21-04-2023)
+- Update to latest version from m4dm4rtig4n/myelectricaldata
+
 ## 0.8.15 (15-04-2023)
 - Update to latest version from m4dm4rtig4n/myelectricaldata
 - Implemented healthcheck
