@@ -1,3 +1,6 @@
+
+## 4.4.4.7068 (21-04-2023)
+- Update to latest version from linuxserver/docker-radarr
 ### 4.3.2.6857-21 (17-03-2023)
 - Minor bugs fixed
 - Solve signalr error https://github.com/alexbelgium/hassio-addons/issues/757
