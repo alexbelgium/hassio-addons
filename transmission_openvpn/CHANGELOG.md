@@ -1,4 +1,7 @@
 
+## v5.0.2 (21-04-2023)
+- Update to latest version from haugene/docker-transmission-openvpn
+
 ## v5.0.0 (15-04-2023)
 - Update to latest version from haugene/docker-transmission-openvpn
 - Implemented healthcheck
