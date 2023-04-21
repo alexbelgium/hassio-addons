@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [MyElectricalData] Need posting of 0.8.16 to stop InfluxDB data duplication (opened 2023-04-21)](https://github.com/alexbelgium/hassio-addons/issues/805) by [@HermesHonshappo](https://github.com/HermesHonshappo)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
