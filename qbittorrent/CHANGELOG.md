@@ -1,3 +1,5 @@
+### 4.5.2-3 (22-04-2023)
+- Minor bugs fixed
 - Fix multi smb mounts
 
 ### 4.5.2-2 (19-03-2023)
