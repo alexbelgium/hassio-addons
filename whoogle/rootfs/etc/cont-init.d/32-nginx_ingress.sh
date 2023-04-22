@@ -10,7 +10,7 @@
 #sed -i 's|manifest.json">|manifest.json" crossorigin="use-credentials">|g' /whoogle/app/templates/index.html
 
 #Allow ingress
-sed -i "1a export WHOOGLE_URL_PREFIX=$(bashio::addon.ingress_entry)" /etc/cont-init.d/99-run.sh
+sed -i "1a export WHOOGLE_URL_PREFIX=\'$(bashio::addon.ingress_entry)\'" /etc/cont-init.d/99-run.sh
 
 #################
 # NGINX SETTING #
