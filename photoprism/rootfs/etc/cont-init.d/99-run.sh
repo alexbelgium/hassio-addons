@@ -110,7 +110,7 @@ bashio::log.info 'Default username : admin, default password: "please_change_pas
 set +u
 
 # shellcheck source=/dev/null
-photoprism start & \
+. /scripts/entrypoint.sh photoprism start & \
 bashio::log.info "Starting, please wait for \"App launched\" green text..."
 
 bashio::net.wait_for 2341 localhost 900
