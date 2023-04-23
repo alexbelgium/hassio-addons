@@ -1,3 +1,5 @@
+- Add custom PUID and PGID
+
 ### Preview-6 (15-04-2023)
 - Minor bugs fixed
 - Implemented healthcheck
