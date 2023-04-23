@@ -77,6 +77,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 RUN chmod 777 /entrypoint.sh
+WORKDIR "/data/photprism"
 ENTRYPOINT [ "/entrypoint.sh" ]
 
 ############
