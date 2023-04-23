@@ -57,9 +57,9 @@
   "name": "Immich",
   "options": {
     "JWT_SECRET": "jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=",
-    "TYPESENSE_ENABLED": false,
     "PGID": 1000,
     "PUID": 1000,
+    "TYPESENSE_ENABLED": false,
     "TZ": "Europe/Paris",
     "data_location": "/share/immich"
   },
