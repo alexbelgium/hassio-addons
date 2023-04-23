@@ -77,6 +77,8 @@
     "DB_TYPE": "sqlite",
     "IMPORT_PATH": "/share/photoprism/import",
     "ORIGINALS_PATH": "/share/photoprism/originals",
+    "PGID": 1000,
+    "PUID": 1000,
     "STORAGE_PATH": "/share/photoprism/storage",
     "UPLOAD_NSFW": "true",
     "certfile": "fullchain.pem",
@@ -101,6 +103,8 @@
     "DB_TYPE": "list(sqlite|mariadb_addon|external)",
     "IMPORT_PATH": "str",
     "ORIGINALS_PATH": "str",
+    "PGID": "int",
+    "PUID": "int",
     "STORAGE_PATH": "str",
     "UPLOAD_NSFW": "bool",
     "certfile": "str",
@@ -118,6 +122,6 @@
   ],
   "slug": "photoprism",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "DONOTUSE_test-10",
+  "version": "DONOTUSE_test-11",
   "video": true
 }
