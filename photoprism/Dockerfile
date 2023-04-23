@@ -32,18 +32,6 @@ ENV \
     working_dir="/data/photoprism" \
     HOME="/data/photoprism"
 
-RUN \
-    # Create directories
-    mkdir -p \
-    /data/photoprism/originals \
-    /data/photoprism/import \
-    /data/photoprism/storage/config \
-    /data/photoprism/backup \
-    /data/photoprism/storage/cache && \
-    chmod -R 777 /data/photoprism && \
-    chown -Rf photoprism:photoprism /data/photoprism && \
-    chmod -Rf a+rwx /data/photoprism
-
 ##################
 # 3 Install apps #
 ##################
