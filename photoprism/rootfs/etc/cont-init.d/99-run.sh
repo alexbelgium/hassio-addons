@@ -95,6 +95,14 @@ for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPR
     touch "$variabletest"/aze && rm "$variabletest"/aze || bashio::log.fatal "$variabletest path is not writable"
 done
 
+# Define id
+if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
+    PUID="$(bashio::config "PUID")"
+    PGID="$(bashio::config "PGID")"
+    export PHOTOPRISM_UID="$PUID"
+    export PHOTOPRISM_GID="$PGID"
+fi
+
 # Start messages
 bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default username : admin, default password: "please_change_password"'
