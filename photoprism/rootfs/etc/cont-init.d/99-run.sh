@@ -100,7 +100,7 @@ bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default username : admin, default password: "please_change_password"'
 
 cd /
-./scripts/entrypoint.sh photoprism start & bashio::log.info "Starting, please wait for next green text..."
+./scripts/entrypoint.sh & bashio::log.info "Starting, please wait for \"App launched\" green text..."
 
 bashio::net.wait_for 2341 localhost 900
 bashio::log.info "App launched"
