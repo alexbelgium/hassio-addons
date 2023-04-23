@@ -92,7 +92,7 @@ if bashio::config.has_value 'networkdisks'; then
                             #######################################
                             for SECVERS in "" ",sec=ntlm" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
                                 if [ "$MOUNTED" = false ]; then
-                                    mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},nobrl$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" 2>/dev/null \
+                                    mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},nobrl$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" 2>ERRORCODE \
                                         && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" || MOUNTED=false
                                 fi
                             done
@@ -133,6 +133,7 @@ if bashio::config.has_value 'networkdisks'; then
             smbclient -L $disk -U "$CIFS_USERNAME%$CIFS_PASSWORD" || true
 
             # Error code
+            mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},nobrl$DOMAINVAR" "$disk" /mnt/"$diskname" 2>ERRORCODE || MOUNTED=false
             bashio::log.fatal "Error read : $(<ERRORCODE)"
             rm ERRORCODE*
 
@@ -145,7 +146,6 @@ if bashio::config.has_value 'networkdisks'; then
 
     if [ -f ERRORCODE ]; then
         rm ERRORCODE*
-
     fi
 
 fi
