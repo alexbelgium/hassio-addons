@@ -1,3 +1,5 @@
+### preview-7 (24-04-2023)
+- Minor bugs fixed
 - Allow environment to be available from command line
 
 ### Preview-6 (15-04-2023)
