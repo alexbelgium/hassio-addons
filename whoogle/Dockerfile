@@ -30,8 +30,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 USER root
 
 RUN \
-    sed -i "s#if re.match(\'.\*\[@_\!\#\$%\^\&\*()\<\>\?/\\\|}{\~:\].\*\',#if not re.match\(\'.\*\[a-zA-Z0-9\].\*\',#g" /whoogle/app/utils/results.py && \
-    sed -i "s#re.sub(r\'\[@_\!\#\$%\^\&\*()\<\>\?/\\\|}{\~:\]+\',#re.sub\(r\'\[\^A-Za-z0-9 \]+\',#g" /whoogle/app/utils/results.py
+    sed -i "s/word = re.sub.*/word = re.sub(r'[^A-Za-z0-9 ]+', '', word)/g" /whoogle/app/utils/results.py
 
 ##################
 # 3 Install apps #
