@@ -1,6 +1,8 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
 
+set +u
+
 ###################
 # Define database #
 ###################
@@ -32,13 +34,23 @@ case $(bashio::config 'DB_TYPE') in
         PHOTOPRISM_DATABASE_NAME="photoprism"
         PHOTOPRISM_DATABASE_USER="$(bashio::services 'mysql' 'username')"
         PHOTOPRISM_DATABASE_PASSWORD="$(bashio::services 'mysql' 'password')"
-        export PHOTOPRISM_DATABASE_DRIVER && bashio::log.blue "PHOTOPRISM_DATABASE_DRIVER=$PHOTOPRISM_DATABASE_DRIVER"
-        export PHOTOPRISM_DATABASE_SERVER && bashio::log.blue "PHOTOPRISM_DATABASE_SERVER=$PHOTOPRISM_DATABASE_SERVER"
-        export PHOTOPRISM_DATABASE_NAME && bashio::log.blue "PHOTOPRISM_DATABASE_NAME=$PHOTOPRISM_DATABASE_NAME"
-        export PHOTOPRISM_DATABASE_USER && bashio::log.blue "PHOTOPRISM_DATABASE_USER=$PHOTOPRISM_DATABASE_USER"
-        export PHOTOPRISM_DATABASE_PASSWORD && bashio::log.blue "PHOTOPRISM_DATABASE_PASSWORD=$PHOTOPRISM_DATABASE_PASSWORD"
+        export PHOTOPRISM_DATABASE_DRIVER && \
+            sed -i "1a PHOTOPRISM_DATABASE_DRIVER=$PHOTOPRISM_DATABASE_DRIVER" /scripts/entrypoint.sh && \
+            bashio::log.blue "PHOTOPRISM_DATABASE_DRIVER=$PHOTOPRISM_DATABASE_DRIVER"
+        export PHOTOPRISM_DATABASE_SERVER && \
+            sed -i "1a PHOTOPRISM_DATABASE_SERVER=$PHOTOPRISM_DATABASE_SERVER" /scripts/entrypoint.sh && \
+            bashio::log.blue "PHOTOPRISM_DATABASE_SERVER=$PHOTOPRISM_DATABASE_SERVER"
+        export PHOTOPRISM_DATABASE_NAME && \
+            sed -i "1a PHOTOPRISM_DATABASE_NAME=$PHOTOPRISM_DATABASE_NAME" /scripts/entrypoint.sh && \
+            bashio::log.blue "PHOTOPRISM_DATABASE_NAME=$PHOTOPRISM_DATABASE_NAME"
+        export PHOTOPRISM_DATABASE_USER && \
+            sed -i "1a PHOTOPRISM_DATABASE_USER=$PHOTOPRISM_DATABASE_USER" /scripts/entrypoint.sh && \
+            bashio::log.blue "PHOTOPRISM_DATABASE_USER=$PHOTOPRISM_DATABASE_USER"
+        export PHOTOPRISM_DATABASE_PASSWORD && \
+            sed -i "1a PHOTOPRISM_DATABASE_PASSWORD=$PHOTOPRISM_DATABASE_PASSWORD" /scripts/entrypoint.sh && \
+            bashio::log.blue "PHOTOPRISM_DATABASE_PASSWORD=$PHOTOPRISM_DATABASE_PASSWORD"
 
-        bashio::log.warning "Webtrees is using the Maria DB addon"
+        bashio::log.warning "Photoprism is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
@@ -62,6 +74,7 @@ if bashio::config.true "ingress_disabled"; then
 else
     PHOTOPRISM_SITE_URL="$(bashio::addon.ingress_entry)/"
     export PHOTOPRISM_SITE_URL
+    sed -i "1a PHOTOPRISM_SITE_URL=$PHOTOPRISM_SITE_URL" /scripts/entrypoint.sh
     bashio::log.warning "Ingress is enabled. To connect, you must add $PHOTOPRISM_SITE_URL to the end of your access point. Example : http://my-url:8123$PHOTOPRISM_SITE_URL"
 fi
 
@@ -80,6 +93,11 @@ export PHOTOPRISM_STORAGE_PATH
 export PHOTOPRISM_ORIGINALS_PATH
 export PHOTOPRISM_IMPORT_PATH
 export PHOTOPRISM_BACKUP_PATH
+sed -i "1a PHOTOPRISM_UPLOAD_NSFW=$PHOTOPRISM_UPLOAD_NSFW" /scripts/entrypoint.sh
+sed -i "1a PHOTOPRISM_STORAGE_PATH=$PHOTOPRISM_STORAGE_PATH" /scripts/entrypoint.sh
+sed -i "1a PHOTOPRISM_ORIGINALS_PATH=$PHOTOPRISM_ORIGINALS_PATH" /scripts/entrypoint.sh
+sed -i "1a PHOTOPRISM_IMPORT_PATH=$PHOTOPRISM_IMPORT_PATH" /scripts/entrypoint.sh
+sed -i "1a PHOTOPRISM_BACKUP_PATH=$PHOTOPRISM_BACKUP_PATH" /scripts/entrypoint.sh
 
 # Test configs
 for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPRISM_IMPORT_PATH $PHOTOPRISM_BACKUP_PATH; do
@@ -101,17 +119,15 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     PGID="$(bashio::config "PGID")"
     export PHOTOPRISM_UID="$PUID"
     export PHOTOPRISM_GID="$PGID"
+    sed -i "1a PHOTOPRISM_UID=$PHOTOPRISM_UID" /scripts/entrypoint.sh
+    sed -i "1a PHOTOPRISM_GID=$PHOTOPRISM_GID" /scripts/entrypoint.sh
 fi
 
 # Start messages
 bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default username : admin, default password: "please_change_password"'
 
-set +u
-
-# shellcheck source=/dev/null
-. /scripts/entrypoint.sh photoprism start & \
-bashio::log.info "Starting, please wait for \"App launched\" green text..."
+. /scripts/entrypoint.sh photoprism start & bashio::log.info "Starting, please wait for next green text..."
 
 bashio::net.wait_for 2341 localhost 900
 bashio::log.info "App launched"

@@ -28,9 +28,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-ENV \
-    working_dir="/data/photoprism" \
-    HOME="/data/photoprism"
+RUN \
+    sed -i "s|HOME=\"/photoprism|HOME=\"/data/photoprism|g" /scripts/entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -77,9 +76,9 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 RUN chmod 777 /entrypoint.sh
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ]
 WORKDIR "/data/photprism"
-ENTRYPOINT [ "/entrypoint.sh" ]
-CMD ["/opt/photoprism/bin/photoprism", "start"]
 
 ############
 # 5 Labels #
