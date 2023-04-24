@@ -79,6 +79,7 @@ if [ -n "${RC_SVCNAME}" ]; then
     if ! /etc/init.d/"${RC_SVCNAME}" --quiet status ; then
         export IN_BACKGROUND=true
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "true" > /var/run/s6/container_environment/IN_BACKGROUND; fi
+        if [ -f ~/.bashrc ]; then printf "%s" "IN_BACKGROUND=\"true\"" >> ~/.bashrc; fi
         /etc/init.d/${RC_SVCNAME} --quiet start
     fi
 fi

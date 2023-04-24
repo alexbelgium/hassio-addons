@@ -38,6 +38,8 @@ sed -i "s|/config/addons_config/calibre-web|$LOCATION|g" /etc/cont-init.d/*
 sed -i "s|/config/addons_config/calibre-web|$LOCATION|g" /etc/services.d/*/run
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
+if [ -f ~/.bashrc ]; then printf "%s" "HOME=\"$LOCATION\"" >> ~/.bashrc; fi
+if [ -f ~/.bashrc ]; then printf "%s" "FM_HOME=\"$LOCATION\"" >> ~/.bashrc; fi
 
 usermod --home "$LOCATION" abc
 

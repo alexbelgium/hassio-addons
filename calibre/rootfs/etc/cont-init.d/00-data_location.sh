@@ -48,6 +48,10 @@ if [ -d /var/run/s6/container_environment ]; then
     printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME
     printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME
 fi
+if [ -f ~/.bashrc ]; then
+    printf "%s" "HOME=\"$LOCATION\"" >> ~/.bashrc
+    printf "%s" "FM_HOME=\"$LOCATION\"" >> ~/.bashrc
+fi
 
 usermod --home "$LOCATION" abc
 

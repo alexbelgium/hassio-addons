@@ -51,6 +51,7 @@ for KEYS in "${arr[@]}"; do
     if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
     # For s6
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
+    if [ -f ~/.bashrc ]; then printf "%s" "${KEYS}=\"${VALUE}\"" >> ~/.bashrc; fi
 
 done
 
