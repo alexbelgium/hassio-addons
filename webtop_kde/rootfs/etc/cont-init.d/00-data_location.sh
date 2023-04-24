@@ -41,8 +41,10 @@ sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc/services.d -type f) || true
 sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc/s6-overlay/s6-rc.d -type f) || true
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
-if [ -f ~/.bashrc ]; then printf "%s" "HOME=\"$LOCATION\"" >> ~/.bashrc; fi
-if [ -f ~/.bashrc ]; then printf "%s" "FM_HOME=\"$LOCATION\"" >> ~/.bashrc; fi
+{
+printf "%s" "HOME=\"$LOCATION\""
+printf "%s" "FM_HOME=\"$LOCATION\""
+} >> ~/.bashrc
 
 usermod --home "$LOCATION" abc
 

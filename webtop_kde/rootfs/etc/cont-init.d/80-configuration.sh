@@ -49,7 +49,7 @@ if bashio::config.has_value 'KEYBOARD'; then
     bashio::log.info "Setting keyboard to $KEYBOARD"
     sed -i "1a export KEYBOARD=$KEYBOARD" /etc/s6-overlay/s6-rc.d/svc-web/run
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "$KEYBOARD" > /var/run/s6/container_environment/KEYBOARD; fi
-    if [ -f ~/.bashrc ]; then printf "%s" "KEYBOARD=\"$KEYBOARD\"" >> ~/.bashrc; fi
+    printf "%s" "KEYBOARD=\"$KEYBOARD\"" >> ~/.bashrc
 fi
 
 # Set password

@@ -14,7 +14,7 @@ export IMMICH_MEDIA_LOCATION="$DATA_LOCATION"
 if [ -d /var/run/s6/container_environment ]; then
     printf "%s" "$DATA_LOCATION" > /var/run/s6/container_environment/IMMICH_MEDIA_LOCATION
 fi
-if [ -f ~/.bashrc ]; then printf "%s" "IMMICH_MEDIA_LOCATION=\"$DATA_LOCATION\"" >> ~/.bashrc; fi
+printf "%s" "IMMICH_MEDIA_LOCATION=\"$DATA_LOCATION\"" >> ~/.bashrc
 
 echo "... check $DATA_LOCATION folder exists"
 mkdir -p "$DATA_LOCATION"

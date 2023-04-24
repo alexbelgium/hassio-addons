@@ -82,7 +82,7 @@ if [ -d /var/run/s6/container_environment ]; then
     printf "%s" "$DB_HOSTNAME" > /var/run/s6/container_environment/DB_HOSTNAME
     printf "%s" "$JWT_SECRET" > /var/run/s6/container_environment/JWT_SECRET
 fi
-if [ -f ~/.bashrc ]; then
+
     {
     printf "%s" "DB_USERNAME=\"$DB_USERNAME\""
     printf "%s" "DB_PASSWORD=\"$DB_PASSWORD\""
@@ -91,4 +91,3 @@ if [ -f ~/.bashrc ]; then
     printf "%s" "DB_HOSTNAME=\"$DB_HOSTNAME\""
     printf "%s" "JWT_SECRET=\"$JWT_SECRET\""
     } >> ~/.bashrc
-fi

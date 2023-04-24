@@ -63,6 +63,6 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     # Define variable
     if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export TRANSMISSION_WEB_HOME=$CUSTOMUI" /etc/services.d/*/*run* 2>/dev/null; fi
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "$CUSTOMUI" > /var/run/s6/container_environment/TRANSMISSION_WEB_HOME; fi
-    if [ -f ~/.bashrc ]; then printf "%s" "TRANSMISSION_WEB_HOME=\"$CUSTOMUI\"" >> ~/.bashrc; fi
+    printf "%s" "TRANSMISSION_WEB_HOME=\"$CUSTOMUI\"" >> ~/.bashrc
 
 fi

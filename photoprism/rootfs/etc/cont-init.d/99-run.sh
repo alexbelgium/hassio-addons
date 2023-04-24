@@ -45,7 +45,6 @@ case $(bashio::config 'DB_TYPE') in
         export PHOTOPRISM_DATABASE_PASSWORD && \
             bashio::log.blue "PHOTOPRISM_DATABASE_PASSWORD=$PHOTOPRISM_DATABASE_PASSWORD"
 
-        if [ -f ~/.bashrc ]; then
             {
             printf "%s" "PHOTOPRISM_DATABASE_DRIVER=\"${PHOTOPRISM_DATABASE_DRIVER}\""
             printf "%s" "PHOTOPRISM_DATABASE_SERVER=\"${PHOTOPRISM_DATABASE_SERVER}\""
@@ -53,7 +52,6 @@ case $(bashio::config 'DB_TYPE') in
             printf "%s" "PHOTOPRISM_DATABASE_USER=\"${PHOTOPRISM_DATABASE_USER}\""
             printf "%s" "PHOTOPRISM_DATABASE_PASSWORD=\"${PHOTOPRISM_DATABASE_PASSWORD}\""
             } >> ~/.bashrc
-        fi
 
         bashio::log.warning "Photoprism is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
@@ -79,7 +77,7 @@ if bashio::config.true "ingress_disabled"; then
 else
     PHOTOPRISM_SITE_URL="$(bashio::addon.ingress_entry)/"
     export PHOTOPRISM_SITE_URL
-    if [ -f ~/.bashrc ]; then printf "%s" "PHOTOPRISM_SITE_URL=\"${PHOTOPRISM_SITE_URL}\"" >> ~/.bashrc; fi
+    printf "%s" "PHOTOPRISM_SITE_URL=\"${PHOTOPRISM_SITE_URL}\"" >> ~/.bashrc
     bashio::log.warning "Ingress is enabled. To connect, you must add $PHOTOPRISM_SITE_URL to the end of your access point. Example : http://my-url:8123$PHOTOPRISM_SITE_URL"
 fi
 
@@ -98,7 +96,7 @@ export PHOTOPRISM_STORAGE_PATH
 export PHOTOPRISM_ORIGINALS_PATH
 export PHOTOPRISM_IMPORT_PATH
 export PHOTOPRISM_BACKUP_PATH
-if [ -f ~/.bashrc ]; then
+
     {
     printf "%s" "PHOTOPRISM_UPLOAD_NSFW=\"${PHOTOPRISM_UPLOAD_NSFW}\""
     printf "%s" "PHOTOPRISM_STORAGE_PATH=\"${PHOTOPRISM_STORAGE_PATH}\""
@@ -106,7 +104,6 @@ if [ -f ~/.bashrc ]; then
     printf "%s" "PHOTOPRISM_IMPORT_PATH=\"${PHOTOPRISM_IMPORT_PATH}\""
     printf "%s" "PHOTOPRISM_BACKUP_PATH=\"${PHOTOPRISM_BACKUP_PATH}\""
     } >> ~/.bashrc
-fi
 
 # Test configs
 for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPRISM_IMPORT_PATH $PHOTOPRISM_BACKUP_PATH; do
@@ -130,12 +127,10 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     export PHOTOPRISM_GID="$PGID"
     sed -i "1a PHOTOPRISM_UID=$PHOTOPRISM_UID" /scripts/entrypoint.sh
     sed -i "1a PHOTOPRISM_GID=$PHOTOPRISM_GID" /scripts/entrypoint.sh
-    if [ -f ~/.bashrc ]; then
         {
         printf "%s" "PHOTOPRISM_UID=\"${PHOTOPRISM_UID}\""
         printf "%s" "PHOTOPRISM_GID=\"${PHOTOPRISM_GID}\""
         } >> ~/.bashrc
-    fi
 fi
 
 # Start messages
