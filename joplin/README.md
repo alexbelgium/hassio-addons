@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Joplin Server] Health Check / Watchdog fail if APP_BASE_URL not localhost (opened 2023-04-25)](https://github.com/alexbelgium/hassio-addons/issues/811) by [@mxbchr](https://github.com/mxbchr)
 # Home assistant add-on: Joplin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
