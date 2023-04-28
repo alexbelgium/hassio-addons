@@ -1,3 +1,6 @@
+
+## 26.0.1 (29-04-2023)
+- Update to latest version from linuxserver/docker-nextcloud
 ### 26.0.0-17 (11-04-2023)
 - Minor bugs fixed
 - Automatic app updates
