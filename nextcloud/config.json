@@ -7,6 +7,10 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Nextcloud for Home Assistant",
   "devices": [
+    "/dev/dri",
+    "/dev/dri/card0",
+    "/dev/dri/card1",
+    "/dev/dri/renderD128",
     "/dev/sda",
     "/dev/sdb",
     "/dev/sdc",
