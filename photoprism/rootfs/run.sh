@@ -27,13 +27,13 @@ export PHOTOPRISM_ORIGINALS_PATH=$(bashio::config 'ORIGINALS_PATH')
 export PHOTOPRISM_IMPORT_PATH=$(bashio::config 'IMPORT_PATH')
 export PHOTOPRISM_BACKUP_PATH=$(bashio::config 'BACKUP_PATH')
 
-    {
+{
     printf "%s" "PHOTOPRISM_UPLOAD_NSFW=\"${PHOTOPRISM_UPLOAD_NSFW}\""
     printf "%s" "PHOTOPRISM_STORAGE_PATH=\"${PHOTOPRISM_STORAGE_PATH}\""
     printf "%s" "PHOTOPRISM_ORIGINALS_PATH=\"${PHOTOPRISM_ORIGINALS_PATH}\""
     printf "%s" "PHOTOPRISM_IMPORT_PATH=\"${PHOTOPRISM_IMPORT_PATH}\""
     printf "%s" "PHOTOPRISM_BACKUP_PATH=\"${PHOTOPRISM_BACKUP_PATH}\""
-    } >> ~/.bashrc
+} >> ~/.bashrc
 
 if bashio::config.has_value 'CUSTOM_OPTIONS'; then
     CUSTOMOPTIONS=$(bashio::config 'CUSTOM_OPTIONS')
