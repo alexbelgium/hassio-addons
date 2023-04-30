@@ -1,3 +1,5 @@
+### 26.0.1-2 (30-04-2023)
+- Minor bugs fixed
 - Chmod only data folder subdirectories  https://github.com/alexbelgium/hassio-addons/issues/818
 
 ## 26.0.1 (29-04-2023)
