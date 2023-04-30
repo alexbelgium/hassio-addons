@@ -31,8 +31,8 @@ if [[ "$datadirectory" == *"/mnt/"* ]] && [ ! -f "$datadirectory"/index.html ]; 
 fi
 
 mkdir -p "$datadirectory"
-chmod 755 -R "$datadirectory"
-chown -R "$PUID:$PGID" "$datadirectory"
+chmod 755 -R "$datadirectory"/*
+chown -R "$PUID:$PGID" "$datadirectory"/*
 
 ######################
 # Modify config.json #
