@@ -1,27 +1,35 @@
+- Fix : healthcheck
 
 ## 2.10.11 (18-03-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.10.10 (11-03-2023)
+
 - Update to latest version from etechonomy/joplin-server
 - Implemented healthcheck
 
 ## 2.10.9 (11-02-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.10.5 (31-12-2022)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.10.4 (25-12-2022)
+
 - Update to latest version from etechonomy/joplin-server
 - Breaking change: MAILER_SECURE replaced by MAILER_SECURITY
 - WARNING : update to supervisor 2022.11 before installing
 - Add access to systime
 
 ## 2.9.7 (08-11-2022)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.9.5 (13-10-2022)
+
 - Update to latest version from etechonomy/joplin-server
 - Add codenotary sign
 - Data location can be set either in /config, /data or /share
@@ -29,6 +37,7 @@
 - Default sqlite storage : /config/addons_config/joplin
 
 ## 2.7.4 (12-02-2022)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.6.10 (20-12-2021)
