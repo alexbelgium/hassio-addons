@@ -7,6 +7,10 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Nextcloud for Home Assistant",
   "devices": [
+    "/dev/dri",
+    "/dev/dri/card0",
+    "/dev/dri/card1",
+    "/dev/dri/renderD128",
     "/dev/sda",
     "/dev/sdb",
     "/dev/sdc",
@@ -107,6 +111,6 @@
   "slug": "nextcloud_ocr",
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "26.0.1-2",
+  "version": "26.0.1-3",
   "webui": "https://[HOST]:[PORT:443]"
 }
