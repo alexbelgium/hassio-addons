@@ -8,6 +8,9 @@
   "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
   "devices": [
     "/dev/dri",
+    "/dev/dri/card0",
+    "/dev/dri/card1",
+    "/dev/dri/renderD128",
     "/dev/vchiq",
     "/dev/video10",
     "/dev/video11",

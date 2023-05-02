@@ -8,6 +8,9 @@
   "description": "Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required",
   "devices": [
     "/dev/dri",
+    "/dev/dri/card0",
+    "/dev/dri/card1",
+    "/dev/dri/renderD128",
     "/dev/vchiq",
     "/dev/video10",
     "/dev/video11",
