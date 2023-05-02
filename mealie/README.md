@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] mealie (opened 2023-04-29)](https://github.com/alexbelgium/hassio-addons/issues/817) by [@gschmidl](https://github.com/gschmidl)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

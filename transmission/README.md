@@ -23,7 +23,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Transmission is a bittorrent client.
-This addon is based on the [docker image](https://github.com/linuxserver/transmission) from linuxserver.io.
+This addon is based on the [docker image](https://github.com/linuxserver/docker-transmission) from linuxserver.io.
 
 ## Installation
 
