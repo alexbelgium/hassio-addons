@@ -19,7 +19,7 @@
     "/dev/video14",
     "/dev/video15",
     "/dev/video16",
-    "/dev/ttyUSB0",
+    "/dev/ttyUSB0"
   ],
   "environment": {},
   "image": "ghcr.io/alexbelgium/overseerr-{arch}",
