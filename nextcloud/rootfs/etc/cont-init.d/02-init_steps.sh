@@ -139,3 +139,12 @@ if [ -f /reinstall ]; then
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 fi
+
+##############
+# CLEAN OCDE #
+##############
+
+sudo -u abc php /data/config/www/nextcloud/occ app:remove --no-interaction "richdocumentscode" &>/dev/null || true
+sudo -u abc php /data/config/www/nextcloud/occ app:remove --no-interaction "richdocumentscode_arm64" &>/dev/null || true
+sudo -u abc php /data/config/www/nextcloud/occ app:remove --no-interaction "richdocumentscode_amd64" &>/dev/null || true
+
