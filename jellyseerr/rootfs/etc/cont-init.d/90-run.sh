@@ -12,7 +12,9 @@ rm -r /data/config
 ln -s "$CONFIG_LOCATION" /data/config
 
 # Create files
-export JELLYFIN_TYPE=$(bashio::config 'TYPE')
-export TZ=$(bashio::config 'TZ')
+JELLYFIN_TYPE=$(bashio::config 'TYPE')
+export JELLYFIN_TYPE
+TZ=$(bashio::config 'TZ')
+export TZ
 
 yarn start
