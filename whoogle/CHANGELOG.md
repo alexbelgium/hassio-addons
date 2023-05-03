@@ -1,3 +1,5 @@
+### 0.8.2-3 (03-05-2023)
+- Minor bugs fixed
 - Fix missing images in ingress
 
 ### 0.8.2-2 (09-04-2023)
