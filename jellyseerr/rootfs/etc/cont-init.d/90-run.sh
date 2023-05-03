@@ -8,7 +8,7 @@ mkdir -p "$CONFIG_LOCATION"
 cp -rnT /app/config "$CONFIG_LOCATION"
 cp -rnT /app /data
 rm -r /app
-rm -r /data/config
+if [ -f /data/config ]; then rm -r /data/config; fi
 ln -s "$CONFIG_LOCATION" /data/config
 
 # Create files
