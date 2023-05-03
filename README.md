@@ -42,7 +42,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 78
+- In the repository : 79
 - Installed : 19917
 
 ### Top 3
@@ -331,6 +331,14 @@ If you want to do add the repository manually, please follow the procedure highl
 ![ingress][ingress-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003;  [Jellyseerr](jellyseerr/) : fork of overseerr for jellyfin support
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyseerr%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyseerr%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7][armv7-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/owl.svg) [Joal](joal/) : An open source command line RatioMaster with WebUI
 
