@@ -1,24 +1,33 @@
+- Fix missing images in ingress
+
 ### 0.8.2-2 (09-04-2023)
+
 - Minor bugs fixed
 
 ## 0.8.2 (08-04-2023)
+
 - Update to latest version from benbusby/whoogle-search
 
 ## 0.8.1 (25-12-2022)
+
 - Update to latest version from benbusby/whoogle-search
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 0.8.0 (26-11-2022)
+
 - Update to latest version from benbusby/whoogle-search
 
 ## 0.7.4 (14-06-2022)
+
 - Update to latest version from benbusby/whoogle-search
 
 ## 0.7.3 (04-06-2022)
+
 - Update to latest version from benbusby/whoogle-search
 - Addition of ingress
 
 ## 0.7.2 (27-04-2022)
+
 - Update to latest version from benbusby/whoogle-search
 - Add codenotary sign
 
