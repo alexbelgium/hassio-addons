@@ -1,3 +1,4 @@
+- Add symlink for transcodes folder https://github.com/alexbelgium/hassio-addons/issues/777
 
 ## 10.8.10 (29-04-2023)
 - Update to latest version from linuxserver/docker-jellyfin
