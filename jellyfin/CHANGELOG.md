@@ -1,3 +1,5 @@
+### 10.8.10-5 (04-05-2023)
+- Minor bugs fixed
 ### 10.8.10-2 (04-05-2023)
 - Minor bugs fixed
 - Add symlink for transcodes folder https://github.com/alexbelgium/hassio-addons/issues/777
