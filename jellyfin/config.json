@@ -7,7 +7,7 @@
   "backup_exclude": [
     "*/cache/",
     "*/logs/",
-    "*/transcoding-temp/",
+    "*/transcodes/",
     "*/metadata/"
   ],
   "codenotary": "alexandrep.github@gmail.com",
@@ -112,6 +112,6 @@
   },
   "slug": "jellyfin",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.8.10-2",
+  "version": "10.8.10-4",
   "video": true
 }
