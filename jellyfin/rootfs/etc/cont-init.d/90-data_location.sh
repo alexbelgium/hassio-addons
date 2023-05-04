@@ -26,8 +26,8 @@ sed -i "s|/usr/share/jellyfin|$LOCATION|g" /etc/nginx/servers/ingress.conf
 
 # Custom transcode location
 rm -r "$LOCATION"/data/transcodes
-mkdir -p /transcodes
-ln -s /transcodes "$LOCATION"/data/transcodes
+mkdir -p /data/transcodes
+ln -s /data/transcodes "$LOCATION"/data/transcodes
 
 # Permissions
 bashio::log.info "Setting ownership to $PUID:$PGID"
