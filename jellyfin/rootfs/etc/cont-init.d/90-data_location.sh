@@ -24,6 +24,11 @@ mkdir -p "$LOCATION" "$LOCATION"/data "$LOCATION"/cache "$LOCATION"/log "$LOCATI
 cp -rn /usr/share/jellyfin/web/* "$LOCATION"/web/
 sed -i "s|/usr/share/jellyfin|$LOCATION|g" /etc/nginx/servers/ingress.conf
 
+# Custom transcode location
+rm -r "$LOCATION"/data/transcodes
+mkdir -p /transcodes
+ln -s /transcodes "$LOCATION"/data/transcodes
+
 # Permissions
 bashio::log.info "Setting ownership to $PUID:$PGID"
 chown -R "$PUID":"$PGID" "$LOCATION"
