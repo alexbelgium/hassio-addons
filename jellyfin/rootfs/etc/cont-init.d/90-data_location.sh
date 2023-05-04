@@ -31,6 +31,7 @@ if [ -d "$LOCATION"/data/transcodes ]; then
   rm -r "$LOCATION"/data/transcodes
 fi
 ln -s /data/transcodes "$LOCATION"/data/transcodes
+chown -R "$PUID":"$PGID" /data/transcodes
 
 # Permissions
 bashio::log.info "Setting ownership to $PUID:$PGID"
