@@ -1,3 +1,5 @@
+### 0.8.2-5 (04-05-2023)
+- Minor bugs fixed
 ### 0.8.2-4 (04-05-2023)
 - Minor bugs fixed
 - Fix missing images in direct access
