@@ -6,9 +6,9 @@ CONFIG_LOCATION="/config/addons_config/jellyseer"
 bashio::log.info "Config stored in $CONFIG_LOCATION"
 mkdir -p "$CONFIG_LOCATION"
 cp -rnT /app/config "$CONFIG_LOCATION"
-cp -rnT /app /data
+cp -rnT /app/ /data/
 rm -r /app
-if [ -f /data/config ]; then rm -r /data/config; fi
+if [ -d /data/config ]; then rm -r /data/config; fi
 ln -s "$CONFIG_LOCATION" /data/config
 
 # Create files
