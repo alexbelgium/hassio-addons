@@ -1,3 +1,5 @@
+### 1.5.1-2 (04-05-2023)
+- Minor bugs fixed
 
 ## 1.5.1-pg14 (23-04-2023)
 - Update to latest version from abesnier/guacamole
