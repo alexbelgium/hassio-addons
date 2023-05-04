@@ -54,6 +54,9 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "environment": {
+    "EXPOSE_PORT": "5001"
+  },
   "image": "ghcr.io/alexbelgium/whoogle-search-{arch}",
   "ingress": true,
   "ingress_stream": true,
@@ -108,5 +111,5 @@
   },
   "slug": "whoogle-search",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
-  "version": "0.8.2-3"
+  "version": "0.8.2-test3"
 }
