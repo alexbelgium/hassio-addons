@@ -47,6 +47,8 @@ sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/nginx/servers/ingress.conf
 sed -i "s#%%ingress_entry_modified%%#/${ingress_entry_modified}#g" /etc/nginx/servers/ingress.conf
+sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/nginx/servers/nginx.conf
+sed -i "s#%%ingress_entry_modified%%#/${ingress_entry_modified}#g" /etc/nginx/servers/nginx.conf
 
 dns_host=127.0.0.11
 sed -i "s/%%dns_host%%/${dns_host}/g" /etc/nginx/includes/resolver.conf
