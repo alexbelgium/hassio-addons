@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Whoogle] image not being displayed because of an ingress error (opened 2023-04-18)](https://github.com/alexbelgium/hassio-addons/issues/803) by [@bruvv](https://github.com/bruvv)
 # Home assistant add-on: whoogle-search
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
