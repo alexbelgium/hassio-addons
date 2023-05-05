@@ -1,3 +1,5 @@
+### 0.6.20-ls207-2 (05-05-2023)
+- Minor bugs fixed
 - Add libnss3 https://github.com/alexbelgium/hassio-addons/issues/824
 
 ## 0.6.20-ls207 (23-04-2023)
