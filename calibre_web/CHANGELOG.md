@@ -1,3 +1,6 @@
+
+## 0.6.20-ls208 (06-05-2023)
+- Update to latest version from linuxserver/docker-calibre-web
 ### 0.6.20-ls207-6 (05-05-2023)
 - Minor bugs fixed
 ### 0.6.20-ls207-3 (05-05-2023)
