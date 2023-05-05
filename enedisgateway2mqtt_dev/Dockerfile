@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_UPSTREAM="0.8.13"
+ARG BUILD_UPSTREAM="0.9.0b1"
 FROM m4dm4rtig4n/myelectricaldata:latest
 
 
