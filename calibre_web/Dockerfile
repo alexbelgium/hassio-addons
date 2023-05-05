@@ -29,6 +29,11 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+RUN \
+    echo '#!/bin/sh' > /usr/bin/xdg-icon-resource && chmod +x /usr/bin/xdg-icon-resource \
+    && echo '#!/bin/sh' > /usr/bin/xdg-desktop-menu && chmod +x /usr/bin/xdg-desktop-menu \
+    && echo '#!/bin/sh' > /usr/bin/xdg-mime && chmod +x /usr/bin/xdg-mime
+
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/calibre-web"
 # hadolint ignore=SC2015, SC2013, SC2086
