@@ -1,3 +1,4 @@
+- Add libnss3 https://github.com/alexbelgium/hassio-addons/issues/824
 
 ## 0.6.20-ls207 (23-04-2023)
 - Update to latest version from linuxserver/docker-calibre-web
