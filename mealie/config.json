@@ -55,7 +55,10 @@
   ],
   "environment": {
     "DB_ENGINE": "sqlite",
-    "WEB_GUNICORN": "true"
+    "WEB_GUNICORN": "true",
+    "WEB_CONCURRENCY": "2",
+    "WORKERS_PER_CORE": "0.5",
+    "MAX_WORKERS": "1"
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "map": [
@@ -92,6 +95,6 @@
   },
   "slug": "mealie",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v1.0.0-beta-3",
+  "version": "v1.0.0-beta-4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
