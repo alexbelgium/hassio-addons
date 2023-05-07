@@ -131,7 +131,7 @@ while IFS= read -r line; do
         sed -i "1a export $KEYS=\'$VALUE\'" /scripts/*run* 2>/dev/null || true
         # Export to s6
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-        printf "%s" "\n${KEYS}=\"${VALUE}\"" >> ~/.bashrc
+        echo "export ${KEYS}=\"${VALUE}\"" >> ~/.bashrc
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS=\'$VALUE\'"; fi
     else
