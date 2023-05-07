@@ -46,11 +46,11 @@ case $(bashio::config 'DB_TYPE') in
             bashio::log.blue "PHOTOPRISM_DATABASE_PASSWORD=$PHOTOPRISM_DATABASE_PASSWORD"
 
         {
-            printf "%s" "PHOTOPRISM_DATABASE_DRIVER=\"${PHOTOPRISM_DATABASE_DRIVER}\""
-            printf "%s" "PHOTOPRISM_DATABASE_SERVER=\"${PHOTOPRISM_DATABASE_SERVER}\""
-            printf "%s" "PHOTOPRISM_DATABASE_NAME=\"${PHOTOPRISM_DATABASE_NAME}\""
-            printf "%s" "PHOTOPRISM_DATABASE_USER=\"${PHOTOPRISM_DATABASE_USER}\""
-            printf "%s" "PHOTOPRISM_DATABASE_PASSWORD=\"${PHOTOPRISM_DATABASE_PASSWORD}\""
+            printf "%s" "\nPHOTOPRISM_DATABASE_DRIVER=\"${PHOTOPRISM_DATABASE_DRIVER}\""
+            printf "%s" "\nPHOTOPRISM_DATABASE_SERVER=\"${PHOTOPRISM_DATABASE_SERVER}\""
+            printf "%s" "\nPHOTOPRISM_DATABASE_NAME=\"${PHOTOPRISM_DATABASE_NAME}\""
+            printf "%s" "\nPHOTOPRISM_DATABASE_USER=\"${PHOTOPRISM_DATABASE_USER}\""
+            printf "%s" "\nPHOTOPRISM_DATABASE_PASSWORD=\"${PHOTOPRISM_DATABASE_PASSWORD}\""
         } >> ~/.bashrc
 
         bashio::log.warning "Photoprism is using the Maria DB addon"
@@ -77,7 +77,7 @@ if bashio::config.true "ingress_disabled"; then
 else
     PHOTOPRISM_SITE_URL="$(bashio::addon.ingress_entry)/"
     export PHOTOPRISM_SITE_URL
-    printf "%s" "PHOTOPRISM_SITE_URL=\"${PHOTOPRISM_SITE_URL}\"" >> ~/.bashrc
+    printf "%s" "\nPHOTOPRISM_SITE_URL=\"${PHOTOPRISM_SITE_URL}\"" >> ~/.bashrc
     bashio::log.warning "Ingress is enabled. To connect, you must add $PHOTOPRISM_SITE_URL to the end of your access point. Example : http://my-url:8123$PHOTOPRISM_SITE_URL"
 fi
 
@@ -98,11 +98,11 @@ export PHOTOPRISM_IMPORT_PATH
 export PHOTOPRISM_BACKUP_PATH
 
 {
-    printf "%s" "PHOTOPRISM_UPLOAD_NSFW=\"${PHOTOPRISM_UPLOAD_NSFW}\""
-    printf "%s" "PHOTOPRISM_STORAGE_PATH=\"${PHOTOPRISM_STORAGE_PATH}\""
-    printf "%s" "PHOTOPRISM_ORIGINALS_PATH=\"${PHOTOPRISM_ORIGINALS_PATH}\""
-    printf "%s" "PHOTOPRISM_IMPORT_PATH=\"${PHOTOPRISM_IMPORT_PATH}\""
-    printf "%s" "PHOTOPRISM_BACKUP_PATH=\"${PHOTOPRISM_BACKUP_PATH}\""
+    printf "%s" "\nPHOTOPRISM_UPLOAD_NSFW=\"${PHOTOPRISM_UPLOAD_NSFW}\""
+    printf "%s" "\nPHOTOPRISM_STORAGE_PATH=\"${PHOTOPRISM_STORAGE_PATH}\""
+    printf "%s" "\nPHOTOPRISM_ORIGINALS_PATH=\"${PHOTOPRISM_ORIGINALS_PATH}\""
+    printf "%s" "\nPHOTOPRISM_IMPORT_PATH=\"${PHOTOPRISM_IMPORT_PATH}\""
+    printf "%s" "\nPHOTOPRISM_BACKUP_PATH=\"${PHOTOPRISM_BACKUP_PATH}\""
 } >> ~/.bashrc
 
 # Test configs
@@ -128,8 +128,8 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     sed -i "1a PHOTOPRISM_UID=$PHOTOPRISM_UID" /scripts/entrypoint.sh
     sed -i "1a PHOTOPRISM_GID=$PHOTOPRISM_GID" /scripts/entrypoint.sh
     {
-        printf "%s" "PHOTOPRISM_UID=\"${PHOTOPRISM_UID}\""
-        printf "%s" "PHOTOPRISM_GID=\"${PHOTOPRISM_GID}\""
+        printf "%s" "\nPHOTOPRISM_UID=\"${PHOTOPRISM_UID}\""
+        printf "%s" "\nPHOTOPRISM_GID=\"${PHOTOPRISM_GID}\""
     } >> ~/.bashrc
 fi
 
