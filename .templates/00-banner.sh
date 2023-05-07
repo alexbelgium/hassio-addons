@@ -55,3 +55,6 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     bashio::log.blue \
         '-----------------------------------------------------------'
 fi
+
+# Clean bashrc file
+if [ -f ~/.bashrc ]; then rm ~/.bashrc; fi
