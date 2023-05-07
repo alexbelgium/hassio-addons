@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Photoprism] Cannot add user in Photoprism Preview-6 (opened 2023-04-15)](https://github.com/alexbelgium/hassio-addons/issues/798) by [@MiSebCo](https://github.com/MiSebCo)
 # Home assistant add-on: Photoprism
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -88,6 +89,15 @@ PHOTOPRISM_DATABASE_NAME: "photoprism"
 PHOTOPRISM_DATABASE_USER: "USERNAME"
 PHOTOPRISM_DATABASE_PASSWORD: "PASSWORD
 ```
+## Using Photoprism Command-Line Interface
+
+Photoprism also provides a command line interface:
+
+https://docs.photoprism.app/getting-started/docker-compose/#command-line-interface
+
+You can access it via portainer addon or executing `docker exec -it <photoprism container id> bash` via _ssh_.
+
+:warning: Do not use `docker exec <photoprism container id> photoprism` as this will lead to unpredictable behavior.
 
 ## Illustration
 
