@@ -27,7 +27,7 @@ sed -i "s|/usr/share/jellyfin|$LOCATION|g" /etc/nginx/servers/ingress.conf
 # Custom transcode location
 mkdir -p /data/transcodes
 if [ -d "$LOCATION"/data/transcodes ]; then
-    cp -rT "$LOCATION"/data/transcodes /data/transcodes
+    cp -rT "$LOCATION"/data/transcodes /data/transcodes || true
     rm -r "$LOCATION"/data/transcodes
 fi
 ln -s /data/transcodes "$LOCATION"/data/transcodes
