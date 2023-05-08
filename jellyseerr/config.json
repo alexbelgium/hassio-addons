@@ -55,6 +55,7 @@
     "/dev/nvme2"
   ],
   "environment": {},
+  "host_network": true,
   "image": "ghcr.io/alexbelgium/jellyseerr-{arch}",
   "init": false,
   "map": [
@@ -78,6 +79,6 @@
   },
   "slug": "jellyseerr",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jellyseerr",
-  "version": "338",
+  "version": "338-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:5055]"
 }
