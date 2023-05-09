@@ -1,28 +1,37 @@
+- Add variables to bashrc
 
 ## 1.14.4 (06-05-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 1.14.2 (29-04-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
+
 ### 1.13.0-3 (16-04-2023)
+
 - Minor bugs fixed
 
 ## 1.13.0 (19-02-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 1.12.2 (04-02-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 - Added consumption/media/data paths to addon config screen.
 
-
 ## 1.12.1 (28-01-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 1.11.3 (07-01-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 1.11.2 (31-12-2022)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 - Allow mariadb
 - Allow ssl
