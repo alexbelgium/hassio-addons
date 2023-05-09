@@ -1,8 +1,7 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
-    "armv7"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "browsing, reading and downloading eBooks using an existing Calibre database",
@@ -103,7 +102,7 @@
     "networkdisks": "str?"
   },
   "slug": "calibre-web",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre-web",
-  "version": "0.6.20-ls207-4",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre_web",
+  "version": "0.6.20-ls208-2",
   "video": true
 }
