@@ -78,6 +78,22 @@ case $(bashio::config 'database') in
         ;;
 esac
 
+set +u
+# For all relevant variables
+for variable in USERMAP_UID USERMAP_GID PAPERLESS_TIME_ZONE PAPERLESS_URL PAPERLESS_OCR_LANGUAGES PAPERLESS_OCR_MODE PAPERLESS_ADMIN_PASSWORD PAPERLESS_ADMIN_USER PAPERLESS_ALLOWED_HOSTS PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DIR PAPERLESS_DBENGINE PAPERLESS_DBHOST PAPERLESS_DBPORT PAPERLESS_DBNAME PAPERLESS_DBUSER PAPERLESS_DBPASS; do
+
+    # Variable content
+    variablecontent="$(eval echo "\$$variable")"
+
+    # Skip if variable content empty
+    if [ ${#variablecontent} -le 2 ]; then
+        continue
+    fi
+
+    # Add to bashrc
+    eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
+done
+
 #################
 # Staring redis #
 #################
