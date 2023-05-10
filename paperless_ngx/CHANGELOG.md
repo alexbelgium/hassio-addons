@@ -1,6 +1,6 @@
 ### 1.14.4-2 (09-05-2023)
 - Minor bugs fixed
-- Add variables to bashrc
+- Add variables to bashrc to allow cli with portainer
 
 ## 1.14.4 (06-05-2023)
 
