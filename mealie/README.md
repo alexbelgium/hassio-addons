@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Mealie] Cant add to current day in meal planner (opened 2023-05-10)](https://github.com/alexbelgium/hassio-addons/issues/831) by [@Scags104](https://github.com/Scags104)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
