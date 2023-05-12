@@ -89,6 +89,7 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "ingress_disabled": "bool?",
@@ -97,5 +98,5 @@
   },
   "slug": "readarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
-  "version": "nightly-0.1.5.1718-ls173"
+  "version": "nightly-0.1.5.1718-ls173-2"
 }
