@@ -1,4 +1,7 @@
 
+## 1.7.41.1 (13-05-2023)
+- Update to latest version from linuxserver/docker-grav
+
 ## 1.7.40 (24-03-2023)
 - Update to latest version from linuxserver/docker-grav
 - Implemented healthcheck
