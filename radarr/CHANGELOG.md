@@ -1,3 +1,5 @@
+### 4.4.4.7068-2 (12-05-2023)
+- Minor bugs fixed
 
 ## 4.4.4.7068 (21-04-2023)
 - Update to latest version from linuxserver/docker-radarr
