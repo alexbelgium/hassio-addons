@@ -1,3 +1,6 @@
+
+## 1.1.4.3027-ls120 (13-05-2023)
+- Update to latest version from linuxserver/docker-lidarr
 - Feat : cifsdomain added
 
 ## 1.1.4.3027-ls119 (29-04-2023)
