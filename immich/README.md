@@ -31,6 +31,7 @@ Postgresql can be either internal or external
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str",

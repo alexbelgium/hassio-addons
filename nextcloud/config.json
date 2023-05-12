@@ -108,6 +108,7 @@
     "TZ": "str?",
     "additional_apps": "str?",
     "certfile": "str",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "disable_updates": "bool?",
@@ -124,6 +125,6 @@
   "slug": "nextcloud_ocr",
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "26.0.1-4",
+  "version": "26.0.1-5",
   "webui": "https://[HOST]:[PORT:443]"
 }

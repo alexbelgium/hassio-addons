@@ -84,6 +84,7 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
@@ -92,6 +93,6 @@
   "slug": "piwigo",
   "stage": "experimental",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "13.6.0-2",
+  "version": "13.6.0-3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }

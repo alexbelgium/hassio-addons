@@ -89,6 +89,7 @@
     "PUID": "int",
     "TZ": "str?",
     "certfile": "str",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "keyfile": "str",
@@ -101,6 +102,6 @@
   },
   "slug": "ubooquity",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.2-12",
+  "version": "2.1.2-13",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:2206]/ubooquity/admin"
 }

@@ -114,6 +114,7 @@
     "TRANSMISSION_WATCH_DIR": "str",
     "TRANSMISSION_WEB_UI": "list(standard|combustion|kettu|transmission-web-control|flood-for-transmission|shift)",
     "auto_restart": "bool?",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
@@ -121,5 +122,5 @@
   },
   "slug": "transmission_openvpn",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v5.0.2"
+  "version": "v5.0.2-2"
 }

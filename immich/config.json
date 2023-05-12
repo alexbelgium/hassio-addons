@@ -99,6 +99,7 @@
     "PUID": "int",
     "TYPESENSE_ENABLED": "bool",
     "TZ": "str?",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str",
@@ -111,6 +112,6 @@
   ],
   "slug": "immich",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.54.1",
+  "version": "1.54.1-2",
   "webui": "http://[HOST]:[PORT:8080]"
 }

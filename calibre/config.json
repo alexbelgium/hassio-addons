@@ -97,6 +97,7 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
@@ -104,6 +105,6 @@
   },
   "slug": "calibre",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
-  "version": "v6.14.1-ls210_reverted",
+  "version": "v6.14.1-ls210-2",
   "video": true
 }

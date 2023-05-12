@@ -82,6 +82,7 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
@@ -89,6 +90,6 @@
   },
   "slug": "code-server",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/coder-server",
-  "version": "4.12.0",
+  "version": "4.12.0-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8443]"
 }

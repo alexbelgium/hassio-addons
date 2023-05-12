@@ -92,6 +92,7 @@
     "NoAuth": "bool",
     "base_folder": "str?",
     "certfile": "str",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "keyfile": "str",
@@ -102,5 +103,5 @@
   },
   "slug": "filebrowser",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.23.0-5"
+  "version": "2.23.0-6"
 }

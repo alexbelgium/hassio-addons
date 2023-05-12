@@ -1,24 +1,31 @@
+- Feat : cifsdomain added
 - Implemented healthcheck
 - Add NTFS support
 - Disable external port by default
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 2.23.0 (08-11-2022)
+
 - Update to latest version from hurlenko/filebrowser-docker
 
 ## 2.22.4 (23-07-2022)
+
 - Update to latest version from hurlenko/filebrowser-docker
 
 ## 2.22.3 (07-07-2022)
+
 - Update to latest version from hurlenko/filebrowser-docker
 
 ## 2.22.2 (05-07-2022)
+
 - Update to latest version from hurlenko/filebrowser-docker
 
 ## 2.22.1 (09-06-2022)
+
 - Update to latest version from hurlenko/filebrowser-docker
 
 ## 2.22.0 (06-06-2022)
+
 - Update to latest version from hurlenko/filebrowser-docker
 - Add codenotary sign
 

@@ -105,6 +105,7 @@
     "SERVER_IP": "str?",
     "TZ": "str?",
     "URL": "str",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str",
@@ -117,6 +118,6 @@
   ],
   "slug": "seafile",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
-  "version": "10.0.0",
+  "version": "10.0.0-2",
   "webui": "http://[HOST]:[PORT:8000]"
 }

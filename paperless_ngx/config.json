@@ -105,6 +105,7 @@
     "PUID": "int",
     "TZ": "str?",
     "certfile": "str",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "database": "list(|sqlite|mariadb_addon)?",
@@ -118,6 +119,6 @@
   ],
   "slug": "paperless_ng",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.14.4-2",
+  "version": "1.14.4-3",
   "webui": "http://[HOST]:[PORT:8000]"
 }

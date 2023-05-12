@@ -1,161 +1,219 @@
+- Feat : cifsdomain added
+
 ### 0.6.20-ls208-2 (06-05-2023)
+
 - Minor bugs fixed
 
 ## 0.6.20-ls208 (06-05-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
+
 ### 0.6.20-ls207-6 (05-05-2023)
+
 - Minor bugs fixed
+
 ### 0.6.20-ls207-3 (05-05-2023)
+
 - Minor bugs fixed
+
 ### 0.6.20-ls207-2 (05-05-2023)
+
 - Minor bugs fixed
 - Add libnss3 https://github.com/alexbelgium/hassio-addons/issues/824
 
 ## 0.6.20-ls207 (23-04-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls206 (21-04-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls205 (15-04-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls203 (01-04-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls202 (31-03-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls200 (24-03-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls199 (18-03-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls198 (11-03-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 - Implemented healthcheck
 
 ## 0.6.19-ls197 (04-03-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls196 (25-02-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls195 (19-02-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls194 (04-02-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls193 (28-01-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls192 (14-01-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls191 (31-12-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls190 (25-12-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls189 (17-12-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls187 (10-12-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls186 (01-12-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 0.6.19-ls185 (26-11-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls184 (19-11-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 - Use nobrl (#556)
 
 ## 0.6.19-ls183 (11-11-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls182 (02-11-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls181 (27-10-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls180 (25-10-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls179 (20-10-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls178 (13-10-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls177 (06-10-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls176 (28-09-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls175 (22-09-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls174 (15-09-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls173 (09-09-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls172 (25-08-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls171 (11-08-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.19-ls170 (04-08-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls170 (28-07-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls169 (16-07-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls168 (14-07-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls167 (30-06-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls166 (23-06-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls165 (16-06-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 - Feat : ingress autologin (thanks @met67)
 
 ## 0.6.18-ls164 (09-06-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 - Fix : ingress (with @met67)
 
 ## 0.6.18-ls163 (26-05-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls162 (19-05-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls161 (11-05-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls160 (05-05-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.18-ls159 (03-05-2022)
+
 - Update to latest version from linuxserver/docker-calibre-web
+
 ## v5.41.0-ls158 (29-04-2022)
 
 - Update to latest version from linuxserver/docker-calibre-web

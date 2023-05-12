@@ -1,24 +1,39 @@
+- Feat : cifsdomain added
+
 ### 26.0.1-3 (02-05-2023)
+
 - Minor bugs fixed
 - Add renderD128 to devices https://github.com/alexbelgium/hassio-addons/pull/820
+
 ### 26.0.1-2 (30-04-2023)
+
 - Minor bugs fixed
 - Chmod only data folder subdirectories https://github.com/alexbelgium/hassio-addons/issues/818
 
 ## 26.0.1 (29-04-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
+
 ### 26.0.0-17 (11-04-2023)
+
 - Minor bugs fixed
 - Automatic app updates
+
 ### 26.0.0-16 (11-04-2023)
+
 - Minor bugs fixed
+
 ### 26.0.0-15 (11-04-2023)
+
 - Minor bugs fixed
+
 ### 26.0.0-14 (11-04-2023)
+
 - Minor bugs fixed
 - Implement check_data_directory_permissions for data folders in mounted drives
 
 ### 26.0.0-12 (02-04-2023)
+
 - Minor bugs fixed
 - &#9888; WARNING : please read warning on previous versions before updating
 - Prevent downgrades, and instead reinstall the correct version

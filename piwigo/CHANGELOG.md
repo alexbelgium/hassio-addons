@@ -1,28 +1,37 @@
+- Feat : cifsdomain added
 
 ## 13.6.0 (25-02-2023)
+
 - Update to latest version from linuxserver/docker-piwigo
 - Realign to upstream folders
 
 ## 13.5.0 (28-01-2023)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 13.4.0 (25-12-2022)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 13.3.0 (29-11-2022)
+
 - Update to latest version from linuxserver/docker-piwigo
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 13.2.0 (19-11-2022)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 13.1.0 (25-10-2022)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 13.0.0 (13-10-2022)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 12.3.0 (02-07-2022)
+
 - Update to latest version from linuxserver/docker-piwigo
 - Add codenotary sign
 

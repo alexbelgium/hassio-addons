@@ -1,22 +1,29 @@
+- Feat : cifsdomain added
 
 ## 0.7.1 (24-03-2023)
+
 - Update to latest version from linuxserver/docker-mylar3
 - Implemented healthcheck
 
 ## 0.7.0 (10-12-2022)
+
 - Update to latest version from linuxserver/docker-mylar3
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 0.6.9 (11-08-2022)
+
 - Update to latest version from linuxserver/docker-mylar3
 
 ## 0.6.8 (19-05-2022)
+
 - Update to latest version from linuxserver/docker-mylar3
 
 ## 0.6.7 (19-04-2022)
+
 - Update to latest version from linuxserver/docker-mylar3
 
 ## 0.6.6 (25-03-2022)
+
 - Update to latest version from linuxserver/docker-mylar3
 - Add codenotary sign
 

@@ -1,63 +1,84 @@
+- Feat : cifsdomain added
 
 ## 16.14.1 (24-03-2023)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.14.0 (11-03-2023)
+
 - Update to latest version from coderaiser/cloudcmd
 - Implemented healthcheck
 
 ## 16.13.1 (04-02-2023)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.11.0 (28-01-2023)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.10.0 (21-01-2023)
+
 - Update to latest version from coderaiser/cloudcmd
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 16.6.1 (22-10-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.6.0 (11-10-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.5.0 (09-08-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.4.1 (21-07-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.4.0 (12-07-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.3.1 (05-07-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.3.0 (02-07-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.2.0 (18-06-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.1.1 (12-05-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.1.0 (27-04-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.1.0 (23-04-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.0.1 (22-04-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 - Add codenotary sign
 
 ## 16.0.0 (20-02-2022)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 15.9.15 (20-01-2022)
+
 - Update to latest version from coderaiser/cloudcmd
+
 ## 15.9.14 (15-01-2022)
 
 - Update to latest version from coderaiser/cloudcmd

@@ -81,6 +81,7 @@
   "schema": {
     "CUSTOM_OPTIONS": "str?",
     "DROPBOX_TOKEN": "str?",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
@@ -89,5 +90,5 @@
   },
   "slug": "cloudcommander",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander",
-  "version": "16.14.1"
+  "version": "16.14.1-2"
 }

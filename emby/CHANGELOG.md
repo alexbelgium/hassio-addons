@@ -1,50 +1,68 @@
+- Feat : cifsdomain added
 
 ## 4.8.0.34 (06-05-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.32 (29-04-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.30 (22-04-2023)
+
 - Update to latest version from linuxserver/docker-emby
+
 ### 4.8.0.29-4 (15-04-2023)
+
 - Minor bugs fixed
 - Fix issue with smb
 
 ## 4.8.0.29 (08-04-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.28 (31-03-2023)
+
 - Update to latest version from linuxserver/docker-emby
 - Implemented healthcheck
 
 ## 4.8.0.21 (13-12-2022)
+
 - Update to latest version from linuxserver/docker-emby
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 4.8.0.19 (22-11-2022)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.17 (19-11-2022)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.16 (05-11-2022)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.15 (29-10-2022)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.13 (22-10-2022)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.12 (15-10-2022)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.10 (30-09-2022)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.9 (24-09-2022)
+
 - Update to latest version from linuxserver/docker-emby
+
 ## 4.8.0.8 (16-08-2022)
 
 - Update to latest version from linuxserver/docker-emby

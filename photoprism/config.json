@@ -104,6 +104,7 @@
     "STORAGE_PATH": "str",
     "UPLOAD_NSFW": "bool",
     "certfile": "str",
+    "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "graphic_drivers": "list(|mesa)?",
@@ -118,6 +119,6 @@
   ],
   "slug": "photoprism",
   "url": "https://github.com/alexbelgium/hassio-addons-test",
-  "version": "preview-9",
+  "version": "preview-10",
   "video": true
 }
