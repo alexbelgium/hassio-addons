@@ -1,3 +1,6 @@
+
+## 0.7.2 (13-05-2023)
+- Update to latest version from linuxserver/docker-mylar3
 - Feat : cifsdomain added
 
 ## 0.7.1 (24-03-2023)

@@ -1,8 +1,8 @@
 {
-  "last_update": "24-03-2023",
+  "last_update": "13-05-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "mylar3",
   "source": "github",
   "upstream_repo": "linuxserver/docker-mylar3",
-  "upstream_version": "0.7.1"
+  "upstream_version": "0.7.2"
 }
