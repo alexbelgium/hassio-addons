@@ -1,3 +1,4 @@
+- Feat : cifsdomain added @thiagomoreirac
 
 ## 0.20.4083 (06-05-2023)
 - Update to latest version from linuxserver/docker-jackett
