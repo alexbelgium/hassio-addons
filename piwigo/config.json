@@ -91,7 +91,6 @@
     "networkdisks": "str?"
   },
   "slug": "piwigo",
-  "stage": "experimental",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "13.7.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
