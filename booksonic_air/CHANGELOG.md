@@ -1,7 +1,5 @@
-
-## v2201.1.0-ls91 (13-05-2023)
-- Update to latest version from linuxserver/docker-booksonic-air
 - Feat : cifsdomain added
+- Armv7 not supported anymore
 
 ## v2201.1.0-ls90 (29-04-2023)
 
