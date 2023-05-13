@@ -1,3 +1,6 @@
+
+## 4.0.1-ls106 (13-05-2023)
+- Update to latest version from linuxserver/docker-sabnzbd
 - Feat : cifsdomain added
 
 ## 4.0.1-ls105 (06-05-2023)
