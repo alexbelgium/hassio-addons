@@ -45,7 +45,7 @@ jobs:
           git config core.filemode true
           # shellcheck disable=SC2086,SC2046
           #git update-index --chmod=+x $(find "$path" -type f -iname "*.sh")
-          chmod u+x $(find "$path" -type f -iname "*.sh") 
+          chmod u+x $(find "$path" -type f -iname "*.sh") || true
           #git commit -am "fixing the script permissions..."
         env: 
           path: "./${{ matrix.addon }}"
