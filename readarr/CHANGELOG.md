@@ -1,3 +1,6 @@
+
+## nightly-0.1.5.1801-ls175 (13-05-2023)
+- Update to latest version from linuxserver/docker-readarr
 ### nightly-0.1.5.1718-ls173-2 (12-05-2023)
 - Minor bugs fixed
 
