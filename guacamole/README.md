@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Guacamole] Update to upstream 1.5.1 to fix VNC connection issues (opened 2023-04-22)](https://github.com/alexbelgium/hassio-addons/issues/807) by [@bcutter](https://github.com/bcutter)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

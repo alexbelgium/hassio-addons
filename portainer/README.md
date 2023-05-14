@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Portainer Agent (opened 2022-11-19)](https://github.com/alexbelgium/hassio-addons/issues/565) by [@rikardronnkvist](https://github.com/rikardronnkvist)
 
 # Home assistant add-on: Portainer
 
