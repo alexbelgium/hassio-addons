@@ -1,3 +1,6 @@
+
+## 4.13.0 (20-05-2023)
+- Update to latest version from linuxserver/docker-code-server
 - Feat : cifsdomain added
 
 ## 4.12.0 (22-04-2023)
