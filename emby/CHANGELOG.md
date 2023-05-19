@@ -1,3 +1,6 @@
+
+## 4.8.0.36 (19-05-2023)
+- Update to latest version from linuxserver/docker-emby
 - Feat : cifsdomain added
 
 ## 4.8.0.34 (06-05-2023)
