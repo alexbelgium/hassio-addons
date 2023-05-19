@@ -1,3 +1,6 @@
+
+## 10.0.1 (19-05-2023)
+- Update to latest version from franchetti/seafile-arm
 - Feat : cifsdomain added
 
 ## 10.0.0 (24-03-2023)
