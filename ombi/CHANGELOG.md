@@ -1,4 +1,7 @@
 
+## 4.39.1 (19-05-2023)
+- Update to latest version from linuxserver/docker-ombi
+
 ## 4.35.10 (04-03-2023)
 - Update to latest version from linuxserver/docker-ombi
 - WARNING : update to supervisor 2022.11 before installing
