@@ -1,4 +1,7 @@
 
+## 1.56.1 (19-05-2023)
+- Update to latest version from imagegenius/docker-immich
+
 ## 1.55.1 (13-05-2023)
 - Update to latest version from imagegenius/docker-immich
 - Feat : cifsdomain added
