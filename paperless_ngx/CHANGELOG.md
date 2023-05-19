@@ -1,3 +1,6 @@
+
+## 1.14.5 (19-05-2023)
+- Update to latest version from paperless-ngx/paperless-ngx
 - Feat : cifsdomain added
 
 ### 1.14.4-2 (09-05-2023)
