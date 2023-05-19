@@ -1,3 +1,6 @@
+
+## 1.26.2 (19-05-2023)
+- Update to latest version from autobrr/autobrr
 - Feat : cifsdomain added
 
 ## 1.25.0 (06-05-2023)
