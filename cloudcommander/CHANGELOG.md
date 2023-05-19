@@ -1,3 +1,6 @@
+
+## 16.15.0 (19-05-2023)
+- Update to latest version from coderaiser/cloudcmd
 - Feat : cifsdomain added
 
 ## 16.14.1 (24-03-2023)
