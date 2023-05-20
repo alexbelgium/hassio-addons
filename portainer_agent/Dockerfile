@@ -14,10 +14,10 @@
 # 1 Build Image #
 #################
 
-FROM portainer/agent:alpine as agent
-
 ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:11.0.0
 FROM ${BUILD_FROM}
+
+FROM portainer/agent:alpine as agent
 
 ENV PORTAINER_AGENT_ARGS=""
 ENV FIRST_HEALTHCHECK_TIMEOUT=20
