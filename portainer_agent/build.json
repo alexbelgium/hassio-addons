@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "aarch64": "portainer/agent:latest",
-    "amd64": "portainer/agent:latest",
-    "armv7": "portainer/agent:latest"
+    "aarch64": "portainer/agent:alpine",
+    "amd64": "portainer/agent:alpine",
+    "armv7": "portainer/agent:alpine"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
