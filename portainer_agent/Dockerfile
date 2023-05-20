@@ -27,7 +27,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+SHELL ["/usr/bin/env bash", "-o", "pipefail", "-c"]
 
 ##################
 # 3 Install apps #
