@@ -1,6 +1,7 @@
 
 ## 4.0.1-ls108 (19-05-2023)
 - Update to latest version from linuxserver/docker-sabnzbd
+- armv7 support removed
 
 ## 4.0.1-ls106 (13-05-2023)
 - Update to latest version from linuxserver/docker-sabnzbd
