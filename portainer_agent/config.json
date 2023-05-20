@@ -11,12 +11,12 @@
   "description": "An agent used to manage all the resources in a Swarm cluster",
   "image": "ghcr.io/alexbelgium/portainer_agent-{arch}",
   "init": false,
+  "full_access": true,
   "map": [
     "share:rw",
     "ssl"
   ],
   "name": "portainer_agent",
-  "options": {},
   "ports": {
     "9001/tcp": 9001,
     "80/tcp": null
