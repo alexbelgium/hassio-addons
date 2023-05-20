@@ -16,7 +16,7 @@
 
 FROM portainer/agent:alpine as agent
 
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:11.0.0
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 ENV PORTAINER_AGENT_ARGS=""
