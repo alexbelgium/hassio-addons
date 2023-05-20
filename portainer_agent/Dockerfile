@@ -14,8 +14,21 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:11.0.0
+FROM portainer/agent:2.6.3 as agent
+
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
+
+ENV PORTAINER_AGENT_ARGS=""
+ENV FIRST_HEALTHCHECK_TIMEOUT=20
+
+# Copy Portainer agent binaries
+COPY --from=agent / /
+
+RUN chmod a+x /usr/sbin/healthcheck && \
+    chmod a+x /usr/sbin/wait-for-signal
+
+ENTRYPOINT [ "/init" ]
 
 ##################
 # 2 Modify Image #
@@ -25,9 +38,6 @@ FROM ${BUILD_FROM}
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
-
-# Set shell
-SHELL ["/usr/bin/env bash", "-o", "pipefail", "-c"]
 
 ##################
 # 3 Install apps #
