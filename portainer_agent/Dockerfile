@@ -14,9 +14,9 @@
 # 1 Build Image #
 #################
 
-FROM portainer/agent:2.6.3 as agent
+FROM portainer/agent:alpine as agent
 
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:11.0.0
 FROM ${BUILD_FROM}
 
 ENV PORTAINER_AGENT_ARGS=""
