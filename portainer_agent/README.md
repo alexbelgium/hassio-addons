@@ -25,22 +25,11 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ---
 
-portainer_agent is an open-source lightweight management UI which allows you to
-easily manage your a Docker host(s) or Docker swarm clusters.
-
-It has never been so easy to manage Docker. portainer_agent provides a detailed
-overview of Docker and allows you to manage containers, images, networks and
-volumes.
-
-## RESTORE BACKUP
-
-Open the addon options and set the password to "". Restart the addon, it will allow to restore portainer_agent from a backup. You need to put your backup in an accessible folder such as /share to have it mounted in the addon
+The Portainer Agent is a workaround for a Docker API limitation when using the Docker API to manage a Docker environment. The user interactions with specific resources (containers, networks, volumes and images) are limited to those available on the node targeted by the Docker API request.
 
 ## WARNING
 
-The portainer_agent add-on is really powerful and gives you virtually access to
-your whole system. While this add-on is created and maintained with care and
-with security in mind, in the wrong or inexperienced hands,
+The portainer_agent add-on is really powerful and gives you virtually access to your whole system. While this add-on is created and maintained with care and with security in mind, in the wrong or inexperienced hands,
 it could damage your system.
 
 ## Installation
@@ -61,24 +50,14 @@ The installation of this add-on is pretty straightforward and not different in c
 ## Configuration
 
 ---
-
-Webui can be found at <http://your-ip:port>, or in your sidebar using Ingress.
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
-
+    
+Main options : 
 ```yaml
-ssl: true/false
-certfile: fullchain.pem #ssl certificate, must be located in /ssl
-keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-password: define admin password. If kept blank, will allow manual restore of previous backup. At least 12 characters.
+    "PORTAINER_AGENT_ARGS": Command line arguments to the portainer-agent executable
 ```
+
+Other options : see https://github.com/portainer/agent#deployment-options
 
 ## Support
 
 Create an issue on github
-
-## Illustration
-
----
-
-![illustration](https://github.com/hassio-addons/addon-portainer_agent/raw/main/images/screenshot.png)
