@@ -13,7 +13,7 @@
   "image": "ghcr.io/alexbelgium/portainer_agent-{arch}",
   "init": false,
   "map": [
-    "/config",
+    "config",
     "share:rw",
     "ssl"
   ],
