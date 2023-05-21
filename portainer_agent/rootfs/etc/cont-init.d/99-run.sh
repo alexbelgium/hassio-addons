@@ -9,4 +9,5 @@ bashio::require.unprotected
 # Set environemnt
 
 # Launch app
+cd /app || true
 ./agent "$PORTAINER_AGENT_ARGS"
