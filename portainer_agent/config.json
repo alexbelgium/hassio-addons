@@ -20,9 +20,6 @@
     "ssl"
   ],
   "name": "portainer_agent",
-  "options": {
-    "PORTAINER_AGENT_ARGS": ""
-  },
   "ports": {
     "80/tcp": null,
     "9001/tcp": 9001
