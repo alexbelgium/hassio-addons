@@ -14,19 +14,18 @@
 # 1 Build Image #
 #################
 
+# Must be declared before first FROM
 ARG BUILD_FROM
+
+# Get agent
 FROM portainer/agent:alpine as original_agent
 ENV PORTAINER_AGENT_ARGS=""
 
+# Build using base
 FROM $BUILD_FROM
 
 # Copy Portainer agent binaries
 COPY --from=original_agent /app /app
-
-#RUN chmod a+x /usr/sbin/healthcheck && \
-#    chmod a+x /usr/sbin/wait-for-signal
-
-ENTRYPOINT [ "/init" ]
 
 ##################
 # 2 Modify Image #
@@ -76,9 +75,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-#RUN chmod 777 /entrypoint.sh
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ]
+WORKDIR [ "/app" ]
+ENTRYPOINT [ "/init" ]
 
 ############
 # 5 Labels #
