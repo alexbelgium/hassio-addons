@@ -7,7 +7,7 @@
 bashio::require.unprotected
 
 # Wait for transmission to become available
-bashio::net.wait_for 9001 localhost 900
+bashio::net.wait_for 9001 localhost 50
 
 # Launch app
 cd /app || true
