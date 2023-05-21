@@ -75,7 +75,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-WORKDIR [ "/app" ]
+WORKDIR "/app"
 ENTRYPOINT [ "/init" ]
 
 ############
