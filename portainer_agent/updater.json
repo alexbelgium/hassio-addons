@@ -1,9 +1,8 @@
 {
-  "github_havingasset": "true",
   "last_update": "06-05-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "portainer_agent",
-  "source": "github",
+  "source": "dockerhub",
   "upstream_repo": "portainer/agent",
   "upstream_version": "2.18.2"
 }
