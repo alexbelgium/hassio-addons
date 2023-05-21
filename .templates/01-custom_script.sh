@@ -16,7 +16,7 @@ if [ -f /config/addons_autoscripts/"${slug}".sh ]; then
     bashio::log.info "... script found, executing"
     # Convert scripts to linux
     dos2unix /config/addons_autoscripts/"${slug}".sh || true
-    chmod +x /config/addons_autoscripts/"${slug}".sh
+    chmod +x /config/addons_autoscripts/"${slug}".sh || true
     /./config/addons_autoscripts/"${slug}".sh
 else
     bashio::log.info "... no script found"

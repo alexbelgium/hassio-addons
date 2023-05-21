@@ -30,7 +30,7 @@
     "9001/tcp": "Portainer agent"
   },
   "schema": {
-    "AGENT_CLUSTER_ADDR": "str",
+    "AGENT_CLUSTER_ADDR": "str?",
     "AGENT_CLUSTER_PROBE_INTERVAL": "str?",
     "AGENT_CLUSTER_PROBE_TIMEOUT": "str?",
     "AGENT_SECRET": "str?",
