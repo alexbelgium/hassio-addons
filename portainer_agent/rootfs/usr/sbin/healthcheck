@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+if [ -f "/tmp/healthcheck-signal" ]; then
+  curl -k --fail https://127.0.0.1:9001/ping || exit 1
+else
+  touch /tmp/healthcheck-signal
+fi
