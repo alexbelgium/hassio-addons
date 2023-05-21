@@ -12,9 +12,6 @@
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
 
-Forked from : https://github.com/hassio-addons/addon-portainer_agent
-Implemented changes : update to latest versions ; ingress ; ssl ; password setting through addon option ; allow manual override
-
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
@@ -26,6 +23,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ---
 
 The Portainer Agent is a workaround for a Docker API limitation when using the Docker API to manage a Docker environment. The user interactions with specific resources (containers, networks, volumes and images) are limited to those available on the node targeted by the Docker API request.
+
+This container is based on the official docker image (https://github.com/portainer/agent) and modified using @homecentr logic (https://github.com/homecentr/docker-portainer-agent) to use in the homeassistant base images.
 
 ## WARNING
 
@@ -46,6 +45,11 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
+
+Instructions (thanks @Mincka) :
+Disable protection mode, then from the other Portainer cluster, add a new environment of type "Agent" with the IP address of HA and port 9001
+
+![image](https://github.com/alexbelgium/hassio-addons/assets/6184289/f5c5f264-69d0-4d3c-b900-476e21aef05a)
 
 ## Configuration
 
