@@ -18,7 +18,7 @@ FROM portainer/agent:alpine as original_agent
 ENV PORTAINER_AGENT_ARGS=""
 
 ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM $BUILD_FROM
 
 # Copy Portainer agent binaries
 COPY --from=agent / /
