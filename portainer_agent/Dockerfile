@@ -14,12 +14,14 @@
 # 1 Build Image #
 #################
 
+ARG BUILD_FROM
+FROM $BUILD_FROM as base_image
+
 FROM portainer/agent:alpine as original_agent
 ENV PORTAINER_AGENT_ARGS=""
 
-ARG BUILD_FROM
-ENV BUILD_BASE="$BUILD_FROM"
-FROM $BUILD_BASE
+# Get initial base
+COPY --from=base_image / /
 
 # Copy Portainer agent binaries
 COPY --from=original_agent /app /app
