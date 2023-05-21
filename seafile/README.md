@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Seafile] Can't install ghcr.io/alexbelgium/seafile-armv7:10.0.1: 500 Server Error for http+docker://localhost/v1.42/images/create?tag=10.0.1&fromImage=ghcr.io%2Falexbelgium%2Fseafile-armv7&platform=linux%2Farm%2Fv7: Internal Server Error ("manifest unknown") (opened 2023-05-21)](https://github.com/alexbelgium/hassio-addons/issues/841) by [@encryptix](https://github.com/encryptix)
 # Home assistant add-on: seafile
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
