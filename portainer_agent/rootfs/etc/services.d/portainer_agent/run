@@ -4,7 +4,8 @@
 # Home Assistant Community Add-on: portainer_agent
 # Runs some initializations for portainer_agent
 # ==============================================================================
-bashio::require.unprotected
+
+bashio::log.warning "Protected mode needs to be disabled in the addons options for full functions"
 
 bashio::log.info "Starting app"
 
