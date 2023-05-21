@@ -14,7 +14,8 @@
 # 1 Build Image #
 #################
 
-ENV BUILD_FROM
+ARG BUILD_FROM
+ENV BUILD_FROM=$BUILD_FROM
 FROM portainer/agent:alpine as original_agent
 ENV PORTAINER_AGENT_ARGS=""
 
