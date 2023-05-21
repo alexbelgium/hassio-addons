@@ -19,7 +19,7 @@
     "share:rw",
     "ssl"
   ],
-  "name": "portainer_agent",
+  "name": "Portainer Agent",
   "ports": {
     "80/tcp": null,
     "9001/tcp": 9001
