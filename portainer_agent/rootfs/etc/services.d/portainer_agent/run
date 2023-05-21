@@ -10,4 +10,4 @@ bashio::log.info "Starting app"
 
 # Launch app
 cd /app || true
-./agent "$PORTAINER_AGENT_ARGS" || ./agent
+./agent "$PORTAINER_AGENT_ARGS" 2>/dev/null || ./agent
