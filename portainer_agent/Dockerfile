@@ -16,12 +16,11 @@
 
 ARG BUILD_FROM
 FROM $BUILD_FROM
-#FROM portainer/agent:alpine as original_agent
-#ENV PORTAINER_AGENT_ARGS=""
-
+FROM portainer/agent:alpine as original_agent
+ENV PORTAINER_AGENT_ARGS=""
 
 # Copy Portainer agent binaries
-#COPY --from=agent / /
+COPY --from=agent /app /app
 
 #RUN chmod a+x /usr/sbin/healthcheck && \
 #    chmod a+x /usr/sbin/wait-for-signal
