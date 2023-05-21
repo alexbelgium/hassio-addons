@@ -15,17 +15,16 @@
 #################
 
 ARG BUILD_FROM
-ENV BUILD_FROM=$BUILD_FROM
-FROM portainer/agent:alpine as original_agent
-ENV PORTAINER_AGENT_ARGS=""
+FROM $BUILD_FROM
+#FROM portainer/agent:alpine as original_agent
+#ENV PORTAINER_AGENT_ARGS=""
 
-FROM ghcr.io/linuxserver/baseimage-alpine:latest
 
 # Copy Portainer agent binaries
-COPY --from=agent / /
+#COPY --from=agent / /
 
-RUN chmod a+x /usr/sbin/healthcheck && \
-    chmod a+x /usr/sbin/wait-for-signal
+#RUN chmod a+x /usr/sbin/healthcheck && \
+#    chmod a+x /usr/sbin/wait-for-signal
 
 ENTRYPOINT [ "/init" ]
 
