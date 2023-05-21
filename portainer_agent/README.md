@@ -55,7 +55,7 @@ Disable protection mode, then from the other Portainer cluster, add a new enviro
 
 ---
     
-Main options : 
+Main options :
 ```yaml
     "PORTAINER_AGENT_ARGS": Command line arguments to the portainer-agent executable
 ```
