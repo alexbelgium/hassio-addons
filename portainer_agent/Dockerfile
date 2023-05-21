@@ -75,6 +75,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
+RUN chmod a+x /usr/sbin/healthcheck && \
+    chmod a+x /usr/sbin/wait-for-signal
 WORKDIR "/app"
 ENTRYPOINT [ "/init" ]
 
@@ -112,11 +114,11 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-ENV HEALTH_PORT="9000" \
-    HEALTH_URL="/api/system/status"
+ENV HEALTH_PORT="" \
+    HEALTH_URL=""
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
+    CMD healthcheck &>/dev/null || exit 1
