@@ -14,13 +14,11 @@
 # 1 Build Image #
 #################
 
-FROM portainer/agent:alpine as agent
+FROM portainer/agent:alpine as original_agent
+ENV PORTAINER_AGENT_ARGS=""
 
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
-
-ENV PORTAINER_AGENT_ARGS=""
-ENV FIRST_HEALTHCHECK_TIMEOUT=20
 
 # Copy Portainer agent binaries
 COPY --from=agent / /
