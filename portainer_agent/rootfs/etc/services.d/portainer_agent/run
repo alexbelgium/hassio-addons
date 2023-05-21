@@ -5,7 +5,7 @@
 # Runs some initializations for portainer_agent
 # ==============================================================================
 
-bashio::log.warning "Protected mode needs to be disabled in the addons options for full functions"
+bashio::require.unprotected
 
 bashio::log.info "Starting app"
 
