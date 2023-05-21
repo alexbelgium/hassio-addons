@@ -14,14 +14,10 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM
-FROM $BUILD_FROM as base_image
-
 FROM portainer/agent:alpine as original_agent
 ENV PORTAINER_AGENT_ARGS=""
 
-# Get initial base
-COPY --from=base_image / /
+FROM ghcr.io/linuxserver/baseimage-alpine:latest
 
 # Copy Portainer agent binaries
 COPY --from=original_agent /app /app
