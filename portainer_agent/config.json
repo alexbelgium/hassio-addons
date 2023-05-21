@@ -17,7 +17,7 @@
     "ssl"
   ],
   "name": "portainer_agent",
-  "options": }
+  "options": {
     "PORTAINER_AGENT_ARGS": ""
   },
   "ports": {
@@ -39,6 +39,7 @@
     "EDGE_INACTIVITY_TIMEOUT": "str?",
     "EDGE_INSECURE_POLL": "list(0|1)?",
     "EDGE_KEY": "str?",
+    "PORTAINER_AGENT_ARGS": "str?",
     "LOG_LEVEL": "str?"
   },
   "slug": "portainer_agent",
