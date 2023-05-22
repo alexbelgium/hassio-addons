@@ -1,3 +1,5 @@
+### 10.0.1-fixed (22-05-2023)
+- Minor bugs fixed
 - Fix : allow app to start
 
 ## 10.0.1 (19-05-2023)
