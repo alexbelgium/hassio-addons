@@ -15,7 +15,7 @@
   "image": "ghcr.io/alexbelgium/portainer_agent-{arch}",
   "init": false,
   "map": [
-    "config",
+    "config:rw",
     "share:rw",
     "ssl"
   ],
@@ -44,5 +44,5 @@
   },
   "slug": "portainer_agent",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.18.2-6"
+  "version": "2.18.2-7"
 }
