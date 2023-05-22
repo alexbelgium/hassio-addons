@@ -6,8 +6,8 @@
 echo "Creating config location ..."
 HOME="$(bashio::config "CONFIG_LOCATION")"
 HOME="$(dirname "$HOME")"
-mkdir -p $HOME
-chmod -R 777 $HOME
+mkdir -p "$HOME"
+chmod -R 777 "$HOME"
 
 # Copy files to data
 echo "Copying files if needed..."
