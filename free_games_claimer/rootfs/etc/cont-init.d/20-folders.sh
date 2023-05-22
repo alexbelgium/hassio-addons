@@ -11,4 +11,4 @@ chmod -R 777 $HOME
 
 # Copy files to data
 echo "Copying files if needed..."
-cp -rnf /fsg/* /data/
+cp -rnf /fgc/* /data/
