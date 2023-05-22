@@ -1,5 +1,4 @@
-### 10.0.1-4 (22-05-2023)
-- Minor bugs fixed
+- Fix : allow app to start
 
 ## 10.0.1 (19-05-2023)
 - Update to latest version from franchetti/seafile-arm
