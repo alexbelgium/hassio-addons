@@ -53,7 +53,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {
+  "options": {
     "CONFIG_LOCATION": "/config/addons_config/free_games_claimer/config.yaml"
   },
   "image": "ghcr.io/alexbelgium/free_games_claimer-{arch}",
@@ -69,6 +69,9 @@
   "ports_description": {
     "5900/tcp": "VNC port",
     "6080/tcp": "NOVNC port"
+  },
+  "schema": {
+    "CONFIG_LOCATION": "str"
   },
   "slug": "free_games_claimer",
   "url": "https://github.com/alexbelgium/hassio-addons",
