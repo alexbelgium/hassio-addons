@@ -11,7 +11,7 @@
     "*/metadata/"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "A Free Software Media System that puts you in control of managing and streaming your media.",
+  "description": "A Free Software Media System that puts you in control of managing and streaming your media",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",

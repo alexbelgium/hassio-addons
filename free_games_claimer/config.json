@@ -4,7 +4,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "automatically claims free games on the Epic Games Store, Amazon Prime Gaming and GOG.",
+  "description": "automatically claims free games on the Epic Games Store, Amazon Prime Gaming and GOG",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
