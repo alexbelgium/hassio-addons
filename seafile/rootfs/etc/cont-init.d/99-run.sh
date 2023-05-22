@@ -116,4 +116,4 @@ esac
 ##############
 
 bashio::log.info "Starting app"
-/./docker_entrypoint.sh
+launch docker_entrypoint.sh
