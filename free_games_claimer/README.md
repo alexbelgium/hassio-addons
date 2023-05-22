@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] free_games_claimer ingress support (opened 2023-03-10)](https://github.com/alexbelgium/hassio-addons/issues/754) by [@nordeep](https://github.com/nordeep)
 
 # Home assistant add-on: Epic Games Free
 
