@@ -25,6 +25,7 @@ fireflyiii_data_importer: fireflyiii_data_importer/config.* # Image : yes
 fireflyiii_fints_importer: fireflyiii_fints_importer/config.* # Image : yes
 flaresolverr: flaresolverr/config.* # Image : yes
 flexget: flexget/config.* # Image : yes
+free_games_claimer: free_games_claimer/config.* # Image : yes
 gazpar2mqtt: gazpar2mqtt/config.* # Image : yes
 gitea: gitea/config.* # Image : yes
 grav: grav/config.* # Image : yes
