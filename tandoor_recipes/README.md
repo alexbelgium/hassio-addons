@@ -61,3 +61,6 @@ If you have in issue with your installation, please be sure to checkout github.
 ![image](https://github.com/TandoorRecipes/recipes/raw/develop/docs/preview.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+## External Recipe files
+The directory /config/addons_config/tandoor_recipes/externalfiles can be used for importing external files in to Tandoor. You can map this with /opt/recipes/externalfiles within Docker.
