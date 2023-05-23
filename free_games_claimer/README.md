@@ -1,5 +1,4 @@
-
-# Home assistant add-on: Epic Games Free
+# Home assistant add-on: Free Games Claimer
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -21,14 +20,20 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[Epic Games Store Weekly Free Games](https://github.com/claabs/epicgames-freegames-node) : automatically login and redeem promotional free games from the Epic Games Store. Handles multiple accounts, 2FA, captcha bypass, captcha notifications, and scheduled runs.
-This addon is based on the docker image https://hub.docker.com/r/charlocharlie/epicgames-freegames
+[Free Games Claimer](https://github.com/vogler/free-games-claimer) : Claims free games periodically on
+
+- Epic Games Store
+- Amazon Prime Gaming
+- GOG
+- Live Games with Gold - planned
+
+This addon is based on the docker image https://github.com/vogler/free-games-claimer
 
 ## Configuration
 
 Webui can be found at <http://your-ip:PORT>.
 
-There are no addon options. All configuration files in json format (config and cookies) must be manually added in /config/addons_config/free_games_claimer/ according to the documentation here for config files (https://github.com/claabs/epicgames-freegames-node#json-configuration) and cookies (https://github.com/claabs/epicgames-freegames-node#cookie-import)
+There are no addon options. All configuration files in yaml format (config and cookies) must be manually added in /config/addons_config/free_games_claimer/ according to the documentation here for config files (https://github.com/vogler/free-games-claimer#configuration--options)
 
 If this file doesn't exist, it will be created at first boot.
 
