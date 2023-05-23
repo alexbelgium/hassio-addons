@@ -98,10 +98,12 @@ esac
 ##############
 echo "Creating symlinks"
 mkdir -p /config/addons_config/tandoor_recipes/mediafiles
+mkdir -p /config/addons_config/tandoor_recipes/externalfiles
 chmod -R 755 /config/addons_config/tandoor_recipes
 mkdir -p /data/recipes/staticfiles
 chmod 755 /data/recipes/staticfiles
 ln -s /config/addons_config/tandoor_recipes/mediafiles /opt/recipes
+ln -s /config/addons_config/tandoor_recipes/externalfiles /opt/recipes
 ln -s /data/recipes/staticfiles /opt/recipes
 
 bashio::log.info "Launching nginx"
