@@ -64,3 +64,4 @@ If you have in issue with your installation, please be sure to checkout github.
 
 ## External Recipe files
 The directory /config/addons_config/tandoor_recipes/externalfiles can be used for importing external files in to Tandoor. You can map this with /opt/recipes/externalfiles within Docker.
+As per directions here: https://docs.tandoor.dev/features/external_recipes/
