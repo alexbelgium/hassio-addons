@@ -38,5 +38,7 @@ echo " "
 bashio::log.info "Starting the app with arguments $CMD_ARGUMENTS"
 echo " "
 
+/./usr/local/bin/docker-entrypoint.sh
+
 # shellcheck disable=SC2086
 $CMD_ARGUMENTS || { node epic-games; node prime-gaming; node gog; }
