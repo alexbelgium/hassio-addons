@@ -18,8 +18,6 @@ if [ ! -f "$HOME"/config.env ]; then
     cp /templates/config.env "$HOME"/config.env
     chmod 777 "$HOME"/config.env
     bashio::log.warning "A default config.env file was copied in $HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
-    sleep 5
-    bashio::exit.nok
 else
     bashio::log.warning "The config.env file found in $HOME will be used. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
 fi
