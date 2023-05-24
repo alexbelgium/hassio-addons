@@ -6,8 +6,8 @@
 ##############
 
 # Delete file if existing
-if [ -f /data/data/config.env ]; then
-    rm /data/data/config.env
+if [ -f /data/config.env ]; then
+    rm /data/config.env
 fi
 
 # Use new config file
@@ -23,7 +23,7 @@ if [ ! -f "$HOME"/config.env ]; then
 else
     bashio::log.warning "The config.env file found in $HOME will be used. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
 fi
-cp "$HOME"/config.env /data/data/
+cp "$HOME"/config.env /data/
 
 # Permissions
 chmod -R 777 "$HOME"
