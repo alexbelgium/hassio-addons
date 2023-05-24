@@ -33,7 +33,7 @@ This addon is based on the docker image https://github.com/vogler/free-games-cla
 
 Webui can be found at <http://your-ip:PORT>.
 
-There are no addon options. All configuration files in yaml format (config and cookies) must be manually added in /config/addons_config/free_games_claimer/ according to the documentation here for config files (https://github.com/vogler/free-games-claimer#configuration--options)
+There are no addon options. All configuration must be manually added in /config/addons_config/free_games_claimer/config.env according to the documentation here for config files (https://github.com/vogler/free-games-claimer#configuration--options)
 
 If this file doesn't exist, it will be created at first boot.
 
