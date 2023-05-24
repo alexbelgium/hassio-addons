@@ -41,4 +41,4 @@ bashio::log.info "Starting the app with arguments $CMD_ARGUMENTS"
 echo " "
 
 # shellcheck disable=SC2086
-$CMD_ARGUMENTS || {node epic-games; node prime-gaming; node gog;}
+$CMD_ARGUMENTS || { node epic-games; node prime-gaming; node gog; }
