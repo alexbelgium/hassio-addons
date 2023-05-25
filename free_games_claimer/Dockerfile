@@ -27,8 +27,13 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-#RUN sed -i "1a /./entrypoint.sh" /usr/local/bin/docker-entrypoint.sh
-
+RUN \
+    # Custom scripts
+    sed -i "1a /./entrypoint.sh" /usr/local/bin/docker-entrypoint.sh && \
+    # Change data folder
+    sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
+    sed -i 's|"$@"|$CMD_PARAMETERS|g' /usr/local/bin/docker-entrypoint.sh && \
+    
 ##################
 # 3 Install apps #
 ##################
@@ -43,7 +48,6 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
 
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh"
-RUN sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -69,11 +73,11 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-RUN chmod 777 /entrypoint.sh
+#RUN chmod 777 /entrypoint.sh
 WORKDIR /data
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/entrypoint.sh" ]
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/entrypoint.sh" ]
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
