@@ -32,7 +32,7 @@ RUN \
     sed -i "1a /./entrypoint.sh" /usr/local/bin/docker-entrypoint.sh && \
     # Change data folder
     sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
-    sed -i 's|"$@"|$CMD_PARAMETERS|g' /usr/local/bin/docker-entrypoint.sh && \
+    sed -i 's|"$@"|$CMD_PARAMETERS|g' /usr/local/bin/docker-entrypoint.sh
     
 ##################
 # 3 Install apps #
