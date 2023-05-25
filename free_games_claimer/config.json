@@ -61,7 +61,7 @@
   "map": [
     "config:rw"
   ],
-  "name": "Epic Games Free",
+  "name": "Free Games Claimer",
   "ports": {
     "5900/tcp": null,
     "6080/tcp": 6080
