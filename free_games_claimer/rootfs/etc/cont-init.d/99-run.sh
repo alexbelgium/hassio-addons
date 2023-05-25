@@ -5,26 +5,26 @@
 # Initialize #
 ##############
 
-# Delete file if existing
-if [ -f /data/config.env ]; then
-    rm /data/config.env
+# Use new config file
+CONFIG_HOME="$(bashio::config "CONFIG_LOCATION")"
+CONFIG_HOME="$(dirname "$CONFIG_HOME")"
+if [ ! -f "$CONFIG_HOME"/config.env ]; then
+    # Copy default config.env
+    cp /templates/config.env "$CONFIG_HOME"/config.env
+    chmod 777 "$CONFIG_HOME"/config.env
+    bashio::log.warning "A default config.env file was copied in $CONFIG_HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
+else
+    bashio::log.warning "The config.env file found in $CONFIG_HOME will be used. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
 fi
 
-# Use new config file
-HOME="$(bashio::config "CONFIG_LOCATION")"
-HOME="$(dirname "$HOME")"
-if [ ! -f "$HOME"/config.env ]; then
-    # Copy default config.env
-    cp /templates/config.env "$HOME"/config.env
-    chmod 777 "$HOME"/config.env
-    bashio::log.warning "A default config.env file was copied in $HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
-else
-    bashio::log.warning "The config.env file found in $HOME will be used. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
-fi
-cp "$HOME"/config.env /data/
+# Copy new file
+\cp "$CONFIG_HOME"/config.env /data/
 
 # Permissions
-chmod -R 777 "$HOME"
+chmod -R 777 "$CONFIG_HOME"
+
+# Export variables
+source "$CONFIG_HOME"/config.env
 
 ##############
 # Launch App #
@@ -38,8 +38,5 @@ echo " "
 bashio::log.info "Starting the app with arguments $CMD_ARGUMENTS"
 echo " "
 
-sed -i '$d' docker-entrypoint.sh
-./docker-entrypoint.sh
-
 # shellcheck disable=SC2086
-$CMD_ARGUMENTS
+docker-entrypoint.sh $CMD_ARGUMENTS

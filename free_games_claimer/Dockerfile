@@ -28,12 +28,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 RUN \
-    # Custom scripts
-    sed -i "1a /./entrypoint.sh" /usr/local/bin/docker-entrypoint.sh && \
     # Change data folder
-    sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
-    sed -i 's|"$@"|$CMD_PARAMETERS|g' /usr/local/bin/docker-entrypoint.sh
-    
+    sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh
+
+# Define subreaper
+ENV TINI_SUBREAPER=true
+
 ##################
 # 3 Install apps #
 ##################
@@ -73,11 +73,11 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # 4 Entrypoint #
 ################
 
-#RUN chmod 777 /entrypoint.sh
+RUN chmod 777 /entrypoint.sh
 WORKDIR /data
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ]
-#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
