@@ -38,5 +38,8 @@ echo " "
 bashio::log.info "Starting the app with arguments $CMD_ARGUMENTS"
 echo " "
 
+sed -i '$d' docker-entrypoint.sh
+./docker-entrypoint.sh
+
 # shellcheck disable=SC2086
-docker-entrypoint.sh $CMD_ARGUMENTS
+$CMD_ARGUMENTS
