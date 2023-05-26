@@ -38,10 +38,15 @@ RUN \
     \
     # modify data limits file
     sed -i \
-    -e 's/upload_max_fileize=1024M/upload_max_fileize=10240M/g' \
-    -e 's/post_max_size=1024M/post_max_size=10240M/g' \
+    -e 's/upload_max_filesize=1024M/upload_max_filesize=8192M/g' \
+    -e 's/post_max_size=1024M/post_max_size=8192M/g' \
     /etc/php*/php.ini || true && \
     \
+    # modify nginx limits file
+    sed -i \
+    "s|client_max_body_size 512M;|client_max_body_size 8192M;|g"
+    /defaults/nginx/site-confs/default.conf.sample && \
+    \    
     # Change location of executable
     sed -i "s|/config|/data/config|g" /usr/bin/occ && \
     sed -i "s|/config|/data/config|g" /usr/bin/updater.phar && \
