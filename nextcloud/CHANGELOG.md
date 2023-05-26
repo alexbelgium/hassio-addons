@@ -1,3 +1,5 @@
+### 26.0.1-5 (26-05-2023)
+- Minor bugs fixed
 - Feat : cifsdomain added
 - Feat : Align max upload size to 8192M https://github.com/alexbelgium/hassio-addons/issues/846
 
