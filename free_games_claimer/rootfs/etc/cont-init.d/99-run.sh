@@ -43,4 +43,4 @@ bashio::log.info "Starting the app with arguments $CMD_ARGUMENTS"
 echo " "
 
 # Add docker-entrypoint command
-eval "${AZE//node/docker-entrypoint.sh node}"
+eval "${CMD_ARGUMENTS//node/docker-entrypoint.sh node}"
