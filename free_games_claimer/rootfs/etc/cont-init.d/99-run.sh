@@ -24,8 +24,9 @@ fi
 chmod -R 777 "$CONFIG_HOME"
 
 # Export variables
-# shellcheck source=/dev/null
-source "$CONFIG_HOME"/config.env
+set -a
+/./"$CONFIG_HOME"/config.env
+set +a
 
 ##############
 # Launch App #
