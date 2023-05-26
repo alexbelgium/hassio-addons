@@ -67,6 +67,6 @@
   },
   "slug": "browserless_chrome",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/browserless_chrome",
-  "version": "1.58.0",
+  "version": "1.59.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
