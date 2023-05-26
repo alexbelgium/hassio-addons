@@ -1,3 +1,6 @@
+
+## 1.4 (27-05-2023)
+- Update to latest version from vogler/free-games-claimer
 ### 1.4-5 (26-05-2023)
 - Minor bugs fixed
 ### 1.4-4 (26-05-2023)
