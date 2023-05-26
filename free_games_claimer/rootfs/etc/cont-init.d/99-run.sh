@@ -43,4 +43,5 @@ bashio::log.info "Starting the app with arguments $CMD_ARGUMENTS"
 echo " "
 
 # Add docker-entrypoint command
-eval "${CMD_ARGUMENTS//node/docker-entrypoint.sh node}"
+# shellcheck disable=SC2086
+docker-entrypoint.sh $CMD_ARGUMENTS
