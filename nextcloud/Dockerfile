@@ -43,10 +43,8 @@ RUN \
     /etc/php*/php.ini || true && \
     \
     # modify nginx limits file
-    sed -i \
-    "s|client_max_body_size 512M;|client_max_body_size 8192M;|g"
-    /defaults/nginx/site-confs/default.conf.sample && \
-    \    
+    sed -i "s|client_max_body_size 512M;|client_max_body_size 8192M;|g" /defaults/nginx/site-confs/default.conf.sample && \
+    \
     # Change location of executable
     sed -i "s|/config|/data/config|g" /usr/bin/occ && \
     sed -i "s|/config|/data/config|g" /usr/bin/updater.phar && \
