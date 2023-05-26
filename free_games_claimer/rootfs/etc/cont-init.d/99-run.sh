@@ -31,13 +31,15 @@ source "$CONFIG_HOME"/config.env
 # Launch App #
 ##############
 
+# Go to folder
 cd /data || true
 
+# Fetch commands
 CMD_ARGUMENTS="$(bashio::config "CMD_ARGUMENTS")"
 
 echo " "
 bashio::log.info "Starting the app with arguments $CMD_ARGUMENTS"
 echo " "
 
-# shellcheck disable=SC2086
-docker-entrypoint.sh $CMD_ARGUMENTS
+# Add docker-entrypoint command
+eval "${AZE//node/docker-entrypoint.sh node}"
