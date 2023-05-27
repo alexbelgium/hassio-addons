@@ -16,7 +16,7 @@
 
 ARG BUILD_VERSION
 ARG BUILD_FROM
-FROM ghcr.io/imagegenius/immich:v1.57.1-ig105
+FROM $BUILD_FROM
 
 ##################
 # 2 Modify Image #
