@@ -6,7 +6,7 @@
 # '.--'`       _'`   _ .--.)
 #    -'         '-.-';`   `
 #    ' -      _.'  ``'--.
-#        '---`    .-'"1.57.1"`
+#      d  '---`    .-'"1.57.1"`
 #               /`
 #=== Home Assistant Addon ===#
 
@@ -16,7 +16,7 @@
 
 ARG BUILD_VERSION
 ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM ghcr.io/imagegenius/immich:v1.57.1-ig105
 
 ##################
 # 2 Modify Image #
