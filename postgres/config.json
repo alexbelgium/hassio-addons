@@ -34,6 +34,6 @@
   },
   "slug": "postgres",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4",
+  "version": "15.3-test2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:5432]"
 }
