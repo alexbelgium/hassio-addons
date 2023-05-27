@@ -42,7 +42,7 @@ RUN \
     \
     && echo "yes"
     
-RUN
+RUN \
     # Correct config location
     for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done \
     \
