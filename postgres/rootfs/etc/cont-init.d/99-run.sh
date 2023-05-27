@@ -8,7 +8,7 @@ if [ ! -f "$CONFIG_HOME"/postgresql.conf.sample ]; then
     # Copy default config.env
     if [ -f /usr/local/share/postgresql/postgresql.conf.sample ]; then
         cp /usr/local/share/postgresql/postgresql.conf.sample "$CONFIG_HOME"/postgresql.conf
-    elif [ -f /usr/share/postgresql/postgresql.conf.sample ]
+    elif [ -f /usr/share/postgresql/postgresql.conf.sample ]; then
         cp /usr/share/postgresql/postgresql.conf.sample "$CONFIG_HOME"/postgresql.conf
     else
         bashio::exit.nok "Config file not found, please ask maintainer"
