@@ -1,3 +1,4 @@
+- Switch to jammy branch (new features could break but is required until a separate Postgres addon is made)
 
 ## 1.57.1 (27-05-2023)
 - Update to latest version from imagegenius/docker-immich
