@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 Omada update check fails (opened 2023-05-28)](https://github.com/alexbelgium/hassio-addons/issues/847) by [@bezigebever](https://github.com/bezigebever)
 # Home assistant add-on: Omada controller
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
