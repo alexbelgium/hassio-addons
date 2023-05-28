@@ -26,11 +26,11 @@
   },
   "schema": {
     "CONFIG_LOCATION": "str",
-    "POSTGRES_PASSWORD": "str",
-    "POSTGRES_USER": "str?",
     "POSTGRES_DB": "str?",
+    "POSTGRES_HOST_AUTH_METHOD": "str?",
     "POSTGRES_INITDB_ARGS": "str?",
-    "POSTGRES_HOST_AUTH_METHOD": "str?"
+    "POSTGRES_PASSWORD": "str",
+    "POSTGRES_USER": "str?"
   },
   "slug": "postgres",
   "url": "https://github.com/alexbelgium/hassio-addons",

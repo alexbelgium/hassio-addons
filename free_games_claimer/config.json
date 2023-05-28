@@ -53,15 +53,15 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "options": {
-    "CMD_ARGUMENTS": "node epic-games ; node prime-gaming ; node gog",
-    "CONFIG_LOCATION": "/config/addons_config/free_games_claimer/config.env"
-  },
   "image": "ghcr.io/alexbelgium/free_games_claimer-{arch}",
   "map": [
     "config:rw"
   ],
   "name": "Free Games Claimer",
+  "options": {
+    "CMD_ARGUMENTS": "node epic-games ; node prime-gaming ; node gog",
+    "CONFIG_LOCATION": "/config/addons_config/free_games_claimer/config.env"
+  },
   "ports": {
     "5900/tcp": null,
     "6080/tcp": 6080
