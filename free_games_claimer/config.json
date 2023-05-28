@@ -57,7 +57,7 @@
   "map": [
     "config:rw"
   ],
-  "name": "Free Games Claimer",
+  "name": "Free Games Claimer (in development)",
   "options": {
     "CMD_ARGUMENTS": "node epic-games ; node prime-gaming ; node gog",
     "CONFIG_LOCATION": "/config/addons_config/free_games_claimer/config.env"
