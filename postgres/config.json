@@ -7,7 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Postgres 15",
   "environment": {
-    "PGDATA": "/data"
+    "PGDATA": "/data/database"
   },
   "image": "ghcr.io/alexbelgium/postgres-{arch}",
   "map": [
@@ -34,6 +34,6 @@
   },
   "slug": "postgres",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "15.3-test4",
+  "version": "15.3-test5",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:5432]"
 }
