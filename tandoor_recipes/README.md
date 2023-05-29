@@ -1,3 +1,4 @@
+## &#9888; Open Request : [[Tandoor_Recipes] add externalfiles and option to disable debug mode. (opened 2023-05-23)](https://github.com/alexbelgium/hassio-addons/pull/843) by [@nough](https://github.com/nough)
 # Hass.io Add-ons: Tandoor recipes
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
