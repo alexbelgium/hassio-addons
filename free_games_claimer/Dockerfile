@@ -31,11 +31,11 @@ RUN \
     # Change data folder
     sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
     # Run scripts only once
-    sed -i "1a if [ ! -f /done ]; then /./entrypoint.sh; fi & touch /done" /usr/local/bin/docker-entrypoint.sh && \
+    sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /entrypoint.sh
     # Choose elements to run
-    sed -i 's|"$@"|"$(bashio::config "CMD_ARGUMENTS")"|g' /usr/local/bin/docker-entrypoint.sh && \
+    #sed -i 's|"$@"|"$(bashio::config "CMD_ARGUMENTS")"|g' /usr/local/bin/docker-entrypoint.sh && \
     # Run with bashio
-    sed -i 's|#!/bin/bash|#!/usr/bin/env bashio|g' /usr/local/bin/docker-entrypoint.sh
+    #sed -i 's|#!/bin/bash|#!/usr/bin/env bashio|g' /usr/local/bin/docker-entrypoint.sh
 
 # Define subreaper
 ENV TINI_SUBREAPER=true
