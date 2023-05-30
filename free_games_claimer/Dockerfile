@@ -29,9 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 RUN \
     # Change data folder
-    sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
-    # Run scripts only once
-    sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /entrypoint.sh
+    sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh
     # Choose elements to run
     #sed -i 's|"$@"|"$(bashio::config "CMD_ARGUMENTS")"|g' /usr/local/bin/docker-entrypoint.sh && \
     # Run with bashio
@@ -78,6 +76,12 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 # 4 Entrypoint #
 ################
+
+RUN \
+    # Change data folder
+    sed -i "1a /./entrypoint.sh" /usr/local/bin/docker-entrypoint.sh && \
+    # Run scripts only once
+    sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /entrypoint.sh
 
 #RUN chmod 777 /entrypoint.sh
 WORKDIR /data
