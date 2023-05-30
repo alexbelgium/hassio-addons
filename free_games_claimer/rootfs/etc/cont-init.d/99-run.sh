@@ -44,4 +44,4 @@ echo " "
 
 # Add docker-entrypoint command
 # shellcheck disable=SC2086
-docker-entrypoint.sh $CMD_ARGUMENTS
+# docker-entrypoint.sh $CMD_ARGUMENTS
