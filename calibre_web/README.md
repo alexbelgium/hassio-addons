@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Calibre_web] Cannot login after fresh install (opened 2023-05-29)](https://github.com/alexbelgium/hassio-addons/issues/850) by [@PaulAmor](https://github.com/PaulAmor)
 # Home assistant add-on: Calibre-web
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
