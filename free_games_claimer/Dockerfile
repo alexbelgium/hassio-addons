@@ -30,7 +30,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 RUN \
     # Change data folder
     sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
-    sed -i "1a if [ ! -f /done ]; then /./entrypoint.sh; fi && touch /done" /docker-entrypoint.sh 
+    sed -i "1a if [ ! -f /done ]; then /./entrypoint.sh; fi && touch /done" /usr/local/bin/docker-entrypoint.sh
 
 # Define subreaper
 ENV TINI_SUBREAPER=true
