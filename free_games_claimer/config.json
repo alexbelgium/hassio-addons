@@ -53,15 +53,15 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "options": {
-    "CONFIG_LOCATION": "/config/addons_config/free_games_claimer/config.yaml"
-  },
   "image": "ghcr.io/alexbelgium/free_games_claimer-{arch}",
-  "init": false,
   "map": [
     "config:rw"
   ],
-  "name": "Epic Games Free",
+  "name": "Free Games Claimer (NOT WORKING)",
+  "options": {
+    "CMD_ARGUMENTS": "node epic-games ; node prime-gaming ; node gog",
+    "CONFIG_LOCATION": "/config/addons_config/free_games_claimer/config.env"
+  },
   "ports": {
     "5900/tcp": null,
     "6080/tcp": 6080
@@ -71,10 +71,11 @@
     "6080/tcp": "NOVNC port"
   },
   "schema": {
+    "CMD_ARGUMENTS": "str",
     "CONFIG_LOCATION": "str"
   },
   "slug": "free_games_claimer",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4",
+  "version": "1.4-test8",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:6080]"
 }

@@ -1,8 +1,17 @@
+### 0.6.20-ls211-2 (30-05-2023)
+- Minor bugs fixed
+- Fix : allow app to start on clean install @PaulAmor https://github.com/alexbelgium/hassio-addons/issues/850
+
+## 0.6.20-ls211 (27-05-2023)
+
+- Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls210 (19-05-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls209 (13-05-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 - Feat : cifsdomain added
 

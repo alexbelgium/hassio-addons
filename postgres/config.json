@@ -1,0 +1,39 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "Postgres 15",
+  "environment": {
+    "PGDATA": "/data/database"
+  },
+  "image": "ghcr.io/alexbelgium/postgres-{arch}",
+  "map": [
+    "config:rw"
+  ],
+  "name": "Postgres",
+  "options": {
+    "CONFIG_LOCATION": "/config/addons_config/postgres/postgresql.conf",
+    "POSTGRES_PASSWORD": "homeassistant"
+  },
+  "ports": {
+    "5432/tcp": 5432
+  },
+  "ports_description": {
+    "5432/tcp": "Postgres port"
+  },
+  "schema": {
+    "CONFIG_LOCATION": "str",
+    "POSTGRES_DB": "str?",
+    "POSTGRES_HOST_AUTH_METHOD": "str?",
+    "POSTGRES_INITDB_ARGS": "str?",
+    "POSTGRES_PASSWORD": "str",
+    "POSTGRES_USER": "str?"
+  },
+  "slug": "postgres",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "15.3-test5",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:5432]"
+}

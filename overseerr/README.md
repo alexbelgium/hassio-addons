@@ -1,3 +1,4 @@
+## &#9888; Open Request : [[REQUEST] overseerr ingress support (opened 2023-05-31)](https://github.com/alexbelgium/hassio-addons/issues/854) by [@sanjay900](https://github.com/sanjay900)
 # Home assistant add-on: overseerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

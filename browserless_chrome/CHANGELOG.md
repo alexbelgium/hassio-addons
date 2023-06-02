@@ -1,4 +1,7 @@
 
+## 1.59.0 (27-05-2023)
+- Update to latest version from browserless/chrome
+
 ## 1.58.0 (18-03-2023)
 - Update to latest version from browserless/chrome
 - Implemented healthcheck

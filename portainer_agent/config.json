@@ -10,8 +10,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "An agent used to manage all the resources in a Swarm cluster",
   "docker_api": true,
-  "hassio_api": true,
   "full_access": true,
+  "hassio_api": true,
   "image": "ghcr.io/alexbelgium/portainer_agent-{arch}",
   "init": false,
   "map": [
@@ -39,10 +39,10 @@
     "EDGE_INACTIVITY_TIMEOUT": "str?",
     "EDGE_INSECURE_POLL": "list(0|1)?",
     "EDGE_KEY": "str?",
-    "PORTAINER_AGENT_ARGS": "str?",
-    "LOG_LEVEL": "str?"
+    "LOG_LEVEL": "str?",
+    "PORTAINER_AGENT_ARGS": "str?"
   },
   "slug": "portainer_agent",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.18.2-7"
+  "version": "2.18.3-alpine"
 }

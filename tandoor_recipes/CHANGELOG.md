@@ -1,7 +1,9 @@
-
-## 1.4.11 (23-05-2023)
+## 1.4.13 (02-06-2023)
 - add configuration option to disable debug mode.
 - add local storage folder for external recipe files that should map in to tandoor 
+
+## 1.4.12 (27-05-2023)
+- Update to latest version from TandoorRecipes/recipes
 
 ## 1.4.10 (19-05-2023)
 - Update to latest version from TandoorRecipes/recipes

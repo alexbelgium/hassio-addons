@@ -1,3 +1,6 @@
+
+## 2.1.34 (27-05-2023)
+- Update to latest version from anthonyraymond/joal
 - Implemented healthcheck
 
 ## 2.1.33 (01-12-2022)

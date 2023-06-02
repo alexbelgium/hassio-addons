@@ -13,6 +13,10 @@ bashio::log.info "Install libnss3"
 apt-get update && apt-get install libnss3 &>/dev/null
 
 # Set Ingress login
-sqlite3 /config/addons_config/calibre-web/app.db 'update settings set config_reverse_proxy_login_header_name="X-WebAuth-User",config_allow_reverse_proxy_header_login=1'
+if [ ! -f /config/addons_config/calibre-web/app.db ]; then
+    bashio::log.warning "First boot : disabling Ingress until addon restart"
+else
+    sqlite3 /config/addons_config/calibre-web/app.db 'update settings set config_reverse_proxy_login_header_name="X-WebAuth-User",config_allow_reverse_proxy_header_login=1'
+fi
 
 bashio::log.info "Default username:password is admin:admin123"

@@ -60,6 +60,7 @@ plex: plex/config.* # Image : yes
 plex_meta_manager: plex_meta_manager/config.* # Image : yes
 portainer: portainer/config.* # Image : yes
 portainer_agent: portainer_agent/config.* # Image : yes
+postgres: postgres/config.* # Image : yes
 prowlarr: prowlarr/config.* # Image : yes
 qbittorrent: qbittorrent/config.* # Image : yes
 radarr: radarr/config.* # Image : yes
