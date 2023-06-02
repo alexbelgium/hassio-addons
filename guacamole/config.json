@@ -74,6 +74,6 @@
   },
   "slug": "guacamole",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.5.1-pg15",
+  "version": "1.5.2-pg15",
   "video": true
 }
