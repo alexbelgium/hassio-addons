@@ -79,15 +79,15 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 
 RUN \
     # Change data folder
-    sed -i "1a /./entrypoint.sh" /usr/local/bin/docker-entrypoint.sh && \
+    # sed -i "1a /./entrypoint.sh" /usr/local/bin/docker-entrypoint.sh && \
     # Run scripts only once
     sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /entrypoint.sh
 
-#RUN chmod 777 /entrypoint.sh
+RUN chmod 777 /entrypoint.sh
 WORKDIR /data
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ]
-#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/entrypoint.sh" ]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
