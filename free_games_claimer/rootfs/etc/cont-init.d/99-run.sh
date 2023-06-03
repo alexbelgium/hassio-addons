@@ -18,7 +18,8 @@ else
 fi
 
 # Copy new file
-\cp "$CONFIG_HOME"/config.env /data/
+mkdir -p /data/data
+\cp "$CONFIG_HOME"/config.env /data/data/
 
 # Permissions
 chmod -R 777 "$CONFIG_HOME"
