@@ -57,4 +57,4 @@ echo " "
 # shellcheck disable=SC2086
 docker-entrypoint.sh $CMD_ARGUMENTS || true
 
-bashio::log.info "All actions concluded"
+bashio::log.info "All actions concluded, addon will stop"
