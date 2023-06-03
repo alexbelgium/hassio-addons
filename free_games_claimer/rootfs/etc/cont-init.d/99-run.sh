@@ -34,6 +34,7 @@ sed -i '/\S/s/^/export /' /config.env
 # Delete lines starting with #
 sed -i '/export #/d' /config.env
 # Get variables
+# Shellcheck disable=SC1091
 source /config.env
 rm /config.env
 set +a
