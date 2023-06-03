@@ -26,7 +26,16 @@ chmod -R 777 "$CONFIG_HOME"
 
 # Export variables
 set -a
-/./"$CONFIG_HOME"/config.env
+cp /./"$CONFIG_HOME"/config.env /config.env
+# Remove previous instance
+sed -i "s|export ||g" /config.env
+# Add export for non empty lines
+sed -i '/\S/s/^/export /' /config.env
+# Delete lines starting with #
+sed -i '/export #/d' /config.env
+# Get variables
+source /config.env
+rm /config.env
 set +a
 
 ##############
