@@ -69,7 +69,7 @@
     "ALLOWED_HOSTS": "",
     "DB_TYPE": "sqlite",
     "SECRET_KEY": "YOUR_SECRET_KEY",
-    "DEBUG": "1"
+    "DEBUG": "0"
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "panel_title": "Tandoor Recipes",
