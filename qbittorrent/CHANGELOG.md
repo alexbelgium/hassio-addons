@@ -1,3 +1,6 @@
+
+## 4.5.3 (03-06-2023)
+- Update to latest version from linuxserver/docker-qbittorrent
 ### 4.5.2-3 (22-04-2023)
 - Minor bugs fixed
 - Fix multi smb mounts
