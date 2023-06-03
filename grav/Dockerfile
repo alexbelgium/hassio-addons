@@ -16,7 +16,8 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+ARG BUILD_UPSTREAM="1.7.41.2"
+FROM ${BUILD_FROM}-version-${BUILD_UPSTREAM}
 
 ##################
 # 2 Modify Image #
