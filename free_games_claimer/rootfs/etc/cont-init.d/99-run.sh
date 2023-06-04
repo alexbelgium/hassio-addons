@@ -58,3 +58,4 @@ echo " "
 docker-entrypoint.sh $CMD_ARGUMENTS || true
 
 bashio::log.info "All actions concluded, addon will stop"
+bashio::addon.stop
