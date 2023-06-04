@@ -49,7 +49,8 @@ cd /data || true
 # Fetch commands
 CMD_ARGUMENTS="$(bashio::config "CMD_ARGUMENTS")"
 IFS=';'
-read -ar strarr <<< "$CMD_ARGUMENTS"
+# Shellcheck disable=SC2162
+read -a strarr <<< "$CMD_ARGUMENTS"
 
 # Sanitizes commands
 trim() {
