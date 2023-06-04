@@ -72,7 +72,7 @@ do
   bashio::log.info "Starting the app with arguments $val"
   echo " "
   # shellcheck disable=SC2086
-  docker-entrypoint.sh "$val"
+  echo "$val" | xargs docker-entrypoint.sh
 done
 
 bashio::log.info "All actions concluded, addon will stop in 10 seconds"
