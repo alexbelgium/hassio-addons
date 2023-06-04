@@ -80,7 +80,7 @@
     "8043/tcp": 8043,
     "8088/tcp": 8088,
     "8843/tcp": 8843,
-    "8088/tcp": 8888,
+    "8088/tcp": 8888
   },
   "ports_description": {
     "29810/udp": "device discovery port",
