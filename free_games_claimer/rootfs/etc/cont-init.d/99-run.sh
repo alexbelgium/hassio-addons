@@ -63,5 +63,7 @@ do
   docker-entrypoint.sh "$val" || true
 done
 
+IFS="$CURRENTIFS"
+
 bashio::log.info "All actions concluded, addon will stop"
 bashio::addon.stop
