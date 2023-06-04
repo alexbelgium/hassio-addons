@@ -1,3 +1,5 @@
+### v1.0.0-beta-5-2 (04-06-2023)
+- Minor bugs fixed
 ### v1.0.0-beta-4 (07-05-2023)
 - Minor bugs fixed
 ### v1.0.0-beta-3 (11-04-2023)
