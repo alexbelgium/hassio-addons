@@ -48,14 +48,20 @@ cd /data || true
 
 # Fetch commands
 CMD_ARGUMENTS="$(bashio::config "CMD_ARGUMENTS")"
-
-echo " "
-bashio::log.info "Starting the app with arguments $CMD_ARGUMENTS"
-echo " "
+CURRENTIFS="$IFS"
+IFS=';'
+read -a strarr <<< "$CMD_ARGUMENTS"
 
 # Add docker-entrypoint command
-# shellcheck disable=SC2086
-docker-entrypoint.sh $CMD_ARGUMENTS || true
+# Print each value of the array by using the loop
+for val in "${strarr[@]}";
+do
+  echo " "
+  bashio::log.info "Starting the app with arguments $val"
+  echo " "
+  # shellcheck disable=SC2086
+  docker-entrypoint.sh "$val" || true
+done
 
 bashio::log.info "All actions concluded, addon will stop"
 bashio::addon.stop
