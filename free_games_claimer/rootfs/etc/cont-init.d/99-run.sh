@@ -49,7 +49,7 @@ cd /data || true
 # Fetch commands
 CMD_ARGUMENTS="$(bashio::config "CMD_ARGUMENTS")"
 IFS=';'
-# Shellcheck disable=SC2162
+# shellcheck disable=SC2162
 read -a strarr <<< "$CMD_ARGUMENTS"
 
 # Sanitizes commands
@@ -67,9 +67,9 @@ trim() {
 for val in "${strarr[@]}";
 do
   #Removes whitespaces
-  val="$(trim $val)"
+  val="$(trim "$val")"
   echo " "
-  bashio::log.info "Starting the app with arguments $val"
+  bashio::log.info "Starting the app with arguments \"$val\""
   echo " "
   # shellcheck disable=SC2086
   echo "$val" | xargs docker-entrypoint.sh
