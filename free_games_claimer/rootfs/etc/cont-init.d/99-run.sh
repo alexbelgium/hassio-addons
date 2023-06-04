@@ -74,5 +74,6 @@ do
   docker-entrypoint.sh "$val"
 done
 
-bashio::log.info "All actions concluded, addon will stop"
+bashio::log.info "All actions concluded, addon will stop in 10 seconds"
+sleep 10
 bashio::addon.stop
