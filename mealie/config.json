@@ -58,7 +58,7 @@
     "MAX_WORKERS": "1",
     "WEB_CONCURRENCY": "2",
     "WEB_GUNICORN": "true",
-    "WORKERS_PER_CORE": "0.5,
+    "WORKERS_PER_CORE": "0.5",
     "DATA_DIR": "/config/addons_config/mealie_data"
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
