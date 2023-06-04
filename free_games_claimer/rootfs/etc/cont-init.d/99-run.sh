@@ -35,10 +35,6 @@ sed -i "s|export ||g" /config.env
 sed -i '/\S/s/^/export /' /config.env
 # Delete lines starting with #
 sed -i '/export #/d' /config.env
-# Show what is exported
-while IFS= read -r line; do
-    bashio::log.blue "${line#"export "}"
-done < /config.env
 # Get variables
 # shellcheck source=/dev/null
 source /config.env
