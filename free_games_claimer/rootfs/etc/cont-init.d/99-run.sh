@@ -48,22 +48,31 @@ cd /data || true
 
 # Fetch commands
 CMD_ARGUMENTS="$(bashio::config "CMD_ARGUMENTS")"
-CURRENTIFS="$IFS"
 IFS=';'
-read -a strarr <<< "$CMD_ARGUMENTS"
+read -ar strarr <<< "$CMD_ARGUMENTS"
+
+# Sanitizes commands
+trim() {
+    local var="$*"
+    # remove leading whitespace characters
+    var="${var#"${var%%[![:space:]]*}"}"
+    # remove trailing whitespace characters
+    var="${var%"${var##*[![:space:]]}"}"
+    printf '%s' "$var"
+}
 
 # Add docker-entrypoint command
 # Print each value of the array by using the loop
 for val in "${strarr[@]}";
 do
+  #Removes whitespaces
+  val="$(trim $val)"
   echo " "
   bashio::log.info "Starting the app with arguments $val"
   echo " "
   # shellcheck disable=SC2086
-  docker-entrypoint.sh "$val" || true
+  docker-entrypoint.sh "$val"
 done
-
-IFS="$CURRENTIFS"
 
 bashio::log.info "All actions concluded, addon will stop"
 bashio::addon.stop
