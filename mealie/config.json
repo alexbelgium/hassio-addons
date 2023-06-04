@@ -58,7 +58,8 @@
     "MAX_WORKERS": "1",
     "WEB_CONCURRENCY": "2",
     "WEB_GUNICORN": "true",
-    "WORKERS_PER_CORE": "0.5"
+    "WORKERS_PER_CORE": "0.5,
+    "DATA_DIR": "/config/addons_config/mealie_data"
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "map": [
@@ -95,6 +96,6 @@
   },
   "slug": "mealie",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v1.0.0-beta-5",
+  "version": "v1.0.0-beta-5-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
