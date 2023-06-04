@@ -57,7 +57,7 @@
     "MANAGE_HTTPS_PORT": "8043",
     "MANAGE_HTTP_PORT": "8088",
     "PORTAL_HTTPS_PORT": "8843",
-    "PORTAL_HTTP_PORT": "8088",
+    "PORTAL_HTTP_PORT": "8888",
     "SHOW_MONGODB_LOGS": "false",
     "SHOW_SERVER_LOGS": "true",
     "SSL_CERT_NAME": "fullchain.pem",
@@ -79,7 +79,8 @@
     "29814/tcp": 29814,
     "8043/tcp": 8043,
     "8088/tcp": 8088,
-    "8843/tcp": 8843
+    "8843/tcp": 8843,
+    "8088/tcp": 8888,
   },
   "ports_description": {
     "29810/udp": "device discovery port",
@@ -89,10 +90,11 @@
     "29814/tcp": "device adoption port",
     "8043/tcp": "web interface https",
     "8088/tcp": "web interface http",
-    "8843/tcp": "portal https"
+    "8843/tcp": "portal https",
+    "8888/tcp": "portal http"
   },
   "slug": "omada_v3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.9-chromium-amd64-2023-05-26",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8088]"
+  "version": "5.9-chromium-amd64-2023-05-26-2",
+  "webui": "http://[HOST]:[PORT:8888]"
 }
