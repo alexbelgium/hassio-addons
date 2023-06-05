@@ -1,3 +1,4 @@
+## 3.15
 - Apply github_tagfilter to dockerhub
 
 ## 3.10
