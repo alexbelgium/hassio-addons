@@ -1,5 +1,6 @@
 ### 5.9-chromium-amd64-2023-06-03 (03-06-2023)
 - Minor bugs fixed
+- Correction of portal http port to 8888
 
 ## 5.9-chromium-amd64-2023-06-02 (2023-06-02)
 - Update to latest version from mbentley/omada-controller
