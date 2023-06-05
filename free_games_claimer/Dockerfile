@@ -35,9 +35,6 @@ RUN \
     # Run with bashio
     #sed -i 's|#!/bin/bash|#!/usr/bin/env bashio|g' /usr/local/bin/docker-entrypoint.sh
 
-# Define subreaper
-ENV TINI_SUBREAPER=true
-
 ##################
 # 3 Install apps #
 ##################
