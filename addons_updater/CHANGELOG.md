@@ -1,3 +1,5 @@
+- Apply github_tagfilter to dockerhub
+
 ## 3.10
 - Add dry run mode (test but does not commit)
 
