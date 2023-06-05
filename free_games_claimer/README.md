@@ -1,3 +1,5 @@
+## &#9888; VNC not working on several machines. Please use config.env to execute the script
+
 # Home assistant add-on: Free Games Claimer
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

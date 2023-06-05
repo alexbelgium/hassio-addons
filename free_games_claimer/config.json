@@ -53,7 +53,11 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "environment": }
+    "TINI_SUBREAPER": "false"
+  },
   "image": "ghcr.io/alexbelgium/free_games_claimer-{arch}",
+  "init": false,
   "map": [
     "config:rw"
   ],
@@ -76,6 +80,6 @@
   },
   "slug": "free_games_claimer",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4-test8",
+  "version": "1.4-test19",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:6080]"
 }

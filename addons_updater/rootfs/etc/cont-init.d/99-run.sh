@@ -97,10 +97,18 @@ for f in */; do
             # shellcheck disable=SC2116
             LOGINFO="... Source is dockerhub" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
+            #Prepare tag flag
+            if [ "${FILTER_TEXT}" = "null" ] || [ "${FILTER_TEXT}" = "" ]; then
+                FILTER_TEXT=""
+            else
+                LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                FILTER_TEXT="&name=5.3"
+            fi
+
             DOCKERHUB_REPO="${UPSTREAM%%/*}"
             DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
             LASTVERSION=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags?page_size=$LISTSIZE$FILTER_TEXT" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
@@ -111,7 +119,7 @@ for f in */; do
 
             [ "${BETA}" = true ] && \
                 LASTVERSION=$(
-                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=$LISTSIZE" |
+                curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags?page_size=$LISTSIZE$FILTER_TEXT" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/!d' |
@@ -120,7 +128,7 @@ for f in */; do
             )
 
             [ "${BYDATE}" = true ] && \
-                LASTVERSION=$(curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=${LISTSIZE}&ordering=last_updated" |
+                LASTVERSION=$(curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags?page_size=${LISTSIZE}&ordering=last_updated$FILTER_TEXT" |
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
@@ -128,7 +136,7 @@ for f in */; do
                 sort -V |
                 tail -n 1
             ) && \
-                DATE=$(curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=${LISTSIZE}&ordering=last_updated" |
+                DATE=$(curl -f -L -s --fail "https://hub.docker.com/v2/repositories/${DOCKERHUB_REPO}/${DOCKERHUB_IMAGE}/tags/?page_size=${LISTSIZE}&ordering=last_updated$FILTER_TEXT" |
                 jq '.results[] | select(.name==$LASTVERSION) | .last_updated' -r --arg LASTVERSION "$LASTVERSION"
             ) && \
                 DATE="${DATE%T*}" && \

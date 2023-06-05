@@ -18,14 +18,27 @@ else
 fi
 
 # Copy new file
-\cp "$CONFIG_HOME"/config.env /data/
+mkdir -p /data/data
+\cp "$CONFIG_HOME"/config.env /data/data/
 
 # Permissions
 chmod -R 777 "$CONFIG_HOME"
 
 # Export variables
 set -a
-/./"$CONFIG_HOME"/config.env
+echo ""
+bashio::log.info "Getting variables from $CONFIG_HOME/config.env"
+cp "$CONFIG_HOME"/config.env /config.env
+# Remove previous instance
+sed -i "s|export ||g" /config.env
+# Add export for non empty lines
+sed -i '/\S/s/^/export /' /config.env
+# Delete lines starting with #
+sed -i '/export #/d' /config.env
+# Get variables
+# shellcheck source=/dev/null
+source /config.env
+rm /config.env
 set +a
 
 ##############
@@ -37,11 +50,33 @@ cd /data || true
 
 # Fetch commands
 CMD_ARGUMENTS="$(bashio::config "CMD_ARGUMENTS")"
+IFS=';'
+# shellcheck disable=SC2162
+read -a strarr <<< "$CMD_ARGUMENTS"
 
-echo " "
-bashio::log.info "Starting the app with arguments $CMD_ARGUMENTS"
-echo " "
+# Sanitizes commands
+trim() {
+    local var="$*"
+    # remove leading whitespace characters
+    var="${var#"${var%%[![:space:]]*}"}"
+    # remove trailing whitespace characters
+    var="${var%"${var##*[![:space:]]}"}"
+    printf '%s' "$var"
+}
 
 # Add docker-entrypoint command
-# shellcheck disable=SC2086
-# docker-entrypoint.sh $CMD_ARGUMENTS
+# Print each value of the array by using the loop
+for val in "${strarr[@]}";
+do
+  #Removes whitespaces
+  val="$(trim "$val")"
+  echo " "
+  bashio::log.info "Starting the app with arguments \"$val\""
+  echo " "
+  # shellcheck disable=SC2086
+  echo "$val" | xargs docker-entrypoint.sh || true
+done
+
+bashio::log.info "All actions concluded, addon will stop in 10 seconds"
+sleep 10
+bashio::addon.stop
