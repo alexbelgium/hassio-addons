@@ -64,7 +64,6 @@
     "SSL_KEY_NAME": "privkey.pem",
     "TZ": "Etc/UTC"
   },
-  "host_network": false,
   "image": "ghcr.io/alexbelgium/omada-{arch}",
   "map": [
     "config:rw",
