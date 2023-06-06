@@ -70,9 +70,10 @@ RUN \
     # Change data folder
     sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
     # Run scripts only once
-    sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /entrypoint.sh
+    sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /entrypoint.sh && \
+    # Allow entrypoint
+    chmod 777 /entrypoint.sh
 
-RUN chmod 777 /entrypoint.sh
 WORKDIR /data
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/entrypoint.sh" ]
