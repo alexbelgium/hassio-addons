@@ -34,7 +34,7 @@ RUN echo "Adding symlinks to entrypoint" \
     -e '1a sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" /etc/cont-init.d/*' \
     -e '1a for i in /etc/cont-init.d/*; do source ."$i"; done' \
     /entrypoint.sh && \
-    sed -i '|portal.http.port=8088|portal.http.port=8888|' /opt/tplink/EAPController/properties/omada.properties
+    sed -i 's|portal.http.port=8088|portal.http.port=8888|g' /opt/tplink/EAPController/properties/omada.properties
 
 ##################
 # 3 Install apps #
