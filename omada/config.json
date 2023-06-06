@@ -67,12 +67,6 @@
     "ssl:ro"
   ],
   "name": "Omada",
-  "options": {
-    "MANAGE_HTTPS_PORT": "8043",
-    "MANAGE_HTTP_PORT": "8088",
-    "PORTAL_HTTPS_PORT": "8843",
-    "PORTAL_HTTP_PORT": "8888"
-  },
   "ports": {
     "29810/udp": 29810,
     "29811/tcp": 29811,
@@ -95,14 +89,8 @@
     "8843/tcp": "portal https",
     "8888/tcp": "portal http"
   },
-  "schema": {
-    "MANAGE_HTTPS_PORT": "int",
-    "MANAGE_HTTP_PORT": "int",
-    "PORTAL_HTTPS_PORT": "int",
-    "PORTAL_HTTP_PORT": "int"
-  },
   "slug": "omada",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.9-chromium-amd64-2023-06-05-2test",
+  "version": "5.9-chromium-amd64-2023-06-05-2test2",
   "webui": "http://[HOST]:[PORT:8088]"
 }
