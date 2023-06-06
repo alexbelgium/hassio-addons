@@ -60,7 +60,6 @@
     "SSL_KEY_NAME": "privkey.pem",
     "TZ": "Etc/UTC"
   },
-  "host_network": true,
   "image": "ghcr.io/alexbelgium/omada-{arch}",
   "map": [
     "config:rw",
@@ -91,6 +90,6 @@
   },
   "slug": "omada",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.9-chromium-amd64-2023-06-05-2test7",
+  "version": "5.9-chromium-amd64-2023-06-05-2test8",
   "webui": "http://[HOST]:[PORT:8088]"
 }
