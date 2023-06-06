@@ -30,6 +30,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 RUN echo "Adding symlinks to entrypoint" \
     && sed -i \
+    -e 's|#!/bin/sh|#!/usr/bin/env bashio|g' \
     -e '1a chmod a+x /etc/cont-init.d/*' \
     -e '1a sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" /etc/cont-init.d/*' \
     -e '1a for i in /etc/cont-init.d/*; do source "$i"; done' \
