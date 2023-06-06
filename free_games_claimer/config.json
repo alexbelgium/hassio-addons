@@ -53,7 +53,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": }
+  "environment": {
     "TINI_SUBREAPER": "false"
   },
   "image": "ghcr.io/alexbelgium/free_games_claimer-{arch}",
