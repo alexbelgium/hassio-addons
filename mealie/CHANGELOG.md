@@ -1,3 +1,5 @@
+### v1.0.0-beta-5-3 (07-06-2023)
+- Minor bugs fixed
 - Fix : avoid loop when upgrading from <1.0 versions https://github.com/alexbelgium/hassio-addons/issues/856
 
 ### v1.0.0-beta-5-2 (04-06-2023)
