@@ -10,7 +10,15 @@ body:
   - type: markdown
     attributes:
       value: |
-        I have a real life job in parallel to this addon, and don't think I'll be able to add new addons for the moment. You can still however express your interest in case someone would do it. If a new addon, have you checked on Google that such as addon doesn't already exists?
+        I have a real life job in parallel to this addon, and don't think I'll be able to add new addons for the moment. You can still however express your interest in case someone would do it.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checked
+      description: "If a new addon, have you checked on Google that such as addon doesn't already exists?"
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
   - type: textarea
     id: description
     attributes:
