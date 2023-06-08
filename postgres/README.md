@@ -28,6 +28,9 @@ This addon is based on the official image : https://hub.docker.com/_/postgres
 
 Webui can be found at <http://your-ip:PORT>.
 
+user : postgres
+password : see options
+
 ```yaml
 POSTGRES_PASSWORD:
 POSTGRES_USER:
