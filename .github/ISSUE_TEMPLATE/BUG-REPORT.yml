@@ -1,8 +1,7 @@
----
 name: "🐛 Bug Report"
 description: Create a new ticket for a bug.
-title: "🐛 [Addon name] <title>"
-  labels: [
+title: "🐛 [BUG] - <title>"
+labels: [
   "bug"
 ]
 body:
@@ -12,6 +11,14 @@ body:
       label: "Description"
       description: Please enter an explicit description of your issue
       placeholder: Short and explicit description of your incident...
+    validations:
+      required: true
+  - type: input
+    id: reprod-url
+    attributes:
+      label: "Reproduction URL"
+      description: Please enter your GitHub URL to provide a reproduction of the issue
+      placeholder: ex. https://github.com/USERNAME/REPO-NAME
     validations:
       required: true
   - type: textarea
@@ -28,23 +35,35 @@ body:
     validations:
       required: true
   - type: textarea
-    id: logs
+    id: screenshot
     attributes:
-      label: "Addon Logs"
-      description: Please paste the full log that appears when starting the addon (including banner). This will be automatically formatted into code, so no need for backticks.
+      label: "Screenshots"
+      description: If applicable, add screenshots to help explain your problem.
+      value: |
+        ![DESCRIPTION](LINK.png)
       render: bash
     validations:
-      required: true
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Logs"
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: bash
+    validations:
+      required: false
   - type: dropdown
     id: browsers
     attributes:
-      label: "Architecture"
-      description: What architecture are you on ?
+      label: "Browsers"
+      description: What browsers are you seeing the problem on ?
       multiple: true
       options:
-        - aarch64
-        - amd64
-        - armv7
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Opera
     validations:
       required: false
   - type: dropdown
@@ -54,7 +73,8 @@ body:
       description: What is the impacted environment ?
       multiple: true
       options:
-        - HAos
-        - Virtual Machine
+        - Windows
+        - Linux
+        - Mac
     validations:
       required: false
