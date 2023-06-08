@@ -30,6 +30,9 @@ assignees: ""
 **Full addon log**
 
 <!-- The full log that appears when starting the addon -->
+```
+Paste your full log between the brackets
+```
 
 **Full addon config**
 
