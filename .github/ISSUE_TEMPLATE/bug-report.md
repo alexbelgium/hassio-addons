@@ -1,46 +1,60 @@
 ---
-name: "\U0001F41B Bug report"
-about: Create a report to help us improve
-title: "\U0001F41B [Addon name] Issue description"
-labels: bug
-assignees: ""
----
-
-<!-- markdownlint-disable MD036 -->
-
-**Which addon?**
-
-<!-- The title of the addon this issue is for. -->
-
-- Addon name :
-- Addon version :
-
-**Describe the bug**
-
-<!-- A clear and concise description of what the bug is. -->
-
-**To Reproduce**
-
-<!-- Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error -->
-
-**Full addon log**
-
-<!-- The full log that appears when starting the addon -->
-```
-Paste your full log between the brackets
-```
-
-**Full addon config**
-
-<!-- The addon config in yaml, please remove your passwords-->
-
-**System**
-
-<!-- Those information can be found under the Supervisor page on the System tab. -->
-
-- Supervisor version: <!--Your Supervisor Version, eg. 209. -->
-- Host system version: <!--Your Home Assistant (former HASSIO) version, eg. HassOS 3.12 -->
+name: "🐛 Bug Report"
+description: Create a new ticket for a bug.
+title: "🐛 [Addon name] <title>"
+labels: [
+  "bug"
+]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: Please enter an explicit description of your issue
+      placeholder: Short and explicit description of your incident...
+    validations:
+      required: true
+  - type: textarea
+    id: reprod
+    attributes:
+      label: "Reproduction steps"
+      description: Please enter an explicit description of your issue
+      value: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+      render: bash
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Addon Logs"
+      description: Please paste the full log that appears when starting the addon (including banner). This will be automatically formatted into code, so no need for backticks.
+      render: bash
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: "Architecture"
+      description: What architecture are you on ?
+      multiple: true
+      options:
+        - aarch64
+        - amd64
+        - armv7
+    validations:
+      required: false
+  - type: dropdown
+    id: os
+    attributes:
+      label: "OS"
+      description: What is the impacted environment ?
+      multiple: true
+      options:
+        - HAos
+        - Virtual Machine
+    validations:
+      required: false
