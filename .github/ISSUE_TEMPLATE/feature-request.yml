@@ -15,9 +15,11 @@ body:
     id: terms
     attributes:
       label: Checked
-      description: "If a new addon, have you checked on Google that such as addon doesn't already exists?"
+      description: "Pre-checks"
       options:
-        - label: I agree to follow this project's Code of Conduct
+        - label: "If a new addon, I have checked on  Google that such as addon doesn't already exists"
+          required: true
+        - label: "If a new feature, I have searched in the discussions & issues that it was not already covered"
           required: true
   - type: textarea
     id: description
