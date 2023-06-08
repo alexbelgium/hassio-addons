@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Guacamole] HTTP Status 404 - Not Found (opened 2023-06-06)](https://github.com/alexbelgium/hassio-addons/issues/859) by [@svh1985](https://github.com/svh1985)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
