@@ -1,0 +1,34 @@
+---
+name: "✨ Feature request"
+description: Suggest an idea for this project
+title: "✨ [REQUEST] Addon name"
+labels: [
+  "prevent stale",
+  "enhancement"
+]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        I have a real life job in parallel to this addon, and don't think I'll be able to add new addons for the moment. You can still however express your interest in case someone would do it. If a new addon, have you checked on Google that such as addon doesn't already exists?
+  - type: textarea
+    id: description
+    attributes:
+      label: "Which addon?"
+      description: The title of the addon the new feature is for
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: "Is your feature request related to a problem? Please describe"
+      description: A clear and concise description of what the problem is. Ex. I'm always frustrated when
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: "Describe the solution you'd like"
+      description: A clear and concise description of what you want to happen
+    validations:
+      required: true
