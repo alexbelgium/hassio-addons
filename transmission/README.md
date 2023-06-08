@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Transmission add Tailmission Web UI (opened 2023-02-19)](https://github.com/alexbelgium/hassio-addons/issues/719) by [@DarkoMir](https://github.com/DarkoMir)
+## &#9888; Open Issue : [🐛 [Transmission] Error in HA logs after 2023.6 (opened 2023-06-08)](https://github.com/alexbelgium/hassio-addons/issues/861) by [@Meister1977](https://github.com/Meister1977)
 
 # Home assistant add-on: Transmission
 
