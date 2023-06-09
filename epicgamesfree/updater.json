@@ -6,5 +6,5 @@
   "slug": "epicgamesfree",
   "source": "dockerhub",
   "upstream_repo": "charlocharlie/epicgames-freegames",
-  "upstream_version": "c0dfe30ee94fa609a9efcb5eb2b8fd0c1dafe6e2-2023-05-03"
+  "upstream_version": "bullseye-slim-2023-05-03"
 }

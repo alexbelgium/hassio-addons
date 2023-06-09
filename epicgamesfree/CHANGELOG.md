@@ -1,3 +1,6 @@
+
+## bullseye-slim-2023-05-03 (2023-05-03)
+- Update to latest version from charlocharlie/epicgames-freegames
 ### c0dfe30ee94fa609a9efcb5eb2b8fd0c1dafe6e2-2023-05-03-2 (24-05-2023)
 - Minor bugs fixed
 
