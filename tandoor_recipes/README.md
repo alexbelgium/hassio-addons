@@ -33,6 +33,7 @@ Required :
     "DB_TYPE": "list(sqlite|postgresql_external)" # Type of database to use.
     "SECRET_KEY": "str", # Your secret key
     "PORT": 9928 # By default, the webui is available on http://HAurl:9928. If you ever need to change the port, you should never do it within the app, but only through this option
+    "Environment": 0|1 # 1 is debug mode, 0 is normal mode. You should run in normal mode unless actively developing.
 Optional :
     "POSTGRES_HOST": "str?", # Needed for postgresql_external
     "POSTGRES_PORT": "str?", # Needed for postgresql_external
@@ -62,3 +63,7 @@ If you have in issue with your installation, please be sure to checkout github.
 ![image](https://github.com/TandoorRecipes/recipes/raw/develop/docs/preview.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+## External Recipe files
+The directory /config/addons_config/tandoor_recipes/externalfiles can be used for importing external files in to Tandoor. You can map this with /opt/recipes/externalfiles within Docker.
+As per directions here: https://docs.tandoor.dev/features/external_recipes/

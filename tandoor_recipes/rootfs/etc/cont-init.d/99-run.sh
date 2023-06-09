@@ -8,6 +8,7 @@
 
 export ALLOWED_HOSTS=$(bashio::config 'ALLOWED_HOSTS') && bashio::log.blue "ALLOWED_HOSTS=$ALLOWED_HOSTS"
 export SECRET_KEY=$(bashio::config 'SECRET_KEY') && bashio::log.blue "SECRET_KEY=$SECRET_KEY"
+export DEBUG=$(bashio::config 'DEBUG') && bashio::log.blue "DEBUG=$DEBUG"
 
 CSRF_TRUSTED_ORIGINS="http://localhost"
 for element in ${ALLOWED_HOSTS//,/ }; do # Separate comma separated values
@@ -98,10 +99,12 @@ esac
 ##############
 echo "Creating symlinks"
 mkdir -p /config/addons_config/tandoor_recipes/mediafiles
+mkdir -p /config/addons_config/tandoor_recipes/externalfiles
 chmod -R 755 /config/addons_config/tandoor_recipes
 mkdir -p /data/recipes/staticfiles
 chmod 755 /data/recipes/staticfiles
 ln -s /config/addons_config/tandoor_recipes/mediafiles /opt/recipes
+ln -s /config/addons_config/tandoor_recipes/externalfiles /opt/recipes
 ln -s /data/recipes/staticfiles /opt/recipes
 
 bashio::log.info "Launching nginx"
