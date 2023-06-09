@@ -1,3 +1,6 @@
+
+## version-v1.0.2 (10-06-2023)
+- Update to latest version from fireflyiii/data-importer
 ### version-1.2.2-3 (28-03-2023)
 - Minor bugs fixed
 - Allow IMPORT_DIR_WHITELIST
