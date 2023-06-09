@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Paperless NGX add Tika and Gotenborg to process emails (eml files) (opened 2023-02-05)](https://github.com/alexbelgium/hassio-addons/issues/693) by [@NODeeJay](https://github.com/NODeeJay)
 # Home assistant add-on: Paperless NGX
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

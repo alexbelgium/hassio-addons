@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [Mealie - database not retained between restarts (opened 2023-06-02)](https://github.com/alexbelgium/hassio-addons/issues/856) by [@ezpl](https://github.com/ezpl)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

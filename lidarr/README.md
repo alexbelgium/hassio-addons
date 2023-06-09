@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Lidarr ingress support (opened 2023-04-23)](https://github.com/alexbelgium/hassio-addons/issues/808) by [@financelurker](https://github.com/financelurker)
+## &#9888; Open Issue : [🐛[Lidarr] Torznab Ygg integration (opened 2023-06-08)](https://github.com/alexbelgium/hassio-addons/issues/862) by [@cannabarman](https://github.com/cannabarman)
 # Home assistant add-on: Lidarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
