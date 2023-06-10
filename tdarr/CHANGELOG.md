@@ -1,3 +1,6 @@
+
+## pro_1.3004 (10-06-2023)
+- Update to latest version from haveagitgat/tdarr
 ### 2.00.20.1-2 (23-04-2023)
 - Minor bugs fixed
 
