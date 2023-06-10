@@ -1,3 +1,6 @@
+
+## ubuntu (10-06-2023)
+- Update to latest version from photoprism/photoprism
 - Feat : cifsdomain added
 
 ### preview-9 (07-05-2023)

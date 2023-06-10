@@ -1,10 +1,10 @@
 {
   "github_fulltag": "true",
-  "last_update": "10-12-2022",
+  "last_update": "10-06-2023",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "photoprism",
   "source": "dockerhub",
   "upstream_repo": "photoprism/photoprism",
-  "upstream_version": "20220121"
+  "upstream_version": "ubuntu"
 }
