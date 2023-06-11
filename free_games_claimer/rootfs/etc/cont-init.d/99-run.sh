@@ -68,13 +68,13 @@ trim() {
 # Print each value of the array by using the loop
 for val in "${strarr[@]}";
 do
-  #Removes whitespaces
-  val="$(trim "$val")"
-  echo " "
-  bashio::log.info "Starting the app with arguments \"$val\""
-  echo " "
-  # shellcheck disable=SC2086
-  echo "$val" | xargs docker-entrypoint.sh || true
+    #Removes whitespaces
+    val="$(trim "$val")"
+    echo " "
+    bashio::log.info "Starting the app with arguments \"$val\""
+    echo " "
+    # shellcheck disable=SC2086
+    echo "$val" | xargs docker-entrypoint.sh || true
 done
 
 bashio::log.info "All actions concluded, addon will stop in 10 seconds"
