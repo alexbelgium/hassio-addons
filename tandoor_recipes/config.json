@@ -68,8 +68,8 @@
   "options": {
     "ALLOWED_HOSTS": "",
     "DB_TYPE": "sqlite",
-    "SECRET_KEY": "YOUR_SECRET_KEY",
-    "DEBUG": "0"
+    "DEBUG": "0",
+    "SECRET_KEY": "YOUR_SECRET_KEY"
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "panel_title": "Tandoor Recipes",
@@ -82,13 +82,13 @@
   "schema": {
     "ALLOWED_HOSTS": "str?",
     "DB_TYPE": "list(sqlite|postgresql_external)",
+    "DEBUG": "list(1|0)",
     "POSTGRES_DB": "str?",
     "POSTGRES_HOST": "str?",
     "POSTGRES_PASSWORD": "str?",
     "POSTGRES_PORT": "str?",
     "POSTGRES_USER": "str?",
-    "SECRET_KEY": "str",
-    "DEBUG": "list(1|0)"
+    "SECRET_KEY": "str"
   },
   "services": [
     "mysql:want"

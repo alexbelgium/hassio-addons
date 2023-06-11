@@ -54,12 +54,12 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "DATA_DIR": "/config/addons_config/mealie_data",
     "DB_ENGINE": "sqlite",
     "MAX_WORKERS": "1",
     "WEB_CONCURRENCY": "2",
     "WEB_GUNICORN": "true",
-    "WORKERS_PER_CORE": "0.5",
-    "DATA_DIR": "/config/addons_config/mealie_data"
+    "WORKERS_PER_CORE": "0.5"
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "map": [
