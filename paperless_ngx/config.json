@@ -66,9 +66,7 @@
   "map": [
     "config:rw",
     "share:rw",
-    "media:rw",
-    "config:rw",
-    "ssl"
+    "media:rw""ssl"
   ],
   "name": "Paperless NGX",
   "options": {

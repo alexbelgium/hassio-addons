@@ -64,8 +64,7 @@
   "map": [
     "config:rw",
     "share:rw",
-    "media:rw",
-    "config:rw"
+    "media:rw"
   ],
   "name": "Nzbget",
   "options": {
