@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Zoneminder] start don't work (opened 2023-06-11)](https://github.com/alexbelgium/hassio-addons/issues/867) by [@jodomi](https://github.com/jodomi)
 # Home assistant add-on: Zoneminder
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
