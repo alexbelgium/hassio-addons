@@ -86,7 +86,7 @@ if bashio::config.has_value 'networkdisks'; then
 
                         # Test with different SMB versions
                         ##################################
-                        for SMBVERS in "" ",vers=3" ",vers=1.0" ",vers=2.1" ",vers=3.0" ",nodfs"; do
+                        for SMBVERS in "" ",vers=3" ",vers=3.2" ",vers=3.0" ",vers=2.1" ",nodfs" ",vers=1.0"; do
 
                             # Test with different security versions
                             #######################################
