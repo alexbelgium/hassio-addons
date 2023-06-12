@@ -53,7 +53,7 @@ if bashio::config.has_value 'networkdisks'; then
         MOUNTED=false
 
         # Data validation
-        if [[ ! $disk =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
+        if [[ ! "$disk" =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
             bashio::log.fatal "The structure of your \"networkdisks\" option : \"$disk\" doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2. If you don't use it, you can simply remove the text, this will avoid this error message in the future."
             break 2
         fi
@@ -118,6 +118,13 @@ if bashio::config.has_value 'networkdisks'; then
             # shellcheck disable=SC2015
             touch "/mnt/$diskname/testaze" && mv "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" ||
             (umount "/mnt/$diskname" && mount -t cifs -o "iocharset=utf8,rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD}$MOUNTOPTIONS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "noserverino option used")
+
+            # Alert if smbv1
+            if [[ "$MOUNTOPTIONS" == *"1.0"* ]]; then
+              bashio::log.warning ""
+              bashio::log.warning "Your smb system requires smbv1. This is an obsolete protocol. Please correct this to prevent issues."
+              bashio::log.warning ""
+            fi
 
         else
             # Mounting failed messages
