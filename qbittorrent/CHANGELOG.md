@@ -1,6 +1,6 @@
 ### 4.5.3-r0-2 (12-06-2023)
 - Minor bugs fixed
-- Be sure to test smb 2 before 1
+- Evaluate smb v2 before v1
 
 ### 4.5.3-r0 (07-06-2023)
 - Minor bugs fixed
