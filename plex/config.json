@@ -4,6 +4,13 @@
     "amd64",
     "armv7"
   ],
+  "backup_exclude": [
+    "**/Cache/**",
+    "**/Plug-in Support/Caches/**",
+    "**/Logs/**",
+    "**/Crash Reports/**",
+    "**/Diagnostics/**"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices",
   "devices": [
@@ -117,7 +124,7 @@
   },
   "slug": "plex_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex",
-  "version": "1.32.3.7162-b0a36929b-ls171",
+  "version": "1.32.3.7162-b0a36929b-ls171-2",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:32400]/web"
 }
