@@ -1,6 +1,8 @@
+- Automatically attempts to disable maintenance mode on start
 
 ## 26.0.2 (27-05-2023)
 - Update to latest version from linuxserver/docker-nextcloud
+
 ### 26.0.1-5 (26-05-2023)
 - Minor bugs fixed
 - Feat : cifsdomain added
