@@ -140,6 +140,12 @@ if [ -f /reinstall ]; then
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 fi
 
+###########################
+# DISABLE MAINTENACE MODE #
+###########################
+
+sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off" &>/dev/null || true
+
 ##############
 # CLEAN OCDE #
 ##############
