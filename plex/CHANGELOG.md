@@ -1,3 +1,5 @@
+### 1.32.3.7162-b0a36929b-ls171-2 (13-06-2023)
+- Minor bugs fixed
 - Reduce backup sizes https://github.com/alexbelgium/hassio-addons/issues/871
 
 ## 1.32.3.7162-b0a36929b-ls171 (10-06-2023)
