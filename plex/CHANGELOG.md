@@ -1,3 +1,4 @@
+- Reduce backup sizes https://github.com/alexbelgium/hassio-addons/issues/871
 
 ## 1.32.3.7162-b0a36929b-ls171 (10-06-2023)
 - Update to latest version from linuxserver/docker-plex
