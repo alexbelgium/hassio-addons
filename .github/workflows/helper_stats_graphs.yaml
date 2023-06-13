@@ -232,9 +232,7 @@ jobs:
           # Get stars
           wget -S -O .github/stars.svg https://contrib.rocks/image?repo=alexbelgium/hassio-addons || true
           # Get stars2
-          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30 || \
-          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons || \
-          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=31 || true
+          wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30 || true
           # Get stars evolution
           wget -S -O .github/starsevol.svg "https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date"
       - name: Commit if needed
