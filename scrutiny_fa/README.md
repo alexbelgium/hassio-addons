@@ -71,7 +71,7 @@ Two types of api endpoints are available:
 - Summary data : http://YOURIP:ADDONPORT/api/summary
 - Detailed data : http://YOURIP:ADDONPORT/api/device/WWN/details
 
-For the detailed data, wmn can be found for each hdd within the scrutiny app. For example for me : http://192.168.178.23:8086/api/device/0x50014ee606c14537/details
+For the detailed data, wmn can be found for each hdd within the scrutiny app. For example: http://192.168.178.23:8086/api/device/0x50014ee606c14537/details
 
 Example to get data from the first hdd.
 
@@ -79,21 +79,28 @@ Example to get data from the first hdd.
 rest:
   - verify_ssl: false
     scan_interval: 60
-    resource: http://YOURIP:ADDONPORT/api/summary
+    resource: http://192.168.178.23:8086/api/device/0x50014ee606c14537/details
     sensor:
-      - name: "HDD disk 1"
-        json_attributes_path: "$.data[0].smart_results[0]"
-        value_template: "OK"
-        json_attributes:
-          - "device_wwn"
-          - "date"
-          - "smart_status"
-          - "temp"
-          - "power_on_hours"
-          - "power_cycle_count"
-          - "ata_attributes"
-          - "nvme_attributes"
-          - "scsi_attributes"
+      - name: "HDD1 - WWN"
+        value_template: "{{ value_json.data.smart_results[0].device_wwn }}"
+      - name: "HDD1 - Last Update"
+        value_template: "{{ value_json.data.smart_results[0].date }}"
+        device_class: timestamp
+      - name: "HDD1 - Temperature"
+        value_template: "{{ value_json.data.smart_results[0].temp }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        state_class: measurement
+      - name: "HDD1 - Power Cycles"
+        value_template: "{{ value_json.data.smart_results[0].power_cycle_count }}"
+      - name: "HDD1 - Power Hours"
+        value_template: "{{ value_json.data.smart_results[0].power_on_hours }}"
+      - name: "HDD1 - Protocol"
+        value_template: "{{ value_json.data.smart_results[0].device_protocol }}"
+    binary_sensor:
+      - name: "HDD1 - SMART Status"
+        value_template: "{{ bool(value_json.data.smart_results[0].Status) }}"
+        device_class: problem
 ```
 
 ## Illustration
