@@ -81,13 +81,14 @@ done
 if bashio::config.true "OPENVPN_CUSTOM_PROVIDER"; then
 
     OVPNLOCATION="$(bashio::config "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION")"
+    OVPNCONFIG="$(bashio::config "OPENVPN_CONFIG")"
     OPENVPN_PROVIDER="${OVPNLOCATION##*/}"
     OPENVPN_PROVIDER="${OPENVPN_PROVIDER%.*}"
     OPENVPN_PROVIDER="${OPENVPN_PROVIDER,,}"
     bashio::log.info "Custom openvpn provider selected"
 
     # Check that ovpn file exists
-    if [ ! -f "$(bashio::config "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION")" ]; then
+    if [ ! -f "$OVPNLOCATION" ] || [ ! -f "$OVPNLOCATION/$OVPNCONFIG" ]; then
         bashio::log.fatal "Ovpn file not found at location provided : $OVPNLOCATION"
         exit 1
     fi
@@ -97,7 +98,8 @@ if bashio::config.true "OPENVPN_CUSTOM_PROVIDER"; then
     echo "Copying ovpn file to proper location"
     mkdir -p /etc/openvpn/"$OPENVPN_PROVIDER"
     mkdir -p /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"
-    cp "$OVPNLOCATION" /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn
+    cp "$OVPNLOCATION" /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn || \
+    cp "$OVPNLOCATION/$OVPNCONFIG" /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn
 
     # Use custom provider
     echo "Exporting variable for custom provider : $OPENVPN_PROVIDER"
