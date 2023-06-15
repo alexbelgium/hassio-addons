@@ -1,3 +1,4 @@
+- Fix : allow custom providers with names based on mullvad
 - Feat : cifsdomain added
 
 ## v5.0.2 (21-04-2023)
