@@ -104,6 +104,6 @@
   },
   "slug": "calibre-web",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre_web",
-  "version": "0.6.20-ls213",
+  "version": "0.6.20-ls214",
   "video": true
 }
