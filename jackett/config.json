@@ -93,6 +93,6 @@
   },
   "slug": "jackett_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jackett",
-  "version": "0.21.185",
+  "version": "0.21.235",
   "webui": "http://[HOST]:[PORT:9117]"
 }
