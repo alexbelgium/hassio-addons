@@ -1,3 +1,6 @@
+
+## 27.0.0 (17-06-2023)
+- Update to latest version from linuxserver/docker-nextcloud
 - Automatically attempts to disable maintenance mode on start
 
 ## 26.0.2 (27-05-2023)
