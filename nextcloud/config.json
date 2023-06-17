@@ -1,7 +1,7 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Nextcloud for Home Assistant",
