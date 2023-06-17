@@ -2,7 +2,6 @@
   "arch": [
     "aarch64",
     "amd64",
-    "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Nextcloud for Home Assistant",
@@ -125,6 +124,6 @@
   "slug": "nextcloud_ocr",
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "27.0.0-2",
+  "version": "27.0.0",
   "webui": "https://[HOST]:[PORT:443]"
 }
