@@ -1,8 +1,7 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
-    "armv7"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Torrent Trackers and Usenet Indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required",
