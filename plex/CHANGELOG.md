@@ -1,3 +1,6 @@
+
+## 1.32.3.7192-7aa441827-ls173 (17-06-2023)
+- Update to latest version from linuxserver/docker-plex
 ### 1.32.3.7162-b0a36929b-ls171-2 (13-06-2023)
 - Minor bugs fixed
 - Reduce backup sizes https://github.com/alexbelgium/hassio-addons/issues/871
