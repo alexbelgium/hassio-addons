@@ -8,7 +8,7 @@ on:
     - cron: '00 23 * * 0'
 
 jobs:
-  build:
+  calibre:
     name: calibreapp/image-actions
     runs-on: ubuntu-latest
     steps:
@@ -27,6 +27,7 @@ jobs:
           pngQuality: '60'
           webpQuality: '60'
 
+  post:
       - name: Create New Pull Request If Needed
         if: steps.calibre.outputs.markdown != ''
         uses: peter-evans/create-pull-request@v5
