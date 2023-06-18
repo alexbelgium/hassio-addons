@@ -99,7 +99,7 @@ if bashio::config.true "OPENVPN_CUSTOM_PROVIDER"; then
     mkdir -p /etc/openvpn/"$OPENVPN_PROVIDER"
     mkdir -p /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"
     cp "$OVPNLOCATION" /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn || \
-    cp "$OVPNLOCATION/$OVPNCONFIG" /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn
+        cp "$OVPNLOCATION/$OVPNCONFIG" /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn
 
     # Use custom provider
     echo "Exporting variable for custom provider : $OPENVPN_PROVIDER"

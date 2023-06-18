@@ -121,9 +121,9 @@ if bashio::config.has_value 'networkdisks'; then
 
             # Alert if smbv1
             if [[ "$MOUNTOPTIONS" == *"1.0"* ]]; then
-              bashio::log.warning ""
-              bashio::log.warning "Your smb system requires smbv1. This is an obsolete protocol. Please correct this to prevent issues."
-              bashio::log.warning ""
+                bashio::log.warning ""
+                bashio::log.warning "Your smb system requires smbv1. This is an obsolete protocol. Please correct this to prevent issues."
+                bashio::log.warning ""
             fi
 
         else
