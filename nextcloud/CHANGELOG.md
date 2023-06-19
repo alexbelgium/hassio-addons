@@ -1,3 +1,4 @@
+- disable_updates only disables app updates, not nextcloud's
 
 ## 27.0.0 (17-06-2023)
 - Update to latest version from linuxserver/docker-nextcloud
