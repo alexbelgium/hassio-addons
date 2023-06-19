@@ -37,7 +37,7 @@ Scripts with .sh ending located in /config/addons_config/nextcloud will be execu
 ### Addon options
 
 ```yaml
-disable_updates : prevent automatic nextcloud updating along addon
+disable_updates : prevent automatic apps updating along addon
 additional_apps: vim,nextcloud #specify additional apk files to install ; separated by commas
 PGID/PUID: 1000 #allows setting user.
 trusted_domains: your-domain.com #allows to select the trusted domains. Domains not in this lis will be removed, except for the first one used in the initial configuration.
