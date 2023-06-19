@@ -1,4 +1,4 @@
-- Feat : Disable_updates only disables app updates, not nextcloud's
+- Add a disclaimer the disabling auto updates can and will lead to issues if not done manually
 
 ## 27.0.0 (17-06-2023)
 - Update to latest version from linuxserver/docker-nextcloud
