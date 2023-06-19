@@ -4,16 +4,6 @@
 # Only execute if installed
 if [ -f /notinstalled ]; then exit 0; fi
 
-# Check current version
-if [ -f /data/config/www/nextcloud/version.php ]; then
-    CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
-else
-    CURRENTVERSION="Not found"
-fi
-
-# Check container version
-CONTAINERVERSION="$(cat /nextcloudversion)"
-
 # Inform if new version available
 function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
 
