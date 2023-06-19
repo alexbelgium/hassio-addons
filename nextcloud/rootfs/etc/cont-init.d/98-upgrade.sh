@@ -35,7 +35,13 @@ if ! bashio::config.true "disable_updates"; then
     # Reset permissions
     /./etc/cont-init.d/01-folders.sh
 elif bashio::config.true "disable_updates" && [ "$(version "$CONTAINERVERSION")" -gt "$(version "$CURRENTVERSION")" ]; then
-    bashio::log.yellow " "
-    bashio::log.yellow "New version available : $CONTAINERVERSION"
-    bashio::log.yellow "...auto_updater not set in addon options, please update from nextcloud settings"
+    bashio::log.warning " "
+    bashio::log.warning "----------------------------------------- "
+    bashio::log.warning "New version available : $CONTAINERVERSION"
+    bashio::log.warning "-----------------------------------------"
+    bashio::log.warning " "
+    bashio::log.warning "...auto_updater not set in addon options, please update from nextcloud settings"
+    bashio::log.warning "If you don't update you risk an addon breakage !"
+    bashio::log.warning " "
+    bashio::log.warning "-----------------------------------------"
 fi
