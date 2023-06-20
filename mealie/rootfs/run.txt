@@ -102,8 +102,11 @@ echo "Permissions adapted"
 # MIGRATE DATA #
 ################
 
-if [ ! -f /config/addons_config/mealie_data/mealie.db ]; then
-    mv -r /data/* /config/addons_config/mealie_data/
+if [ ! -f /config/addons_config/mealie_data/mealie.db ] && [ -f /data/mealie.db ] ; then
+    mv /data/options.json /
+    cp -r /data/* /config/addons_config/mealie_data/
+    rm -r /data/*
+    mv /options.json /data
     bashio::log.warning "Amd64 data migrated to /config/addons_config/mealie_data ; you can now use the new addons. For aarch64, you need to do a manual backup and restore"
 fi
 
