@@ -17,13 +17,12 @@ CONTAINERVERSION="$(cat /nextcloudversion)"
 # Inform if new version available
 function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
 
-# Updater code
-if ! bashio::config.true "disable_updates"; then
+# Updater nextcloud code
+if ! bashio::config.true "disable_updates_nextcloud"; then
     bashio::log.green "Auto_updater set, checking for updates"
     # Install new version
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/updater/updater.phar --no-interaction"
     sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ upgrade"
-    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ app:update --all"
     # Install additional versions
     while [[ $(occ update:check 2>&1) == *"update available"* ]]; do
         bashio::log.yellow "-----------------------------------------------------------------------"
@@ -44,4 +43,12 @@ elif bashio::config.true "disable_updates" && [ "$(version "$CONTAINERVERSION")"
     bashio::log.warning "If you don't update you risk an addon breakage !"
     bashio::log.warning " "
     bashio::log.warning "-----------------------------------------"
+fi
+
+# Updater apps code
+if ! bashio::config.true "disable_updates"; then
+    bashio::log.green "... checking for app updates"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ app:update --all"
+else
+    bashio::log.yellow "... disable_updates set, apps need to be updated manually"
 fi
