@@ -74,6 +74,6 @@
   },
   "slug": "guacamole",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "alpine",
+  "version": "test",
   "video": true
 }
