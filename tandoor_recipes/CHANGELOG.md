@@ -1,3 +1,5 @@
+- Feat : allow mapping to /share and /media
+
 ### 1.4.12-3 (23-06-2023)
 - Minor bugs fixed
 - Feat : new option externalfiles_folder added to customize folder mapping
