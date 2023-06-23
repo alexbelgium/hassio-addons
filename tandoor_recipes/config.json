@@ -62,7 +62,9 @@
   },
   "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
   "map": [
-    "config:rw"
+    "config:rw",
+    "share:rw",
+    "media:rw"
   ],
   "name": "Tandoor recipes",
   "options": {
@@ -97,5 +99,5 @@
   ],
   "slug": "tandoor_recipes",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4.12-3"
+  "version": "1.4.12-4"
 }
