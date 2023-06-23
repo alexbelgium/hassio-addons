@@ -111,7 +111,7 @@ else
     externalfiles_folder="/config/addons_config/tandoor_recipes/externalfiles"
 fi
 mkdir -p "$externalfiles_folder"
-ln -s "$externalfiles_folder"
+ln -s "$externalfiles_folder" /opt/recipes
 
 bashio::log.info "Launching nginx"
 exec nginx & echo "done"
