@@ -99,13 +99,19 @@ esac
 ##############
 echo "Creating symlinks"
 mkdir -p /config/addons_config/tandoor_recipes/mediafiles
-mkdir -p /config/addons_config/tandoor_recipes/externalfiles
 chmod -R 755 /config/addons_config/tandoor_recipes
 mkdir -p /data/recipes/staticfiles
 chmod 755 /data/recipes/staticfiles
 ln -s /config/addons_config/tandoor_recipes/mediafiles /opt/recipes
-ln -s /config/addons_config/tandoor_recipes/externalfiles /opt/recipes
 ln -s /data/recipes/staticfiles /opt/recipes
+
+if bashio::config_has_value "externalfiles_folder"; then
+    externalfiles_folder="$(bashio::config "externalfiles_folder")"
+else
+    externalfiles_folder="/config/addons_config/tandoor_recipes/externalfiles"
+fi
+mkdir -p "$externalfiles_folder"
+ln -s "$externalfiles_folder"
 
 bashio::log.info "Launching nginx"
 exec nginx & echo "done"
