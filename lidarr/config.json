@@ -75,7 +75,7 @@
     "8686/tcp": 8686
   },
   "ports_description": {
-    "8686/tcp": "web interface"
+    "8686/tcp": "Web interface"
   },
   "privileged": [
     "SYS_ADMIN",
