@@ -57,7 +57,9 @@
   "image": "ghcr.io/alexbelgium/plex-media-manager-{arch}",
   "init": false,
   "map": [
-    "config:rw"
+    "config:rw",
+    "share:rw",
+    "media:rw"
   ],
   "name": "Plex meta manager",
   "options": {
