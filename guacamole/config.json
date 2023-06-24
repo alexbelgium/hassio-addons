@@ -58,6 +58,8 @@
   "init": false,
   "map": [
     "config:rw",
+    "media:rw",
+    "share:rw",
     "ssl:ro"
   ],
   "name": "Guacamole Client",
