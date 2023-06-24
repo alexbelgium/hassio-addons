@@ -1,4 +1,7 @@
 
+## 4.0.2-ls113 (24-06-2023)
+- Update to latest version from linuxserver/docker-sabnzbd
+
 ## 4.0.2-ls112 (17-06-2023)
 - Update to latest version from linuxserver/docker-sabnzbd
 
