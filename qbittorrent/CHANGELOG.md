@@ -1,3 +1,5 @@
+### 4.5.4-2 (24-06-2023)
+- Minor bugs fixed
 - armv7 not supported anymore by linuxserver, it is pinned to latest working version
 
 ## 4.5.4 (24-06-2023)
