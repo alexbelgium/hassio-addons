@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] epicgamesfree ingress support (opened 2023-03-10)](https://github.com/alexbelgium/hassio-addons/issues/754) by [@nordeep](https://github.com/nordeep)
-## &#9888; Open Issue : [🐛 [EPIC GAMES FREE] Captcha not working (opened 2023-06-12)](https://github.com/alexbelgium/hassio-addons/issues/869) by [@ajcorrea](https://github.com/ajcorrea)
 
 # Home assistant add-on: Epic Games Free
 
