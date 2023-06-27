@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Scrutiny] FAILED: SMART (opened 2023-06-26)](https://github.com/alexbelgium/hassio-addons/issues/880) by [@dm82m](https://github.com/dm82m)
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
