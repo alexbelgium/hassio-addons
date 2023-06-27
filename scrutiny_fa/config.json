@@ -11,6 +11,7 @@
     "COLLECTOR_HOST_ID": "home_assistant"
   },
   "full_access": true,
+  "homeassistant_api": true,
   "image": "ghcr.io/alexbelgium/scrutiny-fa-{arch}",
   "ingress": true,
   "init": false,
@@ -29,7 +30,8 @@
   "ports_description": {
     "8080/tcp": "Web UI port",
     "8086/tcp": "InfluxDB admin"
-  },
+  },  
+  "privileged": ["SYS_ADMIN", "SYS_RAWIO"],
   "schema": {
     "COLLECTOR_API_ENDPOINT": "str?",
     "COLLECTOR_HOST_ID": "str?",
@@ -43,5 +45,5 @@
   "slug": "scrutiny_fa",
   "udev": true,
   "url": "https://github.com/AnalogJ/scrutiny",
-  "version": "v0.7.1"
+  "version": "v0.7.1-test"
 }
