@@ -1,3 +1,4 @@
+- Add privileges in addition to full_access @dm82m @https://github.com/alexbelgium/hassio-addons/issues/880
 
 ## v0.7.1 (15-04-2023)
 - Update to latest version from analogj/scrutiny
