@@ -71,8 +71,7 @@ RUN \
     sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
     # Run scripts only once
     sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /entrypoint.sh && \
-    sed -i "s=Xvfb=[[ \"\$(ps aux | grep \"Xvfb\" | grep -v grep)\" ]] || x11vnc=g" /usr/local/bin/docker-entrypoint.sh && \
-    sed -i "s=x11vnc=[[ \"\$(ps aux | grep \"x11vnc\" | grep -v grep)\" ]] || x11vnc=g" /usr/local/bin/docker-entrypoint.sh && \
+    sed -i "s=2>/dev/null=2>/dev/null || true=g" /usr/local/bin/docker-entrypoint.sh && \
     # Allow entrypoint
     chmod 777 /entrypoint.sh
 
