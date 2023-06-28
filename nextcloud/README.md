@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Nextcloud] Bug after update (opened 2023-06-28)](https://github.com/alexbelgium/hassio-addons/issues/882) by [@FaboThePlayer](https://github.com/FaboThePlayer)
 
 
 # Home assistant add-on: Nextcloud
