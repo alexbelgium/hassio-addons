@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Tandoor Recipes disable Gunicorn Media (opened 2023-06-28)](https://github.com/alexbelgium/hassio-addons/issues/885) by [@nough](https://github.com/nough)
 # Hass.io Add-ons: Tandoor recipes
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
