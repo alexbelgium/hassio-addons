@@ -1,3 +1,4 @@
+- Fix https://github.com/alexbelgium/hassio-addons/issues/884
 
 ## 1.36.33 (04-03-2023)
 - Update to latest version from zoneminder-containers/zoneminder-base
