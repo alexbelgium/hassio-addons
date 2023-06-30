@@ -35,7 +35,7 @@ RUN sed -i 's|/etc/zm.conf|/config/addons_config/zoneminder/zm.conf|g' /usr/loca
     && sed -i 's|/var/lib/mysql|/config/addons_config/zoneminder/mysql|g' /usr/local/bin/entrypoint.sh \
     && grep -rl '/var/lib/mysql' /etc | xargs sed -i 's|/var/lib/mysql|/config/addons_config/zoneminder/mysql|g' \
     # try without insecure
-    sed -i "s>mysqld --initialize-insecure --user=mysql --datadir>/var/lib/mysql/=mysqld --initialize-insecure --user=mysql --datadir=/var/lib/mysql/ || { bashio::log.warning "Warning, please note the password if first initialization"; mysqld --user=mysql --datadir=/var/lib/mysql/; } >g" /usr/local/bin/entrypoint.sh
+    && sed -i "s>mysqld --initialize-insecure --user=mysql --datadir>/var/lib/mysql/=mysqld --initialize-insecure --user=mysql --datadir=/var/lib/mysql/ || { bashio::log.warning "Warning, please note the password if first initialization"; mysqld --user=mysql --datadir=/var/lib/mysql/; } >g" /usr/local/bin/entrypoint.sh
 
 ##################
 # 3 Install apps #
