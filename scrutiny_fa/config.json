@@ -29,7 +29,7 @@
   "ports_description": {
     "8080/tcp": "Web UI port",
     "8086/tcp": "InfluxDB admin"
-  },  
+  },
   "privileged": [
     "SYS_ADMIN",
     "SYS_RAWIO",
