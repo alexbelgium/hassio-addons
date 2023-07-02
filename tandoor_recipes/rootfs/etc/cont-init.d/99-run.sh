@@ -39,51 +39,51 @@ case $(bashio::config 'DB_TYPE') in
         export DB_ENGINE="django.db.backends.sqlite3"
         export POSTGRES_DB="/config/addons_config/tandoor_recipes/recipes.db"
         ;;
-        
-# tandoor recipes doesnt support mariadb.
-#    mariadb_addon)
-#        bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
-#        if ! bashio::services.available 'mysql'; then
-#            bashio::log.fatal \
-#                "Local database access should be provided by the MariaDB addon"
-#            bashio::exit.nok \
-#                "Please ensure it is installed and started"
-#        fi
+
+        # tandoor recipes doesnt support mariadb.
+        #    mariadb_addon)
+        #        bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
+        #        if ! bashio::services.available 'mysql'; then
+        #            bashio::log.fatal \
+            #                "Local database access should be provided by the MariaDB addon"
+        #            bashio::exit.nok \
+            #                "Please ensure it is installed and started"
+        #        fi
 
         # Install apps
-#        apk add --no-cache postgresql-libs gettext zlib libjpeg libxml2-dev libxslt-dev mysql-client mariadb-connector-c-dev mariadb-dev >/dev/null
+        #        apk add --no-cache postgresql-libs gettext zlib libjpeg libxml2-dev libxslt-dev mysql-client mariadb-connector-c-dev mariadb-dev >/dev/null
 
         # Install mysqlclient
-#        pip install pymysql &>/dev/null
+        #        pip install pymysql &>/dev/null
 
-#        export DB_ENGINE=django.db.backends.mysql
-#        export POSTGRES_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
-#        export POSTGRES_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
-#        export POSTGRES_USER=$(bashio::services "mysql" "username") && bashio::log.blue "POSTGRES_USER=$POSTGRES_USER"
-#        export POSTGRES_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
-#        export POSTGRES_DB="tandoor" && bashio::log.blue "POSTGRES_DB=tandoor"
+        #        export DB_ENGINE=django.db.backends.mysql
+        #        export POSTGRES_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
+        #        export POSTGRES_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
+        #        export POSTGRES_USER=$(bashio::services "mysql" "username") && bashio::log.blue "POSTGRES_USER=$POSTGRES_USER"
+        #        export POSTGRES_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
+        #        export POSTGRES_DB="tandoor" && bashio::log.blue "POSTGRES_DB=tandoor"
 
         # Use values
-#        sed -i "1a export DB_ENGINE=django.db.backends.mysql" /opt/recipes/boot.sh
-#        sed -i "1a export POSTGRES_HOST=$(bashio::services "mysql" "host")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
-#        sed -i "1a export POSTGRES_PORT=$(bashio::services "mysql" "port")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
-#        sed -i "1a export POSTGRES_USER=$(bashio::services "mysql" "username")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_USER=$POSTGRES_USER"
-#        sed -i "1a export POSTGRES_PASSWORD=$(bashio::services "mysql" "password")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
-#        sed -i "1a export POSTGRES_DB=tandoor" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_DB=tandoor"
+        #        sed -i "1a export DB_ENGINE=django.db.backends.mysql" /opt/recipes/boot.sh
+        #        sed -i "1a export POSTGRES_HOST=$(bashio::services "mysql" "host")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_HOST=$POSTGRES_HOST"
+        #        sed -i "1a export POSTGRES_PORT=$(bashio::services "mysql" "port")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_PORT=$POSTGRES_PORT"
+        #        sed -i "1a export POSTGRES_USER=$(bashio::services "mysql" "username")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_USER=$POSTGRES_USER"
+        #        sed -i "1a export POSTGRES_PASSWORD=$(bashio::services "mysql" "password")" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
+        #        sed -i "1a export POSTGRES_DB=tandoor" /opt/recipes/boot.sh && bashio::log.blue "POSTGRES_DB=tandoor"
 
-#        bashio::log.warning "This addon is using the Maria DB addon"
-#        bashio::log.warning "Please ensure this is included in your backups"
-#        bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
+        #        bashio::log.warning "This addon is using the Maria DB addon"
+        #        bashio::log.warning "Please ensure this is included in your backups"
+        #        bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
-#        bashio::log.info "Creating database if required"
+        #        bashio::log.info "Creating database if required"
 
-#        mysql \
-#            -u "${POSTGRES_USER}" -p"${POSTGRES_PASSWORD}" \
-#            -h "${POSTGRES_HOST}" -P "${POSTGRES_PORT}" \
-#            -e "CREATE DATABASE IF NOT EXISTS \`${POSTGRES_DB}\` ;"
-#        ;;
+        #        mysql \
+            #            -u "${POSTGRES_USER}" -p"${POSTGRES_PASSWORD}" \
+            #            -h "${POSTGRES_HOST}" -P "${POSTGRES_PORT}" \
+            #            -e "CREATE DATABASE IF NOT EXISTS \`${POSTGRES_DB}\` ;"
+        #        ;;
 
-# use postgresql
+        # use postgresql
     postgresql_external)
         bashio::log.info "Using an external database, please populate all required fields in the addons config"
         export DB_ENGINE=django.db.backends.postgresql
