@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Firefly iii Data Importer - upload Json config file for auto import (opened 2023-02-16)](https://github.com/alexbelgium/hassio-addons/issues/712) by [@MaoZ1993](https://github.com/MaoZ1993)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

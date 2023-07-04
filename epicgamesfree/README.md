@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] epicgamesfree ingress support (opened 2023-03-10)](https://github.com/alexbelgium/hassio-addons/issues/754) by [@nordeep](https://github.com/nordeep)
-## &#9888; Open Issue : [🐛 [Epic Games Free] Update cron job time (opened 2023-07-02)](https://github.com/alexbelgium/hassio-addons/issues/888) by [@ping-localhost](https://github.com/ping-localhost)
 
 # Home assistant add-on: Epic Games Free
 
