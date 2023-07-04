@@ -3,6 +3,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "fireflyiii_data_importer",
   "source": "dockerhub",
-  "upstream_repo": "fireflyiii/data-importer",
+  "upstream_repo": "firefly-iii/data-importer",
   "upstream_version": "version-v1.0.2"
 }
