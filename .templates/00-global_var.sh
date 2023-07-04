@@ -42,7 +42,7 @@ for KEYS in "${arr[@]}"; do
     ######################################
     export "${KEYS}='${VALUE}'"
     # set .env
-    echo "$KEYS=$VALUE" >> /.env || true
+    echo "$KEYS=\"$VALUE\"" >> /.env || true
     # set /etc/environmemt
     mkdir -p /etc
     echo "$KEYS=$VALUE" >> /etc/environmemt
