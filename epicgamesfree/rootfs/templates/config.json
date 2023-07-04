@@ -1,6 +1,6 @@
 {
   "runOnStartup": true,
-  "cronSchedule": "5 16 * * *",
+  "cronSchedule": "0 0/6 * * *",
   "logLevel": "info",
   "webPortalConfig": {
     "baseUrl": "https://localhost:3000"
