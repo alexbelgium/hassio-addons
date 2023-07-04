@@ -1,3 +1,4 @@
+- Read migration to v4 to v5 : https://github.com/claabs/epicgames-freegames-node#v4-to-v5-migration
 - Update template cron
 
 ## bullseye-slim-2023-06-20 (2023-06-20)
