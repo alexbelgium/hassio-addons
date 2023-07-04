@@ -1,3 +1,4 @@
+- Update template cron
 
 ## bullseye-slim-2023-06-20 (2023-06-20)
 - Update to latest version from charlocharlie/epicgames-freegames
