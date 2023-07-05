@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [qBittorrent] The list of search plugins is empty (opened 2023-07-04)](https://github.com/alexbelgium/hassio-addons/issues/890) by [@gskbyte](https://github.com/gskbyte)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
