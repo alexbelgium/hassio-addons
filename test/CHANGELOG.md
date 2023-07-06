@@ -1,3 +1,5 @@
+### 3.16 (06-07-2023)
+- Minor bugs fixed
 ## 3.15
 - Apply github_tagfilter to dockerhub
 
