@@ -147,8 +147,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Update changelog for minor versions
         run: |
-          git pull
           echo "Starting"
+          # Git pull
+          git pull || true
           cd "$path"
           # Get version
           if [ -f config.yaml ]; then
@@ -182,3 +183,5 @@ jobs:
           commit: -u
           message: "GitHub bot : changelog"
           default_author: github_actions
+          fetch: --force
+          push: --force
