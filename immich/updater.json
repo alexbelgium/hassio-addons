@@ -1,7 +1,7 @@
 {
   "github_beta": "false",
   "last_update": "27-05-2023",
-  "paused": true,
+  "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich",
   "source": "github",
