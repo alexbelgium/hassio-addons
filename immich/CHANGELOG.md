@@ -1,3 +1,6 @@
+
+## 1.66.1 (08-07-2023)
+- Update to latest version from imagegenius/docker-immich
 - Beware that using the built-in Postgres 14 will likely fail at some point. It is recommended to upgrade to an external Postgres 15 database. A solution is the specific addon I've built. See https://github.com/imagegenius/docker-immich/issues/90
 
 ### 1.57.1-jammy (27-05-2023)
