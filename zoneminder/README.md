@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [zoneminder] cannot start (mysql startup timer expired) (opened 2023-06-28)](https://github.com/alexbelgium/hassio-addons/issues/884) by [@charchess](https://github.com/charchess)
 # Home assistant add-on: Zoneminder
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
