@@ -75,7 +75,7 @@
     "9117/tcp": 9117
   },
   "ports_description": {
-    "9117/tcp": "web interface"
+    "9117/tcp": "Web interface"
   },
   "privileged": [
     "SYS_ADMIN",
