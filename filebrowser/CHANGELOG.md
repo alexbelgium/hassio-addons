@@ -1,4 +1,4 @@
-- Allow custom arguments
+- Improve speed for larger folders
 - Feat : cifsdomain added
 - Implemented healthcheck
 - Add NTFS support
