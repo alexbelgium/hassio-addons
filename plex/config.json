@@ -94,7 +94,7 @@
     "8324/tcp": 8324
   },
   "ports_description": {
-    "1900/udp": "Plex DLNA Server",
+    "1900/udp": "Plex DLNA server",
     "3005/tcp": "Plex Home Theater via Plex Companion",
     "32400/tcp": "Plex Media Server Interface",
     "32410/udp": "GDM network discovery",
