@@ -78,7 +78,7 @@
     "7878/tcp": 7878
   },
   "ports_description": {
-    "7878/tcp": "web interface"
+    "7878/tcp": "Web interface"
   },
   "privileged": [
     "SYS_ADMIN",
