@@ -1,4 +1,4 @@
-## &#9888; Open Issue : [🐛 [paperless_ngx] <Updates are not recognised> (opened 2023-07-03)](https://github.com/alexbelgium/hassio-addons/issues/889) by [@rafael298](https://github.com/rafael298)
+## &#9888; Open Issue : [🐛 [paperless_ngx] Updates are not recognised (opened 2023-07-03)](https://github.com/alexbelgium/hassio-addons/issues/889) by [@rafael298](https://github.com/rafael298)
 # Home assistant add-on: Paperless NGX
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
