@@ -6,7 +6,7 @@ if [ -f /notinstalled ]; then exit 0; fi
 
 # Specify launcher
 
-LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
+LAUNCHER="sudo -u abc php /usr/bin/occ"
 
 ####################
 # Initialization   #
