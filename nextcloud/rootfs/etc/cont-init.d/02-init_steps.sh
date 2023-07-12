@@ -34,7 +34,7 @@ if [ -f /notinstalled ]; then
 fi
 
 # Specify launcher
-LAUNCHER="occ"
+LAUNCHER="sudo -u abc php /app/www/public/occ"
 
 # Check current version
 if [ -f /data/config/www/nextcloud/version.php ]; then
