@@ -6,7 +6,7 @@ if [ -f /notinstalled ]; then exit 0; fi
 
 # Specify launcher
 
-LAUNCHER="occ"
+LAUNCHER="sudo -u abc php /app/www/public/occ"
 
 ####################
 # Initialization   #
