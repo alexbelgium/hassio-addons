@@ -8,7 +8,7 @@ if [ -f /notinstalled ]; then exit 0; fi
 # Specify launcher
 PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
-LAUNCHER="sudo -u abc php /data/config/www/nextcloud/occ"
+LAUNCHER="occ"
 
 if $LAUNCHER fulltextsearch:test &>/dev/null; then
     echo "Full Text Search is already working"
