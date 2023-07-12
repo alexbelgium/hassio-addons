@@ -1,6 +1,6 @@
 ### 27.0.0-2 (12-07-2023)
 - Minor bugs fixed
-- MAJOR CHANGE: be sure to have migrated to v27 before updating (read https://info.linuxserver.io/issues/2023-06-25-nextcloud/)
+- MAJOR CHANGE: be sure to have a backup, and have migrated to v27 before updating (read https://info.linuxserver.io/issues/2023-06-25-nextcloud/)
 - Increase timeouts for larger uploads
 - Feat : disable_updates will now only disable app updates, not nextcloud's
 - Feat : disable_updates_nextcloud will disable nextcloud updates which can lead to significant issues
