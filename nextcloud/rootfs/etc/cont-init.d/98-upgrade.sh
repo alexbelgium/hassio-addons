@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+exit 0
+
 # Only execute if installed
 if [ -f /notinstalled ]; then exit 0; fi
 
