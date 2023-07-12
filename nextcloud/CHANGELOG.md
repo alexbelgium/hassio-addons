@@ -1,3 +1,4 @@
+- Increase timeouts for larger uploads
 - Feat : disable_updates will now only disable app updates, not nextcloud's
 - Feat : disable_updates_nextcloud will disable nextcloud updates which can lead to significant issues
 - Force nextcloud app automatic update with addon
