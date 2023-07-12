@@ -37,7 +37,7 @@ fi
 LAUNCHER="sudo -u abc php /app/www/public/occ"
 
 # Check current version
-if [ -f /data/config/www/nextcloud/version.php ]; then
+if [ -f /app/www/public/version.php ]; then
     CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/version.php)"
 else
     CURRENTVERSION="Not found"
@@ -46,7 +46,7 @@ fi
 echo " "
 
 # If not installed, or files not available
-if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /data/config/www/nextcloud/version.php ]; then
+if [[ $($LAUNCHER -V 2>&1) == *"not installed"* ]] || [ ! -f /app/www/public/version.php ]; then
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
     bashio::log.yellow "Nextcloud not installed, please wait for addon startup, login Webui, install Nextcloud, then restart the addon"
     bashio::log.green "--------------------------------------------------------------------------------------------------------------"
