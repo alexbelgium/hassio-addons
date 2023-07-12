@@ -1,4 +1,3 @@
-### 27.0.0-4 (12-07-2023)
 - Don't update : WIP
 - MAJOR CHANGE: be sure to have a backup, and have migrated to v27 before updating (read https://info.linuxserver.io/issues/2023-06-25-nextcloud/)
 - Increase timeouts for larger uploads
