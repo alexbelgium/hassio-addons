@@ -48,8 +48,8 @@ RUN \
     sed -i "s|client_body_timeout 300s;|client_body_timeout 900s;|g" /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Change location of executable
-    sed -i "s|/config|/data/config|g" /usr/bin/occ && \
-    \
+    #sed -i "s|/config|/data/config|g" /usr/bin/occ && \
+    #\
     # Change location of log
     sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
 
