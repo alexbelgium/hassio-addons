@@ -26,18 +26,22 @@ This addon is based on the official image : https://hub.docker.com/_/postgres
 
 ## Configuration
 
-Webui can be found at <http://your-ip:PORT>.
+Postgres port is by default 5432 and is exposed to the host network.
 
-user : postgres
-password : see options
+default user: `postgres`
+password: `set by POSTGRES_PASSWORD`
 
+You can configure this options:
 ```yaml
-POSTGRES_PASSWORD:
-POSTGRES_USER:
-POSTGRES_DB:
-POSTGRES_INITDB_ARGS:
-POSTGRES_HOST_AUTH_METHOD:
+POSTGRES_PASSWORD
+POSTGRES_USER
+POSTGRES_DB
+POSTGRES_INITDB_ARGS
+POSTGRES_HOST_AUTH_METHOD
 ```
+For more info check [base image docs](https://hub.docker.com/_/postgres).
+
+By default `postgresql.conf` is stored in volume accessible by other addons and Home Assistant, so you can conviniently modify it by e.g. File Editor addon. If you prefer better security change `CONFIG_LOCATION` to e.g. `/data/orig/postgresql.conf`, so it will be acessible only to this addon, but you will have to modify it by the [Hassio SSH](https://developers.home-assistant.io/docs/operating-system/debugging/).
 
 ## Installation
 
@@ -47,10 +51,10 @@ The installation of this add-on is pretty straightforward and not different in c
    [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
-1. Set the add-on options to your preferences
+1. Set the add-on options to your preferences, at least POSTGRES_PASSWORD is required.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Open the webUI and adapt the software options
+1. Use any Postgres client to connect, e.g. to `homeassistant.local:5432`
 
 ## Support
 
