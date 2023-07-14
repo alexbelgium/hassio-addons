@@ -1,4 +1,7 @@
 
+## 1.29.0 (15-07-2023)
+- Update to latest version from dani-garcia/bitwarden_rs
+
 ## 1.28.1 (08-04-2023)
 - Update to latest version from dani-garcia/bitwarden_rs
 
