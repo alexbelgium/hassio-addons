@@ -1,4 +1,7 @@
 
+## 1.2.6.3313-ls128 (15-07-2023)
+- Update to latest version from linuxserver/docker-lidarr
+
 ## 1.2.6.3313-ls127 (08-07-2023)
 - Update to latest version from linuxserver/docker-lidarr
 
