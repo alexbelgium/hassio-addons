@@ -1,3 +1,6 @@
+
+## bullseye-slim-2023-07-10 (2023-07-10)
+- Update to latest version from charlocharlie/epicgames-freegames
 - Read migration to v4 to v5 : https://github.com/claabs/epicgames-freegames-node#v4-to-v5-migration
 - Update template cron
 

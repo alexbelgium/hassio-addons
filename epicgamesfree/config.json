@@ -70,6 +70,6 @@
   },
   "slug": "epicgamesfree",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "bullseye-slim-2023-06-20",
+  "version": "bullseye-slim-2023-07-10",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
