@@ -14,7 +14,7 @@ jobs:
       - name: Install apps
         run: |
           git pull --rebase origin master
-          sudo apt-get install gnuplot-nox -y
+          sudo apt-get install gnuplot -y
       - name: Create addons stats
         run: |
           # Prepare data
