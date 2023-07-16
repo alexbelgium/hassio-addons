@@ -14,7 +14,6 @@ jobs:
       - name: Install apps
         run: |
           git pull --rebase origin master
-          sudo apt-get install gawk -y
           sudo apt-get install gnuplot-nox -y
       - name: Create addons stats
         run: |
