@@ -1,3 +1,5 @@
+### 1.2.3-2 (16-07-2023)
+- Minor bugs fixed
 - Armv7 discontinued, pinned to latest working
 
 ## 1.2.3 (15-07-2023)
