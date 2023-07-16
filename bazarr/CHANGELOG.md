@@ -1,3 +1,4 @@
+- Armv7 discontinued, pinned to latest working
 
 ## 1.2.3 (15-07-2023)
 - Update to latest version from linuxserver/docker-bazarr
