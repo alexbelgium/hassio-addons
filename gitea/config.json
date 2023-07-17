@@ -85,6 +85,6 @@
   },
   "slug": "gitea",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/gitea",
-  "version": "1.19.4",
+  "version": "1.20.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
