@@ -14,15 +14,14 @@
   "init": false,
   "name": "Repository Updater",
   "options": {
-    "gitpass": "gitpassword",
+    "gitapi": "gitapi",
     "gituser": "gituser",
     "repository": "alexbelgium/hassio-addons"
   },
   "schema": {
     "dry_run": "bool?",
-    "gitapi": "str?",
+    "gitapi": "str",
     "gitmail": "str?",
-    "gitpass": "str",
     "gituser": "str",
     "repository": "str",
     "verbose": "bool?"
