@@ -72,7 +72,7 @@
     "3000/tcp": 3000
   },
   "ports_description": {
-    "22/tcp": "Ssh",
+    "22/tcp": "ssh",
     "3000/tcp": "Web interface"
   },
   "schema": {
@@ -85,6 +85,6 @@
   },
   "slug": "gitea",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/gitea",
-  "version": "1.20.0",
+  "version": "1.20.0-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
