@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Nextcloud] Addon i cant set trusted_domains ("PDO" error) (opened 2023-07-17)](https://github.com/alexbelgium/hassio-addons/issues/902) by [@chertvl](https://github.com/chertvl)
 
 
 # Home assistant add-on: Nextcloud
