@@ -1,3 +1,6 @@
+## 3.16
+- Removed git password option as it is no longer usable
+
 ## 3.15
 - Apply github_tagfilter to dockerhub
 
