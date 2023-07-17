@@ -14,15 +14,14 @@
   "init": false,
   "name": "Repository Updater",
   "options": {
-    "gitpass": "gitpassword",
+    "gitapi": "gitapi",
     "gituser": "gituser",
     "repository": "alexbelgium/hassio-addons"
   },
   "schema": {
     "dry_run": "bool?",
-    "gitapi": "str?",
+    "gitapi": "str",
     "gitmail": "str?",
-    "gitpass": "str",
     "gituser": "str",
     "repository": "str",
     "verbose": "bool?"
@@ -30,5 +29,5 @@
   "slug": "updater",
   "startup": "once",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater",
-  "version": "3.15"
+  "version": "3.16"
 }

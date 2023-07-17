@@ -18,12 +18,10 @@ VERBOSE=$(bashio::config 'verbose')
 LOGINFO="... github authentification" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
 GITUSER=$(bashio::config 'gituser')
-GITPASS=$(bashio::config 'gitpass')
 GITMAIL=$(bashio::config 'gitmail')
 git config --system http.sslVerify false
 git config --system credential.helper 'cache --timeout 7200'
 git config --system user.name "${GITUSER}"
-git config --system user.password "${GITPASS}"
 if [[ "$GITMAIL" != "null" ]]; then git config --system user.email "${GITMAIL}"; fi
 
 if bashio::config.has_value 'gitapi'; then
@@ -229,12 +227,7 @@ for f in */; do
 
             LOGINFO="... $SLUG : push to github" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 
-            # if API is set
-            if bashio::config.has_value 'gitapi'; then
-                git remote set-url origin "https://${GITUSER}:${GITHUB_API_TOKEN}@github.com/${REPOSITORY}" &>/dev/null
-            else
-                git remote set-url origin "https://${GITUSER}:${GITPASS}@github.com/${REPOSITORY}" &>/dev/null
-            fi
+            git remote set-url origin "https://${GITUSER}:${GITHUB_API_TOKEN}@github.com/${REPOSITORY}" &>/dev/null
 
             # Push
             if ! bashio::config.true "dry_run"; then

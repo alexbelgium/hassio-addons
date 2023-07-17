@@ -68,10 +68,9 @@ Here you define the values that will allow the addon to connect to your reposito
 ```yaml
 repository: 'name/repo' coming from github
 gituser: your github username
-gitpass: your github password
+gitapi: your github api token(classic) https://github.com/settings/tokens
 gitmail: your github email
 verbose: 'false'
-gitapi: optional, it is the API key from your github repo
 ```
 
 Example:
@@ -79,7 +78,7 @@ Example:
 ```yaml
 repository: alexbelgium/hassio-addons
 gituser: your github username
-gitpass: your github password
+gitapi: your github api token
 gitmail: your github email
 verbose: "false"
 ```
