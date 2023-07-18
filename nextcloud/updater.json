@@ -1,5 +1,6 @@
 {
   "last_update": "17-06-2023",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "nextcloud",
   "source": "github",
