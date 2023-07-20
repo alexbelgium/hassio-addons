@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Webtrees] Default Password Not Valid (opened 2023-07-19)](https://github.com/alexbelgium/hassio-addons/issues/907) by [@RebbePod](https://github.com/RebbePod)
 # Home assistant add-on: Webtrees
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
