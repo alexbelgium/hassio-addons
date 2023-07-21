@@ -1,18 +1,23 @@
-- Don't update : WIP
-- MAJOR CHANGE: be sure to have a backup, and have migrated to v27 before updating (read https://info.linuxserver.io/issues/2023-06-25-nextcloud/)
+- &#9888; MAJOR BREAKING CHANGE:
+  - Code rewrite due in upstream logic change https://info.linuxserver.io/issues/2023-06-25-nextcloud
+  - Please backup before updating
+  - If you have not upgraded to v27 with web interface before updating IT WILL STOP WORKING !
 - Increase timeouts for larger uploads
 - Feat : disable_updates will now only disable app updates, not nextcloud's
 - Feat : disable_updates_nextcloud will disable nextcloud updates which can lead to significant issues
 - Force nextcloud app automatic update with addon
 
 ## 27.0.0 (17-06-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
 - Automatically attempts to disable maintenance mode on start
 
 ## 26.0.2 (27-05-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
 
 ### 26.0.1-5 (26-05-2023)
+
 - Minor bugs fixed
 - Feat : cifsdomain added
 - Feat : Align max upload size to 8192M https://github.com/alexbelgium/hassio-addons/issues/846
