@@ -1,4 +1,7 @@
 
+## 1.68.0 (22-07-2023)
+- Update to latest version from imagegenius/docker-immich
+
 ## 1.67.2 (15-07-2023)
 - Update to latest version from imagegenius/docker-immich
 
