@@ -27,7 +27,7 @@ if [ -f /notinstalled ]; then exit 0; fi
 
 # Check current version
 if [ -f /data/config/www/nextcloud/config/config.php ]; then
-    CURRENTVERSION="$(sed -n "s|.*\OC_VersionString = '*\(.*[^ ]\) *';.*|\1|p" /data/config/www/nextcloud/config/config.php)"
+    CURRENTVERSION="$(sed -n "s|.*version.*' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
 else
     CURRENTVERSION="Not found"
 fi
