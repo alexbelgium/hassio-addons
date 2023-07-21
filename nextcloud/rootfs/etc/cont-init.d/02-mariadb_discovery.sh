@@ -12,8 +12,4 @@ if bashio::services.available 'mysql'; then
     bashio::log.blue "Host-name : $(bashio::services "mysql" "host"):$(bashio::services "mysql" "port")"
     bashio::log.green "---"
 
-    # Clean if needed
-    #for var in dbtype dbname dbuser dbhost; do
-    #    sed -i "/$var/d" /defaults/config.php
-    #done
 fi

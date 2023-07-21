@@ -53,11 +53,11 @@ RUN \
     # Run custom scripts after installation
     echo "touch /runfile" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     echo "/./etc/entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
-    chmod 777 /migrations/02-default-location && \
-    sed -i "1a /./defaults/nextcloud-perms.sh" /migrations/02-default-location && \
     \
     # Ensure correct data mount first
     sed -i "1a /./scripts2/00-banner.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run && \
+    sed -i "2a /./defaults/nextcloud-perms.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run && \
+    echo "/./01-custom_script.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
     echo "/./scripts2/00-smb_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
     echo "/./scripts2/00-local_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run
 
@@ -130,7 +130,7 @@ ARG CONFIGLOCATION="/www/nextcloud/config"
 RUN \
     # Avoid using legacy cont-init.d
     mkdir -p /scripts && mv /etc/cont-init.d/* /scripts && \
-    mkdir -p /scripts2 && mv /scripts/00-local_mounts.sh /scripts2 && mv /scripts/00-smb_mounts.sh /scripts2 && mv /scripts/00-banner.sh /scripts2 && \
+    for file in 00-local_mounts.sh 00-smb_mounts.sh 00-banner.sh 01-custom_script.sh; do mkdir -p /scripts2 && mv /scripts/"$file" /scripts2; done && \
     sed -i "s|/etc/cont-init.d|/scripts|g" /etc/entrypoint.sh && \
     \
     # Give permissions
