@@ -32,6 +32,14 @@ else
     CURRENTVERSION="Not found"
 fi
 
+# Updater apps code
+if ! bashio::config.true "disable_updates"; then
+    bashio::log.green "... checking for app updates"
+    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ app:update --all"
+else
+    bashio::log.yellow "... disable_updates set, apps need to be updated manually"
+fi
+
 echo " "
 
 # If not installed, or files not available
