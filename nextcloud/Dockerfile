@@ -54,7 +54,11 @@ RUN \
     echo "touch /runfile" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     echo "/./etc/entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     chmod 777 /migrations/02-default-location && \
-    sed -i "1a /./defaults/nextcloud-perms.sh" /migrations/02-default-location
+    sed -i "1a /./defaults/nextcloud-perms.sh" /migrations/02-default-location && \
+    # Ensure correct data mount first
+    sed -i "1a /./scripts2/00-smb_mounts.sh" /migrations/02-default-location && \
+    sed -i "1a /./scripts2/00-local_mounts.sh" /migrations/02-default-location && \
+    sed -i "1a /./scripts2/00-banner.sh" /migrations/02-default-location
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
@@ -125,10 +129,11 @@ ARG CONFIGLOCATION="/www/nextcloud/config"
 RUN \
     # Avoid using legacy cont-init.d
     mkdir -p /scripts && mv /etc/cont-init.d/* /scripts && \
+    mkdir -p /scripts2 && mv /scripts/00-local_mounts.sh /scripts2 && mv /scripts/00-smb_mounts.sh /scripts2 && mv /scripts/00-banner.sh /scripts2 && \
     sed -i "s|/etc/cont-init.d|/scripts|g" /etc/entrypoint.sh && \
     \
     # Give permissions
-    chmod 777 /etc/entrypoint.sh /defaults/nextcloud-perms.sh && \
+    chmod 777 /etc/entrypoint.sh /defaults/nextcloud-perms.sh /scripts/* /scripts2/* && \
     \
     # Correct erroneous modifications
     for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
