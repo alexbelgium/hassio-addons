@@ -55,10 +55,11 @@ RUN \
     echo "/./etc/entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     chmod 777 /migrations/02-default-location && \
     sed -i "1a /./defaults/nextcloud-perms.sh" /migrations/02-default-location && \
+    \
     # Ensure correct data mount first
-    sed -i "1a /./scripts2/00-smb_mounts.sh" /migrations/02-default-location && \
-    sed -i "1a /./scripts2/00-local_mounts.sh" /migrations/02-default-location && \
-    sed -i "1a /./scripts2/00-banner.sh" /migrations/02-default-location
+    sed -i "1a /./scripts2/00-banner.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run && \
+    echo "/./scripts2/00-smb_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
+    echo "/./scripts2/00-local_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
