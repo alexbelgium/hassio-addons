@@ -1,6 +1,19 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+####################################
+# Clean nginx files at each reboot #
+####################################
+
+echo "Cleaning files"
+for var in /data/config/nginx /data/config/crontabs /data/config/logs; do
+    if [ -d "$var" ]; then rm -r "$var"; fi
+done
+
+########################
+# Settings permissions #
+########################
+
 ocpath="${NEXTCLOUD_PATH}"
 htuser='abc'
 htgroup='abc'

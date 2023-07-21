@@ -47,11 +47,14 @@ RUN \
     sed -i "s|client_max_body_size 512M;|client_max_body_size 8192M;|g" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i "s|client_body_timeout 300s;|client_body_timeout 900s;|g" /defaults/nginx/site-confs/default.conf.sample && \
     \
-    # Change location of executable
-    #sed -i "s|/config|/data/config|g" /usr/bin/occ && \
-    #\
     # Change location of log
-    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
+    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
+    \
+    # Run custom scripts after installation
+    echo "touch /runfile" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
+    echo "/./etc/entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
+    chmod 777 /migrations/02-default-location && \
+    sed -i "1a /./defaults/nextcloud-perms.sh" /migrations/02-default-location
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
@@ -71,9 +74,6 @@ RUN \
     \
     # Avoid chmod /config
     && for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*;do if [ -f $file ] && [[ ! -z $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' $file) ]] ; then sed -i "s|/config$|/data|g" $file; fi ;done \
-    \
-    # Docker mods addition
-    #&& if [ -f /docker-mods ]; then sed -i 's|bash|bashio|g' /docker-mods && sed -i "1a if bashio::config.has_value \"DOCKER_MODS\"; then DOCKER_MODS=\$(bashio::config \"DOCKER_MODS\"); fi" /docker-mods; fi \
     \
     # Replace lsiown if not found
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
@@ -123,7 +123,16 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 ARG CONFIGLOCATION="/www/nextcloud/config"
 # hadolint ignore=SC2015, SC2013, SC2086, SC2016
 RUN \
+    # Avoid using legacy cont-init.d
+    mkdir -p /scripts && mv /etc/cont-init.d/* /scripts && \
+    sed -i "s|/etc/cont-init.d|/scripts|g" /etc/entrypoint.sh && \
+    \
+    # Give permissions
+    chmod 777 /etc/entrypoint.sh /defaults/nextcloud-perms.sh && \
+    \
+    # Correct erroneous modifications
     for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
+    for file in $(grep -Esril "/data/data" /etc /defaults); do sed -Ei "s=(/data/data)+(/| |$|\"|\')=/data\2=g" $file; done && \
     \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \

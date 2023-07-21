@@ -1,6 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+
 if bashio::services.available 'mysql'; then
 
     bashio::log.green "---"
