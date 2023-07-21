@@ -1,4 +1,4 @@
-### 27.0.1 (21-07-2023)
+## 27.0.1 (21-07-2023)
 - &#9888; MAJOR BREAKING CHANGE:
   - Code rewrite due in upstream logic change https://info.linuxserver.io/issues/2023-06-25-nextcloud
   - Please backup before updating
