@@ -57,7 +57,7 @@ RUN \
     # Ensure correct data mount first
     sed -i "1a /./scripts2/00-banner.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run && \
     sed -i "2a /./defaults/nextcloud-perms.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run && \
-    echo "/./01-custom_script.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
+    echo "/./scripts2/01-custom_script.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
     echo "/./scripts2/00-smb_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
     echo "/./scripts2/00-local_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run
 

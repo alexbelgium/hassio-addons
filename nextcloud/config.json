@@ -91,7 +91,7 @@
     "80/tcp": null
   },
   "ports_description": {
-    "443/tcp": "Https web interface",
+    "443/tcp": "Https Web Interface",
     "80/tcp": "Web interface"
   },
   "privileged": [
@@ -124,6 +124,6 @@
   "slug": "nextcloud_ocr",
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "27.0.1",
+  "version": "27.0.1-2",
   "webui": "https://[HOST]:[PORT:443]"
 }
