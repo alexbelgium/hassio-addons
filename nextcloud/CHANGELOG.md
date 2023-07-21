@@ -1,5 +1,3 @@
-### 27.0.1-2 (21-07-2023)
-- Minor bugs fixed
 ### 27.0.1 (21-07-2023)
 - Minor bugs fixed
 - &#9888; MAJOR BREAKING CHANGE:
