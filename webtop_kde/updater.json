@@ -1,6 +1,6 @@
 {
   "dockerhub_list_size": 10,
-  "github_tagfilter": "alpine-kde-version-",
+  "github_tagfilter": "alpine-kde-",
   "last_update": "08-04-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "webtop_kde",
