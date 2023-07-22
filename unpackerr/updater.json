@@ -6,5 +6,5 @@
   "slug": "unpackerr",
   "source": "dockerhub",
   "upstream_repo": "hotio/unpackerr",
-  "upstream_version": "testing-db4370b-528-linux-arm64-2023-03-29"
+  "upstream_version": "testing-db4370b-2023-03-29"
 }
