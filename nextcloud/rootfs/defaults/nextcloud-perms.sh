@@ -37,7 +37,6 @@ find "${ocpath}"/ -type d -exec chmod 0750 {} \;
 
 printf "chown Directories. This could take some time, please wait...\n"
 chown -R ${rootuser}:${htgroup} "${ocpath}"/
-chmod +x "${ocpath}"/occ
 for folder in "${ocpath}"/apps/ "${ocpath}"/assets/ "${ocpath}"/config/ "${ocpath}"/data/ "${ocpath}"/themes/ /ssl/nextcloud/keys; do
 chown -R ${htuser}:${htgroup} "$folder" || true
 done
