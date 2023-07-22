@@ -1,3 +1,5 @@
+### 4.15.0-2 (22-07-2023)
+- Minor bugs fixed
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 
 ## 4.15.0 (22-07-2023)
