@@ -1,3 +1,6 @@
+
+## 1.2.4 (22-07-2023)
+- Update to latest version from linuxserver/docker-bazarr
 ### 1.2.3-2 (16-07-2023)
 - Minor bugs fixed
 - Armv7 discontinued, pinned to latest working
