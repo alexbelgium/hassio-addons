@@ -19,10 +19,8 @@ htuser='abc'
 htgroup='abc'
 rootuser='root'
 
-datadirectory=$(bashio::config 'data_directory')
-
 printf "Creating possible missing Directories\n"
-for folder in "$ocpath"/data "$ocpath"/assets "$ocpath"/updater "$ocpath"/apps "$ocpath"/assets "$ocpath"/config "$ocpath"/data "$ocpath"/themes /data/config/nextcloud/config /data/config/nextcloud/data "$datadirectory" /ssl/nextcloud/keys; do
+for folder in "$ocpath"/data "$ocpath"/assets "$ocpath"/updater "$ocpath"/apps "$ocpath"/assets "$ocpath"/config "$ocpath"/data "$ocpath"/themes /data/config/nextcloud/config /data/config/nextcloud/data /ssl/nextcloud/keys; do
     if [ ! -f "$folder" ]; then
         echo "... $folder"
         mkdir -p "$folder" || true
@@ -41,7 +39,7 @@ printf "chown Directories. This could take some time, please wait...\n"
 chown -R ${rootuser}:${htgroup} "${ocpath}"/
 chmod +x "${ocpath}"/occ
 for folder in "${ocpath}"/apps/ "${ocpath}"/assets/ "${ocpath}"/config/ "${ocpath}"/data/ "${ocpath}"/themes/ "${datadirectory}" /ssl/nextcloud/keys; do
-chown -R ${htuser}:${htgroup} || true
+chown -R ${htuser}:${htgroup} "$folder" || true
 done
 
 printf "chmod/chown .htaccess\n"
