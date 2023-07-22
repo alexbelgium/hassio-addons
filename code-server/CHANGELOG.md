@@ -1,14 +1,19 @@
+- Arm32v7 discontinued by linuxserver, latest working version pinned
 
 ## 4.15.0 (22-07-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.14.1 (01-07-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.14.0 (17-06-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.13.0 (20-05-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 - Feat : cifsdomain added
 

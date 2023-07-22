@@ -1,49 +1,69 @@
+- Arm32v7 discontinued by linuxserver, latest working version pinned
+
 ### 10.8.10-6 (08-05-2023)
+
 - Minor bugs fixed
+
 ### 10.8.10-5 (04-05-2023)
+
 - Minor bugs fixed
+
 ### 10.8.10-2 (04-05-2023)
+
 - Minor bugs fixed
 - Add symlink for transcodes folder https://github.com/alexbelgium/hassio-addons/issues/777
 
 ## 10.8.10 (29-04-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.9 (25-03-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.9-1-ls203 (11-03-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 - Implemented healthcheck
 
 ## 10.8.9-1-ls202 (04-03-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.9-1-ls201 (25-02-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.9-1-ls200 (19-02-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.9-1-ls199 (11-02-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.9-1-ls198 (04-02-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.9-1-ls197 (28-01-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.8-1-ls196 (21-01-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.8-1-ls195 (14-01-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.8-1-ls194 (07-01-2023)
+
 - Update to latest version from linuxserver/docker-jellyfin
 
 ## 10.8.8-1-ls193 (25-12-2022)
+
 - Update to latest version from linuxserver/docker-jellyfin
 - Fixed ingress
 - Expose web folder to /config/addons_config/jellyfin/web

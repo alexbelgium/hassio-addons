@@ -1,11 +1,15 @@
+- Arm32v7 discontinued by linuxserver, latest working version pinned
 
 ## 4.8.0.39 (10-06-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.37 (27-05-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.36 (19-05-2023)
+
 - Update to latest version from linuxserver/docker-emby
 - Feat : cifsdomain added
 

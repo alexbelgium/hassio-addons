@@ -1,3 +1,4 @@
+- Arm32v7 discontinued by linuxserver, latest working version pinned
 - Feat : cifsdomain added
 
 ## v21.1-ls138 (21-01-2023)

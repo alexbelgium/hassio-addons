@@ -1,3 +1,4 @@
+- Arm32v7 discontinued by linuxserver, latest working version pinned
 - Feat : cifsdomain added
 - WARNING : update to supervisor 2022.11 before installing
 - Add codenotary sign
