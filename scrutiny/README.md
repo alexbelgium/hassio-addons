@@ -80,26 +80,34 @@ Example to get data from the first hdd.
 rest:
   - verify_ssl: false
     scan_interval: 60
-    resource: http://192.168.178.23:8086/api/device/0x50014ee606c14537/details
+    resource: http://192.168.178.4:8086/api/device/0x57c35481f82a7a9c/details
     sensor:
-      - name: "HDD1 - WWN"
+      - name: "HDD - WWN"
         value_template: "{{ value_json.data.smart_results[0].device_wwn }}"
-      - name: "HDD1 - Last Update"
+      - name: "HDD - Last Update"
         value_template: "{{ value_json.data.smart_results[0].date }}"
         device_class: timestamp
-      - name: "HDD1 - Temperature"
+      - name: "HDD - Temperature"
         value_template: "{{ value_json.data.smart_results[0].temp }}"
         device_class: temperature
         unit_of_measurement: "°C"
         state_class: measurement
-      - name: "HDD1 - Power Cycles"
+      - name: "HDD - Power Cycles"
         value_template: "{{ value_json.data.smart_results[0].power_cycle_count }}"
-      - name: "HDD1 - Power Hours"
+      - name: "HDD - Power Hours"
         value_template: "{{ value_json.data.smart_results[0].power_on_hours }}"
-      - name: "HDD1 - Protocol"
+      - name: "HDD - Protocol"
         value_template: "{{ value_json.data.smart_results[0].device_protocol }}"
+      - name: "HDD - Reallocated Sectors Count"
+        value_template: '{{ value_json.data.smart_results[0].attrs["5"].raw_value }}'
+      - name: "HDD - Reallocation Event Count"
+        value_template: '{{ value_json.data.smart_results[0].attrs["196"].raw_value }}'
+      - name: "HDD - Current Pending Sector Count"
+        value_template: '{{ value_json.data.smart_results[0].attrs["197"].raw_value }}'
+      - name: "HDD - (Offline) Uncorrectable Sector Count"
+        value_template: '{{ value_json.data.smart_results[0].attrs["198"].raw_value }}'
     binary_sensor:
-      - name: "HDD1 - SMART Status"
+      - name: "HDD - SMART Status"
         value_template: "{{ bool(value_json.data.smart_results[0].Status) }}"
         device_class: problem
 ```
