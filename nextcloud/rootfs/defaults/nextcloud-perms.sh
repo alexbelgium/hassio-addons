@@ -21,7 +21,7 @@ rootuser='root'
 
 printf "Creating possible missing Directories\n"
 for folder in "$ocpath"/data "$ocpath"/assets "$ocpath"/updater "$ocpath"/apps "$ocpath"/assets "$ocpath"/config "$ocpath"/data "$ocpath"/themes /data/config/nextcloud/config /data/config/nextcloud/data /ssl/nextcloud/keys; do
-    if [ ! -f "$folder" ]; then
+    if [ ! -d "$folder" ]; then
         echo "... $folder"
         mkdir -p "$folder" || true
     fi
