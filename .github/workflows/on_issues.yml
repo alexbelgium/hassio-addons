@@ -36,7 +36,7 @@ jobs:
               
               #Get variables
               TITLE="$(jq -r --arg COUNTER $COUNTER ".[$COUNTER].title" issueslist)"
-              TITLE="${TITLE//[<>$\'\"]/}"
+              TITLE="${TITLE//[<>\$\'\"]/}"
               #Check if relevant to addon
               SLUG="$(jq -r --arg f "$f" ".slug" "$f"/config.json)"
               NAME="$(jq -r --arg f "$f" ".name" "$f"/config.json)"
