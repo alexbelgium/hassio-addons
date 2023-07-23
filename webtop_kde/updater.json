@@ -1,5 +1,6 @@
 {
   "dockerhub_list_size": 10,
+  "github_beta": true,
   "github_tagfilter": "alpine-kde-",
   "last_update": "08-04-2023",
   "repository": "alexbelgium/hassio-addons",
