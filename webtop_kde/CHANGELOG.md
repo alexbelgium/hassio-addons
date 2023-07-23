@@ -1,3 +1,6 @@
+
+## 5.24.5 (23-07-2023)
+- Update to latest version from linuxserver/docker-webtop
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 
 ## 4.16-r0-ls95 (08-04-2023)
