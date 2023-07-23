@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [gitea] updating versions, but it seems not to be working (opened 2023-07-17)](https://github.com/alexbelgium/hassio-addons/issues/904) by [@baldarn](https://github.com/baldarn)
 # Home assistant add-on: Gitea
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
