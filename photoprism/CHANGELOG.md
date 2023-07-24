@@ -1,3 +1,5 @@
+## ubuntu (24-07-2023)
+- Update to latest version from photoprism/photoprism
 
 ## ubuntu (10-06-2023)
 - Update to latest version from photoprism/photoprism
