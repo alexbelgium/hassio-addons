@@ -94,10 +94,12 @@
   },
   "panel_icon": "mdi:monitor",
   "ports": {
-    "3000/tcp": null
+    "3000/tcp": null,
+    "3001/tcp": null
   },
   "ports_description": {
-    "3000/tcp": "Web interface"
+    "3000/tcp": "Web interface",
+    "3001/tcp": "https web interface"
   },
   "privileged": [
     "SYS_ADMIN",
