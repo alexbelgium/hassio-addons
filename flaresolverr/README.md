@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] FlareSolverr: OpenVPN support (opened 2023-02-20)](https://github.com/alexbelgium/hassio-addons/issues/725) by [@ralphioli](https://github.com/ralphioli)
 
 # Home assistant add-on: Flaresolver
 
