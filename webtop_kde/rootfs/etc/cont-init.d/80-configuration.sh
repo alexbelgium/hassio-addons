@@ -2,6 +2,8 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2015
 
+exit 0
+
 # Add Edge repositories
 if bashio::config.true 'edge_repositories'; then
     bashio::log.info "Changing app repositories to edge"
