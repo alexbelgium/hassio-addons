@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Firefly III Data Importer - Update minutely (opened 2023-07-24)](https://github.com/alexbelgium/hassio-addons/issues/917) by [@GNeras](https://github.com/GNeras)
 # Home assistant add-on: Fireflyiii data importer
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
