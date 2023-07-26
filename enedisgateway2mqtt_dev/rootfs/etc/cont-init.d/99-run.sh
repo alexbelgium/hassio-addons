@@ -87,11 +87,10 @@ if [ -f "$CONFIGSOURCE" ]; then
     else
         cat ERROR
         bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above. You can check yaml validity with the online tool yamllint.com"
-        bashio::exit.nok
     fi
 else
     # Create symlink for addon to create config
-    touch "${CONFIGSOURCE}"
+    cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"/
     ln -sf "$CONFIGSOURCE" /data
     rm "$CONFIGSOURCE"
     # Need to restart
