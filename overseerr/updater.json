@@ -4,5 +4,5 @@
   "slug": "overseerr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-overseerr",
-  "upstream_version": "1.33.0"
+  "upstream_version": "1.33.1"
 }
