@@ -91,7 +91,7 @@ if [ -f "$CONFIGSOURCE" ]; then
     fi
 else
     # Create symlink for addon to create config
-    touch "${CONFIGSOURCE}"
+    cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"/
     ln -sf "$CONFIGSOURCE" /data
     rm "$CONFIGSOURCE"
     # Need to restart
