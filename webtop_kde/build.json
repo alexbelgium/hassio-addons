@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "lscr.io/linuxserver/webtop:arm64v8-ubuntu-kde",
-    "amd64": "lscr.io/linuxserver/webtop:amd64-ubuntu-kde"
+    "aarch64": "lscr.io/linuxserver/webtop:arm64v8-latest",
+    "amd64": "lscr.io/linuxserver/webtop:amd64-latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
