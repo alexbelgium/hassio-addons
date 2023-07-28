@@ -93,6 +93,6 @@
   },
   "slug": "lidarr_nas",
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/Readme.md",
-  "version": "1.2.6.3313-ls129",
+  "version": "1.2.6.3313-ls130",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8686]"
 }
