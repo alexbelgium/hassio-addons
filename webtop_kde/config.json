@@ -67,11 +67,9 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "FM_HOME": "/share/webtop_kde",
-    "HOME": "/share/webtop_kde",
     "PGID": "0",
     "PUID": "0",
-    "TITLE": "Alpine KDE webtop",
+    "TITLE": "Alpine webtop",
     "shm_size": "1gb"
   },
   "host_dbus": true,
@@ -89,7 +87,7 @@
     "DNS_server": "8.8.8.8",
     "PGID": 0,
     "PUID": 0,
-    "additional_apps": "engrampa,libreoffice",
+    "additional_apps": "engrampa",
     "rpi_video_drivers": true
   },
   "panel_icon": "mdi:monitor",
@@ -128,6 +126,6 @@
   "slug": "webtop-kde",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.24.5-test1",
+  "version": "5.24.5-test2",
   "video": true
 }
