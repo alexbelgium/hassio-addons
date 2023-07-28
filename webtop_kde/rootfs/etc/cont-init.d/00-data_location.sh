@@ -33,11 +33,13 @@ fi
 # Set data location
 bashio::log.info "Setting data location to $LOCATION"
 
-sed -i "1a export HOME=$LOCATION" $(find /etc/s6-overlay/s6-rc.d -name "run" -type f) || true
-sed -i "1a export FM_HOME=$LOCATION" $(find /etc/s6-overlay/s6-rc.d -name "run" -type f) || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /defaults -type f) || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc/cont-init.d -type f) || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc/s6-overlay/s6-rc.d -type f) || true
+sed -i "1a export HOME=$LOCATION" $(find /etc/s6-overlay/s6-rc.d -name "run" -type f)
+sed -i "1a export FM_HOME=$LOCATION" $(find /etc/s6-overlay/s6-rc.d -name "run" -type f)
+sed -i "1a export HOME=$LOCATION" /defaults/startwm.sh
+sed -i "1a export FM_HOME=$LOCATION" /defaults/startwm.sh
+sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /defaults -type f)
+sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc/cont-init.d -type f)
+sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc/s6-overlay/s6-rc.d -type f)
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
 {
