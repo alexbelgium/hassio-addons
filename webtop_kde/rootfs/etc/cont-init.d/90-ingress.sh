@@ -9,7 +9,7 @@
 cp /etc/nginx/http.d/default.conf /etc/nginx/http.d/ingress.conf
 
 ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
+#ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/3001/0001/g" /etc/nginx/http.d/ingress.conf
 sed -i "s/3000/${ingress_port}/g" /etc/nginx/http.d/ingress.conf
 #sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/sites-available/ingress.conf
