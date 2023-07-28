@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 Omada Addon crashed Supervisor during Backup (opened 2023-07-25)](https://github.com/alexbelgium/hassio-addons/issues/919) by [@hannpet](https://github.com/hannpet)
 # Home assistant add-on: Omada controller
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
