@@ -93,6 +93,6 @@
   },
   "slug": "sabnzbd",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.0.3-ls117",
+  "version": "4.0.3-ls118",
   "webui": "http://[HOST]:[PORT:8080]"
 }
