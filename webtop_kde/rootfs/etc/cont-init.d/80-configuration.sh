@@ -24,7 +24,7 @@ if bashio::config.has_value 'additional_apps'; then
     for APP in ${NEWAPPS//,/ }; do
         bashio::log.green "... $APP"
         # shellcheck disable=SC2015
-        if command -v "apk" &>/dev/null; then 
+        if command -v "apk" &>/dev/null; then
             apk add --no-cache "$APP" >/dev/null || bashio::log.red "... not successful, please check package name"
         elif command -v "apt" &>/dev/null; then
             apt-get install -yqq --no-install-recommends "$APP" >/dev/null || bashio::log.red "... not successful, please check package name"
