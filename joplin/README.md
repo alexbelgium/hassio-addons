@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [joplin] Cant get access via mobile app (opened 2023-07-13)](https://github.com/alexbelgium/hassio-addons/issues/897) by [@kuduacz](https://github.com/kuduacz)
 # Home assistant add-on: Joplin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
