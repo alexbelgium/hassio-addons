@@ -34,7 +34,7 @@ RUN \
     usermod --home /share/webtop_kde abc && \
     \
     # Hook scripts
-    sed -i "1a /./etc/entrypoint.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run
+    sed -i "1a /./entrypoint.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/share/webtop_kde"
