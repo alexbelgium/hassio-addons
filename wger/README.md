@@ -24,7 +24,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## Configuration
 
-- Start the addon. Wait a while and check the log for any errors.
+- Start the addon. Wait a while and check the log for any errors. Initial start can take up to 15 minutes !
 - Open yourdomain.com:8000 (where ":8000" is the port configured in the addon).
 - Default
   - Username: `admin`
