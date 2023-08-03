@@ -4,6 +4,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "wger",
   "source": "dockerhub",
-  "upstream_repo": "wger/devel",
+  "upstream_repo": "wger/server",
   "upstream_version": "2.2-dev"
 }
