@@ -1,4 +1,7 @@
 
+## c101c334d88998a51d45680d3a71d5fd7563c9a4-2023-08-01 (2023-08-01)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## bullseye-slim-2023-07-10 (2023-07-10)
 - Update to latest version from charlocharlie/epicgames-freegames
 - Read migration to v4 to v5 : https://github.com/claabs/epicgames-freegames-node#v4-to-v5-migration
