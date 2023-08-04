@@ -29,12 +29,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Allow UID and GID setting
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
-RUN \
+#RUN \
     # Change home folder location
-    usermod --home /share/webtop_kde abc
+#    usermod --home /share/webtop_kde abc
 
 # Global LSIO modifications
-ARG CONFIGLOCATION="/share/webtop_kde"
+ARG CONFIGLOCATION="/data"
 # hadolint ignore=SC2015, SC2013, SC2086
 RUN \
     # Avoid custom-init.d duplications
