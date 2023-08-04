@@ -112,6 +112,6 @@
   ],
   "slug": "immich",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.70.0",
+  "version": "1.71.0",
   "webui": "http://[HOST]:[PORT:8080]"
 }
