@@ -70,7 +70,9 @@
     "PGID": "0",
     "PUID": "0",
     "TITLE": "Alpine webtop",
-    "shm_size": "1gb"
+    "shm_size": "1gb",
+    "FM_HOME": "/data",
+    "START_DOCKER": "false"
   },
   "host_dbus": true,
   "image": "ghcr.io/alexbelgium/webtop_kde-{arch}",
@@ -126,6 +128,6 @@
   "slug": "webtop-kde",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.24.5-test4",
+  "version": "5.24.5-test5",
   "video": true
 }
