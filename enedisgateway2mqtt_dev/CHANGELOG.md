@@ -1,4 +1,7 @@
 
+## 0.9.1b12 (05-08-2023)
+- Update to latest version from m4dm4rtig4n/myelectricaldata
+
 ## 0.9.1b11 (29-07-2023)
 - Update to latest version from m4dm4rtig4n/myelectricaldata
 
