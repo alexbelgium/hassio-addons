@@ -1,3 +1,6 @@
+
+## 4.16.1 (05-08-2023)
+- Update to latest version from linuxserver/docker-code-server
 ### 4.15.0-2 (22-07-2023)
 - Minor bugs fixed
 - Arm32v7 discontinued by linuxserver, latest working version pinned
