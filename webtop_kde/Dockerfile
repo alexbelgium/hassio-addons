@@ -22,11 +22,6 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-# Set S6 wait time
-ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
-
 ##################
 # 3 Install apps #
 ##################
@@ -40,7 +35,7 @@ RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-dns_set.sh"
+ARG MODULES=""
 
 # Automatic modules download
 RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi \
@@ -51,7 +46,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
     && chmod -R 755 /etc/cont-init.d
 
 # Manual apps
-ENV PACKAGES="nginx engrampa"
+ENV PACKAGES=""
 
 # Automatic apps & bashio
 # hadolint ignore=SC2015
@@ -65,11 +60,6 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 # 4 Entrypoint #
 ################
-
-#WORKDIR /
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/entrypoint.sh" ]
-#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
