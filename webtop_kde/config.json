@@ -76,12 +76,6 @@
   "image": "ghcr.io/alexbelgium/webtop_kde-{arch}",
   "ingress": true,
   "init": false,
-  "map": [
-    "config:rw",
-    "media:rw",
-    "share:rw",
-    "ssl"
-  ],
   "name": "Webtop XFCE",
   "options": {
     "DNS_server": "8.8.8.8",
