@@ -27,7 +27,7 @@ FROM ${BUILD_FROM}
 ##################
 
 # Add rootfs
-COPY rootfs/ /
+#COPY rootfs/ /
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
