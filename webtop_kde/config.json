@@ -7,10 +7,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Full linux desktop environment accessible via any modern web browser",
   "image": "ghcr.io/alexbelgium/webtop_kde-{arch}",
-  "ingress": true,
   "init": false,
   "name": "Webtop XFCE",
-  "panel_icon": "mdi:monitor",
   "ports": {
     "3000/tcp": null,
     "3001/tcp": null
@@ -19,15 +17,8 @@
     "3000/tcp": "Web interface",
     "3001/tcp": "https web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH",
-    "NET_ADMIN",
-    "SYS_MODULE",
-    "SYS_RESOURCE"
-  ],
   "slug": "webtop-kde",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.24.5-test11",
+  "version": "5.24.5-test12",
   "video": true
 }
