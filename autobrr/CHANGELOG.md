@@ -1,4 +1,7 @@
 
+## 1.28.0 (05-08-2023)
+- Update to latest version from autobrr/autobrr
+
 ## 1.27.1 (17-06-2023)
 - Update to latest version from autobrr/autobrr
 
