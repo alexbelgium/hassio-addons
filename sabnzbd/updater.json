@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "29-07-2023",
+  "last_update": "05-08-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "sabnzbd",
   "source": "github",
   "upstream_repo": "linuxserver/docker-sabnzbd",
-  "upstream_version": "4.0.3-ls118"
+  "upstream_version": "4.0.3-ls119"
 }
