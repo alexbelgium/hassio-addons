@@ -28,6 +28,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# Add custom scripts
+#RUN \
+#    sed -i '/Paperless-ngx docker container starting/a /./entrypoint.sh' /sbin/docker-entrypoint.sh
+
 ##################
 # 3 Install apps #
 ##################
