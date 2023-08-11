@@ -1,3 +1,6 @@
+
+## 4.8.0.41 (12-08-2023)
+- Update to latest version from linuxserver/docker-emby
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 
 ## 4.8.0.39 (10-06-2023)
