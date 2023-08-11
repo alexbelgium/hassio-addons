@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Nextcloud (opened 2023-07-30)](https://github.com/alexbelgium/hassio-addons/issues/925) by [@zuldero](https://github.com/zuldero)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
