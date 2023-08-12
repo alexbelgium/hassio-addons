@@ -1,5 +1,7 @@
-### 27.0.2 (12-08-2023)
-- Minor bugs fixed
+## 27.0.2 (12-08-2023)
+
+- Update to latest version from linuxserver/docker-nextcloud
+
 ### 27.0.1-7 (22-07-2023)
 - Minor bugs fixed
 - &#9888; MAJOR BREAKING CHANGE:
