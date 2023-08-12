@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Lidarr ingress support (opened 2023-04-23)](https://github.com/alexbelgium/hassio-addons/issues/808) by [@financelurker](https://github.com/financelurker)
 # Home assistant add-on: Lidarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
