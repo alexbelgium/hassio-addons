@@ -61,6 +61,21 @@ RUN \
     echo "/./scripts2/00-smb_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
     echo "/./scripts2/00-local_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run
 
+# One off : update to 27.0.2
+RUN \
+    rm -r /app/www/src/* && \
+    mkdir -p /app/www/src && \
+    curl -o \
+    /tmp/nextcloud.tar.bz2 -L \
+    https://download.nextcloud.com/server/releases/nextcloud-27.0.2.tar.bz2 && \
+  tar xf /tmp/nextcloud.tar.bz2 -C \
+    /app/www/src --strip-components=1 && \
+  rm -rf /app/www/src/updater && \
+  mkdir -p /app/www/src/data && \
+  chmod +x /app/www/src/occ && \
+  echo "**** cleanup ****" && \
+  rm -rf /tmp/*
+
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
 # hadolint ignore=SC2015, SC2013, SC2086
