@@ -43,6 +43,9 @@ case $(bashio::config 'DB_TYPE') in
         bashio::log.warning "Webtrees is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
+
+        # Create database
+        mysql --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$(bashio::services "mysql" "username")" --password="$(bashio::services "mysql" "password")" -e"CREATE DATABASE IF NOT EXISTS webtrees;"
         ;;
 
     external)
