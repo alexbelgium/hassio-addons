@@ -65,11 +65,7 @@
     "LANG": "en-US",
     "PORT": "80",
     "PRETTY_URLS": "1",
-    "WEBTREES_HOME": "/data/webtrees",
-    "WT_EMAIL": "me@example.com",
-    "WT_NAME": "Full Name",
-    "WT_PASS": "mybadpassword",
-    "WT_USER": "admin"
+    "WEBTREES_HOME": "/data/webtrees"
   },
   "image": "ghcr.io/alexbelgium/webtrees-{arch}",
   "init": false,
@@ -119,6 +115,6 @@
   ],
   "slug": "webtrees",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.17",
+  "version": "2.1.17-test",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
