@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [MyElectricalData] Bad text encoding when using ingress view (opened 2023-07-23)](https://github.com/alexbelgium/hassio-addons/issues/914) by [@Bobdugrand8](https://github.com/Bobdugrand8)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
