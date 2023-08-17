@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Transmission Openvpn] Transmission settings inaccesible  (opened 2023-08-09)](https://github.com/alexbelgium/hassio-addons/issues/937) by [@Want100Cookies](https://github.com/Want100Cookies)
 # Home assistant add-on: Transmission Openvpn
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
