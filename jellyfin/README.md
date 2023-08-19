@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST]  Jellyfin discord bot (opened 2023-08-17)](https://github.com/alexbelgium/hassio-addons/issues/943) by [@matsob0123](https://github.com/matsob0123)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
