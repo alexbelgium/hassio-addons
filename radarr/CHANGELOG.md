@@ -1,3 +1,6 @@
+
+## 4.7.5.7809 (19-08-2023)
+- Update to latest version from linuxserver/docker-radarr
 - armv7 discontinued by lsio
 
 ## 4.6.4.7568 (08-07-2023)
