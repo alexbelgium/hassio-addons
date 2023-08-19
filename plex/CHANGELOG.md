@@ -1,4 +1,7 @@
 
+## 1.32.5.7349-8f4248874-ls180 (19-08-2023)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.32.5.7349-8f4248874-ls179 (12-08-2023)
 - Update to latest version from linuxserver/docker-plex
 
