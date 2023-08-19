@@ -1,3 +1,4 @@
+- Fix path for Plex Meta Manager @nwithan8
 
 ## v1.19.0-ls72 (19-08-2023)
 - Update to latest version from linuxserver/docker-plex-meta-manager
