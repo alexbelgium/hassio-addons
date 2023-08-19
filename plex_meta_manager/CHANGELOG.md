@@ -1,3 +1,5 @@
+### v1.19.0-ls72-2 (19-08-2023)
+- Minor bugs fixed
 - Fix path for Plex Meta Manager @nwithan8
 
 ## v1.19.0-ls72 (19-08-2023)
