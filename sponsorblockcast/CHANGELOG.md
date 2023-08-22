@@ -1,3 +1,5 @@
+- Switch to castsponsorskip @bruvv
+
 ## 1.1 (15-05-2023)
 - Updated chromecast-go
 
