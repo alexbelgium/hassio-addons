@@ -1,3 +1,5 @@
+### 1.3-2 (22-08-2023)
+- Minor bugs fixed
 - Switch to castsponsorskip @bruvv
 
 ## 1.1 (15-05-2023)
