@@ -1,3 +1,4 @@
+- Fix typo in nextcloud nginx_addition #950 @chocomega
 
 ## 27.0.2 (19-08-2023)
 - Update to latest version from linuxserver/docker-nextcloud
