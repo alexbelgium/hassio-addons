@@ -26,6 +26,8 @@ VOLUME [ "/data" ]
 # 3 Install apps #
 ##################
 
+USER root
+
 # Add rootfs
 COPY rootfs/ /
 
