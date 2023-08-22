@@ -14,15 +14,18 @@
   "init": false,
   "name": "Castsponsorskip",
   "options": {
-    "SBCCATEGORIES": "sponsor",
-    "SBCPOLLINTERVAL": "1",
-    "SBCSCANINTERVAL": "300"
+    "CSS_DISCOVER_INTERVAL": "5m",
+    "CSS_PAUSED_INTERVAL": "1m",
+    "CSS_PLAYING_INTERVAL": "1s",
+    "CSS_CATEGORIES": "sponsor",
+    "CSS_YOUTUBE_API_KEY": " "
   },
   "schema": {
-    "SBCCATEGORIES": "str",
-    "SBCPOLLINTERVAL": "int",
-    "SBCSCANINTERVAL": "int",
-    "SBCYOUTUBEAPIKEY": "str?"
+    "CSS_DISCOVER_INTERVAL": "str",
+    "CSS_PAUSED_INTERVAL": "str",
+    "CSS_PLAYING_INTERVAL": "str",
+    "CSS_PLAYING_INTERVAL": "str",
+    "CSS_YOUTUBE_API_KEY": "str?"
   },
   "slug": "sponsorblockcast",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast",
