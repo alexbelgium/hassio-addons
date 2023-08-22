@@ -1,0 +1,8 @@
+{
+  "last_update": "29-07-2023",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "sponsorblockcast",
+  "source": "github",
+  "upstream_repo": "gabe565/CastSponsorSkip",
+  "upstream_version": "1.3"
+}
