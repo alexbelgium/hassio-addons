@@ -233,7 +233,7 @@ jobs:
           # Get stars2
           wget -S -O .github/stars2.svg https://git-lister.onrender.com/api/stars/alexbelgium/hassio-addons?limit=30 || true
           # Get stars evolution
-          wget -S -O .github/starsevol.svg "https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date"
+          wget -S -O .github/starsevol.svg "https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date" || true
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
