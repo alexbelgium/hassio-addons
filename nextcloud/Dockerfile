@@ -24,6 +24,7 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 # 2 Modify Image #
 ##################
 
+
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
@@ -184,6 +185,6 @@ ENV HEALTH_PORT="80" \
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
-    --start-period=30s \
-    --timeout=25s \
+    --start-period=120s \
+    --timeout=45s \
     CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || curl --fail http://127.0.0.1:443 || exit 1
