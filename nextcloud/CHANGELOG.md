@@ -1,3 +1,5 @@
+### 27.0.2-3 (24-08-2023)
+- Minor bugs fixed
 - Solve nginx timeouts
 
 ### 27.0.2-2 (22-08-2023)
