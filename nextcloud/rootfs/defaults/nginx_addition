@@ -1,4 +1,9 @@
 add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;";
+fastcgi_send_timeout 120s;
+fastcgi_read_timeout 120s;
+proxy_connect_timeout 120s;
+proxy_send_timeout 120s;
+proxy_read_timeout 120s;
 
 location = /.well-known/host-meta {
 return 301 $scheme://$http_host/public.php?service=host-meta;
