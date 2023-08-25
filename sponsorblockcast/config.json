@@ -7,7 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "skips sponsored YouTube content on all local Chromecasts",
   "environment": {
-    "SBCDIR": "/tmp/sponsorblockcast"
+    "SBCDIR": "/tmp/castsponsorskip"
   },
   "host_network": true,
   "image": "ghcr.io/alexbelgium/sponsorblockcast-{arch}",
