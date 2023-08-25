@@ -1,0 +1,12 @@
+{
+  "build_from": {
+    "386": "qmcgaw/gluetun:v3.35",
+    "amd64": "qmcgaw/gluetun:v3.35",
+    "armv6": "qmcgaw/gluetun:v3.35",
+    "armv7": "qmcgaw/gluetun:v3.35",
+    "arm64": "qmcgaw/gluetun:v3.35"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}

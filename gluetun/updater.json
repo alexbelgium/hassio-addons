@@ -1,0 +1,8 @@
+{
+  "last_update": "24-08-2023",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "gluetun",
+  "source": "github",
+  "upstream_repo": "qdm12/gluetun",
+  "upstream_version": "3.35.0"
+}
