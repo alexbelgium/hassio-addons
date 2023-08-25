@@ -1,6 +1,7 @@
 {
   "github_fulltag": "false",
   "last_update": "19-08-2023",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "paperless_ngx",
   "source": "github",
