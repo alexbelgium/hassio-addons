@@ -41,7 +41,7 @@ if [ ! -d "/data/$BASENAME" ]; then
 else
     LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
     cd "/data/$BASENAME" || exit
-    git pull --rebase origin >/dev/null || git reset --hard origin/master >/dev/null
+    git pull --rebase origin >/dev/null || git reset --hard origin/master >/dev/null || rm -r "/data/$BASENAME"
     git pull --rebase origin >/dev/null
 fi
 
@@ -242,8 +242,5 @@ for f in */; do
         fi
     fi
 done || true # Continue even if issue
-
-# Clean cache
-rm -r /data
 
 bashio::log.info "Addons update completed"
