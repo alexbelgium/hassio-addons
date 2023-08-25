@@ -24,8 +24,8 @@
     "CSS_DISCOVER_INTERVAL": "str",
     "CSS_PAUSED_INTERVAL": "str",
     "CSS_PLAYING_INTERVAL": "str",
-    "CSS_PLAYING_INTERVAL": "str",
-    "CSS_YOUTUBE_API_KEY": "str?"
+    "CSS_CATEGORIES": "str",
+    "CSS_YOUTUBE_API_KEY": "str"
   },
   "slug": "sponsorblockcast",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast",
