@@ -175,9 +175,7 @@
     "UPDATER_VPN_SERVICE_PROVIDERS": "str?",
     "VPN_ENDPOINT_IP": "str?",
     "VPN_ENDPOINT_PORT": "port?",
-    "VPN_INTERFACE": "str?",
-    "OPENVPN_CERT": "str?",
-    "OPENVPN_CERT": "str?"
+    "VPN_INTERFACE": "str?"
   },
   "slug": "gluetun",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/gluetun",
