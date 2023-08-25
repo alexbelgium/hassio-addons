@@ -1,6 +1,7 @@
 {
   "build_from": {
     "i386": "qmcgaw/gluetun:v3.35",
+    "aarch64": "qmcgaw/gluetun:v3.35",
     "amd64": "qmcgaw/gluetun:v3.35",
     "armv7": "qmcgaw/gluetun:v3.35"
   },
