@@ -1,10 +1,10 @@
 {
   "dockerhub_by_date": true,
   "dockerhub_list_size": 2,
-  "last_update": "2023-08-01",
+  "last_update": "2022-12-26",
   "repository": "alexbelgium/hassio-addons",
   "slug": "epicgamesfree",
   "source": "dockerhub",
   "upstream_repo": "charlocharlie/epicgames-freegames",
-  "upstream_version": "c101c334d88998a51d45680d3a71d5fd7563c9a4-2023-08-01"
+  "upstream_version": "f7d1dfdacc198aaada2ea2b69a7cbe3478cb6579-2022-12-26"
 }
