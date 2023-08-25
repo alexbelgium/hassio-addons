@@ -6,6 +6,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "jellyseerr",
   "source": "github",
-  "upstream_repo": "fallenbagel/jellyseerr",
+  "upstream_repo": "Fallenbagel/jellyseerr",
   "upstream_version": "374"
 }
