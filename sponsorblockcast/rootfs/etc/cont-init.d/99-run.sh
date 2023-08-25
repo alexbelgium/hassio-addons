@@ -2,10 +2,11 @@
 # shellcheck shell=bash
 
 # make directory
-mkdir -p /tmp/sponsorblockcast
+
+mkdir -p /tmp/castsponsorskip
 
 # Export options as env variables
-for var in SBCPOLLINTERVAL SBCSCANINTERVAL SBCCATEGORIES SBCYOUTUBEAPIKEY; do
+for var in CSS_DISCOVER_INTERVAL CSS_PAUSED_INTERVAL CSS_PLAYING_INTERVAL CSS_CATEGORIES CSS_YOUTUBE_API_KEY; do
     if bashio::config.has_value "$var"; then
         export "$var"="$(bashio::config "$var")"
     fi
@@ -13,4 +14,4 @@ done
 
 # Starting app
 bashio::log.info "Starting app"
-/./usr/bin/sponsorblockcast &>/proc/1/fd/1
+./castsponsorskip &>/proc/1/fd/1
