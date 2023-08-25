@@ -1,10 +1,8 @@
 {
   "arch": [
-    "386",
+    "i386",
     "amd64",
-    "armv6",
-    "armv7",
-    "arm64"
+    "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Lightweight Swiss-knife VPN client to connect to several VPN providers ",
@@ -71,11 +69,11 @@
     "ssl"
   ],
   "name": "Gluetun VPN client",
-  "ports": {,
+  "ports": {
     "6789/tcp": 6789,
     "7878": 7878,
     "8081": 8081,
-    "8112": 8112
+    "8112": 8112,
     "8888/tcp": 8888,
     "8388/tcp": 8388,
     "8388/udp": 8388,
@@ -84,7 +82,7 @@
     "51413/udp": 51413,
     "51413/tcp": 51413
   },
-  "ports_description": {,
+  "ports_description": {
     "6789/tcp": "nzbget",
     "7878": "radarr",
     "8081": "sickchill",
