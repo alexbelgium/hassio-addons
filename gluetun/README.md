@@ -1,4 +1,4 @@
-# Home assistant add-on: glueten
+# Home assistant add-on: gluetun
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -16,27 +16,25 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/glueten/stats.png)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/gluetun/stats.png)
 
 ## About
 
-[glueten](https://github.com/qdm12/gluetun) - VPN client in a thin Docker container for multiple VPN providers, written in Go, and using OpenVPN or Wireguard, DNS over TLS, with a few proxy servers built-in.
+[gluetun](https://github.com/qdm12/gluetun) - VPN client in a thin Docker container for multiple VPN providers, written in Go, and using OpenVPN or Wireguard, DNS over TLS, with a few proxy servers built-in.
 
 This addon is based on the [docker image](https://github.com/qdm12/gluetun) from qdm12.
 
 ## Configuration
 
-Configurations can be done through the app webUI, except for the following options :
+Configurations can be done through the app webUI, except for the following options:
 
 ```yaml
 PGID: user
 GPID: user
 TZ: timezone
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
 ```
+
+[Additional options gluetun specific](https://github.com/qdm12/gluetun-wiki/tree/main#table-of-contents)
 
 ## Installation
 
