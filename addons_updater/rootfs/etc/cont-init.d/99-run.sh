@@ -243,4 +243,7 @@ for f in */; do
     fi
 done || true # Continue even if issue
 
+# Clean cache
+rm -r /data
+
 bashio::log.info "Addons update completed"
