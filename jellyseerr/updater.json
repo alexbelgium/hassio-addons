@@ -2,7 +2,7 @@
   "last_update": "19-05-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "jellyseerr",
-  "source": "github",
-  "upstream_repo": "Fallenbagel/jellyseerr",
+  "source": "dockerhub",
+  "upstream_repo": "fallenbagel/jellyseerr",
   "upstream_version": "374"
 }
