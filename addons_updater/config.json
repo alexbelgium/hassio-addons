@@ -22,7 +22,6 @@
     "repository": "alexbelgium/hassio-addons"
   },
   "schema": {
-    "add_missing_fields": "bool?",
     "dry_run": "bool?",
     "gitapi": "str",
     "gitmail": "str?",
