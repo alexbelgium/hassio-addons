@@ -1,5 +1,6 @@
 ## 3.18
-- github_exclude: exclude a text in the release name 
+- github_exclude: exclude a text in the release name
+- Correct github_tagfilter usage in dockerhub
 
 ## 3.17
 - Clean cache
