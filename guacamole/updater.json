@@ -4,5 +4,5 @@
   "slug": "guacamole",
   "source": "dockerhub",
   "upstream_repo": "abesnier/guacamole",
-  "upstream_version": "simple"
+  "upstream_version": "github-pg15"
 }

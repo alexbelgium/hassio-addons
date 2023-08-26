@@ -1,4 +1,7 @@
 
+## github-pg15 (26-08-2023)
+- Update to latest version from abesnier/guacamole
+
 ## simple (26-08-2023)
 - Update to latest version from abesnier/guacamole
 
