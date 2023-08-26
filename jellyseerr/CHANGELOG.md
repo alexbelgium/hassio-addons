@@ -1,4 +1,7 @@
 
+## 1.6.0 (26-08-2023)
+- Update to latest version from Fallenbagel/jellyseerr
+
 ## 374 (26-08-2023)
 - Update to latest version from Fallenbagel/jellyseerr
 
