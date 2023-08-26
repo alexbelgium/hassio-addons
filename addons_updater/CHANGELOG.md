@@ -1,3 +1,5 @@
+- Feat : add_missing_fields boolean adds the default values of missing fields to your updater.json
+
 ## 3.18
 - github_exclude: exclude a text in the release name
 - Correct github_tagfilter usage in dockerhub
