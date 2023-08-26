@@ -4,5 +4,5 @@
   "slug": "booksonic_air",
   "source": "github",
   "upstream_repo": "linuxserver/docker-booksonic-air",
-  "upstream_version": "v2201.1.0-ls103"
+  "upstream_version": "2201.1.0"
 }
