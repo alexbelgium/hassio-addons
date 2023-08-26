@@ -72,6 +72,7 @@ for f in */; do
         HAVINGASSET=$(jq -r .github_havingasset updater.json)
         SOURCE=$(jq -r .source updater.json)
         FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
+        EXCLUDE_TEXT=$(jq -r .github_exclude updater.json)
         PAUSED=$(jq -r .paused updater.json)
         DATE="$(date '+%d-%m-%Y')"
         BYDATE=$(jq -r .dockerhub_by_date updater.json)
@@ -100,7 +101,7 @@ for f in */; do
                 FILTER_TEXT=""
             else
                 LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-                FILTER_TEXT="&name=5.3"
+                FILTER_TEXT="&name=$FILTER_TEXT"
             fi
 
             DOCKERHUB_REPO="${UPSTREAM%%/*}"
@@ -168,7 +169,15 @@ for f in */; do
                 FILTER_TEXT=""
             else
                 LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-                ARGUMENTS="$ARGUMENTS --only $FILTER_TEXT"
+                ARGUMENTS="$ARGUMENTS --only \"$FILTER_TEXT\""
+            fi
+
+            #Prepare tag flag
+            if [ "${EXCLUDE_TEXT}" = "null" ] || [ "${EXCLUDE_TEXT}" = "" ]; then
+                EXCLUDE_TEXT=""
+            else
+                LOGINFO="... $SLUG : github_exclude is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                ARGUMENTS="$ARGUMENTS --exclude \"$EXCLUDE_TEXT\""
             fi
 
             #If beta flag, select beta version
