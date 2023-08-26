@@ -1,7 +1,7 @@
 {
   "fulltag": true,
   "github_beta": false,
-  "github_tagfilter": "1.0",
+  "github_exclude": "preview",
   "last_update": "26-08-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "jellyseerr",
