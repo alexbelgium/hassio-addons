@@ -12,6 +12,9 @@
   },
   "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "init": false,
+  "map": [
+    "config:rw"
+  ],
   "name": "Repository Updater",
   "options": {
     "gitapi": "gitapi",
