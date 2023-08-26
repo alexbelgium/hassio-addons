@@ -169,7 +169,7 @@ for f in */; do
                 FILTER_TEXT=""
             else
                 LOGINFO="... $SLUG : filter_text is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-                ARGUMENTS="$ARGUMENTS --only \"$FILTER_TEXT\""
+                ARGUMENTS="$ARGUMENTS --only $FILTER_TEXT"
             fi
 
             #Prepare tag flag
@@ -177,7 +177,7 @@ for f in */; do
                 EXCLUDE_TEXT=""
             else
                 LOGINFO="... $SLUG : github_exclude is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-                ARGUMENTS="$ARGUMENTS --exclude \"$EXCLUDE_TEXT\""
+                ARGUMENTS="$ARGUMENTS --exclude $EXCLUDE_TEXT"
             fi
 
             #If beta flag, select beta version
