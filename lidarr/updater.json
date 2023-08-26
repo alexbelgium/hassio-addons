@@ -4,5 +4,5 @@
   "slug": "lidarr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-lidarr",
-  "upstream_version": "1.3.5.3530-ls134"
+  "upstream_version": "1.3.5.3530"
 }
