@@ -42,7 +42,7 @@ else
     LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
     cd "/data/$BASENAME" || exit
     git pull --rebase origin >/dev/null || git reset --hard origin/master >/dev/null
-    git pull --rebase origin >/dev/null
+    git pull --rebase origin >/dev/null || ( rm -r "/data/$BASENAME" && git clone "https://github.com/${REPOSITORY}" )
 fi
 
 LOGINFO="... parse addons" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi

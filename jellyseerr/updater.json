@@ -1,8 +1,11 @@
 {
-  "last_update": "19-05-2023",
+  "fulltag": true,
+  "github_beta": false,
+  "github_tagfilter": "1.0",
+  "last_update": "26-08-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "jellyseerr",
   "source": "github",
   "upstream_repo": "Fallenbagel/jellyseerr",
-  "upstream_version": "374"
+  "upstream_version": "1.1.0"
 }

@@ -1,3 +1,6 @@
+## 3.17
+- Clean cache
+
 ## 3.16
 - Removed git password option as it is no longer usable
 

@@ -1,0 +1,36 @@
+# yamllint disable rule:line-length
+---
+name: Weekly addons update
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  stats_graphs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Install bashio
+        run: |
+          # Install bashio
+          if grep -q -rnw "$files/" -e 'bashio' && [ ! -f "/usr/bin/bashio" ]; then
+              [ "$VERBOSE" = true ] && echo "install bashio"
+              BASHIO_VERSION="0.14.3"
+              mkdir -p /tmp/bashio
+              curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
+              mv /tmp/bashio/lib /usr/lib/bashio
+              ln -s /usr/lib/bashio/bashio /usr/bin/bashio
+              rm -rf /tmp/bashio
+          fi
+      - name: Run script
+        run: |
+          mkdir -p /data
+          echo "{" >> /data/config.json
+          echo "  repository=\"alexbelgium/hassio-addons\"," >> /data/config.json
+          echo "  gituser=\"alexbelgium/hassio-addons\"," >> /data/config.json
+          echo "  gitapi=\"alexbelgium/hassio-addons\"," >> /data/config.json
+          echo "  gitmail=\"alexbelgium/hassio-addons\"," >> /data/config.json
+          echo "  verbose=false" >> /data/config.json
+          echo "}" >> /data/config.json
+          ./addons_updater/rootfs/etc/cont-init.d/99-run.sh
