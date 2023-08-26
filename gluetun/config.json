@@ -65,8 +65,6 @@
   "init": false,
   "map": [
     "config:rw",
-    "share:rw",
-    "media:rw",
     "ssl"
   ],
   "name": "Gluetun VPN client",
@@ -83,22 +81,9 @@
     "51413/udp": 51413,
     "51413/tcp": 51413
   },
-  "ports_description": {
-    "6789/tcp": "NZBget",
-    "7878": "Radarr",
-    "8081": "SickChill",
-    "8112": "Deluge web UI",
-    "8888/tcp": "HTTP proxy",
-    "8388/tcp": "Shadowsocks",
-    "8388/udp": "Shadowsocks",
-    "9091/tcp": "Transmission",
-    "9117/tcp": "Jackett",
-    "51413/tcp": "",
-    "51413/udp": ""
-  },
   "privileged": [
     "SYS_ADMIN",
-    "DAC_READ_SEARCH"
+    "NET_ADMIN"
   ],
   "schema": {
     "PGID": "int?",
@@ -111,10 +96,11 @@
     "SERVER_REGIONS": "str?",
     "WIREGUARD_PRIVATE_KEY": "str?",
     "WIREGUARD_PUBLIC_KEY": "str?",
+    "WIREGUARD_PRESHARED_KEY": "str?",
+    "WIREGUARD_ALLOWED_IPS": "str?",
     "WIREGUARD_ADDRESSES": "str?",
     "WIREGUARD_IMPLEMENTATION": "list(auto|kernelspace|userspace)?",
     "WIREGUARD_MTU": "int(0,65535)?",
-    "UPDATER_PERIOD": "int?",
     "HTTP_CONTROL_SERVER_ADDRESS": "str?",
     "HTTP_CONTROL_SERVER_LOG": "list(on|off)?",
     "DOT": "list(on|off)?",
@@ -172,12 +158,14 @@
     "SHADOWSOCKS_LISTENING_ADDRESS": "str?",
     "SHADOWSOCKS_PASSWORD": "str?",
     "SHADOWSOCKS_CIPHER": "str?",
+    "UPDATER_PERIOD": "int?",
     "UPDATER_MIN_RATIO": "float(0,1)?",
     "UPDATER_VPN_SERVICE_PROVIDERS": "str?",
     "VPN_ENDPOINT_IP": "str?",
     "VPN_ENDPOINT_PORT": "port?",
     "VPN_INTERFACE": "str?"
   },
+  "stage": "experimental",
   "slug": "gluetun",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/gluetun",
   "version": "3.35.0"

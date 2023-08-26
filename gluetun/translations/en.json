@@ -1,0 +1,325 @@
+{
+    "configuration": {
+        "HTTP_CONTROL_SERVER_ADDRESS": {
+            "name": "HTTP control server address",
+            "description": "Listening address for the HTTP control server."
+        },
+        "HTTP_CONTROL_SERVER_LOG": {
+            "name": "HTTP control server log",
+            "description": "Enable logging of HTTP requests"
+        },
+        "DOT": {
+            "name": "DOT",
+            "description": "Activate DNS over TLS with Unbound"
+        },
+        "DOT_PROVIDERS": {
+            "name": "DOT providers",
+            "description": "Comma delimited list of DNS over TLS providers"
+        },
+        "DOT_CACHING": {
+            "name": "DOT caching",
+            "description": "Unbound caching"
+        },
+        "DOT_IPV6": {
+            "name": "DOT IPV6",
+            "description": "DNS IPv6 resolution"
+        },
+        "DOT_PRIVATE_ADDRESS": {
+            "name": "DOT private address",
+            "description": "Comma separated list of CIDRs or single IP addresses Unbound won't resolve to. Note that the default setting prevents DNS rebinding"
+        },
+        "DOT_VERBOSITY": {
+            "name": "DOT verbosity",
+            "description": "Unbound verbosity level"
+        },
+        "DOT_VERBOSITY_DETAILS": {
+            "name": "DOT verbosity details",
+            "description": "Unbound details verbosity level"
+        },
+        "DOT_VALIDATION_LOGLEVEL": {
+            "name": "DOT validation log level",
+            "description": "Unbound validation log level"
+        },
+        "DNS_UPDATE_PERIOD": {
+            "name": "DNS update period",
+            "description": "Period to update block lists and cryptographic files and restart Unbound. Set to 0 to deactivate updates"
+        },
+        "BLOCK_MALICIOUS": {
+            "name": "Block malicious",
+            "description": "Block malicious hostnames and IPs with Unbound"
+        },
+        "BLOCK_SURVEILLANCE": {
+            "name": "Block surveillance",
+            "description": "Block surveillance hostnames and IPs with Unbound"
+        },
+        "BLOCK_ADS": {
+            "name": "Block ads",
+            "description": "Block ads hostnames and IPs with Unbound"
+        },
+        "UNBLOCK": {
+            "name": "Unblock",
+            "description": "Comma separated list of domain names to leave unblocked with Unbound"
+        },
+        "DNS_ADDRESS": {
+            "name": "DNS address",
+            "description": "IP address to use as DNS resolver. It defaults to localhost to use the DNS over TLS Unbound server."
+        },
+        "DNS_KEEP_NAMESERVER": {
+            "name": "DNS keep nameserver",
+            "description": "Keep /etc/resolv.conf untouched. ⚠ this will likely leak DNS traffic outside the VPN through your default container DNS. This imples DOT=off and ignores DNS_ADDRESS"
+        },
+        "FIREWALL_VPN_INPUT_PORTS": {
+            "name": "Firewall VPN input ports",
+            "description": "Comma separated list of ports to allow from the VPN server side"
+        },
+        "FIREWALL_INPUT_PORTS": {
+            "name": "Firewall input ports",
+            "description": "Comma separated list of ports to allow through the default interface. This seems needed for Kubernetes sidecars."
+        },
+        "FIREWALL_DEBUG": {
+            "name": "Firewall debug",
+            "description": "Prints every firewall related command. You should use it for debugging purposes only."
+        },
+        "FIREWALL_OUTBOUND_SUBNETS": {
+            "name": "Firewall outbound subnets",
+            "description": "Comma separated subnets that Gluetun and the containers sharing its network stack are allowed to access. This involves firewall and routing modifications."
+        },
+        "HEALTH_TARGET_ADDRESS": {
+            "name": "Health target address",
+            "description": "Address to ping on every internal health check"
+        },
+        "HEALTH_VPN_DURATION_INITIAL": {
+            "name": "Health VPN duration initial",
+            "description": "Initial duration to wait for the VPN to be ready before restarting it"
+        },
+        "HEALTH_VPN_DURATION_ADDITION": {
+            "name": "Health VPN duration addition",
+            "description": "Additional duration to add to the wait time for each consecutive failure of the VPN"
+        },
+        "HEALTH_SUCCESS_WAIT_DURATION": {
+            "name": "Health success wait duration",
+            "description": "Duration to wait after a success check to perform another check"
+        },
+        "HEALTH_SERVER_ADDRESS": {
+            "name": "Health server address",
+            "description": "Internal health check server listening address"
+        },
+        "HTTPPROXY": {
+            "name": "HTTP proxy",
+            "description": "Enable the internal HTTP proxy"
+        },
+        "HTTPPROXY_LOG": {
+            "name": "HTTP proxy log",
+            "description": "Logs every tunnel requests"
+        },
+        "HTTPPROXY_LISTENING_ADDRESS": {
+            "name": "HTTP proxy listening address",
+            "description": "Internal listening address for the HTTP proxy"
+        },
+        "HTTPPROXY_USER": {
+            "name": "HTTP proxy user",
+            "description": "Username to use to connect to the HTTP proxy"
+        },
+        "HTTPPROXY_PASSWORD": {
+            "name": "HTTP proxy password",
+            "description": "Password to use to connect to the HTTP proxy"
+        },
+        "HTTPPROXY_STEALTH": {
+            "name": "HTTP proxy stealth",
+            "description": "Stealth mode means HTTP proxy headers are not added to your requests"
+        },
+        "OPENVPN_USER": {
+            "name": "OpenVPN username",
+            "description": "OpenVPN username"
+        },
+        "OPENVPN_PASSWORD": {
+            "name": "OpenVPN password",
+            "description": "OpenVPN password"
+        },
+        "OPENVPN_PROTOCOL": {
+            "name": "OpenVPN protocol",
+            "description": "Network protocol to use, only valid for OpenVPN"
+        },
+        "OPENVPN_VERSION": {
+            "name": "OpenVPN version",
+            "description": "Set the OpenVPN version to run"
+        },
+        "OPENVPN_VERBOSITY": {
+            "name": "OpenVPN verbosity",
+            "description": "Openvpn verbosity level"
+        },
+        "OPENVPN_FLAGS": {
+            "name": "OpenVPN flags",
+            "description": "Space delimited openvpn flags to pass to openvpn"
+        },
+        "OPENVPN_ROOT": {
+            "name": "OpenVPN root",
+            "description": "Run OpenVPN as root"
+        },
+        "OPENVPN_CIPHERS": {
+            "name": "OpenVPN ciphers",
+            "description": "Specify a custom cipher to use. It will also set ncp-disable if using AES GCM for PIA"
+        },
+        "OPENVPN_AUTH": {
+            "name": "OpenVPN authentication",
+            "description": "Specify a custom auth algorithm to use"
+        },
+        "OPENVPN_MSSFIX": {
+            "name": "OpenVPN MSS fix",
+            "description": "Set the MSS fix parameter. Set to 0 to use the defaults."
+        },
+        "OPENVPN_CERT": {
+            "name": "OpenVPN certificate",
+            "description": "OpenVPN certificate content (base64 part only)"
+        },
+        "OPENVPN_KEY": {
+            "name": "OpenVPN key",
+            "description": "OpenVPN key (base64 part only)"
+        },
+        "OPENVPN_ENCRYPTED_KEY": {
+            "name": "OpenVPN encrypted key",
+            "description": "OpenVPN encrypted key (base64 part only)"
+        },
+        "OPENVPN_KEY_PASSPHRASE": {
+            "name": "OpenVPN key passphrase",
+            "description": "Specify a key passphrase to decrypt an encrypted key"
+        },
+        "OPENVPN_PROCESS_USER": {
+            "name": "OpenVPN process user",
+            "description": "Specify a user to run the OpenVPN subprocess"
+        },
+        "OPENVPN_CUSTOM_CONFIG": {
+            "name": "OpenVPN custom config",
+            "description": "Specify a custom OpenVPN configuration file to use for the custom VPN provider."
+        },
+        "TZ": {
+            "name": "Time Zone",
+            "description": "Specify a timezone to use to have correct log times"
+        },
+        "PUID": {
+            "name": "PUID",
+            "description": "User ID to run as non root and for ownership of files written"
+        },
+        "PGID": {
+            "name": "PGID",
+            "description": "Group ID to run as non root and for ownership of files written"
+        },
+        "PUBLICIP_PERIOD": {
+            "name": "Public IP period",
+            "description": "Period to check for public IP address. Set to 0 to disable."
+        },
+        "PUBLICIP_FILE": {
+            "name": "Public IP file",
+            "description": "Filepath to store the public IP address assigned. This will be removed in the v4 program, instead you might want to use the control server"
+        },
+        "VERSION_INFORMATION": {
+            "name": "Version information",
+            "description": "Logs a message indicating if a newer version is available once the VPN is connected"
+        },
+        "VPN_PORT_FORWARDING": {
+            "name": "VPN port forwarding",
+            "description": "Enable custom port forwarding code for supported providers"
+        },
+        "VPN_PORT_FORWARDING_PROVIDER": {
+            "name": "VPN port forwarding provider",
+            "description": "Choose the custom port forwarding code to use. This is useful when using the custom provider with Wireguard."
+        },
+        "VPN_PORT_FORWARDING_STATUS_FILE": {
+            "name": "VPN port forwarding status file",
+            "description": "File path to use for writing the forwarded port obtained."
+        },
+        "SHADOWSOCKS": {
+            "name": "Shadow socks",
+            "description": "Enable the internal Shadowsocks proxy"
+        },
+        "SHADOWSOCKS_LOG": {
+            "name": "Shadow socks log",
+            "description": "Enable logging"
+        },
+        "SHADOWSOCKS_LISTENING_ADDRESS": {
+            "name": "Shadow socks listening address",
+            "description": "Internal listening address for Shadowsocks"
+        },
+        "SHADOWSOCKS_PASSWORD": {
+            "name": "Shadow socks password",
+            "description": "Password to use to connect to Shadowsocks"
+        },
+        "SHADOWSOCKS_CIPHER": {
+            "name": "Shadow socks cipher",
+            "description": "AEAD Cipher to use for Shadowsocks"
+        },
+        "UPDATER_PERIOD": {
+            "name": "Updater period",
+            "description": "Period to update the VPN servers data in memory and to /gluetun/servers.json. Set to 0 to disable. This does a burst of DNS over TLS requests, which may be blocked if you set BLOCK_MALICIOUS=on for example."
+        },
+        "UPDATER_MIN_RATIO": {
+            "name": "Updater min ratio",
+            "description": "Ratio of servers to be found for the update to succeed, compared to the servers already built in the program"
+        },
+        "UPDATER_VPN_SERVICE_PROVIDERS": {
+            "name": "Updater VPN service providers",
+            "description": "List of providers to update servers data for, when the updater triggers periodically. If left empty, it defaults to the current VPN provider used at start."
+        },
+        "VPN_SERVICE_PROVIDER": {
+            "name": "VPN service provider",
+            "description": "Specify a supported VPN provider to use"
+        },
+        "VPN_TYPE": {
+            "name": "VPN type",
+            "description": "VPN protocol to use. Not all providers support Wireguard."
+        },
+        "VPN_ENDPOINT_IP": {
+            "name": "VPN endpoint ip",
+            "description": "Specify a target VPN server IP address to use"
+        },
+        "VPN_ENDPOINT_PORT": {
+            "name": "VPN endpoint port",
+            "description": "Specify a target VPN server port number to use"
+        },
+        "VPN_INTERFACE": {
+            "name": "VPN interface",
+            "description": "Specify a custom network interface name to use"
+        },
+        "WIREGUARD_PRIVATE_KEY": {
+            "name": "Wireguard private key",
+            "description": "Wireguard client private key to use. This is usually always needed."
+        },
+        "WIREGUARD_ADDRESSES": {
+            "name": "Wireguard addresses",
+            "description": "This is usually needed."
+        },
+        "WIREGUARD_PUBLIC_KEY": {
+            "name": "Wireguard public key",
+            "description": "Wireguard server public key to use. This may or may not be needed."
+        },
+        "WIREGUARD_PRESHARED_KEY": {
+            "name": "Wireguard preshared key",
+            "description": "Wireguard pre-shared key"
+        },
+        "WIREGUARD_ALLOWED_IPS": {
+            "name": "Wireguard allowed IPs",
+            "description": "Wireguard peer allowed ips"
+        },
+        "WIREGUARD_IMPLEMENTATION": {
+            "name": "Wireguard implementation",
+            "description": "Wireguard implementation to use"
+        },
+        "WIREGUARD_MTU": {
+            "name": "Wireguard MTU",
+            "description": "Wireguard MTU"
+        }
+    },
+    "network": {
+        "7878": "The port to redirect Radarr VPN traffic through.",
+        "6789/tcp": "NZBget",
+        "8081": "SickChill",
+        "8112": "Deluge web UI",
+        "8888/tcp": "HTTP proxy",
+        "8388/tcp": "Shadowsocks",
+        "8388/udp": "Shadowsocks",
+        "9091/tcp": "Transmission",
+        "9117/tcp": "Jackett",
+        "51413/tcp": "Peer port (DO NOT setup router port forwarding to this port)",
+        "51413/udp": "Peer port (DO NOT setup router port forwarding to this port)"
+    }
+}
