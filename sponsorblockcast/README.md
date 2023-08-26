@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [castsponsorskip] No longer working, exits on startup (opened 2023-08-25)](https://github.com/alexbelgium/hassio-addons/issues/959) by [@roderik-maker](https://github.com/roderik-maker)
 
 # Home assistant add-on: Sponsorblockcast
 
