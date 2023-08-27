@@ -20,7 +20,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-Web based files browser.
+Web based [File Browser](https://filebrowser.org/).
 This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/filebrowser) from hurlenko.
 
 ## Configuration
@@ -28,7 +28,7 @@ This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/file
 Webui can be found at <http://your-ip:8080>.
 Default username: "admin" and password: "admin"
 
-Network disk is mounted to /share/storagecifs
+Network disk is mounted to `/share/storagecifs`.
 
 ```yaml
 ssl: true/false
@@ -48,18 +48,20 @@ base_folder: root folder # optional, default is /
 The installation of this add-on is pretty straightforward and not different in
 comparison to installing any other Hass.io add-on.
 
-1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
+1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance. [![Add repository on my Home Assistant][repository-badge]][repository-url]
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences, see the official documentation for for that.
+1. Carefully configure the add-on to your preferences, see the [official documentation](https://filebrowser.org/configuration) for for that.
 
 ## Support
 
-Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-filebrowser/282108/3)
+Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-filebrowser/282108/3).
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+[repository-badge]: https://img.shields.io/badge/Add%20repository%20to%20my-Home%20Assistant-41BDF5?logo=home-assistant&style=for-the-badge
+[repository-url]: https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
