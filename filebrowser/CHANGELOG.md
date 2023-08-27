@@ -1,3 +1,6 @@
+
+## 2.24.2 (27-08-2023)
+- Update to latest version from filebrowser/filebrowser
 - Switch upstream image to filebrowser/filebrowser
 - Improve speed for larger folders
 - Feat : cifsdomain added
