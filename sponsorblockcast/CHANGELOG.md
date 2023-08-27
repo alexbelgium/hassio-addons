@@ -1,6 +1,9 @@
+### 1.3-4 (27-08-2023)
+- Chromecast check fixed @bruvv
+- Readme updated to reflect the changes @bruvv
 
 ### 1.3-3 (25-08-2023)
-- Start up fixed
+- Start up fixed @bruvv
 
 ### 1.3-2 (22-08-2023)
 - Minor bugs fixed

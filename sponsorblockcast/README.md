@@ -1,5 +1,5 @@
 
-# Home assistant add-on: Sponsorblockcast
+# Home assistant add-on: CastSponsorSkip
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -21,9 +21,9 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-Sponsorblockcast is a POSIX shell script that skips sponsored YouTube content and skippable ads on all local Chromecasts, using the SponsorBlock API. It was inspired by CastBlock but written from scratch to avoid some of its pitfalls (see Differences from CastBlock).
+CastSponsorSkip is a go script that skips sponsored YouTube content on all local Chromecasts, using the SponsorBlock API. It was inspired by CastBlock but written from scratch to avoid some of its pitfalls (see Differences from CastBlock).
 
-This app is developed by @nichobi here : https://github.com/nichobi/sponsorblockcast
+This app is developed by @gabe565 here : https://github.com/gabe565/CastSponsorSkip
 
 Feedback from @diamant-x :
 > Special attention that it only works when casting to a chromecast a youtube video. It mostly removes manual interaction, can't magically skip ads when they are forced to be viewed.
@@ -31,7 +31,7 @@ Feedback from @diamant-x :
 
 ## Configuration
 
-See https://github.com/nichobi/sponsorblockcast
+See https://github.com/gabe565/CastSponsorSkip
 
 ## Installation
 
@@ -48,6 +48,6 @@ comparison to installing any other Hass.io add-on.
 ## Support and issues
 
 Addon : here
-App : https://github.com/nichobi/sponsorblockcast
+App : https://github.com/gabe565/CastSponsorSkip
 
 [repository]: https://github.com/alexbelgium/hassio-addons
