@@ -90,8 +90,7 @@ jobs:
           path: "./${{ matrix.addon }}"
 
   check-build:
-    name: Test addon build
-    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
-    runs-on: ubuntu-latest
-    needs: check-addon-changes
-    uses: ./.github/workflows/onpush_builder.yaml
+   name: Test addon build
+   if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
+   needs: check-addon-changes
+   uses: ./.github/workflows/onpush_builder.yaml
