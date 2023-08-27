@@ -21,11 +21,11 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Web based [File Browser](https://filebrowser.org/).
-This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/filebrowser) from hurlenko.
+This addon is based on the [docker image](https://hub.docker.com/r/filebrowser/filebrowser) from filebrowser.
 
 ## Configuration
 
-Webui can be found at <http://your-ip:8080>.
+Webui can be found at <http://your-ip:port> at the port that you map to 8080 in the addon's options.
 Default username: "admin" and password: "admin"
 
 Network disk is mounted to `/share/storagecifs`.
