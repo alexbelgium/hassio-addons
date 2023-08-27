@@ -92,8 +92,11 @@ fi
 
 bashio::log.info "Starting..."
 
+# Remove default config
+rm /.filebrowser.json
+
 # shellcheck disable=SC2086
-/./filebrowser --disable-preview-resize --disable-type-detection-by-header --cache-dir=".\cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --database=/config/addons_config/filebrowser/filebrowser.dB "$NOAUTH" &
+/./filebrowser --disable-preview-resize --disable-type-detection-by-header --cache-dir=".\cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/addons_config/filebrowser/filebrowser.dB "$NOAUTH" &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
