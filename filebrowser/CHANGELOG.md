@@ -1,3 +1,4 @@
+- Switch upstream image to filebrowser/filebrowser
 - Improve speed for larger folders
 - Feat : cifsdomain added
 - Implemented healthcheck
