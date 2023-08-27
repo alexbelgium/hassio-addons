@@ -14,7 +14,7 @@
   "init": false,
   "name": "Castsponsorskip",
   "options": {
-    "CSS_CATEGORIES": "sponsor",
+    "CSS_CATEGORIES": "sponsor, into, outro, selfpromo",
     "CSS_DISCOVER_INTERVAL": "5m",
     "CSS_PAUSED_INTERVAL": "1m",
     "CSS_PLAYING_INTERVAL": "1s",
