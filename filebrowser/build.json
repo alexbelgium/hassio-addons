@@ -1,0 +1,10 @@
+{
+  "build_from": {
+    "aarch64": "filebrowser/filebrowser:latest",
+    "amd64": "filebrowser/filebrowser:latest",
+    "armv7": "filebrowser/filebrowser:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
