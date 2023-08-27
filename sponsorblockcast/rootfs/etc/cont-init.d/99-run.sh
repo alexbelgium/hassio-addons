@@ -14,4 +14,4 @@ done
 
 # Starting app
 bashio::log.info "Starting app"
-./castsponsorskip &>/proc/1/fd/1
+./castsponsorskip
