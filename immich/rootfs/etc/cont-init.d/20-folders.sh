@@ -28,3 +28,5 @@ for file in $(grep -sril '/photos' /etc); do sed -i "s|/photos|$DATA_LOCATION|g"
 if [ -f /photos ]; then rm -r /photos; fi
 ln -sf "$DATA_LOCATION" /photos
 chown -R "$PUID":"$PGID" /photos
+
+mkdir -p "$MACHINE_LEARNING_CACHE_FOLDER" "$TYPESENSE_DATA_DIR"
