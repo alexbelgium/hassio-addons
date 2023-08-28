@@ -105,7 +105,6 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str",
-    "database": "list(internal|external_postgresql)?",
     "localdisks": "str?",
     "networkdisks": "str?"
   },
