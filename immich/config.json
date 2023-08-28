@@ -55,6 +55,8 @@
   ],
   "environment": {
     "REDIS_HOSTNAME": "localhost",
+    "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
+    "TYPESENSE_DATA_DIR": "/data/typesense",
     "REDIS_PORT": "6379"
   },
   "image": "ghcr.io/alexbelgium/immich-{arch}",
