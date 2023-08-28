@@ -1,5 +1,6 @@
 ## NOT PUSHED YET
-- BREAKING CHANGE : the upstream container has removed the embedded postgres (read more https://github.com/imagegenius/docker-immich/issues/90). You now need to install and configure the postgress add-on from this same repo, and reference it in the addon options. This means you will lose your current database, and will need to recreate it from scratch. Your previous database will still be exported to the file /config/addons_config/immich/old_database.gzip.
+- YOU WILL LOSE DATA : the upstream container has removed the embedded postgres (read more https://github.com/imagegenius/docker-immich/issues/90). You now need to install and configure the postgress add-on from this same repo, and reference it in the addon options. This means you will lose your current database, and will need to recreate it from scratch. Your previous database will still be exported to the file /config/addons_config/immich/old_database.gzip. However exporting it to the postgres container is quite complex and not supported.
+- BREAKING CHANGE : referencing the postgres options is now required
 
 ## 1.75.2 (27-08-2023)
 - Update to latest version from imagegenius/docker-immich
