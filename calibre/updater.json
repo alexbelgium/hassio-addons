@@ -6,5 +6,5 @@
   "slug": "calibre",
   "source": "github",
   "upstream_repo": "linuxserver/docker-calibre",
-  "upstream_version": "v6.15.0-ls211"
+  "upstream_version": "v6.25.0-ls235"
 }
