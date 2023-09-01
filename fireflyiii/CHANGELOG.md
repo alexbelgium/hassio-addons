@@ -1,4 +1,7 @@
 
+## 6.0.22 (02-09-2023)
+- Update to latest version from firefly-iii/firefly-iii
+
 ## 6.0.20 (19-08-2023)
 - Update to latest version from firefly-iii/firefly-iii
 
