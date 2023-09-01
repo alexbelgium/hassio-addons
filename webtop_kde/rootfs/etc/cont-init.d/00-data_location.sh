@@ -24,7 +24,7 @@ else
     done
 
     if [ -z "$LOCATIONOK" ]; then
-        LOCATION=/config/addons_config/${HOSTNAME#*-}
+        LOCATION="/share/webtop_kde"
         bashio::log.fatal "Your data_location value can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $LOCATION"
     fi
 
@@ -33,12 +33,25 @@ fi
 # Set data location
 bashio::log.info "Setting data location to $LOCATION"
 
-sed -i "1a export HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run || true
-sed -i "1a export FM_HOME=$LOCATION" /etc/s6-overlay/s6-rc.d/svc-web/run || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /defaults -type f) || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc/cont-init.d -type f) || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc/services.d -type f) || true
-sed -i "s|/share/webtop_kde|$LOCATION|g" $(find /etc/s6-overlay/s6-rc.d -type f) || true
+# Correct home locations
+for files in /etc/s6-overlay/s6-rc.d/*/run
+    if [ "$(sed -n '1{/bash/p};q' "$file")" ]; then
+        sed -i "1a export HOME=$LOCATION" "$file"
+        sed -i "1a export FM_HOME=$LOCATION" "$file"
+    fi
+fi
+
+# Correct home location
+for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d
+    if [ -d "$folders" ]; then
+        sed -i "s|/share/webtop_kde|$LOCATION|g" $(find "$folders" -type f) 
+    fi
+fi
+
+#  Change user home
+usermod --home "$LOCATION" abc
+
+# Add environment variables
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
 {
@@ -46,12 +59,10 @@ if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var
     printf "%s" "FM_HOME=\"$LOCATION\""
 } >> ~/.bashrc
 
-usermod --home "$LOCATION" abc
-
 # Create folder
 echo "Creating $LOCATION"
 mkdir -p "$LOCATION"
 
 # Set ownership
 bashio::log.info "Setting ownership to $PUID:$PGID"
-chown "$PUID":"$PGID" "$LOCATION"
+chown -R "$PUID":"$PGID" "$LOCATION"
