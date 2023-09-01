@@ -34,7 +34,7 @@ fi
 bashio::log.info "Setting data location to $LOCATION"
 
 # Correct home locations
-for files in /etc/s6-overlay/s6-rc.d/*/run
+for files in /etc/s6-overlay/s6-rc.d/*/run; do
     if [ "$(sed -n '1{/bash/p};q' "$file")" ]; then
         sed -i "1a export HOME=$LOCATION" "$file"
         sed -i "1a export FM_HOME=$LOCATION" "$file"
@@ -42,7 +42,7 @@ for files in /etc/s6-overlay/s6-rc.d/*/run
 fi
 
 # Correct home location
-for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d
+for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
     if [ -d "$folders" ]; then
         sed -i "s|/share/webtop_kde|$LOCATION|g" $(find "$folders" -type f) 
     fi
