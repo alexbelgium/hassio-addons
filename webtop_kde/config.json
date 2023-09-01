@@ -78,6 +78,7 @@
   "image": "ghcr.io/alexbelgium/webtop_kde-{arch}",
   "ingress": true,
   "init": false,
+  "full_access": true,
   "map": [
     "media:rw",
     "share:rw",
@@ -104,7 +105,7 @@
     "NET_ADMIN",
     "SYS_MODULE",
     "SYS_RESOURCE"
-  ],
+],
   "schema": {
     "DNS_server": "str?",
     "KEYBOARD": "list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?",
@@ -125,6 +126,6 @@
   "slug": "webtop-kde",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls89-test2",
+  "version": "4.16-r0-ls89-test3",
   "video": true
 }
