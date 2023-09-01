@@ -39,14 +39,14 @@ for files in /etc/s6-overlay/s6-rc.d/*/run; do
         sed -i "1a export HOME=$LOCATION" "$file"
         sed -i "1a export FM_HOME=$LOCATION" "$file"
     fi
-fi
+done
 
 # Correct home location
 for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
     if [ -d "$folders" ]; then
         sed -i "s|/share/webtop_kde|$LOCATION|g" $(find "$folders" -type f) 
     fi
-fi
+done
 
 #  Change user home
 usermod --home "$LOCATION" abc
