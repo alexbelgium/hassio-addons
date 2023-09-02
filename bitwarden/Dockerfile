@@ -26,6 +26,10 @@ COPY --from=vaultwarden /vaultwarden /opt/vaultwarden
 #COPY --from=vaultwarden /Rocket.toml /opt/Rocket.toml
 COPY --from=vaultwarden /web-vault /opt/web-vault
 
+RUN \
+    cd /usr/lib && \
+    [[ ! -f libssl.so.3 ]] && ln -s libssl.so libssl.so.3
+
 ##################
 # 2 Modify Image #
 ##################
