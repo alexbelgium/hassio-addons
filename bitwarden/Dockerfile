@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=ghcr.io/hassio-addons/ubuntu-base/amd64:latest
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base/amd64:latest
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.29.2"
 FROM "vaultwarden/server:${BUILD_UPSTREAM}" as vaultwarden
