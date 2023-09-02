@@ -2,7 +2,15 @@
 # shellcheck shell=bash
 # shellcheck disable=SC2015
 
-exit 0
+# Install rpi video drivers
+if bashio::config.true 'rpi_video_drivers'; then
+    bashio::log.info "Installing Rpi graphic drivers"
+    if [ "$PACKMANAGER" = "apk" ]; then
+        apk add --no-cache "mesa-dri-vc4 mesa-dri-swrast mesa-gbm xf86-video-fbdev" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
+    elif [ "$PACKMANAGER" = "apt" ]; then
+        apt-get install -yqq --no-install-recommends "mesa*" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
+    fi
+fi
 
 # Install specific apps
 if bashio::config.has_value 'additional_apps'; then
