@@ -1,3 +1,6 @@
+
+## v5.1.0 (02-09-2023)
+- Update to latest version from haugene/docker-transmission-openvpn
 - Fix : allow custom providers with names based on mullvad
 - Feat : cifsdomain added
 
