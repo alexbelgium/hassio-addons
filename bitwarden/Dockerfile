@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base/amd64:5.2.2
+ARG BUILD_FROM=ghcr.io/hassio-addons/ubuntu-base/amd64:latest
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="1.29.2"
 FROM "vaultwarden/server:${BUILD_UPSTREAM}" as vaultwarden
@@ -25,10 +25,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY --from=vaultwarden /vaultwarden /opt/vaultwarden
 #COPY --from=vaultwarden /Rocket.toml /opt/Rocket.toml
 COPY --from=vaultwarden /web-vault /opt/web-vault
-
-RUN \
-    cd /usr/lib && \
-    [[ ! -f libssl.so.3 ]] && ln -s libssl.so libssl.so.3
 
 ##################
 # 2 Modify Image #
