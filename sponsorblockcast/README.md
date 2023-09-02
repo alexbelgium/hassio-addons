@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] sponsorblockcast - Update to latest version of CastSponsorSkip (0.4.0) (opened 2023-09-01)](https://github.com/alexbelgium/hassio-addons/issues/974) by [@Runesmacher](https://github.com/Runesmacher)
 
 # Home assistant add-on: CastSponsorSkip
 
