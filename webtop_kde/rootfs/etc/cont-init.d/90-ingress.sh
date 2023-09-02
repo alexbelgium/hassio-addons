@@ -7,7 +7,7 @@ NGINX_CONFIG=/etc/nginx/sites-available/ingress.conf
 # Copy template
 cp /defaults/default.conf "${NGINX_CONFIG}"
 # Remove ssl part
-awk -i inplace -v n=4 '/server/{n--}; n > 0' "${NGINX_CONFIG}" > tmpfile
+awk -v n=4 '/server/{n--}; n > 0' "${NGINX_CONFIG}" > tmpfile
 mv tmpfile "${NGINX_CONFIG}"
 
 # Remove ipv6
