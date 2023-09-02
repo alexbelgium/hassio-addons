@@ -1,3 +1,5 @@
+### 1.29.2-2 (02-09-2023)
+- Minor bugs fixed
 - Fix https://github.com/alexbelgium/hassio-addons/issues/975
 
 ## 1.29.2 (02-09-2023)
