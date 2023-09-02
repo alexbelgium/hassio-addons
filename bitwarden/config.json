@@ -32,6 +32,6 @@
   },
   "slug": "bitwarden",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bitwarden",
-  "version": "1.29.2_test2",
+  "version": "1.29.2_test3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7277]"
 }
