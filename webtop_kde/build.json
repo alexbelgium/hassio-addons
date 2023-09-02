@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "lscr.io/linuxserver/webtop:arm64v8-debian-xfce",
-    "amd64": "lscr.io/linuxserver/webtop:amd64-debian-xfce"
+    "aarch64": "lscr.io/linuxserver/webtop:arm64v8-alpine-kde",
+    "amd64": "lscr.io/linuxserver/webtop:amd64-alpine-kde"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
