@@ -55,7 +55,9 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "options": {
+  "environment": {
+    "PGID": "0",
+    "PUID": "0",
     "VPN_SERVICE_PROVIDER": "private internet access",
     "VPN_TYPE": "openvpn",
     "OPENVPN_USER": "",
@@ -65,9 +67,17 @@
   "init": false,
   "map": [
     "config:rw",
-    "ssl"
+    "ssl:ro"
   ],
   "name": "Gluetun VPN client",
+  "options": {
+    "VPN_SERVICE_PROVIDER": "private internet access",
+    "VPN_TYPE": "openvpn",
+    "OPENVPN_USER": "",
+    "OPENVPN_PASSWORD": "",
+    "PGID": 0,
+    "PUID": 0
+  },
   "ports": {
     "6789/tcp": 6789,
     "7878": 7878,
@@ -83,7 +93,8 @@
   },
   "privileged": [
     "SYS_ADMIN",
-    "NET_ADMIN"
+    "NET_ADMIN",
+    "NET_RAW"
   ],
   "schema": {
     "PGID": "int?",
