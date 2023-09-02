@@ -34,14 +34,7 @@ VOLUME [ "/sys/fs/cgroup" ]
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
     # Change home folder location
-    usermod --home /share/webtop_kde abc \
-    \
-    # Correct error in upstream image
-    && for file in $(grep -srl "startwm " /etc); do sed -i 's/startwm /startwm.sh /g' $file; done \
-    \
-    # Update distribution
-    # hadolint ignore=DL3017
-    && apk upgrade --no-cache
+    usermod --home /share/webtop_kde abc
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/share/webtop_kde"
