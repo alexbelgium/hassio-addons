@@ -1,3 +1,6 @@
+
+## 0.4.0 (02-09-2023)
+- Update to latest version from gabe565/CastSponsorSkip
 ### 1.3-4 (27-08-2023)
 - Chromecast check fixed @bruvv
 - Readme updated to reflect the changes @bruvv
