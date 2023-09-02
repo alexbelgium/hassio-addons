@@ -4,15 +4,10 @@
 # nginx Path
 NGINX_CONFIG=/etc/nginx/sites-available/ingress.conf
 
-# user passed env vars
-CPORT="${CUSTOM_PORT:-3000}"
-CHPORT="${CUSTOM_HTTPS_PORT:-3001}"
-CUSER="${CUSTOM_USER:-abc}"
-
 # Copy template
 cp /defaults/default.conf ${NGINX_CONFIG}
 # Remove ssl part
-awk -v n=4 '/server/{n--}; n > 0' ${NGINX_CONFIG} > ${NGINX_CONFIG}
+awk -i inplace -v n=4 '/server/{n--}; n > 0' ${NGINX_CONFIG}
 # Remove ipv6
 sed -i '/listen \[::\]/d' ${NGINX_CONFIG}
 # Add ingress parameters
