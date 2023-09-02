@@ -14,8 +14,8 @@ mv tmpfile "${NGINX_CONFIG}"
 sed -i '/listen \[::\]/d' "${NGINX_CONFIG}"
 # Add ingress parameters
 sed -i "s|3000|$(bashio::addon.ingress_port)|g" "${NGINX_CONFIG}"
-sed -i '/server {/a include /etc/nginx/includes/server_params.conf;' "${NGINX_CONFIG}"
-sed -i '/server {/a include /etc/nginx/includes/proxy_params.conf;' "${NGINX_CONFIG}"
+#sed -i '/server {/a include /etc/nginx/includes/server_params.conf;' "${NGINX_CONFIG}"
+#sed -i '/server {/a include /etc/nginx/includes/proxy_params.conf;' "${NGINX_CONFIG}"
 
 # Enable ingress
 cp /etc/nginx/sites-available/ingress.conf /etc/nginx/sites-enabled
