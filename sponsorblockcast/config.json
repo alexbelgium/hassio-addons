@@ -18,16 +18,18 @@
     "CSS_DISCOVER_INTERVAL": "5m",
     "CSS_PAUSED_INTERVAL": "1m",
     "CSS_PLAYING_INTERVAL": "1s",
-    "CSS_YOUTUBE_API_KEY": " "
+    "CSS_YOUTUBE_API_KEY": "",
+    "CSS_MUTE_ADS": "true"
   },
   "schema": {
     "CSS_CATEGORIES": "str",
     "CSS_DISCOVER_INTERVAL": "str",
     "CSS_PAUSED_INTERVAL": "str",
     "CSS_PLAYING_INTERVAL": "str",
-    "CSS_YOUTUBE_API_KEY": "str"
+    "CSS_YOUTUBE_API_KEY": "str",
+    "CSS_MUTE_ADS": "bool"
   },
   "slug": "sponsorblockcast",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast",
-  "version": "0.4.0"
+  "version": "0.4.0-1"
 }
