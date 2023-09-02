@@ -14,12 +14,7 @@
   "init": false,
   "name": "Castsponsorskip",
   "options": {
-    "CSS_CATEGORIES": "sponsor, into, outro, selfpromo",
-    "CSS_DISCOVER_INTERVAL": "5m",
-    "CSS_PAUSED_INTERVAL": "1m",
-    "CSS_PLAYING_INTERVAL": "1s",
-    "CSS_YOUTUBE_API_KEY": "",
-    "CSS_MUTE_ADS": "true"
+    "CSS_CATEGORIES": "sponsor, into, outro, selfpromo"
   },
   "schema": {
     "CSS_CATEGORIES": "str",
