@@ -78,6 +78,7 @@
   "ingress": true,
   "init": false,
   "map": [
+    "config:rw",
     "media:rw",
     "share:rw",
     "ssl"
