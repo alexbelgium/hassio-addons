@@ -19,11 +19,11 @@ if bashio::config.has_value 'additional_apps'; then
     NEWAPPS=$(bashio::config 'additional_apps')
     for packagestoinstall in ${NEWAPPS//,/ }; do
         bashio::log.green "... $APP"
-        if [ "$PACKMANAGER" = "apk" ]; then
+        if command -v "apk" &>/dev/null; then
             apk add --no-cache "$packagestoinstall" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
-        elif [ "$PACKMANAGER" = "apt" ]; then
+        elif command -v "apt" &>/dev/null; then
             apt-get install -yqq --no-install-recommends "$packagestoinstall" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
-        elif [ "$PACKMANAGER" = "pacman" ]; then
+        elif command -v "pacman" &>/dev/null; then
             pacman --noconfirm -S "$packagestoinstall" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
         fi
     done
