@@ -81,7 +81,7 @@
   },
   "panel_icon": "mdi:monitor",
   "ports": {
-    "3000/tcp": null
+    "3000/tcp": 3000
   },
   "ports_description": {
     "3000/tcp": "web interface"
