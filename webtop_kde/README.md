@@ -38,7 +38,7 @@ If graphics don't work, use the DRINODE feature to select your graphic device.
 See all potential ENV variables here : https://docs.linuxserver.io/images/docker-webtop#optional-environment-variables
 
 ```yaml
-TZ: timezone
+TZ: timezone ; Country/City according to https://manpages.ubuntu.com/manpages/trusty/man3/DateTime::TimeZone::Catalog.3pm.html
 additional_apps: engrampa,thunderbird # Allows installation of apps, as they are not persistent
 DRINODE: specify a custom graphic device, default is /dev/dri/renderD128
 DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
