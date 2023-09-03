@@ -60,7 +60,7 @@
     "PGID": "0",
     "PUID": "0",
     "START_DOCKER": "false",
-    "TITLE": "Alpine KDE webtop",
+    "TITLE": "Ubuntu XFCE webtop",
     "shm_size": "1gb"
   },
   "host_dbus": true,
@@ -73,7 +73,7 @@
     "share:rw",
     "ssl"
   ],
-  "name": "Webtop Alpine KDE",
+  "name": "Webtop LSIO",
   "options": {
     "DNS_server": "8.8.8.8",
     "PGID": 0,
@@ -106,6 +106,6 @@
   "slug": "webtop-kde",
   "tmpfs": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls89-test23",
+  "version": "4.16-r0-ls89-xfce",
   "video": true
 }
