@@ -44,7 +44,7 @@ done
 # Correct home location
 for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
     if [ -d "$folders" ]; then
-        sed -i "s|/share/webtop_kde|$LOCATION|g" $(find "$folders" -type f)
+        sed -i "s|/share/webtop_kde|$LOCATION|g" $(find "$folders" -type f) &>/dev/null || true
     fi
 done
 
