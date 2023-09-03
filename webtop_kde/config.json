@@ -71,6 +71,7 @@
     "HOME": "/share/webtop_kde",
     "PGID": "0",
     "PUID": "0",
+    "START_DOCKER": false",
     "TITLE": "Alpine KDE webtop",
     "shm_size": "1gb"
   },
@@ -89,8 +90,7 @@
     "DNS_server": "8.8.8.8",
     "PGID": 0,
     "PUID": 0,
-    "additional_apps": "engrampa,libreoffice",
-    "rpi_video_drivers": true
+    "additional_apps": "engrampa,libreoffice"
   },
   "panel_icon": "mdi:monitor",
   "ports": {
@@ -101,6 +101,7 @@
   },
   "schema": {
     "DNS_server": "str?",
+    "DRINODE": "str?",
     "KEYBOARD": "list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?",
     "PASSWORD": "str?",
     "PGID": "int",
@@ -111,10 +112,8 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str?",
-    "edge_repositories": "bool?",
     "localdisks": "str?",
-    "networkdisks": "str?",
-    "rpi_video_drivers": "bool?"
+    "networkdisks": "str?"
   },
   "slug": "webtop-kde",
   "tmpfs": true,
