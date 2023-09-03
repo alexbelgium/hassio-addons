@@ -254,7 +254,7 @@ done || true # Continue even if issue
 
 # Clean dry run
 if bashio::config.true "dry_run"; then
-  rm -r /data/*
+    rm -r /data/*
 fi
 
 bashio::log.info "Addons update completed"
