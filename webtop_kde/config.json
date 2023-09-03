@@ -71,7 +71,7 @@
     "HOME": "/share/webtop_kde",
     "PGID": "0",
     "PUID": "0",
-    "START_DOCKER": false",
+    "START_DOCKER": "false",
     "TITLE": "Alpine KDE webtop",
     "shm_size": "1gb"
   },
