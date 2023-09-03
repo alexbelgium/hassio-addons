@@ -25,7 +25,7 @@ if bashio::config.has_value 'TZ'; then
     bashio::log.info "Setting timezone to $TIMEZONE"
     ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime
     echo "$TIMEZONE" >/etc/timezone
-fi || (bashio::log.fatal "Error : $TIMEZONE not found. Here is a list of valid timezones : https://manpages.ubuntu.com/manpages/lunar/en/man3/DateTime::TimeZone.3pm.html")
+fi || (bashio::log.fatal "Error : $TIMEZONE not found. Here is a list of valid timezones : https://manpages.ubuntu.com/manpages/focal/man3/DateTime::TimeZone::Catalog.3pm.html")
 
 # Set keyboard
 if bashio::config.has_value 'KEYBOARD'; then
