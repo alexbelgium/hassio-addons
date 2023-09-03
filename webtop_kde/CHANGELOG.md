@@ -1,3 +1,5 @@
+### 4.16-r0-ls89-xfce (03-09-2023)
+- Minor bugs fixed
 - MAJOR REWORK : is now operational with Webtop 2.0
 - Based on Ubuntu XFCE
 
