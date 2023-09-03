@@ -94,7 +94,7 @@
     "PASSWORD": "str?",
     "PGID": "int",
     "PUID": "int",
-    "TZ": "str?",
+    "TZ": "match([A-Z][a-z]*.\/[A-Z][a-z]*.)?",
     "additional_apps": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
