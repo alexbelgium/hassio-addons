@@ -25,7 +25,7 @@ This addon is based on the docker image https://github.com/linuxserver/docker-we
 
 ## Configuration
 
-Webui can be found at <http://your-ip:PORT>.
+Webui can be found with ingress or at <http://your-ip:PORT>. The port is by default disabled but can be enabled through the addon options.
 
 By default the image is based around the abc user and we recommend using this user as all of the init/config is based around it. The default password is also abc . If you want to change this password and require authentication when accessing the interface simply issue passwd inside a gui terminal in the webtop. Then when accessing the web interface use the path:
 
@@ -33,17 +33,20 @@ http://localhost:3000/?login=true
 
 Apps installations are not remanent, you need to do it via addon options. Their config, however, is.
 
+If graphics don't work, use the DRINODE feature to select your graphic device.
+
+See all potential ENV variables here : https://docs.linuxserver.io/images/docker-webtop#optional-environment-variables
+
 ```yaml
 TZ: timezone
 additional_apps: engrampa,thunderbird # Allows installation of apps, as they are not persistent
+DRINODE: specify a custom graphic device, default is /dev/dri/renderD128
 DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
-rpi_video_drivers: installs graphic driver for rpi
-edge_repositories: switch the apps from stable to edge repositories
 ```
 
 ## Installation
