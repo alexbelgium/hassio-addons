@@ -65,7 +65,6 @@
   },
   "host_dbus": true,
   "image": "ghcr.io/alexbelgium/webtop_kde-{arch}",
-  "ingress": true,
   "init": false,
   "map": [
     "config:rw",
@@ -106,6 +105,6 @@
   "slug": "webtop-kde",
   "tmpfs": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls89-xfcetest2",
+  "version": "4.16-r0-ls89-xfce2",
   "video": true
 }
