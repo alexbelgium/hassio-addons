@@ -54,10 +54,10 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "REDIS_HOSTNAME": "localhost",
     "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
-    "TYPESENSE_DATA_DIR": "/data/typesense",
-    "REDIS_PORT": "6379"
+    "REDIS_HOSTNAME": "localhost",
+    "REDIS_PORT": "6379",
+    "TYPESENSE_DATA_DIR": "/data/typesense"
   },
   "image": "ghcr.io/alexbelgium/immich-{arch}",
   "init": false,
