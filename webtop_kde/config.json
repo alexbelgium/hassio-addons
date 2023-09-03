@@ -117,6 +117,7 @@
     "rpi_video_drivers": "bool?"
   },
   "slug": "webtop-kde",
+  "tmpfs": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.16-r0-ls89-test23",
   "video": true
