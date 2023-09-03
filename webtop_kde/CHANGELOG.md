@@ -1,47 +1,5 @@
-### 4.16-r0-ls89-3 (31-08-2023)
-- Minor bugs fixed
-
-## 4.16-r0-ls95 (08-04-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls93 (31-03-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls92 (24-03-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls91 (18-03-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls90 (11-03-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls89 (25-02-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls88 (19-02-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls87 (11-02-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls86 (04-02-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls85 (14-01-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls84 (07-01-2023)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls83 (25-12-2022)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls82 (25-12-2022)
-- Update to latest version from linuxserver/docker-webtop
-
-## 4.16-r0-ls81 (13-12-2022)
-- Update to latest version from linuxserver/docker-webtop
+- MAJOR REWORK : is now operational with Webtop 2.0
+- Based on Ubuntu XFCE
 
 ## 4.16-r0-ls80 (06-12-2022)
 - Update to latest version from linuxserver/docker-webtop
