@@ -88,7 +88,7 @@ if bashio::config.true "OPENVPN_CUSTOM_PROVIDER"; then
     bashio::log.info "Custom openvpn provider selected"
 
     # Check that ovpn file exists
-    if [ ! -f "$OVPNLOCATION" ] || [ ! -f "$OVPNLOCATION/$OVPNCONFIG" ]; then
+    if [ ! -f "$OVPNLOCATION" ]; then
         bashio::log.fatal "Ovpn file not found at location provided : $OVPNLOCATION"
         exit 1
     fi
