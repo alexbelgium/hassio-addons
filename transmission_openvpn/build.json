@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "aarch64": "haugene/transmission-openvpn:latest",
-    "amd64": "haugene/transmission-openvpn:latest",
-    "armv7": "haugene/transmission-openvpn:latest"
+    "aarch64": "haugene/transmission-openvpn:5.1.0",
+    "amd64": "haugene/transmission-openvpn:5.1.0",
+    "armv7": "haugene/transmission-openvpn:5.1.0"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
