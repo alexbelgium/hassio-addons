@@ -92,12 +92,6 @@ COPY rootfs/ /
 # Corrects permissions for /app directory
 RUN if [ -d /app ]; then chown -R nginx /app; fi
 
-# Corrects permissions for s6 v3
-RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
-    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
-    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
-
 # Modules
 ARG MODULES="01-custom_script.sh"
 
