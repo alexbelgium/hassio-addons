@@ -53,7 +53,7 @@ RUN \
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi && \
     \
     # Add entrypoint if existing
-    && if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then echo "/./entrypoint.sh" >> /docker-mods; fi
+    && if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then chmod +x /entrypoint.sh && echo "/./entrypoint.sh" >> /docker-mods; fi
 
 # Changes config directory
 ENV XDG_CONFIG_HOME="/config/addons_config"
