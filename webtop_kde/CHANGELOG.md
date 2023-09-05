@@ -1,9 +1,3 @@
-### 4.16-r0-ls89-xfce10 (05-09-2023)
-- Minor bugs fixed
-### 4.16-r0-ls89-xfce9 (05-09-2023)
-- Minor bugs fixed
-### 4.16-r0-ls89-xfce8 (05-09-2023)
-- Minor bugs fixed
 
 ### 4.16-r0-ls89-xfce3 (04-09-2023)
 - Minor bugs fixed
