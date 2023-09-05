@@ -110,6 +110,6 @@
   "slug": "webtop-kde",
   "tmpfs": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls89-xfce10",
+  "version": "4.16-r0-ls89-xfce11",
   "video": true
 }
