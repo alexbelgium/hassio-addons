@@ -26,7 +26,7 @@ FROM ${BUILD_FROM}
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0 \
-    S6_STAGE2_HOOK=/docker-mods
+    S6_STAGE2_HOOK=/ha_entrypoint.sh
 
 # load volume
 VOLUME [ "/sys/fs/cgroup" ]
@@ -101,8 +101,7 @@ ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/mas
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
-    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /docker-mods ] && [ -f /ha_entrypoint.sh ]; then sed -i "1a /./ha_entrypoint.sh" /docker-mods; fi
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi
 
 #
 #WORKDIR /
