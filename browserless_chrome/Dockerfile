@@ -28,10 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
 USER root
-
-RUN sed -i "2a /./ha_entrypoint.sh" start.sh
 
 ##################
 # 3 Install apps #
@@ -74,6 +71,8 @@ ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/mas
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi
+
+RUN sed -i "2a /./ha_entrypoint.sh" start.sh
 
 ############
 # 5 Labels #
