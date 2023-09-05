@@ -13,7 +13,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
     chmod a+x "$SCRIPTS"
     # Change shebang if no s6 supervision
     sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' "$SCRIPTS"
-    bashio "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    /usr/bin/env bashio "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     rm "$SCRIPTS"
 done
 
