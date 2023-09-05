@@ -57,7 +57,7 @@ RUN \
     #&& if [ -f /docker-mods ]; then sed -i 's|bash|bashio|g' /docker-mods && sed -i "1a if bashio::config.has_value \"DOCKER_MODS\"; then DOCKER_MODS=\$(bashio::config \"DOCKER_MODS\"); fi" /docker-mods; fi \
     \
     # Replace lsiown if not found
-    && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi && \
+    && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi \
     \
     # Add entrypoint if existing
     && if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then chmod +x /entrypoint.sh && sed -i "1a /./entrypoint.sh" /docker-mods; fi
