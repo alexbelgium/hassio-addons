@@ -1,9 +1,4 @@
-### 4.16-r0-ls89-xfce7 (05-09-2023)
-- Minor bugs fixed
-### 4.16-r0-ls89-xfce6 (05-09-2023)
-- Minor bugs fixed
-### 4.16-r0-ls89-xfce5 (05-09-2023)
-- Minor bugs fixed
+
 ### 4.16-r0-ls89-xfce3 (04-09-2023)
 - Minor bugs fixed
 - Ingress enabled
