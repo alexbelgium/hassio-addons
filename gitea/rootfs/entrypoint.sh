@@ -12,6 +12,14 @@ for SCRIPTS in /etc/cont-init.d/*; do
     chmod a+x "$SCRIPTS"
     # Change shebang if no s6 supervision
     sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' "$SCRIPTS"
-    /."$SCRIPTS" || echo "$SCRIPTS: exiting $?"
+    /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     rm "$SCRIPTS"
 done
+
+######################
+# Starting container #
+######################
+
+echo ""
+echo -e "\033[0;32mStarting the upstream container\033[0m"
+echo ""
