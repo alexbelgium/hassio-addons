@@ -89,19 +89,19 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 # Add entrypoint
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/entrypoint.sh" "/ha_entrypoint.sh"
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
+    if [ -f /docker-mods ] && [ -f /ha_entrypoint.sh ]; then sed -i "1a /./ha_entrypoint.sh" /docker-mods; fi
 
 # hadolint ignore=SC2013
 RUN \
     for file in $(grep -Esril "/local/config/addons_config/piwigo" /etc /defaults); do sed -i "s=/local/config/addons_config/piwigo=/local/config=g" "$file"; done
 
 
-#RUN chmod 777 /entrypoint.sh
+#
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]

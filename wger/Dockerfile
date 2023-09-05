@@ -36,7 +36,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 USER root
 
 RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    sed -i "1a sudo -E '/./entrypoint.sh' || true" /home/wger/entrypoint.sh
+    sed -i "1a sudo -E '/./ha_entrypoint.sh' || true" /home/wger/entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -72,14 +72,14 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 # Add entrypoint
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/entrypoint.sh" "/ha_entrypoint.sh"
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
+    if [ -f /docker-mods ] && [ -f /ha_entrypoint.sh ]; then sed -i "1a /./ha_entrypoint.sh" /docker-mods; fi
 
-RUN chmod 777 /entrypoint.sh
+
 USER wger
 #CMD [ "/ha_entrypoint.sh" ]
 

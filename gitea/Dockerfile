@@ -66,14 +66,14 @@ EXPOSE 22 3000
 ################
 
 # Add entrypoint
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/entrypoint.sh" "/ha_entrypoint.sh"
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
+    if [ -f /docker-mods ] && [ -f /ha_entrypoint.sh ]; then sed -i "1a /./ha_entrypoint.sh" /docker-mods; fi
 
-RUN chmod 777 /entrypoint.sh
+
 ENTRYPOINT [ "/ha_entrypoint.sh" ]
 
 ############
