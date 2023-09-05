@@ -67,17 +67,14 @@ ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/mas
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
-    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /docker-mods ] && [ -f /ha_entrypoint.sh ]; then sed -i "1a /./ha_entrypoint.sh" /docker-mods; fi
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi
 
 RUN \
     # Change data folder
     sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
     # Run scripts only once
-    sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /entrypoint.sh && \
-    sed -i "s=x11vnc=[[ \"\$(ps aux | grep \"x11vnc\" | grep -v grep)\" ]] || x11vnc=g" /usr/local/bin/docker-entrypoint.sh && \
-    # Allow entrypoint
-    chmod 777 /entrypoint.sh
+    sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /ha_entrypoint.sh && \
+    sed -i "s=x11vnc=[[ \"\$(ps aux | grep \"x11vnc\" | grep -v grep)\" ]] || x11vnc=g" /usr/local/bin/docker-entrypoint.sh
 
 WORKDIR /data
 ENTRYPOINT [ "/usr/bin/env" ]

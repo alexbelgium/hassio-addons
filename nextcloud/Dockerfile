@@ -126,21 +126,12 @@ ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/mas
 
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
-    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /docker-mods ] && [ -f /ha_entrypoint.sh ]; then sed -i "1a /./ha_entrypoint.sh" /docker-mods; fi
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi
 
 # Correct modifications
 ARG CONFIGLOCATION="/www/nextcloud/config"
 # hadolint ignore=SC2015, SC2013, SC2086, SC2016
 RUN \
-    # Avoid using legacy cont-init.d
-    mkdir -p /scripts && mv /etc/cont-init.d/* /scripts && \
-    for file in 00-local_mounts.sh 00-smb_mounts.sh 00-banner.sh 01-custom_script.sh; do mkdir -p /scripts2 && mv /scripts/"$file" /scripts2; done && \
-    sed -i "s|/etc/cont-init.d|/scripts|g" /etc/entrypoint.sh && \
-    \
-    # Give permissions
-    chmod 777 /etc/entrypoint.sh /defaults/nextcloud-perms.sh /scripts/* /scripts2/* && \
-    \
     # Correct erroneous modifications
     for file in $(grep -Esril "/www/nextcloud/data/config" /etc /defaults); do sed -Ei "s=(/www/nextcloud/data/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" $file; done && \
     for file in $(grep -Esril "/data/data" /etc /defaults); do sed -Ei "s=(/data/data)+(/| |$|\"|\')=/data\2=g" $file; done && \
