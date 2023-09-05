@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashio
 echo "Starting..."
 
 ####################
