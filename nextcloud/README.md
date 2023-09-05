@@ -35,6 +35,7 @@ Scripts with .sh ending located in /config/addons_config/nextcloud will be execu
 ### Addon options
 
 ```yaml
+default_phone_region: EN # Define the default phone region according to https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
 disable_updates: prevent automatic apps updating along addon
 additional_apps: vim,nextcloud #specify additional apk files to install ; separated by commas
 PGID/PUID: 1000 #allows setting user.

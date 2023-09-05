@@ -1,3 +1,5 @@
+- Fit : new variable "default_phone_region" https://github.com/alexbelgium/hassio-addons/issues/981
+
 ### 27.0.2-3 (24-08-2023)
 - Fix : healthcheck timeouts @https://github.com/alexbelgium/hassio-addons/issues/956
 - Fix : nginx timeouts
