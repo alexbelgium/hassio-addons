@@ -1,13 +1,8 @@
 
 ### 4.16-r0-ls89-xfce3 (04-09-2023)
-- Minor bugs fixed
 - Ingress enabled
 
-### 4.16-r0-ls89-xfce2 (03-09-2023)
-- Minor bugs fixed
-
 ### 4.16-r0-ls89-xfce (03-09-2023)
-- Minor bugs fixed
 - MAJOR REWORK : is now operational with Webtop 2.0
 - Based on Ubuntu XFCE
 
