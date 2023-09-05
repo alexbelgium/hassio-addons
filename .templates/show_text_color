@@ -6,3 +6,4 @@ blue=4
 violet=5
 teal=6
 echo "$(tput setaf $red)ENV exported : $word$(tput sgr0)"
+echo -e "\033[0;31mError\033[0m : Text"
