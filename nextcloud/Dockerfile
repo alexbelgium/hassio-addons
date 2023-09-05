@@ -50,18 +50,7 @@ RUN \
     sed -i "s|client_body_timeout 300s;|client_body_timeout 900s;|g" /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Change location of log
-    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
-    \
-    # Run custom scripts after installation
-    echo "touch /runfile" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
-    echo "/./etc/entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
-    \
-    # Ensure correct data mount first
-    sed -i "1a /./scripts2/00-banner.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run && \
-    sed -i "2a /./defaults/nextcloud-perms.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run && \
-    echo "/./scripts2/01-custom_script.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
-    echo "/./scripts2/00-smb_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
-    echo "/./scripts2/00-local_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run
+    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
