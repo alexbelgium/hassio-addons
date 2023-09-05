@@ -1,3 +1,5 @@
+### 27.0.2-4 (05-09-2023)
+- Minor bugs fixed
 - Fit : new variable "default_phone_region" https://github.com/alexbelgium/hassio-addons/issues/981
 
 ### 27.0.2-3 (24-08-2023)
