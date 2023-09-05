@@ -82,7 +82,10 @@ RUN \
     && for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*;do if [ -f $file ] && [[ ! -z $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' $file) ]] ; then sed -i "s|/config$|/data|g" $file; fi ;done \
     \
     # Replace lsiown if not found
-    && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
+    && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi && \
+    \
+    # Add entrypoint if existing
+    && if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then echo "/./entrypoint.sh" >> /docker-mods; fi
 
 ##################
 # 3 Install apps #
