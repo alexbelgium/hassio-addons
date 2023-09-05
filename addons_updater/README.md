@@ -51,7 +51,7 @@ You can add the following tags in the file :
 - github_beta: true/false ; should it look only for releases or prereleases ok
 - github_havingasset : true if there is a requirement that a release has binaries and not just source
 - github_tagfilter: filter a text in the release name
-- github_exclude: exclude a text in the release name 
+- github_exclude: exclude a text in the release name
 - last_update: automatically populated, date of last upstream update
 - repository: 'name/repo' coming from github
 - paused: true # Pauses the updates
