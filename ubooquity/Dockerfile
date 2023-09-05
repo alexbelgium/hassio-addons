@@ -60,10 +60,7 @@ RUN \
     #&& if [ -f /docker-mods ]; then sed -i 's|bash|bashio|g' /docker-mods && sed -i "1a if bashio::config.has_value \"DOCKER_MODS\"; then DOCKER_MODS=\$(bashio::config \"DOCKER_MODS\"); fi" /docker-mods; fi \
     \
     # Replace lsiown if not found
-    && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi \
-    \
-    # Add entrypoint if existing
-    && if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then chmod +x /entrypoint.sh && sed -i "1a /./entrypoint.sh" /docker-mods; fi
+    && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
 ##################
 # 3 Install apps #
@@ -75,7 +72,8 @@ COPY rootfs/ /
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
+    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
+    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
 
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh"
@@ -106,6 +104,12 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 # 4 Entrypoint #
 ################
+
+# Corrects permissions for s6 v3
+RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
+    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
+    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
 
 #RUN chmod 777 /entrypoint.sh
 #WORKDIR /

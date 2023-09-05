@@ -38,7 +38,8 @@ COPY rootfs/ /
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
+    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
+    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
 
 # Install trading view
 ENV FLASK_APP=main.py
@@ -86,6 +87,12 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 # 4 Entrypoint #
 ################
+
+# Corrects permissions for s6 v3
+RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
+    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
+    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
 
 VOLUME [ "/data" ]
 WORKDIR /

@@ -82,10 +82,7 @@ RUN \
     && for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*;do if [ -f $file ] && [[ ! -z $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' $file) ]] ; then sed -i "s|/config$|/data|g" $file; fi ;done \
     \
     # Replace lsiown if not found
-    && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi \
-    \
-    # Add entrypoint if existing
-    && if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then chmod +x /entrypoint.sh && sed -i "1a /./entrypoint.sh" /docker-mods; fi
+    && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
 
 ##################
 # 3 Install apps #
@@ -97,7 +94,8 @@ COPY rootfs/ /
 # Corrects permissions for s6 v3
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
-    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi
+    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
+    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
 
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh"
@@ -127,6 +125,12 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 ################
 # 4 Entrypoint #
 ################
+
+# Corrects permissions for s6 v3
+RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
+    if [ -f /entrypoint.sh ]; then chmod 755 /entrypoint.sh; fi && \
+    if [ -f /docker-mods ] && [ -f /entrypoint.sh ]; then sed -i "1a /./entrypoint.sh" /docker-mods; fi
 
 # Correct modifications
 ARG CONFIGLOCATION="/www/nextcloud/config"
