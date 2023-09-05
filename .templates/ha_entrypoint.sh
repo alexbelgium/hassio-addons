@@ -25,4 +25,4 @@ echo -e "\033[0;32mStarting the upstream container\033[0m"
 echo " "
 
 # Launch lsio mods
-if [ -f /docker-mods ]; then /./docker-mods; fi
+if [ -f /docker-mods ]; then exec /docker-mods; fi
