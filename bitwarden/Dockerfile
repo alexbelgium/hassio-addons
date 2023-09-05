@@ -33,7 +33,8 @@ COPY --from=vaultwarden /web-vault /opt/web-vault
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
+    S6_SERVICES_GRACETIME=0 \
+    S6_STAGE2_HOOK=/ha_entrypoint.sh
 
 ##################
 # 3 Install apps #

@@ -25,7 +25,8 @@ FROM ${BUILD_FROM}
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
+    S6_SERVICES_GRACETIME=0 \
+    S6_STAGE2_HOOK=/ha_entrypoint.sh
 
 ENV PGDATA=/config/addons_config/guacamole/postgres
 ENV GUACAMOLE_HOME=/config/addons_config/guacamole
