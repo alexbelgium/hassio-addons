@@ -25,8 +25,8 @@ FROM ${BUILD_FROM}
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0 \
-    S6_STAGE2_HOOK=/ha_entrypoint.sh
+    S6_SERVICES_GRACETIME=0
+
 
 ENV PGDATA=/config/addons_config/guacamole/postgres
 ENV GUACAMOLE_HOME=/config/addons_config/guacamole
@@ -95,6 +95,7 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 # Add entrypoint
+ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Corrects permissions for s6 v3
