@@ -18,7 +18,7 @@ chown -R "$PUID:$PGID" "/data/config"
 # Check current version
 if [ -f /data/config/www/nextcloud/config/config.php ]; then
     datadirectory="$(sed -n "s|.*datadirectory.*' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
-    echo "... Data directory detected : $datadirectory"
+    echo "... data directory detected : $datadirectory"
 else
     datadirectory=/share/nextcloud
     echo "Nextcloud is not installed yet, the default data directory is : $datadirectory. You can change it during nextcloud installation."
@@ -30,11 +30,11 @@ if [[ "$datadirectory" == *"/mnt/"* ]] && [ ! -f "$datadirectory"/index.html ]; 
     bashio::addon.stop
 fi
 
-mkdir -p "$datadirectory"
+echo "... setting permissions"
+mkdir -p "$datadirectory" 2>/dev/null || true
 chmod 755 -R "$datadirectory"/* 2>/dev/null || true
 chown -R "$PUID:$PGID" "$datadirectory"/* 2>/dev/null || true
+mkdir -p /scripts 2>/dev/null || true
 
-mkdir -p /scripts
-
-echo "...done"
+echo "... done"
 echo " "
