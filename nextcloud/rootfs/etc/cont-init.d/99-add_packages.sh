@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 
 # Runs only after initialization done
-if [ ! -f /app/www/public/occ ]; then cp "$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
+if [ ! -f /app/www/public/occ ]; then cp /etc/cont-init.d/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
 
 # Install specific packages
 if [ ! -d /data/config/www/nextcloud/apps/pdfannotate ]; then
