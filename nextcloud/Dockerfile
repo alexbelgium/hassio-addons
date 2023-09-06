@@ -131,7 +131,7 @@ RUN \
     cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Run custom scripts after installation
-    echo "/./ha_entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
+    echo "mv /scripts/* /etc/cont-init.d/ && /./ha_entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
 
 ############
 # 5 Labels #
