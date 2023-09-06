@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-
 if bashio::config.true 'use_own_certs'; then
 
     bashio::log.green "Using referenced ssl certificates"
