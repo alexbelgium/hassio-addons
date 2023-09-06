@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Sonarr develop (opened 2023-06-11)](https://github.com/alexbelgium/hassio-addons/issues/866) by [@JonasTae](https://github.com/JonasTae)
 
 # Home assistant add-on: Sonarr
 
