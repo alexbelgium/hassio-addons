@@ -95,3 +95,16 @@ sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentsco
 if bashio::config.has_value "default_phone_region"; then
     sudo -u abc php /app/www/public/occ config:system:set default_phone_region --value="$(bashio::config "default_phone_region")"
 fi
+
+######################
+# Modify config.json #
+######################
+
+echo "Disabling check_data_directory_permissions"
+for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
+    if [ -f "$files" ]; then
+        sed -i "/check_data_directory_permissions/d" "$files"
+        sed -i "/datadirectory/a 'check_data_directory_permissions' => false," "$files"
+    fi
+done
+timeout 10 sudo -u abc php /app/www/public/occ config:system:set check_data_directory_permissions --value=false --type=bool || echo "Please install nextcloud first"
