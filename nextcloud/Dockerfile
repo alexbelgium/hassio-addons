@@ -128,11 +128,7 @@ RUN \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
-    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample && \
-    \
-    # Add entrypoint
-    sed -i "1a if [ ! -f /started ]; then touch /started && exit 0; fi" ha_entrypoint.sh && \
-    sed -i "1a /./ha_entrypoint.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run
+    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
 
 ############
 # 5 Labels #
