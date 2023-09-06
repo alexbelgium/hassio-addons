@@ -1,6 +1,9 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+# Runs only after initialization done
+if [ ! -f /app/www/public/occ ]: then cp "$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
+
 ######################################
 # Make links between logs and docker #
 ######################################
