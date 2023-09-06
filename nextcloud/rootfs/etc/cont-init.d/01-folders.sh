@@ -34,5 +34,7 @@ mkdir -p "$datadirectory"
 chmod 755 -R "$datadirectory"/* 2>/dev/null || true
 chown -R "$PUID:$PGID" "$datadirectory"/* 2>/dev/null || true
 
+mkdir -p /scripts
+
 echo "...done"
 echo " "
