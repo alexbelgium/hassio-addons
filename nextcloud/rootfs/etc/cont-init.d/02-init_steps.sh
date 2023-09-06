@@ -78,20 +78,20 @@ echo " "
 # DISABLE MAINTENACE MODE #
 ###########################
 
-sudo -u abc -s /bin/bash -c "php /data/app/www/public/occ maintenance:mode --off" &>/dev/null || true
+sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:mode --off" &>/dev/null || true
 
 ##############
 # CLEAN OCDE #
 ##############
 
-sudo -u abc php /data/app/www/public/occ app:remove --no-interaction "richdocumentscode" &>/dev/null || true
-sudo -u abc php /data/app/www/public/occ app:remove --no-interaction "richdocumentscode_arm64" &>/dev/null || true
-sudo -u abc php /data/app/www/public/occ app:remove --no-interaction "richdocumentscode_amd64" &>/dev/null || true
+sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode" &>/dev/null || true
+sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_arm64" &>/dev/null || true
+sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_amd64" &>/dev/null || true
 
 ################
 # DEFINE PHONE #
 ################
 
 if bashio::config.has_value "default_phone_region"; then
-    sudo -u abc php /data/app/www/public/occ config:system:set default_phone_region --value="$(bashio::config "default_phone_region")"
+    sudo -u abc php /app/www/public/occ config:system:set default_phone_region --value="$(bashio::config "default_phone_region")"
 fi
