@@ -1,3 +1,5 @@
+### 27.0.2-8 (06-09-2023)
+- Minor bugs fixed
 ### 27.0.2-7 (06-09-2023)
 - Minor bugs fixed
 
