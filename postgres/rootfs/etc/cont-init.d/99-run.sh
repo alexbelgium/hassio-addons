@@ -5,7 +5,7 @@
 CONFIG_HOME="$(bashio::config "CONFIG_LOCATION")"
 CONFIG_HOME="$(dirname "$CONFIG_HOME")"
 mkdir -p "$CONFIG_HOME"
-if [ ! -f "$CONFIG_HOME"/postgresql.conf.sample ]; then
+if [ ! -f "$CONFIG_HOME"/postgresql.conf ]; then
     # Copy default config.env
     if [ -f /usr/local/share/postgresql/postgresql.conf.sample ]; then
         cp /usr/local/share/postgresql/postgresql.conf.sample "$CONFIG_HOME"/postgresql.conf
