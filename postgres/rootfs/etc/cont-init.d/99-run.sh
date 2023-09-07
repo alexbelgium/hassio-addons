@@ -23,7 +23,7 @@ fi
 # Creating config location
 mkdir -p "$PGDATA"
 chown -R postgres:postgres "$PGDATA"
-chmod 1777 "$PGDATA"
+chmod 777 "$PGDATA"
 
 # Permissions
 chmod -R 777 "$CONFIG_HOME"
