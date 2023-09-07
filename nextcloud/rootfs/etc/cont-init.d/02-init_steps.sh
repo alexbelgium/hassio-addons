@@ -81,12 +81,16 @@ echo " "
 # DISABLE MAINTENACE MODE #
 ###########################
 
-sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:mode --off" &>/dev/null || true
+echo "... Clean potential errors"
+sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair" >/dev/null || true
+sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner" >/dev/null || true
+sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 
 ##############
 # CLEAN OCDE #
 ##############
 
+echo "... Remove OCDE if installed as not compatible"
 sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode" &>/dev/null || true
 sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_arm64" &>/dev/null || true
 sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_amd64" &>/dev/null || true
@@ -96,6 +100,7 @@ sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentsco
 ################
 
 if bashio::config.has_value "default_phone_region"; then
+    echo "... Define default_phone_region"
     sudo -u abc php /app/www/public/occ config:system:set default_phone_region --value="$(bashio::config "default_phone_region")"
 fi
 
@@ -103,7 +108,7 @@ fi
 # Modify config.json #
 ######################
 
-echo "Disabling check_data_directory_permissions"
+echo "... Disabling check_data_directory_permissions"
 for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
     if [ -f "$files" ]; then
         sed -i "/check_data_directory_permissions/d" "$files"
