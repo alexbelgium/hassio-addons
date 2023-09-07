@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Omadav3] out of memory (opened 2023-09-05)](https://github.com/alexbelgium/hassio-addons/issues/980) by [@SventeHof](https://github.com/SventeHof)
 # Home assistant add-on: Omada controller
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
