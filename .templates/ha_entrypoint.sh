@@ -1,4 +1,4 @@
-#!/command/with-contenv bashio
+#!/bin/sh
 # shellcheck shell=bash
 echo "Starting..."
 
