@@ -17,6 +17,8 @@ jobs:
       id: sort
       run: |
         echo "Converting crlf to lf"
+        apt-get update
+        apt-get install -y dos2unix
         find . -type f -exec dos2unix {} \;
       shell: bash
     - name: Create New Pull Request If Needed
