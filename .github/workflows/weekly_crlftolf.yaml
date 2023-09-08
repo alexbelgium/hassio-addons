@@ -17,7 +17,7 @@ jobs:
       id: sort
       run: |
         echo "Converting crlf to lf"
-        grep -rl '^M$' . | xargs sed 's/^M$//'
+        find blog -type f -print0 | xargs -0 dos2unix;
       shell: bash
     - name: Create New Pull Request If Needed
       uses: peter-evans/create-pull-request@v5
