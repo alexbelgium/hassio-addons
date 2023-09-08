@@ -75,9 +75,6 @@ ADD --chmod=644 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/mas
 RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi
 
-RUN curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" --output /ha_entrypoint.sh \
-    && chmod 777 /ha_entrypoint.sh
-
 WORKDIR /data
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
