@@ -2,28 +2,41 @@
 ---
 name: Convert crlf to lf
 
-on:
-  schedule:
-    - cron: "0 0 * * 0"
-  workflow_dispatch:
-
+env:
+  USER_AGENT: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0"
+  
 jobs:
-  crlf_to_lf:
-    runs-on: ubuntu-20.04
-    steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v4
-    - name: Run script file
-      id: sort
-      run: |
-        echo "Converting crlf to lf"
-        sudo apt-get update
-        sudo apt-get install -y dos2unix
-        find . -type f -exec dos2unix {} \;
-      shell: bash
-    - name: Create New Pull Request If Needed
-      uses: peter-evans/create-pull-request@v5
-      with:
-        title: "Github bot : crlf removed"
-        branch-suffix: timestamp
-        commit-message: "Github bot : crlf removed"
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Setup Env
+        run: |
+          sudo apt update -y
+          sudo apt install dos2unix -y
+
+      - name: Dos2Unix Everything
+        run: |
+          set -x; set +e
+          cd "$GITHUB_WORKSPACE/main"
+          find . -type f -exec dos2unix {} \; 2>/dev/null
+          find . -type f -exec dos2unix {} \;
+          find ".github/workflows" -type f -name '*yaml*' -name '*yml*' -exec dos2unix {} \; 2>/dev/null
+        continue-on-error: true
+        
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          repository: ./main        
+          commit_user_name: Azathothas # defaults to "github-actions[bot]"
+          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "✅ Dos2Unix-fied 🐧🖳 Everything "
+          #push_options: '--force'
+
