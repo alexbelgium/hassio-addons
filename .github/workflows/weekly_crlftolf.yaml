@@ -2,6 +2,11 @@
 ---
 name: Convert crlf to lf
 
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
 env:
   USER_AGENT: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0"
   
