@@ -16,17 +16,12 @@ jobs:
     - name: Run script file
       id: sort
       run: |
-        git clone t-regx/crlf
-        cd crlf
-        pip install -r requirements/requirements.txt
-        python setup.py install
-        cd ..
-        cd hassio-addons
-        crlf -R . --to lf
+        echo "Converting crlf to lf"
+        grep -rl '^M$' . | xargs sed 's/^M$//'
       shell: bash
     - name: Create New Pull Request If Needed
       uses: peter-evans/create-pull-request@v5
       with:
-        title: "Github bot : crlf to lf"
+        title: "Github bot : crlf removed"
         branch-suffix: timestamp
-        commit-message: "Github bot : crlf to lf"
+        commit-message: "Github bot : crlf removed"
