@@ -92,9 +92,13 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 # Add entrypoint
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
-# Corrects permissions for s6 v3
-RUN if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
-    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi
+# Entrypoint modifications
+RUN \
+    # Corrects permissions for s6 v3
+    if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
+    #Correct shebang in entrypoint
+    for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/bin/bash" "/bin/sh"; do [[ -f "${shebang%% *}" ]] && break; done; sed -i "s|/command/with-contenv bashio|$shebang|g" /ha_entrypoint.sh
 
 #
 #WORKDIR /
