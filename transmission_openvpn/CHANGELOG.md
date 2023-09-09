@@ -1,3 +1,6 @@
+
+## v5.2.0 (09-09-2023)
+- Update to latest version from haugene/docker-transmission-openvpn
 ### v5.1.0-3 (04-09-2023)
 - Minor bugs fixed
 - Fix https://github.com/alexbelgium/hassio-addons/issues/978
