@@ -21,7 +21,7 @@ fi
 # Call apps installer script if needed
 curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh
 chmod 777 /automatic_packages.sh
-eval /./automatic_packages.sh "${PACKAGES:-}"
+eval /./automatic_packages.sh "${PACKAGES:-bash}"
 
 # Clean
 rm /automatic_packages.sh
