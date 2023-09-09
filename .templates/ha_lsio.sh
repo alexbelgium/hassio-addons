@@ -1,5 +1,9 @@
 #!/bin/sh
-# shellcheck disable=SC2086, SC2015, SC2013, SC2086
+# shellcheck disable=SC2013,SC2016,SC2236
+
+#############################
+# Modify global lsio images #
+#############################
 
 # Set variable
 CONFIGLOCATION="$1"
@@ -28,7 +32,7 @@ done
 
 # Avoid chmod /config
 for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*; do
-    if [ -f "$file" ] && [ ! -z $(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' "$file") ]; then
+    if [ -f "$file" ] && [ ! -z "$(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' "$file")" ]; then
         sed -i "s|/config$|/data|g" "$file"
     fi
 done
