@@ -6,6 +6,7 @@
 ##############################
 
 PACKAGES="$1"
+echo "To install : $PACKAGES"
 
 # Install bash if needed
 if ! command -v bash >/dev/null 2>/dev/null; then
