@@ -16,9 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="latest"
-FROM ${BUILD_FROM}${BUILD_UPSTREAM}
-ENV BASHIO_VERSION=1.29.1
+FROM ${BUILD_FROM}
 
 ##################
 # 2 Modify Image #
@@ -29,6 +27,16 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+
+# load volume
+VOLUME [ "/sys/fs/cgroup" ]
+
+# Specific images modifications
+# hadolint ignore=SC2015,DL4006,SC2013,SC2086
+RUN \
+    # Change home folder location
+    usermod --home /config/addons_config/calibre abc \
+    && mkdir -p /opt/calibre
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/config/addons_config/calibre"
@@ -52,11 +60,6 @@ RUN \
     \
     # Replace lsiown if not found
     && if [ ! -f /usr/bin/lsiown ]; then for file in $(grep -sril "lsiown" /etc); do sed -i "s|lsiown|chown|g" $file; done; fi
-
-# Specific images modifications
-RUN \
-    usermod --home /config/addons_config/calibre abc \
-    && mkdir -p /opt/calibre
 
 ##################
 # 3 Install apps #
@@ -104,9 +107,11 @@ RUN \
     #Correct shebang in entrypoint
     for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do if [ -f "${shebang%% *}" ]; then break; fi; done; sed -i "s|/command/with-contenv bashio|$shebang|g" /ha_entrypoint.sh
 
+#
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #

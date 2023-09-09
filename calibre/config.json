@@ -105,6 +105,6 @@
   },
   "slug": "calibre",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
-  "version": "v6.14.1-ls210_reverted",
+  "version": "v6.14.1-ls210_test",
   "video": true
 }
