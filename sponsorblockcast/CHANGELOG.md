@@ -1,3 +1,6 @@
+
+## 0.4.1 (09-09-2023)
+- Update to latest version from gabe565/CastSponsorSkip
 ### 0.4.0-1 (02-09-2023)
 - Added CSS_MUTE_ADS config added, mutes ADS. Bool, default to true
 ## 0.4.0 (02-09-2023)
