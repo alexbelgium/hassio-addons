@@ -1,9 +1,9 @@
 
 ## 15.4 (09-09-2023)
 - Update to latest version from postgres
+
 ### 15.3-11 (08-09-2023)
 - Minor bugs fixed
-DON'T UPDATE NOT WORKING 
 
 ### 15.3-10 (08-09-2023)
 - Minor bugs fixed
