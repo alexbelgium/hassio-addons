@@ -6,6 +6,7 @@
 ##############################
 
 MODULES="$1"
+MODULES="$MODULES 00-banner.sh 01-custom_script.sh"
 echo "To download : $MODULES"
 
 # Install bash if not available
