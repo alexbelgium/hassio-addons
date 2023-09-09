@@ -60,7 +60,7 @@ RUN \
 # Global LSIO modifications
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config/addons_config/qBittorrent"
-RUN if grep -qr "lsio" /etc, then /ha_lsio.sh "$CONFIGLOCATION"; fi
+RUN if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi
 
 ##################
 # 3 Install apps #

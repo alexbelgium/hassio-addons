@@ -31,7 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=0 \
 # Global LSIO modifications
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
-RUN if grep -qr "lsio" /etc, then /ha_lsio.sh "$CONFIGLOCATION"; fi
+RUN if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi
 
 RUN \
     sed -i "s|contenv bash|contenv bashio|g" /etc/s6-overlay/s6-rc.d/svc-jellyfin/run && \

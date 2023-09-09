@@ -31,7 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # Global LSIO modifications
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/emby"
-RUN if grep -qr "lsio" /etc, then /ha_lsio.sh "$CONFIGLOCATION"; fi
+RUN if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi
 
 ##################
 # 3 Install apps #
