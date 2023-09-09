@@ -28,12 +28,14 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
 # Global LSIO modifications
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config/addons_config/jellyseerr"
-# hadolint ignore=SC2015, SC2013, SC2086
+RUN if grep -qr "lsio" /etc, then /ha_lsio.sh "$CONFIGLOCATION"; fi
+
+# Avoid custom-init.d duplications
+ARG CONFIGLOCATION="/config/addons_config/jellyseerr"
 RUN \
-    # Avoid custom-init.d duplications
     for file in $(grep -sril "/app/config" /app /etc); do sed -i "s=/app/config=$CONFIGLOCATION=g" $file; done
 
 ##################
