@@ -67,11 +67,7 @@ else
     bashio::log.red "Error message:"
     bashio::log.red "$($LAUNCHER -V 2>&1)"
     bashio::log.red "------------------------------------------------------------------"
-    bashio::exit.nok
-    sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair"
-    sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair-share-owner"
     sudo -u abc -s /bin/bash -c "php /app/www/public/occ upgrade"
-    sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:mode --off"
 fi
 
 echo " "
