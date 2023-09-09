@@ -43,8 +43,8 @@ COPY rootfs/ /
 ARG MODULES="00-banner.sh 01-custom_script.sh 90-disable_ingress.sh 00-local_mounts.sh 00-smb_mounts.sh"
 
 # Automatic modules download
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_modules.sh" "/ha_modules.sh"
-RUN /ha_modules.sh "$MODULES" && rm /ha_modules.sh
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
+RUN /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
 ENV BASHIO_VERSION=0.14.3
@@ -54,7 +54,7 @@ ENV PACKAGES="jq \
     keyutils"
 
 # Automatic apps & bashio
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_modules.sh" "/ha_autoapps.sh"
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_autoapps.sh"
 RUN /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 ################

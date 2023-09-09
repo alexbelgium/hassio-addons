@@ -72,8 +72,8 @@ COPY rootfs/ /
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-dns_set.sh"
 
 # Automatic modules download
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_modules.sh" "/ha_modules.sh"
-RUN /ha_modules.sh "$MODULES" && rm /ha_modules.sh
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
+RUN /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 #RUN if [ -f /etc/s6-overlay/s6-rc.d/init-adduser ]; then for SCRIPTS in /etc/cont-init.d/*; do [ -e "$SCRIPTS" ] || continue \
 #    && mkdir -p /abscripts && sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' "$SCRIPTS" \
@@ -85,7 +85,7 @@ RUN /ha_modules.sh "$MODULES" && rm /ha_modules.sh
 ARG PACKAGES=""
 
 # Automatic apps & bashio
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_modules.sh" "/ha_autoapps.sh"
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_autoapps.sh"
 RUN /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 # Switch scripts from s6 v2 to v3

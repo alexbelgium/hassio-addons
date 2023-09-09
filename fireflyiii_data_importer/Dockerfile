@@ -46,14 +46,14 @@ COPY rootfs/ /
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh 90-config_yaml.sh"
 
 # Automatic modules download
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_modules.sh" "/ha_modules.sh"
-RUN /ha_modules.sh "$MODULES" && rm /ha_modules.sh
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
+RUN /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
 ENV PACKAGES="cron"
 
 # Automatic apps & bashio
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_modules.sh" "/ha_autoapps.sh"
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_autoapps.sh"
 RUN /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 ################
