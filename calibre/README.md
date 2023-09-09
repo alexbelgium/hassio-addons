@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Calibre update (opened 2023-08-29)](https://github.com/alexbelgium/hassio-addons/issues/972) by [@bokkoman](https://github.com/bokkoman)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
