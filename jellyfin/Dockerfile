@@ -25,8 +25,9 @@ FROM ${BUILD_FROM}
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=0 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0 \
-    S6_READ_ONLY_ROOT=1
+    S6_SERVICES_GRACETIME=0
+
+ENV S6_READ_ONLY_ROOT=1
 
 # Global LSIO modifications
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
