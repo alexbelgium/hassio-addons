@@ -35,6 +35,7 @@ RUN if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_ls
 
 # Avoid custom-init.d duplications
 ARG CONFIGLOCATION="/config/addons_config/jellyseerr"
+# hadolint ignore=SC2086
 RUN \
     for file in $(grep -sril "/app/config" /app /etc); do sed -i "s=/app/config=$CONFIGLOCATION=g" $file; done
 

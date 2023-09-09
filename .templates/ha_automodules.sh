@@ -6,6 +6,7 @@
 ##############################
 
 MODULES="$1"
+echo "To download : $MODULES"
 
 # Install bash if not available
 if ! command -v bash >/dev/null 2>/dev/null; then
