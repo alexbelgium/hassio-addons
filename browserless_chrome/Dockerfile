@@ -26,12 +26,9 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0 \
-    S6_STAGE2_HOOK=/ha_entrypoint.sh
+    S6_SERVICES_GRACETIME=0
 
 USER root
-
-RUN sed -i "2a /./ha_entrypoint.sh" start.sh
 
 ##################
 # 3 Install apps #
@@ -68,7 +65,8 @@ RUN if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get
 ################
 
 # Add entrypoint
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
 RUN \
@@ -77,6 +75,8 @@ RUN \
     if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
     #Correct shebang in entrypoint
     for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/bin/bash" "/bin/sh"; do [[ -f "${shebang%% *}" ]] && break; done; sed -i "s|/command/with-contenv bashio|$shebang|g" /ha_entrypoint.sh
+
+RUN sed -i "2a /./ha_entrypoint.sh" start.sh
 
 ############
 # 5 Labels #

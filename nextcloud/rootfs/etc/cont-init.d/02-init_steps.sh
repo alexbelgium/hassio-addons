@@ -1,6 +1,9 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+# Runs only after initialization done
+if [ ! -f /app/www/public/occ ]; then cp /etc/cont-init.d/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
+
 ######################################
 # Make links between logs and docker #
 ######################################
@@ -78,20 +81,38 @@ echo " "
 # DISABLE MAINTENACE MODE #
 ###########################
 
-sudo -u abc -s /bin/bash -c "php /data/app/www/public/occ maintenance:mode --off" &>/dev/null || true
+echo "... Clean potential errors"
+sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair" >/dev/null || true
+sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner" >/dev/null || true
+sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
 
 ##############
 # CLEAN OCDE #
 ##############
 
-sudo -u abc php /data/app/www/public/occ app:remove --no-interaction "richdocumentscode" &>/dev/null || true
-sudo -u abc php /data/app/www/public/occ app:remove --no-interaction "richdocumentscode_arm64" &>/dev/null || true
-sudo -u abc php /data/app/www/public/occ app:remove --no-interaction "richdocumentscode_amd64" &>/dev/null || true
+echo "... Remove OCDE if installed as not compatible"
+sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode" &>/dev/null || true
+sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_arm64" &>/dev/null || true
+sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_amd64" &>/dev/null || true
 
 ################
 # DEFINE PHONE #
 ################
 
 if bashio::config.has_value "default_phone_region"; then
-    sudo -u abc php /data/app/www/public/occ config:system:set default_phone_region --value="$(bashio::config "default_phone_region")"
+    echo "... Define default_phone_region"
+    sudo -u abc php /app/www/public/occ config:system:set default_phone_region --value="$(bashio::config "default_phone_region")"
 fi
+
+######################
+# Modify config.json #
+######################
+
+echo "... Disabling check_data_directory_permissions"
+for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
+    if [ -f "$files" ]; then
+        sed -i "/check_data_directory_permissions/d" "$files"
+        sed -i "/datadirectory/a 'check_data_directory_permissions' => false," "$files"
+    fi
+done
+timeout 10 sudo -u abc php /app/www/public/occ config:system:set check_data_directory_permissions --value=false --type=bool || echo "Please install nextcloud first"

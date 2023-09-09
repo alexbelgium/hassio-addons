@@ -28,8 +28,7 @@ FROM ${BUILD_FROM}${BUILD_UPSTREAM}
 # Set S6 wait time
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0 \
-    S6_STAGE2_HOOK=/ha_entrypoint.sh
+    S6_SERVICES_GRACETIME=0
 
 # Specific modifications
 ARG CONFIGLOCATION="/share/nextcloud"
@@ -50,18 +49,7 @@ RUN \
     sed -i "s|client_body_timeout 300s;|client_body_timeout 900s;|g" /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Change location of log
-    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
-    \
-    # Run custom scripts after installation
-    echo "touch /runfile" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
-    echo "/./etc/entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
-    \
-    # Ensure correct data mount first
-    sed -i "1a /./scripts2/00-banner.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run && \
-    sed -i "2a /./defaults/nextcloud-perms.sh" /etc/s6-overlay/s6-rc.d/init-adduser/run && \
-    echo "/./scripts2/01-custom_script.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
-    echo "/./scripts2/00-smb_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run && \
-    echo "/./scripts2/00-local_mounts.sh" >> /etc/s6-overlay/s6-rc.d/init-adduser/run
+    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
 
 # Global LSIO modifications
 ARG CONFIGLOCATION="/data/config"
@@ -122,7 +110,8 @@ VOLUME ["/share", "/ssl", "/data", "/media"]
 ################
 
 # Add entrypoint
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
 RUN \
@@ -143,7 +132,10 @@ RUN \
     # Correct nginx files
     sed -i "/Strict-Transport-Security/d" /defaults/nginx/site-confs/default.conf.sample && \
     sed -i '1h;1!H;$!d;g;s/\(.*\)}/\1/' /defaults/nginx/site-confs/default.conf.sample && \
-    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample
+    cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample && \
+    \
+    # Run custom scripts after installation
+    echo "mv /scripts/* /etc/cont-init.d/ && /./ha_entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
 
 ############
 # 5 Labels #
