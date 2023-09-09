@@ -58,7 +58,7 @@ ENV PACKAGES="jq \
     nginx"
 
 # Automatic apps & bashio
-ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_autoapps.sh"
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
 RUN /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 ################
