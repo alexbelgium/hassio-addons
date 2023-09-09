@@ -3,7 +3,7 @@
 # shellcheck disable=SC2086
 
 # Runs only after initialization done
-if [ ! -f /app/www/public/occ ]; then cp /etc/cont-init.d/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
+if [ ! -f /app/www/public/occ ]; then cp /etc/cont-init.d/"${0##*/}" /scripts/ && exit 0; fi
 
 # Only execute if installed
 if [ -f /notinstalled ]; then exit 0; fi
