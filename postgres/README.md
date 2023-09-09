@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Postgres] Custom configuration cannot be applied (and overwritten instead) (opened 2023-08-28)](https://github.com/alexbelgium/hassio-addons/issues/971) by [@interkelstar](https://github.com/interkelstar)
-## &#9888; Open Issue : [🐛 [POSTGRES] env: cant execute /ha_entrypoint.sh: No such file or directory (opened 2023-09-07)](https://github.com/alexbelgium/hassio-addons/issues/983) by [@swap83](https://github.com/swap83)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
