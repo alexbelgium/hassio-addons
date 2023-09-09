@@ -1,3 +1,6 @@
+
+## v6.26.0-ls237 (09-09-2023)
+- Update to latest version from linuxserver/docker-calibre
 - Feat : cifsdomain added
 
 ### v6.14.1-ls210 (09-04-2023)
