@@ -19,7 +19,7 @@
     "5000/udp": 5000
   },
   "ports_description": {
-    "5000/udp": "Webui"
+    "5000/udp": "webui"
   },
   "schema": {
     "PGID": "int",
