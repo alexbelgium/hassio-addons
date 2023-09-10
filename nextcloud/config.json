@@ -99,7 +99,6 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "default_phone_region": "match(^[A-Z]{2}$)?",
     "Full_Text_Search": "bool?",
     "OCR": "bool?",
     "OCRLANG": "str?",
@@ -111,6 +110,7 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "default_phone_region": "match(^[A-Z]{2}$)?",
     "disable_updates": "bool?",
     "elasticsearch_server": "str?",
     "keyfile": "str",
