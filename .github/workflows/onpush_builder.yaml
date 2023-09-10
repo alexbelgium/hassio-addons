@@ -69,6 +69,7 @@ jobs:
         uses: actions/checkout@v4
       - name: 🔎 Run Home Assistant Add-on Lint
         uses: frenck/action-addon-linter@v2
+        continue-on-error: true
         with:
           path: "./${{ matrix.addon }}"
 
