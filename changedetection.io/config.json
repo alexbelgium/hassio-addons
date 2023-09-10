@@ -16,10 +16,10 @@
     "PUID": 0
   },
   "ports": {
-    "5000/tdp": 5000
+    "5000/tcp": 5000
   },
   "ports_description": {
-    "5000/tdp": "webui"
+    "5000/tcp": "webui"
   },
   "schema": {
     "PGID": "int",
