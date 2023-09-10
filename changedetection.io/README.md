@@ -31,7 +31,7 @@ Webui can be found at `<your-ip>:5000`.
 ```yaml
 PGID: user
 GPID: user
-TZ: Etc/UTC	specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 BASE_URL: Specify the full URL (including protocol) when running behind a reverse proxy
 ```
 
