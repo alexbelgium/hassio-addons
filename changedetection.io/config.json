@@ -5,10 +5,6 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "free, open-source web page monitoring, notification and change detection",
-  "environment": {
-    "PGID": "0",
-    "PUID": "0"
-  },
   "image": "ghcr.io/alexbelgium/changedetection.io_nas-{arch}",
   "init": false,
   "map": [
