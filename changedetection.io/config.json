@@ -4,7 +4,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "free, open-source web page monitoring, notification and change detection",
+  "description": "web page monitoring, notification and change detection (free, open-source)",
   "image": "ghcr.io/alexbelgium/changedetection.io_nas-{arch}",
   "init": false,
   "map": [
