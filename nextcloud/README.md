@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Nextcloud default_phone_region variable under configurable (opened 2023-09-05)](https://github.com/alexbelgium/hassio-addons/issues/981) by [@panhans](https://github.com/panhans)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
