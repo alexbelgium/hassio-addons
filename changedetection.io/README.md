@@ -24,36 +24,15 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-changedetection.io) from linuxserver.io.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Configuration
 
-Webui can be found at `<your-ip>:8096`.
+Webui can be found at `<your-ip>:5000`.
 
 ```yaml
 PGID: user
 GPID: user
-TZ: timezone
-claim: claim code for changedetection.io server # see https://github.com/linuxserver/docker-changedetection.io
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-cifsdomain: "domain" # optional, allow setting the domain for the smb share
+TZ: Etc/UTC	specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+BASE_URL: Specify the full URL (including protocol) when running behind a reverse proxy
 ```
 
 ## Installation
