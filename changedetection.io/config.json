@@ -5,7 +5,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "web page monitoring, notification and change detection (free, open-source)",
-  "image": "ghcr.io/alexbelgium/changedetection.io_nas-{arch}",
+  "image": "ghcr.io/alexbelgium/changedetection.io-{arch}",
   "init": false,
   "map": [
     "config:rw"
