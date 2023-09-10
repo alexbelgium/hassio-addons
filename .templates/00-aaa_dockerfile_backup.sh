@@ -27,10 +27,10 @@ if [ -e "/ENVFILE" ]; then
 
     if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi &&
     if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi &&
-    curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh &&
-    chmod 777 /automatic_packages.sh &&
-    eval /./automatic_packages.sh "${PACKAGES:-}" &&
-    rm /automatic_packages.sh
+    curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automatic_packages.sh" --output /ha_automatic_packages.sh &&
+    chmod 777 /ha_automatic_packages.sh &&
+    eval /./ha_automatic_packages.sh "${PACKAGES:-}" &&
+    rm /ha_automatic_packages.sh
 fi
 
 if [ -e "/MODULESFILE" ] && [ ! -f /ha_entrypoint.sh ]; then

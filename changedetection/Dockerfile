@@ -16,7 +16,6 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="1.2.4"
 FROM ${BUILD_FROM}
 
 ##################
@@ -28,9 +27,11 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# Image specific modifications
+
 # Global LSIO modifications
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-ARG CONFIGLOCATION="/config/addons_config/bazarr"
+ARG CONFIGLOCATION="/config"
 RUN if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 ##################
@@ -41,7 +42,7 @@ RUN if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_ls
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh"
 
 # Automatic modules download
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
@@ -64,7 +65,20 @@ ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/mas
 
 # Entrypoint modifications
 ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint_modif.sh"
-RUN /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
+
+RUN \
+    # Corrects permissions for s6 v3
+    if [ -d /etc/cont-init.d ]; then chmod -R 755 /etc/cont-init.d; fi && \
+    if [ -d /etc/services.d ]; then chmod -R 755 /etc/services.d; fi && \
+    #Correct shebang in entrypoint
+    mkdir -p /run/s6/container_environment && \
+    for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do if [ -f "${shebang%% *}" ]; then break; fi; done; sed -i "s|/command/with-contenv bashio|$shebang|g" /ha_entrypoint.sh
+
+#
+#WORKDIR /
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/ha_entrypoint.sh" ]
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
@@ -100,11 +114,11 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-ENV HEALTH_PORT="6767" \
-    HEALTH_URL=""
+ENV HEALTH_PORT="32400" \
+    HEALTH_URL="/identity"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
+    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || curl --fail http://127.0.0.1:443 || exit 1

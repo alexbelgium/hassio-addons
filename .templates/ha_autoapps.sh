@@ -19,9 +19,9 @@ if ! command -v curl >/dev/null 2>/dev/null; then
 fi
 
 # Call apps installer script if needed
-curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/automatic_packages.sh" --output /automatic_packages.sh
-chmod 777 /automatic_packages.sh
-eval /./automatic_packages.sh "${PACKAGES:-}"
+curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automatic_packages.sh" --output /ha_automatic_packages.sh
+chmod 777 /ha_automatic_packages.sh
+eval /./ha_automatic_packages.sh "${PACKAGES:-}"
 
 # Clean
-rm /automatic_packages.sh
+rm /ha_automatic_packages.sh
