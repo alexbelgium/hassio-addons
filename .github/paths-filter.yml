@@ -12,6 +12,7 @@ booksonic_air: booksonic_air/config.* # Image : yes
 browserless_chrome: browserless_chrome/config.* # Image : yes
 calibre: calibre/config.* # Image : yes
 calibre_web: calibre_web/config.* # Image : yes
+changedetection: changedetection/config.* # Image : yes
 cloudcommander: cloudcommander/config.* # Image : yes
 code-server: code-server/config.* # Image : yes
 elasticsearch: elasticsearch/config.* # Image : yes
@@ -78,7 +79,6 @@ spotweb: spotweb/config.* # Image : yes
 tandoor_recipes: tandoor_recipes/config.* # Image : yes
 tdarr: tdarr/config.* # Image : yes
 teamspeak: teamspeak/config.* # Image : yes
-test: test/config.* # Image : yes
 transmission: transmission/config.* # Image : yes
 transmission_openvpn: transmission_openvpn/config.* # Image : yes
 ubooquity: ubooquity/config.* # Image : yes
