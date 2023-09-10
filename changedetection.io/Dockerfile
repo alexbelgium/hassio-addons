@@ -105,12 +105,3 @@ LABEL \
 #################
 # 6 Healthcheck #
 #################
-
-ENV HEALTH_PORT="32400" \
-    HEALTH_URL="/identity"
-HEALTHCHECK \
-    --interval=5s \
-    --retries=5 \
-    --start-period=30s \
-    --timeout=25s \
-    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || curl --fail http://127.0.0.1:443 || exit 1
