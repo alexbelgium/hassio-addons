@@ -9,7 +9,7 @@ echo "Starting..."
 for SCRIPTS in /etc/cont-init.d/*; do
     [ -e "$SCRIPTS" ] || continue
     echo "$SCRIPTS: executing"
-    
+
     # Ensure permissions
     chown "$(id -u)":"$(id -g)" "$SCRIPTS"
     chmod a+x "$SCRIPTS"
@@ -20,7 +20,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
         for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do if [ -f "${shebang%% *}" ]; then break; fi; done
         sed -i "s|$currentshebang|$shebang|g" "$SCRIPTS"
     fi
-    
+
     # Start the script
     /./"$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
 
