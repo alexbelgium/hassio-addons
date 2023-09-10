@@ -6,4 +6,5 @@ MD007:          # Unordered list indentation
 MD012: false    # Multiple consecutive blank lines
 MD013: false    # Line length
 MD025: false    # Multiple top level headings in the same document
+MD033: false    # No Inline html
 MD041: false    # First line in file should be a top level header
