@@ -63,7 +63,7 @@ ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
-ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint_modif.sh"
+ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 ############
