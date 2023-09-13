@@ -1,3 +1,5 @@
+### 1.32.5.7349-8f4248874-ls182-4 (13-09-2023)
+- Minor bugs fixed
 ### 1.32.5.7349-8f4248874-ls182-3 (12-09-2023)
 - Minor bugs fixed
 - Fix : using puid/guid
