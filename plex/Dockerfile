@@ -27,7 +27,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
 # Image specific modifications
 # hadolint ignore=SC2016,SC2086
 RUN \
@@ -35,7 +34,12 @@ RUN \
     file=$(grep -sril 'Server claimed successfully' /etc) \
     && sed -i 's/with-contenv bash/with-contenv bashio/g' $file \
     && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' $file \
-    && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' $file
+    && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' $file \
+    \
+    # Correct library path
+    && sed -i "s|/config/Library/Application Support|/share/plex/Library/Application Support|g" /defaults/plexmediaserver
+
+ENV PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/share/plex/Library/Application Support"
 
 # Global LSIO modifications
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
