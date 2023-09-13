@@ -15,4 +15,4 @@ for file in $(grep -Esril "/config/.config/yarn" /usr /etc /defaults); do
     sed -i "s=/config/.config/yarn=/config/addons_config/overseerr/yarn=g" "$file"
 done
 yarn config set global-folder /config/addons_config/overseerr/yarn
-chown -R abc:abc /config/addons_config/overseerr
+chown -R "$PUID:$PGID" /config/addons_config/overseerr

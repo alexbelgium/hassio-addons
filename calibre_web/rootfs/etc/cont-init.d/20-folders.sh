@@ -5,4 +5,4 @@ if [ ! -d /config/addons_config/calibre-web ]; then
     mkdir -p /config/addons_config/calibre-web
 fi
 
-chown -R abc:abc /config/addons_config/calibre-web
+chown -R "$PUID:$PGID" /config/addons_config/calibre-web

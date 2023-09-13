@@ -29,7 +29,7 @@ fi
 echo "Updating folders"
 mkdir -p "$CONFIGDIR"
 mkdir -p /watch || true
-chown -R abc:abc "$CONFIGDIR"
+chown -R "$PUID:$PGID" "$CONFIGDIR"
 
 if ! bashio::fs.file_exists "$CONFIGDIR/settings.json"; then
     echo "Creating default config"
@@ -61,14 +61,14 @@ CONFIG=$(<$CONFIGDIR/settings.json)
 # Permissions
 echo "Updating permissions"
 mkdir -p "$download_dir"
-chown abc:abc "$download_dir"
+chown "$PUID:$PGID" "$download_dir"
 
 # if incomplete dir > 2, to allow both null and '', set it as existing
 if [ ${#incomplete_dir} -ge 2 ]; then
     echo "Incomplete dir set: $incomplete_dir"
     CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=true")
     mkdir -p "$incomplete_dir"
-    chown abc:abc "$incomplete_dir"
+    chown "$PUID:$PGID" "$incomplete_dir"
 else
     echo "Incomplete dir disabled"
     CONFIG=$(bashio::jq "${CONFIG}" ".\"incomplete-dir-enabled\"=false")

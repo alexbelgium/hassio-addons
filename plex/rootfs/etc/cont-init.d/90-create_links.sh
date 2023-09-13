@@ -7,9 +7,9 @@
 if [ ! -d /share/plex ]; then
     echo "Creating /share/plex"
     mkdir -p /share/plex
-    chown -R abc:abc /share/plex
+    chown -R "$PUID:$PGID" /share/plex
 else
-    chown -R abc:abc /share/plex
+    chown -R "$PUID:$PGID" /share/plex
 fi
 
 if [ ! -d /share/plex/Library ]; then

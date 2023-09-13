@@ -9,4 +9,4 @@ COMICS=$(jq ".comicsPaths[0].pathString" /config/addons_config/ubooquity/prefere
 BOOKS=$(jq ".booksPaths[0].pathString" /config/addons_config/ubooquity/preferences.json)
 
 mkdir -p "$FILES" "$COMICS" "$BOOKS" /config/addons_config/ubooquity || true
-chown -R abc:abc "$FILES" "$COMICS" "$BOOKS" /config/addons_config/ubooquity || true
+chown -R "$PUID:$PGID" "$FILES" "$COMICS" "$BOOKS" /config/addons_config/ubooquity || true

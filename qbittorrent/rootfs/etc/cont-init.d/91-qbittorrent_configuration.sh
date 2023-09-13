@@ -58,7 +58,7 @@ fi
 
 # Create default location
 mkdir -p "$DOWNLOADS" || bashio::log.fatal "Error : folder defined in SavePath doesn't exist and can't be created. Check path"
-chown -R abc:abc "$DOWNLOADS" || bashio::log.fatal "Error, please check default save folder configuration in addon"
+chown -R "$PUID:$PGID" "$DOWNLOADS" || bashio::log.fatal "Error, please check default save folder configuration in addon"
 
 ##############
 # Avoid bugs #
@@ -148,7 +148,7 @@ if [ ! "$CUSTOMUI" = custom ]; then
     sed -i '/RootFolder/d' qBittorrent.conf
     rm -f -r /webui
     mkdir -p /webui
-    chown abc:abc /webui
+    chown "$PUID:$PGID" /webui
 fi
 
 # Install webui

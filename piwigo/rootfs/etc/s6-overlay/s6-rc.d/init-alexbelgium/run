@@ -10,12 +10,12 @@
 if [ ! -d /share/piwigo ]; then
     echo "Creating /share/piwigo"
     mkdir -p /share/piwigo
-    chown -R abc:abc /share/piwigo
+    chown -R "$PUID:$PGID" /share/piwigo
 else
-    chown -R abc:abc /share/piwigo
+    chown -R "$PUID:$PGID" /share/piwigo
 fi
 
-mkdir -p /config/www/local 
+mkdir -p /config/www/local
 if [ ! -d /share/piwigo/config ] && [ -d /config/www/local/config ]; then
     echo "moving config folder"
     mv /config/www/local/config /share/piwigo

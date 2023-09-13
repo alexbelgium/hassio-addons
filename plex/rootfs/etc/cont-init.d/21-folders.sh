@@ -24,4 +24,4 @@ if [ ! -d "/config/Library/Application Support" ]; then
     ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support"
 fi
 
-chown -R abc:abc /share/plex
+chown -R "$PUID:$PGID" /share/plex

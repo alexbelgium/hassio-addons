@@ -29,19 +29,19 @@ bashio::log.info "Import dir set to $IMPORTDIR"
 #    echo "Creating /config"
 #    mkdir -p /config
 #fi
-#chown -R abc:abc /config
+#chown -R "$PUID:$PGID" /config
 
 if [ ! -d "$MEDIADIR" ]; then
     echo "Creating $MEDIADIR"
     mkdir -p "$MEDIADIR"
 fi
-chown -R abc:abc "$MEDIADIR"
+chown -R "$PUID:$PGID" "$MEDIADIR"
 
 if [ ! -d "$IMPORTDIR" ]; then
     echo "Creating $IMPORTDIR"
     mkdir -p "$IMPORTDIR"
 fi
-chown -R abc:abc "$IMPORTDIR"
+chown -R "$PUID:$PGID" "$IMPORTDIR"
 
 ##################
 # CONFIGURE IMAP #

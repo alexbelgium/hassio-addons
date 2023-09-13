@@ -4,13 +4,13 @@
 if [ ! -d /share/music ]; then
     echo "Creating /share/music"
     mkdir -p /share/music
-    chown -R abc:abc /share/music
+    chown -R "$PUID:$PGID" /share/music
 fi
 
 if [ ! -d /share/downloads ]; then
     echo "Creating /share/downloads"
     mkdir -p /share/downloads
-    chown -R abc:abc /share/downloads
+    chown -R "$PUID:$PGID" /share/downloads
 fi
 
 if [ -d /config/lidarr ] && [ ! -d /config/addons_config/lidarr ]; then

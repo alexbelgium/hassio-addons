@@ -11,7 +11,7 @@ CONFIG_LOCATION=$(bashio::config 'CONFIG_LOCATION')
 bashio::log.info "Config stored in $CONFIG_LOCATION"
 
 mkdir -p "$CONFIG_LOCATION"
-chown -R abc:abc "$CONFIG_LOCATION"
+chown -R "$PUID:$PGID" "$CONFIG_LOCATION"
 
 sed -i "s|/config/addons_config/readarr|$CONFIG_LOCATION|g" /etc/services.d/readarr/run
 sed -i "s|/config/addons_config/readarr|$CONFIG_LOCATION|g" /etc/cont-init.d/30-config
