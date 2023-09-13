@@ -36,8 +36,8 @@ RUN \
     && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' $file \
     && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' $file \
     \
-    # Correct library path
-    && sed -i "s|/config/Library/Application Support|/share/plex/Library/Application Support|g" /defaults/plexmediaserver
+    # Execute scripts
+    && echo "/./scripts/* /etc/s6-overlay/s6-rc.d/init-plex-chown"
 
 ENV PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/share/plex/Library/Application Support"
 
