@@ -34,10 +34,7 @@ RUN \
     file=$(grep -sril 'Server claimed successfully' /etc) \
     && sed -i 's/with-contenv bash/with-contenv bashio/g' $file \
     && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' $file \
-    && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' $file \
-    \
-    # Execute scripts
-    && echo "/./scripts/* >> /etc/s6-overlay/s6-rc.d/init-plex-chown"
+    && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' $file
 
 ENV PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/share/plex/Library/Application Support"
 
