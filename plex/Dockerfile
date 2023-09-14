@@ -36,12 +36,12 @@ RUN \
     && sed -i '2iexport PLEX_CLAIM=$(bashio::config "claim")' $file \
     && sed -i '3i[ $PLEX_CLAIM = "Get_from_https://www.plex.tv/claim" ] && bashio::log.warning "Please change the PLEX_CLAIM code from the options" && exit 1 || true' $file
 
-ENV PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/share/plex/Library/Application Support"
+#ENV PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR="/share/plex/Library/Application Support"
 
 # Global LSIO modifications
-#ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-#ARG CONFIGLOCATION="/config"
-#RUN if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
+ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
+ARG CONFIGLOCATION="/config"
+RUN if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 
 ##################
