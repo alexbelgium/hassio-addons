@@ -7,9 +7,6 @@
 if [ ! -d /share/plex ]; then
     echo "Creating /share/plex"
     mkdir -p /share/plex
-    chown -R "$PUID:$PGID" /share/plex
-else
-    chown -R "$PUID:$PGID" /share/plex
 fi
 
 if [ ! -d /share/plex/Library ]; then
@@ -22,3 +19,7 @@ else
     ln -s /share/plex/Library /config
     echo "Using existing config"
 fi
+
+chown -R "$PUID:$PGID" /config/Library
+chown -R "$PUID:$PGID" /share/plex
+chmod -R 777 /share/plex
