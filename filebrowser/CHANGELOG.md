@@ -1,4 +1,7 @@
 
+## 2.25.0 (16-09-2023)
+- Update to latest version from filebrowser/filebrowser
+
 ## 2.24.2 (27-08-2023)
 - Update to latest version from filebrowser/filebrowser
 - Switch upstream image to filebrowser/filebrowser
