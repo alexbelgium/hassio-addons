@@ -1,10 +1,10 @@
 {
   "dockerhub_by_date": true,
   "dockerhub_list_size": 2,
-  "last_update": "09-09-2023",
+  "last_update": "16-09-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "postgres",
   "source": "github",
   "upstream_repo": "postgres",
-  "upstream_version": "15.4"
+  "upstream_version": "16.0"
 }
