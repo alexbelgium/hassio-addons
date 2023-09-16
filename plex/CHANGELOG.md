@@ -1,3 +1,6 @@
+
+## 1.32.6.7468-07e0d4a7e-ls183 (16-09-2023)
+- Update to latest version from linuxserver/docker-plex
 ### 1.32.5.7349-8f4248874-ls182-5 (14-09-2023)
 - Minor bugs fixed
 - Fix : using puid/guid
