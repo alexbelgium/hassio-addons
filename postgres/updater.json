@@ -7,5 +7,5 @@
   "slug": "postgres",
   "source": "github",
   "upstream_repo": "postgres",
-  "upstream_version": "16.0"
+  "upstream_version": "15.4"
 }

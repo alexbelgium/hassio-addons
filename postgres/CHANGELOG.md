@@ -1,4 +1,7 @@
 
+## 15.4 (16-09-2023)
+- Update to latest version from postgres
+
 ## 16.0 (16-09-2023)
 - Update to latest version from postgres
 
