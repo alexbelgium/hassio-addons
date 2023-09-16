@@ -75,7 +75,6 @@ RUN /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
-WORKDIR /data
 
 ############
 # 5 Labels #
