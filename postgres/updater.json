@@ -1,6 +1,7 @@
 {
   "dockerhub_by_date": true,
   "dockerhub_list_size": 2,
+  "github_tagfilter": "15",
   "last_update": "16-09-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "postgres",
