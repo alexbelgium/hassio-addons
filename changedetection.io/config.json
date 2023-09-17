@@ -22,10 +22,10 @@
     "5000/tcp": "webui"
   },
   "schema": {
+    "BASE_URL": "str?",
     "PGID": "int",
     "PUID": "int",
-    "TZ": "str?",
-    "BASE_URL": "str?"
+    "TZ": "str?"
   },
   "slug": "changedetection.io",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/changedetection.io",
