@@ -73,7 +73,7 @@ ADD --chmod=777 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/mas
 RUN /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 
-ENTRYPOINT [ "/usr/bin/env" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 
 ############
