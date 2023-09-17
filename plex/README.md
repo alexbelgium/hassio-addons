@@ -1,6 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Plex reduce backup (opened 2023-06-13)](https://github.com/alexbelgium/hassio-addons/issues/871) by [@akrigator](https://github.com/akrigator)
 ## &#9888; Open Issue : [🐛 [Plex NAS] amdgpu: The CS has been rejected (opened 2023-08-20)](https://github.com/alexbelgium/hassio-addons/issues/945) by [@interkelstar](https://github.com/interkelstar)
-## &#9888; Open Issue : [🐛 [Plex NAS] Not Starting (opened 2023-09-10)](https://github.com/alexbelgium/hassio-addons/issues/986) by [@kolossboss](https://github.com/kolossboss)
 
 
 # Home assistant add-on: plex

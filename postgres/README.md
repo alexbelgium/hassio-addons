@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Postgres] Custom configuration cannot be applied (and overwritten instead) (opened 2023-08-28)](https://github.com/alexbelgium/hassio-addons/issues/971) by [@interkelstar](https://github.com/interkelstar)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

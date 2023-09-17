@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] Transmission - set config directory from configuration page (opened 2023-07-28)](https://github.com/alexbelgium/hassio-addons/issues/922) by [@akslow](https://github.com/akslow)
-## &#9888; Open Issue : [🐛 [Transmission Openvpn] FATAL: Ovpn file not found at location provided (opened 2023-09-04)](https://github.com/alexbelgium/hassio-addons/issues/978) by [@almico](https://github.com/almico)
 
 # Home assistant add-on: Transmission
 
