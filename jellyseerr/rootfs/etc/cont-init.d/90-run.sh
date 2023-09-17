@@ -7,7 +7,7 @@ bashio::log.info "Config stored in $CONFIG_LOCATION"
 mkdir -p "$CONFIG_LOCATION"
 cp -rnT /app/config "$CONFIG_LOCATION"/
 rm -r /app/config
-ln -s "$CONFIG_LOCATION" /data/config
+ln -s "$CONFIG_LOCATION" /app/config
 chmod -R 755 "$CONFIG_LOCATION"
 
 # Create files
