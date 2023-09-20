@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Seafile: enble WebDAV (opened 2023-09-18)](https://github.com/alexbelgium/hassio-addons/issues/991) by [@stepler-nn](https://github.com/stepler-nn)
 # Home assistant add-on: seafile
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
