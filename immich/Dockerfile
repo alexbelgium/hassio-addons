@@ -37,9 +37,6 @@ USER root
 # Install PostgreSQL
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-"]
-
 ##################
 # 3 Install apps #
 ##################
