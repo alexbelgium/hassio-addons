@@ -1,3 +1,5 @@
+### 1.78.1-5 (21-09-2023)
+- Minor bugs fixed
 - YOU WILL LOSE DATA : the upstream container has removed the embedded postgres (read more https://github.com/imagegenius/docker-immich/issues/90). You now need to install and configure the postgress add-on from this same repo, and reference it in the addon options. This means you will lose your current database, and will need to recreate it from scratch. Your previous database will still be exported to the file /config/addons_config/immich/old_database.gzip. However exporting it to the postgres container is quite complex and not supported.
 - BREAKING CHANGE : referencing the postgres options is now required. You can either install the postgres add-on from my repo, or this one for example : https://github.com/Expaso/hassos-addons/tree/master/timescaledb
 - Switch from jammy branch to latest due to deprecation
