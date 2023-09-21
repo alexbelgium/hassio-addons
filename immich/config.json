@@ -54,6 +54,7 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "DOCKER_MODS": "imagegenius/mods:universal-redis",
     "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379",
