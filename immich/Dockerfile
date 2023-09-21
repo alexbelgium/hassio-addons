@@ -35,13 +35,13 @@ ARG CONFIGLOCATION="/config/addons_config/immich"
 RUN if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 # Install REDIS
-ENV DOCKER_MODS="imagegenius/mods:universal-redis"
-RUN \
-    echo "Installing REDIS" \
-    && chmod 777 -R /docker-mods \
-        && /./docker-mods/* || ls / \
-    && if [ !-f /defaults/redis.conf ]; then echo "Not installed" && exit 1; fi
-ENV DOCKER_MODS=""
+#ENV DOCKER_MODS="imagegenius/mods:universal-redis"
+#RUN \
+#    echo "Installing REDIS" \
+#    && chmod 777 -R /docker-mods \
+#        && /./docker-mods/* || ls / \
+#    && if [ !-f /defaults/redis.conf ]; then echo "Not installed" && exit 1; fi
+#ENV DOCKER_MODS=""
 
 ##################
 # 3 Install apps #
