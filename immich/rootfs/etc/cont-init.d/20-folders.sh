@@ -30,3 +30,5 @@ ln -sf "$DATA_LOCATION" /photos
 chown -R "$PUID":"$PGID" /photos
 
 mkdir -p "$MACHINE_LEARNING_CACHE_FOLDER" "$TYPESENSE_DATA_DIR"
+chown -R "$PUID":"$PGID" "$MACHINE_LEARNING_CACHE_FOLDER"
+chown -R "$PUID":"$PGID" "$TYPESENSE_DATA_DIR"
