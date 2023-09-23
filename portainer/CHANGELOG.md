@@ -1,7 +1,4 @@
 
-## 2.19.1 (23-09-2023)
-- Update to latest version from portainer/portainer
-
 ## 2.19.0 (09-09-2023)
 - Update to latest version from portainer/portainer
 

@@ -1,7 +1,4 @@
 
-## test (23-09-2023)
-- Update to latest version from abesnier/guacamole
-
 ## github-pg15 (26-08-2023)
 - Update to latest version from abesnier/guacamole
 

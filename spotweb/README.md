@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Spotweb] Spotweb is spamming CLI with crond messages (opened 2023-09-22)](https://github.com/alexbelgium/hassio-addons/issues/999) by [@JBakers](https://github.com/JBakers)
 # Home Assistant Add-ons: Spotweb
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
