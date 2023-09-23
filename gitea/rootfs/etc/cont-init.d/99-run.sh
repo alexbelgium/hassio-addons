@@ -30,13 +30,11 @@ for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
         sed -i "/server/a PROTOCOL=http" "$file"
     fi
 
-done
-
 ##################
 # ADAPT ROOT_URL #
 ##################
 
-if bashio::config.true 'ROOT_URL'; then
+if bashio::config.has_value 'ROOT_URL'; then
     bashio::log.blue "ROOT_URL set, using value : $(bashio::config 'ROOT_URL')"
 else
     ROOT_URL="$PROTOCOL://$(bashio::config 'DOMAIN'):$(bashio::addon.port 3000)"
@@ -61,6 +59,8 @@ for param in APP_NAME DOMAIN ROOT_URL; do
         sed -i "1a $param=\"$(bashio::config "$param")\"" /etc/s6/gitea/setup
 
     fi
+
+done
 
 done
 
