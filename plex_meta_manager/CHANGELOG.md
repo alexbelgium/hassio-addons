@@ -1,7 +1,4 @@
 
-## 1.19.1 (23-09-2023)
-- Update to latest version from linuxserver/docker-plex-meta-manager
-
 ## 1.19.0 (26-08-2023)
 - Update to latest version from linuxserver/docker-plex-meta-manager
 

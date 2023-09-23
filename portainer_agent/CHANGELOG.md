@@ -1,7 +1,4 @@
 
-## windowsltsc2022-amd64-2.19.1 (23-09-2023)
-- Update to latest version from portainer/agent
-
 ## windowsltsc2022-amd64-2.19.0 (02-09-2023)
 - Update to latest version from portainer/agent
 
