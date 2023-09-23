@@ -56,7 +56,6 @@
   "environment": {
     "TRUSTED_PROXIES": "**"
   },
-  "image": "ghcr.io/alexbelgium/fireflyiii_fints_importer-{arch}",
   "map": [
     "config:rw",
     "share:rw",
