@@ -56,7 +56,6 @@
   "environment": {
     "TRUSTED_PROXIES": "**"
   },
-  "image": "ghcr.io/alexbelgium/fireflyiii_fints_importer-{arch}",
   "map": [
     "config:rw",
     "share:rw",
@@ -74,6 +73,6 @@
   },
   "slug": "fireflyiii_fints_importer",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.2-10",
+  "version": "1.2-11",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
