@@ -2,4 +2,5 @@
 
 chmod -R +x /etc/periodic
 
-/usr/sbin/crond -f -S -l 0
+# log errors in addon logs in foreground
+/usr/sbin/crond -f -L /proc/1/fd/1 -S -l 0
