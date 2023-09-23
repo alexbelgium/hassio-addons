@@ -1,3 +1,5 @@
+### 1.5.4-9 (23-09-2023)
+- Minor bugs fixed
 - Enable external port by default (9999)
 - Redirect crond messages https://github.com/alexbelgium/hassio-addons/issues/999
 
