@@ -56,6 +56,8 @@
   "environment": {
     "DOCKER_MODS": "imagegenius/mods:universal-redis",
     "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
+    "MACHINE_LEARNING_WORKERS": "1",
+    "MACHINE_LEARNING_WORKER_TIMEOUT": "120",
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379",
     "TRANSFORMERS_CACHE": "/data/machine-learning",
@@ -104,6 +106,8 @@
     "DB_USERNAME": "str",
     "DISABLE_MACHINE_LEARNING": "bool?",
     "JWT_SECRET": "str",
+    "MACHINE_LEARNING_WORKERS": "int?",
+    "MACHINE_LEARNING_WORKER_TIMEOUT": "int?",
     "PGID": "int",
     "PUID": "int",
     "TYPESENSE_ENABLED": "bool",
@@ -120,6 +124,6 @@
   ],
   "slug": "immich",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.79.1",
+  "version": "1.79.1-2",
   "webui": "http://[HOST]:[PORT:8080]"
 }
