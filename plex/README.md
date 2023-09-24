@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Plex reduce backup (opened 2023-06-13)](https://github.com/alexbelgium/hassio-addons/issues/871) by [@akrigator](https://github.com/akrigator)
 
 
 # Home assistant add-on: plex
