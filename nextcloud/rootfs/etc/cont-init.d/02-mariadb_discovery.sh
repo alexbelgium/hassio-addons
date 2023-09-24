@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 
 # Runs only after initialization done
-if [ ! -f /app/www/public/occ ]; then cp /etc/cont-init.d/"${0##*/}" /scripts/ && exit 0; fi
+if [ ! -f /app/www/public/occ ]; then cp /etc/cont-init.d/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
 
 if bashio::services.available 'mysql'; then
 

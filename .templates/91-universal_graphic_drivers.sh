@@ -5,7 +5,7 @@ if bashio::config.has_value "graphic_driver"; then
     # Origin : https://github.com/wumingjieno1/photoprism-test/blob/main/scripts/dist/install-gpu.sh
     # abort if not executed as root
     if [[ $(id -u) != "0" ]]; then
-        bashio::log.fatal "Error: Run ${0##*/} as root" 1>&2
+        bashio::log.fatal "Error: Run $(basename "${BASH_SOURCE}") as root" 1>&2
         exit 1
     fi
 
