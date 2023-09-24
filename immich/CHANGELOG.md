@@ -1,3 +1,5 @@
+### 1.79.1-2 (24-09-2023)
+- Minor bugs fixed
 - Feat : new optional settings for ML workers and timeout https://github.com/alexbelgium/hassio-addons/issues/996
 
 ## 1.79.1 (23-09-2023)
