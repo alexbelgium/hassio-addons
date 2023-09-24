@@ -38,7 +38,7 @@ fi
 # Updater apps code
 if ! bashio::config.true "disable_updates"; then
     bashio::log.green "... checking for app updates"
-    sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ app:update --all"
+    sudo -u abc -s /bin/bash -c "php /app/www/public/occ app:update --all"
 else
     bashio::log.yellow "... disable_updates set, apps need to be updated manually"
 fi
@@ -67,7 +67,10 @@ else
     bashio::log.red "Error message:"
     bashio::log.red "$($LAUNCHER -V 2>&1)"
     bashio::log.red "------------------------------------------------------------------"
-    sudo -u abc -s /bin/bash -c "php /app/www/public/occ upgrade"
+    sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair" || true
+    sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair-share-owner" || true
+    sudo -u abc -s /bin/bash -c "php /app/www/public/occ app:update --all" || true
+    sudo -u abc -s /bin/bash -c "php /app/www/public/occ upgrade" || true
 fi
 
 echo " "
@@ -77,9 +80,9 @@ echo " "
 ###########################
 
 echo "... Clean potential errors"
-sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair" >/dev/null || true
-sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:repair-share-owner" >/dev/null || true
-sudo -u abc -s /bin/bash -c "php /data/config/www/nextcloud/occ maintenance:mode --off"
+sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair" >/dev/null || true
+sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair-share-owner" >/dev/null || true
+sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:mode --off" || true
 
 ##############
 # CLEAN OCDE #
