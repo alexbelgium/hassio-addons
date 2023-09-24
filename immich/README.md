@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Immich] Unable to connect to the database (opened 2023-09-20)](https://github.com/alexbelgium/hassio-addons/issues/996) by [@lachlanalston](https://github.com/lachlanalston)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
