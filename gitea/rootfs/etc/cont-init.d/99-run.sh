@@ -30,37 +30,37 @@ for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
         sed -i "/server/a PROTOCOL=http" "$file"
     fi
 
-##################
-# ADAPT ROOT_URL #
-##################
+    ##################
+    # ADAPT ROOT_URL #
+    ##################
 
-if bashio::config.has_value 'ROOT_URL'; then
-    bashio::log.blue "ROOT_URL set, using value : $(bashio::config 'ROOT_URL')"
-else
-    ROOT_URL="$PROTOCOL://$(bashio::config 'DOMAIN'):$(bashio::addon.port 3000)"
-    bashio::log.blue "ROOT_URL not set, using extrapolated value : $ROOT_URL"
-    sed -i "/server/a ROOT_URL=$ROOT_URL" "$file"
-fi
-
-####################
-# ADAPT PARAMETERS #
-####################
-
-for param in APP_NAME DOMAIN ROOT_URL; do
-    # Remove parameter
-    sed -i "/$param/d" "$file"
-
-    # Define parameter
-    if bashio::config.has_value "$param"; then
-        echo "parameter set : $param=$(bashio::config "$param")"
-        sed -i "/server/a $param = \"$(bashio::config "$param")\"" "$file"
-
-        # Allow at setup
-        sed -i "1a $param=\"$(bashio::config "$param")\"" /etc/s6/gitea/setup
-
+    if bashio::config.has_value 'ROOT_URL'; then
+        bashio::log.blue "ROOT_URL set, using value : $(bashio::config 'ROOT_URL')"
+    else
+        ROOT_URL="$PROTOCOL://$(bashio::config 'DOMAIN'):$(bashio::addon.port 3000)"
+        bashio::log.blue "ROOT_URL not set, using extrapolated value : $ROOT_URL"
+        sed -i "/server/a ROOT_URL=$ROOT_URL" "$file"
     fi
 
-done
+    ####################
+    # ADAPT PARAMETERS #
+    ####################
+
+    for param in APP_NAME DOMAIN ROOT_URL; do
+        # Remove parameter
+        sed -i "/$param/d" "$file"
+
+        # Define parameter
+        if bashio::config.has_value "$param"; then
+            echo "parameter set : $param=$(bashio::config "$param")"
+            sed -i "/server/a $param = \"$(bashio::config "$param")\"" "$file"
+
+            # Allow at setup
+            sed -i "1a $param=\"$(bashio::config "$param")\"" /etc/s6/gitea/setup
+
+        fi
+
+    done
 
 done
 
