@@ -18,7 +18,9 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 ARG BUILD_UPSTREAM="5.9-chromium-amd64-2023-06-02"
 FROM ${BUILD_FROM}
-
+# Set ulimit values
+RUN ulimit -n 1024
+RUN ulimit -u 2048
 ##################
 # 2 Modify Image #
 ##################
