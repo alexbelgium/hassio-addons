@@ -1,5 +1,6 @@
+- Increase start timer
+
 ### 27.1.1-3 (24-09-2023)
-- Minor bugs fixed
 - Automatic disable maintenance
 
 ### 27.1.1-2 (24-09-2023)
