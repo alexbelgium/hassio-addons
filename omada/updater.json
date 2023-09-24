@@ -2,7 +2,7 @@
   "dockerhub_by_date": true,
   "github_tagfilter": "-arm64",
   "last_update": "2023-06-02",
-  "paused": true,
+  "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "omada",
   "source": "dockerhub",
