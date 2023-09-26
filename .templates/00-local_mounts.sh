@@ -17,18 +17,8 @@ fi
 
 ## List available Disk with Labels and Id
 bashio::log.blue "---------------------------------------------------"
-bashio::log.blue "   By https://github.com/dianlight/hassio-addons   "
-#autodisks=($(lsblk -E label -n -o label | sed -r '/^\s*$/d' | grep -v hassos | grep pp))
-readarray -t autodisks < <(lsblk -E label -n -o label -i | sed -r '/^\s*$/d' | grep -v hassos)
-if [ ${#autodisks[@]} -eq 0 ]; then
-    bashio::log.info "No Disk with labels."
-else
-    bashio::log.info "Available Disk Labels:"
-    # shellcheck disable=SC2046
-    for disk in "${autodisks[@]}"; do
-        bashio::log.info "\t${disk}[$(lsblk $(blkid -L "$disk") -no fstype)]"
-    done
-fi
+bashio::log.info "Available Disks :"
+lsblk -o name,label,size,fstype,type,ro | awk '$5 != "" { print $0 }'
 bashio::log.blue "---------------------------------------------------"
 
 ######################
