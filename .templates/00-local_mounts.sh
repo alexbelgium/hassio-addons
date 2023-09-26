@@ -1,6 +1,16 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+#################
+# INSTALL TOOLS #
+#################
+
+# Install lsblk
+if ! command -v "lsblk" &>/dev/null; then
+    if command -v "apk" &>/dev/null; then apk add --no-cache lsblk >/dev/null; fi
+    if command -v "apt" &>/dev/null; then apt-get update && apt-get install -yqq util-linux; fi
+fi
+
 ####################
 # LIST LOCAL DISKS #
 ####################
@@ -52,12 +62,6 @@ if bashio::config.has_value 'localdisks'; then
             PUID="$(bashio::config 'PUID')"
             PGID="$(bashio::config 'PGID')"
             chown "$PUID:$PGID" /mnt/"$disk"
-        fi
-
-        # Install lsblk
-        if ! command -v "lsblk" &>/dev/null; then
-            if command -v "apk" &>/dev/null; then apk add --no-cache lsblk >/dev/null; fi
-            if command -v "apt" &>/dev/null; then apt-get update && apt-get install -yqq util-linux; fi
         fi
 
         # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)
