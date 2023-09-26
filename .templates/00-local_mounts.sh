@@ -7,7 +7,7 @@
 
 ## List available Disk with Labels and Id
 bashio::log.blue "---------------------------------------------------"
-bashio::log.blue "By https://github.com/dianlight/hassio-addons      "
+bashio::log.blue "   By https://github.com/dianlight/hassio-addons   "
 #autodisks=($(lsblk -E label -n -o label | sed -r '/^\s*$/d' | grep -v hassos | grep pp))
 readarray -t autodisks < <(lsblk -E label -n -o label -i | sed -r '/^\s*$/d' | grep -v hassos)
 if [ ${#autodisks[@]} -eq 0 ]; then
