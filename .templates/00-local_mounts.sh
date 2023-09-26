@@ -5,23 +5,20 @@
 # LIST LOCAL DISKS #
 ####################
 
-function list_drives () {
-    bashio::log.info "List of available labels (@dianlight)"
-    bashio::log.blue "---------------------------------------------------"
-    #autodisks=($(lsblk -E label -n -o label | sed -r '/^\s*$/d' | grep -v hassos | grep pp))
-    readarray -t autodisks < <(lsblk -E label -n -o label -i | sed -r '/^\s*$/d' | grep -v hassos)
-    if [ ${#autodisks[@]} -eq 0 ]; then
-        bashio::log.info "No Disk with labels."
-    else
-        bashio::log.info "Available Disk Labels:"
-        # shellcheck disable=SC2068
-        for disk in ${autodisks[@]}; do
-            # shellcheck disable=SC2046
-            bashio::log.info "\t${disk}[$(lsblk $(blkid -L "$disk") -no fstype)]"
-        done
-    fi
-    bashio::log.blue "---------------------------------------------------"
-}
+## List available Disk with Labels and Id
+          bashio::log.blue "---------------------------------------------------"
+          bashio::log.blue "By https://github.com/dianlight/hassio-addons      "
+          #autodisks=($(lsblk -E label -n -o label | sed -r '/^\s*$/d' | grep -v hassos | grep pp))
+          readarray -t autodisks < <(lsblk -E label -n -o label -i | sed -r '/^\s*$/d' | grep -v hassos)
+          if [ ${#autodisks[@]} -eq 0 ]; then
+               bashio::log.info "No Disk with labels."
+          else
+               bashio::log.info "Available Disk Labels:"
+               for disk in "${autodisks[@]}"; do
+                    bashio::log.info "\t${disk}[$(lsblk $(blkid -L "$disk") -no fstype)]"
+               done
+          fi
+          bashio::log.blue "---------------------------------------------------"
 
 ######################
 # MOUNT LOCAL SHARES #
@@ -87,8 +84,7 @@ if bashio::config.has_value 'localdisks'; then
         # shellcheck disable=SC2015
         mount -t $type "$devpath"/"$disk" "$dirpath"/"$disk" -o $options && bashio::log.info "Success! $disk mounted to /mnt/$disk" || \
             (bashio::log.fatal "Unable to mount local drives! Please check the name."
-            rmdir /mnt/$disk
-            list_drives
+            rmdir /mnt/"$disk"
         bashio::addon.stop)
     done
 
