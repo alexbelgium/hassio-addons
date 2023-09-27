@@ -60,9 +60,9 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Does server exists
         server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
-        if nc -w 2 -z 8.8.8.8 22 2>/dev/null; then
+        if command -v "nc" &>/dev/null; then
             nc -w 2 -z "$server" 22 2>/dev/null || \
-                bashio::log.warning "Your server $server from $disk isn't reachable, is it correct?"
+                bashio::log.warning "Your server $server from $disk doesn't seem reachable, is it correct?"
         fi
 
         # Prepare mount point
