@@ -70,6 +70,13 @@ if bashio::config.has_value 'localdisks'; then
                 options="${options},umask=000"
                 type="ntfs"
                 ;;
+            ext*)
+                true
+                ;;
+            **)
+                bashio::log.fatal "Cannot mount : ${disk} uses ${fstype} which is not supported"
+                exit 1
+                ;;
         esac
 
         # Legacy mounting : mount to share if still exists (avoid breaking changes)
