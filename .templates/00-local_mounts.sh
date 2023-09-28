@@ -70,6 +70,11 @@ if bashio::config.has_value 'localdisks'; then
                 options="${options},umask=000"
                 type="ntfs"
                 ;;
+            squashfs)
+                bashio::log.warning "${fstype} is an EXPERIMENTAL support"
+                options="loop"
+                type="squashfs"
+                ;;
         esac
 
         # Legacy mounting : mount to share if still exists (avoid breaking changes)
