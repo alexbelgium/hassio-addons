@@ -144,12 +144,15 @@ if bashio::config.has_value 'networkdisks'; then
 
             # Error code
             mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},nobrl$DOMAINVAR" "$disk" /mnt/"$diskname" 2>ERRORCODE || MOUNTED=false
-            bashio::log.fatal "Error read : $(<ERRORCODE)"
+            bashio::log.fatal "Error read : $(<ERRORCODE), addon will stop in 1 min"
             rm ERRORCODE*
 
             # clean folder
             umount "/mnt/$diskname" 2>/dev/null || true
             rmdir "/mnt/$diskname" || true
+
+            sleep 1m
+            bashio::addon.stop
         fi
 
     done
