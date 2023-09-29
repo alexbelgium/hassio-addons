@@ -1,3 +1,6 @@
+
+## 10.8.11 (30-09-2023)
+- Update to latest version from linuxserver/docker-jellyfin
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 
 ### 10.8.10-6 (08-05-2023)
