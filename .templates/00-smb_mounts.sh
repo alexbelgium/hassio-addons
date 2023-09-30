@@ -66,10 +66,11 @@ if bashio::config.has_value 'networkdisks'; then
         # Does server exists
         if command -v "nc" &>/dev/null; then
             # test if smb port is open
-            nc -w 2 -z "$server" 445 2>/dev/null || \
+            nc -w 1 -z "$server" 445 2>/dev/null || \
                 # test with ping also if different port is used
-                ping -w 2 -c 1 "$server" >/dev/null || \
-                bashio::log.warning "Your server $server from $disk doesn't seem reachable, is it correct?"
+                echo "... warning : SMB port not opened, trying ping" && ping -w 1 -c 1 "$server" >/dev/null || \
+                echo "... warning : ping not successful, trying smbclient" && smbclient -t 1 -L "$server" -N &>/dev/null || \
+                { bashio::log.warning "Your server $server from $disk doesn't seem reachable, script will stop"; break; }
         fi
 
         # Try smbv1
