@@ -14,6 +14,13 @@ if bashio::config.has_value 'localdisks'; then
     lsblk -o name,label,size,fstype,type,ro | awk '$5 != "" { print $0 }'
     bashio::log.blue "---------------------------------------------------"
 
+    # Show support fs https://github.com/dianlight/hassio-addons/blob/2e903184254617ac2484fe7c03a6e33e6987151c/sambanas/rootfs/etc/s6-overlay/s6-rc.d/init-automount/run#L106
+    fstypes=$(grep -v nodev </proc/filesystems | tr -d '\n')
+    bashio::log.blue "------------from-github.com/dianlight--------------"
+    bashio::log.green "Supported fs : ${fstypes}"
+    if grep -q fuseblk </proc/filesystems; then bashio::log.green "Supported fusefs: $(find /sbin -name "mount*fuse" | cut -c 13- | tr "\n" " " | sed s/fuse//g)"; fi
+    bashio::log.blue "---------------------------------------------------"
+
     MOREDISKS=$(bashio::config 'localdisks')
     echo "Local Disks mounting..."
 
