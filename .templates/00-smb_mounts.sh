@@ -97,7 +97,7 @@ if bashio::config.has_value 'networkdisks'; then
                             #######################################
                             for SECVERS in "" ",sec=ntlm" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
                                 if [ "$MOUNTED" = false ]; then
-                                    mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},nobrl$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" &>ERRORCODE \
+                                    mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},nobrl$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" 2>ERRORCODE \
                                         && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" || MOUNTED=false
                                 fi
                             done
@@ -114,7 +114,7 @@ if bashio::config.has_value 'networkdisks'; then
         # Try smbv1
         if [ "$MOUNTED" = false ]; then 
           echo "... trying smbv1"
-          mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},vers=1.0$DOMAINVAR" "$disk" /mnt/"$diskname" &>ERRORCODE \
+          mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},vers=1.0$DOMAINVAR" "$disk" /mnt/"$diskname" \
           && MOUNTED=true && MOUNTOPTIONS="$SMBVERS,vers=1.0$DOMAINVAR" || MOUNTED=false
         fi
         
