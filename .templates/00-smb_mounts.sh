@@ -44,6 +44,8 @@ if bashio::config.has_value 'networkdisks'; then
     # shellcheck disable=SC2086
     for disk in ${MOREDISKS//,/ }; do # Separate comma separated values
 
+        echo "... mounting $disk"
+        
         # Clean name of network share
         # shellcheck disable=SC2116,SC2001
         disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
@@ -89,7 +91,7 @@ if bashio::config.has_value 'networkdisks'; then
 
                         # Test with different SMB versions
                         ##################################
-                        for SMBVERS in "" ",vers=3" ",vers=3.2" ",vers=3.0" ",vers=2.1" ",nodfs" ",vers=1.0"; do
+                        for SMBVERS in "" ",vers=3" ",vers=3.2" ",vers=3.0" ",vers=2.1" ",nodfs"; do
 
                             # Test with different security versions
                             #######################################
@@ -109,6 +111,13 @@ if bashio::config.has_value 'networkdisks'; then
             done
         fi
 
+        # Try smbv1
+        if [ "$MOUNTED" = false ]; then 
+          echo "... trying smbv1"
+          mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},vers=1.0$DOMAINVAR" "$disk" /mnt/"$diskname" &>ERRORCODE \
+          && MOUNTED=true && MOUNTOPTIONS="$SMBVERS,vers=1.0$DOMAINVAR" || MOUNTED=false
+        fi
+        
         # Messages
         if [ "$MOUNTED" = true ] && mountpoint -q /mnt/"$diskname"; then
             #Test write permissions
