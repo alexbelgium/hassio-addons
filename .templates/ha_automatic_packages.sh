@@ -63,8 +63,8 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
     COMMAND="mount"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils ntfs-3g squashfs-tools fuse"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat* ntfs* squashfs-tools"
+        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils ntfs-3g squashfs-tools fuse lsblk"
+        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat* ntfs* squashfs-tools lsblk"
         #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES ntfs-3g"
     fi
 
