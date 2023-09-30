@@ -80,7 +80,7 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Prepare mount point
         mkdir -p /mnt/"$diskname"
-        chown -R root:root /mnt/"$diskname"
+        chown root:root /mnt/"$diskname"
 
         # if Fail test different smb and sec versions
         echo "... looking for the optimal parameters for mounting"
