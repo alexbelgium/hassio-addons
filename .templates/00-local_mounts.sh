@@ -15,8 +15,8 @@ if bashio::config.has_value 'localdisks'; then
     bashio::log.blue "---------------------------------------------------"
 
     # Show support fs https://github.com/dianlight/hassio-addons/blob/2e903184254617ac2484fe7c03a6e33e6987151c/sambanas/rootfs/etc/s6-overlay/s6-rc.d/init-automount/run#L106
-    fstypes=$(grep -v nodev </proc/filesystems | awk '{$1=" "$1}1' | tr -d '\n\t')
-    bashio::log.green "Supported fs : ${fstypes}"
+    fstypessupport=$(grep -v nodev </proc/filesystems | awk '{$1=" "$1}1' | tr -d '\n\t')
+    bashio::log.green "Supported fs : ${fstypessupport}"
     bashio::log.green "Inspired from : github.com/dianlight"
     bashio::log.blue "---------------------------------------------------"
 
@@ -50,8 +50,15 @@ if bashio::config.has_value 'localdisks'; then
         fstype=$(lsblk "$devpath"/"$disk" -no fstype)
         options="nosuid,relatime,noexec"
         type="auto"
-        bashio::log.info "Mounting ${disk} of type ${fstype}"
 
+        # Check if supported
+        if [[ *"${fstype}"* != "$fstypessupport" ]]; then
+            bashio::log.fatal : "${fstype} type for ${disk} is not supported"
+            break
+        fi
+
+        # Mount drive
+        bashio::log.info "Mounting ${disk} of type ${fstype}"
         case "$fstype" in
             exfat | vfat | msdos)
                 bashio::log.warning "${fstype} permissions and ACL don't works and this is an EXPERIMENTAL support"
