@@ -2,32 +2,37 @@
 # shellcheck shell=bash
 # shellcheck disable=
 
-#########################
-# MOUNT SMB SHARES v1.6 #
-#########################
+####################
+# MOUNT SMB SHARES #
+####################
 if bashio::config.has_value 'networkdisks'; then
+
+    echo 'Mounting smb share(s)...'
 
     # Define variables
     MOREDISKS=$(bashio::config 'networkdisks')
     CIFS_USERNAME=$(bashio::config 'cifsusername')
     CIFS_PASSWORD=$(bashio::config 'cifspassword')
-
     SMBVERS=""
+    SMBDEFAULT=""
     SECVERS=""
 
-    # Mount CIFS Share if configured and if Protection Mode is active
-    echo 'Mounting smb share(s)...'
+    # Clean data
+    MOREDISKS=${MOREDISKS// \/\//,\/\/}
+    MOREDISKS=${MOREDISKS//, /,}
+    MOREDISKS=${MOREDISKS// /"\040"}
 
+    # Is domain set
     if bashio::config.has_value 'cifsdomain'; then
-        echo "Using domain $(bashio::config 'cifsdomain')"
+        echo "... using domain $(bashio::config 'cifsdomain')"
         DOMAIN=",domain=$(bashio::config 'cifsdomain')"
     else
         DOMAIN=""
     fi
 
-    # Mount using UID/GID values
+    # Is  UID/GID set
     if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID' && [ -z ${ROOTMOUNT+x} ]; then
-        echo "Using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
+        echo "... using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
         PUID=",uid=$(bashio::config 'PUID')"
         PGID=",gid=$(bashio::config 'PGID')"
     else
@@ -35,17 +40,10 @@ if bashio::config.has_value 'networkdisks'; then
         PGID=",gid=$(id -g)"
     fi
 
-    # Clean data
-    MOREDISKS=${MOREDISKS// \/\//,\/\/}
-    MOREDISKS=${MOREDISKS//, /,}
-    MOREDISKS=${MOREDISKS// /"\040"}
-
     # Mounting disks
     # shellcheck disable=SC2086
     for disk in ${MOREDISKS//,/ }; do # Separate comma separated values
 
-        echo "... mounting $disk"
-        
         # Clean name of network share
         # shellcheck disable=SC2116,SC2001
         disk=$(echo $disk | sed "s,/$,,") # Remove / at end of name
@@ -54,14 +52,18 @@ if bashio::config.has_value 'networkdisks'; then
         diskname="${diskname##*/}"          # Get only last part of the name
         MOUNTED=false
 
+        echo "... mounting $disk"
+
         # Data validation
         if [[ ! "$disk" =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
             bashio::log.fatal "The structure of your \"networkdisks\" option : \"$disk\" doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2. If you don't use it, you can simply remove the text, this will avoid this error message in the future."
             break 2
         fi
 
-        # Does server exists
+        # Extract ip part of server for further manipulation
         server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
+
+        # Does server exists
         if command -v "nc" &>/dev/null; then
             # test if smb port is open
             nc -w 2 -z "$server" 445 2>/dev/null || \
@@ -70,11 +72,18 @@ if bashio::config.has_value 'networkdisks'; then
                 bashio::log.warning "Your server $server from $disk doesn't seem reachable, is it correct?"
         fi
 
+        # Try smbv1
+        if smbclient -t 2 -L "$server" -m NT1 -N &>/dev/null; then
+          echo "... only SMBv1 is supported, trying it"
+          SMBDEFAULT=",vers=1.0"
+        fi
+
         # Prepare mount point
         mkdir -p /mnt/"$diskname"
         chown -R root:root /mnt/"$diskname"
 
         # if Fail test different smb and sec versions
+        echo "... looking for the optimal parameters for mounting"
         if [ "$MOUNTED" = false ]; then
 
             # Test with domain, remove otherwise
@@ -91,11 +100,11 @@ if bashio::config.has_value 'networkdisks'; then
 
                         # Test with different SMB versions
                         ##################################
-                        for SMBVERS in "" ",vers=3" ",vers=3.2" ",vers=3.0" ",vers=2.1" ",nodfs"; do
+                        for SMBVERS in "$SMBDEFAULT" ",vers=3" ",vers=3.2" ",vers=3.0" ",vers=2.1" ",nodfs"; do
 
                             # Test with different security versions
                             #######################################
-                            for SECVERS in "" ",sec=ntlm" ",sec=ntlmv2" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
+                            for SECVERS in "" ",sec=ntlmv2" ",sec=ntlm" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
                                 if [ "$MOUNTED" = false ]; then
                                     mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},nobrl$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" 2>ERRORCODE \
                                         && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAINVAR" || MOUNTED=false
@@ -111,13 +120,6 @@ if bashio::config.has_value 'networkdisks'; then
             done
         fi
 
-        # Try smbv1
-        if [ "$MOUNTED" = false ]; then 
-          echo "... trying smbv1"
-          mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},vers=1.0$DOMAINVAR" "$disk" /mnt/"$diskname" \
-          && MOUNTED=true && MOUNTOPTIONS="$SMBVERS,vers=1.0$DOMAINVAR" || MOUNTED=false
-        fi
-        
         # Messages
         if [ "$MOUNTED" = true ] && mountpoint -q /mnt/"$diskname"; then
             #Test write permissions
@@ -144,7 +146,7 @@ if bashio::config.has_value 'networkdisks'; then
             bashio::log.fatal "Here is some debugging info :"
 
             # Provide debugging info
-            smbclient -L $disk -U "$CIFS_USERNAME%$CIFS_PASSWORD" || true
+            smbclient -t 5 -L $disk -U "$CIFS_USERNAME%$CIFS_PASSWORD"
 
             # Error code
             mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},nobrl$DOMAINVAR" "$disk" /mnt/"$diskname" 2>ERRORCODE || MOUNTED=false
