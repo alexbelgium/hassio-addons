@@ -17,7 +17,7 @@ if bashio::config.has_value 'localdisks'; then
     # Show support fs https://github.com/dianlight/hassio-addons/blob/2e903184254617ac2484fe7c03a6e33e6987151c/sambanas/rootfs/etc/s6-overlay/s6-rc.d/init-automount/run#L106
     fstypes=$(grep -v nodev </proc/filesystems | awk '{$1=" "$1}1' | tr -d '\n\t')
     bashio::log.green "Supported fs : ${fstypes}"
-    bashio::log.green "Source : github.com/dianlight"
+    bashio::log.green "Inspired from : github.com/dianlight"
     bashio::log.blue "---------------------------------------------------"
 
     MOREDISKS=$(bashio::config 'localdisks')
