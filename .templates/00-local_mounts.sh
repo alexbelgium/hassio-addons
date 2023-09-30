@@ -8,12 +8,6 @@
 # Mount local Share if configured
 if bashio::config.has_value 'localdisks'; then
 
-    # Install lsblk
-    if ! command -v "lsblk" &>/dev/null; then
-        if command -v "apk" &>/dev/null; then apk add --no-cache lsblk >/dev/null; fi
-        if command -v "apt" &>/dev/null; then apt-get update && apt-get install -yqq util-linux; fi
-    fi
-
     ## List available Disk with Labels and Id
     bashio::log.blue "---------------------------------------------------"
     bashio::log.info "Available Disks :"
