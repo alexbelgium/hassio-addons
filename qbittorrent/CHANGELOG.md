@@ -1,3 +1,5 @@
+- Avoid crash when using smbv1
+
 ### 4.5.5-2 (30-09-2023)
 - Improve scripts
 
