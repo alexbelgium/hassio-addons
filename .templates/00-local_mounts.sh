@@ -1,32 +1,24 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-#################
-# INSTALL TOOLS #
-#################
-
-# Install lsblk
-if ! command -v "lsblk" &>/dev/null; then
-    if command -v "apk" &>/dev/null; then apk add --no-cache lsblk >/dev/null; fi
-    if command -v "apt" &>/dev/null; then apt-get update && apt-get install -yqq util-linux; fi
-fi
-
-####################
-# LIST LOCAL DISKS #
-####################
-
-## List available Disk with Labels and Id
-bashio::log.blue "---------------------------------------------------"
-bashio::log.info "Available Disks :"
-lsblk -o name,label,size,fstype,type,ro | awk '$5 != "" { print $0 }'
-bashio::log.blue "---------------------------------------------------"
-
 ######################
 # MOUNT LOCAL SHARES #
 ######################
 
 # Mount local Share if configured
 if bashio::config.has_value 'localdisks'; then
+
+    # Install lsblk
+    if ! command -v "lsblk" &>/dev/null; then
+        if command -v "apk" &>/dev/null; then apk add --no-cache lsblk >/dev/null; fi
+        if command -v "apt" &>/dev/null; then apt-get update && apt-get install -yqq util-linux; fi
+    fi
+
+    ## List available Disk with Labels and Id
+    bashio::log.blue "---------------------------------------------------"
+    bashio::log.info "Available Disks :"
+    lsblk -o name,label,size,fstype,type,ro | awk '$5 != "" { print $0 }'
+    bashio::log.blue "---------------------------------------------------"
 
     MOREDISKS=$(bashio::config 'localdisks')
     echo "Local Disks mounting..."
