@@ -6,5 +6,5 @@
   "slug": "prowlarr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-prowlarr",
-  "upstream_version": "nightly-1.9.2.3988-ls35"
+  "upstream_version": "nightly-1.9.2.3990-ls36"
 }
