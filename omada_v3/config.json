@@ -95,6 +95,6 @@
   },
   "slug": "omada_v3",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.3-amd64-2023-09-23",
+  "version": "5.3-amd64-2023-09-27",
   "webui": "http://[HOST]:[PORT:8088]"
 }
