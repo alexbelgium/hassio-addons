@@ -67,23 +67,23 @@ if bashio::config.has_value 'networkdisks'; then
         if command -v "nc" &>/dev/null; then
             # test if smb port is open
             if ! nc -w 1 -z "$server" 445 2>/dev/null; then
-              # test with ping also if different port is used
-              echo "... warning : SMB port not opened, trying ping"
-              if ! ping -w 1 -c 1 "$server" >/dev/null; then
-                # Try smbclient (last as slowest)
-                echo "... warning : ping not successful, trying smbclient"
-                if ! smbclient -t 1 -L "$server" -N &>/dev/null; then
-                  bashio::log.fatal "... your server $server from $disk doesn't seem reachable, script will stop"
-                  break
+                # test with ping also if different port is used
+                echo "... warning : SMB port not opened, trying ping"
+                if ! ping -w 1 -c 1 "$server" >/dev/null; then
+                    # Try smbclient (last as slowest)
+                    echo "... warning : ping not successful, trying smbclient"
+                    if ! smbclient -t 1 -L "$server" -N &>/dev/null; then
+                        bashio::log.fatal "... your server $server from $disk doesn't seem reachable, script will stop"
+                        break
+                    fi
                 fi
-              fi
-          fi
+            fi
         fi
 
         # Try smbv1
         if smbclient -t 2 -L "$server" -m NT1 -N &>/dev/null; then
-          echo "... only SMBv1 is supported, trying it"
-          SMBDEFAULT=",vers=1.0"
+            echo "... only SMBv1 is supported, trying it"
+            SMBDEFAULT=",vers=1.0"
         fi
 
         # Prepare mount point
