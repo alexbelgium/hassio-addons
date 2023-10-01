@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Gitea] ROOT_URL and DOMAIN not updating (opened 2023-09-22)](https://github.com/alexbelgium/hassio-addons/issues/998) by [@zarya](https://github.com/zarya)
 # Home assistant add-on: Gitea
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

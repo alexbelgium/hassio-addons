@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Filebrowser] Wont start with local drive mount (opened 2023-09-25)](https://github.com/alexbelgium/hassio-addons/issues/1008) by [@DjordjeMandic](https://github.com/DjordjeMandic)
 # Home assistant add-on: Filebrowser
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
