@@ -92,12 +92,15 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Deeper analysis if failed
         if [ "$MOUNTED" = false ]; then
-        
+
+        # Detect smb version
         # Try smbv1
         if smbclient -t 2 -L "$server" -m NT1 -N &>/dev/null; then
             echo "... only SMBv1 is supported, trying it"
             SMBDEFAULT=",vers=1.0"
         fi
+
+        # Detect sec vers
 
         # if Fail test different smb and sec versions
         echo "... looking for the optimal parameters for mounting"
