@@ -16,6 +16,8 @@ if bashio::config.has_value 'networkdisks'; then
     SMBVERS=""
     SMBDEFAULT=""
     SECVERS=""
+    CHARSET=""
+    DOMAINVAR=""
 
     # Clean data
     MOREDISKS=${MOREDISKS// \/\//,\/\/}
@@ -60,9 +62,13 @@ if bashio::config.has_value 'networkdisks'; then
             break 2
         fi
 
+        # Prepare mount point
+        mkdir -p /mnt/"$diskname"
+        chown root:root /mnt/"$diskname"
+       
         # Extract ip part of server for further manipulation
         server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
-
+        
         # Does server exists
         if command -v "nc" &>/dev/null; then
             # test if smb port is open
@@ -79,16 +85,19 @@ if bashio::config.has_value 'networkdisks'; then
                 fi
             fi
         fi
+        
+        # Quickly try to mount with defaults
+        mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$CIFS_USERNAME,password=${CIFS_PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAINVAR" "$disk" /mnt/"$diskname" 2>ERRORCODE \
+        && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAINVAR" || MOUNTED=false
 
+        # Deeper analysis if failed
+        if [ "$MOUNTED" = false ]; then
+        
         # Try smbv1
         if smbclient -t 2 -L "$server" -m NT1 -N &>/dev/null; then
             echo "... only SMBv1 is supported, trying it"
             SMBDEFAULT=",vers=1.0"
         fi
-
-        # Prepare mount point
-        mkdir -p /mnt/"$diskname"
-        chown root:root /mnt/"$diskname"
 
         # if Fail test different smb and sec versions
         echo "... looking for the optimal parameters for mounting"
@@ -126,6 +135,8 @@ if bashio::config.has_value 'networkdisks'; then
                 done
 
             done
+        fi
+
         fi
 
         # Messages
