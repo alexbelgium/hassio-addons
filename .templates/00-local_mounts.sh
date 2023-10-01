@@ -52,7 +52,7 @@ if bashio::config.has_value 'localdisks'; then
         type="auto"
 
         # Check if supported
-        if [[ *"${fstype}"* != "$fstypessupport" ]]; then
+        if [[ "${fstypessupport}" != *"${fstype}"* ]]; then
             bashio::log.fatal : "${fstype} type for ${disk} is not supported"
             break
         fi
