@@ -19,7 +19,6 @@ if bashio::config.has_value 'networkdisks'; then
     USERNAME=$(bashio::config 'cifsusername')
     PASSWORD=$(bashio::config 'cifspassword')
     SMBVERS=""
-    SMBDEFAULT=""
     SECVERS=""
     CHARSET=",iocharset=utf8"
 
@@ -116,6 +115,7 @@ if bashio::config.has_value 'networkdisks'; then
             # What is the SMB version
             echo "... detecting SMB version"
             # Extracting SMB versions and normalize output
+            # shellcheck disable=SC2210,SC2094
             SMBVERS="$(nmap --script smb-protocols "$server" -p 445 2>1 | awk '/  [0-9]/' | awk '{print $NF}'  | cut -c -3 | sort -V | tail -n 1  || true)"
             # Manage output
             if [ -n "$SMBVERS" ]; then
