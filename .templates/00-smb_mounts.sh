@@ -91,12 +91,8 @@ if bashio::config.has_value 'networkdisks'; then
             output="$(nmap -F $server -T5 -oG -)"
             if ! echo "$output" | grep 445/open &>/dev/null; then
                 if echo "$output" | grep /open &>/dev/null; then
-                    if ! smbclient -t 1 -L "$server" -N "$DOMAINCLIENT" &>/dev/null; then
-                        bashio::log.fatal "... fatal : $server is reachable but SMB port not opened, stopping script"
-                        continue
-                    else
-                        bashio::warning "... fatal : $server not reachable but SMB connects, you have strange security in place"
-                    fi
+                    bashio::log.fatal "... fatal : $server is reachable but SMB port not opened, stopping script"
+                    continue
                 else
                     bashio::log.fatal "... fatal : $server not reachable, is it correct"
                     continue
@@ -111,7 +107,7 @@ if bashio::config.has_value 'networkdisks'; then
             fi
 
             # Should there be a workgroup
-            echo "... testing credentials"
+            echo "... testing workgroup"
             if ! smbclient -t 2 -L $disk -N "$DOMAINCLIENT" &>/dev/null; then
                 bashio::log.fatal "A workgroup must perhaps be specified"
                 continue
@@ -136,7 +132,7 @@ if bashio::config.has_value 'networkdisks'; then
 
              # Test with different security versions
              #######################################
-             for SECVERS in "" ",sec=ntlmv2" ",sec=ntlm" ",sec=ntlmv2i" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5"; do
+             for SECVERS in "$SECVERS" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
                  if [ "$MOUNTED" = false ]; then
                      mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>ERRORCODE \
                      && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAIN" || MOUNTED=false
@@ -171,7 +167,7 @@ if bashio::config.has_value 'networkdisks'; then
             bashio::log.fatal "Here is some debugging info :"
 
             # Provide debugging info
-            smbclient -t 5 -L $disk -U "$USERNAME%$PASSWORD"
+            smbclient -t 2 -L $disk -U "$USERNAME%$PASSWORD"
 
             # Error code
             mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$DOMAIN" "$disk" /mnt/"$diskname" 2>ERRORCODE || MOUNTED=false
