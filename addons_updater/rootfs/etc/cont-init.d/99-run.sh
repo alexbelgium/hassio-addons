@@ -104,6 +104,11 @@ for f in */; do
                 FILTER_TEXT="&name=$FILTER_TEXT"
             fi
 
+            #Prepare tag flag
+            if [ "${EXCLUDE_TEXT}" = "null" ] || [ "${EXCLUDE_TEXT}" = "" ]; then
+                EXCLUDE_TEXT="zzzzzzzzzzzzzzzzzz"
+            fi
+
             DOCKERHUB_REPO="${UPSTREAM%%/*}"
             DOCKERHUB_IMAGE=$(echo "$UPSTREAM" | cut -d "/" -f2)
             LASTVERSION=$(
@@ -112,6 +117,8 @@ for f in */; do
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
                 sed -e '/.*nightly.*/d' |
+                sed -e '/.*beta.*/d' |
+                sed -e "/.*$EXCLUDE_TEXT.*/d" |
                 sort -V |
                 tail -n 1
             )
@@ -122,6 +129,7 @@ for f in */; do
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/!d' |
+                sed -e "/.*$EXCLUDE_TEXT.*/d" |                
                 sort -V |
                 tail -n 1
             )
@@ -132,6 +140,7 @@ for f in */; do
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
                 sed -e '/.*nightly.*/d' |
+                sed -e "/.*$EXCLUDE_TEXT.*/d" |                
                 sort -V |
                 tail -n 1
             ) && \
