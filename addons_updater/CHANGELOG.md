@@ -1,3 +1,4 @@
+- github_exclude applies to dockerhub
 
 ## 3.18
 - github_exclude: exclude a text in the release name
