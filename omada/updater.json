@@ -1,6 +1,7 @@
 {
   "dockerhub_by_date": true,
   "dockerhub_list_size": 20,
+  "github_exclude": "beta",
   "github_tagfilter": "5.1",
   "last_update": "2023-09-22",
   "paused": false,
