@@ -6,7 +6,6 @@
   ],
   "backup_exclude": [
     "*/cache/",
-    "*/logs/",
     "*/transcoding-temp/",
     "*/metadata/"
   ],
