@@ -1,6 +1,5 @@
 #!/bin/sh
 # shellcheck disable=SC2015
-set -e
 
 ##############################
 # Automatic apps download #
