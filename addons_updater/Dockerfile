@@ -65,7 +65,7 @@ RUN /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 # Entrypoint logic
 
 #WORKDIR /
-ENTRYPOINT [ "/usr/bin/env" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
