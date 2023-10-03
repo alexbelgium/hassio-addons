@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 # nginx Path
 NGINX_CONFIG=/etc/nginx/sites-available/ingress.conf

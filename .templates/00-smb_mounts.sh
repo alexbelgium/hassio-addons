@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 # shellcheck disable=
 
 ####################
@@ -20,7 +21,7 @@ if bashio::config.has_value 'networkdisks'; then
     ####################
     # Define variables #
     ####################
-    
+
     # Set variables
     MOREDISKS=$(bashio::config 'networkdisks')
     USERNAME=$(bashio::config 'cifsusername')
@@ -57,7 +58,7 @@ if bashio::config.has_value 'networkdisks'; then
     ##################
     # Mounting disks #
     ##################
-    
+
     # shellcheck disable=SC2086
     for disk in ${MOREDISKS//,/ }; do # Separate comma separated values
 
@@ -145,7 +146,7 @@ if bashio::config.has_value 'networkdisks'; then
                      && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAIN" || MOUNTED=false
                  fi
              done
-             
+
          fi
 
         # Messages

@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 # Allow OCR setting
 OCRLANG="$(bashio::config "ocrlang")"

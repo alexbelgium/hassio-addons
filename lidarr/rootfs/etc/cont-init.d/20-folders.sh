@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 if [ ! -d /share/music ]; then
     echo "Creating /share/music"

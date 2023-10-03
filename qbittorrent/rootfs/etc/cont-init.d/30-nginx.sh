@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 DEBUG=$(bashio::config 'TZ')
 [ "$DEBUG" = "debug" ] && echo "Before declare"

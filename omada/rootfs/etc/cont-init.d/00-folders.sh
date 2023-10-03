@@ -1,5 +1,6 @@
 #!/bin/bash
 # shellcheck shell=bash
+set -e
 
 CONFIGSOURCE="/data"
 

@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 # ==============================================================================
 
 bashio::log.info "Waiting for port 9000 to open..."

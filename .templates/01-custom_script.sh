@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 slug="${HOSTNAME#*-}"
 bashio::log.info "Execute /config/addons_autoscripts/${slug}.sh if existing"

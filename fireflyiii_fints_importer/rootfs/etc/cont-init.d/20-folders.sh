@@ -1,5 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
+set -e
 
 CONFIGSOURCE="/config/addons_config/fireflyiii_fints_importer"
 

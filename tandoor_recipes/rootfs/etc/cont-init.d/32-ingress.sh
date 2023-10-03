@@ -1,5 +1,6 @@
 #!/usr/bin/bashio
 # shellcheck shell=bash
+set -e
 
 if [[ -n "${DISABLE_INGRESS}" ]]; then
     bashio::log.info "Ingress disabled"

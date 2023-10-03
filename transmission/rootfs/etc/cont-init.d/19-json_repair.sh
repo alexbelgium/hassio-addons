@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 JSONTOCHECK='/config/addons_config/transmission/settings.json'
 JSONSOURCE='/defaults/settings.json'

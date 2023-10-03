@@ -1,5 +1,6 @@
 #!/bin/sh
 # shellcheck disable=SC2013,SC2016,SC2236
+set -e
 
 #############################
 # Modify global lsio images #

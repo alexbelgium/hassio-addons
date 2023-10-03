@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 # shellchek disable=SC2015
 
 JSONTOCHECK='/config/transmission/settings.json'

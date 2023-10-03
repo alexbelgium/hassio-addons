@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 # Create files
 CONFIG_LOCATION="/config/addons_config/jellyseer"

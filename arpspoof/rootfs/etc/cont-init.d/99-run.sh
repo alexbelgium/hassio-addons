@@ -1,5 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
+set -e
 
 # Avoid unbound variables
 set +u

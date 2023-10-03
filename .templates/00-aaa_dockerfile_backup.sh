@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # If dockerfile failed install manually
 

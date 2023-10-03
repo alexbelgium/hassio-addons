@@ -1,5 +1,6 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
+set -e
 # ==============================================================================
 # Home Assistant Community Add-on: Bitwarden
 # This file configures nginx

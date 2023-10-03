@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 if [ ! -f /touched ]; then
     until [[ -n $(cat /data/*_1.log 2>/dev/null) ]]; do

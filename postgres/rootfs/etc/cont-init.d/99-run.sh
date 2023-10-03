@@ -1,5 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
+set -e
 
 # Use new config file
 CONFIG_HOME="$(bashio::config "CONFIG_LOCATION")"

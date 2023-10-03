@@ -1,4 +1,5 @@
 #!/usr/bin/env bashio
+set -e
 
 if bashio::config.has_value "graphic_driver"; then
 

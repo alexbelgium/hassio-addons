@@ -1,5 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
+set -e
 
 for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
 

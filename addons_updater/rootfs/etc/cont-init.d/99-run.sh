@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 ##########
 # UPDATE #
@@ -129,7 +130,7 @@ for f in */; do
                 jq '.results | .[] | .name' -r |
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/!d' |
-                sed -e "/.*$EXCLUDE_TEXT.*/d" |                
+                sed -e "/.*$EXCLUDE_TEXT.*/d" |
                 sort -V |
                 tail -n 1
             )
@@ -140,7 +141,7 @@ for f in */; do
                 sed -e '/.*latest.*/d' |
                 sed -e '/.*dev.*/d' |
                 sed -e '/.*nightly.*/d' |
-                sed -e "/.*$EXCLUDE_TEXT.*/d" |                
+                sed -e "/.*$EXCLUDE_TEXT.*/d" |
                 sort -V |
                 tail -n 1
             ) && \

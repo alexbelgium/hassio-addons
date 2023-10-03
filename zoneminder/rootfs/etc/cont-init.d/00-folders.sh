@@ -1,5 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
+set -e
 
 #CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
 #CONFIGSOURCE=$(dirname "$CONFIGSOURCE")

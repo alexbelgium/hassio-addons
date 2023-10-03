@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 # shellcheck disable=SC2086
 
 # Runs only after initialization done

@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 CONFIG_LOCATION=$(bashio::config 'CONFIG_LOCATION')
 bashio::log.info "Config stored in $CONFIG_LOCATION"

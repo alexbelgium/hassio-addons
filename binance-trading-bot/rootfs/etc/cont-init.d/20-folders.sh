@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 if [ -d /config/binance-trading-bot ]; then
     echo "Moving to new location /config/addons_config/binance-trading-bot"

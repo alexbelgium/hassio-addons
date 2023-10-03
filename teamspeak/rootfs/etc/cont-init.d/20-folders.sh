@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 # Data remanence for /teamspeak/save
 if [ -d /teamspeak ]; then
