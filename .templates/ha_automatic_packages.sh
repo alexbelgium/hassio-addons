@@ -65,7 +65,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
     if grep -q -rnw "$files/" -e "$COMMAND"; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES exfat-fuse exfat-utils ntfs-3g squashfs-tools fuse lsblk"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat* ntfs* squashfs-tools lsblk"
+        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat* ntfs* squashfs-tools util-linux"
         #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES ntfs-3g"
     fi
 
