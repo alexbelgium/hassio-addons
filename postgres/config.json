@@ -4,8 +4,7 @@
     "amd64",
     "armv7"
   ],
-  "codenotary": "alexandrep.github@gmail.com",
-  "description": "Postgres 15",
+  "description": "Postgres 16",
   "environment": {
     "PGDATA": "/data/database"
   },
@@ -32,7 +31,11 @@
     "POSTGRES_PASSWORD": "str",
     "POSTGRES_USER": "str?"
   },
+  "services": [
+    "postgres:provide"
+  ],
   "slug": "postgres",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "15.4"
+  "startup": "system",
+  "version": "16.0"
 }
