@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-set -e
 # shellcheck disable=SC2015
+set -e
 
 # Install specific apps
 if bashio::config.has_value 'additional_apps'; then

@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-set -e
 # shellcheck disable=SC2015
+set -e
 
 # Set TZ
 if bashio::config.has_value 'TZ'; then

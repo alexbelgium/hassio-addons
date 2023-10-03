@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-set -e
 # shellcheck disable=SC2046
+set -e
 
 # Define user
 PUID=$(bashio::config "PUID")
