@@ -80,7 +80,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
     COMMAND="nmap"
     if grep -q -rnw "$files/" -e "$COMMAND"; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES nmap nmap-scripts
+        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES nmap nmap-scripts"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES nmap"
         #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES iputils"
     fi
