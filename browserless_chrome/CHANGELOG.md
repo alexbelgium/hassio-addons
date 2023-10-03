@@ -1,4 +1,7 @@
 
+## 1.60.2 (03-10-2023)
+- Update to latest version from browserless/chrome
+
 ## 1.60.1 (23-09-2023)
 - Update to latest version from browserless/chrome
 
