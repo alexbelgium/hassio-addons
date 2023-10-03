@@ -36,23 +36,21 @@ if bashio::config.has_value 'networkdisks'; then
     MOREDISKS=${MOREDISKS// /"\040"}
 
     # Is domain set
+    DOMAIN=""
+    DOMAINCLIENT=""
     if bashio::config.has_value 'cifsdomain'; then
         echo "... using domain $(bashio::config 'cifsdomain')"
         DOMAIN=",domain=$(bashio::config 'cifsdomain')"
         DOMAINCLIENT=",--workgroup=$(bashio::config 'cifsdomain')"
-    else
-        DOMAIN=""
-        DOMAINCLIENT=""
     fi
 
     # Is  UID/GID set
-    if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID' && [ -z ${ROOTMOUNT+x} ]; then
+    PUID=",uid=$(id -u)"
+    PGID=",gid=$(id -g)"
+    if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
         echo "... using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
         PUID=",uid=$(bashio::config 'PUID')"
         PGID=",gid=$(bashio::config 'PGID')"
-    else
-        PUID=",uid=$(id -u)"
-        PGID=",gid=$(id -g)"
     fi
 
     ##################
