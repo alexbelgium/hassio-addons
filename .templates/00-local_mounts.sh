@@ -9,14 +9,14 @@ set -e
 # Mount local Share if configured
 if bashio::config.has_value 'localdisks'; then
 
-    # Available UUID
-    blkid -s UUID -o value > availabledisks
-    echo "UUID" >> availabledisks
+    # Available devices
+    blkid | awk '{print substr($1, 0, length($1) - 1)}' | awk -F'/' '{print $NF}' > availabledisks
+    echo "NAME" >> availabledisks
 
     ## List available Disk with Labels and Id
     bashio::log.blue "---------------------------------------------------"
     bashio::log.info "Available Disks for mounting (excluding devices blocked by HA) :"
-    lsblk -o name,label,size,fstype,ro,uuid | awk '$4 != "" { print $0 }' | grep -f availabledisks
+    lsblk -o name,label,size,fstype,ro | awk '$4 != "" { print $0 }' | grep -f availabledisks
     bashio::log.blue "---------------------------------------------------"
     rm availabledisks
 
