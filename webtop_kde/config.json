@@ -109,6 +109,7 @@
   },
   "slug": "webtop-kde",
   "tmpfs": true,
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.16-r0-ls89-xfce12test",
   "video": true

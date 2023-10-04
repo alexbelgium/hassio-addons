@@ -25,6 +25,7 @@
     "CSS_YOUTUBE_API_KEY": "str?"
   },
   "slug": "sponsorblockcast",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast",
   "version": "0.5.0"
 }

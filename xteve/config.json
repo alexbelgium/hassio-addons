@@ -25,6 +25,7 @@
     "34400/tcp": "Web interface"
   },
   "slug": "xteve",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.5.3-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:34400]/web"

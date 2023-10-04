@@ -44,6 +44,7 @@
     "ssl": "bool"
   },
   "slug": "portainer",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.19.1"
 }

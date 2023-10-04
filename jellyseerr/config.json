@@ -78,6 +78,7 @@
     "TZ": "str?"
   },
   "slug": "jellyseerr",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jellyseerr",
   "version": "1.7.0test3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:5055]"

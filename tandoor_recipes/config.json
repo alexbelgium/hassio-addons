@@ -98,6 +98,7 @@
     "mysql:want"
   ],
   "slug": "tandoor_recipes",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.5.6"
 }

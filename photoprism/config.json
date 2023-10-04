@@ -118,6 +118,7 @@
     "mysql:want"
   ],
   "slug": "photoprism",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons-test",
   "version": "ubuntu-230719-73fa7bbe8",
   "video": true

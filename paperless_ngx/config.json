@@ -117,6 +117,7 @@
     "mysql:want"
   ],
   "slug": "paperless_ng",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.15.1",
   "webui": "http://[HOST]:[PORT:8000]"

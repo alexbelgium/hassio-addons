@@ -129,6 +129,7 @@
     "whitelist": "str?"
   },
   "slug": "qbittorrent",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.5.5-4"
 }

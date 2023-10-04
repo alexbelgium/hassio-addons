@@ -123,6 +123,7 @@
     "mysql:want"
   ],
   "slug": "immich",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.79.1-2",
   "webui": "http://[HOST]:[PORT:8080]"

@@ -92,6 +92,7 @@
     "smbv1": "bool?"
   },
   "slug": "prowlarr",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "nightly-1.9.2.3990-ls36",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9696]"

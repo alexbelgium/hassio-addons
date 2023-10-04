@@ -113,6 +113,7 @@
     "networkdisks": "str?"
   },
   "slug": "tdarr",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "pro_1.3004",
   "video": true,

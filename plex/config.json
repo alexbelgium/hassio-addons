@@ -123,6 +123,7 @@
     "smbv1": "bool?"
   },
   "slug": "plex_nas",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex",
   "version": "1.32.6.7557-1cf77d501-ls186",
   "video": true,

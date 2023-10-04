@@ -79,6 +79,7 @@
     "CONFIG_LOCATION": "str"
   },
   "slug": "free_games_claimer",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "1.4-test22",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:6080]"

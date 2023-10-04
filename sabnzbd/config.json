@@ -92,6 +92,7 @@
     "networkdisks": "str?"
   },
   "slug": "sabnzbd",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.1.0",
   "webui": "http://[HOST]:[PORT:8080]"

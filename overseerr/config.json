@@ -79,6 +79,7 @@
     "TZ": "str?"
   },
   "slug": "overseerr",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/overseerr",
   "version": "1.33.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:5055]"

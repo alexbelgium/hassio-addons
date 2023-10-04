@@ -111,6 +111,7 @@
     "smbv1": "bool?"
   },
   "slug": "jellyfin",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "10.8.11",
   "video": true

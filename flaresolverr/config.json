@@ -63,6 +63,7 @@
     "8191/tcp": "Web interface"
   },
   "slug": "flaresolverr",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "3.3.6",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8191]"

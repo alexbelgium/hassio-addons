@@ -102,6 +102,7 @@
     "verify_address": "bool?"
   },
   "slug": "inadyn",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.12.0"
 }

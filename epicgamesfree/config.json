@@ -69,6 +69,7 @@
     "3000/tcp": "web interface"
   },
   "slug": "epicgamesfree",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "c101c334d88998a51d45680d3a71d5fd7563c9a4-2023-08-01",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"

@@ -33,6 +33,7 @@
     "9987/udp": "Voice"
   },
   "slug": "teamspeak",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "3.13.6-8"
 }

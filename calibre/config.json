@@ -104,6 +104,7 @@
     "networkdisks": "str?"
   },
   "slug": "calibre",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
   "version": "v6.27.0-ls240",
   "video": true

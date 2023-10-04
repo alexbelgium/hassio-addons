@@ -85,6 +85,7 @@
     "WebuiPass": "str?"
   },
   "slug": "flexget",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "testing-79",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:5050]"

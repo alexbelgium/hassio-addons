@@ -76,7 +76,8 @@
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
     "SERVER_IP": "homeassistant.local",
     "TZ": "Europe/Paris",
-    "URL": "seafile.example.com",
+    "udev": true,
+  "url": "seafile.example.com",
     "data_location": "/share/seafile",
     "database": "sqlite"
   },
@@ -104,7 +105,8 @@
     "SEAFILE_ADMIN_PASSWORD": "password",
     "SERVER_IP": "str?",
     "TZ": "str?",
-    "URL": "str",
+    "udev": true,
+  "url": "str",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
@@ -117,6 +119,7 @@
     "mysql:want"
   ],
   "slug": "seafile",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
   "version": "testing",
   "webui": "http://[HOST]:[PORT:8000]"

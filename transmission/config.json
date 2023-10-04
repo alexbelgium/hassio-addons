@@ -108,6 +108,7 @@
     "whitelist": "str?"
   },
   "slug": "transmission_ls",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "4.0.4"
 }

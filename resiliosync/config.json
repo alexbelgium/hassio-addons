@@ -99,6 +99,7 @@
     "networkdisks": "str?"
   },
   "slug": "resiliosync",
+  "udev": true,
   "url": "https://github.com/tyjtyj/hassio-addons",
   "version": "2.7.3-12"
 }

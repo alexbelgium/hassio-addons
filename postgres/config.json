@@ -33,6 +33,7 @@
     "POSTGRES_USER": "str?"
   },
   "slug": "postgres",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "15.4"
 }

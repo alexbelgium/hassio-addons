@@ -89,6 +89,7 @@
     "8888/tcp": "portal http"
   },
   "slug": "omada",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "beta-arm64-2023-09-22",
   "webui": "http://[HOST]:[PORT:8088]"

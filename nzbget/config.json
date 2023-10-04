@@ -93,6 +93,7 @@
     "networkdisks": "str?"
   },
   "slug": "nzbget",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "v21.1-ls138"
 }

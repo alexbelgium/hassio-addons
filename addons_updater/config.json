@@ -30,6 +30,7 @@
     "verbose": "bool?"
   },
   "slug": "updater",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater",
   "version": "3.18.5"
 }

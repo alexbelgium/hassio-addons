@@ -75,6 +75,7 @@
     "PUID": "int"
   },
   "slug": "ombi",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/ombi",
   "version": "4.43.5",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3579]"

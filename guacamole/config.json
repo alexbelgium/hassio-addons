@@ -75,6 +75,7 @@
     "TZ": "str?"
   },
   "slug": "guacamole",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "test",
   "video": true
