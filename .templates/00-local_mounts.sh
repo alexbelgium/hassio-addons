@@ -9,11 +9,15 @@ set -e
 # Mount local Share if configured
 if bashio::config.has_value 'localdisks'; then
 
+    # Available UUID
+    blkid -s UUID -o value > availabledisks
+    echo "UUID" >> availabledisks
+
     ## List available Disk with Labels and Id
     bashio::log.blue "---------------------------------------------------"
     bashio::log.info "Available Disks :"
-    lsblk -o name,label,size,fstype,ro | awk '$4 != "" { print $0 }'
-    bashio::log.blue "        you cannot mount HAos data partition       "    
+    lsblk -o name,label,size,fstype,ro,uuid | awk '$4 != "" { print $0 }' | grep -f availabledisks
+    bashio::log.blue "        you cannot mount HAos data partition       "
     bashio::log.blue "---------------------------------------------------"
 
     # Show support fs https://github.com/dianlight/hassio-addons/blob/2e903184254617ac2484fe7c03a6e33e6987151c/sambanas/rootfs/etc/s6-overlay/s6-rc.d/init-automount/run#L106
