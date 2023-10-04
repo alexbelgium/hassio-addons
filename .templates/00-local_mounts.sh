@@ -12,7 +12,7 @@ if bashio::config.has_value 'localdisks'; then
     ## List available Disk with Labels and Id
     bashio::log.blue "---------------------------------------------------"
     bashio::log.info "Available Disks :"
-    lsblk -o name,label,size,fstype,ro | awk '$5 != "" { print $0 }'
+    lsblk -o name,label,size,fstype,ro | awk '$4 != "" { print $0 }'
     bashio::log.blue "---------------------------------------------------"
 
     # Show support fs https://github.com/dianlight/hassio-addons/blob/2e903184254617ac2484fe7c03a6e33e6987151c/sambanas/rootfs/etc/s6-overlay/s6-rc.d/init-automount/run#L106
