@@ -28,15 +28,20 @@ if bashio::config.has_value 'localdisks'; then
     # shellcheck disable=SC2086
     for disk in ${MOREDISKS//,/ }; do
 
-        # Mount by device as default
-        devpath=/dev
-
-        # Mount as uuid
-        if [ ${#disk} == 36 ] ; then
+        # Mount as uuid if length of name is 36 characters
+        if [ -e /dev/"${disk}" ] ; then
+            echo "... mount as uuid"
             devpath=/dev/disk/by-uuid
-            # Mount as label
-        elif [ "${disk:0:2}" != "sd" ] && [ "${disk:0:4}" != "nvme" ] ; then
+            # Mount as label if not found in /dev
+        elif [ -n "$(lsblk -o LABEL | grep -w "NAS" | awk '{print $1}')" ]; then
+            echo "... mount as label"
             devpath=/dev/disk/by-label
+        elif [ -e /dev/"${disk}" ]
+            echo "... mount as physical device"
+            devpath=/dev
+        else            
+            bashio::log.fatal "... $disk was found neither in uuid, labels or physical drives, it will be skipped"
+            continue
         fi
 
         # Creates dir
