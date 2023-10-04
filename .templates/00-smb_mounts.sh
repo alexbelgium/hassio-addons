@@ -74,6 +74,7 @@ if bashio::config.has_value 'networkdisks'; then
         # Data validation
         if [[ ! "$disk" =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
             bashio::log.fatal "... the structure of your \"networkdisks\" option : \"$disk\" doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2. If you don't use it, you can simply remove the text, this will avoid this error message in the future."
+            touch ERRORCODE
             continue
         fi
 
@@ -97,17 +98,20 @@ if bashio::config.has_value 'networkdisks'; then
             if ! echo "$output" | grep 445/open &>/dev/null; then
                 if echo "$output" | grep /open &>/dev/null; then
                     bashio::log.fatal "... fatal : $server is reachable but SMB port not opened, stopping script"
+                    touch ERRORCODE
                     continue
                 else
                     bashio::log.fatal "... fatal : $server not reachable, is it correct"
+                    touch ERRORCODE
                     continue
                 fi
             fi
 
             # Are credentials correct
             echo "... testing credentials"
-            if ! smbclient -t 2 -L $disk -U $USERNAME%$PASSWORD "$DOMAINCLIENT" &>/dev/null; then
-                bashio::log.fatal "Incorrect Username or Password! Script will stop."
+            if ! smbclient -t 2 -L "$disk" -U "$USERNAME%$PASSWORD" "$DOMAINCLIENT" &>/dev/null; then
+                bashio::log.fatal "Incorrect Username, Password, or share path ! Script will stop."
+                touch ERRORCODE
                 continue
             fi
 
@@ -115,6 +119,7 @@ if bashio::config.has_value 'networkdisks'; then
             echo "... testing workgroup"
             if ! smbclient -t 2 -L $disk -N "$DOMAINCLIENT" &>/dev/null; then
                 bashio::log.fatal "A workgroup must perhaps be specified"
+                touch ERRORCODE
                 continue
             fi
 
@@ -184,14 +189,16 @@ if bashio::config.has_value 'networkdisks'; then
             umount "/mnt/$diskname" 2>/dev/null || true
             rmdir "/mnt/$diskname" || true
 
-            sleep 1m
-            bashio::addon.stop
         fi
 
     done
 
     if [ -f ERRORCODE ]; then
         rm ERRORCODE*
+        bashio::log.fatal "Addon will stop in 1m to prevent damages to your system"
+        sleep 1m
+        bashio::addon.stop
+        exit 1
     fi
 
 fi
