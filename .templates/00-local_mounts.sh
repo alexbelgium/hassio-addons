@@ -41,7 +41,7 @@ if bashio::config.has_value 'localdisks'; then
         elif [ -n "$(lsblk -o LABEL | grep -w "NAS" | awk '{print $1}')" ]; then
             echo "... mount as label"
             devpath=/dev/disk/by-label
-        elif [ -e /dev/"${disk}" ]
+        elif [ -e /dev/"${disk}" ]; then
             echo "... mount as physical device"
             devpath=/dev
         else            
