@@ -1,6 +1,8 @@
 # AUTO BUILDS #
 # From https://github.com/Poeschl/Hassio-Addons
 # name: slug/filename ; could be slug/config.* for all files
+all: */config.*
+all2: **/config.*
 addons_updater: addons_updater/config.* # Image : yes
 arpspoof: arpspoof/config.* # Image : yes
 autobrr: autobrr/config.* # Image : yes
