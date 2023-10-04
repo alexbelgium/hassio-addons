@@ -15,10 +15,10 @@ if bashio::config.has_value 'localdisks'; then
 
     ## List available Disk with Labels and Id
     bashio::log.blue "---------------------------------------------------"
-    bashio::log.info "Available Disks :"
+    bashio::log.info "Available Disks for mounting (excluding devices blocked by HA) :"
     lsblk -o name,label,size,fstype,ro,uuid | awk '$4 != "" { print $0 }' | grep -f availabledisks
-    bashio::log.blue "        you cannot mount HAos data partition       "
     bashio::log.blue "---------------------------------------------------"
+    rm availabledisks
 
     # Show support fs https://github.com/dianlight/hassio-addons/blob/2e903184254617ac2484fe7c03a6e33e6987151c/sambanas/rootfs/etc/s6-overlay/s6-rc.d/init-automount/run#L106
     fstypessupport=$(grep -v nodev </proc/filesystems | awk '{$1=" "$1}1' | tr -d '\n\t')
