@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Emby NAS] Wont mount localdisks in latest update (opened 2023-10-05)](https://github.com/alexbelgium/hassio-addons/issues/1016) by [@hacshacdgacs](https://github.com/hacshacdgacs)
 # Home assistant add-on: emby
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
