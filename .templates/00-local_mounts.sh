@@ -37,17 +37,18 @@ if bashio::config.has_value 'localdisks'; then
         disk="${disk##*/}"
 
         # Function to check what is the type of device
-        if lsblk | grep -q "^$1"; then
-            echo "... $disk is a physical device."
+        if [ -e /dev/"$disk" ]; then
+            echo "... $disk is a physical device"
             devpath=/dev
-        elif lsblk -o UUID | grep -q "$1"; then
-            echo "... $disk is a device by UUID."
+        elif lsblk -o UUID | grep -q "$disk"; then
+            echo "... $disk is a device by UUID"
             devpath=/dev/disk/by-uuid
-        elif lsblk -o LABEL | grep -q "$1"; then
-            echo "... $disk is a device by label."
+        elif lsblk -o LABEL | grep -q "$disk"; then
+            echo "... $disk is a device by label"
             devpath=/dev/disk/by-label
         else
-            echo "$disk does not match any known physical device, UUID, or label."
+            bashio::log.fatal "$disk does not match any known physical device, UUID, or label. "
+            sleep 1m
         fi
 
         # Creates dir
