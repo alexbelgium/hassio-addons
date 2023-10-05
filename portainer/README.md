@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Portainer Business Edition (opened 2023-06-14)](https://github.com/alexbelgium/hassio-addons/issues/873) by [@Frozenius](https://github.com/Frozenius)
 
 # Home assistant add-on: Portainer
 
