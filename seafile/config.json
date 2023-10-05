@@ -76,8 +76,7 @@
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
     "SERVER_IP": "homeassistant.local",
     "TZ": "Europe/Paris",
-    "udev": true,
-  "url": "seafile.example.com",
+    "url": "seafile.example.com",
     "data_location": "/share/seafile",
     "database": "sqlite"
   },
