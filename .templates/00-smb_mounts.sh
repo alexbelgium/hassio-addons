@@ -145,7 +145,7 @@ if bashio::config.has_value 'networkdisks'; then
              #######################################
              for SECVERS in "$SECVERS" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
                  if [ "$MOUNTED" = false ]; then
-                     mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>ERRORCODE \
+                     mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>/dev/null \
                      && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUIDPGID$CHARSET$DOMAIN" || MOUNTED=false
                  fi
              done
