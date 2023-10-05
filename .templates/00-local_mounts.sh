@@ -15,7 +15,7 @@ if bashio::config.has_value 'localdisks'; then
 
     ## List available Disk with Labels and Id
     bashio::log.blue "---------------------------------------------------"
-    bashio::log.info "Available Disks for mounting (excluding devices blocked by HA) :"
+    bashio::log.info "Available Disks for mounting :"
     lsblk -o name,label,size,fstype,ro | awk '$4 != "" { print $0 }' | grep -f availabledisks
     bashio::log.blue "---------------------------------------------------"
     rm availabledisks
