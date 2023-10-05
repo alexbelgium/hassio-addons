@@ -83,7 +83,7 @@ if bashio::config.has_value 'networkdisks'; then
         chown root:root /mnt/"$diskname"
 
         # Quickly try to mount with defaults
-        mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>ERRORCODE \
+        mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>/dev/null \
         && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" || MOUNTED=false
 
         # Deeper analysis if failed
