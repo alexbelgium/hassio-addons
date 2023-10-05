@@ -109,8 +109,13 @@ if bashio::config.has_value 'networkdisks'; then
 
             # Are credentials correct
             echo "... testing credentials"
-            if ! smbclient -t 2 -L "$disk" -U "$USERNAME%$PASSWORD" "$DOMAINCLIENT" &>/dev/null; then
-                bashio::log.fatal "Incorrect Username, Password, or share path ! Script will stop."
+            if ! smbclient -t 2 -L "$disk" -U "$USERNAME%$PASSWORD" "$DOMAINCLIENT" &>/output; then
+                if [[ "$(cat /output)" == *"LOGON_FAILURE"* ]]; then
+                    bashio::log.fatal "Incorrect Username, Password, or Domain! Script will stop."
+                else
+                    bashio::log.fatal "Incorrect path? Error : $(cat /output). Script will stop."
+                fi
+                rm /output
                 touch ERRORCODE
                 continue
             fi
