@@ -1,3 +1,5 @@
+### 4.8.0.49-3 (05-10-2023)
+- Minor bugs fixed
 ### 4.8.0.49-2 (04-10-2023)
 - Minor bugs fixed
 - Robust SMB & local mounts code
