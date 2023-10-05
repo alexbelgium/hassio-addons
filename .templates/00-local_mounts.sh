@@ -48,7 +48,7 @@ if bashio::config.has_value 'localdisks'; then
             devpath=/dev/disk/by-label
         else
             bashio::log.fatal "$disk does not match any known physical device, UUID, or label. "
-            sleep 1m
+            continue
         fi
 
         # Creates dir
