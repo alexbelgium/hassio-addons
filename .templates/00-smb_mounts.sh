@@ -109,13 +109,14 @@ if bashio::config.has_value 'networkdisks'; then
 
             # Are credentials correct
             echo "... testing credentials"
-            if ! smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" "$DOMAINCLIENT" 2>/output >/dev/null; then
-                if [[ "$(cat /output)" == *"LOGON_FAILURE"* ]]; then
-                    bashio::log.fatal "Incorrect Username, Password, or Domain! Script will stop."
-                else
-                    bashio::log.fatal "Incorrect path? Error : $(cat /output). Script will stop."
-                fi
-                rm /output
+            OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" "$DOMAINCLIENT" -c "exit" 2>&1"
+            if echo "$OUTPUT" | grep -q "LOGON_FAILURE"; then
+                bashio::log.fatal "Incorrect Username, Password, or Domain! Script will stop."
+                touch ERRORCODE
+                continue
+            elif echo "$OUTPUT" | grep -q "tree connect failed"; then
+                echo "... testing path"
+                bashio::log.fatal "Invalid or inaccessible SMB path. Script will stop."
                 touch ERRORCODE
                 continue
             fi
@@ -186,7 +187,7 @@ if bashio::config.has_value 'networkdisks'; then
             smbclient -t 2 -L $disk -U "$USERNAME%$PASSWORD"
 
             # Error code
-            mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$DOMAIN" "$disk" /mnt/"$diskname" 2>ERRORCODE || MOUNTED=false
+            mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$DOMAIN" "$disk" /mnt/"$diskname" 2> ERRORCODE || MOUNTED=false
             bashio::log.fatal "Error read : $(<ERRORCODE), addon will stop in 1 min"
             rm ERRORCODE*
 
