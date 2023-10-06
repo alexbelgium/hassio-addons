@@ -107,6 +107,13 @@ if bashio::config.has_value 'networkdisks'; then
                 fi
             fi
 
+            # Should there be a workgroup
+            echo "... testing workgroup"
+            if ! smbclient -t 2 -L $disk -N $DOMAINCLIENT -c "exit" &>/dev/null; then
+                bashio::log.fatal "A workgroup must perhaps be specified"
+                touch ERRORCODE
+            fi
+    
             # Are credentials correct
             echo "... testing credentials"
             OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" -c "exit" $DOMAINCLIENT 2>&1)"
@@ -119,14 +126,9 @@ if bashio::config.has_value 'networkdisks'; then
                 bashio::log.fatal "Invalid or inaccessible SMB path. Script will stop."
                 touch ERRORCODE
                 continue
-            fi
-
-            # Should there be a workgroup
-            echo "... testing workgroup"
-            if ! smbclient -t 2 -L $disk -N $DOMAINCLIENT -c "exit" &>/dev/null; then
-                bashio::log.fatal "A workgroup must perhaps be specified"
-                touch ERRORCODE
-                continue
+            elif echo "$OUTPUT" | ! grep -q "Disk"; then                
+                echo "... testing path"
+                bashio::log.fatal "No shares found. Invalid or inaccessible SMB path? Script will stop."
             fi
 
             # What is the SMB version
