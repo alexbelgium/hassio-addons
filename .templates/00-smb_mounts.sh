@@ -126,9 +126,9 @@ if bashio::config.has_value 'networkdisks'; then
                 bashio::log.fatal "Invalid or inaccessible SMB path. Script will stop."
                 touch ERRORCODE
                 continue
-            elif echo "$OUTPUT" | ! grep -q "Disk"; then                
+            elif ! echo "$OUTPUT" | grep -q "Disk"; then                
                 echo "... testing path"
-                bashio::log.fatal "No shares found. Invalid or inaccessible SMB path? Script will stop."
+                bashio::log.fatal "No shares found. Invalid or inaccessible SMB path?"
             fi
 
             # What is the SMB version
