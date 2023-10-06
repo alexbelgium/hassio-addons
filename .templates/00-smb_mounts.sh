@@ -41,7 +41,7 @@ if bashio::config.has_value 'networkdisks'; then
     if bashio::config.has_value 'cifsdomain'; then
         echo "... using domain $(bashio::config 'cifsdomain')"
         DOMAIN=",domain=$(bashio::config 'cifsdomain')"
-        DOMAINCLIENT=",--workgroup=$(bashio::config 'cifsdomain')"
+        DOMAINCLIENT="--workgroup=$(bashio::config 'cifsdomain')"
     fi
 
     # Is  UID/GID set
