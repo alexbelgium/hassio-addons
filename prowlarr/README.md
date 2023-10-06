@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Prowlarr Ingress (opened 2023-06-22)](https://github.com/alexbelgium/hassio-addons/issues/879) by [@antonio1475](https://github.com/antonio1475)
 # Home assistant add-on: Prowlarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
