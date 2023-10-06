@@ -77,7 +77,7 @@
     "DEBUG": "0",
     "SECRET_KEY": "YOUR_SECRET_KEY",
     "externalfiles_folder": "/config/addons_config/tandoor_recipes/externalfiles",
-    "SSL" : "true",
+    "ssl" : "true",
     "certfile" : "fullchain.pem"
     "keyfile" : "privkey.pem"
   },
@@ -100,7 +100,7 @@
     "POSTGRES_USER": "str?",
     "SECRET_KEY": "str",
     "externalfiles_folder": "str?"
-    "SSL" : "str?",
+    "ssl" : "str?",
     "certfile" : "str?"
     "keyfile" : "str?"
   },
