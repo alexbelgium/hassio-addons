@@ -109,7 +109,7 @@ if bashio::config.has_value 'networkdisks'; then
 
             # Are credentials correct
             echo "... testing credentials"
-            OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" "$DOMAINCLIENT" -c "exit" 2>&1)"
+            OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" -c "exit" $DOMAINCLIENT 2>&1)"
             if echo "$OUTPUT" | grep -q "LOGON_FAILURE"; then
                 bashio::log.fatal "Incorrect Username, Password, or Domain! Script will stop."
                 touch ERRORCODE
@@ -123,7 +123,7 @@ if bashio::config.has_value 'networkdisks'; then
 
             # Should there be a workgroup
             echo "... testing workgroup"
-            if ! smbclient -t 2 -L $disk -N "$DOMAINCLIENT" -c "exit" &>/dev/null; then
+            if ! smbclient -t 2 -L $disk -N $DOMAINCLIENT -c "exit" &>/dev/null; then
                 bashio::log.fatal "A workgroup must perhaps be specified"
                 touch ERRORCODE
                 continue
@@ -138,7 +138,7 @@ if bashio::config.has_value 'networkdisks'; then
             if [ -n "$SMBVERS" ]; then
               echo "... SMB version $SMBVERS detected"
               SMBVERS=",vers=$SMBVERS"
-            elif smbclient -t 2 -L "$server" -m NT1 -N "$DOMAINCLIENT" &>/dev/null; then
+            elif smbclient -t 2 -L "$server" -m NT1 -N $DOMAINCLIENT &>/dev/null; then
               echo "... only SMBv1 is supported, this can lead to issues"
               SECVERS=",sec=ntlm"
               SMBVERS=",vers=1.0"
