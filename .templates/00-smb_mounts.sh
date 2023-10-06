@@ -109,12 +109,12 @@ if bashio::config.has_value 'networkdisks'; then
 
             # Are credentials correct
             echo "... testing credentials"
-            OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" "$DOMAINCLIENT" -c "exit" 2>&1"
+            OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" "$DOMAINCLIENT" -c "exit" 2>&1)"
             if echo "$OUTPUT" | grep -q "LOGON_FAILURE"; then
                 bashio::log.fatal "Incorrect Username, Password, or Domain! Script will stop."
                 touch ERRORCODE
                 continue
-            elif echo "$OUTPUT" | grep -q "tree connect failed"; then
+            elif echo "$OUTPUT" | grep -q "tree connect failed" || echo "$OUTPUT" | grep -q "NT_STATUS_CONNECTION_DISCONNECTED"; then
                 echo "... testing path"
                 bashio::log.fatal "Invalid or inaccessible SMB path. Script will stop."
                 touch ERRORCODE
@@ -123,7 +123,7 @@ if bashio::config.has_value 'networkdisks'; then
 
             # Should there be a workgroup
             echo "... testing workgroup"
-            if ! smbclient -t 2 -L $disk -N "$DOMAINCLIENT" &>/dev/null; then
+            if ! smbclient -t 2 -L $disk -N "$DOMAINCLIENT" -c "exit" &>/dev/null; then
                 bashio::log.fatal "A workgroup must perhaps be specified"
                 touch ERRORCODE
                 continue
@@ -184,7 +184,7 @@ if bashio::config.has_value 'networkdisks'; then
             bashio::log.fatal "Here is some debugging info :"
 
             # Provide debugging info
-            smbclient -t 2 -L $disk -U "$USERNAME%$PASSWORD"
+            smbclient -t 2 -L $disk -U "$USERNAME%$PASSWORD" -c "exit"
 
             # Error code
             mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$DOMAIN" "$disk" /mnt/"$diskname" 2> ERRORCODE || MOUNTED=false
