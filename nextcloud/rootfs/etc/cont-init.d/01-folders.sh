@@ -32,10 +32,10 @@ if [[ "$datadirectory" == *"/mnt/"* ]] && [ ! -f "$datadirectory"/index.html ]; 
 fi
 
 echo "... setting permissions"
-mkdir -p "$datadirectory" 2>/dev/null || true
-chmod 755 -R "$datadirectory" 2>/dev/null || true
-chown -R "$PUID:$PGID" "$datadirectory"/* 2>/dev/null || true
-mkdir -p /scripts 2>/dev/null || true
+mkdir -p "$datadirectory"
+chmod 755 -R "$datadirectory"
+chown -R "$PUID:$PGID" "$datadirectory"
+mkdir -p /scripts
 
 echo "... done"
 echo " "
