@@ -1,4 +1,7 @@
 
+## 0.5.1 (07-10-2023)
+- Update to latest version from gabe565/CastSponsorSkip
+
 ## 0.5.0 (23-09-2023)
 - Update to latest version from gabe565/CastSponsorSkip
 
