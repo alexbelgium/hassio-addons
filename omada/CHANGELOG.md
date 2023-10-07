@@ -1,4 +1,7 @@
 
+## 5.12-2023-10-06 (2023-10-06)
+- Update to latest version from mbentley/omada-controller
+
 ## beta-arm64-2023-09-22 (2023-09-22)
 - Update to latest version from mbentley/omada-controller
 ### 5.9-chromium-amd64-2023-06-05-2 (06-06-2023)
