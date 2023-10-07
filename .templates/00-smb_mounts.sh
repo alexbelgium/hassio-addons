@@ -116,7 +116,7 @@ if bashio::config.has_value 'networkdisks'; then
     
             # Are credentials correct
             echo "... testing credentials"
-            OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" -c "exit" $DOMAINCLIENT 2>&1)"
+            OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" -c "exit" $DOMAINCLIENT 2>&1 || true)"
             if echo "$OUTPUT" | grep -q "LOGON_FAILURE"; then
                 bashio::log.fatal "Incorrect Username, Password, or Domain! Script will stop."
                 touch ERRORCODE
