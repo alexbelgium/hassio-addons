@@ -1,3 +1,6 @@
+
+## 1.81.1 (07-10-2023)
+- Update to latest version from imagegenius/docker-immich
 ### 1.79.1-2 (24-09-2023)
 - Minor bugs fixed
 - Feat : new optional settings for ML workers and timeout https://github.com/alexbelgium/hassio-addons/issues/996
