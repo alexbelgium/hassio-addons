@@ -78,7 +78,7 @@
     "SECRET_KEY": "YOUR_SECRET_KEY",
     "externalfiles_folder": "/config/addons_config/tandoor_recipes/externalfiles",
     "ssl" : "true",
-    "certfile" : "fullchain.pem"
+    "certfile" : "fullchain.pem",
     "keyfile" : "privkey.pem"
   },
   "panel_icon": "mdi:silverware-fork-knife",
@@ -99,9 +99,9 @@
     "POSTGRES_PORT": "str?",
     "POSTGRES_USER": "str?",
     "SECRET_KEY": "str",
-    "externalfiles_folder": "str?"
+    "externalfiles_folder": "str?",
     "ssl" : "str?",
-    "certfile" : "str?"
+    "certfile" : "str?",
     "keyfile" : "str?"
   },
   "services": [
