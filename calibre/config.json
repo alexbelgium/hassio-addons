@@ -3,7 +3,6 @@
     "aarch64",
     "amd64"
   ],
-  "codenotary": "alexandrep.github@gmail.com",
   "description": "e-book manager",
   "devices": [
     "/dev/dri",
