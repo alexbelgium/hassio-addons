@@ -1,3 +1,5 @@
+### 27.1.2-2 (07-10-2023)
+- Minor bugs fixed
 - Fix : cannot write in data folder
 
 ## 27.1.2 (07-10-2023)
