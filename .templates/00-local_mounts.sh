@@ -61,7 +61,7 @@ if bashio::config.has_value 'localdisks'; then
 
         # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)
         fstype=$(lsblk "$devpath"/"$disk" -no fstype)
-        options="nosuid,relatime,noexec"
+        options="relatime"
         type="auto"
 
         # Check if supported
