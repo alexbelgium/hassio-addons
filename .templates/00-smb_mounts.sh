@@ -84,7 +84,7 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Quickly try to mount with defaults
         mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>/dev/null \
-        && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" || MOUNTED=false
+            && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" || MOUNTED=false
 
         # Deeper analysis if failed
         if [ "$MOUNTED" = false ]; then
@@ -113,7 +113,7 @@ if bashio::config.has_value 'networkdisks'; then
                 bashio::log.fatal "A workgroup must perhaps be specified"
                 touch ERRORCODE
             fi
-    
+
             # Are credentials correct
             echo "... testing credentials"
             OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" -c "exit" $DOMAINCLIENT 2>&1 || true)"
@@ -126,7 +126,7 @@ if bashio::config.has_value 'networkdisks'; then
                 bashio::log.fatal "Invalid or inaccessible SMB path. Script will stop."
                 touch ERRORCODE
                 continue
-            elif ! echo "$OUTPUT" | grep -q "Disk"; then                
+            elif ! echo "$OUTPUT" | grep -q "Disk"; then
                 echo "... testing path"
                 bashio::log.fatal "No shares found. Invalid or inaccessible SMB path?"
             fi
@@ -138,27 +138,27 @@ if bashio::config.has_value 'networkdisks'; then
             SMBVERS="$(nmap --script smb-protocols "$server" -p 445 2>1 | awk '/  [0-9]/' | awk '{print $NF}'  | cut -c -3 | sort -V | tail -n 1  || true)"
             # Manage output
             if [ -n "$SMBVERS" ]; then
-              echo "... SMB version $SMBVERS detected"
-              SMBVERS=",vers=$SMBVERS"
+                echo "... SMB version $SMBVERS detected"
+                SMBVERS=",vers=$SMBVERS"
             elif smbclient -t 2 -L "$server" -m NT1 -N $DOMAINCLIENT &>/dev/null; then
-              echo "... only SMBv1 is supported, this can lead to issues"
-              SECVERS=",sec=ntlm"
-              SMBVERS=",vers=1.0"
+                echo "... only SMBv1 is supported, this can lead to issues"
+                SECVERS=",sec=ntlm"
+                SMBVERS=",vers=1.0"
             else
-              echo "... couldn't detect, default used"
-              SMBVERS=""
+                echo "... couldn't detect, default used"
+                SMBVERS=""
             fi
 
-             # Test with different security versions
-             #######################################
-             for SECVERS in "$SECVERS" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
-                 if [ "$MOUNTED" = false ]; then
-                     mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>/dev/null \
-                     && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" || MOUNTED=false
-                 fi
-             done
+            # Test with different security versions
+            #######################################
+            for SECVERS in "$SECVERS" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
+                if [ "$MOUNTED" = false ]; then
+                    mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>/dev/null \
+                        && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" || MOUNTED=false
+                fi
+            done
 
-         fi
+        fi
 
         # Messages
         if [ "$MOUNTED" = true ] && mountpoint -q /mnt/"$diskname"; then
