@@ -80,9 +80,9 @@
     "SEAFILE_ADMIN_PASSWORD": "a_very_secret_password",
     "SERVER_IP": "homeassistant.local",
     "TZ": "Europe/Paris",
-    "url": "seafile.example.com",
     "data_location": "/share/seafile",
-    "database": "sqlite"
+    "database": "sqlite",
+    "url": "seafile.example.com"
   },
   "panel_icon": "mdi:library",
   "ports": {
@@ -108,14 +108,14 @@
     "SEAFILE_ADMIN_PASSWORD": "password",
     "SERVER_IP": "str?",
     "TZ": "str?",
-    "url": "str",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str",
     "database": "list(sqlite|mariadb_addon)",
     "localdisks": "str?",
-    "networkdisks": "str?"
+    "networkdisks": "str?",
+    "url": "str"
   },
   "services": [
     "mysql:want"
