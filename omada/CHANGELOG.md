@@ -1,3 +1,4 @@
+- Fix : disappearing data
 
 ## 5.12-2023-10-06 (2023-10-06)
 - Update to latest version from mbentley/omada-controller
