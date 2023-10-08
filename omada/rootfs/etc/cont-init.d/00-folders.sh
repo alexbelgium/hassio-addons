@@ -21,19 +21,15 @@ fi
 cp -rnf /opt/tplink/EAPController/data/* "$CONFIGSOURCE"
 
 echo "Creating symlink"
+# Clean existing folder
 rm -r /opt/tplink/EAPController/data/*
 
-mkdir -p "$CONFIGSOURCE"/pdf
-mkdir -p "$CONFIGSOURCE"/omada/html
-mkdir -p "$CONFIGSOURCE"/db
-mkdir -p "$CONFIGSOURCE"/map
-mkdir -p "$CONFIGSOURCE"/portal
-
-ln -s "$CONFIGSOURCE"/pdf /opt/tplink/EAPController/data
-ln -s "$CONFIGSOURCE"/omada/html /opt/tplink/EAPController/data
-ln -s "$CONFIGSOURCE"/db /opt/tplink/EAPController/data
-ln -s "$CONFIGSOURCE"/map /opt/tplink/EAPController/data
-ln -s "$CONFIGSOURCE"/portal /opt/tplink/EAPController/data
+# Create symlinks for all files in /data
+for files in $(ls -d "$CONFIGSOURCE"/*); do
+    if [ -e "$files" ]; then
+        ln -s "$files" /opt/tplink/EAPController/data
+    fi
+done
 
 # Make sure permissions are right
 echo "Updating permissions"
