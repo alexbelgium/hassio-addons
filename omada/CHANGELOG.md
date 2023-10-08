@@ -1,3 +1,5 @@
+### 5.12-2023-10-06-3 (08-10-2023)
+- Minor bugs fixed
 ### 5.12-2023-10-06-2 (08-10-2023)
 - Minor bugs fixed
 - Fix : disappearing data
