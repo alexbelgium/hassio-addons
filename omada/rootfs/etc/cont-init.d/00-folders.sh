@@ -26,7 +26,7 @@ rm -r /opt/tplink/EAPController/data/*
 
 # Create symlinks for all files in /data
 # shellcheck disable=SC2086
-for files in $(ls -d "$CONFIGSOURCE"/*); do
+for files in "$CONFIGSOURCE"/*; do
     if [ -e "$files" ]; then
         ln -s "$files" /opt/tplink/EAPController/data
     fi
