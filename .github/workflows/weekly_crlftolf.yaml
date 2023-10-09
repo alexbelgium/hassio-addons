@@ -37,7 +37,7 @@ jobs:
           find ".github/workflows" -type f -name '*yaml*' -name '*yml*' -exec dos2unix {} \; 2>/dev/null
         continue-on-error: true
         
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           repository: ./main        
           commit_user_name: Azathothas # defaults to "github-actions[bot]"
