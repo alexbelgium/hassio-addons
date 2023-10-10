@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [SABnzbd+Plex NAS] Ingress Support (opened 2023-10-08)](https://github.com/alexbelgium/hassio-addons/issues/1022) by [@dm82m](https://github.com/dm82m)
 
 
 # Home assistant add-on: plex
