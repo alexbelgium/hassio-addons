@@ -69,11 +69,11 @@ cp "$CONFIGSOURCE" /tempenv
 sed -i '/^#/d' /tempenv
 sed -i '/^ /d' /tempenv
 sed -i '/^$/d' /tempenv
-
 # Exit if empty
 if [ ! -s /tempenv ]; then
     exit 0
 fi
+rm /tempenv
 
 # Check if yaml is valid
 EXIT_CODE=0
@@ -149,7 +149,7 @@ while IFS= read -r line; do
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
         echo "export ${KEYS}=\"${VALUE}\"" >> ~/.bashrc
         # Show in log
-        if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS=\'$VALUE\'"; fi
+        if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS='$VALUE'"; fi
     else
         bashio::log.fatal "$line does not follow the correct structure. Please check your yaml file."
     fi
