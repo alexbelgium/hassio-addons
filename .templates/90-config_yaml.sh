@@ -8,30 +8,37 @@ set -e
 ##################
 
 # Where is the config
-CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-# Check CONFIGSOURCE ends with config.yaml
-if [ "$(basename "$CONFIGSOURCE")" != "config.yaml" ]; then
-    bashio::log.error "Watchout: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
-fi
+if bashio::config.has_value 'CONFIG_LOCATION'; then
 
-# Check if config is located in an acceptable location
-LOCATIONOK=""
-for location in "/share" "/config" "/data"; do
-    if [[ "$CONFIGSOURCE" == "$location"* ]]; then
-        LOCATIONOK=true
+    # Get config source
+    CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
+    # Check CONFIGSOURCE ends with config.yaml
+    if [ "$(basename "$CONFIGSOURCE")" != "config.yaml" ]; then
+        bashio::log.error "Watchout: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
     fi
-done
-
-if [ -z "$LOCATIONOK" ]; then
+    # Check if config is located in an acceptable location
+    LOCATIONOK=""
+    for location in "/share" "/config" "/data"; do
+        if [[ "$CONFIGSOURCE" == "$location"* ]]; then
+            LOCATIONOK=true
+        fi
+    done
+    if [ -z "$LOCATIONOK" ]; then
     CONFIGSOURCE=/config/addons_config/${HOSTNAME#*-}
     bashio::log.fatal "Your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
+    fi
+    
+else
+    # Use default
+    CONFIGSOURCE="/config/addons_config/${HOSTNAME#*-}"
+
 fi
 
 # Check if config file is there, or create one from template
 if [ -f "$CONFIGSOURCE" ]; then
-    echo "Using config file found in $CONFIGSOURCE"
+    echo "... using config file found in $CONFIGSOURCE"
 else
-    echo "No config file, creating one from template"
+    echo "... no config file, creating one from template"
     # Create folder
     mkdir -p "$(dirname "${CONFIGSOURCE}")"
     # Placing template in config
