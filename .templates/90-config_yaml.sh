@@ -7,9 +7,6 @@ set -e
 # INITIALIZATION #
 ##################
 
-slug="${HOSTNAME#*-}"
-bashio::log.info "Load environment variables from /config/addons_config/${slug}/config.yaml if existing"
-
 # Where is the config
 if bashio::config.has_value 'CONFIG_LOCATION'; then
 
@@ -17,7 +14,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
     # Check CONFIGSOURCE ends with config.yaml
     if [ "$(basename "$CONFIGSOURCE")" != "config.yaml" ]; then
-        bashio::log.error "... watch-out: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
+        bashio::log.error "Watch-out: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
     fi
     # Check if config is located in an acceptable location
     LOCATIONOK=""
@@ -28,7 +25,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     done
     if [ -z "$LOCATIONOK" ]; then
     CONFIGSOURCE=/config/addons_config/${HOSTNAME#*-}
-    bashio::log.fatal "... watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
+    bashio::log.fatal "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
     
 else
@@ -38,10 +35,8 @@ else
 fi
 
 # Check if config file is there, or create one from template
-if [ -f "$CONFIGSOURCE" ]; then
-    echo "... using config file found in $CONFIGSOURCE"
-else
-    echo "... no config file, creating one from template"
+if [ ! -f "$CONFIGSOURCE" ]; then
+    echo "... no config file, creating one from template. Please customize the file in $CONFIGSOURCE before restarting."
     # Create folder
     mkdir -p "$(dirname "${CONFIGSOURCE}")"
     # Placing template in config
@@ -53,27 +48,34 @@ else
         TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/config.template"
         curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
     fi
-    # Need to restart
-    bashio::log.warning "... config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
 fi
 
 # Permissions
 chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
 
+####################
+# LOAD CONFIG.YAML #
+####################
+
+bashio::log.info "Load environment variables from $CONFIGSOURCE if existing"
+
+# Check if there are lines to read
+cp "$CONFIGSOURCE" /tempenv
+sed -i '/^#/d' /tempenv
+sed -i '/^ /d' /tempenv
+
+# Exit if empty
+if ! -s /tempenv; then
+    exit 0
+fi
+
 # Check if yaml is valid
 EXIT_CODE=0
 yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
-if [ "$EXIT_CODE" = 0 ]; then
-    echo "Config file is a valid yaml"
-else
+if [ "$EXIT_CODE" != 0 ]; then
     cat ERROR
-    bashio::log.warning "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
-    # bashio::exit.nok
-fi
-
-# Check if = instead of :
-if [[ "$(grep -c "=" "$CONFIGSOURCE")" -gt 2 ]]; then
-    bashio::log.warning 'Are you sure you did not use "KEY=VALUE" ? yaml nomenclature requires "KEY:VALUE"'
+    bashio::log.warning "... config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
+    exit 1
 fi
 
 # Export all yaml entries as env variables
@@ -97,8 +99,6 @@ function parse_yaml {
     }'
 }
 
-# Get variables and export
-bashio::log.info "Starting the app with the variables in $CONFIGSOURCE"
 # Get list of parameters in a file
 parse_yaml "$CONFIGSOURCE" "" >/tmpfile
 # Escape dollars
@@ -145,7 +145,6 @@ while IFS= read -r line; do
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS=\'$VALUE\'"; fi
     else
-        bashio::exit.nok "$line does not follow the correct structure. Please check your yaml file."
+        bashio::log.fatal "$line does not follow the correct structure. Please check your yaml file."
     fi
 done <"/tmpfile"
-
