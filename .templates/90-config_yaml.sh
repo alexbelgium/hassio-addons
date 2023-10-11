@@ -7,6 +7,11 @@ set -e
 # INITIALIZATION #
 ##################
 
+# Exit if /config is not mounted
+if [ ! -f /config/configuration.* ] || [ ! -d /config/.storage ]; then
+    exit 0
+fi
+
 # Where is the config
 if bashio::config.has_value 'CONFIG_LOCATION'; then
 
