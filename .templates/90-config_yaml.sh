@@ -66,7 +66,7 @@ sed -i '/^ /d' /tempenv
 sed -i '/^$/d' /tempenv
 
 # Exit if empty
-if ! -s /tempenv; then
+if [ ! -s /tempenv ]; then
     exit 0
 fi
 
