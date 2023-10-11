@@ -7,6 +7,9 @@ set -e
 # INITIALIZATION #
 ##################
 
+slug="${HOSTNAME#*-}"
+bashio::log.info "Load environment variables from /config/addons_config/${slug}/config.yaml if existing"
+
 # Where is the config
 if bashio::config.has_value 'CONFIG_LOCATION'; then
 
@@ -14,7 +17,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
     # Check CONFIGSOURCE ends with config.yaml
     if [ "$(basename "$CONFIGSOURCE")" != "config.yaml" ]; then
-        bashio::log.error "Watchout: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
+        bashio::log.error "... watch-out: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
     fi
     # Check if config is located in an acceptable location
     LOCATIONOK=""
@@ -25,7 +28,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     done
     if [ -z "$LOCATIONOK" ]; then
     CONFIGSOURCE=/config/addons_config/${HOSTNAME#*-}
-    bashio::log.fatal "Your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
+    bashio::log.fatal "... watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
     
 else
@@ -51,8 +54,7 @@ else
         curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
     fi
     # Need to restart
-    bashio::log.fatal "Config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
-    bashio::addon.stop
+    bashio::log.warning "... config file not found, creating a new one. Please customize the file in $CONFIGSOURCE before restarting."
 fi
 
 # Permissions
