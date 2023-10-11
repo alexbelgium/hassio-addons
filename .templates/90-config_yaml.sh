@@ -63,6 +63,7 @@ bashio::log.info "Load environment variables from $CONFIGSOURCE if existing"
 cp "$CONFIGSOURCE" /tempenv
 sed -i '/^#/d' /tempenv
 sed -i '/^ /d' /tempenv
+sed -i '/^$/d' /tempenv
 
 # Exit if empty
 if ! -s /tempenv; then
