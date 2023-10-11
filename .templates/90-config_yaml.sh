@@ -8,7 +8,7 @@ set -e
 ##################
 
 # Exit if /config is not mounted
-if [ ! -f /config/configuration.* ] || [ ! -d /config/.storage ]; then
+if [ ! -f /config/configuration.yaml ] || [ ! -d /config/.storage ]; then
     exit 0
 fi
 
