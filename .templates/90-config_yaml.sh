@@ -30,7 +30,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     
 else
     # Use default
-    CONFIGSOURCE="/config/addons_config/${HOSTNAME#*-}"
+    CONFIGSOURCE="/config/addons_config/${HOSTNAME#*-}/config.yaml"
 
 fi
 
