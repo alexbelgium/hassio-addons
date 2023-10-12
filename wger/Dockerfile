@@ -47,7 +47,7 @@ RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 90-config_yaml.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh 01-config_yaml.sh"
 
 # Automatic modules download
 ADD --chmod=744 "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"

@@ -32,7 +32,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     CONFIGSOURCE=/config/addons_config/${HOSTNAME#*-}
     bashio::log.fatal "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
-    
+
 else
     # Use default
     CONFIGSOURCE="/config/addons_config/${HOSTNAME#*-}/config.yaml"
