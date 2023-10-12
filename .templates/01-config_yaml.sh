@@ -39,6 +39,16 @@ else
 
 fi
 
+# Permissions
+mkdir -p "$(dirname "${CONFIGSOURCE}")"
+chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
+
+####################
+# LOAD CONFIG.YAML #
+####################
+
+bashio::log.info "Load environment variables from $CONFIGSOURCE if existing"
+
 # Check if config file is there, or create one from template
 if [ ! -f "$CONFIGSOURCE" ]; then
     echo "... no config file, creating one from template. Please customize the file in $CONFIGSOURCE before restarting."
@@ -54,15 +64,6 @@ if [ ! -f "$CONFIGSOURCE" ]; then
         curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
     fi
 fi
-
-# Permissions
-chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
-
-####################
-# LOAD CONFIG.YAML #
-####################
-
-bashio::log.info "Load environment variables from $CONFIGSOURCE if existing"
 
 # Check if there are lines to read
 cp "$CONFIGSOURCE" /tempenv
