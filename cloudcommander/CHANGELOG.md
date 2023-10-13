@@ -1,4 +1,7 @@
 
+## 16.17.7 (13-10-2023)
+- Update to latest version from coderaiser/cloudcmd
+
 ## 16.17.6 (23-09-2023)
 - Update to latest version from coderaiser/cloudcmd
 - Switch to alpine
