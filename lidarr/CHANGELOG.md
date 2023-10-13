@@ -1,4 +1,7 @@
 
+## 1.4.5.3639 (14-10-2023)
+- Update to latest version from linuxserver/docker-lidarr
+
 ## 1.3.5.3530 (26-08-2023)
 - Update to latest version from linuxserver/docker-lidarr
 
