@@ -5,10 +5,8 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "skips sponsored YouTube content on all local Chromecasts",
-  "environment": {
-    "SBCDIR": "/tmp/castsponsorskip"
-  },
+  "description": "Skip YouTube ads and sponsorships on all local Google Cast devices ",
+  "environment": {},
   "host_network": true,
   "image": "ghcr.io/alexbelgium/sponsorblockcast-{arch}",
   "init": false,
@@ -27,5 +25,5 @@
   "slug": "sponsorblockcast",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast",
-  "version": "0.5.1"
+  "version": "0.5.3"
 }

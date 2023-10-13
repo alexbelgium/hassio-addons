@@ -21,7 +21,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-CastSponsorSkip is a go script that skips sponsored YouTube content on all local Chromecasts, using the SponsorBlock API. It was inspired by CastBlock but written from scratch to avoid some of its pitfalls (see Differences from CastBlock).
+CastSponsorSkip is a Go program that skips sponsored YouTube content and skippable ads on all local Chromecasts, using the SponsorBlock API. It was inspired by CastBlock but written from scratch to avoid some of its pitfalls (see Differences from CastBlock).
 
 This app is developed by @gabe565 here : https://github.com/gabe565/CastSponsorSkip
 
