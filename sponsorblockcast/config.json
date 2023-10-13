@@ -6,9 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Skip YouTube ads and sponsorships on all local Google Cast devices ",
-  "environment": {
-    "SBCDIR": "/tmp/castsponsorskip"
-  },
+  "environment": {},
   "host_network": true,
   "image": "ghcr.io/alexbelgium/sponsorblockcast-{arch}",
   "init": false,
