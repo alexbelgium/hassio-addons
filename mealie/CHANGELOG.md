@@ -1,3 +1,6 @@
+
+## v1.0.0-RC1.1 (14-10-2023)
+- Update to latest version from hay-kot/mealie
 ### v1.0.0-beta-5-4 (20-06-2023)
 - Minor bugs fixed
 ### v1.0.0-beta-5-3 (07-06-2023)
