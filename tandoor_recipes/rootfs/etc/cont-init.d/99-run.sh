@@ -108,7 +108,7 @@ chmod 755 /data/recipes/staticfiles
 ln -s /config/addons_config/tandoor_recipes/mediafiles /opt/recipes
 ln -s /data/recipes/staticfiles /opt/recipes
 
-if bashio::config_has_value "externalfiles_folder"; then
+if bashio::config.has_value "externalfiles_folder"; then
     externalfiles_folder="$(bashio::config "externalfiles_folder")"
 else
     externalfiles_folder="/config/addons_config/tandoor_recipes/externalfiles"
