@@ -49,7 +49,7 @@ chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
 
 bashio::log.green "Load environment variables from $CONFIGSOURCE if existing"
 bashio::log.green "---------------------------------------------------------"
-echo "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
+echo "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add‐ons-feature-:-add-env-variables"
 
 # Check if config file is there, or create one from template
 if [ ! -f "$CONFIGSOURCE" ]; then
