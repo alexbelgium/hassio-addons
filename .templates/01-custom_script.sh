@@ -3,7 +3,9 @@
 set -e
 
 slug="${HOSTNAME#*-}"
-bashio::log.info "Execute /config/addons_autoscripts/${slug}.sh if existing"
+bashio::log.green "Execute /config/addons_autoscripts/${slug}.sh if existing"
+bashio::log.green "---------------------------------------------------------"
+echo "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
 
 mkdir -p /config/addons_autoscripts
 
@@ -14,12 +16,12 @@ fi
 
 # Execute scripts
 if [ -f /config/addons_autoscripts/"${slug}".sh ]; then
-    bashio::log.info "... script found, executing"
+    bashio::log.green "... script found, executing"
     # Convert scripts to linux
     dos2unix /config/addons_autoscripts/"${slug}".sh || true
     chmod +x /config/addons_autoscripts/"${slug}".sh || true
     /./config/addons_autoscripts/"${slug}".sh
 else
-    bashio::log.info "... no script found"
+    bashio::log.green "... no script found"
 fi
 
