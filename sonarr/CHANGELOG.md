@@ -1,4 +1,4 @@
-- v4 develop tag
+- Breaking change : update to v4
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 
 ### 3.0.10.1567-2 (19-03-2023)
