@@ -1,4 +1,5 @@
 {
+  "github_beta": true,
   "last_update": "18-03-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "sonarr",
