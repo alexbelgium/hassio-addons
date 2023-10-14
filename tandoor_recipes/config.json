@@ -78,7 +78,6 @@
     "DEBUG": "0",
     "SECRET_KEY": "YOUR_SECRET_KEY",
     "externalfiles_folder": "/config/addons_config/tandoor_recipes/externalfiles",
-    "ssl" : "false",
     "certfile" : "fullchain.pem",
     "keyfile" : "privkey.pem"
   },
