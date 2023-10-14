@@ -22,6 +22,6 @@ if [ -f /config/addons_autoscripts/"${slug}".sh ]; then
     chmod +x /config/addons_autoscripts/"${slug}".sh || true
     /./config/addons_autoscripts/"${slug}".sh
 else
-    bashio::log.green "... no script found"
+    bashio::log.green "... no script found, exiting"
 fi
 
