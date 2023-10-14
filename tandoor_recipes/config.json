@@ -69,7 +69,8 @@
   "map": [
     "config:rw",
     "share:rw",
-    "media:rw"
+    "media:rw",
+    "ssl:ro"
   ],
   "name": "Tandoor recipes",
   "options": {
