@@ -101,7 +101,7 @@
     "POSTGRES_USER": "str?",
     "SECRET_KEY": "str",
     "externalfiles_folder": "str?",
-    "ssl" : "bool",
+    "ssl" : "bool?",
     "certfile" : "str?",
     "keyfile" : "str?"
   },
