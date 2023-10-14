@@ -62,6 +62,7 @@
     "DB_ENGINE": "django.db.backends.sqlite3",
     "DISABLE_INGRESS": "true",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
+    "TANDOOR_PORT": "8081",
     "TRUSTED_PROXIES": "**"
   },
   "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
