@@ -36,8 +36,8 @@ Required :
     "Environment": 0|1 # 1 is debug mode, 0 is normal mode. You should run in normal mode unless actively developing.
 Optional :
     "ssl" : "true|false", # Set ssl 
-    "certfile" : "fullchain.pem", # Place where your ssl files are
-    "keyfile" : "privkey.pem", # Place where your ssl files are
+    "certfile" : "fullchain.pem", # Name of your ssl files located in /ssl
+    "keyfile" : "privkey.pem", # Name of your ssl files located in /ssl
     "POSTGRES_HOST": "str?", # Needed for postgresql_external
     "POSTGRES_PORT": "str?", # Needed for postgresql_external
     "POSTGRES_USER": "str?", # Needed for postgresql_external
