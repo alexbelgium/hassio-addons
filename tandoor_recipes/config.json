@@ -111,6 +111,6 @@
   "slug": "tandoor_recipes",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.5.6-test_ssl",
+  "version": "1.5.6-test_ssl2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
