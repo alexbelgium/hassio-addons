@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Immich] Search bar and face recognition does not work (opened 2023-10-14)](https://github.com/alexbelgium/hassio-addons/issues/1027) by [@Blendi](https://github.com/Blendi)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
