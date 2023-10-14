@@ -19,7 +19,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
     # Check CONFIGSOURCE ends with config.yaml
     if [ "$(basename "$CONFIGSOURCE")" != "config.yaml" ]; then
-        bashio::log.error "Watch-out: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
+        bashio::log.red "Watch-out: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
     fi
     # Check if config is located in an acceptable location
     LOCATIONOK=""
@@ -30,7 +30,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     done
     if [ -z "$LOCATIONOK" ]; then
     CONFIGSOURCE=/config/addons_config/${HOSTNAME#*-}
-    bashio::log.fatal "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
+    bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
 
 else
@@ -47,7 +47,9 @@ chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
 # LOAD CONFIG.YAML #
 ####################
 
-bashio::log.info "Load environment variables from $CONFIGSOURCE if existing"
+bashio::log.green "Load environment variables from $CONFIGSOURCE if existing"
+echo "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
+bashio::log.green "---------------------------------------------------------"
 
 # Check if config file is there, or create one from template
 if [ ! -f "$CONFIGSOURCE" ]; then
@@ -81,7 +83,7 @@ EXIT_CODE=0
 yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
 if [ "$EXIT_CODE" != 0 ]; then
     cat ERROR
-    bashio::log.warning "... config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
+    bashio::log.yellow "... config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
     exit 1
 fi
 
@@ -151,6 +153,6 @@ while IFS= read -r line; do
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS='$VALUE'"; fi
     else
-        bashio::log.fatal "$line does not follow the correct structure. Please check your yaml file."
+        bashio::log.red "$line does not follow the correct structure. Please check your yaml file."
     fi
 done <"/tmpfile"
