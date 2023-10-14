@@ -35,6 +35,9 @@ Required :
     "PORT": 9928 # By default, the webui is available on http://HAurl:9928. If you ever need to change the port, you should never do it within the app, but only through this option
     "Environment": 0|1 # 1 is debug mode, 0 is normal mode. You should run in normal mode unless actively developing.
 Optional :
+    "ssl" : "true|false", # Set ssl 
+    "certfile" : "fullchain.pem", # Name of your ssl files located in /ssl
+    "keyfile" : "privkey.pem", # Name of your ssl files located in /ssl
     "POSTGRES_HOST": "str?", # Needed for postgresql_external
     "POSTGRES_PORT": "str?", # Needed for postgresql_external
     "POSTGRES_USER": "str?", # Needed for postgresql_external
