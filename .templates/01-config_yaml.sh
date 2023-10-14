@@ -74,6 +74,7 @@ sed -i '/^ /d' /tempenv
 sed -i '/^$/d' /tempenv
 # Exit if empty
 if [ ! -s /tempenv ]; then
+    bashio::log.green "... no env variables found, exiting"
     exit 0
 fi
 rm /tempenv
