@@ -78,9 +78,9 @@
     "DB_TYPE": "sqlite",
     "DEBUG": "0",
     "SECRET_KEY": "YOUR_SECRET_KEY",
+    "certfile": "fullchain.pem",
     "externalfiles_folder": "/config/addons_config/tandoor_recipes/externalfiles",
-    "certfile" : "fullchain.pem",
-    "keyfile" : "privkey.pem"
+    "keyfile": "privkey.pem"
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "panel_title": "Tandoor Recipes",
@@ -100,10 +100,10 @@
     "POSTGRES_PORT": "str?",
     "POSTGRES_USER": "str?",
     "SECRET_KEY": "str",
+    "certfile": "str?",
     "externalfiles_folder": "str?",
-    "ssl" : "bool?",
-    "certfile" : "str?",
-    "keyfile" : "str?"
+    "keyfile": "str?",
+    "ssl": "bool?"
   },
   "services": [
     "mysql:want"
