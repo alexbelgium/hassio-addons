@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [POSTGRES] password authentication failed for user postgres (opened 2023-10-15)](https://github.com/alexbelgium/hassio-addons/issues/1030) by [@acervicius](https://github.com/acervicius)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
