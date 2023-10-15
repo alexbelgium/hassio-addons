@@ -160,7 +160,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
-&#10003;  [Castsponsorskip](sponsorblockcast/) : Skip YouTube ads and sponsorships on all local Google Cast devices 
+&#10003;  [Castsponsorskip](sponsorblockcast/) : Skip YouTube ads and sponsorships on all local Google Cast devices
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsponsorblockcast%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsponsorblockcast%2Fupdater.json)
