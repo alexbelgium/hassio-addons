@@ -124,7 +124,7 @@ timeout 10 sudo -u abc php /app/www/public/occ config:system:set check_data_dire
 for variable in env_memory_limit env_upload_max_filesize env_post_max_size; do
     if bashio::config.has_value "$variable"; then
         variable="${variable#env_}"
-        sed -i "/$variable/c $variable = (bashio::config env_$variable)" /etc/php*/conf.d/nextcloud.ini
-        sed -i "/$variable/c $variable = (bashio::config env_$variable)" /etc/php*/php.ini
+        sed -i "/$variable/c $variable = $(bashio::config env_$variable)" /etc/php*/conf.d/nextcloud.ini
+        sed -i "/$variable/c $variable = $(bashio::config env_$variable)" /etc/php*/php.ini
     fi
 done
