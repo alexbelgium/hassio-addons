@@ -90,7 +90,7 @@ sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:mode --off" || 
 # CLEAN OCDE #
 ##############
 
-echo "... Remove OCDE if installed as not compatible"
+echo "... Remove CODE if installed as not compatible"
 sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode" &>/dev/null || true
 sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_arm64" &>/dev/null || true
 sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_amd64" &>/dev/null || true
