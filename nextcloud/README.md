@@ -51,6 +51,9 @@ localdisks: sda1 #put the hardware name of your drive to mount separated by comm
 networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password, same for all smb shares)
+env_memory_limit: nextcloud usable memory limit (default is 512M)
+env_post_max_size: nextcloud post size (default is 512M)
+env_upload_max_filesize; nextcloud upload size (default is 512M)
 ```
 
 Webui can be found at `<your-ip>:port`.
