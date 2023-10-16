@@ -1,3 +1,5 @@
+- Feat : optional configuration of php (env_memory_limit ; env_post_max_size ; env_upload_max_filesize)
+
 ### 27.1.2-2 (07-10-2023)
 - Minor bugs fixed
 - Fix : cannot write in data folder
