@@ -117,6 +117,9 @@
     "default_phone_region": "match(^[A-Z]{2}$)?",
     "disable_updates": "bool?",
     "elasticsearch_server": "str?",
+    "env_memory_limit": "str?",
+    "env_post_max_size": "str?",
+    "env_upload_max_filesize": "str?",
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
@@ -130,6 +133,6 @@
   "uart": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "27.1.2-2",
+  "version": "27.1.2-3",
   "webui": "https://[HOST]:[PORT:443]"
 }
