@@ -86,6 +86,15 @@ sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair" >/dev/n
 sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair-share-owner" >/dev/null || true
 sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:mode --off" || true
 
+##############
+# CLEAN OCDE #
+##############
+
+echo "... Remove OCDE if installed as not compatible"
+sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode" &>/dev/null || true
+sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_arm64" &>/dev/null || true
+sudo -u abc php /app/www/public/occ app:remove --no-interaction "richdocumentscode_amd64" &>/dev/null || true
+
 ################
 # DEFINE PHONE #
 ################
