@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Nextcloud] Unable to use Collabora Online (opened 2023-10-14)](https://github.com/alexbelgium/hassio-addons/issues/1028) by [@ShonP40](https://github.com/ShonP40)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
