@@ -42,7 +42,7 @@ RUN \
     -e 's/upload_max_filesize=1024M/upload_max_filesize=8192M/g' \
     -e 's/post_max_size=1024M/post_max_size=8192M/g' \
     -e 's/max_execution_time=120/max_execution_time=3600/g' \
-    /etc/php*/php.ini || true && \
+    /etc/php*/php.ini && \
     \
     # modify nginx limits file
     sed -i "s|client_max_body_size 512M;|client_max_body_size 8192M;|g" /defaults/nginx/site-confs/default.conf.sample && \
