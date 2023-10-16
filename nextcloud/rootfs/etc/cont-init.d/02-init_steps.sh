@@ -126,5 +126,6 @@ for variable in env_memory_limit env_upload_max_filesize env_post_max_size; do
         variable="${variable#env_}"
         sed -i "/$variable/c $variable = $(bashio::config env_$variable)" /etc/php*/conf.d/nextcloud.ini
         sed -i "/$variable/c $variable = $(bashio::config env_$variable)" /etc/php*/php.ini
+        bashio::log.blue "$variable set to $(bashio::config env_$variable)"
     fi
 done
