@@ -39,14 +39,22 @@ RUN \
     \
     # modify data limits file
     sed -i \
-    -e 's/upload_max_filesize=1024M/upload_max_filesize=8192M/g' \
-    -e 's/post_max_size=1024M/post_max_size=8192M/g' \
-    -e 's/max_execution_time=120/max_execution_time=3600/g' \
+    -e 's/upload_max_filesize/c upload_max_filesize=8192M' \
+    -e 's/post_max_size/c post_max_size=8192M' \
+    -e 's/max_execution_time/c max_execution_time=3600' \
     /etc/php*/php.ini && \
     \
+    sed -i \
+    -e 's/upload_max_filesize/c upload_max_filesize=8192M' \
+    -e 's/post_max_size/c post_max_size=8192M' \
+    -e 's/max_execution_time/c max_execution_time=3600' \
+    /etc/php*/conf.d/nextcloud.ini && \
+    \
     # modify nginx limits file
-    sed -i "s|client_max_body_size 512M;|client_max_body_size 8192M;|g" /defaults/nginx/site-confs/default.conf.sample && \
-    sed -i "s|client_body_timeout 300s;|client_body_timeout 900s;|g" /defaults/nginx/site-confs/default.conf.sample && \
+    sed -i \
+    -e 's/client_max_body_size/c client_max_body_size 8192M;' \
+    -e 's/post_max_size/c client_body_timeout 900s;' \
+    /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Change location of log
     sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
