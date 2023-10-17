@@ -62,15 +62,13 @@
     "DB_ENGINE": "django.db.backends.sqlite3",
     "DISABLE_INGRESS": "true",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
-    "TANDOOR_PORT": "8081",
     "TRUSTED_PROXIES": "**"
   },
   "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
   "map": [
     "config:rw",
     "share:rw",
-    "media:rw",
-    "ssl:ro"
+    "media:rw"
   ],
   "name": "Tandoor recipes",
   "options": {
@@ -78,9 +76,7 @@
     "DB_TYPE": "sqlite",
     "DEBUG": "0",
     "SECRET_KEY": "YOUR_SECRET_KEY",
-    "certfile": "fullchain.pem",
-    "externalfiles_folder": "/config/addons_config/tandoor_recipes/externalfiles",
-    "keyfile": "privkey.pem"
+    "externalfiles_folder": "/config/addons_config/tandoor_recipes/externalfiles"
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "panel_title": "Tandoor Recipes",
@@ -100,10 +96,7 @@
     "POSTGRES_PORT": "str?",
     "POSTGRES_USER": "str?",
     "SECRET_KEY": "str",
-    "certfile": "str?",
-    "externalfiles_folder": "str?",
-    "keyfile": "str?",
-    "ssl": "bool?"
+    "externalfiles_folder": "str?"
   },
   "services": [
     "mysql:want"
@@ -111,6 +104,5 @@
   "slug": "tandoor_recipes",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.5.6",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
+  "version": "1.5.6"
 }
