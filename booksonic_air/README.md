@@ -22,7 +22,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ---
 
-[Booksonic-air](http://booksonic.org/) is a platform for accessing the audibooks you own wherever you are. At the moment the platform consists of Booksonic Air - A server for streaming your audiobooks, successor to the original Booksonic server and based on Airsonic. Booksonic App - An DSub based Android app for connection to Booksonic-Air servers.
+[Booksonic-air](http://booksonic.org/) is a platform for accessing the audiobooks you own wherever you are. At the moment the platform consists of Booksonic Air - A server for streaming your audiobooks, successor to the original Booksonic server and based on Airsonic. Booksonic App - An DSub based Android app for connection to Booksonic-Air servers.
 This addon is based on the docker image https://github.com/linuxserver/docker-booksonic-air
 
 ## Installation
