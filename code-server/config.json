@@ -95,6 +95,6 @@
   "slug": "code-server",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/coder-server",
-  "version": "4.17.1",
+  "version": "4.18.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8443]"
 }
