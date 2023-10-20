@@ -1,3 +1,6 @@
+
+## v0.7.2 (20-10-2023)
+- Update to latest version from analogj/scrutiny
 ### v0.7.1-2 (27-06-2023)
 - Minor bugs fixed
 - Add privileges in addition to full_access @dm82m @https://github.com/alexbelgium/hassio-addons/issues/880
