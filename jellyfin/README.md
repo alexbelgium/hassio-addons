@@ -27,6 +27,8 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
+### Addon config
+
 Webui can be found at `<your-ip>:8096`.
 
 ```yaml
@@ -40,6 +42,8 @@ cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
 DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg # Install graphic drivers
 ```
+
+### Enable ssl
 
 ## Installation
 
