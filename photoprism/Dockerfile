@@ -14,10 +14,10 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM
-ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="ubuntu"
-FROM photoprism/photoprism:preview
+ARG BUILD_FROM=photoprism/photoprism
+ARG BUILD_VERSION=231021
+
+FROM ${BUILD_FROM}:${BUILD_VERSION}
 
 ##################
 # 2 Modify Image #
