@@ -81,6 +81,7 @@
     "PGID": 0,
     "PUID": 0
   },
+  "panel_admin": false,
   "panel_icon": "mdi:library",
   "ports": {
     "8083/tcp": 8084
