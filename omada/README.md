@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [[Omada controller] ignore “beta” version (opened 2023-10-01)](https://github.com/alexbelgium/hassio-addons/issues/1010) by [@ankushg](https://github.com/ankushg)
 # Home assistant add-on: Omada controller
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

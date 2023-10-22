@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [autobrr] Cant update (opened 2023-10-15)](https://github.com/alexbelgium/hassio-addons/issues/1029) by [@celynw](https://github.com/celynw)
 
 # Home assistant add-on: Autobrrf
 
