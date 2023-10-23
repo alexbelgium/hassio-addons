@@ -68,7 +68,8 @@
   "map": [
     "config:rw",
     "share:rw",
-    "media:rw"
+    "media:rw",
+    "ssl:ro"
   ],
   "name": "Tandoor recipes",
   "options": {
@@ -76,7 +77,10 @@
     "DB_TYPE": "sqlite",
     "DEBUG": "0",
     "SECRET_KEY": "YOUR_SECRET_KEY",
-    "externalfiles_folder": "/config/addons_config/tandoor_recipes/externalfiles"
+    "externalfiles_folder": "/config/addons_config/tandoor_recipes/externalfiles",
+    "ssl" : "true",
+    "certfile" : "fullchain.pem",
+    "keyfile" : "privkey.pem"
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "panel_title": "Tandoor Recipes",
@@ -96,7 +100,10 @@
     "POSTGRES_PORT": "str?",
     "POSTGRES_USER": "str?",
     "SECRET_KEY": "str",
-    "externalfiles_folder": "str?"
+    "externalfiles_folder": "str?",
+    "ssl" : "bool?",
+    "certfile" : "str?",
+    "keyfile" : "str?"
   },
   "services": [
     "mysql:want"
@@ -104,6 +111,6 @@
   "slug": "tandoor_recipes",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.5.6-reverted",
-  "webui": "http://[HOST]:[PORT:8080]"
+  "version": "1.5.6-ssl",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
