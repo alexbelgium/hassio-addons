@@ -138,6 +138,20 @@ if bashio::config.has_value 'networkdisks'; then
             SMBVERS="$(nmap --script smb-protocols "$server" -p 445 2>1 | awk '/  [0-9]/' | awk '{print $NF}'  | cut -c -3 | sort -V | tail -n 1  || true)"
             # Manage output
             if [ -n "$SMBVERS" ]; then
+                case $SMBVERS in
+                  202)
+                    SMBVERS="2.0"
+                    ;;
+                  21)
+                    SMBVERS="2.1"
+                    ;;
+                  302)
+                    SMBVERS="3.02"
+                    ;;
+                  311)
+                    SMBVERS="3.1.1"
+                    ;;
+                esac
                 echo "... SMB version $SMBVERS detected"
                 SMBVERS=",vers=$SMBVERS"
             elif smbclient -t 2 -L "$server" -m NT1 -N $DOMAINCLIENT &>/dev/null; then
