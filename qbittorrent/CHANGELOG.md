@@ -1,3 +1,6 @@
+
+## 4.6.0 (28-10-2023)
+- Update to latest version from linuxserver/docker-qbittorrent
 ### 4.5.5-4 (30-09-2023)
 - Minor bugs fixed
 - Avoid crash when using smbv1
