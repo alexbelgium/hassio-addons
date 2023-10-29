@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Qbittorrent] version 4.6.0 - external ip data leak with openvpn (opened 2023-10-28)](https://github.com/alexbelgium/hassio-addons/issues/1049) by [@BeachyHeadCode](https://github.com/BeachyHeadCode)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
