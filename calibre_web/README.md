@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [calibre-web] Cannot login (opened 2023-10-29)](https://github.com/alexbelgium/hassio-addons/issues/1050) by [@klassm](https://github.com/klassm)
 # Home assistant add-on: Calibre-web
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
