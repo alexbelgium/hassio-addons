@@ -1,3 +1,5 @@
+### 16.17.7-2 (30-10-2023)
+- Minor bugs fixed
 
 ## 16.17.7 (13-10-2023)
 - Update to latest version from coderaiser/cloudcmd
