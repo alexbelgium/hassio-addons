@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Sonarr/Radarr] Blank screen after setting up Forced Authentication (opened 2023-10-30)](https://github.com/alexbelgium/hassio-addons/issues/1054) by [@antonio1475](https://github.com/antonio1475)
 
 # Home assistant add-on: Sonarr
 
