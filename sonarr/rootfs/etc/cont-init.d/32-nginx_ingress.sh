@@ -23,7 +23,7 @@ sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
 slug=sonarr
 CONFIG_LOCATION=/config/addons_config/"$slug"/config.xml
 
-if -f "$CONFIG_LOCATION"; then
+if [ -f "$CONFIG_LOCATION" ]; then
   # Disable local auth
   sed -i "/AuthenticationType/d" "$CONFIG_LOCATION"
   sed -i "2a <AuthenticationType>DisabledForLocalAddresses</AuthenticationType>" "$CONFIG_LOCATION"
