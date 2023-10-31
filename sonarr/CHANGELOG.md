@@ -1,3 +1,4 @@
+- Fix : add DisabledForLocalAddresses
 
 ## 4.0.0.703 (28-10-2023)
 - Update to latest version from linuxserver/docker-sonarr
