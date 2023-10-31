@@ -18,8 +18,6 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
   CONFIG_LOCATION="$CONFIG_LOCATION"/config.xml
 fi
 
-# Disable local authentification
-
 # Set UrlBase
 if ! grep -q "<UrlBase>$slug</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then
   bashio::log.warning "BaseUrl not set properly, restarting"
@@ -44,6 +42,7 @@ fi
 if ! grep -q "DisabledForLocalAddresses" "$CONFIG_LOCATION"; then
   sed -i "/AuthenticationType/d" "$CONFIG_LOCATION"
   sed -i "2a <AuthenticationType>DisabledForLocalAddresses</AuthenticationType>" "$CONFIG_LOCATION"
+  bashio::addon.restart
 fi
 
 bashio::log.info "Starting NGinx..."
