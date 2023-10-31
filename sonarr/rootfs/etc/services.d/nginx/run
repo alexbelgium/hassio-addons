@@ -40,6 +40,7 @@ fi
 
 # Ensure local address
 if ! grep -q "DisabledForLocalAddresses" "$CONFIG_LOCATION"; then
+  bashio::log.warning "DisabledForLocalAddresses added, restarting"
   sed -i "/AuthenticationType/d" "$CONFIG_LOCATION"
   sed -i "2a <AuthenticationType>DisabledForLocalAddresses</AuthenticationType>" "$CONFIG_LOCATION"
   bashio::addon.restart
