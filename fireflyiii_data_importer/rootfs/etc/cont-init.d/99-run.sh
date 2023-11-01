@@ -19,6 +19,11 @@ fi
 export IMPORT_DIR_ALLOWLIST="$CONFIGSOURCE"
 export IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"
 
+export AUTO_IMPORT_SECRET=$(bashio::config "AUTO_IMPORT_SECRET")
+export CAN_POST_FILES=$(bashio::config "CAN_POST_FILES")
+export CAN_POST_AUTOIMPORT=$(bashio::config "CAN_POST_AUTOIMPORT")
+
+
 ################
 # CRON OPTIONS #
 ################

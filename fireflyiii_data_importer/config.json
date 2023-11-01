@@ -61,7 +61,7 @@
   "environment": {
     "TRUSTED_PROXIES": "**"
   },
-  "image": "ghcr.io/alexbelgium/fireflyiii_data_importer-{arch}",
+"image": "ghcr.io/alexbelgium/fireflyiii_data_importer-{arch}",
   "map": [
     "config:rw",
     "share:rw",
@@ -78,6 +78,9 @@
     "8080/tcp": "web interface"
   },
   "schema": {
+    "AUTO_IMPORT_SECRET": "str?",
+    "CAN_POST_FILES": "bool?",
+    "CAN_POST_AUTOIMPORT": "bool?",
     "CONFIG_LOCATION": "str",
     "FIREFLY_III_ACCESS_TOKEN": "str",
     "FIREFLY_III_CLIENT_ID": "str?",
