@@ -24,13 +24,19 @@ slug=sonarr
 CONFIG_LOCATION=/config/addons_config/"$slug"/config.xml
 
 if [ -f "$CONFIG_LOCATION" ]; then
-  # Disable local auth
-  sed -i "/AuthenticationType/d" "$CONFIG_LOCATION"
-  sed -i "2a <AuthenticationType>DisabledForLocalAddresses</AuthenticationType>" "$CONFIG_LOCATION"
-
   # Set UrlBase
   if ! bashio::config.true "ingress_disabled"; then
+    bashio::log.info "Disabling ingress and enabling authentification"
     sed -i "/UrlBase/d" "$CONFIG_LOCATION"
     sed -i "/<Config>/a <UrlBase>$slug<\/UrlBase>" "$CONFIG_LOCATION"
+    sed -i "/<AuthenticationMethod>external</AuthenticationMethod>/d" "$CONFIG_LOCATION"
+  else
+    bashio::log.info "Ingress is enabled, authentification will be disabled and should be managed through HA itself"
+    # Disable local auth
+    sed -i "/AuthenticationType/d" "$CONFIG_LOCATION"
+    sed -i "2a <AuthenticationType>DisabledForLocalAddresses</AuthenticationType>" "$CONFIG_LOCATION"
+    # Disable local auth
+    sed -i "/AuthenticationMethod/d" "$CONFIG_LOCATION"
+    sed -i "2a <AuthenticationMethod>external</AuthenticationMethod>" "$CONFIG_LOCATION"
   fi
 fi
