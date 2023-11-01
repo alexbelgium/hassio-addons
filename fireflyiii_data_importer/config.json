@@ -61,7 +61,7 @@
   "environment": {
     "TRUSTED_PROXIES": "**"
   },
- "image": "ghcr.io/alexbelgium/fireflyiii_data_importer-{arch}",
+  "image": "ghcr.io/alexbelgium/fireflyiii_data_importer-{arch}",
   "map": [
     "config:rw",
     "share:rw",
