@@ -1,4 +1,4 @@
-- Fix : add DisabledForLocalAddresses. Restart addon after setting password.
+- Fix : disable authentification when using ingress
 
 ## 5.0.3.8127 (14-10-2023)
 - Update to latest version from linuxserver/docker-radarr

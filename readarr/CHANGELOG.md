@@ -1,4 +1,4 @@
-- Fix : add DisabledForLocalAddresses. Restart addon after setting password.
+- Fix : disable authentification when using ingress
 
 ## 0.3.9.2272 (20-10-2023)
 - Update to latest version from linuxserver/docker-readarr
