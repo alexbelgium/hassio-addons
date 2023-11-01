@@ -1,4 +1,4 @@
-- Fix : add DisabledForLocalAddresses. Restart addon after setting password.
+- Fix : disable authentification when using ingress
 
 ## 4.0.0.703 (28-10-2023)
 - Update to latest version from linuxserver/docker-sonarr
