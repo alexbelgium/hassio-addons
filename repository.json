@@ -1,6 +1,6 @@
 {
-  "name": "HA Add-ons by alexbelgium",
+  "name": "HA Add-ons by alexbelgium -- FinTS Dev",
   "udev": true,
-  "url": "https://github.com/alexbelgium/hassio-addons",
+  "url": "https://github.com/baflo/hassio-addons-by-alex-belgium/tree/dev-f3-fints-importer",
   "maintainer": "alexbelgium"
 }
