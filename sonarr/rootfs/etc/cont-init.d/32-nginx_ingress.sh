@@ -27,13 +27,6 @@ if [ -f "$CONFIG_LOCATION" ]; then
   # Set UrlBase
   if ! bashio::config.true "ingress_disabled"; then
     bashio::log.warning "---------------------------"
-    bashio::log.info "Disabling ingress and enabling authentification"
-    bashio::log.warning "---------------------------"
-    sed -i "/UrlBase/d" "$CONFIG_LOCATION"
-    sed -i "/<Config>/a <UrlBase>$slug<\/UrlBase>" "$CONFIG_LOCATION"
-    sed -i "/<AuthenticationMethod>external</AuthenticationMethod>/d" "$CONFIG_LOCATION"
-  else
-    bashio::log.warning "---------------------------"
     bashio::log.warning "Ingress is enabled, authentification will be disabled and should be managed through HA itself. If you need authentification, please disable ingress in addon options"
     bashio::log.warning "---------------------------"
     # Disable local auth
@@ -42,5 +35,12 @@ if [ -f "$CONFIG_LOCATION" ]; then
     # Disable local auth
     sed -i "/AuthenticationMethod/d" "$CONFIG_LOCATION"
     sed -i "2a <AuthenticationMethod>external</AuthenticationMethod>" "$CONFIG_LOCATION"
+  else
+    bashio::log.warning "---------------------------"
+    bashio::log.info "Disabling ingress and enabling authentification"
+    bashio::log.warning "---------------------------"
+    sed -i "/UrlBase/d" "$CONFIG_LOCATION"
+    sed -i "2a <UrlBase>$slug<\/UrlBase>" "$CONFIG_LOCATION"
+    sed -i "/<AuthenticationMethod>external</AuthenticationMethod>/d" "$CONFIG_LOCATION"
   fi
 fi
