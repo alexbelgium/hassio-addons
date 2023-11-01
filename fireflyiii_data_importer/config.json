@@ -78,6 +78,9 @@
     "8080/tcp": "web interface"
   },
   "schema": {
+    "AUTO_IMPORT_SECRET": "str?",
+    "CAN_POST_FILES": "bool?",
+    "CAN_POST_AUTOIMPORT": "bool?",
     "CONFIG_LOCATION": "str",
     "FIREFLY_III_ACCESS_TOKEN": "str",
     "FIREFLY_III_CLIENT_ID": "str?",
@@ -92,6 +95,6 @@
   "slug": "fireflyiii_data_importer",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.3.8",
+  "version": "1.3.9",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
