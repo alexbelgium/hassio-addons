@@ -38,13 +38,5 @@ if bashio::config.true "ingress_disabled"; then
     fi
 fi
 
-# Ensure local address
-if ! grep -q "<AuthenticationType>DisabledForLocalAddresses</AuthenticationType>" "$CONFIG_LOCATION"; then
-  bashio::log.warning "DisabledForLocalAddresses added, restarting"
-  sed -i "/AuthenticationType/d" "$CONFIG_LOCATION"
-  sed -i "2a <AuthenticationType>DisabledForLocalAddresses</AuthenticationType>" "$CONFIG_LOCATION"
-  bashio::addon.restart
-fi
-
 bashio::log.info "Starting NGinx..."
 exec nginx
