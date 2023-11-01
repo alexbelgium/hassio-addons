@@ -1,3 +1,5 @@
+### 4.0.0.703-2 (01-11-2023)
+- Minor bugs fixed
 - Fix : disable authentification when using ingress
 
 ## 4.0.0.703 (28-10-2023)
