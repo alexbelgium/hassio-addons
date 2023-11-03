@@ -1,3 +1,4 @@
+- logs & cache removed from backups
 
 ## 10.8.11 (30-09-2023)
 - Update to latest version from linuxserver/docker-jellyfin
