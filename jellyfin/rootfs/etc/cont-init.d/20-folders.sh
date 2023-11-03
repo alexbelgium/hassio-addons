@@ -48,4 +48,4 @@ for folders in "data" "plugins" "root"; do
     mkdir -p "$LOCATION/$folders"
     chown -R "$PUID:$PGID" "$LOCATION/$folders"
     ln -s "$LOCATION/$folders" /jellyfin/"$folders"
-fi
+done
