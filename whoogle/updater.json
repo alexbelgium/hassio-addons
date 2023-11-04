@@ -1,8 +1,8 @@
 {
-  "last_update": "26-08-2023",
+  "last_update": "04-11-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "whoogle",
   "source": "github",
   "upstream_repo": "benbusby/whoogle-search",
-  "upstream_version": "0.8.3"
+  "upstream_version": "0.8.4"
 }
