@@ -32,7 +32,7 @@ Configurations can be added in the /config/addons_config/fireflyiii_fints_import
 
 ### Cron job
 
-A cron job running all configurations perdiodically can be activated by selecting a period. Please note the perdiods `daily2`, `daily4`, etc. run at 2am, 4am, etc., so you can select the hour when to update.
+A cron job running all configurations perdiodically can be activated by selecting a period. Please note the periods `daily2`, `daily4`, etc. run at 2am, 4am, etc., so you can select the hour when to update.
 
 ## Installation
 
