@@ -62,6 +62,7 @@
     "HOME": "/config/addons_config/calibre",
     "PGID": "0",
     "PUID": "0",
+    "START_DOCKER": "false",
     "shm_size": "1gb"
   },
   "image": "ghcr.io/alexbelgium/calibre-{arch}",
@@ -109,6 +110,6 @@
   "slug": "calibre",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
-  "version": "6.29.0-2",
+  "version": "6.29.0-3",
   "video": true
 }
