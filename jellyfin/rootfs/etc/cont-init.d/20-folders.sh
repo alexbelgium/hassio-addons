@@ -38,7 +38,7 @@ for folders in "cache" "log" "data/metadata"; do
     if [ -d "$LOCATION/$folders" ]; then
         echo "Previous $folders found, migrating to /data"
         cp -r "$LOCATION/$folders/*" /data/"$folders"/
-        rm -r "${$LOCATION:?}/$folders"
+        rm -r "${LOCATION:?}/$folders"
     fi
     mkdir -p "$LOCATION/$folders"
     ln -s /data/"$folders" "$LOCATION/$folders"
