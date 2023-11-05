@@ -1,3 +1,5 @@
+- Fix : ingress
+
 ### 6.29.0-2 (05-11-2023)
 - Minor bugs fixed
 
