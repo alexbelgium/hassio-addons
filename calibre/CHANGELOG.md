@@ -1,3 +1,5 @@
+### 6.29.0-2 (05-11-2023)
+- Minor bugs fixed
 
 ## 6.29.0 (20-10-2023)
 - Update to latest version from linuxserver/docker-calibre
