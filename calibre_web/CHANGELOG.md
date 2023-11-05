@@ -1,3 +1,5 @@
+### 0.6.21-2 (05-11-2023)
+- Minor bugs fixed
 - Fix : https://github.com/alexbelgium/hassio-addons/issues/1050 @klassm
 
 ## 0.6.21 (28-10-2023)
