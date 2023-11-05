@@ -79,8 +79,8 @@
   },
   "schema": {
     "AUTO_IMPORT_SECRET": "str?",
-    "CAN_POST_FILES": "bool?",
     "CAN_POST_AUTOIMPORT": "bool?",
+    "CAN_POST_FILES": "bool?",
     "CONFIG_LOCATION": "str",
     "FIREFLY_III_ACCESS_TOKEN": "str",
     "FIREFLY_III_CLIENT_ID": "str?",
