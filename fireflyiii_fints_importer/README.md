@@ -30,6 +30,10 @@ Read official documentation for information how to set : https://github.com/bnw/
 
 Configurations can be added in the /config/addons_config/fireflyiii_fints_importer/ folder according to : https://github.com/bnw/firefly-iii-fints-importer#storing-configurations
 
+### Cron job
+
+A cron job running all configurations perdiodically can be activated by selecting a period. Please note the perdiods `daily2`, `daily4`, etc. run at 2am, 4am, etc., so you can select the hour when to update.
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.

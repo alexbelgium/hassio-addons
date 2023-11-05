@@ -74,7 +74,7 @@
     "8080/tcp": "web interface"
   },
   "schema": {
-    "Updates": "list(|hourly|daily|daily4|daily6|daily8|daily10|daily12|weekly)?",
+    "Updates": "list(|hourly|daily2|daily4|daily6|daily8|daily10|daily12|weekly)?",
     "silent": "bool?"
   },
   "slug": "fireflyiii_fints_importer",
