@@ -35,17 +35,11 @@ for folders in "cache" "log" "data/metadata"; do
     echo "Creating link for /jellyfin/$folders"
     mkdir -p /data/"$folders"
     chown -R "$PUID:$PGID" /data/"$folders"
-    ln -s /data/"$folders" /jellyfin/"$folders"
     if [ -d "$LOCATION/$folders" ]; then
+        echo "Previous $folders found, migrating to /data"
         cp -r "$LOCATION/$folders/*" /data/"$folders"/
         rm -r "$LOCATION/$folders"
     fi
-done
-
-# links in /config
-for folders in "data" "plugins" "root"; do
-    echo "Creating link for /jellyfin/$folders"
     mkdir -p "$LOCATION/$folders"
-    chown -R "$PUID:$PGID" "$LOCATION/$folders"
-    ln -s "$LOCATION/$folders" /jellyfin/"$folders"
+    ln -s /data/"$folders" "$LOCATION/$folders"
 done
