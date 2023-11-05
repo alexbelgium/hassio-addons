@@ -68,3 +68,5 @@ mkdir -p "$LOCATION"
 bashio::log.info "Setting ownership to $PUID:$PGID"
 chown -R "$PUID":"$PGID" "$LOCATION"
 chmod -R 755 "$LOCATION"
+mkdir -p "$LOCATION"/.XDG
+chmod -R 700 "$LOCATION"/.XDG
