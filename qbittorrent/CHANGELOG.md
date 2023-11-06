@@ -1,5 +1,8 @@
+- Ingress webui update at start
+
 ### 4.6.0-2 (30-10-2023)
 - Minor bugs fixed
+
 ### 4.6.0-WITHOUT_VPN (30-10-2023)
 - Minor bugs fixed
 
