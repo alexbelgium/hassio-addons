@@ -152,6 +152,11 @@ if [ ! "$CUSTOMUI" = custom ]; then
     chown "$PUID:$PGID" /webui
 fi
 
+# Update ingress webui
+curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
+unzip -o vuetorrent.zip -d / >/dev/null
+rm vuetorrent.zip
+
 # Install webui
 if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$CUSTOMUI" = custom ]; then
     ### Variables
@@ -160,9 +165,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     ### Download WebUI
     case $CUSTOMUI in
         "vuetorrent")
-            curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
-            unzip -o vuetorrent.zip -d / >/dev/null
-            mv vuetorrent.zip /webui/release.zip
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
             ;;
 
         "qbit-matUI")
