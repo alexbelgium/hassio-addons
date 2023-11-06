@@ -161,6 +161,9 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     case $CUSTOMUI in
         "vuetorrent")
             curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
+            # Update ingress
+            rm -r /vuetorrent/*
+            unzip -q /webui/release.zip -d /vuetorrent/
             ;;
 
         "qbit-matUI")
