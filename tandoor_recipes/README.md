@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Tandoor Recipes] is broken in pushed 1.5.6-test_ssl builds. (opened 2023-10-15)](https://github.com/alexbelgium/hassio-addons/issues/1032) by [@dcossey014](https://github.com/dcossey014)
 # Hass.io Add-ons: Tandoor recipes
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
