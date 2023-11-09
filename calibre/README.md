@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Calibre Cant startup/ memory leak (opened 2023-10-30)](https://github.com/alexbelgium/hassio-addons/issues/1052) by [@JeffersonBledsoe](https://github.com/JeffersonBledsoe)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
