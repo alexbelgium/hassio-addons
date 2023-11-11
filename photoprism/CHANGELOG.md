@@ -1,3 +1,6 @@
+## 231021 (22-10-2023)
+- Update to latest version from photoprism/photoprism
+
 ## ubuntu-231011 (17-10-2023)
 - Update to latest version from photoprism/photoprism
 

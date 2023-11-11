@@ -15,9 +15,7 @@
 #################
 
 ARG BUILD_FROM
-ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="ubuntu"
-FROM photoprism/photoprism:preview
+FROM ${BUILD_FROM}
 
 ##################
 # 2 Modify Image #

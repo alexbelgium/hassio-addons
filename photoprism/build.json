@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "photoprism/photoprism:preview",
+    "amd64": "photoprism/photoprism:preview"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
