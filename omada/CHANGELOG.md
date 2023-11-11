@@ -1,4 +1,7 @@
 
+## 5.12-2023-11-09 (2023-11-09)
+- Update to latest version from mbentley/omada-controller
+
 ## 5.12-2023-11-03 (2023-11-03)
 - Update to latest version from mbentley/omada-controller
 
