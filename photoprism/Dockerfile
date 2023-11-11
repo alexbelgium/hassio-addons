@@ -14,10 +14,8 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=photoprism/photoprism
-ARG BUILD_VERSION=231021
-
-FROM ${BUILD_FROM}:${BUILD_VERSION}
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
 ##################
 # 2 Modify Image #
