@@ -1,3 +1,6 @@
+
+## preview-ubuntu-2023-04-29 (2023-04-29)
+- Update to latest version from photoprism/photoprism
 ## 231021 (22-10-2023)
 - Update to latest version from photoprism/photoprism
 
