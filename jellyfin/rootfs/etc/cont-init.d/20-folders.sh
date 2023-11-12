@@ -18,24 +18,71 @@ if [ -z "$LOCATIONOK" ]; then
 fi
 
 # Set folders
+
 if [ ! -d /jellyfin ]; then
     echo "Creating /jellyfin"
     mkdir -p /jellyfin
     chown -R "$PUID:$PGID" /jellyfin
 fi
 
-for folders in "tv" "movie"; do
-    echo "Creating $LOCATION/$folders"
-    mkdir -p "$LOCATION/$folders"
-    chown -R "$PUID:$PGID" "$LOCATION/$folders"
-done
+if [ ! -d "$LOCATION"/tv ]; then
+    echo "Creating $LOCATION/tv"
+    mkdir -p "$LOCATION"/tv
+    chown -R "$PUID:$PGID" "$LOCATION"/tv
+fi
 
-# links in /data
-for folders in "cache" "log" "data/metadata"; do
-    echo "Creating link for /jellyfin/$folders"
-    mkdir -p /data/"$folders"
-    chown -R "$PUID:$PGID" /data/"$folders"
-    rm -r "${LOCATION:?}/$folders"
-    mkdir -p "$LOCATION/$folders"
-    ln -s /data/"$folders" "$LOCATION/$folders"
-done
+if [ ! -d "$LOCATION"/movies ]; then
+    echo "Creating $LOCATION/movies"
+    mkdir -p "$LOCATION"/movies
+    chown -R "$PUID:$PGID" "$LOCATION"/movies
+fi
+
+if [ ! -d "$LOCATION" ]; then
+    echo "Creating $LOCATION"
+    mkdir -p "$LOCATION"
+    chown -R "$PUID:$PGID" "$LOCATION"
+fi
+
+# links
+
+if [ ! -d /jellyfin/cache ]; then
+    echo "Creating link for /jellyfin/cache"
+    mkdir -p "$LOCATION"/cache
+    chown -R "$PUID:$PGID" "$LOCATION"/cache
+    ln -s "$LOCATION"/cache /jellyfin/cache
+fi
+
+if [ ! -d /jellyfin/data ]; then
+    echo "Creating link for /jellyfin/data"
+    mkdir -p "$LOCATION"/data
+    chown -R "$PUID:$PGID" "$LOCATION"/data
+    ln -s "$LOCATION"/data /jellyfin/data
+fi
+
+if [ ! -d /jellyfin/log ]; then
+    echo "Creating link for /jellyfin/log"
+    mkdir -p "$LOCATION"/log
+    chown -R "$PUID:$PGID" "$LOCATION"/log
+    ln -s "$LOCATION"/log /jellyfin/log
+fi
+
+if [ ! -d /jellyfin/metadata ]; then
+    echo "Creating link for /jellyfin/metadata"
+    mkdir -p "$LOCATION"/metadata
+    chown -R "$PUID:$PGID" "$LOCATION"/metadata
+    ln -s "$LOCATION"/metadata /jellyfin/metadata
+fi
+
+if [ ! -d /jellyfin/plugins ]; then
+    echo "Creating link for /jellyfin/plugins"
+    mkdir -p "$LOCATION"/plugins
+    chown -R "$PUID:$PGID" "$LOCATION"/plugins
+    ln -s "$LOCATION"/plugins /jellyfin/plugins
+fi
+
+if [ ! -d /jellyfin/root ]; then
+    echo "Creating link for /jellyfin/root"
+    mkdir -p "$LOCATION"/root
+    chown -R "$PUID:$PGID" "$LOCATION"/root
+    ln -s "$LOCATION"/root /jellyfin/root
+fi
