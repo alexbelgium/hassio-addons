@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Flexget] Not getting updated (opened 2023-11-14)](https://github.com/alexbelgium/hassio-addons/issues/1071) by [@DDanii](https://github.com/DDanii)
 # Hass.io Add-ons: Flexget
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
