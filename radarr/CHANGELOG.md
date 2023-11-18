@@ -1,3 +1,6 @@
+
+## 5.1.3.8246 (18-11-2023)
+- Update to latest version from linuxserver/docker-radarr
 ### 5.0.3.8127-2 (01-11-2023)
 - Minor bugs fixed
 - Fix : disable authentification when using ingress
