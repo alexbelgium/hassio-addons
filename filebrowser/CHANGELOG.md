@@ -1,3 +1,5 @@
+- New config folders logic : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+
 ### 2.23.0_reverted (29-09-2023)
 - Minor bugs fixed
 - Revert to 2.23.0 to avoid tus interference with ingress
