@@ -1,3 +1,5 @@
+- New config folders logic : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+
 ### 16.17.7-2 (30-10-2023)
 - Minor bugs fixed
 
