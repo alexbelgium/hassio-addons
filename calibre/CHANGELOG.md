@@ -1,3 +1,6 @@
+
+## 7.0.0 (18-11-2023)
+- Update to latest version from linuxserver/docker-calibre
 ### 6.29.0-3 (05-11-2023)
 - Minor bugs fixed
 - Fix : ingress
