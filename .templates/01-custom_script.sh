@@ -2,6 +2,8 @@
 # shellcheck shell=bash
 set -e
 
+slug="${HOSTNAME#*-}"
+
 # Check type of config folder
 if [ ! -f /config/configuration.* ]; then
     # Migrate previous script
@@ -16,7 +18,6 @@ else
     mkdir -p /config/addons_autoscripts
 fi
 
-slug="${HOSTNAME#*-}"
 bashio::log.green "Execute $CONFIGLOCATION/${slug}.sh if existing"
 bashio::log.green "---------------------------------------------------------"
 echo "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
@@ -31,4 +32,3 @@ if [ -f "$CONFIGLOCATION/${slug}".sh ]; then
 else
     bashio::log.green "... no script found, exiting"
 fi
-
