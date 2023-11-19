@@ -4,7 +4,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "scan, index and archive all your physical documents",
+  "description": "Scan, index and archive all your physical documents",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
