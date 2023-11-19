@@ -8,7 +8,7 @@ slug="${HOSTNAME#*-}"
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
     # Migrate previous script
-    if [ -f /config/addons_autoscripts/"${slug}".sh ] && [ -d /homeassistant/addons_autoscripts ]; then
+    if [ -f /homeassistant/addons_autoscripts/"${slug}".sh ]; then
         echo "Migrating scripts to new config location"
         mv -f /homeassistant/addons_autoscripts/"${slug}".sh /config/"${slug}".sh
     fi
