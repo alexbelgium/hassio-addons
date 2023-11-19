@@ -1,3 +1,4 @@
+- Restore local and smb disks scripts
 
 ## 2.0.0b1 (19-11-2023)
 - Update to latest version from paperless-ngx/paperless-ngx
