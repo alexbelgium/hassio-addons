@@ -19,10 +19,12 @@ fi
 export IMPORT_DIR_ALLOWLIST="$CONFIGSOURCE"
 export IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"
 
+# shellcheck disable=SC2155
 export AUTO_IMPORT_SECRET="$(bashio::config "AUTO_IMPORT_SECRET")"
+# shellcheck disable=SC2155
 export CAN_POST_FILES="$(bashio::config "CAN_POST_FILES")"
+# shellcheck disable=SC2155
 export CAN_POST_AUTOIMPORT="$(bashio::config "CAN_POST_AUTOIMPORT")"
-
 
 ################
 # CRON OPTIONS #
