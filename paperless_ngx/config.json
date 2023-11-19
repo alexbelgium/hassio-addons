@@ -1,8 +1,7 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
-    "armv7"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "scan, index and archive all your physical documents",
@@ -61,21 +60,25 @@
   "environment": {
     "PAPERLESS_ADMIN_PASSWORD": "admin",
     "PAPERLESS_ADMIN_USER": "admin",
+    "PAPERLESS_DATA_DIR": "/config/data",
+    "PAPERLESS_MEDIA_ROOT": "/config/media",
+    "PAPERLESS_CONSUMPTION_DIR": "/config/consume",
+    "PAPERLESS_EXPORT_DIR": "/config/export",
     "PGID": "0",
     "PUID": "0"
   },
-  "homeassistant": "0.92.0b2",
   "image": "ghcr.io/alexbelgium/paperless_ng-{arch}",
   "init": false,
   "map": [
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "media:rw",
     "ssl"
   ],
   "name": "Paperless NGX",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/paperless_ng/config.yaml",
+    "CONFIG_LOCATION": "/config/config.yaml",
     "OCRLANG": "ENG FRA GER",
     "PAPERLESS_OCR_MODE": "skip",
     "PGID": 0,

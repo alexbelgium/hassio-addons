@@ -1,9 +1,9 @@
 {
+  "github_beta": "true",
   "github_fulltag": "false",
   "last_update": "19-08-2023",
-  "paused": true,
   "repository": "alexbelgium/hassio-addons",
-  "slug": "paperless_ngx",
+  "slug": "paperless_ng",
   "source": "github",
   "upstream_repo": "paperless-ngx/paperless-ngx",
   "upstream_version": "1.17.1"

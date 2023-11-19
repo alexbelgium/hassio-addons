@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 # shellcheck disable=SC2155
-set -e
 
 ####################
 # Define variables #
@@ -23,18 +22,19 @@ export PAPERLESS_ADMIN_PASSWORD="admin"
 export PAPERLESS_ADMIN_USER="admin"
 export PAPERLESS_ALLOWED_HOSTS="*"
 
-export PAPERLESS_DATA_DIR="/config/addons_config/paperless_ng"
-export PAPERLESS_MEDIA_ROOT="/config/addons_config/paperless_ng/media"
-export PAPERLESS_CONSUMPTION_DIR="/config/addons_config/paperless_ng/consume"
+export PAPERLESS_DATA_DIR="/config/data"
+export PAPERLESS_MEDIA_ROOT="/config/media"
+export PAPERLESS_CONSUMPTION_DIR="/config/consume"
+export PAPERLESS_EXPORT_DIR="/config/export"
+chown -R paperless:paperless /config
 
-if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR=$(bashio::config "PAPERLESS_DATA_DIR"); fi
-if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT=$(bashio::config "PAPERLESS_MEDIA_ROOT"); fi
-if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR=$(bashio::config "PAPERLESS_CONSUMPTION_DIR"); fi
-
-for folder in "$PAPERLESS_DATA_DIR" "$PAPERLESS_MEDIA_ROOT" "$PAPERLESS_CONSUMPTION_DIR"; do
-    mkdir -p "$folder"
-    chmod -R 755 "$folder"
-    chown -R paperless:paperless "$folder"
+for variable in "PAPERLESS_DATA_DIR" "PAPERLESS_MEDIA_ROOT" "PAPERLESS_CONSUMPTION_DIR" "PAPERLESS_EXPORT_DIR"; do
+    # Import new variable if set in options
+    if bashio::config.has_value "$variable"; then export "$variable"=$(bashio::config "$variable"); fi
+    # Create folder and permissions if needed
+    mkdir -p "$variable"
+    chmod -R 755 "$variable"
+    chown -R paperless:paperless "$variable"
 done
 
 ###################
@@ -91,8 +91,17 @@ for variable in USERMAP_UID USERMAP_GID PAPERLESS_TIME_ZONE PAPERLESS_URL PAPERL
         continue
     fi
 
+    # Export
+    export "$variable=$variablecontent"
     # Add to bashrc
     eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
+    # set .env
+    echo "$variable=\"$variablecontent\"" >> /.env || true
+    # set /etc/environmemt
+    mkdir -p /etc
+    echo "$variable=\"$variablecontent\"" >> /etc/environmemt
+    # For s6
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${variablecontent}" > /var/run/s6/container_environment/"${variable}"; fi
 done
 
 #################
@@ -109,5 +118,3 @@ exec nginx & bashio::log.info "Starting nginx"
 # Staring app #
 ###############
 bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
-
-/./usr/local/bin/paperless_cmd.sh /sbin/docker-entrypoint.sh
