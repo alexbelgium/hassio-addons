@@ -8,8 +8,17 @@ set -e
 ##################
 
 # Exit if /config is not mounted
-if [ ! -f /config/configuration.yaml ] || [ ! -d /config/.storage ]; then
+if [ ! -d /config ]; then
     exit 0
+fi
+
+# Check type of config folder
+if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
+    # New config location
+    CONFIGLOCATION="/config"
+else
+    # Legacy config location
+    CONFIGLOCATION="/config/addons_config"
 fi
 
 # Where is the config
@@ -29,14 +38,21 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
         fi
     done
     if [ -z "$LOCATIONOK" ]; then
-        CONFIGSOURCE=/config/addons_config/${HOSTNAME#*-}
+        CONFIGSOURCE="$CONFIGLOCATION/${HOSTNAME#*-}"
         bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
 
 else
     # Use default
-    CONFIGSOURCE="/config/addons_config/${HOSTNAME#*-}/config.yaml"
+    CONFIGSOURCE="$CONFIGLOCATION/${HOSTNAME#*-}/config.yaml"
+fi
 
+# Migrate if needed
+if [ "$CONFIGLOCATION" == "/config" ]; then
+    if [ -f "/config/addons_config/${HOSTNAME#*-}/config.yaml" ]; then
+        echo "Migrating config.yaml to new config location"
+        mv /config/addons_config/${HOSTNAME#*-}/config.yaml /config/config.yaml
+    fi
 fi
 
 # Permissions
