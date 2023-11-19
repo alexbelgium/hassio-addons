@@ -76,7 +76,7 @@
     "media:rw",
     "ssl"
   ],
-  "name": "Paperless NGX",
+  "name": "Paperless ngx",
   "options": {
     "CONFIG_LOCATION": "/config/config.yaml",
     "OCRLANG": "ENG FRA GER",
