@@ -42,7 +42,7 @@ RUN sed -i "2a /./ha_entrypoint.sh" /sbin/docker-entrypoint.sh
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh"
+ARG MODULES="00-banner.sh 00-local_mounts.sh 00-smb_mounts.sh 01-custom_script.sh"
 
 # Automatic modules download
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
