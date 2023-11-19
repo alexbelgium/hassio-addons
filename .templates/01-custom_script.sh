@@ -5,7 +5,7 @@ set -e
 slug="${HOSTNAME#*-}"
 
 # Check type of config folder
-if [ ! -f /config/configuration.* ]; then
+if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
     # Migrate previous script
     if [ -f /config/addons_autoscripts/"${slug}".sh ]; then
         mv -f /config/addons_autoscripts/"${slug}".sh /config/"${slug}".sh
