@@ -21,7 +21,7 @@ if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; t
     CONFIGLOCATION="/config"
 else
     # Legacy config location
-    CONFIGLOCATION="/config/addons_config"
+    CONFIGLOCATION="/config/addons_config/${slug}"
 fi
 
 # Where is the config
@@ -41,13 +41,13 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
         fi
     done
     if [ -z "$LOCATIONOK" ]; then
-        CONFIGSOURCE="$CONFIGLOCATION/${slug}"
+        CONFIGSOURCE="$CONFIGLOCATION"
         bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
 
 else
     # Use default
-    CONFIGSOURCE="$CONFIGLOCATION/${slug}/config.yaml"
+    CONFIGSOURCE="$CONFIGLOCATION/config.yaml"
 fi
 
 # Migrate if needed
