@@ -1,5 +1,3 @@
-### 2.0.0b1-2 (19-11-2023)
-- Minor bugs fixed
 - Restore local and smb disks scripts
 
 ## 2.0.0b1 (19-11-2023)
