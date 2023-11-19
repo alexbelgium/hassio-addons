@@ -2,13 +2,15 @@
 # shellcheck shell=bash
 set -e
 
+# Define slug if needed
 slug="${HOSTNAME#*-}"
 
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
     # Migrate previous script
-    if [ -f /config/addons_autoscripts/"${slug}".sh ]; then
-        mv -f /config/addons_autoscripts/"${slug}".sh /config/"${slug}".sh
+    if [ -f /config/addons_autoscripts/"${slug}".sh ] && [ -d /homeassistant/addons_autoscripts ]; then
+        echo "Migrating scripts to new config location"
+        mv -f /homeassistant/addons_autoscripts/"${slug}".sh /config/"${slug}".sh
     fi
     # New config location
     CONFIGLOCATION="/config"

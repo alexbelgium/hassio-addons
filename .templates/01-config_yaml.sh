@@ -12,6 +12,9 @@ if [ ! -d /config ]; then
     exit 0
 fi
 
+# Define slug if
+slug="${HOSTNAME#*-}"
+
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
     # New config location
@@ -38,20 +41,20 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
         fi
     done
     if [ -z "$LOCATIONOK" ]; then
-        CONFIGSOURCE="$CONFIGLOCATION/${HOSTNAME#*-}"
+        CONFIGSOURCE="$CONFIGLOCATION/${slug}"
         bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
 
 else
     # Use default
-    CONFIGSOURCE="$CONFIGLOCATION/${HOSTNAME#*-}/config.yaml"
+    CONFIGSOURCE="$CONFIGLOCATION/${slug}/config.yaml"
 fi
 
 # Migrate if needed
 if [ "$CONFIGLOCATION" == "/config" ]; then
-    if [ -f "/config/addons_config/${HOSTNAME#*-}/config.yaml" ]; then
+    if [ -f "/homeassistant/addons_config/${slug}/config.yaml" ]; then
         echo "Migrating config.yaml to new config location"
-        mv /config/addons_config/${HOSTNAME#*-}/config.yaml /config/config.yaml
+        mv /homeassistant/addons_config/"${slug}"/config.yaml /config/config.yaml
     fi
 fi
 
