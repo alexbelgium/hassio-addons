@@ -62,10 +62,11 @@
   "ingress": true,
   "ingress_stream": true,
   "map": [
-    "ssl:rw",
-    "share:rw",
+    "addon_config:rw",
     "all_addon_configs:rw",
     "homeassistant_config:rw",
+    "ssl:rw",
+    "share:rw",
     "media:rw",
     "backup:rw",
     "addons:rw"
@@ -95,5 +96,5 @@
   "slug": "cloudcommander",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander",
-  "version": "16.17.7-2"
+  "version": "16.17.7-3"
 }
