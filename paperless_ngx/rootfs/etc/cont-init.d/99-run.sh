@@ -8,15 +8,15 @@
 
 bashio::log.info "Defining variables"
 
-if bashio::config.has_value "PUID"; then export USERMAP_UID=$(bashio::config "PUID"); fi
-if bashio::config.has_value "PGID"; then export USERMAP_GID=$(bashio::config "PGID"); fi
-if bashio::config.has_value "TZ"; then export PAPERLESS_TIME_ZONE=$(bashio::config "TZ"); fi
-if bashio::config.has_value "PAPERLESS_URL"; then export PAPERLESS_URL=$(bashio::config "PAPERLESS_URL"); fi
+if bashio::config.has_value "PUID"; then export USERMAP_UID="$(bashio::config "PUID")"; fi
+if bashio::config.has_value "PGID"; then export USERMAP_GID="$(bashio::config "PGID")"; fi
+if bashio::config.has_value "TZ"; then export PAPERLESS_TIME_ZONE="$(bashio::config "TZ")"; fi
+if bashio::config.has_value "PAPERLESS_URL"; then export PAPERLESS_URL="$(bashio::config "PAPERLESS_URL")"; fi
 if bashio::config.has_value "OCRLANG"; then
     PAPERLESS_OCR_LANGUAGES="$(bashio::config "OCRLANG")"
     export PAPERLESS_OCR_LANGUAGES=${PAPERLESS_OCR_LANGUAGES,,}
 fi
-if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE"); fi
+if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE="$(bashio::config "PAPERLESS_OCR_MODE")"; fi
 
 export PAPERLESS_ADMIN_PASSWORD="admin"
 export PAPERLESS_ADMIN_USER="admin"
@@ -30,7 +30,7 @@ chown -R paperless:paperless /config
 
 for variable in "PAPERLESS_DATA_DIR" "PAPERLESS_MEDIA_ROOT" "PAPERLESS_CONSUMPTION_DIR" "PAPERLESS_EXPORT_DIR"; do
     # Import new variable if set in options
-    if bashio::config.has_value "$variable"; then export "$variable"=$(bashio::config "$variable"); fi
+    if bashio::config.has_value "$variable"; then export "$variable"="$(bashio::config "$variable")"; fi
     # Create folder and permissions if needed
     mkdir -p "$variable"
     chmod -R 755 "$variable"
@@ -43,7 +43,7 @@ done
 
 bashio::log.info "Defining database"
 
-case $(bashio::config 'database') in
+case "$(bashio::config 'database')" in
 
         # Use mariadb
     mariadb_addon)
