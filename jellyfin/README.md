@@ -58,7 +58,7 @@ DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-am
 #### Jellyfin configuration
 1. From the sidebar, click on `Administration` -> `Dashboard`
 2. Under `Networking`, `Server Address Settings`, tick `Enable HTTPS`
-3. Under `HTTPS Settings`, tick `Require HTTPS` 
+3. Under `HTTPS Settings`, tick `Require HTTPS`
 4. For `Custom SSL certificate path:`, point it to your PFX file and fill in the `Certificate password` if required
 5. Scroll to the bottom and `Save`
 
