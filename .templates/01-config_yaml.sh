@@ -163,7 +163,7 @@ while IFS= read -r line; do
         # set .env
         if [ -f /.env ]; then echo "$KEYS=$VALUE" >> /.env; fi
         mkdir -p /etc
-        echo "$KEYS=$VALUE" >> /etc/environmemt
+        echo "$KEYS=$VALUE" >> /etc/environment
         # Export to scripts
         if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
         if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi

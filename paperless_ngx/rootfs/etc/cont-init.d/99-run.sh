@@ -100,9 +100,9 @@ for variable in USERMAP_UID USERMAP_GID PAPERLESS_TIME_ZONE PAPERLESS_URL PAPERL
     eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
     # set .env
     echo "$variable=\"$variablecontent\"" >> /.env || true
-    # set /etc/environmemt
+    # set /etc/environment
     mkdir -p /etc
-    echo "$variable=\"$variablecontent\"" >> /etc/environmemt
+    echo "$variable=\"$variablecontent\"" >> /etc/environment
     # For s6
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "${variablecontent}" > /var/run/s6/container_environment/"${variable}"; fi
 done
