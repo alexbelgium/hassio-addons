@@ -124,6 +124,6 @@
   "slug": "photoprism",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "preview-ubuntu-2023-04-29-3",
+  "version": "preview-ubuntu-2023-04-29",
   "video": true
 }
