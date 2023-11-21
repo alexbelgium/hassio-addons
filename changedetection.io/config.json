@@ -19,7 +19,7 @@
     "5000/tcp": 5000
   },
   "ports_description": {
-    "5000/tcp": "webui"
+    "5000/tcp": "Webui"
   },
   "schema": {
     "BASE_URL": "str?",
