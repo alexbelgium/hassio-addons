@@ -1,4 +1,4 @@
-## &#9888; Open Issue : [🐛 [Addon name] Cant connect to Jackett Nas (opened 2023-11-19)](https://github.com/alexbelgium/hassio-addons/issues/1077) by [@Haydon94](https://github.com/Haydon94)
+## &#9888; Open Issue : [🐛 [Jackett] Cant connect to Jackett Nas (opened 2023-11-19)](https://github.com/alexbelgium/hassio-addons/issues/1077) by [@Haydon94](https://github.com/Haydon94)
 # Home assistant add-on: jackett
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
