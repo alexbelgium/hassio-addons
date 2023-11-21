@@ -24,7 +24,7 @@
     "8375/tcp": 8375
   },
   "ports_description": {
-    "3000/tcp": "Web interface",
+    "3000/tcp": "web interface",
     "3443/tcp": "ssl web interface",
     "10110/tcp": "NMEA0183 port",
     "8375/tcp": "TCPSTREAM port"
