@@ -4,7 +4,7 @@
   "github_exclude": "-",
   "github_tagfilter": "5.1",
   "last_update": "2023-11-21",
-  "paused": false,
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "omada",
   "source": "dockerhub",
