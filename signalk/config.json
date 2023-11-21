@@ -1,0 +1,38 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "An implementation of a Signal K central server for boats",
+  "environment": {
+    "PORT": "3000",
+    "SSLPORT": "3443",
+    "NMEA0183PORT": "10110",
+    "TCPSTREAMPORT": "8375"
+  },
+  "image": "ghcr.io/alexbelgium/signalk-{arch}",
+  "map": [
+    "config:rw",
+    "share:rw",
+    "ssl"
+  ],
+  "name": "Signalk",
+  "ports": {
+    "3000/tcp": 3000,
+    "3443/tcp": 3443,
+    "10110/tcp": 10110,
+    "8375/tcp": 8375
+  },
+  "ports_description": {
+    "3000/tcp": "web interface",
+    "3443/tcp": "ssl web interface",
+    "10110/tcp": "NMEA0183 port",
+    "8375/tcp": "TCPSTREAM port"
+  },
+  "slug": "signalk",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "1.0",
+  "webui": "http://[HOST]:[PORT:3000]"
+}

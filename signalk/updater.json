@@ -1,0 +1,8 @@
+{
+  "last_update": "04-11-2023",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "signalk",
+  "source": "github",
+  "upstream_repo": "SignalK/signalk-server",
+  "upstream_version": "1.0"
+}
