@@ -1,6 +1,3 @@
-
-## 5.12-2023-11-21 (2023-11-21)
-- Update to latest version from mbentley/omada-controller
 - Addon deprecated, please use https://github.com/jkunczik/home-assistant-omada
 
 ## 5.12-2023-11-15 (2023-11-15)
