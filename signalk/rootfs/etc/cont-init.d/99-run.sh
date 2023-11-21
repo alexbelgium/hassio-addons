@@ -7,4 +7,4 @@ bashio::log.info "Setting folder"
 cp -rnf /home/node/.signalk/* /config/
 
 bashio::log.info "Starting application"
-/./home/node/signalk/startup.sh
+sudo -u node -s /bin/sh -c "/home/node/signalk/startup.sh"
