@@ -111,8 +111,7 @@
     "cifsusername": "str?",
     "data_location": "str",
     "localdisks": "str?",
-    "networkdisks": "str?",
-    "smbv1": "bool?"
+    "networkdisks": "str?"
   },
   "slug": "jellyfin",
   "udev": true,
