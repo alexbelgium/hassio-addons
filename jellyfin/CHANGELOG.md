@@ -1,3 +1,5 @@
+### 10.8.12-4 (21-11-2023)
+- Minor bugs fixed
 ### 10.8.12-2 (12-11-2023)
 - Minor bugs fixed
 
