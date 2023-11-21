@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 # shellcheck disable=SC2155
-set -e
 
 ####################
 # Define variables #
@@ -9,32 +8,32 @@ set -e
 
 bashio::log.info "Defining variables"
 
-if bashio::config.has_value "PUID"; then export USERMAP_UID=$(bashio::config "PUID"); fi
-if bashio::config.has_value "PGID"; then export USERMAP_GID=$(bashio::config "PGID"); fi
-if bashio::config.has_value "TZ"; then export PAPERLESS_TIME_ZONE=$(bashio::config "TZ"); fi
-if bashio::config.has_value "PAPERLESS_URL"; then export PAPERLESS_URL=$(bashio::config "PAPERLESS_URL"); fi
+if bashio::config.has_value "PUID"; then export USERMAP_UID="$(bashio::config "PUID")"; fi
+if bashio::config.has_value "PGID"; then export USERMAP_GID="$(bashio::config "PGID")"; fi
+if bashio::config.has_value "TZ"; then export PAPERLESS_TIME_ZONE="$(bashio::config "TZ")"; fi
+if bashio::config.has_value "PAPERLESS_URL"; then export PAPERLESS_URL="$(bashio::config "PAPERLESS_URL")"; fi
 if bashio::config.has_value "OCRLANG"; then
     PAPERLESS_OCR_LANGUAGES="$(bashio::config "OCRLANG")"
-    export PAPERLESS_OCR_LANGUAGES=${PAPERLESS_OCR_LANGUAGES,,}
+    export PAPERLESS_OCR_LANGUAGES="${PAPERLESS_OCR_LANGUAGES,,}"
 fi
-if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE=$(bashio::config "PAPERLESS_OCR_MODE"); fi
+if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE="$(bashio::config "PAPERLESS_OCR_MODE")"; fi
 
 export PAPERLESS_ADMIN_PASSWORD="admin"
 export PAPERLESS_ADMIN_USER="admin"
-export PAPERLESS_ALLOWED_HOSTS="*"
+export PAPERLESS_ALLOWED_HOSTS="\"*\""
 
-export PAPERLESS_DATA_DIR="/config/addons_config/paperless_ng"
-export PAPERLESS_MEDIA_ROOT="/config/addons_config/paperless_ng/media"
-export PAPERLESS_CONSUMPTION_DIR="/config/addons_config/paperless_ng/consume"
+chown -R paperless:paperless /config
 
-if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR=$(bashio::config "PAPERLESS_DATA_DIR"); fi
-if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT=$(bashio::config "PAPERLESS_MEDIA_ROOT"); fi
-if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR=$(bashio::config "PAPERLESS_CONSUMPTION_DIR"); fi
+if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR="$(bashio::config "PAPERLESS_DATA_DIR")"; else export PAPERLESS_DATA_DIR="/config/data"; fi
+if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT="$(bashio::config "PAPERLESS_MEDIA_ROOT")"; else export PAPERLESS_MEDIA_ROOT="/config/media"; fi
+if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR="$(bashio::config "PAPERLESS_CONSUMPTION_DIR")"; else export PAPERLESS_CONSUMPTION_DIR="/config/consume"; fi
+if bashio::config.has_value "PAPERLESS_EXPORT_DIR"; then export PAPERLESS_EXPORT_DIR="$(bashio::config "PAPERLESS_EXPORT_DIR")"; else export PAPERLESS_EXPORT_DIR="/config/export"; fi
 
-for folder in "$PAPERLESS_DATA_DIR" "$PAPERLESS_MEDIA_ROOT" "$PAPERLESS_CONSUMPTION_DIR"; do
-    mkdir -p "$folder"
-    chmod -R 755 "$folder"
-    chown -R paperless:paperless "$folder"
+for variable in "$PAPERLESS_DATA_DIR" "$PAPERLESS_MEDIA_ROOT" "$PAPERLESS_CONSUMPTION_DIR" "$PAPERLESS_EXPORT_DIR"; do
+    # Create folder and permissions if needed
+    mkdir -p "$variable"
+    chmod -R 755 "$variable"
+    chown -R paperless:paperless "$variable"
 done
 
 ###################
@@ -43,7 +42,7 @@ done
 
 bashio::log.info "Defining database"
 
-case $(bashio::config 'database') in
+case "$(bashio::config 'database')" in
 
         # Use mariadb
     mariadb_addon)
@@ -80,19 +79,30 @@ case $(bashio::config 'database') in
 esac
 
 set +u
+
 # For all relevant variables
-for variable in USERMAP_UID USERMAP_GID PAPERLESS_TIME_ZONE PAPERLESS_URL PAPERLESS_OCR_LANGUAGES PAPERLESS_OCR_MODE PAPERLESS_ADMIN_PASSWORD PAPERLESS_ADMIN_USER PAPERLESS_ALLOWED_HOSTS PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DIR PAPERLESS_DBENGINE PAPERLESS_DBHOST PAPERLESS_DBPORT PAPERLESS_DBNAME PAPERLESS_DBUSER PAPERLESS_DBPASS; do
+for variable in PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DIR PAPERLESS_EXPORT_DIR USERMAP_UID USERMAP_GID PAPERLESS_TIME_ZONE PAPERLESS_URL PAPERLESS_OCR_LANGUAGES PAPERLESS_OCR_MODE PAPERLESS_ADMIN_PASSWORD PAPERLESS_ADMIN_USER PAPERLESS_ALLOWED_HOSTS PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DIR PAPERLESS_DBENGINE PAPERLESS_DBHOST PAPERLESS_DBPORT PAPERLESS_DBNAME PAPERLESS_DBUSER PAPERLESS_DBPASS; do
 
     # Variable content
     variablecontent="$(eval echo "\$$variable")"
-
     # Skip if variable content empty
     if [ ${#variablecontent} -le 2 ]; then
         continue
+    else
+        bashio::log.blue "$variable=\"$variablecontent\""
     fi
 
+    # Export
+    export "$variable=$variablecontent"
     # Add to bashrc
     eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
+    # set .env
+    echo "$variable=\"$variablecontent\"" >> /.env || true
+    # set /etc/environment
+    mkdir -p /etc
+    echo "$variable=\"$variablecontent\"" >> /etc/environment
+    # For s6
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${variablecontent}" > /var/run/s6/container_environment/"${variable}"; fi
 done
 
 #################
@@ -106,8 +116,8 @@ exec redis-server & bashio::log.info "Starting redis"
 exec nginx & bashio::log.info "Starting nginx"
 
 ###############
-# Staring app #
+# Starting app #
 ###############
 bashio::log.info "Initial username and password are admin. Please change in the administration panel of the webUI after login."
 
-/./usr/local/bin/paperless_cmd.sh /sbin/docker-entrypoint.sh
+/./usr/local/bin/paperless_cmd.sh /sbin/docker-entrypoint.sh 

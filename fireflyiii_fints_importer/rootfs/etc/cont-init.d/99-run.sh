@@ -28,15 +28,26 @@ if bashio::config.has_value 'Updates'; then
         bashio::log.info "$FREQUENCY updates"
         echo ""
 
+        for i in $(seq 4 2 12)
+        do
+            hour="   $i"
+            freqDir="/etc/periodic/daily$i"
+            echo "0    ${hour:(-4)}       *       *       *       run-parts \"$freqDir\"" >> /etc/crontabs/root
+            mkdir "$freqDir"
+        done
+
         # Sets cron // do not delete this message
-        cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
-        chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
+        freqDir="/etc/periodic/${FREQUENCY}"
+        cp /templates/cronupdate "$freqDir/"
+        chmod 777 "$freqDir/cronupdate"
 
         # Sets cron to run with www-data user
         # sed -i 's|root|www-data|g' /etc/crontab
 
         # Starts cron
-        service cron start
+        echo "Timezone $TZ"
+        export TZ
+        crond -l 2 -f > /dev/stdout 2> /dev/stderr &
 
         # Export variables
         IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"

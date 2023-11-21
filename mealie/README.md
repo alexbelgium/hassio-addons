@@ -1,4 +1,4 @@
-## &#9888; Open Request : [✨ [REQUEST] Mealie: Add yaml config for environmentla variables for email configurations (opened 2023-10-02)](https://github.com/alexbelgium/hassio-addons/issues/1011) by [@bobloadmire](https://github.com/bobloadmire)
+## &#9888; Open Request : [✨ [REQUEST] Mealie Ingress Support (opened 2023-11-05)](https://github.com/alexbelgium/hassio-addons/issues/1061) by [@minmaxat](https://github.com/minmaxat)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

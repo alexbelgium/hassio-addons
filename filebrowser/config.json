@@ -68,7 +68,8 @@
   "ingress_stream": true,
   "map": [
     "media:rw",
-    "config:rw",
+    "all_addon_configs:rw",
+    "homeassistant_config:rw",
     "addons:rw",
     "backup:rw",
     "share:rw",
@@ -108,5 +109,5 @@
   "slug": "filebrowser",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.23.0_reverted"
+  "version": "2.23.0_reverted2"
 }

@@ -1,4 +1,16 @@
 
+## 2.13.5 (19-11-2023)
+- Update to latest version from etechonomy/joplin-server
+
+## 2.13.4 (18-11-2023)
+- Update to latest version from etechonomy/joplin-server
+
+## 2.13.3 (04-11-2023)
+- Update to latest version from etechonomy/joplin-server
+
+## 2.13.2 (20-10-2023)
+- Update to latest version from etechonomy/joplin-server
+
 ## 2.13.1 (23-09-2023)
 - Update to latest version from etechonomy/joplin-server
 

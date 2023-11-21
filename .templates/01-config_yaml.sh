@@ -8,8 +8,20 @@ set -e
 ##################
 
 # Exit if /config is not mounted
-if [ ! -f /config/configuration.yaml ] || [ ! -d /config/.storage ]; then
+if [ ! -d /config ]; then
     exit 0
+fi
+
+# Define slug if
+slug="${HOSTNAME#*-}"
+
+# Check type of config folder
+if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
+    # New config location
+    CONFIGLOCATION="/config"
+else
+    # Legacy config location
+    CONFIGLOCATION="/config/addons_config/${slug}"
 fi
 
 # Where is the config
@@ -29,14 +41,27 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
         fi
     done
     if [ -z "$LOCATIONOK" ]; then
-        CONFIGSOURCE=/config/addons_config/${HOSTNAME#*-}
+        CONFIGSOURCE="$CONFIGLOCATION"
         bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
 
 else
     # Use default
-    CONFIGSOURCE="/config/addons_config/${HOSTNAME#*-}/config.yaml"
+    CONFIGSOURCE="$CONFIGLOCATION/config.yaml"
+fi
 
+# Migrate if needed
+if [ "$CONFIGLOCATION" == "/config" ]; then
+    # Migrate file
+    if [ -f "/homeassistant/addons_config/${slug}/config.yaml" ]; then
+        echo "Migrating config.yaml to new config location"
+        mv /homeassistant/addons_config/"${slug}"/config.yaml /config/config.yaml
+    fi
+    # Migrate option
+    if [[ "$(bashio::config "CONFIG_LOCATION")" == "/config/addons_config"* ]] && [ -f /config/config.yaml ]; then
+        bashio::addon.option "CONFIG_LOCATION" "/config/config.yaml"
+        CONFIGSOURCE="$(bashio::config "CONFIG_LOCATION")"
+    fi
 fi
 
 # Permissions
@@ -120,13 +145,13 @@ while IFS= read -r line; do
     # Check if secret
     if [[ "${line}" == *'!secret '* ]]; then
         echo "secret detected"
-        secret=${line#*secret }
+        secret="${line#*secret }"
         # Check if single match
-        secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
+        secretnum="$(sed -n "/$secret:/=" /config/secrets.yaml)"
         [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
-        secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
-        secret=${secret#*: }
+        secret="$(sed -n "/$secret:/p" /config/secrets.yaml)"
+        secret="${secret#*: }"
         line="${line%%=*}='$secret'"
     fi
     # Data validation
@@ -144,7 +169,7 @@ while IFS= read -r line; do
         # set .env
         if [ -f /.env ]; then echo "$KEYS=$VALUE" >> /.env; fi
         mkdir -p /etc
-        echo "$KEYS=$VALUE" >> /etc/environmemt
+        echo "$KEYS=$VALUE" >> /etc/environment
         # Export to scripts
         if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
         if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi

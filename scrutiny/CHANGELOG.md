@@ -1,4 +1,7 @@
 
+## v0.7.2 (20-10-2023)
+- Update to latest version from analogj/scrutiny
+
 ## v0.7.1 (15-04-2023)
 - Update to latest version from analogj/scrutiny
 

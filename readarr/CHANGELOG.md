@@ -1,4 +1,11 @@
 
+## 0.3.10.2287 (04-11-2023)
+- Update to latest version from linuxserver/docker-readarr
+- Fix : disable authentification when using ingress
+
+## 0.3.9.2272 (20-10-2023)
+- Update to latest version from linuxserver/docker-readarr
+
 ## 0.3.8.2267 (14-10-2023)
 - Update to latest version from linuxserver/docker-readarr
 

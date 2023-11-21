@@ -81,6 +81,7 @@
     "PGID": 0,
     "PUID": 0
   },
+  "panel_admin": false,
   "panel_icon": "mdi:library",
   "ports": {
     "8083/tcp": 8084
@@ -109,6 +110,6 @@
   "slug": "calibre-web",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre_web",
-  "version": "0.6.20",
+  "version": "0.6.21-2",
   "video": true
 }

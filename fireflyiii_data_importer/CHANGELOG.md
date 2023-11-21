@@ -1,4 +1,9 @@
 
+## 1.3.9 (04-11-2023)
+- Update to latest version from firefly-iii/data-importer
+## 1.3.9 (01-11-20223)
+- Adds config to allow automation
+
 ## 1.3.8 (02-09-2023)
 - Update to latest version from firefly-iii/data-importer
 

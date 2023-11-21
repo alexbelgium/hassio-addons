@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST]  Jellyfin discord bot (opened 2023-08-17)](https://github.com/alexbelgium/hassio-addons/issues/943) by [@matsob0123](https://github.com/matsob0123)
+## &#9888; Open Request : [✨ [REQUEST] Jellyfish NAS: omit `/config/addons_config/jellyfin/data/metadata` from backup (opened 2023-10-25)](https://github.com/alexbelgium/hassio-addons/issues/1048) by [@bilogic](https://github.com/bilogic)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -27,6 +28,8 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
+### Addon config
+
 Webui can be found at `<your-ip>:8096`.
 
 ```yaml
@@ -40,6 +43,24 @@ cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
 DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg # Install graphic drivers
 ```
+
+### Enable ssl
+#### Creating the PFX certificate file first
+1. This part assumes you already have SSL certs in PEM format using the Let's Encrypt add on
+2. Run this command `openssl pkcs12 -export -in fullchain.pem -inkey private_key.pem -passout pass: -out server.pfx`
+3. Set the permission using `chmod 0700 server.pfx`
+> Note:
+> The above command creates a PFX file without a password, you can fill in a password with `-passout pass:"your-password"`
+> but will also have to provide `your-password` to Jellyfin's configuration
+
+#### Automating the PFX certificate
+
+#### Jellyfin configuration
+1. From the sidebar, click on `Administration` -> `Dashboard`
+2. Under `Networking`, `Server Address Settings`, tick `Enable HTTPS`
+3. Under `HTTPS Settings`, tick `Require HTTPS`
+4. For `Custom SSL certificate path:`, point it to your PFX file and fill in the `Certificate password` if required
+5. Scroll to the bottom and `Save`
 
 ## Installation
 
