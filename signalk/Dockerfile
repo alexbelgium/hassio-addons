@@ -31,6 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 USER root
 
 # Correct config location
+# shellcheck ignore=SC2013
 RUN for file in $(grep -sril "/home/node/.signalk" /etc /usr /home); do \
     sed -i "s=/home/node/.signalk=/config=g" "$file"; done
 
