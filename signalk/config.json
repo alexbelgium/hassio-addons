@@ -18,7 +18,7 @@
     "share:rw",
     "ssl"
   ],
-  "name": "Signalk",
+  "name": "Signalk Server",
   "ports": {
     "3000/tcp": 3000,
     "3443/tcp": 3443,
