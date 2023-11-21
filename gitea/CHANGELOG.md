@@ -1,3 +1,5 @@
+### 1.21.0-3 (21-11-2023)
+- Minor bugs fixed
 ## 1.21.0 (15-11-2023)
 - Update to latest version from go-gitea/gitea
 ## 1.20.5 (3-10-2023)
