@@ -2,6 +2,11 @@
 # shellcheck shell=bash
 set -e
 
+bashio::log.warning "-----------------------------------------------------------------------------"
+bashio::log.warning "Addon deprecated, please use https://github.com/jkunczik/home-assistant-omada"
+bashio::log.warning "-----------------------------------------------------------------------------"
+sleep 10000
+
 CONFIGSOURCE="/data"
 
 # Use ssl
