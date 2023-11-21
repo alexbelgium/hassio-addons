@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [readarr] addon not starting (opened 2023-11-21)](https://github.com/alexbelgium/hassio-addons/issues/1083) by [@PubDeer](https://github.com/PubDeer)
 # Home assistant add-on: readarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
