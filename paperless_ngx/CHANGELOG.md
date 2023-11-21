@@ -1,11 +1,7 @@
-WORK IN PROGRESS DON'T UPDATE (no data loss)
-
-### 2.0.0b1-4 (20-11-2023)
+### 2.0.0b1-5 (20-11-2023)
 - Correct passing of addon options to addon
 - Automatically changes config.yaml addon option to new location
 - Restore local and smb disks scripts
-
-## 2.0.0b1 (19-11-2023)
 - Update to latest version from paperless-ngx/paperless-ngx
 - MAJOR CHANGE : new HA config logic implemented. Files are now located in the addon config file, that can be accessed from the addon_configs folder from my filebrowser or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 - Update to new official image

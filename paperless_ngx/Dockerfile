@@ -16,7 +16,6 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.0.0b1"
 FROM ${BUILD_FROM}
 
 ##################
@@ -66,12 +65,12 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 # Add custom scripts
-# RUN sed -i "2a source /ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
-#     sed -i 's=/./=source /=g' /ha_entrypoint.sh && \
-#    sed -i "s=env bash=env bashio=g" /sbin/docker-entrypoint.sh
+RUN sed -i "2a source /ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
+    sed -i "s=/./=source /=g" /ha_entrypoint.sh && \
+    sed -i "s=env bash=env bashio=g" /sbin/docker-entrypoint.sh
 
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/ha_entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############

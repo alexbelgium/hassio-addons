@@ -7,7 +7,6 @@ if [ -d "/homeassistant/addons_config/$slug" ]; then
     echo "Migrating /homeassistant/addons_config/$slug"
     mv /homeassistant/addons_config/"$slug"/media /config/ || true
     mv /homeassistant/addons_config/"$slug"/consume /config/ || true
-    mv /homeassistant/addons_config/"$slug"/config.yaml /config/ || true
     mkdir -p /config/data
     mv /homeassistant/addons_config/"$slug"/* /config/data/ || true
     rm -r /homeassistant/addons_config/"$slug"

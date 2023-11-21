@@ -4,7 +4,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Scan, index and archive all your physical documents",
+  "description": "scan, index and archive all your physical documents",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
@@ -76,7 +76,7 @@
     "media:rw",
     "ssl"
   ],
-  "name": "Paperless ngx",
+  "name": "Paperless NGX",
   "options": {
     "CONFIG_LOCATION": "/config/config.yaml",
     "OCRLANG": "ENG FRA GER",
@@ -125,7 +125,7 @@
   ],
   "slug": "paperless_ng",
   "udev": true,
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/paperless_ngx",
-  "version": "2.0.0b1-4",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "2.0.0b1-5",
   "webui": "http://[HOST]:[PORT:8000]"
 }
