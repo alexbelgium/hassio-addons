@@ -130,6 +130,6 @@
   "slug": "immich",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.87.0-2",
+  "version": "1.88.1",
   "webui": "http://[HOST]:[PORT:8080]"
 }
