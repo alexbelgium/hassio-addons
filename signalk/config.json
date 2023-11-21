@@ -14,9 +14,7 @@
   },
   "image": "ghcr.io/alexbelgium/signalk-{arch}",
   "map": [
-    "config:rw",
-    "share:rw",
-    "ssl"
+    "addon_config:rw"
   ],
   "name": "Signalk Server",
   "ports": {
@@ -33,6 +31,6 @@
   },
   "slug": "signalk",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.00",
+  "version": "2.4.1",
   "webui": "http://[HOST]:[PORT:3000]"
 }
