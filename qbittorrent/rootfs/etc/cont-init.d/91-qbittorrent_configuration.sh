@@ -203,5 +203,5 @@ fi
 # CLOSE  #
 ##########
 
-bashio::log.info "Default username/password : admin/adminadmin"
+bashio::log.info "Default username/password : admin/homeassistant"
 bashio::log.info "Configuration can be found in $CONFIG_LOCATION"
