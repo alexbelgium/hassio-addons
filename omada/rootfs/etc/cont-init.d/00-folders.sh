@@ -38,7 +38,7 @@ for folders in html keystore pdf db; do
     ln -s /data/"$folders" /opt/tplink/EAPController/data
 done
 touch /data/LAST_RAN_OMADA_VER.txt
-ln -s /data/LAST_RAN_OMADA_VER.txt /opt/tplink/EAPController/data
+ln -s /data/LAST_RAN_OMADA_VER.txt /opt/tplink/EAPController/data/
 
 # Make sure permissions are right
 echo "Updating permissions"
