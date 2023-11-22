@@ -161,6 +161,9 @@ while IFS= read -r line; do
         VALUE="${line#*=}"
         # Sanitize " ' ` in current variable
         VALUE="${VALUE//[\"\'\`]/}"
+        if [[ "$VALUE" = *" "* ]]; then
+            VALUE="'$VALUE'"
+        fi
         # export to python
         if command -v "python3" &>/dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py
@@ -168,17 +171,17 @@ while IFS= read -r line; do
             python3 /env.py
         fi
         # set .env
-        if [ -f /.env ]; then echo "$KEYS=\"$VALUE\"" >> /.env; fi
+        if [ -f /.env ]; then echo "$KEYS=$VALUE" >> /.env; fi
         mkdir -p /etc
-        echo "$KEYS=\"$VALUE\"" >> /etc/environment
+        echo "$KEYS=$VALUE" >> /etc/environment
         # Export to scripts
-        if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $KEYS=\"$VALUE\"" /etc/services.d/*/*run* 2>/dev/null; fi
-        if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $KEYS=\"$VALUE\"" /etc/cont-init.d/*run* 2>/dev/null; fi
+        if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $KEYS=$VALUE" /etc/services.d/*/*run* 2>/dev/null; fi
+        if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $KEYS=$VALUE" /etc/cont-init.d/*run* 2>/dev/null; fi
         # For s6
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-        echo "export ${KEYS}=\"${VALUE}\"" >> ~/.bashrc
+        echo "export ${KEYS}=${VALUE}" >> ~/.bashrc
         # Show in log
-        if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS=\"$VALUE\""; fi
+        if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS=$VALUE"; fi
     else
         bashio::log.red "$line does not follow the correct structure. Please check your yaml file."
     fi
