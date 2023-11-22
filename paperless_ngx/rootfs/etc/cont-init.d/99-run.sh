@@ -19,7 +19,7 @@ if bashio::config.has_value "OCRLANG"; then
     PAPERLESS_OCR_LANGUAGES="$(bashio::config "OCRLANG")"
     export PAPERLESS_OCR_LANGUAGES="${PAPERLESS_OCR_LANGUAGES,,}"
 fi
-if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE="\"$(bashio::config "PAPERLESS_OCR_MODE")\""; fi
+if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE="$(bashio::config "PAPERLESS_OCR_MODE")"; fi
 if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR="\"$(bashio::config "PAPERLESS_DATA_DIR")\""; else export PAPERLESS_DATA_DIR="/config/data"; fi
 if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT="\"$(bashio::config "PAPERLESS_MEDIA_ROOT")\""; else export PAPERLESS_MEDIA_ROOT="/config/media"; fi
 if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR="\"$(bashio::config "PAPERLESS_CONSUMPTION_DIR")\""; else export PAPERLESS_CONSUMPTION_DIR="/config/consume"; fi
@@ -85,10 +85,12 @@ for variable in PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DI
 
     # Variable content
     variablecontent="$(eval echo "\$$variable")"
+    # Sanitize " ' ` in current variable
+    variablecontent="${variablecontent//[\"\'\`]/}"
     bashio::log.blue "$variable=\"$variablecontent\""
 
     # Export
-    export "$variable=$variablecontent"
+    export "$variable=\"$variablecontent\""
     # Add to bashrc
     eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
     # set .env
