@@ -1,3 +1,5 @@
+### 4.6.1-2 (22-11-2023)
+- Minor bugs fixed
 - Re-add default username (admin) and password (homeassistant)
 
 ## 4.6.1 (21-11-2023)
