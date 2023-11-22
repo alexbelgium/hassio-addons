@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Immich] not working with v1.88 (opened 2023-11-21)](https://github.com/alexbelgium/hassio-addons/issues/1084) by [@digitaljamie](https://github.com/digitaljamie)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
