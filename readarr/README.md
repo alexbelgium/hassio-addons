@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [readarr] addon not starting (opened 2023-11-21)](https://github.com/alexbelgium/hassio-addons/issues/1083) by [@PubDeer](https://github.com/PubDeer)
+## &#9888; Open Issue : [🐛 [readarr] config can be done in ui except for .... (opened 2023-11-22)](https://github.com/alexbelgium/hassio-addons/issues/1088) by [@airtonix](https://github.com/airtonix)
 # Home assistant add-on: readarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
