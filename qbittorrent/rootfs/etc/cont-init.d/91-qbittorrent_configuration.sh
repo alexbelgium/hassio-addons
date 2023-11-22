@@ -139,9 +139,9 @@ else
     if ! grep -q Username qBittorrent.conf; then
         sed -i "$LINE i\WebUI\\\Username=admin" qBittorrent.conf
     fi
-    if ! grep -q Password_PBKDF2 qBittorrent.conf; then
-        sed -i "$LINE i\WebUI\\Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
-    fi
+fi
+if ! grep -q Password_PBKDF2 qBittorrent.conf; then
+    sed -i "$LINE i\WebUI\\Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
 fi
 
 ################
@@ -203,5 +203,5 @@ fi
 # CLOSE  #
 ##########
 
-bashio::log.info "Default username/password : admin/homeassistant"
+bashio::log.info "Default username/password : $USERNAME/homeassistant"
 bashio::log.info "Configuration can be found in $CONFIG_LOCATION"
