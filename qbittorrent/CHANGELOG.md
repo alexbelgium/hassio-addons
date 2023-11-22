@@ -1,3 +1,5 @@
+### 4.6.1-3 (22-11-2023)
+- Minor bugs fixed
 - Restart the addon after setting the default password
 
 ### 4.6.1-2 (22-11-2023)
