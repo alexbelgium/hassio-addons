@@ -1,6 +1,8 @@
+- Re-add default username (admin) and password (homeassistant)
 
 ## 4.6.1 (21-11-2023)
 - Update to latest version from linuxserver/docker-qbittorrent
+
 ### 4.6.0-3 (06-11-2023)
 - Minor bugs fixed
 - Ingress webui update at start
