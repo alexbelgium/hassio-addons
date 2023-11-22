@@ -26,7 +26,7 @@ rm -r /opt/tplink/EAPController/data/*
 
 # Create symlinks for all files in /data
 # shellcheck disable=SC2086
-for folders in html keystore pdf db; do
+for folders in html keystore pdf db omada/html portal; do
     # Create new folder
     mkdir -p /data/"$folders"
     # Remove previous one
@@ -37,6 +37,7 @@ for folders in html keystore pdf db; do
     # Create symlink
     ln -s /data/"$folders" /opt/tplink/EAPController/data
 done
+
 touch /data/LAST_RAN_OMADA_VER.txt
 ln -s /data/LAST_RAN_OMADA_VER.txt /opt/tplink/EAPController/data/
 
