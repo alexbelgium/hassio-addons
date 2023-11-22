@@ -163,7 +163,7 @@ if [ ! "$CUSTOMUI" = custom ]; then
 fi
 
 # Clean data if not custom
-if [ ! "$CUSTOMUI" = default ]; then
+if [ "$CUSTOMUI" = default ]; then
     bashio::log.warning "Default Webui selected ! It will not work for ingress, which will stay with vuetorrent"
     sed -i '/AlternativeUIEnabled/d' qBittorrent.conf
     sed -i '/RootFolder/d' qBittorrent.conf
