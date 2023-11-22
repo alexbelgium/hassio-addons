@@ -26,11 +26,19 @@ rm -r /opt/tplink/EAPController/data/*
 
 # Create symlinks for all files in /data
 # shellcheck disable=SC2086
-for files in "$CONFIGSOURCE"/*; do
-    if [ -e "$files" ]; then
-        ln -s "$files" /opt/tplink/EAPController/data
+for folders in html keystore pdf db; do
+    # Create new folder
+    mkdir -p /data/"$folders"
+    # Remove previous one
+    if [ -d /opt/tplink/EAPController/data/"$folders" ]; then 
+        cp -rnf /opt/tplink/EAPController/data/"$folders"/* /data/"$folders"/* 2>/dev/null || true
+        rm -r /opt/tplink/EAPController/data/"$folders"
     fi
+    # Create symlink
+    ln -s /data/"$folders" /opt/tplink/EAPController/data
 done
+touch /data/LAST_RAN_OMADA_VER.txt
+ln -s /data/LAST_RAN_OMADA_VER.txt /opt/tplink/EAPController/data
 
 # Make sure permissions are right
 echo "Updating permissions"
