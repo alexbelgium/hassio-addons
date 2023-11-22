@@ -197,7 +197,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
             ;;
 
         "DarkLight")
-            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/crash0verride11/DarkLight-qBittorent-WebUI/releases | grep -o "www*.*zip" | head -1)" >/dev/null
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/crash0verride11/DarkLight-qBittorent-WebUI/releases | grep -o "http.*www.zip" | head -1)" >/dev/null
             ;;
 
     esac
