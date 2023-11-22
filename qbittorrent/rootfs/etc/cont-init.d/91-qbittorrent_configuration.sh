@@ -141,7 +141,7 @@ else
     fi
 fi
 LINE2="$(sed -n '/Password_PBKDF2/=' qBittorrent.conf)"
-if [[ "$LINE" gt "$LINE2" ]]; then sed -i '/Password_PBKDF2/d' qBittorrent.conf; fi 
+if [[ "$LINE" -gt "$LINE2" ]]; then sed -i '/Password_PBKDF2/d' qBittorrent.conf; fi 
 if ! grep -q Password_PBKDF2 qBittorrent.conf; then
     sed -i "/\[Preferences\]/a\WebUI\\\Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
     bashio::addon.restart
