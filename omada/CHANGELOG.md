@@ -1,4 +1,4 @@
-- Addon deprecated, please use https://github.com/jkunczik/home-assistant-omada
+- Restored functionality of data retention
 
 ## 5.12-2023-11-15 (2023-11-15)
 - Update to latest version from mbentley/omada-controller
