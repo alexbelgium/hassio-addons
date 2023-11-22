@@ -1,3 +1,5 @@
+- Allow names with spaces in directory names
+
 ### 2.0.0b1-5 (20-11-2023)
 - Correct passing of addon options to addon
 - Automatically changes config.yaml addon option to new location
