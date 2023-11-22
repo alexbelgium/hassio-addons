@@ -13,5 +13,4 @@ chown -R node:node /home/node/.signalk
 
 bashio::log.info "Starting application"
 
-
 sudo -u node -s /bin/sh -c "/home/node/signalk/startup.sh" || bashio::addon.restart
