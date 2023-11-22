@@ -133,15 +133,17 @@ if bashio::config.has_value 'Username'; then
     #clean data
     sed -i '/WebUI\\\Username/d' qBittorrent.conf
     #add data
-    sed -i "$LINE i\WebUI\\\Username=$USERNAME" qBittorrent.conf
+    sed -i "/\[Preferences\]/a\WebUI\\\Username=$USERNAME" qBittorrent.conf
     bashio::log.info "WEBUI username set to $USERNAME"
 else
     if ! grep -q Username qBittorrent.conf; then
-        sed -i "$LINE i\WebUI\\\Username=admin" qBittorrent.conf
+        sed -i "/\[Preferences\]/a\WebUI\\\Username=admin" qBittorrent.conf
     fi
 fi
+LINE2="$(sed -n '/Password_PBKDF2/=' qBittorrent.conf)"
+if [[ "$LINE" gt "$LINE2" ]]; then sed -i '/Password_PBKDF2/d' qBittorrent.conf; fi 
 if ! grep -q Password_PBKDF2 qBittorrent.conf; then
-    sed -i "/Username/i\WebUI\\\Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
+    sed -i "/\[Preferences\]/a\WebUI\\\Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
     bashio::addon.restart
 fi
 
