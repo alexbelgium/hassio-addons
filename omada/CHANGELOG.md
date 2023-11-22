@@ -1,3 +1,5 @@
+### 5.12-2023-11-21-2 (22-11-2023)
+- Minor bugs fixed
 - Restored functionality of data retention
 
 ## 5.12-2023-11-15 (2023-11-15)
