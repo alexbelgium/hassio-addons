@@ -1,4 +1,3 @@
-- Added iQbit and Darklight webui
 
 ### 4.6.1-6 (22-11-2023)
 - Minor bugs fixed
