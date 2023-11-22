@@ -1,3 +1,5 @@
+### 4.6.1-6 (22-11-2023)
+- Minor bugs fixed
 ### 4.6.1-5 (22-11-2023)
 - Minor bugs fixed
 - Selecting qbit webui also applies it to ingress. Otherwise, default is vuetorrent
