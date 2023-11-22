@@ -88,7 +88,7 @@ for variable in PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DI
     # Sanitize " ' ` in current variable
     variablecontent="${variablecontent//[\"\'\`]/}"
     if [[ "$variablecontent" = *" "* ]] && [[ "$variable" != "PAPERLESS_OCR_LANGUAGES" ]]; then
-        variablecontent="'$variablecontent'"
+        variablecontent="\"$variablecontent\""
     fi
     bashio::log.blue "$variable=$variablecontent"
 
