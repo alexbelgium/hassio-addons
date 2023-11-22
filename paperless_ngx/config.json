@@ -79,7 +79,7 @@
   "name": "Paperless NGX",
   "options": {
     "CONFIG_LOCATION": "/config/config.yaml",
-    "OCRLANG": "ENG FRA GER",
+    "OCRLANG": "ENG FRA DEU",
     "PAPERLESS_OCR_MODE": "skip",
     "PGID": 0,
     "PUID": 0,
