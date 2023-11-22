@@ -1,3 +1,5 @@
+### 2.0.0.1-6 (22-11-2023)
+- Minor bugs fixed
 - Allow names with spaces in directory names
 
 ### 2.0.0b1-5 (20-11-2023)
