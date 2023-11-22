@@ -20,18 +20,18 @@ if bashio::config.has_value "OCRLANG"; then
     export PAPERLESS_OCR_LANGUAGES="${PAPERLESS_OCR_LANGUAGES,,}"
 fi
 if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE="$(bashio::config "PAPERLESS_OCR_MODE")"; fi
-if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR="\"$(bashio::config "PAPERLESS_DATA_DIR")\""; else export PAPERLESS_DATA_DIR="/config/data"; fi
-if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT="\"$(bashio::config "PAPERLESS_MEDIA_ROOT")\""; else export PAPERLESS_MEDIA_ROOT="/config/media"; fi
-if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR="\"$(bashio::config "PAPERLESS_CONSUMPTION_DIR")\""; else export PAPERLESS_CONSUMPTION_DIR="/config/consume"; fi
-if bashio::config.has_value "PAPERLESS_EXPORT_DIR"; then export PAPERLESS_EXPORT_DIR="\"$(bashio::config "PAPERLESS_EXPORT_DIR")\""; else export PAPERLESS_EXPORT_DIR="/config/export"; fi
+if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR="$(bashio::config "PAPERLESS_DATA_DIR")"; else export PAPERLESS_DATA_DIR="/config/data"; fi
+if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT="$(bashio::config "PAPERLESS_MEDIA_ROOT")"; else export PAPERLESS_MEDIA_ROOT="/config/media"; fi
+if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR="$(bashio::config "PAPERLESS_CONSUMPTION_DIR")"; else export PAPERLESS_CONSUMPTION_DIR="/config/consume"; fi
+if bashio::config.has_value "PAPERLESS_EXPORT_DIR"; then export PAPERLESS_EXPORT_DIR="$(bashio::config "PAPERLESS_EXPORT_DIR")"; else export PAPERLESS_EXPORT_DIR="/config/export"; fi
 
 # Create folder and permissions if needed
 chown -R paperless:paperless /config
 for variable in "$PAPERLESS_DATA_DIR" "$PAPERLESS_MEDIA_ROOT" "$PAPERLESS_CONSUMPTION_DIR" "$PAPERLESS_EXPORT_DIR"; do
     echo "Creating directory \"$variable\""
-    mkdir -p "\"$variable\""
-    chmod -R 755 "\"$variable\""
-    chown -R paperless:paperless "\"$variable\""
+    mkdir -p "$variable"
+    chmod -R 755 "$variable"
+    chown -R paperless:paperless "$variable"
 done
 
 ###################
@@ -88,20 +88,20 @@ for variable in PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DI
     variablecontent="$(eval echo "\$$variable")"
     # Sanitize " ' ` in current variable
     variablecontent="${variablecontent//[\"\'\`]/}"
-    if [[ "$variablecontent" = *" "* ]] && [[ "$variable" != "PAPERLESS_OCR_LANGUAGES" ]]; then
-        variablecontent="\"$variablecontent\""
-    fi
+    #if [[ "$variablecontent" = *" "* ]] && [[ "$variable" != "PAPERLESS_OCR_LANGUAGES" ]]; then
+    #    variablecontent="\"$variablecontent\""
+    #fi
     bashio::log.blue "$variable=$variablecontent"
 
     # Export
-    export "$variable=$variablecontent"
+    export "$variable"="$variablecontent"
     # Add to bashrc
-    eval echo "$variable=$variablecontent" >> ~/.bashrc
+    eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
     # set .env
-    echo "$variable=$variablecontent" >> /.env || true
+    echo "$variable=\"$variablecontent\"" >> /.env || true
     # set /etc/environment
     mkdir -p /etc
-    echo "$variable=$variablecontent" >> /etc/environment
+    echo "$variable=\"$variablecontent\"" >> /etc/environment
     # For s6
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "${variablecontent}" > /var/run/s6/container_environment/"${variable}"; fi
 done
