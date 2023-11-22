@@ -94,10 +94,10 @@
   },
   "panel_icon": "mdi:file-search",
   "ports": {
-    "2283/tcp": 8181
+    "8080/tcp": 8181
   },
   "ports_description": {
-    "2283/tcp": "Web UI port"
+    "8080/tcp": "Web UI port"
   },
   "privileged": [
     "SYS_ADMIN",
