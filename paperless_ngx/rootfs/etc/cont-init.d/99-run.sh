@@ -87,17 +87,20 @@ for variable in PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DI
     variablecontent="$(eval echo "\$$variable")"
     # Sanitize " ' ` in current variable
     variablecontent="${variablecontent//[\"\'\`]/}"
-    bashio::log.blue "$variable=\"$variablecontent\""
+    if [[ $variablecontent = *" "* ]]; then
+        variablecontent="'$variablecontent'"
+    fi
+    bashio::log.blue "$variable=$variablecontent"
 
     # Export
-    export "$variable=\"$variablecontent\""
+    export "$variable=$variablecontent"
     # Add to bashrc
-    eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
+    eval echo "$variable=$variablecontent" >> ~/.bashrc
     # set .env
-    echo "$variable=\"$variablecontent\"" >> /.env || true
+    echo "$variable=$variablecontent" >> /.env || true
     # set /etc/environment
     mkdir -p /etc
-    echo "$variable=\"$variablecontent\"" >> /etc/environment
+    echo "$variable=$variablecontent" >> /etc/environment
     # For s6
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "${variablecontent}" > /var/run/s6/container_environment/"${variable}"; fi
 done
