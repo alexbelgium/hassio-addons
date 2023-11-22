@@ -162,10 +162,16 @@ if [ ! "$CUSTOMUI" = custom ]; then
     chown "$PUID:$PGID" /webui
 fi
 
-# Update ingress webui
-curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
-unzip -o vuetorrent.zip -d / >/dev/null
-rm vuetorrent.zip
+# Clean data if not custom
+if [ ! "$CUSTOMUI" = default ]; then
+    bashio::log.warning "Default Webui selected ! It will not work for ingress, which will stay with vuetorrent"
+    sed -i '/AlternativeUIEnabled/d' qBittorrent.conf
+    sed -i '/RootFolder/d' qBittorrent.conf
+    # Update ingress webui
+    curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
+    unzip -o vuetorrent.zip -d / >/dev/null
+    rm vuetorrent.zip
+fi
 
 # Install webui
 if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$CUSTOMUI" = custom ]; then
