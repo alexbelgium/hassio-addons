@@ -182,9 +182,6 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     case $CUSTOMUI in
         "vuetorrent")
             curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
-            # Set nginx
-            sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
-            sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf            
             ;;
 
         "qbit-matUI")
@@ -193,9 +190,14 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
 
         "qb-web")
             curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
-            # Set nginx
-            sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
-            sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf            
+            ;;
+
+        "iQbit")
+            curl -f -s -S -J -L -o /webui/release.zip "https://github.com/ntoporcov/iQbit/archive/master.zip" >/dev/null
+            ;;
+
+        "DarkLight")
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/crash0verride11/DarkLight-qBittorent-WebUI/releases | grep -o "www*.*zip" | head -1)" >/dev/null
             ;;
 
     esac
@@ -205,9 +207,13 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     unzip -q /webui/release.zip -d /webui/"$CUSTOMUI"
     rm /webui/*.zip
     CUSTOMUIDIR="$(dirname "$(find /webui/"$CUSTOMUI" -iname "public" -type d)")"
-    # Set qbittorrent
     sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" "$CONFIG_LOCATION"/qBittorrent.conf
     sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" "$CONFIG_LOCATION"/qBittorrent.conf
+    # Set ingress ui
+    if [[ "$CUSTOMUI" != qbit-matUI ]]; then
+      sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
+      sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf
+    fi
 fi
 
 ##########
