@@ -28,9 +28,9 @@ if bashio::config.has_value "PAPERLESS_EXPORT_DIR"; then export PAPERLESS_EXPORT
 # Create folder and permissions if needed
 chown -R paperless:paperless /config
 for variable in "$PAPERLESS_DATA_DIR" "$PAPERLESS_MEDIA_ROOT" "$PAPERLESS_CONSUMPTION_DIR" "$PAPERLESS_EXPORT_DIR"; do
-    mkdir -p "$variable"
-    chmod -R 755 "$variable"
-    chown -R paperless:paperless "$variable"
+    mkdir -p "\"$variable\""
+    chmod -R 755 "\"$variable\""
+    chown -R paperless:paperless "\"$variable\""
 done
 
 ###################
