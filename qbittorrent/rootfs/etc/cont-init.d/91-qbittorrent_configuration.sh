@@ -182,6 +182,9 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     case $CUSTOMUI in
         "vuetorrent")
             curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
+            # Set nginx
+            sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
+            sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf            
             ;;
 
         "qbit-matUI")
@@ -190,6 +193,9 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
 
         "qb-web")
             curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
+            # Set nginx
+            sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
+            sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf            
             ;;
 
     esac
@@ -202,10 +208,6 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     # Set qbittorrent
     sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" "$CONFIG_LOCATION"/qBittorrent.conf
     sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" "$CONFIG_LOCATION"/qBittorrent.conf
-    # Set nginx
-    sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf
-    sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf
-
 fi
 
 ##########
