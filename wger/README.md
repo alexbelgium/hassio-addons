@@ -38,9 +38,10 @@ Options can be configured through two ways :
 "CONFIG_LOCATION": location of the config.yaml # Sets the location of the config.yaml (see below)
 ```
 
-- Config.yaml
+- Config.yaml (advanced usage)
 
-Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options
+Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
+
 
 The complete list of ENV variables can be seen here : not available
 
