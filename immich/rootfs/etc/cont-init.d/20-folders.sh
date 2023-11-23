@@ -33,3 +33,12 @@ chown -R "$PUID":"$PGID" /photos
 mkdir -p "$MACHINE_LEARNING_CACHE_FOLDER" "$TYPESENSE_DATA_DIR"
 chown -R "$PUID":"$PGID" "$MACHINE_LEARNING_CACHE_FOLDER"
 chown -R "$PUID":"$PGID" "$TYPESENSE_DATA_DIR"
+
+##################
+# REDIS LOCATION #
+##################
+
+mkdir -p /data/redis
+mkdir -p /data/log
+chmod 777 /data/redis
+chmod 777 /data/log
