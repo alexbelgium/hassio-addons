@@ -22,6 +22,7 @@ mkdir -p "$DATA_LOCATION"
 
 echo "... setting permissions"
 chown -R "$PUID":"$PGID" "$DATA_LOCATION"
+chmod -R 777 /config/redis
 
 echo "... correcting official script"
 # shellcheck disable=SC2013
