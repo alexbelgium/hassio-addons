@@ -89,5 +89,5 @@
   "slug": "enedisgateway2mqtt_dev",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.9.3b1-4"
+  "version": "0.9.3b1-5"
 }
