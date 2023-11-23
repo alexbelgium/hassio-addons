@@ -145,13 +145,13 @@ while IFS= read -r line; do
     # Check if secret
     if [[ "${line}" == *'!secret '* ]]; then
         echo "secret detected"
-        secret="${line#*secret }"
+        secret=${line#*secret }
         # Check if single match
-        secretnum="$(sed -n "/$secret:/=" /config/secrets.yaml)"
+        secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
         [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
-        secret="$(sed -n "/$secret:/p" /config/secrets.yaml)"
-        secret="${secret#*: }"
+        secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
+        secret=${secret#*: }
         line="${line%%=*}='$secret'"
     fi
     # Data validation
@@ -160,11 +160,6 @@ while IFS= read -r line; do
         # extract keys and values
         KEYS="${line%%=*}"
         VALUE="${line#*=}"
-        # Sanitize " ' ` in current variable
-        VALUE="${VALUE//[\"\'\`]/}"
-        if [[ "$VALUE" = *" "* ]]; then
-            VALUE="'$VALUE'"
-        fi
         # export to python
         if command -v "python3" &>/dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py
@@ -176,13 +171,13 @@ while IFS= read -r line; do
         mkdir -p /etc
         echo "$KEYS=$VALUE" >> /etc/environment
         # Export to scripts
-        if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $KEYS=$VALUE" /etc/services.d/*/*run* 2>/dev/null; fi
-        if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $KEYS=$VALUE" /etc/cont-init.d/*run* 2>/dev/null; fi
+        if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
+        if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
         # For s6
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-        echo "export ${KEYS}=${VALUE}" >> ~/.bashrc
+        echo "export ${KEYS}=\"${VALUE}\"" >> ~/.bashrc
         # Show in log
-        if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS=$VALUE"; fi
+        if ! bashio::config.false "verbose"; then bashio::log.blue "$KEYS='$VALUE'"; fi
     else
         bashio::log.red "$line does not follow the correct structure. Please check your yaml file."
     fi
