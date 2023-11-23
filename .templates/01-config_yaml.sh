@@ -24,14 +24,15 @@ else
     CONFIGLOCATION="/config/addons_config/${slug}"
 fi
 
-# Where is the config
+# Default location
+CONFIGSOURCE="$CONFIGLOCATION"/config.yaml
+
+# Is there a custom path
 if bashio::config.has_value 'CONFIG_LOCATION'; then
 
-    # Get config source
     CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-    # Check CONFIGSOURCE ends with config.yaml
+    # If does not end by config.yaml, remove trailing slash and add config.yaml
     if [[ "$CONFIGSOURCE" != *".yaml" ]]; then
-        # Remove trailing slash and add config.yaml
         CONFIGSOURCE="${CONFIGSOURCE%/}"/config.yaml
     fi
     # Check if config is located in an acceptable location
@@ -42,17 +43,13 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
         fi
     done
     if [ -z "$LOCATIONOK" ]; then
+        bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGLOCATION/config.yaml"
         CONFIGSOURCE="$CONFIGLOCATION"/config.yaml
-        bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
-
-else
-    # Use default
-    CONFIGSOURCE="$CONFIGLOCATION/config.yaml"
 fi
 
 # Migrate if needed
-if [ "$CONFIGLOCATION" == "/config" ]; then
+if [[ "$CONFIGLOCATION" == "/config" ]]; then
     # Migrate file
     if [ -f "/homeassistant/addons_config/${slug}/config.yaml" ]; then
         echo "Migrating config.yaml to new config location"
@@ -61,13 +58,19 @@ if [ "$CONFIGLOCATION" == "/config" ]; then
     # Migrate option
     if [[ "$(bashio::config "CONFIG_LOCATION")" == "/config/addons_config"* ]] && [ -f /config/config.yaml ]; then
         bashio::addon.option "CONFIG_LOCATION" "/config/config.yaml"
-        CONFIGSOURCE="$(bashio::config "CONFIG_LOCATION")"
+        CONFIGSOURCE="/config/config.yaml"
     fi
 fi
 
+if [[ "$CONFIGSOURCE" != *".yaml" ]]; then
+    bashio::log.error "Something is going wrong in the config location, quitting"
+fi
+
 # Permissions
-mkdir -p "$(dirname "${CONFIGSOURCE}")"
-chmod -R 755 "$(dirname "${CONFIGSOURCE}")"
+if [[ "$CONFIGSOURCE" == *".yaml" ]]; then
+    mkdir -p "$(dirname "${CONFIGSOURCE}")" || true
+    chmod -R 755 "$(dirname "${CONFIGSOURCE}")" || true
+fi
 
 ####################
 # LOAD CONFIG.YAML #
