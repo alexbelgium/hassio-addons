@@ -30,7 +30,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     # Get config source
     CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
     # Check CONFIGSOURCE ends with config.yaml
-    if [[ "$CONFIGSOURCE" != "*.yaml" ]]; then
+    if [[ "$CONFIGSOURCE" != *".yaml" ]]; then
         # Remove trailing slash and add config.yaml
         CONFIGSOURCE="${CONFIGSOURCE%/}"/config.yaml
     fi
@@ -42,7 +42,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
         fi
     done
     if [ -z "$LOCATIONOK" ]; then
-        CONFIGSOURCE="$CONFIGLOCATION"
+        CONFIGSOURCE="$CONFIGLOCATION"/config.yaml
         bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGSOURCE"
     fi
 
