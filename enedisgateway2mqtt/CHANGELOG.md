@@ -1,3 +1,5 @@
+### 0.9.2-4 (23-11-2023)
+- Minor bugs fixed
 
 ## 0.9.2 (23-09-2023)
 - Update to latest version from m4dm4rtig4n/myelectricaldata
