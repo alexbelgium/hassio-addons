@@ -30,7 +30,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     # Get config source
     CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
     # Check CONFIGSOURCE ends with config.yaml
-    if [ "$(basename "$CONFIGSOURCE")" != "*.yaml" ]; then
+    if [[ "$(basename "$CONFIGSOURCE")" != "*.yaml" ]]; then
         # Remove trailing slash and add config.yaml
         CONFIGSOURCE="${CONFIGSOURCE%/}"/config.yaml
     fi
