@@ -44,5 +44,6 @@ if [ -f "$CONFIG_LOCATION" ]; then
     bashio::log.warning "---------------------------"
     sed -i "/UrlBase/d" "$CONFIG_LOCATION"
     sed -i "/<AuthenticationMethod>external/d" "$CONFIG_LOCATION"
+    # sed -i "/<AuthenticationMethod>external/d" "$CONFIG_LOCATION"
   fi
 fi
