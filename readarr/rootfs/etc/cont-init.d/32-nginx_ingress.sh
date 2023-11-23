@@ -36,8 +36,8 @@ if [ -f "$CONFIG_LOCATION" ]; then
     sed -i "/AuthenticationType/d" "$CONFIG_LOCATION"
     sed -i "2a <AuthenticationType>DisabledForLocalAddresses</AuthenticationType>" "$CONFIG_LOCATION"
     # Disable local auth
-    sed -i "/AuthenticationMethod/d" "$CONFIG_LOCATION"
-    sed -i "2a <AuthenticationMethod>external</AuthenticationMethod>" "$CONFIG_LOCATION"
+    # sed -i "/AuthenticationMethod/d" "$CONFIG_LOCATION"
+    # sed -i "2a <AuthenticationMethod>external</AuthenticationMethod>" "$CONFIG_LOCATION"
   else
     bashio::log.warning "---------------------------"
     bashio::log.info "Disabling ingress and enabling authentification"
