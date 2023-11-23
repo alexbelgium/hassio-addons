@@ -20,10 +20,10 @@ if bashio::config.has_value "OCRLANG"; then
     export PAPERLESS_OCR_LANGUAGES="${PAPERLESS_OCR_LANGUAGES,,}"
 fi
 if bashio::config.has_value "PAPERLESS_OCR_MODE"; then export PAPERLESS_OCR_MODE="$(bashio::config "PAPERLESS_OCR_MODE")"; fi
-if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR="$(bashio::config "PAPERLESS_DATA_DIR")"; else export PAPERLESS_DATA_DIR="/config/data"; fi
-if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT="$(bashio::config "PAPERLESS_MEDIA_ROOT")"; else export PAPERLESS_MEDIA_ROOT="/config/media"; fi
-if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR="$(bashio::config "PAPERLESS_CONSUMPTION_DIR")"; else export PAPERLESS_CONSUMPTION_DIR="/config/consume"; fi
-if bashio::config.has_value "PAPERLESS_EXPORT_DIR"; then export PAPERLESS_EXPORT_DIR="$(bashio::config "PAPERLESS_EXPORT_DIR")"; else export PAPERLESS_EXPORT_DIR="/config/export"; fi
+if bashio::config.has_value "PAPERLESS_DATA_DIR"; then export PAPERLESS_DATA_DIR="$(bashio::config "PAPERLESS_DATA_DIR")"; fi
+if bashio::config.has_value "PAPERLESS_MEDIA_ROOT"; then export PAPERLESS_MEDIA_ROOT="$(bashio::config "PAPERLESS_MEDIA_ROOT")"; fi
+if bashio::config.has_value "PAPERLESS_CONSUMPTION_DIR"; then export PAPERLESS_CONSUMPTION_DIR="$(bashio::config "PAPERLESS_CONSUMPTION_DIR")"; fi
+if bashio::config.has_value "PAPERLESS_EXPORT_DIR"; then export PAPERLESS_EXPORT_DIR="$(bashio::config "PAPERLESS_EXPORT_DIR")"; fi
 
 # Create folder and permissions if needed
 chown -R paperless:paperless /config
