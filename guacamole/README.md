@@ -27,7 +27,7 @@ This addon is based on the docker image here : https://github.com/abesnier/docke
 
 ## Configuration
 
-Webui can be found at <http://your-ip:8080>.
+Webui can be found at <http://homeassistant:8080>.
 
 The default username is guacadmin with password guacadmin.
 

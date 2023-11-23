@@ -37,7 +37,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at <http://your-ip:8888>.
+Webui can be found at <http://homeassistant:8888>.
 
 ```yaml
 PGID: user

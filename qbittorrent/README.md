@@ -38,7 +38,7 @@ This addons has several configurable options :
 
 ---
 
-Webui can be found at <http://your-ip:8080>, or in your sidebar using Ingress.
+Webui can be found at <http://homeassistant:8080>, or in your sidebar using Ingress.
 The default username/password : described in the startup log.
 Configurations can be done through the app webUI, except for the following options
 

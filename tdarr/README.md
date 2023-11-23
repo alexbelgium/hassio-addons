@@ -26,7 +26,7 @@ This addon is based on the [docker image](https://hub.docker.com/r/hurlenko/Tdar
 
 ## Configuration
 
-Webui can be found at <http://your-ip:8265>.
+Webui can be found at <http://homeassistant:8265>.
 App documentation can be found here : https://docs.tdarr.io/docs/welcome/what/
 
 ```yaml

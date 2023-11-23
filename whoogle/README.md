@@ -25,7 +25,7 @@ This addon is based on the docker image https://hub.docker.com/r/benbusby/whoogl
 
 ## Configuration
 
-Webui can be found at <http://your-ip:PORT>.
+Webui can be found at <http://homeassistant:PORT>.
 Configurations can be done through the app webUI, except for the following options
 
 Options can be configured through two ways :

@@ -45,7 +45,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ---
 
-Webui can be found at <http://your-ip:PORT>.
+Webui can be found at <http://homeassistant:PORT>.
 Configurations can be done through the app webUI, except for the following options.
 Please read the upstream container documentation for further info : https://github.com/linuxserver/docker-calibre/blob/35b5e3ae06ba95f666687150ca5fd632b8db9e87/README.md#application-setup
 

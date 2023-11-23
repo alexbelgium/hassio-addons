@@ -43,7 +43,7 @@ comparison to installing any other Hass.io add-on.
 1. Self-signed keys are generated the first time you run the container and can be found in /data/keys, if needed, you can replace them with your own.
 1. The easiest way to edit the configuration file is to go in /config/piwigo from home assistant local files editor to configure email settings etc.
 
-Webui can be found at <http://your-ip:81>.
+Webui can be found at <http://homeassistant:81>.
 
 ```yaml
 PGID: user

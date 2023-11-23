@@ -46,9 +46,12 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ---
 
-Webui can be found at <http://your-ip:PORT>.
+Webui can be found at <http://homeassistant:8787/readarr> or with ingress.
 The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+
+Options can be configured through three ways :
+
+- Addon options
 
 ```yaml
 PGID: user
@@ -59,6 +62,12 @@ networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separat
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 ```
+
+- Webui : all normal configuration from the app
+
+- Config.yaml (advanced usage)
+
+Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
 
 ## Support
 

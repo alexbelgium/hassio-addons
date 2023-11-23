@@ -33,7 +33,7 @@ This addon is based on the docker image https://github.com/vogler/free-games-cla
 
 ## Configuration
 
-Webui can be found at <http://your-ip:PORT>.
+Webui can be found at <http://homeassistant:PORT>.
 
 There are no addon options. All configuration must be manually added in /config/addons_config/free_games_claimer/config.env according to the documentation here for config files (https://github.com/vogler/free-games-claimer#configuration--options)
 

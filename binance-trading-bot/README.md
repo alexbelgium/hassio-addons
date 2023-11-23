@@ -27,7 +27,7 @@ This is a test app ; for any issues please contact the link above.
 
 ## Configuration
 
-Webui can be found at <http://your-ip:80>.
+Webui can be found at <http://homeassistant:80>.
 Please see https://github.com/chrisleekr/binance-trading-bot for configuration.
 
 ## Installation

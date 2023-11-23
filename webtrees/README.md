@@ -26,7 +26,7 @@ This addon is based on the docker image https://github.com/NathanVaughn/webtrees
 
 ## Configuration
 
-Webui can be found at <http://your-ip:PORT>.
+Webui can be found at <http://homeassistant:PORT>.
 
 The name and password are defined through the startup wizard.
 

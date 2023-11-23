@@ -25,7 +25,7 @@ This addon is based on the [docker image](https://hub.docker.com/r/filebrowser/f
 
 ## Configuration
 
-Webui can be found at <http://your-ip:port> at the port that you map to 8080 in the addon's options.
+Webui can be found at <http://homeassistant:port> at the port that you map to 8080 in the addon's options.
 Default username: "admin" and password: "admin"
 
 Network disk is mounted to `/share/storagecifs`.

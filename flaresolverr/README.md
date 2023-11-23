@@ -31,7 +31,7 @@ Based on the docker image : https://hub.docker.com/r/flaresolverr/flaresolverr
 
 ## Configuration
 
-Webui can be found at <http://your-ip:port>
+Webui can be found at <http://homeassistant:port>
 
 ## Installation
 

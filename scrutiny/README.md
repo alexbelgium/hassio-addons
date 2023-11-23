@@ -36,7 +36,7 @@ Features :
 
 ---
 
-Webui can be found at <http://your-ip:8080>, or through Ingress.
+Webui can be found at <http://homeassistant:8080>, or through Ingress.
 It automatically mounts all local drives.
 
 Enable full access only if you are encountering issues. SMART access should work without full access in all other scenarios.

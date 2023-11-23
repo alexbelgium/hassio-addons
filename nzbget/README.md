@@ -25,7 +25,7 @@ This addon is based on the docker image https://github.com/linuxserver/docker-nz
 
 ## Configuration
 
-Webui can be found at <http://your-ip:PORT>.
+Webui can be found at <http://homeassistant:PORT>.
 The default username/password : login:nzbget, password:tegbzn6789
 Configurations can be done through the app webUI, except for the following options
 

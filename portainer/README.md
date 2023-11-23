@@ -63,7 +63,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ---
 
-Webui can be found at <http://your-ip:port>, or in your sidebar using Ingress.
+Webui can be found at <http://homeassistant:port>, or in your sidebar using Ingress.
 The default username/password : described in the startup log.
 Configurations can be done through the app webUI, except for the following options
 

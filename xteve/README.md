@@ -40,7 +40,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at <http://your-ip:34400/web>.
+Webui can be found at <http://homeassistant:34400/web>.
 
 ## Support
 

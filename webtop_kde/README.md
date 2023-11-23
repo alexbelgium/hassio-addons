@@ -25,7 +25,7 @@ This addon is based on the docker image https://github.com/linuxserver/docker-we
 
 ## Configuration
 
-Webui can be found with ingress or at <http://your-ip:PORT>. The port is by default disabled but can be enabled through the addon options.
+Webui can be found with ingress or at <http://homeassistant:PORT>. The port is by default disabled but can be enabled through the addon options.
 
 By default the image is based around the abc user and we recommend using this user as all of the init/config is based around it. The default password is also abc . If you want to change this password and require authentication when accessing the interface simply issue passwd inside a gui terminal in the webtop. Then when accessing the web interface use the path:
 

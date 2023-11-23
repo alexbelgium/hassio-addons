@@ -40,7 +40,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
-Webui can be found at <http://your-ip:PORT>.
+Webui can be found at <http://homeassistant:PORT>.
 
 ```yaml
 ROUTER_IP: 127.0.0.1 #Required Router IP
