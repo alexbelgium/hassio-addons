@@ -37,8 +37,7 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 # Install REDIS
 #ENV DOCKER_MODS="imagegenius/mods:universal-redis"
 RUN \
-    echo "mv /config/redis /data/redis" >> /docker-mods && \
-    echo "sed -i \"s=/config/redis=/data=g\" /etc/s6*/s6*/*-redis/run" >> /docker-mods
+    echo "sed -i \"s=/config/redis=/data=g\" /etc/s6*/s6*/*/run" >> /docker-mods
 
 #    && chmod 777 -R /docker-mods \
 #        && /./docker-mods/* || ls / \
