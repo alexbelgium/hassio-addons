@@ -72,7 +72,7 @@
   ],
   "name": "Readarr",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/readarr/config.yaml",
+    "CONFIG_LOCATION": "/config/addons_config/readarr",
     "PGID": 0,
     "PUID": 0
   },
@@ -102,5 +102,5 @@
   "slug": "readarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
-  "version": "0.3.10.2287-7"
+  "version": "0.3.10.2287-8"
 }

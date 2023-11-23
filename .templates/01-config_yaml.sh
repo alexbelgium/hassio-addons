@@ -30,8 +30,9 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
     # Get config source
     CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
     # Check CONFIGSOURCE ends with config.yaml
-    if [ "$(basename "$CONFIGSOURCE")" != "config.yaml" ]; then
-        bashio::log.red "Watch-out: your CONFIG_LOCATION should end by config.yaml, and instead it is $(basename "$CONFIGSOURCE")"
+    if [ "$(basename "$CONFIGSOURCE")" != "*.yaml" ]; then
+        # Remove trailing slash and add config.yaml
+        CONFIGSOURCE="${CONFIGSOURCE%/}"/config.yaml
     fi
     # Check if config is located in an acceptable location
     LOCATIONOK=""
