@@ -1,6 +1,6 @@
+- Allow directories to be set from config.yaml (prevent forcing defaults)
+
 ### 2.0.0.1-8 (23-11-2023)
-- Minor bugs fixed
-### 2.0.0.1-7 (23-11-2023)
 - Minor bugs fixed
 - Finally all bugs solved !
 
