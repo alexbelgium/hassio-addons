@@ -1,3 +1,5 @@
+### 1.88.1-5 (23-11-2023)
+- Minor bugs fixed
 - Fixed REDIS error
 
 ## 1.88.1 (21-11-2023)
