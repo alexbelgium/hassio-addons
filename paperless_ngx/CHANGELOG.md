@@ -1,3 +1,5 @@
+- Finally all bugs solved !
+
 ### 2.0.0.1-6 (22-11-2023)
 - Minor bugs fixed
 - Allow names with spaces in directory names
