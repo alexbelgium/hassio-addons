@@ -68,8 +68,9 @@ fi
 
 # Permissions
 if [[ "$CONFIGSOURCE" == *".yaml" ]]; then
-    mkdir -p "$(dirname "${CONFIGSOURCE}")" || true
-    chmod -R 755 "$(dirname "${CONFIGSOURCE}")" || true
+    echo "Setting permissions for the config.yaml directory"
+    mkdir -p "$(dirname "${CONFIGSOURCE}")"
+    chmod -R 755 "$(dirname "${CONFIGSOURCE}")" 2>/dev/null
 fi
 
 ####################
