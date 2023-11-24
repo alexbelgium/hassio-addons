@@ -1,3 +1,5 @@
+### 2.0.0.1-12 (24-11-2023)
+- Minor bugs fixed
 - Switch tag latest to beta except for armv7
 
 ### 2.0.0.1-11 (24-11-2023)
