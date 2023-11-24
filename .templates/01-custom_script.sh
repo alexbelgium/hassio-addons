@@ -14,15 +14,18 @@ if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; t
     fi
     # New config location
     CONFIGLOCATION="/config"
+    CONFIGFILEBROWSER="/config/*-$slug"
 else
     # Legacy config location
     CONFIGLOCATION="/config/addons_autoscripts"
+    CONFIGFILEBROWSER="/config/addons_autoscripts"
     mkdir -p /config/addons_autoscripts
 fi
 
 bashio::log.green "Execute $CONFIGLOCATION/${slug}.sh if existing"
 bashio::log.green "---------------------------------------------------------"
-echo "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
+bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGFILEBROWSER/${slug}.sh"
+bashio::log.green "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
 
 # Execute scripts
 if [ -f "$CONFIGLOCATION/${slug}".sh ]; then
