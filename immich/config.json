@@ -59,6 +59,7 @@
   ],
   "environment": {
     "DOCKER_MODS": "imagegenius/mods:universal-redis",
+    "CI_PORT": "8080",
     "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
     "MACHINE_LEARNING_WORKERS": "1",
     "MACHINE_LEARNING_WORKER_TIMEOUT": "120",
@@ -94,10 +95,10 @@
   },
   "panel_icon": "mdi:file-search",
   "ports": {
-    "3001/tcp": 8181
+    "8080/tcp": 8181
   },
   "ports_description": {
-    "3001/tcp": "Web UI port"
+    "8080/tcp": "Web UI port"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -130,6 +131,6 @@
   "slug": "immich",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.88.1-6",
-  "webui": "http://[HOST]:[PORT:3001]"
+  "version": "1.88.1-7",
+  "webui": "http://[HOST]:[PORT:8080]"
 }
