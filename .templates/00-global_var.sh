@@ -41,7 +41,16 @@ for KEYS in "${arr[@]}"; do
     ######################################
     # Export the variable to run scripts #
     ######################################
+    KEYS="${line%%=*}"
+    VALUE="${line#*=}"
+    line="${KEYS}='${VALUE}'"
     export "$line"
+    # export to python
+    if command -v "python3" &>/dev/null; then
+        [ ! -f /env.py ] && echo "import os" > /env.py
+        echo "os.environ['${KEYS}'] = '${VALUE//[\"\']/}'" >> /env.py
+        python3 /env.py
+    fi
     # set .env
     echo "$line" >> /.env || true
     # set /etc/environment
