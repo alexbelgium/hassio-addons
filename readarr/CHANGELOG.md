@@ -1,3 +1,6 @@
+- Add text message to clarify url for login (if disabled or not)
+- Fix error "Requested value \u0027external\u0027 was not found"
+
 ### 0.3.10.2287-11 (23-11-2023)
 - Minor bugs fixed
 ### 0.3.10.2287-10 (23-11-2023)
