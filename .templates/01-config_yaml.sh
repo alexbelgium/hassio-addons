@@ -19,9 +19,11 @@ slug="${HOSTNAME#*-}"
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
     # New config location
     CONFIGLOCATION="/config"
+    CONFIGFILEBROWSER="/addon_configs/*-$slug/config.yaml"
 else
     # Legacy config location
     CONFIGLOCATION="/config/addons_config/${slug}"
+    CONFIGFILEBROWSER="/homeassistant/addons_config/$slug/config.yaml"
 fi
 
 # Default location
@@ -79,6 +81,11 @@ fi
 
 echo ""
 bashio::log.green "Load environment variables from $CONFIGSOURCE if existing"
+if [[ "$CONFIGSOURCE" == "/config"* ; then
+  bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGFILEBROWSER"
+else
+  bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGSOURCE"
+fi
 bashio::log.green "---------------------------------------------------------"
 bashio::log.green "Wiki here on how to use : github.com/alexbelgium/hassio-addons/wiki/Add‐ons-feature-:-add-env-variables"
 echo ""
