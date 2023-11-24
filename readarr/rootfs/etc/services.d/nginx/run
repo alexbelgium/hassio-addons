@@ -33,11 +33,13 @@ if ! grep -q "<UrlBase>$slug</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.t
   bashio::addon.restart
 fi
 
+echo ""
 if bashio::config.true "ingress_disabled"; then
-  bashio::log.info "you can connect at http://homeassistant:8787"
+  bashio::log.info "Ingress is disabled. You can connect at http://homeassistant:$(bashio::addon.port 8787)"
 else
-  bashio::log.info "you can connect at http://homeassistant:8787/readarr or using ingress"
+  bashio::log.info "Ingress is enabled. You can connect from HA or at http://homeassistant:$(bashio::addon.port 8787)/readarr"
 fi
+echo ""
 
 bashio::log.info "Starting NGinx..."
 exec nginx
