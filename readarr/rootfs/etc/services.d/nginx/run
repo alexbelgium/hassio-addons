@@ -18,12 +18,25 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
   CONFIG_LOCATION="$CONFIG_LOCATION"/config.xml
 fi
 
+# Delete external
+if ! grep -q "external" "$CONFIG_LOCATION"; then
+  bashio::log.warning "external is set, restarting"
+  sed -i "/external/d" "$CONFIG_LOCATION"
+  bashio::addon.restart
+fi
+
 # Set UrlBase
 if ! grep -q "<UrlBase>$slug</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then
   bashio::log.warning "BaseUrl not set properly, restarting"
   sed -i "/UrlBase/d" "$CONFIG_LOCATION"
   sed -i "/<Config>/a <UrlBase>$slug<\/UrlBase>" "$CONFIG_LOCATION"
   bashio::addon.restart
+fi
+
+if bashio::config.true "ingress_disabled"; then
+  bashio::log.info "you can connect at http://homeassistant:8787"
+else
+  bashio::log.info "you can connect at http://homeassistant:8787/readarr or using ingress"
 fi
 
 bashio::log.info "Starting NGinx..."
