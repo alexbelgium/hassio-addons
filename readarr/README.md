@@ -1,4 +1,4 @@
-## &#9888; Open Issue : [🐛 [readarr] config can be done in ui except for .... (opened 2023-11-22)](https://github.com/alexbelgium/hassio-addons/issues/1088) by [@airtonix](https://github.com/airtonix)
+## &#9888; Open Issue : [🐛 [readarr] Update info page with better information (opened 2023-11-22)](https://github.com/alexbelgium/hassio-addons/issues/1088) by [@airtonix](https://github.com/airtonix)
 ## &#9888; Open Issue : [🐛 [readarr] First install, config directory is created in wrong location (opened 2023-11-22)](https://github.com/alexbelgium/hassio-addons/issues/1089) by [@airtonix](https://github.com/airtonix)
 # Home assistant add-on: readarr
 
