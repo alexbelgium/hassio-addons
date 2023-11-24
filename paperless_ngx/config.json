@@ -93,8 +93,8 @@
     "8443/tcp": null
   },
   "ports_description": {
-    "8000/tcp": "Http web interface",
-    "8443/tcp": "Https web interface"
+    "8000/tcp": "http web interface",
+    "8443/tcp": "https web interface"
   },
   "privileged": [
     "SYS_ADMIN",
