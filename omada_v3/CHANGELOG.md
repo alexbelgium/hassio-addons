@@ -1,3 +1,5 @@
+- Recommendation : please backup your database and migrated to this addon https://github.com/jkunczik/home-assistant-omada
+- It is dedicated and seems in active development ; it should be more stable
 
 ## 5.3-amd64-2023-11-21 (2023-11-21)
 - Update to latest version from mbentley/omada-controller
