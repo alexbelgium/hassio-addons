@@ -1,4 +1,5 @@
 - Switch tag latest to beta
+- Removed armv7 support (not supported in beta tag)
 
 ### 2.0.0.1-11 (24-11-2023)
 - Minor bugs fixed
