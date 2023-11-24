@@ -1,3 +1,5 @@
+### 2.0.0.1-11 (24-11-2023)
+- Minor bugs fixed
 - Readd armv7 support
 
 ### 2.0.0.1-9 (23-11-2023)
