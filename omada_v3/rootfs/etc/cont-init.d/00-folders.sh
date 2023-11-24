@@ -39,3 +39,9 @@ ln -s "$CONFIGSOURCE"/portal /opt/tplink/EAPController/data
 echo "Updating permissions"
 chmod -R 777 "$CONFIGSOURCE"
 chown -R "508:508" "$CONFIGSOURCE"
+
+bashio::log.warning ""
+bashio::log.warning ""
+bashio::log.warning "Recommendation : please backup your database and migrated to this addon https://github.com/jkunczik/home-assistant-omada"
+bashio::log.warning ""
+bashio::log.warning ""
