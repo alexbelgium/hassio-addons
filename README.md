@@ -43,19 +43,19 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 84
-- Installed : 46033
+- Installed : 34679
 
 ### Top 3
 
 1. Filebrowser (6078x)
 2. Portainer (5838x)
-3. Arpspoof (1429x)
+3. Arpspoof (1469x)
 
 ### Architectures used
 
 - amd64: 54%
-- aarch64: 36%
-- armv7: 10%
+- aarch64: 35%
+- armv7: 11%
 
 ### Total downloads evolution
 
@@ -74,7 +74,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ## Add-ons provided by this repository
 
 
-&#10003;  [Arpspoof (1429x)](arpspoof/) : block internet connection for local network devices
+&#10003;  [Arpspoof (1469x)](arpspoof/) : block internet connection for local network devices
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fupdater.json)
@@ -497,7 +497,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpaperless_ngx%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7no][armv7no-badge]
+![armv7][armv7-badge]
 ![MariaDB][mariadb-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
