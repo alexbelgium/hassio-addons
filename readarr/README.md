@@ -64,11 +64,11 @@ cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 ```
 
-### Webui
+### Within readarr itself
 
 All normal configuration from within the app
 
-### `/config/addons_config/readarr_nas.yml`
+### The ENV override file: `/config/addons_config/readarr_nas.yml`
 
 For more control, you can add enviroment variables by defining them as keys in a valid `.yaml` file.
 
