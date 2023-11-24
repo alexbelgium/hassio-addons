@@ -3,6 +3,7 @@
     "aarch64": "ghcr.io/paperless-ngx/paperless-ngx:beta",
     "amd64": "ghcr.io/paperless-ngx/paperless-ngx:beta",
     "armv7": "ghcr.io/paperless-ngx/paperless-ngx:latest"
+  },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
   }
