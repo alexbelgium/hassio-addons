@@ -42,16 +42,18 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-## Configuration
+## Usage
 
----
+Webui can be found at <http://homeassistant:8787/readarr> or with ingress ☝️ by clicking the `Open Web UI` button.
 
-Webui can be found at <http://homeassistant:8787/readarr> or with ingress.
+
 The default username/password : described in the startup log.
+
+## Configuration
 
 Options can be configured through three ways :
 
-- Addon options
+### Addon options
 
 ```yaml
 PGID: user
@@ -63,11 +65,19 @@ cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 ```
 
-- Webui : all normal configuration from the app
+### Within readarr itself
 
-- Config.yaml (advanced usage)
+All normal configuration from within the app
 
-Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
+### The ENV override file: `/config/addons_config/readarr_nas.yml`
+
+For more control, you can add enviroment variables by defining them as keys in a valid `.yaml` file.
+
+```yaml
+TZ: Europe/Paris
+```
+
+more info : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
 
 ## Support
 
