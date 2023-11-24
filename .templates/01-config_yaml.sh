@@ -81,7 +81,7 @@ fi
 
 echo ""
 bashio::log.green "Load environment variables from $CONFIGSOURCE if existing"
-if [[ "$CONFIGSOURCE" == "/config"* ; then
+if [[ "$CONFIGSOURCE" == "/config"* ]]; then
   bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGFILEBROWSER"
 else
   bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGSOURCE"
