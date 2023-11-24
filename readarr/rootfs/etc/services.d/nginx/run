@@ -19,7 +19,7 @@ if bashio::config.has_value 'CONFIG_LOCATION'; then
 fi
 
 # Delete external
-if ! grep -q "external" "$CONFIG_LOCATION"; then
+if grep -q "external" "$CONFIG_LOCATION"; then
   bashio::log.warning "external is set, restarting"
   sed -i "/external/d" "$CONFIG_LOCATION"
   bashio::addon.restart
