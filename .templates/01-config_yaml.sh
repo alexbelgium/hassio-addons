@@ -77,9 +77,11 @@ fi
 # LOAD CONFIG.YAML #
 ####################
 
+echo ""
 bashio::log.green "Load environment variables from $CONFIGSOURCE if existing"
 bashio::log.green "---------------------------------------------------------"
-echo "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add‐ons-feature-:-add-env-variables"
+bashio::log.green "Wiki here on how to use : github.com/alexbelgium/hassio-addons/wiki/Add‐ons-feature-:-add-env-variables"
+echo ""
 
 # Check if config file is there, or create one from template
 if [ ! -f "$CONFIGSOURCE" ]; then
