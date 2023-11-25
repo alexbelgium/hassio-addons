@@ -25,5 +25,5 @@ find /homeassistant/addons_config -maxdepth 1 -type l -delete
 ln -fs /homeassistant/addons_config /config
 ln -fs /homeassistant/addons_autoscripts /config
 for folders in $(find /addon_configs -maxdepth 1 -type d -not -name "*filebrowser*"); do
-  ln -fs ${folders} /config/addons_config
+  ln -fs "/${folders##*\/}" /config/addons_config
 done
