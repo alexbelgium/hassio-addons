@@ -6,12 +6,12 @@ set -e
 # Migrate database #
 ####################
 
-if [ -f /config/addons_config/filebrowser/filebrowser.dB ]; then
+if [ -f /homeassistant/addons_config/filebrowser/filebrowser.dB ]; then
     echo "Moving database to new location /config"
     mkdir -p /config
     chmod 777 /config
-    cp -rnf /config/addons_config/filebrowser/* /config/
-    rm -r /config/addons_config/filebrowser
+    cp -rnf /homeassistant/addons_config/filebrowser/* /config/
+    rm -r /homeassistant/addons_config/filebrowser
 fi
 
 ######################
@@ -21,6 +21,8 @@ fi
 # Clean symlinks
 find /config -maxdepth 1 -type l -delete
 find /homeassistant/addons_config -maxdepth 1 -type l -delete
+
+# Remove erroneous folders
 if [ -d /homeassistant ]; then
   if [ -d /config/addons_config ]; then
     rm -r /config/addons_config
