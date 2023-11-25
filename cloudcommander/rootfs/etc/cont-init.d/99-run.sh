@@ -8,7 +8,7 @@ set -e
 
 if [ -f /homeassistant/addons_config/cloudcommander ]; then
     echo "Moving database to new location /config"
-    cp -rnf /homeassistant/addons_config/cloudcommander/* /config/
+    cp -rnf /homeassistant/addons_config/cloudcommander/* /config/ || true
     rm -r /homeassistant/addons_config/cloudcommander
 fi
 
