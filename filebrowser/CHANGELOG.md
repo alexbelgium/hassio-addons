@@ -1,3 +1,5 @@
+### 2.23.0_7 (25-11-2023)
+- Minor bugs fixed
 - Restore database.db persistence
 
 ### 2.23.0_reverted5 (21-11-2023)
