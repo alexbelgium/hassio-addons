@@ -2,16 +2,10 @@
 # shellcheck shell=bash
 set -e
 
-if [ -d /config/filebrowser ]; then
-    echo "Moving to new location /config/addons_config/filebrowser"
-    mkdir -p /config/addons_config/filebrowser
-    chmod 777 /config/addons_config/filebrowser
-    mv /config/filebrowser/* /config/addons_config/filebrowser/
-    rm -r /config/filebrowser
-fi
-
-if [ ! -d /config/addons_config/filebrowser ]; then
-    echo "Creating /config/addons_config/filebrowser"
-    mkdir -p /config/addons_config/filebrowser
-    chmod 777 /config/addons_config/filebrowser
+if [ -f /config/addons_config/filebrowser/filebrowser.d* ]; then
+    echo "Moving database to new location /config"
+    mkdir -p /config
+    chmod 777 /config
+    mv /config/addons_config/filebrowser/* /config/
+    rm -r /config/addons_config/filebrowser
 fi
