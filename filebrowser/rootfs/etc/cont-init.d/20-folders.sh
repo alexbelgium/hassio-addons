@@ -6,6 +6,6 @@ if [ -f /config/addons_config/filebrowser/filebrowser.d* ]; then
     echo "Moving database to new location /config"
     mkdir -p /config
     chmod 777 /config
-    mv /config/addons_config/filebrowser/* /config/
+    cp -rnf /config/addons_config/filebrowser/* /config/
     rm -r /config/addons_config/filebrowser
 fi
