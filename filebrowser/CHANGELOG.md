@@ -1,5 +1,5 @@
 ### 2.23.0_7 (25-11-2023)
- Symlink addons_config and addons_autoscripts in /config to allow the same behavior as prior to the new HA logic to handle config mountpoints
+- Symlink addons_config and addons_autoscripts in /config to allow the same behavior as prior to the new HA logic to handle config mountpoints
 - Restore database.db persistence
 
 ### 2.23.0_reverted5 (21-11-2023)
