@@ -33,8 +33,4 @@ fi
 # Create symlinks
 ln -s /homeassistant/addons_config /config
 ln -s /homeassistant/addons_autoscripts /config
-
-for folders in $(find /addon_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*filebrowser*"); do
-  ln -fs "${folders}" /config/addons_config/
-  echo $folders
-done
+find /addon_configs/ -maxdepth 1 -mindepth 1 -type d -not -name "*filebrowser*" -exec ln -s {} /config \;
