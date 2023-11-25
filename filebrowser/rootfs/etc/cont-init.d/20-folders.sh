@@ -8,8 +8,6 @@ set -e
 
 if [ -f /homeassistant/addons_config/filebrowser/filebrowser.dB ]; then
     echo "Moving database to new location /config"
-    mkdir -p /config
-    chmod 777 /config
     cp -rnf /homeassistant/addons_config/filebrowser/* /config/
     rm -r /homeassistant/addons_config/filebrowser
 fi
