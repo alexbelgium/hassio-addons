@@ -1,3 +1,6 @@
+
+## 1.88.2 (25-11-2023)
+- Update to latest version from imagegenius/docker-immich
 ### 1.88.1-7 (24-11-2023)
 - Minor bugs fixed
 ### 1.88.1-6 (23-11-2023)
