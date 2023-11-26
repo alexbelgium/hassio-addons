@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Immich] not working with v1.88 (opened 2023-11-21)](https://github.com/alexbelgium/hassio-addons/issues/1084) by [@digitaljamie](https://github.com/digitaljamie)
+## &#9888; Open Issue : [🐛 Immich write permissions (opened 2023-11-26)](https://github.com/alexbelgium/hassio-addons/issues/1097) by [@josiah-eichelman](https://github.com/josiah-eichelman)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
