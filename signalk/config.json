@@ -8,9 +8,9 @@
   "description": "An implementation of a Signal K central server for boats",
   "environment": {
     "HOME": "/config",
+    "NMEA0183PORT": "10110",
     "PORT": "3000",
     "SSLPORT": "3443",
-    "NMEA0183PORT": "10110",
     "TCPSTREAMPORT": "8375"
   },
   "image": "ghcr.io/alexbelgium/signalk-{arch}",
@@ -19,15 +19,15 @@
   ],
   "name": "Signalk Server",
   "ports": {
+    "10110/tcp": 10110,
     "3000/tcp": 3000,
     "3443/tcp": 3443,
-    "10110/tcp": 10110,
     "8375/tcp": 8375
   },
   "ports_description": {
+    "10110/tcp": "NMEA0183 port",
     "3000/tcp": "web interface",
     "3443/tcp": "ssl web interface",
-    "10110/tcp": "NMEA0183 port",
     "8375/tcp": "TCPSTREAM port"
   },
   "slug": "signalk",

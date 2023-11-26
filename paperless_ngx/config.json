@@ -61,10 +61,10 @@
   "environment": {
     "PAPERLESS_ADMIN_PASSWORD": "admin",
     "PAPERLESS_ADMIN_USER": "admin",
-    "PAPERLESS_DATA_DIR": "/config/data",
-    "PAPERLESS_MEDIA_ROOT": "/config/media",
     "PAPERLESS_CONSUMPTION_DIR": "/config/consume",
+    "PAPERLESS_DATA_DIR": "/config/data",
     "PAPERLESS_EXPORT_DIR": "/config/export",
+    "PAPERLESS_MEDIA_ROOT": "/config/media",
     "PGID": "0",
     "PUID": "0"
   },

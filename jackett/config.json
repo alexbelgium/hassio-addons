@@ -76,12 +76,12 @@
     "PUID": 0
   },
   "ports": {
-    "9117/tcp": 9117,
-    "8889/tcp": 8889
+    "8889/tcp": 8889,
+    "9117/tcp": 9117
   },
   "ports_description": {
-    "9117/tcp": "Web interface",
-    "8889/tcp": "Alternative port"
+    "8889/tcp": "Alternative port",
+    "9117/tcp": "Web interface"
   },
   "privileged": [
     "SYS_ADMIN",
