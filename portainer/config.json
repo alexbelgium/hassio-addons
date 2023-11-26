@@ -39,7 +39,6 @@
   },
   "schema": {
     "certfile": "str",
-    "disable_password": "bool?",
     "keyfile": "str",
     "password": "str?",
     "ssl": "bool"
