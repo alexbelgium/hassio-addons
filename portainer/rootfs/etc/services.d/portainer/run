@@ -35,11 +35,11 @@ fi
 # Set password
 CURRENTPASSWORD=""
 PASSWORD=$(bashio::config 'password')
-if ! bashio::config.has_value 'password'; then
+if bashio::config.true "disable_password"; then
   PASSWORD="empty"
+  touch "/data/portainer_password"
+  CURRENTPASSWORD=$( cat /data/portainer_password )
 fi
-touch "/data/portainer_password"
-CURRENTPASSWORD=$( cat /data/portainer_password )
 
 # Reset password if not first run
 if bashio::fs.file_exists "/data/hidden"; then
@@ -51,7 +51,7 @@ if bashio::fs.file_exists "/data/hidden"; then
 fi
 
 # Define option
-if bashio::config.has_value 'password' ; then
+if ! bashio::config.true "disable_password"; then
   echo -n $PASSWORD > /data/portainer_password
   options+=(--admin-password-file /data/portainer_password)
   bashio::log.info "... password set to $PASSWORD"
