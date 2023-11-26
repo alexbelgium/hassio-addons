@@ -1,4 +1,4 @@
-## &#9888; Open Issue : [🐛 [filebrowser] Settings reset after 2.23.0_reverted2 update (including authentication data) (opened 2023-11-25)](https://github.com/alexbelgium/hassio-addons/issues/1096) by [@bcutter](https://github.com/bcutter)
+## &#9888; Open Issue : [🐛 [filebrowser] Settings reset after 2.23.0_reverted2 update (including authentication data)  (opened 2023-11-25)](https://github.com/alexbelgium/hassio-addons/issues/1096) by [@bcutter](https://github.com/bcutter)
 # Home assistant add-on: Filebrowser
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
