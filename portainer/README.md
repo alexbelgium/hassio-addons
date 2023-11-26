@@ -70,7 +70,6 @@ Configurations can be done through the app webUI, except for the following optio
 
 ```yaml
 ssl: true/false
-disable_password: true/false # optional boolean to manually configure password such as with Oauth. Disabled by default to allow password management from addon option
 certfile: fullchain.pem #ssl certificate, must be located in /ssl
 keyfile: privkey.pem #sslkeyfile, must be located in /ssl
 password: define admin password. If kept blank, will allow manual restore of previous backup. At least 12 characters.
