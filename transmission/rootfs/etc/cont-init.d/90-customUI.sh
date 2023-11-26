@@ -26,8 +26,8 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
 
         "transmission-web-control")
             mkdir -p /tmp/twctemp && \
-                TWCVERSION=$(curl -s "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" | jq -r .tag_name)
-            curl -o /tmp/twc.tar.gz -L "https://github.com/ronggang/transmission-web-control/archive/${TWCVERSION}.tar.gz"
+                TWCVERSION=$(curl -s "https://api.github.com/repos/transmission-web-control/transmission-web-control/releases/latest" | jq -r .tag_name)
+            curl -o /tmp/twc.tar.gz -L "https://github.com/transmission-web-control/transmission-web-control/archive/${TWCVERSION}.tar.gz"
             tar xf /tmp/twc.tar.gz -C /tmp/twctemp --strip-components=1
             mv /tmp/twctemp/src /transmission-web-control
             # Enables the original UI button in transmission-web-control
