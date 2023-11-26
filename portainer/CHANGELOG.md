@@ -1,3 +1,4 @@
+- Feat : disable_password optional boolean to manually configure password such as with Oauth. Disabled by default to allow password management from addon option
 
 ## 2.19.3 (25-11-2023)
 - Update to latest version from portainer/portainer
