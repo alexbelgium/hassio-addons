@@ -61,6 +61,7 @@
     "CI_PORT": "8080",
     "DOCKER_MODS": "imagegenius/mods:universal-redis",
     "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
+    "REVERSE_GEOCODING_DUMP_DIRECTORY": "/data/.reverse-geocoding-dump/",
     "MACHINE_LEARNING_WORKERS": "1",
     "MACHINE_LEARNING_WORKER_TIMEOUT": "120",
     "REDIS_HOSTNAME": "localhost",
@@ -131,6 +132,6 @@
   "slug": "immich",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.88.2",
+  "version": "1.88.2-2",
   "webui": "http://[HOST]:[PORT:8080]"
 }
