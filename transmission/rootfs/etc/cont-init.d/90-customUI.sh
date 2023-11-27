@@ -30,7 +30,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
             mkdir -p /transmission-web-control
             unzip -q /release.zip -d /transmission-web-control
             mv /transmission-web-control/dist/* /transmission-web-control
-            rm /transmission-web-control/dist
+            rm -r /transmission-web-control/dist
             rm /release.zip
             # Enables the original UI button in transmission-web-control
             ln -s /usr/share/transmission/web/style /transmission-web-control && \
