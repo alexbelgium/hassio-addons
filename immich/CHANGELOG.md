@@ -1,3 +1,4 @@
+- Fix : add REVERSE_GEOCODING_DUMP_DIRECTORY in config environment
 
 ## 1.88.2 (25-11-2023)
 - Update to latest version from imagegenius/docker-immich
