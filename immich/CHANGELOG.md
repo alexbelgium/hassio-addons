@@ -1,3 +1,5 @@
+### 1.88.2-3 (27-11-2023)
+- Minor bugs fixed
 - Fix : add REVERSE_GEOCODING_DUMP_DIRECTORY in config environment
 
 ## 1.88.2 (25-11-2023)
