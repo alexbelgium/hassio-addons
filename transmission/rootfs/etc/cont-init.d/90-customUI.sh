@@ -33,10 +33,10 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
             rm -r /transmission-web-control/dist
             rm /release.zip
             # Enables the original UI button in transmission-web-control
-            ln -s /usr/share/transmission/web/style /transmission-web-control && \
-                ln -s /usr/share/transmission/web/images /transmission-web-control && \
-                ln -s /usr/share/transmission/web/javascript /transmission-web-control && \
-                ln -s /usr/share/transmission/web/index.html /transmission-web-control/index.original.html
+            ln -s /usr/share/transmission/public_html/style /transmission-web-control && \
+                ln -s /usr/share/transmission/public_html/images /transmission-web-control && \
+                ln -s /usr/share/transmission/public_html/javascript /transmission-web-control && \
+                ln -s /usr/share/transmission/public_html/index.html /transmission-web-control/index.original.html
             ;;
 
         "kettu")
