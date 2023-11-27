@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Nextcloud - Video Preview / Thumbnail Support (opened 2023-11-26)](https://github.com/alexbelgium/hassio-addons/issues/1099) by [@LuckyTriple7](https://github.com/LuckyTriple7)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
