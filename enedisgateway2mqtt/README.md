@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [MyElectricalData] Add-on version 0.9.2-3 fails to start (opened 2023-11-23)](https://github.com/alexbelgium/hassio-addons/issues/1091) by [@chocomega](https://github.com/chocomega)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

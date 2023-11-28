@@ -1,4 +1,3 @@
-## &#9888; Open Request : [[REQUEST] Persist Portainer Oauth (opened 2023-11-25)](https://github.com/alexbelgium/hassio-addons/issues/1095) by [@alexbelgium](https://github.com/alexbelgium)
 
 # Home assistant add-on: Portainer
 

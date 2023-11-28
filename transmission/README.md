@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Transmission UI new version (opened 2023-11-26)](https://github.com/alexbelgium/hassio-addons/issues/1098) by [@Meister1977](https://github.com/Meister1977)
 
 # Home assistant add-on: Transmission
 
