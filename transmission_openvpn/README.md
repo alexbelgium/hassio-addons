@@ -45,6 +45,8 @@ For setting a custom openvpn file, you should flag the "OPENVPN_CUSTOM_PROVIDER"
 
 Complete transmission options are in /config/addons_config/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
 
+WEBPROXY_ENABLED : the webproxy is enabled by default on port 8118 but can be disabled using the addon option "WEBPROXY_ENABLED". More informations : https://haugene.github.io/docker-transmission-openvpn/web-proxy/ (thanks @tutorempire)
+
 Webui can be found at `<your-ip>:9091`.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
