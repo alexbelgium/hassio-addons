@@ -100,7 +100,7 @@
     "51413/tcp": "Peer port (setup router port forwarding to this port)",
     "51413/udp": "Peer port (setup router port forwarding to this port)",
     "9091/tcp": "Web UI port (required)",
-    "8118/tcp": "Web UI port (required)"
+    "8118/tcp": "Webproxy port (optional)"
   },
   "privileged": [
     "SYS_ADMIN",
