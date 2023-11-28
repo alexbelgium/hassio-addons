@@ -131,10 +131,10 @@
     "cifsusername": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "WEB_PROXY": "bool"
+    "WEBPROXY_ENABLED": "bool"
   },
   "slug": "transmission_openvpn",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v5.2.0-3"
+  "version": "v5.2.0-4"
 }
