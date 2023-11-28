@@ -59,6 +59,11 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "environment": {
+    "WEBPROXY_PORT": "8118",
+    "CREATE_TUN_DEVICE": "false",
+    "OPENVPN_OPTS": ""
+  },
   "image": "ghcr.io/alexbelgium/transmission_openvpn-{arch}",
   "ingress": true,
   "map": [
@@ -81,18 +86,21 @@
     "TRANSMISSION_INCOMPLETE_DIR": "/share/incomplete",
     "TRANSMISSION_V3_UPDATE": "true",
     "TRANSMISSION_WATCH_DIR": "/share/watch_dir",
-    "TRANSMISSION_WEB_UI": "flood-for-transmission"
+    "TRANSMISSION_WEB_UI": "flood-for-transmission",
+    "WEBPROXY_ENABLED": "true"
   },
   "panel_icon": "mdi:transmission-tower",
   "ports": {
     "51413/tcp": 51413,
     "51413/udp": 51413,
-    "9091/tcp": 9091
+    "9091/tcp": 9091,
+    "8118/tcp": 8118
   },
   "ports_description": {
     "51413/tcp": "Peer port (setup router port forwarding to this port)",
     "51413/udp": "Peer port (setup router port forwarding to this port)",
-    "9091/tcp": "Web UI port (required)"
+    "9091/tcp": "Web UI port (required)",
+    "8118/tcp": "Web UI port (required)"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -122,10 +130,11 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?"
+    "networkdisks": "str?",
+    "WEB_PROXY": "bool"
   },
   "slug": "transmission_openvpn",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v5.2.0-2"
+  "version": "v5.2.0-3"
 }
