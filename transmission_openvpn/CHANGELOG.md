@@ -1,7 +1,6 @@
-- Feat : addition of custom environement variable through the 01-config_yaml.sh logic. Further infos : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
 
 ### v5.2.0-2 (28-11-2023)
-- Minor bugs fixed
+- Feat : addition of custom environement variable through the 01-config_yaml.sh logic. Further infos : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
 
 ## v5.2.0 (09-09-2023)
 - Update to latest version from haugene/docker-transmission-openvpn
