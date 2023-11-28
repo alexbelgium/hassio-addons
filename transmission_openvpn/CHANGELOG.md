@@ -1,3 +1,5 @@
+### v5.2.0-2 (28-11-2023)
+- Minor bugs fixed
 
 ## v5.2.0 (09-09-2023)
 - Update to latest version from haugene/docker-transmission-openvpn
