@@ -1,3 +1,4 @@
+- Feat : addition of the WEBPROXY. It is enabled by default on port 8118 but can be disabled using the addon option "WEBPROXY_ENABLED". More informations : https://haugene.github.io/docker-transmission-openvpn/web-proxy/ (thanks @tutorempire)
 
 ### v5.2.0-2 (28-11-2023)
 - Feat : addition of custom environement variable through the 01-config_yaml.sh logic. Further infos : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
