@@ -85,6 +85,7 @@
     "additional_apps": "inotify-tools",
     "certfile": "fullchain.pem",
     "elasticsearch_server": "<ip:port>",
+    "enable_thumbnails": true,
     "keyfile": "privkey.pem",
     "trusted_domains": "your-domain, your-domain2",
     "use_own_certs": false
@@ -117,6 +118,7 @@
     "default_phone_region": "match(^[A-Z]{2}$)?",
     "disable_updates": "bool?",
     "elasticsearch_server": "str?",
+    "enable_thumbnails": "bool",
     "env_memory_limit": "str?",
     "env_post_max_size": "str?",
     "env_upload_max_filesize": "str?",
