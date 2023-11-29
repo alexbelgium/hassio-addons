@@ -138,6 +138,10 @@ if bashio::config.true "enable_thumbnails"; then
     echo "... Enabling thumbnails"
     for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
         if [ -f "$files" ]; then
+
+            # Create backup file
+            cp "$files" /share/backup_nextcloud_"$RANDOM".php
+            
             # Clean variables
             sed -i "/preview_ffmpeg_path/d" "$files"
             sed -i "/enable_previews/d" "$files"
