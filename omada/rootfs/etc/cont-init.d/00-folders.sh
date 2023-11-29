@@ -8,7 +8,7 @@ CONFIGSOURCE="/data"
 if [ -d /ssl ]; then
     mkdir -p /cert
     cp -r /ssl/* /cert
-    chown -R omada:omada /cert
+    chown -R 508:508 /cert
 fi
 
 # Create directory
@@ -45,7 +45,7 @@ ln -s /data/LAST_RAN_OMADA_VER.txt /opt/tplink/EAPController/data/
 # Make sure permissions are right
 echo "Updating permissions"
 chmod -R 777 "$CONFIGSOURCE"
-chown -R "omada:omada" "$CONFIGSOURCE"
+chown -R "508:508" "$CONFIGSOURCE"
 
 bashio::log.warning ""
 bashio::log.warning ""
