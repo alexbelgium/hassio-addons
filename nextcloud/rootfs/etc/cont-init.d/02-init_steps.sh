@@ -168,6 +168,7 @@ if bashio::config.true "enable_thumbnails"; then
             # Iterate through each line in the lines_to_add_file
             while IFS= read -r line; do
                 # Remove leading blanks
+                # shellcheck disable=SC2116,SC2086
                 line="$(echo $line)"
                 # Use sed to insert the line after the match "installed" in the config_file
                 sed -i "/installed/i\ \ $line" "$files"
