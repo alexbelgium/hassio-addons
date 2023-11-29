@@ -117,9 +117,9 @@ for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; 
 done
 timeout 10 sudo -u abc php /app/www/public/occ config:system:set check_data_directory_permissions --value=false --type=bool || echo "Please install nextcloud first"
 
-######################
+##################
 # Modify php.ini #
-######################
+##################
 
 for variable in env_memory_limit env_upload_max_filesize env_post_max_size; do
     if bashio::config.has_value "$variable"; then
@@ -129,3 +129,46 @@ for variable in env_memory_limit env_upload_max_filesize env_post_max_size; do
         bashio::log.blue "$variable set to $(bashio::config "env_$variable")"
     fi
 done
+
+#####################
+# Enable thumbnails #
+#####################
+
+if bashio::config.true "Enable_thumbnails"; then
+    echo "... Enabling thumbnails"
+    for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
+        if [ -f "$files" ]; then
+            # Clean variables
+            sed -i "/preview_ffmpeg_path/d" "$files"
+            sed -i "/enable_previews/d" "$files"
+            sed -i "/'installed'/a 'preview_ffmpeg_path' => '/usr/bin/ffmpeg'," "$files"            
+            sed -i "/'installed'/a 'enable_previews' => true," "$files"            
+
+            # Prepare text
+            if ! grep -q "enabledPreviewProviders" "$files"; then
+                insert_text=$(cat <<EOL              
+                  'enabledPreviewProviders' =>
+                  array (
+                  0 => 'OC\\Preview\\TXT',
+                  1 => 'OC\\Preview\\MarkDown',
+                  2 => 'OC\\Preview\\OpenDocument',
+                  3 => 'OC\\Preview\\PDF',
+                  4 => 'OC\\Preview\\Image',
+                  5 => 'OC\\Preview\\TIFF',
+                  6 => 'OC\\Preview\\SVG',
+                  7 => 'OC\\Preview\\Font',
+                  8 => 'OC\\Preview\\MP3',
+                  9 => 'OC\\Preview\\Movie',
+                  10 => 'OC\\Preview\\MKV',
+                  11 => 'OC\\Preview\\MP4',
+                  12 => 'OC\\Preview\\AVI',
+                  ),
+                EOL
+                )
+    
+                # Use sed to insert the text after a specific pattern (you can adjust the pattern as needed)
+                sed -i "/'installed'/a $insert_text" "$files"
+            fi
+        fi
+    done
+fi
