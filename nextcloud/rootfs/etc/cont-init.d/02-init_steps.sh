@@ -163,11 +163,18 @@ if bashio::config.true "Enable_thumbnails"; then
             12 => 'OC\Preview\AVI',
             )," > lines_to_add
 
+            lines_to_add="lines_to_add"
+
             # Iterate through each line in the lines_to_add_file
             while IFS= read -r line; do
+                # Remove leading blanks
+                line="$(echo $line)"
                 # Use sed to insert the line after the match "installed" in the config_file
-                sed -i "/installed/i\ \ ${line//[[:space:]]/}" config.php
+                sed -i "/installed/i\ \ $line" "$files"
             done < "$lines_to_add"
+
+            # Clean temporary file
+            rm lines_to_add
         fi
     done
 fi
