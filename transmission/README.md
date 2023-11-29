@@ -1,4 +1,3 @@
-## &#9888; Open Request : [[REQUEST] Transmission-OpenVPN: NordVPN Settings (opened 2023-11-28)](https://github.com/alexbelgium/hassio-addons/issues/1102) by [@tutorempire](https://github.com/tutorempire)
 
 # Home assistant add-on: Transmission
 
