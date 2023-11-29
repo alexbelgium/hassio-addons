@@ -147,7 +147,7 @@ if bashio::config.true "enable_thumbnails"; then
             # Add variables
             echo "'preview_ffmpeg_path' => '/usr/bin/ffmpeg',
             'enable_previews' => true,
-            'enabledPreviewProviders' =>
+            'enabledPreviewProviders' => 
             array (
             0 => 'OC\Preview\TXT',
             1 => 'OC\Preview\MarkDown',
@@ -171,8 +171,8 @@ if bashio::config.true "enable_thumbnails"; then
                 # Remove leading blanks
                 # shellcheck disable=SC2116,SC2086
                 line="$(echo $line)"
-                # Use sed to insert the line after the match "installed" in the config_file
-                sed -i "/installed/i\ \ $line" "$files"
+                # Use sed to insert the line at the end in the config_file
+                sed -i "/);/i\ \ $line" "$files"
             done < "$lines_to_add"
 
             # Clean temporary file
