@@ -1,4 +1,4 @@
-- Feat : optional configuration of thumbnails generation (enable_thumbnails ; enabled by default)
+- Feat : optional configuration of thumbnails generation (enable_thumbnails ; enabled by default) thanks @LuckyTriple7
 
 ## 27.1.4 (25-11-2023)
 - Update to latest version from linuxserver/docker-nextcloud
