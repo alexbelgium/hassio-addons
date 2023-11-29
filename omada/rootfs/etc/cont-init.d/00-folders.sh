@@ -8,7 +8,7 @@ CONFIGSOURCE="/data"
 if [ -d /ssl ]; then
     mkdir -p /cert
     cp -r /ssl/* /cert
-    chown -R 508:508 /cert
+    chown -R omada:omada /cert
 fi
 
 # Create directory
