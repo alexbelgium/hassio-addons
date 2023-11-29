@@ -134,7 +134,7 @@ done
 # Enable thumbnails #
 #####################
 
-if bashio::config.true "Enable_thumbnails"; then
+if bashio::config.true "enable_thumbnails"; then
     echo "... Enabling thumbnails"
     for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
         if [ -f "$files" ]; then
