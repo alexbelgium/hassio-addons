@@ -44,6 +44,7 @@ trusted_domains: your-domain.com #allows to select the trusted domains. Domains 
 OCR: false #set to true to install tesseract-ocr capability.
 OCRLANG: fra,eng #Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
 data_directory: path for the main data directory. Defaults to `/share/nextcloud`. Only used to set permissions and prefill the initial installation template. Once initial  installation is done it can't be changed
+enable_thumbnails: true/false # enable generations of thumbnails for media file (to disable for older systems)
 use_own_certs: true/false #if true, use the certfile and keyfile specified
 certfile: fullchain.pem #ssl certificate, must be located in /ssl
 keyfile: privkey.pem #sslkeyfile, must be located in /ssl
