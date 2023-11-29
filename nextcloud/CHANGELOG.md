@@ -1,8 +1,11 @@
+- Feat : optional configuration of thumbnails generation (enable_thumbnails ; enabled by default)
 
 ## 27.1.4 (25-11-2023)
 - Update to latest version from linuxserver/docker-nextcloud
+
 ### 27.1.3 (03-11-2023)
 - Minor bugs fixed
+
 ### 27.1.2-3 (16-10-2023)
 - Minor bugs fixed
 - Feat : optional configuration of php (env_memory_limit ; env_post_max_size ; env_upload_max_filesize)
