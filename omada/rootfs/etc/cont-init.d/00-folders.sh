@@ -35,16 +35,17 @@ for folders in html keystore pdf db omada/html portal; do
         rm -r /opt/tplink/EAPController/data/"$folders"
     fi
     # Create symlink
-    ln -s /data/"$folders" /opt/tplink/EAPController/data
+    ln -s /data/"$folders" /opt/tplink/EAPController/data || true
 done
 
 touch /data/LAST_RAN_OMADA_VER.txt
+if [ -f /opt/tplink/EAPController/data/LAST_RAN_OMADA_VER.txt ]; then rm /opt/tplink/EAPController/data/LAST_RAN_OMADA_VER.txt; fi
 ln -s /data/LAST_RAN_OMADA_VER.txt /opt/tplink/EAPController/data/
 
 # Make sure permissions are right
 echo "Updating permissions"
 chmod -R 777 "$CONFIGSOURCE"
-chown -R "508:508" "$CONFIGSOURCE"
+chown -R "omada:omada" "$CONFIGSOURCE"
 
 bashio::log.warning ""
 bashio::log.warning ""
