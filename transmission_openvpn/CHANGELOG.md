@@ -1,3 +1,5 @@
+### v5.2.0-5 (29-11-2023)
+- Minor bugs fixed
 - Fix : WEBPROXY starting
 
 ### v5.2.0-4 (28-11-2023)
