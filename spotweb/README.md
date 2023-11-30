@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛Spotweb No pictures anymore, unable to write to cachepath (opened 2023-10-29)](https://github.com/alexbelgium/hassio-addons/issues/1051) by [@JBakers](https://github.com/JBakers)
+## &#9888; Open Issue : [🐛 [Spotweb] not able to retrieve older spots (opened 2023-11-30)](https://github.com/alexbelgium/hassio-addons/issues/1106) by [@marcokreeft87](https://github.com/marcokreeft87)
 # Home Assistant Add-ons: Spotweb
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
