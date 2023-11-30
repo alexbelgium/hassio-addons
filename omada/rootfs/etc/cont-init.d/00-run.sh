@@ -17,6 +17,11 @@ if [ ! -f "$CONFIGSOURCE" ]; then
     mkdir -p "$CONFIGSOURCE"
 fi
 
+# Create new global directory
+mkdir -p /opt/tplink/EAPController2
+cp -rnf /opt/tplink/EAPController /opt/tplink/EAPController2
+rm -r /opt/tplink/EAPController || true
+
 # Migrate data
 if [ -d /data/db ]; then
     mv /data/* "$CONFIGSOURCE"/
@@ -26,29 +31,16 @@ fi
 # Ensure structure is correct
 cp -rnf /opt/tplink/EAPController/data/* "$CONFIGSOURCE/"
 
+# Symlink data folder
 echo "Creating symlink"
-# Clean existing folder
-rm -r /opt/tplink/EAPController/data/*
-
-# Create folders if not existing
-for item in db html keystore html logs properties properties.default pdf db portal; do
-    mkdir -p "$CONFIGSOURCE/$item"
-fi
-
-# Create symlinks for all files in /data
-# shellcheck disable=SC2086
-for item in "$CONFIGSOURCE"/*; do
-    # Extract the base name of the item
-    base_name=$(basename "$item")
-    # Create a symbolic link in the initial directory
-    ln -s "$item" "/opt/tplink/EAPController/data/$base_name"
-done
+rm -r /opt/tplink/EAPController2/data || true
+ln -s "$CONFIGSOURCE" /opt/tplink/EAPController2/data
 
 # Make sure permissions are right
 echo "Updating permissions"
 chmod -R 777 "$CONFIGSOURCE"
 chown -R "508:508" "$CONFIGSOURCE"
-chown -R "508:508" "/opt/tplink/EAPController/data"
+chown -R "508:508" "/opt/tplink/EAPController2"
 
 echo ""
 echo ""
