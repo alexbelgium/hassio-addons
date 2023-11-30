@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -e
 
-CONFIGSOURCE="/data"
+CONFIGSOURCE="/config"
 
 # Use ssl
 if [ -d /ssl ]; then
@@ -11,44 +11,23 @@ if [ -d /ssl ]; then
     chown -R 508:508 /cert
 fi
 
-# Create directory
-if [ ! -f "$CONFIGSOURCE" ]; then
-    echo "Creating directory"
-    mkdir -p "$CONFIGSOURCE"
-fi
+# Migrate previous files
+mkdir -p /config/data
+mv /data/* /config/data
 
-# Ensure structure is correct
-cp -rnf /opt/tplink/EAPController/data/* "$CONFIGSOURCE"
-
-echo "Creating symlink"
-# Clean existing folder
-rm -r /opt/tplink/EAPController/data/*
-
-# Create symlinks for all files in /data
-# shellcheck disable=SC2086
-for folders in html keystore pdf db omada/html portal; do
-    # Create new folder
-    mkdir -p /data/"$folders"
-    # Remove previous one
-    if [ -d /opt/tplink/EAPController/data/"$folders" ]; then 
-        cp -rnf /opt/tplink/EAPController/data/"$folders"/* /data/"$folders"/* 2>/dev/null || true
-        rm -r /opt/tplink/EAPController/data/"$folders"
-    fi
-    # Create symlink
-    ln -s /data/"$folders" /opt/tplink/EAPController/data || true
-done
-
-touch /data/LAST_RAN_OMADA_VER.txt
-if [ -f /opt/tplink/EAPController/data/LAST_RAN_OMADA_VER.txt ]; then rm /opt/tplink/EAPController/data/LAST_RAN_OMADA_VER.txt; fi
-ln -s /data/LAST_RAN_OMADA_VER.txt /opt/tplink/EAPController/data/
+# Copy app files
+cp -rnf /opt/tplink/EAPController/data/* /config/data/ 2>/dev/null || true
+rm -r /opt/tplink/EAPController/data 2>/dev/null || true
+rm -r /opt/tplink/EAPController/logs 2>/dev/null || true
+mv /opt/tplink/EAPController/* /config
 
 # Make sure permissions are right
 echo "Updating permissions"
-chmod -R 777 "$CONFIGSOURCE"
-chown -R "508:508" "$CONFIGSOURCE"
+chmod -R 777 /config
+chown -R "508:508" /config
 
 echo ""
 echo ""
-echo "Recommendation : please backup your database and migrated to this addon https://github.com/jkunczik/home-assistant-omada"
+echo "Recommendation : please backup your database and migrate to this addon https://github.com/jkunczik/home-assistant-omada"
 echo ""
 echo ""
