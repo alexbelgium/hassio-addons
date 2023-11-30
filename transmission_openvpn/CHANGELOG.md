@@ -1,3 +1,5 @@
+- Feat : activate incomplete dir by default if the addon option is activated https://github.com/alexbelgium/hassio-addons/issues/1107
+
 ### v5.2.0-5 (29-11-2023)
 - Minor bugs fixed
 - Fix : WEBPROXY starting
