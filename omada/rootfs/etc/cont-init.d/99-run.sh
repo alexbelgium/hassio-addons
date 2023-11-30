@@ -43,15 +43,18 @@ for item in "$CONFIGSOURCE"/*; do
     echo "Created symlink for '$base_name'"
 done
 
+# Create logfile
+touch /config/server.log
+ln -s /config/server.log /opt/tplink/EAPController/logs/server.log
+
 # Make sure permissions are right
 echo "Updating permissions"
 chmod -R 777 "$CONFIGSOURCE"
 chown -R "508:508" "$CONFIGSOURCE"
+chown -R "508:508" /opt/tplink/EAPController
 
 echo ""
 echo ""
 echo "Recommendation : please backup your database and migrated to this addon https://github.com/jkunczik/home-assistant-omada"
 echo ""
 echo ""
-
-/./entrypoint.sh
