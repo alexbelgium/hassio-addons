@@ -53,3 +53,5 @@ echo ""
 echo "Recommendation : please backup your database and migrated to this addon https://github.com/jkunczik/home-assistant-omada"
 echo ""
 echo ""
+
+/./entrypoint.sh
