@@ -29,7 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Adding symlinks to entrypoint
-RUN sed -i '1a /./ha_entrypoint.sh' /entrypoint.sh
+#RUN sed -i '1a /./ha_entrypoint.sh' /entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -64,7 +64,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-#ENTRYPOINT [ "/usr/bin/env" ]
+ENTRYPOINT [ "/ha_entrypoint.sh" ]
 #CMD [ "/ha_entrypoint.sh" ]
 
 ############
