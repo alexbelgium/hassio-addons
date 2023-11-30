@@ -58,7 +58,6 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "OMADA_DIR": "/opt/tplink/EAPController2",
     "SHOW_MONGODB_LOGS": "false",
     "SHOW_SERVER_LOGS": "true",
     "SSL_CERT_NAME": "fullchain.pem",
