@@ -28,15 +28,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
-RUN echo "Adding symlinks to entrypoint" \
-#    && sed -i \
-#    -e '1a chmod a+x /etc/cont-init.d/*' \
-#    -e '1a sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" /etc/cont-init.d/*' \
-#    -e '1a for i in /etc/cont-init.d/*; do /."$i"; done' \
-#    /entrypoint.sh && \
-#    # Adapt directory
-    && sed -i "s=/opt/tplink/EAPController/=/opt/tplink/EAPController2/=g" /entrypoint.sh
+# Adding symlinks to entrypoint
+RUN sed -i '1a /./ha_entrypoint.sh' /entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -71,9 +64,8 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-#
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
