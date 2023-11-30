@@ -145,32 +145,29 @@ if bashio::config.true "enable_thumbnails"; then
             sed -i "/enabledPreviewProviders/,/),/d" "$files"
 
             # Add variables
-            echo "'preview_ffmpeg_path' => '/usr/bin/ffmpeg',
-            'enable_previews' => true,
-            'enabledPreviewProviders' => 
-            array (
-            0 => 'OC\Preview\TXT',
-            1 => 'OC\Preview\MarkDown',
-            2 => 'OC\Preview\OpenDocument',
-            3 => 'OC\Preview\PDF',
-            4 => 'OC\Preview\Image',
-            5 => 'OC\Preview\TIFF',
-            6 => 'OC\Preview\SVG',
-            7 => 'OC\Preview\Font',
-            8 => 'OC\Preview\MP3',
-            9 => 'OC\Preview\Movie',
-            10 => 'OC\Preview\MKV',
-            11 => 'OC\Preview\MP4',
-            12 => 'OC\Preview\AVI',
-            )," > lines_to_add
+            echo "  'preview_ffmpeg_path' => '/usr/bin/ffmpeg',
+  'enable_previews' => true,
+  'enabledPreviewProviders' =>
+  array (
+    0 => 'OC\\Preview\\TXT',
+    1 => 'OC\\Preview\\MarkDown',
+    2 => 'OC\\Preview\\OpenDocument',
+    3 => 'OC\\Preview\\PDF',
+    4 => 'OC\\Preview\\Image',
+    5 => 'OC\\Preview\\TIFF',
+    6 => 'OC\\Preview\\SVG',
+    7 => 'OC\\Preview\\Font',
+    8 => 'OC\\Preview\\MP3',
+    9 => 'OC\\Preview\\Movie',
+    10 => 'OC\\Preview\\MKV',
+    11 => 'OC\\Preview\\MP4',
+    12 => 'OC\\Preview\\AVI',
+  )," > lines_to_add
 
             lines_to_add="lines_to_add"
 
             # Iterate through each line in the lines_to_add_file
             while IFS= read -r line; do
-                # Remove leading blanks
-                # shellcheck disable=SC2116,SC2086
-                line="$(echo $line)"
                 # Use sed to insert the line at the end in the config_file
                 sed -i "/);/i\ \ $line" "$files"
             done < "$lines_to_add"
