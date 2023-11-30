@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Immich] Network Disk not working as Data Location (opened 2023-11-30)](https://github.com/alexbelgium/hassio-addons/issues/1105) by [@josiah-eichelman](https://github.com/josiah-eichelman)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
