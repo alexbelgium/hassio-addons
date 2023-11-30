@@ -58,6 +58,7 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "OMADA_DIR": "/config",
     "SHOW_MONGODB_LOGS": "false",
     "SHOW_SERVER_LOGS": "true",
     "SSL_CERT_NAME": "fullchain.pem",
@@ -95,6 +96,6 @@
   "slug": "omada",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.12-2023-11-22-test2",
+  "version": "5.12-2023-11-22-test3",
   "webui": "http://[HOST]:[PORT:8088]"
 }
