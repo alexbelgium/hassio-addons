@@ -34,7 +34,9 @@ RUN echo "Adding symlinks to entrypoint" \
     -e '1a chmod a+x /etc/cont-init.d/*' \
     -e '1a sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" /etc/cont-init.d/*' \
     -e '1a for i in /etc/cont-init.d/*; do /."$i"; done' \
-    /entrypoint.sh
+    /entrypoint.sh && \
+    # Adapt directory
+    for file in $(grep -srl "/opt/tplink/EAPController/" / 2>/dev/null); do sed -i "s=/opt/tplink/EAPController/=/opt/tplink/EAPController2/=g" "$file"; done
 
 ##################
 # 3 Install apps #
