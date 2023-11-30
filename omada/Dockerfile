@@ -29,14 +29,14 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 
-#RUN echo "Adding symlinks to entrypoint" \
+RUN echo "Adding symlinks to entrypoint" \
 #    && sed -i \
 #    -e '1a chmod a+x /etc/cont-init.d/*' \
 #    -e '1a sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" /etc/cont-init.d/*' \
 #    -e '1a for i in /etc/cont-init.d/*; do /."$i"; done' \
 #    /entrypoint.sh && \
 #    # Adapt directory
-#    for file in $(grep -srl "/opt/tplink/EAPController/" / 2>/dev/null); do sed -i "s=/opt/tplink/EAPController/=/opt/tplink/EAPController2/=g" "$file"; done
+    && sed -i "s=/opt/tplink/EAPController/=/opt/tplink/EAPController2/=g" /entrypoint.sh
 
 ##################
 # 3 Install apps #
