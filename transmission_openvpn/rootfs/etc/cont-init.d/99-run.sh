@@ -43,7 +43,10 @@ echo ""
 if [ -f "$TRANSMISSION_HOME"/settings.json ]; then
     echo "Updating variables"
     sed -i "/download-dir/c     \"download-dir\": \"$(bashio::config 'TRANSMISSION_DOWNLOAD_DIR')\"," "$TRANSMISSION_HOME"/settings.json
-    sed -i "/incomplete-dir/c     \"incomplete-dir\": \"$(bashio::config 'TRANSMISSION_INCOMPLETE_DIR')\"," "$TRANSMISSION_HOME"/settings.json || true
+    if bashio::config.has_value 'TRANSMISSION_INCOMPLETE_DIR'; then
+        sed -i "/\"incomplete-dir\"/c     \"incomplete-dir\": \"$(bashio::config 'TRANSMISSION_INCOMPLETE_DIR')\"," "$TRANSMISSION_HOME"/settings.json || true
+        sed -i "/\"incomplete-dir-enabled\"/c     \"incomplete-dir-enabled\": true," "$TRANSMISSION_HOME"/settings.json || true
+    fi
     sed -i "/watch-dir/c     \"watch-dir\": \"$(bashio::config 'TRANSMISSION_WATCH_DIR')\"," "$TRANSMISSION_HOME"/settings.json || true
     sed -i.bak ':begin;$!N;s/,\n}/\n}/g;tbegin;P;D' "$TRANSMISSION_HOME"/settings.json
 fi
