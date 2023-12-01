@@ -138,42 +138,25 @@ if bashio::config.true "enable_thumbnails"; then
     echo "... Enabling thumbnails"
     for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
         if [ -f "$files" ]; then
-            
-            # Clean variables
+            # Add variables
+            sudo -u abc php /app/www/public/occ config:system:set preview_ffmpeg_path --value='/usr/bin/ffmpeg'
+            sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=true
+            sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=true
+            i=0
+            for element in TXT MarkDown OpenDocument PDF Image TIFF SVG Font MP3 Movie MKV MP4 AVI; do # Comma separated values
+                # shellcheck disable=SC2086
+                $LAUNCHER config:system:set enabledPreviewProviders $i --value="${element}"
+                i=$((i + 1))
+            done
+        fi
+    done
+else
+    # Remove variables
+    for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
+        if [ -f "$files" ]; then    
             sed -i "/preview_ffmpeg_path/d" "$files"
             sed -i "/enable_previews/d" "$files"
             sed -i "/enabledPreviewProviders/,/),/d" "$files"
-
-            # Add variables
-            echo "  'preview_ffmpeg_path' => '/usr/bin/ffmpeg',
-  'enable_previews' => true,
-  'enabledPreviewProviders' =>
-  array (
-    0 => 'OC\\Preview\\TXT',
-    1 => 'OC\\Preview\\MarkDown',
-    2 => 'OC\\Preview\\OpenDocument',
-    3 => 'OC\\Preview\\PDF',
-    4 => 'OC\\Preview\\Image',
-    5 => 'OC\\Preview\\TIFF',
-    6 => 'OC\\Preview\\SVG',
-    7 => 'OC\\Preview\\Font',
-    8 => 'OC\\Preview\\MP3',
-    9 => 'OC\\Preview\\Movie',
-    10 => 'OC\\Preview\\MKV',
-    11 => 'OC\\Preview\\MP4',
-    12 => 'OC\\Preview\\AVI',
-  )," > lines_to_add
-
-            lines_to_add="lines_to_add"
-
-            # Iterate through each line in the lines_to_add_file
-            while IFS= read -r line; do
-                # Use sed to insert the line at the end in the config_file
-                sed -i "/);/i\ \ $line" "$files"
-            done < "$lines_to_add"
-
-            # Clean temporary file
-            rm lines_to_add
         fi
-    done
+    fi
 fi
