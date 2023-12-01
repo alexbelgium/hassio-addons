@@ -139,13 +139,15 @@ if bashio::config.true "enable_thumbnails"; then
     for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
         if [ -f "$files" ]; then
             # Add variables
+            "... set ffmpeg path"
             sudo -u abc php /app/www/public/occ config:system:set preview_ffmpeg_path --value='/usr/bin/ffmpeg'
-            sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=true
+            "... set enable_previews"
             sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=true
             i=0
             for element in TXT MarkDown OpenDocument PDF Image TIFF SVG Font MP3 Movie MKV MP4 AVI; do # Comma separated values
+                "... set $element thumbnails"
                 # shellcheck disable=SC2086
-                $LAUNCHER config:system:set enabledPreviewProviders $i --value="${element}"
+                sudo -u abc php /app/www/public/occ config:system:set enabledPreviewProviders $i --value="${element}"
                 i=$((i + 1))
             done
         fi
@@ -153,10 +155,9 @@ if bashio::config.true "enable_thumbnails"; then
 else
     # Remove variables
     for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; do
-        if [ -f "$files" ]; then    
-            sed -i "/preview_ffmpeg_path/d" "$files"
-            sed -i "/enable_previews/d" "$files"
-            sed -i "/enabledPreviewProviders/,/),/d" "$files"
+        if [ -f "$files" ]; then
+            "... disable previews"
+            sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=false
         fi
     fi
 fi
