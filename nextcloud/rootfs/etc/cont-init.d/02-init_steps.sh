@@ -135,11 +135,9 @@ done
 #####################
 
 if bashio::config.true "enable_thumbnails"; then
-    echo "... Enabling thumbnails"
+    echo "... enabling thumbnails"
     # Add variables
-    "... set ffmpeg path"
     sudo -u abc php /app/www/public/occ config:system:set preview_ffmpeg_path --value='/usr/bin/ffmpeg'
-    "... set enable_previews"
     sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=true
     i=0
     for element in TXT MarkDown OpenDocument PDF Image TIFF SVG Font MP3 Movie MKV MP4 AVI; do # Comma separated values
@@ -148,6 +146,6 @@ if bashio::config.true "enable_thumbnails"; then
     done
 else
     # Remove variables
-    "... disable previews"
+    echo "... disabling thumbnails"
     sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=false
 fi
