@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] New Addon - SignalK  (opened 2023-11-19)](https://github.com/alexbelgium/hassio-addons/issues/1075) by [@tingles2233](https://github.com/tingles2233)
 # Home assistant add-on: signalk
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
