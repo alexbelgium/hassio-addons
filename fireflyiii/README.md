@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [Firefly III Data Import Tool, update to version v1.3.12 not possible, stuck at v.1.3.8 (opened 2023-12-02)](https://github.com/alexbelgium/hassio-addons/issues/1110) by [@Ovenlade](https://github.com/Ovenlade)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
