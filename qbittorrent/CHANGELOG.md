@@ -1,4 +1,7 @@
 
+## 4.6.2 (02-12-2023)
+- Update to latest version from linuxserver/docker-qbittorrent
+
 ### 4.6.1-6 (22-11-2023)
 - Minor bugs fixed
 
