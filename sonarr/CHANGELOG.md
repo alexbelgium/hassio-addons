@@ -1,3 +1,4 @@
+- Send crond messages to addon logs
 
 ## 4.0.0.733 (26-11-2023)
 - Update to latest version from linuxserver/docker-sonarr
