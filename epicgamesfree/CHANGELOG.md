@@ -1,4 +1,7 @@
 
+## bullseye-slim-2023-11-29 (2023-11-29)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## c101c334d88998a51d45680d3a71d5fd7563c9a4-2023-08-01 (2023-08-01)
 - Update to latest version from charlocharlie/epicgames-freegames
 
