@@ -1,3 +1,4 @@
+- Send crond messages to addon logs
 
 ## nightly-1.11.0.4126-ls48 (02-12-2023)
 - Update to latest version from linuxserver/docker-prowlarr
