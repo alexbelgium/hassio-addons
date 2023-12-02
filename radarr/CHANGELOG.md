@@ -1,3 +1,4 @@
+- Send crond messages to addon logs
 
 ## 5.1.3.8246 (18-11-2023)
 - Update to latest version from linuxserver/docker-radarr
