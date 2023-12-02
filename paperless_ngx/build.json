@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/paperless-ngx/paperless-ngx:beta",
-    "amd64": "ghcr.io/paperless-ngx/paperless-ngx:beta"
+    "aarch64": "ghcr.io/paperless-ngx/paperless-ngx:latest",
+    "amd64": "ghcr.io/paperless-ngx/paperless-ngx:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
