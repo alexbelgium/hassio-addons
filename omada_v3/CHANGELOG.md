@@ -1,4 +1,7 @@
 
+## 5.3-amd64-2023-12-01 (2023-12-01)
+- Update to latest version from mbentley/omada-controller
+
 ## 5.3-amd64-2023-11-22 (2023-11-22)
 - Update to latest version from mbentley/omada-controller
 - Recommendation : please backup your database and migrated to this addon https://github.com/jkunczik/home-assistant-omada
