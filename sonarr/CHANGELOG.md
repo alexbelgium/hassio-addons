@@ -1,3 +1,5 @@
+### 4.0.0.733-2 (02-12-2023)
+- Minor bugs fixed
 - Send crond messages to addon logs
 
 ## 4.0.0.733 (26-11-2023)
