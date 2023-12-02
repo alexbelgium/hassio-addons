@@ -1,10 +1,10 @@
 {
   "github_beta": "true",
   "github_fulltag": "true",
-  "last_update": "26-11-2023",
+  "last_update": "02-12-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "prowlarr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-prowlarr",
-  "upstream_version": "nightly-1.10.5.4107-ls39"
+  "upstream_version": "nightly-1.11.0.4126-ls48"
 }
