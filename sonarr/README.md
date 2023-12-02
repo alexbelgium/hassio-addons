@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Radarr] [Sonarr] [Prowlarr NAS] [Readarr] crond console output (opened 2023-12-02)](https://github.com/alexbelgium/hassio-addons/issues/1111) by [@SirJohnDoe](https://github.com/SirJohnDoe)
 
 # Home assistant add-on: Sonarr
 

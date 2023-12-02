@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [readarr] First install, config directory is created in wrong location (opened 2023-11-22)](https://github.com/alexbelgium/hassio-addons/issues/1089) by [@airtonix](https://github.com/airtonix)
+## &#9888; Open Issue : [🐛 [Radarr] [Sonarr] [Prowlarr NAS] [Readarr] crond console output (opened 2023-12-02)](https://github.com/alexbelgium/hassio-addons/issues/1111) by [@SirJohnDoe](https://github.com/SirJohnDoe)
 # Home assistant add-on: readarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
