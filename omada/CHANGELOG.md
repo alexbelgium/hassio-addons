@@ -1,3 +1,6 @@
+
+## 5.12-2023-12-01 (2023-12-01)
+- Update to latest version from mbentley/omada-controller
 ### DONOTUPDATE_TEST3 (30-11-2023)
 - Minor bugs fixed
 ### DONOTUPDATE_TEST2 (30-11-2023)

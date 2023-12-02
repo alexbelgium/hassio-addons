@@ -95,6 +95,6 @@
   "slug": "omada",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "DONOTUPDATE_TEST3",
+  "version": "5.12-2023-12-01",
   "webui": "http://[HOST]:[PORT:8088]"
 }
