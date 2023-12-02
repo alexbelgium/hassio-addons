@@ -38,6 +38,12 @@ for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*; 
     fi
 done
 
+# Send crond logs to addon logs
+if [ -f /etc/s6-overlay/s6-rc.d/svc-cron/run ]; then
+    sed -i "/exec busybox crond/c exec busybox crond -f -L /proc/1/fd/1 -S -l 5" /etc/s6-overlay/s6-rc.d/svc-cron/run
+    sed -i "/exec \/usr\/sbin\/cron/c exec /usr/sbin/cron -f -L /proc/1/fd/1 5" /etc/s6-overlay/s6-rc.d/svc-cron/run
+fi
+
 # Replace lsiown if not found
 if [ ! -f /usr/bin/lsiown ]; then
     for file in $(grep -sril "lsiown" /etc); do
