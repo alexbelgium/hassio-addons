@@ -57,6 +57,9 @@ comparison to installing any other Hass.io add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
+Beware that you need to install a separate postgres addon to be able to connect the database. You can install the postgres addon already in my repository.
+Beware to change the password BEFORE starting it ; it won't change afterwards
+
 ## Support
 
 Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-immich/282108/3)
