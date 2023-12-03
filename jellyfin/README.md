@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST]  Jellyfin discord bot (opened 2023-08-17)](https://github.com/alexbelgium/hassio-addons/issues/943) by [@matsob0123](https://github.com/matsob0123)
 ## &#9888; Open Request : [✨ [REQUEST] Jellyfish NAS: omit `/config/addons_config/jellyfin/data/metadata` from backup (opened 2023-10-25)](https://github.com/alexbelgium/hassio-addons/issues/1048) by [@bilogic](https://github.com/bilogic)
 # Home assistant add-on: jellyfin
 
