@@ -60,9 +60,9 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "WEBPROXY_PORT": "8118",
     "CREATE_TUN_DEVICE": "false",
-    "OPENVPN_OPTS": ""
+    "OPENVPN_OPTS": "",
+    "WEBPROXY_PORT": "8118"
   },
   "image": "ghcr.io/alexbelgium/transmission_openvpn-{arch}",
   "ingress": true,
@@ -93,14 +93,14 @@
   "ports": {
     "51413/tcp": 51413,
     "51413/udp": 51413,
-    "9091/tcp": 9091,
-    "8118/tcp": 8118
+    "8118/tcp": 8118,
+    "9091/tcp": 9091
   },
   "ports_description": {
     "51413/tcp": "Peer port (setup router port forwarding to this port)",
     "51413/udp": "Peer port (setup router port forwarding to this port)",
-    "9091/tcp": "Web UI port (required)",
-    "8118/tcp": "Webproxy port (optional)"
+    "8118/tcp": "Webproxy port (optional)",
+    "9091/tcp": "Web UI port (required)"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -125,13 +125,13 @@
     "TRANSMISSION_V3_UPDATE": "bool?",
     "TRANSMISSION_WATCH_DIR": "str",
     "TRANSMISSION_WEB_UI": "list(standard|combustion|kettu|transmission-web-control|flood-for-transmission|shift)",
+    "WEBPROXY_ENABLED": "bool",
     "auto_restart": "bool?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?",
-    "WEBPROXY_ENABLED": "bool"
+    "networkdisks": "str?"
   },
   "slug": "transmission_openvpn",
   "udev": true,
