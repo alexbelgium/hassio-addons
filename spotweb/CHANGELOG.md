@@ -1,3 +1,5 @@
+### 1.5.4-10 (04-12-2023)
+- Minor bugs fixed
 - Fix : images not loading https://github.com/alexbelgium/hassio-addons/issues/1051
 
 ### 1.5.4-9 (23-09-2023)
