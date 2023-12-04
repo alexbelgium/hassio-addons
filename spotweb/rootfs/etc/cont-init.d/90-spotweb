@@ -123,7 +123,10 @@ else
 fi
 
 # Adapt cache permissions
-mkdir -p /app/cache
+mkdir -p /data/cache
+# Create symlink
+if [ -d /app/cache ]; then rm -r /app/cache; fi
+ln -s /data/cache /app/
 chmod -R 777 /app/cache
 
 # Run check-cache at boot to fix potential cache problems
