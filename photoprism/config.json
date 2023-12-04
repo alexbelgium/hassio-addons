@@ -88,6 +88,7 @@
     "ssl": false
   },
   "panel_icon": "mdi:camera",
+  "panel_admin": false,
   "ports": {
     "2342/tcp": 2342
   },
@@ -124,6 +125,6 @@
   "slug": "photoprism",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "preview-ubuntu-2023-04-29-3",
+  "version": "preview-ubuntu-2023-04-29-4",
   "video": true
 }

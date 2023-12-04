@@ -1,3 +1,5 @@
+## preview-ubuntu-2023-04-29-4 (2023-12-04)
+- Allows non-admin users to use paperless from HA sidebar
 
 ## preview-ubuntu-2023-04-29 (2023-04-29)
 - Update to latest version from photoprism/photoprism

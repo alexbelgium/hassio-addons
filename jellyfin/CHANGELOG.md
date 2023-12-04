@@ -1,3 +1,5 @@
+## 10.8.13-1 (04-12-2023)
+- Allows non-admin users to use paperless from HA sidebar
 
 ## 10.8.13 (02-12-2023)
 - Update to latest version from linuxserver/docker-jellyfin
