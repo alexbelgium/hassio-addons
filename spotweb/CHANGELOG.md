@@ -1,3 +1,5 @@
+- Fix : images not loading https://github.com/alexbelgium/hassio-addons/issues/1051
+
 ### 1.5.4-9 (23-09-2023)
 - Minor bugs fixed
 - Enable external port by default (9999)
