@@ -1,3 +1,5 @@
+### 1.4.0-2 (04-12-2023)
+- Minor bugs fixed
 
 ## 1.4.0 (02-12-2023)
 - Update to latest version from linuxserver/docker-bazarr
