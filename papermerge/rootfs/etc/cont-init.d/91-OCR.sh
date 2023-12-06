@@ -23,7 +23,7 @@ if [ -n "$OCRLANG" ]; then
     lineStart=$(sed -n '/OCR_LANGUAGES/=' "$CONFIGLOCATION"/papermerge.conf.py)
     bashio::log.info "OCRLANG variable is set, processing the language packages"
     lineEnd=$(sed -n '/}/=' "$CONFIGLOCATION"/papermerge.conf.py)
-    sed -i "${lineStart},${lineEnd}d" "$CONFIGLOCATION"/papermerge.conf.py
+    sed -i "${lineStart},${lineEnd}d" "$CONFIGLOCATION"/papermerge.conf.py || true
 
     bashio::log.info "Writing new configuration"
     echo "OCR_LANGUAGES = {" >> "$CONFIGLOCATION"/papermerge.conf.py
