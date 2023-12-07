@@ -1,3 +1,5 @@
+### 27.1.4-6 (07-12-2023)
+- Minor bugs fixed
 ### 27.1.4-5 (01-12-2023)
 - Minor bugs fixed
 - Feat : optional configuration of thumbnails generation (enable_thumbnails ; enabled by default) thanks @LuckyTriple7
