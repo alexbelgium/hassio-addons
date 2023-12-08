@@ -113,10 +113,7 @@ RUN \
     cat /defaults/nginx_addition >> /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Run custom scripts after installation
-    echo "mv /scripts/* /etc/cont-init.d/ && /./ha_entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run \
-    \
-    # Activate imagemagick
-    sed -i "s/rights=\"none\"/rights=\"read|write\"/g" /etc/ImageMagick-6/policy.xml
+    echo "mv /scripts/* /etc/cont-init.d/ && /./ha_entrypoint.sh" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
 
 ############
 # 5 Labels #
