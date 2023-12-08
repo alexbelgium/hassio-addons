@@ -69,6 +69,10 @@ RUN sed -i "2a source /ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
     sed -i "s=/./=source /=g" /ha_entrypoint.sh && \
     sed -i "s=env bash=env bashio=g" /sbin/docker-entrypoint.sh
 
+RUN \
+    # Activate imagemagick
+    sed -i "s/rights=\"none\"/rights=\"read|write\"/g" /etc/ImageMagick-6/policy.xml
+
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
