@@ -58,8 +58,12 @@ RUN \
     curl -o /tmp/qbit_manage.tar.gz -L "https://github.com/StuffAnThings/qbit_manage/archive/master.tar.gz" && \
     tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
     \
+    # Evaluate dependencies to build
+    BUILD_ARCH=$(uname -m) \
+    && echo "${BUILD_ARCH}" \
+    && BUILD_ARCH=${BUILD_ARCH:-x86} \
+    && if [[ "${BUILD_ARCH}" == *armv7* ]]; then apk add --no-cache python3-dev py3-pip gcc; else apk add --no-cache py3-pip gcc; fi && \
     # Install dependencies
-    apk add --no-cache python3-dev py3-pip gcc && \
     pip install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed
 
 ##################
