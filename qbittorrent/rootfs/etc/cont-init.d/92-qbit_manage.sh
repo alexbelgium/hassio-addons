@@ -4,7 +4,15 @@ set -e
 
 if bashio::config.true "qbit_manage"; then
 
-	bashio::log.info "qbit_manage activated, setting system"
+ 	bashio::log.info "qbit_manage activated, setting system"
+
+	# Disable if armv7
+	if [[ "$(bashio::info.arch)" == "armv7" ]]; then
+		bashio::log.warning "------------------------------------------------"
+		bashio::log.warning "Your system is armv7, qbit_manage cannot be used"
+		bashio::log.warning "------------------------------------------------"
+  		exit 0
+ 	fi
 
 	# Set folder
 	echo "... setting folder"
