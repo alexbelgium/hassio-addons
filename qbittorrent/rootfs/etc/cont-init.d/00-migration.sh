@@ -91,15 +91,15 @@ fi || true
 if bashio::config.has_value 'smbv1'; then
     bashio::addon.option "smbv1"
     bashio::log.yellow "... smbv1 : removed as not used anymore"
-    MIGRATED=true
 fi || true
 
 if bashio::config.has_value 'openvpn_config'; then
     openvpn_config="$(bashio::config "openvpn_config")"
     if [ -f "$openvpn_config" ]; then
         mv "$openvpn_config" /config/openvpn/
+        bashio::log.yellow "... openvpn file migrated to new location"
     fi
-    MIGRATED=true
+    bashio::addon.option "openvpn_config"
 fi || true
 
 if [[ "$MIGRATED" == "true" ]]; then
