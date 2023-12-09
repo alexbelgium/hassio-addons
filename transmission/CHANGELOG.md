@@ -1,3 +1,6 @@
+
+## 4.0.5 (09-12-2023)
+- Update to latest version from linuxserver/docker-transmission
 ### 4.0.4-2 (27-11-2023)
 - Minor bugs fixed
 - Feat : new transmission-web-control https://github.com/alexbelgium/hassio-addons/issues/1098
