@@ -1,3 +1,6 @@
+
+## nightly-1.11.1.4143-ls58 (09-12-2023)
+- Update to latest version from linuxserver/docker-prowlarr
 ### nightly-1.11.0.4126-ls48-2 (02-12-2023)
 - Minor bugs fixed
 - Send crond messages to addon logs
