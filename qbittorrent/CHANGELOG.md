@@ -1,5 +1,4 @@
 ### 4.6.2-2wireguard_openvpn (09-12-2023)
-- Minor bugs fixed
 - BREAKING CHANGE : upstream container switched to trigus42/qbittorrentvpn. All options will be migrated. Please double check all your options as the default behavior might have changed.
 - BREAKING CHANGE : default password changed from "adminadmin" to "homeassistant". Please change from webui
 - MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/qBittorrent et a folder only accessible from my Filebrowser addon called /addon_configs/something-qBittorrent. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
