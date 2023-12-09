@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [MyElectricalData] No more data since 2023-11-26 (opened 2023-12-08)](https://github.com/alexbelgium/hassio-addons/issues/1117) by [@didi31](https://github.com/didi31)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
