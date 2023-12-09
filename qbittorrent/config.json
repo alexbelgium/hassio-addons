@@ -68,6 +68,7 @@
     "SET_FWMARK": "true",
     "QBITTORRENTLOGPATH": "/config/qBittorrent/data/logs"
   },
+  "homeassistant": "2023.12.0",
   "image": "ghcr.io/alexbelgium/qbittorrent-{arch}",
   "ingress": true,
   "init": false,
