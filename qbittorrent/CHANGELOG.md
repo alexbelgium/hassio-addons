@@ -1,3 +1,5 @@
+### 4.6.2-4wireguard_openvpn (09-12-2023)
+- Minor bugs fixed
 ### 4.6.2-2wireguard_openvpn (09-12-2023)
 - BREAKING CHANGE : upstream container switched to trigus42/qbittorrentvpn. All options will be migrated. Please double check all your options as the default behavior might have changed.
 - BREAKING CHANGE : default password changed from "adminadmin" to "homeassistant". Please change from webui
