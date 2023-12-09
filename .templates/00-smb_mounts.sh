@@ -87,13 +87,12 @@ if bashio::config.has_value 'networkdisks'; then
             && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" || MOUNTED=false
 
         # Deeper analysis if failed
-        if [ "$MOUNTED" = false ]; then
+        if [ "$MOUNTED" = false ]; then 
 
             # Extract ip part of server for further manipulation
             server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
 
             # Does server exists
-            echo "... testing that $server is reachable"
             output="$(nmap -F $server -T5 -oG -)"
             if ! echo "$output" | grep 445/open &>/dev/null; then
                 if echo "$output" | grep /open &>/dev/null; then
@@ -105,21 +104,20 @@ if bashio::config.has_value 'networkdisks'; then
                     touch ERRORCODE
                     continue
                 fi
-            fi
-
-            # Should there be a workgroup
-            echo "... testing workgroup"
-            if ! smbclient -t 2 -L $disk -N $DOMAINCLIENT -c "exit" &>/dev/null; then
-                bashio::log.fatal "A workgroup must perhaps be specified"
-                touch ERRORCODE
+            else
+                echo "... $server is reachable"
             fi
 
             # Are credentials correct
-            echo "... testing credentials"
             OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" -c "exit" $DOMAINCLIENT 2>&1 || true)"
             if echo "$OUTPUT" | grep -q "LOGON_FAILURE"; then
-                bashio::log.fatal "Incorrect Username, Password, or Domain! Script will stop."
+                bashio::log.fatal "... incorrect Username, Password, or Domain! Script will stop."
                 touch ERRORCODE
+                # Should there be a workgroup
+                if ! smbclient -t 2 -L $disk -N $DOMAINCLIENT -c "exit" &>/dev/null; then
+                    bashio::log.fatal "... perhaps a workgroup must be specified"
+                    touch ERRORCODE
+                fi
                 continue
             elif echo "$OUTPUT" | grep -q "tree connect failed" || echo "$OUTPUT" | grep -q "NT_STATUS_CONNECTION_DISCONNECTED"; then
                 echo "... testing path"
@@ -129,10 +127,10 @@ if bashio::config.has_value 'networkdisks'; then
             elif ! echo "$OUTPUT" | grep -q "Disk"; then
                 echo "... testing path"
                 bashio::log.fatal "No shares found. Invalid or inaccessible SMB path?"
+            else
+                echo "... valid credentials"
             fi
 
-            # What is the SMB version
-            echo "... detecting SMB version"
             # Extracting SMB versions and normalize output
             # shellcheck disable=SC2210,SC2094
             SMBVERS="$(nmap --script smb-protocols "$server" -p 445 2>1 | awk '/  [0-9]/' | awk '{print $NF}'  | cut -c -3 | sort -V | tail -n 1  || true)"
@@ -155,11 +153,11 @@ if bashio::config.has_value 'networkdisks'; then
                 echo "... SMB version $SMBVERS detected"
                 SMBVERS=",vers=$SMBVERS"
             elif smbclient -t 2 -L "$server" -m NT1 -N $DOMAINCLIENT &>/dev/null; then
-                echo "... only SMBv1 is supported, this can lead to issues"
+                echo "... SMB version : only SMBv1 is supported, this can lead to issues"
                 SECVERS=",sec=ntlm"
                 SMBVERS=",vers=1.0"
             else
-                echo "... couldn't detect, default used"
+                echo "... SMB version : couldn't detect, default used"
                 SMBVERS=""
             fi
 
@@ -176,16 +174,18 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Messages
         if [ "$MOUNTED" = true ] && mountpoint -q /mnt/"$diskname"; then
+            rm ERRORCODE
             #Test write permissions
             # shellcheck disable=SC2015
             touch "/mnt/$diskname/testaze" && rm "/mnt/$diskname/testaze" &&
             bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $MOUNTOPTIONS" ||
-            bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
+            ( touch ERRORCODE && bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" )
 
             # Test for serverino
             # shellcheck disable=SC2015
             touch "/mnt/$diskname/testaze" && mv "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" ||
-            (umount "/mnt/$diskname" && mount -t cifs -o "iocharset=utf8,rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD}$MOUNTOPTIONS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "noserverino option used")
+            (umount "/mnt/$diskname" && mount -t cifs -o "iocharset=utf8,rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD}$MOUNTOPTIONS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "noserverino option used") || \
+            touch ERRORCODE
 
             # Alert if smbv1
             if [[ "$MOUNTOPTIONS" == *"1.0"* ]]; then
@@ -205,7 +205,6 @@ if bashio::config.has_value 'networkdisks'; then
             # Error code
             mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$DOMAIN" "$disk" /mnt/"$diskname" 2> ERRORCODE || MOUNTED=false
             bashio::log.fatal "Error read : $(<ERRORCODE), addon will stop in 1 min"
-            rm ERRORCODE*
 
             # clean folder
             umount "/mnt/$diskname" 2>/dev/null || true
