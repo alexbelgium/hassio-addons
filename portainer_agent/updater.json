@@ -1,8 +1,8 @@
 {
-  "last_update": "25-11-2023",
+  "last_update": "09-12-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "portainer_agent",
   "source": "dockerhub",
   "upstream_repo": "portainer/agent",
-  "upstream_version": "windowsltsc2022-amd64-2.19.3"
+  "upstream_version": "windowsltsc2022-amd64-2.19.4"
 }
