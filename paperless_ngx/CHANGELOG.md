@@ -1,3 +1,6 @@
+
+## 2.1.1 (09-12-2023)
+- Update to latest version from paperless-ngx/paperless-ngx
 - Enable imagemagick for pdf https://github.com/alexbelgium/hassio-addons/issues/1118
 
 ### 2.0.1-2 (02-12-2023)
