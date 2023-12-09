@@ -91,7 +91,7 @@
     "certfile": "fullchain.pem",
     "customUI": "vuetorrent",
     "keyfile": "privkey.pem",
-    "VPN_ENABLED": "no",
+    "VPN_ENABLED": "yes",
     "ssl": false,
     "LAN_NETWORK": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16"
   },
@@ -139,10 +139,17 @@
     "VPN_TYPE": "list(openvpn|wireguard)?",
     "run_duration": "str?",
     "silent": "bool?",
-    "ssl": "bool"
+    "ssl": "bool",
+    "openvpn_enable": "bool?",
+    "openvpn_username": "str?",
+    "Username": "str?",
+    "openvpn_password": "str?",
+    "whitelist": "str?",
+    "smbv1": "bool?",
+    "openvpn_config": "str?"
   },
   "slug": "qbittorrent",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.6.2-2wireguard_openvpn"
+  "version": "4.6.2-3wireguard_openvpn"
 }
