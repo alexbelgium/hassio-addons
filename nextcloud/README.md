@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Nextcloud] Avoid logging to  system console (opened 2023-12-07)](https://github.com/alexbelgium/hassio-addons/issues/1116) by [@dd310](https://github.com/dd310)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
