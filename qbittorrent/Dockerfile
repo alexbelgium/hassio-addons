@@ -59,7 +59,7 @@ RUN \
     tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
     \
     # Install dependencies
-    apk add py3-pip && \
+    apk add --no-cache py3-pip && \
     pip install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed
 
 ##################
