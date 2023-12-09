@@ -7,7 +7,7 @@ set -e
 ##########
 
 # Define preferences line
-CONFIG_LOCATION=/config/addons_config/qBittorrent
+CONFIG_LOCATION=/config/qBittorrent/config/
 mkdir -p "$CONFIG_LOCATION"
 
 # copy default config
@@ -19,9 +19,8 @@ cd "$CONFIG_LOCATION"/ || true
 LINE=$(sed -n '/\[Preferences\]/=' qBittorrent.conf) || bashio::exit.nok "qBittorrent.conf not valid"
 LINE=$((LINE + 1))
 
-# Remove unused folders
-if [ -d "$CONFIG_LOCATION"/addons_config ]; then rm -r "$CONFIG_LOCATION"/addons_config; fi
-if [ -d "$CONFIG_LOCATION"/qBittorrent ]; then rm -r "$CONFIG_LOCATION"/qBittorrent; fi
+# Check file size
+ORIGINAL_SIZE="$(wc -c "$CONFIG_LOCATION"/qBittorrent.conf)"
 
 ###########
 # TIMEOUT #
@@ -68,20 +67,16 @@ chown -R "$PUID:$PGID" "$DOWNLOADS" || bashio::log.fatal "Error, please check de
 sed -i -e '/CSRFProtection/d' \
     -e '/ClickjackingProtection/d' \
     -e '/HostHeaderValidation/d' \
-    -e '/WebUI\Address/d' \
+    -e '/Address/d' \
     -e "$LINE i\WebUI\\\CSRFProtection=false" \
     -e "$LINE i\WebUI\\\ClickjackingProtection=false" \
     -e "$LINE i\WebUI\\\HostHeaderValidation=false" \
-    -e "$LINE i\WebUI\\\Address=*" qBittorrent.conf
-#sed -i '/WebUI\ReverseProxySupportEnabled/d' qBittorrent.conf
-#sed -i "$LINE i\WebUI\\\ReverseProxySupportEnabled=true" qBittorrent.conf
+    -e "$LINE i\WebUI\\\Address=\*" qBittorrent.conf
 
 ################
 # Correct Port #
 ################
 
-# sed -i '/PortRangeMin/d' qBittorrent.conf
-# sed -i "$LINE i\Connection\\\PortRangeMin=6881" qBittorrent.conf
 sed -i "s|6881|59595|g" qBittorrent.conf # Correction if required
 
 ################
@@ -110,7 +105,7 @@ fi
 
 cd "$CONFIG_LOCATION"/ || true
 
-WHITELIST="$(bashio::config 'whitelist')"
+WHITELIST="$(bashio::config 'LAN_NETWORK')"
 #clean data
 sed -i '/AuthSubnetWhitelist/d' qBittorrent.conf
 
@@ -128,22 +123,45 @@ fi
 ###############
 
 cd "$CONFIG_LOCATION"/ || true
-if bashio::config.has_value 'Username'; then
-    USERNAME=$(bashio::config 'Username')
-    #clean data
-    sed -i '/WebUI\\\Username/d' qBittorrent.conf
-    #add data
-    sed -i "/\[Preferences\]/a\WebUI\\\Username=$USERNAME" qBittorrent.conf
-    bashio::log.info "WEBUI username set to $USERNAME"
+if bashio::config.has_value 'QBT_USERNAME'; then
+    QBT_USERNAME=$(bashio::config 'QBT_USERNAME')
 else
-    if ! grep -q Username qBittorrent.conf; then
-        sed -i "/\[Preferences\]/a\WebUI\\\Username=admin" qBittorrent.conf
-    fi
+    QBT_USERNAME="admin"
 fi
-LINE2="$(sed -n '/Password_PBKDF2/=' qBittorrent.conf)"
-if [[ "$LINE" -gt "$LINE2" ]]; then sed -i '/Password_PBKDF2/d' qBittorrent.conf; fi 
-if ! grep -q Password_PBKDF2 qBittorrent.conf; then
-    sed -i "/\[Preferences\]/a\WebUI\\\Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
+#clean data
+sed -i '/WebUI\\\Username/d' qBittorrent.conf
+#add data
+sed -i "/\[Preferences\]/a\WebUI\\\Username=$QBT_USERNAME" qBittorrent.conf
+bashio::log.info "WEBUI username set to $QBT_USERNAME"
+
+###############
+# PASSWORD    #
+###############
+
+# Set initial password to homeassistant
+cd "$CONFIG_LOCATION"/ || true
+NEEDREBOOT=""
+if ! grep -q "Password_PBKDF2" qBittorrent.conf; then
+    function escape_special_characters() {
+        local value="$1"
+        value=$(echo "$value" | sed 's/[&/\;.<>`$*(){}[\]~^|!?@%#=,:+_-]/\\&/g')
+        echo "$value"
+    }
+    PBKDF2="UDxNW6zG8wJHG9PvnGFP4A==:gJZEXLbR2XYNN042G4ygLMvZi2BhHm2m6Soz6GVCrCuVZH6OSkUan7AvUDEiSodHckUm8oNTkx9atQwcUf/JLQ=="
+    PBKDF2="$(escape_special_characters "$PBKDF2")"
+    sed -i "/\[Preferences\]/a\WebUI\\\Password_PBKDF2=\"@ByteArray($PBKDF2)\"" qBittorrent.conf
+    NEEDREBOOT=true
+fi
+
+####################
+# REBOOT IF NEEDED #
+####################
+
+# Reboot if first time password is set, or if password is changed
+
+# Check file size
+if [[ "$ORIGINAL_SIZE" != "$(wc -c "$CONFIG_LOCATION"/qBittorrent.conf)" ]]; then
+    bashio::log.info "Configuration changed, rebooting"
     bashio::addon.restart
 fi
 
@@ -217,5 +235,5 @@ fi
 # CLOSE  #
 ##########
 
-bashio::log.info "Default username/password : $USERNAME/homeassistant"
+bashio::log.info "Default username/password : $QBT_USERNAME/homeassistant. Please change your password on first connection"
 bashio::log.info "Configuration can be found in $CONFIG_LOCATION"

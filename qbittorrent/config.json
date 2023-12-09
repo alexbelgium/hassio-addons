@@ -62,29 +62,37 @@
   "environment": {
     "PGID": "0",
     "PUID": "0",
-    "WEBUI_PORT": "8080"
+    "WEBUI_PORT": "8080",
+    "ADDITIONAL_PORTS": "59595,6882",
+    "DOWNLOAD_DIR_CHOWN": "true",
+    "SET_FWMARK": "true",
+    "QBITTORRENTLOGPATH": "/config/qBittorrent/data/logs"
   },
   "image": "ghcr.io/alexbelgium/qbittorrent-{arch}",
   "ingress": true,
   "init": false,
   "map": [
     "media:rw",
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "ssl"
   ],
   "name": "Qbittorrent",
   "options": {
+    "qbit_manage": false,
     "DNS_server": "8.8.8.8,1.1.1.1",
     "PGID": "0",
     "PUID": "0",
     "SavePath": "/share/qBittorrent",
-    "Username": "admin",
+    "QBT_USERNAME": "admin",
+    "VPN_TYPE": "openvpn",
     "certfile": "fullchain.pem",
     "customUI": "vuetorrent",
     "keyfile": "privkey.pem",
+    "VPN_ENABLED": "no",
     "ssl": false,
-    "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16"
+    "LAN_NETWORK": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16"
   },
   "panel_icon": "mdi:progress-download",
   "ports": {
@@ -103,16 +111,18 @@
   },
   "privileged": [
     "SYS_ADMIN",
+    "SYS_MODULE",
     "DAC_READ_SEARCH",
     "NET_ADMIN"
   ],
   "schema": {
     "DNS_server": "str?",
+    "qbit_manage": "bool",
     "PGID": "int?",
     "PUID": "int?",
     "SavePath": "str?",
     "TZ": "str?",
-    "Username": "str?",
+    "QBT_USERNAME": "str?",
     "certfile": "str",
     "cifsdomain": "str?",
     "cifspassword": "str?",
@@ -121,19 +131,17 @@
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "openvpn_alt_mode": "bool?",
-    "openvpn_config": "str?",
-    "openvpn_enabled": "bool?",
-    "openvpn_password": "str?",
-    "openvpn_username": "str?",
+    "LAN_NETWORK": "str",
+    "VPN_ENABLED": "list(yes|no)",
+    "VPN_PASSWORD": "str?",
+    "VPN_USERNAME": "str?",
+    "VPN_TYPE": "list(openvpn|wireguard)?",
     "run_duration": "str?",
     "silent": "bool?",
-    "smbv1": "bool?",
-    "ssl": "bool",
-    "whitelist": "str?"
+    "ssl": "bool"
   },
   "slug": "qbittorrent",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.6.2"
+  "version": "4.6.2-wireguard_ovpn"
 }

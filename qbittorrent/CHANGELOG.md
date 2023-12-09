@@ -1,125 +1,174 @@
+- BREAKING CHANGE : upstream container switched to trigus42/qbittorrentvpn. All options will be migrated. Please double check all your options as the default behavior might have changed.
+- BREAKING CHANGE : default password changed from "adminadmin" to "homeassistant". Please change from webui
+- MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/qBittorrent et a folder only accessible from my Filebrowser addon called /addon_configs/something-qBittorrent. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+- FEAT : wireguard support, see trigus42/qbittorrentvpn
+- FEAT : addition of qbit_manage application through an addon option. Please customize the configuration file in /config/xxx-qBittorrent/qbit_manage/qbit_manage.yml
+- Fix : avoid crond messages spaming https://github.com/alexbelgium/hassio-addons/issues/1111
 
 ## 4.6.2 (02-12-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ### 4.6.1-6 (22-11-2023)
+
 - Minor bugs fixed
 
 ### 4.6.1-5 (22-11-2023)
+
 - Minor bugs fixed
 - Selecting qbit webui also applies it to ingress. Otherwise, default is vuetorrent
 
 ### 4.6.1-3 (22-11-2023)
+
 - Minor bugs fixed
 - Restart the addon after setting the default password
 
 ### 4.6.1-2 (22-11-2023)
+
 - Minor bugs fixed
 - Re-add default username (admin) and password (homeassistant)
 
 ## 4.6.1 (21-11-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ### 4.6.0-3 (06-11-2023)
+
 - Minor bugs fixed
 - Ingress webui update at start
 
 ### 4.6.0-2 (30-10-2023)
+
 - Minor bugs fixed
 
 ### 4.6.0-WITHOUT_VPN (30-10-2023)
+
 - Minor bugs fixed
 
 ## 4.6.0 (28-10-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
+
 ### 4.5.5-4 (30-09-2023)
+
 - Minor bugs fixed
 - Avoid crash when using smbv1
 
 ## 4.5.5 (02-09-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
+
 ### 4.5.4-2 (24-06-2023)
+
 - Minor bugs fixed
 - armv7 not supported anymore by linuxserver, it is pinned to latest working version
 
 ## 4.5.4 (24-06-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ### 4.5.3-r0-2 (12-06-2023)
+
 - Minor bugs fixed
 - Evaluate smb v2 before v1
 
 ### 4.5.3-r0 (07-06-2023)
+
 - Minor bugs fixed
 
 ## 4.5.3 (03-06-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
+
 ### 4.5.2-3 (22-04-2023)
+
 - Minor bugs fixed
 - Fix multi smb mounts
 
 ### 4.5.2-2 (19-03-2023)
+
 - Minor bugs fixed
 - Align exec code with upstream
 
 ## 4.5.2 (18-03-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 - Correct downloads folder
+
 ### 4.5.2-r0-ls250-2 (13-03-2023)
+
 - Minor bug fixes
 - Try solving sed error message #755
+
 ### 4.5.2-r0-ls250-2 (11-03-2023)
+
 - Bug updates
 - Add lsio branding
 - Implement healthcheck
 
 ## 4.5.2-r0-ls250 (11-03-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.2-r0-ls249 (04-03-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.1-r1-ls246 (25-02-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.1-r1-ls245 (19-02-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r1-ls243 (11-02-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r1-ls242 (04-02-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r1-ls241 (28-01-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r1-ls240 (21-01-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r1-ls239 (14-01-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r1-ls238 (07-01-2023)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r1-ls237 (31-12-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r1-ls236 (25-12-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r0-ls234 (13-12-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 - Fix : using options Savepath for download folder
 
 ## 4.5.0-r0-ls233 (06-12-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r0-ls232 (01-12-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
 ## 4.5.0-r0-ls231 (29-11-2022)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 - WARNING : update to supervisor 2022.11 before installing
 
@@ -441,7 +490,7 @@
 ## 14.3.3.99202101191832-7248-da0b276d5ubuntu18.04.1-ls113
 
 - Update to latest version from linuxserver/docker-qbittorrent
-- Whitelist option
+- LAN_NETWORK option
 - Enables PUID/PGID options
 - Addition of ssl options
 - Addition of possibility to mount local disc or smb

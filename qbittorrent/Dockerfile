@@ -16,7 +16,6 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="4.6.2"
 FROM ${BUILD_FROM}
 
 ##################
@@ -28,18 +27,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
-# Environment variables
-ENV \
-    DEBIAN_FRONTEND="noninteractive"\
-    LANG="C.UTF-8" \
-    PS1="$(whoami)@$(hostname):$(pwd)$ " \
-    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
-    S6_CMD_WAIT_FOR_SERVICES=1 \
-    TERM="xterm-256color" \
-    HOME="/config/addons_config" \
-    XDG_CONFIG_HOME="/config/addons_config" \
-    XDG_DATA_HOME="/config/addons_config"
+# GENERAL MODIFICATIONS
+#######################
 
 # Image specific modifications
 # hadolint ignore=DL4006
@@ -57,10 +46,21 @@ RUN \
     && unzip -o vuetorrent.zip -d / >/dev/null \
     && rm vuetorrent.zip >/dev/null
 
-# Global LSIO modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-ARG CONFIGLOCATION="/config/addons_config/qBittorrent"
-RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
+# ADD QBIT_MANAGE
+#################
+
+ENV QBM_DOCKER True
+ENV QBT_SKIP_QB_VERSION_CHECK True
+
+RUN \
+    # Install qbit_manage
+    mkdir -p /qbit_manage && \
+    curl -o /tmp/qbit_manage.tar.gz -L "https://github.com/StuffAnThings/qbit_manage/archive/master.tar.gz" && \
+    tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
+    \
+    # Install dependencies
+    apk add py3-pip && \
+    pip install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed
 
 ##################
 # 3 Install apps #
@@ -137,12 +137,3 @@ LABEL \
 #################
 # 6 Healthcheck #
 #################
-
-ENV HEALTH_PORT="" \
-    HEALTH_URL=""
-HEALTHCHECK \
-    --interval=5s \
-    --retries=5 \
-    --start-period=30s \
-    --timeout=25s \
-    CMD pgrep qbittorrent || exit 1

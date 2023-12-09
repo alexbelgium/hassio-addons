@@ -8,20 +8,15 @@ bashio::net.wait_for 8080 localhost 900
 
 bashio::log.info "Starting NGinx..."
 
-# Check vpn is working
-if [ -f /currentip ]; then
+if [[ "$(bashio::config 'VPN_ENABLED')" == "yes" ]]; then
   exec nginx & \
   while true; do
     # Get vpn ip
-    if bashio::config.true 'openvpn_alt_mode'; then
-      curl -s ipecho.net/plain > /vpnip
-    else
-      curl -s ipecho.net/plain --interface tun0 > /vpnip
-    fi
+    curl -s ipecho.net/plain --interface tun0 > /vpnip
 
     # Verify ip has changed
     if [[ "$(cat /vpnip)" = "$(cat /currentip)" ]]; then
-      bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
+      bashio::log.fatal "VPN is not properly configured. Your ip is exposed."
       bashio::exit.nok
     fi
 
@@ -32,7 +27,7 @@ if [ -f /currentip ]; then
     bashio::log.info "VPN is up and running with ip $(cat /vpnip), based in country : $COUNTRY"
 
     # Check every 15m
-    sleep 15m
+    sleep 30m
 
     true
   done
