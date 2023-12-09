@@ -54,17 +54,12 @@ ENV QBT_SKIP_QB_VERSION_CHECK True
 
 RUN \
     # Install qbit_manage
-    BUILD_ARCH=$(uname -m) && \
-    echo "${BUILD_ARCH}" && \
-    BUILD_ARCH=${BUILD_ARCH:-x86} && \
-    if [[ "${BUILD_ARCH}" == *armv7* ]]; then exit 0; fi && \
-    if [[ "${BUILD_ARCH}" == *aarch64* ]]; then apk add musl-dev; fi && \    
     mkdir -p /qbit_manage && \
     curl -o /tmp/qbit_manage.tar.gz -L "https://github.com/StuffAnThings/qbit_manage/archive/master.tar.gz" && \
     tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
     \
     # Install dependencies
-    apk add py3-pip gcc && \
+    apk add py3-pip gcc musl-dev && \
     pip install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed
 
 ##################
