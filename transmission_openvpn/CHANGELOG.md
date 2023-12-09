@@ -1,3 +1,6 @@
+
+## v5.3.1 (09-12-2023)
+- Update to latest version from haugene/docker-transmission-openvpn
 ### v5.2.0-6 (30-11-2023)
 - Minor bugs fixed
 - Feat : activate incomplete dir by default if the addon option is activated https://github.com/alexbelgium/hassio-addons/issues/1107
