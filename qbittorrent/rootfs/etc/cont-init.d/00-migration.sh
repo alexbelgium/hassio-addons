@@ -107,7 +107,6 @@ if [[ "$MIGRATED" == "true" ]]; then
     bashio::addon.restart
 fi
 
-
 if [ -d /config/qBittorrent/qBittorrent ]; then
 rm -r /config/qBittorrent/qBittorrent
 fi || true
