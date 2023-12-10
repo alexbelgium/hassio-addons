@@ -79,7 +79,7 @@
     "addon_config:rw",
     "homeassistant_config:rw",
     "share:rw",
-    "ssl"
+    "ssl:rw"
   ],
   "name": "Qbittorrent",
   "options": {
@@ -153,5 +153,5 @@
   "slug": "qbittorrent",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.6.2-10wireguard_openvpn"
+  "version": "4.6.2-11wireguard_openvpn"
 }
