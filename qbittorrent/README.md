@@ -110,7 +110,7 @@ Click to expand :
 
 - Install Filebrowser addon
 - Go to /addon_configs/db21ed7f_qbittorrent/data/nova3/engines/
-- Open jackett.py
+- Open jackett.json
 - Change 'url': 'http://127.0.0.1:9117' with your HomeAssistant addon url and password
 - Set your API key with one you are given in the Jackett addon webui
 - Save, restart
