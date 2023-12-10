@@ -80,26 +80,6 @@ sed -i -e '/CSRFProtection/d' \
 sed -i "s|6881|59595|g" qBittorrent.conf # Correction if required
 
 ################
-# SSL CONFIG   #
-################
-
-# Clean data
-sed -i '/HTTPS/d' qBittorrent.conf
-
-bashio::config.require.ssl
-if bashio::config.true 'ssl'; then
-    bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
-    #set variables
-    CERTFILE=$(bashio::config 'certfile')
-    KEYFILE=$(bashio::config 'keyfile')
-
-    #Modify configuration
-    sed -i "$LINE i\WebUI\\\HTTPS\\\Enabled=True" qBittorrent.conf
-    sed -i "$LINE i\WebUI\\\HTTPS\\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
-    sed -i "$LINE i\WebUI\\\HTTPS\\\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
-fi
-
-################
 # WHITELIST    #
 ################
 
