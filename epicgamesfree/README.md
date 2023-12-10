@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [epicgamesfree] Continuous notification about Gigabash Demo (opened 2023-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1122) by [@czerwony03](https://github.com/czerwony03)
 
 # Home assistant add-on: Epic Games Free
 
