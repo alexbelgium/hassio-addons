@@ -26,10 +26,15 @@ fi || true
 if [ -d /homeassistant/openvpn ]; then
     if [ "$(ls -A /homeassistant/openvpn)" ]; then
         mv /homeassistant/openvpn/* /config/openvpn/
-        rm -r /homeassistant/openvpn
         bashio::log.yellow "... moved files from /config/openvpn to /addon_configs/$HOSTNAME/openvpn"
     fi
 fi || true
+
+# Restore openvpn files
+if [ "$(ls -A /config/openvpn)" ]; then
+    mkdir -p /homeassistant/openvpn
+    cp -rnf /config/openvpn/* /homeassistant/openvpn
+fi
 
 if [ -f /homeassistant/addons_config/qbittorrent/config.yaml ]; then
     mv /homeassistant/addons_config/qbittorrent/* /config/
