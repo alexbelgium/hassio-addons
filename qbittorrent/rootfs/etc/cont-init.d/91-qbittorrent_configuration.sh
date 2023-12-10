@@ -120,7 +120,6 @@ bashio::log.info "WEBUI username set to $QBT_USERNAME"
 
 # Set initial password to homeassistant
 cd "$CONFIG_LOCATION"/ || true
-NEEDREBOOT=""
 if ! grep -q "Password_PBKDF2" qBittorrent.conf; then
     function escape_special_characters() {
         local value="$1"
@@ -130,7 +129,6 @@ if ! grep -q "Password_PBKDF2" qBittorrent.conf; then
     PBKDF2="UDxNW6zG8wJHG9PvnGFP4A==:gJZEXLbR2XYNN042G4ygLMvZi2BhHm2m6Soz6GVCrCuVZH6OSkUan7AvUDEiSodHckUm8oNTkx9atQwcUf/JLQ=="
     PBKDF2="$(escape_special_characters "$PBKDF2")"
     sed -i "/\[Preferences\]/a\WebUI\\\Password_PBKDF2=\"@ByteArray($PBKDF2)\"" qBittorrent.conf
-    NEEDREBOOT=true
 fi
 
 ####################
