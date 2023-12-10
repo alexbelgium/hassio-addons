@@ -1,3 +1,5 @@
+### 4.6.2-8wireguard_openvpn (10-12-2023)
+- Minor bugs fixed
 - &#9888; PLEASE READ CHANGELOG OF "4.6.2-5wireguard_openvpn" FIRST
 - Corrected 00-smb_mounts.sh logic for servers that don't support anonymous access
 
