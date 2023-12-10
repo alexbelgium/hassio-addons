@@ -3,6 +3,7 @@
 - &#9888; PLEASE READ CHANGELOG OF "4.6.2-5wireguard_openvpn" FIRST
 - Correct ssl usage : either with HA certificates or self-generated
 - Corrected 00-smb_mounts.sh logic for servers that don't support anonymous access
+- Readme : instructions on setting up Jackett as qbittorrent engine
 
 ### 4.6.2-5wireguard_openvpn (09-12-2023)
 - MAKE A FULL BACKUP BEFORE UPDATING !
