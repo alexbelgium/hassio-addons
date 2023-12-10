@@ -44,7 +44,9 @@ else
     # Prepare ingress
     qbittorrent_protocol="http"
     # Correct qBittorrent.conf
-    sed -i "/HTTPS/d" /config/qBittorrent/config/qBittorrent.conf
+    if [ -f /config/qBittorrent/config/qBittorrent.conf ]; then
+      sed -i "/HTTPS/d" /config/qBittorrent/config/qBittorrent.conf
+    fi
 fi
 
 #################
