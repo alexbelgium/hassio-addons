@@ -1,3 +1,5 @@
+### 4.6.2-12wireguard_openvpn (10-12-2023)
+- Minor bugs fixed
 - &#9888; PLEASE READ CHANGELOG OF "4.6.2-5wireguard_openvpn" FIRST
 - Correct ssl usage : either with HA certificates or self-generated
 - Corrected 00-smb_mounts.sh logic for servers that don't support anonymous access
