@@ -1,0 +1,53 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+qbittorrent_protocol="http"
+
+################
+# SSL CONFIG   #
+################
+
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+    bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+
+    # Enable ssl in script
+    sed -i "1a ENABLE_SSL=yes" /etc/cont-init.d/04-qbittorrent-setup.sh
+
+    #set variables
+    CERTFILE=$(bashio::config 'certfile')
+    KEYFILE=$(bashio::config 'keyfile')
+
+    # Correct files
+    if [ -f /config/qBittorrent/config/WebUICertificate.crt ]; then
+        bashio::log.warning "... you have a file in /config/qBittorrent/config/WebUICertificate.crt, it will be used instead of the CERFILE option"
+    else
+        sed -i "s|/config/qBittorrent/config/WebUICertificate.crt|/ssl/$CERTFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
+        sed -i "s|WebUICertificate.crt|$CERTFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
+    fi
+    
+    # Correct files
+    if [ -f /config/qBittorrent/config/WebUIKey.key ]; then
+        bashio::log.warning "... you have a file in /config/qBittorrent/config/WebUIKey.key, it will be used instead of the KEYFILE option"
+    else
+        sed -i "s|/config/qBittorrent/config/WebUIKey.key|/ssl/$KEYFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
+        sed -i "s|WebUIKey.key|$KEYFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
+    fi
+
+    # Set nginx protocol
+    qbittorrent_protocol=https
+fi
+
+#################
+# NGINX SETTING #
+#################
+
+cp /etc/nginx/templates/ingress.gtpl /etc/nginx/servers/ingress.conf
+
+sed -i "s|{{ .interface }}|$(bashio::addon.ip_address)|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .port }}|$(bashio::addon.ingress_port)|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .protocol }}|${qbittorrent_protocol}|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .certfile }}|$(bashio::config 'certfile')|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .keyfile }}|$(bashio::config 'keyfile')|g" /etc/nginx/servers/ingress.conf
+sed -i "s|{{ .ssl }}|$(bashio::config 'ssl')|g" /etc/nginx/servers/ingress.conf
