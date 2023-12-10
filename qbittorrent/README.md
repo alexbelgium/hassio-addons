@@ -103,6 +103,8 @@ These lines will expose a `sensor.get_torrent_speed` that updates every 60 secon
 
 ## Common issues
 
+Click to expand :
+
 <details>
   <summary>### Configure Jackett as qBittorrent engine</summary>
 
