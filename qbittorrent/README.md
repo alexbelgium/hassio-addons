@@ -104,6 +104,17 @@ These lines will expose a `sensor.get_torrent_speed` that updates every 60 secon
 ## Common issues
 
 <details>
+  <summary>### Configure Jackett as qBittorrent engine</summary>
+
+- Install Filebrowser addon
+- Go to /addon_configs/db21ed7f_qbittorrent/data/nova3/engines/
+- Open jackett.py
+- Change 'url': 'http://127.0.0.1:9117' with your HomeAssistant addon url and password
+- Save, restart
+
+</details>
+
+<details>
   <summary>### ipv6 issues with openvpn (@happycoo)</summary>
 Add this code to your .ovpn config
 
