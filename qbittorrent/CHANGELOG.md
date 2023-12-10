@@ -1,3 +1,5 @@
+### 4.6.2-10wireguard_openvpn (10-12-2023)
+- Minor bugs fixed
 ### 4.6.2-9wireguard_openvpn (10-12-2023)
 - Minor bugs fixed
 - &#9888; PLEASE READ CHANGELOG OF "4.6.2-5wireguard_openvpn" FIRST
