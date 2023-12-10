@@ -1,4 +1,4 @@
-- PLEASE READ CHANGELOG OF "4.6.2-5wireguard_openvpn" FIRST
+- &#9888; PLEASE READ CHANGELOG OF "4.6.2-5wireguard_openvpn" FIRST
 - Corrected 00-smb_mounts.sh logic for servers that don't support anonymous access
 
 ### 4.6.2-5wireguard_openvpn (09-12-2023)
