@@ -66,7 +66,9 @@
     "PUID": "0",
     "QBITTORRENTLOGPATH": "/config/qBittorrent/data/logs",
     "SET_FWMARK": "true",
-    "WEBUI_PORT": "8080"
+    "WEBUI_PORT": "8080",
+    "HEALTH_CHECK_INTERVAL": "15",
+    "HEALTH_CHECK_TIMEOUT": "30"
   },
   "homeassistant": "2023.12.0",
   "image": "ghcr.io/alexbelgium/qbittorrent-{arch}",
@@ -151,5 +153,5 @@
   "slug": "qbittorrent",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.6.2-8wireguard_openvpn"
+  "version": "4.6.2-9wireguard_openvpn"
 }
