@@ -174,7 +174,12 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Messages
         if [ "$MOUNTED" = true ] && mountpoint -q /mnt/"$diskname"; then
-            rm ERRORCODE
+
+            # Remove errorcode
+            if [ -f ERRORCODE ]; then
+                rm ERRORCODE
+            fi
+            
             #Test write permissions
             # shellcheck disable=SC2015
             touch "/mnt/$diskname/testaze" && rm "/mnt/$diskname/testaze" &&
