@@ -8,7 +8,6 @@ qbittorrent_protocol="http"
 # SSL CONFIG   #
 ################
 
-bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
     bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
 
@@ -17,19 +16,21 @@ if bashio::config.true 'ssl'; then
 
     #set variables
     CERTFILE=$(bashio::config 'certfile')
+    CERTFILE="${CERTFILE:-null}"
     KEYFILE=$(bashio::config 'keyfile')
+    KEYFILE="${KEYFILE:-null}"
 
-    # Correct files
-    if [ -f /config/qBittorrent/config/WebUICertificate.crt ]; then
-        bashio::log.warning "... you have a file in /config/qBittorrent/config/WebUICertificate.crt, it will be used instead of the CERFILE option"
+    # Correct certificate file
+    if [ ! -f /ssl/"$CERTFILE" ]; then
+        bashio::log.warning "... CERTFILE option not found or valid, using self-generated /config/qBittorrent/config/WebUICertificate.crt"
     else
         sed -i "s|/config/qBittorrent/config/WebUICertificate.crt|/ssl/$CERTFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
         sed -i "s|WebUICertificate.crt|$CERTFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
     fi
     
-    # Correct files
-    if [ -f /config/qBittorrent/config/WebUIKey.key ]; then
-        bashio::log.warning "... you have a file in /config/qBittorrent/config/WebUIKey.key, it will be used instead of the KEYFILE option"
+    # Correct keyfile
+    if [ ! -f /ssl/"$KEYFILE" ]; then
+        bashio::log.warning "... KEYFILE option not found or valid, using self-generated /config/qBittorrent/config/WebUICertificate.crt"
     else
         sed -i "s|/config/qBittorrent/config/WebUIKey.key|/ssl/$KEYFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
         sed -i "s|WebUIKey.key|$KEYFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
@@ -37,6 +38,7 @@ if bashio::config.true 'ssl'; then
 
     # Set nginx protocol
     qbittorrent_protocol=https
+
 fi
 
 #################
