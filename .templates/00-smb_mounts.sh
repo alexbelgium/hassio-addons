@@ -10,7 +10,7 @@ set -e
 if bashio::config.has_value 'networkdisks'; then
 
     # Alert message that it is a new code
-    if [[ "$(date +"%Y%m%d")" -lt "20240101" ]]; then
+    if [[ "$(date +"%Y%m%d")" -lt "20240201" ]]; then
         bashio::log.warning "------------------------"
         bashio::log.warning "This is a new code, please report any issues on https://github.com/alexbelgium/hassio-addons"
         bashio::log.warning "------------------------"
@@ -87,7 +87,7 @@ if bashio::config.has_value 'networkdisks'; then
             && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" || MOUNTED=false
 
         # Deeper analysis if failed
-        if [ "$MOUNTED" = false ]; then 
+        if [ "$MOUNTED" = false ]; then
 
             # Extract ip part of server for further manipulation
             server="$(echo "$disk" | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
@@ -105,7 +105,7 @@ if bashio::config.has_value 'networkdisks'; then
                     continue
                 fi
             else
-                echo "... $server is reachable"
+                echo "... $server is confirmed reachable"
             fi
 
             # Are credentials correct
@@ -128,7 +128,7 @@ if bashio::config.has_value 'networkdisks'; then
                 echo "... testing path"
                 bashio::log.fatal "No shares found. Invalid or inaccessible SMB path?"
             else
-                echo "... valid credentials"
+                echo "... credentials are valid"
             fi
 
             # Extracting SMB versions and normalize output
@@ -150,7 +150,7 @@ if bashio::config.has_value 'networkdisks'; then
                     SMBVERS="3.1.1"
                     ;;
                 esac
-                echo "... SMB version $SMBVERS detected"
+                echo "... SMB version detected : $SMBVERS"
                 SMBVERS=",vers=$SMBVERS"
             elif smbclient -t 2 -L "$server" -m NT1 -N $DOMAINCLIENT &>/dev/null; then
                 echo "... SMB version : only SMBv1 is supported, this can lead to issues"
