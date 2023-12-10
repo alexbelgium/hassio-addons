@@ -1,4 +1,7 @@
 
+## bullseye-slim-2023-12-09 (2023-12-09)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## bullseye-slim-2023-11-29 (2023-11-29)
 - Update to latest version from charlocharlie/epicgames-freegames
 
