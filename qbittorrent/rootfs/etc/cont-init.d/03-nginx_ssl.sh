@@ -24,6 +24,7 @@ if bashio::config.true 'ssl'; then
     if [ ! -f /ssl/"$CERTFILE" ]; then
         bashio::log.warning "... CERTFILE option not found or valid, using self-generated /config/qBittorrent/config/WebUICertificate.crt"
     else
+        chmod 744 /ssl/"$CERTFILE"
         sed -i "s|/config/qBittorrent/config/WebUICertificate.crt|/ssl/$CERTFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
         sed -i "s|WebUICertificate.crt|$CERTFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
     fi
@@ -32,6 +33,7 @@ if bashio::config.true 'ssl'; then
     if [ ! -f /ssl/"$KEYFILE" ]; then
         bashio::log.warning "... KEYFILE option not found or valid, using self-generated /config/qBittorrent/config/WebUICertificate.crt"
     else
+        chmod 744 /ssl/"$KEYFILE"
         sed -i "s|/config/qBittorrent/config/WebUIKey.key|/ssl/$KEYFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
         sed -i "s|WebUIKey.key|$KEYFILE|g" /etc/cont-init.d/04-qbittorrent-setup.sh
     fi
