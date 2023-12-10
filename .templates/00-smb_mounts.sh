@@ -73,7 +73,7 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Data validation
         if [[ ! "$disk" =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
-            bashio::log.fatal "... the structure of your \"networkdisks\" option : \"$disk\" doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2. If you don't use it, you can simply remove the text, this will avoid this error message in the future."
+            bashio::log.fatal "...... the structure of your \"networkdisks\" option : \"$disk\" doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2. If you don't use it, you can simply remove the text, this will avoid this error message in the future."
             touch ERRORCODE
             continue
         fi
@@ -96,39 +96,39 @@ if bashio::config.has_value 'networkdisks'; then
             output="$(nmap -F $server -T5 -oG -)"
             if ! echo "$output" | grep 445/open &>/dev/null; then
                 if echo "$output" | grep /open &>/dev/null; then
-                    bashio::log.fatal "... fatal : $server is reachable but SMB port not opened, stopping script"
+                    bashio::log.fatal "...... $server is reachable but SMB port not opened, stopping script"
                     touch ERRORCODE
                     continue
                 else
-                    bashio::log.fatal "... fatal : $server not reachable, is it correct"
+                    bashio::log.fatal "...... fatal : $server not reachable, is it correct"
                     touch ERRORCODE
                     continue
                 fi
             else
-                echo "... $server is confirmed reachable"
+                echo "......... $server is confirmed reachable"
             fi
 
             # Are credentials correct
             OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" -c "exit" $DOMAINCLIENT 2>&1 || true)"
             if echo "$OUTPUT" | grep -q "LOGON_FAILURE"; then
-                bashio::log.fatal "... incorrect Username, Password, or Domain! Script will stop."
+                bashio::log.fatal "...... incorrect Username, Password, or Domain! Script will stop."
                 touch ERRORCODE
                 # Should there be a workgroup
                 if ! smbclient -t 2 -L $disk -N $DOMAINCLIENT -c "exit" &>/dev/null; then
-                    bashio::log.fatal "... perhaps a workgroup must be specified"
+                    bashio::log.fatal "...... perhaps a workgroup must be specified"
                     touch ERRORCODE
                 fi
                 continue
             elif echo "$OUTPUT" | grep -q "tree connect failed" || echo "$OUTPUT" | grep -q "NT_STATUS_CONNECTION_DISCONNECTED"; then
                 echo "... testing path"
-                bashio::log.fatal "Invalid or inaccessible SMB path. Script will stop."
+                bashio::log.fatal "...... invalid or inaccessible SMB path. Script will stop."
                 touch ERRORCODE
                 continue
             elif ! echo "$OUTPUT" | grep -q "Disk"; then
                 echo "... testing path"
-                bashio::log.fatal "No shares found. Invalid or inaccessible SMB path?"
+                bashio::log.fatal "...... no shares found. Invalid or inaccessible SMB path?"
             else
-                echo "... credentials are valid"
+                echo "...... credentials are valid"
             fi
 
             # Extracting SMB versions and normalize output
@@ -150,14 +150,14 @@ if bashio::config.has_value 'networkdisks'; then
                     SMBVERS="3.1.1"
                     ;;
                 esac
-                echo "... SMB version detected : $SMBVERS"
+                echo "...... SMB version detected : $SMBVERS"
                 SMBVERS=",vers=$SMBVERS"
             elif smbclient -t 2 -L "$server" -m NT1 -N $DOMAINCLIENT &>/dev/null; then
-                echo "... SMB version : only SMBv1 is supported, this can lead to issues"
+                echo "...... SMB version : only SMBv1 is supported, this can lead to issues"
                 SECVERS=",sec=ntlm"
                 SMBVERS=",vers=1.0"
             else
-                echo "... SMB version : couldn't detect, default used"
+                echo "...... SMB version : couldn't detect, default used"
                 SMBVERS=""
             fi
 
@@ -178,13 +178,13 @@ if bashio::config.has_value 'networkdisks'; then
             #Test write permissions
             # shellcheck disable=SC2015
             touch "/mnt/$diskname/testaze" && rm "/mnt/$diskname/testaze" &&
-            bashio::log.info "... $disk successfully mounted to /mnt/$diskname with options $MOUNTOPTIONS" ||
+            bashio::log.info "...... $disk successfully mounted to /mnt/$diskname with options $MOUNTOPTIONS" ||
             ( touch ERRORCODE && bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" )
 
             # Test for serverino
             # shellcheck disable=SC2015
             touch "/mnt/$diskname/testaze" && mv "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" ||
-            (umount "/mnt/$diskname" && mount -t cifs -o "iocharset=utf8,rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD}$MOUNTOPTIONS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "noserverino option used") || \
+            (umount "/mnt/$diskname" && mount -t cifs -o "iocharset=utf8,rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD}$MOUNTOPTIONS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "...... noserverino option used") || \
             touch ERRORCODE
 
             # Alert if smbv1
