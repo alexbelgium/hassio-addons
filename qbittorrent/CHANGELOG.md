@@ -1,3 +1,6 @@
+- PLEASE READ CHANGELOG OF "4.6.2-5wireguard_openvpn" FIRST
+- Corrected 00-smb_mounts.sh logic for servers that don't support anonymous access
+
 ### 4.6.2-5wireguard_openvpn (09-12-2023)
 - MAKE A FULL BACKUP BEFORE UPDATING !
 - BREAKING CHANGE : upstream container switched to trigus42/qbittorrentvpn. All options will be migrated. Please double check all your options as the default behavior might have changed.
