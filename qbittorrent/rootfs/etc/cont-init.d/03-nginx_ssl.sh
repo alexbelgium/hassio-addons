@@ -2,8 +2,6 @@
 # shellcheck shell=bash
 set -e
 
-qbittorrent_protocol="http"
-
 ################
 # SSL CONFIG   #
 ################
@@ -40,7 +38,13 @@ if bashio::config.true 'ssl'; then
 
     # Set nginx protocol
     qbittorrent_protocol=https
-
+else
+    # Disable ssl in script
+    sed -i "1a ENABLE_SSL=no" /etc/cont-init.d/04-qbittorrent-setup.sh
+    # Prepare ingress
+    qbittorrent_protocol="http"
+    # Correct qBittorrent.conf
+    sed -i "/HTTPS/d" /config/qBittorrent/config/qBittorrent.conf
 fi
 
 #################
