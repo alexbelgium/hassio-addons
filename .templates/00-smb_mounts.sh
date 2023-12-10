@@ -105,7 +105,7 @@ if bashio::config.has_value 'networkdisks'; then
                     continue
                 fi
             else
-                echo "......... $server is confirmed reachable"
+                echo "...... $server is confirmed reachable"
             fi
 
             # Are credentials correct
