@@ -1,5 +1,5 @@
-### 10.8.13-3-3 (10-12-2023)
-- Minor bugs fixed
+- Corrected 00-smb_mounts.sh logic for servers that don't support anonymous access
+
 ## 10.8.13-1 (04-12-2023)
 - Allows non-admin users to use paperless from HA sidebar
 
