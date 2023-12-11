@@ -1,3 +1,4 @@
+- Backups stored in /share/portainer_$(date +%m-%d-%Y)_$RANDOM".backup
 
 ## 2.19.4 (09-12-2023)
 - Update to latest version from portainer/portainer
