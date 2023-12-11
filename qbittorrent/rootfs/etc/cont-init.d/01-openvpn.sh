@@ -10,7 +10,7 @@ if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN
 
     # If there is a config file, add nopull
     if [ -n "$(ls -A /config/openvpn 2>/dev/null)" ]; then
-        for file in /config/openvpn/*; do 
+        for file in /config/openvpn/*.ovpn; do 
         if [ -f "$file" ]; then 
             if ! grep -q route-nopull "$file"; then
                 echo "... adding route-nopull to $file"
