@@ -34,12 +34,12 @@ fi
 
 # Set password
 CURRENTPASSWORD=""
-PASSWORD=$(bashio::config 'password')
+PASSWORD="$(bashio::config 'password')"
 if ! bashio::config.has_value 'password'; then
   PASSWORD="empty"
 fi
 touch "/data/portainer_password"
-CURRENTPASSWORD=$( cat /data/portainer_password )
+CURRENTPASSWORD="$( cat /data/portainer_password )"
 
 # Reset password if not first run
 if bashio::fs.file_exists "/data/hidden"; then
