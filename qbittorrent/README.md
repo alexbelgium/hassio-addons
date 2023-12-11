@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [qbittorrent] Problems with network drive (opened 2023-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1125) by [@floralvikings](https://github.com/floralvikings)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
