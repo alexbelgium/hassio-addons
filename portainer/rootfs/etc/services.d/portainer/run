@@ -52,11 +52,11 @@ fi
 
 # Define option
 if bashio::config.has_value 'password' ; then
-  echo -n $PASSWORD > /data/portainer_password
+  echo -n "${PASSWORD:-empty}" > /data/portainer_password
   options+=(--admin-password-file /data/portainer_password)
   bashio::log.info "... password set to $PASSWORD"
 else
-  echo -n $PASSWORD > /data/portainer_password
+  echo -n "${PASSWORD:-empty}" > /data/portainer_password
   bashio::log.info "... starting without predefined password"
 fi
 
