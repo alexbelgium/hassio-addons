@@ -54,6 +54,7 @@ RUN \
 ENV QBM_DOCKER True
 ENV QBT_SKIP_QB_VERSION_CHECK True
 
+# halodint disable=DL3019,SC3010
 RUN \
     # Allow specific arch
     BUILD_ARCH=$(uname -m) && \
