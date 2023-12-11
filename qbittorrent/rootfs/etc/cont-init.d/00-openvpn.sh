@@ -34,8 +34,12 @@ if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN
 
             # Check proto
             if grep -q "proto" "$file"; then
-                echo "... proto not found in your ovpn, assuming UDP"
-                touch /data/udp
+                if [ -f /data/tdp ]; then
+                    echo "... proto not found in your ovpn, assuming TDP"
+                    sed -i "250a VPN_PROTOCOL=\"udp\"" /etc/cont-init.d/02-vpn.sh
+                else
+                    echo "... proto not found in your ovpn, assuming UDP"
+                fi
             fi
             
         fi
