@@ -16,12 +16,29 @@ if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN
     # If there is a config file, remove nopull
     if [ -n "$(ls -A /config/openvpn 2>/dev/null)" ]; then
         for file in /config/openvpn/*.ovpn; do 
-        if [ -f "$file" ]; then 
+        if [ -f "$file" ]; then
+
+            # Remove route-nopull
             if grep -q route-nopull "$file"; then
                 echo "... removing route-nopull from $file"
                 sed -i "/route-nopull/d" "$file"
             fi
-        fi 
+
+            # Avoid ipv6
+            sed -i "/proto udp/c proto udp4" "$file"
+            sed -i "/proto tcp/c proto tcp4" "$file"
+            sed -i "/route-ipv6/d" "$file"
+            sed -i "/ifconfig-ipv6/d" "$file"
+            sed -i "6a pull-filter ignore \"route-ipv6\"" "$file"
+            sed -i "6a pull-filter ignore \"ifconfig-ipv6\"" "$file"
+
+            # Check proto
+            if grep -q "proto" "$file"; then
+                echo "... proto not found in your ovpn, assuming UDP"
+                touch /data/udp
+            fi
+            
+        fi
         done
     fi
 
