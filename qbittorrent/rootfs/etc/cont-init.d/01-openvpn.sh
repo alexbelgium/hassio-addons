@@ -10,10 +10,14 @@ if [ bashio::config "VPN_ENABLED" == "yes" ]; then
 
     # If there is a config file, add nopull
     if [ -n "$(ls -A /config/openvpn 2>/dev/null)" ]; then
-        if ! grep -q route-nopull /etc/openvpn/config.ovpn; then
-            echo "... adding route-nopull to your config.ovpn"
-            sed -i "1a route-nopull" /etc/openvpn/config.ovpn
-        fi
+        for file in /config/openvpn/*; do 
+        if [ -f "$file" ]; then 
+            if ! grep -q route-nopull "$file"; then
+                echo "... adding route-nopull to $file"
+                sed -i "1a route-nopull" "$file"
+            fi
+        fi 
+        done
     fi
     
 else
