@@ -1,4 +1,4 @@
-- When database is reset, the previous one is stored in /share/portainer_$(date +%m-%d-%Y)_$RANDOM".backup
+- When database is reset, the previous one is stored in /share/portainer_$(date +%m-%d-%Y)_$RANDOM".backup. In case of unwanted database wipe, you can therefore restore it from the portainer options
 
 ## 2.19.4 (09-12-2023)
 - Update to latest version from portainer/portainer
