@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] Jellyfish NAS: omit `/config/addons_config/jellyfin/data/metadata` from backup (opened 2023-10-25)](https://github.com/alexbelgium/hassio-addons/issues/1048) by [@bilogic](https://github.com/bilogic)
-## &#9888; Open Issue : [🐛 [Jellyfin Nas] Addon will not start due to fatal error when checking samba share workgroup (opened 2023-12-09)](https://github.com/alexbelgium/hassio-addons/issues/1120) by [@fsaris](https://github.com/fsaris)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
