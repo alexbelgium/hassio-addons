@@ -6,7 +6,7 @@ mkdir -p /config/openvpn
 QBT_CONFIG_FILE="/config/qBittorrent/config/qBittorrent.conf"
 
 # Correct openvpn files
-if [[ bashio::config "VPN_ENABLED" == "yes" ]] && [[ bashio::config "VPN_TYPE" == "openvpn" ]]; then
+if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN_TYPE")" == "openvpn" ]]; then
 
     # If there is a config file, add nopull
     if [ -n "$(ls -A /config/openvpn 2>/dev/null)" ]; then
