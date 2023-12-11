@@ -46,7 +46,7 @@ if bashio::fs.file_exists "/data/hidden"; then
   if [ "$CURRENTPASSWORD" != "$PASSWORD" ]; then
     mv -f /data/portainer.db /data/portainer.old || true
     rm /data/hidden || true
-    bashio::log.warning "... password changed, database reseted. Previous version stored in /data/portainer.old"
+    bashio::log.warning "... password changed, database reseted. Previous version stored in /share/portainer_$(date +%m-%d-%Y)_$RANDOM".backup"
   fi
 fi
 
