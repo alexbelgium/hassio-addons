@@ -8,13 +8,13 @@ QBT_CONFIG_FILE="/config/qBittorrent/config/qBittorrent.conf"
 # Correct openvpn files
 if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN_TYPE")" == "openvpn" ]]; then
 
-    # If there is a config file, add nopull
+    # If there is a config file, remove nopull
     if [ -n "$(ls -A /config/openvpn 2>/dev/null)" ]; then
         for file in /config/openvpn/*.ovpn; do 
         if [ -f "$file" ]; then 
-            if ! grep -q route-nopull "$file"; then
-                echo "... adding route-nopull to $file"
-                sed -i "1a route-nopull" "$file"
+            if grep -q route-nopull "$file"; then
+                echo "... removing route-nopull from $file"
+                sed -i "/route-nopull/d" "$file"
             fi
         fi 
         done
