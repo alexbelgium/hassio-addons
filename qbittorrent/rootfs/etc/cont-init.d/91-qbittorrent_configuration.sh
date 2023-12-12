@@ -57,7 +57,9 @@ if bashio::config.has_value 'SavePath'; then
 fi
 
 # Create default location
-mkdir -p "$DOWNLOADS" || bashio::log.fatal "Error : folder defined in SavePath doesn't exist and can't be created. Check path"
+if [ ! -d "$DOWNLOADS" ]; then 
+    mkdir -p "$DOWNLOADS" || bashio::log.fatal "Error : folder defined in SavePath doesn't exist and can't be created. Check path"
+fi
 chown -R "$PUID:$PGID" "$DOWNLOADS" || bashio::log.fatal "Error, please check default save folder configuration in addon"
 
 ##############
