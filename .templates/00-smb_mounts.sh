@@ -4,6 +4,33 @@
 set -e
 
 ####################
+# DEFINE FUNCTIONS #
+####################
+
+test_mount () {
+
+        # Test mounted
+        if mountpoint -q /mnt/"$diskname"; then
+            return 1
+        fi
+           
+        # Test write permissions
+        # shellcheck disable=SC2015
+        mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" || \
+        ( MOUNTED=false && bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" )
+
+        # Test for serverino
+        # shellcheck disable=SC2015
+        touch "/mnt/$diskname/testaze" && mv "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" || \
+        MOUNTOPTIONS="$MOUNTOPTIONS,noserverino"
+        return 1
+
+        # Set correctly mounted bit
+        MOUNTED=true
+
+}
+
+####################
 # MOUNT SMB SHARES #
 ####################
 
@@ -84,7 +111,7 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Quickly try to mount with defaults
         mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>/dev/null \
-            && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" || MOUNTED=false
+            && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" && test_mount || MOUNTED=false
 
         # Deeper analysis if failed
         if [ "$MOUNTED" = false ]; then
