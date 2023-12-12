@@ -182,7 +182,7 @@ if bashio::config.has_value 'networkdisks'; then
             
             #Test write permissions
             # shellcheck disable=SC2015
-            touch "/mnt/$diskname/testaze" && rm "/mnt/$diskname/testaze" &&
+            mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" &&
             bashio::log.info "...... $disk successfully mounted to /mnt/$diskname with options $MOUNTOPTIONS" ||
             ( touch ERRORCODE && bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" )
 
