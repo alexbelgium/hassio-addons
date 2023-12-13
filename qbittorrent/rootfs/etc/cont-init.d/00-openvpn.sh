@@ -32,6 +32,9 @@ if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN
             sed -i "6a pull-filter ignore \"route-ipv6\"" "$file"
             sed -i "6a pull-filter ignore \"ifconfig-ipv6\"" "$file"
 
+            # Correct paths
+            sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
+
             # Check proto
             if grep -q "proto" "$file"; then
                 if [ -f /data/tdp ]; then
