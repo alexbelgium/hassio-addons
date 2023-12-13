@@ -9,24 +9,49 @@ set -e
 
 test_mount () {
 
+        # Set initial test
+        MOUNTED=false
+        ERROR_MOUNT=false
+
         # Test mounted
-        if mountpoint -q /mnt/"$diskname"; then
-            return 1
+        if mountpoint -q /mnt/"$1"; then
+            return 0
         fi
            
-        # Test write permissions
-        # shellcheck disable=SC2015
-        mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" || \
-        ( MOUNTED=false && bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" )
-
         # Test for serverino
         # shellcheck disable=SC2015
-        touch "/mnt/$diskname/testaze" && mv "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" || \
-        MOUNTOPTIONS="$MOUNTOPTIONS,noserverino"
-        return 1
+        mkdir "/mnt/$1/testaze" && touch "/mnt/$1/testaze/testaze" && rm -r "/mnt/$1/testaze" || ERROR_MOUNT=true
+        if [[ "$ERROR_MOUNT" == "true" ]]; then
+                # Test write permissions
+                if [[ "$MOUNTOPTIONS" == *"noserverino"* ]]; then
+                        bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
+                else
+                        MOUNTOPTIONS="$MOUNTOPTIONS,noserverino"
+                        echo "... testing with noserverino"
+                        mount_drive
+                fi
+        return 0
+        fi
 
         # Set correctly mounted bit
         MOUNTED=true
+        return 0
+
+}
+
+mount_drive () {
+
+        # Define options
+        MOUNTED=true
+        MOUNTOPTIONS="$1"
+
+        # Try mounting
+        mount -t cifs -o "$MOUNTOPTIONS" "$disk" /mnt/"$diskname" 2>ERRORCODE || MOUNTED=false
+
+        # Test if succesful
+        if [[ "$MOUNTED" == "true" ]]; then
+                test_mount
+        fi
 
 }
 
@@ -110,9 +135,8 @@ if bashio::config.has_value 'networkdisks'; then
         chown root:root /mnt/"$diskname"
 
         # Quickly try to mount with defaults
-        mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>/dev/null \
-            && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" && test_mount || MOUNTED=false
-
+        mount_drive "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN"
+        
         # Deeper analysis if failed
         if [ "$MOUNTED" = false ]; then
 
@@ -192,32 +216,21 @@ if bashio::config.has_value 'networkdisks'; then
             #######################################
             for SECVERS in "$SECVERS" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
                 if [ "$MOUNTED" = false ]; then
-                    mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" "$disk" /mnt/"$diskname" 2>/dev/null \
-                        && MOUNTED=true && MOUNTOPTIONS="$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN" || MOUNTED=false
+                        mount_drive "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN"
                 fi
             done
 
         fi
 
         # Messages
-        if [ "$MOUNTED" = true ] && mountpoint -q /mnt/"$diskname"; then
+        if [ "$MOUNTED" = true ]; then
+
+            bashio::log.info "...... $disk successfully mounted to /mnt/$diskname with options $MOUNTOPTIONS"
 
             # Remove errorcode
             if [ -f ERRORCODE ]; then
                 rm ERRORCODE
             fi
-            
-            #Test write permissions
-            # shellcheck disable=SC2015
-            mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" &&
-            bashio::log.info "...... $disk successfully mounted to /mnt/$diskname with options $MOUNTOPTIONS" ||
-            ( touch ERRORCODE && bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw" )
-
-            # Test for serverino
-            # shellcheck disable=SC2015
-            touch "/mnt/$diskname/testaze" && mv "/mnt/$diskname/testaze" "/mnt/$diskname/testaze2" && rm "/mnt/$diskname/testaze2" ||
-            (umount "/mnt/$diskname" && mount -t cifs -o "iocharset=utf8,rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD}$MOUNTOPTIONS,noserverino" "$disk" /mnt/"$diskname" && bashio::log.warning "...... noserverino option used") || \
-            touch ERRORCODE
 
             # Alert if smbv1
             if [[ "$MOUNTOPTIONS" == *"1.0"* ]]; then
@@ -235,7 +248,7 @@ if bashio::config.has_value 'networkdisks'; then
             smbclient -t 2 -L $disk -U "$USERNAME%$PASSWORD" -c "exit"
 
             # Error code
-            mount -t cifs -o "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$DOMAIN" "$disk" /mnt/"$diskname" 2> ERRORCODE || MOUNTED=false
+            mount_drive "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$DOMAIN"
             bashio::log.fatal "Error read : $(<ERRORCODE), addon will stop in 1 min"
 
             # clean folder
@@ -245,13 +258,5 @@ if bashio::config.has_value 'networkdisks'; then
         fi
 
     done
-
-    if [ -f ERRORCODE ]; then
-        rm ERRORCODE*
-        bashio::log.fatal "Addon will stop in 1m to prevent damages to your system"
-        sleep 1m
-        bashio::addon.stop
-        exit 1
-    fi
 
 fi
