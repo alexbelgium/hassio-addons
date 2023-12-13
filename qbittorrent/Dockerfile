@@ -68,7 +68,10 @@ RUN \
     \
     # Install dependencies
     apk add py3-pip gcc musl-dev && \
-    pip install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed
+    pip install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed && \
+    \
+    # Add latency for mullvad
+    echo "sleep 5" >> /etc/cont-init.d/02-vpn.sh
 
 ##################
 # 3 Install apps #
