@@ -136,7 +136,7 @@ if bashio::config.has_value 'networkdisks'; then
         chown root:root /mnt/"$diskname"
 
         # Quickly try to mount with defaults
-        mount_drive "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN"
+        mount_drive "rw,file_mode=0775,dir_mode=0775,username=${USERNAME},password=${PASSWORD},nobrl${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}${DOMAIN}"
         
         # Deeper analysis if failed
         if [ "$MOUNTED" = false ]; then
@@ -217,7 +217,7 @@ if bashio::config.has_value 'networkdisks'; then
             #######################################
             for SECVERS in "$SECVERS" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
                 if [ "$MOUNTED" = false ]; then
-                        mount_drive "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN"
+                        mount_drive "rw,file_mode=0775,dir_mode=0775,username=${USERNAME},password=${PASSWORD},nobrl${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}${DOMAIN}"
                 fi
             done
 
@@ -252,8 +252,8 @@ if bashio::config.has_value 'networkdisks'; then
             SECVERS=""
             PUID=""
             PGID=""
-            CHARSET=""            
-            mount_drive "rw,file_mode=0775,dir_mode=0775,username=$USERNAME,password=${PASSWORD},nobrl$SMBVERS$SECVERS$PUID$PGID$CHARSET$DOMAIN"
+            CHARSET=""
+            mount_drive "rw,file_mode=0775,dir_mode=0775,username=${USERNAME},password=${PASSWORD},nobrl${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}${DOMAIN}"
             bashio::log.fatal "Error read : $(<ERRORCODE), addon will stop in 1 min"
 
             # clean folder
