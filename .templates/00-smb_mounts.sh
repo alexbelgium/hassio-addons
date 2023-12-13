@@ -260,6 +260,9 @@ if bashio::config.has_value 'networkdisks'; then
             umount "/mnt/$diskname" 2>/dev/null || true
             rmdir "/mnt/$diskname" || true
 
+            # Stop addon
+            bashio::addon.stop
+
         fi
 
     done
