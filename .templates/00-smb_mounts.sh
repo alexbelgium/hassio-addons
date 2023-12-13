@@ -7,7 +7,7 @@ set -e
 # DEFINE FUNCTIONS #
 ####################
 
-test_mount () {
+test_mount {
 
         # Set initial test
         MOUNTED=false
@@ -50,6 +50,7 @@ mount_drive () {
 
         # Test if succesful
         if [[ "$MOUNTED" == "true" ]]; then
+                # shellcheck disable=SC2015
                 test_mount
         fi
 
