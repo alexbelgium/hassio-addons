@@ -7,7 +7,7 @@ set -e
 # DEFINE FUNCTIONS #
 ####################
 
-test_mount {
+test_mount () {
 
         # Set initial test
         MOUNTED=false
