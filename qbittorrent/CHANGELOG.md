@@ -1,5 +1,3 @@
-### 4.6.2-15_wireguard_openvpn (13-12-2023)
-- Minor bugs fixed
 - Remove route-nopull to allow upstream scripts
 - &#9888; PLEASE READ CHANGELOG OF "4.6.2-5wireguard_openvpn" FIRST
 - Correct ssl usage : either with HA certificates or self-generated
