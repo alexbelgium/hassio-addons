@@ -14,13 +14,13 @@ test_mount () {
         ERROR_MOUNT=false
 
         # Test mounted
-        if mountpoint -q /mnt/"$1"; then
+        if mountpoint -q /mnt/"$diskname"; then
             return 0
         fi
            
         # Test for serverino
         # shellcheck disable=SC2015
-        mkdir "/mnt/$1/testaze" && touch "/mnt/$1/testaze/testaze" && rm -r "/mnt/$1/testaze" || ERROR_MOUNT=true
+        mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" || ERROR_MOUNT=true
         if [[ "$ERROR_MOUNT" == "true" ]]; then
                 # Test write permissions
                 if [[ "$MOUNTOPTIONS" == *"noserverino"* ]]; then
