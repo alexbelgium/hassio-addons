@@ -25,8 +25,6 @@ if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN
             fi
 
             # Avoid ipv6
-            sed -i "/proto udp/c proto udp4" "$file"
-            sed -i "/proto tcp/c proto tcp4" "$file"
             sed -i "/route-ipv6/d" "$file"
             sed -i "/ifconfig-ipv6/d" "$file"
             sed -i "6a pull-filter ignore \"route-ipv6\"" "$file"
