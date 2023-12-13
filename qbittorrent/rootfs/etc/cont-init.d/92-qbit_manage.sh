@@ -25,7 +25,7 @@ if bashio::config.true "qbit_manage"; then
 	sed -i "s=remote_dir: \"/mnt/user/data/torrents/\"=$(bashio::config.has_value "SavePath")=g" /config/qbit_manage/qbit_manage.yml
 
 	# Startup delay 30s ; config file specific ; log file specific
-	python /qbit_manage/qbit_manage.py -sd 30 --config-file "/config/qbit_manage/qbit_manage.yml" --log-file "/config/qbit_manage/qbit_manage.log" & true
+	python /qbit_manage/qbit_manage.py -sd 30 --config-file "/config/qbit_manage/qbit_manage.yml" --log-file "/config/qbit_manage/qbit_manage.log" --run & true
 	bashio::log.info "qbit_manage started with config in /addon_configs/$HOSTNAME/qbit_manage/qbit_manage.yaml accessible with the Filebrowser addon"
 
 fi
