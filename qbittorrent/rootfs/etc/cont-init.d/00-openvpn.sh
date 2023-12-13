@@ -20,6 +20,7 @@ if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN
         if [ -f "$file" ]; then
 
             # Convert to unix
+            echo "... converting to unix format $file"
             dos2unix "$file"
 
             # Remove route-nopull
@@ -28,21 +29,8 @@ if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN
                 sed -i "/route-nopull/d" "$file"
             fi
 
-            # Avoid ipv6
-            sed -i "/ipv6/d" "$file"
-
             # Correct paths
             sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
-
-            # Check proto
-            if grep -q "proto" "$file"; then
-                if [ -f /data/tdp ]; then
-                    echo "... proto not found in your ovpn, assuming TDP"
-                    sed -i "250a VPN_PROTOCOL=\"udp\"" /etc/cont-init.d/02-vpn.sh
-                else
-                    echo "... proto not found in your ovpn, assuming UDP"
-                fi
-            fi
             
         fi
         done
