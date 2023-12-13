@@ -3,6 +3,7 @@
 set -e
 
 mkdir -p /config/openvpn
+chmod -R 777 /config/openvpn
 QBT_CONFIG_FILE="/config/qBittorrent/config/qBittorrent.conf"
 
 # Ensure no redirection by removing the direction tag
