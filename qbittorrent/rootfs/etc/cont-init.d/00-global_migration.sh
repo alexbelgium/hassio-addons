@@ -9,26 +9,25 @@ mkdir -p /config/qBittorrent/data
 
 MIGRATED=""
 
-if [ -f /homeassistant/addons_config/qBittorrent/qBittorrent.conf ]; then
+if [ -f /homeassistant/addons_config/qBittorrent/qBittorrent.conf ] && [ ! -f /homeassistant/addons_config/qBittorrent/migrated ]; then
     bashio::log.warning "----------------------------------------"
     bashio::log.warning "Migrating configuration to the new addon"
     bashio::log.warning "----------------------------------------"
-    mv /homeassistant/addons_config/qBittorrent/*.json /config/qBittorrent/config/
-    mv /homeassistant/addons_config/qBittorrent/*.conf /config/qBittorrent/config/
-    if [ -d /homeassistant/addons_config/qBittorrent/rss ]; then mv /homeassistant/addons_config/qBittorrent/rss /config/qBittorrent/config/; fi
-    mv /homeassistant/addons_config/qBittorrent/* /config/qBittorrent/data/
+    cp -rnf /homeassistant/addons_config/qBittorrent/*.json /config/qBittorrent/config/
+    cp -rnf /homeassistant/addons_config/qBittorrent/*.conf /config/qBittorrent/config/
+    if [ -d /homeassistant/addons_config/qBittorrent/rss ]; then cp -rnf /homeassistant/addons_config/qBittorrent/rss /config/qBittorrent/config/; fi
+    cp -rnf /homeassistant/addons_config/qBittorrent/* /config/qBittorrent/data/
     if [ -d /config/qBittorrent/data/addons_config ]; then rm -r /config/qBittorrent/data/addons_config; fi
     if [ -d /config/qBittorrent/data/qBittorrent ]; then rm -r /config/qBittorrent/data/qBittorrent; fi
-    rm -r /homeassistant/addons_config/qBittorrent
+    touch /homeassistant/addons_config/qBittorrent/migrated
     bashio::log.yellow "... moved files from /config/addons_config/qBittorrent to /addon_configs/$HOSTNAME/qBitorrent (must be accessed with my Filebrowser addon)"
-fi || true
+fi
 
 if [ -d /homeassistant/openvpn ]; then
     if [ "$(ls -A /homeassistant/openvpn)" ]; then
-        mv /homeassistant/openvpn/* /config/openvpn/
-        bashio::log.yellow "... moved files from /config/openvpn to /addon_configs/$HOSTNAME/openvpn"
+        cp -rnf /homeassistant/openvpn/* /config/openvpn/
     fi
-fi || true
+fi
 
 # Restore openvpn files
 if [ "$(ls -A /config/openvpn)" ]; then
@@ -36,18 +35,20 @@ if [ "$(ls -A /config/openvpn)" ]; then
     cp -rnf /config/openvpn/* /homeassistant/openvpn
 fi
 
-if [ -f /homeassistant/addons_config/qbittorrent/config.yaml ]; then
-    mv /homeassistant/addons_config/qbittorrent/* /config/
+if [ -f /homeassistant/addons_config/qbittorrent/config.yaml ] && [ ! -f /homeassistant/addons_config/qbittorrent/migrated ]; then
+    cp -rnf /homeassistant/addons_config/qbittorrent/* /config/
     rm -r /homeassistant/addons_config/qbittorrent
+    touch /homeassistant/addons_config/qbittorrent/migrated
     bashio::log.yellow "... moved config.yaml from /config/addons_config/qbittorrent to /addon_configs/$HOSTNAME"
     MIGRATED=true
-fi || true
+fi
 
 if [ -f /homeassistant/addons_autoscrips/qbittorrent.sh ]; then
-    mv /homeassistant/addons_autoscrips/qbittorrent.sh /config/
+    cp -rnf /homeassistant/addons_autoscrips/qbittorrent.sh /config/
+    mv /homeassistant/addons_autoscrips/qbittorrent.sh /homeassistant/addons_autoscrips/qbittorrent.sh.bak
     bashio::log.yellow "... moved qbittorrent.sh from /config/addons_autoscripts to /addon_configs/$HOSTNAME"
     MIGRATED=true
-fi || true
+fi
 
 if bashio::config.has_value 'openvpn_enable'; then
     if bashio::config.true 'openvpn_enabled'; then
@@ -91,21 +92,21 @@ if bashio::config.has_value 'whitelist'; then
     bashio::addon.option "whitelist"
     bashio::log.yellow "... whitelist : removed as not used anymore"
     MIGRATED=true
-fi || true
+fi
 
 if bashio::config.has_value 'smbv1'; then
     bashio::addon.option "smbv1"
     bashio::log.yellow "... smbv1 : removed as not used anymore"
-fi || true
+fi
 
 if bashio::config.has_value 'openvpn_config'; then
     openvpn_config="$(bashio::config "openvpn_config")"
     if [ -f "$openvpn_config" ]; then
-        mv "$openvpn_config" /config/openvpn/
+        cp -rnf "$openvpn_config" /config/openvpn/
         bashio::log.yellow "... openvpn file migrated to new location"
     fi
     bashio::addon.option "openvpn_config"
-fi || true
+fi
 
 if [[ "$MIGRATED" == "true" ]]; then
     bashio::log.warning "Options were changed, restarting the addon"    
@@ -114,4 +115,4 @@ fi
 
 if [ -d /config/qBittorrent/qBittorrent ]; then
 rm -r /config/qBittorrent/qBittorrent
-fi || true
+fi
