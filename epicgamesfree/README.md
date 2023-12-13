@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] [epicgamesfree] Change url in Notification  (opened 2023-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1124) by [@vinnie1234](https://github.com/vinnie1234)
 
 # Home assistant add-on: Epic Games Free
 
