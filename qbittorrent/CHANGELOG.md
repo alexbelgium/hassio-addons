@@ -1,5 +1,3 @@
-### 4.6.2-13wireguard_openvpn (11-12-2023)
-- Minor bugs fixed
 - Remove route-nopull to allow upstream scripts
 
 ### 4.6.2-12wireguard_openvpn (10-12-2023)
