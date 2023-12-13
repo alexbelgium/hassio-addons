@@ -53,25 +53,26 @@ RUN \
 
 ENV QBM_DOCKER True
 ENV QBT_SKIP_QB_VERSION_CHECK True
+ENV PYTHONUNBUFFERED=1
 
 # halodint disable=DL3019,SC3010
 RUN \
     # Allow specific arch
-    BUILD_ARCH=$(uname -m) && \
-    echo "${BUILD_ARCH}" && \
-    BUILD_ARCH=${BUILD_ARCH:-x86} && \
-    if [[ "${BUILD_ARCH}" != *amd64* ]]; then apk add python3-dev; fi && \    
+    #BUILD_ARCH=$(uname -m) && \
+    #echo "${BUILD_ARCH}" && \
+    #BUILD_ARCH=${BUILD_ARCH:-x86} && \
+    #if [[ "${BUILD_ARCH}" != *amd64* ]]; then apk add python3-dev; fi && \    
     # Install qbit_manage
     mkdir -p /qbit_manage && \
     curl -o /tmp/qbit_manage.tar.gz -L "https://github.com/StuffAnThings/qbit_manage/archive/master.tar.gz" && \
     tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
     \
     # Install dependencies
-    apk add py3-pip gcc musl-dev && \
-    pip install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed && \
-    \
-    # Add latency for mullvad
-    echo "sleep 5" >> /etc/cont-init.d/02-vpn.sh
+    apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python && \
+    python3 -m ensurepip && \
+    pip3 install --no-cache --upgrade pip setuptools && \
+    apk add gcc musl-dev && \
+    pip3 install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed
 
 ##################
 # 3 Install apps #
