@@ -70,7 +70,7 @@
     "HEALTH_CHECK_INTERVAL": "15",
     "HEALTH_CHECK_TIMEOUT": "30"
   },
-  "homeassistant": "2023.12.0",
+  "homeassistant": "2023.12.1",
   "image": "ghcr.io/alexbelgium/qbittorrent-{arch}",
   "ingress": true,
   "init": false,
