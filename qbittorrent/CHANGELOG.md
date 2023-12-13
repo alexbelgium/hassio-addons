@@ -1,3 +1,5 @@
+- qbit_manage : add run command
+
 ### 4.6.2-16_wireguard_openvpn (13-12-2023)
 - Minor bugs fixed
 - Remove route-nopull to allow upstream scripts
