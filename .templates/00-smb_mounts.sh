@@ -13,12 +13,12 @@ test_mount () {
         MOUNTED=false
         ERROR_MOUNT=false
 
-        # Test mounted
-        if mountpoint -q /mnt/"$diskname"; then
+        # Exit if not mounted
+        if ! mountpoint -q /mnt/"$diskname"; then
             return 0
         fi
            
-        # Test for serverino
+        # Exit if can't write
         # shellcheck disable=SC2015
         mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" || ERROR_MOUNT=true
         if [[ "$ERROR_MOUNT" == "true" ]]; then
