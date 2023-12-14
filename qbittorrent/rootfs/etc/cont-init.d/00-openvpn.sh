@@ -48,7 +48,10 @@ if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN
     ip route add 192.168.0.0/16 via 172.30.32.1
     ip route add 172.16.0.0/12 via 172.30.32.1
 
+elif [[ "$(bashio::config "VPN_TYPE")" == "openvpn" ]]; then
+
+export WG_I_PREFER_BUGGY_USERSPACE_TO_POLISHED_KMOD=1
+sed -i -E 's/&& cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1//gm' "$(command -v wg-quick)" || true
+
 fi
 
-# Set net.ipv4.conf.all.src_valid_mark
-sed -i -E 's/&& cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1//gm' "$(command -v wg-quick)" || true
