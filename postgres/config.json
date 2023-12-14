@@ -4,6 +4,7 @@
     "amd64",
     "armv7"
   ],
+  "backup": "cold",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Postgres 15",
   "environment": {
