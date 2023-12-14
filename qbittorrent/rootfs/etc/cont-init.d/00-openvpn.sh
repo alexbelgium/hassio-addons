@@ -31,6 +31,13 @@ if [[ "$(bashio::config "VPN_ENABLED")" == "yes" ]] && [[ "$(bashio::config "VPN
 
             # Correct paths
             sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
+
+            # Check if the last character in the file is a newline character
+            last_char=$(tail -c 1 "$file")            
+            if [ "$last_char" != $'\n' ]; then
+                # Add a blank line at the end of the file
+                echo >> "$file"
+            fi
             
         fi
         done
