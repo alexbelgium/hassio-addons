@@ -141,7 +141,7 @@ fi
 
 # Check file size
 if [[ "$ORIGINAL_SIZE" != "$(wc -c "$CONFIG_LOCATION"/qBittorrent.conf)" ]]; then
-    bashio::log.info "Configuration changed, rebooting"
+    bashio::log.warning "Configuration changed, rebooting"
     bashio::addon.restart
 fi
 
