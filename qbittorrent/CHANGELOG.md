@@ -1,3 +1,5 @@
+### 4.6.2-19_wireguard_openvpn (14-12-2023)
+- Minor bugs fixed
 - Implement a sleep period to wait until vpn is up on faster systems
 - qbit_manage : add run command
 
