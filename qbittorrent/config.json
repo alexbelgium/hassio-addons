@@ -69,7 +69,8 @@
     "SET_FWMARK": "true",
     "WEBUI_PORT": "8080",
     "HEALTH_CHECK_INTERVAL": "15",
-    "HEALTH_CHECK_TIMEOUT": "30"
+    "HEALTH_CHECK_TIMEOUT": "30",
+    "WG_I_PREFER_BUGGY_USERSPACE_TO_POLISHED_KMOD": "1"
   },
   "homeassistant": "2023.12.0",
   "image": "ghcr.io/alexbelgium/qbittorrent-{arch}",
