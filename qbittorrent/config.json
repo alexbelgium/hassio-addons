@@ -7,6 +7,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "qBittorrent is a bittorrent client",
   "devices": [
+    "/dev/net/tun",
     "/dev/dri",
     "/dev/dri/card0",
     "/dev/dri/card1",
