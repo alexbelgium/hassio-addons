@@ -57,19 +57,20 @@ ENV PYTHONUNBUFFERED=1
 
 # halodint disable=DL3019,SC3010
 RUN \
-    # Allow specific arch
-    #BUILD_ARCH=$(uname -m) && \
-    #echo "${BUILD_ARCH}" && \
-    #BUILD_ARCH=${BUILD_ARCH:-x86} && \
-    #if [[ "${BUILD_ARCH}" != *amd64* ]]; then apk add python3-dev; fi && \    
     # Install qbit_manage
     mkdir -p /qbit_manage && \
     curl -o /tmp/qbit_manage.tar.gz -L "https://github.com/StuffAnThings/qbit_manage/archive/master.tar.gz" && \
     tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
     \
     # Install dependencies
-    apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python && \
+    ## Allow python specific arch
+    BUILD_ARCH=$(uname -m) && \
+    echo "${BUILD_ARCH}" && \
+    BUILD_ARCH=${BUILD_ARCH:-x86} && \
+    if [[ "${BUILD_ARCH}" != *amd64* ]]; then apk add python3-dev; else apk add python3; fi && \    
+    ln -sf python3 /usr/bin/python && \
     python3 -m ensurepip && \
+    ## Install other
     pip3 install --no-cache --upgrade pip setuptools && \
     apk add gcc musl-dev && \
     pip3 install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed
