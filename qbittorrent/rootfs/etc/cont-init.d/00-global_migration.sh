@@ -21,18 +21,12 @@ if [ -f /homeassistant/addons_config/qBittorrent/qBittorrent.conf ] && [ ! -f /h
     if [ -d /config/qBittorrent/data/qBittorrent ]; then rm -r /config/qBittorrent/data/qBittorrent; fi
     touch /homeassistant/addons_config/qBittorrent/migrated
     bashio::log.yellow "... moved files from /config/addons_config/qBittorrent to /addon_configs/$HOSTNAME/qBitorrent (must be accessed with my Filebrowser addon)"
-fi
 
-if [ -d /homeassistant/openvpn ]; then
-    if [ "$(ls -A /homeassistant/openvpn)" ]; then
+    if [ -d /homeassistant/openvpn ]; then
+      if [ "$(ls -A /homeassistant/openvpn)" ]; then
         cp -rnf /homeassistant/openvpn/* /config/openvpn/
+      fi
     fi
-fi
-
-# Restore openvpn files
-if [ "$(ls -A /config/openvpn)" ]; then
-    mkdir -p /homeassistant/openvpn
-    cp -rnf /config/openvpn/* /homeassistant/openvpn
 fi
 
 if [ -f /homeassistant/addons_config/qbittorrent/config.yaml ] && [ ! -f /homeassistant/addons_config/qbittorrent/migrated ]; then
