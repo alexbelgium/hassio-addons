@@ -6,6 +6,10 @@ set -e
 # INIT   #
 ##########
 
+if [ -f /REBOOT ]; then
+  rm /REBOOT
+fi
+
 # Define preferences line
 CONFIG_LOCATION=/config/qBittorrent/config/
 mkdir -p "$CONFIG_LOCATION"
