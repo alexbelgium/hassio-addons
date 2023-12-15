@@ -1,3 +1,5 @@
+- Don't upgrade, I'll revert middle of next week to previous upstream version
+
 ### 4.6.2-23_wireguard_openvpn (15-12-2023)
 - Perform migration of previous files a single time to allow backup restore prior to the change of image
 
