@@ -9,7 +9,7 @@ counter=0
 until [ "$counter" -gt 10 ]
 do
   echo "... waiting until vpn is up"
-  ping -c 1 "1.1.1.1" &> /dev/null && exit 0 || true
+  ( ping -c 1 "1.1.1.1" &> /dev/null ) && exit 0 || true
   ((counter++))
   sleep 5
 done
