@@ -155,5 +155,5 @@
   "slug": "qbittorrent",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.6.2-22_wireguard_openvpn"
+  "version": "4.6.2-23_wireguard_openvpn"
 }
