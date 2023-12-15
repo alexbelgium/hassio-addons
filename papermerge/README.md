@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Papermerge] Constant high CPU load (opened 2023-12-06)](https://github.com/alexbelgium/hassio-addons/issues/1115) by [@bilogic](https://github.com/bilogic)
 
 # Home assistant add-on: Papermerge
 
