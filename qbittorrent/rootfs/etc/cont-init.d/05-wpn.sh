@@ -14,7 +14,7 @@ do
   sleep 5
 done
 
-bashio::log.fatal "vpn failed to get up for 60 seconds"
+bashio::log.fatal "vpn failed to get up for 60 seconds. Issue with your config file ?"
 
 if [ ! -d /REBOOT ]; then
   touch /REBOOT
