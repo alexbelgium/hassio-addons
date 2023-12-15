@@ -15,3 +15,8 @@ do
 done
 
 bashio::log.fatal "vpn failed to get up for 60 seconds"
+
+if [ ! -d /REBOOT ]; then
+  touch /REBOOT
+  bashio::addon.restart
+fi
