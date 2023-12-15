@@ -1,5 +1,6 @@
 ### 4.6.2-23_wireguard_openvpn (15-12-2023)
-- Minor bugs fixed
+- Perform migration of previous files a single time to allow backup restore prior to the change of image
+
 ## 4.6.2-20_wireguard_openvpn (14-12-2023)
 - Minor bugs fixed
 - Sanitize the ovpn file
