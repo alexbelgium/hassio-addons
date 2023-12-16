@@ -1,3 +1,6 @@
+
+## 28.0.0 (16-12-2023)
+- Update to latest version from linuxserver/docker-nextcloud
 ### 27.1.4-6 (07-12-2023)
 - Crond output redirected to addon logs https://github.com/alexbelgium/hassio-addons/issues/1111
 
