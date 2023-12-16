@@ -1,4 +1,7 @@
 
+## 14.0.0 (16-12-2023)
+- Update to latest version from linuxserver/docker-piwigo
+
 ## 13.8.0 (08-07-2023)
 - Update to latest version from linuxserver/docker-piwigo
 
