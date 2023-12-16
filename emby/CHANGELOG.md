@@ -1,4 +1,7 @@
 
+## 4.8.0.62 (16-12-2023)
+- Update to latest version from linuxserver/docker-emby
+
 ## 4.8.0.61 (02-12-2023)
 - Update to latest version from linuxserver/docker-emby
 
