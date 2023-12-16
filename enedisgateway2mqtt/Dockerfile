@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_UPSTREAM="0.9.3"
-FROM m4dm4rtig4n/myelectricaldata:$BUILD_UPSTREAM
+FROM m4dm4rtig4n/myelectricaldata:latest
 
 
 ##################
