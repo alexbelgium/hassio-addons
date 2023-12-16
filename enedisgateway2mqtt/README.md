@@ -1,5 +1,6 @@
 ## &#9888; Open Issue : [🐛 [MyElectricalData] No more data since 2023-11-26 (opened 2023-12-08)](https://github.com/alexbelgium/hassio-addons/issues/1117) by [@didi31](https://github.com/didi31)
 ## &#9888; Open Issue : [🐛 [MyElectricalData] No more data since 2023-11-28 (opened 2023-12-14)](https://github.com/alexbelgium/hassio-addons/issues/1132) by [@yoyomax80400](https://github.com/yoyomax80400)
+## &#9888; Open Issue : [🐛 [MyElectricalData] update to 0.9.3 impossible (opened 2023-12-16)](https://github.com/alexbelgium/hassio-addons/issues/1137) by [@WarC0zes](https://github.com/WarC0zes)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
