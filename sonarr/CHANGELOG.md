@@ -1,3 +1,6 @@
+
+## 4.0.0.737 (16-12-2023)
+- Update to latest version from linuxserver/docker-sonarr
 ### 4.0.0.733-2 (02-12-2023)
 - Minor bugs fixed
 - Send crond messages to addon logs
