@@ -63,13 +63,13 @@
   "environment": {
     "ADDITIONAL_PORTS": "59595,6882",
     "DOWNLOAD_DIR_CHOWN": "true",
+    "HEALTH_CHECK_INTERVAL": "15",
+    "HEALTH_CHECK_TIMEOUT": "30",
     "PGID": "0",
     "PUID": "0",
     "QBITTORRENTLOGPATH": "/config/qBittorrent/data/logs",
     "SET_FWMARK": "true",
     "WEBUI_PORT": "8080",
-    "HEALTH_CHECK_INTERVAL": "15",
-    "HEALTH_CHECK_TIMEOUT": "30",
     "WG_I_PREFER_BUGGY_USERSPACE_TO_POLISHED_KMOD": "1"
   },
   "homeassistant": "2023.12.0",
