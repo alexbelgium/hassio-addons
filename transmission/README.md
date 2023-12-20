@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Transmission] infinite download time (opened 2023-12-19)](https://github.com/alexbelgium/hassio-addons/issues/1140) by [@maxpoz1](https://github.com/maxpoz1)
 
 # Home assistant add-on: Transmission
 
