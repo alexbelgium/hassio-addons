@@ -56,7 +56,7 @@ if bashio::config.true 'openvpn_enabled'; then
             cp /config/openvpn/* /etc/openvpn/
             # Standardize file
             cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
-    
+
     # If openvpn_config not set, and folder is empty
     else
             bashio::exit.nok "Openvpn enabled, but no .ovpn files in the /addon_configs/$HOSTNAME/openvpn folder ! Exiting"        
@@ -69,7 +69,7 @@ if bashio::config.true 'openvpn_enabled'; then
     if grep -q "ipv6" /etc/openvpn/config.ovpn; then
       bashio::log.warning "ipv6 configured in the ovpn file but not compatible with the addon. You should remove it."
     fi
-    
+
     # Set credentials
     if bashio::config.has_value "openvpn_username"; then
         openvpn_username=$(bashio::config 'openvpn_username')
@@ -83,7 +83,7 @@ if bashio::config.true 'openvpn_enabled'; then
     else
         bashio::exit.nok "Openvpn is enabled, but openvpn_password option is empty! Exiting"
     fi
-    
+
     # Add credentials file
     if grep -q auth-user-pass /etc/openvpn/config.ovpn; then
         sed -i "s/auth-user-pass.*/auth-user-pass \/etc\/openvpn\/credentials/g" /etc/openvpn/config.ovpn
