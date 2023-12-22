@@ -4,6 +4,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "qbittorrent",
   "source": "github",
-  "upstream_repo": "trigus42/qbittorrentvpn",
+  "upstream_repo": "linuxserver/docker-qbittorrent",
   "upstream_version": "4.6.2"
 }

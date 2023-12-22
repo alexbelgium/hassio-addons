@@ -16,6 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
+ARG BUILD_UPSTREAM="4.6.2"
 FROM ${BUILD_FROM}
 
 ##################
@@ -27,10 +28,17 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-USER root
-
-# GENERAL MODIFICATIONS
-#######################
+# Environment variables
+ENV \
+    DEBIAN_FRONTEND="noninteractive"\
+    LANG="C.UTF-8" \
+    PS1="$(whoami)@$(hostname):$(pwd)$ " \
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+    S6_CMD_WAIT_FOR_SERVICES=1 \
+    TERM="xterm-256color" \
+    HOME="/config" \
+    XDG_CONFIG_HOME="/config" \
+    XDG_DATA_HOME="/config"
 
 # Image specific modifications
 # hadolint ignore=DL4006
@@ -47,6 +55,11 @@ RUN \
     && curl -f -s -S -O -J -L "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null \
     && unzip -o vuetorrent.zip -d / >/dev/null \
     && rm vuetorrent.zip >/dev/null
+
+# Global LSIO modifications
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
+ARG CONFIGLOCATION="/config"
+RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 # ADD QBIT_MANAGE
 #################
@@ -67,13 +80,10 @@ RUN \
     BUILD_ARCH=$(uname -m) && \
     echo "${BUILD_ARCH}" && \
     BUILD_ARCH=${BUILD_ARCH:-x86} && \
-    if [[ "${BUILD_ARCH}" != *amd64* ]]; then apk add python3-dev; else apk add python3; fi && \    
+    if [[ "${BUILD_ARCH}" != *amd64* ]]; then apk add python3-dev; else apk add python3; fi && \
     ln -sf python3 /usr/bin/python && \
-    python3 -m ensurepip && \
-    ## Install other
-    pip3 install --no-cache --upgrade pip setuptools && \
-    apk add gcc musl-dev && \
-    pip3 install --no-cache-dir --upgrade --requirement /qbit_manage/requirements.txt --ignore-installed
+    apk add --no-cache py3-pip gcc musl-dev && \
+    pip3 install --break-system-packages --no-cache-dir --ignore-installed --upgrade --requirement /qbit_manage/requirements.txt
 
 ##################
 # 3 Install apps #
@@ -95,7 +105,7 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 #    && chmod a+x /etc/s6-overlay/s6-rc.d/$SCRIPTSNAME/* ; done; fi
 
 # Manual apps
-ARG PACKAGES="dos2unix"
+ARG PACKAGES="wireguard-tools"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
@@ -150,3 +160,12 @@ LABEL \
 #################
 # 6 Healthcheck #
 #################
+
+ENV HEALTH_PORT="" \
+    HEALTH_URL=""
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD pgrep qbittorrent || exit 1

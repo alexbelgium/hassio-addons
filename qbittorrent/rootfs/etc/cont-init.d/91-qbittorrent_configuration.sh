@@ -6,15 +6,11 @@ set -e
 # INIT   #
 ##########
 
-if [ -f /REBOOT ]; then
-  rm /REBOOT
-fi
-
 # Define preferences line
-CONFIG_LOCATION=/config/qBittorrent/config/
+CONFIG_LOCATION=/config/qBittorrent
 mkdir -p "$CONFIG_LOCATION"
 
-# copy default config
+# copy default config
 if [ ! -f "$CONFIG_LOCATION"/qBittorrent.conf ]; then
     cp /defaults/qBittorrent.conf "$CONFIG_LOCATION"/qBittorrent.conf
 fi
@@ -22,6 +18,10 @@ fi
 cd "$CONFIG_LOCATION"/ || true
 LINE=$(sed -n '/\[Preferences\]/=' qBittorrent.conf) || bashio::exit.nok "qBittorrent.conf not valid"
 LINE=$((LINE + 1))
+
+# Remove unused folders
+if [ -d "$CONFIG_LOCATION"/addons_config ]; then rm -r "$CONFIG_LOCATION"/addons_config; fi
+if [ -d "$CONFIG_LOCATION"/qBittorrent ]; then rm -r "$CONFIG_LOCATION"/qBittorrent; fi
 
 # Check file size
 ORIGINAL_SIZE="$(wc -c "$CONFIG_LOCATION"/qBittorrent.conf)"
@@ -61,7 +61,7 @@ if bashio::config.has_value 'SavePath'; then
 fi
 
 # Create default location
-if [ ! -d "$DOWNLOADS" ]; then 
+if [ ! -d "$DOWNLOADS" ]; then
     mkdir -p "$DOWNLOADS" || bashio::log.fatal "Error : folder defined in SavePath doesn't exist and can't be created. Check path"
 fi
 chown -R "$PUID:$PGID" "$DOWNLOADS" || bashio::log.fatal "Error, please check default save folder configuration in addon"
@@ -70,20 +70,45 @@ chown -R "$PUID:$PGID" "$DOWNLOADS" || bashio::log.fatal "Error, please check de
 # Avoid bugs #
 ##############
 
-sed -i -e '/CSRFProtection/d' \
-    -e '/ClickjackingProtection/d' \
-    -e '/HostHeaderValidation/d' \
-    -e '/Address/d' \
-    -e "$LINE i\WebUI\\\CSRFProtection=false" \
-    -e "$LINE i\WebUI\\\ClickjackingProtection=false" \
-    -e "$LINE i\WebUI\\\HostHeaderValidation=false" \
-    -e "$LINE i\WebUI\\\Address=\*" qBittorrent.conf
+sed -i -e "/CSRFProtection/d" \
+    -e "/ClickjackingProtection/d" \
+    -e "/HostHeaderValidation/d" \
+    -e "/WebUI\\\Address/d" \
+    -e "/\[Preferences\]/a \WebUI\\\CSRFProtection=false" \
+    -e "/\[Preferences\]/a \WebUI\\\ClickjackingProtection=false" \
+    -e "/\[Preferences\]/a \WebUI\\\HostHeaderValidation=false" \
+    -e "/\[Preferences\]/a \WebUI\\\Address=\*" qBittorrent.conf
+
+#sed -i '/WebUI\ReverseProxySupportEnabled/d' qBittorrent.conf
+#sed -i "$LINE i\WebUI\\\ReverseProxySupportEnabled=true" qBittorrent.conf
 
 ################
 # Correct Port #
 ################
 
+# sed -i '/PortRangeMin/d' qBittorrent.conf
+# sed -i "$LINE i\Connection\\\PortRangeMin=6881" qBittorrent.conf
 sed -i "s|6881|59595|g" qBittorrent.conf # Correction if required
+
+################
+# SSL CONFIG   #
+################
+
+# Clean data
+sed -i '/HTTPS/d' qBittorrent.conf
+
+bashio::config.require.ssl
+if bashio::config.true 'ssl'; then
+    bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+    #set variables
+    CERTFILE=$(bashio::config 'certfile')
+    KEYFILE=$(bashio::config 'keyfile')
+
+    #Modify configuration
+    sed -i "$LINE i\WebUI\\\HTTPS\\\Enabled=True" qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\HTTPS\\\CertificatePath=/ssl/$CERTFILE" qBittorrent.conf
+    sed -i "$LINE i\WebUI\\\HTTPS\\\KeyPath=/ssl/$KEYFILE" qBittorrent.conf
+fi
 
 ################
 # WHITELIST    #
@@ -91,7 +116,7 @@ sed -i "s|6881|59595|g" qBittorrent.conf # Correction if required
 
 cd "$CONFIG_LOCATION"/ || true
 
-WHITELIST="$(bashio::config 'LAN_NETWORK')"
+WHITELIST="$(bashio::config 'whitelist')"
 #clean data
 sed -i '/AuthSubnetWhitelist/d' qBittorrent.conf
 
@@ -109,32 +134,21 @@ fi
 ###############
 
 cd "$CONFIG_LOCATION"/ || true
-if bashio::config.has_value 'QBT_USERNAME'; then
-    QBT_USERNAME=$(bashio::config 'QBT_USERNAME')
+if bashio::config.has_value 'Username'; then
+    USERNAME="$(bashio::config 'Username')"
 else
-    QBT_USERNAME="admin"
+    USERNAME=admin
 fi
+
 #clean data
 sed -i '/WebUI\\\Username/d' qBittorrent.conf
 #add data
-sed -i "/\[Preferences\]/a\WebUI\\\Username=$QBT_USERNAME" qBittorrent.conf
-bashio::log.info "WEBUI username set to $QBT_USERNAME"
+sed -i "/\[Preferences\]/a\WebUI\\\Username=$USERNAME" qBittorrent.conf
+bashio::log.info "WEBUI username set to $USERNAME"
 
-###############
-# PASSWORD    #
-###############
-
-# Set initial password to homeassistant
-cd "$CONFIG_LOCATION"/ || true
-if ! grep -q "Password_PBKDF2" qBittorrent.conf; then
-    function escape_special_characters() {
-        local value="$1"
-        value=$(echo "$value" | sed 's/[&/\;.<>`$*(){}[\]~^|!?@%#=,:+_-]/\\&/g')
-        echo "$value"
-    }
-    PBKDF2="UDxNW6zG8wJHG9PvnGFP4A==:gJZEXLbR2XYNN042G4ygLMvZi2BhHm2m6Soz6GVCrCuVZH6OSkUan7AvUDEiSodHckUm8oNTkx9atQwcUf/JLQ=="
-    PBKDF2="$(escape_special_characters "$PBKDF2")"
-    sed -i "/\[Preferences\]/a\WebUI\\\Password_PBKDF2=\"@ByteArray($PBKDF2)\"" qBittorrent.conf
+# Add default password if not existing
+if ! grep -q Password_PBKDF2 qBittorrent.conf; then
+    sed -i "/\[Preferences\]/a\WebUI\\\Password_PBKDF2=\"@ByteArray(cps93Gf8ma8EM3QRon+spg==:wYFoMNVmdiqzWYQ6mFrvET+RRbBSIPVfXFFeEy0ZEagxvNuEF7uGVnG5iq8oeu38kGLtmJqCM2w8cTdtORDP2A==)\"" qBittorrent.conf
 fi
 
 ####################
@@ -146,6 +160,7 @@ fi
 # Check file size
 if [[ "$ORIGINAL_SIZE" != "$(wc -c "$CONFIG_LOCATION"/qBittorrent.conf)" ]]; then
     bashio::log.warning "Configuration changed, rebooting"
+    sleep 5
     bashio::addon.restart
 fi
 
@@ -219,5 +234,5 @@ fi
 # CLOSE  #
 ##########
 
-bashio::log.info "Default username/password : $QBT_USERNAME/homeassistant. Please change your password on first connection"
+bashio::log.info "Default username/password : $USERNAME/homeassistant"
 bashio::log.info "Configuration can be found in $CONFIG_LOCATION"
