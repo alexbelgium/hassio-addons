@@ -1,6 +1,5 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-set -e
 
 WEBUI_PORT=${WEBUI_PORT:-8080}
 
@@ -9,8 +8,7 @@ if bashio::config.true 'silent'; then
 fi
 
 if bashio::config.true 'openvpn_enabled'; then
-    cd /etc/openvpn || true
-    exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh
+    exec /usr/sbin/openvpn --config /etc/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh --pull-filter ignore "route-ipv6" --pull-filter ignore "ifconfig-ipv6" --pull-filter ignore "tun-ipv6" --pull-filter ignore "redirect-gateway ipv6" --pull-filter ignore "dhcp-option DNS6"
 else
     if bashio::config.true 'silent'; then
     exec \
