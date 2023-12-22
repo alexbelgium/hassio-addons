@@ -137,7 +137,7 @@ cd "$CONFIG_LOCATION"/ || true
 if bashio::config.has_value 'Username'; then
     USERNAME="$(bashio::config 'Username')"
 else
-    USERNAME=admin
+    USERNAME="admin"
 fi
 
 #clean data
