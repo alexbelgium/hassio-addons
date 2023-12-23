@@ -100,6 +100,6 @@
   "slug": "joplin",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.13.5-3",
+  "version": "2.14.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:22300]"
 }
