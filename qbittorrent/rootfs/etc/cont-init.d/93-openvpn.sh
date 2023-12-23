@@ -14,8 +14,16 @@ if bashio::config.true 'openvpn_enabled'; then
     bashio::log.info "Openvpn enabled, configuring"
     bashio::log.info "----------------------------"
 
+    # If openvpn_config not set, but folder is not empty
+    if [ ! "$(ls -A /config/openvpn/*.ovpn 2>/dev/null)" ]; then
+        bashio::exit.nok "Configured ovpn file : $openvpn_config not found! Are you sure you added it in /addon_configs/$HOSTNAME/openvpn using the Filebrowser addon ?"
+    fi
+
     # Get current ip
     curl -s ipecho.net/plain > /currentip
+
+    # Standardize lf
+    find /config/openvpn/ -type f -print0 | xargs -0 dos2unix -ic0 | xargs -0 dos2unix -b
 
     #####################
     # CONFIGURE OPENVPN #
@@ -37,13 +45,10 @@ if bashio::config.true 'openvpn_enabled'; then
             else
                 bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
             fi
-        # File not found
-        else
-            bashio::exit.nok "Configured ovpn file : $openvpn_config not found! Are you sure you added it in /addon_configs/$HOSTNAME/openvpn using the Filebrowser addon ?"
         fi
 
     # If openvpn_config not set, but folder is not empty
-    elif [ "$(ls -A /config/openvpn/*.ovpn 2>/dev/null)" ]; then
+    else
             # Look for openvpn files
             # Wildcard search for openvpn config files and store results in array
             mapfile -t VPN_CONFIGS < <( find /config/openvpn -maxdepth 1 -name "*.ovpn" -print )
@@ -56,10 +61,6 @@ if bashio::config.true 'openvpn_enabled'; then
             cp /config/openvpn/* /etc/openvpn/
             # Standardize file
             cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
-
-    # If openvpn_config not set, and folder is empty
-    else
-        bashio::exit.nok "Openvpn enabled, but no .ovpn files in the /addon_configs/$HOSTNAME/openvpn folder ! Exiting"
     fi
 
     # Correct paths
