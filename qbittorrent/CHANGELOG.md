@@ -1,9 +1,5 @@
 ### 4.6.2_26_reverted (23-12-2023)
 - Minor bugs fixed
-### 4.6.2_25_reverted (22-12-2023)
-- Minor bugs fixed
-### 4.6.2_24_reverted (22-12-2023)
-- Minor bugs fixed
 - &#9888; BREAKING CHANGE : I've decided to revert to the initial upstream image, apologies for this whole incovenience. After receiving many constructive (or plainly negative) feedbacks I have decided it was just not worth it to implement a new upstream image supposed to prevent ip leak for openvpn, plus wireguard support, and decided to just restore my own code. I've still kept qbit_manage, and will perhaps implement wireguard in the future but with my own code. As the databases were migrated for users to the new config locations, I've decided to keep it like that. It is more sustainable as HA is pushing in this direction and allows to backup the config with the addon (which was not the case previously).
 
 - &#9888; ACTION (preferred) : Please restore a backup prior to the versions containing wireguard_openvpn in the name, then update (as was mentioned in the 4.6.2-5wireguard_openvpn changelog asking a full backup prior to update). This will make sure all your options are kept and you don't need to reconfigure
