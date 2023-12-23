@@ -65,11 +65,6 @@ if bashio::config.true 'openvpn_enabled'; then
     # Correct paths
     sed -i "s=/etc/openvpn=/config/openvpn=g" /etc/openvpn/config.ovpn
 
-    # Remove ipv6
-    if grep -q "ipv6" /etc/openvpn/config.ovpn; then
-      bashio::log.warning "ipv6 configured in the ovpn file but not compatible with the addon. You should remove it."
-    fi
-
     # Set credentials
     if bashio::config.has_value "openvpn_username"; then
         openvpn_username=$(bashio::config 'openvpn_username')
