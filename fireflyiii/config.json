@@ -99,6 +99,6 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "6.0.30-3",
+  "version": "6.1.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
