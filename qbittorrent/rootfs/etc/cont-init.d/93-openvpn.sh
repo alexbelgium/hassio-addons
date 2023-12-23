@@ -49,12 +49,12 @@ do
       fi
     fi
   fi
-done < "$1"
+done < "$file"
+
+# Standardize lf
+dos2unix "$file"
     }
-
-    # Standardize lf
-    #find /config/openvpn/ -type f -print0 | xargs -0 dos2unix -ic0 | xargs -0 dos2unix -b
-
+    
     #####################
     # CONFIGURE OPENVPN #
     #####################
