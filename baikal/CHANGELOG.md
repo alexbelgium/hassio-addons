@@ -1,4 +1,7 @@
 
+## 0.9.4 (23-12-2023)
+- Update to latest version from ckulka/baikal-docker
+
 ## 0.9.3+msmtp (04-11-2023)
 - Update to latest version from ckulka/baikal-docker
 - Implemented healthcheck
