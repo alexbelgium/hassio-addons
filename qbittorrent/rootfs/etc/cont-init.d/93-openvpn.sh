@@ -22,6 +22,33 @@ if bashio::config.true 'openvpn_enabled'; then
     # Get current ip
     curl -s ipecho.net/plain > /currentip
 
+    # Function to check for files path
+    function check_path () {
+
+# Loop through each line of the input file
+while read line
+do
+  # Check if the line contains a txt file
+  if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
+    # Extract the txt file name from the line
+    file_name="$(echo "$line" | awk -F' ' '{print $2}')"
+    # Check if the txt file exists
+    if [ ! -f "$file_name" ]; then
+      # Check if the txt file exists in the /config/openvpn/ directory
+      if [ -f "/config/openvpn/$file_name" ]; then
+        # Append /config/openvpn/ in front of the original txt file in the ovpn file
+        sed -i "s/$file_name/\/config\/openvpn\/$file_name/" "$file"
+        # Print a success message
+        bashio::log.warning "Appended /config/openvpn/ to $file_name in $file"
+      else
+        # Print an error message
+        bashio::log.warning "$file_name is referenced in your ovpn file but does not exist in the /config/openvpn/ directory"
+      fi
+    fi
+  fi
+done < "$1"
+    }
+
     # Standardize lf
     #find /config/openvpn/ -type f -print0 | xargs -0 dos2unix -ic0 | xargs -0 dos2unix -b
 
@@ -37,6 +64,8 @@ if bashio::config.true 'openvpn_enabled'; then
             # If correct type
             if [[ "$openvpn_config" == *".ovpn" ]] || [[ "$openvpn_config" == *".conf" ]]; then
                 echo "... configured ovpn file : using /addon_configs/$HOSTNAME/openvpn/$openvpn_config"
+                # Check path
+                check_path /config/openvpn/"$openvpn_config"
                 # Copy potential additional files
                 cp /config/openvpn/* /etc/openvpn/
                 # Standardize file                
@@ -57,6 +86,8 @@ if bashio::config.true 'openvpn_enabled'; then
             # Get the VPN_CONFIG name without the path and extension
             openvpn_config="${VPN_CONFIG##*/}"
             echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${openvpn_config}"
+            # Check path
+            check_path /config/openvpn/"${openvpn_config}"
             # Copy potential additional files
             cp /config/openvpn/* /etc/openvpn/
             # Standardize file
