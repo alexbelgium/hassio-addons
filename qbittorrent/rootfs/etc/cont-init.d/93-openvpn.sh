@@ -38,11 +38,11 @@ do
     # Check if the txt file exists
     if [ ! -f "$file_name" ]; then
       # Check if the txt file exists in the /config/openvpn/ directory
-      if [ -f "/config/openvpn/$file_name" ]; then
+      if [ -f "/config/openvpn/${file_name##*/}" ]; then
         # Append /config/openvpn/ in front of the original txt file in the ovpn file
-        sed -i "s/$file_name/\/config\/openvpn\/$file_name/" "$file"
+        sed -i "s/$file_name/\/config\/openvpn\/${file_name##*/}/g" "$file"
         # Print a success message
-        bashio::log.warning "Appended /config/openvpn/ to $file_name in $file"
+        bashio::log.warning "Appended /config/openvpn/ to ${file_name##*/} in $file"
       else
         # Print an error message
         bashio::log.warning "$file_name is referenced in your ovpn file but does not exist, and can't be found either in the /config/openvpn/ directory"
