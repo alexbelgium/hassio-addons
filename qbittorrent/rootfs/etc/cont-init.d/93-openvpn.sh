@@ -45,7 +45,7 @@ do
         bashio::log.warning "Appended /config/openvpn/ to $file_name in $file"
       else
         # Print an error message
-        bashio::log.warning "$file_name is referenced in your ovpn file but does not exist in the /config/openvpn/ directory"
+        bashio::log.warning "$file_name is referenced in your ovpn file but does not exist, and can't be found either in the /config/openvpn/ directory"
       fi
     fi
   fi
