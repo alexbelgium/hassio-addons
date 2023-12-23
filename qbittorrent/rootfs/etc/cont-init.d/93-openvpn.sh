@@ -25,6 +25,9 @@ if bashio::config.true 'openvpn_enabled'; then
     # Function to check for files path
     function check_path () {
 
+# Get variable
+file="$1"
+
 # Loop through each line of the input file
 while read line
 do
