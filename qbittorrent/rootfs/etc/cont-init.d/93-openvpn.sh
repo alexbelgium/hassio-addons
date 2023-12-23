@@ -23,7 +23,7 @@ if bashio::config.true 'openvpn_enabled'; then
     curl -s ipecho.net/plain > /currentip
 
     # Standardize lf
-    find /config/openvpn/ -type f -print0 | xargs -0 dos2unix -ic0 | xargs -0 dos2unix -b
+    #find /config/openvpn/ -type f -print0 | xargs -0 dos2unix -ic0 | xargs -0 dos2unix -b
 
     #####################
     # CONFIGURE OPENVPN #
