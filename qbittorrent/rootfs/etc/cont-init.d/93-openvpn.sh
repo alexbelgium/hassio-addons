@@ -59,7 +59,7 @@ if bashio::config.true 'openvpn_enabled'; then
 
     # If openvpn_config not set, and folder is empty
     else
-            bashio::exit.nok "Openvpn enabled, but no .ovpn files in the /addon_configs/$HOSTNAME/openvpn folder ! Exiting"        
+        bashio::exit.nok "Openvpn enabled, but no .ovpn files in the /addon_configs/$HOSTNAME/openvpn folder ! Exiting"
     fi
 
     # Correct paths
