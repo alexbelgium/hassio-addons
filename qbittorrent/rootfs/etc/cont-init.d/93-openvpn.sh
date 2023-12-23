@@ -88,12 +88,14 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Permissions
+    chmod 755 /config/openvpn/*
     chmod 755 /etc/openvpn/*
     chmod 600 /etc/openvpn/credentials
     chmod 755 /etc/openvpn/up.sh
     chmod 755 /etc/openvpn/down.sh
     chmod 755 /etc/openvpn/up-qbittorrent.sh
     chmod +x /etc/openvpn/up.sh
+    chmod +x /etc/openvpn/down.sh
     chmod +x /etc/openvpn/up-qbittorrent.sh
 
     echo "... openvpn correctly set, qbittorrent will run tunnelled through openvpn"
