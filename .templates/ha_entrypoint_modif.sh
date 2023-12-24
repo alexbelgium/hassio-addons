@@ -10,7 +10,7 @@ set -e
 
 for folders in /default /defaults /etc; do
   if [ -d "$folders" ]; then
-    find "$folders" -type f -not -path '*/\.*' -exec grep -Il '.' {} \ -print0; | xargs -0 -d '\n' -L 1 dos2unix -k
+    find "$folders" -type f -not -path '*/\.*' -exec grep -Il '.' {} \; -print0 | xargs -0 -d '\n' -L 1 dos2unix -k
   fi
 done
 
