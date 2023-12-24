@@ -22,12 +22,12 @@ find /homeassistant/addons_config -maxdepth 1 -type l -delete
 
 # Remove erroneous folders
 if [ -d /homeassistant ]; then
-  if [ -d /config/addons_config ]; then
-    rm -r /config/addons_config
-  fi
-  if [ -d /config/addons_autoscripts ]; then
-    rm -r /config/addons_autoscripts
-  fi
+    if [ -d /config/addons_config ]; then
+        rm -r /config/addons_config
+    fi
+    if [ -d /config/addons_autoscripts ]; then
+        rm -r /config/addons_autoscripts
+    fi
 fi
 
 # Create symlinks

@@ -5,7 +5,7 @@ set -e
 
 # Set configuration directory
 if [ -d /home/node/.signalk ]; then
-  rm -r /home/node/.signalk
+    rm -r /home/node/.signalk
 fi
 ln -sf /config /home/node/.signalk
 chown -R node:node /config

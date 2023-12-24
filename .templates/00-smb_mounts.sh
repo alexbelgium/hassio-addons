@@ -9,50 +9,50 @@ set -e
 
 test_mount () {
 
-        # Set initial test
-        MOUNTED=false
-        ERROR_MOUNT=false
+    # Set initial test
+    MOUNTED=false
+    ERROR_MOUNT=false
 
-        # Exit if not mounted
-        if ! mountpoint -q /mnt/"$diskname"; then
-            return 0
-        fi
-           
-        # Exit if can't write
-        # shellcheck disable=SC2015
-        mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" || ERROR_MOUNT=true
-        if [[ "$ERROR_MOUNT" == "true" ]]; then
-                # Test write permissions
-                if [[ "$MOUNTOPTIONS" == *"noserverino"* ]]; then
-                        bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
-                else
-                        MOUNTOPTIONS="$MOUNTOPTIONS,noserverino"
-                        echo "... testing with noserverino"
-                        mount_drive "$MOUNTOPTIONS"
-                fi
+    # Exit if not mounted
+    if ! mountpoint -q /mnt/"$diskname"; then
         return 0
-        fi
+    fi
 
-        # Set correctly mounted bit
-        MOUNTED=true
+    # Exit if can't write
+    # shellcheck disable=SC2015
+    mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" || ERROR_MOUNT=true
+    if [[ "$ERROR_MOUNT" == "true" ]]; then
+        # Test write permissions
+        if [[ "$MOUNTOPTIONS" == *"noserverino"* ]]; then
+            bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
+        else
+            MOUNTOPTIONS="$MOUNTOPTIONS,noserverino"
+            echo "... testing with noserverino"
+            mount_drive "$MOUNTOPTIONS"
+        fi
         return 0
+    fi
+
+    # Set correctly mounted bit
+    MOUNTED=true
+    return 0
 
 }
 
 mount_drive () {
 
-        # Define options
-        MOUNTED=true
-        MOUNTOPTIONS="$1"
+    # Define options
+    MOUNTED=true
+    MOUNTOPTIONS="$1"
 
-        # Try mounting
-        mount -t cifs -o "$MOUNTOPTIONS" "$disk" /mnt/"$diskname" 2>ERRORCODE || MOUNTED=false
+    # Try mounting
+    mount -t cifs -o "$MOUNTOPTIONS" "$disk" /mnt/"$diskname" 2>ERRORCODE || MOUNTED=false
 
-        # Test if succesful
-        if [[ "$MOUNTED" == "true" ]]; then
-                # shellcheck disable=SC2015
-                test_mount
-        fi
+    # Test if succesful
+    if [[ "$MOUNTED" == "true" ]]; then
+        # shellcheck disable=SC2015
+        test_mount
+    fi
 
 }
 
@@ -137,7 +137,7 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Quickly try to mount with defaults
         mount_drive "rw,file_mode=0775,dir_mode=0775,username=${USERNAME},password=${PASSWORD},nobrl${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}${DOMAIN}"
-        
+
         # Deeper analysis if failed
         if [ "$MOUNTED" = false ]; then
 
@@ -189,18 +189,18 @@ if bashio::config.has_value 'networkdisks'; then
             # Manage output
             if [ -n "$SMBVERS" ]; then
                 case $SMBVERS in
-                  202)
-                    SMBVERS="2.0"
-                    ;;
-                  21)
-                    SMBVERS="2.1"
-                    ;;
-                  302)
-                    SMBVERS="3.02"
-                    ;;
-                  311)
-                    SMBVERS="3.1.1"
-                    ;;
+                    202)
+                        SMBVERS="2.0"
+                        ;;
+                    21)
+                        SMBVERS="2.1"
+                        ;;
+                    302)
+                        SMBVERS="3.02"
+                        ;;
+                    311)
+                        SMBVERS="3.1.1"
+                        ;;
                 esac
                 echo "...... SMB version detected : $SMBVERS"
                 SMBVERS=",vers=$SMBVERS"
@@ -217,7 +217,7 @@ if bashio::config.has_value 'networkdisks'; then
             #######################################
             for SECVERS in "$SECVERS" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
                 if [ "$MOUNTED" = false ]; then
-                        mount_drive "rw,file_mode=0775,dir_mode=0775,username=${USERNAME},password=${PASSWORD},nobrl${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}${DOMAIN}"
+                    mount_drive "rw,file_mode=0775,dir_mode=0775,username=${USERNAME},password=${PASSWORD},nobrl${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}${DOMAIN}"
                 fi
             done
 

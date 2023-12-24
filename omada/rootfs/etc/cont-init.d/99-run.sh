@@ -39,7 +39,7 @@ for item in "$CONFIGSOURCE"/*; do
     # Get the base name of the file or folder
     base_name=$(basename "$item")
     # Create a symbolic link in the current working directory
-    ln -s "$item" /opt/tplink/EAPController/data/"$base_name"    
+    ln -s "$item" /opt/tplink/EAPController/data/"$base_name"
     echo "Created symlink for '$base_name'"
 done
 

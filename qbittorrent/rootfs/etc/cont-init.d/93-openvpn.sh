@@ -25,41 +25,41 @@ if bashio::config.true 'openvpn_enabled'; then
     # Function to check for files path
     function check_path () {
 
-# Get variable
-file="$1"
+        # Get variable
+        file="$1"
 
-# Loop through each line of the input file
-while read line
-do
-  # Check if the line contains a txt file
-  if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
-    # Extract the txt file name from the line
-    file_name="$(echo "$line" | awk -F' ' '{print $2}')"
-    # Check if the txt file exists
-    if [ ! -f "$file_name" ]; then
-      # Check if the txt file exists in the /config/openvpn/ directory
-      if [ -f "/config/openvpn/${file_name##*/}" ]; then
-        # Append /config/openvpn/ in front of the original txt file in the ovpn file
-        sed -i "s/$file_name/\/config\/openvpn\/${file_name##*/}/g" "$file"
-        # Print a success message
-        bashio::log.warning "Appended /config/openvpn/ to ${file_name##*/} in $file"
-      else
-        # Print an error message
-        bashio::log.warning "$file_name is referenced in your ovpn file but does not exist, and can't be found either in the /config/openvpn/ directory"
-      fi
-    fi
-  fi
-done < "$file"
+        # Loop through each line of the input file
+        while read line
+        do
+            # Check if the line contains a txt file
+            if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
+                # Extract the txt file name from the line
+                file_name="$(echo "$line" | awk -F' ' '{print $2}')"
+                # Check if the txt file exists
+                if [ ! -f "$file_name" ]; then
+                    # Check if the txt file exists in the /config/openvpn/ directory
+                    if [ -f "/config/openvpn/${file_name##*/}" ]; then
+                        # Append /config/openvpn/ in front of the original txt file in the ovpn file
+                        sed -i "s/$file_name/\/config\/openvpn\/${file_name##*/}/g" "$file"
+                        # Print a success message
+                        bashio::log.warning "Appended /config/openvpn/ to ${file_name##*/} in $file"
+                    else
+                        # Print an error message
+                        bashio::log.warning "$file_name is referenced in your ovpn file but does not exist, and can't be found either in the /config/openvpn/ directory"
+                    fi
+                fi
+            fi
+        done < "$file"
 
-# Standardize lf
-dos2unix "$file"
+        # Standardize lf
+        dos2unix "$file"
 
 
-    # Correct paths
-    sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
+        # Correct paths
+        sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
 
     }
-    
+
     #####################
     # CONFIGURE OPENVPN #
     #####################
@@ -76,30 +76,30 @@ dos2unix "$file"
                 check_path /config/openvpn/"$openvpn_config"
                 # Copy potential additional files
                 cp /config/openvpn/* /etc/openvpn/
-                # Standardize file                
+                # Standardize file
                 cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
-            # Not correct type
+                # Not correct type
             else
                 bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
             fi
         fi
 
-    # If openvpn_config not set, but folder is not empty
+        # If openvpn_config not set, but folder is not empty
     else
-            # Look for openvpn files
-            # Wildcard search for openvpn config files and store results in array
-            mapfile -t VPN_CONFIGS < <( find /config/openvpn -maxdepth 1 -name "*.ovpn" -print )
-            # Choose random config
-            VPN_CONFIG="${VPN_CONFIGS[$RANDOM % ${#VPN_CONFIGS[@]}]}"
-            # Get the VPN_CONFIG name without the path and extension
-            openvpn_config="${VPN_CONFIG##*/}"
-            echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${openvpn_config}"
-            # Check path
-            check_path /config/openvpn/"${openvpn_config}"
-            # Copy potential additional files
-            cp /config/openvpn/* /etc/openvpn/
-            # Standardize file
-            cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
+        # Look for openvpn files
+        # Wildcard search for openvpn config files and store results in array
+        mapfile -t VPN_CONFIGS < <( find /config/openvpn -maxdepth 1 -name "*.ovpn" -print )
+        # Choose random config
+        VPN_CONFIG="${VPN_CONFIGS[$RANDOM % ${#VPN_CONFIGS[@]}]}"
+        # Get the VPN_CONFIG name without the path and extension
+        openvpn_config="${VPN_CONFIG##*/}"
+        echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${openvpn_config}"
+        # Check path
+        check_path /config/openvpn/"${openvpn_config}"
+        # Copy potential additional files
+        cp /config/openvpn/* /etc/openvpn/
+        # Standardize file
+        cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
     fi
 
     # Set credentials
