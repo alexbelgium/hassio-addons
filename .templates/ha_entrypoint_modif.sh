@@ -25,6 +25,10 @@ if [ -d /etc/services.d ]; then
     chmod -R 755 /etc/services.d
 fi
 
+if [ -d /etc/s6-rc.d ]; then
+    chmod -R 755 /etc/s6-rc.d
+fi
+
 # Correct shebang in entrypoint
 ###############################
 
