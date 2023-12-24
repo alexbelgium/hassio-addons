@@ -4,25 +4,36 @@ on:
   schedule:
     - cron: "0 0 * * 0"
   workflow_dispatch:
-      
+
+concurrency:
+  group: lint-bash-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  beautify:
+  lint-bash:
+    name: Lint Bash Scripts
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout
+      - name: Checkout Git Repository
         uses: actions/checkout@v4
+
+      - name: Set up Python Environment
+        uses: actions/setup-python@v4
         with:
-          ref: ${{ github.head_ref }}
-      - uses: actions/setup-python@v3
-      - name: "Install beautify"
-        uses: BSFishy/pip-action@v1
-        with:
-          packages: |
-            beautysh
-      - name: "Run beautify"
+          python-version: "3.11"
+
+      - name: Install Beautysh
+        run: pip install beautysh
+
+      - name: Run Beautysh
         run: |
-          find . -name '*.sh' -print0 | xargs -0 beautysh --indent-size 4
+          shopt -s globstar nullglob
+          if compgen -G "**/*.sh" > /dev/null; then
+            beautysh **/*.sh --indent-size 4 --check
+          fi
+          shopt -u globstar nullglob  
+
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
