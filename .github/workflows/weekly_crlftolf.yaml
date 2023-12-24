@@ -30,18 +30,16 @@ jobs:
 
       - name: Dos2Unix Everything
         run: |
-          set -x; set +e
+          #Presets
+          set +x ; set +e
+          #--------------#
           cd "$GITHUB_WORKSPACE/main"
-          find . -type f -exec dos2unix {} \; 2>/dev/null
-          find . -type f -exec dos2unix {} \;
-          find ".github/workflows" -type f -name '*yaml*' -name '*yml*' -exec dos2unix {} \; 2>/dev/null
+          find . -type f ! -path "./.git/*" -exec dos2unix {} \; 2>/dev/null
         continue-on-error: true
-        
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           repository: ./main        
-          commit_user_name: Azathothas # defaults to "github-actions[bot]"
-          commit_user_email: AjamX101@gmail.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
           commit_message: "✅ Dos2Unix-fied 🐧🖳 Everything "
           #push_options: '--force'
 
