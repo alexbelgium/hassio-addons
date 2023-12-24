@@ -5,6 +5,15 @@ set -e
 # Global modifications before entrypoint #
 ##########################################
 
+# Ensure lf
+###########
+
+for folders in /default /defaults /etc; do
+  if [ -d "$folders" ]; then
+    find "$folders" -type f -not -path '*/\.*' -exec grep -Il '.' {} \; | xargs -d '\n' -L 1 dos2unix -k
+  fi
+done
+
 # Corrects permissions for s6 v3
 ################################
 
