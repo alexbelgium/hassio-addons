@@ -53,6 +53,11 @@ done < "$file"
 
 # Standardize lf
 dos2unix "$file"
+
+
+    # Correct paths
+    sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
+
     }
     
     #####################
@@ -97,9 +102,6 @@ dos2unix "$file"
             cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
     fi
 
-    # Correct paths
-    sed -i "s=/etc/openvpn=/config/openvpn=g" /etc/openvpn/config.ovpn
-
     # Set credentials
     if bashio::config.has_value "openvpn_username"; then
         openvpn_username=$(bashio::config 'openvpn_username')
@@ -117,6 +119,7 @@ dos2unix "$file"
     # Add credentials file
     if grep -q auth-user-pass /etc/openvpn/config.ovpn; then
         sed -i "s/auth-user-pass.*/auth-user-pass \/etc\/openvpn\/credentials/g" /etc/openvpn/config.ovpn
+        bashio::log.warning "auth-user-pass specified, will be replaced by the addon options' username and password"
     else
         echo "auth-user-pass /etc/openvpn/credentials" >> /etc/openvpn/config.ovpn
     fi
