@@ -1,45 +1,38 @@
 # yamllint disable rule:line-length
 ---
-name: Convert crlf to lf
-
-on:
-  schedule:
-    - cron: "0 0 * * 0"
-  workflow_dispatch:
-
-env:
-  USER_AGENT: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0"
-  
+# This workflow finds and fixes CRLF endings in a repository
+name: Fix CRLF Endings
+on: push # Trigger the workflow on push event
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    
-    permissions:
-      contents: write
-      
-    steps:        
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  fix-crlf:
+    name: Fix CRLF Endings
+    runs-on: ubuntu-latest # Use a Linux runner
+    steps:
+      - name: Checkout repository contents
+        uses: actions/checkout@v2 # Use the checkout action
+      - name: Find files with CRLF endings
+        uses: erclu/check-crlf@v1.2.0 # Use the check-crlf action
+        id: check-crlf # Assign an id to this step
         with:
-          path: main
-
-      - name: Setup Env
+          # Specify the paths to check
+          path: |
+            ./*
+            !.git
+            !*.png
+            !*.jpg
+            !*.bin
+      - name: Apply dos2unix to files with CRLF endings
         run: |
-          sudo apt update -y
-          sudo apt install dos2unix -y
-
-      - name: Dos2Unix Everything
-        run: |
-          #Presets
-          set +x ; set +e
-          #--------------#
-          cd "$GITHUB_WORKSPACE/main"
-          find . -type f ! -path "./.git/*" -exec dos2unix {} \; 2>/dev/null
-        continue-on-error: true
-
-      - uses: stefanzweifel/git-auto-commit-action@v4
+          # Loop through each file and apply dos2unix
+          for f in ${{ steps.check-crlf.outputs.files }}; do
+            # Apply dos2unix and keep the original timestamp
+            dos2unix -k "$f"
+          done
+      - name: Create a pull request with the fixed files
+        uses: peter-evans/create-pull-request@v3 # Use the create-pull-request action
         with:
-          repository: ./main        
-          commit_message: "✅ Dos2Unix-fied 🐧🖳 Everything "
-          #push_options: '--force'
-
+          # Specify the pull request details
+          title: Fix CRLF Endings
+          commit-message: Apply dos2unix to files with CRLF endings
+          branch: fix-crlf-endings
+          delete-branch: true
