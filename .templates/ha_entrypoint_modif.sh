@@ -12,7 +12,7 @@ set -e
 # It skips hidden files, binary files, and files without crlf eol
 
 # Find all non-hidden files in /etc that contain crlf eol
-FILES=$(find /etc -type f -not -path '*/\.*' -exec grep -Il $'\r' {} \;)
+FILES=$(find /etc /defaults -type f -not -path '*/\.*' -exec grep -Il $'\r' {} \;)
 
 # Loop through each file and apply dos2unix
 for f in $FILES; do
