@@ -8,9 +8,18 @@ set -e
 # Ensure lf
 ###########
 
-for folders in /default /defaults /etc; do
-  if [ -d "$folders" ]; then
-    find "$folders" -type f -print0 | xargs -0 dos2unix
+# This script recursively applies dos2unix to all files in /etc
+# It skips hidden files, binary files, and files without crlf eol
+
+# Find all non-hidden files in /etc that contain crlf eol
+FILES=$(find /etc -type f -not -path '*/\.*' -exec grep -Il $'\r' {} \;)
+
+# Loop through each file and apply dos2unix
+for f in $FILES; do
+  # Check if the file is a text file
+  if file "$f" | grep -q text; then
+    # Apply dos2unix and keep the original timestamp
+    dos2unix -k "$f"
   fi
 done
 
