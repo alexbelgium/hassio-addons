@@ -2,7 +2,10 @@
 ---
 # This workflow finds and fixes CRLF endings in a repository
 name: Fix CRLF Endings
-on: push # Trigger the workflow on push event
+on: 
+  push # Trigger the workflow on push event
+  workflow_dispatch:
+
 jobs:
   fix-crlf:
     name: Fix CRLF Endings
