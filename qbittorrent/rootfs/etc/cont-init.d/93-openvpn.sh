@@ -40,7 +40,7 @@ if bashio::config.true 'openvpn_enabled'; then
                     # Check if the txt file exists in the /config/openvpn/ directory
                     if [ -f "/config/openvpn/${file_name##*/}" ]; then
                         # Append /config/openvpn/ in front of the original txt file in the ovpn file
-                        sed -i "s/$file_name/\/config\/openvpn\/${file_name##*/}/g" "$file"
+                        sed -i "s|$file_name|\/config\/openvpn\/${file_name##*/}|g" "$file"
                         # Print a success message
                         bashio::log.warning "Appended /config/openvpn/ to ${file_name##*/} in $file"
                     else
