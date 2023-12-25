@@ -32,7 +32,7 @@ jobs:
             dos2unix -k "$f"
           done
       - name: Create a pull request with the fixed files
-        uses: peter-evans/create-pull-request@v3 # Use the create-pull-request action
+        uses: peter-evans/create-pull-request@v5 # Use the create-pull-request action
         with:
           # Specify the pull request details
           title: Fix CRLF Endings
