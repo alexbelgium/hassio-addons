@@ -28,7 +28,7 @@ test_mount () {
         else
             MOUNTOPTIONS="$MOUNTOPTIONS,noserverino"
             echo "... testing with noserverino"
-            mount_drive "$MOUNTOPTIONS"
+            mount_drive "$MOUNTOPTIONS" || bashio::log.warning "Read-only mount confirmed"
         fi
         return 0
     fi
