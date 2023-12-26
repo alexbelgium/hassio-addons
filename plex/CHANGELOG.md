@@ -1,3 +1,5 @@
+### 1.32.8.7639-fb6452ebf-ls197-2 (26-12-2023)
+- Minor bugs fixed
 
 ## 1.32.8.7639-fb6452ebf-ls197 (23-12-2023)
 - Update to latest version from linuxserver/docker-plex
