@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Unpackerr] does not respect unpackerr.conf settings (opened 2023-12-22)](https://github.com/alexbelgium/hassio-addons/issues/1144) by [@norbertjoni](https://github.com/norbertjoni)
 # Home assistant add-on: Unpackerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
