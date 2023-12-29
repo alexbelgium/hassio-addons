@@ -20,38 +20,48 @@ if bashio::config.true 'openvpn_enabled'; then
     # Function to check for files path
     function check_path () {
 
-        # Get variable
-        file="$1"
+    # Get variable
+    file="$1"
 
-        # Loop through each line of the input file
-        while read line
-        do
-            # Check if the line contains a txt file
-            if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
-                # Extract the txt file name from the line
-                file_name="$(echo "$line" | awk -F' ' '{print $2}')"
-                # Check if the txt file exists
-                if [ ! -f "$file_name" ]; then
-                    # Check if the txt file exists in the /config/openvpn/ directory
-                    if [ -f "/config/openvpn/${file_name##*/}" ]; then
-                        # Append /config/openvpn/ in front of the original txt file in the ovpn file
-                        sed -i "s|$file_name|/config/openvpn/${file_name##*/}|g" "$file"
-                        # Print a success message
-                        bashio::log.warning "Appended /config/openvpn/ to ${file_name##*/} in $file"
-                    else
-                        # Print an error message
-                        bashio::log.warning "$file_name is referenced in your ovpn file but does not exist, and can't be found either in the /config/openvpn/ directory"
-                        sleep 5
-                    fi
+    # Double check exists
+    if [ !-f "$file" ]; then
+        bashio::warning "$file not found"
+        return 1
+    fi
+
+    cp "$file" "$file2"
+
+    # Loop through each line of the input file
+    while read line
+    do
+        # Check if the line contains a txt file
+        if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
+            # Extract the txt file name from the line
+            file_name="$(echo "$line" | awk -F' ' '{print $2}')"
+            # Check if the txt file exists
+            if [ ! -f "$file_name" ]; then
+                # Check if the txt file exists in the /config/openvpn/ directory
+                if [ -f "/etc/openvpn/custom/${file_name##*/}" ]; then
+                    # Append /config/openvpn/ in front of the original txt file in the ovpn file
+                    sed -i "s|$file_name|/etc/openvpn/custom/${file_name##*/}|g" "$file"
+                    # Print a success message
+                    bashio::log.warning "Appended /etc/openvpn/custom/ to ${file_name##*/} in $file"
+                else
+                    # Print an error message
+                    bashio::log.warning "$file_name is referenced in your ovpn file but does not exist in the $TRANSMISSION_HOME/openvpn folder"
+                    sleep 5
                 fi
             fi
-        done < "$file"
+        fi
+    done < "$file2"
 
-        # Standardize lf
-        dos2unix "$file"
+    rm "$file2"
 
-        # Correct paths
-        sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
+    # Standardize lf
+    dos2unix "$file"
+    
+    # Correct paths
+    sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
 
     }
 
