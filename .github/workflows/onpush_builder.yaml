@@ -28,7 +28,7 @@ jobs:
         id: filter
         with:
           filters: .github/paths-filter.yml
-          
+
   correct-CRLF:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     needs: check-addon-changes
@@ -36,7 +36,7 @@ jobs:
 
   make-executable:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
-    needs: correct-CRLF
+    needs: [check-addon-changes, correct-CRLF]
     runs-on: ubuntu-latest
     strategy: 
       fail-fast: false
