@@ -75,6 +75,14 @@ function check_path () {
     # Get variable
     file="$1"
 
+    # Double check exists
+    if [ !-f "$file" ]; then
+        bashio::warning "$file not found"
+        return 1
+    fi
+
+    cp "$file" "$file2"
+
     # Loop through each line of the input file
     while read line
     do
@@ -97,7 +105,9 @@ function check_path () {
                 fi
             fi
         fi
-    done < "$file"
+    done < "$file2"
+
+    rm "$file2"
 
 }
 
