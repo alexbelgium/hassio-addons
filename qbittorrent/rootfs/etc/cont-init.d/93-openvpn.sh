@@ -32,7 +32,7 @@ if bashio::config.true 'openvpn_enabled'; then
     cp "$file" /tmpfile
 
         # Loop through each line of the input file
-        while read line
+        while read -r line
         do
             # Check if the line contains a txt file
             if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
