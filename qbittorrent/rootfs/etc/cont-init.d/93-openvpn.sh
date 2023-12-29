@@ -24,7 +24,7 @@ if bashio::config.true 'openvpn_enabled'; then
     file="$1"
 
     # Double check exists
-    if [ !-f "$file" ]; then
+    if [ ! -f "$file" ]; then
         bashio::warning "$file not found"
         return 1
     fi
