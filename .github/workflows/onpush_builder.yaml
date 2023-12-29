@@ -28,10 +28,15 @@ jobs:
         id: filter
         with:
           filters: .github/paths-filter.yml
+          
+  correct-CRLF:
+    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
+    needs: check-addon-changes
+    uses: ./.github/workflows/weekly_crlftolf.yaml
 
   make-executable:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
-    needs: check-addon-changes
+    needs: correct-CRLF
     runs-on: ubuntu-latest
     strategy: 
       fail-fast: false
@@ -74,7 +79,7 @@ jobs:
 
   build:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
-    needs: [check-addon-changes, make-executable]
+    needs: [check-addon-changes, make-executable, correct-CRLF]
     runs-on: ubuntu-latest
     environment: CR_PAT
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
