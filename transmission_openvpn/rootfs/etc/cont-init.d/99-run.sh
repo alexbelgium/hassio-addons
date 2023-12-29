@@ -121,7 +121,16 @@ if [ "$(bashio::config "OPENVPN_PROVIDER")" == "custom" ]; then
 
     # Validate ovpn file
     openvpn_config="$(bashio::config "OPENVPN_CONFIG")"
-    openvpn_config="${openvpn_config%.*}.ovpn"
+
+    # If contains *.ovpn, clean option
+    if [[ "$openvpn_config" == *".ovpn" ]]; then
+        bashio::log.warning "OPENVPN_CONFIG should not end by ovpn, correcting"
+        bashio::addon.option 'OPENVPN_CONFIG' "${openvpn_config%.ovpn}"
+        bashio::addon.restart
+    fi
+
+    # Add ovpn
+    openvpn_config="${openvpn_config}.ovpn"
 
     # log
     bashio::log.info "OPENVPN_PROVDER set to custom, will use the openvpn file OPENVPN_CONFIG : $openvpn_config"
