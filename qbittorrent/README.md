@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [qbittorrent] Problems with network drive (opened 2023-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1125) by [@floralvikings](https://github.com/floralvikings)
-## &#9888; Open Issue : [[qbittorrent] Mullvad vpn : udp4 permission denied (opened 2023-12-11)](https://github.com/alexbelgium/hassio-addons/issues/1127) by [@Stooovie](https://github.com/Stooovie)
 ## &#9888; Open Issue : [🐛 [qbittorrent] Unable to get qbitmanage to run (opened 2023-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1131) by [@hacshacdgacs](https://github.com/hacshacdgacs)
 # Home assistant add-on: qbittorrent
 
