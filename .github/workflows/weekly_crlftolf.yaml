@@ -31,11 +31,8 @@ jobs:
             # Apply dos2unix and keep the original timestamp
             dos2unix -k "$f"
           done
-      - name: Create a pull request with the fixed files
-        uses: peter-evans/create-pull-request@v5 # Use the create-pull-request action
+      - name: Commit if needed
+        uses: EndBug/add-and-commit@v9
         with:
-          # Specify the pull request details
-          title: Fix CRLF Endings
-          commit-message: Apply dos2unix to files with CRLF endings
-          branch: fix-crlf-endings
-          delete-branch: true
+          message: "Github bot : CRLF corrected"
+          default_author: github_actions
