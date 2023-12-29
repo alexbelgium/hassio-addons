@@ -27,7 +27,7 @@ jobs:
       - name: Apply dos2unix to files with CRLF endings
         run: |
           # Loop through each file and apply dos2unix
-          # shellcheck ignore=SC2043
+          # shellcheck disable=SC2043
           for f in ${{ steps.check-crlf.outputs.files }}; do
             # Apply dos2unix and keep the original timestamp
             dos2unix -k "$f"
