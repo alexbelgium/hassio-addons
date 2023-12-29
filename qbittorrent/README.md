@@ -65,7 +65,7 @@ cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
 openvpn_enabled: true/false # is openvpn required to start qbittorrent
-openvpn_config": For example "config.ovpn" # name of the file located in /config/openvpn.
+openvpn_config": For example "config.ovpn" # name of the file located in /config/openvpn. If empty, a random one will be used
 openvpn_username": USERNAME
 openvpn_password: YOURPASSWORD
 openvpn_alt_mode: bind at container level and not app level
