@@ -78,7 +78,7 @@ function check_path () {
     file="$1"
 
     # Double check exists
-    if [ !-f "$file" ]; then
+    if [ ! -f "$file" ]; then
         bashio::warning "$file not found"
         return 1
     fi
