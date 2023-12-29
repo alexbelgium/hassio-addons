@@ -108,8 +108,11 @@ function check_path () {
             fi
         fi
     done < /tmpfile
-    
+
     rm /tmpfile
+
+    # Ensure config ends with a line feed
+    sed -i "\$q" "$file"
 
 }
 

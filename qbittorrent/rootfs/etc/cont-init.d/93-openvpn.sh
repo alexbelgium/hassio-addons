@@ -53,12 +53,15 @@ if bashio::config.true 'openvpn_enabled'; then
                 fi
             fi
         done < /tmpfile
-    
+
     rm /tmpfile
 
     # Standardize lf
     dos2unix "$file"
-    
+
+    # Ensure config ends with a line feed
+    sed -i "\$q" "$file"
+
     # Correct paths
     sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
 
