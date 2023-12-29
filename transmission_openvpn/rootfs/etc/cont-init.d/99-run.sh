@@ -124,7 +124,7 @@ if [ "$(bashio::config "OPENVPN_PROVIDER")" == "custom" ]; then
     bashio::log.info "OPENVPN_PROVDER set to custom, will use the openvpn file OPENVPN_CONFIG : $openvpn_config"
 
     # If file found
-    if [ -f /config/openvpn/"$openvpn_config" ]; then
+    if [ -f $TRANSMISSION_HOME/openvpn/"$openvpn_config" ]; then
         echo "... configured ovpn file : using $TRANSMISSION_HOME/openvpn/$openvpn_config"
         # Copy files
         rm -r /etc/openvpn/custom
