@@ -83,7 +83,7 @@ function check_path () {
         return 1
     fi
 
-    cp "$file" "$file2"
+    cp "$file" /tmpfile
 
     # Loop through each line of the input file
     while read line
@@ -107,9 +107,9 @@ function check_path () {
                 fi
             fi
         fi
-    done < "$file2"
-
-    rm "$file2"
+    done < /tmpfile
+    
+    rm /tmpfile
 
 }
 
