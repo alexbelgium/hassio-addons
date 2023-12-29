@@ -12,6 +12,8 @@ for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
 done
 echo ""
 
+mkdir -p "$TRANSMISSION_HOME"/openvpn
+
 ###########################
 # Correct download folder #
 ###########################
