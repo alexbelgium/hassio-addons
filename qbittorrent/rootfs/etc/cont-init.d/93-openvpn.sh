@@ -59,6 +59,10 @@ if bashio::config.true 'openvpn_enabled'; then
     # Standardize lf
     dos2unix "$file"
 
+    # Remove custom up & down
+    sed -i '/^up /s/^/#/' "$file"
+    sed -i '/^down /s/^/#/' "$file"
+    
     # Remove blank lines
     sed -i '/^[[:blank:]]*$/d' "$file"
 
