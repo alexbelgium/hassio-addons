@@ -5,5 +5,5 @@
   "slug": "sonarr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-sonarr",
-  "upstream_version": "4.0.0.740"
+  "upstream_version": "4.0.0.741"
 }
