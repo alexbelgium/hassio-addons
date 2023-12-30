@@ -35,7 +35,7 @@ if bashio::config.true 'openvpn_enabled'; then
         while read -r line
         do
             # Check if the line contains a txt file
-            if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
+            if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]] || [[ "$line" =~ auth-user-pass ]]; then
                 # Extract the txt file name from the line
                 file_name="$(echo "$line" | awk -F' ' '{print $2}')"
                 # Check if the txt file exists
@@ -59,6 +59,9 @@ if bashio::config.true 'openvpn_enabled'; then
     # Standardize lf
     dos2unix "$file"
 
+    # Remove blank lines
+    sed -i '/^[[:blank:]]*$/d' "$file"
+
     # Ensure config ends with a line feed
     sed -i "\$q" "$file"
 
@@ -81,10 +84,6 @@ if bashio::config.true 'openvpn_enabled'; then
                 echo "... configured ovpn file : using /addon_configs/$HOSTNAME/openvpn/$openvpn_config"
                 # Check path
                 check_path /config/openvpn/"$openvpn_config"
-                # Copy potential additional files
-                cp /config/openvpn/* /etc/openvpn/
-                # Standardize file
-                cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
                 # Not correct type
             else
                 bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
@@ -102,18 +101,17 @@ if bashio::config.true 'openvpn_enabled'; then
         VPN_CONFIG="${VPN_CONFIGS[$RANDOM % ${#VPN_CONFIGS[@]}]}"
         # Get the VPN_CONFIG name without the path and extension
         openvpn_config="${VPN_CONFIG##*/}"
-        echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${openvpn_config}"
+        echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${openvpn_config}. Other available files :"
+        printf '%s\n' "${VPN_CONFIGS[@]}"
         # Check path
         check_path /config/openvpn/"${openvpn_config}"
-        # Copy potential additional files
-        cp /config/openvpn/* /etc/openvpn/
-        # Standardize file
-        cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
-
     # If openvpn_enabled set, config not set, and openvpn folder empty
     else
         bashio::exit.nok "openvpn_enabled is set, however, your openvpn folder is empty ! Are you sure you added it in /addon_configs/$HOSTNAME/openvpn using the Filebrowser addon ?"
     fi
+
+    # Send to openvpn script
+    sed -i "s|/config/openvpn/config.ovpn|/config/openvpn/$openvpn_config|g" /etc/s6-overlay/s6-rc.d/svc-qbittorrent
 
     # Set credentials
     if bashio::config.has_value "openvpn_username"; then
@@ -130,11 +128,32 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Add credentials file
-    if grep -q auth-user-pass /etc/openvpn/config.ovpn; then
-        sed -i "s/auth-user-pass.*/auth-user-pass \/etc\/openvpn\/credentials/g" /etc/openvpn/config.ovpn
-        bashio::log.warning "auth-user-pass specified, will be replaced by the addon options' username and password"
+    file_name="$(echo "$(sed -n "/^auth-user-pass/p" /config/openvpn/"$openvpn_config")" | awk -F' ' '{print $2}')"
+    file_name="${file_name:-null}"
+    if grep -q auth-user-pass /config/openvpn/"$openvpn_config"; then
+        # Credentials specified are they custom ?
+        if  [[ "$file_name" != *"/etc/openvpn/credentials"* ]]; then
+            if [ -f "$file_name" ]; then
+                # If credential specified, exists, and is not the addon default
+                bashio::log.warning "auth-user-pass specified in the ovpn file, addon username and passwords won't be used !"
+            else
+                # Credential referenced but doesn't exist
+                bashio::log.warning "auth-user-pass $file_name is referenced in your ovpn file but does not exist, and can't be found either in the /config/openvpn/ directory. The addon will attempt to use it's own username and password instead."
+                # Comment previous lines
+                sed -i '/^auth-user-pass/i # specified auth-user-pass file not found, disabling' /config/openvpn/"$openvpn_config"
+                sed -i '/^auth-user-pass/s/^/#/' /config/openvpn/"$openvpn_config"
+                # No credentials specified, using addons username and password
+                echo "# Please do not remove the line below, it allows using the addon username and password" >> /config/openvpn/"$openvpn_config"
+                echo "auth-user-pass /etc/openvpn/credentials" >> /config/openvpn/"$openvpn_config"
+            fi
+        else
+            # Standardize just to be sure
+            sed -i "/\/etc\/openvpn\/credentials/c auth-user-pass \/etc\/openvpn\/credentials" /config/openvpn/"$openvpn_config"
+        fi
     else
-        echo "auth-user-pass /etc/openvpn/credentials" >> /etc/openvpn/config.ovpn
+        # No credentials specified, using addons username and password
+        echo "# Please do not remove the line below, it allows using the addon username and password" >> /config/openvpn/"$openvpn_config"
+        echo "auth-user-pass /etc/openvpn/credentials" >> /config/openvpn/"$openvpn_config"
     fi
 
     # Permissions
@@ -165,9 +184,9 @@ if bashio::config.true 'openvpn_enabled'; then
         sed -i '/Interface/d' "$QBT_CONFIG_FILE"
 
         # Modify ovpn config
-        if grep -q route-nopull /etc/openvpn/config.ovpn; then
+        if grep -q route-nopull /config/openvpn/"$openvpn_config"; then
             echo "... removing route-nopull from your config.ovpn"
-            sed -i '/route-nopull/d' /etc/openvpn/config.ovpn
+            sed -i '/route-nopull/d' /config/openvpn/"$openvpn_config"
         fi
 
         # Exit
@@ -203,9 +222,9 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Modify ovpn config
-    if ! grep -q route-nopull /etc/openvpn/config.ovpn; then
+    if ! grep -q route-nopull  /config/openvpn/"$openvpn_config"; then
         echo "... adding route-nopull to your config.ovpn"
-        sed -i "1a route-nopull" /etc/openvpn/config.ovpn
+        sed -i "1a route-nopull"  /config/openvpn/"$openvpn_config"
     fi
 
 else

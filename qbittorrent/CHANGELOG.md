@@ -1,5 +1,7 @@
+- Feat (potential breaking change) : previously, "auth-user-pass" fields were removed to use the addon username & password. Now, the addon will respect those fields if the file exists to allow for multiple configurations storing different credentials in local files. If the referenced file doesn't exists, or if this field is not referenced, the normal addon username & password will be used
+- Feat : use ovpn files directly in /config/openvpn instead of doing a copy in /etc/openvpn as before. This will make any change more obvious to the user.
+
 ### 4.6.2_30 (30-12-2023)
-- Minor bugs fixed
 - Feat : sanitize ovpn files (disabling ipv6 as not supported by HA, ensuring CRLF, ensure trailing new line, checking paths of referenced static files...)
 - Feat : if no ovpn is referred in the option, it will use a random one from the openvpn folder (from https://github.com/Trigus42/alpine-qbittorrentvpn)
 - Fix : avoid addon restart at each start (due to blanks being cleaned in the whitelist field)
