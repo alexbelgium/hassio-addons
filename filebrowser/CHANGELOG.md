@@ -1,3 +1,4 @@
+### 2.23.0_9 (20-12-2023)
 - Fix : correct cache for thumbnails creation
 
 ### 2.23.0_8 (20-12-2023)
