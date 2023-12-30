@@ -97,6 +97,9 @@ else
     DISABLE_THUMBNAILS=""
 fi
 
+# Remove configuration file
+rm /.filebrowser.json
+
 bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
