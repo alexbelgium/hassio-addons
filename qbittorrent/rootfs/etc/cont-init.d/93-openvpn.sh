@@ -134,7 +134,7 @@ if bashio::config.true 'openvpn_enabled'; then
     # Add credentials file
     file_name="$(sed -n "/^auth-user-pass/p" /config/openvpn/"$openvpn_config" | awk -F' ' '{print $2}')"
     file_name="${file_name:-null}"
-    if grep -q auth-user-pass /config/openvpn/"$openvpn_config"; then
+    if grep -q ^auth-user-pass /config/openvpn/"$openvpn_config" ; then
         # Credentials specified are they custom ?
         if  [[ "$file_name" != *"/etc/openvpn/credentials"* ]]; then
             if [ -f "$file_name" ]; then
