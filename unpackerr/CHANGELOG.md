@@ -1,4 +1,6 @@
 
+- &#9888; MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config to a folder only accessible from my Filebrowser addon called /addon_configs/db21ed7f_unpackerr. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
+
 ## testing-e916f00-9-linux-arm64-2023-09-17 (2023-09-17)
 - Update to latest version from hotio/unpackerr
 

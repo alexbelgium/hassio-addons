@@ -60,9 +60,10 @@
   "image": "ghcr.io/alexbelgium/unpackerr-{arch}",
   "init": false,
   "map": [
-    "config:rw",
-    "share:rw",
     "media:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
+    "share:rw",
     "ssl"
   ],
   "name": "Unpackerr",
@@ -85,7 +86,8 @@
     "extraction_path": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "watch_path": "str?"
+    "watch_path": "str?",
+    "TZ": "str?"
   },
   "slug": "unpackerr",
   "udev": true,
