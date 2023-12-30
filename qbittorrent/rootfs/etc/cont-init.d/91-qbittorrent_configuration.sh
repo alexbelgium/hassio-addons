@@ -117,6 +117,8 @@ fi
 cd "$CONFIG_LOCATION"/ || true
 
 WHITELIST="$(bashio::config 'whitelist')"
+# Remove blanks
+WHITELIST="${WHITELIST// /}"
 #clean data
 sed -i '/AuthSubnetWhitelist/d' qBittorrent.conf
 
