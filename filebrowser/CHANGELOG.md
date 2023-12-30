@@ -1,3 +1,5 @@
+### 2.23.0_10 (30-12-2023)
+- Minor bugs fixed
 - Fix : correct cache for thumbnails creation
 - Feat : new addon option to disable_thumbnails (set disable_thumbnails to true or false ; default true for speed)
 
