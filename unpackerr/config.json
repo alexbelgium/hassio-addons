@@ -92,5 +92,5 @@
   "slug": "unpackerr",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "testing-e916f00-9-linux-arm64-2023-09-17"
+  "version": "0.12.0"
 }
