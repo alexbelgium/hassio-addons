@@ -94,7 +94,7 @@ if bashio::config.true 'openvpn_enabled'; then
         fi
 
     # If openvpn_config not set, but folder is not empty
-    elif [ ! "$(ls -A /config/openvpn/*.ovpn)" ]; then
+    elif ls /config/openvpn/*.ovpn > /dev/null 2>&1; then
         # Look for openvpn files
         # Wildcard search for openvpn config files and store results in array
         mapfile -t VPN_CONFIGS < <( find /config/openvpn -maxdepth 1 -name "*.ovpn" -print )
