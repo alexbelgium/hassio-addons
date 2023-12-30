@@ -98,7 +98,9 @@ else
 fi
 
 # Remove configuration file
-rm /.filebrowser.json
+if [ -f /.filebrowser.json ]; then
+    rm /.filebrowser.json
+fi
 
 bashio::log.info "Starting..."
 
