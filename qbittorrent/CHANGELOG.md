@@ -1,4 +1,3 @@
-### 4.6.2_36 (30-12-2023)
 - Feat (potential breaking change) : previously, "auth-user-pass" fields were removed to use the addon username & password. Now, the addon will respect those fields if the file exists to allow for multiple configurations storing different credentials in local files. If the referenced file doesn't exists, or if this field is not referenced, the normal addon username & password will be used
 - Feat : use ovpn files directly in /config/openvpn instead of doing a copy in /etc/openvpn as before. This will make any change more obvious to the user.
 
