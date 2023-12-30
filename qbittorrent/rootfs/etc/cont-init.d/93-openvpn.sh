@@ -115,7 +115,7 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Send to openvpn script
-    sed -i "1a export openvpn_config=\"$openvpn_config\"|g" /etc/s6-overlay/s6-rc.d/svc-qbittorrent
+    sed -i "s|/config/openvpn/config.ovpn|/config/openvpn/$openvpn_config|g" /etc/s6-overlay/s6-rc.d/svc-qbittorrent/run
 
     # Set credentials
     if bashio::config.has_value "openvpn_username"; then
