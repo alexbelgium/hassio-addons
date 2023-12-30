@@ -91,12 +91,6 @@ else
     BASE_FOLDER=/
 fi
 
-if bashio::config.has_value 'disable_thumbnails'; then
-    DISABLE_THUMBNAILS=" --disable-thumbnails"
-else
-    DISABLE_THUMBNAILS=""
-fi
-
 # Remove configuration file
 if [ -f /.filebrowser.json ]; then
     rm /.filebrowser.json
