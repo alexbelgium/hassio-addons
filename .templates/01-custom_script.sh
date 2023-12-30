@@ -40,7 +40,7 @@ chmod +x "$CONFIGLOCATION/${slug}".sh
 while IFS= read -r line
 do
     # Remove leading and trailing whitespaces
-    line=$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+    line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 
     # Check if line is not empty and does not start with #
     if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
