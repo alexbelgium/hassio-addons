@@ -1,5 +1,4 @@
 - Fix : correct cache for thumbnails creation
-- Feat : new option to disable thumbnails (set disable_thumbnails to true)
 
 ### 2.23.0_8 (20-12-2023)
 - Minor bugs fixed
