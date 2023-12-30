@@ -1,5 +1,3 @@
-## &#9888; Open Issue : [🐛 [Transmission] infinite download time (opened 2023-12-19)](https://github.com/alexbelgium/hassio-addons/issues/1140) by [@maxpoz1](https://github.com/maxpoz1)
-## &#9888; Open Request : [✨ [REQUEST] Transmission Openvpn , add custom value for OPENVPN_PROVIDER  (opened 2023-12-20)](https://github.com/alexbelgium/hassio-addons/issues/1141) by [@Moosketair](https://github.com/Moosketair)
 
 # Home assistant add-on: Transmission
 

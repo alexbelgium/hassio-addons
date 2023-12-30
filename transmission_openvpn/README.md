@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Transmission Openvpn , add custom value for OPENVPN_PROVIDER  (opened 2023-12-20)](https://github.com/alexbelgium/hassio-addons/issues/1141) by [@Moosketair](https://github.com/Moosketair)
 # Home assistant add-on: Transmission Openvpn
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -40,9 +39,7 @@ comparison to installing any other Hass.io add-on.
 
 Options : see https://github.com/haugene/docker-transmission-openvpn for documentation
 
-TRANSMISSION_V3_UPDATE: updates to v3. Remove and add all torrents due to transmission changes
-
-For setting a custom openvpn file, you should flag the "OPENVPN_CUSTOM_PROVIDER" field and reference the path of the \*.ovpn file in the "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION" field.
+For setting a custom openvpn file (even if using AIRVPN), you should set OPENVPN_PROVIDER to "custom", then reference your ovpn file in your "OPENVPN_CONFIG". For example, if AIRVPN has provided to you an *.ovpn filed named AIRVPN.ovpn, you need to install an addon such as Filebrowser, go in the /config/addons_config/transmission/openvpn folder and put the AIRVPN.ovpn here. Then, in the addon option you need to write "AIRVPN" in the "OPENVPN_CONFIG" option
 
 Complete transmission options are in /config/addons_config/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
 

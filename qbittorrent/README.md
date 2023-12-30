@@ -1,6 +1,5 @@
-## &#9888; Open Issue : [🐛 [qbittorrent] Problems with network drive (opened 2023-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1125) by [@floralvikings](https://github.com/floralvikings)
-## &#9888; Open Issue : [[qbittorrent] Mullvad vpn : udp4 permission denied (opened 2023-12-11)](https://github.com/alexbelgium/hassio-addons/issues/1127) by [@Stooovie](https://github.com/Stooovie)
 ## &#9888; Open Issue : [🐛 [qbittorrent] Unable to get qbitmanage to run (opened 2023-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1131) by [@hacshacdgacs](https://github.com/hacshacdgacs)
+## &#9888; Open Issue : [[Qbittorrent] random ovpn is NOT used as advertised in changelog (opened 2023-12-30)](https://github.com/alexbelgium/hassio-addons/issues/1150) by [@Stooovie](https://github.com/Stooovie)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -65,7 +64,7 @@ cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 cifsdomain: "domain" # optional, allow setting the domain for the smb share
 openvpn_enabled: true/false # is openvpn required to start qbittorrent
-openvpn_config": For example "config.ovpn" # name of the file located in /config/openvpn.
+openvpn_config": For example "config.ovpn" # name of the file located in /config/openvpn. If empty, a random one will be used
 openvpn_username": USERNAME
 openvpn_password: YOURPASSWORD
 openvpn_alt_mode: bind at container level and not app level

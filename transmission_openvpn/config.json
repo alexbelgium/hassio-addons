@@ -112,17 +112,14 @@
     "DNS_server": "str?",
     "LOCAL_NETWORK": "str",
     "OPENVPN_CONFIG": "str?",
-    "OPENVPN_CUSTOM_PROVIDER": "bool?",
-    "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION": "str?",
     "OPENVPN_PASSWORD": "str",
-    "OPENVPN_PROVIDER": "list(|anonine|anonvpn|blackvpn|btguard|bulletvpn|cryptostorm|expressvpn|fastestvpn|freevpn|froot|frostvpn|getflix|ghostpath|giganews|goosevpn|hideme|hidemyass|integrityvpn|ipvanish|ironsocket|ivacy|ivpn|mullvad|nordvpn|octanevpn|ovpn|pia|privado|privatevpn|protonvpn|proxpn|purevpn|ra4w|safervpn|slickvpn|slickvpncore|smartdnsproxy|smartvpn|surfshark|tiger|torguard|trustzone|tunnelbear|vpnac|vpnarea|vpnbook|vpnfacile|vpnht|vpntunnel|vpnunlimited|vyprvpn|wevpn|windscribe|zoogvpn)?",
+    "OPENVPN_PROVIDER": "list(custom|anonine|anonvpn|blackvpn|btguard|bulletvpn|cryptostorm|expressvpn|fastestvpn|freevpn|froot|frostvpn|getflix|ghostpath|giganews|goosevpn|hideme|hidemyass|integrityvpn|ipvanish|ironsocket|ivacy|ivpn|mullvad|nordvpn|octanevpn|ovpn|pia|privado|privatevpn|protonvpn|proxpn|purevpn|ra4w|safervpn|slickvpn|slickvpncore|smartdnsproxy|smartvpn|surfshark|tiger|torguard|trustzone|tunnelbear|vpnac|vpnarea|vpnbook|vpnfacile|vpnht|vpntunnel|vpnunlimited|vyprvpn|wevpn|windscribe|zoogvpn)?",
     "OPENVPN_USERNAME": "str",
     "PGID": "int",
     "PUID": "int",
     "TRANSMISSION_DOWNLOAD_DIR": "str",
     "TRANSMISSION_HOME": "str",
     "TRANSMISSION_INCOMPLETE_DIR": "str",
-    "TRANSMISSION_V3_UPDATE": "bool?",
     "TRANSMISSION_WATCH_DIR": "str",
     "TRANSMISSION_WEB_UI": "list(standard|combustion|kettu|transmission-web-control|flood-for-transmission|shift)",
     "WEBPROXY_ENABLED": "bool",
@@ -136,5 +133,5 @@
   "slug": "transmission_openvpn",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v5.3.1"
+  "version": "v5.3.1-6"
 }

@@ -14,22 +14,25 @@ if bashio::config.true 'openvpn_enabled'; then
     bashio::log.info "Openvpn enabled, configuring"
     bashio::log.info "----------------------------"
 
-    # If openvpn_config not set, but folder is not empty
-    if [ ! "$(ls -A /config/openvpn/*.ovpn 2>/dev/null)" ]; then
-        bashio::exit.nok "Configured ovpn file : $openvpn_config not found! Are you sure you added it in /addon_configs/$HOSTNAME/openvpn using the Filebrowser addon ?"
-    fi
-
     # Get current ip
     curl -s ipecho.net/plain > /currentip
 
     # Function to check for files path
     function check_path () {
 
-        # Get variable
-        file="$1"
+    # Get variable
+    file="$1"
+
+    # Double check exists
+    if [ ! -f "$file" ]; then
+        bashio::warning "$file not found"
+        return 1
+    fi
+
+    cp "$file" /tmpfile
 
         # Loop through each line of the input file
-        while read line
+        while read -r line
         do
             # Check if the line contains a txt file
             if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
@@ -49,14 +52,18 @@ if bashio::config.true 'openvpn_enabled'; then
                     fi
                 fi
             fi
-        done < "$file"
+        done < /tmpfile
 
-        # Standardize lf
-        dos2unix "$file"
+    rm /tmpfile
 
+    # Standardize lf
+    dos2unix "$file"
 
-        # Correct paths
-        sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
+    # Ensure config ends with a line feed
+    sed -i "\$q" "$file"
+
+    # Correct paths
+    sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
 
     }
 
@@ -82,10 +89,12 @@ if bashio::config.true 'openvpn_enabled'; then
             else
                 bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
             fi
+        else
+            bashio::exit.nok "Configured ovpn file : $openvpn_config not found! Are you sure you added it in /addon_configs/$HOSTNAME/openvpn using the Filebrowser addon ?"
         fi
 
-        # If openvpn_config not set, but folder is not empty
-    else
+    # If openvpn_config not set, but folder is not empty
+    elif [ ! "$(ls -A /config/openvpn/*.ovpn 2>/dev/null)" ]; then
         # Look for openvpn files
         # Wildcard search for openvpn config files and store results in array
         mapfile -t VPN_CONFIGS < <( find /config/openvpn -maxdepth 1 -name "*.ovpn" -print )
@@ -100,6 +109,10 @@ if bashio::config.true 'openvpn_enabled'; then
         cp /config/openvpn/* /etc/openvpn/
         # Standardize file
         cp /config/openvpn/"${openvpn_config}" /etc/openvpn/config.ovpn
+
+    # If openvpn_enabled set, config not set, and openvpn folder empty
+    else
+        bashio::exit.nok "openvpn_enabled is set, however, your openvpn folder is empty ! Are you sure you added it in /addon_configs/$HOSTNAME/openvpn using the Filebrowser addon ?"
     fi
 
     # Set credentials

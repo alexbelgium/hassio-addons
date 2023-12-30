@@ -22,18 +22,30 @@ else
     mkdir -p /config/addons_autoscripts
 fi
 
-bashio::log.green "Execute $CONFIGLOCATION/${slug}.sh if existing"
-bashio::log.green "---------------------------------------------------------"
-bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGFILEBROWSER/${slug}.sh"
+bashio::log.green "Execute $CONFIGFILEBROWSER/${slug}.sh if existing"
 bashio::log.green "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
 
-# Execute scripts
-if [ -f "$CONFIGLOCATION/${slug}".sh ]; then
-    bashio::log.green "... script found, executing"
-    # Convert scripts to linux
-    dos2unix "$CONFIGLOCATION/${slug}".sh || true
-    chmod +x "$CONFIGLOCATION/${slug}".sh || true
-    /."$CONFIGLOCATION/${slug}".sh
-else
-    bashio::log.green "... no script found, exiting"
+# Download template if no script found and exit
+if [ ! -f "$CONFIGLOCATION/${slug}".sh ]; then
+    TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/script.template"
+    curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGLOCATION/${slug}".sh
+    exit 0
 fi
+
+# Convert scripts to linux
+dos2unix "$CONFIGLOCATION/${slug}".sh &>/dev/null || true
+chmod +x "$CONFIGLOCATION/${slug}".sh
+
+# Check if there is actual commands
+while IFS= read -r line
+do
+    # Remove leading and trailing whitespaces
+    line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+    # Check if line is not empty and does not start with #
+    if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
+        bashio::log.green "... script found, executing"
+        /."$CONFIGLOCATION/${slug}".sh
+        exit 0
+    fi
+done < "$CONFIGLOCATION/${slug}".sh

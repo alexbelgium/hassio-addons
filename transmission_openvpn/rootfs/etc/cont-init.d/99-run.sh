@@ -1,29 +1,5 @@
 #!/usr/bin/bashio
-
-#################
-# Update to v3 #
-################
-
-if bashio::config.true "TRANSMISSION_V3_UPDATE"; then
-
-    (
-        bashio::log.info "Updating transmission to v3"
-        bashio::log.warning "If your previous version was v2, remove and add torrents again"
-
-        # see https://github.com/haugene/docker-transmission-openvpn/discussions/1937
-        wget -O 976b5901365c5ca1.key "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xa37da909ae70535824d82620976b5901365c5ca1"
-
-        cat > /etc/apt/sources.list.d/transmission.list <<EOF
-# Transmission PPA https://launchpad.net/~transmissionbt/+archive/ubuntu/ppa
-deb [signed-by=/976b5901365c5ca1.key] http://ppa.launchpad.net/transmissionbt/ppa/ubuntu focal main
-#deb-src http://ppa.launchpad.net/transmissionbt/ppa/ubuntu focal main
-EOF
-
-        apt-get update -o Dir::Etc::sourcelist="sources.list.d/transmission.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
-        apt-get install -y transmission-daemon transmission-cli
-    ) >/dev/null
-
-fi
+# shellcheck shell=bash
 
 ####################
 # Export variables #
@@ -35,6 +11,8 @@ for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
     export "$k"="$(bashio::config "$k")"
 done
 echo ""
+
+mkdir -p "$TRANSMISSION_HOME"/openvpn
 
 ###########################
 # Correct download folder #
@@ -81,33 +59,95 @@ done
 # Custom provider #
 ###################
 
-if bashio::config.true "OPENVPN_CUSTOM_PROVIDER"; then
+# Migrate OPENVPN_CUSTOM_PROVIDER to OPENVPN_PROVIDER
+if bashio::config.true 'OPENVPN_CUSTOM_PROVIDER'; then
+    # Use new option
+    bashio::addon.option "OPENVPN_PROVIDER" "custom"
+    # Remove previous option
+    bashio::addon.option "OPENVPN_CUSTOM_PROVIDER"
+    # log
+    bashio::log.yellow "OPENVPN_CUSTOM_PROVIDER actived, OPENVPN_PROVIDER set to custom"
+    # Restart
+    bashio::addon.restart
+fi
 
-    OVPNLOCATION="$(bashio::config "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION")"
-    OVPNCONFIG="$(bashio::config "OPENVPN_CONFIG")"
-    OPENVPN_PROVIDER="${OVPNLOCATION##*/}"
-    OPENVPN_PROVIDER="${OPENVPN_PROVIDER%.*}"
-    OPENVPN_PROVIDER="${OPENVPN_PROVIDER,,}"
-    bashio::log.info "Custom openvpn provider selected"
+# Function to check for files path
+function check_path () {
 
-    # Check that ovpn file exists
-    if [ ! -f "$OVPNLOCATION" ]; then
-        bashio::log.fatal "Ovpn file not found at location provided : $OVPNLOCATION"
-        exit 1
+    # Get variable
+    file="$1"
+
+    # Double check exists
+    if [ ! -f "$file" ]; then
+        bashio::warning "$file not found"
+        return 1
     fi
 
-    # Copy ovpn file
-    sed -i "s|config_repo_temp_dir=\$(mktemp -d)|config_repo_temp_dir=/tmp/tmp2|g" /etc/openvpn/fetch-external-configs.sh
-    echo "Copying ovpn file to proper location"
-    mkdir -p /etc/openvpn/"$OPENVPN_PROVIDER"
-    mkdir -p /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"
-    cp "$OVPNLOCATION" /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn || \
-        cp "$OVPNLOCATION/$OVPNCONFIG" /tmp/tmp2/temp/openvpn/"$OPENVPN_PROVIDER"/"$OPENVPN_PROVIDER".ovpn
+    cp "$file" /tmpfile
 
-    # Use custom provider
-    echo "Exporting variable for custom provider : $OPENVPN_PROVIDER"
-    export OPENVPN_PROVIDER="$OPENVPN_PROVIDER"
-    export OPENVPN_CONFIG="$OPENVPN_PROVIDER"
+    # Loop through each line of the input file
+    while read -r line
+    do
+        # Check if the line contains a txt file
+        if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
+            # Extract the txt file name from the line
+            file_name="$(echo "$line" | awk -F' ' '{print $2}')"
+            # Check if the txt file exists
+            if [ ! -f "$file_name" ]; then
+                # Check if the txt file exists in the /config/openvpn/ directory
+                if [ -f "/etc/openvpn/custom/${file_name##*/}" ]; then
+                    # Append /config/openvpn/ in front of the original txt file in the ovpn file
+                    sed -i "s|$file_name|/etc/openvpn/custom/${file_name##*/}|g" "$file"
+                    # Print a success message
+                    bashio::log.warning "Appended /etc/openvpn/custom/ to ${file_name##*/} in $file"
+                else
+                    # Print an error message
+                    bashio::log.warning "$file_name is referenced in your ovpn file but does not exist in the $TRANSMISSION_HOME/openvpn folder"
+                    sleep 5
+                fi
+            fi
+        fi
+    done < /tmpfile
+
+    rm /tmpfile
+
+    # Ensure config ends with a line feed
+    sed -i "\$q" "$file"
+
+}
+
+# Define custom file
+if [ "$(bashio::config "OPENVPN_PROVIDER")" == "custom" ]; then
+
+    # Validate ovpn file
+    openvpn_config="$(bashio::config "OPENVPN_CONFIG")"
+
+    # If contains *.ovpn, clean option
+    if [[ "$openvpn_config" == *".ovpn" ]]; then
+        bashio::log.warning "OPENVPN_CONFIG should not end by ovpn, correcting"
+        bashio::addon.option 'OPENVPN_CONFIG' "${openvpn_config%.ovpn}"
+        bashio::addon.restart
+    fi
+
+    # Add ovpn
+    openvpn_config="${openvpn_config}.ovpn"
+
+    # log
+    bashio::log.info "OPENVPN_PROVDER set to custom, will use the openvpn file OPENVPN_CONFIG : $openvpn_config"
+
+    # If file found
+    if [ -f "$TRANSMISSION_HOME"/openvpn/"$openvpn_config" ]; then
+        echo "... configured ovpn file : using $TRANSMISSION_HOME/openvpn/$openvpn_config"
+        # Copy files
+        rm -r /etc/openvpn/custom
+        # Symlink folder
+        echo "... symlink the $TRANSMISSION_HOME/openvpn foplder to /etc/openvpn/custom"
+        ln -s "$TRANSMISSION_HOME"/openvpn /etc/openvpn/custom
+        # Check path
+        check_path /etc/openvpn/custom/"$openvpn_config"
+    else
+        bashio::exit.nok "Configured ovpn file : $openvpn_config not found! Are you sure you added it in $TRANSMISSION_HOME/openvpn ?"
+    fi
 
 else
 
