@@ -101,7 +101,6 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "disable_thumbnails": "bool?",
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
