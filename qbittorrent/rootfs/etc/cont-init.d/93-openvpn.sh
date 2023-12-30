@@ -62,7 +62,7 @@ if bashio::config.true 'openvpn_enabled'; then
     # Remove custom up & down
     sed -i '/^up /s/^/#/' "$file"
     sed -i '/^down /s/^/#/' "$file"
-    
+
     # Remove blank lines
     sed -i '/^[[:blank:]]*$/d' "$file"
 
@@ -132,7 +132,7 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Add credentials file
-    file_name="$(echo "$(sed -n "/^auth-user-pass/p" /config/openvpn/"$openvpn_config")" | awk -F' ' '{print $2}')"
+    file_name="$(sed -n "/^auth-user-pass/p" /config/openvpn/"$openvpn_config" | awk -F' ' '{print $2}')"
     file_name="${file_name:-null}"
     if grep -q auth-user-pass /config/openvpn/"$openvpn_config"; then
         # Credentials specified are they custom ?
