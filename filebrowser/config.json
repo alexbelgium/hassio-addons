@@ -80,6 +80,7 @@
   "options": {
     "NoAuth": true,
     "certfile": "fullchain.pem",
+    "disable_thumbnails": true,
     "keyfile": "privkey.pem",
     "ssl": false
   },
@@ -101,6 +102,7 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "disable_thumbnails": "bool?",
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
