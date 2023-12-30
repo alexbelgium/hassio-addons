@@ -71,6 +71,7 @@ if bashio::config.true 'openvpn_enabled'; then
 
     # Correct paths
     sed -i "s=/etc/openvpn=/config/openvpn=g" "$file"
+    sed -i "s=/config/openvpn/credentials=/etc/openvpn/credentials=g" "$file"
 
     }
 
@@ -148,7 +149,7 @@ if bashio::config.true 'openvpn_enabled'; then
                 sed -i '/^auth-user-pass/s/^/#/' /config/openvpn/"$openvpn_config"
                 # No credentials specified, using addons username and password
                 echo "# Please do not remove the line below, it allows using the addon username and password" >> /config/openvpn/"$openvpn_config"
-                echo "auth-user-pass /etc/openvpn/credentials" >> /config/openvpn/"$openvpn_config"
+                echo "auth-user-pass /etc/openvpn/credentials" >> /etc/openvpn/"$openvpn_config"
             fi
         else
             # Standardize just to be sure
