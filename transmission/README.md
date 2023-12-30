@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Transmission Openvpn , add custom value for OPENVPN_PROVIDER  (opened 2023-12-20)](https://github.com/alexbelgium/hassio-addons/issues/1141) by [@Moosketair](https://github.com/Moosketair)
 
 # Home assistant add-on: Transmission
 
