@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [qbittorrent] Unable to get qbitmanage to run (opened 2023-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1131) by [@hacshacdgacs](https://github.com/hacshacdgacs)
-## &#9888; Open Issue : [[Qbittorrent] random ovpn is NOT used as advertised in changelog (opened 2023-12-30)](https://github.com/alexbelgium/hassio-addons/issues/1150) by [@Stooovie](https://github.com/Stooovie)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
