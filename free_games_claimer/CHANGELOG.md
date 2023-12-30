@@ -1,4 +1,7 @@
 
+## 1.6 (30-12-2023)
+- Update to latest version from vogler/free-games-claimer
+
 ## 1.5 (04-11-2023)
 - Update to latest version from vogler/free-games-claimer
 
