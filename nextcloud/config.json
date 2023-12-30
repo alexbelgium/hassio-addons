@@ -135,6 +135,6 @@
   "uart": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "28.0.0",
+  "version": "28.0.1",
   "webui": "https://[HOST]:[PORT:443]"
 }
