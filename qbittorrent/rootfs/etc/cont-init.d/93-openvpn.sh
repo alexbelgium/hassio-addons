@@ -39,7 +39,7 @@ if bashio::config.true 'openvpn_enabled'; then
                 # Extract the txt file name from the line
                 file_name="$(echo "$line" | awk -F' ' '{print $2}')"
                 # Check if the txt file exists
-                if [ ! -f "$file_name" ]; then
+                if [[ "$file_name" != *"/etc/openvpn/credentials"* ]] && [ ! -f "$file_name" ]; then
                     # Check if the txt file exists in the /config/openvpn/ directory
                     if [ -f "/config/openvpn/${file_name##*/}" ]; then
                         # Append /config/openvpn/ in front of the original txt file in the ovpn file
@@ -137,7 +137,7 @@ if bashio::config.true 'openvpn_enabled'; then
     file_name="${file_name:-null}"
     if grep -q ^auth-user-pass /config/openvpn/"$openvpn_config" ; then
         # Credentials specified are they custom ?
-        if  [[ "$file_name" != *"/etc/openvpn/credentials"* ]] && [[ "$file_name" != "null" ]]; then
+        if [[ "$file_name" != *"/etc/openvpn/credentials"* ]] && [[ "$file_name" != "null" ]]; then
             if [ -f "$file_name" ]; then
                 # If credential specified, exists, and is not the addon default
                 bashio::log.warning "auth-user-pass specified in the ovpn file, addon username and passwords won't be used !"
