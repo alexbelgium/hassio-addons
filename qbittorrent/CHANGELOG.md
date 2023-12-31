@@ -1,3 +1,5 @@
+### 4.6.2_39 (31-12-2023)
+- Minor bugs fixed
 - [qbit_manage] : corrects default yaml for the addon for url (127.0.0.1 instead of localhost ) ; username (from username in options) ; password (default is homeassistant) ; root_dir (from SavePath in options) [15f4d63](https://github.com/alexbelgium/hassio-addons/commit/15f4d632c5d6946d093e39b5d3f9bee135aadfe7)
 
 ### 4.6.2_37 (30-12-2023)
