@@ -80,14 +80,14 @@
   "schema": {
     "PGID": "int",
     "PUID": "int",
+    "TZ": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "extraction_path": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "watch_path": "str?",
-    "TZ": "str?"
+    "watch_path": "str?"
   },
   "slug": "unpackerr",
   "udev": true,
