@@ -30,7 +30,7 @@ if bashio::config.true "qbit_manage"; then
     sed -i "/pass: password/c\  pass: homeassistant" /config/qbit_manage/qbit_manage.yml
     # Set root dir
     echo "... downloads directory set to $(bashio::config 'SavePath')"
-    sed -i "/root_dir/d" /config/qbit_manage/qbit_manage.yml
+    sed -i "/  root_dir/d" /config/qbit_manage/qbit_manage.yml
     sed -i "/directory:/a\  root_dir: \"$(bashio::config 'SavePath')\"" /config/qbit_manage/qbit_manage.yml
 
     # Startup delay 30s ; config file specific ; log file specific
