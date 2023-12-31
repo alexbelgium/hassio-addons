@@ -5,7 +5,7 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "qBittorrent is a bittorrent client",
+  "description": "qBittorrent is a bittorrent client.",
   "devices": [
     "/dev/net/tun",
     "/dev/dri",
