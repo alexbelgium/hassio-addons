@@ -31,7 +31,7 @@ if bashio::config.true "qbit_manage"; then
     # Set root dir
     echo "... downloads directory set to $(bashio::config 'SavePath')"
     sed -i "/^root_dir/d" /config/qbit_manage/qbit_manage.yml
-    sed -i "/directory:/a\  root_dir: \"$(bashio::config 'SavePath')\""
+    sed -i "/directory:/a\  root_dir: \"$(bashio::config 'SavePath')\"" /config/qbit_manage/qbit_manage.yml
 
     # Startup delay 30s ; config file specific ; log file specific
     python /qbit_manage/qbit_manage.py -sd 30 --config-file "/config/qbit_manage/qbit_manage.yml" --log-file "/config/qbit_manage/qbit_manage.log" --run & true
