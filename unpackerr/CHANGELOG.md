@@ -1,3 +1,4 @@
+- Removed addon options that modified the unpackerr.conf to avoid breakage. Any modifications needs to be done manually using (for example) the Filebrowser addon in /addon_configs/db21ed7f_unpackerr/unpackerr.conf. This also means you'll have to make sure the PUID/PGID specified really correspond to your actual permissions (the app doesn't allow to run as root)
 
 ## 0.12.0 (30-12-2023)
 - Update to latest version from Unpackerr/unpackerr
