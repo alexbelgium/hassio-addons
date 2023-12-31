@@ -84,13 +84,11 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "extraction_path": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?",
-    "watch_path": "str?"
+    "networkdisks": "str?"
   },
   "slug": "unpackerr",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.12.0-2"
+  "version": "0.12.0-3"
 }
