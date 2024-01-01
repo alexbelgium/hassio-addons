@@ -22,7 +22,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 ---
-
+Extract from the author's gighub :
 [unpackerr](https://github.com/unpackerr/unpackerr) runs as a daemon on your download host. It checks for completed downloads and extracts them so Lidarr, Radarr, Readarr, Sonarr may import them. There are a handful of options out there for extracting and deleting files after your client downloads them. I just didn't care for any of them, so I wrote my own. I wanted a small single-binary with reasonable logging that can extract downloaded archives and clean up the mess after they've been imported.
 
 This addon is based on the docker image https://hub.docker.com/r/hotio/unpackerr
