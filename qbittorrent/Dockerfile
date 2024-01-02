@@ -76,6 +76,9 @@ RUN \
     curl -o /tmp/qbit_manage.tar.gz -L "https://github.com/StuffAnThings/qbit_manage/archive/master.tar.gz" && \
     tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
     \
+    # Clean dependencies
+    sed -i "s/\\(qbittorrent-api\\)==[0-9]*\\.[0-9]*\\.[0-9]*/\\1/" /qbit_manage/requirements.txt && \
+    \
     # Install dependencies
     ## Allow python specific arch
     BUILD_ARCH=$(uname -m) && \
