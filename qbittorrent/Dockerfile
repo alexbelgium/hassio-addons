@@ -77,7 +77,7 @@ RUN \
     tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
     \
     # Clean dependencies
-    sed -i "s/\\(qbittorrent-api\\)==[0-9]*\\.[0-9]*\\.[0-9]*/\\1/" /qbit_manage/requirements.txt && \
+    sed -i "s/\\(qbittorrent-api\\)==2023.10.54/\\1/" /qbit_manage/requirements.txt && \
     \
     # Install dependencies
     ## Allow python specific arch
