@@ -64,8 +64,9 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 # ADD QBIT_MANAGE
 #################
 
-ENV QBM_DOCKER True
-ENV QBT_SKIP_QB_VERSION_CHECK True
+ENV QBM_DOCKER=True
+ENV QBT_SKIP_QB_VERSION_CHECK=True
+ENV qbt_skip_qb_version_check=true
 ENV PYTHONUNBUFFERED=1
 
 # halodint disable=DL3019,SC3010
