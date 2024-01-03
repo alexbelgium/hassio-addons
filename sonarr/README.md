@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Qbittorrent] Unable to connect to Qbittorrent from Sonarr or Prowlarr (opened 2024-01-02)](https://github.com/alexbelgium/hassio-addons/issues/1153) by [@JohnnyPicnic](https://github.com/JohnnyPicnic)
 
 # Home assistant add-on: Sonarr
 
