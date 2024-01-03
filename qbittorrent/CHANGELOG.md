@@ -1,9 +1,18 @@
-### 4.6.2_29 (30-12-2023)
+- [qbit_manage] : switch to develop 
+
+### 4.6.2_40 (31-12-2023)
 - Minor bugs fixed
-- Feat : sanitize ovpn files (disabling ipv6 as not supported by HA, ensuring CRLF, ensure trailing new line, checking paths of referenced static files...)
-- Feat : if no ovpn is referred in the option, it will use a random one from the openvpn folder (from https://github.com/Trigus42/alpine-qbittorrentvpn)
-- Fix : avoid addon restart at each start (due to blanks being cleaned in the whitelist field)
-- Fix : reduce cron log level to avoid spam
+- [qbit_manage] : corrects default yaml for the addon for url (127.0.0.1 instead of localhost ) ; username (from username in options) ; password (default is homeassistant) ; root_dir (from SavePath in options) [15f4d63](https://github.com/alexbelgium/hassio-addons/commit/15f4d632c5d6946d093e39b5d3f9bee135aadfe7)
+
+### 4.6.2_37 (30-12-2023)
+- [openvpn] Feat (potential breaking change) : previously, "auth-user-pass" fields were removed to use the addon username & password. Now, the addon will respect those fields if the file exists to allow for multiple configurations storing different credentials in local files. If the referenced file doesn't exists, or if this field is not referenced, the normal addon username & password will be used
+- [openvpn] Feat : use ovpn files directly in /config/openvpn instead of doing a copy in /etc/openvpn as before. This will make any change more obvious to the user.
+
+### 4.6.2_30 (30-12-2023)
+- [openvpn] Feat : sanitize ovpn files (disabling ipv6 as not supported by HA, ensuring CRLF, ensure trailing new line, checking paths of referenced static files...)
+- [openvpn] Feat : if no ovpn is referred in the option, it will use a random one from the openvpn folder (from https://github.com/Trigus42/alpine-qbittorrentvpn)
+- [qbittorrent] Fix : avoid addon restart at each start (due to blanks being cleaned in the whitelist field)
+- [general] Fix : reduce cron log level to avoid spam
 
 ### 4.6.2_27_reverted (23-12-2023)
 - &#9888; BREAKING CHANGE : I've decided to revert to the initial upstream image, apologies for this whole incovenience. After receiving many constructive (or plainly negative) feedbacks I have decided it was just not worth it to implement a new upstream image supposed to prevent ip leak for openvpn, plus wireguard support, and decided to just restore my own code. I've still kept qbit_manage, and will perhaps implement wireguard in the future but with my own code. As the databases were migrated for users to the new config locations, I've decided to keep it like that. It is more sustainable as HA is pushing in this direction and allows to backup the config with the addon (which was not the case previously).

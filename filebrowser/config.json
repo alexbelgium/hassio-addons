@@ -80,6 +80,7 @@
   "options": {
     "NoAuth": true,
     "certfile": "fullchain.pem",
+    "disable_thumbnails": true,
     "keyfile": "privkey.pem",
     "ssl": false
   },
@@ -110,5 +111,5 @@
   "slug": "filebrowser",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.23.0_8"
+  "version": "2.23.0_10"
 }

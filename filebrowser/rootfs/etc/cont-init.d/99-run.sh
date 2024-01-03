@@ -85,22 +85,26 @@ else
     bashio::log.info "Default username/password : admin/admin"
 fi
 
+# Set base folder
 if bashio::config.has_value 'base_folder'; then
     BASE_FOLDER=$(bashio::config 'base_folder')
 else
     BASE_FOLDER=/
 fi
 
-if bashio::config.has_value 'disable_thumbnails'; then
-    DISABLE_THUMBNAILS=" --disable-thumbnails"
+# Disable thumbnails
+if bashio::config.true 'disable_thumbnails'; then
+    DISABLE_THUMBNAILS="--disable-thumbnails"
 else
     DISABLE_THUMBNAILS=""
 fi
 
-bashio::log.info "Starting..."
+# Remove configuration file
+if [ -f /.filebrowser.json ]; then
+    rm /.filebrowser.json
+fi
 
-# Remove default config
-rm /.filebrowser.json
+bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
 /./filebrowser --disable-preview-resize --disable-type-detection-by-header --cache-dir="/cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/filebrowser.dB "$NOAUTH" "$DISABLE_THUMBNAILS" &
