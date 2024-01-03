@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [qbittorrent] Unable to get qbitmanage to run (opened 2023-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1131) by [@hacshacdgacs](https://github.com/hacshacdgacs)
 ## &#9888; Open Issue : [🐛 [Qbittorrent] Unable to connect to Qbittorrent from Sonarr or Prowlarr (opened 2024-01-02)](https://github.com/alexbelgium/hassio-addons/issues/1153) by [@JohnnyPicnic](https://github.com/JohnnyPicnic)
 # Home assistant add-on: qbittorrent
 
