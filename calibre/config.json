@@ -57,9 +57,9 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "CALIBRE_CONFIG_DIRECTORY": "/config/addons_config/calibre",
-    "FM_HOME": "/config/addons_config/calibre",
-    "HOME": "/config/addons_config/calibre",
+    "CALIBRE_CONFIG_DIRECTORY": "/config",
+    "FM_HOME": "/config",
+    "HOME": "/config",
     "PGID": "0",
     "PUID": "0",
     "START_DOCKER": "false",
