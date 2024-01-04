@@ -71,7 +71,8 @@
   "map": [
     "media:rw",
     "share:rw",
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "ssl"
   ],
   "name": "Calibre",
