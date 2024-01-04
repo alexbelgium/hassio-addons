@@ -16,6 +16,11 @@ mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 for KEYS in "${arr[@]}"; do
     # export key
     VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
+    # Check if the value is an array
+    if [[ "$VALUE" == \[* ]]; then
+      bashio::log.warning "$VALUE is an array, skipping"
+    else
+    # Continue for single values
     VALUE="${VALUE//[\"\']/}"
     line="${KEYS}='${VALUE}'"
     # Check if secret
@@ -59,7 +64,7 @@ for KEYS in "${arr[@]}"; do
     # For s6
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
     echo "export ${KEYS}='${VALUE}'" >> ~/.bashrc
-
+    fi
 done
 
 ################
