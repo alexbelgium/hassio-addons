@@ -45,7 +45,7 @@ done
 # Correct home location
 for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
     if [ -d "$folders" ]; then
-        sed -i "s|/config/addons_config/calibre|$LOCATION|g" $(find "$folders" -type f) &>/dev/null || true
+        sed -i "s|/config|$LOCATION|g" $(find "$folders" -type f) &>/dev/null || true
     fi
 done
 
