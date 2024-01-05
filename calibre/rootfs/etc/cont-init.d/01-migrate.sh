@@ -6,7 +6,7 @@ set -e
 # Migrate database #
 ####################
 
-if [ -f /homeassistant/addons_config/calibre ]; then
+if [ -d /homeassistant/addons_config/calibre ]; then
     echo "Moving database to new location /config"
     cp -rnf /homeassistant/addons_config/calibre/* /config/
     rm -r /homeassistant/addons_config/calibre
