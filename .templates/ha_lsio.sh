@@ -31,12 +31,14 @@ for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do
     sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" "$file"
 done
 
-# Avoid chmod /config
-for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*; do
-    if [ -f "$file" ] && [ ! -z "$(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' "$file")" ]; then
-        sed -i "s|/config$|/data|g" "$file"
-    fi
-done
+# Avoid chmod /config if ha config mounted
+if [ -f /config/configuration.yaml ] || [ -f /config/configuration.json ]; then
+    for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*; do
+        if [ -f "$file" ] && [ ! -z "$(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' "$file")" ]; then
+            sed -i "s|/config$|/data|g" "$file"
+        fi
+    done
+fi
 
 # Send crond logs to addon logs
 if [ -f /etc/s6-overlay/s6-rc.d/svc-cron/run ]; then
