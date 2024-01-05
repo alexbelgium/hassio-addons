@@ -28,7 +28,7 @@ bashio::log.green "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons
 # Download template if no script found and exit
 if [ ! -f "$CONFIGLOCATION/${slug}".sh ]; then
     TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/script.template"
-    curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGLOCATION/${slug}".sh
+    curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGLOCATION/${slug}".sh || true
     exit 0
 fi
 
