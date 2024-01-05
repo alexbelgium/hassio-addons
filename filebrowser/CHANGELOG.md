@@ -1,3 +1,5 @@
+### 2.23.0_11 (05-01-2024)
+- Minor bugs fixed
 - Fix : healthcheck for https (thanks @encryptix) https://github.com/alexbelgium/hassio-addons/issues/1155
 
 ### 2.23.0_10 (30-12-2023)
