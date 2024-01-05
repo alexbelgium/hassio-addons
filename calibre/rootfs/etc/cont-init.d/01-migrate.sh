@@ -11,3 +11,8 @@ if [ -d /homeassistant/addons_config/calibre ]; then
     cp -rf /homeassistant/addons_config/calibre/* /config/
     rm -r /homeassistant/addons_config/calibre
 fi
+
+# Legacy path
+mkdir -p /config/addons_config/calibre
+ln -s "/config/Calibre Library" "/config/addons_config/calibre/"
+chmod -R 777 /config/addons_config
