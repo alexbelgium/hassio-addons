@@ -1,3 +1,5 @@
+- Fix : healthcheck for https (thanks @encryptix) https://github.com/alexbelgium/hassio-addons/issues/1155
+
 ### 2.23.0_10 (30-12-2023)
 - Minor bugs fixed
 - Fix : correct cache for thumbnails creation
