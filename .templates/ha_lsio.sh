@@ -7,8 +7,7 @@ set -e
 #############################
 
 # Set variable
-CONFIGLOCATION="$1"
-CONFIGLOCATION="${CONFIGLOCATION:-/config}"
+CONFIGLOCATION="${1:-/config}"
 echo "Setting config to $CONFIGLOCATION"
 
 # Avoid custom-init.d duplications
