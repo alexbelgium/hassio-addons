@@ -2,6 +2,12 @@
 # shellcheck shell=bash
 set -e
 
+# Clear default.conf
+if [ ! -f /done ] && [ -f /data/config/nginx/site-confs/default.conf ]; then
+    rm /data/config/nginx/site-confs/default.conf
+    touch /done
+fi
+
 # Runs only after initialization done
 # shellcheck disable=SC2128
 if [ ! -f /app/www/public/occ ]; then cp /etc/cont-init.d/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
