@@ -147,7 +147,7 @@ if bashio::config.true "enable_thumbnails"; then
     sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=true
     i=0
     for element in TXT MarkDown OpenDocument PDF Image TIFF SVG Font MP3 Movie MKV MP4 AVI; do # Comma separated values
-        sudo -u abc php /app/www/public/occ config:system:set enabledPreviewProviders "$i" --value="OC\\Preview\\${element}"
+        sudo -u abc php /app/www/public/occ config:system:set enabledPreviewProviders "$i" --value="OC\\Preview\\${element}" >/dev/null
         i=$((i + 1))
     done
 else
