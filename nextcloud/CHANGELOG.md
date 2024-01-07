@@ -1,3 +1,5 @@
+### 28.0.1-2 (07-01-2024)
+- Minor bugs fixed
 - Fix : js not found https://github.com/alexbelgium/hassio-addons/issues/1158
 
 ## 28.0.1 (30-12-2023)
