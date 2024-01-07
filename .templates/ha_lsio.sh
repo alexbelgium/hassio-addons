@@ -18,15 +18,15 @@ done
 # If custom config
 if [ "$CONFIGLOCATION" != "/config" ]; then
 
-# Create new config folder if needed
-for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do
-    sed -i "1a mkdir -p $CONFIGLOCATION" "$file"
-done
+    # Create new config folder if needed
+    for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do
+        sed -i "1a mkdir -p $CONFIGLOCATION" "$file"
+    done
 
-# Correct config location
-for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do
-    sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" "$file"
-done
+    # Correct config location
+    for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do
+        sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" "$file"
+    done
 
 fi
 

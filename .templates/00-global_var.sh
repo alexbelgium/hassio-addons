@@ -18,52 +18,52 @@ for KEYS in "${arr[@]}"; do
     VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
     # Check if the value is an array
     if [[ "$VALUE" == \[* ]]; then
-      bashio::log.warning "$VALUE is an array, skipping"
+        bashio::log.warning "$VALUE is an array, skipping"
     else
-    # Continue for single values
-    VALUE="${VALUE//[\"\']/}"
-    line="${KEYS}='${VALUE}'"
-    # Check if secret
-    if [[ "${line}" == *'!secret '* ]]; then
-        echo "secret detected"
-        secret=${line#*secret }
-        # Check if single match
-        secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
-        [[ "$secretnum" == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
-        # Get text
-        secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
-        secret=${secret#*: }
-        line="${line%%=*}='$secret'"
-        VALUE="$secret"
-    fi
-    # text
-    if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
-        bashio::log.blue "${KEYS}=******"
-    else
-        bashio::log.blue "$line"
-    fi
+        # Continue for single values
+        VALUE="${VALUE//[\"\']/}"
+        line="${KEYS}='${VALUE}'"
+        # Check if secret
+        if [[ "${line}" == *'!secret '* ]]; then
+            echo "secret detected"
+            secret=${line#*secret }
+            # Check if single match
+            secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
+            [[ "$secretnum" == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+            # Get text
+            secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
+            secret=${secret#*: }
+            line="${line%%=*}='$secret'"
+            VALUE="$secret"
+        fi
+        # text
+        if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
+            bashio::log.blue "${KEYS}=******"
+        else
+            bashio::log.blue "$line"
+        fi
 
-    ######################################
-    # Export the variable to run scripts #
-    ######################################
-    export "$line"
-    # export to python
-    if command -v "python3" &>/dev/null; then
-        [ ! -f /env.py ] && echo "import os" > /env.py
-        echo "os.environ['${KEYS}'] = '${VALUE//[\"\']/}'" >> /env.py
-        python3 /env.py
-    fi
-    # set .env
-    echo "$line" >> /.env || true
-    # set /etc/environment
-    mkdir -p /etc
-    echo "$line" >> /etc/environment
-    # For non s6
-    if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
-    if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
-    # For s6
-    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-    echo "export ${KEYS}='${VALUE}'" >> ~/.bashrc
+        ######################################
+        # Export the variable to run scripts #
+        ######################################
+        export "$line"
+        # export to python
+        if command -v "python3" &>/dev/null; then
+            [ ! -f /env.py ] && echo "import os" > /env.py
+            echo "os.environ['${KEYS}'] = '${VALUE//[\"\']/}'" >> /env.py
+            python3 /env.py
+        fi
+        # set .env
+        echo "$line" >> /.env || true
+        # set /etc/environment
+        mkdir -p /etc
+        echo "$line" >> /etc/environment
+        # For non s6
+        if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
+        if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
+        # For s6
+        if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
+        echo "export ${KEYS}='${VALUE}'" >> ~/.bashrc
     fi
 done
 
