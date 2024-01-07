@@ -14,7 +14,7 @@ JSONSOURCE="/data/options.json"
 mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 
 for KEYS in "${arr[@]}"; do
-# export key
+    # export key
     VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
     # Check if the value is an array
     if [[ "$VALUE" == \[* ]]; then
