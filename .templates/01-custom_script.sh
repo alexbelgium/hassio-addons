@@ -27,6 +27,7 @@ else
 fi
 
 # Default location
+mkdir -p "$CONFIGLOCATION"
 CONFIGSOURCE="$CONFIGLOCATION/${HOSTNAME#*-}.sh"
 
 bashio::log.green "Execute $CONFIGFILEBROWSER if existing"
