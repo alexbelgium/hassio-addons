@@ -1,4 +1,4 @@
-- Fix : js errors in upstream container
+- Fix : js not found https://github.com/alexbelgium/hassio-addons/issues/1158
 
 ## 28.0.1 (30-12-2023)
 - Update to latest version from linuxserver/docker-nextcloud
