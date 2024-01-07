@@ -1,3 +1,4 @@
+- Fix : js errors in upstream container
 
 ## 28.0.1 (30-12-2023)
 - Update to latest version from linuxserver/docker-nextcloud
