@@ -46,6 +46,7 @@ for KEYS in "${arr[@]}"; do
         ######################################
         # Export the variable to run scripts #
         ######################################
+        # shellcheck disable=SC2163
         export "$line"
         # export to python
         if command -v "python3" &>/dev/null; then
