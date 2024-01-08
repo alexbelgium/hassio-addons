@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Jackett] Тo access to WebUI . Unhealthy container (opened 2024-01-07)](https://github.com/alexbelgium/hassio-addons/issues/1159) by [@GampiST](https://github.com/GampiST)
 # Home assistant add-on: jackett
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
