@@ -9,6 +9,15 @@ set -e
 # For all keys in options.json
 JSONSOURCE="/data/options.json"
 
+# Define secrets location
+if [ -f /homeassistant/secrets.yaml ]; then
+    SECRETSOURCE="/homeassistant/secrets.yaml"
+elif [ -f /config/secrets.yaml ]; then
+    SECRETSOURCE="/config/secrets.yaml"
+else
+    SECRETSOURCE="false"
+fi
+
 # Export keys as env variables
 # echo "All addon options were exported as variables"
 mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
@@ -27,11 +36,16 @@ for KEYS in "${arr[@]}"; do
         if [[ "${line}" == *'!secret '* ]]; then
             echo "secret detected"
             secret=${line#*secret }
+            # Stop if secret file not mounted
+            if [[ "$SECRETSOURCE" == "false" ]; then
+                bashio::log.warning "Homeassistant config not mounted, secrets are not supported"
+                continue
+            fi
             # Check if single match
-            secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
+            secretnum=$(sed -n "/$secret:/=" "$SECRETSOURCE" )
             [[ "$secretnum" == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
             # Get text
-            secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
+            secret=$(sed -n "/$secret:/p" "$SECRETSOURCE" )
             secret=${secret#*: }
             line="${line%%=*}='$secret'"
             VALUE="$secret"
