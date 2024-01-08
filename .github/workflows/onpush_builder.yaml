@@ -171,8 +171,9 @@ jobs:
           touch CHANGELOG.md
           # If the version does not exist
           if ! grep -q "$version" CHANGELOG.md; then
-            # And if there isn't modifications listed
-            if [[ $(sed "1p" a) != "-"** ]]; then
+            first_line="$(sed -n '/./p' CHANGELOG.md | head -n 1)"
+            # If the first line does not start with -
+            if [[ "$first_line" != "-"* ]]; then
               sed -i "1i\- Minor bugs fixed" CHANGELOG.md
             fi
             sed -i "1i\### $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
