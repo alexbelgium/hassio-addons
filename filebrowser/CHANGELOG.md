@@ -1,3 +1,5 @@
+### 2.23.0_12 (08-01-2024)
+- Minor bugs fixed
 - Fix : allow secrets https://github.com/alexbelgium/hassio-addons/issues/1163
 
 ### 2.23.0_11 (05-01-2024)
