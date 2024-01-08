@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [filebrowser] secrets.yaml - file not found (opened 2024-01-08)](https://github.com/alexbelgium/hassio-addons/issues/1163) by [@C-o-l-u-m-b-o](https://github.com/C-o-l-u-m-b-o)
 # Home assistant add-on: Filebrowser
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
