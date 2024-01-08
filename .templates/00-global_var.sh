@@ -37,7 +37,7 @@ for KEYS in "${arr[@]}"; do
             echo "secret detected"
             secret=${line#*secret }
             # Stop if secret file not mounted
-            if [[ "$SECRETSOURCE" == "false" ]; then
+            if [[ "$SECRETSOURCE" == "false" ]]; then
                 bashio::log.warning "Homeassistant config not mounted, secrets are not supported"
                 continue
             fi
