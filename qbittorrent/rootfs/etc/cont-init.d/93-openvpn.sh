@@ -29,23 +29,21 @@ if bashio::config.true 'openvpn_enabled'; then
             return 1
         fi
 
-        cp "$file" /tmpfile
+        # Avoid single auth-user-pass
+        if grep -q "^auth-user-pass" "$file" ; then
+            second_word="$(sed -n "/^auth-user-pass/p" "$file" | awk -F' ' '{print $2}')"
+            # If the second word is empty or starts with a dash
+            if [ -z "$second_word" ] || [[ "$second_word" == -* ]]; then
+                # Comment out the line with #
+                sed -i '/^auth-user-pass/s/^/#/' "$file"
+                continue
+            fi
+        fi
 
-        # Loop through each line of the input file
+        # Check referenced files
+        cp "$file" /tmpfile
         while read -r line
         do
-            # If the line contains only auth-user-pass disable it
-            if [[ "$line" == "auth-user-pass"* ]]; then
-                # Split the line by whitespace and get the second word
-                second_word=$(echo "$line" | awk '{print $2}')
-                # If the second word is empty or starts with a dash
-                if [ -z "$second_word" ] || [[ "$second_word" == -* ]]; then
-                    # Comment out the line with #
-                    sed -i '/^auth-user-pass/s/^/#/' "$file"
-                    continue
-                fi
-            fi
-
             # Check if the line contains a txt file
             if [[ ! $line =~ ^"#" ]] && [[ ! $line =~ ^";" ]] && [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]] || [[ "$line" =~ auth-user-pass ]]; then
                 # Extract the txt file name from the line
@@ -65,7 +63,6 @@ if bashio::config.true 'openvpn_enabled'; then
                 fi
             fi
         done < /tmpfile
-
         rm /tmpfile
 
         # Standardize lf
@@ -145,10 +142,10 @@ if bashio::config.true 'openvpn_enabled'; then
     fi
 
     # Add credentials file
-    file_name="$(sed -n "/^auth-user-pass/p" /config/openvpn/"$openvpn_config" | awk -F' ' '{print $2}')"
-    file_name="${file_name:-null}"
     if grep -q ^auth-user-pass /config/openvpn/"$openvpn_config" ; then
         # Credentials specified are they custom ?
+        file_name="$(sed -n "/^auth-user-pass/p" /config/openvpn/"$openvpn_config" | awk -F' ' '{print $2}')"
+        file_name="${file_name:-null}"
         if [[ "$file_name" != *"/etc/openvpn/credentials"* ]] && [[ "$file_name" != "null" ]]; then
             if [ -f "$file_name" ]; then
                 # If credential specified, exists, and is not the addon default
