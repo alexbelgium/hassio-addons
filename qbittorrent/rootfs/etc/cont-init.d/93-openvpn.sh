@@ -34,6 +34,18 @@ if bashio::config.true 'openvpn_enabled'; then
         # Loop through each line of the input file
         while read -r line
         do
+            # If the line contains only auth-user-pass disable it
+            if [[ "$line" == "auth-user-pass"* ]]; then
+                # Split the line by whitespace and get the second word
+                second_word=$(echo "$line" | awk '{print $2}')
+                # If the second word is empty or starts with a dash
+                if [ -z "$second_word" ] || [[ "$second_word" == -* ]]; then
+                    # Comment out the line with #
+                    sed -i '/^auth-user-pass/s/^/#/' "$file"
+                    continue
+                fi
+            fi
+
             # Check if the line contains a txt file
             if [[ ! $line =~ ^"#" ]] && [[ ! $line =~ ^";" ]] && [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]] || [[ "$line" =~ auth-user-pass ]]; then
                 # Extract the txt file name from the line
