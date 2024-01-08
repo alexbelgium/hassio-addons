@@ -36,7 +36,6 @@ if bashio::config.true 'openvpn_enabled'; then
             if [ -z "$second_word" ] || [[ "$second_word" == -* ]]; then
                 # Comment out the line with #
                 sed -i '/^auth-user-pass/s/^/#/' "$file"
-                continue
             fi
         fi
 
