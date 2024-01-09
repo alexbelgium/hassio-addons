@@ -37,6 +37,7 @@ if bashio::config.true 'openvpn_enabled'; then
             ((line_number++))
             # Extract the second argument
             file_name="$(echo "$line" | awk -F' ' '{print $2}')"
+            # If second argument is null or -
             if [ -z "$file_name" ] || [[ "$file_name" == -* ]]; then
                 # Comment out the line
                 sed -i "${line_number}s/^/# /" "$file"
