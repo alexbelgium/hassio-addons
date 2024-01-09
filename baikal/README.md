@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Baikal] Cant update to version 0.9.4+msmtpfix (opened 2024-01-08)](https://github.com/alexbelgium/hassio-addons/issues/1162) by [@TomaszDom](https://github.com/TomaszDom)
 
 # Home assistant add-on: Baikal
 
