@@ -12,7 +12,7 @@
   "init": false,
   "name": "Castsponsorskip",
   "options": {
-    "CSS_CATEGORIES": "sponsor, into, outro, selfpromo"
+    "CSS_CATEGORIES": "sponsor, intro, outro, selfpromo"
   },
   "schema": {
     "CSS_CATEGORIES": "str",
@@ -25,5 +25,5 @@
   "slug": "sponsorblockcast",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast",
-  "version": "0.7.0"
+  "version": "0.7.0-2"
 }
