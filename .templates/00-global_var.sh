@@ -33,9 +33,12 @@ for KEYS in "${arr[@]}"; do
         VALUE="${VALUE//[\"\']/}"
         line="${KEYS}='${VALUE}'"
         # Check if secret
-        if [[ "${line}" == *'!secret '* ]]; then
+        if [[ "${line}" == *"!secret "* ]]; then
             echo "secret detected"
+            # Get argument
             secret=${line#*secret }
+            # Remove trailing ' or "
+            secret="${secret%[\"\']}"
             # Stop if secret file not mounted
             if [[ "$SECRETSOURCE" == "false" ]]; then
                 bashio::log.warning "Homeassistant config not mounted, secrets are not supported"
