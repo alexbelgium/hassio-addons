@@ -1,3 +1,4 @@
+### 0.7.0-2 (09-01-2024)
 - Fix : typo in css_categories for intro https://github.com/alexbelgium/hassio-addons/issues/1165
 
 ## 0.7.0 (06-01-2024)
