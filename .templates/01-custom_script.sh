@@ -44,6 +44,13 @@ fi
 dos2unix "$CONFIGSOURCE" &>/dev/null || true
 chmod +x "$CONFIGSOURCE"
 
+# Get current shebang, if not available use another
+currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$CONFIGSOURCE")"
+if [ ! -f "${currentshebang%% *}" ]; then
+    for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do if [ -f "${shebang%% *}" ]; then break; fi; done
+    sed -i "s|$currentshebang|$shebang|g" "$CONFIGSOURCE"
+fi
+
 # Check if there is actual commands
 while IFS= read -r line
 do
