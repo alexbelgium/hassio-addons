@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] addons_updater support for ghcr.io images without github releases (opened 2024-01-09)](https://github.com/alexbelgium/hassio-addons/issues/1168) by [@jdeath](https://github.com/jdeath)
 # Home assistant add-on: addons updater
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
