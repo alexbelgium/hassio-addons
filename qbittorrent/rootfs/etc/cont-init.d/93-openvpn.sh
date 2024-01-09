@@ -28,21 +28,20 @@ if bashio::config.true 'openvpn_enabled'; then
             bashio::warning "$file not found"
             return 1
         fi
-
-        # Avoid single auth-user-pass
-        if grep -q "^auth-user-pass" "$file" ; then
-            second_word="$(sed -n "/^auth-user-pass/p" "$file" | awk -F' ' '{print $2}')"
-            # If the second word is empty or starts with a dash
-            if [ -z "$second_word" ] || [[ "$second_word" == -* ]]; then
-                # Comment out the line with #
-                sed -i '/^auth-user-pass/s/^/#/' "$file"
-            fi
-        fi
-
-        # Check referenced files
+        
+        # Check each lines
         cp "$file" /tmpfile
-        while read -r line
-        do
+        line_number=0
+        while read -r line; do
+            # Increment the line number
+            ((line_number++))
+            # Extract the second argument
+            file_name="$(echo "$line" | awk -F' ' '{print $2}')"
+            if [ -z "$file_name" ] || [[ "$file_name" == -* ]]; then
+                # Comment out the line
+                sed -i "${line_number}s/^/# /" "$file"
+            fi
+            
             # Check if the line contains a txt file
             if [[ ! $line =~ ^"#" ]] && [[ ! $line =~ ^";" ]] && [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]] || [[ "$line" =~ auth-user-pass ]]; then
                 # Extract the txt file name from the line
