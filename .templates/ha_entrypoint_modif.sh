@@ -8,8 +8,8 @@ set -e
 # Corrects permissions for s6 v3
 ################################
 
-PUID="{PUID:-0}"
-PGID="{PGID:-0}"
+PUID="${PUID:-0}"
+PGID="${PGID:-0}"
 
 if [ -f /ha_entrypoint.sh ]; then
     chown -R "$PUID:$PGID" /ha_entrypoint.sh
