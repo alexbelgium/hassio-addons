@@ -11,9 +11,15 @@ for SCRIPTS in /etc/cont-init.d/*; do
     [ -e "$SCRIPTS" ] || continue
     echo "$SCRIPTS: executing"
 
-    # Ensure permissions
-    chown "$(id -u)":"$(id -g)" "$SCRIPTS"
-    chmod a+x "$SCRIPTS"
+    # Check if run as root
+    if test "$(id -u)" == 0 && test "$(id -u)" == 0; then
+        chown "$(id -u)":"$(id -g)" "$SCRIPTS"
+        chmod a+x "$SCRIPTS"
+    else
+        bashio::log.warning "Script executed with user $(id -u):$(id -g), things can break and chown won't work"
+        # Disable chown in scripts
+        sed -i "s/chown /true # chown /g" "$SCRIPTS"
+    fi
 
     # Get current shebang, if not available use another
     currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$SCRIPTS")"
