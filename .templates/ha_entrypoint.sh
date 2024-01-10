@@ -17,8 +17,11 @@ for SCRIPTS in /etc/cont-init.d/*; do
         chmod a+x "$SCRIPTS"
     else
         bashio::log.warning "Script executed with user $(id -u):$(id -g), things can break and chown won't work"
-        # Disable chown in scripts
-        sed -i "s/chown /true # chown /g" "$SCRIPTS"
+        # Disable chown and chmod in scripts
+        sed -i "s/^chown /true # chown /g" "$SCRIPTS"
+        sed -i "s/ chown / true # chown /g" "$SCRIPTS"
+        sed -i "s/^chmod /true # chmod /g" "$SCRIPTS"
+        sed -i "s/ chmod / true # chmod /g" "$SCRIPTS"
     fi
 
     # Get current shebang, if not available use another
