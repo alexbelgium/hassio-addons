@@ -220,11 +220,12 @@ for f in */; do
                     tail -n 1)" || true
                     if [[ "$LASTVERSION" == "" ]]; then
                         # Continue to next
+                        echo "No packages found"
                         continue
                     fi
                 else
-                    echo "No packages found"
                     # Continue to next
+                    echo "No packages found"
                     continue
                 fi
             else
