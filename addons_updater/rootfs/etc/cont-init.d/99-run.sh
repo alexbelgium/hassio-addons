@@ -207,11 +207,9 @@ for f in */; do
         # Add brackets
         LASTVERSION='"'${LASTVERSION}'"'
 
-        # Do not compare with ls tag for linuxserver images (to avoid updating only for dependencies)
-        #LASTVERSION2=${LASTVERSION%-ls*}
-        #CURRENT2=${CURRENT%-ls*}
-        LASTVERSION2=${LASTVERSION}
-        CURRENT2=${CURRENT}
+        # Avoid characters incompatible with HomeAssistant version name
+        LASTVERSION2=${LASTVERSION//+/-}
+        CURRENT2=${CURRENT//+/-}
 
         # Update if needed
         if [ "${CURRENT2}" != "${LASTVERSION2}" ]; then
