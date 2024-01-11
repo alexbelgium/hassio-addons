@@ -90,7 +90,8 @@ for f in */; do
 
         #Find current version
         LOGINFO="... $SLUG : get current version" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
-        CURRENT=$(jq .upstream_version updater.json) || { bashio::log.error "$SLUG addon upstream tag not found in updater.json. Exiting."; continue; }
+        CURRENT=$(jq .upstream_version updater.json) || \
+        { bashio::log.error "$SLUG addon upstream tag not found in updater.json. Exiting."; continue; }
 
         if [[ "$SOURCE" = dockerhub ]]; then
             # Use dockerhub as upstream
@@ -200,8 +201,9 @@ for f in */; do
 
             #Execute version search
             # shellcheck disable=SC2086
-            LASTVERSION="$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1)" || { if [[ "$SOURCE" == "github" ]] && [[ ${LASTVERSION,,} == *"no release found"* ]]; then
-
+            LASTVERSION="$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1)" || \
+            # If failure, checks if there is packages that could be used
+            { if [[ "$SOURCE" == "github" ]] && [[ ${LASTVERSION,,} == *"no release found"* ]]; then
                 # Is there a package
                 echo "No version found, looking if packages available"
                 last_packages="$(curl -s https://github.com/$REPOSITORY/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")" || true
@@ -230,7 +232,6 @@ for f in */; do
                 continue
             fi }
         fi
-
 
         # Add brackets
         LASTVERSION='"'${LASTVERSION}'"'
