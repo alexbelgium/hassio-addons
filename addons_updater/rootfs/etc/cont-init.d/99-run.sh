@@ -200,9 +200,29 @@ for f in */; do
 
             #Execute version search
             # shellcheck disable=SC2086
-            LASTVERSION=$(lastversion "$UPSTREAM" $ARGUMENTS) || continue
-        fi
+            LASTVERSION="$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1)" || \
+            \
+            # check if it is an issue with no releases in github
+            ( if [[ "$SOURCE" == "github" ]] && [[ ${LASTVERSION,,} == *"no release found"* ]]; then
 
+                # Is there a package
+                echo "No version found, looking if packages available"
+                last_packages="$(curl -s https://github.com/$REPOSITORY/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")"
+                last_package="$(echo "$last_packages" | head -n 1)"
+                if [[ "$(echo -n "$last_packages" | grep -c '^')" -gt 0 ]]; then
+                    echo "A total of $(echo -n "$last_packages" | grep -c '^') packages were found, using $last_package" 
+                else
+                    echo "No packages found"
+                    # Continue to next
+                    continue
+                fi
+
+                # Are there tags
+                
+            else
+                # Continue to next
+                continue
+            fi )
 
         # Add brackets
         LASTVERSION='"'${LASTVERSION}'"'
