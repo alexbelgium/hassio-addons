@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 calibre stores data under config folder (instead of addon_config) (opened 2024-01-03)](https://github.com/alexbelgium/hassio-addons/issues/1154) by [@codyc1515](https://github.com/codyc1515)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
