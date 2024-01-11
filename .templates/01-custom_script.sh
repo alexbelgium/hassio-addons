@@ -2,39 +2,54 @@
 # shellcheck shell=bash
 set -e
 
-# Define slug if needed
-slug="${HOSTNAME#*-}"
+##################
+# INITIALIZATION #
+##################
+
+# Exit if /config is not mounted
+if [ ! -d /config ]; then
+    exit 0
+fi
+
+# Define slug
+slug="${HOSTNAME}"
 
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
-    # Migrate previous script
-    if [ -f /homeassistant/addons_autoscripts/"${slug}".sh ]; then
-        echo "Migrating scripts to new config location"
-        mv -f /homeassistant/addons_autoscripts/"${slug}".sh /config/"${slug}".sh
-    fi
     # New config location
     CONFIGLOCATION="/config"
-    CONFIGFILEBROWSER="/config/*-$slug"
+    CONFIGFILEBROWSER="/addon_configs/$slug/${HOSTNAME#*-}.sh"
 else
     # Legacy config location
+    slug="${HOSTNAME#*-}"
     CONFIGLOCATION="/config/addons_autoscripts"
-    CONFIGFILEBROWSER="/config/addons_autoscripts"
-    mkdir -p /config/addons_autoscripts
+    CONFIGFILEBROWSER="/homeassistant/addons_config/${slug}/${slug}.sh"
 fi
 
-bashio::log.green "Execute $CONFIGFILEBROWSER/${slug}.sh if existing"
+# Default location
+mkdir -p "$CONFIGLOCATION" || true
+CONFIGSOURCE="$CONFIGLOCATION/${HOSTNAME#*-}.sh"
+
+bashio::log.green "Execute $CONFIGFILEBROWSER if existing"
 bashio::log.green "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
 
 # Download template if no script found and exit
-if [ ! -f "$CONFIGLOCATION/${slug}".sh ]; then
+if [ ! -f "$CONFIGSOURCE" ]; then
     TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/script.template"
-    curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGLOCATION/${slug}".sh
+    curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE" || true
     exit 0
 fi
 
 # Convert scripts to linux
-dos2unix "$CONFIGLOCATION/${slug}".sh &>/dev/null || true
-chmod +x "$CONFIGLOCATION/${slug}".sh
+dos2unix "$CONFIGSOURCE" &>/dev/null || true
+chmod +x "$CONFIGSOURCE"
+
+# Get current shebang, if not available use another
+currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$CONFIGSOURCE")"
+if [ ! -f "${currentshebang%% *}" ]; then
+    for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do if [ -f "${shebang%% *}" ]; then break; fi; done
+    sed -i "s|$currentshebang|$shebang|g" "$CONFIGSOURCE"
+fi
 
 # Check if there is actual commands
 while IFS= read -r line
@@ -45,7 +60,7 @@ do
     # Check if line is not empty and does not start with #
     if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
         bashio::log.green "... script found, executing"
-        /."$CONFIGLOCATION/${slug}".sh
+        /."$CONFIGSOURCE"
         exit 0
     fi
-done < "$CONFIGLOCATION/${slug}".sh
+done < "$CONFIGSOURCE"

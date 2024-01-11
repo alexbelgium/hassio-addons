@@ -1,3 +1,7 @@
+
+## 7.3.0 (06-01-2024)
+- Update to latest version from linuxserver/docker-calibre
+- BREAKING CHANGE : please relink your library according to https://github.com/alexbelgium/hassio-addons/issues/1154#issuecomment-1879182729
 - ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/calibre to a folder only accessible from my Filebrowser addon called /addon_configs/something-calibre. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/ https://github.com/alexbelgium/hassio-addons/issues/1154
 
 ## 7.2.0 (16-12-2023)

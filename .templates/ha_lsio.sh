@@ -7,7 +7,7 @@ set -e
 #############################
 
 # Set variable
-CONFIGLOCATION="$1"
+CONFIGLOCATION="${1:-/config}"
 echo "Setting config to $CONFIGLOCATION"
 
 # Avoid custom-init.d duplications
@@ -15,10 +15,20 @@ for file in $(grep -sril 'Potential tampering with custom' /etc/cont-init.d /etc
     rm -f "$file"
 done
 
-# Create new config folder if needed
-for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do
-    sed -i "1a mkdir -p $CONFIGLOCATION" "$file"
-done
+# If custom config
+if [ "$CONFIGLOCATION" != "/config" ]; then
+
+    # Create new config folder if needed
+    for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do
+        sed -i "1a mkdir -p $CONFIGLOCATION" "$file"
+    done
+
+    # Correct config location
+    for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do
+        sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" "$file"
+    done
+
+fi
 
 # Allow UID and GID setting
 for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do
@@ -26,17 +36,14 @@ for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do
     sed -i '1a PGID="$(if bashio::config.has_value "PGID"; then bashio::config "PGID"; else echo "0"; fi)"' "$file"
 done
 
-# Correct config location
-for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do
-    sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" "$file"
-done
-
-# Avoid chmod /config
-for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*; do
-    if [ -f "$file" ] && [ ! -z "$(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' "$file")" ]; then
-        sed -i "s|/config$|/data|g" "$file"
-    fi
-done
+# Avoid chmod /config if ha config mounted
+if [ -f /config/configuration.yaml ] || [ -f /config/configuration.json ]; then
+    for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*; do
+        if [ -f "$file" ] && [ ! -z "$(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' "$file")" ]; then
+            sed -i "s|/config$|/data|g" "$file"
+        fi
+    done
+fi
 
 # Send crond logs to addon logs
 if [ -f /etc/s6-overlay/s6-rc.d/svc-cron/run ]; then

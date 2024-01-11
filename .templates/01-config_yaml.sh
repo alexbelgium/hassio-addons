@@ -28,6 +28,7 @@ else
 fi
 
 # Default location
+mkdir -p "$CONFIGLOCATION" || true
 CONFIGSOURCE="$CONFIGLOCATION"/config.yaml
 
 # Is there a custom path

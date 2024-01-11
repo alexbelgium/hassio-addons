@@ -14,6 +14,7 @@ bashio::log.info "Config stored in $CONFIG_LOCATION"
 mkdir -p "$CONFIG_LOCATION"
 chown -R "$PUID:$PGID" "$CONFIG_LOCATION"
 
+# shellcheck disable=SC2013
 for file in $(grep -sril "/config/addons_config/readarr" /etc /defaults); do
     sed -i "s|/config/addons_config/readarr|$CONFIG_LOCATION|g" "$file"
 done
