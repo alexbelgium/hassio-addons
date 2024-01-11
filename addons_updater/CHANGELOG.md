@@ -1,4 +1,5 @@
-- github_exclude applies to dockerhub
+- Feat : if there is no releases in a github repo, check if there is a valid package and get the highest tag
+- Feat : github_exclude applies to dockerhub
 
 ## 3.18
 - github_exclude: exclude a text in the release name
