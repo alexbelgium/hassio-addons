@@ -219,16 +219,16 @@ for f in */; do
                     if [[ "$LASTVERSION" == "" ]]; then
                         # Continue to next
                         echo "No packages found"
-                        continue
+                        set_continue=true
                     fi
                 else
                     # Continue to next
                     echo "No packages found"
-                    continue
+                    set_continue=true
                 fi
             else
                 # Continue to next
-                continue
+                set_continue=true
             fi
             }
 
@@ -236,6 +236,11 @@ for f in */; do
             LASTVERSION=""
             # shellcheck disable=SC2086
             LASTVERSION="$(lastversion "$UPSTREAM" $ARGUMENTS || test_packages)"
+            
+            # Continue if issue
+            if [[ "${set_continue:-false}" == true ]]; then
+                continue
+            fi
 
         fi
 
