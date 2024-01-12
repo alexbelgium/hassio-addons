@@ -226,6 +226,7 @@ for f in */; do
                         set_continue=true
                     else
                         bashio::log.info "Found tag $LASTVERSION"
+                        echo "$LASTVERSION"
                     fi
                 else
                     # Continue to next
