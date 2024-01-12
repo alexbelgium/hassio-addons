@@ -203,18 +203,18 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     ### Download WebUI
     case $CUSTOMUI in
         "vuetorrent")
-            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/WDaan/VueTorrent/releases/latest | grep -o "http.*vuetorrent.zip" | head -1)" >/dev/null
             ;;
 
         "qbit-matUI")
-            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip" | head -1)" >/dev/null
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/bill-ahmed/qbit-matUI/releases/latest | grep -o "http.*Unix.*.zip" | head -1)" >/dev/null
             echo ""
             bashio::log.warning "qbit-matUI selected ! It will not work for ingress, which will stay with vuetorrent"
             echo ""
             ;;
 
         "qb-web")
-            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
+            curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
             ;;
 
     esac
