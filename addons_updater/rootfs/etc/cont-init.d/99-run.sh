@@ -74,6 +74,7 @@ for f in */; do
         SOURCE=$(jq -r .source updater.json)
         FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
         EXCLUDE_TEXT=$(jq -r .github_exclude updater.json)
+        EXCLUDE_TEXT="${EXCLUDE_TEXT:-zzzzzzzzzzzzzzzz}"
         PAUSED=$(jq -r .paused updater.json)
         DATE="$(date '+%d-%m-%Y')"
         BYDATE=$(jq -r .dockerhub_by_date updater.json)
