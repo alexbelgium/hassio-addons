@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Nextcloud] New installation wont start (opened 2024-01-10)](https://github.com/alexbelgium/hassio-addons/issues/1170) by [@Holger-H](https://github.com/Holger-H)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
