@@ -204,7 +204,7 @@ for f in */; do
             if [ "$VERBOSE" = true ]; then 
                 bashio::log.info "source : $SOURCE and LASTVERSION : $(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)"
             fi
-            if [[ "$SOURCE" == "github" ]] && [[ "$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)" == *"No release found"* ]]; then
+            if [[ "$SOURCE" == *"github"* ]] && [[ "$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)" == *"No release"* ]]; then
                 # Is there a package
                 echo "No version found, looking if packages available"
                 last_packages="$(curl -s https://github.com/"$REPOSITORY"/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")" || true
