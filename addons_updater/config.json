@@ -13,7 +13,7 @@
   "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "init": false,
   "map": [
-    "config:rw"
+    "addon_config:rw"
   ],
   "name": "Repository Updater",
   "options": {
@@ -32,5 +32,5 @@
   "slug": "updater",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater",
-  "version": "3.18.7"
+  "version": "3.19"
 }
