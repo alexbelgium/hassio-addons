@@ -7,6 +7,8 @@ if [ ! -f /data/done ] && [ -f /data/config/nginx/site-confs/default.conf ]; the
     rm /data/config/nginx/site-confs/default.conf
     touch /data/done
     bashio::addon.restart
+elif [ ! -f /data/config/nginx/site-confs/default.conf ] && [ -f /data/config/nginx/site-confs/default.conf.sample ]; then
+    cp /data/config/nginx/site-confs/default.conf.sample /data/config/nginx/site-confs/default.conf    
 fi
 
 # Runs only after initialization done
