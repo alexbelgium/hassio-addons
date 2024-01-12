@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Qbittorrent] Web UI artifacts (opened 2024-01-12)](https://github.com/alexbelgium/hassio-addons/issues/1172) by [@akrigator](https://github.com/akrigator)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
