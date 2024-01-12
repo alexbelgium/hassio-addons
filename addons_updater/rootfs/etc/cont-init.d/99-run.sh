@@ -207,12 +207,12 @@ for f in */; do
             if [[ "$SOURCE" == *"github"* ]] && [[ "$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)" == *"No release"* ]]; then
                 # Is there a package
                 bashio::log.warning "No version found, looking if packages available"
-                last_packages="$(curl -s -L https://github.com/"$REPOSITORY"/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")" || true
+                last_packages="$(curl -s -L https://github.com/"$UPSTREAM"/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")" || true
                 last_package="$(echo "$last_packages" | head -n 1)" || true
                 if [[ "$(echo -n "$last_packages" | grep -c '^')" -gt 0 ]]; then
                     bashio::log.warning "A total of $(echo -n "$last_packages" | grep -c '^') packages were found, using $last_package"
                     LASTVERSION=""
-                    LASTVERSION="$(curl -s -L https://github.com/"$REPOSITORY"/pkgs/container/"$last_package" | sed -n "s/.*?tag=\([^\"]*\)\">.*/\1/p" | 
+                    LASTVERSION="$(curl -s -L https://github.com/"$UPSTREAM"/pkgs/container/"$last_package" | sed -n "s/.*?tag=\([^\"]*\)\">.*/\1/p" | 
                     sed -e '/.*latest.*/d' |
                     sed -e '/.*dev.*/d' |
                     sed -e '/.*nightly.*/d' |
