@@ -74,6 +74,7 @@
     "media:rw",
     "share:rw",
     "addon_config:rw",
+    "homeassistant_config:rw",
     "ssl"
   ],
   "name": "Calibre-web",
@@ -110,6 +111,6 @@
   "slug": "calibre-web",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre_web",
-  "version": "0.6.21-6",
+  "version": "0.6.21-7",
   "video": true
 }
