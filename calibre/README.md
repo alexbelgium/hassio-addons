@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Calibre] Try to access to blocked device (opened 2024-01-12)](https://github.com/alexbelgium/hassio-addons/issues/1174) by [@codyc1515](https://github.com/codyc1515)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
