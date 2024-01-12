@@ -1,0 +1,64 @@
+{
+  "arch": [
+    "amd64",
+    "aarch64",
+    "armhf",
+    "armv7",
+    "i386"
+  ],
+  "boot": "auto",
+  "description": "WireGuard Easy: WireGuard + UI in one",
+  "environment": {},
+  "map": [
+    "ssl:rw"
+  ],
+  "name": "wgeasy",
+  "options": {
+    "WG_HOST": "hassio.local",
+    "PASSWORD": "",
+    "WG_PORT": "51820",
+    "WG_DEVICE": "eth0",
+    "WG_PATH": "/ssl/wgeasy/",
+    "WG_PERSISTENT_KEEPALIVE": "0",
+    "WG_DEFAULT_ADDRESS": "10.8.0.x",
+    "WG_DEFAULT_DNS": "1.1.1.1",
+    "WG_ALLOWED_IPS": "0.0.0.0/0, ::/0",
+    "WG_POST_UP": "",
+    "WG_POST_DOWN": ""
+  },
+  "ports": {
+    "51820/udp": "51820",
+    "51821/tcp": "51821"
+  },
+  "ports_description": {
+    "51820/udp": "WireGuard: forward this port in your router",
+    "51820/tcp": "WebUI"
+  },
+  "schema": {
+    "WG_HOST": "str",
+    "PASSWORD": "str",
+    "WG_PORT": "str",
+    "WG_DEVICE": "str",
+    "WG_PATH": "str",
+    "WG_PERSISTENT_KEEPALIVE": "str",
+    "WG_DEFAULT_ADDRESS": "str",
+    "WG_DEFAULT_DNS": "str",
+    "WG_ALLOWED_IPS": "str",
+    "WG_POST_UP": "str",
+    "WG_POST_DOWN": "str"
+  },
+  "slug": "wgeasy",
+  "startup": "services",
+  "upstream": "9",
+  "url": "https://github.com/jdeath/homeassistant-addons/tree/main/wgeasy",
+  "version": "9",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:51821]",
+  "ingress": true,
+  "ingress_port": 51821,
+  "privileged": [
+    "NET_ADMIN"
+  ],
+  "devices": [
+    "/dev/net/tun"
+  ]
+}
