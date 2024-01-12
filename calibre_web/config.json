@@ -59,11 +59,11 @@
   ],
   "environment": {
     "DOCKER_MODS": "linuxserver/mods:universal-calibre",
-    "FM_HOME": "/config/addons_config/calibre-web",
-    "HOME": "/config/addons_config/calibre-web",
+    "FM_HOME": "/config",
+    "HOME": "/config",
     "PGID": "0",
     "PUID": "0",
-    "calibre-web_CONFIG_DIRECTORY": "/config/addons_config/calibre-web",
+    "calibre-web_CONFIG_DIRECTORY": "/config",
     "shm_size": "1gb"
   },
   "hassio_api": true,
@@ -110,6 +110,6 @@
   "slug": "calibre-web",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre_web",
-  "version": "0.6.21-4",
+  "version": "0.6.21-5",
   "video": true
 }

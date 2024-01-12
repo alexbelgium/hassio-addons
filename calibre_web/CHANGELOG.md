@@ -1,52 +1,72 @@
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/calibre-web to a folder only accessible from my Filebrowser addon called /addon_configs/something-calibre-web. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/ https://github.com/alexbelgium/hassio-addons/issues/1177
+
 ### 0.6.21-2 (05-11-2023)
+
 - Minor bugs fixed
 - Fix : https://github.com/alexbelgium/hassio-addons/issues/1050 @klassm
 
 ## 0.6.21 (28-10-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls225 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls224 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls222 (12-08-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls221 (05-08-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls220 (23-07-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls219 (22-07-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls218 (15-07-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls217 (08-07-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls216 (01-07-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls215 (24-06-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls214 (17-06-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls213 (10-06-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
 
 ## 0.6.20-ls212 (03-06-2023)
+
 - Update to latest version from linuxserver/docker-calibre-web
+
 ### 0.6.20-ls211-2 (30-05-2023)
+
 - Minor bugs fixed
 - Fix : allow app to start on clean install @PaulAmor https://github.com/alexbelgium/hassio-addons/issues/850
 
