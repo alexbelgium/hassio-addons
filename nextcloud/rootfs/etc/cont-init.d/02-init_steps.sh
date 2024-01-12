@@ -4,11 +4,11 @@ set -e
 
 # Clear default.conf from erroneous upstream element (only once)
 if [ ! -f /data/done ] && [ -f /data/config/nginx/site-confs/default.conf ]; then
-    rm /data/config/nginx/site-confs/default.conf
+    rm /data/config/nginx/site-confs/*
     touch /data/done
     bashio::addon.restart
-elif [ ! -f /data/config/nginx/site-confs/default.conf ] && [ -f /data/config/nginx/site-confs/default.conf.sample ]; then
-    cp /data/config/nginx/site-confs/default.conf.sample /data/config/nginx/site-confs/default.conf    
+elif [ ! -f /data/config/nginx/site-confs/default.conf ]; then
+    cp /defaults/nginx/site-confs/default.conf.sample /data/config/nginx/site-confs/default.conf  
 fi
 
 # Runs only after initialization done
