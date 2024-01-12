@@ -217,7 +217,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
             curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
             ;;
 
-    esac
+    esac || { bashio::log.warning "$CUSTOMUI could not be downloaded, please raise an issue on the github repository. The default UI will be used" && exit 0 ; }
 
     ### Install WebUI
     mkdir -p /webui/"$CUSTOMUI"
