@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Qbittorrent] openvpn - wrong read directory /config/openvpn/config.ovpn (opened 2024-01-12)](https://github.com/alexbelgium/hassio-addons/issues/1175) by [@jdumeez](https://github.com/jdumeez)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
