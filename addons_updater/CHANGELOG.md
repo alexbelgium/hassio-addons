@@ -1,3 +1,4 @@
+## 3.19
 - New HA config logic implemented. Files are now located in the addon config file, that can be accessed from the addon_configs folder from my filebrowser or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 - Feat : if there is no releases in a github repo, check if there is a valid package and get the highest tag https://github.com/alexbelgium/hassio-addons/issues/1168
 - Feat : github_exclude applies to dockerhub
