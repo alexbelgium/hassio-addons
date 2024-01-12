@@ -229,7 +229,7 @@ for f in */; do
                     fi
                 else
                     # Continue to next
-                    echo "No packages found"
+                    bashio::log.warning "No packages found"
                     set_continue=true
                 fi
             else
@@ -237,9 +237,7 @@ for f in */; do
                 set_continue=true
             fi
             }
-
-            #Execute version search
-            LASTVERSION=""
+            
             # shellcheck disable=SC2086
             LASTVERSION="$(lastversion "$UPSTREAM" $ARGUMENTS || test_packages)"
             
