@@ -47,7 +47,7 @@
     "WG_POST_UP": "str",
     "WG_POST_DOWN": "str"
   },
-  "slug": "wgeasy",
+  "slug": "aaa",
   "startup": "services",
   "upstream": "9",
   "url": "https://github.com/jdeath/homeassistant-addons/tree/main/wgeasy",
