@@ -218,15 +218,14 @@ for f in */; do
                     sed -e '/.*dev.*/d' |
                     sed -e '/.*nightly.*/d' |
                     sed -e '/.*beta.*/d' |
-                    sed -e "/.*$EXCLUDE_TEXT.*/d" |
                     sort -V |
                     tail -n 1)" || true
                     if [[ "$LASTVERSION" == "" ]]; then
                         # Continue to next
-                        echo "No packages found"
+                        bashio::log.warning "No packages found"
                         set_continue=true
                     else
-                        echo "Found tag $LASTVERSION"
+                        bashio::log.info "Found tag $LASTVERSION"
                     fi
                 else
                     # Continue to next
