@@ -1,3 +1,4 @@
+### 0.6.21-5 (12-01-2024)
 - ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/calibre-web to a folder only accessible from my Filebrowser addon called /addon_configs/something-calibre-web. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/ https://github.com/alexbelgium/hassio-addons/issues/1177
 
 ### 0.6.21-2 (05-11-2023)
