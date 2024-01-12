@@ -17,23 +17,23 @@ jobs:
       run: |
         # Init
         echo "Starting"
-        
+
         # Get issues list
-        curl -s https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
+        curl -s -L https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
         # Go through all folders, add to filters if not existing
         for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           if [ -f "$f"/config.json ]; then
-          
+
             # Clean previously reported issues
             sed -i "/Open Issue :/d" "$f"/README.md
             sed -i "/Open Request :/d" "$f"/README.md
             # If there is an issue with the addon name in title, put a message
             COUNTER=0
             while [[ $(jq -r --arg COUNTER "$COUNTER" ".["$COUNTER"].title" issueslist) != null ]]; do
-            
+
               #Increment counter
               (( COUNTER=COUNTER+1 )) || true
-              
+
               #Get variables
               TITLE="$(jq -r --arg COUNTER "$COUNTER" ".["$COUNTER"].title" issueslist)"
               TITLE="${TITLE//[<>\$\'\"]/}"
@@ -66,4 +66,4 @@ jobs:
         commit: -u
         fetch: --force
         push: --force
-        
+

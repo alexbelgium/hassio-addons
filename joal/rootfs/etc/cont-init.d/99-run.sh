@@ -19,9 +19,9 @@ fi
 # download latest version
 
 if [ "$VERBOSE" = true ]; then
-    curl --progress-bar -f -J -L -o /tmp/joal.tar.gz "$(curl -f -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")"
+    curl --progress-bar -f -J -L -o /tmp/joal.tar.gz "$(curl -f -s -L https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")"
 else
-    curl --progress-bar -f -S -J -L -o /tmp/joal.tar.gz "$(curl -f -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")" >/dev/null
+    curl --progress-bar -f -S -J -L -o /tmp/joal.tar.gz "$(curl -f -s -L https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")" >/dev/null
 fi
 mkdir -p /data/joal
 tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null

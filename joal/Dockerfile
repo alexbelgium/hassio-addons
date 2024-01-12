@@ -34,7 +34,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # hadolint ignore=SC2015,DL4006
 RUN \
     if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl); fi \
-    && curl -f -s -S -J -L -o /tmp/joal.tar.gz "$(curl -f -s https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")" >/dev/null \
+    && curl -f -s -S -J -L -o /tmp/joal.tar.gz "$(curl -f -s -L https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")" >/dev/null \
     && mkdir -p /data/joal \
     && tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null \
     && chown -R "$(id -u)":"$(id -g)" /data/joal \

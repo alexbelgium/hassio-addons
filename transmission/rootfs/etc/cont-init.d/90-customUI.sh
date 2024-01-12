@@ -25,7 +25,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
             ;;
 
         "transmission-web-control")
-            curl -f -s -S -J -L -o /release.zip "$(curl -f -s https://api.github.com/repos/transmission-web-control/transmission-web-control/releases/latest | grep -o "http.*dist.zip" | head -1)" >/dev/null
+            curl -f -s -S -J -L -o /release.zip "$(curl -f -s -L https://api.github.com/repos/transmission-web-control/transmission-web-control/releases/latest | grep -o "http.*dist.zip" | head -1)" >/dev/null
             ### Install WebUI
             mkdir -p /transmission-web-control
             unzip -q /release.zip -d /transmission-web-control
@@ -49,7 +49,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
             ;;
 
         "transmissionic")
-            TRANSMISSIONIC_VERSION=$(curl -s "https://api.github.com/repos/6c65726f79/Transmissionic/releases/latest" | jq -r .tag_name)
+            TRANSMISSIONIC_VERSION=$(curl -s -L "https://api.github.com/repos/6c65726f79/Transmissionic/releases/latest" | jq -r .tag_name)
             curl -o /tmp/transmissionic.zip -L "https://github.com/6c65726f79/Transmissionic/releases/download/${TRANSMISSIONIC_VERSION}/Transmissionic-webui-${TRANSMISSIONIC_VERSION}.zip"
             unzip /tmp/transmissionic.zip -d /tmp
             mv /tmp/web /transmissionic
