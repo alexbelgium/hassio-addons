@@ -2,10 +2,11 @@
 # shellcheck shell=bash
 set -e
 
-# Clear default.conf
-if [ ! -f /done ] && [ -f /data/config/nginx/site-confs/default.conf ]; then
+# Clear default.conf from erroneous upstream element (only once)
+if [ ! -f /data/done ] && [ -f /data/config/nginx/site-confs/default.conf ]; then
     rm /data/config/nginx/site-confs/default.conf
-    touch /done
+    touch /data/done
+    bashio::addon.restart
 fi
 
 # Runs only after initialization done
