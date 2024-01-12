@@ -201,7 +201,7 @@ for f in */; do
     
             # If failure, checks if there is packages that could be used
             function test_packages () {
-                if [[ "$SOURCE" == "github" ]] && [[ ${LASTVERSION,,} == *"no release found"* ]]; then
+                if [[ "$SOURCE" == "github" ]] && [[ ${LASTVERSION,,:-} == *"no release found"* ]]; then
                 # Is there a package
                 echo "No version found, looking if packages available"
                 last_packages="$(curl -s https://github.com/"$REPOSITORY"/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")" || true
