@@ -107,9 +107,6 @@ if bashio::config.true 'openvpn_enabled'; then
             # If correct type
             if [[ "$openvpn_config" == *".ovpn" ]] || [[ "$openvpn_config" == *".conf" ]]; then
                 echo "... configured ovpn file : using /addon_configs/$HOSTNAME/openvpn/$openvpn_config"
-                # Check path
-                check_path /config/openvpn/"$openvpn_config"
-                # Not correct type
             else
                 bashio::exit.nok "Configured ovpn file : $openvpn_config is set but does not end by .ovpn ; it can't be used!"
             fi
@@ -128,8 +125,6 @@ if bashio::config.true 'openvpn_enabled'; then
         openvpn_config="${VPN_CONFIG##*/}"
         echo "... Openvpn enabled, but openvpn_config option empty. Selecting a random ovpn file : ${openvpn_config}. Other available files :"
         printf '%s\n' "${VPN_CONFIGS[@]}"
-        # Check path
-        check_path /config/openvpn/"${openvpn_config}"
         # If openvpn_enabled set, config not set, and openvpn folder empty
     else
         bashio::exit.nok "openvpn_enabled is set, however, your openvpn folder is empty ! Are you sure you added it in /addon_configs/$HOSTNAME/openvpn using the Filebrowser addon ?"
@@ -137,6 +132,9 @@ if bashio::config.true 'openvpn_enabled'; then
 
     # Send to openvpn script
     sed -i "s|/config/openvpn/config.ovpn|/config/openvpn/$openvpn_config|g" /etc/s6-overlay/s6-rc.d/svc-qbittorrent/run
+    
+    # Check path
+    check_path /config/openvpn/"${openvpn_config}"
 
     # Set credentials
     if bashio::config.has_value "openvpn_username"; then
