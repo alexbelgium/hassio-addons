@@ -201,6 +201,9 @@ for f in */; do
     
             # If failure, checks if there is packages that could be used
             function test_packages () {
+            if [ "$VERBOSE" = true ]; then 
+                bashio::log.info "source : $SOURCE and LASTVERSION : $(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)"
+            fi
             if [[ "$SOURCE" == "github" ]] && [[ "$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)" == *"No release found"* ]]; then
                 # Is there a package
                 echo "No version found, looking if packages available"
