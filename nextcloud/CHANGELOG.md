@@ -1,3 +1,5 @@
+- Fix : webui won't start https://github.com/alexbelgium/hassio-addons/issues/1170 https://github.com/alexbelgium/hassio-addons/issues/1171
+
 ### 28.0.1-3 (10-01-2024)
 - Tentative fix : https://github.com/alexbelgium/hassio-addons/issues/1170
 
