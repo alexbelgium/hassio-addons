@@ -1,3 +1,4 @@
+- Fix : failure to install custom webUI https://github.com/alexbelgium/hassio-addons/issues/1172 (thanks @akrigator)
 - [qbit_manage] : switch to develop 
 
 ### 4.6.2_40 (31-12-2023)
