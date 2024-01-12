@@ -204,11 +204,11 @@ for f in */; do
                 if [[ "$SOURCE" == "github" ]] && [[ ${LASTVERSION,,} == *"no release found"* ]]; then
                 # Is there a package
                 echo "No version found, looking if packages available"
-                last_packages="$(curl -s https://github.com/$REPOSITORY/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")" || true
+                last_packages="$(curl -s https://github.com/"$REPOSITORY"/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")" || true
                 last_package="$(echo "$last_packages" | head -n 1)" || true
                 if [[ "$(echo -n "$last_packages" | grep -c '^')" -gt 0 ]]; then
                     echo "A total of $(echo -n "$last_packages" | grep -c '^') packages were found, using $last_package"
-                    LASTVERSION="$(curl -s https://github.com/$REPOSITORY/pkgs/container/$last_package | sed -n "s/.*?tag=\([^\"]*\)\">.*/\1/p" | 
+                    LASTVERSION="$(curl -s https://github.com/"$REPOSITORY"/pkgs/container/"$last_package" | sed -n "s/.*?tag=\([^\"]*\)\">.*/\1/p" | 
                     sed -e '/.*latest.*/d' |
                     sed -e '/.*dev.*/d' |
                     sed -e '/.*nightly.*/d' |
