@@ -22,6 +22,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [Paperless NGX](https://github.com/paperless-ngx/paperless-ngx) is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.
 
+Alternative quality addon : https://github.com/BenoitAnastay/home-assistant-addons-repository/tree/main/paperless-ngx
+
 ## Configuration
 
 Default username:password is admin:admin. Once logged in, you can change it from within the administration panel.
