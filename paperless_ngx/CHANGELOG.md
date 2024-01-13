@@ -1,3 +1,5 @@
+### 2.3.3-3 (13-01-2024)
+- Minor bugs fixed
 ### 2.3.3-2 (13-01-2024)
 - Tentative fix : paperless not starting https://github.com/alexbelgium/hassio-addons/issues/1178
 
