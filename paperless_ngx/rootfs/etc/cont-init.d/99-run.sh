@@ -91,8 +91,9 @@ for variable in PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DI
     #if [[ "$variablecontent" = *" "* ]] && [[ "$variable" != "PAPERLESS_OCR_LANGUAGES" ]]; then
     #    variablecontent="\"$variablecontent\""
     #fi
-    bashio::log.blue "$variable=$variablecontent"
-
+    bashio::log.blue "$variable=\"$variablecontent\""
+    # Add to entrypoint
+    sed -i "1a export $variable=\"$variablecontent\"" /sbin/docker-entrypoint.sh
     # Export
     export "$variable"="$variablecontent"
     # Add to bashrc
