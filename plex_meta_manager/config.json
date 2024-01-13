@@ -88,5 +88,5 @@
   "slug": "plex-meta-manager",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex_meta_manager",
-  "version": "1.19.1"
+  "version": "1.20.0"
 }
