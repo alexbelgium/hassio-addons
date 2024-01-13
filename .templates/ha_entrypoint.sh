@@ -32,6 +32,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
     fi
 
     # Start the script
+    # shellcheck source=/dev/null
     source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
 
     # Cleanup
