@@ -74,6 +74,6 @@
   "slug": "baikal",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.9.4+msmtpfix",
+  "version": "0.9.4-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
