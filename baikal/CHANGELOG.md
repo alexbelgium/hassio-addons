@@ -1,3 +1,5 @@
+### 0.9.4-2 (14-01-2024)
+- Minor bugs fixed
 
 ## 0.9.4+msmtpfix (30-12-2023)
 - Update to latest version from ckulka/baikal-docker
