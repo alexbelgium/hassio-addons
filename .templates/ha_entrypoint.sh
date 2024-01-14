@@ -32,14 +32,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
     fi
 
     # Start the script
-    if command -v "source" &>/dev/null; then
-        # Use source to share env variables
-        # shellcheck source=/dev/null
-        /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
-    else
-        # Support for posix only shell
-        /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
-    fi
+    /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
 
     # Cleanup
     rm "$SCRIPTS"
