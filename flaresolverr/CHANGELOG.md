@@ -1,3 +1,4 @@
+- Correct healthcheck endpoint (thanks @override80)
 
 ## 3.3.13 (13-01-2024)
 - Update to latest version from FlareSolverr/FlareSolverr
