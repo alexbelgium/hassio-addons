@@ -203,6 +203,7 @@ for f in */; do
             # If failure, checks if there is packages that could be used
             function test_packages () {
             if [ "$VERBOSE" = true ]; then 
+                # shellcheck ignore=SC2086
                 bashio::log.info "source : $SOURCE and LASTVERSION : $(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)"
             fi
             if [[ "$SOURCE" == *"github"* ]] && [[ "$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)" == *"No release"* ]]; then
