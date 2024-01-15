@@ -33,7 +33,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
     # Use source to share env variables when requested
     if [ "${ha_entry_source:-null}" = true ] && command -v "source" &>/dev/null; then
         # Exit cannot be used with source
-        sed -iE "s/(.*\s|^)exit ([0-9]+)/\1 return \2 || exit \2/g" "$SCRIPTS"
+        sed -i "s/(.*\s|^)exit ([0-9]+)/\1 return \2 || exit \2/g" "$SCRIPTS"
         sed -i "s/bashio::exit.nok/return 1/g" "$SCRIPTS"
         sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
         # shellcheck source=/dev/null
