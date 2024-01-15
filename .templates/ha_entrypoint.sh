@@ -38,13 +38,10 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
         # shellcheck source=/dev/null
         source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
-    # Support for posix only shell
     else
+        # Support for posix only shell
         /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     fi
-
-    # Start the script
-    /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
 
     # Cleanup
     rm "$SCRIPTS"
