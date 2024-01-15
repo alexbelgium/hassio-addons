@@ -103,7 +103,7 @@ LABEL \
 #################
 
 ENV HEALTH_PORT="8191" \
-    HEALTH_URL="health"
+    HEALTH_URL="/health"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
