@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛Paperless ngx /sbin/docker-entrypoint.sh: line 157: PAPERLESS_OCR_LANGUAGES: unbound variable (opened 2024-01-13)](https://github.com/alexbelgium/hassio-addons/issues/1178) by [@Fritzandreasx](https://github.com/Fritzandreasx)
 # Home assistant add-on: Paperless NGX
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
