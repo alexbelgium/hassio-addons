@@ -203,10 +203,10 @@ for f in */; do
             # If failure, checks if there is packages that could be used
             function test_packages () {
             if [ "$VERBOSE" = true ]; then 
-                # shellcheck ignore=SC2086
+                # shellcheck disable=SC2086
                 bashio::log.info "source : $SOURCE and LASTVERSION : $(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)"
             fi
-            # shellcheck ignore=SC2086
+            # shellcheck disable=SC2086
             if [[ "$SOURCE" == *"github"* ]] && [[ "$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)" == *"No release"* ]]; then
                 # Is there a package
                 bashio::log.warning "No version found, looking if packages available"
