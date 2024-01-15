@@ -46,3 +46,7 @@ done
 
 # Define shebang
 sed -i "s|/command/with-contenv bashio|$shebang|g" /ha_entrypoint.sh
+
+# Avoid log_level interference
+# Avoid interference with LOG_LEVEL used in the app
+sed -i 's|{LOG_LEVEL:|{8:|g' /usr/lib/bashio/bashio.sh
