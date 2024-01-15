@@ -206,6 +206,7 @@ for f in */; do
                 # shellcheck ignore=SC2086
                 bashio::log.info "source : $SOURCE and LASTVERSION : $(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)"
             fi
+            # shellcheck ignore=SC2086
             if [[ "$SOURCE" == *"github"* ]] && [[ "$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)" == *"No release"* ]]; then
                 # Is there a package
                 bashio::log.warning "No version found, looking if packages available"
