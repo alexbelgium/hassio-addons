@@ -32,6 +32,16 @@ for SCRIPTS in /etc/cont-init.d/*; do
     fi
 
     # Start the script
+    if [ "${ha_entry_source:-null}" = true ]; then
+        # Use source to share env variables
+        # shellcheck source=/dev/null
+        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    else
+        # Support for posix only shell
+        /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    fi
+
+    # Start the script
     /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
 
     # Cleanup
