@@ -31,13 +31,16 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s|$currentshebang|$shebang|g" "$SCRIPTS"
     fi
 
-    # Start the script
-    if [ "${ha_entry_source:-null}" = true ]; then
-        # Use source to share env variables
+    # Use source to share env variables when requested
+    if [ "${ha_entry_source:-null}" = true ] && command -v "source" &>/dev/null; then
+        # Exit cannot be used with source
+        sed -iE "s/(.*\s|^)exit ([0-9]+)/\1 return \2 || exit \2/g" "$SCRIPTS"
+        sed -i "s/bashio::exit.nok/return 1/g" "$SCRIPTS"
+        sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
         # shellcheck source=/dev/null
         source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    # Support for posix only shell
     else
-        # Support for posix only shell
         /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     fi
 
