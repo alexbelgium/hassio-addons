@@ -1,3 +1,4 @@
+### 3.3.13-2 (15-01-2024)
 - Correct healthcheck endpoint (thanks @override80)
 
 ## 3.3.13 (13-01-2024)
