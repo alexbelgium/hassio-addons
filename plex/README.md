@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [plex-meta-manager] Switch to original branch (opened 2024-01-15)](https://github.com/alexbelgium/hassio-addons/issues/1184) by [@bruvv](https://github.com/bruvv)
 
 
 # Home assistant add-on: plex
