@@ -109,26 +109,23 @@ if bashio::config.true 'wireguard_enabled'; then
 
         # Ensure ingress is allowed in allowed_ips
         allowed_ips="$(sed -n "/AllowedIPs/p" /config/wireguard/"${openvpn_config}")"
-        allowed_ips="${allowed_ips//=*}"
+        allowed_ips="${allowed_ips//*=}"
         # Use comma as separator and read into an array
         IFS=',' read -ra ADDR <<< "$allowed_ips"
         # Initialize an empty array to hold the filtered elements
         filtered=()
         # Loop over the elements
-        for i in "${ADDR[@]}"; do
+        for i in "${ADDR[@]}" 127.0.0.1 10.0.0.0/8 192.168.0.0/16 172.16.0.0/12 172.30.0.0/16; do
             # If the element does not contain "::", add it to the filtered array
             if [[ $i != *::* ]]; then
                 filtered+=("$i")
             fi
         done
-        # Add additional elements
-        for i in 10.0.0.0/8 192.168.0.0/16 172.16.0.0/12 172.30.0.0/16; do
-            filtered+=("$i")
-        done
+        filtered=("$(echo "${filtered[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')")
         # Join the filtered elements with commas and store in a variable
         allowed_ips=$(IFS=', '; echo "${filtered[*]}")
         # Store it in the conf file
-        sed -i "|^AllowedIPs|c AllowedIPs=$allowed_ips" /config/wireguard/"${openvpn_config}"
+        sed -i "/^AllowedIPs/c AllowedIPs=$allowed_ips" /config/wireguard/"${openvpn_config}"
 
     fi
 
