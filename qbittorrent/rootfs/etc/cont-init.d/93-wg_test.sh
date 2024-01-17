@@ -2,6 +2,10 @@
 # shellcheck shell=bash
 set -e
 
+########################################################
+# DRAFT : Start wireguard if needed
+########################################################
+    
 QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
 
 #################
