@@ -7,6 +7,7 @@
 # This file must be filled according to the yaml format.
 # If the format is invalid, the addon will note an error.
 # To validate your yaml, you can use the free online tool http://www.yamllint.com/
+# You can use env both for the addon, and for bashio. For bashio, use BASHIO_LOG_LEVEL instead of LOG_LEVEL
 
 # EXAMPLE of the format (you need to remove the # for it to become active)
 # TZ: Europe/Paris

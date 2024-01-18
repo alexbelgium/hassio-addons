@@ -13,7 +13,7 @@ if [ -f /currentip ]; then
   exec nginx || nginx -s reload & \
   while true; do
     # Get vpn ip
-    if bashio::config.true 'openvpn_alt_mode'; then
+    if ! bashio::config.true 'wireguard_enabled' && bashio::config.true 'openvpn_alt_mode'; then
       curl -s ipecho.net/plain > /vpnip
     else
       curl -s ipecho.net/plain --interface tun0 > /vpnip
