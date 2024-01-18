@@ -1,3 +1,4 @@
+- There is now an official addon in the community repository, you should migrate to it !
 
 ## 5.2.6.8376 (30-12-2023)
 - Update to latest version from linuxserver/docker-radarr
