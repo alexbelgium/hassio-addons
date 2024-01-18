@@ -43,7 +43,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh 00-deprecated.sh"
 
 # Automatic modules download
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"

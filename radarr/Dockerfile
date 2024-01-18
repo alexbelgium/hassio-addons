@@ -40,7 +40,7 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 COPY rootfs/ /
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 90-disable_ingress.sh 00-local_mounts.sh 00-smb_mounts.sh"
+ARG MODULES="00-banner.sh 01-custom_script.sh 90-disable_ingress.sh 00-local_mounts.sh 00-smb_mounts.sh 00-deprecated.sh"
 
 # Automatic modules download
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
