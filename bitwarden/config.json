@@ -5,13 +5,13 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Open source password management solution",
+  "description": "Deprecated - please use community version",
   "image": "ghcr.io/alexbelgium/vaultwarden-{arch}",
   "init": false,
   "map": [
     "ssl"
   ],
-  "name": "DEPRECATED - Vaultwarden (Bitwarden)",
+  "name": "DEPRECATED - Vaultwarden",
   "options": {
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
@@ -31,6 +31,7 @@
     "ssl": "bool"
   },
   "slug": "bitwarden",
+  "stage": "deprecated",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bitwarden",
   "version": "1.30.1",
