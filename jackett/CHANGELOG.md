@@ -1,3 +1,6 @@
+
+## 0.21.1540 (13-01-2024)
+- Update to latest version from linuxserver/docker-jackett
 ### 0.21.1501-2 (07-01-2024)
 - Minor bugs fixed
 - Fix : healthcheck with port 8889 https://github.com/alexbelgium/hassio-addons/issues/1159

@@ -29,6 +29,13 @@
     "/dev/nvme",
     "/dev/nvme0n1p1",
     "/dev/nvme0n1p2",
+    "/dev/nvme0n1p3",
+    "/dev/nvme1n1p1",
+    "/dev/nvme1n1p2",
+    "/dev/nvme1n1p3",
+    "/dev/nvme2n1p1",
+    "/dev/nvme2n1p2",
+    "/dev/nvme3n1p3",
     "/dev/mmcblk",
     "/dev/fuse",
     "/dev/sda1",
@@ -102,5 +109,5 @@
   "slug": "readarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
-  "version": "0.3.14.2354"
+  "version": "0.3.15.2376"
 }

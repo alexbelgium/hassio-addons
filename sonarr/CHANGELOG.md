@@ -1,3 +1,7 @@
+- There is now an official addon in the community repository, you should migrate to it !
+
+## 4.0.0.836 (13-01-2024)
+- Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.751 (06-01-2024)
 - Update to latest version from linuxserver/docker-sonarr

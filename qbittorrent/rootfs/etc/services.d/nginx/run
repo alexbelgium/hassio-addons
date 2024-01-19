@@ -10,10 +10,10 @@ bashio::log.info "Starting NGinx..."
 
 # Check vpn is working
 if [ -f /currentip ]; then
-  exec nginx & \
+  exec nginx || nginx -s reload & \
   while true; do
     # Get vpn ip
-    if bashio::config.true 'openvpn_alt_mode'; then
+    if ! bashio::config.true 'wireguard_enabled' && bashio::config.true 'openvpn_alt_mode'; then
       curl -s ipecho.net/plain > /vpnip
     else
       curl -s ipecho.net/plain --interface tun0 > /vpnip
@@ -37,5 +37,5 @@ if [ -f /currentip ]; then
     true
   done
 else
-  exec nginx
+  exec nginx || nginx -s reload
 fi

@@ -74,6 +74,7 @@ for f in */; do
         SOURCE=$(jq -r .source updater.json)
         FILTER_TEXT=$(jq -r .github_tagfilter updater.json)
         EXCLUDE_TEXT=$(jq -r .github_exclude updater.json)
+        EXCLUDE_TEXT="${EXCLUDE_TEXT:-zzzzzzzzzzzzzzzz}"
         PAUSED=$(jq -r .paused updater.json)
         DATE="$(date '+%d-%m-%Y')"
         BYDATE=$(jq -r .dockerhub_by_date updater.json)
@@ -198,40 +199,56 @@ for f in */; do
             else
                 LOGINFO="... $SLUG : beta is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
             fi
-
-            #Execute version search
-            # shellcheck disable=SC2086
-            LASTVERSION="$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1)" || \
+    
             # If failure, checks if there is packages that could be used
-            { if [[ "$SOURCE" == "github" ]] && [[ ${LASTVERSION,,} == *"no release found"* ]]; then
+            function test_packages () {
+            if [ "$VERBOSE" = true ]; then 
+                # shellcheck disable=SC2086
+                bashio::log.info "source : $SOURCE and LASTVERSION : $(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)"
+            fi
+            # shellcheck disable=SC2086
+            if [[ "$SOURCE" == *"github"* ]] && [[ "$(lastversion "$UPSTREAM" $ARGUMENTS 2>&1 || true)" == *"No release"* ]]; then
                 # Is there a package
-                echo "No version found, looking if packages available"
-                last_packages="$(curl -s https://github.com/$REPOSITORY/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")" || true
+                bashio::log.warning "No version found, looking if packages available"
+                last_packages="$(curl -s -L https://github.com/"$UPSTREAM"/packages | sed -n "s/.*\/container\/package\/\([^\"]*\).*/\1/p")" || true
                 last_package="$(echo "$last_packages" | head -n 1)" || true
                 if [[ "$(echo -n "$last_packages" | grep -c '^')" -gt 0 ]]; then
-                    echo "A total of $(echo -n "$last_packages" | grep -c '^') packages were found, using $last_package"
-                    LASTVERSION="$(curl -s https://github.com/$REPOSITORY/pkgs/container/$last_package | sed -n "s/.*?tag=\([^\"]*\)\">.*/\1/p" | 
+                    bashio::log.warning "A total of $(echo -n "$last_packages" | grep -c '^') packages were found, using $last_package"
+                    LASTVERSION=""
+                    LASTVERSION="$(curl -s -L https://github.com/"$UPSTREAM"/pkgs/container/"$last_package" | sed -n "s/.*?tag=\([^\"]*\)\">.*/\1/p" | 
                     sed -e '/.*latest.*/d' |
                     sed -e '/.*dev.*/d' |
                     sed -e '/.*nightly.*/d' |
                     sed -e '/.*beta.*/d' |
-                    sed -e "/.*$EXCLUDE_TEXT.*/d" |
                     sort -V |
                     tail -n 1)" || true
                     if [[ "$LASTVERSION" == "" ]]; then
                         # Continue to next
-                        echo "No packages found"
-                        continue
+                        bashio::log.warning "No packages found"
+                        set_continue=true
+                    else
+                        bashio::log.info "Found tag $LASTVERSION"
+                        echo "$LASTVERSION"
                     fi
                 else
                     # Continue to next
-                    echo "No packages found"
-                    continue
+                    bashio::log.warning "No packages found"
+                    set_continue=true
                 fi
             else
                 # Continue to next
+                set_continue=true
+            fi
+            }
+            
+            # shellcheck disable=SC2086
+            LASTVERSION="$(lastversion "$UPSTREAM" $ARGUMENTS || test_packages)"
+            
+            # Continue if issue
+            if [[ "${set_continue:-false}" == true ]]; then
                 continue
-            fi }
+            fi
+
         fi
 
         # Add brackets

@@ -1,3 +1,7 @@
+- There is now an official addon in the community repository, you should migrate to it !
+
+## nightly-1.12.1.4201-ls88 (13-01-2024)
+- Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.12.0.4187-ls80 (06-01-2024)
 - Update to latest version from linuxserver/docker-prowlarr

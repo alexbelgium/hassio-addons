@@ -11,7 +11,7 @@
   "map": [
     "ssl"
   ],
-  "name": "Vaultwarden (Bitwarden)",
+  "name": "DEPRECATED - Vaultwarden (Bitwarden)",
   "options": {
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",

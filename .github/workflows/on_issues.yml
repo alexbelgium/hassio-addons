@@ -17,35 +17,35 @@ jobs:
       run: |
         # Init
         echo "Starting"
-        
+
         # Get issues list
-        curl -s https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
+        curl -s -L https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
         # Go through all folders, add to filters if not existing
         for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
           if [ -f "$f"/config.json ]; then
-          
+
             # Clean previously reported issues
             sed -i "/Open Issue :/d" "$f"/README.md
             sed -i "/Open Request :/d" "$f"/README.md
             # If there is an issue with the addon name in title, put a message
             COUNTER=0
-            while [[ $(jq -r --arg COUNTER "$COUNTER" ".["$COUNTER"].title" issueslist) != null ]]; do
-            
+            while [[ $(jq -r --arg COUNTER "$COUNTER" ".[$COUNTER].title" issueslist) != null ]]; do
+
               #Increment counter
               (( COUNTER=COUNTER+1 )) || true
-              
+
               #Get variables
-              TITLE="$(jq -r --arg COUNTER "$COUNTER" ".["$COUNTER"].title" issueslist)"
+              TITLE="$(jq -r --arg COUNTER "$COUNTER" ".[$COUNTER].title" issueslist)"
               TITLE="${TITLE//[<>\$\'\"]/}"
               #Check if relevant to addon
               SLUG="$(jq -r --arg f "$f" ".slug" "$f"/config.json)"
               NAME="$(jq -r --arg f "$f" ".name" "$f"/config.json)"
               if [[ "${TITLE,,}" == *"${f,,}"* ]] || [[ "${TITLE,,}" == *"${SLUG,,}"* ]] || [[ "${TITLE,,}" == *"${NAME,,}"* ]]; then
                 echo "Project $TITLE, $SLUG, $NAME has an issue"
-                REQ="$(jq -r --arg COUNTER "$COUNTER" ".["$COUNTER"].user.login" issueslist)"
-                URL="$(jq -r --arg COUNTER "$COUNTER" ".["$COUNTER"].html_url" issueslist)"
-                LABEL="$(jq -r --arg COUNTER "$COUNTER" ".["$COUNTER"].labels[].name" issueslist)"
-                DATEISSUE="$(jq -r --arg COUNTER "$COUNTER" ".["$COUNTER"].created_at" issueslist)"
+                REQ="$(jq -r --arg COUNTER "$COUNTER" ".[$COUNTER].user.login" issueslist)"
+                URL="$(jq -r --arg COUNTER "$COUNTER" ".[$COUNTER].html_url" issueslist)"
+                LABEL="$(jq -r --arg COUNTER "$COUNTER" ".[$COUNTER].labels[].name" issueslist)"
+                DATEISSUE="$(jq -r --arg COUNTER "$COUNTER" ".[$COUNTER].created_at" issueslist)"
                 DATEISSUE="${DATEISSUE%T*}"
                 if [[ "$LABEL" == *"bug"* ]]; then
                   sed -i "1i ## &#9888; Open Issue : [$TITLE (opened ${DATEISSUE})]($URL) by [@${REQ}](https://github.com/$REQ)" "$f"/README.md
@@ -66,4 +66,4 @@ jobs:
         commit: -u
         fetch: --force
         push: --force
-        
+

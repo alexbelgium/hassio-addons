@@ -10,6 +10,13 @@ fi
 if bashio::config.true 'openvpn_enabled'; then
     exec /usr/sbin/openvpn --config /config/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh --pull-filter ignore "route-ipv6" --pull-filter ignore "ifconfig-ipv6" --pull-filter ignore "tun-ipv6" --pull-filter ignore "redirect-gateway ipv6" --pull-filter ignore "dhcp-option DNS6"
 else
+    ########################################################
+    # DRAFT : Start wireguard if needed
+    if bashio::config.true 'wireguard_enabled'; then
+        wg-quick up /config/wireguard/config.conf & true
+    fi
+    ########################################################
+
     if bashio::config.true 'silent'; then
     exec \
         s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \

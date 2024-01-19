@@ -1,6 +1,5 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
-set -e
 echo "Starting..."
 
 ####################
@@ -31,8 +30,18 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s|$currentshebang|$shebang|g" "$SCRIPTS"
     fi
 
-    # Start the script
-    /./"$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    # Use source to share env variables when requested
+    if [ "${ha_entry_source:-null}" = true ] && command -v "source" &>/dev/null; then
+        # Exit cannot be used with source
+        sed -i "s/(.*\s|^)exit ([0-9]+)/\1 return \2 || exit \2/g" "$SCRIPTS"
+        sed -i "s/bashio::exit.nok/return 1/g" "$SCRIPTS"
+        sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
+        # shellcheck source=/dev/null
+        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    else
+        # Support for posix only shell
+        /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    fi
 
     # Cleanup
     rm "$SCRIPTS"
