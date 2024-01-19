@@ -11,7 +11,7 @@
   "map": [
     "ssl"
   ],
-  "name": "DEPRECATED - Vaultwarden",
+  "name": "zzz_archived - Vaultwarden",
   "options": {
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
