@@ -68,8 +68,6 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "PGID": "0",
-    "PUID": "0",
     "WEBUI_PORT": "8080"
   },
   "homeassistant": "2023.12.0",
