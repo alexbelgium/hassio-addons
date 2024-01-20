@@ -1,4 +1,7 @@
 
+## 7.4.0 (20-01-2024)
+- Update to latest version from linuxserver/docker-calibre
+
 ## 7.3.0 (06-01-2024)
 - Update to latest version from linuxserver/docker-calibre
 - BREAKING CHANGE : please relink your library according to https://github.com/alexbelgium/hassio-addons/issues/1154#issuecomment-1879182729
