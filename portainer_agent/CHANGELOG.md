@@ -1,4 +1,7 @@
 
+## linux-arm64-2.19.4-alpine (20-01-2024)
+- Update to latest version from portainer/agent
+
 ## windowsltsc2022-amd64-2.19.4 (09-12-2023)
 - Update to latest version from portainer/agent
 
