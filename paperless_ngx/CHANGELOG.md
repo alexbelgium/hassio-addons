@@ -1,3 +1,6 @@
+
+## 2.4.0 (20-01-2024)
+- Update to latest version from paperless-ngx/paperless-ngx
 ### 2.3.3-4 (13-01-2024)
 - Tentative fix : paperless not starting https://github.com/alexbelgium/hassio-addons/issues/1178
 
