@@ -28,11 +28,10 @@ jobs:
 
       - name: Run Beautysh
         run: |
-          # shellcheck disable=SC2035
           find . -name '*.sh' -print0 | xargs -0 beautysh --indent-size 4
           shopt -s globstar nullglob
           if compgen -G "**/*.sh" > /dev/null; then
-            beautysh **/*.sh --indent-size 4 --check
+            beautysh -- **/*.sh --indent-size 4 --check
           fi
           shopt -u globstar nullglob  
 
