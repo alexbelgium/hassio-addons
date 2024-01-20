@@ -1,4 +1,7 @@
 
+## 0.7.8 (20-01-2024)
+- Update to latest version from linuxserver/docker-mylar3
+
 ## 0.7.7 (30-12-2023)
 - Update to latest version from linuxserver/docker-mylar3
 
