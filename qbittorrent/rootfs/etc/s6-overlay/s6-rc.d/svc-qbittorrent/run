@@ -8,7 +8,7 @@ if bashio::config.true 'silent'; then
 fi
 
 if bashio::config.true 'openvpn_enabled'; then
-    exec /usr/sbin/openvpn --config /config/openvpn/config.ovpn --cd /config/openvpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh --pull-filter ignore "route-ipv6" --pull-filter ignore "ifconfig-ipv6" --pull-filter ignore "tun-ipv6" --pull-filter ignore "redirect-gateway ipv6" --pull-filter ignore "dhcp-option DNS6"
+    exec /usr/sbin/openvpn --config /config/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh --pull-filter ignore "route-ipv6" --pull-filter ignore "ifconfig-ipv6" --pull-filter ignore "tun-ipv6" --pull-filter ignore "redirect-gateway ipv6" --pull-filter ignore "dhcp-option DNS6"
 else
     ########################################################
     # DRAFT : Start wireguard if needed
