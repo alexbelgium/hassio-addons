@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -e
 
-exit 0
+if bashio::config.true 'wireguard_enabled'; then
 
 ########################################################
 # DRAFT : Start wireguard if needed
@@ -34,8 +34,6 @@ chmod 755 /config/wireguard/*
 #################
 # CONFIGURE VPN #
 #################
-
-if bashio::config.true 'wireguard_enabled'; then
 
     ############
     # MESSAGES #
