@@ -20,6 +20,9 @@ jobs:
     outputs:
       changedAddons: ${{ steps.filter.outputs.changes }}
     steps:
+      - name: ↩️ Checkout
+        uses: actions/checkout@v4
+
       - name: 📂 Detect changed files
         uses: dorny/paths-filter@v2
         id: filter
