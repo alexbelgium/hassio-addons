@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "whatsapper/whatsapper:latest",
+    "amd64": "whatsapper/whatsapper:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
