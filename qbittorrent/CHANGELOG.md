@@ -1,3 +1,4 @@
+### 4.6.3-2 (21-01-2024)
 - Fix : openvpn not starting https://github.com/alexbelgium/hassio-addons/issues/1192
 
 ## 4.6.3 (20-01-2024)
