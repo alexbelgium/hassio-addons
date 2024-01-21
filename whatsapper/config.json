@@ -12,14 +12,12 @@
     "share:rw"
   ],
   "name": "Whatsapper",
-  "options": {},
   "ports": {
     "4123/tcp": 3000
   },
   "ports_description": {
     "4123/tcp": "Api interface"
   },
-  "schema": {},
   "slug": "whatsapper",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whatsapper",
