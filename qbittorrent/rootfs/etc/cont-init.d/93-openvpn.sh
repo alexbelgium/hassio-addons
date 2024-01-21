@@ -17,10 +17,6 @@ if bashio::config.true 'openvpn_enabled'; then
     # Get current ip
     curl -s ipecho.net/plain > /currentip
 
-    # Create symlink for files
-    rm -r /etc/openvpn
-    ln -s /config/openvpn /etc/openvpn
-
     # Function to check for files path
     function check_path () {
 
