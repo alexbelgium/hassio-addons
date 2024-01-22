@@ -1,3 +1,5 @@
+### v1.0.0-3 (22-01-2024)
+- Minor bugs fixed
 ## v1.0.0 (22-01-2024)
 - Switch of container to official version 1.0.0
 - Adaptation of ports : please check addon options page
