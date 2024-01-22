@@ -1,3 +1,8 @@
+## v1.0.0 (22-01-2024)
+- Switch of container to official version 1.0.0
+- Adaptation of ports : please check addon options page
+- Root user not anymore supported by upstream image, setting it to root (0:0) will revert to 1000:1000
+- Default user of 1000:1000
 
 ## v1.0.0-RC1.1 (14-10-2023)
 - Update to latest version from hay-kot/mealie
