@@ -27,14 +27,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
-ENV FRONTEND_PORT=9925
-
 # Correct data path
 # hadolint ignore=DL4006
-RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/config/addons_config/mealie_data|g' && \
-    # Sets port to 9925 as default port
-    sed -i "s|yarn start -p 3000|yarn start -p 9925|g" /app/run.sh
+RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/config/addons_config/mealie_data|g'
 
 ##################
 # 3 Install apps #
