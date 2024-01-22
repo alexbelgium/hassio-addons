@@ -78,7 +78,7 @@
     "share:rw",
     "ssl:rw"
   ],
-  "name": "Mealie (Omni):",
+  "name": "Mealie",
   "options": {
     "ALLOW_SIGNUP": true,
     "PGID": 0,
