@@ -1,6 +1,6 @@
 ## &#9888; Open Request : [✨ [REQUEST] Mealie Ingress Support (opened 2023-11-05)](https://github.com/alexbelgium/hassio-addons/issues/1061) by [@minmaxat](https://github.com/minmaxat)
 ## &#9888; Open Request : [✨ [REQUEST] Mealie (Omni) (opened 2024-01-14)](https://github.com/alexbelgium/hassio-addons/issues/1179) by [@LoganJFisher](https://github.com/LoganJFisher)
-## &#9888; Open Issue : [🐛 [Mealie] 502 Bad Gateway (opened 2024-01-22)](https://github.com/alexbelgium/hassio-addons/issues/1197) by [@gschmidl](https://github.com/gschmidl)
+## &#9888; Open Issue : [🐛 [MEALIE] Port mismatch? (opened 2024-01-22)](https://github.com/alexbelgium/hassio-addons/issues/1198) by [@Rykian](https://github.com/Rykian)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
