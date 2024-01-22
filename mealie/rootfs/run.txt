@@ -31,6 +31,18 @@ for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
     export "$k"="$(bashio::config "$k")"
 done
 
+##############
+# Check PUID #
+##############
+
+bashio::log.info "Checking user type"
+if [ "$PUID" = 0 ] || [ "$PGID" = 0 ]; then
+    bashio::log.warning "Can't run as root, the user will be set to 1000:1000"
+    bashio::addon.option "PUID" "1000"
+    bashio::addon.option "PGID" "1000"
+    bashio::addon.restart
+fi
+
 ###############
 # CONFIG YAML #
 ###############
