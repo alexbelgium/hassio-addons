@@ -19,6 +19,7 @@
   "init": false,
   "map": [
     "share:rw",
+    "media:rw",
     "ssl"
   ],
   "name": "Portainer",
