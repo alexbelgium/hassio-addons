@@ -89,12 +89,10 @@
   },
   "panel_icon": "mdi:silverware-fork-knife",
   "ports": {
-    "9000/tcp": 9090,
-    "9001/tcp": 9091
+    "9001/tcp": 9090
   },
   "ports_description": {
-    "9000/tcp": "Web interface",
-    "9001/tcp": "Ssl web interface"
+    "9001/tcp": "Web interface"
   },
   "schema": {
     "ALLOW_SIGNUP": "bool",
@@ -108,6 +106,6 @@
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v1.0.0-3",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:9000]"
+  "version": "v1.0.0-4",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:9001]"
 }
