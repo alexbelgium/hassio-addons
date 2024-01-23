@@ -12,7 +12,7 @@ if bashio::config.true 'ssl'; then
     keyfile=$(bashio::config 'keyfile')
     sed -i "s|%%certfile%%|${certfile}|g" /etc/nginx/servers/ssl.conf
     sed -i "s|%%keyfile%%|${keyfile}|g" /etc/nginx/servers/ssl.conf
-    sed -i "s|3000;|3000 ssl;|g" /etc/nginx/servers/ssl.conf
+    sed -i "s|9001;|9001 ssl;|g" /etc/nginx/servers/ssl.conf
 
 else
 
