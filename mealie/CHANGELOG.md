@@ -1,3 +1,5 @@
+- Fix : avoid spamming of "GET /api/app/about"
+
 ### v1.0.0-4 (23-01-2024)
 - Breaking change : port 9001 (mapped to 9090 by default) both for http and https
 
