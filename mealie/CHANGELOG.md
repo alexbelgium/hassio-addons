@@ -1,3 +1,4 @@
+### v1.0.0-5 (23-01-2024)
 - Fix : avoid spamming of "GET /api/app/about"
 
 ### v1.0.0-4 (23-01-2024)
