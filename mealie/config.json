@@ -106,6 +106,6 @@
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v1.0.0-4",
+  "version": "v1.0.0-5",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9001]"
 }
