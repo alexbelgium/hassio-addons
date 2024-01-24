@@ -1,3 +1,5 @@
+- Feat : exposed DATA_DIR in options to set a custom path
+
 ### v1.0.0-5 (23-01-2024)
 - Fix : avoid spamming of "GET /api/app/about"
 
