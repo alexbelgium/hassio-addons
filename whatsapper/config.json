@@ -13,10 +13,10 @@
   ],
   "name": "Whatsapper",
   "ports": {
-    "4123/tcp": 3000
+    "3000/tcp": 4000
   },
   "ports_description": {
-    "4123/tcp": "Api interface"
+    "3000/tcp": "Api interface"
   },
   "slug": "whatsapper",
   "udev": true,
