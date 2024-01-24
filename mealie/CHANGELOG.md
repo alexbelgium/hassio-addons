@@ -1,3 +1,4 @@
+### v1.0.0-7 (24-01-2024)
 - Feat : exposed DATA_DIR in options to set a custom path
 
 ### v1.0.0-5 (23-01-2024)
