@@ -1,3 +1,5 @@
+### v1.0.0-8 (24-01-2024)
+- Minor bugs fixed
 ### v1.0.0-7 (24-01-2024)
 - Feat : exposed DATA_DIR in options to set a custom path
 
