@@ -98,7 +98,7 @@
   "schema": {
     "ALLOW_SIGNUP": "bool",
     "BASE_URL": "str?",
-    "DATA_DIR": "/config/addons_config/mealie_data",
+    "DATA_DIR": "str?",
     "PGID": "int",
     "PUID": "int",
     "certfile": "str",
