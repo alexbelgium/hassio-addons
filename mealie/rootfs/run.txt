@@ -31,6 +31,15 @@ for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
     export "$k"="$(bashio::config "$k")"
 done
 
+##################
+# ADAPT DATA DIR #
+##################
+
+if [ "$DATA_DIR" != "/config/addons_config/mealie_data" ]; then
+    bashio::log.info "Adapt data dir"
+    grep -rl "/config/addons_config/mealie_data" /app | xargs sed -i "s|/config/addons_config/mealie_data|$DATA_DIR|g"
+fi
+
 ##############
 # Check PUID #
 ##############
