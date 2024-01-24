@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=whatsapper/whatsapper
+ARG BUILD_FROM=baldarn/whatsapper
 
 FROM ${BUILD_FROM}
 
