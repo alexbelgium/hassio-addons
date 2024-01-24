@@ -119,19 +119,11 @@ fi
 mkdir -p "$DATA_DIR"
 chmod -R 777 /data
 chmod -R 777 "$DATA_DIR"
-echo "Permissions adapted"
-
-################
-# MIGRATE DATA #
-################
-
-if [ ! -f "$DATA_DIR"/mealie.db ] && [ -f /data/mealie.db ] ; then
-    mv /data/options.json /
-    cp -r /data/* "$DATA_DIR"/
-    rm -r /data/*
-    mv /options.json /data
-    bashio::log.warning "Amd64 data migrated to "$DATA_DIR" ; you can now use the new addons. For aarch64, you need to do a manual backup and restore"
+chown -R "$PUID:$PGID" "$DATA_DIR"
+if [ -f "$DATA_DIR"/.secret ]; then
+    chmod 777 "$DATA_DIR"/.secret
 fi
+echo "Permissions adapted"
 
 bashio::log.info "Starting nginx"
 nginx & true
