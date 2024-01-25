@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Whatsapper (opened 2024-01-19)](https://github.com/alexbelgium/hassio-addons/issues/1188) by [@baldarn](https://github.com/baldarn)
 # Home assistant add-on: Whatsapper
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
