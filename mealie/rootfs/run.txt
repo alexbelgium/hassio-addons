@@ -40,18 +40,6 @@ if [ "$DATA_DIR" != "/config/addons_config/mealie_data" ]; then
     grep -rl "/config/addons_config/mealie_data" /app | xargs sed -i "s|/config/addons_config/mealie_data|$DATA_DIR|g"
 fi
 
-##############
-# Check PUID #
-##############
-
-bashio::log.info "Checking user type"
-if [ "$PUID" = 0 ] || [ "$PGID" = 0 ]; then
-    bashio::log.warning "Can't run as root, the user will be set to 1000:1000"
-    bashio::addon.option "PUID" "1000"
-    bashio::addon.option "PGID" "1000"
-    bashio::addon.restart
-fi
-
 ###############
 # CONFIG YAML #
 ###############
