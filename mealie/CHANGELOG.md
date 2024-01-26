@@ -1,3 +1,4 @@
+### v1.0.0-10 (26-01-2024)
 - Fix : .secret permissions denied by allowing again 0 as default user
 
 ### v1.0.0-8 (24-01-2024)
