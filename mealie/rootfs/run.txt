@@ -121,7 +121,13 @@ chmod -R 777 /data
 chmod -R 777 "$DATA_DIR"
 chown -R "$PUID:$PGID" "$DATA_DIR"
 if [ -f "$DATA_DIR"/.secret ]; then
+    echo ".secret file is existing"
     chmod 777 "$DATA_DIR"/.secret
+    chown "$PUID:$PGID" "$DATA_DIR"/.secret
+fi
+if [ -f /config/addons_config/mealie_data/.secret ]; then
+    chmod 777 /config/addons_config/mealie_data/.secret
+    chown "$PUID:$PGID" /config/addons_config/mealie_data/.secret
 fi
 echo "Permissions adapted"
 
