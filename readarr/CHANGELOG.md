@@ -1,4 +1,7 @@
 
+## 0.3.17.2406 (27-01-2024)
+- Update to latest version from linuxserver/docker-readarr
+
 ## 0.3.16.2387 (20-01-2024)
 - Update to latest version from linuxserver/docker-readarr
 - There is now an official addon in the community repository, you should migrate to it !
