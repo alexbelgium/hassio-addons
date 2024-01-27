@@ -1,4 +1,7 @@
 
+## nightly-1.13.1.4243-ls104 (27-01-2024)
+- Update to latest version from linuxserver/docker-prowlarr
+
 ## 1.12.2.4211-ls48 (20-01-2024)
 - Update to latest version from linuxserver/docker-prowlarr
 - There is now an official addon in the community repository, you should migrate to it !
