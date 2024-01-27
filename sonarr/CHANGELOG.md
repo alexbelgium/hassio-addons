@@ -1,4 +1,7 @@
 
+## 4.0.1.987 (27-01-2024)
+- Update to latest version from linuxserver/docker-sonarr
+
 ## 4.0.0.924 (20-01-2024)
 - Update to latest version from linuxserver/docker-sonarr
 - There is now an official addon in the community repository, you should migrate to it ! However it does not support ingress ;)
