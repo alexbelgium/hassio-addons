@@ -1,4 +1,7 @@
 
+## 2.1.0 (27-01-2024)
+- Update to latest version from browserless/chrome
+
 ## 2.0.0 (23-12-2023)
 - Update to latest version from browserless/chrome
 
