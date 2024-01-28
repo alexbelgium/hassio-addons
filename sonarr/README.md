@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Sonarr] Backup file not found (opened 2024-01-28)](https://github.com/alexbelgium/hassio-addons/issues/1211) by [@norbertjoni](https://github.com/norbertjoni)
 
 # Home assistant add-on: Sonarr
 
