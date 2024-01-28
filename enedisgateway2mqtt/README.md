@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 MyElectricalData Dev: Cant install ghcr.io/alexbelgium/myelectricaldata_dev-amd64:0.10.0rc18 (opened 2024-01-27)](https://github.com/alexbelgium/hassio-addons/issues/1208) by [@Sonic62](https://github.com/Sonic62)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
