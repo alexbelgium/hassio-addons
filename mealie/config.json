@@ -81,7 +81,7 @@
   "name": "Mealie",
   "options": {
     "ALLOW_SIGNUP": true,
-    "DATA_DIR": "/config/addons_config/mealie_data",    
+    "DATA_DIR": "/config/addons_config/mealie_data",
     "PGID": 0,
     "PUID": 0,
     "certfile": "fullchain.pem",
