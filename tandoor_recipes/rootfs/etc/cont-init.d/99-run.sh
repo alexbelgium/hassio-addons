@@ -116,9 +116,6 @@ fi
 mkdir -p "$externalfiles_folder"
 ln -s "$externalfiles_folder" /opt/recipes
 
-bashio::log.info "Launching nginx"
-exec nginx & echo "done"
-
 bashio::log.info "Launching app"
 cd /opt/recipes || exit
 ./boot.sh
