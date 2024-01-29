@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [Browserless Chrome: Add on Does not start since 2.1.0 upgrade (opened 2024-01-28)](https://github.com/alexbelgium/hassio-addons/issues/1212) by [@wigster](https://github.com/wigster)
 # Home assistant add-on: Browserless Chrome
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
