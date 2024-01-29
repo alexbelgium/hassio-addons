@@ -1,3 +1,4 @@
+- Removed custom nginx (https://github.com/alexbelgium/hassio-addons/issues/1207)
 
 ## 1.5.11 (20-01-2024)
 - Update to latest version from TandoorRecipes/recipes
