@@ -69,7 +69,8 @@
     "DB_ENGINE": "django.db.backends.sqlite3",
     "DISABLE_INGRESS": "true",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
-    "TRUSTED_PROXIES": "**"
+    "TRUSTED_PROXIES": "**",
+    "GUNICORN_MEDIA": "1"
   },
   "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
   "map": [
@@ -111,6 +112,6 @@
   "slug": "tandoor_recipes",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.5.11-test2",
+  "version": "1.5.11-test3",
   "webui": "http://[HOST]:[PORT:8080]"
 }
