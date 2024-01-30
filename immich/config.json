@@ -3,6 +3,9 @@
     "aarch64",
     "amd64"
   ],
+  "backup_exclude": [
+    "**/machine-learning/*"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted photo and video backup solution directly from your mobile phone",
   "devices": [
