@@ -1,3 +1,5 @@
+### 2024.1.30-1 (30-01-2024)
+- Fix data persistence
 ### 2024.1.30 (30-01-2024)
 - Updated version
 - Add data persistence
