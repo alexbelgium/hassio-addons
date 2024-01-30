@@ -11,6 +11,9 @@
   "image": "ghcr.io/alexbelgium/sponsorblockcast-{arch}",
   "init": false,
   "name": "Castsponsorskip",
+  "map": [
+    "addon_config:rw"
+  ],
   "options": {
     "CSS_CATEGORIES": "sponsor, intro, outro, selfpromo"
   },
@@ -25,5 +28,5 @@
   "slug": "sponsorblockcast",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast",
-  "version": "0.7.0-2"
+  "version": "0.7.0-3"
 }
