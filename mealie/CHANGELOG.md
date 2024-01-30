@@ -1,3 +1,5 @@
+- Fix : incorrect redirect https://github.com/alexbelgium/hassio-addons/issues/1210
+
 ### v1.0.0-10 (26-01-2024)
 - Fix : .secret permissions denied by allowing again 0 as default user
 
