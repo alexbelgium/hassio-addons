@@ -65,7 +65,7 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "DEFAULT_USER_DATA_DIR": "/data/profile"
+    "DATA_DIR": "/data/profile"
   },
   "image": "ghcr.io/alexbelgium/browserless_chrome-{arch}",
   "init": false,
@@ -79,6 +79,6 @@
   "slug": "browserless_chrome",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/browserless_chrome",
-  "version": "2.1.0-test2",
+  "version": "2.1.0-test3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
