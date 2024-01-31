@@ -31,7 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 RUN \
     # Correct for access
     sed -i "s|.*listen_addresses(.*)|listen_addresses = '*'(1)|g" /usr/local/share/postgresql/postgresql.conf.sample && \
-    sed -i "s|.*data_directory(.*)|data_directory = '/data/database'(1)|g" /usr/local/share/postgresql/postgresql.conf.sample
+    sed -i "s|.*data_directory(.*)|data_directory = '/config/database'(1)|g" /usr/local/share/postgresql/postgresql.conf.sample
 
 ##################
 # 3 Install apps #
