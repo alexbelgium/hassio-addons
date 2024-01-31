@@ -6,7 +6,7 @@
   ],
   "backup": "cold",
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Postgres 15",
+  "description": "Postgres 15 with vector.rs extension",
   "environment": {
     "PGDATA": "/config/database",
     "CONFIG_LOCATION": "/config/postgresql.conf"
