@@ -34,10 +34,14 @@ chmod -R 777 "$CONFIG_HOME"
 #####################
 
 # Set variables for vector.rs
-export DB_PORT=5432
-export DB_HOSTNAME=localhost
-export DB_USERNAME=postgres
-export DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
+DB_PORT=5432
+DB_HOSTNAME=localhost
+DB_USERNAME=postgres
+DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
+export DB_PORT
+export DB_HOSTNAME
+export DB_USERNAME
+export DB_PASSWORD
 echo "DROP EXTENSION IF EXISTS vectors;
     CREATE EXTENSION vectors;
 \q"> setup_postgres.sql
