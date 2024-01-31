@@ -13,5 +13,5 @@ if [ -f /homeassistant/addons_config/postgres/config.yaml ]; then
     mv /homeassistant/addons_config/postgres/*  /config/
     rm -r /homeassistant/addons_config/postgres
     # Correct database location
-    sed -i "s|/data/|/config/|g" /config/postgresql.conf
+    sed -i "s|/data/database|/config/database|g" /config/postgresql.conf
 fi
