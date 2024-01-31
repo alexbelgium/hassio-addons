@@ -37,7 +37,7 @@ chmod -R 777 "$CONFIG_HOME"
 ##############
 
 # Go to folder
-cd /data || true
+cd /config || true
 
 echo " "
 bashio::log.info "Starting the app"
