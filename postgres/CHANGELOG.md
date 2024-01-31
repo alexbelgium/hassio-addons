@@ -1,3 +1,5 @@
+- WARNING : addition of vector.rs extension, potentially breaking change ! Be sure to backup prior to update
+- Database location changed from /data to /addon_configs/xxx-postgres : no expected user impact
 
 ## 15.5 (11-11-2023)
 - Update to latest version from postgres
