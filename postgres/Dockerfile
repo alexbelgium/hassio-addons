@@ -16,7 +16,7 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM postgres:15-alpine
+FROM $BUILD_FROM
 
 ##################
 # 2 Modify Image #
