@@ -1,3 +1,6 @@
+- &#9888; PLEASE BACKUP before updating! Non reversible changes
+- &#9888; BREAKING change : dependency on the update postgres image for vector.rs support, it will not work if you do not update postgres !
+- &#9888; Database location changed from /data to /addon_configs/xxx-postgres : no expected user impact other that all configuration files will also be located in this folder accessible with addons such as Filebrowser
 
 ## 1.90.2 (09-12-2023)
 - Update to latest version from imagegenius/docker-immich
