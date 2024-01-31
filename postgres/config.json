@@ -8,15 +8,18 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Postgres 15",
   "environment": {
-    "PGDATA": "/data/database"
+    "PGDATA": "/config/database",
+    "CONFIG_LOCATION": "/config/postgresql.conf"
   },
   "image": "ghcr.io/alexbelgium/postgres-{arch}",
   "map": [
-    "config:rw"
+    "addon_config:rw",
+    "homeassistant_config:rw",
+    "media:rw"
   ],
-  "name": "Postgres",
+  "name": "Postgres 15",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/postgres/postgresql.conf",
+    "vector.rs_enabled": true,
     "POSTGRES_PASSWORD": "homeassistant"
   },
   "ports": {
@@ -26,7 +29,7 @@
     "5432/tcp": "Postgres port"
   },
   "schema": {
-    "CONFIG_LOCATION": "str",
+    "vector.rs_enabled": "bool",
     "POSTGRES_DB": "str?",
     "POSTGRES_HOST_AUTH_METHOD": "str?",
     "POSTGRES_INITDB_ARGS": "str?",
