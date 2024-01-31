@@ -29,8 +29,18 @@ chmod 777 "$PGDATA"
 # Permissions
 chmod -R 777 "$CONFIG_HOME"
 
-# Copy new config
-# cp "$CONFIG_HOME"/postgresql.conf /config/
+#####################
+# Prepare vector.rs #
+#####################
+
+# Set variables for vector.rs
+export DB_PORT=5432
+export DB_HOSTNAME=localhost
+export DB_USERNAME=postgres
+export DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
+echo "DROP EXTENSION IF EXISTS vectors;
+    CREATE EXTENSION vectors;
+\q"> setup_postgres.sql
 
 ##############
 # Launch App #
@@ -45,8 +55,9 @@ echo " "
 
 # Add docker-entrypoint command
 if "$(bashio::info.arch)" != "armv7"; then
+    sed -i "/exec \"\$@\"/i psql \"postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT\" < setup_postgres.sql || true" docker-entrypoint.sh
     docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so
 else
     bashio::log.warning "Your architectur is armv7, vector.rs is disabled as not supported"
-    docker-entrypoint.sh postgres 
+    docker-entrypoint.sh postgres
 fi
