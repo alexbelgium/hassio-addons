@@ -2,11 +2,12 @@
 # shellcheck shell=bash
 set -e
 
-echo "Setting 
+bashio::log.info "Waiting for port 5432 to open..."
 
-#####################
-# Prepare vector.rs #
-#####################
+# Wait for transmission to become available
+bashio::net.wait_for 5432 localhost 900
+
+bashio::log.info "Enabling vector.rs"
 
 # Set variables for vector.rs
 DB_PORT=5432
