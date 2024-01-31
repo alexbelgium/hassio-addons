@@ -19,7 +19,6 @@
   ],
   "name": "Postgres 15",
   "options": {
-    "vector.rs_enabled": true,
     "POSTGRES_PASSWORD": "homeassistant"
   },
   "ports": {
@@ -29,7 +28,6 @@
     "5432/tcp": "Postgres port"
   },
   "schema": {
-    "vector.rs_enabled": "bool",
     "POSTGRES_DB": "str?",
     "POSTGRES_HOST_AUTH_METHOD": "str?",
     "POSTGRES_INITDB_ARGS": "str?",
