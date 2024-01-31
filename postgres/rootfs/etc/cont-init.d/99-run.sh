@@ -16,7 +16,7 @@ if [ ! -f "$CONFIG_HOME"/postgresql.conf ]; then
     fi
     bashio::log.warning "A default config.env file was copied in $CONFIG_HOME. Please customize according to https://hub.docker.com/_/postgres and restart the add-on"
 else
-    bashio::log.warning "The config.env file found in $CONFIG_HOME will be used. Please customize according to https://hub.docker.com/_/postgres and restart the add-on"
+    bashio::log.warning "The config.env file found in $CONFIG_HOME will be used (mapped to /addon_configs/xxx-postgres when accessing from Filebrowser). Please customize according to https://hub.docker.com/_/postgres and restart the add-on"
 fi
 
 # Define home
