@@ -3,8 +3,7 @@
 set -e
 
 # Use new config file
-CONFIG_HOME="$(bashio::config "CONFIG_LOCATION")"
-CONFIG_HOME="$(dirname "$CONFIG_HOME")"
+CONFIG_HOME="/config"
 mkdir -p "$CONFIG_HOME"
 if [ ! -f "$CONFIG_HOME"/postgresql.conf ]; then
     # Copy default config.env
