@@ -44,9 +44,9 @@ bashio::log.info "Starting the app"
 echo " "
 
 # Add docker-entrypoint command
-# shellcheck disable=SC2086
-if bashio::config.true "vector.rs_enabled"; then
+if "$(bashio::info.arch)" != "armv7"; then
     docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so
 else
+    bashio::log.warning "Your architectur is armv7, vector.rs is disabled as not supported"
     docker-entrypoint.sh postgres 
 fi
