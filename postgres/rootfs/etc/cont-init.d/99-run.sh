@@ -42,6 +42,8 @@ echo " "
 
 # Add docker-entrypoint command
 if [ "$(bashio::info.arch)" != "armv7" ]; then
+    # Exec vecto modification
+    /./docker-entrypoint-initdb.d/10-vector.sh & \
     docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so
 else
     bashio::log.warning "Your architecture is armv7, pgvecto.rs is disabled as not supported"
