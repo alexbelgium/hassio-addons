@@ -29,8 +29,8 @@ chmod 777 "$PGDATA"
 # Permissions
 chmod -R 777 "$CONFIG_HOME"
 
-# Copy new file
-cp "$CONFIG_HOME"/postgresql.conf /data/
+# Copy new config
+# cp "$CONFIG_HOME"/postgresql.conf /config/
 
 ##############
 # Launch App #
@@ -45,4 +45,8 @@ echo " "
 
 # Add docker-entrypoint command
 # shellcheck disable=SC2086
-docker-entrypoint.sh postgres
+if bashio::config.true "vector.rs_enabled"; then
+    docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so
+else
+    docker-entrypoint.sh postgres 
+fi
