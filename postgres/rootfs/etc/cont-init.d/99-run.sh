@@ -61,7 +61,6 @@ echo " "
 
 # Add docker-entrypoint command
 if [ "$(bashio::info.arch)" != "armv7" ]; then
-    sed -i "/exec \"\$@\"/i psql \"postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT\" < setup_postgres.sql || true" /usr/local/bin/docker-entrypoint.sh
     docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so
 else
     bashio::log.warning "Your architecture is armv7, pgvecto.rs is disabled as not supported"
