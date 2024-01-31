@@ -2,6 +2,15 @@
 # shellcheck shell=bash
 set -e
 
+##########################
+# MIGRATIONS AND UPDATES #
+##########################
+
+# Clean typesense
+if [ -d /data/typesense ]; then
+    rm -r /data/typesense
+fi
+
 #################
 # DATA_LOCATION #
 #################
@@ -31,10 +40,8 @@ ln -sf "$DATA_LOCATION" /photos
 chown -R "$PUID":"$PGID" /photos
 
 mkdir -p "$MACHINE_LEARNING_CACHE_FOLDER"
-mkdir -p "$TYPESENSE_DATA_DIR"
 mkdir -p "$REVERSE_GEOCODING_DUMP_DIRECTORY"
 chown -R "$PUID":"$PGID" "$MACHINE_LEARNING_CACHE_FOLDER"
-chown -R "$PUID":"$PGID" "$TYPESENSE_DATA_DIR"
 chown -R "$PUID":"$PGID" "$REVERSE_GEOCODING_DUMP_DIRECTORY"
 chown -R "$PUID":"$PGID" /data
 chmod 777 /data
