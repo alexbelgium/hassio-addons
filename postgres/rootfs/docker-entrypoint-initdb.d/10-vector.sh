@@ -13,8 +13,7 @@ bashio::log.info "Enabling vector.rs"
 DB_PORT=5432
 DB_HOSTNAME=localhost
 DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
-DB_USERNAME=postgres
-if bashio::config.has_value "POSTGRES_USER"; then POSTGRES_USER="$(bashio::config "POSTGRES_USER")"; else POSTGRES_USER=postgres; fi
+if bashio::config.has_value "DB_USERNAME"; then DB_USERNAME="$(bashio::config "DB_USERNAME")"; else DB_USERNAME=postgres; fi
 
 export DB_PORT
 export DB_HOSTNAME
