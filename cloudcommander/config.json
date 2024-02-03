@@ -103,5 +103,5 @@
   "slug": "cloudcommander",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander",
-  "version": "17.0.1"
+  "version": "17.0.3"
 }
