@@ -1,3 +1,4 @@
+### 15.5-5 (03-02-2024)
 - Revert vector to 0.1.11 as only version supported by immich
 
 ### 15.5-4 (31-01-2024)
