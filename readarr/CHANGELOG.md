@@ -1,4 +1,7 @@
 
+## 0.3.18.2411 (03-02-2024)
+- Update to latest version from linuxserver/docker-readarr
+
 ## 0.3.17.2406 (27-01-2024)
 - Update to latest version from linuxserver/docker-readarr
 
