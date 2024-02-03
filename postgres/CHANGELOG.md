@@ -1,3 +1,5 @@
+- Revert vector to 0.1.11 as only version supported by immich
+
 ### 15.5-4 (31-01-2024)
 - &#9888; PLEASE BACKUP before updating! Non reversible changes
 - &#9888; WARNING : addition of pgvecto.rs extension, potentially breaking change ! Be sure to backup prior to update
