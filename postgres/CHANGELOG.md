@@ -1,5 +1,5 @@
 ### 15.5-6 (03-02-2024)
-- Fix : use custom postgres username 
+- Fix : use custom postgres username
 
 ### 15.5-5 (03-02-2024)
 - Revert vector to 0.1.11 as only version supported by immich
