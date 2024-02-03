@@ -1,3 +1,6 @@
+
+## 0.7.2 (03-02-2024)
+- Update to latest version from gabe565/CastSponsorSkip
 ### 0.7.0-3 (30-01-2024)
 - Feat : add possibility for custom env addition
 
