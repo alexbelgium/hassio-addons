@@ -1,3 +1,6 @@
+
+## 1.94.1 (03-02-2024)
+- Update to latest version from imagegenius/docker-immich
 - &#9888; PLEASE BACKUP before updating! Non reversible changes
 - &#9888; BREAKING change : dependency on the update postgres image for vector.rs support, it will not work if you do not update postgres !
 - &#9888; Database location changed from /data to /addon_configs/xxx-postgres : no expected user impact other that all configuration files will also be located in this folder accessible with addons such as Filebrowser
