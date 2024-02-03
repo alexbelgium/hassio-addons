@@ -1,3 +1,6 @@
+
+## v1.1.1 (03-02-2024)
+- Update to latest version from hay-kot/mealie
 ### v1.0.0-11 (30-01-2024)
 - Fix : incorrect redirect https://github.com/alexbelgium/hassio-addons/issues/1210
 
