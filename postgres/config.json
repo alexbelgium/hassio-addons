@@ -25,7 +25,7 @@
     "5432/tcp": 5432
   },
   "ports_description": {
-    "5432/tcp": "Postgres port"
+    "5432/tcp": "Postgres"
   },
   "schema": {
     "POSTGRES_DB": "str?",
