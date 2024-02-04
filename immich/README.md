@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Immich] version pgvecto.rs missmatch (opened 2024-02-04)](https://github.com/alexbelgium/hassio-addons/issues/1232) by [@Doomic](https://github.com/Doomic)
 # Home assistant add-on: immich
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
