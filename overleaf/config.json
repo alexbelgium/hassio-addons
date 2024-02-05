@@ -37,8 +37,7 @@
     "EMAIL_CONFIRMATION_DISABLED": "bool"
   },
   "slug": "overleaf",
-  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1",
+  "version": "0.1",
   "webui": "http://[HOST]:[PORT:80]"
 }
