@@ -1,3 +1,5 @@
+### 0.1 (05-02-2024)
+- Minor bugs fixed
 
 ## 0.0.98 (15-04-2023)
 - Update to latest version from chrisleekr/binance-trading-bot
