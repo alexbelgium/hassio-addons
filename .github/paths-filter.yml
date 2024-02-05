@@ -52,6 +52,7 @@ omada: omada/config.* # Image : yes
 omada_v3: omada_v3/config.* # Image : yes
 ombi: ombi/config.* # Image : yes
 organizr: organizr/config.* # Image : yes
+overleaf: overleaf/config.* # Image : yes
 overseerr: overseerr/config.* # Image : yes
 paperless_ngx: paperless_ngx/config.* # Image : yes
 papermerge: papermerge/config.* # Image : yes
@@ -78,7 +79,6 @@ sonarr: sonarr/config.* # Image : yes
 sponsorblockcast: sponsorblockcast/config.* # Image : yes
 spotweb: spotweb/config.* # Image : yes
 tandoor_recipes: tandoor_recipes/config.* # Image : yes
-overleaf: overleaf/config.* # Image : yes
 tdarr: tdarr/config.* # Image : yes
 teamspeak: teamspeak/config.* # Image : yes
 transmission: transmission/config.* # Image : yes
