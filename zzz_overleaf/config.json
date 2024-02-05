@@ -1,0 +1,44 @@
+{
+  "arch": [
+    "amd64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "web-based collaborative LaTeX editor",
+  "environment": {
+    "SHARELATEX_MONGO_URL": "mongodb://mongo/sharelatex",
+    "SHARELATEX_REDIS_HOST": "redis",
+    "REDIS_HOST": "localhost",
+    "REDIS_PASSWORD": "",
+    "TEXMFVAR": "/var/lib/sharelatex/tmp/texmf-var",
+    "REDIS_PORT": "6379"
+  },
+  "image": "ghcr.io/alexbelgium/overleaf-{arch}",
+  "map": [
+    "addon_config:rw"
+  ],
+  "name": "DO NOT USE Overleaf",
+  "options": {
+    "SHARELATEX_APP_NAME": "Overleaf Community Edition",
+    "ENABLED_LINKED_FILE_TYPES": "url,project_file",
+    "ENABLE_CONVERSIONS": "true",
+    "EMAIL_CONFIRMATION_DISABLED": "true"
+  },
+  "panel_icon": "mdi:bitcoin",
+  "ports": {
+    "80/tcp": 80
+  },
+  "ports_description": {
+    "80/tcp": "Web UI port"
+  },
+  "schema": {
+    "SHARELATEX_APP_NAME": "str",
+    "ENABLED_LINKED_FILE_TYPES": "str",
+    "ENABLE_CONVERSIONS": "bool",
+    "EMAIL_CONFIRMATION_DISABLED": "bool"
+  },
+  "slug": "overleaf",
+  "udev": true,
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "0.0.98",
+  "webui": "http://[HOST]:[PORT:80]"
+}
