@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Postgres] Database size doubled when updating to 15.5-5 (opened 2024-02-04)](https://github.com/alexbelgium/hassio-addons/issues/1233) by [@Blendi](https://github.com/Blendi)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
