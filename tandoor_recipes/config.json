@@ -68,9 +68,9 @@
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
     "DISABLE_INGRESS": "true",
+    "GUNICORN_MEDIA": "1",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
-    "TRUSTED_PROXIES": "**",
-    "GUNICORN_MEDIA": "1"
+    "TRUSTED_PROXIES": "**"
   },
   "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
   "map": [

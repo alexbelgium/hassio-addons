@@ -10,10 +10,10 @@
   "host_network": true,
   "image": "ghcr.io/alexbelgium/sponsorblockcast-{arch}",
   "init": false,
-  "name": "Castsponsorskip",
   "map": [
     "addon_config:rw"
   ],
+  "name": "Castsponsorskip",
   "options": {
     "CSS_CATEGORIES": "sponsor, intro, outro, selfpromo"
   },

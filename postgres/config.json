@@ -8,8 +8,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Postgres 15 with pgvecto.rs support",
   "environment": {
-    "PGDATA": "/config/database",
-    "CONFIG_LOCATION": "/config/postgresql.conf"
+    "CONFIG_LOCATION": "/config/postgresql.conf",
+    "PGDATA": "/config/database"
   },
   "image": "ghcr.io/alexbelgium/postgres-{arch}",
   "map": [
