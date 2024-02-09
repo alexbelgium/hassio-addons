@@ -1,5 +1,5 @@
+## &#9888; Open Request : [✨ [REQUEST] Mealie Ingress Support (opened 2023-11-05)](https://github.com/alexbelgium/hassio-addons/issues/1061) by [@minmaxat](https://github.com/minmaxat)
 ## &#9888; Open Request : [✨ [REQUEST] Mealie change data directory (opened 2024-01-14)](https://github.com/alexbelgium/hassio-addons/issues/1179) by [@LoganJFisher](https://github.com/LoganJFisher)
-## &#9888; Open Issue : [[Mealie] PermissionError: [Errno 13] Permission denied: /config/addons_config/mealie_data/.secret (opened 2024-01-24)](https://github.com/alexbelgium/hassio-addons/issues/1201) by [@jack5mikemotown](https://github.com/jack5mikemotown)
 ## &#9888; Open Issue : [🐛 [Mealie] Direct link to meals plan page redirects incorrectly (opened 2024-01-28)](https://github.com/alexbelgium/hassio-addons/issues/1210) by [@nickj-git](https://github.com/nickj-git)
 # Hass.io Add-ons: Mealie
 
