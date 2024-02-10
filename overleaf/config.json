@@ -38,6 +38,6 @@
   },
   "slug": "overleaf",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.1",
+  "version": "0.2.0",
   "webui": "http://[HOST]:[PORT:80]"
 }

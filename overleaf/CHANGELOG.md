@@ -1,3 +1,6 @@
+
+## 0.2.0 (10-02-2024)
+- Update to latest version from sharelatex/sharelatex
 ### 0.1 (05-02-2024)
 - Minor bugs fixed
 
