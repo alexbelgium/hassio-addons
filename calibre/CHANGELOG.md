@@ -1,4 +1,7 @@
 
+## 7.5.1 (10-02-2024)
+- Update to latest version from linuxserver/docker-calibre
+
 ## 7.4.0 (20-01-2024)
 - Update to latest version from linuxserver/docker-calibre
 
