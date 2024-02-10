@@ -1,4 +1,7 @@
 
+## debian-2024-02-09 (2024-02-09)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## bullseye-slim-2024-01-18 (2024-01-18)
 - Update to latest version from charlocharlie/epicgames-freegames
 
