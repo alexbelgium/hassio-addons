@@ -1,3 +1,5 @@
+### 2.2.0-4 (10-02-2024)
+- Minor bugs fixed
 ### 2.2.0-2 (10-02-2024)
 - Minor bugs fixed
 
