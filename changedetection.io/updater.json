@@ -1,9 +1,9 @@
 {
   "github_fulltag": "false",
-  "last_update": "20-01-2024",
+  "last_update": "10-02-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "changedetection.io",
   "source": "github",
   "upstream_repo": "linuxserver/docker-changedetection.io",
-  "upstream_version": "0.45.13"
+  "upstream_version": "0.45.14"
 }
