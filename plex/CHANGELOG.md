@@ -1,4 +1,7 @@
 
+## 1.32.8.7639-fb6452ebf-ls203 (10-02-2024)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.32.8.7639-fb6452ebf-ls202 (03-02-2024)
 - Update to latest version from linuxserver/docker-plex
 
