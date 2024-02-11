@@ -5,12 +5,12 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "web-based collaborative LaTeX editor",
   "environment": {
-    "SHARELATEX_MONGO_URL": "mongodb://mongo/sharelatex",
-    "SHARELATEX_REDIS_HOST": "redis",
     "REDIS_HOST": "localhost",
     "REDIS_PASSWORD": "",
-    "TEXMFVAR": "/var/lib/sharelatex/tmp/texmf-var",
-    "REDIS_PORT": "6379"
+    "REDIS_PORT": "6379",
+    "SHARELATEX_MONGO_URL": "mongodb://mongo/sharelatex",
+    "SHARELATEX_REDIS_HOST": "redis",
+    "TEXMFVAR": "/var/lib/sharelatex/tmp/texmf-var"
   },
   "image": "ghcr.io/alexbelgium/overleaf-{arch}",
   "map": [
@@ -18,10 +18,10 @@
   ],
   "name": "DO NOT USE Overleaf",
   "options": {
-    "SHARELATEX_APP_NAME": "Overleaf Community Edition",
+    "EMAIL_CONFIRMATION_DISABLED": "true",
     "ENABLED_LINKED_FILE_TYPES": "url,project_file",
     "ENABLE_CONVERSIONS": "true",
-    "EMAIL_CONFIRMATION_DISABLED": "true"
+    "SHARELATEX_APP_NAME": "Overleaf Community Edition"
   },
   "panel_icon": "mdi:bitcoin",
   "ports": {
@@ -31,10 +31,10 @@
     "80/tcp": "Web UI port"
   },
   "schema": {
-    "SHARELATEX_APP_NAME": "str",
+    "EMAIL_CONFIRMATION_DISABLED": "bool",
     "ENABLED_LINKED_FILE_TYPES": "str",
     "ENABLE_CONVERSIONS": "bool",
-    "EMAIL_CONFIRMATION_DISABLED": "bool"
+    "SHARELATEX_APP_NAME": "str"
   },
   "slug": "overleaf",
   "url": "https://github.com/alexbelgium/hassio-addons",
