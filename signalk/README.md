@@ -43,8 +43,4 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Create an issue on github
 
-## Illustration
-
-![illustration](https://raw.githubusercontent.com/firefly-iii/firefly-iii/develop/.github/assets/img/imac-complete.png)
-
 [repository]: https://github.com/alexbelgium/hassio-addons
