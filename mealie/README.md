@@ -1,6 +1,7 @@
 ## &#9888; Open Request : [✨ [REQUEST] Mealie Ingress Support (opened 2023-11-05)](https://github.com/alexbelgium/hassio-addons/issues/1061) by [@minmaxat](https://github.com/minmaxat)
 ## &#9888; Open Request : [✨ [REQUEST] Mealie change data directory (opened 2024-01-14)](https://github.com/alexbelgium/hassio-addons/issues/1179) by [@LoganJFisher](https://github.com/LoganJFisher)
 ## &#9888; Open Issue : [🐛 [Mealie] Direct link to meals plan page redirects incorrectly (opened 2024-01-28)](https://github.com/alexbelgium/hassio-addons/issues/1210) by [@nickj-git](https://github.com/nickj-git)
+## &#9888; Open Issue : [🐛 [Mealie] ERR_CONNECTION_REFUSED after upgrade (opened 2024-02-09)](https://github.com/alexbelgium/hassio-addons/issues/1238) by [@iainp999](https://github.com/iainp999)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
