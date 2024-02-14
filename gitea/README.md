@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Gitea add Configuration for ALLOWED_DOMAINS (opened 2024-02-13)](https://github.com/alexbelgium/hassio-addons/issues/1242) by [@Torpedro1978](https://github.com/Torpedro1978)
 # Home assistant add-on: Gitea
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
