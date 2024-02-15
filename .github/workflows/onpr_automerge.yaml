@@ -15,5 +15,5 @@ jobs:
       - name: Enable auto-merge
         uses: reitermarkus/automerge@v2.1.2
         with:
-          token: ${{ secrets.Auto_Merge }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           merge-method: squash
