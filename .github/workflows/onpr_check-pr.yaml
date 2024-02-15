@@ -17,7 +17,7 @@ jobs:
       - name: ↩️ Checkout
         uses: actions/checkout@v4
 
-      - name: 📂 Detect chanced addons
+      - name: 📂 Detect changed addons
         uses: dorny/paths-filter@v3
         id: filter
         with:
@@ -273,3 +273,15 @@ jobs:
         run: |
           rm -rf /tmp/buildx-cache
           mv /tmp/buildx-cache-new /tmp/buildx-cache
+
+  enable-auto-merge:
+    name: 🤖 Auto merge release PR
+    needs: check-addon-changes
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'auto-merge')
+    steps:
+      - name: Enable auto-merge
+        uses: reitermarkus/automerge@v2.1.2
+        with:
+          token: ${{ secrets.Auto_Merge }}
+          merge-method: squash
