@@ -50,7 +50,7 @@ comparison to installing any other Hass.io add-on.
 
 ## Support
 
-Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-Tdarr/282108/3)
+Create an issue on github
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
