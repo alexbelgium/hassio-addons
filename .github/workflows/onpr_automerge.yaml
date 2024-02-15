@@ -1,7 +1,7 @@
 # yamllint disable rule:line-length
 # shellcheck disable=SC2043
 ---
-name: automerge
+name: PR automerge
 on:
   pull_request:
     types:
@@ -15,18 +15,6 @@ on:
   pull_request_review:
     types:
       - submitted
-  check_suite:
-    types:
-      - completed
-  status: {}
-jobs:
-# This workflow will automatically merge a pull request if the title contains "automerge" and all checks are successful
-name: Auto Merge PR
-on:
-  pull_request:
-    types: [opened, synchronize, reopened, edited]
-  check_suite:
-    types: [completed]
 
 jobs:
   auto-merge:
