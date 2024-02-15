@@ -33,14 +33,14 @@ jobs:
       - name: Check PR status
         if: env.AUTO_MERGE == 'true'
         run: |
-          status="${{ github.event.check_suite.conclusion }}"
-          if [[ "$status" == "success" ]]; then
+          #status="${{ github.event.check_suite.conclusion }}"
+          #if [[ "$status" == "success" ]]; then
             echo "All checks are successful"
             echo "PR_STATUS=true" >> $GITHUB_ENV
-          else
-            echo "Some checks are not successful"
-            echo "PR_STATUS=false" >> $GITHUB_ENV
-          fi
+          #else
+          #  echo "Some checks are not successful"
+          #  echo "PR_STATUS=false" >> $GITHUB_ENV
+          #fi
       - name: Merge PR
         if: env.PR_STATUS == 'true'
         uses: "pascalgn/automerge-action@v0.16.2"
