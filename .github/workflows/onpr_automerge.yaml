@@ -4,9 +4,9 @@
 name: Check PR Build
 on:
   pull_request:
+    types: [opened, edited]
     branches:
       - master
-
 
 jobs:
   enable-auto-merge:
