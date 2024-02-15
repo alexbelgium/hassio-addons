@@ -4,7 +4,7 @@
 name: Check PR Build
 on:
   pull_request:
-    types: [opened, edited]
+    types: [labeled]
     branches:
       - master
 
