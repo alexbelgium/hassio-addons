@@ -273,15 +273,3 @@ jobs:
         run: |
           rm -rf /tmp/buildx-cache
           mv /tmp/buildx-cache-new /tmp/buildx-cache
-
-  enable-auto-merge:
-    name: 🤖 Auto merge release PR
-    needs: check-build
-    runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'auto-merge')
-    steps:
-      - name: Enable auto-merge
-        uses: reitermarkus/automerge@v2.1.2
-        with:
-          token: ${{ secrets.Auto_Merge }}
-          merge-method: squash
