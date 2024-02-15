@@ -1,7 +1,7 @@
 # yamllint disable rule:line-length
 # shellcheck disable=SC2043
 ---
-name: Check PR Build
+name: PR automerge
 on:
   pull_request:
     types: [labeled]
