@@ -1,11 +1,11 @@
-name: 🤖 Enable auto merge
-
+# yamllint disable rule:line-length
+# shellcheck disable=SC2043
+---
+name: Check PR Build
 on:
-  pull_request_target:
-    branches: [release]
-    # We're using labeled here because we don't want to enable auto merge for every PR against release.
-    # Just the ones created by the cherry pick action.
-    types: [labeled]
+  pull_request:
+    branches:
+      - master
 
 jobs:
   enable-auto-merge:
