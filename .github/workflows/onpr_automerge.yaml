@@ -7,6 +7,7 @@ on:
     branches:
       - master
 
+
 jobs:
   enable-auto-merge:
     name: 🤖 Auto merge release PR
