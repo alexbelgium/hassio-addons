@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] iSponsorBlockTV: Same as CastSponsorSkip but with support for Youtube TV clients (so not limited to casting only). (opened 2023-11-02)](https://github.com/alexbelgium/hassio-addons/issues/1058) by [@diamant-x](https://github.com/diamant-x)
 
 # Home assistant add-on: CastSponsorSkip
 
