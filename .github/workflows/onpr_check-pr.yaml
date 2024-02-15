@@ -276,7 +276,7 @@ jobs:
 
   enable-auto-merge:
     name: 🤖 Auto merge release PR
-    needs: check-addon-changes
+    needs: check-build
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'auto-merge')
     steps:
