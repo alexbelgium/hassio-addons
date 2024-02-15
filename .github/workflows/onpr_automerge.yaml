@@ -20,11 +20,41 @@ on:
       - completed
   status: {}
 jobs:
-  automerge:
+# This workflow will automatically merge a pull request if the title contains "automerge" and all checks are successful
+name: Auto Merge PR
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  check_suite:
+    types: [completed]
+
+jobs:
+  auto-merge:
     runs-on: ubuntu-latest
     steps:
-      - id: automerge
-        name: automerge
+      - name: Check PR title
+        run: |
+          title="${{ github.event.pull_request.title }}"
+          if [[ "$title" == *"auto_merge"* ]]; then
+            echo "PR title contains auto_merge"
+            echo "AUTO_MERGE=true" >> $GITHUB_ENV
+          else
+            echo "PR title does not contain automerge"
+            echo "AUTO_MERGE=false" >> $GITHUB_ENV
+          fi
+      - name: Check PR status
+        if: env.AUTO_MERGE == 'true'
+        run: |
+          status="${{ github.event.check_suite.conclusion }}"
+          if [[ "$status" == "success" ]]; then
+            echo "All checks are successful"
+            echo "PR_STATUS=true" >> $GITHUB_ENV
+          else
+            echo "Some checks are not successful"
+            echo "PR_STATUS=false" >> $GITHUB_ENV
+          fi
+      - name: Merge PR
+        if: env.PR_STATUS == 'true'
         uses: "pascalgn/automerge-action@v0.16.2"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
