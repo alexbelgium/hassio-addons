@@ -22,7 +22,6 @@ on:
 jobs:
   automerge:
     runs-on: ubuntu-latest
-    if: ${{ github.event.label.name == 'auto-merge' }}    
     steps:
       - id: automerge
         name: automerge
