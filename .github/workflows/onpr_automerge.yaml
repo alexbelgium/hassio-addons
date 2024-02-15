@@ -1,19 +1,32 @@
 # yamllint disable rule:line-length
 # shellcheck disable=SC2043
 ---
-name: PR automerge
+name: automerge
 on:
   pull_request:
-    types: [ labeled ]
-
+    types:
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
+  status: {}
 jobs:
-  enable-auto-merge:
-    name: 🤖 Auto merge release PR
+  automerge:
     runs-on: ubuntu-latest
-    if: ${{ github.event.label.name == 'auto-merge' }}
+    if: ${{ github.event.label.name == 'auto-merge' }}    
     steps:
-      - name: Enable auto-merge
-        uses: reitermarkus/automerge@v2.1.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: squash
+      - id: automerge
+        name: automerge
+        uses: "pascalgn/automerge-action@v0.16.2"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
