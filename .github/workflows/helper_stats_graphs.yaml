@@ -14,7 +14,8 @@ jobs:
       - name: Install apps
         run: |
           git pull --rebase origin master
-          sudo apt-get install gnuplot -y
+          sudo apt-get update
+          sudo apt-get install gnuplot -y || true
       - name: Create addons stats
         run: |
           # Prepare data
