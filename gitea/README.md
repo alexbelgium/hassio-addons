@@ -21,6 +21,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
+[Gitea](https://about.gitea.com/) is a painless self-hosted all-in-one software development service, it includes Git hosting, code review, team collaboration, package registry and CI/CD. It is similar to GitHub, Bitbucket and GitLab.
+
 Various tweaks and configuration options addition.
 This addon is based on the [docker image](https://hub.docker.com/r/gitea/gitea).
 
