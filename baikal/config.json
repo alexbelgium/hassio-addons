@@ -5,7 +5,7 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Baïkal is a Calendar+Contacts server",
+  "description": "Calendar+Contacts server",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
