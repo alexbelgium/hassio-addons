@@ -11,34 +11,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Update path_filters
-        run: |
-          # Init
-          echo "Starting"
-
-          # Go through all folders, add to filters if not existing
-          for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
-            if [ -f "$f"/config.json ]; then
-
-              # Rename Readme
-              [ -f "$f"/Readme.md ] && mv "$f"/Readme.md "$f"/README.md
-            
-              # Add to file
-              if ! grep "$f:" ".github/paths-filter.yml"; then
-                echo "$f: $f/config.*" >> ".github/paths-filter.yml"
-              fi
-              
-              # Identify addons with true images
-              if [ "$(jq '.image' "$f/config.json")" != null ]; then
-                sed -i "/$f/ s/ # Image : yes//g" ".github/paths-filter.yml"
-                sed -i "/$f/ s/$/ # Image : yes/" ".github/paths-filter.yml"
-              fi
-            fi
-          done
-
-          # Sort yaml
-          sort -t= ".github/paths-filter.yml" -o ".github/paths-filter.yml"
-
       - name: Create README file
         run: |
           # Init
