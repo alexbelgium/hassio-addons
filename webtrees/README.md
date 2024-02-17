@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [Webtrees issue🐛 [Addon name] title (opened 2024-02-16)](https://github.com/alexbelgium/hassio-addons/issues/1252) by [@Hubby972](https://github.com/Hubby972)
 # Home assistant add-on: Webtrees
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
