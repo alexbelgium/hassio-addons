@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [❓ [Guacamole Client] Database no response support wanted (opened 2023-11-12)](https://github.com/alexbelgium/hassio-addons/issues/1069) by [@Slin-nilS](https://github.com/Slin-nilS)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
