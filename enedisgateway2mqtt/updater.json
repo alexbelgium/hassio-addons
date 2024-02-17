@@ -1,9 +1,9 @@
 {
   "github_beta": "false",
-  "last_update": "10-02-2024",
+  "last_update": "17-02-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "enedisgateway2mqtt",
   "source": "github",
   "upstream_repo": "m4dm4rtig4n/myelectricaldata",
-  "upstream_version": "0.10.0"
+  "upstream_version": "0.11.0"
 }
