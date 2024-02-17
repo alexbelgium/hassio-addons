@@ -1,3 +1,6 @@
+
+## 2.1.7.4030 (17-02-2024)
+- Update to latest version from linuxserver/docker-lidarr
 - There is now an official addon in the community repository, you should migrate to it !
 
 ## 2.0.7.3849 (16-12-2023)
