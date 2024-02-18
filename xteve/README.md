@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [xTeVe] Buffer = VLC is not working because VLC refuses to run as root (id:0) user (opened 2024-02-17)](https://github.com/alexbelgium/hassio-addons/issues/1254) by [@kulmegil](https://github.com/kulmegil)
 # Home assistant add-on: xTeVe
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
