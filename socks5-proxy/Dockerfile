@@ -23,8 +23,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-s' -o ./socks5
 
 ARG BUILD_VERSION
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM ghcr.io/hassio-addons/base:15.0.7
 COPY --from=builder /go/src/github.com/serjs/socks5/socks5 /
 
 ##################
