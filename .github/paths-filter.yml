@@ -76,6 +76,7 @@ scrutiny: scrutiny/config.* # Image : yes
 scrutiny_fa: scrutiny_fa/config.* # Image : yes
 seafile: seafile/config.* # Image : yes
 signalk: signalk/config.* # Image : yes
+socks5-proxy: socks5-proxy/config.* # Image : yes
 sonarr: sonarr/config.* # Image : yes
 sponsorblockcast: sponsorblockcast/config.* # Image : yes
 spotweb: spotweb/config.* # Image : yes
