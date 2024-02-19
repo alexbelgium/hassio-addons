@@ -14,8 +14,8 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base/amd64:7.1.0
 ARG BUILD_VERSION
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 ##################
@@ -26,8 +26,6 @@ FROM ${BUILD_FROM}
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
-
-RUN apk -add --no-cache bash
 
 ##################
 # 3 Install apps #
