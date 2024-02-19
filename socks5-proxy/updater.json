@@ -1,0 +1,8 @@
+{
+  "last_update": "21-11-2023",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "socks5-server",
+  "source": "dockerhub",
+  "upstream_repo": "serjs/go-socks5-proxy",
+  "upstream_version": "0.1"
+}

@@ -1,0 +1,7 @@
+---
+build_from:
+  aarch64: serjs/go-socks5-proxy:latest
+  amd64: serjs/go-socks5-proxy:latest
+  armv7: serjs/go-socks5-proxy:latest
+codenotary:
+  signer: alexandrep.github@gmail.com

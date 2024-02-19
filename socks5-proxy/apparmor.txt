@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile goproxy_addon flags=(attach_disconnected,mediate_deleted) {
+profile socks5-server_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,

@@ -1,0 +1,30 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "high performance proxy server",
+  "environment": {
+    "PROXY_PORT": "1080"
+  },
+  "image": "ghcr.io/alexbelgium/socks5-server-{arch}",
+  "init": false,
+  "name": "Socks5 Server",
+  "ports": {
+    "1080/tcp": 1080
+  },
+  "ports_description": {
+    "1080/tcp": "Socks5 port"
+  },
+  "schema": {
+    "PROXY_USER": "str",
+    "PROXY_PASSWORD": "str",
+    "ALLOWED_DEST_FQDN": "str?",
+    "ALLOWED_IPS": "str?"
+  },
+  "slug": "socks5-server",
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/socks5-server",
+  "version": "0.1"
+}
