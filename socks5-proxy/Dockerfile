@@ -17,7 +17,6 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base/amd64:7.1.0
 ARG BUILD_VERSION
 FROM ${BUILD_FROM}
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ##################
 # 2 Modify Image #
