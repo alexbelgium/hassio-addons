@@ -1,0 +1,9 @@
+{
+  "last_update": "21-11-2023",
+  "paused": true,
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "goproxy",
+  "source": "github",
+  "upstream_repo": "dani-garcia/goproxy_rs",
+  "upstream_version": "1.30.1"
+}
