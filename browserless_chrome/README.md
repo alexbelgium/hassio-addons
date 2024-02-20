@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [changedetection][browserless chrome] Target page, context or browser has been closed (opened 2024-02-16)](https://github.com/alexbelgium/hassio-addons/issues/1251) by [@Norm2023](https://github.com/Norm2023)
+## &#9888; Open Issue : [🐛 [browserless chrome] No handler or file found for resource / (opened 2024-02-19)](https://github.com/alexbelgium/hassio-addons/issues/1257) by [@TheYarkin](https://github.com/TheYarkin)
 # Home assistant add-on: Browserless Chrome
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
