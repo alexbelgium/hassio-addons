@@ -11,7 +11,7 @@
   },
   "image": "ghcr.io/alexbelgium/socks5-server-{arch}",
   "init": false,
-  "name": "Socks5 Server",
+  "name": "zzz_Under Development not working",
   "ports": {
     "1080/tcp": 1080
   },
