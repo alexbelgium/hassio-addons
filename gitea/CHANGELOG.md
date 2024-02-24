@@ -1,4 +1,7 @@
 
+## 1.21.6 (24-02-2024)
+- Update to latest version from go-gitea/gitea
+
 ## 1.21.5 (03-02-2024)
 - Update to latest version from go-gitea/gitea
 
