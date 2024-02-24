@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Ombi Ingress (opened 2024-01-07)](https://github.com/alexbelgium/hassio-addons/issues/1157) by [@Wheemer](https://github.com/Wheemer)
 # Home assistant add-on: Ombi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
