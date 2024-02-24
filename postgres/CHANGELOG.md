@@ -1,3 +1,5 @@
+- Update pgvector to 0.2.0
+
 ### 15.5-6 (03-02-2024)
 - Fix : use custom postgres username
 
