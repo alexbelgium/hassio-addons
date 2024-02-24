@@ -1,4 +1,7 @@
 
+## 1.4.2 (24-02-2024)
+- Update to latest version from linuxserver/docker-bazarr
+
 ## 1.4.1 (10-02-2024)
 - Update to latest version from linuxserver/docker-bazarr
 ### 1.4.0-2 (04-12-2023)
