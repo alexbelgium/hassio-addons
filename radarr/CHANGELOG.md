@@ -1,3 +1,6 @@
+
+## 5.3.6.8612 (24-02-2024)
+- Update to latest version from linuxserver/docker-radarr
 - There is now an official addon in the community repository, you should migrate to it ! However it does not support ingress ;)
 
 ## 5.2.6.8376 (30-12-2023)
