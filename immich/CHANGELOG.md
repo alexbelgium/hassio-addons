@@ -1,4 +1,7 @@
 
+## 1.95.1 (24-02-2024)
+- Update to latest version from imagegenius/docker-immich
+
 ## 1.94.1 (03-02-2024)
 - Update to latest version from imagegenius/docker-immich
 - &#9888; PLEASE BACKUP before updating! Non reversible changes
