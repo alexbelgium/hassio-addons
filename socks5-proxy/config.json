@@ -19,10 +19,10 @@
     "1080/tcp": "Socks5 port"
   },
   "schema": {
-    "PROXY_USER": "str",
-    "PROXY_PASSWORD": "str",
     "ALLOWED_DEST_FQDN": "str?",
-    "ALLOWED_IPS": "str?"
+    "ALLOWED_IPS": "str?",
+    "PROXY_PASSWORD": "str",
+    "PROXY_USER": "str"
   },
   "slug": "socks5-server",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/socks5-server",
