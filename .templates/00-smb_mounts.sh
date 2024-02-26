@@ -202,6 +202,7 @@ if bashio::config.has_value 'networkdisks'; then
                         SMBVERS="3.1.1"
                         ;;
                     "3.1")
+                        echo "SMB 3.1 detected, converting to 3.1.1"
                         SMBVERS="3.1.1"
                         ;;          
                 esac
