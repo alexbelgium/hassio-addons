@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 unpackerr error when installed (opened 2024-02-26)](https://github.com/alexbelgium/hassio-addons/issues/1270) by [@juhenriquez](https://github.com/juhenriquez)
 # Home assistant add-on: Unpackerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
