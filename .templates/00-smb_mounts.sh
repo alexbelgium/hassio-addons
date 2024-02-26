@@ -201,6 +201,9 @@ if bashio::config.has_value 'networkdisks'; then
                     311)
                         SMBVERS="3.1.1"
                         ;;
+                    "3.1")
+                        SMBVERS="3.1.1"
+                        ;;          
                 esac
                 echo "...... SMB version detected : $SMBVERS"
                 SMBVERS=",vers=$SMBVERS"
