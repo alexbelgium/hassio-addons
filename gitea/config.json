@@ -67,6 +67,7 @@
   "image": "ghcr.io/alexbelgium/gitea-{arch}",
   "init": false,
   "map": [
+    "addon_config:rw",
     "share:rw",
     "ssl:rw"
   ],
@@ -97,6 +98,6 @@
   "slug": "gitea",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/gitea",
-  "version": "1.21.6",
+  "version": "1.21.6-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
