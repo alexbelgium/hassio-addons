@@ -1,11 +1,12 @@
 # yamllint disable rule:line-length
 # shellcheck disable=SC2043
 ---
-name: PR automerge
+name: automerge
 on:
   pull_request:
     types:
       - labeled
+      - unlabeled
       - synchronize
       - opened
       - edited
@@ -15,35 +16,16 @@ on:
   pull_request_review:
     types:
       - submitted
-
+  check_suite:
+    types:
+      - completed
+  status: {}
 jobs:
-  auto-merge:
+  automerge:
+    if: ${{ (github.event.issue.pull_request) && (contains(github.event.comment.body, '/automerge')) }}    # <--- The other way to compare if it's on a PR or on an issue
     runs-on: ubuntu-latest
-    steps:
-      - name: Check PR title
-        run: |
-          title="${{ github.event.pull_request.title }}"
-          if [[ "$title" == *"auto_merge"* ]]; then
-            echo "PR title contains auto_merge"
-            echo "AUTO_MERGE=true" >> $GITHUB_ENV
-          else
-            echo "PR title does not contain automerge"
-            echo "AUTO_MERGE=false" >> $GITHUB_ENV
-          fi
-      - name: Check PR status
-        if: env.AUTO_MERGE == 'true'
-        run: |
-          #status="${{ github.event.check_suite.conclusion }}"
-          #if [[ "$status" == "success" ]]; then
-            echo "All checks are successful"
-            echo "PR_STATUS=true" >> $GITHUB_ENV
-          #else
-          #  echo "Some checks are not successful"
-          #  echo "PR_STATUS=false" >> $GITHUB_ENV
-          #fi
-      - name: Merge PR
-        if: env.PR_STATUS == 'true'
-        run: |
-          curl -X PUT -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/merge
+      - id: automerge
+        name: automerge
+        uses: "pascalgn/automerge-action@v0.16.2"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
