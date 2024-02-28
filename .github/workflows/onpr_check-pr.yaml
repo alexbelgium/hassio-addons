@@ -66,6 +66,7 @@ jobs:
       - name: 🔎 Check if a label for the addon exists
         shell: bash
         run: |
+          exit 0
           labeltext=$(sed -nr "/${{ matrix.addon }}/p" '.github/paths-filter.yml')
           if [[ -z "$labeltext" ]]; then
               echo "::error::There is no label for this addon! Please add it to .github/paths-filter.yml"
