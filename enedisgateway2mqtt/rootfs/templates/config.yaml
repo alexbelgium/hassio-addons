@@ -1,4 +1,4 @@
-cycle: 14400  # 4H
+cycle: 14400 # 4H
 debug: true
 log2file: false
 wipe_influxdb: false # Work only with influxdb > 2.X
@@ -6,20 +6,27 @@ wipe_influxdb: false # Work only with influxdb > 2.X
 # Mais il est possible de basculer sur une base de données externe de type SQLite ou PostgreSQL
 # Exemple pour Postgres :
 # storage_uri: postgresql://myelectricaldata:myelectricaldata@postgres:5432/myelectricaldata
-tempo:
+mqtt:
   enable: true
-  price_blue_hc: 0.097
-  price_blue_hp: 0.1249
-  price_red_hc: 0.1216
-  price_red_hp: 0.6712
-  price_white_hc: 0.114
-  price_white_hp: 0.1508
-home_assistant:
+  hostname: mosquitto
+  port: 1883
+  username: null
+  password: null
+  prefix: myelectricaldata
+  client_id: myelectricaldata # DOIT ETRE UNIQUE SUR LA TOTALITE DES CLIENTS CONNECTE AU SERVEUR MQTT
+  retain: true
+  qos: 0
+home_assistant: # MQTT est obligaoire pour Home Assistant
   enable: true
   discovery: true
   discovery_prefix: homeassistant
-influxdb:
+home_assistant_ws:
   enable: true
+  ssl: true
+  token: TOKEN_LONGUE_DUREE
+  url: URL_VERS_HOME_ASSISTANT
+influxdb:
+  enable: false
   hostname: influxdb
   port: 8086
   token: myelectricaldata
@@ -27,7 +34,7 @@ influxdb:
   bucket: myelectricaldata
   # ATTENTION, L'activation de l'importation asynchrone va réduire fortement le temps d'importation dans InfluxDB
   # mais va augmenter la consommation mémoire & CPU et donc à activer uniquement sur un hardware robuste.
-  method: synchronous    # Mode disponible : synchronous / asynchronous / batching
+  method: synchronous # Mode disponible : synchronous / asynchronous / batching
   # batching_options permet uniquement de configurer la methode `batching`.
   # Pour plus d'information : https://github.com/influxdata/influxdb-client-python#batching
   batching_options:
@@ -39,69 +46,59 @@ influxdb:
     max_retries: 5
     max_retry_delay: 125_000
     exponential_base: 2
-mqtt:
-  enable: true
-  hostname: mosquitto
-  port: 1883
-  username: null
-  password: null
-  prefix: myelectricaldata
-  client_id: myelectricaldata     # DOIT ETRE UNIQUE SUR LA TOTALITE DES CLIENTS CONNECTE AU SERVEUR MQTT
-  retain: true
-  qos: 0
 myelectricaldata:
   "MON_PDL_1":
-    enable: 'true'
+    enable: "true"
     token: TOKEN_DE_MON_PDL_1
     name: "Maison"
-    addresses: 'true'
-    cache: 'true'
-    consumption: 'true'
-    consumption_detail: 'true'
-    consumption_price_base: '0.145907'
-    consumption_price_hc: '0.124364'
-    consumption_price_hp: '0.164915'
+    addresses: "true"
+    cache: "true"
+    consumption: "true"
+    consumption_detail: "true"
+    consumption_price_base: "0.145907"
+    consumption_price_hc: "0.124364"
+    consumption_price_hp: "0.164915"
     consumption_max_date: "2021-06-01"
     consumption_detail_max_date: "2021-06-01"
-    offpeak_hours_0: 22H00-6H00               # LUNDI
-    offpeak_hours_1: 22H00-6H00               # MARDI
-    offpeak_hours_2: 22H00-6H00               # MERCREDI
-    offpeak_hours_3: 22H00-6H00               # JEUDI
-    offpeak_hours_4: 22H00-6H00               # VENDREDI
-    offpeak_hours_5: 22H00-6H00;12H00-14H00   # SAMEDI
-    offpeak_hours_6: 22H00-6H00;12H00-14H00   # DIMANCHE
+    offpeak_hours_0: 22H00-6H00 # LUNDI
+    offpeak_hours_1: 22H00-6H00 # MARDI
+    offpeak_hours_2: 22H00-6H00 # MERCREDI
+    offpeak_hours_3: 22H00-6H00 # JEUDI
+    offpeak_hours_4: 22H00-6H00 # VENDREDI
+    offpeak_hours_5: 22H00-6H00;12H00-14H00 # SAMEDI
+    offpeak_hours_6: 22H00-6H00;12H00-14H00 # DIMANCHE
     plan: HC/HP
-    production: 'false'
-    production_detail: 'false'
-    production_price: '0.0'
+    production: "false"
+    production_detail: "false"
+    production_price: "0.0"
     production_max_date: "2021-06-01"
     production_detail_max_date: "2021-06-01"
-    refresh_addresse: 'false'
-    refresh_contract: 'false'
+    refresh_addresse: "false"
+    refresh_contract: "false"
   "MON_PDL_2_AVEC_PRODUCTION":
-    enable: 'true'
+    enable: "true"
     token: TOKEN_DE_MON_PDL_2
     name: "Maison de vacances"
-    cache: 'true'
-    consumption: 'true'
-    consumption_detail: 'true'
-    consumption_price_base: '0.175'
-    consumption_price_hc: '0.175'
-    consumption_price_hp: '0.175'
+    cache: "true"
+    consumption: "true"
+    consumption_detail: "true"
+    consumption_price_base: "0.175"
+    consumption_price_hc: "0.175"
+    consumption_price_hp: "0.175"
     consumption_max_date: "2021-06-01"
     consumption_detail_max_date: "2021-06-01"
-    offpeak_hours_0: ''
-    offpeak_hours_1: ''
-    offpeak_hours_2: ''
-    offpeak_hours_3: ''
-    offpeak_hours_4: ''
-    offpeak_hours_5: ''
-    offpeak_hours_6: ''
+    offpeak_hours_0: ""
+    offpeak_hours_1: ""
+    offpeak_hours_2: ""
+    offpeak_hours_3: ""
+    offpeak_hours_4: ""
+    offpeak_hours_5: ""
+    offpeak_hours_6: ""
     plan: BASE
-    production: 'true'
-    production_detail: 'true'
-    production_price: '0.10'
+    production: "true"
+    production_detail: "true"
+    production_price: "0.10"
     production_max_date: "2021-06-01"
     production_detail_max_date: "2021-06-01"
-    refresh_addresse: 'false'
-    refresh_contract: 'false'
+    refresh_addresse: "false"
+    refresh_contract: "false"
