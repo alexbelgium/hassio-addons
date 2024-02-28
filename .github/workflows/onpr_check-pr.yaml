@@ -66,7 +66,6 @@ jobs:
       - name: 🔎 Check if a label for the addon exists
         shell: bash
         run: |
-          exit 0
           labeltext=$(sed -nr "/${{ matrix.addon }}/p" '.github/paths-filter.yml')
           if [[ -z "$labeltext" ]]; then
               echo "::error::There is no label for this addon! Please add it to .github/paths-filter.yml"
@@ -137,6 +136,7 @@ jobs:
         id: labels
         shell: bash
         run: |
+          exit 0
           # shellcheck disable=SC2076,SC2059
           labels="io.hass.version=${{ steps.information.outputs.version }}"
           labels=$(printf '%s' "$labels\nio.hass.name=${{ steps.information.outputs.name }}")
