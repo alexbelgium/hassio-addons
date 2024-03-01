@@ -9,7 +9,6 @@
   "environment": {
     "PROXY_PORT": "1080"
   },
-  "image": "ghcr.io/alexbelgium/socks5-server-{arch}",
   "init": false,
   "name": "zzz_Under Development not working",
   "ports": {
