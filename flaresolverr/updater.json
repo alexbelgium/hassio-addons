@@ -1,8 +1,8 @@
 {
-  "last_update": "24-02-2024",
+  "last_update": "02-03-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "flaresolverr",
   "source": "github",
   "upstream_repo": "FlareSolverr/FlareSolverr",
-  "upstream_version": "3.3.15"
+  "upstream_version": "3.3.16"
 }
