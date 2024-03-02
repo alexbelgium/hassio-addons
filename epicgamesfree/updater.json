@@ -1,6 +1,7 @@
 {
   "dockerhub_by_date": true,
   "dockerhub_list_size": 2,
+  "github_exclude": "-",
   "last_update": "",
   "repository": "alexbelgium/hassio-addons",
   "slug": "epicgamesfree",
