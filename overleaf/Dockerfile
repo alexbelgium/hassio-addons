@@ -40,7 +40,7 @@ RUN if [ -f /config/settings.js ]; then sed -i "s|/var/lib/sharelatex/data|/conf
 COPY rootfs/ /
 
 RUN \
-    apt-get install gnupg curl && \
+    apt-get install -y gnupg curl && \
     curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
     gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
     --dearmor && \
