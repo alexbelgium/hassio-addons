@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "ajslater/codex:latest",
+    "amd64": "ajslater/codex:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
