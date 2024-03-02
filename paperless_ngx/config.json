@@ -133,6 +133,6 @@
   "slug": "paperless_ng",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "webui": "http://[HOST]:[PORT:8000]"
 }

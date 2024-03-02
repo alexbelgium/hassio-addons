@@ -1,4 +1,7 @@
 
+## 2.5.4 (02-03-2024)
+- Update to latest version from paperless-ngx/paperless-ngx
+
 ## 2.5.3 (17-02-2024)
 - Update to latest version from paperless-ngx/paperless-ngx
 
