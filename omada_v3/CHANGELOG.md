@@ -1,4 +1,7 @@
 
+## 5.3-amd64-2024-02-28 (2024-02-28)
+- Update to latest version from mbentley/omada-controller
+
 ## 5.3-amd64-2024-02-16 (2024-02-16)
 - Update to latest version from mbentley/omada-controller
 
