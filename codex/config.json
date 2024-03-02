@@ -97,6 +97,6 @@
   "slug": "codex",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.27",
+  "version": "1.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9810]"
 }
