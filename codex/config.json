@@ -70,10 +70,12 @@
   ],
   "name": "Codex",
   "options": {
+    "PGID": "0",
+    "PUID": "0"
   },
   "panel_icon": "mdi:book-open",
   "ports": {
-    "9810/tcp": null
+    "9810/tcp": 9810
   },
   "ports_description": {
     "9810/tcp": "Web UI port"
