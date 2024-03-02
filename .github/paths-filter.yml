@@ -15,6 +15,7 @@ calibre_web: calibre_web/config.* # Image : yes
 changedetection.io: changedetection.io/config.* # Image : yes
 cloudcommander: cloudcommander/config.* # Image : yes
 code-server: code-server/config.* # Image : yes
+codex: codex/config.* # Image : yes
 elasticsearch: elasticsearch/config.* # Image : yes
 emby: emby/config.* # Image : yes
 enedisgateway2mqtt: enedisgateway2mqtt/config.* # Image : yes
