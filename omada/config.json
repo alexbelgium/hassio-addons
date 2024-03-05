@@ -83,6 +83,8 @@
     "29812/tcp": 29812,
     "29813/tcp": 29813,
     "29814/tcp": 29814,
+    "29815/tcp": 29815,
+    "29816/tcp": 29816,
     "8043/tcp": 8043,
     "8088/tcp": 8088,
     "8843/tcp": 8843,
@@ -94,6 +96,8 @@
     "29812/tcp": "legacy device discovery port",
     "29813/tcp": "legacy device upgrade port",
     "29814/tcp": "device adoption port",
+    "29815/tcp": "application data port",
+    "29816/tcp": "remote terminal session port",
     "8043/tcp": "web interface https",
     "8088/tcp": "web interface http",
     "8843/tcp": "portal https",
@@ -102,6 +106,6 @@
   "slug": "omada",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.13-2024-02-28",
+  "version": "5.13-2024-02-28-2",
   "webui": "http://[HOST]:[PORT:8088]"
 }
