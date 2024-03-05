@@ -1,3 +1,5 @@
+### 4.0.5-2 (05-03-2024)
+- Minor bugs fixed
 
 ## 4.0.5 (09-12-2023)
 - Update to latest version from linuxserver/docker-transmission
