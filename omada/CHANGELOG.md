@@ -1,3 +1,4 @@
+- additional ports needed in the latest controller version
 
 ## 5.13-2024-02-28 (2024-02-28)
 - Update to latest version from mbentley/omada-controller
