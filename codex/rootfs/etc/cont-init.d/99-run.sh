@@ -52,10 +52,6 @@ for file in /config/hypercorn.toml $(find /usr -name hypercorn.toml.default); do
     fi
 done
 
-# Export CSRF
-export CSRF_TRUSTED_ORIGINS="http://localhost,http://192.168.178.23"
-export ALLOWED_HOSTS="*"
-
 ##############
 # LAUNCH APP #
 ##############
