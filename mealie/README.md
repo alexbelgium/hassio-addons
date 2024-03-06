@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Mealie] Direct link to meals plan page redirects incorrectly (opened 2024-01-28)](https://github.com/alexbelgium/hassio-addons/issues/1210) by [@nickj-git](https://github.com/nickj-git)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
