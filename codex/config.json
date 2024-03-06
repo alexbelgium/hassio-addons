@@ -62,6 +62,8 @@
     "PGID": "0",
     "PUID": "0"
   },
+  "hassio_api": true,
+  "homeassistant_api": true,
   "image": "ghcr.io/alexbelgium/codex-{arch}",
   "ingress": true,
   "ingress_stream": true,
@@ -73,7 +75,8 @@
   "name": "Codex",
   "options": {
     "PGID": "0",
-    "PUID": "0"
+    "PUID": "0",
+    "csrf_allowed": "http://homeassistant.local:8123,https://homeassistant.local:8123"
   },
   "panel_icon": "mdi:book-open",
   "ports": {
@@ -92,6 +95,7 @@
     "PGID": "int?",
     "PUID": "int?",
     "TZ": "str?",
+    "csrf_allowed": str",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
@@ -101,5 +105,5 @@
   "slug": "codex",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4.3"
+  "version": "1.4.3-2"
 }
