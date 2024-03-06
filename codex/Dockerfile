@@ -27,6 +27,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+# Avoid CSRF
+RUN grep -irl 'SECURE_CROSS_ORIGIN_OPENER_POLICY' /usr | xargs sed -i 's/same-origin/origin/g' && \
+    find /usr -name settings.py | xargs sed -i "/CsrfViewMiddleware/d" && \
+    sed -i "/SECURE_CROSS_ORIGIN_OPENER_POLICY/d" /usr/local/lib/python*/site-packages/django/conf/global_settings.py && \
+    sed -i "/SECURE_REFERER/d" /usr/local/lib/python*/site-packages/django/conf/global_settings.py
+
 ##################
 # 3 Install apps #
 ##################
