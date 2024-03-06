@@ -95,7 +95,7 @@
     "PGID": "int?",
     "PUID": "int?",
     "TZ": "str?",
-    "csrf_allowed": str",
+    "csrf_allowed": "str",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
