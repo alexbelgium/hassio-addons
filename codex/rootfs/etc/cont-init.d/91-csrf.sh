@@ -8,7 +8,7 @@ CSRF=""
 # Get HA Port
 result=$(bashio::api.supervisor GET /core/info true || true)
 port=$(bashio::jq "$result" ".data.port")
-addon_port=$(bashio::addon.port 80)
+addon_port=$(bashio::addon.port 9810)
 
 # Get all possible URLs
 result=$(bashio::api.supervisor GET /core/api/config true || true)
