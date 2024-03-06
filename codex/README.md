@@ -65,6 +65,10 @@ cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
 ```
 
+## Illustration
+
+![image](https://github.com/alexbelgium/hassio-addons/assets/44178713/43b3895b-1e7c-44d2-8e3d-e2307e27da18)
+
 ## Support
 
 Create an issue on github
