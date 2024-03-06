@@ -67,7 +67,7 @@ cifspassword: "password" # optional, smb password
 
 ## Illustration
 
-![image](https://github.com/alexbelgium/hassio-addons/assets/44178713/43b3895b-1e7c-44d2-8e3d-e2307e27da18)
+![image](https://github.com/alexbelgium/hassio-addons/assets/44178713/f1cf3cad-5bda-46df-a0f5-864b127d7b6b)
 
 ## Support
 
