@@ -26,7 +26,7 @@ declare ingress_interface
 declare ingress_port
 #declare keyfile
 
-FB_BASEURL=$(bashio::addon.ingress_entry)
+FB_BASEURL="$(bashio::addon.ingress_entry)"
 export FB_BASEURL
 
 declare ADDON_PROTOCOL=http
@@ -48,9 +48,13 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 for file in /config/hypercorn.toml $(find /usr -name hypercorn.toml.default); do
     if [ -f "$file" ]; then
         sed -i "/root_path/d" "$file"
-        echo "root_path = \"${FB_BASEURL}\"" >> "$file"
+        sed -i "1a root_path = \"${FB_BASEURL}\"" "$file"
     fi
 done
+
+# Export CSRF
+export CSRF_TRUSTED_ORIGINS="http://localhost,http://192.168.178.23"
+export ALLOWED_HOSTS="*"
 
 ##############
 # LAUNCH APP #
@@ -60,8 +64,8 @@ bashio::log.warning "Default password admin:admin..."
 bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
-/./usr/local/bin/codex
+/./usr/local/bin/codex & true
 
-bashio::net.wait_for 8080 localhost 900 || true
+bashio::net.wait_for 9810 localhost 900 || true
 bashio::log.info "Started !"
-exec nginx0
+exec nginx
