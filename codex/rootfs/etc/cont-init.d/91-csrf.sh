@@ -44,7 +44,7 @@ for url in "${urls[@]}"; do
     if  bashio::var.has_value "${url}"; then
         if [[ "${url}" != "null" ]] && [[ "${url}" != "null.local" ]]; then
             CSRF="https://${url}:${port},http://${url}:${port},https://${url},http://${url}",${CSRF}
-            if bashio::var.has_value "$(bashio::addon.port 80)"; then
+            if bashio::var.has_value "$(bashio::addon.port 9810)"; then
                 CSRF="https://${url}:${addon_port},http://${url}:${addon_port}",${CSRF}
             fi
         fi
