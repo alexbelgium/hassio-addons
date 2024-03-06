@@ -97,3 +97,4 @@ whoogle: whoogle/config.* # Image : yes
 xteve: xteve/config.* # Image : yes
 zoneminder: zoneminder/config.* # Image : yes
 zzz_archived_bitwarden: zzz_archived_bitwarden/config.* # Image : yes
+zzz_archived_paperless_ngx: zzz_archived_paperless_ngx/config.* # Image : yes
