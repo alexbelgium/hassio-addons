@@ -83,7 +83,7 @@
     "media:rw",
     "ssl"
   ],
-  "name": "Paperless NGX",
+  "name": "zzz_archived - Paperless NGX",
   "options": {
     "CONFIG_LOCATION": "/config/config.yaml",
     "OCRLANG": "ENG FRA DEU",
@@ -131,6 +131,7 @@
     "mysql:want"
   ],
   "slug": "paperless_ng",
+  "stage": "deprecated",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "2.5.4",
