@@ -54,4 +54,10 @@ Complete transmission options are in /share/transmission (make sure addon is sto
 
 Webui can be found at `<your-ip>:9091`.
 
+## Issues
+
+# If settings.json gets reseted in the log https://github.com/alexbelgium/hassio-addons/issues/1269
+- Install the Filebrowser addon
+- Delete the folders /homeassistant/addons_config/transmission and /homeassistant/addons_config/transmission-ls
+
 [repository]: https://github.com/alexbelgium/hassio-addons
