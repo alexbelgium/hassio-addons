@@ -4,7 +4,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "managing digital comics",
+  "description": "web based comic archive browser and reader",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
@@ -57,6 +57,14 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "environment": {
+    "CODEX_CONFIG_DIR": "/config",
+    "PGID": "0",
+    "PUID": "0"
+  },
+  "hassio_api": true,
+  "homeassistant_api": true,
+  "image": "ghcr.io/alexbelgium/codex-{arch}",
   "ingress": true,
   "ingress_stream": true,
   "map": [
@@ -65,27 +73,37 @@
     "share:rw"
   ],
   "name": "Codex",
+  "options": {
+    "PGID": "0",
+    "PUID": "0",
+    "csrf_allowed": "http://homeassistant.local:8123,https://homeassistant.local:8123"
+  },
   "panel_icon": "mdi:book-open",
   "ports": {
-    "7171/tcp": 7171
+    "9810/tcp": 9810
   },
   "ports_description": {
-    "7171/tcp": "Web UI port"
+    "9810/tcp": "Web UI port"
   },
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
   "schema": {
+    "CODEX_RESET_ADMIN": "int?",
+    "CODEX_SKIP_INTEGRITY_CHECK": "int?",
+    "PGID": "int?",
+    "PUID": "int?",
     "TZ": "str?",
+    "csrf_allowed": "str",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
     "networkdisks": "str?"
   },
-  "slug": "comixed",
+  "slug": "codex",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.1"
+  "version": "1.4.3-5"
 }
