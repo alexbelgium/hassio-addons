@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Emby NAS] After Upgrading HA OS to 12.0 andd-on doesnt start (opened 2024-02-26)](https://github.com/alexbelgium/hassio-addons/issues/1271) by [@rqmartins73](https://github.com/rqmartins73)
-## &#9888; Open Issue : [[Emby] addon doesnt start after upgrade to HAOs 12 (opened 2024-03-06)](https://github.com/alexbelgium/hassio-addons/issues/1290) by [@txitxo0](https://github.com/txitxo0)
 # Home assistant add-on: emby
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
