@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Zoneminder] Symbolic Link from container to HA Media folder (opened 2024-02-28)](https://github.com/alexbelgium/hassio-addons/issues/1274) by [@DuchyWare](https://github.com/DuchyWare)
 # Home assistant add-on: Zoneminder
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

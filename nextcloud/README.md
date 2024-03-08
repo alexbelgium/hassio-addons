@@ -1,5 +1,3 @@
-## &#9888; Open Issue : [🐛 [Nextcloud] NC addon removes Collabora CODE Server when starting (opened 2024-02-23)](https://github.com/alexbelgium/hassio-addons/issues/1261) by [@a0zzy](https://github.com/a0zzy)
-## &#9888; Open Issue : [🐛 [NextCloud] Cant connect through Nabu Casa? (opened 2024-02-28)](https://github.com/alexbelgium/hassio-addons/issues/1276) by [@purierca](https://github.com/purierca)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
