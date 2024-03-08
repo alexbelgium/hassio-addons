@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] NextCloud allow iFrame (opened 2024-01-15)](https://github.com/alexbelgium/hassio-addons/issues/1182) by [@ymurawski](https://github.com/ymurawski)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
