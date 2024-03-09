@@ -1,3 +1,5 @@
+### 2.6.2-2 (09-03-2024)
+- Minor bugs fixed
 Migration (thanks @eikeja) : 
 - Install the new addon
 - Make a backup of the old Paperless directory. In my case "/addon_configs/db21ed7f_paperless_ng"
