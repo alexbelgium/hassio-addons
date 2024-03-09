@@ -1,4 +1,7 @@
 
+## v1.3.1 (09-03-2024)
+- Update to latest version from hay-kot/mealie
+
 ## v1.2.0 (17-02-2024)
 - Update to latest version from hay-kot/mealie
 
