@@ -1,3 +1,5 @@
+### 1.1 (09-03-2024)
+- Minor bugs fixed
 ### 1.0 (09-03-2024)
 - Minor bugs fixed
 
