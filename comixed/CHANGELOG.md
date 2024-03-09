@@ -1,3 +1,5 @@
+### 1.0 (09-03-2024)
+- Minor bugs fixed
 
 ##  (09-03-2024)
 - Update to latest version from comixed/comixed
