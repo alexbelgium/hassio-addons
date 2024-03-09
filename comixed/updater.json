@@ -1,9 +1,9 @@
 {
   "github_beta": "true",
-  "last_update": "06-03-2024",
+  "last_update": "09-03-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "comixed",
   "source": "Dockerhub",
   "upstream_repo": "comixed/comixed",
-  "upstream_version": "1.4.3"
+  "upstream_version": ""
 }
