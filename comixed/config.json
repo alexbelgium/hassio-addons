@@ -59,6 +59,7 @@
   ],
   "hassio_api": true,
   "homeassistant_api": true,
+  "image": "ghcr.io/alexbelgium/comixed-{arch}",
   "ingress": true,
   "ingress_stream": true,
   "map": [
