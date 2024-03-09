@@ -2,6 +2,18 @@
 
 # ⚠️ It is recommended to use this new addon (https://github.com/BenoitAnastay/home-assistant-addons-repository). It is more robust and has more functions. ⚠️
 
+Migration (thanks @eikeja) : 
+- Install the new addon
+- Make a backup of the old Paperless directory. In my case "/addon_configs/db21ed7f_paperless_ng"
+- View the folder structure of the new instance, assign files from the old instance to the folders of the new instance.
+
+Start new Paperless - all data is there!
+
+Folder assignment:
+/addon_configs/db21ed7f_paperless_ng/data → /addon_configs/ca5234a0_paperless-ngx/data
+
+/addon_configs/db21ed7f_paperless_ng/media → /share/paperless
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
 ![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpaperless_ngx%2Fconfig.json)
