@@ -56,7 +56,7 @@ done
 # LAUNCH APP #
 ##############
 
-bashio::log.warning "Default password admin:admin..."
+bashio::log.warning "When run for the first time, ComiXed creates a default accounts for logging into the system: Username: comixedadmin@localhost Password: comixedadmin"
 bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
