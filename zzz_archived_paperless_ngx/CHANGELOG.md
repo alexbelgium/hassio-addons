@@ -1,3 +1,6 @@
+
+## 2.6.2 (09-03-2024)
+- Update to latest version from paperless-ngx/paperless-ngx
 - Deprecated, please move to https://github.com/BenoitAnastay/home-assistant-addons-repository (better quality addon)
 
 ## 2.5.4 (02-03-2024)
