@@ -1,3 +1,14 @@
+Migration (thanks @eikeja) : 
+- Install the new addon
+- Make a backup of the old Paperless directory. In my case "/addon_configs/db21ed7f_paperless_ng"
+- View the folder structure of the new instance, assign files from the old instance to the folders of the new instance.
+
+Start new Paperless - all data is there!
+
+Folder assignment:
+/addon_configs/db21ed7f_paperless_ng/data → /addon_configs/ca5234a0_paperless-ngx/data
+
+/addon_configs/db21ed7f_paperless_ng/media → /share/paperless
 
 ## 2.6.2 (09-03-2024)
 - Update to latest version from paperless-ngx/paperless-ngx
