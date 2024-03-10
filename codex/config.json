@@ -95,10 +95,10 @@
     "PGID": "int?",
     "PUID": "int?",
     "TZ": "str?",
-    "csrf_allowed": "str",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "csrf_allowed": "str",
     "localdisks": "str?",
     "networkdisks": "str?"
   },
