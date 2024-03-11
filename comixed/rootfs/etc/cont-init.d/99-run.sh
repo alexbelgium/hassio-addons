@@ -54,6 +54,20 @@ if [[ "$INGRESS" == "true" ]]; then
     done
 fi
 
+###########
+# FOLDERS #
+###########
+
+echo "Create structure"
+mkdir -p /config/comic_data
+mkdir -p /config/library
+mkdir -p /config/imports
+mkdir -p /config/database
+ln -sf /config/comic_data /comic_data
+ln -sf /config/library /library
+ln -sf /config/imports /imports
+ln -sf /config/database /root/.comixed
+
 ##############
 # LAUNCH APP #
 ##############
