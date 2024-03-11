@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Postgress] Deleting and reinstalling the add on keep the database files but I cant find the database under /config (opened 2024-03-01)](https://github.com/alexbelgium/hassio-addons/issues/1278) by [@stefanuc111](https://github.com/stefanuc111)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
