@@ -16,7 +16,26 @@
 
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+FROM ${BUILD_FROM} AS builder
+FROM openjdk:17-jdk-slim
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
+       openjdk-11-jre \
+       unzip \
+       wget \
+       bash \
+       locales \
+       locales-all
+RUN rm -rf /var/lib/apt/lists/*
+RUN locale-gen "en_US.UTF-8"
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+MAINTAINER The ComiXed Project "comixed-dev@freelists.org"
+
+COPY --from=builder /app /app
+
+ENV PATH="$JAVA_HOME/bin:${PATH}"
 
 ##################
 # 2 Modify Image #
