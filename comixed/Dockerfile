@@ -28,9 +28,6 @@ RUN apt-get update && \
        locales-all && \
     rm -rf /var/lib/apt/lists/* && \
     locale-gen "en_US.UTF-8"
-ENV LC_ALL en_US.UTF-8 \
-    LANG en_US.UTF-8 \
-    LANGUAGE en_US.UTF-8
 
 COPY --from=builder /app /app
 
