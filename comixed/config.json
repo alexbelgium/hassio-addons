@@ -60,8 +60,6 @@
   "hassio_api": true,
   "homeassistant_api": true,
   "image": "ghcr.io/alexbelgium/comixed-{arch}",
-  "ingress": true,
-  "ingress_stream": true,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -90,5 +88,6 @@
   "slug": "comixed",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.1"
+  "version": "1.1",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:7171]"
 }
