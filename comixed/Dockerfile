@@ -18,7 +18,8 @@ ARG BUILD_FROM
 ARG BUILD_VERSION
 FROM ${BUILD_FROM} AS builder
 FROM openjdk:17-jdk-slim
-RUN apt-get update && \
+RUN set +u && set +e && \
+    apt-get update && \
     apt-get install -y --no-install-recommends \
        openjdk-11-jre \
        unzip \
