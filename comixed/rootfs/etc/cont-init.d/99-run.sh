@@ -20,6 +20,7 @@ fi
 # NGINX SETTING #
 #################
 
+INGRESS="false"
 if [[ "$INGRESS" == "true" ]]; then
     #declare port
     #declare certfile
