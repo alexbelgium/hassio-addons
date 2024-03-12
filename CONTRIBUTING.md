@@ -34,4 +34,3 @@ Even better: You could submit a pull request with a fix / new feature!
 
 [github]: https://github.com/alexbelgium/hassio-addons/issues
 [prs]: https://github.com/alexbelgium/hassio-addons/pulls
-
