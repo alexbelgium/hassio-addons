@@ -211,7 +211,7 @@ jobs:
             if [[ "$first_line" != "-"* ]]; then
               sed -i "1i\- Minor bugs fixed" CHANGELOG.md
             fi
-            sed -i "1i\### $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
+            sed -i "1i\## $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
             #fi
           fi
         env: 
