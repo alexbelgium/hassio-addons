@@ -1,9 +1,12 @@
-### 0.6.21-7 (12-01-2024)
+
+## 0.6.21-7 (12-01-2024)
+
 - Minor bugs fixed
-### 0.6.21-5 (12-01-2024)
+## 0.6.21-5 (12-01-2024)
+
 - ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/calibre-web to a folder only accessible from my Filebrowser addon called /addon_configs/something-calibre-web. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/ https://github.com/alexbelgium/hassio-addons/issues/1177
 
-### 0.6.21-2 (05-11-2023)
+## 0.6.21-2 (05-11-2023)
 
 - Minor bugs fixed
 - Fix : https://github.com/alexbelgium/hassio-addons/issues/1050 @klassm
@@ -68,7 +71,7 @@
 
 - Update to latest version from linuxserver/docker-calibre-web
 
-### 0.6.20-ls211-2 (30-05-2023)
+## 0.6.20-ls211-2 (30-05-2023)
 
 - Minor bugs fixed
 - Fix : allow app to start on clean install @PaulAmor https://github.com/alexbelgium/hassio-addons/issues/850
@@ -86,7 +89,7 @@
 - Update to latest version from linuxserver/docker-calibre-web
 - Feat : cifsdomain added
 
-### 0.6.20-ls208-2 (06-05-2023)
+## 0.6.20-ls208-2 (06-05-2023)
 
 - Minor bugs fixed
 
@@ -94,15 +97,15 @@
 
 - Update to latest version from linuxserver/docker-calibre-web
 
-### 0.6.20-ls207-6 (05-05-2023)
+## 0.6.20-ls207-6 (05-05-2023)
 
 - Minor bugs fixed
 
-### 0.6.20-ls207-3 (05-05-2023)
+## 0.6.20-ls207-3 (05-05-2023)
 
 - Minor bugs fixed
 
-### 0.6.20-ls207-2 (05-05-2023)
+## 0.6.20-ls207-2 (05-05-2023)
 
 - Minor bugs fixed
 - Add libnss3 https://github.com/alexbelgium/hassio-addons/issues/824

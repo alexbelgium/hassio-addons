@@ -1,80 +1,104 @@
 
 ## 4.0.2.1262 (09-03-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.2.1192 (02-03-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.1.1168 (24-02-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.1.1131 (17-02-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.1.1096 (10-02-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.1.1047 (03-02-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.1.987 (27-01-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.924 (20-01-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 - There is now an official addon in the community repository, you should migrate to it ! However it does not support ingress ;)
 
 ## 4.0.0.836 (13-01-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.751 (06-01-2024)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.741 (30-12-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.740 (30-12-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.738 (23-12-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.737 (16-12-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
-### 4.0.0.733-2 (02-12-2023)
+## 4.0.0.733-2 (02-12-2023)
+
 - Minor bugs fixed
 - Send crond messages to addon logs
 
 ## 4.0.0.733 (26-11-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.731 (21-11-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.725 (18-11-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.719 (11-11-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.710 (04-11-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
-### 4.0.0.703-2 (01-11-2023)
+## 4.0.0.703-2 (01-11-2023)
+
 - Minor bugs fixed
 - Fix : disable authentification when using ingress
 
 ## 4.0.0.703 (28-10-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.700 (20-10-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 
 ## 4.0.0.697 (14-10-2023)
+
 - Update to latest version from linuxserver/docker-sonarr
 - Breaking change : update to v4
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 
-### 3.0.10.1567-2 (19-03-2023)
+## 3.0.10.1567-2 (19-03-2023)
 
 - Minor bugs fixed
 - Corrected ingress bug https://github.com/alexbelgium/hassio-addons/issues/758

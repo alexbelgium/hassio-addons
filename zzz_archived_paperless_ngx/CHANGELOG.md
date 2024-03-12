@@ -1,6 +1,8 @@
-### 2.6.2-2 (09-03-2024)
+
+## 2.6.2-2 (09-03-2024)
+
 - Minor bugs fixed
-Migration (thanks @eikeja) : 
+Migration (thanks @eikeja) :
 - Install the new addon
 - Make a backup of the old Paperless directory. In my case "/addon_configs/db21ed7f_paperless_ng"
 - View the folder structure of the new instance, assign files from the old instance to the folders of the new instance.
@@ -13,66 +15,85 @@ Folder assignment:
 /addon_configs/db21ed7f_paperless_ng/media → /share/paperless
 
 ## 2.6.2 (09-03-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 - Deprecated, please move to https://github.com/BenoitAnastay/home-assistant-addons-repository (better quality addon)
 
 ## 2.5.4 (02-03-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 2.5.3 (17-02-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 2.4.3 (03-02-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 2.4.2 (27-01-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 2.4.0 (20-01-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx
-### 2.3.3-4 (13-01-2024)
+## 2.3.3-4 (13-01-2024)
+
 - Tentative fix : paperless not starting https://github.com/alexbelgium/hassio-addons/issues/1178
 
 ## 2.3.3 (13-01-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 2.2.1 (30-12-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 2.1.3 (23-12-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 2.1.2 (16-12-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 2.1.1 (09-12-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 - Enable imagemagick for pdf https://github.com/alexbelgium/hassio-addons/issues/1118
 
-### 2.0.1-2 (02-12-2023)
+## 2.0.1-2 (02-12-2023)
+
 - Minor bugs fixed
 - Update to latest version from paperless-ngx/paperless-ngx
 
-### 2.0.0.1-12 (24-11-2023)
+## 2.0.0.1-12 (24-11-2023)
+
 - Minor bugs fixed
 - Switch tag latest to beta except for armv7
 
-### 2.0.0.1-11 (24-11-2023)
+## 2.0.0.1-11 (24-11-2023)
+
 - Minor bugs fixed
 - Readd armv7 support
 
-### 2.0.0.1-9 (23-11-2023)
+## 2.0.0.1-9 (23-11-2023)
+
 - Allow directories to be set from config.yaml (prevent forcing defaults)
 
-### 2.0.0.1-8 (23-11-2023)
+## 2.0.0.1-8 (23-11-2023)
+
 - Minor bugs fixed
 - Finally all bugs solved !
 
-### 2.0.0.1-6 (22-11-2023)
+## 2.0.0.1-6 (22-11-2023)
+
 - Minor bugs fixed
 - Allow names with spaces in directory names
 
-### 2.0.0b1-5 (20-11-2023)
+## 2.0.0b1-5 (20-11-2023)
+
 - Correct passing of addon options to addon
 - Automatically changes config.yaml addon option to new location
 - Restore local and smb disks scripts
@@ -82,10 +103,11 @@ Folder assignment:
 - Enable beta channel
 
 ## 1.14.5 (19-05-2023)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 - Feat : cifsdomain added
 
-### 1.14.4-2 (09-05-2023)
+## 1.14.4-2 (09-05-2023)
 
 - Minor bugs fixed
 - Add variables to bashrc to allow cli with portainer
@@ -98,7 +120,7 @@ Folder assignment:
 
 - Update to latest version from paperless-ngx/paperless-ngx
 
-### 1.13.0-3 (16-04-2023)
+## 1.13.0-3 (16-04-2023)
 
 - Minor bugs fixed
 

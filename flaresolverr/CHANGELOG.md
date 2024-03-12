@@ -1,88 +1,117 @@
 
 ## 3.3.16 (02-03-2024)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.3.15 (24-02-2024)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.3.14 (17-02-2024)
+
 - Update to latest version from FlareSolverr/FlareSolverr
-### 3.3.13-2 (15-01-2024)
+## 3.3.13-2 (15-01-2024)
+
 - Correct healthcheck endpoint (thanks @override80)
 
 ## 3.3.13 (13-01-2024)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.3.12 (16-12-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
-### 3.3.10-4 (10-12-2023)
+## 3.3.10-4 (10-12-2023)
+
 - Minor bugs fixed
 
 ## 3.3.10 (18-11-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.3.7 (11-11-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.3.6 (16-09-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
-### 3.3.4-2 (09-09-2023)
+## 3.3.4-2 (09-09-2023)
+
 - Minor bugs fixed
 
 ## 3.3.4 (09-09-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.3.3 (02-09-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.3.2 (05-08-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.2.2 (22-07-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.2.1 (17-06-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.2.0 (27-05-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.1.2 (08-04-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.1.1 (31-03-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.1.0 (24-03-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.0.4 (11-03-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 - Implemented healthcheck
 
 ## 3.0.2 (14-01-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 3.0.1 (07-01-2023)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 2.2.10 (25-10-2022)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 2.2.9 (27-09-2022)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 2.2.8 (20-09-2022)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 2.2.7 (13-09-2022)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 2.2.6 (04-08-2022)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 
 ## 2.2.4 (19-04-2022)
+
 - Update to latest version from FlareSolverr/FlareSolverr
 - Add codenotary sign
 

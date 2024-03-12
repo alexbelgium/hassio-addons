@@ -1,47 +1,59 @@
-### 4.6.3-4 (21-01-2024)
+
+## 4.6.3-4 (21-01-2024)
+
 - Fix : openvpn not starting https://github.com/alexbelgium/hassio-addons/issues/1192
 
 ## 4.6.3 (20-01-2024)
+
 - Update to latest version from linuxserver/docker-qbittorrent
 
-### 4.6.2_43 (12-01-2024)
+## 4.6.2_43 (12-01-2024)
+
 - Fix : openvpn not starting https://github.com/alexbelgium/hassio-addons/issues/1175
 
-### 4.6.2_42 (12-01-2024)
+## 4.6.2_42 (12-01-2024)
+
 - Fix : failure to install custom webUI https://github.com/alexbelgium/hassio-addons/issues/1172 (thanks @akrigator)
 - [qbit_manage] : switch to develop
 
-### 4.6.2_40 (31-12-2023)
+## 4.6.2_40 (31-12-2023)
+
 - Minor bugs fixed
 - [qbit_manage] : corrects default yaml for the addon for url (127.0.0.1 instead of localhost ) ; username (from username in options) ; password (default is homeassistant) ; root_dir (from SavePath in options) [15f4d63](https://github.com/alexbelgium/hassio-addons/commit/15f4d632c5d6946d093e39b5d3f9bee135aadfe7)
 
-### 4.6.2_37 (30-12-2023)
+## 4.6.2_37 (30-12-2023)
+
 - [openvpn] Feat (potential breaking change) : previously, "auth-user-pass" fields were removed to use the addon username & password. Now, the addon will respect those fields if the file exists to allow for multiple configurations storing different credentials in local files. If the referenced file doesn't exists, or if this field is not referenced, the normal addon username & password will be used
 - [openvpn] Feat : use ovpn files directly in /config/openvpn instead of doing a copy in /etc/openvpn as before. This will make any change more obvious to the user.
 
-### 4.6.2_30 (30-12-2023)
+## 4.6.2_30 (30-12-2023)
+
 - [openvpn] Feat : sanitize ovpn files (disabling ipv6 as not supported by HA, ensuring CRLF, ensure trailing new line, checking paths of referenced static files...)
 - [openvpn] Feat : if no ovpn is referred in the option, it will use a random one from the openvpn folder (from https://github.com/Trigus42/alpine-qbittorrentvpn)
 - [qbittorrent] Fix : avoid addon restart at each start (due to blanks being cleaned in the whitelist field)
 - [general] Fix : reduce cron log level to avoid spam
 
-### 4.6.2_27_reverted (23-12-2023)
+## 4.6.2_27_reverted (23-12-2023)
+
 - &#9888; BREAKING CHANGE : I've decided to revert to the initial upstream image, apologies for this whole incovenience. After receiving many constructive (or plainly negative) feedbacks I have decided it was just not worth it to implement a new upstream image supposed to prevent ip leak for openvpn, plus wireguard support, and decided to just restore my own code. I've still kept qbit_manage, and will perhaps implement wireguard in the future but with my own code. As the databases were migrated for users to the new config locations, I've decided to keep it like that. It is more sustainable as HA is pushing in this direction and allows to backup the config with the addon (which was not the case previously).
 
 - &#9888; ACTION (preferred) : Please restore a backup prior to the versions containing wireguard_openvpn in the name, then update (as was mentioned in the 4.6.2-5wireguard_openvpn changelog asking a full backup prior to update). This will make sure all your options are kept and you don't need to reconfigure
 
 - &#9888; IF NO BACKUP : You'll need to update directly, but you'll need to reconfigure the addon (in theory the database should be kept)
 
-### 4.6.2-23_wireguard_openvpn (15-12-2023)
+## 4.6.2-23_wireguard_openvpn (15-12-2023)
+
 - Perform migration of previous files a single time to allow backup restore prior to the change of image
 
 ## 4.6.2-20_wireguard_openvpn (14-12-2023)
+
 - Minor bugs fixed
 - Sanitize the ovpn file
 - Implement a sleep period to wait until vpn is up on faster systems
 - qbit_manage : add run command
 
-### 4.6.2-16_wireguard_openvpn (13-12-2023)
+## 4.6.2-16_wireguard_openvpn (13-12-2023)
+
 - Minor bugs fixed
 - Remove route-nopull to allow upstream scripts
 - &#9888; PLEASE READ CHANGELOG OF "4.6.2-5wireguard_openvpn" FIRST
@@ -49,7 +61,8 @@
 - Corrected 00-smb_mounts.sh logic for servers that don't support anonymous access
 - Readme : instructions on setting up Jackett as qbittorrent engine
 
-### 4.6.2-5wireguard_openvpn (09-12-2023)
+## 4.6.2-5wireguard_openvpn (09-12-2023)
+
 - MAKE A FULL BACKUP BEFORE UPDATING !
 - &#9888; BREAKING CHANGE : upstream container switched to trigus42/qbittorrentvpn. All options will be migrated. Please double check all your options as the default behavior might have changed.
 - &#9888; BREAKING CHANGE : default password changed from "adminadmin" to "homeassistant". Please change from webui
@@ -62,21 +75,21 @@
 
 - Update to latest version from linuxserver/docker-qbittorrent
 
-### 4.6.1-6 (22-11-2023)
+## 4.6.1-6 (22-11-2023)
 
 - Minor bugs fixed
 
-### 4.6.1-5 (22-11-2023)
+## 4.6.1-5 (22-11-2023)
 
 - Minor bugs fixed
 - Selecting qbit webui also applies it to ingress. Otherwise, default is vuetorrent
 
-### 4.6.1-3 (22-11-2023)
+## 4.6.1-3 (22-11-2023)
 
 - Minor bugs fixed
 - Restart the addon after setting the default password
 
-### 4.6.1-2 (22-11-2023)
+## 4.6.1-2 (22-11-2023)
 
 - Minor bugs fixed
 - Re-add default username (admin) and password (homeassistant)
@@ -85,16 +98,16 @@
 
 - Update to latest version from linuxserver/docker-qbittorrent
 
-### 4.6.0-3 (06-11-2023)
+## 4.6.0-3 (06-11-2023)
 
 - Minor bugs fixed
 - Ingress webui update at start
 
-### 4.6.0-2 (30-10-2023)
+## 4.6.0-2 (30-10-2023)
 
 - Minor bugs fixed
 
-### 4.6.0-WITHOUT_VPN (30-10-2023)
+## 4.6.0-WITHOUT_VPN (30-10-2023)
 
 - Minor bugs fixed
 
@@ -102,7 +115,7 @@
 
 - Update to latest version from linuxserver/docker-qbittorrent
 
-### 4.5.5-4 (30-09-2023)
+## 4.5.5-4 (30-09-2023)
 
 - Minor bugs fixed
 - Avoid crash when using smbv1
@@ -111,7 +124,7 @@
 
 - Update to latest version from linuxserver/docker-qbittorrent
 
-### 4.5.4-2 (24-06-2023)
+## 4.5.4-2 (24-06-2023)
 
 - Minor bugs fixed
 - armv7 not supported anymore by linuxserver, it is pinned to latest working version
@@ -120,12 +133,12 @@
 
 - Update to latest version from linuxserver/docker-qbittorrent
 
-### 4.5.3-r0-2 (12-06-2023)
+## 4.5.3-r0-2 (12-06-2023)
 
 - Minor bugs fixed
 - Evaluate smb v2 before v1
 
-### 4.5.3-r0 (07-06-2023)
+## 4.5.3-r0 (07-06-2023)
 
 - Minor bugs fixed
 
@@ -133,12 +146,12 @@
 
 - Update to latest version from linuxserver/docker-qbittorrent
 
-### 4.5.2-3 (22-04-2023)
+## 4.5.2-3 (22-04-2023)
 
 - Minor bugs fixed
 - Fix multi smb mounts
 
-### 4.5.2-2 (19-03-2023)
+## 4.5.2-2 (19-03-2023)
 
 - Minor bugs fixed
 - Align exec code with upstream
@@ -148,12 +161,12 @@
 - Update to latest version from linuxserver/docker-qbittorrent
 - Correct downloads folder
 
-### 4.5.2-r0-ls250-2 (13-03-2023)
+## 4.5.2-r0-ls250-2 (13-03-2023)
 
 - Minor bug fixes
 - Try solving sed error message #755
 
-### 4.5.2-r0-ls250-2 (11-03-2023)
+## 4.5.2-r0-ls250-2 (11-03-2023)
 
 - Bug updates
 - Add lsio branding

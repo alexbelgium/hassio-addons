@@ -1,36 +1,48 @@
 
 ## 2.14.2 (20-01-2024)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.14.1 (23-12-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.13.5 (19-11-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.13.4 (18-11-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.13.3 (04-11-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.13.2 (20-10-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.13.1 (23-09-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.12.1 (15-07-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.11.2 (24-06-2023)
+
 - Update to latest version from etechonomy/joplin-server
 
 ## 2.11.1 (19-05-2023)
+
 - Update to latest version from etechonomy/joplin-server
-### 2.10.11-3 (02-05-2023)
+## 2.10.11-3 (02-05-2023)
+
 - Minor bugs fixed
-### 2.10.11-2 (02-05-2023)
+## 2.10.11-2 (02-05-2023)
+
 - Minor bugs fixed
 - Fix : healthcheck
 

@@ -1,50 +1,66 @@
 
 ## 1.4.2 (24-02-2024)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.4.1 (10-02-2024)
+
 - Update to latest version from linuxserver/docker-bazarr
-### 1.4.0-2 (04-12-2023)
+## 1.4.0-2 (04-12-2023)
+
 - Minor bugs fixed
 
 ## 1.4.0 (02-12-2023)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.3.1 (20-10-2023)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.3.0 (16-09-2023)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.2.4 (22-07-2023)
+
 - Update to latest version from linuxserver/docker-bazarr
-### 1.2.3-2 (16-07-2023)
+## 1.2.3-2 (16-07-2023)
+
 - Minor bugs fixed
 - Armv7 discontinued, pinned to latest working
 
 ## 1.2.3 (15-07-2023)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.2.2 (01-07-2023)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.2.1 (06-05-2023)
+
 - Update to latest version from linuxserver/docker-bazarr
-### 1.2.0-1 (21-04-2023)
+## 1.2.0-1 (21-04-2023)
+
 - Minor bugs fixed
 - Implemented healthcheck
 
 ## 1.2.0 (04-03-2023)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.1.4 (07-01-2023)
+
 - Update to latest version from linuxserver/docker-bazarr
 
 ## 1.1.3 (06-12-2022)
+
 - Update to latest version from linuxserver/docker-bazarr
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 1.1.2 (18-10-2022)
+
 - Update to latest version from linuxserver/docker-bazarr
 - New feature : localdisks mounting added
 

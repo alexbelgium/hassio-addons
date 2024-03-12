@@ -1,29 +1,38 @@
 
 ## 17.0.3 (03-02-2024)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 17.0.1 (27-01-2024)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 17.0.0 (16-12-2023)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.18.0 (09-12-2023)
+
 - Update to latest version from coderaiser/cloudcmd
-### 16.17.7-6 (25-11-2023)
+## 16.17.7-6 (25-11-2023)
+
 - Minor bugs fixed
-### 16.17.7-3 (19-11-2023)
+## 16.17.7-3 (19-11-2023)
+
 - Minor bugs fixed
 - MAJOR CHANGE : new HA config logic implemented. Files are now located in the addon config file, that can be accessed from the addon_configs folder from my cloudcommander or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 - Homeassistant config accessible in /homeassistant folder ; all addons config in /addons_config ; this addon config in /config
 
-### 16.17.7-2 (30-10-2023)
+## 16.17.7-2 (30-10-2023)
+
 - Minor bugs fixed
 
 ## 16.17.7 (13-10-2023)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 16.17.6 (23-09-2023)
+
 - Update to latest version from coderaiser/cloudcmd
 - Switch to alpine
 

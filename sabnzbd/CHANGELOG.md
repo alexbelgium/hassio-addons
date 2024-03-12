@@ -1,63 +1,83 @@
 
 ## 4.2.2 (03-02-2024)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.2.1 (06-01-2024)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.1.0 (30-09-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.3 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.3-ls123 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.3-ls122 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.3-ls120 (12-08-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.3-ls119 (05-08-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.3-ls118 (29-07-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.3-ls117 (22-07-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.3-ls116 (15-07-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.2-ls115 (08-07-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.2-ls114 (01-07-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.2-ls113 (24-06-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.2-ls112 (17-06-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.2-ls111 (10-06-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.1-ls110 (03-06-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.1-ls109 (27-05-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.0.1-ls108 (19-05-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 - armv7 support removed
 
 ## 4.0.1-ls106 (13-05-2023)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 - Feat : cifsdomain added
 

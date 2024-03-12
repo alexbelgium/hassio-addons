@@ -1,41 +1,54 @@
 
 ## 5.3.6.8612 (24-02-2024)
+
 - Update to latest version from linuxserver/docker-radarr
 - There is now an official addon in the community repository, you should migrate to it ! However it does not support ingress ;)
 
 ## 5.2.6.8376 (30-12-2023)
+
 - Update to latest version from linuxserver/docker-radarr
-### 5.1.3.8246-4 (02-12-2023)
+## 5.1.3.8246-4 (02-12-2023)
+
 - Minor bugs fixed
 - Send crond messages to addon logs
 
 ## 5.1.3.8246 (18-11-2023)
+
 - Update to latest version from linuxserver/docker-radarr
-### 5.0.3.8127-2 (01-11-2023)
+## 5.0.3.8127-2 (01-11-2023)
+
 - Minor bugs fixed
 - Fix : disable authentification when using ingress
 
 ## 5.0.3.8127 (14-10-2023)
+
 - Update to latest version from linuxserver/docker-radarr
 
-### 4.7.5.7809-2 (27-09-2023)
+## 4.7.5.7809-2 (27-09-2023)
+
 - Minor bugs fixed
 
 ## 4.7.5.7809 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-radarr
 - armv7 discontinued by lsio
 
 ## 4.6.4.7568 (08-07-2023)
+
 - Update to latest version from linuxserver/docker-radarr
 
 ## 4.5.2.7388 (03-06-2023)
+
 - Update to latest version from linuxserver/docker-radarr
-### 4.4.4.7068-2 (12-05-2023)
+## 4.4.4.7068-2 (12-05-2023)
+
 - Minor bugs fixed
 
 ## 4.4.4.7068 (21-04-2023)
+
 - Update to latest version from linuxserver/docker-radarr
-### 4.3.2.6857-21 (17-03-2023)
+## 4.3.2.6857-21 (17-03-2023)
+
 - Minor bugs fixed
 - Solve signalr error https://github.com/alexbelgium/hassio-addons/issues/757
 - Implemented healthcheck

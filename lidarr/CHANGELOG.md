@@ -1,59 +1,78 @@
 
 ## 2.1.7.4030 (17-02-2024)
+
 - Update to latest version from linuxserver/docker-lidarr
 - There is now an official addon in the community repository, you should migrate to it !
 
 ## 2.0.7.3849 (16-12-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.4.5.3639 (14-10-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.3.5.3530 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.3.5.3530-ls134 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.2.6.3313-ls133 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.2.6.3313-ls132 (12-08-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.2.6.3313-ls131 (05-08-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.2.6.3313-ls130 (29-07-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.2.6.3313-ls129 (22-07-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.2.6.3313-ls128 (15-07-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.2.6.3313-ls127 (08-07-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.1.4.3027-ls126 (01-07-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.1.4.3027-ls125 (24-06-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.1.4.3027-ls123 (10-06-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
-### 1.1.4.3027-ls122-2 (08-06-2023)
+## 1.1.4.3027-ls122-2 (08-06-2023)
+
 - Minor bugs fixed
 
 ## 1.1.4.3027-ls122 (03-06-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.1.4.3027-ls121 (27-05-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 
 ## 1.1.4.3027-ls120 (13-05-2023)
+
 - Update to latest version from linuxserver/docker-lidarr
 - Feat : cifsdomain added
 
@@ -65,7 +84,7 @@
 
 - Update to latest version from linuxserver/docker-lidarr
 
-### 1.0.2.2592-ls117-2 (15-04-2023)
+## 1.0.2.2592-ls117-2 (15-04-2023)
 
 - Minor bugs fixed
 
@@ -81,7 +100,7 @@
 
 - Update to latest version from linuxserver/docker-lidarr
 
-### 1.0.2.2592-ls113-2 (12-03-2023)
+## 1.0.2.2592-ls113-2 (12-03-2023)
 
 - Minor bugs fixed
 - Implemented healthcheck

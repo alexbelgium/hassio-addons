@@ -1,43 +1,57 @@
 
 ## 2201.1.0 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls103 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls102 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls101 (12-08-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls100 (05-08-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls99 (29-07-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls98 (22-07-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls97 (15-07-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls96 (08-07-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls95 (24-06-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls94 (10-06-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls93 (03-06-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
 
 ## v2201.1.0-ls92 (27-05-2023)
+
 - Update to latest version from linuxserver/docker-booksonic-air
-### v2201.1.0-ls91 (13-05-2023)
+## v2201.1.0-ls91 (13-05-2023)
+
 - Minor bugs fixed
 - Feat : cifsdomain added
 - Armv7 not supported anymore

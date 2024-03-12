@@ -1,36 +1,46 @@
-### 2.23.0_12 (08-01-2024)
+
+## 2.23.0_12 (08-01-2024)
+
 - Minor bugs fixed
 - Fix : allow secrets https://github.com/alexbelgium/hassio-addons/issues/1163
 
-### 2.23.0_11 (05-01-2024)
+## 2.23.0_11 (05-01-2024)
+
 - Minor bugs fixed
 - Fix : healthcheck for https (thanks @encryptix) https://github.com/alexbelgium/hassio-addons/issues/1155
 
-### 2.23.0_10 (30-12-2023)
+## 2.23.0_10 (30-12-2023)
+
 - Minor bugs fixed
 - Fix : correct cache for thumbnails creation
 - Feat : new addon option to disable_thumbnails (set disable_thumbnails to true or false ; default true for speed)
 
-### 2.23.0_8 (20-12-2023)
+## 2.23.0_8 (20-12-2023)
+
 - Minor bugs fixed
 - Update of global scripts
 
-### 2.23.0_7 (25-11-2023)
+## 2.23.0_7 (25-11-2023)
+
 - Symlink addons_config and addons_autoscripts in /config to allow the same behavior as prior to the new HA logic to handle config mountpoints
 - Restore database.db persistence
 
-### 2.23.0_reverted5 (21-11-2023)
+## 2.23.0_reverted5 (21-11-2023)
+
 - MAJOR CHANGE : new HA config logic implemented. Files are now located in the addon config file, that can be accessed from the addon_configs folder from my filebrowser or cloudcommander addons. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 - Homeassistant config accessible in /homeassistant folder ; all addons config in /addons_config ; this addon config in /config
 
-### 2.23.0_reverted (29-09-2023)
+## 2.23.0_reverted (29-09-2023)
+
 - Minor bugs fixed
 - Revert to 2.23.0 to avoid tus interference with ingress
 
 ## 2.25.0 (16-09-2023)
+
 - Update to latest version from filebrowser/filebrowser
 
 ## 2.24.2 (27-08-2023)
+
 - Update to latest version from filebrowser/filebrowser
 - Switch upstream image to filebrowser/filebrowser
 - Improve speed for larger folders

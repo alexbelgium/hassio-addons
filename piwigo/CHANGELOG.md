@@ -1,20 +1,26 @@
 
 ## 14.3.0 (02-03-2024)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 14.2.0 (03-02-2024)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 14.1.0 (30-12-2023)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 14.0.0 (16-12-2023)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 13.8.0 (08-07-2023)
+
 - Update to latest version from linuxserver/docker-piwigo
 
 ## 13.7.0 (13-05-2023)
+
 - Update to latest version from linuxserver/docker-piwigo
 - Feat : cifsdomain added
 

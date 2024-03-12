@@ -1,118 +1,160 @@
 
 ## 4.9.0.8 (02-03-2024)
+
 - Update to latest version from linuxserver/docker-emby
-### 4.9.0.5-5 (27-02-2024)
+## 4.9.0.5-5 (27-02-2024)
+
 - Minor bugs fixed
-### 4.9.0.5-4 (26-02-2024)
+## 4.9.0.5-4 (26-02-2024)
+
 - Minor bugs fixed
-### 4.9.0.5-3 (26-02-2024)
+## 4.9.0.5-3 (26-02-2024)
+
 - Minor bugs fixed
-### 4.9.0.5-2 (26-02-2024)
+## 4.9.0.5-2 (26-02-2024)
+
 - Minor bugs fixed
 
 ## 4.9.0.5 (24-02-2024)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.9.0.4 (17-02-2024)
+
 - Update to latest version from linuxserver/docker-emby
-### 4.9.0.1-2 (13-02-2024)
+## 4.9.0.1-2 (13-02-2024)
+
 - Minor bugs fixed
 
 ## 4.9.0.1 (10-02-2024)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.80 (03-02-2024)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.75 (27-01-2024)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.73 (20-01-2024)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.67 (13-01-2024)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.66 (06-01-2024)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.65 (30-12-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.64 (30-12-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.63 (23-12-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.62 (16-12-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.61 (02-12-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.60 (21-11-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.59 (18-11-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.58 (11-11-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.57 (04-11-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.56 (28-10-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.55 (20-10-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.53 (14-10-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.52 (13-10-2023)
+
 - Update to latest version from linuxserver/docker-emby
-### 4.8.0.49-6 (05-10-2023)
+## 4.8.0.49-6 (05-10-2023)
+
 - Minor bugs fixed
-### 4.8.0.49-5 (05-10-2023)
+## 4.8.0.49-5 (05-10-2023)
+
 - Minor bugs fixed
-### 4.8.0.49-4 (05-10-2023)
+## 4.8.0.49-4 (05-10-2023)
+
 - Minor bugs fixed
-### 4.8.0.49-3 (05-10-2023)
+## 4.8.0.49-3 (05-10-2023)
+
 - Minor bugs fixed
-### 4.8.0.49-2 (04-10-2023)
+## 4.8.0.49-2 (04-10-2023)
+
 - Minor bugs fixed
 - Robust SMB & local mounts code
 
 ## 4.8.0.49 (03-10-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.48 (30-09-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.47 (23-09-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.46 (16-09-2023)
+
 - Update to latest version from linuxserver/docker-emby
-### 4.8.0.45-2 (09-09-2023)
+## 4.8.0.45-2 (09-09-2023)
+
 - Minor bugs fixed
 
 ## 4.8.0.45 (09-09-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.44 (02-09-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.43 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.42 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.8.0.41 (12-08-2023)
+
 - Update to latest version from linuxserver/docker-emby
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 
@@ -141,7 +183,7 @@
 
 - Update to latest version from linuxserver/docker-emby
 
-### 4.8.0.29-4 (15-04-2023)
+## 4.8.0.29-4 (15-04-2023)
 
 - Minor bugs fixed
 - Fix issue with smb

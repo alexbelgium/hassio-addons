@@ -1,57 +1,75 @@
 
 ## v1.3.1 (09-03-2024)
+
 - Update to latest version from hay-kot/mealie
 
 ## v1.2.0 (17-02-2024)
+
 - Update to latest version from hay-kot/mealie
 
 ## v1.1.1 (03-02-2024)
+
 - Update to latest version from hay-kot/mealie
-### v1.0.0-11 (30-01-2024)
+## v1.0.0-11 (30-01-2024)
+
 - Fix : incorrect redirect https://github.com/alexbelgium/hassio-addons/issues/1210
 
-### v1.0.0-10 (26-01-2024)
+## v1.0.0-10 (26-01-2024)
+
 - Fix : .secret permissions denied by allowing again 0 as default user
 
-### v1.0.0-8 (24-01-2024)
+## v1.0.0-8 (24-01-2024)
+
 - Minor bugs fixed
 
-### v1.0.0-7 (24-01-2024)
+## v1.0.0-7 (24-01-2024)
+
 - Feat : exposed DATA_DIR in options to set a custom path
 
-### v1.0.0-5 (23-01-2024)
+## v1.0.0-5 (23-01-2024)
+
 - Fix : avoid spamming of "GET /api/app/about"
 
-### v1.0.0-4 (23-01-2024)
+## v1.0.0-4 (23-01-2024)
+
 - Breaking change : port 9001 (mapped to 9090 by default) both for http and https
 
-### v1.0.0-3 (22-01-2024)
+## v1.0.0-3 (22-01-2024)
+
 - Minor bugs fixed
 
 ## v1.0.0 (22-01-2024)
+
 - Switch of container to official version 1.0.0
 - Adaptation of ports : please check addon options page
 - Root user not anymore supported by upstream image, setting it to root (0:0) will revert to 1000:1000
 - Default user of 1000:1000
 
 ## v1.0.0-RC1.1 (14-10-2023)
+
 - Update to latest version from hay-kot/mealie
-### v1.0.0-beta-5-4 (20-06-2023)
+## v1.0.0-beta-5-4 (20-06-2023)
+
 - Minor bugs fixed
-### v1.0.0-beta-5-3 (07-06-2023)
+## v1.0.0-beta-5-3 (07-06-2023)
+
 - Minor bugs fixed
 - Fix : avoid loop when upgrading from <1.0 versions https://github.com/alexbelgium/hassio-addons/issues/856
 
-### v1.0.0-beta-5-2 (04-06-2023)
+## v1.0.0-beta-5-2 (04-06-2023)
+
 - Minor bugs fixed
 
-### v1.0.0-beta-4 (07-05-2023)
+## v1.0.0-beta-4 (07-05-2023)
+
 - Minor bugs fixed
 
-### v1.0.0-beta-3 (11-04-2023)
+## v1.0.0-beta-3 (11-04-2023)
+
 - Minor bugs fixed
 
 ## v1.0.0-beta-2 (11-04-2023)
+
 - Fix : ssl (https://github.com/alexbelgium/hassio-addons/issues/782)
 - Implemented healthcheck
 

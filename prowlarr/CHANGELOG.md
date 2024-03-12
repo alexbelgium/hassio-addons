@@ -1,324 +1,431 @@
 
 ## nightly-1.14.2.4318-ls127 (09-03-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.14.1.4315-ls124 (02-03-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.14.1.4304-ls121 (24-02-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.14.0.4286-ls116 (17-02-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.13.3.4259-ls111 (10-02-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.13.2.4251-ls108 (03-02-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.13.1.4243-ls104 (27-01-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## 1.12.2.4211-ls48 (20-01-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 - There is now an official addon in the community repository, you should migrate to it !
 
 ## nightly-1.12.1.4201-ls88 (13-01-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.12.0.4187-ls80 (06-01-2024)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.11.4.4171-ls71 (30-12-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.11.3.4163-ls68 (23-12-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.11.2.4156-ls64 (16-12-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## develop-1.11.1.4146-ls139 (10-12-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.11.1.4143-ls58 (09-12-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
-### nightly-1.11.0.4126-ls48-2 (02-12-2023)
+## nightly-1.11.0.4126-ls48-2 (02-12-2023)
+
 - Minor bugs fixed
 - Send crond messages to addon logs
 
 ## nightly-1.11.0.4126-ls48 (02-12-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.10.5.4107-ls39 (26-11-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.10.5.4102-ls37 (25-11-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.10.5.4091-ls31 (21-11-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## develop-1.10.4.4088-ls134 (19-11-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.10.4.4084-ls27 (18-11-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.10.3.4070-ls21 (11-11-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.10.2.4061-ls14 (04-11-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.10.1.4059-ls12 (28-10-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.10.0.4046-ls7 (20-10-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.9.4.4031-ls2 (14-10-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.9.4.4030-ls1 (14-10-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.9.3.4012-ls52 (07-10-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.9.2.3990-ls36 (30-09-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.9.2.3988-ls35 (30-09-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.9.1.3981-ls31 (23-09-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.9.0.3965-ls25 (16-09-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.9.0.3964-ls24 (16-09-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.8.6.3940-ls15 (09-09-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
-### nightly-1.8.6.3939-ls14-2 (09-09-2023)
+## nightly-1.8.6.3939-ls14-2 (09-09-2023)
+
 - Minor bugs fixed
 
 ## nightly-1.8.6.3939-ls14 (09-09-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.8.5.3895-ls3 (02-09-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.8.5.3886-ls45 (27-08-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.8.4.3883-ls42 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.8.3.3876-ls36 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.8.2.3856-ls25 (12-08-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.8.1.3827-ls13 (05-08-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.8.0.3796-ls4 (29-07-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.7.4.3765-ls3 (23-07-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.7.3.3759-ls2 (22-07-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.7.3.3758-ls2 (22-07-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.7.2.3701-ls589 (15-07-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.7.1.3676-ls588 (08-07-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.7.0.3623-ls587 (01-07-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.6.2.3590-ls587 (24-06-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.6.1.3559-ls586 (17-06-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.6.0.3524-ls584 (10-06-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.5.2.3473-ls582 (03-06-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.5.1.3415-ls580 (27-05-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.5.0.3382-ls578 (20-05-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.5.0.3373-ls577 (19-05-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.5.0.3326-ls577 (13-05-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.5.0.3295-ls576 (06-05-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.4.1.3244-ls576 (29-04-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.3.3224-ls575 (23-04-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.3.3217-ls574 (22-04-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.3.3208-ls574 (21-04-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.3.3154-ls573 (15-04-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.3.3047-ls572 (08-04-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.2.2987-ls570 (01-04-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.2.2987-ls569 (31-03-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## develop-1.3.2.2984-ls96 (25-03-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.2.2964-ls567 (24-03-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.2.2943-ls566 (18-03-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.2.2892-ls566 (11-03-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.2.2863-ls566 (04-03-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.3.1.2772-ls565 (25-02-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.2.2.2669-ls563 (19-02-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.2.1.2668-ls563 (19-02-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.2.0.2578-ls562 (11-02-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.2.0.2569-ls561 (11-02-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.1.3.2490-ls547 (04-02-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.1.2.2439-ls538 (29-01-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.1.2.2430-ls537 (28-01-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.1.1.2367-ls526 (22-01-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.1.1.2341-ls522 (21-01-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.1.0.2295-ls511 (14-01-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.1.0.2249-ls500 (07-01-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.1.0.2246-ls499 (07-01-2023)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.0.0.2197-ls483 (31-12-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-1.0.0.2171-ls478 (25-12-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.11.2114-ls449 (13-12-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## develop-0.4.10.2111-ls77 (10-12-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.10.2105-ls447 (01-12-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.10.2099-ls446 (27-11-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 - WARNING : update to supervisor 2022.11 before installing
 
 ## nightly-0.4.10.2096-ls445 (26-11-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.10.2089-ls444 (22-11-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.10.2086-ls442 (14-11-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.8.2076-ls438 (11-11-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.2066-ls434 (05-11-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.2048-ls431 (01-11-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.2016-ls427 (13-10-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.2015-ls426 (11-10-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.2000-ls420 (06-10-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.1999-ls419 (04-10-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.1995-ls418 (30-09-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.1990-ls416 (28-09-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.1988-ls415 (27-09-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.7.1978-ls411 (20-09-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.6.1969-ls408 (15-09-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 
 ## nightly-0.4.6.1965-ls406 (13-09-2022)
+
 - Update to latest version from linuxserver/docker-prowlarr
 - New feature : localdisks mounting added
 

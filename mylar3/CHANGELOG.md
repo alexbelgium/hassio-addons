@@ -1,20 +1,26 @@
 
 ## 0.7.8 (20-01-2024)
+
 - Update to latest version from linuxserver/docker-mylar3
 
 ## 0.7.7 (30-12-2023)
+
 - Update to latest version from linuxserver/docker-mylar3
 
 ## 0.7.6 (19-11-2023)
+
 - Update to latest version from linuxserver/docker-mylar3
 
 ## 0.7.5 (26-08-2023)
+
 - Update to latest version from linuxserver/docker-mylar3
 
 ## 0.7.4 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-mylar3
 
 ## 0.7.3 (29-07-2023)
+
 - Update to latest version from linuxserver/docker-mylar3
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 

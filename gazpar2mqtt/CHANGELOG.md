@@ -1,11 +1,13 @@
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 0.8.2 (17-07-2022)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 - Add codenotary sign
 - New logic for non HAos systems
 
 ## 0.8.1 (20-01-2022)
+
 - Update to latest version from yukulehe/gazpar2mqtt
 
 ## 0.8.0 (19-01-2022)

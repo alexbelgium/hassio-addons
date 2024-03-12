@@ -1,59 +1,79 @@
-### 4.0.5-2 (05-03-2024)
+
+## 4.0.5-2 (05-03-2024)
+
 - Minor bugs fixed
 
 ## 4.0.5 (09-12-2023)
+
 - Update to latest version from linuxserver/docker-transmission
-### 4.0.4-2 (27-11-2023)
+## 4.0.4-2 (27-11-2023)
+
 - Minor bugs fixed
 - Feat : new transmission-web-control https://github.com/alexbelgium/hassio-addons/issues/1098
 - Feat : prevent caching in Ingress to allow for faster UI changes
 
 ## 4.0.4 (02-09-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3 (27-08-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r6-ls193 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r6-ls192 (12-08-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r6-ls190 (05-08-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r3-ls187 (29-07-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r3-ls186 (22-07-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r3-ls185 (15-07-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r3-ls184 (08-07-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r3-ls183 (01-07-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r3-ls182 (24-06-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r3-ls181 (17-06-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r2-ls179 (03-06-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r2-ls177 (27-05-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r2-ls176 (19-05-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 
 ## 4.0.3-r1-ls173 (13-05-2023)
+
 - Update to latest version from linuxserver/docker-transmission
 - Feat : cifsdomain added
 

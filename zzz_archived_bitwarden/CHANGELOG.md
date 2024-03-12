@@ -1,47 +1,61 @@
 - Deprecated, please use version from community repository. Just export your vault from this addon, and import it in the official addon.
 
 ## 1.30.1 (21-11-2023)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 
 ## 1.30.0 (11-11-2023)
+
 - Update to latest version from dani-garcia/bitwarden_rs
-### 1.29.2-2 (02-09-2023)
+## 1.29.2-2 (02-09-2023)
+
 - Minor bugs fixed
 - Fix https://github.com/alexbelgium/hassio-addons/issues/975
 
 ## 1.29.2 (02-09-2023)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 
 ## 1.29.1 (29-07-2023)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 
 ## 1.29.0 (15-07-2023)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 
 ## 1.28.1 (08-04-2023)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 
 ## 1.28.0 (31-03-2023)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 - Implemented healthcheck
 
 ## 1.27.0 (25-12-2022)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 - WARNING : update to supervisor 2022.11 before installing
 
 ## 1.26.0 (15-10-2022)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 
 ## 1.25.2 (28-07-2022)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 
 ## 1.25.1 (17-07-2022)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 
 ## 1.25.0 (24-05-2022)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 
 ## 1.24.0 (27-04-2022)
+
 - Update to latest version from dani-garcia/bitwarden_rs
 - Add codenotary sign
 

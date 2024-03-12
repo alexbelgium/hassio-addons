@@ -1,85 +1,111 @@
 
 ## 28.0.3 (02-03-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud
 ## 28.0.2 (02-02-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud
 
-### 28.0.1-6 (14-01-2024)
+## 28.0.1-6 (14-01-2024)
+
 - Minor bugs fixed
-### 28.0.1-5 (14-01-2024)
+## 28.0.1-5 (14-01-2024)
+
 - Minor bugs fixed
-### 28.0.1-4 (12-01-2024)
+## 28.0.1-4 (12-01-2024)
+
 - Fix : webui won't start https://github.com/alexbelgium/hassio-addons/issues/1170 https://github.com/alexbelgium/hassio-addons/issues/1171
 
-### 28.0.1-3 (10-01-2024)
+## 28.0.1-3 (10-01-2024)
+
 - Tentative fix : https://github.com/alexbelgium/hassio-addons/issues/1170
 
-### 28.0.1-2 (07-01-2024)
+## 28.0.1-2 (07-01-2024)
+
 - Minor bugs fixed
 - Fix : js not found https://github.com/alexbelgium/hassio-addons/issues/1158
 
 ## 28.0.1 (30-12-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
 
 ## 28.0.0 (16-12-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
-### 27.1.4-6 (07-12-2023)
+## 27.1.4-6 (07-12-2023)
+
 - Crond output redirected to addon logs https://github.com/alexbelgium/hassio-addons/issues/1111
 
-### 27.1.4-5 (01-12-2023)
+## 27.1.4-5 (01-12-2023)
+
 - Minor bugs fixed
 - Feat : optional configuration of thumbnails generation (enable_thumbnails ; enabled by default) thanks @LuckyTriple7
 
 ## 27.1.4 (25-11-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
 
-### 27.1.3 (03-11-2023)
+## 27.1.3 (03-11-2023)
+
 - Minor bugs fixed
 
-### 27.1.2-3 (16-10-2023)
+## 27.1.2-3 (16-10-2023)
+
 - Minor bugs fixed
 - Feat : optional configuration of php (env_memory_limit ; env_post_max_size ; env_upload_max_filesize)
 
-### 27.1.2-2 (07-10-2023)
+## 27.1.2-2 (07-10-2023)
+
 - Minor bugs fixed
 - Fix : cannot write in data folder
 
 ## 27.1.2 (07-10-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
 - Increase start timer
 
-### 27.1.1-3 (24-09-2023)
+## 27.1.1-3 (24-09-2023)
+
 - Automatic disable maintenance
 
-### 27.1.1-2 (24-09-2023)
+## 27.1.1-2 (24-09-2023)
+
 - Minor bugs fixed
 
 ## 27.1.1 (23-09-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
-### 27.0.2-10 (06-09-2023)
+## 27.0.2-10 (06-09-2023)
+
 - Minor bugs fixed
-### 27.0.2-9 (06-09-2023)
+## 27.0.2-9 (06-09-2023)
+
 - Minor bugs fixed
 
-### 27.0.2-4 (05-09-2023)
+## 27.0.2-4 (05-09-2023)
+
 - Minor bugs fixed
 - Fit : new variable "default_phone_region" https://github.com/alexbelgium/hassio-addons/issues/981
 
-### 27.0.2-3 (24-08-2023)
+## 27.0.2-3 (24-08-2023)
+
 - Fix : healthcheck timeouts @https://github.com/alexbelgium/hassio-addons/issues/956
 - Fix : nginx timeouts
 
-### 27.0.2-2 (22-08-2023)
+## 27.0.2-2 (22-08-2023)
+
 - Minor bugs fixed
 - Fix typo in nextcloud nginx_addition #950 @chocomega
 
 ## 27.0.2 (19-08-2023)
+
 - Update to latest version from linuxserver/docker-nextcloud
 ## 27.0.2 (12-08-2023)
 
 - Update to latest version from linuxserver/docker-nextcloud
 
-### 27.0.1-7 (22-07-2023)
+## 27.0.1-7 (22-07-2023)
+
 - Minor bugs fixed
 - &#9888; MAJOR BREAKING CHANGE:
   - Code rewrite due in upstream logic change https://info.linuxserver.io/issues/2023-06-25-nextcloud
@@ -99,18 +125,18 @@
 
 - Update to latest version from linuxserver/docker-nextcloud
 
-### 26.0.1-5 (26-05-2023)
+## 26.0.1-5 (26-05-2023)
 
 - Minor bugs fixed
 - Feat : cifsdomain added
 - Feat : Align max upload size to 8192M https://github.com/alexbelgium/hassio-addons/issues/846
 
-### 26.0.1-3 (02-05-2023)
+## 26.0.1-3 (02-05-2023)
 
 - Minor bugs fixed
 - Add renderD128 to devices https://github.com/alexbelgium/hassio-addons/pull/820
 
-### 26.0.1-2 (30-04-2023)
+## 26.0.1-2 (30-04-2023)
 
 - Minor bugs fixed
 - Chmod only data folder subdirectories https://github.com/alexbelgium/hassio-addons/issues/818
@@ -119,32 +145,32 @@
 
 - Update to latest version from linuxserver/docker-nextcloud
 
-### 26.0.0-17 (11-04-2023)
+## 26.0.0-17 (11-04-2023)
 
 - Minor bugs fixed
 - Automatic app updates
 
-### 26.0.0-16 (11-04-2023)
+## 26.0.0-16 (11-04-2023)
 
 - Minor bugs fixed
 
-### 26.0.0-15 (11-04-2023)
+## 26.0.0-15 (11-04-2023)
 
 - Minor bugs fixed
 
-### 26.0.0-14 (11-04-2023)
+## 26.0.0-14 (11-04-2023)
 
 - Minor bugs fixed
 - Implement check_data_directory_permissions for data folders in mounted drives
 
-### 26.0.0-12 (02-04-2023)
+## 26.0.0-12 (02-04-2023)
 
 - Minor bugs fixed
 - &#9888; WARNING : please read warning on previous versions before updating
 - Prevent downgrades, and instead reinstall the correct version
 - Improve PUID/PGID code setting, and avoid minor issues
 
-### 26.0.0-9_updater (01-04-2023)
+## 26.0.0-9_updater (01-04-2023)
 
 - Minor bugs fixed
 - &#9888; WARNING : PLEASE BACKUP NEXTCLOUD & MARIADB ADDONS BEFORE UPDATING !
@@ -152,17 +178,17 @@
 - Improved updater code
 - Autocorrection of permission errors in data directory
 
-### 26.0.0-4 (26-03-2023)
+## 26.0.0-4 (26-03-2023)
 
 - Minor bugs fixed
 - Fix : solve AGAIN spam of healthcheck in logs
 
-### 26.0.0-3 (26-03-2023)
+## 26.0.0-3 (26-03-2023)
 
 - Minor bugs fixed
 - Fix : bug in launcher script status detector if data is in a mounted directory
 
-### 26.0.0-2 (26-03-2023)
+## 26.0.0-2 (26-03-2023)
 
 - Minor bugs fixed
 - Fix : connection with desktop client https://github.com/alexbelgium/hassio-addons/issues/771
@@ -174,12 +200,12 @@
 - Update to latest version from linuxserver/docker-nextcloud
 - auto_update boolean option : automatically updates the nextcloud instance with the container version
 
-### 25.0.5-14 (23-03-2023)
+## 25.0.5-14 (23-03-2023)
 
 - Minor bugs fixed
 - Revert version number to align with container
 
-### 25.0.4-11 (22-03-2023)
+## 25.0.4-11 (22-03-2023)
 
 - Minor bugs fixed
 - Implemented safety check that reinstalls nextcloud if issue detected https://github.com/alexbelgium/hassio-addons/issues/764

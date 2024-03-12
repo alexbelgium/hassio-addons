@@ -1,48 +1,60 @@
-### 2.19.4-3 (11-12-2023)
+
+## 2.19.4-3 (11-12-2023)
+
 - Minor bugs fixed
 - When database is reset, the previous one is stored in /share/portainer_$(date +%m-%d-%Y)_$RANDOM".backup. In case of unwanted database wipe, you can therefore restore it from the portainer options
 
 ## 2.19.4 (09-12-2023)
+
 - Update to latest version from portainer/portainer
 
 ## 2.19.3 (25-11-2023)
+
 - Update to latest version from portainer/portainer
-### 2.19.2-3 (21-11-2023)
+## 2.19.2-3 (21-11-2023)
+
 - Minor bugs fixed
 
 ## 2.19.2 (18-11-2023)
+
 - Update to latest version from portainer/portainer
 
 ## 2.19.1 (23-09-2023)
+
 - Update to latest version from portainer/portainer
 
 ## 2.19.0 (09-09-2023)
+
 - Update to latest version from portainer/portainer
 
 ## 2.18.4 (08-07-2023)
+
 - Update to latest version from portainer/portainer
 
 ## 2.18.3 (27-05-2023)
+
 - Update to latest version from portainer/portainer
 
 ## 2.18.2 (06-05-2023)
+
 - Update to latest version from portainer/portainer
 
 ## 2.18.1 (21-04-2023)
+
 - Update to latest version from portainer/portainer
 - Feat : addition of Micro Editor to all addons
 
-### 2.17.1-9 (11-03-2023)
+## 2.17.1-9 (11-03-2023)
 
 - Minor bugs solved
 - Revert : disable healthcheck (caused unhealthy status)
 
-### 2.17.1-8 (11-03-2023)
+## 2.17.1-8 (11-03-2023)
 
 - Minor bugs solved
 - Improve healthcheck with /api/status
 
-### 2.17.1-6 (11-03-2023)
+## 2.17.1-6 (11-03-2023)
 
 - Implemented healthcheck
 - Rollback implementation of s6-rc.d from 2.17.1-4 to 2.17.1-2 due to reported issues with addon entities reporting

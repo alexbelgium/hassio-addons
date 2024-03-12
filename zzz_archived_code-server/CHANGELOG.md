@@ -1,37 +1,49 @@
 
 ## 4.22.0 (09-03-2024)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.21.2 (02-03-2024)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.21.1 (10-02-2024)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.20.1 (27-01-2024)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.20.0 (23-12-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.19.1 (02-12-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.19.0 (19-11-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.18.0 (21-10-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.17.1 (30-09-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.17.0 (23-09-2023)
+
 - Update to latest version from linuxserver/docker-code-server
 
 ## 4.16.1 (05-08-2023)
+
 - Update to latest version from linuxserver/docker-code-server
-### 4.15.0-2 (22-07-2023)
+## 4.15.0-2 (22-07-2023)
+
 - Minor bugs fixed
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 

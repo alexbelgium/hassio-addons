@@ -1,69 +1,91 @@
 
 ## 1.5.14 (09-03-2024)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.5.13 (17-02-2024)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.5.12 (03-02-2024)
+
 - Update to latest version from TandoorRecipes/recipes
 - Removed custom nginx (https://github.com/alexbelgium/hassio-addons/issues/1207)
 
 ## 1.5.11 (20-01-2024)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.5.10 (09-12-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.5.9 (02-12-2023)
+
 - Update to latest version from TandoorRecipes/recipes
-### 1.5.6-reverted (17-10-2023)
+## 1.5.6-reverted (17-10-2023)
+
 - Minor bugs fixed
 
 ## 1.5.6 (02-09-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.5.5 (19-08-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.5.4 (08-07-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.5.3 (01-07-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.5.1 (24-06-2023)
+
 - Update to latest version from TandoorRecipes/recipes
-### 1.4.12-4 (23-06-2023)
+## 1.4.12-4 (23-06-2023)
+
 - Minor bugs fixed
 - Feat : allow mapping to /share and /media
 
-### 1.4.12-3 (23-06-2023)
+## 1.4.12-3 (23-06-2023)
+
 - Minor bugs fixed
 - Feat : new option externalfiles_folder added to customize folder mapping
 
-### 1.4.12-2 (09-06-2023)
+## 1.4.12-2 (09-06-2023)
+
 - Minor bugs fixed
 ## 1.4.13 (02-06-2023)
+
 - add configuration option to disable debug mode.
 - add local storage folder for external recipe files that should map in to tandoor
 
 ## 1.4.12 (27-05-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.4.10 (19-05-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.4.9 (29-04-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.4.8 (18-03-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.4.7 (19-02-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.4.6 (04-02-2023)
+
 - Update to latest version from TandoorRecipes/recipes
 - Ingress removed
 - Readd Ingress feature
