@@ -5,7 +5,7 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Code-server is VS Code running on a remote server, accessible through the browser",
+  "description": "Deprecated : Code-server is VS Code running on a remote server, accessible through the browser",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
@@ -74,7 +74,7 @@
     "media:rw",
     "ssl"
   ],
-  "name": "Code-server (VScode)",
+  "name": "zzz_archived : Code-server (VScode)",
   "options": {
     "PGID": 0,
     "PUID": 0
