@@ -1,11 +1,4 @@
-## 0.13.1-6 (13-03-2024)
-- Minor bugs fixed
-## 0.13.1-5 (13-03-2024)
-- Minor bugs fixed
-## 0.13.1-4 (13-03-2024)
-- Minor bugs fixed
-## 0.13.1-3 (13-03-2024)
-- Minor bugs fixed
+- Fix : not starting https://github.com/alexbelgium/hassio-addons/issues/1270
 
 ## 0.13.1 (27-01-2024)
 
