@@ -5,23 +5,23 @@ set +e
 VPN_PROVIDER="${VPN_PROVIDER:-null}"
 case "$VPN_PROVIDER" in
   "generic")
-    rm -r /etc/s6*/s6*/service-pia
-    rm -r /etc/s6*/s6*/service-proton  
+    echo "" > etc/s6*/s6*/service-pia/run
+    echo "" > /etc/s6*/s6*/service-proton/run
   ;;
 
   "pia")
-    rm -r /etc/s6*/s6*/service-privoxy
-    rm -r /etc/s6*/s6*/service-proton  
+    echo "" > /etc/s6*/s6*/service-privoxy/run
+    echo "" > /etc/s6*/s6*/service-proton/run
   ;;
 
   "proton")
-    rm -r /etc/s6*/s6*/service-privoxy
-    rm -r /etc/s6*/s6*/service-pia
+    echo "" > /etc/s6*/s6*/service-privoxy/run
+    echo "" > /etc/s6*/s6*/service-pia/run
   ;;
 
   **)
-    rm -r /etc/s6*/s6*/service-privoxy
-    rm -r /etc/s6*/s6*/service-proton  
-    rm -r /etc/s6*/s6*/service-pia
+    echo "" > /etc/s6*/s6*/service-privoxy/run
+    echo "" > /etc/s6*/s6*/service-proton/run
+    echo "" > /etc/s6*/s6*/service-pia/run
   ;;
 esac
