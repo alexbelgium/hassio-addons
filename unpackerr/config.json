@@ -65,6 +65,7 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "VPN_PROVIDER": "null",
     "VPN_ENABLED": "false"
   },
   "image": "ghcr.io/alexbelgium/unpackerr-{arch}",
@@ -100,5 +101,5 @@
   "slug": "unpackerr",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.13.1-5"
+  "version": "0.13.1-6"
 }
