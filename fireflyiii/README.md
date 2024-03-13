@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 Firefly III - Cant seem to enable webhooks (opened 2024-03-11)](https://github.com/alexbelgium/hassio-addons/issues/1299) by [@deryckhans](https://github.com/deryckhans)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
