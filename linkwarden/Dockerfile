@@ -21,8 +21,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Adapt for SQLITE
 RUN \
-    mv /data /data_linkwarden
-#    sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma
+    mv /data /data_linkwarden && \
+    sed -i "s|postgresql|sqlite|g" /data_linkwarden/prisma/schema.prisma
 
 ##################
 # 2 Modify Image #
@@ -66,8 +66,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-#
-#WORKDIR /
+WORKDIR /data_linkwarden
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
