@@ -15,6 +15,7 @@
 #################
 
 ARG BUILD_VERSION
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
