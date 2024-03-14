@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Transmission] error with config file (opened 2024-02-26)](https://github.com/alexbelgium/hassio-addons/issues/1269) by [@enricodeleo](https://github.com/enricodeleo)
-## &#9888; Open Issue : [🐛 [Transmission] Add-on doesnt start. (opened 2024-03-13)](https://github.com/alexbelgium/hassio-addons/issues/1300) by [@furang](https://github.com/furang)
 
 # Home assistant add-on: Transmission
 
