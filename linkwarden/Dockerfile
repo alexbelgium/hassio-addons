@@ -20,8 +20,8 @@ FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Adapt for SQLITE
-RUN \
-    sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma
+#RUN \
+#    sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma
 
 ##################
 # 2 Modify Image #
