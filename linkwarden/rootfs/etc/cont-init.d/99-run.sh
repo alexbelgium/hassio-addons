@@ -2,8 +2,9 @@
 # shellcheck shell=bash
 set -e
 
-yarn prisma migrate deploy
+bashio::log.info "Creating folders"
+mkdir -p /config/library
 
 bashio::log.info "Starting app..."
-
+yarn prisma migrate deploy
 yarn start docker-entrypoint.sh
