@@ -36,7 +36,8 @@ RUN \
     sed -i "s|postgresql|sqlite|g" /data_linkwarden/prisma/schema.prisma && \
     rm -r /data_linkwarden/prisma/migrations && \
     cd /data_linkwarden && \
-    prisma migrate dev
+    npx prisma db push && \
+    npx prisma generate
 
 ##################
 # 3 Install apps #
