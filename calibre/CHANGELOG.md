@@ -1,3 +1,4 @@
+- Fix KasmVNC https://github.com/alexbelgium/hassio-addons/issues/1301
 
 ## 7.6.0 (02-03-2024)
 
