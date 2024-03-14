@@ -27,6 +27,8 @@ FROM $BUILD_FROM
 # Copy Portainer agent binaries
 COPY --from=original_agent /app /app
 
+RUN apk add --no-cache tzdata
+
 ##################
 # 2 Modify Image #
 ##################
