@@ -6,9 +6,9 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "collaborative bookmark manager to collect, organize, and preserve webpages and articles",
   "environment": {
-    "DATABASE_URL": "/config/linkwarden.sqlite",
+    "DATABASE_URL": "/config/database/linkwarden.sqlite",
     "NEXTAUTH_URL": "http://localhost:3000/api/v1/auth",
-    "STORAGE_FOLDER": "/config"
+    "STORAGE_FOLDER": "/config/library"
   },
   "init": false,
   "map": [
