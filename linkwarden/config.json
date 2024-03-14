@@ -10,6 +10,7 @@
     "NEXTAUTH_URL": "http://localhost:3000/api/v1/auth",
     "STORAGE_FOLDER": "/config/library"
   },
+  "image": "ghcr.io/alexbelgium/linkwarden-{arch}",
   "init": false,
   "map": [
     "addon_config:rw"
