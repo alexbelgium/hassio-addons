@@ -19,11 +19,6 @@ ARG BUILD_FROM
 FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Adapt for SQLITE
-RUN \
-    mv /data /data_linkwarden && \
-    sed -i "s|postgresql|sqlite|g" /data_linkwarden/prisma/schema.prisma
-
 ##################
 # 2 Modify Image #
 ##################
@@ -32,6 +27,16 @@ RUN \
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
+
+# Adapt image
+RUN \
+    # Keep data
+    mv /data /data_linkwarden && \
+    # Adapt for SQLITE
+    sed -i "s|postgresql|sqlite|g" /data_linkwarden/prisma/schema.prisma && \
+    rm -r /data_linkwarden/prisma/migrations && \
+    cd /data_linkwarden && \
+    prisma migrate dev
 
 ##################
 # 3 Install apps #
