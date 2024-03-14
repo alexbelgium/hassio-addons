@@ -1,0 +1,6 @@
+---
+build_from:
+  aarch64: ghcr.io/linkwarden/linkwarden:main
+  amd64: ghcr.io/linkwarden/linkwarden:main
+codenotary:
+  signer: alexandrep.github@gmail.com

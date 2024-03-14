@@ -1,0 +1,33 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "collaborative bookmark manager to collect, organize, and preserve webpages and articles",
+  "environment": {
+    "DATABASE_URL": "/config/linkwarden.sqlite",
+    "NEXTAUTH_URL": "http://localhost:3000/api/v1/auth",
+    "STORAGE_FOLDER": "/config"
+  },
+  "init": false,
+  "map": [
+    "addon_config:rw"
+  ],
+  "name": "Linkwarden",
+  "ports": {
+    "3000/tcp": 3000
+  },
+  "ports_description": {
+    "3000/tcp": "linkwarden Vault"
+  },
+  "schema": {
+    "NEXTAUTH_SECRET": "str",
+    "NEXTAUTH_URL": "str?"
+    },
+  "slug": "linkwarden",
+  "udev": true,
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden",
+  "version": "1.0",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
+}
