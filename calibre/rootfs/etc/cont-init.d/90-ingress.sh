@@ -22,5 +22,8 @@ sed -i '/proxy_buffering/a sub_filter_types *;' "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a sub_filter "vnc/index.html?autoconnect" "vnc/index.html?path=%%path%%/websockify?autoconnect";' "${NGINX_CONFIG}"
 sed -i "s|%%path%%|${SUBFOLDER:1}|g" "${NGINX_CONFIG}"
 
+# Correct image
+sed -i "s|SUBFOLDERwebsockify|/websockify|g" "${NGINX_CONFIG}"
+
 # Enable ingress
 cp /etc/nginx/sites-available/ingress.conf /etc/nginx/sites-enabled
