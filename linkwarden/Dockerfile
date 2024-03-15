@@ -34,6 +34,7 @@ RUN \
     #mv /data /data_linkwarden && \
     # Reinstall linkwarden
     \
+    apt-get update && \
     apt-get install -y git && \
     git clone https://github.com/linkwarden/linkwarden.git && \
     \
