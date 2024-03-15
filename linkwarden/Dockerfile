@@ -31,9 +31,21 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # Adapt image
 RUN \
     # Keep data
-    mv /data /data_linkwarden && \
+    #mv /data /data_linkwarden && \
+    # Reinstall linkwarden
+    \
+    apt-get install -y git && \
+    git clone https://github.com/linkwarden/linkwarden.git && \
+    \
     # Adapt for SQLITE
-    sed -i "s|postgresql|sqlite|g" /data_linkwarden/prisma/schema.prisma
+    sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma && \
+    \
+    # Reinstall app
+    cd /bitwarden && \
+    yarn && \
+    npx playwright install-deps && \
+    yarn build && \
+    yarn prisma migrate deploy
 
 ##################
 # 3 Install apps #
@@ -68,7 +80,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-WORKDIR /data_linkwarden
+WORKDIR /linkwarden
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
