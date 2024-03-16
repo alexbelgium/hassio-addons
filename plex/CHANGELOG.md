@@ -1,4 +1,7 @@
 
+## 1.40.1.8227-c0dd5a73e-ls210 (16-03-2024)
+- Update to latest version from linuxserver/docker-plex
+
 ## 1.40.0.7998-c29d4c0c8-ls208 (09-03-2024)
 
 - Update to latest version from linuxserver/docker-plex
