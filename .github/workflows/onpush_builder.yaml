@@ -154,6 +154,10 @@ jobs:
              # shellcheck disable=SC2129
              echo "build_arch=false" >> $GITHUB_OUTPUT;
           fi
+
+      - name: Use action to check for mixed line endings (CRLF and LF)
+        uses: ymwymw/check-mixed-line-endings@v2
+
       - name: Login to GitHub Container Registry
         if: env.BUILD_ARGS != '--test'
         uses: docker/login-action@v3.0.0
