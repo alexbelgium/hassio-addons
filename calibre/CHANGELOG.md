@@ -1,3 +1,6 @@
+
+## 7.7.0 (16-03-2024)
+- Update to latest version from linuxserver/docker-calibre
 ## 7.6.0-2 (14-03-2024)
 - Fix KasmVNC https://github.com/alexbelgium/hassio-addons/issues/1301
 
