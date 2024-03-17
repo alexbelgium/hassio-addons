@@ -28,6 +28,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # Switch data location to /config
 RUN if [ -f /config/settings.js ]; then sed -i "s|/var/lib/sharelatex/data|/config|g" /config/settings.js; fi && \
     if [ -f /etc/sharelatex/settings.js ]; then sed -i "s|/var/lib/sharelatex/data|/config|g" /etc/sharelatex/settings.js; fi
