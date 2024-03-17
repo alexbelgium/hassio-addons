@@ -28,23 +28,24 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-WORKDIR /linkwarden
-
 # Adapt image
 RUN \
     # Keep data
     #mv /data /data_linkwarden && \
     # Reinstall linkwarden
     \
+    rm -r /data && \
     apt-get update && \
     apt-get install -y git && \
-    git clone https://github.com/linkwarden/linkwarden.git && \
-    \
+    git clone https://github.com/linkwarden/linkwarden.git
+
+WORKDIR /linkwarden
+
     # Adapt for SQLITE
+RUN \
     sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma && \
     \
     # Reinstall app
-    cd /linkwarden && \
     yarn && \
     npx playwright install-deps && \
     yarn build && \
