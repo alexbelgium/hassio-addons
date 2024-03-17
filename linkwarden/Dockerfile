@@ -43,7 +43,7 @@ RUN \
     sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma && \
     \
     # Recreate data
-    rm -r / data && mkdir /data_linkwarden && \
+    mkdir /data_linkwarden && \
     \
     # Copy files
     cp /linkwarden/package.json /linkwarden/yarn.lock /linkwarden/playwright.config.ts /data_linkwarden/
