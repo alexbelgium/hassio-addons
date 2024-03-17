@@ -31,31 +31,34 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 FROM node:18.18-bullseye-slim
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Get repo
+WORKDIR /
+
 RUN \
+    # Get repo
     rm -r /data && \
     apt-get update && \
     apt-get install -y git && \
-    git clone https://github.com/linkwarden/linkwarden.git
-
-RUN rm -r / data && \
-    mkdir /data_linkwarden
+    git clone https://github.com/linkwarden/linkwarden.git && \
+    \
+    # Adapt for sqlite
+    sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma && \
+    \
+    # Recreate data
+    rm -r / data && mkdir /data_linkwarden && \
+    \
+    # Copy files
+    cp /linkwarden/package.json /linkwarden/yarn.lock /linkwarden/playwright.config.ts /data_linkwarden/
 
 WORKDIR /data_linkwarden
 
-COPY ./package.json ./yarn.lock ./playwright.config.ts ./
-
 # Increase timeout to pass github actions arm64 build
 RUN --mount=type=cache,sharing=locked,target=/usr/local/share/.cache/yarn yarn install --network-timeout 10000000
-
-RUN \
-    sed -i "s|postgresql|sqlite|g" /prisma/schema.prisma && \
 
 RUN npx playwright install-deps && \
     apt-get clean && \
     yarn cache clean
 
-COPY . .
+COPY /linkwarden/* /data_linkwarden/
 
 RUN yarn prisma generate && \
     yarn build
