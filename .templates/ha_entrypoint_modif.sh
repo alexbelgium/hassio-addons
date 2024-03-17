@@ -38,7 +38,7 @@ fi
 mkdir -p /run/s6/container_environment
 
 # Check if shebang exists
-for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do
+for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
     if [ -f "${shebang%% *}" ]; then
         break
     fi
