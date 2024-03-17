@@ -65,8 +65,8 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "VPN_PROVIDER": "null",
-    "VPN_ENABLED": "false"
+    "VPN_ENABLED": "false",
+    "VPN_PROVIDER": "null"
   },
   "image": "ghcr.io/alexbelgium/unpackerr-{arch}",
   "init": false,

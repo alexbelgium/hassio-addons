@@ -25,7 +25,7 @@
   "schema": {
     "NEXTAUTH_SECRET": "str",
     "NEXTAUTH_URL": "str?"
-    },
+  },
   "slug": "linkwarden",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden",
