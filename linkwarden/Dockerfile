@@ -28,36 +28,37 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-WORKDIR /
+FROM node:18.18-bullseye-slim
+ARG DEBIAN_FRONTEND=noninteractive
 
-# Adapt image
+# Get repo
 RUN \
-    # Keep data
-    #mv /data /data_linkwarden && \
-    # Reinstall linkwarden
-    \
     rm -r /data && \
     apt-get update && \
     apt-get install -y git && \
     git clone https://github.com/linkwarden/linkwarden.git
 
-WORKDIR /linkwarden
+RUN rm -r / data && \
+    mkdir /data_linkwarden
 
-    # Adapt for SQLITE
+WORKDIR /data_linkwarden
+
+COPY ./package.json ./yarn.lock ./playwright.config.ts ./
+
+# Increase timeout to pass github actions arm64 build
+RUN --mount=type=cache,sharing=locked,target=/usr/local/share/.cache/yarn yarn install --network-timeout 10000000
+
 RUN \
-    sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma && \
-    \
-    # add.env
-    echo "NEXTAUTH_SECRET=homeassistant_key" >> /linkwarden/.env && \
-    echo "NEXTAUTH_URL=http://localhost:3000/api/v1/auth" >> /linkwarden/.env && \
-    echo "DATABASE_URL=file:/config/database/linkwarden.sqlite" >> /linkwarden/.env && \
-    echo "STORAGE_FOLDER=/config/library" >> /linkwarden/.env && \
-    \
-    # Reinstall app
-    yarn && \
-    npx playwright install-deps && \
-    yarn build && \
-    yarn prisma migrate deploy
+    sed -i "s|postgresql|sqlite|g" /prisma/schema.prisma && \
+
+RUN npx playwright install-deps && \
+    apt-get clean && \
+    yarn cache clean
+
+COPY . .
+
+RUN yarn prisma generate && \
+    yarn build
 
 ##################
 # 3 Install apps #
