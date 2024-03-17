@@ -46,7 +46,7 @@ RUN \
     mkdir /data_linkwarden && \
     \
     # Copy files
-    cp linkwarden/package.json linkwarden/yarn.lock linkwarden/playwright.config.ts ./data_linkwarden/
+    cp linkwarden/package.json linkwarden/yarn.lock linkwarden/playwright.config.ts /data_linkwarden/
 
 WORKDIR /data_linkwarden
 
