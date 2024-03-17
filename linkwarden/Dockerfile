@@ -40,7 +40,7 @@ RUN \
     git clone https://github.com/linkwarden/linkwarden.git && \
     \
     # Adapt for sqlite
-    sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma && \
+    sed -i "s|postgresql|sqlite|g" linkwarden/prisma/schema.prisma && \
     \
     # Recreate data
     mkdir /data_linkwarden && \
