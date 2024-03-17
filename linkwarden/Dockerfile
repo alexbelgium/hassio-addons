@@ -47,6 +47,12 @@ WORKDIR /linkwarden
 RUN \
     sed -i "s|postgresql|sqlite|g" /linkwarden/prisma/schema.prisma && \
     \
+    # add.env
+    echo "NEXTAUTH_SECRET=homeassistant_key" >> /linkwarden/.env && \
+    echo "NEXTAUTH_URL=http://localhost:3000/api/v1/auth" >> /linkwarden/.env && \
+    echo "DATABASE_URL=file:/config/database/linkwarden.sqlite" >> /linkwarden/.env && \
+    echo "STORAGE_FOLDER=/config/library" >> /linkwarden/.env && \
+    \
     # Reinstall app
     yarn && \
     npx playwright install-deps && \
