@@ -68,7 +68,8 @@
   "ingress": true,
   "init": false,
   "map": [
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "media:rw",
     "share:rw",
     "ssl:ro"
@@ -91,6 +92,6 @@
   "slug": "guacamole",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "testnoupload-4",
+  "version": "TEST",
   "video": true
 }
