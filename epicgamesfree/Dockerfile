@@ -38,6 +38,7 @@ RUN sed -i "1a /./ha_entrypoint.sh" /usr/local/bin/docker-entrypoint.sh
 COPY rootfs/ /
 
 # Uses /bin for compatibility purposes
+# hadolint ignore=SC2114
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then if [ -d /bin ]; then cp -rn /bin/* /usr/bin/ && rm -r /bin; fi; ln -s /usr/bin /bin; fi
 
 # Modules
