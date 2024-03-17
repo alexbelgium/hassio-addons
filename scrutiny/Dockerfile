@@ -27,6 +27,11 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
+RUN \
+    if [ -d /bin ]; then cp -rn /bin/* /usr/bin/; fi && \
+    rm -r /bin && \
+    ln -s /usr/bin /bin
+
 ##################
 # 3 Install apps #
 ##################
