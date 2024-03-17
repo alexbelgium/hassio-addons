@@ -57,7 +57,7 @@ RUN npx playwright install-deps && \
     apt-get clean && \
     yarn cache clean
 
-COPY /linkwarden/* /data_linkwarden/
+COPY ./linkwarden/* ./
 
 RUN yarn prisma generate && \
     yarn build
