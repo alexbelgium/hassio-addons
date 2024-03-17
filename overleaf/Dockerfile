@@ -32,13 +32,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 RUN if [ -f /config/settings.js ]; then sed -i "s|/var/lib/sharelatex/data|/config|g" /config/settings.js; fi && \
     if [ -f /etc/sharelatex/settings.js ]; then sed -i "s|/var/lib/sharelatex/data|/config|g" /etc/sharelatex/settings.js; fi
 
-##################
-# 3 Install apps #
-##################
-
-# Add rootfs
-COPY rootfs/ /
-
 RUN \
     apt-get install -y gnupg curl && \
     curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
@@ -47,6 +40,16 @@ RUN \
     echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-7.0.list && \
     apt-get update && \
     apt-get install -y mongodb-org
+
+##################
+# 3 Install apps #
+##################
+
+# Copy local files
+COPY rootfs/ /
+
+# Uses /bin for compatibility purposes
+RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then if [ -d /bin ]; then cp -rn /bin/* /usr/bin/ && rm -r /bin; fi; ln -s /usr/bin /bin; fi
 
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh"

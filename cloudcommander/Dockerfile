@@ -34,6 +34,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # Add rootfs
 COPY rootfs/ /
 
+# Uses /bin for compatibility purposes
+RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then if [ -d /bin ]; then cp -rn /bin/* /usr/bin/ && rm -r /bin; fi; ln -s /usr/bin /bin; fi
+
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh"
 

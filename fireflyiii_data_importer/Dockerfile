@@ -42,6 +42,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # Copy local files
 COPY rootfs/ /
 
+# Uses /bin for compatibility purposes
+RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then if [ -d /bin ]; then cp -rn /bin/* /usr/bin/ && rm -r /bin; fi; ln -s /usr/bin /bin; fi
+
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh 01-config_yaml.sh"
 

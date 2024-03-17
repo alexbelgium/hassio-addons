@@ -27,17 +27,15 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-RUN \
-    if [ -d /bin ]; then cp -rn /bin/* /usr/bin/; fi && \
-    rm -r /bin && \
-    ln -s /usr/bin /bin
-
 ##################
 # 3 Install apps #
 ##################
 
 # Add rootfs
 COPY rootfs/ /
+
+# Uses /bin for compatibility purposes
+RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then if [ -d /bin ]; then cp -rn /bin/* /usr/bin/ && rm -r /bin; fi; ln -s /usr/bin /bin; fi
 
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh"

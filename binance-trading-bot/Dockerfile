@@ -28,13 +28,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-##################
-# 3 Install apps #
-##################
-
-# Add rootfs
-COPY rootfs/ /
-
 # Install trading view
 ENV FLASK_APP=main.py
 ENV FLASK_ENV=production
@@ -54,6 +47,16 @@ RUN \
     && echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/community' >> /etc/apk/repositories \
     && apk add mongodb mongodb-tools --no-cache >/dev/null \
     && sed -i "/v3.9/d" /etc/apk/repositories
+
+##################
+# 3 Install apps #
+##################
+
+# Add rootfs
+COPY rootfs/ /
+
+# Uses /bin for compatibility purposes
+RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then if [ -d /bin ]; then cp -rn /bin/* /usr/bin/ && rm -r /bin; fi; ln -s /usr/bin /bin; fi
 
 # Modules
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh"
