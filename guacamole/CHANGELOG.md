@@ -1,3 +1,4 @@
+## TEST1 (17-03-2024)
 - ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/guacamole to a folder only accessible from my Filebrowser addon called /addon_configs/something-guacamole. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/ https://github.com/alexbelgium/hassio-addons/issues/1309
 
 ## testnoupload (11-11-2023)
