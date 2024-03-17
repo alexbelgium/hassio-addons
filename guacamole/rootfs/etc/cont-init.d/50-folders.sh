@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -e
 
-mkdir -p /config/addons_config/guacamole/fonts
-mkdir -p /config/addons_config/guacamole/postgres
-chown -R postgres:postgres /config/addons_config/guacamole/postgres
-chmod -R 0700 /config/addons_config/guacamole/postgres
+mkdir -p /config/fonts
+mkdir -p /config/postgres
+chown -R postgres:postgres /config/postgres
+chmod -R 0700 /config/postgres
