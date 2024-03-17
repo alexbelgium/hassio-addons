@@ -29,6 +29,6 @@
   "slug": "linkwarden",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden",
-  "version": "1.6",
+  "version": "1.7",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
