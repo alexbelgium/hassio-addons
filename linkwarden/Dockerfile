@@ -28,38 +28,13 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-FROM node:18.18-bullseye-slim
-ARG DEBIAN_FRONTEND=noninteractive
-
+# Add postgres 16
 RUN \
-    # Recreate data
-    mkdir /data_linkwarden
-
-WORKDIR /data_linkwarden
-
-RUN \
-    # Get repo
     apt-get update && \
-    apt-get install -y git && \
-    git clone https://github.com/linkwarden/linkwarden.git && \
-    \
-    # Adapt for sqlite
-    sed -i "s|postgresql|sqlite|g" linkwarden/prisma/schema.prisma && \
-    \
-    # Copy files
-    cp linkwarden/package.json linkwarden/yarn.lock linkwarden/playwright.config.ts .
-
-# Increase timeout to pass github actions arm64 build
-RUN --mount=type=cache,sharing=locked,target=/usr/local/share/.cache/yarn yarn install --network-timeout 10000000
-
-RUN npx playwright install-deps && \
-    apt-get clean && \
-    yarn cache clean
-
-RUN cp -rnf linkwarden/* .
-
-RUN yarn prisma generate && \
-    yarn build
+    apt-get install -y postgresql postgresql-contrib && \
+    sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    sudo apt-get update && apt-get install -y postgresql-16
 
 ##################
 # 3 Install apps #
