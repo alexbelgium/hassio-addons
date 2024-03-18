@@ -1,3 +1,5 @@
+## v0.8.0-3 (18-03-2024)
+- Minor bugs fixed
 ## v0.8.0-2 (17-03-2024)
 - Minor bugs fixed
 
