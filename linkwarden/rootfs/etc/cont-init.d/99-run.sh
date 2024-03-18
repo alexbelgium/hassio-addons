@@ -17,6 +17,10 @@ bashio::log.info "Starting app..."
 yarn prisma migrate deploy
 yarn start docker-entrypoint.sh & true
 
+######################
+# CONFIGURE POSTGRES #
+######################
+
 bashio::log.info "Starting postgres..."
 mkdir -p /config/postgres
 mkdir -p /var/run/postgresql 
@@ -28,4 +32,6 @@ if [ -e /config/postgres/postgresql.conf ]; then
 else
   postgres /usr/lib/postgresql/*/bin/initdb
 fi
-postgres /usr/lib/postgresql/*/bin/postgres -D /config/postgres/
+
+bashio::log.info "Starting postgres..."
+service postgresql start
