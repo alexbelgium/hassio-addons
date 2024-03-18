@@ -24,7 +24,8 @@
   },
   "schema": {
     "NEXTAUTH_SECRET": "str",
-    "NEXTAUTH_URL": "str?"
+    "NEXTAUTH_URL": "str?",
+    "DATABASE_URL": "str?"
   },
   "slug": "linkwarden",
   "udev": true,
