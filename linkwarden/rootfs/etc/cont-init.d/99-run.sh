@@ -15,4 +15,17 @@ npx prisma generate
 
 bashio::log.info "Starting app..."
 yarn prisma migrate deploy
-yarn start docker-entrypoint.sh
+yarn start docker-entrypoint.sh & true
+
+bashio::log.info "Starting postgres..."
+mkdir -p /config/postgres
+mkdir -p /var/run/postgresql 
+chown postgres:postgres /var/run/postgresql
+chown -R postgres:postgres /config/postgres
+chmod 0700 /config/postgres
+if [ -e /config/postgres/postgresql.conf ]; then
+  echo "Database already configured"
+else
+  postgres /usr/lib/postgresql/*/bin/initdb
+fi
+postgres /usr/lib/postgresql/*/bin/postgres -D /config/postgres/
