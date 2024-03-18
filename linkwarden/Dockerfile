@@ -29,6 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Install postgres
+ENV PGDATA=/config/postgres
 RUN \
     apt update && apt install vim gnupg2 lsb-release sudo -y && \
     curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc| gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
