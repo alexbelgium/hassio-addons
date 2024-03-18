@@ -56,7 +56,10 @@ RUN npx playwright install-deps && \
     apt-get clean && \
     yarn cache clean
 
-RUN cp -rnf linkwarden/* .
+RUN echo "NEXTAUTH_SECRET=homeassistant_secret" > .env && \
+    echo "NEXTAUTH_URL=http://localhost:3000/api/v1/auth" >> .env && \
+    echo "NEXTAUTH_SECRET=file:/config/database/linkwarden.sqlite" >> .env && \
+    cp -rnf linkwarden/* .
 
 RUN yarn prisma generate && \
     yarn build
