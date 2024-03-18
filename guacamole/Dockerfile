@@ -42,8 +42,8 @@ RUN \
     && sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
     \
     # avoid error
-    && sed -i 's|(cat /config/.database-version)|(cat /config/\.database-version &>/dev/null)|g' /etc/cont-init.d/* \
-    && sed -i 's|(cat /config/.database-version)|(cat /config/\.database-version &>/dev/null)|g' /etc/services.d/*/run \
+    && sed -i 's|(cat /config/\.database-version)|(cat /config/\.database-version \&>/dev/null)|g' /etc/cont-init.d/* \
+    && sed -i 's|(cat /config/\.database-version)|(cat /config/\.database-version \&>/dev/null)|g' /etc/services.d/*/run \
     \
     # Allow syslog
     && mkdir -p /tmpsock \
