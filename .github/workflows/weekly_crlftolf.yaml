@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository contents
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
 
       - name: Use action to check for CRLF endings
         uses: erclu/check-crlf@v1
