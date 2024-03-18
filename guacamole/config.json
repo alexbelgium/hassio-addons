@@ -92,6 +92,6 @@
   "slug": "guacamole",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "TEST2",
+  "version": "TEST3",
   "video": true
 }
