@@ -39,6 +39,8 @@ if [[ "$DATABASE_URL" == *"localhost"* ]]; then
    echo "configure database"
     postgres /usr/lib/postgresql/*/bin/initdb
   fi
+else
+  echo "... using external database"
 fi
 
 ########################
