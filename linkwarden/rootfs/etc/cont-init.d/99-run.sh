@@ -27,6 +27,12 @@ echo "... starting server"
 service postgresql start & true
 sleep 5
 
+echo "... create user"
+# Create database if does not exist
+echo "CREATE ROLE postgres WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'homeassistant';
+\q"> setup_postgres.sql
+psql "postgres://postgres:homeassistant&localhost:5432/linkwarden" < setup_postgres.sql || true
+
 if [ -e /config/postgres/postgresql.conf ]; then
   echo "... database already configured"
 else
