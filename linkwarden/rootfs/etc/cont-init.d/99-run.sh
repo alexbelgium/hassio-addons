@@ -39,8 +39,7 @@ if [[ "$DATABASE_URL" == *"localhost"* ]]; then
     sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'homeassistant';"
     
     # Create database if does not exist
-    echo "CREATE ROLE postgres WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'homeassistant';
-         CREATE DATABASE linkwarden; CREATE USER postgres WITH ENCRYPTED PASSWORD 'homeassistant'; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;
+    echo "CREATE DATABASE linkwarden; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;
     \q"> setup_postgres.sql
     sudo -u postgres psql "postgres://postgres:homeassistant@localhost:5432" < setup_postgres.sql || true
 fi
