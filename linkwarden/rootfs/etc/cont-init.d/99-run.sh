@@ -7,7 +7,7 @@ set -e
 #################
 
 bashio::log.info "Creating folders"
-mkdir -p /config/library
+mkdir -p "$STORAGE_FOLDER"
 
 ######################
 # CONFIGURE POSTGRES #
