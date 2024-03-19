@@ -20,7 +20,7 @@
     "3000/tcp": 3000
   },
   "ports_description": {
-    "3000/tcp": "webui"
+    "3000/tcp": "Webui"
   },
   "schema": {
     "NEXTAUTH_SECRET": "str",
