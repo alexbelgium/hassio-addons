@@ -6,7 +6,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "collaborative bookmark manager to collect, organize, and preserve webpages and articles",
   "environment": {
-    "DATABASE_URL": "file:/config/database/linkwarden.sqlite",
+    "DATABASE_URL": "postgresql://postgres:homeassistant@localhost:5432/linkwarden",
     "NEXTAUTH_URL": "http://localhost:3000/api/v1/auth",
     "STORAGE_FOLDER": "/config/library"
   },
@@ -20,15 +20,15 @@
     "3000/tcp": 3000
   },
   "ports_description": {
-    "3000/tcp": "linkwarden Vault"
+    "3000/tcp": "webui"
   },
   "schema": {
     "NEXTAUTH_SECRET": "str",
     "NEXTAUTH_URL": "str?",
-    "DATABASE_URL": "str?"
+    "DATABASE_URL": "str?",
+    "STORAGE_FOLDER": "str?"
   },
   "slug": "linkwarden",
-  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden",
   "version": "1.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
