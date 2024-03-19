@@ -28,9 +28,13 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-# Install postgres
 ENV PGDATA=/config/postgres
+# Adapt campaign
 RUN \
+    # Change data directory
+    mv /data /data_linkwarden && \
+    \
+    # Install postgres
     apt-get update && apt-get install vim gnupg2 lsb-release sudo curl -y && \
     curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc| gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
     sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
