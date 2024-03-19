@@ -38,6 +38,7 @@ Options can be configured through two ways :
 ```yaml
 "NEXTAUTH_SECRET": mandatory, must be filled at start
 "NEXTAUTH_URL": optional, only if linkwarden is kept externally
+"STORAGE_FOLDER": optional, is /config/library by default
 "DATABASE_URL": optional, if kept blank an internal database will be used. If an external database is used, modify according to this design postgresql://postgres:homeassistant@localhost:5432/linkwarden
 ```
 
