@@ -30,6 +30,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 ENV PGDATA=/config/postgres
 # Adapt campaign
+# hadolint ignore=DL3015
 RUN \
     # Change data directory
     mv /data /data_linkwarden && \
