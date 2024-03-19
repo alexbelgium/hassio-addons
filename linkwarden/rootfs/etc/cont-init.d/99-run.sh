@@ -1,37 +1,43 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 set -e
-  
+
+#################
+# INITALISATION #
+#################
+
 bashio::log.info "Creating folders"
 mkdir -p /config/library
-mkdir -p /config/database
-touch /config/database/linkwarden.sqlite
-
-bashio::log.info "Applying migrations"
-rm -r /data_linkwarden/prisma/migrations
-cd /data_linkwarden
-npx prisma db push
-npx prisma generate
-
-bashio::log.info "Starting app..."
-yarn prisma migrate deploy
-yarn start docker-entrypoint.sh & true
 
 ######################
 # CONFIGURE POSTGRES #
 ######################
 
-bashio::log.info "Starting postgres..."
+bashio::log.info "Setting postgres..."
+if [[ "$DATABASE_URL" == *"localhost"* ]]; then
+echo "... with local database"
+echo "... set database in /config/postgres"
 mkdir -p /config/postgres
 mkdir -p /var/run/postgresql 
 chown postgres:postgres /var/run/postgresql
 chown -R postgres:postgres /config/postgres
 chmod 0700 /config/postgres
+
+echo "... starting server"
+service postgresql start & true
+sleep 5
+
 if [ -e /config/postgres/postgresql.conf ]; then
-  echo "Database already configured"
+  echo "... database already configured"
 else
+ echo "configure database"
   postgres /usr/lib/postgresql/*/bin/initdb
 fi
 
-bashio::log.info "Starting postgres..."
-service postgresql start
+########################
+# CONFIGURE LINKWARDEN #
+########################
+
+bashio::log.info "Starting app..."
+yarn prisma migrate deploy
+yarn start docker-entrypoint.sh & true
