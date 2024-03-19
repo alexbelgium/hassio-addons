@@ -78,6 +78,7 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 # Modify .env location
 RUN sed -i "s|/\.env|/data_linkwarden/\.env|g" /etc/cont-init.d/*.sh
 
+WORKDIR /data_linkwarden
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
