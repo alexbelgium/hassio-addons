@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Portainer Agend] Error on short poll because of unknown timezone (opened 2024-03-14)](https://github.com/alexbelgium/hassio-addons/issues/1303) by [@C0ntroller](https://github.com/C0ntroller)
 
 # Home assistant add-on: Portainer
 

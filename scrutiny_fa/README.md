@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [Scrutiny (Full Access) - error during startup (opened 2024-03-17)](https://github.com/alexbelgium/hassio-addons/issues/1308) by [@pxFIN](https://github.com/pxFIN)
 # Home assistant add-on: Scrutiny Full Access
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
