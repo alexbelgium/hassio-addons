@@ -27,7 +27,10 @@ FROM $BUILD_FROM
 # Copy Portainer agent binaries
 COPY --from=original_agent /app /app
 
+# Add tzdata
 RUN apk add --no-cache tzdata
+ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo.zip
+ENV ZONEINFO /zoneinfo.zip
 
 ##################
 # 2 Modify Image #
