@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Overleaf (opened 2024-02-03)](https://github.com/alexbelgium/hassio-addons/issues/1226) by [@LoganJFisher](https://github.com/LoganJFisher)
 # Home assistant add-on: Overleaf
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

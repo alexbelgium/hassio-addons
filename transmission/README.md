@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Transmission] Add-on doesnt start. (opened 2024-03-13)](https://github.com/alexbelgium/hassio-addons/issues/1300) by [@furang](https://github.com/furang)
 
 # Home assistant add-on: Transmission
 
