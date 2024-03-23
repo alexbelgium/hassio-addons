@@ -1,4 +1,7 @@
 
+## 17.2.0 (23-03-2024)
+- Update to latest version from coderaiser/cloudcmd
+
 ## 17.0.7 (16-03-2024)
 - Update to latest version from coderaiser/cloudcmd
 
