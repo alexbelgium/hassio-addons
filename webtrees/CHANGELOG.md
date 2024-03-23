@@ -1,4 +1,7 @@
 
+## 2.1.19 (23-03-2024)
+- Update to latest version from nathanvaughn/webtrees-docker
+
 ## 2.1.18 (20-10-2023)
 
 - Update to latest version from nathanvaughn/webtrees-docker
