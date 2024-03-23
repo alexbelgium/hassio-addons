@@ -1,3 +1,6 @@
+
+## linux-ppc64le-2.20.0-alpine (23-03-2024)
+- Update to latest version from portainer/agent
 ## linux-arm64-2.19.4-alpine-3 (21-03-2024)
 - Minor bugs fixed
 ## linux-arm64-2.19.4-alpine-2 (14-03-2024)
