@@ -4,7 +4,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Web based comic archive browser and reader"
+  "description": "Web based comic archive browser and reader",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
