@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] Guacamole Client - Autologin (opened 2024-03-15)](https://github.com/alexbelgium/hassio-addons/issues/1304) by [@FrancescoC87](https://github.com/FrancescoC87)
-## &#9888; Open Issue : [🐛 [Guacamole Client] Wrong addon config directory name (opened 2024-03-17)](https://github.com/alexbelgium/hassio-addons/issues/1309) by [@jorgwolski](https://github.com/jorgwolski)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
