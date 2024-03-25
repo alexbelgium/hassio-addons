@@ -23,9 +23,9 @@
     "3000/tcp": "webui"
   },
   "schema": {
+    "DATABASE_URL": "str?",
     "NEXTAUTH_SECRET": "str",
     "NEXTAUTH_URL": "str?",
-    "DATABASE_URL": "str?",
     "STORAGE_FOLDER": "str?"
   },
   "slug": "linkwarden",
