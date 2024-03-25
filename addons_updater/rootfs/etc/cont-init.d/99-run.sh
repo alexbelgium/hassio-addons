@@ -280,7 +280,7 @@ for f in */; do
             #Update changelog
             touch "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
             if [[ "$SOURCE" == *"github"* ]]; then
-                sed -i "1i - Update to latest version from $UPSTREAM (https://github.com/${REPOSITORY%/}/releases)" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
+                sed -i "1i - Update to latest version from $UPSTREAM (changelog : https://github.com/${UPSTREAM%/}/releases)" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
             else
                 sed -i "1i - Update to latest version from $UPSTREAM" "/data/${BASENAME}/${SLUG}/CHANGELOG.md"
             fi
