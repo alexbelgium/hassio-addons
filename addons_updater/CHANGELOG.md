@@ -1,3 +1,4 @@
+- Automatically add a link to the release tab when using a github repo to facilitate access to upstream changelog
 
 ## 3.19
 
