@@ -71,7 +71,9 @@
   },
   "image": "ghcr.io/alexbelgium/requestrr-{arch}",
   "init": false,
-  "map": [],
+  "map": [
+    "addon_config:rw"
+  ],
   "name": "Requestrr",
   "options": {
     "PGID": 0,
@@ -95,6 +97,6 @@
   "slug": "requestrr",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.2-3-bugfix",
+  "version": "DO_NOT_UPDATE-test",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:4545]"
 }
