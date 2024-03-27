@@ -1,4 +1,3 @@
-## &#9888; Open Request : [Requestrr (opened 2024-03-26)](https://github.com/alexbelgium/hassio-addons/issues/1321) by [@dumbledorethor](https://github.com/dumbledorethor)
 # Home assistant add-on: requestrr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
