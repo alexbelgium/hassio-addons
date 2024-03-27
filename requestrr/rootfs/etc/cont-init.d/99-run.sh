@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Start app
-dotnet Requestrr.WebApi.dll -c /config
+/app/requestrr/bin/Requestrr.WebApi -c /config
