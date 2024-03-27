@@ -47,7 +47,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Webui can be found at <http://homeassistant:PORT>.
 The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+Please run a first time the addon, then customize using my Filebrowser addon the config file created in /addon_configs/db21ed7f_requestrr
 
 ```yaml
 PGID: user
