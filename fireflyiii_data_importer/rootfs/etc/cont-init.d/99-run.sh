@@ -3,7 +3,6 @@
 set -e
 
 CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-CONFIGSOURCE="$(dirname "$CONFIGSOURCE")"
 
 #################
 # CONFIG IMPORT #
