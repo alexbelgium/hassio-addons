@@ -3,7 +3,7 @@
 set -e
 
 slug=fireflyiii_data_importer
-CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
+CONFIGSOURCE="$(bashio::config "CONFIG_LOCATION")"
 
 if [ -d "/homeassistant/addons_config/$slug" ]; then
     echo "Migrating /homeassistant/addons_config/$slug"
