@@ -70,13 +70,14 @@
   },
   "image": "ghcr.io/alexbelgium/fireflyiii_data_importer-{arch}",
   "map": [
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "ssl"
   ],
   "name": "Firefly iii Data Importer",
   "options": {
-    "CONFIG_LOCATION": "/config/addons_config/fireflyiii_data_importer/config.yaml"
+    "CONFIG_LOCATION": "/config"
   },
   "ports": {
     "8080/tcp": 3474
@@ -102,6 +103,6 @@
   "slug": "fireflyiii_data_importer",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.4.5",
+  "version": "1.4.5-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
