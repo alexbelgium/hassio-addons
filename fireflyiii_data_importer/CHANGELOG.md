@@ -1,3 +1,5 @@
+- ⚠ Previous version had a critical bug that might have led to the deletion of your configurations... I apologize for that - the only way to recover them is by going in the last backup that you had of your /config directory (likely last time you did a full backup of your homeassistant system). Btw I highly recommend automated weekly backups using a tool such as https://github.com/sabeechen/hassio-google-drive-backup
+
 ## 1.4.5-2 (28-03-2024)
 - ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/fireflyiii_date_importer in a folder only accessible from my Filebrowser addon called /addon_configs/db21ed7f_fireflyiii_date_importer. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
