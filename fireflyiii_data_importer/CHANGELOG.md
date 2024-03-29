@@ -1,3 +1,4 @@
+## 1.4.5-3 (29-03-2024)
 - ⚠ Previous version had a critical bug that might have led to the deletion of your configurations... I apologize for that - the only way to recover them is by going in the last backup that you had of your /config directory (likely last time you did a full backup of your homeassistant system). Btw I highly recommend automated weekly backups using a tool such as https://github.com/sabeechen/hassio-google-drive-backup
 
 ## 1.4.5-2 (28-03-2024)
