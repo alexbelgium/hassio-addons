@@ -1,4 +1,7 @@
 
+## 4.6.4 (30-03-2024)
+- Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
+
 ## 4.6.3-4 (21-01-2024)
 
 - Fix : openvpn not starting https://github.com/alexbelgium/hassio-addons/issues/1192
