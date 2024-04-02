@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Linkwarden (opened 2024-03-14)](https://github.com/alexbelgium/hassio-addons/issues/1302) by [@blackpearlla](https://github.com/blackpearlla)
 # Home assistant add-on: linkwarden
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
