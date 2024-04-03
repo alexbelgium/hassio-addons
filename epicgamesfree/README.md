@@ -49,6 +49,12 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Support
 
+### Timeout error
+
+Please try adding `"browserNavigationTimeout": 300000,` to your config.json (https://github.com/alexbelgium/hassio-addons/issues/675#issuecomment-1407675351)
+
+### Other errors
+
 Create an issue on github
 
 [repository]: https://github.com/alexbelgium/hassio-addons
