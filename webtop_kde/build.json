@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "lscr.io/linuxserver/webtop:arm64v8-ubuntu-xfce",
-    "amd64": "lscr.io/linuxserver/webtop:amd64-ubuntu-xfce"
+    "aarch64": "lscr.io/linuxserver/webtop:ubuntu-xfce",
+    "amd64": "lscr.io/linuxserver/webtop:ubuntu-xfce"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
