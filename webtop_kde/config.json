@@ -108,7 +108,7 @@
     "22/tcp": "SSH",
     "23/tcp": "TELNET",
     "25/tcp": "SMTP",
-    "53/tcp": "Domain",
+    "53/tcp": "DNS",
     "80/tcp": "http",
     "3000/tcp": "web interface",
     "3001/tcp": "custom port 1",
