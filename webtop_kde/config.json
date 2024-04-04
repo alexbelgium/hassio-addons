@@ -110,7 +110,7 @@
     "25/tcp": "SMTP",
     "53/tcp": "DNS",
     "80/tcp": "http",
-    "3000/tcp": "web interface",
+    "3000/tcp": "Web interface",
     "3001/tcp": "custom port 1",
     "3002/tcp": "custom port 2"
   },
