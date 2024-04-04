@@ -93,10 +93,26 @@
   },
   "panel_icon": "mdi:monitor",
   "ports": {
-    "3000/tcp": 3000
-  },
+    "21/tcp": null,
+    "22/tcp": null,
+    "23/tcp": null,
+    "25/tcp": null,
+    "53/tcp": null,
+    "80/tcp": null,
+    "3000/tcp": 3000,
+    "3001/tcp": null,
+    "3002/tcp": null
+  },  
   "ports_description": {
-    "3000/tcp": "web interface"
+    "21/tcp": "FTP",
+    "22/tcp": "SSH",
+    "23/tcp": "TELNET",
+    "25/tcp": "SMTP",
+    "53/tcp": "Domain",
+    "80/tcp": "http",
+    "3000/tcp": "web interface",
+    "3001/tcp": "custom port 1",
+    "3002/tcp": "custom port 2"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -122,6 +138,6 @@
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls89-xfce12test",
+  "version": "5c8ffd24-ls153",
   "video": true
 }
