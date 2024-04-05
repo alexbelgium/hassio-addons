@@ -1,4 +1,7 @@
 
+## 6.1.13 (06-04-2024)
+- Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
+
 ## 6.1.12 (23-03-2024)
 - Update to latest version from firefly-iii/firefly-iii
 
