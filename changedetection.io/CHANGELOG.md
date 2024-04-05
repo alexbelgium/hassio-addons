@@ -1,4 +1,7 @@
 
+## 0.45.17 (06-04-2024)
+- Update to latest version from linuxserver/docker-changedetection.io (changelog : https://github.com/linuxserver/docker-changedetection.io/releases)
+
 ## 0.45.16 (09-03-2024)
 
 - Update to latest version from linuxserver/docker-changedetection.io
