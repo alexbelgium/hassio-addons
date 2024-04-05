@@ -93,6 +93,7 @@
   },
   "panel_icon": "mdi:monitor",
   "ports": {
+    "20/tcp": null,
     "21/tcp": null,
     "22/tcp": null,
     "23/tcp": null,
@@ -104,6 +105,7 @@
     "3002/tcp": null
   },  
   "ports_description": {
+    "20/tcp": "FTP",
     "21/tcp": "FTP",
     "22/tcp": "SSH",
     "23/tcp": "TELNET",
@@ -138,6 +140,6 @@
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5c8ffd24-ls153-2",
+  "version": "5c8ffd24-ls153-3",
   "video": true
 }
