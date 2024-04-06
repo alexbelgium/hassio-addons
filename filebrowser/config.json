@@ -63,7 +63,11 @@
     "/dev/sda8",
     "/dev/nvme0",
     "/dev/nvme1",
-    "/dev/nvme2"
+    "/dev/nvme2",
+    "/dev/md0",
+    "/dev/md1",
+    "/dev/md2",
+    "/dev/md3"
   ],
   "environment": {
     "FB_BASEURL": "/filebrowser",
@@ -118,5 +122,5 @@
   "slug": "filebrowser",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.23.0_12"
+  "version": "2.23.0_13"
 }
