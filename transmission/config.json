@@ -64,7 +64,11 @@
     "/dev/sda8",
     "/dev/nvme0",
     "/dev/nvme1",
-    "/dev/nvme2"
+    "/dev/nvme2",
+    "/dev/md0",
+    "/dev/md1",
+    "/dev/md2",
+    "/dev/md3"
   ],
   "environment": {},
   "image": "ghcr.io/alexbelgium/transmission_ls-{arch}",
