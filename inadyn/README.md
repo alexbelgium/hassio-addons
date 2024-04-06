@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [inadyn] Custom provider doesnt seem to be working (opened 2024-04-06)](https://github.com/alexbelgium/hassio-addons/issues/1334) by [@m435tr0d](https://github.com/m435tr0d)
 # Home assistant add-on: Inadyn
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
