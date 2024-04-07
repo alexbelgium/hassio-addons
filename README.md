@@ -22,6 +22,8 @@ _Thanks to all contributors !_
 
 [![contributors](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/graphs/contributors)
 
+## [![Repography logo](https://images.repography.com/logo.svg)](https://repography.com) / Recent activity [![Time period](https://images.repography.com/49357946/alexbelgium/hassio-addons/recent-activity/TLd82uCliKhiQBckPFbP9NeD_y0hjL5kPfkYkHzRZcs/aqavqD1bUKgpz0LZnR-4z-Q3uUow0lvAnafrrsc-vnQ_badge.svg)](https://repography.com)
+
 ## About
 
 Home Assistant allows anyone to create add-on repositories to share their
