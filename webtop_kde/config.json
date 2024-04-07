@@ -98,23 +98,23 @@
     "22/tcp": null,
     "23/tcp": null,
     "25/tcp": null,
-    "53/tcp": null,
-    "80/tcp": null,
     "3000/tcp": 3000,
     "3001/tcp": null,
-    "3002/tcp": null
-  },  
+    "3002/tcp": null,
+    "53/tcp": null,
+    "80/tcp": null
+  },
   "ports_description": {
     "20/tcp": "FTP",
     "21/tcp": "FTP",
     "22/tcp": "SSH",
     "23/tcp": "TELNET",
     "25/tcp": "SMTP",
-    "53/tcp": "DNS",
-    "80/tcp": "http",
     "3000/tcp": "Web interface",
     "3001/tcp": "custom port 1",
-    "3002/tcp": "custom port 2"
+    "3002/tcp": "custom port 2",
+    "53/tcp": "DNS",
+    "80/tcp": "http"
   },
   "privileged": [
     "SYS_ADMIN",
