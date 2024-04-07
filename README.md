@@ -23,6 +23,12 @@ _Thanks to all contributors !_
 [![contributors](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/graphs/contributors)
 
 ## [![Repography logo](https://images.repography.com/logo.svg)](https://repography.com) / Recent activity [![Time period](https://images.repography.com/49357946/alexbelgium/hassio-addons/recent-activity/TLd82uCliKhiQBckPFbP9NeD_y0hjL5kPfkYkHzRZcs/aqavqD1bUKgpz0LZnR-4z-Q3uUow0lvAnafrrsc-vnQ_badge.svg)](https://repography.com)
+[![Timeline graph](https://images.repography.com/49357946/alexbelgium/hassio-addons/recent-activity/TLd82uCliKhiQBckPFbP9NeD_y0hjL5kPfkYkHzRZcs/aqavqD1bUKgpz0LZnR-4z-Q3uUow0lvAnafrrsc-vnQ_timeline.svg)](https://github.com/alexbelgium/hassio-addons/commits)
+[![Issue status graph](https://images.repography.com/49357946/alexbelgium/hassio-addons/recent-activity/TLd82uCliKhiQBckPFbP9NeD_y0hjL5kPfkYkHzRZcs/aqavqD1bUKgpz0LZnR-4z-Q3uUow0lvAnafrrsc-vnQ_issues.svg)](https://github.com/alexbelgium/hassio-addons/issues)
+[![Pull request status graph](https://images.repography.com/49357946/alexbelgium/hassio-addons/recent-activity/TLd82uCliKhiQBckPFbP9NeD_y0hjL5kPfkYkHzRZcs/aqavqD1bUKgpz0LZnR-4z-Q3uUow0lvAnafrrsc-vnQ_prs.svg)](https://github.com/alexbelgium/hassio-addons/pulls)
+[![Trending topics](https://images.repography.com/49357946/alexbelgium/hassio-addons/recent-activity/TLd82uCliKhiQBckPFbP9NeD_y0hjL5kPfkYkHzRZcs/aqavqD1bUKgpz0LZnR-4z-Q3uUow0lvAnafrrsc-vnQ_words.svg)](https://github.com/alexbelgium/hassio-addons/commits)
+[![Top contributors](https://images.repography.com/49357946/alexbelgium/hassio-addons/recent-activity/TLd82uCliKhiQBckPFbP9NeD_y0hjL5kPfkYkHzRZcs/aqavqD1bUKgpz0LZnR-4z-Q3uUow0lvAnafrrsc-vnQ_users.svg)](https://github.com/alexbelgium/hassio-addons/graphs/contributors)
+[![Activity map](https://images.repography.com/49357946/alexbelgium/hassio-addons/recent-activity/TLd82uCliKhiQBckPFbP9NeD_y0hjL5kPfkYkHzRZcs/aqavqD1bUKgpz0LZnR-4z-Q3uUow0lvAnafrrsc-vnQ_map.svg)](https://github.com/alexbelgium/hassio-addons/commits)
 
 ## About
 
