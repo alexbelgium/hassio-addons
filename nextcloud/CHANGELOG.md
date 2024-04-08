@@ -1,3 +1,4 @@
+- Add preview support for BMP GIF HEIC JPEG Krita PNG XBitmap
 - Checks if maintenance_window_start is set, or use 1 as default which corresponds to 1-5 am (https://docs.nextcloud.com/server/28/admin_manual/configuration_server/background_jobs_configuration.html#maintenance-window-start)
 
 ## 28.0.4 (30-03-2024)
