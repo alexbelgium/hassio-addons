@@ -159,3 +159,12 @@ else
     echo "... disabling thumbnails"
     sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=false
 fi
+
+##########################
+# Set maintenance period #
+##########################
+
+if [[ "$(occ config:system:get maintenance_window_start)" == "" ]]; then
+    echo "... maintenance windows not set, it will be changed to 1"
+    sudo -u abc php /app/www/public/occ config:system:set maintenance_window_start --type=integer --value=1
+fi
