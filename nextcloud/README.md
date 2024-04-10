@@ -31,7 +31,28 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ### Custom scripts
 
-Scripts with .sh ending located in /config/addons_config/nextcloud will be executed at boot
+/config/addons_autoscripts/nextcloud-ocr.sh will be executed at boot.
+To run custom commands at boot you can try a code such as : 
+```bash
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+#################
+# CODE INJECTOR #
+#################
+
+# Any commands written in this bash script will be executed at addon start
+# See guide here : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-customisation
+
+# Runs only after initialization done
+# shellcheck disable=SC2128
+mkdir -p /scripts
+if [ ! -f /app/www/public/occ ]; then cp /config/addons_autoscripts/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
+
+echo "Scanning files"
+sudo -u abc php /app/www/public/occ files:scan --all
+echo "This is done !"
+```
 
 ### Addon options
 
