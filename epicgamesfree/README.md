@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [epicgamesfree] A new docker volume is created every addon restart (opened 2024-03-26)](https://github.com/alexbelgium/hassio-addons/issues/1322) by [@elkarto](https://github.com/elkarto)
 
 # Home assistant add-on: Epic Games Free
 

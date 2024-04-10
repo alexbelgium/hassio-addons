@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [SCRUTINY_FA] Addon doesnt respect scheduling option (opened 2024-03-28)](https://github.com/alexbelgium/hassio-addons/issues/1324) by [@flopon](https://github.com/flopon)
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
