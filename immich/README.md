@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [Immich | Data location on networkshare permission denied (opened 2024-04-09)](https://github.com/alexbelgium/hassio-addons/issues/1341) by [@Breakingx](https://github.com/Breakingx)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)
