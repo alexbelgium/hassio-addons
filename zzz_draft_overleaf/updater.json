@@ -1,8 +1,0 @@
-{
-  "last_update": "10-02-2024",
-  "repository": "alexbelgium/hassio-addons",
-  "slug": "overleaf",
-  "source": "github",
-  "upstream_repo": "sharelatex/sharelatex",
-  "upstream_version": "0.2.0"
-}
