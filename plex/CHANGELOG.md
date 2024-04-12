@@ -1,4 +1,7 @@
 
+## 1.40.1.8227-c0dd5a73e-ls212 (13-04-2024)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
+
 ## 1.40.1.8227-c0dd5a73e-ls211 (30-03-2024)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 
