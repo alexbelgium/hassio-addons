@@ -43,19 +43,19 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 88
-- Installed : 67070
+- Installed : 64308
 
 ### Top 3
 
-1. Filebrowser (9957x)
-2. Portainer (5045x)
-3. Arpspoof (2150x)
+1. Portainer (5496x)
+2. Filebrowser (9957x)
+3. Arpspoof (2190x)
 
 ### Architectures used
 
 - amd64: 53%
 - aarch64: 37%
-- armv7: 10%
+- armv7: 11%
 
 ### Total downloads evolution
 
@@ -74,7 +74,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ## Add-ons provided by this repository
 
 
-&#10003;  [Arpspoof (2150x)](arpspoof/) : block internet connection for local network devices
+&#10003;  [Arpspoof (2190x)](arpspoof/) : block internet connection for local network devices
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fupdater.json)
@@ -558,7 +558,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (5045x)](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (5496x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
@@ -567,7 +567,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![armv7][armv7-badge]
 ![ingress][ingress-badge]
 
-&#10003;  [Portainer (5045x) Agent](portainer_agent/) : An agent used to manage all the resources in a Swarm cluster
+&#10003;  [Portainer (5496x) Agent](portainer_agent/) : An agent used to manage all the resources in a Swarm cluster
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_agent%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_agent%2Fupdater.json)
