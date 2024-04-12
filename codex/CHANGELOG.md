@@ -1,4 +1,7 @@
 
+## 1.5.15 (13-04-2024)
+- Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
+
 ## 1.5.13 (06-04-2024)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
 
