@@ -32,6 +32,6 @@
   },
   "slug": "signalk",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.6.2",
+  "version": "2.7.1",
   "webui": "http://[HOST]:[PORT:3000]"
 }
