@@ -1,3 +1,5 @@
+## v0.8.1-2 (13-04-2024)
+- Minor bugs fixed
 
 ## v0.8.1 (13-04-2024)
 - Update to latest version from analogj/scrutiny (changelog : https://github.com/analogj/scrutiny/releases)
