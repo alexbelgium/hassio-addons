@@ -48,9 +48,10 @@ done
 sed -i "s|/command/with-contenv bashio|$shebang|g" /ha_entrypoint.sh
 
 # Correct for scripts
-for files in /etc/cont-init.d/* /etc/services.d/*; do
-    sed -i "s|/command/with-contenv bashio|$shebang|g" "$files"
-    sed -i "s|/usr/bin/with-contenv bashio|$shebang|g" "$files"
+for string in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio"; do
+    for file in $(grep -sril "$string" /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do
+        sed -i "s|$string|$shebang|g" "$files"
+    done
 done
 
 # Avoid interference with LOG_LEVEL used in the app
