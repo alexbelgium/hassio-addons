@@ -38,7 +38,7 @@ fi
 mkdir -p /run/s6/container_environment
 
 # Check if shebang exists
-for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
+for shebang in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
     if [ -f "${shebang%% *}" ]; then
         break
     fi
@@ -46,6 +46,12 @@ done
 
 # Define shebang
 sed -i "s|/command/with-contenv bashio|$shebang|g" /ha_entrypoint.sh
+
+# Correct for scripts
+for files in /etc/cont-init.d/* /etc/services.d/*; do
+    sed -i "s|/command/with-contenv bashio|$shebang|g" "$files"
+    sed -i "s|/usr/bin/with-contenv bashio|$shebang|g" "$files"
+done
 
 # Avoid interference with LOG_LEVEL used in the app
 if [ -f /usr/lib/bashio/bashio.sh ]; then
