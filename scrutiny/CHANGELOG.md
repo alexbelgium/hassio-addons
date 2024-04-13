@@ -1,3 +1,6 @@
+
+## v0.8.1 (13-04-2024)
+- Update to latest version from analogj/scrutiny (changelog : https://github.com/analogj/scrutiny/releases)
 ## v0.8.0-3 (18-03-2024)
 -Avoid overriding the smartctl command https://github.com/alexbelgium/hassio-addons/issues/1308
 
