@@ -5,7 +5,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Scrutiny WebUI for smartd S.M.A.R.T monitoring",
+  "description": "Scrutiny webUI for smartd S.M.A.R.T monitoring",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
