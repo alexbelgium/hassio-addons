@@ -24,6 +24,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## Configuration
 
+Ingress addition : https://community.home-assistant.io/t/ingress-access-for-tandoor-recipes/717859
+
 Please check Tandoor Recipes documentation : https://docs.tandoor.dev/install/docker/
 
 ```yaml
