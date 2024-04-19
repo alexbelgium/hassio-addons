@@ -186,6 +186,8 @@ if bashio::config.has_value 'networkdisks'; then
             # Extracting SMB versions and normalize output
             # shellcheck disable=SC2210,SC2094
             SMBVERS="$(nmap --script smb-protocols "$server" -p 445 2>1 | awk '/  [0-9]/' | awk '{print $NF}'  | cut -c -3 | sort -V | tail -n 1  || true)"
+            # Avoid :
+            SMBVERS="${SMBVERS/:/.}"
             # Manage output
             if [ -n "$SMBVERS" ]; then
                 case $SMBVERS in
