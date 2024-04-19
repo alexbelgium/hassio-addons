@@ -191,7 +191,7 @@ if bashio::config.has_value 'networkdisks'; then
             # Manage output
             if [ -n "$SMBVERS" ]; then
                 case $SMBVERS in
-                    202)
+                    "202"|"200"|"20")
                         SMBVERS="2.0"
                         ;;
                     21)
