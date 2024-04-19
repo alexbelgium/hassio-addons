@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] MyElectricalData (opened 2024-02-14)](https://github.com/alexbelgium/hassio-addons/issues/1243) by [@m4dm4rtig4n](https://github.com/m4dm4rtig4n)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
