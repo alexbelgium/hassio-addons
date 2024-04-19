@@ -1,4 +1,7 @@
 
+## 1.8.1 (20-04-2024)
+- Update to latest version from Fallenbagel/jellyseerr (changelog : https://github.com/Fallenbagel/jellyseerr/releases)
+
 ## 1.7.0 (16-09-2023)
 
 - Update to latest version from Fallenbagel/jellyseerr
