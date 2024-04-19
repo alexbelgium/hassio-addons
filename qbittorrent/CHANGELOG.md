@@ -1,3 +1,4 @@
+- Fix nmap bug
 
 ## 4.6.4 (30-03-2024)
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
