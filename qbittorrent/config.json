@@ -4,7 +4,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "qBittorrent is a bittorrent client",
+  "description": "bittorrent client with optional vpn",
   "devices": [
     "/dev/net/tun",
     "/dev/dri",
