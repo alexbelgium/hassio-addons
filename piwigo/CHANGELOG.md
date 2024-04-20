@@ -1,4 +1,7 @@
 
+## 14.4.0 (20-04-2024)
+- Update to latest version from linuxserver/docker-piwigo (changelog : https://github.com/linuxserver/docker-piwigo/releases)
+
 ## 14.3.0 (02-03-2024)
 
 - Update to latest version from linuxserver/docker-piwigo
