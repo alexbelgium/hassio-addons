@@ -30,7 +30,7 @@ if [ -f "$CONFIG_LOCATION" ]; then
     bashio::log.green "---------------------------"
     bashio::log.green "Connection_mode is $connection_mode"
     bashio::log.green "---------------------------"
-    case connectionmode in
+    case "$connectionmode" in
         # Ingress mode, authentification is disabled
         ingress_noauth)
             bashio::log.green "Ingress is enabled, authentification is disabled"
