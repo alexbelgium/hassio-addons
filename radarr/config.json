@@ -82,7 +82,9 @@
   "name": "Radarr",
   "options": {
     "PGID": 0,
-    "PUID": 0
+    "PUID": 0,
+    "connection_mode": "ingress_noauth"
+
   },
   "panel_icon": "mdi:movie-outline",
   "ports": {
@@ -102,13 +104,12 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "ingress_disabled": "bool?",
+    "connection_mode": "list(ingress_noauth,noingress_auth,ingress_auth)",
     "localdisks": "str?",
-    "networkdisks": "str?",
-    "smbv1": "bool?"
+    "networkdisks": "str?"
   },
   "slug": "radarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
-  "version": "5.4.6.8723"
+  "version": "5.4.6.8723-2"
 }

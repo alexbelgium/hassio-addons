@@ -57,6 +57,7 @@ localdisks: sda1 #put the hardware name of your drive to mount separated by comm
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
 cifspassword: "password" # optional, smb password
+connection_mode: ingress_noauth (default, disables authentification to allow a seamless ingress integration), noingress_auth (disables ingress to allow a simpler external url, enables authentification), ingress_auth (enables both ingress and authentification)
 ```
 
 ## Support

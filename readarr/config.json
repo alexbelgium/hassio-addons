@@ -81,7 +81,9 @@
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/readarr",
     "PGID": 0,
-    "PUID": 0
+    "PUID": 0,
+    "connection_mode": "ingress_noauth"
+
   },
   "panel_icon": "mdi:download-circle",
   "ports": {
@@ -102,12 +104,12 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "ingress_disabled": "bool?",
+    "connection_mode": "list(ingress_noauth,noingress_auth,ingress_auth)",
     "localdisks": "str?",
     "networkdisks": "str?"
   },
   "slug": "readarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
-  "version": "0.3.24.2509"
+  "version": "0.3.24.2509-2"
 }
