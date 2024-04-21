@@ -1,3 +1,5 @@
+- Fix : allows absence of legacy folders (addons_config and addons_autoscripts)
+
 ## 2.23.0_13 (06-04-2024)
 - Allow mdadm RAID (thanks @zagi988)
 
