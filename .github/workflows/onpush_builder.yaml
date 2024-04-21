@@ -182,11 +182,9 @@ jobs:
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon
 
-  make-issue:
-    if: steps.builderstep.outcome == 'failure'
-    steps:
-      - uses: actions/checkout@v3
-      - uses: JasonEtco/create-an-issue@v2
+      - name: Makeissue ${{ matrix.addon }} add-on
+        if: failure()
+        uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
