@@ -167,6 +167,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build ${{ matrix.addon }} add-on
+        id: builderstep
         if: steps.check.outputs.build_arch == 'true'
         continue-on-error: true
         uses: home-assistant/builder@master
@@ -180,6 +181,16 @@ jobs:
             --image "${{ steps.check.outputs.image }}" \
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon
+
+  make-issue:
+    if: steps.builderstep.outcome == 'failure'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: .github/ISSUE_TEMPLATE/BUG-REPORT.yml
 
   make-changelog:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
