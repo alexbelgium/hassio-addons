@@ -1,3 +1,4 @@
+## 4.0.4.1515-4 (21-04-2024)
 - BREAKING CHANGE : ingress_disabled option removed. Instead, a new option connection_mode is added. It has 3 modes : ingress_noauth (default, disables authentification to allow a seamless ingress integration), noingress_auth (disables ingress to allow a simpler external url, enables authentification), ingress_auth (enables both ingress and authentification). Thanks @Ni3kjm !
 
 ## 4.0.4.1515 (20-04-2024)
