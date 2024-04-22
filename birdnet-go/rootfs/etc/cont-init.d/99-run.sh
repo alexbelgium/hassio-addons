@@ -15,7 +15,8 @@ echo " "
 
 bashio::log.info "Starting app..."
 COMMAND="$(bashio::config "COMMAND")"
-/usr/bin/birdnet-go realtime $COMMAND & true
+# shellcheck disable=SC2086
+/usr/bin/birdnet-go $COMMAND & true
 
 # Wait for app to become available to start nginx
 bashio::net.wait_for 8080 localhost 900
