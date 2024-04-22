@@ -26,6 +26,6 @@
   },
   "slug": "birdnet-go",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go",
-  "version": "0.5.1",
+  "version": "0.5.1-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
