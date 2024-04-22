@@ -17,6 +17,9 @@
     "addon_config:rw"
   ],
   "name": "birdnet-go",
+  "options": {
+    "COMMAND": "realtime"
+  },
   "panel_icon": "mdi:bird",
   "ports": {
     "8080/tcp": 8080
@@ -26,10 +29,10 @@
   },
   "schema": {
     "ALSA_CARD": "int?",
+    "COMMAND": "str",
     "TZ": "str?"
   },
   "slug": "birdnet-go",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go",
-  "version": "0.5.1_testingress3",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
+  "version": "0.5.1-2"
 }
