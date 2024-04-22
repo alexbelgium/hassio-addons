@@ -32,7 +32,7 @@ Install, then start the addon a first time
 Webui can be found at <http://homeassistant:8080>.
 You'll need to create a new user at startup.
 
-Options can be configured through two ways :
+Options can be configured through three ways :
 
 - Addon options
 
@@ -42,7 +42,10 @@ TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of
 ```
 
 - Config.yaml
-Additional environment variables can be configured using the config.yaml file found in /config/db21ed7f_birdnet-go/config.yaml using the Filebrowser addon
+Additional variables can be configured using the config.yaml file found in /config/db21ed7f_birdnet-go/config.yaml using the Filebrowser addon
+
+- Config_env.yaml
+Additional environment variables can be configured there
 
 ## Installation
 
