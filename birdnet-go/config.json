@@ -9,7 +9,6 @@
   "environment": {
   },
   "ingress": true,
-  "ingress_port": 0,
   "ingress_stream": true,
   "image": "ghcr.io/alexbelgium/birdnet-go-{arch}",
   "init": false,
