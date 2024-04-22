@@ -27,12 +27,11 @@ jobs:
           jpegProgressive: false
           pngQuality: '60'
           webpQuality: '60'
-          
-      - name: Create New Pull Request If Needed
+
+      - name: Commit if needed
         if: steps.calibre.outputs.markdown != ''
-        uses: peter-evans/create-pull-request@v5
+        uses: EndBug/add-and-commit@v9
         with:
-          title: "Github bot : image compressed"
-          branch-suffix: timestamp
-          commit-message: "Github bot : image compressed"
+          message: "Github bot : image compressed"
+          default_author: github_actions
           body: ${{ steps.calibre.outputs.markdown }} 
