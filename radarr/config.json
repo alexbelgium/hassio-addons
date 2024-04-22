@@ -104,12 +104,12 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "connection_mode": "list(ingress_noauth,noingress_auth,ingress_auth)",
+    "connection_mode": "list(ingress_noauth|noingress_auth|ingress_auth)",
     "localdisks": "str?",
     "networkdisks": "str?"
   },
   "slug": "radarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
-  "version": "5.4.6.8723-4"
+  "version": "5.4.6.8723-5"
 }
