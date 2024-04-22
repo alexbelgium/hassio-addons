@@ -42,7 +42,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 88
+- In the repository : 89
 - Installed : 66686
 
 ### Top 3
@@ -842,6 +842,14 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 ![MariaDB][mariadb-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/bird.svg) [birdnet-go](birdnet-go/) : Realtime BirdNET soundscape analyzer
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbirdnet-go%2Fconfig.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7no][armv7no-badge]
+![ingress][ingress-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/progress-download.svg) [qBittorrent](qbittorrent/) : bittorrent client with optional vpn
 
