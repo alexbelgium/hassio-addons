@@ -8,12 +8,16 @@
   "description": "Realtime BirdNET soundscape analyzer",
   "environment": {
   },
+  "ingress": true,
+  "ingress_port": 0,
+  "ingress_stream": true,
   "image": "ghcr.io/alexbelgium/birdnet-go-{arch}",
   "init": false,
   "map": [
     "addon_config:rw"
   ],
   "name": "birdnet-go",
+  "panel_icon": "mdi:bird",
   "ports": {
     "8080/tcp": 8080
   },
@@ -26,6 +30,6 @@
   },
   "slug": "birdnet-go",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go",
-  "version": "0.5.1",
+  "version": "0.5.1_test",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

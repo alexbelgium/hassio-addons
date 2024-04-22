@@ -73,7 +73,7 @@
   ],
   "host_network": true,
   "image": "ghcr.io/alexbelgium/emby-{arch}",
-  "ingress": true,
+  "ingress": true,b
   "ingress_port": 0,
   "ingress_stream": true,
   "init": false,

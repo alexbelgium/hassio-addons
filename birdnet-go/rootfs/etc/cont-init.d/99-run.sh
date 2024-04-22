@@ -14,4 +14,10 @@ echo " "
 ########################
 
 bashio::log.info "Starting app..."
-/usr/bin/birdnet-go realtime
+/usr/bin/birdnet-go realtime & true
+
+# Wait for app to become available to start nginx
+bashio::net.wait_for 8096 localhost 900
+bashio::log.info "Starting NGinx..."
+exec nginx
+
