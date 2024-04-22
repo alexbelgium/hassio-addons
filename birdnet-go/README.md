@@ -39,6 +39,7 @@ Options can be configured through three ways :
 ```yaml
 ALSA_CARD : number of the card (0 or 1 usually), see https://github.com/tphakala/birdnet-go/blob/main/doc/installation.md#deciding-alsa_card-value
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+COMMAND : realtime --rtsp url # allows to provide arguments to birdnet-go
 ```
 
 - Config.yaml
