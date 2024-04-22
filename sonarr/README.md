@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Sonarr HA calendar integration l (opened 2024-03-06)](https://github.com/alexbelgium/hassio-addons/issues/1289) by [@FaliseDotCom](https://github.com/FaliseDotCom)
+## &#9888; Open Issue : [🐛 [Sonarr/Radarr/Jellyfin] Jellyfin notifications broken (opened 2024-04-19)](https://github.com/alexbelgium/hassio-addons/issues/1348) by [@leokeba](https://github.com/leokeba)
 
 # Home assistant add-on: Sonarr
 
