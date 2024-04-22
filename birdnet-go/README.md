@@ -30,7 +30,8 @@ This addon is based on their docker image.
 
 Install, then start the addon a first time
 Webui can be found at <http://homeassistant:8080>.
-You'll need to create a new user at startup.
+
+You'll need a microphone : either use one connected to HA or the audio stream of a rstp camera.
 
 Options can be configured through three ways :
 
