@@ -7,8 +7,6 @@ set -e
 #################
 
 bashio::log.info "ALSA_CARD option is set to $(bashio::config "ALSA_CARD"). If the microphone doesn't work, please adapt it"
-bashio::log.blue "Listing available listening devices"
-arecord -l
 echo " "
 
 ########################
