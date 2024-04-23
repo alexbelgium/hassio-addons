@@ -80,6 +80,10 @@
   "ports_description": {
     "8080/tcp": "web ui"
   },
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "ALSA_CARD": "int?",
     "COMMAND": "str",
