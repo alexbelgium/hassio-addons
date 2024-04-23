@@ -21,11 +21,14 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME="/config"
+# Install dependencies 
 RUN apt-get update -y && apt-get install gcc python3-dev -y
-#RUN curl -s https://raw.githubusercontent.com/olipayne/BirdNET-Pi/main/newinstaller.sh | bash
-RUN curl -s https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh && \
-    sed -i "/sudo reboot/d" newinstaller.sh && \
-    bash newinstaller.sh
+
+# Install app
+RUN curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
+    chmod +x /newinstaller.sh && \
+    sed -i "/sudo reboot/d" /newinstaller.sh && \
+    /./newinstaller.sh
 
 ##################
 # 2 Modify Image #
