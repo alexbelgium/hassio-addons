@@ -40,6 +40,13 @@ RUN \
     sed -i "s|sudo|#sudo|g" /newinstaller.sh && \
     cat /newinstaller.sh
 
+RUN if type sudo 2>/dev/null; then \ 
+     echo "The sudo command already exists... Skipping."; \
+    else \
+     echo -e "#!/bin/sh\n\${@}" > /usr/sbin/sudo; \
+     chmod +x /usr/sbin/sudo; \
+    fi
+
 USER birdnet
 RUN "/./newinstaller.sh"
 USER root
