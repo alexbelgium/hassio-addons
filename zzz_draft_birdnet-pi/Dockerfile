@@ -21,6 +21,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME="/home/birdnet"
+# hadolint ignore=DL3015
 RUN \
     # Install dependencies 
     apt-get update -y && apt-get install gcc python3-dev sudo -y && \
@@ -32,7 +33,8 @@ RUN \
     # Install app
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
-    sed -i "/reboot/d" "/newinstaller.sh"
+    sed -i "s|apt |apt-get |g" /newinstaller.sh && \
+    sed -i "/reboot/d" /newinstaller.sh
 
 USER birdnet
 RUN "/./newinstaller.sh"
