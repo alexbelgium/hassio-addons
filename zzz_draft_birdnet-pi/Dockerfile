@@ -17,7 +17,6 @@
 ARG BUILD_VERSION
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME="/home/birdnet"
@@ -30,12 +29,7 @@ RUN \
     groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
     echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
-    if type sudo 2>/dev/null; then \ 
-     echo "The sudo command already exists... Skipping."; \
-    else \
-     echo "#!/bin/sh\n\${@}" > /usr/sbin/sudo; \
-     chmod +x /usr/sbin/sudo; \
-    fi && \
+    chown root:root /etc/sudoers
     chown root:root /usr/bin/sudo && \
     chmod 4755 /usr/bin/sudo && \
     \
@@ -47,8 +41,7 @@ RUN \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
     #sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
     #sed -i "s|sudo|#sudo|g" /newinstaller.sh && \
-    cat /newinstaller.sh && \
-    sudo -u birdnet -E -s /bin/bash -c "/newinstaller.sh"
+    sudo -u birdnet -s /bin/bash -c "/newinstaller.sh"
 
 ##################
 # 2 Modify Image #
