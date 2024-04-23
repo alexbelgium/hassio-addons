@@ -98,6 +98,7 @@
     "mysql:want"
   ],
   "slug": "birdnet-go",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go",
   "version": "0.5.1-4"
 }
