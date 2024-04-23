@@ -37,7 +37,8 @@ RUN \
     sed -i "s|sudo apt update|echo \"yes\"|g" /newinstaller.sh && \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
     sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
-    sed -i "s|sudo|#sudo|g" /newinstaller.sh
+    sed -i "s|sudo|#sudo|g" /newinstaller.sh && \
+    cat /newinstaller.sh
 
 USER birdnet
 RUN "/./newinstaller.sh"
