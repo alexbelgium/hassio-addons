@@ -1,3 +1,4 @@
+## 0.2 (23-04-2024)
 - Feat : Allow to define the /clips folder
 - Feat : Allow mounting of SMB and local drives
 
