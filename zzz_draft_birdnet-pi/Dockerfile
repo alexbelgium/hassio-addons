@@ -32,6 +32,7 @@ RUN \
     # Install app
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
+    sed -i "/reboot/d" "/newinstaller.sh" && \
     sudo -u birdnet -s /bin/bash -c "/newinstaller.sh"
 
 ##################
