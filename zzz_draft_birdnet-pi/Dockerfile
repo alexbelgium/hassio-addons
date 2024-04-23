@@ -24,7 +24,7 @@ ENV HOME="/home/birdnet"
 # hadolint ignore=DL3015
 RUN \
     # Install dependencies 
-    apt-get update -y && apt-get install gcc python3-dev sudo -y && \
+    apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
     # Create user
     groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
@@ -34,7 +34,8 @@ RUN \
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
-    sed -i "/reboot/d" /newinstaller.sh
+    sed -i "s|sudo|#sudo|g" /newinstaller.sh && \
+    sed -i "/sudo apt update/a echo "Missing apps : $PACKAGES_MISSING" && exit 1" /newinstaller.sh
 
 USER birdnet
 RUN "/./newinstaller.sh"
