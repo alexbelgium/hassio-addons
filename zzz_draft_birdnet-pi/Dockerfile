@@ -31,7 +31,8 @@ RUN \
     echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Install app
-    curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
+    curl -s https://raw.githubusercontent.com/mcguirepr89/BirdNET-Pi/main/newinstaller.sh -o /newinstaller.sh && \
+    # curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
     sed -i "s|sudo|#sudo|g" /newinstaller.sh && \
