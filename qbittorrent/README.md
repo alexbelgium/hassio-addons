@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [qbittorrent] Since last update no longer starts up  (opened 2024-04-23)](https://github.com/alexbelgium/hassio-addons/issues/1351) by [@jdumeez](https://github.com/jdumeez)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
