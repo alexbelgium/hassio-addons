@@ -28,10 +28,10 @@ This addon is based on their docker image.
 
 ## Configuration
 
-Install, then start the addon a first time
-Webui can be found at <http://homeassistant:8080>.
-
+Install, then start the addon a first time. Webui can be found at <http://homeassistant:8080>.
 You'll need a microphone : either use one connected to HA or the audio stream of a rstp camera.
+
+The audio clips folder can be stored on an external or SMB drive by mounting it from the addon options, then specifying the path instead of "clips/". For example, "/mnt/NAS/Birdnet/"
 
 Options can be configured through three ways :
 
