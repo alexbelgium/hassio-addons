@@ -1,7 +1,6 @@
 {
   "arch": [
-    "aarch64",
-    "amd64"
+    "aarch64"
   ],
   "audio": true,
   "codenotary": "alexandrep.github@gmail.com",
