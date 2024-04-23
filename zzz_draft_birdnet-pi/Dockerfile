@@ -20,7 +20,7 @@ FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV HOME="/home/birdnet/"
+ENV HOME="/home/birdnet"
 RUN \
     # Install dependencies 
     apt-get update -y && apt-get install gcc python3-dev sudo -y && \
