@@ -1,3 +1,4 @@
+## 0.5.1-4 (23-04-2024)
 - Feat : provide mariadb information in the startup log to allow its usage
 
 ## 0.5.1-3 (23-04-2024)
