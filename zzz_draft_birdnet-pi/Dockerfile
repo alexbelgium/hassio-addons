@@ -20,15 +20,18 @@ FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV HOME="/config"
-# Install dependencies 
-RUN apt-get update -y && apt-get install gcc python3-dev -y
-
-# Install app
-RUN curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
-    chmod +x /newinstaller.sh && \
-    sed -i "/sudo reboot/d" /newinstaller.sh && \
-    /./newinstaller.sh
+ENV HOME="/root"
+RUN \
+    # Install dependencies 
+    apt-get update -y && apt-get install gcc python3-dev sudo -y && \
+    \
+    # Create user
+    groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet
+    \
+    # Install app
+    curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
+    chmod 777 /newinstaller.sh && \
+    sudo -u birdnet -s /bin/bash -c "/newinstaller.sh"
 
 ##################
 # 2 Modify Image #
