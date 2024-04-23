@@ -26,7 +26,7 @@ RUN \
     apt-get update -y && apt-get install gcc python3-dev sudo -y && \
     \
     # Create user
-    groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet
+    groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
     \
     # Install app
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
