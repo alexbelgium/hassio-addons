@@ -36,6 +36,8 @@ RUN \
      echo "#!/bin/sh\n\${@}" > /usr/sbin/sudo; \
      chmod +x /usr/sbin/sudo; \
     fi && \
+    chown root:root /usr/bin/sudo && \
+    chmod 4755 /usr/bin/sudo && \
     \
     # Install app
     #curl -s https://raw.githubusercontent.com/mcguirepr89/BirdNET-Pi/main/newinstaller.sh -o /newinstaller.sh && \
