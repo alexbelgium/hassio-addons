@@ -34,9 +34,9 @@ RUN \
     #curl -s https://raw.githubusercontent.com/mcguirepr89/BirdNET-Pi/main/newinstaller.sh -o /newinstaller.sh && \
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
+    sed -i "s|sudo apt update|echo \"yes\"|g" /newinstaller.sh && \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
     sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
-    sed -i "s|sudo apt update|echo \"yes\"|g" /newinstaller.sh && \
     sed -i "s|sudo|#sudo|g" /newinstaller.sh
 
 USER birdnet
