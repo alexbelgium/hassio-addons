@@ -35,7 +35,7 @@ RUN \
     chmod 777 /newinstaller.sh && \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
     sed -i "s|sudo|#sudo|g" /newinstaller.sh && \
-    sed -i "/sudo apt update/a echo "Missing apps : $PACKAGES_MISSING" && exit 1" /newinstaller.sh
+    sed -i "/sudo apt update/a echo \"Missing apps : \$PACKAGES_MISSING\" && exit 1" /newinstaller.sh
 
 USER birdnet
 RUN "/./newinstaller.sh"
