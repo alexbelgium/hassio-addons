@@ -48,7 +48,7 @@ RUN \
     #sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
     #sed -i "s|sudo|#sudo|g" /newinstaller.sh && \
     cat /newinstaller.sh && \
-    sudo -u birdnet -s /bin/bash -c "/newinstaller.sh"
+    sudo -u birdnet -E -s /bin/bash -c "/newinstaller.sh"
 
 USER birdnet
 RUN "/./newinstaller.sh"
