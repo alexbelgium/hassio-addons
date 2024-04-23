@@ -29,7 +29,7 @@ RUN \
     groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
     echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
-    chown root:root /etc/sudoers
+    chown root:root /etc/sudoers && \
     chown root:root /usr/bin/sudo && \
     chmod 4755 /usr/bin/sudo && \
     \
