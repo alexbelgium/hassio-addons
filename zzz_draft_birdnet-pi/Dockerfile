@@ -50,10 +50,6 @@ RUN \
     cat /newinstaller.sh && \
     sudo -u birdnet -E -s /bin/bash -c "/newinstaller.sh"
 
-USER birdnet
-RUN "/./newinstaller.sh"
-USER root
-
 ##################
 # 2 Modify Image #
 ##################
