@@ -53,7 +53,7 @@ RUN \
     \
     # Adapt for lsio
     ln -s /home/abc /app && \
-    chown -R /home/abc /app
+    chown -R abc:abc /home/abc /app
 
 #USER abc
 #WORKDIR /app
