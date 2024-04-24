@@ -34,7 +34,7 @@ RUN \
     #groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
     #echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     mkdir -p /app && \
-    chown 1000:1000 /app && \
+    chown abc:abc /app && \
     echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
