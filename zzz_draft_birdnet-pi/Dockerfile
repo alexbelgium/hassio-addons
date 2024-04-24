@@ -53,7 +53,7 @@ RUN \
     /./newinstaller.sh && \
     \
     # Adapt for lsio
-    [[ -d /app ]] && rm -r /app && \
+    if [ -d /app ]; then rm -r /app; fi && \
     ln -s /home/abc /app && \
     chown -R abc:abc /home/abc /app
 
