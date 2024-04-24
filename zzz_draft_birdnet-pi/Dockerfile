@@ -20,9 +20,10 @@ FROM ${BUILD_FROM}
 
 ENV DEBIAN_FRONTEND="Noninteractive" \
     BIRDNET_USER="abc" \
-    USER="abc"
-    #\
-    #HOME="/home/abc"
+    USER="abc" \
+    PUID=1000 \
+    PGID=1000 \
+    HOME="/app"
 
 # hadolint ignore=DL3015
 RUN \
@@ -32,6 +33,8 @@ RUN \
     # Create user and allow sudo
     #groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
     #echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    mkdir -p /app && \
+    chown 1000:1000 /app && \
     echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
@@ -48,7 +51,7 @@ USER abc
 RUN export DEBIAN_FRONTEND noninteractive && \
     export BIRDNET_USER="abc" && \
     export USER="abc" && \
-    #export HOME="/home/abc" && \
+    export HOME="/app" && \
     echo "HOME is $HOME" && \
     /./newinstaller.sh
 USER root
