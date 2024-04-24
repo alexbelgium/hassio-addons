@@ -30,11 +30,10 @@ RUN \
     # Install dependencies 
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
-    # Create user and allow sudo
-    #groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
-    #echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    # Scripts expect to see a home in /home
     mkdir -p /home/abc && \
     ln -s /home/abc /app && \
+    # Ensure permissions
     chown -R abc:abc /home/abc && \
     chown -R abc:abc /app && \
     echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
