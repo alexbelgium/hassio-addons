@@ -37,11 +37,12 @@ RUN \
     chmod 777 /newinstaller.sh
 
 USER birdnet
-RUN export DEBIAN_FRONTEND=noninteractive && \
-    export BIRDNET_USER="birdnet" && \
-    export USER="birdnet" && \
-    export HOME="/home/birdnet" && \
-    echo "this is the path: $(awk -F: '/1000/ {print $6}' /etc/passwd)" && \
+ENV DEBIAN_FRONTEND noninteractive \
+    BIRDNET_USER="birdnet" \
+    USER="birdnet" \
+    HOME="/home/$BIRDNET_USER"
+RUN /usr/bin/env && \
+    exit 1 && \
     /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
