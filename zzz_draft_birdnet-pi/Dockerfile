@@ -21,7 +21,7 @@ FROM ${BUILD_FROM}
 ENV DEBIAN_FRONTEND noninteractive \
     BIRDNET_USER="birdnet" \
     USER="birdnet" \
-    HOME="/home/$BIRDNET_USER"
+    HOME="/home/birdnet"
 
 # hadolint ignore=DL3015
 RUN \
@@ -34,16 +34,17 @@ RUN \
     \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
-    chmod 777 /newinstaller.sh
+    chmod 777 /newinstaller.sh && \
+    \
+    # Correct installer
+    sed -i "/reboot/d" /newinstaller.sh
 
 USER birdnet
 ENV DEBIAN_FRONTEND noninteractive \
     BIRDNET_USER="birdnet" \
     USER="birdnet" \
-    HOME="/home/$BIRDNET_USER"
-RUN /usr/bin/env && \
-    exit 1 && \
-    /./newinstaller.sh
+    HOME="/home/birdnet"
+RUN /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
     # Correct script
