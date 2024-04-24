@@ -19,9 +19,9 @@ ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 ENV DEBIAN_FRONTEND="Noninteractive" \
-    BIRDNET_USER="birdnet" \
-    USER="birdnet" \
-    HOME="/home/birdnet"
+    BIRDNET_USER="abc" \
+    USER="abc" \
+    HOME="/home/abc"
 
 # hadolint ignore=DL3015
 RUN \
@@ -29,8 +29,9 @@ RUN \
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
     # Create user and allow sudo
-    groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
-    echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    #groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
+    #echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
@@ -39,14 +40,14 @@ RUN \
     # Correct installer
     sed -i "/reboot/d" /newinstaller.sh && \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
-    sed -i "/git clone/a sed -i '1a export HOME=\"/home/birdnet\"'" /newinstaller.sh && \
-    sed -i "/git clone/a sed -i '1a export BIRDNET_USER=\"birdnet\"'" /newinstaller.sh
+    sed -i "/git clone/a sed -i '1a export HOME=\"/home/abc\"'" /newinstaller.sh && \
+    sed -i "/git clone/a sed -i '1a export BIRDNET_USER=\"abc\"'" /newinstaller.sh
 
-USER birdnet
+USER abc
 RUN export DEBIAN_FRONTEND noninteractive && \
-    export BIRDNET_USER="birdnet" && \
-    export USER="birdnet" && \
-    export HOME="/home/birdnet" && \
+    export BIRDNET_USER="abc" && \
+    export USER="abc" && \
+    export HOME="/home/abc" && \
     /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
