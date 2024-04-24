@@ -23,19 +23,16 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     USER="abc" \
     PUID=1000 \
     PGID=1000 \
-    HOME="/app"
+    HOME="/home/abc"
 
 # hadolint ignore=DL3015
 RUN \
     # Install dependencies 
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
-    # Scripts expect to see a home in /home
-    mkdir -p /home/abc && \
-    ln -s /home/abc /app && \
     # Ensure permissions
+    mkdir -p /home/abc && \
     chown -R abc:abc /home/abc && \
-    chown -R abc:abc /app && \
     echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
@@ -52,8 +49,11 @@ RUN \
     # Remove all instances of sudo from all other scripts
     sed -i '1a for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done' /newinstaller.sh && \
     \
-    /./newinstaller.sh
-
+    /./newinstaller.sh && \
+    \
+    # Adapt for lsio
+    ln -s /home/abc /app && \
+    chown -R /home/abc /app
 
 #USER abc
 #WORKDIR /app
