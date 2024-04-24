@@ -29,19 +29,18 @@ RUN \
     groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
     echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
-    chown root:root /etc/sudoers && \
-    chown root:root /usr/bin/sudo && \
-    chmod 4755 /usr/bin/sudo && \
-    \
     # Install app
     #curl -s https://raw.githubusercontent.com/mcguirepr89/BirdNET-Pi/main/newinstaller.sh -o /newinstaller.sh && \
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
+    # Correct for absence of sudo
     sed -i "s|sudo apt update|echo \"yes\"|g" /newinstaller.sh && \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
-    #sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
-    #sed -i "s|sudo|#sudo|g" /newinstaller.sh && \
-    sudo -u birdnet -s /bin/bash -c "/newinstaller.sh"
+    sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
+    for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do
+        sed -i "/sudo/c echo \"sudo replaced\"" "$file"
+    done && \
+    /./newinstaller.sh
 
 ##################
 # 2 Modify Image #
