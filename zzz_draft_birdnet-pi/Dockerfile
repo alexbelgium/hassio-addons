@@ -40,14 +40,14 @@ RUN \
     # Correct installer
     sed -i "/reboot/d" /newinstaller.sh && \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
-    sed -i "/git clone/a sed -i '1a export HOME=\"/home/abc\"'" /newinstaller.sh && \
+    #sed -i "/git clone/a sed -i '1a export HOME=\"/home/abc\"'" /newinstaller.sh && \
     sed -i "/git clone/a sed -i '1a export BIRDNET_USER=\"abc\"'" /newinstaller.sh
 
 USER abc
 RUN export DEBIAN_FRONTEND noninteractive && \
     export BIRDNET_USER="abc" && \
     export USER="abc" && \
-    export HOME="/home/abc" && \
+    #export HOME="/home/abc" && \
     /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
