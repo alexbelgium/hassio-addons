@@ -36,10 +36,10 @@ RUN \
     chmod 777 /newinstaller.sh
 
 USER birdnet
-ENV DEBIAN_FRONTEND noninteractive \
-    BIRDNET_USER="birdnet" \
-    HOME="/home/$BIRDNET_USER"
-RUN bash /newinstaller.sh
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    export BIRDNET_USER="birdnet" && \
+    export HOME="/home/birdnet" && \
+    /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
     # Correct script
