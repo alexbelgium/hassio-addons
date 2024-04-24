@@ -69,9 +69,9 @@ for KEYS in "${arr[@]}"; do
         if command -v "python3" &>/dev/null ; then
             [ ! -f /env.py ] && echo "import os" > /env.py
             # Escape \
-            VALUEPY="${VALUEPY//\\/\\\\}"
+            VALUEPY="${VALUE//\\/\\\\}"
             # Avoid " and '
-            VALUEPY="${VALUE//[\"\']/}"
+            VALUEPY="${VALUEPY//[\"\']/}"
             echo "os.environ['${KEYS}'] = '$VALUEPY'" >> /env.py
             python3 /env.py
         fi
