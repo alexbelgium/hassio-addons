@@ -20,8 +20,9 @@ FROM ${BUILD_FROM}
 
 ENV DEBIAN_FRONTEND="Noninteractive" \
     BIRDNET_USER="abc" \
-    USER="abc" \
-    HOME="/home/abc"
+    USER="abc"
+    #\
+    #HOME="/home/abc"
 
 # hadolint ignore=DL3015
 RUN \
