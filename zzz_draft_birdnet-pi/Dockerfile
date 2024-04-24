@@ -40,10 +40,6 @@ RUN \
     sed -i "/reboot/d" /newinstaller.sh
 
 USER birdnet
-ENV DEBIAN_FRONTEND noninteractive \
-    BIRDNET_USER="birdnet" \
-    USER="birdnet" \
-    HOME="/home/birdnet"
 RUN /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
