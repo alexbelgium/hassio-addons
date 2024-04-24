@@ -14,12 +14,7 @@ echo " "
 ########################
 
 bashio::log.info "Starting app..."
-COMMAND="$(bashio::config "COMMAND")"
-# shellcheck disable=SC2086
-/usr/bin/birdnet-pi $COMMAND & true
 
-# Wait for app to become available to start nginx
-bashio::net.wait_for 8080 localhost 900
-bashio::log.info "Starting NGinx..."
-exec nginx
-
+if [ ! -f /config/birdnet.conf ]; then
+  cp /etc/birdnet/birdnet.conf /config
+fi
