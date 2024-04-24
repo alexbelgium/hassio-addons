@@ -20,6 +20,7 @@ FROM ${BUILD_FROM}
 
 ENV DEBIAN_FRONTEND noninteractive \
     BIRDNET_USER="birdnet" \
+    USER="birdnet" \
     HOME="/home/$BIRDNET_USER"
 
 # hadolint ignore=DL3015
@@ -38,6 +39,7 @@ RUN \
 USER birdnet
 RUN export DEBIAN_FRONTEND=noninteractive && \
     export BIRDNET_USER="birdnet" && \
+    export USER="birdnet" && \
     export HOME="/home/birdnet" && \
     echo "this is the path: $(awk -F: '/1000/ {print $6}' /etc/passwd)" && \
     /./newinstaller.sh
