@@ -53,6 +53,7 @@ RUN \
     /./newinstaller.sh && \
     \
     # Adapt for lsio
+    [[ -d /app ]] && rm -r /app && \
     ln -s /home/abc /app && \
     chown -R abc:abc /home/abc /app
 
@@ -125,7 +126,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 # Avoid config.yaml interference
-WORKDIR /home/birdnet
+WORKDIR /config
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
