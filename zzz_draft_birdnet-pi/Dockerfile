@@ -18,8 +18,10 @@ ARG BUILD_VERSION
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV HOME="/home/birdnet"
+ENV DEBIAN_FRONTEND noninteractive \
+    BIRDNET_USER="birdnet" \
+    HOME="/home/$BIRDNET_USER"
+
 # hadolint ignore=DL3015
 RUN \
     # Install dependencies 
