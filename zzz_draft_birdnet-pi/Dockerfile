@@ -45,19 +45,27 @@ RUN \
     # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
     # Use apt-get as without user action
-    sed -i "s|apt |apt-get |g" /newinstaller.sh
-
-USER abc
-WORKDIR /app
-RUN export DEBIAN_FRONTEND noninteractive && \
-    export BIRDNET_USER="abc" && \
-    export USER="abc" && \
-    export HOME="/app" && \
-    echo "HOME is $HOME" && \
-    ls -l /app && \
-    sudo chown -R abc:abc /app && \
+    sed -i "s|apt |apt-get |g" /newinstaller.sh && \
+    \
+    # Remove all instances of sudo from the newinstaller
+    sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
+    # Remove all instances of sudo from all other scripts
+    sed -i '1a for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done' /newinstaller.sh && \
+    \
     /./newinstaller.sh
-USER root
+
+
+#USER abc
+#WORKDIR /app
+#RUN export DEBIAN_FRONTEND noninteractive && \
+#    export BIRDNET_USER="abc" && \
+#    export USER="abc" && \
+#    export HOME="/app" && \
+#    echo "HOME is $HOME" && \
+#    ls -l /app && \
+#    sudo chown -R abc:abc /app && \
+#    /./newinstaller.sh
+#USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
     # Correct script
     #sed -i "s|== 0|== 7|g" /newinstaller.sh && \ 
