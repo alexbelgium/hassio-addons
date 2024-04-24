@@ -18,11 +18,6 @@ ARG BUILD_VERSION
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-ENV DEBIAN_FRONTEND noninteractive \
-    BIRDNET_USER="birdnet" \
-    USER="birdnet" \
-    HOME="/home/birdnet"
-
 # hadolint ignore=DL3015
 RUN \
     # Install dependencies 
@@ -37,9 +32,14 @@ RUN \
     chmod 777 /newinstaller.sh && \
     \
     # Correct installer
-    sed -i "/reboot/d" /newinstaller.sh
+    sed -i "/reboot/d" /newinstaller.sh && \
+    sed -i "s|apt |apt-get |g" /newinstaller.sh
 
 USER birdnet
+ENV DEBIAN_FRONTEND noninteractive \
+    BIRDNET_USER="birdnet" \
+    USER="birdnet" \
+    HOME="/home/birdnet"
 RUN /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
