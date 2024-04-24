@@ -53,6 +53,7 @@ RUN export DEBIAN_FRONTEND noninteractive && \
     export USER="abc" && \
     export HOME="/app" && \
     echo "HOME is $HOME" && \
+    cd /app || true && \
     /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
