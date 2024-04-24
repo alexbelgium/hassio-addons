@@ -48,6 +48,7 @@ RUN \
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     # Remove all instances of sudo from all other scripts
     sed -i '1a for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done' /newinstaller.sh && \
+    sed -i '1a for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do \sed -i "s|\$my_dir|/config|" "$file"; done' /newinstaller.sh && \
     \
     /./newinstaller.sh && \
     \
