@@ -18,7 +18,7 @@ ARG BUILD_VERSION
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-ENV DEBIAN_FRONTEND noninteractive \
+ENV DEBIAN_FRONTEND="Noninteractive" \
     BIRDNET_USER="birdnet" \
     USER="birdnet" \
     HOME="/home/birdnet"
