@@ -39,6 +39,7 @@ USER birdnet
 RUN export DEBIAN_FRONTEND=noninteractive && \
     export BIRDNET_USER="birdnet" && \
     export HOME="/home/birdnet" && \
+    echo "this is the path: $(awk -F: '/1000/ {print $6}' /etc/passwd)" && \
     /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
