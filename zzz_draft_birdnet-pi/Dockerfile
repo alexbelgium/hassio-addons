@@ -45,9 +45,7 @@ RUN \
     \
     # Correct installer
     sed -i "/reboot/d" /newinstaller.sh && \
-    sed -i "s|apt |apt-get |g" /newinstaller.sh && \
-    #sed -i "/git clone/a sed -i '1a export HOME=\"/home/abc\"'" /newinstaller.sh && \
-    sed -i "/git clone/a sed -i '1a export BIRDNET_USER=\"abc\"'" /newinstaller.sh
+    sed -i "s|apt |apt-get |g" /newinstaller.sh
 
 USER abc
 WORKDIR /app
