@@ -38,7 +38,9 @@ RUN \
     \
     # Correct installer
     sed -i "/reboot/d" /newinstaller.sh && \
-    sed -i "s|apt |apt-get |g" /newinstaller.sh
+    sed -i "s|apt |apt-get |g" /newinstaller.sh && \
+    sed -i "/git clone/a sed -i '1a export HOME=\"/home/birdnet\"'" /newinstaller.sh && \
+    sed -i "/git clone/a sed -i '1a export BIRDNET_USER=\"birdnet\"'" /newinstaller.sh
 
 USER birdnet
 RUN export DEBIAN_FRONTEND noninteractive && \
