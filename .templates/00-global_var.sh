@@ -66,7 +66,7 @@ for KEYS in "${arr[@]}"; do
         # shellcheck disable=SC2163
         export "$line"
         # export to python
-        if command -v "python3" &>/dev/null && ; then
+        if command -v "python3" &>/dev/null ; then
             [ ! -f /env.py ] && echo "import os" > /env.py
             # Escape \
             VALUEPY="${VALUEPY//\\/\\\\}"
