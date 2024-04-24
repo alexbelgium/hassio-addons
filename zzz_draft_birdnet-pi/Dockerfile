@@ -48,12 +48,14 @@ RUN \
     sed -i "/git clone/a sed -i '1a export BIRDNET_USER=\"abc\"'" /newinstaller.sh
 
 USER abc
+WORKDIR /app
 RUN export DEBIAN_FRONTEND noninteractive && \
     export BIRDNET_USER="abc" && \
     export USER="abc" && \
     export HOME="/app" && \
     echo "HOME is $HOME" && \
-    cd /app || true && \
+    ls -l /app && \
+    sudo chown -R abc:abc /app && \
     /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
