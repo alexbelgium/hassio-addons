@@ -18,7 +18,7 @@ ARG BUILD_VERSION
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-ENV DEBIAN_FRONTEND="Noninteractive" \
+ENV DEBIAN_FRONTEND="noninteractive" \
     BIRDNET_USER="abc" \
     USER="abc" \
     PUID=1000 \
