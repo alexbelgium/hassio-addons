@@ -43,8 +43,9 @@ RUN \
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     \
-    # Correct installer
+    # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
+    # Use apt-get as without user action
     sed -i "s|apt |apt-get |g" /newinstaller.sh
 
 USER abc
