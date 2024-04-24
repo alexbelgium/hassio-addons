@@ -27,20 +27,24 @@ RUN \
     # Install dependencies 
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
-    # Create user
+    # Create user and allow sudo
     groupadd --gid 1000 birdnet && useradd --uid 1000 --gid birdnet --shell /bin/bash --create-home birdnet && \
     echo "birdnet ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
-    # Install app
-    #curl -s https://raw.githubusercontent.com/mcguirepr89/BirdNET-Pi/main/newinstaller.sh -o /newinstaller.sh && \
+    # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
-    chmod 777 /newinstaller.sh && \
-    # Allow running as root
-    sed -i "s|== 0|== 7|g" /newinstaller.sh && \ 
-    sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
-    sed -i "s|sudo -K|true|g" /newinstaller.sh && \
-    for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done && \
-    /./newinstaller.sh
+    chmod 777 /newinstaller.sh
+
+USER birdnet
+RUN bash /newinstaller.sh
+USER root
+    #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
+    # Correct script
+    #sed -i "s|== 0|== 7|g" /newinstaller.sh && \ 
+    #sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
+    #sed -i "s|sudo -K|true|g" /newinstaller.sh && \
+    #for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done && \
+    #/./newinstaller.sh
     # Correct for absence of sudo
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
 
