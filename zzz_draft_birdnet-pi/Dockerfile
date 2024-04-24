@@ -36,6 +36,7 @@ RUN \
     # Allow running as root
     sed -i "s|== 0|== 7|g" /newinstaller.sh && \ 
     sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
+    sed -i "s|sudo -K|true|g" /newinstaller.sh && \
     for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done && \
     /./newinstaller.sh
     # Correct for absence of sudo
