@@ -36,14 +36,10 @@ RUN \
     sed -i "s|apt |apt-get |g" /newinstaller.sh
 
 USER birdnet
-ENV DEBIAN_FRONTEND noninteractive \
-    BIRDNET_USER="birdnet" \
-    USER="birdnet" \
-    HOME="/home/birdnet"
 RUN export DEBIAN_FRONTEND noninteractive && \
-    BIRDNET_USER="birdnet" && \
-    USER="birdnet" && \
-    HOME="/home/birdnet" && \
+    export BIRDNET_USER="birdnet" && \
+    export USER="birdnet" && \
+    export HOME="/home/birdnet" && \
     /./newinstaller.sh
 USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
