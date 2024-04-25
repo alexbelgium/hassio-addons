@@ -1,4 +1,4 @@
-#!/bin/execlineb -P
+#!/usr/bin/with-contenv bash
 
 with-contenv
 s6-setuidgid ${USER}

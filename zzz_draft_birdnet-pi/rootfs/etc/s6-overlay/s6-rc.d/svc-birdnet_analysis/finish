@@ -1,4 +1,4 @@
-#!/bin/execlineb -P
+#!/usr/bin/with-contenv bash
 
 if { sleep 3 }
 s6-svc -u /etc/s6-overlay/s6-rc.d/svc-birdnet_analysis

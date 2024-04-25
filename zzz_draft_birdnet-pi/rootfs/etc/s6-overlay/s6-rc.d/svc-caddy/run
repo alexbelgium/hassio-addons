@@ -1,5 +1,4 @@
-#!/bin/execlineb -P
-with-contenv
+#!/usr/bin/with-contenv bash
 s6-setuidgid ${USER}
 echo "Starting service: caddy"
 /usr/local/bin/caddy run --config /etc/caddy/Caddyfile

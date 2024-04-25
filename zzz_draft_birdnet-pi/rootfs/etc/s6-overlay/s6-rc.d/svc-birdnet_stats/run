@@ -1,5 +1,4 @@
-#!/bin/execlineb -P
-with-contenv
+#!/usr/bin/with-contenv bash
 s6-setuidgid ${USER}
 echo "Starting service: birdnet stats"
 $HOME/BirdNET-Pi/birdnet/bin/streamlit run $HOME/BirdNET-Pi/scripts/plotly_streamlit.py --browser.gatherUsageStats false --server.address localhost --server.baseUrlPath "/stats"
