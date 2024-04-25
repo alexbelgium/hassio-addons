@@ -64,7 +64,7 @@ RUN \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
     ln -s /home/pi /app && \
-    chown -R pi:pi /home/pi /app
+    chown -R 1000:1000 /home/pi /app
 
 #USER pi
 #WORKDIR /app
