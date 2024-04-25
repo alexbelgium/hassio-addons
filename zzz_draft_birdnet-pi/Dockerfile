@@ -20,9 +20,9 @@ FROM ${BUILD_FROM}
 
 ENV DEBIAN_FRONTEND="noninteractive" \
     BIRDNET_USER="pi" \
-    USER="pi" \
-    PUID=1000 \
-    PGID=1000 \
+    USER="1000" \
+    PUID=101 \
+    PGID=101 \
     HOME="/home/pi" \
     XDG_RUNTIME_DIR="/run/user/1000" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3"
@@ -33,11 +33,11 @@ RUN \
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
     # Change user to pi and create /home/pi
-    usermod -u 101 abc && \
+    usermod -u 101 -g 101 abc && \
     useradd --uid 1000 --gid 1000 -m pi && \
     \
     # Ensure permissions
-    chown -R 1000:1000 /home/pi && \
+    chown -R pi:pi /home/pi && \
     echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
