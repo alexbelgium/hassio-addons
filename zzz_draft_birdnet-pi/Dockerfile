@@ -59,7 +59,7 @@ RUN \
     \
     # Change user to pi
     groupmod -o -g "100" abc && usermod -o -u "100" abc && \
-    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m pi
+    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m pi && \
     \
     # Adapt for lsio
     if [ -d /app ]; then rm -r /app; fi && \
