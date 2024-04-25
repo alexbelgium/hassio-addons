@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
-s6-setuidgid ${USER}
+#!/usr/bin/with-contenv bashio
 echo "Starting service: birdnet recording"
-/usr/local/bin/birdnet_recording.sh
+exec \
+    s6-setuidgid "$USER" "/usr/local/bin/birdnet_recording.sh"

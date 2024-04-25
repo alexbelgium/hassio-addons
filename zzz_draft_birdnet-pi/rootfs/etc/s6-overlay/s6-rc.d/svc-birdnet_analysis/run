@@ -1,4 +1,5 @@
-#!/usr/bin/with-contenv bash
-s6-setuidgid ${USER}
+#!/usr/bin/with-contenv bashio
 echo "Starting service: birdnet analysis"
-$PYTHON_VIRTUAL_ENV /usr/local/bin/birdnet_analysis.py
+
+exec \
+    s6-setuidgid "$USER" "$PYTHON_VIRTUAL_ENV /usr/local/bin/birdnet_analysis.py"

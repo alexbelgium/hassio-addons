@@ -24,7 +24,8 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     PUID=1000 \
     PGID=1000 \
     HOME="/home/abc" \
-    XDG_RUNTIME_DIR="/run/user/1000"
+    XDG_RUNTIME_DIR="/run/user/1000" \
+    PYTHON_VIRTUAL_ENV="/home/abc/BirdNET-Pi/birdnet/bin/python3"
 
 # hadolint ignore=DL3015,SC2016
 RUN \
@@ -56,14 +57,14 @@ RUN \
     \
     /./newinstaller.sh && \
     \
-    # Adapt for lsio
-    if [ -d /app ]; then rm -r /app; fi && \
-    ln -s /home/abc /app && \
-    chown -R abc:abc /home/abc /app && \
-    \
     # Change user to pi
     groupmod -o -g "100" abc && usermod -o -u "100" abc && \
     groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m pi
+    \
+    # Adapt for lsio
+    if [ -d /app ]; then rm -r /app; fi && \
+    ln -s /home/abc /app && \
+    chown -R pi:pi /home/abc /app
 
 #USER abc
 #WORKDIR /app

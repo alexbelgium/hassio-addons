@@ -1,3 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 echo "Starting service: web terminal"
-/usr/local/bin/gotty --address localhost -w -p 8888 --path terminal --title-format "BirdNET-Pi Terminal" login
+exec \
+    s6-setuidgid "$USER" "/usr/local/bin/gotty --address localhost -w -p 8888 --path terminal --title-format 'BirdNET-Pi Terminal' login"

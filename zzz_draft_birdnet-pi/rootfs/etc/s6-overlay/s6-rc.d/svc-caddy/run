@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
-s6-setuidgid ${USER}
+#!/usr/bin/with-contenv bashio
 echo "Starting service: caddy"
-/usr/local/bin/caddy run --config /etc/caddy/Caddyfile
+exec \
+    s6-setuidgid "$USER" "/usr/local/bin/caddy run --config /etc/caddy/Caddyfile"

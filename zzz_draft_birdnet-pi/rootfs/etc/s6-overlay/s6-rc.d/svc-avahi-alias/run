@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 s6-setuidgid ${USER}
 
 echo "Starting service: avahi alias"

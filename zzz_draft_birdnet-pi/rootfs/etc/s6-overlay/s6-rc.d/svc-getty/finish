@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/with-contenv bashio
 
 if { sleep 3 }
 s6-svc -u /etc/s6-overlay/s6-rc.d/svc-getty
