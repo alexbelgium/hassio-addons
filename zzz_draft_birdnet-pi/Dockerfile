@@ -30,13 +30,16 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 # hadolint ignore=DL3015,SC2016
 RUN \
     # Install dependencies
+    echo "Install dependencies" && \
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
     # Change user to pi and create /home/pi
-    usermod -u 101 -g 101 abc && \
-    useradd --uid 1000 --gid 1000 -m pi && \
+    echo "setting users" && \
+    groupadd --non-unique -g 1000 pi && \
+    useradd --non-unique --uid 1000 --gid 1000 -m pi && \
     \
     # Ensure permissions
+    echo "setting permissions" && \
     chown -R pi:pi /home/pi && \
     echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
