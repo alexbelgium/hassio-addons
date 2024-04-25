@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv bashio
 echo "Starting service: chart viewer"
 exec \
-    s6-setuidgid "$USER" "$PYTHON_VIRTUAL_ENV /usr/local/bin/daily_plot.py --daemon --sleep 2"
+    s6-setuidgid "$USER" "$PYTHON_VIRTUAL_ENV" /usr/local/bin/daily_plot.py --daemon --sleep 2

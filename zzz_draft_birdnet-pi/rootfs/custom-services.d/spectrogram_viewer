@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv bashio
 echo "Starting service: spectrogram viewer"
 exec \
-    s6-setuidgid "$USER" "/usr/local/bin/spectrogram.sh"
+    s6-setuidgid "$USER" /usr/local/bin/spectrogram.sh
