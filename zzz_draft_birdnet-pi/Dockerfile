@@ -37,7 +37,7 @@ RUN \
     useradd --uid 1000 --gid 1000 -m pi && \
     \
     # Ensure permissions
-    chown -R pi:pi /home/pi && \
+    chown -R 1000:1000 /home/pi && \
     echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
