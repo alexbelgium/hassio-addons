@@ -1,4 +1,8 @@
 #!/usr/bin/with-contenv bashio
 echo "Starting service: caddy"
+until [[ -e /var/run/dbus/system_bus_socket ]]; do
+    sleep 1s
+done
+
 exec \
     s6-setuidgid "$USER" /usr/bin/caddy run --config /etc/caddy/Caddyfile
