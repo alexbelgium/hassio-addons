@@ -1,0 +1,4 @@
+#!/bin/execlineb -P
+with-contenv
+s6-envdir /run/user/1000
+/usr/local/bin/livestream.sh

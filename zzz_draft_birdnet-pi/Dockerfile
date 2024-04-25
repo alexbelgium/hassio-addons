@@ -27,7 +27,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 
 # hadolint ignore=DL3015
 RUN \
-    # Install dependencies 
+    # Install dependencies
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
     # Ensure permissions
@@ -50,9 +50,11 @@ RUN \
     sed -i '1a for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' /newinstaller.sh && \
     sed -i '1a for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' /newinstaller.sh && \
     sed -i '1a for file in $(grep -srl "install_services.sh" $HOME/BirdNET-Pi/scripts); do sed -i "/install_services.sh/c ./install_services.sh" "$file"; done' /newinstaller.sh && \
+    # Avoid systemctl
+    sed -i '/git clone/a sed -i "s|systemctl enable|#systemctl enable|g" $HOME/BirdNET-Pi/scripts/install_services.sh' /newinstaller.sh && \
     \
     /./newinstaller.sh && \
-    
+
     \
     # Adapt for lsio
     if [ -d /app ]; then rm -r /app; fi && \
@@ -72,7 +74,7 @@ RUN \
 #USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
     # Correct script
-    #sed -i "s|== 0|== 7|g" /newinstaller.sh && \ 
+    #sed -i "s|== 0|== 7|g" /newinstaller.sh && \
     #sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
     #sed -i "s|sudo -K|true|g" /newinstaller.sh && \
     #for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done && \

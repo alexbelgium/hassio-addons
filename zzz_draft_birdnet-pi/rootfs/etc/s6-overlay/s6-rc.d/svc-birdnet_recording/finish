@@ -1,0 +1,4 @@
+#!/bin/execlineb -P
+
+if { sleep 6 }
+s6-svc -u /etc/s6-overlay/s6-rc.d/svc-birdnet_recording

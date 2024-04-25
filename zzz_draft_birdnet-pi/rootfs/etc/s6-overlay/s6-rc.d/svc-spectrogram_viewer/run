@@ -1,0 +1,4 @@
+#!/bin/execlineb -P
+with-contenv
+s6-setuidgid ${USER}
+/usr/local/bin/spectrogram.sh
