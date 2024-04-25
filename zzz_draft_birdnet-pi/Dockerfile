@@ -19,13 +19,13 @@ ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 ENV DEBIAN_FRONTEND="noninteractive" \
-    BIRDNET_USER="abc" \
-    USER="abc" \
+    BIRDNET_USER="pi" \
+    USER="pi" \
     PUID=1000 \
     PGID=1000 \
-    HOME="/home/abc" \
+    HOME="/home/pi" \
     XDG_RUNTIME_DIR="/run/user/1000" \
-    PYTHON_VIRTUAL_ENV="/home/abc/BirdNET-Pi/birdnet/bin/python3"
+    PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3"
 
 # hadolint ignore=DL3015,SC2016
 RUN \
@@ -33,9 +33,9 @@ RUN \
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
     # Ensure permissions
-    mkdir -p /home/abc && \
-    chown -R abc:abc /home/abc && \
-    echo "abc ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    mkdir -p /home/pi && \
+    chown -R pi:pi /home/pi && \
+    echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
@@ -63,18 +63,18 @@ RUN \
     \
     # Adapt for lsio
     if [ -d /app ]; then rm -r /app; fi && \
-    ln -s /home/abc /app && \
-    chown -R pi:pi /home/abc /app
+    ln -s /home/pi /app && \
+    chown -R pi:pi /home/pi /app
 
-#USER abc
+#USER pi
 #WORKDIR /app
 #RUN export DEBIAN_FRONTEND noninteractive && \
-#    export BIRDNET_USER="abc" && \
-#    export USER="abc" && \
+#    export BIRDNET_USER="pi" && \
+#    export USER="pi" && \
 #    export HOME="/app" && \
 #    echo "HOME is $HOME" && \
 #    ls -l /app && \
-#    sudo chown -R abc:abc /app && \
+#    sudo chown -R pi:pi /app && \
 #    /./newinstaller.sh
 #USER root
     #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
