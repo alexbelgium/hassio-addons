@@ -34,7 +34,7 @@ RUN \
     \
     # Change user to pi and create /home/pi
     usermod -u 101 abc && \
-    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m pi && \
+    useradd --uid 1000 --gid 1000 -m pi && \
     \
     # Ensure permissions
     chown -R pi:pi /home/pi && \
