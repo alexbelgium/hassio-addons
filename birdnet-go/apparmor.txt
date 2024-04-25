@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile birdnet-go_addon flags=(attach_disconnected,mediate_deleted) {
+profile db21ed7f_birdnet-go flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,
