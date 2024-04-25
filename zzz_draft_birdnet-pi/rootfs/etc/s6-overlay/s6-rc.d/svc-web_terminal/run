@@ -1,3 +1,4 @@
 #!/bin/execlineb -P
 with-contenv
+echo "Starting service: web terminal"
 /usr/local/bin/gotty --address localhost -w -p 8888 --path terminal --title-format "BirdNET-Pi Terminal" login

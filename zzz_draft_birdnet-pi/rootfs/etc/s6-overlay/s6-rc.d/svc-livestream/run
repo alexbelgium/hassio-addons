@@ -1,3 +1,4 @@
 #!/bin/execlineb -P
 with-contenv
+echo "Starting service: livestream"
 /usr/local/bin/livestream.sh

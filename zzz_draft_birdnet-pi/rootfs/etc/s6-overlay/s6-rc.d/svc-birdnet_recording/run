@@ -1,4 +1,5 @@
 #!/bin/execlineb -P
 with-contenv
 s6-setuidgid ${USER}
+echo "Starting service: birdnet recording"
 /usr/local/bin/birdnet_recording.sh

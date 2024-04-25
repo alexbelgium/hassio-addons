@@ -1,4 +1,6 @@
 #!/bin/execlineb -P
 with-contenv
 s6-setuidgid ${USER}
+
+echo "Starting service: avahi alias"
 /bin/bash -c "/usr/bin/avahi-publish -a -R %I $(hostname -I |cut -d' ' -f1)"

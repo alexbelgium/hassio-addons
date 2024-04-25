@@ -2,4 +2,5 @@
 
 with-contenv
 s6-setuidgid ${USER}
-/sbin/agetty --autologin ${USER} --noclear %I \$TERM
+echo "Starting service: getty"
+/sbin/agetty --autologin ${USER} --noclear %I $TERM
