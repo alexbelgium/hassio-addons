@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bashio
+echo "Starting service: birdnet stats"
+exec \
+    s6-setuidgid "$USER" "$HOME/BirdNET-Pi/birdnet/bin/streamlit run $HOME/BirdNET-Pi/scripts/plotly_streamlit.py --browser.gatherUsageStats false --server.address localhost --server.baseUrlPath '/stats'"
