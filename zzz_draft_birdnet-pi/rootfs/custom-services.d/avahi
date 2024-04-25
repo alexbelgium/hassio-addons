@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bashio
+echo "Starting service: avahi daemon"
+avahi-daemon & true
