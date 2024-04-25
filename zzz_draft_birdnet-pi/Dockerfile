@@ -52,15 +52,18 @@ RUN \
     sed -i '1a for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' /newinstaller.sh && \
     sed -i '1a for file in $(grep -srl "install_services.sh" $HOME/BirdNET-Pi/scripts); do sed -i "/install_services.sh/c ./install_services.sh" "$file"; done' /newinstaller.sh && \
     # Avoid systemctl
-    sed -i '/git clone/a sed -i "s|systemctl enable|#systemctl enable|g" $HOME/BirdNET-Pi/scripts/install_services.sh' /newinstaller.sh && \
+    sed -i '/git clone/a sed -i "s|systemctl enable|#systemctl enable|g" "$HOME"/BirdNET-Pi/scripts/install_services.sh' /newinstaller.sh && \
     \
     /./newinstaller.sh && \
-
     \
     # Adapt for lsio
     if [ -d /app ]; then rm -r /app; fi && \
     ln -s /home/abc /app && \
-    chown -R abc:abc /home/abc /app
+    chown -R abc:abc /home/abc /app && \
+    \
+    # Change user to pi
+    groupmod -o -g "100" abc && usermod -o -u "100" abc && \
+    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m pi
 
 #USER abc
 #WORKDIR /app
