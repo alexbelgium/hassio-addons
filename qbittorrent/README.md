@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [qbittorrent] Since last update no longer starts up  (opened 2024-04-23)](https://github.com/alexbelgium/hassio-addons/issues/1351) by [@jdumeez](https://github.com/jdumeez)
+## &#9888; Open Issue : [🐛 [qBittorrent] OpenVPN password escaping not handled (opened 2024-04-23)](https://github.com/alexbelgium/hassio-addons/issues/1352) by [@BeachyHeadCode](https://github.com/BeachyHeadCode)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
