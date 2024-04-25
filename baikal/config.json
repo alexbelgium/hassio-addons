@@ -67,7 +67,8 @@
   ],
   "image": "ghcr.io/alexbelgium/baikal-{arch}",
   "map": [
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "ssl:ro"
   ],
