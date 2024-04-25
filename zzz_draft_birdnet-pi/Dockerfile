@@ -33,8 +33,8 @@ RUN \
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
     \
     # Change user to pi and create /home/pi
-    groupmod -g 101 abc && usermod -u 101 abc && \
-    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m && \
+    usermod -u 101 abc && \
+    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m pi && \
     \
     # Ensure permissions
     chown -R pi:pi /home/pi && \
