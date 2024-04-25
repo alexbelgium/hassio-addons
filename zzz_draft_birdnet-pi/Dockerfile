@@ -26,7 +26,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     HOME="/home/abc" \
     XDG_RUNTIME_DIR="/run/user/1000"
 
-# hadolint ignore=DL3015
+# hadolint ignore=DL3015,SC2016
 RUN \
     # Install dependencies
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
