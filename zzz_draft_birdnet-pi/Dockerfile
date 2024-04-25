@@ -20,9 +20,9 @@ FROM ${BUILD_FROM}
 
 ENV DEBIAN_FRONTEND="noninteractive" \
     BIRDNET_USER="pi" \
-    USER="1000" \
-    PUID=101 \
-    PGID=101 \
+    USER="pi" \
+    PUID=1000 \
+    PGID=1000 \
     HOME="/home/pi" \
     XDG_RUNTIME_DIR="/run/user/1000" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3"
@@ -40,7 +40,7 @@ RUN \
     \
     # Ensure permissions
     echo "setting permissions" && \
-    chown -R pi:pi /home/pi && \
+    chown -R 1000:1000 /home/pi && \
     echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
