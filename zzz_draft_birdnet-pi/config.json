@@ -76,7 +76,10 @@
     "80/tcp": 80
   },
   "ports_description": {
-    "80/tcp": "web ui"
+    "80/tcp": "web ui",
+    "8888/tcp": "web terminal",
+    "8080/tcp": "log",
+    "8501/tcp": "streamlit"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -94,5 +97,5 @@
   },
   "slug": "birdnet-pi",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
-  "version": "1.0"
+  "version": "1.1"
 }

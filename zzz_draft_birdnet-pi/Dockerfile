@@ -41,8 +41,9 @@ RUN \
     \
     # Ensure permissions
     echo "setting permissions" && \
-    chown -R 1000:1000 /home/pi && \
     echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    mkdir -p /home/pi/.config/matplotlib && \
+    chown -R 1000:1000 /home/pi && \
     \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \

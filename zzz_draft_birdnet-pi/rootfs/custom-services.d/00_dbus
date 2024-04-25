@@ -1,3 +1,4 @@
 #!/usr/bin/with-contenv bashio
 echo "Starting service: dbus"
-dbus-daemon --system
+exec \
+    dbus-daemon --system --nofork
