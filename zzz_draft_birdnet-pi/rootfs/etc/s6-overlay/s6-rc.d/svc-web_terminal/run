@@ -1,4 +1,3 @@
 #!/bin/execlineb -P
 with-contenv
-s6-envdir /run/user/1000
 /usr/local/bin/gotty --address localhost -w -p 8888 --path terminal --title-format "BirdNET-Pi Terminal" login

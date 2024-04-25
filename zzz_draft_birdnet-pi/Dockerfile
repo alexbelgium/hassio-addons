@@ -23,7 +23,8 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     USER="abc" \
     PUID=1000 \
     PGID=1000 \
-    HOME="/home/abc"
+    HOME="/home/abc" \
+    XDG_RUNTIME_DIR="/run/user/1000"
 
 # hadolint ignore=DL3015
 RUN \
