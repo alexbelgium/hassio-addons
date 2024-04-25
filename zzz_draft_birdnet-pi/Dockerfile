@@ -31,21 +31,17 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 RUN \
     # Install dependencies
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
-    \
-    # Ensure permissions
     mkdir -p /home/pi && \
-    chown -R pi:pi /home/pi && \
-    echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     \
+    # Modify installer
     # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
     # Use apt-get as without user action
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
-    \
     # Remove all instances of sudo from the newinstaller
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     # Remove all instances of sudo from all other scripts
@@ -55,13 +51,18 @@ RUN \
     # Avoid systemctl
     sed -i '/git clone/a sed -i "s|systemctl enable|#systemctl enable|g" "$HOME"/BirdNET-Pi/scripts/install_services.sh' /newinstaller.sh && \
     \
+    # Execute installer
     /./newinstaller.sh && \
     \
     # Change user to pi
     groupmod -o -g "100" abc && usermod -o -u "100" abc && \
     groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m pi && \
     \
-    # Adapt for lsio
+    # Ensure permissions
+    chown -R pi:pi /home/pi && \
+    echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    \
+    # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
     ln -s /home/pi /app && \
     chown -R pi:pi /home/pi /app
