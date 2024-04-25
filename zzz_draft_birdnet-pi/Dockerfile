@@ -55,8 +55,8 @@ RUN \
     /./newinstaller.sh && \
     \
     # Change user to pi
-    groupmod -o -g "100" abc && usermod -o -u "100" abc && \
-    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m pi && \
+    groupmod -g 100 abc && usermod -u 100 abc && \
+    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 && \
     \
     # Ensure permissions
     chown -R pi:pi /home/pi && \
