@@ -31,7 +31,14 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 RUN \
     # Install dependencies
     apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
-    mkdir -p /home/pi && \
+    \
+    # Change user to pi and create /home/pi
+    groupmod -g 101 abc && usermod -u 101 abc && \
+    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 -m && \
+    \
+    # Ensure permissions
+    chown -R pi:pi /home/pi && \
+    echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
@@ -53,14 +60,6 @@ RUN \
     \
     # Execute installer
     /./newinstaller.sh && \
-    \
-    # Change user to pi
-    groupmod -g 100 abc && usermod -u 100 abc && \
-    groupadd --gid 1000 pi && useradd --uid 1000 --gid 1000 && \
-    \
-    # Ensure permissions
-    chown -R pi:pi /home/pi && \
-    echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
