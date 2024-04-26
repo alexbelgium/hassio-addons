@@ -22,7 +22,7 @@ profile birdnet-pi2_addon flags=(attach_disconnected,mediate_deleted) {
   capability setuid,
   capability sys_admin,
   capability dac_read_search,
-  # capability dac_override,
+  capability dac_override,
   # capability sys_rawio,
 
 # S6-Overlay
@@ -52,7 +52,11 @@ profile birdnet-pi2_addon flags=(attach_disconnected,mediate_deleted) {
   /dev/nvme1 mrwkl,
   /dev/mmcblk0p1 mrwkl,
   /dev/* mrwkl,
+  /udev/* mrwkl,
   /tmp/** mrkwl,
+  /dev/fuse/** mrkwl,
+  /dev/** mrkwl,
+  /sys/firmware/** mrkwl,
 
   # Data access
   /data/** rw,

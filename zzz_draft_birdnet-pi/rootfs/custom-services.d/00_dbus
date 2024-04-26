@@ -8,7 +8,8 @@ echo "Starting service: pulseaudio"
 while :
 do
     if [[ ! $(/usr/bin/pulseaudio --check) ]]; then
-        /usr/bin/pulseaudio --system
+        exec \
+            s6-setuidgid "$USER" /usr/bin/pulseaudio --start
     fi
     sleep 10
 done

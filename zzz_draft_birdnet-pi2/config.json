@@ -5,6 +5,7 @@
   ],
   "audio": true,
   "codenotary": "alexandrep.github@gmail.com",
+  "description": "Full linux desktop environment accessible via any modern web browser",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
@@ -29,6 +30,13 @@
     "/dev/nvme",
     "/dev/nvme0n1p1",
     "/dev/nvme0n1p2",
+    "/dev/nvme0n1p3",
+    "/dev/nvme1n1p1",
+    "/dev/nvme1n1p2",
+    "/dev/nvme1n1p3",
+    "/dev/nvme2n1p1",
+    "/dev/nvme2n1p2",
+    "/dev/nvme3n1p3",
     "/dev/mmcblk",
     "/dev/fuse",
     "/dev/sda1",
@@ -57,46 +65,81 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "description": "Realtime BirdNET soundscape analyzer",
   "environment": {
+    "FM_HOME": "/share/birdnet-pi2",
+    "HOME": "/share/birdnet-pi2",
+    "PGID": "0",
+    "PUID": "0",
+    "START_DOCKER": "false",
+    "TITLE": "Ubuntu XFCE webtop",
+    "shm_size": "1gb"
   },
+  "host_dbus": true,
   "image": "ghcr.io/alexbelgium/birdnet-pi2-{arch}",
+  "ingress": true,
   "init": false,
   "map": [
-    "addon_config:rw",
+    "config:rw",
     "media:rw",
-    "share:rw"
+    "share:rw",
+    "ssl"
   ],
-  "name": "zzz Do not use2",
+  "name": "Webtop LSIO",
   "options": {
-    "COMMAND": "realtime"
+    "DNS_server": "8.8.8.8",
+    "PGID": 0,
+    "PUID": 0,
+    "additional_apps": "engrampa,libreoffice"
   },
-  "panel_icon": "mdi:bird",
+  "panel_icon": "mdi:monitor",
   "ports": {
-    "80/tcp": 80
+    "20/tcp": null,
+    "21/tcp": null,
+    "22/tcp": null,
+    "23/tcp": null,
+    "25/tcp": null,
+    "3000/tcp": 3000,
+    "3001/tcp": null,
+    "3002/tcp": null,
+    "53/tcp": null,
+    "80/tcp": null
   },
   "ports_description": {
-    "80/tcp": "web ui",
-    "8888/tcp": "web terminal",
-    "8080/tcp": "log",
-    "8501/tcp": "streamlit"
+    "20/tcp": "FTP",
+    "21/tcp": "FTP",
+    "22/tcp": "SSH",
+    "23/tcp": "TELNET",
+    "25/tcp": "SMTP",
+    "3000/tcp": "Web interface",
+    "3001/tcp": "custom port 1",
+    "3002/tcp": "custom port 2",
+    "53/tcp": "DNS",
+    "80/tcp": "http"
   },
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "ALSA_CARD": "int?",
-    "COMMAND": "str",
-    "TZ": "str?",
+    "DNS_server": "str?",
+    "DRINODE": "list(/dev/dri/card0|/dev/dri/card1|/dev/dri/card2|/dev/dri/renderD128|/dev/dri/renderD129|)?",
+    "KEYBOARD": "list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?",
+    "PASSWORD": "str?",
+    "PGID": "int",
+    "PUID": "int",
+    "TZ": "match([A-Z][a-z]*./[A-Z][a-z]*.)?",
+    "additional_apps": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "data_location": "str?",
     "localdisks": "str?",
     "networkdisks": "str?"
   },
-  "slug": "birdnet-pi2",
-  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi2",
-  "version": "1.1",
+  "slug": "webtop-kde",
+  "tmpfs": true,
+  "udev": true,
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "5c8ffd24-ls153-3",
   "video": true
 }

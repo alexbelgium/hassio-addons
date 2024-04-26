@@ -1,4 +1,4 @@
-# Home assistant add-on: birdnet-pi2
+# Home assistant add-on: Webtop KDE Alpine
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 
@@ -20,38 +20,36 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
----
-
-[birdnet-pi2](https://github.com/tphakala/birdnet-pi2/tree/main) is an AI solution for continuous avian monitoring and identification developed by @tphakala
-
-This addon is based on their docker image.
+[webtop](https://github.com/webtop/webtop) is a full desktop environments accessible via any modern web browser.
+This addon is based on the docker image https://github.com/linuxserver/docker-webtop
 
 ## Configuration
 
-Install, then start the addon a first time
-Webui can be found at <http://homeassistant:8080>.
+Webui can be found with ingress or at <http://homeassistant:PORT>. The port is by default disabled but can be enabled through the addon options.
 
-You'll need a microphone : either use one connected to HA or the audio stream of a rstp camera.
+By default the image is based around the abc user and we recommend using this user as all of the init/config is based around it. The default password is also abc . If you want to change this password and require authentication when accessing the interface simply issue passwd inside a gui terminal in the webtop. Then when accessing the web interface use the path:
 
-Options can be configured through three ways :
+http://localhost:3000/?login=true
 
-- Addon options
+Apps installations are not remanent, you need to do it via addon options. Their config, however, is.
+
+If graphics don't work, use the DRINODE feature to select your graphic device.
+
+See all potential ENV variables here : https://docs.linuxserver.io/images/docker-webtop#optional-environment-variables
 
 ```yaml
-ALSA_CARD : number of the card (0 or 1 usually), see https://github.com/tphakala/birdnet-pi2/blob/main/doc/installation.md#deciding-alsa_card-value
-TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
-COMMAND : realtime --rtsp url # allows to provide arguments to birdnet-pi2
+TZ: timezone ; Country/City according to https://manpages.ubuntu.com/manpages/trusty/man3/DateTime::TimeZone::Catalog.3pm.html
+additional_apps: engrampa,thunderbird # Allows installation of apps, as they are not persistent
+DRINODE: specify a custom graphic device, default is /dev/dri/renderD128
+DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
+networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password
+cifsdomain: "domain" # optional, allow setting the domain for the smb share
 ```
 
-- Config.yaml
-Additional variables can be configured using the config.yaml file found in /config/db21ed7f_birdnet-pi2/config.yaml using the Filebrowser addon
-
-- Config_env.yaml
-Additional environment variables can be configured there
-
 ## Installation
-
----
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
@@ -64,18 +62,12 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-## Integration with HA
-
-Not yet available
-
-## Common issues
-
-Not yet available
-
 ## Support
 
 Create an issue on github
 
----
+## Illustration
 
-![illustration](https://raw.githubusercontent.com/tphakala/birdnet-pi2/main/doc/birdnet-pi2-dashboard.webp)
+![illustration](https://www.linuxserver.io/user/pages/content/images/2021/05/menu.png)
+
+[repository]: https://github.com/alexbelgium/hassio-addons

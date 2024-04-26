@@ -1,4 +1,0 @@
-#!/usr/bin/with-contenv bashio
-echo "Starting service: web terminal"
-exec \
-    s6-setuidgid "$USER" /usr/local/bin/gotty --address localhost -w -p 8888 --path terminal --title-format "birdnet-pi2 Terminal" login
