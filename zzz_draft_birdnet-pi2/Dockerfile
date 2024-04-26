@@ -18,6 +18,9 @@ ARG BUILD_VERSION
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 ENV DEBIAN_FRONTEND="noninteractive" \
     BIRDNET_USER="pi" \
     USER="pi" \

@@ -3,7 +3,6 @@
     "aarch64",
     "amd64"
   ],
-  "audio": true,
   "codenotary": "alexandrep.github@gmail.com",
   "devices": [
     "/dev/dri",
@@ -97,6 +96,6 @@
   },
   "slug": "birdnet-pi2",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
-  "version": "1.0",
+  "version": "1.1",
   "video": true
 }

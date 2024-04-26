@@ -31,7 +31,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 RUN \
     # Install dependencies
     echo "Install dependencies" && \
-    apt-get update -y && apt-get install gcc python3-dev git jq sudo -y && \
+    apt-get update -y && apt-get install curl gcc python3-dev git jq sudo -y && \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \

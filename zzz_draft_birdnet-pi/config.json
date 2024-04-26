@@ -3,7 +3,6 @@
     "aarch64",
     "amd64"
   ],
-  "audio": true,
   "codenotary": "alexandrep.github@gmail.com",
   "devices": [
     "/dev/dri",
