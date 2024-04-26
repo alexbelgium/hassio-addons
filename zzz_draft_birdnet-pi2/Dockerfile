@@ -46,7 +46,7 @@ RUN \
     chown -R 1000:1000 /home/pi && \
     \
     # Download installer
-    curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/birdnet-pi2/main/newinstaller.sh" -o /newinstaller.sh && \
+    curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     \
     # Modify installer
@@ -57,11 +57,11 @@ RUN \
     # Remove all instances of sudo from the newinstaller
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     # Remove all instances of sudo from all other scripts
-    sed -i '1a for file in $(grep -srl "sudo" $HOME/birdnet-pi2/scripts); do sed -i "s|sudo ||" "$file"; done' /newinstaller.sh && \
-    sed -i '1a for file in $(grep -srl "my_dir" $HOME/birdnet-pi2/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' /newinstaller.sh && \
-    sed -i '1a for file in $(grep -srl "install_services.sh" $HOME/birdnet-pi2/scripts); do sed -i "/install_services.sh/c ./install_services.sh" "$file"; done' /newinstaller.sh && \
+    sed -i '1a for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' /newinstaller.sh && \
+    sed -i '1a for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' /newinstaller.sh && \
+    sed -i '1a for file in $(grep -srl "install_services.sh" $HOME/BirdNET-Pi/scripts); do sed -i "/install_services.sh/c ./install_services.sh" "$file"; done' /newinstaller.sh && \
     # Avoid systemctl
-    sed -i '/git clone/a sed -i "s|systemctl enable|#systemctl enable|g" "$HOME"/birdnet-pi2/scripts/install_services.sh' /newinstaller.sh && \
+    sed -i '/git clone/a sed -i "s|systemctl enable|#systemctl enable|g" "$HOME"/BirdNET-Pi/scripts/install_services.sh' /newinstaller.sh && \
     \
     # Execute installer
     /./newinstaller.sh && \
