@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bashio
+s6-envdir /run/user/1000
+s6-setuidgid ${USER}
+/usr/local/bin/custom_recording.sh

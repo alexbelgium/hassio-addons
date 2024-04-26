@@ -1,0 +1,6 @@
+---
+build_from:
+  aarch64: jrei/systemd-debian:12
+  amd64: jrei/systemd-debian:12
+codenotary:
+  signer: alexandrep.github@gmail.com

@@ -1,9 +1,0 @@
-{
-  "github_fulltag": "true",
-  "last_update": "08-04-2023",
-  "repository": "alexbelgium/hassio-addons",
-  "slug": "birdnet-pi2",
-  "source": "github",
-  "upstream_repo": "linuxserver/docker-webtop",
-  "upstream_version": "4.16-r0-ls95"
-}

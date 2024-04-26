@@ -14,33 +14,9 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM
 ARG BUILD_VERSION
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
-
-##################
-# 2 Modify Image #
-##################
-
-# Set S6 wait time
-ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
-
-
-# load volume
-VOLUME [ "/sys/fs/cgroup" ]
-
-# Allow UID and GID setting
-# hadolint ignore=SC2015,DL4006,SC2013,SC2086
-RUN \
-    # Change home folder location
-    usermod --home /share/birdnet-pi2 abc
-
-# Global LSIO modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-ARG CONFIGLOCATION="/share/birdnet-pi2"
-RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 ENV DEBIAN_FRONTEND="noninteractive" \
     BIRDNET_USER="pi" \
@@ -95,6 +71,36 @@ RUN \
     ln -s /home/pi /app && \
     chown -R 1000:1000 /home/pi /app
 
+#USER pi
+#WORKDIR /app
+#RUN export DEBIAN_FRONTEND noninteractive && \
+#    export BIRDNET_USER="pi" && \
+#    export USER="pi" && \
+#    export HOME="/app" && \
+#    echo "HOME is $HOME" && \
+#    ls -l /app && \
+#    sudo chown -R pi:pi /app && \
+#    /./newinstaller.sh
+#USER root
+    #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
+    # Correct script
+    #sed -i "s|== 0|== 7|g" /newinstaller.sh && \
+    #sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
+    #sed -i "s|sudo -K|true|g" /newinstaller.sh && \
+    #for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done && \
+    #/./newinstaller.sh
+    # Correct for absence of sudo
+    #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
+
+##################
+# 2 Modify Image #
+##################
+
+# Set S6 wait time
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_SERVICES_GRACETIME=0
+
 ##################
 # 3 Install apps #
 ##################
@@ -108,14 +114,14 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
 # Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh 90-dns_set.sh"
+ARG MODULES="00-local_mounts.sh 00-smb_mounts.sh"
 
 # Automatic modules download
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="nginx engrampa"
+ENV PACKAGES="alsa-utils libasound2-plugins nginx"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
@@ -133,8 +139,9 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-#
-#WORKDIR /
+# Avoid config.yaml interference
+WORKDIR /config
+#ENTRYPOINT ["/lib/systemd/systemd"]
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -169,6 +176,15 @@ LABEL \
     org.opencontainers.image.revision=${BUILD_REF} \
     org.opencontainers.image.version=${BUILD_VERSION}
 
-####################
-# 6 HealthcheckNOT #
-####################
+#################
+# 6 Healthcheck #
+#################
+
+ENV HEALTH_PORT="80" \
+    HEALTH_URL=""
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=30s \
+    --timeout=25s \
+    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1

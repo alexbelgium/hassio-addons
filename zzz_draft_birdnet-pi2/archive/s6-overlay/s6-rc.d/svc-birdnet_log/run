@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bashio
+echo "Starting service: birdnet log"
+exec \
+    s6-setuidgid "$USER" "/usr/local/bin/gotty --address localhost -p 8080 --path log --title-format 'BirdNET-Pi Log' birdnet_log.sh"
