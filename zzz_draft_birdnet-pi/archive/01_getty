@@ -5,5 +5,4 @@ until [[ -e /var/run/dbus/system_bus_socket ]]; do
 done
 
 exec \
-    s6-setuidgid "$USER" /sbin/agetty --autologin "${USER}"
-     --noclear %I "$TERM"
+    s6-setuidgid "$USER" /sbin/agetty --autologin "${USER}" --noclear %I "$TERM"

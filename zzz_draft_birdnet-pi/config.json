@@ -57,11 +57,12 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "description": "Realtime BirdNET soundscape analyzer",
+  "description": "realtime acoustic bird classification system",
   "environment": {
   },
-  "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
   "init": false,
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -76,10 +77,7 @@
     "80/tcp": 80
   },
   "ports_description": {
-    "80/tcp": "web ui",
-    "8888/tcp": "web terminal",
-    "8080/tcp": "log",
-    "8501/tcp": "streamlit"
+    "80/tcp": "web ui"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -97,6 +95,6 @@
   },
   "slug": "birdnet-pi",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
-  "version": "1.5",
+  "version": "1.8",
   "video": true
 }

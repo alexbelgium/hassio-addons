@@ -1,6 +1,7 @@
 #!/usr/bin/with-contenv bashio
-# Waiting for dbus
-until [[ -e /var/run/dbus/system_bus_socket ]]; do
+#Disable pulseaudio as managed by HA
+echo "Starting service: livestream"
+until [[ -e /start ]]; do
     sleep 1s
 done
 

@@ -33,6 +33,10 @@ RUN \
     echo "Install dependencies" && \
     apt-get update -y && apt-get install curl gcc python3-dev git jq sudo -y && \
     \
+    # Correct for systemctl
+    curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
+    chmod a+x /bin/systemctl && \
+    \
     # Change user to pi and create /home/pi
     echo "setting users" && \
     groupmod -o -g 101 abc && usermod -o -u 101 abc && \
@@ -49,19 +53,28 @@ RUN \
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     \
+    # Use installer to modify other scripts
+    #######################################
+    # Define file
+    sed -i "1a /./newinstallermod.sh && rm /newinstallermod.sh" /newinstaller.sh && \
+    echo '#!/bin/bash' >> /newinstallermod.sh && \
+    # Remove all instances of sudo from all other scripts
+    echo 'for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' >> /newinstallermod.sh && \
+    echo 'for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
+    echo 'for file in $(grep -srl "install_services.sh" $HOME/BirdNET-Pi/scripts); do sed -i "/install_services.sh/c ./install_services.sh" "$file"; done' >> /newinstallermod.sh && \
+    # Disable pulseaudio
+    echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
+    # Set permission
+    chmod +x /newinstallermod.sh && \
+    \
     # Modify installer
+    ##################
     # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
     # Use apt-get as without user action
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
     # Remove all instances of sudo from the newinstaller
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
-    # Remove all instances of sudo from all other scripts
-    sed -i '1a for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' /newinstaller.sh && \
-    sed -i '1a for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' /newinstaller.sh && \
-    sed -i '1a for file in $(grep -srl "install_services.sh" $HOME/BirdNET-Pi/scripts); do sed -i "/install_services.sh/c ./install_services.sh" "$file"; done' /newinstaller.sh && \
-    # Avoid systemctl
-    sed -i '/git clone/a sed -i "s|systemctl enable|#systemctl enable|g" "$HOME"/BirdNET-Pi/scripts/install_services.sh' /newinstaller.sh && \
     \
     # Execute installer
     /./newinstaller.sh && \
@@ -82,15 +95,15 @@ RUN \
 #    sudo chown -R pi:pi /app && \
 #    /./newinstaller.sh
 #USER root
-    #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
-    # Correct script
-    #sed -i "s|== 0|== 7|g" /newinstaller.sh && \
-    #sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
-    #sed -i "s|sudo -K|true|g" /newinstaller.sh && \
-    #for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done && \
-    #/./newinstaller.sh
-    # Correct for absence of sudo
-    #sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
+#sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
+# Correct script
+#sed -i "s|== 0|== 7|g" /newinstaller.sh && \
+#sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
+#sed -i "s|sudo -K|true|g" /newinstaller.sh && \
+#for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done && \
+#/./newinstaller.sh
+# Correct for absence of sudo
+#sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
 
 ##################
 # 2 Modify Image #
