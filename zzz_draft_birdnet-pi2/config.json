@@ -136,7 +136,7 @@
     "localdisks": "str?",
     "networkdisks": "str?"
   },
-  "slug": "webtop-kde",
+  "slug": "birndet-pi2",
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
