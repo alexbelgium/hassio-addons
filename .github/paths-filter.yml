@@ -102,5 +102,6 @@ zoneminder: zoneminder/config.* # Image : yes
 zzz_archived_bitwarden: zzz_archived_bitwarden/config.* # Image : yes
 zzz_archived_code-server: zzz_archived_code-server/config.* # Image : yes
 zzz_archived_paperless_ngx: zzz_archived_paperless_ngx/config.* # Image : yes
+zzz_draft_birdnet-pi2: zzz_draft_birdnet-pi2/config.* # Image : yes
 zzz_draft_birdnet-pi: zzz_draft_birdnet-pi/config.* # Image : yes
 zzz_draft_overleaf: zzz_draft_overleaf/config.* # Image : yes
