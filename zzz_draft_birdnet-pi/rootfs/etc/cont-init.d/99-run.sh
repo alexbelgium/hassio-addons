@@ -6,6 +6,10 @@ set -e
 # INITALISATION #
 #################
 
+# Starting dbus
+echo "Starting service: dbus"
+service dbus start
+
 bashio::log.info "ALSA_CARD option is set to $(bashio::config "ALSA_CARD"). If the microphone doesn't work, please adapt it"
 echo " "
 

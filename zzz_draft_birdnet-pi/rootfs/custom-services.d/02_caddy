@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bashio
+# Dependencies
+until [[ -e /var/run/dbus/system_bus_socket ]] && [[ -e /run/php/php*-fpm.sock ]]; do
+    sleep 1s
+done
+
+# Correct fpm.sock
+sed -i "s|/run/php/php-fpm.sock|$(find /run/php -name *.sock)|g" /etc/caddy/Caddyfile
+
+echo "Starting service: caddy"
+exec \
+    s6-setuidgid "$USER" /usr/bin/caddy run --config /etc/caddy/Caddyfile
