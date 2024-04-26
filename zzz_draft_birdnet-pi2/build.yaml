@@ -1,0 +1,6 @@
+---
+build_from:
+  aarch64: ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
+  amd64: ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
+codenotary:
+  signer: alexandrep.github@gmail.com

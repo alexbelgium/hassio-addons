@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bashio
+echo "Starting service: birdnet recording"
+exec \
+    s6-setuidgid "$USER" /usr/local/bin/birdnet_recording.sh

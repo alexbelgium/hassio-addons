@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bashio
+echo "Starting service: avahi alias"
+exec \
+    s6-setuidgid "$USER" /usr/bin/avahi-publish -a -R %I "$(hostname -I |cut -d' ' -f1)"

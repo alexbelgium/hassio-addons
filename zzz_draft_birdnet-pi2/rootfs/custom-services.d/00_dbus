@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv bashio
+# Waiting for dbus
+until [[ -e /var/run/dbus/system_bus_socket ]]; do
+    sleep 1s
+done
+
+echo "Starting service: pulseaudio"
+while :
+do
+    if [[ ! $(/usr/bin/pulseaudio --check) ]]; then
+        /usr/bin/pulseaudio --system
+    fi
+    sleep 10
+done
