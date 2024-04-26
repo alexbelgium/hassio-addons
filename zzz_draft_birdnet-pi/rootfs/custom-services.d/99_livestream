@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 echo "Starting service: livestream"
-until [[ -e /var/run/dbus/system_bus_socket ]]; do
+until [[ -e /start ]]; do
     sleep 1s
 done
 
