@@ -1,3 +1,6 @@
+
+## 29.0.0 (27-04-2024)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 - Add preview support for BMP GIF HEIC JPEG Krita PNG XBitmap
 - Checks if maintenance_window_start is set, or use 1 as default which corresponds to 1-5 am (https://docs.nextcloud.com/server/28/admin_manual/configuration_server/background_jobs_configuration.html#maintenance-window-start)
 
