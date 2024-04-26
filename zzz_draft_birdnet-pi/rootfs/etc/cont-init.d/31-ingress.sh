@@ -6,6 +6,8 @@ set -e
 # NGINX SETTING #
 #################
 
+exit 0
+
 declare ingress_interface
 declare ingress_port
 

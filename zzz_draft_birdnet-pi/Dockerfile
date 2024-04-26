@@ -36,6 +36,8 @@ RUN \
     # Correct for systemctl
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
     chmod a+x /bin/systemctl && \
+    curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/journalctl3.py -o /bin/journalctl && \
+    chmod a+x /bin/journalctl && \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \
@@ -61,7 +63,6 @@ RUN \
     # Remove all instances of sudo from all other scripts
     echo 'for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' >> /newinstallermod.sh && \
     echo 'for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
-    echo 'for file in $(grep -srl "install_services.sh" $HOME/BirdNET-Pi/scripts); do sed -i "/install_services.sh/c ./install_services.sh" "$file"; done' >> /newinstallermod.sh && \
     # Disable pulseaudio
     echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
     # Set permission
