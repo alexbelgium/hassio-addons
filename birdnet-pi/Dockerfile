@@ -36,8 +36,6 @@ RUN \
     # Correct for systemctl
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
     chmod a+x /bin/systemctl && \
-    curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/journalctl3.py -o /bin/journalctl && \
-    chmod a+x /bin/journalctl && \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \

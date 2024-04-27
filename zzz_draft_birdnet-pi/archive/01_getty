@@ -1,8 +1,0 @@
-#!/usr/bin/with-contenv bashio
-echo "Starting service: getty"
-until [[ -e /var/run/dbus/system_bus_socket ]]; do
-    sleep 1s
-done
-
-exec \
-    s6-setuidgid "$USER" /sbin/agetty --autologin "${USER}" --noclear %I "$TERM"

@@ -1,4 +1,0 @@
-#!/usr/bin/with-contenv bashio
-echo "Starting service: livestream"
-exec \
-    s6-setuidgid "$USER" "/usr/local/bin/livestream.sh"
