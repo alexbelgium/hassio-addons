@@ -4,7 +4,9 @@
     "amd64"
   ],
   "audio": true,
+  "backup": "cold",
   "codenotary": "alexandrep.github@gmail.com",
+  "host_dbus": true,
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
@@ -60,6 +62,7 @@
   "description": "realtime acoustic bird classification system",
   "environment": {
   },
+  "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
   "init": false,
   "map": [
     "addon_config:rw",
@@ -86,8 +89,13 @@
     "localdisks": "str?",
     "networkdisks": "str?"
   },
+  "services": [
+    "mysql:want"
+  ],
   "slug": "birdnet-pi",
+  "startup": "application",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
+  "usb": true,
   "version": "1.0",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"

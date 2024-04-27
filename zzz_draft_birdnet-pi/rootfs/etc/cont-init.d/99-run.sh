@@ -11,9 +11,9 @@ curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-rep
 chmod a+x /bin/systemctl
 
 # Starting dbus
-bashio::log.info "Starting system services..."
-echo "... dbus"
-service dbus start
+#bashio::log.info "Starting system services..."
+#echo "... dbus"
+#service dbus start
 
 # Restarting all services
 bashio::log.info "Ensuring birdnet.conf is in /config ; please customize as needed"
