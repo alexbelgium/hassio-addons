@@ -31,11 +31,13 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 RUN \
     # Install dependencies
     echo "Install dependencies" && \
-    apt-get update -y && apt-get install curl gcc python3-dev git jq sudo php-mbstring -y && \
+    apt-get update -y && apt-get install curl gcc python3-dev git jq sudo php-mbstring procps -y && \
     \
     # Correct for systemctl
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
     chmod a+x /bin/systemctl && \
+    curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/journalctl3.py -o /bin/journalctl && \
+    chmod a+x /bin/journalctl && \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \
@@ -83,7 +85,11 @@ RUN \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
     ln -s /home/pi /app && \
-    chown -R 1000:1000 /home/pi /app
+    chown -R 1000:1000 /home/pi /app && \
+    \
+    # Cleanup
+    apt-get clean all && \
+    rm -rf /var/lib/apt/lists/*
 
 ##################
 # 2 Modify Image #
