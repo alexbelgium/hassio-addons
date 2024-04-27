@@ -67,6 +67,9 @@
     "share:rw"
   ],
   "name": "BirdNET-pi",
+  "options": {
+    "TZ": "Europe/Paris"
+  },
   "ports": {
     "80/tcp": 80
   },
