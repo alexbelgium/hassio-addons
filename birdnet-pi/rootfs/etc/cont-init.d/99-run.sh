@@ -42,6 +42,14 @@ done
 # SET SYSTEM #
 ##############
 
+# Set TZ
+if bashio::config.has_value 'TZ'; then
+    TIMEZONE=$(bashio::config 'TZ')
+    bashio::log.green "Setting timezone to $TIMEZONE"
+    ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime
+    echo "$TIMEZONE" >/etc/timezone
+fi || (bashio::log.fatal "Error : $TIMEZONE not found. Here is a list of valid timezones : https://manpages.ubuntu.com/manpages/focal/man3/DateTime::TimeZone::Catalog.3pm.html")
+
 # Correcting systemctl
 curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl
 chmod a+x /bin/systemctl
