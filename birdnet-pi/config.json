@@ -59,8 +59,6 @@
     "/dev/nvme2"
   ],
   "description": "realtime acoustic bird classification system",
-  "environment": {
-  },
   "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
   "init": false,
   "map": [
@@ -69,7 +67,6 @@
     "share:rw"
   ],
   "name": "BirdNET-pi",
-  "panel_icon": "mdi:bird",
   "ports": {
     "80/tcp": 80
   },
@@ -94,7 +91,7 @@
   "slug": "birdnet-pi",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "1.4",
+  "version": "0.13",
   "video": true,
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
+  "webui": "http://[HOST]:[PORT:80]"
 }
