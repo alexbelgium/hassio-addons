@@ -42,14 +42,14 @@ RUN \
     # Change user to pi and create /home/pi
     echo "setting users" && \
     groupmod -o -g 101 abc && usermod -o -u 101 abc && \
-    groupadd --non-unique -g 1000 pi && \
-    useradd --non-unique --uid 1000 --gid 1000 -m pi && \
+    groupadd --non-unique -g 1000 "$USER" && \
+    useradd --non-unique --uid 1000 --gid 1000 -m "$USER" && \
     \
     # Ensure permissions
     echo "setting permissions" && \
-    echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    mkdir -p /home/pi/.config/matplotlib && \
-    chown -R 1000:1000 /home/pi && \
+    echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    mkdir -p /home/"$USER"/.config/matplotlib && \
+    chown -R "$USER":"$USER" /home/"$USER" && \
     \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
@@ -84,8 +84,8 @@ RUN \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
-    ln -s /home/pi /app && \
-    chown -R 1000:1000 /home/pi /app && \
+    ln -s /home/"$USER" /app && \
+    chown -R "$USER":"$USER" /home/"$USER" /app && \
     \
     # Cleanup
     apt-get clean all && \
