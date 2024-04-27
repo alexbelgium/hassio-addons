@@ -50,6 +50,7 @@ RUN \
     echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     mkdir -p /home/"$USER"/.config/matplotlib && \
     chown -R "$USER":"$USER" /home/"$USER" && \
+    git config --global --add safe.directory '*' && \
     \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
