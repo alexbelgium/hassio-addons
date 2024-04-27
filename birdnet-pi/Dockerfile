@@ -58,7 +58,7 @@ RUN \
     # Use installer to modify other scripts
     #######################################
     # Define file
-    sed -i "1a /./newinstallermod.sh && rm /newinstallermod.sh" /newinstaller.sh && \
+    sed -i "1a /./newinstallermod.sh" /newinstaller.sh && \
     echo '#!/bin/bash' >> /newinstallermod.sh && \
     # Remove all instances of sudo from all other scripts
     echo 'for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' >> /newinstallermod.sh && \
