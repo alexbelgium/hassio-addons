@@ -17,9 +17,22 @@ service dbus start
 
 # Restarting all services
 bashio::log.info "Ensuring birdnet.conf is in /config ; please customize as needed"
-if [ ! -f /config/birdnet.conf ]; then
-  cp /etc/birdnet/birdnet.conf /config
-fi
+
+# Symlink files
+########################
+# Create configuration file
+if [ ! -f /config/birdnet.conf ]; then cp /etc/birdnet/birdnet.conf /config; fi
+if [ -f "$HOME"/BirdNET-Pi/birdnet.conf ]; then rm "$HOME"/BirdNET-Pi/birdnet.conf; fi
+chown 1000:1000 /config/birdnet.conf
+ln -s /config/birdnet.conf "$HOME"/BirdNET-Pi/
+chown 1000:1000 -h "$HOME"/BirdNET-Pi/birdnet.conf
+
+# Create sqlite database
+if [ ! -f /config/birds.db ]; then touch /config/birds.db; fi
+if [ -f "$HOME"/BirdNET-Pi/scripts/birds.db ]; then rm "$HOME"/BirdNET-Pi/scripts/birds.db; fi
+chown 1000:1000 /config/birds.db
+ln -s /config/birds.db "$HOME"/BirdNET-Pi/scripts/
+chown 1000:1000 -h "$HOME"/BirdNET-Pi/scripts/birds.db
 
 bashio::log.info "Starting BirdNET-Pi services"
 chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
