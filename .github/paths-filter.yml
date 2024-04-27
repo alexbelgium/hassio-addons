@@ -8,6 +8,7 @@ baikal: baikal/config.* # Image : yes
 bazarr: bazarr/config.* # Image : yes
 binance-trading-bot: binance-trading-bot/config.* # Image : yes
 birdnet-go: birdnet-go/config.* # Image : yes
+birdnet-pi: birdnet-pi/config.* # Image : yes
 bitwarden: bitwarden/config.* # Image : yes
 booksonic_air: booksonic_air/config.* # Image : yes
 browserless_chrome: browserless_chrome/config.* # Image : yes
