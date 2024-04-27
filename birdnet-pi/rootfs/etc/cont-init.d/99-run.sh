@@ -34,7 +34,7 @@ done
 # Symlink folders
 for folders in BirdSongs/Extracted/By_Date BirdSongs/Extracted/Charts BirdSongs/Processed; do
     echo "... setting folder $folders"
-    rm -r "$HOME/$folders"
+    rm -r "$HOME/${folders:?}"
     sudo -u pi ln -fs /config/"$folders" "$HOME/$folders"
 done
 
