@@ -80,7 +80,7 @@ RUN \
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     \
     # Execute installer
-    /./newinstaller.sh && \
+    sudo -u pi /./newinstaller.sh && \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
