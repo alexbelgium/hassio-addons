@@ -11,6 +11,8 @@ bashio::log.info "Ensuring permissions are good"
 # Define structure
 echo "... making sure structure is correct"
 touch /config/apprise.txt
+touch /config/include_species_list.txt
+touch /config/exclude_species_list.txt
 mkdir -p /config/BirdSongs/Extracted/By_Date
 mkdir -p /config/BirdSongs/Extracted/Charts
 mkdir -p /config/BirdSongs/Processed
@@ -21,7 +23,7 @@ chown -R 1000:1000 /config /etc/birdnet
 
 # Symlink files
 bashio::log.green "Ensuring files are in /config ; please customize as needed"
-for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt"; do
+for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt"; do
     filename="${files##*/}"
     echo "... setting $filename"
     if [ ! -f /config/"$filename" ]; then echo "... copying $filename" && sudo -u pi mv "$files" /config/; fi
