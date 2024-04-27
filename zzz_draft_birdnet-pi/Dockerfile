@@ -31,7 +31,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 RUN \
     # Install dependencies
     echo "Install dependencies" && \
-    apt-get update -y && apt-get install curl gcc python3-dev git jq sudo -y && \
+    apt-get update -y && apt-get install curl gcc python3-dev git jq sudo php-mbstring -y && \
     \
     # Correct for systemctl
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
@@ -85,27 +85,6 @@ RUN \
     ln -s /home/pi /app && \
     chown -R 1000:1000 /home/pi /app
 
-#USER pi
-#WORKDIR /app
-#RUN export DEBIAN_FRONTEND noninteractive && \
-#    export BIRDNET_USER="pi" && \
-#    export USER="pi" && \
-#    export HOME="/app" && \
-#    echo "HOME is $HOME" && \
-#    ls -l /app && \
-#    sudo chown -R pi:pi /app && \
-#    /./newinstaller.sh
-#USER root
-#sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
-# Correct script
-#sed -i "s|== 0|== 7|g" /newinstaller.sh && \
-#sed -i "s|sudo -n true|true|g" /newinstaller.sh && \
-#sed -i "s|sudo -K|true|g" /newinstaller.sh && \
-#for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do \sed -i "s|sudo ||" "$file"; done && \
-#/./newinstaller.sh
-# Correct for absence of sudo
-#sudo -E -u birdnet -s /bin/bash -c "/newinstaller.sh"
-
 ##################
 # 2 Modify Image #
 ##################
@@ -135,7 +114,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="alsa-utils libasound2-plugins nginx"
+ENV PACKAGES="alsa-utils libasound2-plugins"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"

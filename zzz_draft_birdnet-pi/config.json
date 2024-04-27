@@ -61,34 +61,24 @@
   "environment": {
   },
   "init": false,
-  "ingress": true,
-  "ingress_stream": true,
   "map": [
     "addon_config:rw",
     "media:rw",
     "share:rw"
   ],
-  "name": "zzz Do not use",
-  "options": {
-    "COMMAND": "realtime"
-  },
+  "name": "BirdNET-pi",
   "panel_icon": "mdi:bird",
   "ports": {
     "80/tcp": 80
   },
   "ports_description": {
-    "80/tcp": "web ui",
-    "8888/tcp": "web terminal",
-    "8080/tcp": "log",
-    "8501/tcp": "streamlit"
+    "80/tcp": "web ui"
   },
   "privileged": [
     "SYS_ADMIN",
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "ALSA_CARD": "int?",
-    "COMMAND": "str",
     "TZ": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
@@ -98,6 +88,7 @@
   },
   "slug": "birdnet-pi",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
-  "version": "1.9",
-  "video": true
+  "version": "1.0",
+  "video": true,
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
