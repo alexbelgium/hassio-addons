@@ -27,7 +27,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     XDG_RUNTIME_DIR="/run/user/1000" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3"
 
-# hadolint ignore=DL3015,SC2016
+# hadolint ignore=DL3015,SC2016,DL3004
 RUN \
     # Install dependencies
     echo "Install dependencies" && \
