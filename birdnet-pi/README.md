@@ -39,6 +39,11 @@ Options can be configured through three ways :
 
 ```yaml
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
+networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password
+cifsdomain: "domain" # optional, allow setting the domain for the smb share
 ```
 
 - Config.yaml
