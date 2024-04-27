@@ -27,7 +27,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     XDG_RUNTIME_DIR="/run/user/1000" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3"
 
-# hadolint ignore=DL3015,SC2016,DL3004
+# hadolint ignore=DL3015,SC2016
 RUN \
     # Install dependencies
     echo "Install dependencies" && \
@@ -42,14 +42,14 @@ RUN \
     # Change user to pi and create /home/pi
     echo "setting users" && \
     groupmod -o -g 101 abc && usermod -o -u 101 abc && \
-    groupadd --non-unique -g 1000 "$USER" && \
-    useradd --non-unique --uid 1000 --gid 1000 -m "$USER" && \
+    groupadd --non-unique -g 1000 pi && \
+    useradd --non-unique --uid 1000 --gid 1000 -m pi && \
     \
     # Ensure permissions
     echo "setting permissions" && \
-    echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    mkdir -p "$HOME"/.config/matplotlib && \
-    chown -R 1000:1000 "$HOME" && \
+    echo "pi ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    mkdir -p /home/pi/.config/matplotlib && \
+    chown -R 1000:1000 /home/pi && \
     \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
@@ -66,7 +66,7 @@ RUN \
     # Disable pulseaudio
     echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
     # Set permission
-    chmod 777 /newinstallermod.sh && \
+    chmod +x /newinstallermod.sh && \
     \
     # Modify installer
     ##################
@@ -84,8 +84,8 @@ RUN \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
-    ln -s "$HOME" /app && \
-    chown -R 1000:1000 "$HOME" /app
+    ln -s /home/pi /app && \
+    chown -R 1000:1000 /home/pi /app
 
 ##################
 # 2 Modify Image #
