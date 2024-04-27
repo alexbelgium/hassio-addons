@@ -59,8 +59,6 @@
     "/dev/nvme2"
   ],
   "description": "realtime acoustic bird classification system",
-  "environment": {
-  },
   "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
   "init": false,
   "map": [
