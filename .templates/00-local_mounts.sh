@@ -40,10 +40,10 @@ if bashio::config.has_value 'localdisks'; then
         if [ -e /dev/"$disk" ]; then
             echo "... $disk is a physical device"
             devpath=/dev
-        elif lsblk -o UUID | grep -q "$disk"; then
+        elif [ -e /dev/disk/by-uuid/"$disk" ] || lsblk -o UUID | grep -q "$disk"; then
             echo "... $disk is a device by UUID"
             devpath=/dev/disk/by-uuid
-        elif lsblk -o LABEL | grep -q "$disk"; then
+        elif [ -e /dev/disk/by-label/"$disk" ] || lsblk -o LABEL | grep -q "$disk"; then
             echo "... $disk is a device by label"
             devpath=/dev/disk/by-label
         else
