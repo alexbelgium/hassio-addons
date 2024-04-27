@@ -6,7 +6,6 @@
   "audio": true,
   "backup": "cold",
   "codenotary": "alexandrep.github@gmail.com",
-  "host_dbus": true,
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
@@ -95,7 +94,11 @@
   "slug": "birdnet-pi",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
+<<<<<<< Updated upstream
   "version": "1.2",
+=======
+  "version": "1.4",
+>>>>>>> Stashed changes
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
