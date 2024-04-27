@@ -38,9 +38,7 @@ Options can be configured through three ways :
 - Addon options
 
 ```yaml
-ALSA_CARD : number of the card (0 or 1 usually), see https://github.com/tphakala/birdnet-pi/blob/main/doc/installation.md#deciding-alsa_card-value
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
-COMMAND : realtime --rtsp url # allows to provide arguments to birdnet-pi
 ```
 
 - Config.yaml
