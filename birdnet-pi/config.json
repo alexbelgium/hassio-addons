@@ -94,5 +94,5 @@
   "usb": true,
   "version": "0.13",
   "video": true,
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
+  "webui": "http://[HOST]:[PORT:80]"
 }
