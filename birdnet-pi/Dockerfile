@@ -75,10 +75,10 @@ RUN \
     # Ensure chmod
     sed -i "/git clone/a chown -R 1000:1000 $HOME" /newinstaller.sh && \
     # Remove all instances of sudo from the newinstaller
-    #sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
+    sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     \
     # Execute installer
-    sudo -u pi /./newinstaller.sh && \
+    /./newinstaller.sh && \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
