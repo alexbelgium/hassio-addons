@@ -22,7 +22,7 @@ if [ ! -f /config/birdnet.conf ]; then
 fi
 
 bashio::log.info "Starting BirdNET-Pi services"
-chmod +x $HOME/BirdNET-Pi/scripts/restart_services.sh
-/.$HOME/BirdNET-Pi/scripts/restart_services.sh &>/proc/1/fd/1
+chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
+/."$HOME"/BirdNET-Pi/scripts/restart_services.sh &>/proc/1/fd/1
 
 bashio::log.info "App is accessible from webui"
