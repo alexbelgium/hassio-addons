@@ -96,7 +96,7 @@
   "startup": "application",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "1.0",
+  "version": "1.1",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }

@@ -74,8 +74,10 @@ RUN \
     sed -i "/reboot/d" /newinstaller.sh && \
     # Use apt-get as without user action
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
+    # Ensure chmod
+    sed -i "/git clone/a chown -R 1000:1000 $HOME" /newinstaller.sh && \
     # Remove all instances of sudo from the newinstaller
-    sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
+    #sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     \
     # Execute installer
     /./newinstaller.sh && \
