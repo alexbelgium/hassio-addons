@@ -83,7 +83,6 @@
     "PGID": 0,
     "PUID": 0,
     "connection_mode": "ingress_noauth"
-
   },
   "panel_icon": "mdi:download-circle",
   "ports": {
@@ -111,5 +110,5 @@
   "slug": "readarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
-  "version": "0.3.24.2509-5"
+  "version": "0.3.25.2515"
 }
