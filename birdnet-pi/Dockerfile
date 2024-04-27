@@ -27,17 +27,8 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     XDG_RUNTIME_DIR="/run/user/1000" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3"
 
-    # Set locale for debian apt
-ENV LC_CTYPE="en_US.UTF-8" \
-    LC_ALL="en_US.UTF-8" \
-    LANGUAGE="en_US.UTF-8" \
-    LANG="en_US.UTF-8"
-
 # hadolint ignore=DL3015,SC2016
 RUN \
-    # Set locale for debian apt
-    locale-gen en_US.UTF-8 && \
-    \
     # Install dependencies
     echo "Install dependencies" && \
     apt-get update -y && apt-get install curl gcc python3-dev git jq sudo php-mbstring -y && \
