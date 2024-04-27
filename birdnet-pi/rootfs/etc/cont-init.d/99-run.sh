@@ -17,8 +17,9 @@ service dbus start
 
 # Symlink files
 bashio::log.info "Ensuring files are in /config ; please customize as needed"
+touch /config/apprise.txt
 chown -R 1000:1000 /config /etc/birdnet
-for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db"; do
+for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt"; do
     filename="${files##*/}"
     echo "... setting $filename"
     if [ ! -f /config/"$filename" ]; then echo "... copying $filename" && sudo -u pi mv "$files" /config/; fi
@@ -26,14 +27,6 @@ for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db"
     chmod 777 /config/*
     sudo -u pi ln -fs /config/"$filename" "$files"
     sudo -u pi ln -fs /config/"$filename" /etc/birdnet/"$filename"
-done
-
-for files in "apprise.txt"
-    if [ -f "$files" ]; then
-        echo "... /config/$files exists, it will be sent to BirdNET"  
-    else
-        echo "... /config/$files does not exist, if created before restarting it will be sent to BirdNET"  
-    fi
 done
 
 # Starting services
