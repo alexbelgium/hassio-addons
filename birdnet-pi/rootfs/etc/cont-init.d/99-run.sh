@@ -11,8 +11,9 @@ bashio::log.info "Ensuring permissions are good"
 # Define structure
 echo "... making sure structure is correct"
 touch /config/apprise.txt
-mkdir -p /config/By_Date
-mkdir -p /config/Charts
+mkdir -p /config/BirdSongs/Extracted/By_Date
+mkdir -p /config/BirdSongs/Extracted/Charts
+mkdir -p /config/BirdSongs/Processed
 
 # Permissions
 echo "... set permissions to user pi"
@@ -31,10 +32,10 @@ for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db"
 done
 
 # Symlink folders
-for files in "$HOME/BirdSongs/Extracted/By_Date" "$HOME/BirdSongs/Extracted/Charts"; do
-    filename="${files##*/}"
-    echo "... setting folder BirdSongs/Extracted/$filename"
-    sudo -u pi ln -fs /config/"$filename" "$files"
+for folders in BirdSongs/Extracted/By_Date BirdSongs/Extracted/Charts BirdSongs/Processed; do
+    echo "... setting folder $folders"
+    rm -r "$HOME/$folders"
+    sudo -u pi ln -fs /config/"$folders" "$HOME/$folders"
 done
 
 ##############
