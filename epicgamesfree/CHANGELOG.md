@@ -1,6 +1,4 @@
 
-## debian-2024-04-26 (2024-04-26)
-- Update to latest version from charlocharlie/epicgames-freegames
 ## debian-2024-03-17-2 (31-03-2024)
 - Minor bugs fixed
 
