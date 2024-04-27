@@ -88,9 +88,6 @@
     "localdisks": "str?",
     "networkdisks": "str?"
   },
-  "services": [
-    "mysql:want"
-  ],
   "slug": "birdnet-pi",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
