@@ -42,7 +42,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 91
+- In the repository : 90
 - Installed : 66168
 
 ### Top 3
@@ -119,6 +119,16 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
+
+&#10003;  [BirdNET-pi](birdnet-pi/) : realtime acoustic bird classification system
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbirdnet-pi%2Fconfig.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7no][armv7no-badge]
+![MariaDB][mariadb-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/bird.svg) [Birdnet-go](birdnet-go/) : Realtime BirdNET soundscape analyzer
 
@@ -862,24 +872,6 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
-![smb][smb-badge]
-![localdisks][localdisks-badge]
-
-&#10003; ![image](https://api.iconify.design/mdi/bird.svg) [zzz Do not use](zzz_draft_birdnet-pi/) : Realtime BirdNET soundscape analyzer
-
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_draft_birdnet-pi%2Fconfig.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7no][armv7no-badge]
-![smb][smb-badge]
-![localdisks][localdisks-badge]
-
-&#10003; ![image](https://api.iconify.design/mdi/bird.svg) [zzz Do not use 2](zzz_draft_birdnet-pi2/) : Realtime BirdNET soundscape analyzer
-
-&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_draft_birdnet-pi2%2Fconfig.json)
-![aarch64][aarch64-badge]
-![amd64][amd64-badge]
-![armv7no][armv7no-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
