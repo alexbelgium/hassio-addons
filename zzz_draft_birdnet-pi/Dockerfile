@@ -66,7 +66,7 @@ RUN \
     # Disable pulseaudio
     echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
     # Set permission
-    chmod +x /newinstallermod.sh && \
+    chmod 777 /newinstallermod.sh && \
     \
     # Modify installer
     ##################
