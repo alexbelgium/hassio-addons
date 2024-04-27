@@ -67,7 +67,6 @@
     "share:rw"
   ],
   "name": "BirdNET-pi",
-  "panel_icon": "mdi:bird",
   "ports": {
     "80/tcp": 80
   },
