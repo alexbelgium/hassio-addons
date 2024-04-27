@@ -89,9 +89,10 @@
     "mysql:want"
   ],
   "slug": "birdnet-pi",
+  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-3",
+  "version": "0.13-4",
   "video": true,
   "webui": "http://[HOST]:[PORT:80]"
 }
