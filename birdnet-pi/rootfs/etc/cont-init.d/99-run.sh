@@ -15,25 +15,18 @@ bashio::log.info "Starting system services..."
 echo "... dbus"
 service dbus start
 
-# Restarting all services
-bashio::log.info "Ensuring birdnet.conf is in /config ; please customize as needed"
-
 # Symlink files
-########################
-# Create configuration file
-if [ ! -f /config/birdnet.conf ]; then cp /etc/birdnet/birdnet.conf /config; fi
-if [ -f "$HOME"/BirdNET-Pi/birdnet.conf ]; then rm "$HOME"/BirdNET-Pi/birdnet.conf; fi
-chown 1000:1000 /config/birdnet.conf
-ln -s /config/birdnet.conf "$HOME"/BirdNET-Pi/
-chown 1000:1000 -h "$HOME"/BirdNET-Pi/birdnet.conf
+bashio::log.info "Ensuring files are in /config ; please customize as needed"
+for files in /etc/birdnet/birdnet.conf "$HOME/BirdNET-Pi/scripts/birds.db"; do
+    filename="${files##*/}"
+    if [ ! -f /config/"$filename" ]; then cp "$files" /config/; fi
+    if [ -f "$files" ]; then rm "$files"; fi
+    chown 1000:1000 /config/"$filename"
+    ln -s /config/"$filename" "$files"
+    chown 1000:1000 -h "$files"
+done
 
-# Create sqlite database
-if [ ! -f /config/birds.db ]; then touch /config/birds.db; fi
-if [ -f "$HOME"/BirdNET-Pi/scripts/birds.db ]; then rm "$HOME"/BirdNET-Pi/scripts/birds.db; fi
-chown 1000:1000 /config/birds.db
-ln -s /config/birds.db "$HOME"/BirdNET-Pi/scripts/
-chown 1000:1000 -h "$HOME"/BirdNET-Pi/scripts/birds.db
-
+# Starting services
 bashio::log.info "Starting BirdNET-Pi services"
 chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 /."$HOME"/BirdNET-Pi/scripts/restart_services.sh &>/proc/1/fd/1
