@@ -44,6 +44,9 @@ done
 # SET SYSTEM #
 ##############
 
+# Remove services tab
+sed -i '/System Controls/d' "$HOME"/BirdNET-Pi/homepage/views.php
+
 # Set TZ
 if bashio::config.has_value 'TZ'; then
     TIMEZONE=$(bashio::config 'TZ')
