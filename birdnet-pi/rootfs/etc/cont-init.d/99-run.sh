@@ -56,6 +56,11 @@ for folders in Extracted/By_Date Extracted/Charts Processed StreamData; do
     sudo -u pi ln -fs "$BIRDSONGS_FOLDER"/"$folders" "$HOME/BirdSongs/$folders"
 done
 
+# Permissions
+echo "... set script to automatically restart services if clogged"
+chown -R 1000:1000 /scripts
+sed "s/\$USER/$USER/g" /scripts/throttlescript.cron >> /etc/crontab
+
 ##############
 # SET SYSTEM #
 ##############
