@@ -1,3 +1,4 @@
+## 0.13 (28-04-2024)
 - Fix : ensure correct labels language is used at boot
 - Feat : add throttle recording service from @JohnButcher https://github.com/mcguirepr89/BirdNET-Pi/issues/393#issuecomment-1166445710
 - Feat : use tmpfs from StreamData to reduce disk wear
