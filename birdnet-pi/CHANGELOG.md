@@ -1,3 +1,5 @@
+- Feat : definition of BirdSongs folder through an addon option, existing data will not be migrated
+
 ## 0.13-5 (27-04-2024)
 - Add support for /config/include_species_list.txt and /config/exclude_species_list.txt
 
