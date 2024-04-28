@@ -5,6 +5,7 @@
   ],
   "audio": true,
   "codenotary": "alexandrep.github@gmail.com",
+  "description": "Realtime BirdNET soundscape analyzer",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
@@ -64,12 +65,10 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "description": "Realtime BirdNET soundscape analyzer",
-  "environment": {
-  },
+  "environment": {},
+  "image": "ghcr.io/alexbelgium/birdnet-go-{arch}",
   "ingress": true,
   "ingress_stream": true,
-  "image": "ghcr.io/alexbelgium/birdnet-go-{arch}",
   "init": false,
   "map": [
     "addon_config:rw",

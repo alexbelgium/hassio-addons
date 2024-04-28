@@ -84,7 +84,6 @@
     "PGID": 0,
     "PUID": 0,
     "connection_mode": "ingress_noauth"
-
   },
   "panel_icon": "mdi:movie-outline",
   "ports": {
