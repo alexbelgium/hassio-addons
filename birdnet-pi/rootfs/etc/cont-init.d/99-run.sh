@@ -14,6 +14,7 @@ echo "... creating default files"
 touch /config/apprise.txt
 touch /config/include_species_list.txt
 touch /config/exclude_species_list.txt
+touch /config/IdentifiedSoFar.txt
 
 # Set BirdSongs folder
 BIRDSONGS_FOLDER="/config/BirdSongs"
@@ -39,7 +40,7 @@ echo "... set permissions to user pi"
 chown -R 1000:1000 /config /etc/birdnet "$BIRDSONGS_FOLDER"
 
 # Symlink files
-for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt"; do
+for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt; do
     filename="${files##*/}"
     echo "... creating symlink for $filename"
     if [ ! -f /config/"$filename" ]; then echo "... copying $filename" && sudo -u pi mv "$files" /config/; fi
