@@ -1,3 +1,5 @@
+## 0.13-10 (28-04-2024)
+- Minor bugs fixed
 ## 0.13-8 (28-04-2024)
 - Feat : add throttle recording service from @JohnButcher https://github.com/mcguirepr89/BirdNET-Pi/issues/393#issuecomment-1166445710
 - Feat : use tmpfs from StreamData to reduce disk wear
