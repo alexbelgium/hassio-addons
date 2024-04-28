@@ -16,6 +16,7 @@ touch /config/exclude_species_list.txt
 mkdir -p /config/BirdSongs/Extracted/By_Date
 mkdir -p /config/BirdSongs/Extracted/Charts
 mkdir -p /config/BirdSongs/Processed
+mkdir -p /config/BirdSongs/StreamData
 
 # Permissions
 echo "... set permissions to user pi"
@@ -34,18 +35,25 @@ for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db"
 done
 
 # Symlink folders
-for folders in BirdSongs/Extracted/By_Date BirdSongs/Extracted/Charts BirdSongs/Processed; do
+for folders in BirdSongs/Extracted/By_Date BirdSongs/Extracted/Charts BirdSongs/Processed BirdSongs/StreamData; do
     echo "... setting folder $folders"
     rm -r "$HOME/${folders:?}"
     sudo -u pi ln -fs /config/"$folders" "$HOME/$folders"
 done
 
-##############
-# SET SYSTEM #
-##############
+################
+# MODIFY WEBUI #
+################
+
+# Correct the phpsysinfo for the correct gotty service
+sed -i "s/gotty/$(ps aux | grep -o 'gotty-[a-z0-9]*' | head -n 1)/g" "$HOME"/BirdNET-Pi/templates/phpsysinfo.ini
 
 # Remove services tab
 sed -i '/System Controls/d' "$HOME"/BirdNET-Pi/homepage/views.php
+
+##############
+# SET SYSTEM #
+##############
 
 # Set TZ
 if bashio::config.has_value 'TZ'; then
