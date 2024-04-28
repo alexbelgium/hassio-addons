@@ -24,6 +24,14 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [birdnet-pi](https://github.com/Nachtzuster/BirdNET-Pi) is an AI solution for continuous avian monitoring and identification originally developed by @mcguirepr89 on github (https://github.com/mcguirepr89/BirdNET-Pi), whose work is continued by @Nachtzuster and other developers on an active fork (https://github.com/Nachtzuster/BirdNET-Pi)
 
+Features of the addon :
+- Robust base image provided by [linuxserver](https://github.com/linuxserver/docker-baseimage-debian)
+- Working docker system thanks to https://github.com/gdraheim/docker-systemctl-replacement
+- Uses HA pulseaudio server
+- Uses HA tmpfs to store temporary files in ram and avoid disk wear
+- Exposes all config files to /config to allow remanence and easy access
+- Allows to modify the location of the stored bird songs (preferably to an external hdd)
+
 ## Configuration
 
 Install, then start the addon a first time
