@@ -82,7 +82,7 @@ service dbus start
 
 # Starting services
 echo ""
-bashio::log.green "Starting BirdNET-Pi services"
+bashio::log.info "Starting BirdNET-Pi services"
 chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 /."$HOME"/BirdNET-Pi/scripts/restart_services.sh &>/proc/1/fd/1
 
