@@ -61,6 +61,8 @@
   "description": "realtime acoustic bird classification system",
   "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
   "init": false,
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "addon_config:rw",
     "media:rw",
