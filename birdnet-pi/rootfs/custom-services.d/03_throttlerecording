@@ -7,6 +7,10 @@
 echo "Starting service: throttlerecording"
 touch "$HOME"/BirdSongs/StreamData/analyzing_now.txt
 
+# Avoid unbound errors
+set +u
+source /config/birdnet.conf
+
 srv="birdnet_recording"
 analyzing_now="."
 counter=10
