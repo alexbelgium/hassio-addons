@@ -56,28 +56,12 @@ for folders in Extracted/By_Date Extracted/Charts Processed StreamData; do
     sudo -u pi ln -fs "$BIRDSONGS_FOLDER"/"$folders" "$HOME/BirdSongs/$folders"
 done
 
-################
-# MODIFY WEBUI #
-################
-
-echo " "
-bashio::loginfo "Adapting webui"
-
-# Correct the phpsysinfo for the correct gotty service
-gottyservice="$(ps aux | grep -o 'gotty-[a-z0-9]*' | head -n 1)"
-echo "... using $gottyservice in phpsysinfo"
-sed -i "s/,gotty,/,${gottyservice:-gotty},/g" "$HOME"/BirdNET-Pi/templates/phpsysinfo.ini
-
-# Remove services tab
-echo "... removing System Controls from webui as should be used from HA"
-sed -i '/>System Controls/d' "$HOME"/BirdNET-Pi/homepage/views.php
-
 ##############
 # SET SYSTEM #
 ##############
 
 echo " "
-bashio::loginfo "Starting system services"
+bashio::log.info "Starting system services"
 
 # Set TZ
 if bashio::config.has_value 'TZ'; then
@@ -102,4 +86,18 @@ bashio::log.green "Starting BirdNET-Pi services"
 chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 /."$HOME"/BirdNET-Pi/scripts/restart_services.sh &>/proc/1/fd/1
 
-bashio::log.green "App is accessible from webui"
+################
+# MODIFY WEBUI #
+################
+
+echo " "
+bashio::log.info "Adapting webui"
+
+# Remove services tab
+echo "... removing System Controls from webui as should be used from HA"
+sed -i '/>System Controls/d' "$HOME"/BirdNET-Pi/homepage/views.php
+
+# Correct the phpsysinfo for the correct gotty service
+gottyservice="$(ps aux | grep 'address' | grep -o 'gotty-[a-z0-9]*' | head -n 1)"
+echo "... using $gottyservice in phpsysinfo"
+sed -i "s/,gotty,/,${gottyservice:-gotty},/g" "$HOME"/BirdNET-Pi/templates/phpsysinfo.ini
