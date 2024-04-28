@@ -1,3 +1,4 @@
+## 0.13-6 (28-04-2024)
 - Feat : definition of BirdSongs folder through an addon option, existing data will not be migrated
 
 ## 0.13-5 (27-04-2024)
