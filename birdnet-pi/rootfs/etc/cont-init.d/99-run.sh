@@ -33,14 +33,18 @@ echo "... creating default folders ; it is highly recommended to store those on 
 mkdir -p "$BIRDSONGS_FOLDER"/Extracted/By_Date
 mkdir -p "$BIRDSONGS_FOLDER"/Extracted/Charts
 mkdir -p "$BIRDSONGS_FOLDER"/Processed
-mkdir -p "$BIRDSONGS_FOLDER"/StreamData
+
+echo "... setting StreamData on tmpfs to reduce disk wear"
+mkdir -p /tmp/StreamData
+rm -r "$HOME"/BirdSongs/StreamData
+sudo -u pi ln -fs /tmp/StreamData "$HOME"/BirdSongs/StreamData
 
 # Permissions
 echo "... set permissions to user pi"
-chown -R 1000:1000 /config /etc/birdnet "$BIRDSONGS_FOLDER"
+chown -R 1000:1000 /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp/StreamData
 
 # Symlink files
-for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt; do
+for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt"; do
     filename="${files##*/}"
     echo "... creating symlink for $filename"
     if [ ! -f /config/"$filename" ]; then echo "... copying $filename" && sudo -u pi mv "$files" /config/; fi
@@ -51,7 +55,7 @@ for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db"
 done
 
 # Symlink folders
-for folders in Extracted/By_Date Extracted/Charts Processed StreamData; do
+for folders in Extracted/By_Date Extracted/Charts Processed; do
     echo "... creating symlink for $BIRDSONGS_FOLDER/$folders"
     rm -r "$HOME/BirdSongs/${folders:?}"
     sudo -u pi ln -fs "$BIRDSONGS_FOLDER"/"$folders" "$HOME/BirdSongs/$folders"
