@@ -95,17 +95,7 @@ RUN \
     \
     # Cleanup
     apt-get clean all && \
-    rm -rf /var/lib/apt/lists/* && \
-    \
-    # Change files
-    ##############
-    # Correct birds.db location to avoid symlinks
-    for location in '$HOME/BirdNET-Pi/scripts/birds.db' '~/BirdNET-Pi/scripts/birds.db' './scripts/birds.db' "userDir + '/BirdNET-Pi/scripts/birds.db'" '$home."/BirdNET-Pi/scripts/birds.db"'; do \
-    for files in "$HOME"/BirdNET-Pi/scripts/*.*; do sed -i "s|$location|/config/birds.db|g" "$files"; done; done && \
-    \
-    # Correct birdnet.conf location to avoid symlinks
-    for location in '/etc/birdnet/birdnet.conf' '$my_dir/birdnet.conf'; do \
-    for files in "$HOME"/BirdNET-Pi/scripts/*.*; do sed -i "s|$location|/config/birdnet.conf|g" "$files"; done; done
+    rm -rf /var/lib/apt/lists/*
 
 ##################
 # 2 Modify Image #
