@@ -31,6 +31,7 @@ Features of the addon :
 - Uses HA tmpfs to store temporary files in ram and avoid disk wear
 - Exposes all config files to /config to allow remanence and easy access
 - Allows to modify the location of the stored bird songs (preferably to an external hdd)
+- Supports ingress, to allow secure remote access without exposing ports
 
 ## Configuration
 
