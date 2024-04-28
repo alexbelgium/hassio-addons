@@ -30,14 +30,16 @@ if bashio::config.has_value "BIRDSONGS_FOLDER"; then
     fi
 fi
 echo "... creating default folders ; it is highly recommended to store those on a ssd"
-mkdir -p "$BIRDSONGS_FOLDER"/Extracted/By_Date
-mkdir -p "$BIRDSONGS_FOLDER"/Extracted/Charts
-mkdir -p "$BIRDSONGS_FOLDER"/Processed
+mkdir -p "$BIRDSONGS_FOLDER"/By_Date
+mkdir -p "$BIRDSONGS_FOLDER"/Charts
 
-echo "... setting StreamData on tmpfs to reduce disk wear"
+echo "... setting StreamData and Processed on tmpfs to reduce disk wear"
 mkdir -p /tmp/StreamData
+mkdir -p /tmp/Processed
 rm -r "$HOME"/BirdSongs/StreamData
+rm -r "$HOME"/BirdSongs/Processed
 sudo -u pi ln -fs /tmp/StreamData "$HOME"/BirdSongs/StreamData
+sudo -u pi ln -fs /tmp/Processed "$HOME"/BirdSongs/Processed
 
 # Permissions
 echo "... set permissions to user pi"
@@ -56,7 +58,7 @@ for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db"
 done
 
 # Symlink folders
-for folders in Extracted/By_Date Extracted/Charts Processed; do
+for folders in Extracted/By_Date Extracted/Charts; do
     echo "... creating symlink for $BIRDSONGS_FOLDER/$folders"
     rm -r "$HOME/BirdSongs/${folders:?}"
     sudo -u pi ln -fs "$BIRDSONGS_FOLDER"/"$folders" "$HOME/BirdSongs/$folders"
