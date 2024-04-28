@@ -57,10 +57,10 @@ for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db"
 done
 
 # Symlink folders
-for folders in Extracted/By_Date Extracted/Charts; do
+for folders in By_Date Charts; do
     echo "... creating symlink for $BIRDSONGS_FOLDER/$folders"
-    rm -r "$HOME/BirdSongs/${folders:?}"
-    sudo -u pi ln -fs "$BIRDSONGS_FOLDER"/"$folders" "$HOME/BirdSongs/$folders"
+    rm -r "$HOME/BirdSongs/Extracted/${folders:?}"
+    sudo -u pi ln -fs "$BIRDSONGS_FOLDER"/"$folders" "$HOME/BirdSongs/Extracted/$folders"
 done
 
 ##############
