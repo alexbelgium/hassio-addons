@@ -61,8 +61,6 @@
   "description": "realtime acoustic bird classification system",
   "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
   "init": false,
-  "ingress": true,
-  "ingress_stream": true,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -98,7 +96,7 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-15_TEST",
+  "version": "0.13-14",
   "video": true,
   "webui": "http://[HOST]:[PORT:80]"
 }
