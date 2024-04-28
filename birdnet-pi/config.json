@@ -91,10 +91,11 @@
     "networkdisks": "str?"
   },
   "slug": "birdnet-pi",
+  "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-6",
+  "version": "0.13-7",
   "video": true,
   "webui": "http://[HOST]:[PORT:80]"
 }
