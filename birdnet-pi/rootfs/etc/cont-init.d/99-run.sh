@@ -44,7 +44,6 @@ sudo -u pi ln -fs /tmp/Processed "$HOME"/BirdSongs/Processed
 # Permissions
 echo "... set permissions to user pi"
 chown -R pi:pi /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
-chmod 664 /config/birds.db
 
 # Symlink files
 for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt"; do
