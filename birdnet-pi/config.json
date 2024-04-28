@@ -68,6 +68,7 @@
   ],
   "name": "BirdNET-pi",
   "options": {
+    "BIRDSONGS_FOLDER": "/config/BirdSongs",
     "TZ": "Europe/Paris"
   },
   "ports": {
@@ -81,6 +82,7 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
+    "BIRDSONGS_FOLDER": "str?",
     "TZ": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
@@ -92,7 +94,7 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-5",
+  "version": "0.13-6",
   "video": true,
   "webui": "http://[HOST]:[PORT:80]"
 }
