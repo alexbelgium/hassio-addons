@@ -37,7 +37,7 @@ while [ 1 ];do
      else
         state="active"
      fi
-     echo "$(date)    INFO ${wavs} wav files waiting in ${ingest_dir}, $srv state is $state"
+     echo "$(date)    INFO ${wavs} wav files waiting in $(readlink -f $ingest_dir), $srv state is $state"
      if [ "$wavs" -gt 100 -a "$state" = "active" ];then
         sudo systemctl stop "$srv"
         echo "$(date) WARNING stopped $srv service"
