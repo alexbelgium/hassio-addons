@@ -1,5 +1,5 @@
 - Feat : add throttle recording service from @JohnButcher https://github.com/mcguirepr89/BirdNET-Pi/issues/393#issuecomment-1166445710
-- Feat : use tmpfs to avoid SDram degradation
+- Feat : use tmpfs from StreamData to reduce disk wear
 
 ## 0.13-6 (28-04-2024)
 - Feat : definition of BirdSongs folder through an addon option, existing data will not be migrated
