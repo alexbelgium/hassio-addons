@@ -41,7 +41,7 @@ sudo -u pi ln -fs /tmp/StreamData "$HOME"/BirdSongs/StreamData
 
 # Permissions
 echo "... set permissions to user pi"
-chown -R 1000:1000 /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp/StreamData
+chown -R 1000:1000 /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 
 # Symlink files
 for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt"; do
