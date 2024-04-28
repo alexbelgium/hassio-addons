@@ -68,7 +68,8 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Integration with HA
 
-Not yet available
+You can use apprise to send notifications with mqtt, then act on those using HomeAssistant
+Further informations : https://wander.ingstar.com/projects/birdnetpi.html
 
 ## Common issues
 
