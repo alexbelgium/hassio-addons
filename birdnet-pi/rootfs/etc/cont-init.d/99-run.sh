@@ -100,9 +100,9 @@ echo " "
 bashio::log.info "Adapting webui"
 
 # Correct language labels
-DATABASE_LANG="$(grep "^DATABASE_LANG" /config/birdnet.conf)" || exit 1
+export "$(grep "^DATABASE_LANG" /config/birdnet.conf)" || exit 1
 echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
-./install_language_label_nm.sh -l "$DATABASE_LANG" || exit 1
+.$HOME/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG" || exit 1
 
 # Remove services tab
 echo "... removing System Controls from webui as should be used from HA"
@@ -112,3 +112,5 @@ sed -i '/>System Controls/d' "$HOME"/BirdNET-Pi/homepage/views.php
 gottyservice="$(pgrep -l "gotty" | awk '{print $NF}' | head -n 1)"
 echo "... using $gottyservice in phpsysinfo"
 sed -i "s/,gotty,/,${gottyservice:-gotty},/g" "$HOME"/BirdNET-Pi/templates/phpsysinfo.ini
+
+bashio::log.info "Starting upstream container"
