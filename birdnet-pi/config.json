@@ -78,7 +78,7 @@
     "80/tcp": 80
   },
   "ports_description": {
-    "80/tcp": "web ui"
+    "80/tcp": "Web ui"
   },
   "privileged": [
     "SYS_ADMIN",
