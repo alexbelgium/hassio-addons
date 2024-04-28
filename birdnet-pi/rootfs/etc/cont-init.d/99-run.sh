@@ -98,6 +98,6 @@ echo "... removing System Controls from webui as should be used from HA"
 sed -i '/>System Controls/d' "$HOME"/BirdNET-Pi/homepage/views.php
 
 # Correct the phpsysinfo for the correct gotty service
-gottyservice="$(ps aux | grep 'address' | grep -o 'gotty-[a-z_0-9]*' | head -n 1)"
+gottyservice="$(pgrep -l "gotty" | awk '{print $NF}' | head -n 1)"
 echo "... using $gottyservice in phpsysinfo"
 sed -i "s/,gotty,/,${gottyservice:-gotty},/g" "$HOME"/BirdNET-Pi/templates/phpsysinfo.ini
