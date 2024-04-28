@@ -22,14 +22,12 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ---
 
-[birdnet-pi](https://github.com/tphakala/birdnet-pi/tree/main) is an AI solution for continuous avian monitoring and identification developed by @tphakala
-
-This addon is based on their docker image.
+[birdnet-pi](https://github.com/Nachtzuster/BirdNET-Pi) is an AI solution for continuous avian monitoring and identification originally developed by @mcguirepr89 on github (https://github.com/Nachtzuster/BirdNET-Pi), whose work is continued by @Nachtzuster and other developers on an active fork (https://github.com/Nachtzuster/BirdNET-Pi)
 
 ## Configuration
 
 Install, then start the addon a first time
-Webui can be found at <http://homeassistant:8080>.
+Webui can be found at <http://homeassistant:80>.
 
 You'll need a microphone : either use one connected to HA or the audio stream of a rstp camera.
 
@@ -39,6 +37,7 @@ Options can be configured through three ways :
 
 ```yaml
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+BIRDSONGS_FOLDER: folder to store birdsongs file # It should be an ssd if you want to avoid clogging of analysis
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
