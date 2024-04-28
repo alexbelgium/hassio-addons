@@ -101,9 +101,9 @@ echo " "
 bashio::log.info "Adapting webui"
 
 # Correct language labels
-export "$(grep "^DATABASE_LANG" /config/birdnet.conf)" || exit 1
+export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
 echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
-."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG" || exit 1
+/."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
 
 # Remove services tab
 echo "... removing System Controls from webui as should be used from HA"
