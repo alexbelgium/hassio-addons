@@ -1,2 +1,0 @@
-#birdnet
-*/15 * * * * $USER /scripts/throttlescript.sh >/dev/null 2>&1
