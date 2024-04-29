@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Sonarr/Radarr/Jellyfin] Jellyfin notifications broken (opened 2024-04-19)](https://github.com/alexbelgium/hassio-addons/issues/1348) by [@leokeba](https://github.com/leokeba)
 
 # Home assistant add-on: Radarr
 
