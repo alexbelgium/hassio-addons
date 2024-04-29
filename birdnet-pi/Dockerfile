@@ -92,6 +92,9 @@ RUN \
     ln -s /home/"$USER" /app && \
     chown -R "$USER":"$USER" /home/"$USER" /app && \
     \
+    # Give access to caddy
+    groupmod -o -g 1000 caddy && usermod -o -u 1000 caddy && \
+    \
     # Cleanup
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
