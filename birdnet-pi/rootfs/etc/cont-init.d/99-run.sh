@@ -87,8 +87,8 @@ if [[ "$(bashio::config "BIRDS_ONLINE_INFO")" == *"ebird"* ]]; then
     chown pi:pi /home/pi/BirdNET-Pi/model/ebird.txt
     sed -i '/$sciname =/a \\t$ebirdname = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/ebird.txt | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/todays_detections.php
     sed -i '/$sciname =/a \\t$ebirdname = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/ebird.txt | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/stats.php
-    sed -i "s|https://allaboutbirds.org/guide/<?php echo \$comname;?>|https://ebird.org/species/<?php echo \$ebirdname;?>?siteLanguage=DATABASE_LANG_$DATABASE_LANG|g" "$HOME"/BirdNET-Pi/scripts/todays_detections.php
-    sed -i "s|https://allaboutbirds.org/guide/\$comname|https://ebird.org/species/\$ebirdname?siteLanguage=DATABASE_LANG_$DATABASE_LANG|g" "$HOME"/BirdNET-Pi/scripts/stats.php
+    sed -i "s|https://allaboutbirds.org/guide/<?php echo \$comname;?>|https://ebird.org/species/<?php echo \$ebirdname;?>?siteLanguage=$DATABASE_LANG_$DATABASE_LANG|g" "$HOME"/BirdNET-Pi/scripts/todays_detections.php
+    sed -i "s|https://allaboutbirds.org/guide/\$comname|https://ebird.org/species/\$ebirdname?siteLanguage=$DATABASE_LANG_$DATABASE_LANG|g" "$HOME"/BirdNET-Pi/scripts/stats.php
 else
     # Correct allaboutbirds for non-english names
     echo "... using allaboutbirds, with correction for non-english names"
