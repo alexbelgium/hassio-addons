@@ -71,6 +71,7 @@
   "name": "BirdNET-pi",
   "options": {
     "BIRDSONGS_FOLDER": "/config/BirdSongs",
+    "BIRDS_ONLINE_INFO": "ebird.org",
     "TZ": "Europe/Paris"
   },
   "panel_icon": "mdi:bird",
@@ -86,6 +87,7 @@
   ],
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
+    "BIRDS_ONLINE_INFO": "list(allaboutbirds.org|ebird.org)",
     "TZ": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
@@ -98,6 +100,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-3",
+  "version": "0.13-4",
   "video": true
 }
