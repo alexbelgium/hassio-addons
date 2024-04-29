@@ -41,7 +41,8 @@ fi || (bashio::log.fatal "Error : $TIMEZONE not found. Here is a list of valid t
 # Correct language labels
 export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
 echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
-/."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
+# Saving default of en
+cp "$HOME"/BirdNET-Pi/model/labels.txt "$HOME"/BirdNET-Pi/model/labels.bak
 
 # Correcting systemctl
 echo "... correcting systemctl"
@@ -78,5 +79,10 @@ sed -i '/Ram drive/d' "$HOME"/BirdNET-Pi/scripts/service_controls.php
 gottyservice="$(pgrep -l "gotty" | awk '{print $NF}' | head -n 1)"
 echo "... using $gottyservice in phpsysinfo"
 sed -i "s/,gotty,/,${gottyservice:-gotty},/g" "$HOME"/BirdNET-Pi/templates/phpsysinfo.ini
+
+# Correct allaboutbirds for non-english names
+echo "... allow allaboutbirds for non-english names"
+sed -i '/$sciname =/a \\t$comnameen = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/labels.bak | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/todays_detections.php
+sed -i 's|allaboutbirds.org/guide/<?php echo $comname|allaboutbirds.org/guide/<?php echo $comnameen|g' "$HOME"/BirdNET-Pi/scripts/todays_detections.php
 
 bashio::log.info "Starting upstream container"
