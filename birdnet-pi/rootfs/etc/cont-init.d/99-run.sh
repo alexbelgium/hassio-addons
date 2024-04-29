@@ -41,6 +41,7 @@ fi || (bashio::log.fatal "Error : $TIMEZONE not found. Here is a list of valid t
 # Correct language labels
 export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
 echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
+/."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
 # Saving default of en
 cp "$HOME"/BirdNET-Pi/model/labels.txt "$HOME"/BirdNET-Pi/model/labels.bak
 
