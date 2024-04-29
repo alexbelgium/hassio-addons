@@ -14,8 +14,8 @@ echo "... creating default files"
 touch /config/apprise.txt
 touch /config/include_species_list.txt
 touch /config/exclude_species_list.txt
-echo "" > /config/IdentifiedSoFar.txt
-echo "" > /config/disk_check_exclude.txt # Using touch caused an issue with stats.php
+if [ ! -f /config/IdentifiedSoFar.txt ]; then echo "" > /config/IdentifiedSoFar.txt; fi
+if [ ! -f /config/disk_check_exclude.txt ]; then echo "" > /config/disk_check_exclude.txt; fi # Using touch caused an issue with stats.php
 
 # Get BirdSongs folder locations
 BIRDSONGS_FOLDER="/config/BirdSongs"
