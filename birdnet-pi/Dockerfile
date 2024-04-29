@@ -92,7 +92,7 @@ RUN \
     ln -s /home/"$USER" /app && \
     chown -R "$USER":"$USER" /home/"$USER" /app && \
     \
-    # Give access to caddy
+    # Give access to caddy for files owned by the user, to allow files modification
     groupmod -o -g 1000 caddy && usermod -o -u 1000 caddy && \
     \
     # Cleanup
