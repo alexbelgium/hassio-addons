@@ -21,6 +21,11 @@ grep -o '^[^#=]*=' "$configtemplate" | sed 's/=//' | while read -r var; do
         bashio::log.yellow "...$var was missing from your birdnet.conf file, it was re-added"
         grep "^$var=" "$configtemplate" >> "$configcurrent"
     fi
+    # Check for duplicates
+    if [ "$(grep -c "^$var=" "$configcurrent")" -gt 1 ]; then
+        bashio::log.error "Duplicate variable $var found in $configcurrent, all were commented out expect for the first one"
+        awk -v var="$var" '{ if ($0 ~ "^[[:blank:]]*"var && c++ > 0) print "#" $0; else print $0; }' "$configcurrent" > temp && mv temp "$configcurrent"
+    fi
 done
 
 ##############
