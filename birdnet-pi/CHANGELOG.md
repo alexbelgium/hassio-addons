@@ -1,3 +1,5 @@
+## 0.13-3 (29-04-2024)
+- Minor bugs fixed
 ## 0.13-2 (29-04-2024)
 - Remove throttle script due to interactions with analysis service
 
