@@ -48,6 +48,11 @@ bashio::log.info "Adapting webui"
 echo "... removing System Controls from webui as should be used from HA"
 sed -i '/>System Controls/d' "$HOME"/BirdNET-Pi/homepage/views.php
 
+# Remove services tab
+echo "... removing Ram drive from webui as it is handled from HA"
+sed -i '/Ram drive/{n;s/center"/center" style="display: none;"/;}' "$HOME"/BirdNET-Pi/scripts/service_controls.php
+sed -i '/Ram drive/d' "$HOME"/BirdNET-Pi/scripts/service_controls.php
+
 # Correct the phpsysinfo for the correct gotty service
 gottyservice="$(pgrep -l "gotty" | awk '{print $NF}' | head -n 1)"
 echo "... using $gottyservice in phpsysinfo"
