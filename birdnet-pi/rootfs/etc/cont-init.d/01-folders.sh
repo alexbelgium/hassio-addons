@@ -16,7 +16,7 @@ touch /config/include_species_list.txt
 touch /config/exclude_species_list.txt
 touch /config/IdentifiedSoFar.txt
 
-# Set BirdSongs folder
+# Get BirdSongs folder locations
 BIRDSONGS_FOLDER="/config/BirdSongs"
 if bashio::config.has_value "BIRDSONGS_FOLDER"; then
     BIRDSONGS_FOLDER_OPTION="$(bashio::config "BIRDSONGS_FOLDER")"
@@ -29,10 +29,13 @@ if bashio::config.has_value "BIRDSONGS_FOLDER"; then
         bashio::log.yellow "BIRDSONGS_FOLDER reverted to /config/BirdSongs"
     fi
 fi
+
+# Create BirdSongs folder
 echo "... creating default folders ; it is highly recommended to store those on a ssd"
 mkdir -p "$BIRDSONGS_FOLDER"/By_Date
 mkdir -p "$BIRDSONGS_FOLDER"/Charts
 
+# Store temporary folders in tmpfs
 echo "... setting StreamData and Processed on tmpfs to reduce disk wear"
 mkdir -p /tmp/StreamData
 mkdir -p /tmp/Processed
@@ -41,9 +44,12 @@ rm -r "$HOME"/BirdSongs/Processed
 sudo -u pi ln -fs /tmp/StreamData "$HOME"/BirdSongs/StreamData
 sudo -u pi ln -fs /tmp/Processed "$HOME"/BirdSongs/Processed
 
-# Permissions
+# Permissions for created files and folders
 echo "... set permissions to user pi"
 chown -R pi:pi /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
+
+# Save default birdnet.conf to perform sanity check
+cp "$HOME"/BirdNET-Pi/birdnet.conf "$HOME"/BirdNET-Pi/birdnet.bak
 
 # Symlink files
 for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt"; do
