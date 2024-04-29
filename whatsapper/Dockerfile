@@ -34,7 +34,7 @@ USER root
 ##################
 
 # Copy local files
-COPY rootfs/ /
+# COPY rootfs/ /
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
