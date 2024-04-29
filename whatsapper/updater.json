@@ -1,8 +1,8 @@
 {
-  "last_update": "30-1-2024",
+  "last_update": "29-4-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "whatsapper",
   "source": "github",
   "upstream_repo": "baldarn/whatsapper",
-  "upstream_version": "2024.1.30"
+  "upstream_version": "2024.4.29"
 }

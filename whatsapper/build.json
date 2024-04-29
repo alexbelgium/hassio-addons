@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "baldarn/whatsapper:2024.1.30",
-    "amd64": "baldarn/whatsapper:2024.1.30"
+    "aarch64": "baldarn/whatsapper:2024.4.29",
+    "amd64": "baldarn/whatsapper:2024.4.29"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
