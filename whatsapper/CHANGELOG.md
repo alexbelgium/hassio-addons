@@ -1,3 +1,7 @@
+## 2024.4.29-1 (29-04-2024)
+
+- Fix docker build
+
 ## 2024.4.29 (29-04-2024)
 
 - Fix wweb.js client issue (see https://github.com/pedroslopez/whatsapp-web.js/issues/2885)
