@@ -1,5 +1,6 @@
-## 0.13-7 (29-04-2024)
-- Minor bugs fixed
+- Improve ingress
+- Fix : give caddy UID 1000 to allow deletion of files owned by pi
+
 ## 0.13-5 (29-04-2024)
 - Feat : addon option to use allaboutbird (US) or ebird (international) for additional birds info
 - Remove throttle script due to interactions with analysis service
