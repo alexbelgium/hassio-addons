@@ -41,6 +41,9 @@ fi || (bashio::log.fatal "Error : $TIMEZONE not found. Here is a list of valid t
 # Correct language labels
 export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
 echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
+
+DATABASE_LANG=fr
+
 /."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
 # Saving default of en
 cp "$HOME"/BirdNET-Pi/model/labels.txt "$HOME"/BirdNET-Pi/model/labels.bak
@@ -90,8 +93,8 @@ if [[ "$(bashio::config "BIRDS_ONLINE_INFO")" == *"ebird"* ]]; then
     sed -i '/$sciname =/a \\t$ebirdname = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/ebird.txt | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/todays_detections.php
     # shellcheck disable=SC2016
     sed -i '/$sciname =/a \\t$ebirdname = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/ebird.txt | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/stats.php
-    sed -i "s|https://allaboutbirds.org/guide/<?php echo \$comname;?>|https://ebird.org/species/<?php echo \$ebirdname;?>?siteLanguage=$DATABASE_LANG_$DATABASE_LANG|g" "$HOME"/BirdNET-Pi/scripts/todays_detections.php
-    sed -i "s|https://allaboutbirds.org/guide/\$comname|https://ebird.org/species/\$ebirdname?siteLanguage=$DATABASE_LANG_$DATABASE_LANG|g" "$HOME"/BirdNET-Pi/scripts/stats.php
+    sed -i "s|https://allaboutbirds.org/guide/<?php echo \$comname;?>|https://ebird.org/species/<?php echo \$ebirdname;?>?siteLanguage=${DATABASE_LANG}_${DATABASE_LANG}|g" "$HOME"/BirdNET-Pi/scripts/todays_detections.php
+    sed -i "s|https://allaboutbirds.org/guide/\$comname|https://ebird.org/species/\$ebirdname?siteLanguage=${DATABASE_LANG}_${DATABASE_LANG}|g" "$HOME"/BirdNET-Pi/scripts/stats.php
 else
     # Correct allaboutbirds for non-english names
     echo "... using allaboutbirds, with correction for non-english names"
