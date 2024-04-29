@@ -1,3 +1,5 @@
+## 0.13-7 (29-04-2024)
+- Minor bugs fixed
 ## 0.13-5 (29-04-2024)
 - Feat : addon option to use allaboutbird (US) or ebird (international) for additional birds info
 - Remove throttle script due to interactions with analysis service
