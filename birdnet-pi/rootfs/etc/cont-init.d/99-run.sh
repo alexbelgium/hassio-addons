@@ -2,6 +2,27 @@
 # shellcheck shell=bash
 set -e
 
+######################
+# CHECK BIRDNET.CONF #
+######################
+
+echo " "
+bashio::log.info "Checking your birndet.conf file integrity"
+
+# Set variables
+configcurrent="$HOME"/BirdNET-Pi/birdnet.conf
+configtemplate="$HOME"/BirdNET-Pi/birdnet.bak
+
+# Extract variable names from config template and read each one
+grep -o '^[^#=]*=' "$configtemplate" | sed 's/=//' | while read -r var; do
+    # Check if the variable is in configcurrent, if not, append it
+    if ! grep -q "^$var=" "$configcurrent"; then
+        # At which line was the variable in the initial file
+        bashio::log.yellow "...$var was missing from your birdnet.conf file, it was re-added"
+        grep "^$var=" "$configtemplate" >> "$configcurrent"
+    fi
+done
+
 ##############
 # SET SYSTEM #
 ##############
