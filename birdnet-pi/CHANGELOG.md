@@ -1,3 +1,4 @@
+## 0.13-2 (29-04-2024)
 - Remove throttle script due to interactions with analysis service
 
 ## 0.13 (28-04-2024)
