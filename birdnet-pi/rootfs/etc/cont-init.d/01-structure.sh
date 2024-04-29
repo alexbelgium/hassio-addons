@@ -14,7 +14,8 @@ echo "... creating default files"
 touch /config/apprise.txt
 touch /config/include_species_list.txt
 touch /config/exclude_species_list.txt
-touch /config/IdentifiedSoFar.txt
+echo "" > /config/IdentifiedSoFar.txt
+echo "" > /config/disk_check_exclude.txt # Using touch caused an issue with stats.php
 
 # Get BirdSongs folder locations
 BIRDSONGS_FOLDER="/config/BirdSongs"
@@ -52,7 +53,7 @@ chown -R pi:pi /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 cp "$HOME"/BirdNET-Pi/birdnet.conf "$HOME"/BirdNET-Pi/birdnet.bak
 
 # Symlink files
-for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt"; do
+for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt"; do
     filename="${files##*/}"
     echo "... creating symlink for $filename"
     if [ ! -f /config/"$filename" ]; then echo "... copying $filename" && sudo -u pi mv "$files" /config/; fi
