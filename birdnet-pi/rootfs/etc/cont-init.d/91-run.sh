@@ -22,6 +22,15 @@ echo "... correcting systemctl"
 curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl
 chmod a+x /bin/systemctl
 
+
+# Correct language labels
+export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
+# Saving default of en
+cp "$HOME"/BirdNET-Pi/model/labels.txt "$HOME"/BirdNET-Pi/model/labels.bak
+# Adapt to new language
+echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
+/."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
+
 # Starting dbus
 echo "... starting dbus"
 service dbus start
