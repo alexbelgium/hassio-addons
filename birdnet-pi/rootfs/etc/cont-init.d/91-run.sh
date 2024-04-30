@@ -22,7 +22,6 @@ echo "... correcting systemctl"
 curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl
 chmod a+x /bin/systemctl
 
-
 # Correct language labels
 export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
 # Saving default of en
