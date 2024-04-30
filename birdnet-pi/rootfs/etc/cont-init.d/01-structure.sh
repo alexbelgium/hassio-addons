@@ -60,7 +60,6 @@ for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db"
     if [ -e "$files" ]; then rm "$files"; fi
     sudo -u pi ln -fs /config/"$filename" "$files"
     sudo -u pi ln -fs /config/"$filename" /etc/birdnet/"$filename"
-    chmod 664 /config/*
 done
 
 # Symlink folders
@@ -69,3 +68,8 @@ for folders in By_Date Charts; do
     rm -r "$HOME/BirdSongs/Extracted/${folders:?}"
     sudo -u pi ln -fs "$BIRDSONGS_FOLDER"/"$folders" "$HOME/BirdSongs/Extracted/$folders"
 done
+
+# Permissions for created files and folders
+echo "... check permissions"
+chmod -R 664 /config/*
+chmod 777 /config
