@@ -17,16 +17,6 @@ if bashio::config.has_value 'TZ'; then
     echo "$TIMEZONE" >/etc/timezone
 fi || (bashio::log.fatal "Error : $TIMEZONE not found. Here is a list of valid timezones : https://manpages.ubuntu.com/manpages/focal/man3/DateTime::TimeZone::Catalog.3pm.html")
 
-# Correct language labels
-export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
-echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
-
-DATABASE_LANG=fr
-
-/."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
-# Saving default of en
-cp "$HOME"/BirdNET-Pi/model/labels.txt "$HOME"/BirdNET-Pi/model/labels.bak
-
 # Correcting systemctl
 echo "... correcting systemctl"
 curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl
