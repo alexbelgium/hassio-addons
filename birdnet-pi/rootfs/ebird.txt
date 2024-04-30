@@ -6185,7 +6185,7 @@ Troglodytes ochraceus_ochwre1
 Troglodytes pacificus_pacwre1
 Troglodytes rufociliatus_rubwre2
 Troglodytes solstitialis_mouwre1
-Troglodytes troglodytes_pygswi2
+Troglodytes troglodytes_winwre4
 Trogon bairdii_baitro1
 Trogon caligatus_gartro1
 Trogon chionurus_whttro1
