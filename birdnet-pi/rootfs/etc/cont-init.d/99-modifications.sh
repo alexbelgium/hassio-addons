@@ -26,8 +26,11 @@ sed -i "s/,gotty,/,${gottyservice:-gotty},/g" "$HOME"/BirdNET-Pi/templates/phpsy
 # Set the online birds info system
 if [[ "$(bashio::config "BIRDS_ONLINE_INFO")" == *"ebird"* ]]; then
     echo "... using ebird instead of allaboutbirds"
+    # Set ebird database
     mv /ebird.txt /home/pi/BirdNET-Pi/model/ebird.txt
     chown pi:pi /home/pi/BirdNET-Pi/model/ebird.txt
+    # Get language
+    export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
     # shellcheck disable=SC2016
     sed -i '/$sciname =/a \\t$ebirdname = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/ebird.txt | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/todays_detections.php
     # shellcheck disable=SC2016
