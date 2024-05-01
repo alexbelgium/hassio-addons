@@ -7,7 +7,6 @@ if [ -d /tmp/StreamData ]; then
     # Stop the services in parallel
     systemctl stop birdnet_analysis & 
     systemctl stop birdnet_recording
-    wait 1
     
     # Check if there are files in /tmp/StreamData and move them to /data/StreamData
     mkdir -p /data/StreamData
