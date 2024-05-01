@@ -12,7 +12,7 @@ if [ -d /tmp/StreamData ]; then
     # Check if there are files in /tmp/StreamData and move them to /data/StreamData
     mkdir -p /data/StreamData
     if [ "$(ls -A /tmp/StreamData)" ]; then
-        cp -rnf /tmp/StreamData/* /data/StreamData/
+        mv -v /tmp/StreamData/* /data/StreamData/
     fi
     
     bashio::log.fatal "... files safe, allowing container to stop"
