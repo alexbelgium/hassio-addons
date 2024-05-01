@@ -39,6 +39,10 @@ echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
 echo "... starting dbus"
 service dbus start
 
+# Starting journald
+echo "... starting journald"
+systemctl start systemd-journald
+
 # Starting services
 echo ""
 bashio::log.info "Starting BirdNET-Pi services"
