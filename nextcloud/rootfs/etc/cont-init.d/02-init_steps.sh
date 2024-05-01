@@ -2,14 +2,9 @@
 # shellcheck shell=bash
 set -e
 
-# Clear default.conf from erroneous upstream element (only once)
-if [ ! -f /data/done ] && [ -f /data/config/nginx/site-confs/default.conf ]; then
-    rm /data/config/nginx/site-confs/*
-    touch /data/done
-    bashio::addon.restart
-elif [ ! -f /data/config/nginx/site-confs/default.conf ]; then
-    cp /defaults/nginx/site-confs/default.conf.sample /data/config/nginx/site-confs/default.conf  
-fi
+# Fix app can't install
+sed -i "s|modHeadersAvailable true|modHeadersAvailable false|g" /data/config/nginx/site-confs/*.conf
+sed -i "s|front_controller_active true|front_controller_active false|g" /data/config/nginx/site-confs/*.conf
 
 # Runs only after initialization done
 # shellcheck disable=SC2128
