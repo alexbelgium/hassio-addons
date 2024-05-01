@@ -10,6 +10,7 @@ if [ -d /tmp/StreamData ]; then
     wait 1
     
     # Check if there are files in /tmp/StreamData and move them to /data/StreamData
+    mkdir -p /data/StreamData
     if [ "$(ls -A /tmp/StreamData)" ]; then
         cp -rnf /tmp/StreamData/* /data/StreamData/
     fi
