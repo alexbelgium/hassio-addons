@@ -18,11 +18,6 @@ echo "... removing Ram drive from webui as it is handled from HA"
 sed -i '/Ram drive/{n;s/center"/center" style="display: none;"/;}' "$HOME"/BirdNET-Pi/scripts/service_controls.php
 sed -i '/Ram drive/d' "$HOME"/BirdNET-Pi/scripts/service_controls.php
 
-# Correct the phpsysinfo for the correct gotty service
-gottyservice="$(pgrep -l "gotty" | awk '{print $NF}' | head -n 1)"
-echo "... using $gottyservice in phpsysinfo"
-sed -i "s/,gotty,/,${gottyservice:-gotty},/g" "$HOME"/BirdNET-Pi/templates/phpsysinfo.ini
-
 # Set the online birds info system
 if [[ "$(bashio::config "BIRDS_ONLINE_INFO")" == *"ebird"* ]]; then
     echo "... using ebird instead of allaboutbirds"
