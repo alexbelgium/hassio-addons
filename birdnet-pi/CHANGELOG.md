@@ -1,7 +1,5 @@
-## 0.13-10 (30-04-2024)
-- Minor bugs fixed
-## 0.13-9 (30-04-2024)
-- Minor bugs fixed
+- Feat : define "terminal" password for the user pi from the addon options
+
 ## 0.13-8 (29-04-2024)
 - Improve ingress
 - Fix : give caddy UID 1000 to allow deletion of files owned by pi
