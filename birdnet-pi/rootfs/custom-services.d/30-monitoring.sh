@@ -9,6 +9,7 @@ srv="birdnet_recording"
 analyzing_now="."
 counter=10
 set +u
+# shellcheck disable=SC1091
 source /config/birdnet.conf 2>/dev/null
 
 # Ensure folder exists
