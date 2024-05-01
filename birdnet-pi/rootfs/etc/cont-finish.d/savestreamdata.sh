@@ -5,8 +5,8 @@ if [ -d /tmp/StreamData ]; then
     bashio::log.fatal "Container stopping, saving temporary files"
     
     # Stop the services in parallel
-    systemctl stop bridnet_analysis & 
-    systemctl stop bridnet_recording
+    systemctl stop birdnet_analysis & 
+    systemctl stop birdnet_recording
     wait 1
     
     # Check if there are files in /tmp/StreamData and move them to /data/StreamData
