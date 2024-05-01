@@ -1,3 +1,4 @@
+- Feat : re-add the throttle service
 - Feat : ensure no data from tpmfs is lost when the container is closed by saving it to a temporary place, and restoring on restart
 
 ## 0.13-11 (01-05-2024)
