@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [ResilioSync🐛 [Addon name] title (opened 2024-05-01)](https://github.com/alexbelgium/hassio-addons/issues/1368) by [@UKnau22](https://github.com/UKnau22)
 # Home assistant add-on: Resilio Sync
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
