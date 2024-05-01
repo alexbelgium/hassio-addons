@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [birdnet-pi] birds.db not written/used (opened 2024-05-01)](https://github.com/alexbelgium/hassio-addons/issues/1369) by [@frostworx](https://github.com/frostworx)
 # Home assistant add-on: birdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
