@@ -1,6 +1,6 @@
+- Fix : show container logs in "View log"
+
 ## 0.13-17 (01-05-2024)
-- Minor bugs fixed
-## 0.13-16 (01-05-2024)
 - Feat : Send service logs to docker container 
 - Feat : re-add the throttle service
 - Feat : ensure no data from tpmfs is lost when the container is closed by saving it to a temporary place, and restoring on restart
