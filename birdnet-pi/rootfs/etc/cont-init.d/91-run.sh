@@ -49,4 +49,4 @@ bashio::log.info "Starting BirdNET-Pi services"
 chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 sudo -u pi "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 
-bashio::log.info "Starting upstream container"
+echo " "
