@@ -13,6 +13,9 @@ if [ -d /data/StreamData ] && [ "$(ls -A /tmp/StreamData)" ]; then
     echo "... done"
     echo ""
 
+    # Setting permissions
+    chown -R pi:pi /tmp
+
     # Cleaning folder
     rm -r /data/StreamData
 
