@@ -1,7 +1,5 @@
-## 0.13-13 (01-05-2024)
-- Minor bugs fixed
-## 0.13-12 (01-05-2024)
-- Minor bugs fixed
+- Feat : ensure no data from tpmfs is lost when the container is closed by saving it to a temporary place, and restoring on restart
+
 ## 0.13-11 (01-05-2024)
 - Feat : use pi_password to define the user password from the addon options
 
