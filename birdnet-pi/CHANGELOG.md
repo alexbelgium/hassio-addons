@@ -1,3 +1,5 @@
+## 0.13-17 (01-05-2024)
+- Minor bugs fixed
 ## 0.13-16 (01-05-2024)
 - Feat : Send service logs to docker container 
 - Feat : re-add the throttle service
