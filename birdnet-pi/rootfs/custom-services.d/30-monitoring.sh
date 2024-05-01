@@ -12,7 +12,7 @@ set +u
 source /config/birdnet.conf 2>/dev/null
 
 # Ensure folder exists
-ingest_dir="${$RECS_DIR/StreamData}"
+ingest_dir="$RECS_DIR/StreamData"
 if [ ! -d "$ingest_dir" ]; then
     mkdir -p "$ingest_dir"
     chmod -R pi:pi
