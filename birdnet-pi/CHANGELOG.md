@@ -1,4 +1,4 @@
-- Feat : define "terminal" password for the user pi from the addon options
+- Feat : use pi_password to define the user password from the addon options
 
 ## 0.13-8 (29-04-2024)
 - Improve ingress
