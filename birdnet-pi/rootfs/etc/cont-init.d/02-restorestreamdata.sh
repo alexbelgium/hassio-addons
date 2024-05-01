@@ -8,7 +8,7 @@ if [ -d /data/StreamData ] && [ "$(ls -A /tmp/StreamData)" ]; then
 
     # Copy files
     if [ "$(ls -A /data/StreamData)" ]; then
-        mv /data/StreamData/* /tmp/StreamData/
+        mv -v /data/StreamData/* /tmp/StreamData/
     fi
     echo "... done"
     echo ""
