@@ -49,4 +49,10 @@ for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs
     sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$HOME/BirdNET-Pi/templates/$file"
 done
 
+# Send services log to container logs
+for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs -0 basename -a) livestream.service chart_viewer.service chart_viewer.service spectrogram_viewer.service; do
+    sed -i "/Service/a StandardError=append:/proc/1/fd/1" "$HOME/BirdNET-Pi/templates/$file"
+    sed -i "/Service/a StandardOutput=append:/proc/1/fd/1" "$HOME/BirdNET-Pi/templates/$file"
+done
+
 echo " "
