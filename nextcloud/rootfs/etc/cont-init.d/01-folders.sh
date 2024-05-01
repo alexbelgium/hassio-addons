@@ -31,6 +31,11 @@ if [[ "$datadirectory" == *"/mnt/"* ]] && [ ! -f "$datadirectory"/index.html ]; 
     bashio::addon.stop
 fi
 
+# Remove nginx conf if existing
+if [ -f /data/config/nginx/site-confs/default.conf ]; then
+  rm /data/config/nginx/site-confs/default.conf
+fi
+
 echo "... setting permissions"
 mkdir -p "$datadirectory"
 chmod 755 -R "$datadirectory"
