@@ -20,7 +20,7 @@ fi
 
 # Other folder if no RTSP STREAM ?
 if [ -z "${RTSP_STREAM}" ]; then
-    ingest_dir=${RECS_DIR}/$(date +"%B-%Y/%d-%A")
+    ingest_dir="${RECS_DIR}/$(date +"%B-%Y/%d-%A")"
     if [ ! -d "$ingest_dir" ]; then
         mkdir -p "$ingest_dir"
         chmod -R pi:pi
@@ -46,10 +46,10 @@ while true; do
     # Pause recorder to catch-up
     ############################
 
-    wavs=$(find ${ingest_dir} -maxdepth 1 -name '*.wav' | wc -l)
-    state=$(systemctl is-active "$srv")
+    wavs="$(find "${ingest_dir}" -maxdepth 1 -name '*.wav' | wc -l)"
+    state="$(systemctl is-active "$srv")"
 
-    echo "$(date)    INFO ${wavs} wav files waiting in $(readlink -f $ingest_dir), $srv state is $state"
+    echo "$(date)    INFO ${wavs} wav files waiting in $(readlink -f "$ingest_dir"), $srv state is $state"
 
     if (( wavs > 100 )) && [[ "$state" == "active" ]]; then
         sudo systemctl stop "$srv"
