@@ -8,7 +8,7 @@ set -e
 
 echo " "
 bashio::log.info "Setting password for the user pi"
-echo "pi:$(bashio::log.config "pi_password")" | sudo chpasswd
+echo "pi:$(bashio::config "pi_password")" | sudo chpasswd
 echo "... done"
 
 echo " "
