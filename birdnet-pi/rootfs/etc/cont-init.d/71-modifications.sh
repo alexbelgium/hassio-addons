@@ -44,4 +44,10 @@ else
     sed -i "s|https://allaboutbirds.org/guide/\$comname|https://allaboutbirds.org/guide/\$comnameen|g" "$HOME"/BirdNET-Pi/scripts/stats.php
 fi
 
+# Correct services to start as user pi
+birdnet_services="$()"
+for file in $(ls "$HOME"/BirdNET-Pi/templates/birdnet*.service | xargs basename -a) livestream.service chart_viewer.service chart_viewer.service spectrogram_viewer.service; do
+    sed -i "s|ExecStart=|ExecStart=sudo -u pi |g" "$HOME/BirdNET-Pi/templates/$file"
+done
+
 echo " "
