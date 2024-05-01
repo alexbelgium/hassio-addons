@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 
 if [ -d /tmp/StreamData ]; then
     bashio::log.fatal "Container stopping, saving temporary files"
