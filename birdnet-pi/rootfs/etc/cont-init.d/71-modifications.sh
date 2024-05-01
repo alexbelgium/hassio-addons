@@ -46,14 +46,21 @@ else
 fi
 
 # Correct services to start as user pi
+echo "... correct services to start as pi"
 for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs -0 basename -a) livestream.service chart_viewer.service chart_viewer.service spectrogram_viewer.service; do
     sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$HOME/BirdNET-Pi/templates/$file"
 done
 
 # Send services log to container logs
+echo "... send services log to container logs"
 for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs -0 basename -a) livestream.service chart_viewer.service chart_viewer.service spectrogram_viewer.service; do
     sed -i "/Service/a StandardError=append:/proc/1/fd/1" "$HOME/BirdNET-Pi/templates/$file"
     sed -i "/Service/a StandardOutput=append:/proc/1/fd/1" "$HOME/BirdNET-Pi/templates/$file"
 done
+
+# Correct log services to show /proc/1/fd/1
+echo "... show container logs in /logs"
+sed -i "s|sudo -u pi ||g" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
+sed -i "s|birdnet_log.sh|cat /proc/1/fd/1|g" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
 
 echo " "
