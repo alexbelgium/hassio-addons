@@ -50,14 +50,14 @@ while true; do
     wavs="$(find "${ingest_dir}" -maxdepth 1 -name '*.wav' | wc -l)"
     state="$(systemctl is-active "$srv")"
 
-    echo "$(date)    INFO ${wavs} wav files waiting in $(readlink -f "$ingest_dir"), $srv state is $state"
+    bashio::log.green "$(date)    INFO ${wavs} wav files waiting in $(readlink -f "$ingest_dir"), $srv state is $state"
 
     if (( wavs > 100 )) && [[ "$state" == "active" ]]; then
         sudo systemctl stop "$srv"
-        echo "$(date) WARNING stopped $srv service"
+        bashio::log.red "$(date) WARNING stopped $srv service"
     elif (( wavs <= 100 )) && [[ "$state" == "inactive" ]]; then
         sudo systemctl start $srv
-        echo "$(date)    INFO started $srv service"
+        bashio::log.yellow "$(date)    INFO started $srv service"
     fi
 
     ((counter--))
