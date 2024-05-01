@@ -36,14 +36,16 @@ echo "... creating default folders ; it is highly recommended to store those on 
 mkdir -p "$BIRDSONGS_FOLDER"/By_Date
 mkdir -p "$BIRDSONGS_FOLDER"/Charts
 
-# Store temporary folders in tmpfs
-echo "... setting StreamData and Processed on tmpfs to reduce disk wear"
-mkdir -p /tmp/StreamData
-mkdir -p /tmp/Processed
-rm -r "$HOME"/BirdSongs/StreamData
-rm -r "$HOME"/BirdSongs/Processed
-sudo -u pi ln -fs /tmp/StreamData "$HOME"/BirdSongs/StreamData
-sudo -u pi ln -fs /tmp/Processed "$HOME"/BirdSongs/Processed
+# If tmpfs is installed, use it
+if df -T /tmp | grep -q "tmpfs"; then
+    echo "... tmpfs detected, using it for StreamData and Processed to reduce disk wear"
+    mkdir -p /tmp/StreamData
+    mkdir -p /tmp/Processed
+    rm -r "$HOME"/BirdSongs/StreamData
+    rm -r "$HOME"/BirdSongs/Processed
+    sudo -u pi ln -fs /tmp/StreamData "$HOME"/BirdSongs/StreamData
+    sudo -u pi ln -fs /tmp/Processed "$HOME"/BirdSongs/Processed
+fi
 
 # Permissions for created files and folders
 echo "... set permissions to user pi"
