@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 Firefly III] Addon not starting (opened 2024-04-11)](https://github.com/alexbelgium/hassio-addons/issues/1343) by [@Ycer0n](https://github.com/Ycer0n)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
