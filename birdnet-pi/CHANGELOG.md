@@ -1,3 +1,4 @@
+## 0.13-11 (01-05-2024)
 - Feat : use pi_password to define the user password from the addon options
 
 ## 0.13-8 (29-04-2024)
