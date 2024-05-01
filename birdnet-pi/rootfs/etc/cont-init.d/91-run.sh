@@ -7,6 +7,11 @@ set -e
 ##############
 
 echo " "
+bashio::log.info "Setting password for the user pi"
+echo "pi:$(bashio::log.config "pi_password")" | sudo chpasswd
+echo "... done"
+
+echo " "
 bashio::log.info "Starting system services"
 
 # Set TZ
@@ -38,6 +43,6 @@ service dbus start
 echo ""
 bashio::log.info "Starting BirdNET-Pi services"
 chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
-/."$HOME"/BirdNET-Pi/scripts/restart_services.sh &>/proc/1/fd/1
+sudo -u pi "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 
 bashio::log.info "Starting upstream container"
