@@ -1,3 +1,4 @@
+- Feat : Send service logs to docker container 
 - Feat : re-add the throttle service
 - Feat : ensure no data from tpmfs is lost when the container is closed by saving it to a temporary place, and restoring on restart
 
