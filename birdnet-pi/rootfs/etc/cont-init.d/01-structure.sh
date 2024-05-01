@@ -73,3 +73,5 @@ done
 echo "... check permissions"
 chmod -R 664 /config/*
 chmod 777 /config
+
+echo " "
