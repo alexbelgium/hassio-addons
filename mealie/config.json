@@ -82,8 +82,8 @@
   "options": {
     "ALLOW_SIGNUP": true,
     "DATA_DIR": "/config/addons_config/mealie_data",
-    "PGID": 0,
-    "PUID": 0,
+    "PGID": 1000,
+    "PUID": 1000,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "ssl": false
@@ -108,6 +108,6 @@
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v1.5.1",
+  "version": "v1.5.1-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9001]"
 }
