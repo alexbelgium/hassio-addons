@@ -47,7 +47,7 @@ systemctl start systemd-journald
 echo ""
 bashio::log.info "Starting BirdNET-Pi services"
 chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
-sudo -u pi "$HOME"/BirdNET-Pi/scripts/restart_services.sh
+"$HOME"/BirdNET-Pi/scripts/restart_services.sh
 
 # Correct the phpsysinfo for the correct gotty service
 gottyservice="$(pgrep -l "gotty" | awk '{print $NF}' | head -n 1)"
