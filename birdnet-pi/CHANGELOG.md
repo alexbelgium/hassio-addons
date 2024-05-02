@@ -1,5 +1,6 @@
 - Fix : show container logs in "View log"
 - Feat : new command line script to change the identification of a bird (changes database & files location)
+- Fix : correct chmod defaults
 
 ## 0.13-17 (01-05-2024)
 - Feat : Send service logs to docker container 
