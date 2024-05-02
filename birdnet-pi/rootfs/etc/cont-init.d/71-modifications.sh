@@ -48,7 +48,7 @@ fi
 # Correct services to start as user pi
 echo "... correct services to start as pi"
 for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs -0 basename -a) livestream.service chart_viewer.service chart_viewer.service spectrogram_viewer.service; do
-    if [[ "$file" != "birdnet_log.service" ]; then
+    if [[ "$file" != "birdnet_log.service" ]]; then
         sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$HOME/BirdNET-Pi/templates/$file"
     fi
 done
