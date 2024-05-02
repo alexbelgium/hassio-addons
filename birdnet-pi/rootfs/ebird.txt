@@ -34,7 +34,7 @@ Accipiter novaehollandiae_grygos1
 Accipiter poliogaster_gybhaw1
 Accipiter soloensis_grfhaw1
 Accipiter striatus_shshaw
-Accipiter superciliosus_puncan1
+Accipiter superciliosus_tinhaw1
 Accipiter tachiro_afrgos1
 Accipiter trinotatus_sptgos1
 Accipiter trivirgatus_cregos1
@@ -224,7 +224,7 @@ Amblycorypha alexanderi_null
 Amblycorypha longinicta_null
 Amblycorypha oblongifolia_null
 Amblycorypha rotundifolia_null
-Amblyornis newtoniana_golbow1
+Amblyornis newtoniana_null
 Amblyospiza albifrons_growea1
 Amblyramphus holosericeus_schbla1
 Ammodramus aurifrons_yebspa1
@@ -778,7 +778,7 @@ Butastur indicus_gyfbuz1
 Butastur teesa_whebuz1
 Buteo albigula_whthaw1
 Buteo albonotatus_zothaw
-Buteo augur_renbuz1
+Buteo augur_augbuz2
 Buteo brachypterus_madbuz1
 Buteo brachyurus_shthaw
 Buteo buteo_combuz1
@@ -2178,7 +2178,7 @@ Erithacus rubecula_eurrob1
 Erpornis zantholeuca_whbyuh1
 Erythrocercus holochlorus_yelfly2
 Erythrogenys erythrocnemis_sbsbab2
-Erythrogenys erythrogenys_phifal1
+Erythrogenys erythrogenys_rcsbab1
 Erythrogenys gravivox_bksscb1
 Erythrogenys hypoleucos_lasbab1
 Erythrogenys mcclellandi_spbscb1
@@ -2913,7 +2913,7 @@ Icterus galbula_balori
 Icterus graceannae_wheori1
 Icterus graduacauda_audori
 Icterus gularis_altori
-Icterus icterus_graori1
+Icterus icterus_ventro1
 Icterus jamacaii_camtro1
 Icterus leucopteryx_jamori1
 Icterus mesomelas_yetori1
@@ -2947,7 +2947,7 @@ Incaspiza laeta_bbifin1
 Incaspiza ortizi_gywinf1
 Incaspiza personata_rbifin1
 Incilius valliceps_null
-Indicator indicator_dwahon1
+Indicator indicator_grehon2
 Indicator minor_y00400
 Indicator variegatus_scthon1
 Inezia caudata_pattyr3
@@ -3540,7 +3540,7 @@ Merops philippinus_btbeat1
 Merops pusillus_libeat1
 Merops superciliosus_mabeat1
 Merops variegatus_bbbeat2
-Merops viridis_grnbee1
+Merops viridis_btbeat2
 Merulaxis ater_slabri1
 Mesembrinibis cayennensis_greibi1
 Mesitornis unicolor_bromes1
@@ -4088,7 +4088,7 @@ Oriolus kundoo_ingori1
 Oriolus larvatus_abhori1
 Oriolus monacha_dahori1
 Oriolus nigripennis_blwori1
-Oriolus oriolus_timori1
+Oriolus oriolus_eugori2
 Oriolus percivali_bltori1
 Oriolus phaeochromus_halori1
 Oriolus sagittatus_olbori1
@@ -4319,7 +4319,7 @@ Percnostola rufifrons_blhant3
 Perdicula argoondah_robqua1
 Perdicula asiatica_jubqua1
 Perdicula erythrorhyncha_pabqua1
-Perdix perdix_tibpar1
+Perdix perdix_grypar
 Pericrocotus cantonensis_brrmin1
 Pericrocotus cinnamomeus_smamin1
 Pericrocotus divaricatus_ashmin1
@@ -5199,7 +5199,7 @@ Pyrrhura roseifrons_rofpar3
 Pyrrhura rupicola_blcpar1
 Pyrrhura viridicata_sampar1
 Pytilia melba_grwpyt1
-Quelea quelea_carque1
+Quelea quelea_rebque1
 Querula purpurata_putfru1
 Quiscalus lugubris_cargra1
 Quiscalus major_botgra
@@ -5253,7 +5253,7 @@ Recurvirostra avosetta_pieavo1
 Regulus goodfellowi_flamec1
 Regulus ignicapilla_firecr1
 Regulus madeirensis_firecr3
-Regulus regulus_wahhon1
+Regulus regulus_goldcr1
 Regulus satrapa_gockin
 Reinwardtipicus validus_orbwoo1
 Reinwardtoena reinwardti_grcdov2
@@ -5502,7 +5502,7 @@ Serinus canaria_comcan
 Serinus canicollis_capcan1
 Serinus flavivertex_yeccan1
 Serinus pusillus_fifser1
-Serinus serinus_golgre1
+Serinus serinus_eurser1
 Serpophaga cinerea_tortyr1
 Serpophaga griseicapilla_gyctyr2
 Serpophaga hypoleuca_rivtyr1
@@ -5626,7 +5626,7 @@ Spinus olivaceus_olisis1
 Spinus pinus_pinsis
 Spinus psaltria_lesgol
 Spinus spinescens_andsis1
-Spinus spinus_tibser1
+Spinus spinus_eursis
 Spinus tristis_amegfi
 Spinus xanthogastrus_yebsis1
 Spiza americana_dickci
@@ -5790,7 +5790,7 @@ Suiriri suiriri_suifly1
 Sula dactylatra_masboo
 Sula leucogaster_brnboo
 Sula nebouxii_bfoboo
-Sula sula_sulcud2
+Sula sula_refboo
 Surnia ulula_nohowl
 Surniculus dicruroides_asidrc2
 Surniculus lugubris_asidrc3
@@ -5935,7 +5935,7 @@ Tauraco porphyreolophus_puctur2
 Tauraco schalowi_schtur1
 Tchagra australis_brctch1
 Tchagra senegalus_bkctch1
-Tchagra tchagra_martch2
+Tchagra tchagra_soutch1
 Teledromas fuscus_sangal1
 Telespiza ultima_nihfin
 Telophorus bocagei_gygbus1
@@ -6408,7 +6408,7 @@ Volatinia jacarina_blbgra1
 Wetmorethraupis sterrhopteron_orttan1
 Willisornis poecilinotus_scbant3
 Willisornis vidua_scbant8
-Xanthocephalus xanthocephalus_yeffla1
+Xanthocephalus xanthocephalus_yehbla
 Xanthomixis zosterops_spetet1
 Xanthopsar flavus_sacbla2
 Xanthotis macleayanus_machon2
