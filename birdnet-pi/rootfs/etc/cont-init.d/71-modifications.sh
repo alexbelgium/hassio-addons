@@ -62,6 +62,7 @@ done
 
 # Correct log services to show /proc/1/fd/1
 echo "... show container logs in /logs"
+sed -i "/USER=pi/d" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
 sed -i "s|birdnet_log.sh|cat /proc/1/fd/1|g" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
 
 echo " "
