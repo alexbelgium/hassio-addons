@@ -40,8 +40,8 @@ echo "... starting dbus"
 service dbus start
 
 # Starting journald
-echo "... starting journald"
-systemctl start systemd-journald
+# echo "... starting journald"
+# systemctl start systemd-journald
 
 # Starting services
 echo ""
