@@ -16,7 +16,8 @@ source /config/birdnet.conf 2>/dev/null
 ingest_dir="$RECS_DIR/StreamData"
 if [ ! -d "$ingest_dir" ]; then
     mkdir -p "$ingest_dir"
-    chmod -R pi:pi
+    chown -R pi:pi "$ingest_dir"
+    chmod -R 755 "$ingest_dir"
 fi
 
 # Other folder if no RTSP STREAM ?
@@ -24,7 +25,8 @@ if [ -z "${RTSP_STREAM}" ]; then
     ingest_dir="${RECS_DIR}/$(date +"%B-%Y/%d-%A")"
     if [ ! -d "$ingest_dir" ]; then
         mkdir -p "$ingest_dir"
-        chmod -R pi:pi
+        chown -R pi:pi "$ingest_dir"
+        chmod -R 755 "$ingest_dir"
     fi
 fi
 

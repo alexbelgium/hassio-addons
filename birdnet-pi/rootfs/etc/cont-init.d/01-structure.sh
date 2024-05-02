@@ -50,6 +50,7 @@ fi
 # Permissions for created files and folders
 echo "... set permissions to user pi"
 chown -R pi:pi /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
+chmod -R 755 /config /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 
 # Save default birdnet.conf to perform sanity check
 cp "$HOME"/BirdNET-Pi/birdnet.conf "$HOME"/BirdNET-Pi/birdnet.bak
@@ -73,7 +74,7 @@ done
 
 # Permissions for created files and folders
 echo "... check permissions"
-chmod -R 664 /config/*
+chmod -R 755 /config/*
 chmod 777 /config
 
 echo " "
