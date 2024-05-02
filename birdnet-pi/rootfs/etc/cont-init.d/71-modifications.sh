@@ -22,7 +22,7 @@ sed -i '/Ram drive/d' "$HOME"/BirdNET-Pi/scripts/service_controls.php
 if [[ "$(bashio::config "BIRDS_ONLINE_INFO")" == *"ebird"* ]]; then
     echo "... using ebird instead of allaboutbirds"
     # Set ebird database
-    mv /ebird.txt /home/pi/BirdNET-Pi/model/ebird.txt
+    mv /helpers/ebird.txt /home/pi/BirdNET-Pi/model/ebird.txt
     chown pi:pi /home/pi/BirdNET-Pi/model/ebird.txt
     # Get language
     export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
@@ -48,7 +48,9 @@ fi
 # Correct services to start as user pi
 echo "... correct services to start as pi"
 for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs -0 basename -a) livestream.service chart_viewer.service chart_viewer.service spectrogram_viewer.service; do
-    sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$HOME/BirdNET-Pi/templates/$file"
+    if [[ "$file" != "birdnet_log.service" ]; then
+        sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$HOME/BirdNET-Pi/templates/$file"
+    fi
 done
 
 # Send services log to container logs
@@ -60,7 +62,6 @@ done
 
 # Correct log services to show /proc/1/fd/1
 echo "... show container logs in /logs"
-sed -i "s|sudo -u pi ||g" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
 sed -i "s|birdnet_log.sh|cat /proc/1/fd/1|g" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
 
 echo " "
