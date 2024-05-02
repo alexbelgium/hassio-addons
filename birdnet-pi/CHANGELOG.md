@@ -1,10 +1,9 @@
-## 0.13-18 (02-05-2024)
 - Fix : show container logs in "View log"
 - Feat : new command line script to change the identification of a bird (changes database & files location)
 - Fix : correct chmod defaults
 
 ## 0.13-17 (01-05-2024)
-- Feat : Send service logs to docker container 
+- Feat : Send service logs to docker container
 - Feat : re-add the throttle service
 - Feat : ensure no data from tpmfs is lost when the container is closed by saving it to a temporary place, and restoring on restart
 
