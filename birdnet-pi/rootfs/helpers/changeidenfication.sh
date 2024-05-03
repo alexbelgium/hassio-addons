@@ -10,6 +10,10 @@
 OLDNAME="$1" #OLDNAME="Mésange_charbonnière-78-2024-05-02-birdnet-RTSP_1-18:14:08.mp3"
 NEWNAME="$2" #NEWNAME="Lapinus atricapilla_Lapinu à tête noire"
 
+# Ask for user input if no arguments
+if [ -z "$OLDNAME" ]; then read -p 'OLDNAME (finishing my mp3): ' OLDNAME; fi
+if [ -z "$NEWNAME" ]; then read -p 'NEWNAME (sciname_commoname": ' NEWNAME; fi
+
 # Fixed values
 LABELS_FILE="$HOME/BirdNET-Pi/model/labels.txt"
 DB_FILE="$HOME/BirdNET-Pi/scripts/birds.db"
@@ -19,7 +23,6 @@ DETECTIONS_TABLE="detections"
 # VALIDITY CHECKS #
 ###################
 
-# Check if arguments are valid
 if [[ "$1" != *".mp3" ]]; then
   echo "The first argument should be a filename starting with the common name of the bird and finishing by mp3!"
   echo "Instead, it is : $1"
