@@ -25,10 +25,12 @@ DETECTIONS_TABLE="detections"
 # Check if arguments are valid
 if [[ "$1" != *".mp3" ]]; then
   echo "The first argument should be a filename starting with the common name of the bird and finishing by mp3!"
+  echo "Instead, it is : $1"
   exit 1
 elif [[ "$2" != *"_"* ]]; then
   echo "The second argument should be in the format : \"scientific name_common name\""
-  exit 1  
+  echo "Instead, it is : $2"
+  exit 1
 fi
 
 # Check if $NEWNAME is found in the file $LABELS_FILE
