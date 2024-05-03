@@ -8,15 +8,25 @@ set +u #avoid error with apprise variables
 # SET VARIABLES #
 #################
 
-# shellcheck disable=SC1091
-source /etc/birdnet/birdnet.conf
-OLDNAME="" #OLDNAME="Mésange_charbonnière-78-2024-05-02-birdnet-RTSP_1-18:14:08.mp3"
-NEWNAME="" #NEWNAME="Lapinus atricapilla_Lapinu à tête noire"
-OLDNAME="$1"
-NEWNAME="$2"
+# Get arguments
+OLDNAME="$1" #OLDNAME="Mésange_charbonnière-78-2024-05-02-birdnet-RTSP_1-18:14:08.mp3"
+NEWNAME="$2" #NEWNAME="Lapinus atricapilla_Lapinu à tête noire"
+
+# Fixed values
 LABELS_FILE="$HOME/BirdNET-Pi/model/labels.txt"
 DB_FILE="$HOME/BirdNET-Pi/scripts/birds.db"
 DETECTIONS_TABLE="detections"
+
+# Extract the part before the _ from $NEWNAME
+NEWNAME_comname="${NEWNAME#*_}"
+NEWNAME_sciname="${NEWNAME%%_*}"
+
+# Replace spaces with underscores
+NEWNAME_comname2="${NEWNAME_comname// /_}"
+OLDNAME_comname2="${OLDNAME_comname// /_}"
+
+# Replace OLDNAME_comname2 with NEWNAME_comname2 in OLDNAME
+NEWNAME_filename="${OLDNAME//$OLDNAME_comname2/$NEWNAME_comname2}"
 
 ###################
 # VALIDITY CHECKS #
@@ -51,22 +61,11 @@ if [[ -z "$OLDNAME_sciname" ]]; then
     exit 1
 fi
 
-echo "This script will change the identification $OLDNAME from $OLDNAME_comname to $NEWNAME_comname"
+echo "This script will change the identification $OLDNAME from $OLDNAME_comname to ${NEWNAME#*_}"
 
 ########################
 # EXECUTE : MOVE FILES #
 ########################
-
-# Extract the part before the _ from $NEWNAME
-NEWNAME_comname="${NEWNAME#*_}"
-NEWNAME_sciname="${NEWNAME%%_*}"
-
-# Replace spaces with underscores
-NEWNAME_comname2="${NEWNAME_comname// /_}"
-OLDNAME_comname2="${OLDNAME_comname// /_}"
-
-# Replace OLDNAME_comname2 with NEWNAME_comname2 in OLDNAME
-NEWNAME_filename="${OLDNAME//$OLDNAME_comname2/$NEWNAME_comname2}"
 
 # Check if the file exists
 FILE_PATH="$HOME/BirdSongs/Extracted/By_Date/$OLDNAME_date/$OLDNAME_comname2/$OLDNAME"
