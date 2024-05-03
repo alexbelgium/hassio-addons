@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Nextcloud] latest upstream version does not allow to install apps (opened 2024-04-05)](https://github.com/alexbelgium/hassio-addons/issues/1333) by [@dafunkydan](https://github.com/dafunkydan)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
