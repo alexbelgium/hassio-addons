@@ -7,6 +7,7 @@ if [ $$ -lt 2 ]; then
 fi
 
 set +u #avoid error with apprise variables
+# shellcheck disable=SC1091
 source /etc/birdnet/birdnet.conf
 
 #OLDNAME="Mésange_charbonnière-78-2024-05-02-birdnet-RTSP_1-18:14:08.mp3"
@@ -42,7 +43,6 @@ NEWNAME_comname2="${NEWNAME_comname// /_}"
 OLDNAME_comname2="${OLDNAME_comname// /_}"
 
 # Replace OLDNAME_comname2 with NEWNAME_comname2 in OLDNAME
-echo $OLDNAME
 NEWNAME_filename="${OLDNAME//$OLDNAME_comname2/$NEWNAME_comname2}"
 
 # Check if the file exists
