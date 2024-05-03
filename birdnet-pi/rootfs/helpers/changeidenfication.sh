@@ -24,19 +24,19 @@ if ! grep -q "$NEWNAME" "$LABELS_FILE"; then
     exit 1
 fi
 
-# Extract the part before the _ from $NEWNAME
-NEWNAME_comname="${NEWNAME#*_}"
-NEWNAME_sciname="${NEWNAME%%_*}"
-
 # Get the line where the column "File_Name" matches exactly $OLDNAME
 IFS='|' read -r OLDNAME_sciname OLDNAME_comname OLDNAME_date < <(sqlite3 "$DB_FILE" "SELECT Sci_Name, Com_Name, Date FROM $DETECTIONS_TABLE WHERE File_Name = '$OLDNAME';")
-
-echo "This script will change the identification $OLDNAME from $OLDNAME_comname to $NEWNAME_comname"
 
 if [[ -z "$OLDNAME_sciname" ]]; then
     echo "Error: No line matching $OLDNAME in $DB_FILE"
     exit 1
 fi
+
+echo "This script will change the identification $OLDNAME from $OLDNAME_comname to $NEWNAME_comname"
+
+# Extract the part before the _ from $NEWNAME
+NEWNAME_comname="${NEWNAME#*_}"
+NEWNAME_sciname="${NEWNAME%%_*}"
 
 # Replace spaces with underscores
 NEWNAME_comname2="${NEWNAME_comname// /_}"
