@@ -15,17 +15,6 @@ LABELS_FILE="$HOME/BirdNET-Pi/model/labels.txt"
 DB_FILE="$HOME/BirdNET-Pi/scripts/birds.db"
 DETECTIONS_TABLE="detections"
 
-# Extract the part before the _ from $NEWNAME
-NEWNAME_comname="${NEWNAME#*_}"
-NEWNAME_sciname="${NEWNAME%%_*}"
-
-# Replace spaces with underscores
-NEWNAME_comname2="${NEWNAME_comname// /_}"
-OLDNAME_comname2="${OLDNAME_comname// /_}"
-
-# Replace OLDNAME_comname2 with NEWNAME_comname2 in OLDNAME
-NEWNAME_filename="${OLDNAME//$OLDNAME_comname2/$NEWNAME_comname2}"
-
 ###################
 # VALIDITY CHECKS #
 ###################
@@ -58,6 +47,17 @@ if [[ -z "$OLDNAME_sciname" ]]; then
     echo "Error: No line matching $OLDNAME in $DB_FILE"
     exit 1
 fi
+
+# Extract the part before the _ from $NEWNAME
+NEWNAME_comname="${NEWNAME#*_}"
+NEWNAME_sciname="${NEWNAME%%_*}"
+
+# Replace spaces with underscores
+NEWNAME_comname2="${NEWNAME_comname// /_}"
+OLDNAME_comname2="${OLDNAME_comname// /_}"
+
+# Replace OLDNAME_comname2 with NEWNAME_comname2 in OLDNAME
+NEWNAME_filename="${OLDNAME//$OLDNAME_comname2/$NEWNAME_comname2}"
 
 echo "This script will change the identification $OLDNAME from $OLDNAME_comname to ${NEWNAME#*_}"
 
