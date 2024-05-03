@@ -23,6 +23,11 @@ DETECTIONS_TABLE="detections"
 # VALIDITY CHECKS #
 ###################
 
+# Check if files exist
+if [ ! -d "$LABELS_FILE" ]; then echo "$LABELS_FILE doesn't exist, exiting" && exit 1; fi
+if [ ! -d "$DB_FILE" ]; then echo "$DB_FILE doesn't exist, exiting" && exit 1; fi
+
+# Check if inputs are valid
 if [[ "$1" != *".mp3" ]]; then
   echo "The first argument should be a filename starting with the common name of the bird and finishing by mp3!"
   echo "Instead, it is : $1"
