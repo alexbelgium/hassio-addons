@@ -12,6 +12,8 @@ source /etc/birdnet/birdnet.conf
 
 #OLDNAME="Mésange_charbonnière-78-2024-05-02-birdnet-RTSP_1-18:14:08.mp3"
 #NEWNAME="Lapinus atricapilla_Lapinu à tête noire"
+OLDNAME=""
+NEWNAME=""
 OLDNAME="$1"
 NEWNAME="$2"
 LABELS_FILE="$HOME/BirdNET-Pi/model/labels.txt"
