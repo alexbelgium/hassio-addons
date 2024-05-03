@@ -80,6 +80,10 @@ env_upload_max_filesize; nextcloud upload size (default is 512M)
 
 Webui can be found at `<your-ip>:port`.
 
+### Change the temp folder to avoid bloating emmc on HA systems (thanks @senna1992)
+
+See ; https://github.com/alexbelgium/hassio-addons/discussions/1370
+
 ### Use mariadb as the main database (Thanks @amaciuc)
 
 If you notice the following warning at your first `webui` running:
