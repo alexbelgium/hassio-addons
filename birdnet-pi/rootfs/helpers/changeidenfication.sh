@@ -2,8 +2,6 @@
 
 # This scripts allows to change the identification of a Birdnet-pi detection
 
-set +u #avoid error with apprise variables
-
 #################
 # SET VARIABLES #
 #################
