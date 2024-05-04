@@ -1,3 +1,6 @@
+
+## 1.30.5 (04-05-2024)
+- Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 - Deprecated, please use version from community repository. Just export your vault from this addon, and import it in the official addon.
 
 ## 1.30.1 (21-11-2023)
