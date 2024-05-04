@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [inadyn] Error : /etc/cont-init.d/01-custom_script.sh exiting 23 (opened 2024-05-03)](https://github.com/alexbelgium/hassio-addons/issues/1378) by [@LenirSantiago](https://github.com/LenirSantiago)
 # Home assistant add-on: Inadyn
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
