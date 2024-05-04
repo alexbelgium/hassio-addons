@@ -1,3 +1,6 @@
+
+## 4.0.4.1572 (04-05-2024)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
 - Fix : not starting
 
 ## 4.0.4.1515-4 (21-04-2024)
