@@ -1,3 +1,5 @@
+## 0.5.2 (04-05-2024)
+- Minor bugs fixed
 ## 0.5.1-4 (23-04-2024)
 - Feat : provide mariadb information in the startup log to allow its usage
 
