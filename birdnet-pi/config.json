@@ -60,9 +60,9 @@
     "/dev/nvme2"
   ],
   "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
-  "init": false,
   "ingress": true,
   "ingress_stream": true,
+  "init": false,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -88,13 +88,13 @@
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
     "BIRDS_ONLINE_INFO": "list(allaboutbirds.org|ebird.org)",
-    "pi_password": "password",
     "TZ": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?"
+    "networkdisks": "str?",
+    "pi_password": "password"
   },
   "slug": "birdnet-pi",
   "tmpfs": true,
