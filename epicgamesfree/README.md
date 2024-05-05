@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [EPic Games Free] Add-on wont start after latest update  (opened 2024-04-27)](https://github.com/alexbelgium/hassio-addons/issues/1356) by [@LordSimpson](https://github.com/LordSimpson)
 
 # Home assistant add-on: Epic Games Free
 
