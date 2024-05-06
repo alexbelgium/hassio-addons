@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Firefly iii] config.yaml does not seem to be working (opened 2024-05-06)](https://github.com/alexbelgium/hassio-addons/issues/1383) by [@MiroVerleysen](https://github.com/MiroVerleysen)
 # Home assistant add-on: fireflyiii
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
