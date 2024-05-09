@@ -46,4 +46,6 @@ comparison to installing any other Hass.io add-on.
 1. Go to the webui, where you will initialize the app
 1. Restart the addon, to apply any option that should be applied
 
+default administration password (login: admin, password: admin).
+
 [repository]: https://github.com/alexbelgium/hassio-addons
