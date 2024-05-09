@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [linkwarden] Addon is not using the latest version (opened 2024-05-03)](https://github.com/alexbelgium/hassio-addons/issues/1376) by [@axute](https://github.com/axute)
 # Home assistant add-on: linkwarden
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
