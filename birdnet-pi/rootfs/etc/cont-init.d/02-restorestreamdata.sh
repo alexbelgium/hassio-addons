@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 
 # Check if there are files in "$HOME"/BirdSongs/StreamData and move them to /data/StreamData
-if [ -d /data/StreamData ] && [ "$(ls -A "$HOME"/BirdSongs/StreamData)" ]; then
+if [ -d /data/StreamData ] && [ "$(ls -A /data/StreamData/)" ]; then
 
     bashio::log.warning "Container was stopped while files were still being analysed, restoring them"
 
