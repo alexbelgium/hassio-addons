@@ -1,5 +1,8 @@
+- Improve data recovery upon analyser stop
+
 ## 0.13-20 (02-05-2024)
 - Minor bugs fixed
+
 ## 0.13-19 (02-05-2024)
 - Fix : show container logs in "View log"
 - Feat : new command line script to change the identification of a bird (changes database & files location)
