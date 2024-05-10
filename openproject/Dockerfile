@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=openproject/openproject
+ARG BUILD_FROM
 
 FROM ${BUILD_FROM}
 
