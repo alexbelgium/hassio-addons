@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [qBittorrent] Torrent downloaded, and theres a path... but no files (opened 2024-04-29)](https://github.com/alexbelgium/hassio-addons/issues/1366) by [@purierca](https://github.com/purierca)
 # Home assistant add-on: qbittorrent
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
