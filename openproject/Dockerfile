@@ -27,10 +27,11 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-ENV OPENPROJECT_SECRET_KEY_BASE=secret \
+ENV OPENPROJECT_SECRET_KEY_BASE=addon_secret \
     OPENPROJECT_HOST__NAME=localhost:8080 \
     OPENPROJECT_HTTPS=false \
-    OPENPROJECT_DEFAULT__LANGUAGE=en
+    OPENPROJECT_DEFAULT__LANGUAGE=en \
+    OPENPROJECT_EDITION=bim
 
 USER root
 
@@ -59,6 +60,8 @@ ENV PACKAGES=""
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+
+VOLUME ["/data:/var/openproject/pgdata"]
 
 EXPOSE 8080
 
