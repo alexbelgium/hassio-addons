@@ -30,6 +30,10 @@ if [ -z "${RTSP_STREAM}" ]; then
     fi
 fi
 
+if [ -d /tmp/StreamData ]; then
+    RECS_DIR=/tmp
+fi
+
 while true; do
     sleep 61
 
