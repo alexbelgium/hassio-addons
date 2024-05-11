@@ -1,8 +1,7 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
-    "armv7"
+    "amd64"
   ],
   "audio": true,
   "backup": "cold",
