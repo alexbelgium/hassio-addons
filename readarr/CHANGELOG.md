@@ -1,4 +1,7 @@
 
+## 0.3.27.2538 (11-05-2024)
+- Update to latest version from linuxserver/docker-readarr (changelog : https://github.com/linuxserver/docker-readarr/releases)
+
 ## 0.3.25.2515 (27-04-2024)
 - Update to latest version from linuxserver/docker-readarr (changelog : https://github.com/linuxserver/docker-readarr/releases)
 - Fix : not starting
