@@ -45,7 +45,7 @@ while true; do
           "$HOME"/BirdNET-Pi/scripts/restart_services.sh
        fi
        counter=10
-       analyzing_now=$(cat "$ingest_dir/analyzing_now.txt)
+       analyzing_now=$(cat "$ingest_dir"/analyzing_now.txt)
     fi
 
     # Pause recorder to catch-up
