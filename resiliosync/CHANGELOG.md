@@ -1,3 +1,6 @@
+
+## 2.8.0.1389 (11-05-2024)
+- Update to latest version from linuxserver/docker-resilio-sync (changelog : https://github.com/linuxserver/docker-resilio-sync/releases)
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 - WARNING : update to supervisor 2022.11 before installing
 - Ingress addition
