@@ -30,9 +30,7 @@ if [ -z "${RTSP_STREAM}" ]; then
     fi
 fi
 
-if [ -d /tmp/StreamData ]; then
-    RECS_DIR=/tmp
-fi
+ingest_dir="$(readlink -f "$ingest_dir")" || true
 
 while true; do
     sleep 61
@@ -41,22 +39,22 @@ while true; do
     ############################
 
     if (( counter <= 0 )); then
-       latest=$(cat "$RECS_DIR"/StreamData/analyzing_now.txt)
+       latest=$(cat "$ingest_dir/analyzing_now.txt)
        if [[ "$latest" == "$analyzing_now" ]]; then
           echo "$(date) WARNING no change in analyzing_now for 10 iterations, restarting services"
           "$HOME"/BirdNET-Pi/scripts/restart_services.sh
        fi
        counter=10
-       analyzing_now=$(cat "$HOME"/BirdSongs/StreamData/analyzing_now.txt)
+       analyzing_now=$(cat "$ingest_dir/analyzing_now.txt)
     fi
 
     # Pause recorder to catch-up
     ############################
 
-    wavs="$(find "${ingest_dir}" -maxdepth 1 -name '*.wav' | wc -l)"
+    wavs="$(find "$ingest_dir" -maxdepth 1 -name '*.wav' | wc -l)"
     state="$(systemctl is-active "$srv")"
 
-    bashio::log.green "$(date)    INFO ${wavs} wav files waiting in $(readlink -f "$ingest_dir"), $srv state is $state"
+    bashio::log.green "$(date)    INFO ${wavs} wav files waiting in $ingest_dir, $srv state is $state"
 
     if (( wavs > 100 )) && [[ "$state" == "active" ]]; then
         sudo systemctl stop "$srv"
