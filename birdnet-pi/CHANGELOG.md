@@ -1,3 +1,4 @@
+## 0.13-23 (11-05-2024)
 - Improve throttle service
 - Improve data recovery upon analyser stop
 
