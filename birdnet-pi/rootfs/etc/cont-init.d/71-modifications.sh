@@ -45,6 +45,11 @@ else
     sed -i "s|https://allaboutbirds.org/guide/\$comname|https://allaboutbirds.org/guide/\$comnameen|g" "$HOME"/BirdNET-Pi/scripts/stats.php
 fi
 
+# Avoid to preselect the title
+echo "... avoiding title preselection in tables"
+sed -i "s|option selected value=|option value=|g" /home/pi/BirdNET-Pi/scripts/include_list.php
+sed -i "s|option selected value=|option value=|g" /home/pi/BirdNET-Pi/scripts/exclude_list.php
+
 # Correct services to start as user pi
 echo "... correct services to start as pi"
 for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs -0 basename -a) livestream.service chart_viewer.service chart_viewer.service spectrogram_viewer.service; do
