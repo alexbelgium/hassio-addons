@@ -11,8 +11,8 @@ OLDNAME="$1" #OLDNAME="Mésange_charbonnière-78-2024-05-02-birdnet-RTSP_1-18:14
 NEWNAME="$2" #NEWNAME="Lapinus atricapilla_Lapinu à tête noire"
 
 # Ask for user input if no arguments
-if [ -z "$OLDNAME" ]; then read -p 'OLDNAME (finishing my mp3): ' OLDNAME; fi
-if [ -z "$NEWNAME" ]; then read -p 'NEWNAME (sciname_commoname": ' NEWNAME; fi
+if [ -z "$OLDNAME" ]; then read -r -p 'OLDNAME (finishing my mp3): ' OLDNAME; fi
+if [ -z "$NEWNAME" ]; then read -r -p 'NEWNAME (sciname_commoname": ' NEWNAME; fi
 
 # Fixed values
 LABELS_FILE="$HOME/BirdNET-Pi/model/labels.txt"
