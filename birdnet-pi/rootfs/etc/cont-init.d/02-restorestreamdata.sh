@@ -15,6 +15,7 @@ if [ -d /data/StreamData ] && [ "$(ls -A /data/StreamData/)" ]; then
 
     # Setting permissions
     chown -R pi:pi "$HOME"/BirdSongs
+    chmod -R 777 "$HOME"/BirdSongs
 
     # Cleaning folder
     rm -r /data/StreamData
