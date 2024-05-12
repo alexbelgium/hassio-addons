@@ -35,7 +35,7 @@ cp "$HOME"/BirdNET-Pi/model/labels.txt "$HOME"/BirdNET-Pi/model/labels.bak
 echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
 /."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
 
-bashio::log.info "... starting cron"
+echo "... starting cron"
 service cron start
 
 # Starting dbus
