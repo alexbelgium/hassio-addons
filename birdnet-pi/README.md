@@ -48,10 +48,13 @@ Options can be configured through three ways :
 - Addon options
 
 ```yaml
-TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 BIRDSONGS_FOLDER: folder to store birdsongs file # It should be an ssd if you want to avoid clogging of analysis
 BIRDS_ONLINE_INFO: uses either allaboutbird (US birds in english) or ebird (universal and translated) to provide online information
-pi_password: set the user password
+TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+ssl: true/false
+certfile: fullchain.pem #ssl certificate, must be located in /ssl
+keyfile: privkey.pem #sslkeyfile, must be located in /ssl
+pi_password: set the user password to access the web terminal
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
