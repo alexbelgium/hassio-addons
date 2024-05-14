@@ -1,8 +1,7 @@
 {
   "build_from": {
     "aarch64": "lscr.io/linuxserver/resilio-sync:arm64v8-latest",
-    "amd64": "lscr.io/linuxserver/resilio-sync:amd64-latest",
-    "armv7": "lscr.io/linuxserver/resilio-sync:arm32v7-2.7.3.1381-1-ls125"
+    "amd64": "lscr.io/linuxserver/resilio-sync:amd64-latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
