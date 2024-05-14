@@ -24,8 +24,8 @@ DETECTIONS_TABLE="detections"
 ###################
 
 # Check if files exist
-if [ ! -d "$LABELS_FILE" ]; then echo "$LABELS_FILE doesn't exist, exiting" && exit 1; fi
-if [ ! -d "$DB_FILE" ]; then echo "$DB_FILE doesn't exist, exiting" && exit 1; fi
+if [ ! -f "$LABELS_FILE" ]; then echo "$LABELS_FILE doesn't exist, exiting" && exit 1; fi
+if [ ! -f "$DB_FILE" ]; then echo "$DB_FILE doesn't exist, exiting" && exit 1; fi
 
 # Check if inputs are valid
 if [[ "$1" != *".mp3" ]]; then
