@@ -6,13 +6,22 @@
 # SET VARIABLES #
 #################
 
+echo "starting"
+
+HOME="/home/pi"
+source /etc/birdnet/birdnet.conf &>/dev/null
+
 # Get arguments
 OLDNAME="$1" #OLDNAME="Mésange_charbonnière-78-2024-05-02-birdnet-RTSP_1-18:14:08.mp3"
 NEWNAME="$2" #NEWNAME="Lapinus atricapilla_Lapinu à tête noire"
 
+# Set log level
+OUTPUT_TYPE="$3" #Can be : null (only errors output), debug (all outputs), or newname (errors and newname file)
+if [ -z "$OUTPUT_TYPE" ]; then OUTPUT_TYPE="debug"; fi
+
 # Ask for user input if no arguments
-if [ -z "$OLDNAME" ]; then read -r -p 'OLDNAME (finishing my mp3): ' OLDNAME; fi
-if [ -z "$NEWNAME" ]; then read -r -p 'NEWNAME (sciname_commoname": ' NEWNAME; fi
+if [ -z "$OLDNAME" ]; then read -r -p 'OLDNAME (finishing by mp3): ' OLDNAME; fi
+if [ -z "$NEWNAME" ]; then read -r -p 'NEWNAME (sciname_commoname): ' NEWNAME; fi
 
 # Fixed values
 LABELS_FILE="$HOME/BirdNET-Pi/model/labels.txt"
@@ -67,7 +76,7 @@ OLDNAME_comname2="${OLDNAME_comname// /_}"
 # Replace OLDNAME_comname2 with NEWNAME_comname2 in OLDNAME
 NEWNAME_filename="${OLDNAME//$OLDNAME_comname2/$NEWNAME_comname2}"
 
-echo "This script will change the identification $OLDNAME from $OLDNAME_comname to ${NEWNAME#*_}"
+[[ "$OUTPUT_TYPE" == "debug" ]] && echo "This script will change the identification $OLDNAME from $OLDNAME_comname to ${NEWNAME#*_}"
 
 ########################
 # EXECUTE : MOVE FILES #
@@ -84,7 +93,10 @@ if [[ -f $FILE_PATH ]]; then
     mv "$FILE_PATH" "$NEW_DIR/$NEWNAME_filename"
     mv "$FILE_PATH".png "$NEW_DIR/$NEWNAME_filename".png
     
-    echo "Files moved!"
+    [[ "$OUTPUT_TYPE" == "debug" ]] && echo "Files moved!"
+    # Outputs new filename
+	echo "OK;$NEWNAME_filename"
+
 else
     echo "Error: File $FILE_PATH does not exist"
 fi
@@ -96,6 +108,6 @@ fi
 # Update the database
 sqlite3 "$DB_FILE" "UPDATE $DETECTIONS_TABLE SET Sci_Name = '$NEWNAME_sciname', Com_Name = '$NEWNAME_comname', File_Name = '$NEWNAME_filename' WHERE File_Name = '$OLDNAME';"
 
-echo "Database entry remove"
+[[ "$OUTPUT_TYPE" == "debug" ]] && echo "Database entry removed"
 
-echo "All done!"
+[[ "$OUTPUT_TYPE" == "debug" ]] && echo "All done!"
