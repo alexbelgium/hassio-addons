@@ -34,6 +34,8 @@ There are no addon options. All configuration files in json format (config and c
 
 If this file doesn't exist, it will be created at first boot.
 
+The last release changelog mentions that automatic redemption is not possible anymore due to epic improvement on automation detection. A redemption link is sent to your preferred notification method instead of being automated (thanks @Shiroe93) 
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
