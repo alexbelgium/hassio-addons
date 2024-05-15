@@ -1,4 +1,3 @@
-## 0.13-26 (15-05-2024)
 - Enable new feature to change detection from webui
 
 ## 0.13-25 (13-05-2024)
