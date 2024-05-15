@@ -6,8 +6,6 @@
 # SET VARIABLES #
 #################
 
-echo "starting"
-
 HOME="/home/pi"
 source /etc/birdnet/birdnet.conf &>/dev/null
 
@@ -16,8 +14,7 @@ OLDNAME="$1" #OLDNAME="Mésange_charbonnière-78-2024-05-02-birdnet-RTSP_1-18:14
 NEWNAME="$2" #NEWNAME="Lapinus atricapilla_Lapinu à tête noire"
 
 # Set log level
-OUTPUT_TYPE="$3" #Can be : null (only errors output), debug (all outputs), or newname (errors and newname file)
-if [ -z "$OUTPUT_TYPE" ]; then OUTPUT_TYPE="debug"; fi
+OUTPUT_TYPE="${3:-debug}" # Set 3rd argument to debug to have all outputs
 
 # Ask for user input if no arguments
 if [ -z "$OLDNAME" ]; then read -r -p 'OLDNAME (finishing by mp3): ' OLDNAME; fi
@@ -53,9 +50,19 @@ if ! grep -q "$NEWNAME" "$LABELS_FILE"; then
     exit 1
 fi
 
+# Check if the common name as the same as the first
+OLDNAME_space="${OLDNAME//_/ }"
+if [[ "${OLDNAME_space%%-*}" == "${NEWNAME#*_}" ]]; then
+    echo "Error: $OLDNAME has the same common name as $NEWNAME"
+    exit 1
+fi
+
 ##################
 # EXECUTE SCRIPT #
 ##################
+
+# Intro
+[[ "$OUTPUT_TYPE" == "debug" ]] && echo "Starting to modify $OLDNAME to $NEWNAME"
 
 # Get the line where the column "File_Name" matches exactly $OLDNAME
 IFS='|' read -r OLDNAME_sciname OLDNAME_comname OLDNAME_date < <(sqlite3 "$DB_FILE" "SELECT Sci_Name, Com_Name, Date FROM $DETECTIONS_TABLE WHERE File_Name = '$OLDNAME' LIMIT 1;")
@@ -94,9 +101,6 @@ if [[ -f $FILE_PATH ]]; then
     mv "$FILE_PATH".png "$NEW_DIR/$NEWNAME_filename".png
     
     [[ "$OUTPUT_TYPE" == "debug" ]] && echo "Files moved!"
-    # Outputs new filename
-	echo "OK;$NEWNAME_filename"
-
 else
     echo "Error: File $FILE_PATH does not exist"
 fi
