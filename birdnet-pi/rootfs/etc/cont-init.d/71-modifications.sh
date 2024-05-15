@@ -69,6 +69,11 @@ if [ ! -f /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh ]; then
     curl -o /home/pi/BirdNET-Pi/scripts/play.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/play.php &>/dev/null
 fi
 
+# Avoid preselection in include and exclude lists
+echo "... avoid preselecting options in include and exclude lists"
+sed -i "s|option selected|option disabled|g" "$HOME"/BirdNET-Pi/scripts/include_list.php
+sed -i "s|option selected|option disabled|g" "$HOME"/BirdNET-Pi/scripts/exclude_list.php
+
 # Correct log services to show /proc/1/fd/1
 echo "... show container logs in /logs"
 sed -i "/User=pi/d" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
