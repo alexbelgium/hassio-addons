@@ -60,11 +60,14 @@ for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs
     sed -i "/Service/a StandardOutput=append:/proc/1/fd/1" "$HOME/BirdNET-Pi/templates/$file"
 done
 
-echo "... install option to change birds identification"
-curl -o /home/pi/BirdNET-Pi/homepage/images/bird.svg https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/images/bird.svg &>/dev/null || true
-curl -o /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/birdnet_changeidentification.sh &>/dev/null || true
-chmod 777 /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh &>/dev/null || true
-curl https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/play.php > /home/pi/BirdNET-Pi/scripts/play.php &>/dev/null || true
+# Add birds change option
+if [ ! -f /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh ]; then
+    echo "... install option to change birds identification"
+    curl -o /home/pi/BirdNET-Pi/homepage/images/bird.svg https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/images/bird.svg
+    curl -o /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/birdnet_changeidentification.sh
+    chmod 777 /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh
+    curl -o /home/pi/BirdNET-Pi/scripts/play.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/play.php &>/dev/null
+fi
 
 # Correct log services to show /proc/1/fd/1
 echo "... show container logs in /logs"
