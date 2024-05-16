@@ -65,3 +65,5 @@ sed -i "|exclude_species_list.txt|a\    CONVERT_DICT = {row.split(';')[0]: row.s
 sed -i "|exclude_species_list.txt|a\    CONVERT_LIST = loadCustomSpeciesList(os.path.expanduser(\"~/BirdNET-Pi/convert_species_list.txt\"))" "$HOME"/BirdNET-Pi/scripts/server.py
 sed -i "|for entry in entries:|a\            if entry[0] in CONVERT_LIST:" "$HOME"/BirdNET-Pi/scripts/server.py
 sed -i "|for entry in entries:|a\                entry[0] = CONVERT_LIST[entry[0]]" "$HOME"/BirdNET-Pi/scripts/server.py
+
+echo " "
