@@ -153,6 +153,10 @@ WORKDIR /config
 #CMD [ "/ha_entrypoint.sh" ]
 #SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Allow a dockerfile independent from HA
+EXPOSE 80
+RUN mkdir -p /data /config
+
 ############
 # 5 Labels #
 ############
