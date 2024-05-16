@@ -62,11 +62,18 @@ done
 
 # Add birds change option
 if [ ! -f /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh ]; then
-    echo "... install option to change birds identification"
+    # Clean previous files
+    rm /home/pi/BirdNET-Pi/scripts/play.php
+    rm /home/pi/BirdNET-Pi/homepage/style.css
+    # Download new files
     curl -o /home/pi/BirdNET-Pi/homepage/images/bird.svg https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/images/bird.svg
     curl -o /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/birdnet_changeidentification.sh
+    curl -o /home/pi/BirdNET-Pi/scripts/play.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/play.php
+    curl -o /home/pi/BirdNET-Pi/homepage/style.css https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/style.css
+    # Correct permissions
     chmod 777 /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh
-    curl -o /home/pi/BirdNET-Pi/scripts/play.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/play.php &>/dev/null
+    chmod 777 /home/pi/BirdNET-Pi/scripts/play.php
+    chmod 777 /home/pi/BirdNET-Pi/homepage/style.css
 fi
 
 # Avoid preselection in include and exclude lists
