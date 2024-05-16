@@ -60,10 +60,10 @@ touch /config/convert_species_list.txt
 sed -i "/exclude_species_list.txt/a sudo -u pi ln -fs /config/convert_species_list.txt $HOME/BirdNET-Pi/scripts/" "$HOME"/BirdNET-Pi/scripts/clear_all_data.sh
 sed -i "/exclude_species_list.txt/a sudo -u pi ln -fs /config/convert_species_list.txt $HOME/BirdNET-Pi/scripts/" "$HOME"/BirdNET-Pi/scripts/install_services.sh
 sed -i "/INTERPRETER, M_INTERPRETER, INCLUDE_LIST, EXCLUDE_LIST/c INTERPRETER, M_INTERPRETER, INCLUDE_LIST, EXCLUDE_LIST, CONVERT_LIST = (None, None, None, None, None)" "$HOME"/BirdNET-Pi/scripts/server.py
-sed -i "|global INCLUDE_LIST, EXCLUDE_LIST|c\    global INCLUDE_LIST, EXCLUDE_LIST, CONVERT_LIST" "$HOME"/BirdNET-Pi/scripts/server.py
-sed -i "|exclude_species_list.txt|a\    CONVERT_DICT = {row.split(';')[0]: row.split(';')[1] for row in CONVERT_LIST}" "$HOME"/BirdNET-Pi/scripts/server.py
-sed -i "|exclude_species_list.txt|a\    CONVERT_LIST = loadCustomSpeciesList(os.path.expanduser(\"~/BirdNET-Pi/convert_species_list.txt\"))" "$HOME"/BirdNET-Pi/scripts/server.py
-sed -i "|for entry in entries:|a\            if entry[0] in CONVERT_LIST:" "$HOME"/BirdNET-Pi/scripts/server.py
-sed -i "|for entry in entries:|a\                entry[0] = CONVERT_LIST[entry[0]]" "$HOME"/BirdNET-Pi/scripts/server.py
+sed -i "/global INCLUDE_LIST, EXCLUDE_LIST/c\    global INCLUDE_LIST, EXCLUDE_LIST, CONVERT_LIST" "$HOME"/BirdNET-Pi/scripts/server.py
+sed -i "/exclude_species_list.txt/a\    CONVERT_DICT = {row.split(';')[0]: row.split(';')[1] for row in CONVERT_LIST}" "$HOME"/BirdNET-Pi/scripts/server.py
+sed -i "/exclude_species_list.txt/a\    CONVERT_LIST = loadCustomSpeciesList(os.path.expanduser(\"~/BirdNET-Pi/convert_species_list.txt\"))" "$HOME"/BirdNET-Pi/scripts/server.py
+sed -i "/for entry in entries:/a\            if entry[0] in CONVERT_LIST:" "$HOME"/BirdNET-Pi/scripts/server.py
+sed -i "/for entry in entries:/a\                entry[0] = CONVERT_LIST[entry[0]]" "$HOME"/BirdNET-Pi/scripts/server.py
 
 echo " "
