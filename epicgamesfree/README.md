@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [ [EPic Games Free] error appears in cli as soon as add-on starts (opened 2024-05-14)](https://github.com/alexbelgium/hassio-addons/issues/1391) by [@Shiroe93](https://github.com/Shiroe93)
 
 # Home assistant add-on: Epic Games Free
 
