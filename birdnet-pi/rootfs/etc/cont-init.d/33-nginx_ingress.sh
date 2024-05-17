@@ -18,6 +18,10 @@ ingress_entry=$(bashio::addon.ingress_entry)
 # Quits if ingress not active
 if [ -z "$ingress_entry" ]; then exit 0; fi
 
+# Create .htpasswd
+export "$(grep "^CADDY_PWD" /config/birdnet.conf)"
+htpasswd -b -c /home/pi/.htpasswd birdnet "$CADDY_PWD" &>/dev/null
+
 echo " "
 bashio::log.info "Adapting for ingress"
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
