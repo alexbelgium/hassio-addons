@@ -1,3 +1,5 @@
+- Allow access to restricted areas in ingress without needing to encode password (using nginx layer)
+
 ## 0.13-27 (15-05-2024)
 - Enable new feature to change detection from webui
 
