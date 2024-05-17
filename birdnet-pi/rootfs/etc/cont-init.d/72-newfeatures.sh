@@ -57,7 +57,7 @@ fi
 echo "... adding feature of convert_species_list"
 touch /config/convert_species_list.txt
 chown pi:pi /config/convert_species_list.txt
-chmod 777 /config/convert_species_list.txt
+sudo -u pi ln -fs /config/convert_species_list.txt "$HOME"/BirdNET-Pi/
 # Not useful
 sed -i "/exclude_species_list.txt/a sudo -u pi ln -fs /config/convert_species_list.txt $HOME/BirdNET-Pi/scripts/" "$HOME"/BirdNET-Pi/scripts/clear_all_data.sh
 sed -i "/exclude_species_list.txt/a sudo -u pi ln -fs /config/convert_species_list.txt $HOME/BirdNET-Pi/scripts/" "$HOME"/BirdNET-Pi/scripts/install_services.sh
