@@ -1,4 +1,3 @@
-- Allow access to restricted areas in ingress without needing to encode password (using nginx layer)
 - Improve code clarity by separating modifications of code to make it work, and new features specific to the addon
 - New option SPECIES_CONVERTER: if yes, you need to put in the file /config/convert_species_list.txt the list of species you want to convert (example : Falco subbuteo_Faucon hobereau;Falco tinnunculus_Faucon Crécerelle). It will convert on the fly the specie when detected. This is not enabled by default as can be a cause for issues
 
