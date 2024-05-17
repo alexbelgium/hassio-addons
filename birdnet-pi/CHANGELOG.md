@@ -1,4 +1,5 @@
 - Allow access to restricted areas in ingress without needing to encode password (using nginx layer)
+- Improve code clarity by separating modifications of code to make it work, and new features specific to the addon
 
 ## 0.13-27 (15-05-2024)
 - Enable new feature to change detection from webui
