@@ -1,3 +1,6 @@
+
+## v24.1-ls139 (18-05-2024)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 - Feat : cifsdomain added
 
