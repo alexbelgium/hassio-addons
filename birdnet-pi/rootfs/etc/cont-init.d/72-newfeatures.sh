@@ -78,6 +78,9 @@ if bashio::config.true "SPECIES_CONVERTER"; then
     sed -i "/converted_entry in INCLUDE_LIST or len(INCLUDE_LIST)/c\                if ((converted_entry in INCLUDE_LIST or len(INCLUDE_LIST) == 0)" "$HOME"/BirdNET-Pi/scripts/server.py
     sed -i "s|                d = Detection|                    d = Detection|g" "$HOME"/BirdNET-Pi/scripts/server.py
     sed -i "s|                confident_detections|                    confident_detections|g" "$HOME"/BirdNET-Pi/scripts/server.py
+    curl -o /home/pi/BirdNET-Pi/scripts/convert_list.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-2_species_conversion/scripts/convert_list.php
+    chmod 777 /home/pi/BirdNET-Pi/scripts/convert_list.php
+    #sed -i '/Excluded Species List/\      <button type=\"submit\" name=\"view\" value=\"Converted\" form=\"views\">Convert Species List</button>' "$HOME"/BirdNET-Pi/homepage/views.php
 fi
 
 echo " "
