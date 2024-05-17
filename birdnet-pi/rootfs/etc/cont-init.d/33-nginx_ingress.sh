@@ -25,11 +25,4 @@ sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
 
-# Create .htpasswd
-echo "... setting up automatic identification"
-export "$(grep "^CADDY_PWD" /config/birdnet.conf)"
-htpasswd -b -c /home/pi/.htpasswd birdnet "$CADDY_PWD" &>/dev/null
-chown 1000:1000 /home/pi/.htpasswd
-#sed -i '/caddy_pwd,\$config/a exec("htpasswd -b -c /home/pi/.htpasswd birdnet \"$caddy_pwd\" &>/dev/null");' "$HOME"/BirdNET-Pi/scripts/advanced.php
-
 echo " "
