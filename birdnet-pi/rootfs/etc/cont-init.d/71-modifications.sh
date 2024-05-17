@@ -43,4 +43,8 @@ echo "... show container logs in /logs"
 sed -i "/User=pi/d" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
 sed -i "s|birdnet_log.sh|cat /proc/1/fd/1|g" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
 
+# Make sure config is correctly formatted.
+echo "... avoid caddy formatting errors"
+caddy fmt --overwrite /etc/caddy/Caddyfile
+
 echo " "
