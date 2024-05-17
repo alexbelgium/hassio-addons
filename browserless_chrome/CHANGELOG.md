@@ -1,3 +1,6 @@
+
+## 2.12.0 (18-05-2024)
+- Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
 ## 2.8.0-DONTUPDATE (03-05-2024)
 - Switch to chromium
 
