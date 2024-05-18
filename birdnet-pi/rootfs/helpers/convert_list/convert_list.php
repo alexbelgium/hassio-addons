@@ -2,27 +2,33 @@
 <style>
 </style>
 
+<p><strong>This tool will allow to convert on-the-fly species to compensate for model errors. It SHOULD NOT BE USED except if you know what you are doing, instead the model errors should be reported to the owner. However, it is still convenient for systematic biases that are confirmed through careful listening of samples, while waiting for the models to be updated.</strong></p>
+
 <div class="customlabels column1">
 <form action="" method="GET" id="add">
   <input type="hidden" id="species" name="species">
   <h3>Specie to convert from :</h3>
+  <!-- Input box to filter options in the first table -->
+  <input type="text" id="species1Search" onkeyup="filterOptions('species1')" placeholder="Search for species...">
   <select name="species1" id="species1" size="25">
   <?php
     error_reporting(E_ALL);
     ini_set('display_errors',1);
-    
+
     $filename = './scripts/labels.txt';
     $eachline = file($filename, FILE_IGNORE_NEW_LINES);
-    
-    foreach($eachline as $lines){echo 
+
+    foreach($eachline as $lines){echo
   "<option value=\"".$lines."\">$lines</option>";}
   ?>
   </select>
   <br><br> <!-- Added a space between the two tables -->
   <h3>Specie to convert to :</h3>
+  <!-- Input box to filter options in the second table -->
+  <input type="text" id="species2Search" onkeyup="filterOptions('species2')" placeholder="Search for species...">
   <select name="species2" id="species2" size="25">
   <?php
-    foreach($eachline as $lines){echo 
+    foreach($eachline as $lines){echo
   "<option value=\"".$lines."\">$lines</option>";}
   ?>
   </select>
@@ -49,7 +55,7 @@
   $filename = './scripts/convert_species_list.txt'; // Changed the file path
   $eachline = file($filename, FILE_IGNORE_NEW_LINES);
   foreach($eachline as $lines){
-    echo 
+    echo
   "<option value=\"".$lines."\">$lines</option>";
 }?>
   </select>
@@ -66,14 +72,30 @@
     document.getElementById("add").addEventListener("submit", function(event) {
       var speciesSelect1 = document.getElementById("species1");
       var speciesSelect2 = document.getElementById("species2");
-      var selectedSpecies1 = speciesSelect1.options[speciesSelect1.selectedIndex].value;
-      var selectedSpecies2 = speciesSelect2.options[speciesSelect2.selectedIndex].value;
-      document.getElementById("species").value = selectedSpecies1 + ";" + selectedSpecies2;
-      if (speciesSelect1.selectedIndex < 1 || speciesSelect2.selectedIndex < 1) {
+      if (speciesSelect1.selectedIndex < 0 || speciesSelect2.selectedIndex < 0) {
         alert("Please select a species from both lists.");
         document.querySelector('.views').style.opacity = 1;
         event.preventDefault();
+      } else {
+        var selectedSpecies1 = speciesSelect1.options[speciesSelect1.selectedIndex].value;
+        var selectedSpecies2 = speciesSelect2.options[speciesSelect2.selectedIndex].value;
+        document.getElementById("species").value = selectedSpecies1 + ";" + selectedSpecies2;
       }
     });
-  
+
+    // Function to filter options in a select element
+    function filterOptions(id) {
+      var input = document.getElementById(id + "Search");
+      var filter = input.value.toUpperCase();
+      var select = document.getElementById(id);
+      var options = select.getElementsByTagName("option");
+      for (var i = 0; i < options.length; i++) {
+        var txtValue = options[i].textContent || options[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          options[i].style.display = "";
+        } else {
+          options[i].style.display = "none";
+        }
+      }
+    }
 </script>

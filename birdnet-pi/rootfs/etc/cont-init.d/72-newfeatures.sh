@@ -55,32 +55,17 @@ fi
 
 # Add species conversion system
 if bashio::config.true "SPECIES_CONVERTER"; then
-    bashio::log.yellow "... adding feature of SPECIES_CONVERTER, please see README to use"
+    bashio::log.yellow "... adding feature of SPECIES_CONVERTER, a new tab is added to your Tools"
     touch /config/convert_species_list.txt
     chown pi:pi /config/convert_species_list.txt
     sudo -u pi ln -fs /config/convert_species_list.txt "$HOME"/BirdNET-Pi/
     # Not useful
     sed -i "/exclude_species_list.txt/a sudo -u pi ln -fs /config/convert_species_list.txt $HOME/BirdNET-Pi/scripts/" "$HOME"/BirdNET-Pi/scripts/clear_all_data.sh
     sed -i "/exclude_species_list.txt/a sudo -u pi ln -fs /config/convert_species_list.txt $HOME/BirdNET-Pi/scripts/" "$HOME"/BirdNET-Pi/scripts/install_services.sh
-    # Change server
-    sed -i "/INTERPRETER, M_INTERPRETER, INCLUDE_LIST, EXCLUDE_LIST/c INTERPRETER, M_INTERPRETER, INCLUDE_LIST, EXCLUDE_LIST, CONVERT_LIST = (None, None, None, None, None)" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/global INCLUDE_LIST, EXCLUDE_LIST/c\    global INCLUDE_LIST, EXCLUDE_LIST, CONVERT_LIST, CONVERT_DICT" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/exclude_species_list.txt/a\    CONVERT_DICT = {row.split(';')[0]: row.split(';')[1] for row in CONVERT_LIST}" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/exclude_species_list.txt/a\    CONVERT_LIST = loadCustomSpeciesList(os.path.expanduser(\"~/BirdNET-Pi/convert_species_list.txt\"))" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "s|entry\[0\]|converted_entry|g" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "s|if converted_entry in|if entry\[0\] in|g" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/for entry in entries/a\                    converted_entry = entry[0]" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/for entry in entries/a\                else :" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/for entry in entries/a\                    log.info('WARNING : ' + entry[0] + ' converted to ' + converted_entry)" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/for entry in entries/a\                    converted_entry = CONVERT_DICT.get(entry[0], entry[0])" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/for entry in entries/a\                if entry[0] in CONVERT_DICT:" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/for entry in entries/a\            if entry[1] >= conf.getfloat('CONFIDENCE'):" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "/converted_entry in INCLUDE_LIST or len(INCLUDE_LIST)/c\                if ((converted_entry in INCLUDE_LIST or len(INCLUDE_LIST) == 0)" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "s|                d = Detection|                    d = Detection|g" "$HOME"/BirdNET-Pi/scripts/server.py
-    sed -i "s|                confident_detections|                    confident_detections|g" "$HOME"/BirdNET-Pi/scripts/server.py
-    curl -o /home/pi/BirdNET-Pi/scripts/convert_list.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-2_species_conversion/scripts/convert_list.php
-    chmod 777 /home/pi/BirdNET-Pi/scripts/convert_list.php
-    #sed -i '/Excluded Species List/\      <button type=\"submit\" name=\"view\" value=\"Converted\" form=\"views\">Convert Species List</button>' "$HOME"/BirdNET-Pi/homepage/views.php
+    # Add files
+    mv -f /helpers/convert_list/convert_list.php "$HOME"/BirdNET-Pi/scripts/convert_list.php && chown pi:pi "$HOME"/BirdNET-Pi/scripts/convert_list.php
+    mv -f /helpers/convert_list/server.py "$HOME"/BirdNET-Pi/scripts/server.py && chown pi:pi "$HOME"/BirdNET-Pi/scripts/server.py
+    mv -f /helpers/convert_list/views.php "$HOME"/BirdNET-Pi/homepage/views.php && chown pi:pi "$HOME"/BirdNET-Pi/homepage/views.php
 fi
 
 echo " "
