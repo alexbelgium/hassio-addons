@@ -85,17 +85,19 @@
 
     // Function to filter options in a select element
     function filterOptions(id) {
-      var input = document.getElementById(id + "Search");
+      var input = document.getElementById(id + 'Search');
       var filter = input.value.toUpperCase();
       var select = document.getElementById(id);
-      var options = select.getElementsByTagName("option");
+      var options = select.getElementsByTagName('option');
       for (var i = 0; i < options.length; i++) {
         var txtValue = options[i].textContent || options[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          options[i].style.display = "";
+          options[i].style.display = '';
         } else {
-          options[i].style.display = "none";
+          options[i].style.display = 'none';
         }
-      }
+  }
+}
+
     }
 </script>
