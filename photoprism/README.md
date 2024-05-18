@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Photoprism newer version available (opened 2024-05-16)](https://github.com/alexbelgium/hassio-addons/issues/1394) by [@Rgasd](https://github.com/Rgasd)
 # Home assistant add-on: Photoprism
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
