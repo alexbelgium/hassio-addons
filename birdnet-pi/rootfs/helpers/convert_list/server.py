@@ -22,7 +22,7 @@ log = logging.getLogger(__name__)
 
 
 userDir = os.path.expanduser('~')
-INTERPRETER, M_INTERPRETER, INCLUDE_LIST, EXCLUDE_LIST, CONVERT_LIST = (None, None, None, None, None)
+INTERPRETER, M_INTERPRETER, INCLUDE_LIST, EXCLUDE_LIST, CONVERT_LIST, CONVERT_DICT = (None, None, None, None, None, None)
 PREDICTED_SPECIES_LIST = []
 model, priv_thresh, sf_thresh = (None, None, None)
 
