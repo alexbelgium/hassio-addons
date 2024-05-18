@@ -1,4 +1,3 @@
-## 0.13-29 (18-05-2024)
 - Significantly improve the SPECIES_CONVERTER option, and add a webui when the option is enabled
 
 ## 0.13-28 (17-05-2024)
