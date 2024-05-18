@@ -1,0 +1,25 @@
+{
+  "arch": [
+    "amd64",
+    "aarch64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "Openproject for Home Assistant",
+  "image": "ghcr.io/alexbelgium/openproject-{arch}",
+  "init": false,
+  "map": [
+    "addon_config:rw",
+    "share:rw"
+  ],
+  "name": "Openproject",
+  "ports": {
+    "8080/tcp": 8080
+  },
+  "ports_description": {
+    "8080/tcp": "Web interface"
+  },
+  "slug": "openproject",
+  "udev": true,
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/openproject",
+  "version": "14"
+}
