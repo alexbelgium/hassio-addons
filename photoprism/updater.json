@@ -1,7 +1,6 @@
 {
   "dockerhub_by_date": "true",
   "github_fulltag": "true",
-  "github_tagfilter": "preview",
   "last_update": "2023-04-29",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
