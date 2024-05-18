@@ -63,9 +63,9 @@ if bashio::config.true "SPECIES_CONVERTER"; then
     sed -i "/exclude_species_list.txt/a sudo -u pi ln -fs /config/convert_species_list.txt $HOME/BirdNET-Pi/scripts/" "$HOME"/BirdNET-Pi/scripts/clear_all_data.sh
     sed -i "/exclude_species_list.txt/a sudo -u pi ln -fs /config/convert_species_list.txt $HOME/BirdNET-Pi/scripts/" "$HOME"/BirdNET-Pi/scripts/install_services.sh
     # Add files
-    mv -f /helpers/convert_list/convert_list.php "$HOME"/BirdNET-Pi/scripts/convert_list.php && chown pi:pi "$HOME"/BirdNET-Pi/scripts/convert_list.php
-    mv -f /helpers/convert_list/server.py "$HOME"/BirdNET-Pi/scripts/server.py && chown pi:pi "$HOME"/BirdNET-Pi/scripts/server.py
-    mv -f /helpers/convert_list/views.php "$HOME"/BirdNET-Pi/homepage/views.php && chown pi:pi "$HOME"/BirdNET-Pi/homepage/views.php
+    mv -f /helpers/convert_list/convert_list.php "$HOME"/BirdNET-Pi/scripts/convert_list.php && chown pi:pi "$HOME"/BirdNET-Pi/scripts/convert_list.php && chmod 664 "$HOME"/BirdNET-Pi/scripts/convert_list.php
+    mv -f /helpers/convert_list/server.py "$HOME"/BirdNET-Pi/scripts/server.py && chown pi:pi "$HOME"/BirdNET-Pi/scripts/server.py && chmod 775 "$HOME"/BirdNET-Pi/scripts/server.py
+    mv -f /helpers/convert_list/views.php "$HOME"/BirdNET-Pi/homepage/views.php && chown pi:pi "$HOME"/BirdNET-Pi/homepage/views.php && chmod 664 "$HOME"/BirdNET-Pi/scripts/server.py
 fi
 
 echo " "
