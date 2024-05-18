@@ -56,6 +56,7 @@ nzbget: nzbget/config.* # Image : yes
 omada: omada/config.* # Image : yes
 omada_v3: omada_v3/config.* # Image : yes
 ombi: ombi/config.* # Image : yes
+openproject: openproject/config.* # Image : yes
 organizr: organizr/config.* # Image : yes
 overleaf: overleaf/config.* # Image : yes
 overseerr: overseerr/config.* # Image : yes
