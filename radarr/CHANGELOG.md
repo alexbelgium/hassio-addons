@@ -1,3 +1,6 @@
+
+## 5.6.0.8846 (18-05-2024)
+- Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 ## 5.4.6.8723-5 (22-04-2024)
 - Fix : not starting
 
