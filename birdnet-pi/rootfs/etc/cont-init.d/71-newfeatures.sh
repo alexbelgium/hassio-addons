@@ -58,6 +58,7 @@ if bashio::config.true "SPECIES_CONVERTER"; then
     bashio::log.yellow "... adding feature of SPECIES_CONVERTER, a new tab is added to your Tools"
     touch /config/convert_species_list.txt
     chown pi:pi /config/convert_species_list.txt
+    sudo -u pi ln -fs /config/convert_species_list.txt "$HOME"/BirdNET-Pi/
     sudo -u pi ln -fs /config/convert_species_list.txt "$HOME"/BirdNET-Pi/scripts/
     # Not useful
     sed -i "/exclude_species_list.txt/a sudo -u pi ln -fs /config/convert_species_list.txt $HOME/BirdNET-Pi/scripts/" "$HOME"/BirdNET-Pi/scripts/clear_all_data.sh
