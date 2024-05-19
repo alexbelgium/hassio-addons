@@ -3,7 +3,7 @@
 
 ## 0.13-28 (17-05-2024)
 - [SPECIES_CONVERTER] : New option ; if enabled, you need to put in the file /config/convert_species_list.txt the list of species you want to convert (example : Falco subbuteo_Faucon hobereau;Falco tinnunculus_Faucon Crécerelle). It will convert on the fly the specie when detected. This is not enabled by default as can be a cause for issues
-- [code] : Improve code clarity by separating modifications of code to make it work, and new features specific to the addon
+- Improve code clarity by separating modifications of code to make it work, and new features specific to the addon
 
 ## 0.13-27 (15-05-2024)
 - [CHANGE DETECTION] : Enable new feature to change detection from webui
