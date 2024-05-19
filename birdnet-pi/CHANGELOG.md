@@ -1,3 +1,4 @@
+## 0.13-32 (19-05-2024)
 - [INGRESS] Allow access to restricted area without password if authentificated from within the homeassistant app
 
 ## 0.13-31 (19-05-2024)
