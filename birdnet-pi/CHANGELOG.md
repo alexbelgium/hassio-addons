@@ -1,5 +1,5 @@
-## 0.13-30 (18-05-2024)
 - Significantly improve the SPECIES_CONVERTER option, and add a webui when the option is enabled
+- Improve the SPECIES_CONVERTER webui with input text filtering in both browser and mobile
 
 ## 0.13-28 (17-05-2024)
 - Improve code clarity by separating modifications of code to make it work, and new features specific to the addon
