@@ -83,19 +83,34 @@
       }
     });
 
+    // Store the original list of options in a variable
+    var originalOptions = {};
+    
     // Function to filter options in a select element
     function filterOptions(id) {
       var input = document.getElementById(id + "Search");
       var filter = input.value.toUpperCase();
       var select = document.getElementById(id);
       var options = select.getElementsByTagName("option");
-      for (var i = 0; i < options.length; i++) {
-        var txtValue = options[i].textContent || options[i].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          options[i].style.display = "";
-        } else {
-          options[i].style.display = "none";
-        }
+    
+      // If the original list of options for this select element hasn't been stored yet, store it
+      if (!originalOptions[id]) {
+        originalOptions[id] = Array.from(options).map(option => option.value);
       }
+    
+      // Clear the select element
+      while (select.firstChild) {
+        select.removeChild(select.firstChild);
+      }
+    
+      // Populate the select element with the filtered labels
+      originalOptions[id].forEach(label => {
+        if (label.toUpperCase().indexOf(filter) > -1) {
+          let option = document.createElement('option');
+          option.value = label;
+          option.text = label;
+          select.appendChild(option);
+        }
+      });
     }
 </script>
