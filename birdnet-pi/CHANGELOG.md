@@ -1,4 +1,5 @@
 - [INGRESS] Allow access to restricted area without password if authentificated from within the homeassistant app
+- [SPECIES_CONVERTER] : fixed
 
 ## 0.13-31 (19-05-2024)
 - [SPECIES_CONVERTER] : Significantly improve, add a webui when the option is enabled
