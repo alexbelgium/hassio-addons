@@ -48,4 +48,9 @@ echo "... caddyfile modifications"
 caddy fmt --overwrite /etc/caddy/Caddyfile
 sed -i "s|http://|http://:8081|g" /etc/caddy/Caddyfile
 
+# If port 80 is enabled, make sure it is still 80
+if [ -n "$VARIABLE" ] && [ "$(bashio::addon.port 80)" != 80 ]; then
+    bashio::log.fatal "The port 80 is enabled, but should still be 80 if you want the automatic ssl certificates generation to work"
+fi
+
 echo " "
