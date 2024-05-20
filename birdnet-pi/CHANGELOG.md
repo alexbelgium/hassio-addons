@@ -1,5 +1,5 @@
+- BREAKING CHANGE : the main port has changed from 80 to 8081 to allow ssl
 - Try armv7 build
-- Breaking change : the main port has changed from 80 to 8081 to allow ssl
 - Enable ssl access using either caddy's automated ssl (see Readme), or HomeAssistant's let's encrypt from the addon options
 - [INGRESS] allow access to streamlit, logs
 
