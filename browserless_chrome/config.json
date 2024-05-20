@@ -64,6 +64,9 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "environment": {
+    "TIMEOUT": "60000"
+  },
   "image": "ghcr.io/alexbelgium/browserless_chrome-{arch}",
   "init": false,
   "name": "Browserless Chromium",
@@ -76,6 +79,6 @@
   "slug": "browserless_chrome",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/browserless_chrome",
-  "version": "2.12.0",
+  "version": "2.12.0-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]/docs"
 }
