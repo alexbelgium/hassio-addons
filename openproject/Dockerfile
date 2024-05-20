@@ -31,7 +31,9 @@ ENV OPENPROJECT_SECRET_KEY_BASE=addon_secret \
     OPENPROJECT_HOST__NAME=localhost:8080 \
     OPENPROJECT_HTTPS=false \
     OPENPROJECT_DEFAULT__LANGUAGE=en \
-    OPENPROJECT_EDITION=bim
+    OPENPROJECT_EDITION=bim \
+    PGDATA=/data/pg\
+    APP_DATA_PATH=/data/assets
 
 USER root
 
@@ -62,8 +64,6 @@ ENV PACKAGES=""
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
-
-VOLUME ["/data:/var/openproject/pgdata"]
 
 EXPOSE 8080
 
