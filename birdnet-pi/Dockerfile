@@ -45,7 +45,7 @@ RUN \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \
-    groupmod -o -g 101 abc && usermod -o -u 101 abc && \
+    if id abc >/dev/null 2>&1; then groupmod -o -g 101 abc && usermod -o -u 101 abc; fi && \
     groupadd --non-unique -g 1000 "$USER" && \
     useradd --non-unique --uid 1000 --gid 1000 -m "$USER" && \
     \
