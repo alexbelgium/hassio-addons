@@ -43,10 +43,10 @@ if [ ! -f /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh ]; then
     rm /home/pi/BirdNET-Pi/scripts/play.php
     rm /home/pi/BirdNET-Pi/homepage/style.css
     # Download new files
-    curl -o /home/pi/BirdNET-Pi/homepage/images/bird.svg https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/images/bird.svg
-    curl -o /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/birdnet_changeidentification.sh
-    curl -o /home/pi/BirdNET-Pi/scripts/play.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/play.php
-    curl -o /home/pi/BirdNET-Pi/homepage/style.css https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/style.css
+    curl -s -o /home/pi/BirdNET-Pi/homepage/images/bird.svg https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/images/bird.svg
+    curl -s -o /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/birdnet_changeidentification.sh
+    curl -s -o /home/pi/BirdNET-Pi/scripts/play.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/play.php
+    curl -s -o /home/pi/BirdNET-Pi/homepage/style.css https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/style.css
     # Correct permissions
     chmod 777 /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh
     chmod 777 /home/pi/BirdNET-Pi/scripts/play.php
