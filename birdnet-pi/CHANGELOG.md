@@ -1,3 +1,5 @@
+- [INGRESS] allow access to streamlit
+
 ## 0.13-33 (19-05-2024)
 - [INGRESS] Allow access to restricted area without password if authentificated from within the homeassistant app
 - [SPECIES_CONVERTER] : fixed
