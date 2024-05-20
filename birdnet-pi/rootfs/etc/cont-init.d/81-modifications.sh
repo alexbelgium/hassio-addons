@@ -54,7 +54,7 @@ sed -i "s|/stats|/stats/|g" "$HOME"/BirdNET-Pi/homepage/views.php
 sed -i "s|/log|/log/|g" "$HOME"/BirdNET-Pi/homepage/views.php
 
 # If port 80 is enabled, make sure it is still 80
-if [ -n "$VARIABLE" ] && [ "$(bashio::addon.port 80)" != 80 ]; then
+if [ -n "$(bashio::addon.port 80)" ] && [ "$(bashio::addon.port 80)" != 80 ]; then
     bashio::log.fatal "The port 80 is enabled, but should still be 80 if you want the automatic ssl certificates generation to work"
 fi
 
