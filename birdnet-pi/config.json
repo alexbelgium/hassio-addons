@@ -74,7 +74,7 @@
     "BIRDSONGS_FOLDER": "/config/BirdSongs",
     "BIRDS_ONLINE_INFO": "ebird.org",
     "TZ": "Europe/Paris",
-    "certfile": "keychain.pem",
+    "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "ssl": false
   },
