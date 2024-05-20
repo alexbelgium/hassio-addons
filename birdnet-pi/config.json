@@ -66,20 +66,26 @@
   "map": [
     "addon_config:rw",
     "media:rw",
-    "share:rw"
+    "share:rw",
+    "ssl"
   ],
   "name": "BirdNET-pi",
   "options": {
     "BIRDSONGS_FOLDER": "/config/BirdSongs",
     "BIRDS_ONLINE_INFO": "ebird.org",
-    "TZ": "Europe/Paris"
+    "TZ": "Europe/Paris",
+    "certfile": "keychain.pem",
+    "keyfile": "privkey.pem",
+    "ssl": false
   },
   "panel_icon": "mdi:bird",
   "ports": {
-    "80/tcp": 80
+    "80/tcp": null,
+    "8081/tcp": 80
   },
   "ports_description": {
-    "80/tcp": "Web ui"
+    "80/tcp": "Optional : set to 80 to use caddy's automatic ssl",
+    "8081/tcp": "Web ui"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -95,13 +101,16 @@
     "cifsusername": "str?",
     "localdisks": "str?",
     "networkdisks": "str?",
-    "pi_password": "password"
+    "pi_password": "password",
+    "certfile": "str",
+    "keyfile": "str",
+    "ssl": "bool"
   },
   "slug": "birdnet-pi",
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-33",
+  "version": "0.13-34_test",
   "video": true
 }

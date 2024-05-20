@@ -1,3 +1,5 @@
+- Breaking change : the main port has changed from 80 to 8081 to allow ssl
+- Enable ssl access using either caddy's automated ssl (see Readme), or HomeAssistant's let's encrypt from the addon options
 - [INGRESS] allow access to streamlit, logs
 
 ## 0.13-33 (19-05-2024)
