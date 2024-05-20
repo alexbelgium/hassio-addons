@@ -35,6 +35,8 @@ ENV OPENPROJECT_SECRET_KEY_BASE=addon_secret \
 
 USER root
 
+RUN sed -i "1a /./ha_entrypoint.sh" /app/docker/prod/entrypoint.sh
+
 ##################
 # 3 Install apps #
 ##################
@@ -77,7 +79,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-ENTRYPOINT [ "/ha_entrypoint.sh" ]
+# ENTRYPOINT [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
