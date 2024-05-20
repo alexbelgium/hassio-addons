@@ -30,6 +30,6 @@ echo "${ingress_entry}" > /ingress_url
 sed -i "/function is_authenticated/a if (strpos(\$_SERVER['HTTP_REFERER'], '/api/hassio_ingress') !== false && strpos(\$_SERVER['HTTP_REFERER'], trim(file_get_contents('/ingress_url'))) !== false) { \$ret = true; return \$ret; }" "$HOME"/BirdNET-Pi/scripts/common.php
 
 echo "... correcting stats path"
-sed -i "s|/stats\|stats\|g" "$HOME"/BirdNET-Pi/homepage/views.php
+sed -i "s|/stats\\\|stats\\\|g" "$HOME"/BirdNET-Pi/homepage/views.php
 
 echo " "
