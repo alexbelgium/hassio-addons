@@ -35,6 +35,8 @@ ENV OPENPROJECT_SECRET_KEY_BASE=addon_secret \
 
 USER root
 
+RUN sed -i "1a /./ha_entrypoint.sh" /app/docker/prod/entrypoint.sh
+
 ##################
 # 3 Install apps #
 ##################
