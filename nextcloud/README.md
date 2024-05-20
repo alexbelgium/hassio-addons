@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 Nextcloud: App cannot be installed because it makes the server unstable (opened 2024-05-07)](https://github.com/alexbelgium/hassio-addons/issues/1386) by [@gsmolamodzzz](https://github.com/gsmolamodzzz)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

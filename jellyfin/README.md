@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Jellyfin] DLNA config not found (opened 2024-05-20)](https://github.com/alexbelgium/hassio-addons/issues/1400) by [@hugoKs3](https://github.com/hugoKs3)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
