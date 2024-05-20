@@ -82,7 +82,7 @@
   "panel_icon": "mdi:bird",
   "ports": {
     "80/tcp": null,
-    "8081/tcp": 80
+    "8081/tcp": 8081
   },
   "ports_description": {
     "80/tcp": "Optional : set to 80 to use caddy's automatic ssl",
