@@ -81,19 +81,19 @@ if bashio::config.true "SPECIES_CONVERTER"; then
         # Remove the extracted lines from the original file
         sed -i '/if(\$_GET\['\''view'\''\] == "File"){/,$d' "$HOME"/BirdNET-Pi/homepage/views.php
         # Add new text
-        cat "/helpers/convert_list/views.add" >> "$HOME"/BirdNET-Pi/homepage/views.php
+        cat "/helpers/views.add" >> "$HOME"/BirdNET-Pi/homepage/views.php
         cat "$HOME"/BirdNET-Pi/homepage/views.php.temp >> "$HOME"/BirdNET-Pi/homepage/views.php
         # Clean up: Remove the temporary file
         rm "$HOME"/BirdNET-Pi/homepage/views.php.temp
     fi
-    
+
     # Add the converter script
     if [ ! -f "$HOME"/BirdNET-Pi/scripts/convert_list.php ]; then
-        mv -f /helpers/convert_list/convert_list.php "$HOME"/BirdNET-Pi/scripts/convert_list.php
+        mv -f /helpers/convert_list.php "$HOME"/BirdNET-Pi/scripts/convert_list.php
         chown pi:pi "$HOME"/BirdNET-Pi/scripts/convert_list.php
         chmod 664 "$HOME"/BirdNET-Pi/scripts/convert_list.php
     fi
-    
+
     # Change server
     if ! grep -q "converted_entry" "$HOME"/BirdNET-Pi/scripts/server.py; then
         sed -i "/INTERPRETER, M_INTERPRETER, INCLUDE_LIST, EXCLUDE_LIST/c INTERPRETER, M_INTERPRETER, INCLUDE_LIST, EXCLUDE_LIST, CONVERT_LIST = (None, None, None, None, None)" "$HOME"/BirdNET-Pi/scripts/server.py
