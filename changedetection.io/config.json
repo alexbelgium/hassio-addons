@@ -5,6 +5,9 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "web page monitoring, notification and change detection",
+  "environment": {
+    "TIMEOUT": "60000"
+  }
   "image": "ghcr.io/alexbelgium/changedetection.io-{arch}",
   "init": false,
   "map": [
@@ -13,7 +16,8 @@
   "name": "Changedetection.io",
   "options": {
     "PGID": 0,
-    "PUID": 0
+    "PUID": 0,
+    "TIMEOUT": "60000"
   },
   "ports": {
     "5000/tcp": 5000
@@ -25,11 +29,12 @@
     "BASE_URL": "str?",
     "PGID": "int",
     "PUID": "int",
+    "TIMEOUT": "int",
     "TZ": "str?"
   },
   "slug": "changedetection.io",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/changedetection.io",
-  "version": "0.45.22",
+  "version": "0.45.22-2",
   "webui": "http://[HOST]:[PORT:5000]"
 }
