@@ -66,6 +66,7 @@ if bashio::config.true "SPECIES_CONVERTER"; then
     # Modify views.php if not already done
     if ! grep -q "Converted" "$HOME"/BirdNET-Pi/homepage/views.php; then
         # Add button
+        # shellcheck disable=SC2016
         sed -i '/Excluded Species List/a\      <button type=\\"submit\\" name=\\"view\\" value=\\"Converted\\" form=\\"views\\">Converted Species List</button>' "$HOME"/BirdNET-Pi/homepage/views.php
         # Flag to indicate whether we've found the target line
         found_target=false
