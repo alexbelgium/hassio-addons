@@ -5,7 +5,7 @@
 source /etc/birdnet/birdnet.conf
 
 # Create ingress configuration for Caddyfile
-  cat < EOF >> /etc/caddy/Caddyfile
+  cat << EOF >> /etc/caddy/Caddyfile
 http://:8082 {
   root * ${EXTRACTED}
   file_server browse
