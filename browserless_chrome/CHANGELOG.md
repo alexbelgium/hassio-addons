@@ -1,3 +1,5 @@
+## 2.12.0-3 (21-05-2024)
+- Minor bugs fixed
 ## 2.12.0-2 (20-05-2024)
 - Minor bugs fixed
 
