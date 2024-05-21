@@ -31,6 +31,6 @@ sed -i "/function is_authenticated/a if (strpos(\$_SERVER['HTTP_REFERER'], '/api
 
 echo "... adapt Caddyfile for ingress"
 chmod +x /helpers/caddy_ingress.sh
-sed -i "/sudo caddy fmt --overwrite/i /./helpers/caddy_ingress.sh" /etc/caddy/Caddyfile "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
+sed -i "/sudo caddy fmt --overwrite/i /./helpers/caddy_ingress.sh" "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
 
 echo " "
