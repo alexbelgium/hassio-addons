@@ -80,6 +80,7 @@ if bashio::config.true "SPECIES_CONVERTER"; then
             fi
         done < "$HOME"/BirdNET-Pi/homepage/views.php
         # Remove the extracted lines from the original file
+        # shellcheck disable=SC2016
         sed -i '/if(\$_GET\['\''view'\''\] == "File"){/,$d' "$HOME"/BirdNET-Pi/homepage/views.php
         # Add new text
         cat "/helpers/views.add" >> "$HOME"/BirdNET-Pi/homepage/views.php
