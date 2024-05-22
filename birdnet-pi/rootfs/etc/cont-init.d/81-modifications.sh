@@ -45,9 +45,13 @@ sed -i "s|birdnet_log.sh|cat /proc/1/fd/1|g" "$HOME/BirdNET-Pi/templates/birdnet
 
 # Make sure config is correctly formatted.
 echo "... caddyfile modifications"
+#Correct instructions
 caddy fmt --overwrite /etc/caddy/Caddyfile
+#Change port to leave 80 free for certificate requests
 sed -i "s|http://|http://:8081|g" /etc/caddy/Caddyfile
 sed -i "s|http://|http://:8081|g" "$HOME"/BirdNET-Pi/update_caddyfile.sh
+#Remove default file that blocks 80
+if [ -f /etc/caddy/Caddyfile.original ]; then rm /etc/caddy/Caddyfile.original; fi
 
 # Improve webui paths to facilitate ingress
 echo "... correcting webui paths"
