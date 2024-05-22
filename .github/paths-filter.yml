@@ -51,6 +51,7 @@ mealie_frontend: mealie_frontend/config.* # IImage : yes # Image : yes
 myelectricaldata: myelectricaldata/config.* # Image : yes
 myelectricaldata_dev: myelectricaldata_dev/config.* # Image : yes
 mylar3: mylar3/config.* # Image : yes
+navidrome: navidrome/config.* # Image : yes
 nextcloud: nextcloud/config.* # Image : yes
 nzbget: nzbget/config.* # Image : yes
 omada: omada/config.* # Image : yes
