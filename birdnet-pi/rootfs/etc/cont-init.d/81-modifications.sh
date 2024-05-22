@@ -52,7 +52,6 @@ sed -i "s|http://|http://:8081|g" /etc/caddy/Caddyfile
 sed -i "s|http://|http://:8081|g" "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
 #Remove default file that blocks 80
 if [ -f /etc/caddy/Caddyfile.original ]; then rm /etc/caddy/Caddyfile.original; fi
-/."$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh &>/dev/null
 
 # Improve webui paths to facilitate ingress
 echo "... correcting webui paths"
