@@ -1,9 +1,10 @@
 - Security : enable double layer basic auth with caddy in addition to php when connecting without ingress
 - Update to latest Birdnet-pi
+- [SSL] : allow usage of caddy's automated ssl by mapping 80 to port 80 in the addons option, and defining an https address in the birdnet.conf
+- [SSL] : allow usage of HomeAssistant's let's encrypt certificates by enabling ssl from the addon options. No need to specify the website address in birdnet.conf but the certificate described must match the address used to access birdnet.pi
 
 ## 0.13-37 (20-05-2024)
 - BREAKING CHANGE : the main port has changed from 80 to 8081 to allow ssl
-- Not working yet : enable ssl access using either caddy's automated ssl (see Readme), or HomeAssistant's let's encrypt from the addon options
 - [INGRESS] allow access to streamlit, logs
 
 ## 0.13-33 (19-05-2024)
