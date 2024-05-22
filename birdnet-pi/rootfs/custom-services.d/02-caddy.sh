@@ -1,4 +1,6 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
 # Dependencies
 sockfile="empty"
 until [[ -e /var/run/dbus/system_bus_socket ]] && [[ -e "$sockfile" ]]; do
