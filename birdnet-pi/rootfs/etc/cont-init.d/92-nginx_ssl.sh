@@ -12,8 +12,8 @@ if bashio::config.true 'ssl'; then
     certfile=$(bashio::config 'certfile')
     keyfile=$(bashio::config 'keyfile')
     sed -i "/root/a tls /ssl/${certfile} /ssl/${keyfile}" /etc/caddy/Caddyfile
-    sed -i "s|http://|https://|g" /etc/caddy/Caddyfile
-    sed -i "s|http://|https://|g" "$HOME"/BirdNET-Pi/update_caddyfile.sh
+    sed -i "s|http://:8081|https://:8081|g" /etc/caddy/Caddyfile
+    sed -i "s|http://:8081|https://:8081|g" "$HOME"/BirdNET-Pi/update_caddyfile.sh
 fi
 
 echo " "
