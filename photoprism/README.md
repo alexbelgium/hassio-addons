@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[Photoprism] Addon wont start after some trouble with shares (opened 2024-05-21)](https://github.com/alexbelgium/hassio-addons/issues/1407) by [@JvdBBBB](https://github.com/JvdBBBB)
 # Home assistant add-on: Photoprism
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
