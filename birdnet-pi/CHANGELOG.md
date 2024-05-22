@@ -1,3 +1,4 @@
+## 0.13-38 (22-05-2024)
 - Security : enable double layer basic auth with caddy in addition to php when connecting without ingress
 - Update to latest Birdnet-pi
 - [SSL] : allow usage of caddy's automated ssl by mapping 80 to port 80 in the addons option, and defining an https address in the birdnet.conf
