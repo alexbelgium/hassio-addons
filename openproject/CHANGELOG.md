@@ -1,3 +1,5 @@
+## 14.1.0-2 (22-05-2024)
+- Minor bugs fixed
 ## 14.1.0 (22-05-2024)
 
 - Update openproject to 14.1.0
