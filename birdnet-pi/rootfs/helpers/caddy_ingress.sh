@@ -1,5 +1,12 @@
+#!/bin/bash
+# shellcheck shell=bash
 
-:8082 {
+# Get values
+source /etc/birdnet/birdnet.conf
+
+# Create ingress configuration for Caddyfile
+  cat << EOF >> /etc/caddy/Caddyfile
+http://:8082 {
   root * ${EXTRACTED}
   file_server browse
   handle /By_Date/* {
@@ -14,3 +21,4 @@
   reverse_proxy /stats* localhost:8501
   reverse_proxy /terminal* localhost:8888
 }
+EOF
