@@ -1,4 +1,5 @@
 - Security : enable double layer basic auth with caddy in addition to php when connecting without ingress
+- Update to latest Birdnet-pi
 
 ## 0.13-37 (20-05-2024)
 - BREAKING CHANGE : the main port has changed from 80 to 8081 to allow ssl
