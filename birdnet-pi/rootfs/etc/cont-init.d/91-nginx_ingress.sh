@@ -30,6 +30,7 @@ echo "${ingress_entry}" > /ingress_url
 sed -i "/function is_authenticated/a if (strpos(\$_SERVER['HTTP_REFERER'], '/api/hassio_ingress') !== false && strpos(\$_SERVER['HTTP_REFERER'], trim(file_get_contents('/ingress_url'))) !== false) { \$ret = true; return \$ret; }" "$HOME"/BirdNET-Pi/scripts/common.php
 
 echo "... adapt Caddyfile for ingress"
+chmod +x /helpers/caddy_ingress.sh
 sed -i "/sudo caddy fmt --overwrite/i /./helpers/caddy_ingress.sh" "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
 
 echo " "
