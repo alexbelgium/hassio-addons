@@ -1,0 +1,36 @@
+{
+  "arch": [
+    "amd64",
+    "aarch64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "Navidrome for Home Assistant",
+  "image": "ghcr.io/alexbelgium/navidrome-{arch}",
+  "init": false,
+  "map": [
+    "addon_config:rw",
+    "share:rw",
+    "ssl:rw"
+  ],
+  "name": "Navidrome",
+  "options": {
+    "base_url": "localhost",
+    "music_folder": "/data/music",
+    "data_folder": "/data/data",
+    "log_level": "info",
+    "certfile": "fullchain.pem",
+    "keyfile": "privkey.pem",
+    "ssl": false
+  },
+  "ports": {
+    "4533/tcp": 4533
+  },
+  "ports_description": {
+    "4533/tcp": "Web interface"
+  },
+  "slug": "navidrome",
+  "udev": true,
+  "url": "https://github.com/alexbelgium/hassio-addons/tree/master/navidrome",
+  "version": "0.52.5",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
+}
