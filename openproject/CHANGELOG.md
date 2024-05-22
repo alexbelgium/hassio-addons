@@ -1,3 +1,7 @@
+## 14.1.0 (22-05-2024)
+
+- Update openproject to 14.1.0
+
 ## 14.1 (20-05-2024)
 
 - Booting issues & Persistence
