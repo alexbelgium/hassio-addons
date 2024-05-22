@@ -10,5 +10,8 @@ done
 chown caddy:caddy /run/php/php*-fpm.sock
 sed -i "s|/run/php/php-fpm.sock|$sockfile|g" /etc/caddy/Caddyfile
 
+# Update caddyfile with password
+/."$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh &>/dev/null || true
+
 echo "Starting service: caddy"
 /usr/bin/caddy run --config /etc/caddy/Caddyfile
