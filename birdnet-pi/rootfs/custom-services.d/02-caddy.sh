@@ -10,6 +10,7 @@ done
 
 # Correct fpm.sock
 chown caddy:caddy /run/php/php*-fpm.sock
+sed -i "s|/run/php/php-fpm.sock|$sockfile|g" /helpers/caddy_ingress.sh
 sed -i "s|/run/php/php-fpm.sock|$sockfile|g" /etc/caddy/Caddyfile
 sed -i "s|/run/php/php-fpm.sock|$sockfile|g" "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
 
