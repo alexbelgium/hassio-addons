@@ -1,3 +1,5 @@
+## 0.13-43 (23-05-2024)
+- Minor bugs fixed
 ## 0.13-42 (22-05-2024)
 - Security : enable double layer basic auth with caddy in addition to php when connecting without ingress
 - Update to latest Birdnet-pi
