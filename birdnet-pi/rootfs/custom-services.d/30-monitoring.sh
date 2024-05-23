@@ -32,6 +32,10 @@ fi
 
 ingest_dir="$(readlink -f "$ingest_dir")" || true
 
+# Check permissions
+chown -R pi:pi "$ingest_dir"
+chmod -R 777 "$ingest_dir"
+
 while true; do
     sleep 61
 
