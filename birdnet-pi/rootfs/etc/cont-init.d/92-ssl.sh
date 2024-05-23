@@ -7,7 +7,7 @@ set -e
 ###############
 
 if bashio::config.true 'ssl'; then
-    bashio::log "Ssl is enabled using addon options, setting up nginx"
+    bashio::log.info "Ssl is enabled using addon options, setting up nginx"
     bashio::config.require.ssl
     certfile=$(bashio::config 'certfile')
     keyfile=$(bashio::config 'keyfile')
