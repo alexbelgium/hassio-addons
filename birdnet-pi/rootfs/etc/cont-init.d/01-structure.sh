@@ -56,13 +56,13 @@ chmod -R 755 /config /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 cp "$HOME"/BirdNET-Pi/birdnet.conf "$HOME"/BirdNET-Pi/birdnet.bak
 
 # Symlink files
+echo "... creating symlink"
 for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt"; do
     filename="${files##*/}"
-    echo "... creating symlink for $filename"
     if [ ! -f /config/"$filename" ]; then echo "... copying $filename" && sudo -u pi mv "$files" /config/; fi
     if [ -e "$files" ]; then rm "$files"; fi
-    sudo -u pi ln -fs /config/"$filename" "$files"
-    sudo -u pi ln -fs /config/"$filename" /etc/birdnet/"$filename"
+    sudo -u pi ln -fs /config/"$filename" "$files" || bashio::log.fatal "Symlink creation failed for $filename"
+    sudo -u pi ln -fs /config/"$filename" /etc/birdnet/"$filename" || bashio::log.fatal "Symlink creation failed for $filename"
 done
 
 # Symlink folders
