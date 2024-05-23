@@ -15,11 +15,6 @@ source /config/birdnet.conf 2>/dev/null
 # Ensure folder exists
 ingest_dir="$RECS_DIR/StreamData"
 
-# Other folder if no RTSP STREAM ?
-if [ -z "${RTSP_STREAM}" ]; then
-    ingest_dir="${RECS_DIR}/$(date +"%B-%Y/%d-%A")"
-fi
-
 # Check permissions
 mkdir -p "$ingest_dir"
 chown -R pi:pi "$ingest_dir"
