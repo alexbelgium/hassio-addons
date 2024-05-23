@@ -5,7 +5,7 @@
 sockfile="empty"
 until [[ -e /var/run/dbus/system_bus_socket ]] && [[ -e "$sockfile" ]]; do
     sleep 1s
-    sockfile="$(find /run/php -name *.sock)"
+    sockfile="$(find /run/php -name "*.sock")"
 done
 
 # Correct fpm.sock
