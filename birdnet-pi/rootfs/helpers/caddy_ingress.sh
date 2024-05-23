@@ -1,6 +1,11 @@
 #!/bin/bash
 # shellcheck shell=bash
 
+# Avoid original file
+if [ -f /etc/caddy/Caddyfile.original ]; then
+  rm /etc/caddy/Caddyfile.original
+fi
+
 # Get values
 source /etc/birdnet/birdnet.conf
 
