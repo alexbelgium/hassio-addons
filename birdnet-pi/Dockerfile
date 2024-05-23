@@ -97,8 +97,7 @@ RUN \
     \
     # Cleanup
     apt-get clean all && \
-    rm -rf /var/lib/apt/lists/* && \
-    if [ -f /etc/caddy/Caddyfile.original ]; then rm /etc/caddy/Caddyfile.original; fi
+    rm -rf /var/lib/apt/lists/*
 
 ##################
 # 2 Modify Image #
