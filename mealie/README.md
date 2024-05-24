@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Mealie] Application fail to start (opened 2024-04-26)](https://github.com/alexbelgium/hassio-addons/issues/1355) by [@BigFriendlyDuck](https://github.com/BigFriendlyDuck)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
