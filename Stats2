@@ -18,7 +18,7 @@ teamspeak 1961 465 816 680
 tdarr 1425 350 602 473
 tandoor_recipes 539 54 308 177
 spotweb 768 191 335 242
-sponsorblockcast 1232 109 673 450
+sponsorblockcast 1233 109 674 450
 sonarr_nas 483 17 319 147
 signalk 38 10 14 14
 seafile 993 228 442 323
@@ -33,7 +33,7 @@ qbittorrent 1165 - 736 429
 prowlarr 303 - 208 95
 postgres 1071 116 573 382
 portainer_agent 476 32 273 171
-portainer 6582 179 3886 2517
+portainer 6583 179 3886 2518
 plex-media-manager 238 31 134 73
 plex_nas 436 13 271 152
 piwigo 230 47 110 73
@@ -55,11 +55,11 @@ lidarr_nas 110 11 72 27
 joplin 712 - 428 284
 joal 856 201 231 424
 jellyseerr 340 43 191 106
-jellyfin 651 16 404 231
-jackett_nas 282 13 190 79
+jellyfin 652 16 405 231
+jackett_nas 283 13 191 79
 inadyn 698 143 323 232
-immich 278 - 178 100
-guacamole 961 - 647 314
+immich 279 - 179 100
+guacamole 962 - 648 314
 grav 75 - 48 27
 gitea 305 - 173 132
 gazpar2mqtt 1785 466 664 655
@@ -81,7 +81,7 @@ cloudcommander 287 - 200 87
 changedetection.io 117 - 72 45
 calibre_web 791 - 445 346
 calibre 374 - 223 151
-browserless_chrome 128 - 74 54
+browserless_chrome 129 - 75 54
 calibre_web 791 - 445 346
 birdnet-pi 33 - 22 11
 birdnet-go 151 - 87 64
