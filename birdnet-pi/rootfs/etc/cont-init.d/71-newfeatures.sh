@@ -116,4 +116,9 @@ if bashio::config.true "SPECIES_CONVERTER"; then
     fi
 fi
 
+# Add weekly report button
+if ! grep -q "Weekly Report" "$HOME"/BirdNET-Pi/homepage/views.php; then
+    sed -i "67a\  <button type=\"submit\" name=\"view\" value=\"Weekly Report\" form=\"views\">Weekly Report</button>" "$HOME"/BirdNET-Pi/homepage/views.php
+fi
+
 echo " "
