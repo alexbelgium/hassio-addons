@@ -1,4 +1,7 @@
 
+## v1.7.0 (25-05-2024)
+- Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
+
 ## v1.6.0 (11-05-2024)
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 ## v1.5.1-2 (01-05-2024)
