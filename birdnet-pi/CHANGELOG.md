@@ -1,3 +1,5 @@
+- Add weekly report button to views
+
 ## 0.13-46 (23-05-2024)
 - Security : enable double layer basic auth with caddy in addition to php when connecting without ingress
 - Update to latest Birdnet-pi
