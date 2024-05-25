@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Postgress] Connection to local host failed (opened 2024-05-18)](https://github.com/alexbelgium/hassio-addons/issues/1398) by [@AalianKhan](https://github.com/AalianKhan)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
