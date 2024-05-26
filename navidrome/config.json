@@ -15,11 +15,11 @@
   "name": "Navidrome",
   "options": {
     "base_url": "localhost",
-    "music_folder": "/data/music",
-    "data_folder": "/data/data",
-    "log_level": "info",
     "certfile": "fullchain.pem",
+    "data_folder": "/data/data",
     "keyfile": "privkey.pem",
+    "log_level": "info",
+    "music_folder": "/data/music",
     "ssl": false
   },
   "ports": {
