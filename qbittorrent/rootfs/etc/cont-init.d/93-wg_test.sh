@@ -2,6 +2,7 @@
 # shellcheck shell=bash
 set -e
 
+exit 0
 if bashio::config.true 'wireguard_enabled'; then
 
 ########################################################
