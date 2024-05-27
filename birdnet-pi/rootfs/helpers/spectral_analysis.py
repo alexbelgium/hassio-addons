@@ -3,19 +3,28 @@ import scipy.io.wavfile as wavfile
 import matplotlib.pyplot as plt
 import os
 import glob
+import sys  # Import the sys module
+
+from utils.helpers import get_settings
 
 # Dependencies /usr/bin/pip install numpy scipy matplotlib
 
 # Define the directory containing the WAV files
-input_directory = '/tmp/StreamData'
+conf = get_settings()
+input_directory = os.path.join(conf['RECS_DIR'], 'StreamData')
 output_directory = '/config'
 
 # Ensure the output directory exists
 if not os.path.exists(output_directory):
     os.makedirs(output_directory)
 
-# Get a list of all WAV files in the input directory
-wav_files = glob.glob(os.path.join(input_directory, '*.wav'))
+# Check if a command-line argument is provided
+if len(sys.argv) > 1:
+    # If an argument is provided, use it as the file to analyze
+    wav_files = [sys.argv[1]]
+else:
+    # If no argument is provided, analyze all WAV files in the directory
+    wav_files = glob.glob(os.path.join(input_directory, '*.wav'))
 
 # Process each file
 for file_path in wav_files:
