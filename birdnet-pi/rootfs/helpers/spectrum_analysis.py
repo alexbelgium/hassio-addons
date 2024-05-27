@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import os
 import glob
 
+# Dependencies /usr/bin/pip install numpy scipy matplotlib
+
 # Define the directory containing the WAV files
 input_directory = '/tmp/StreamData'
 output_directory = '/config'
