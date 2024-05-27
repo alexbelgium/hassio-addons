@@ -12,7 +12,7 @@ from utils.helpers import get_settings
 # Define the directory containing the WAV files
 conf = get_settings()
 input_directory = os.path.join(conf['RECS_DIR'], 'StreamData')
-output_directory = '/config'
+output_directory = os.path.join(conf['RECS_DIR'], 'Extracted/Charts')
 
 # Ensure the output directory exists
 if not os.path.exists(output_directory):
