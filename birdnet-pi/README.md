@@ -94,9 +94,19 @@ Option 2 : enable port 80, define your BirdNET-Pi URL as https. Certificate will
 
 ## Microphone comparison
 
+Recommended microphones ([full discussion here](https://github.com/mcguirepr89/BirdNET-Pi/discussions/39): 
+- Clippy EM272 (https://www.veldshop.nl/en/smart-clippy-em272z1-mono-omni-microphone.html) + ugreen aux to usb connector
+- Boya By-LM40
+
 Conclusion, using mic from Dahua is good enough, but Boya by-lm40 is more optimal for range as birndet model analysis the 150-15000Hz range
 
 ![image](https://github.com/alexbelgium/hassio-addons/assets/44178713/df992b79-7171-4f73-b0c0-55eb4256cd5b)
+
+## Denoise ([Full discussion here](https://github.com/mcguirepr89/BirdNET-Pi/discussions/597))
+
+Denoise is frowned upon by serious researchers. However it does seem to significantly increase quality of detection ! Here is how to do it in HA :
+- Using Portainer addon, go in the hassio_audio container, and modify the file /etc/pulse/system.pa to add the line `load-module module-echo-cancel`
+- Go in the Terminal addon, and type `ha audio restart`
 
 ## Common issues
 
