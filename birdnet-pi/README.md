@@ -107,6 +107,7 @@ Conclusion, using mic from Dahua is good enough, but Boya by-lm40 is more optima
 Denoise is frowned upon by serious researchers. However it does seem to significantly increase quality of detection ! Here is how to do it in HA :
 - Using Portainer addon, go in the hassio_audio container, and modify the file /etc/pulse/system.pa to add the line `load-module module-echo-cancel`
 - Go in the Terminal addon, and type `ha audio restart`
+- Select the echo cancelled device as input device in the addon options
 
 ## Common issues
 
