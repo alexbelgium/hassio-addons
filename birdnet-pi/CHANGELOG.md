@@ -1,4 +1,5 @@
 - Add weekly report button to views
+- Use optional iframe for Adminer
 
 ## 0.13-46 (23-05-2024)
 - Security : enable double layer basic auth with caddy in addition to php when connecting without ingress
