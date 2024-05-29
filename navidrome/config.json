@@ -20,7 +20,12 @@
     "keyfile": "privkey.pem",
     "log_level": "info",
     "music_folder": "/data/music",
-    "ssl": false
+    "ssl": false,
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "localdisks": "str?",
+    "networkdisks": "str?",
   },
   "ports": {
     "4533/tcp": 4533
@@ -31,6 +36,6 @@
   "slug": "navidrome",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/navidrome",
-  "version": "0.52.5-2",
+  "version": "0.52.5-3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
