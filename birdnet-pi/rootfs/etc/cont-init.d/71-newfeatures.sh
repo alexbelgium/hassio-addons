@@ -119,7 +119,7 @@ fi
 # Convert Adminer to iframe
 if ! grep "iframe src=\'scripts/adminer.php" "$HOME"/BirdNET-Pi/homepage/views.php; then
     sed -i '/scripts\/adminer.php\/c\      <button type=\\"submit\\" name=\\"view\\" value=\\"Adminer\\" form=\\"views\\">Database Maintenance</button>' "$HOME"/BirdNET-Pi/homepage/views.php
-    sed -i "/if\(\$_GET\['view'\] == \"Webterm\"\){/i test" "$HOME"/BirdNET-Pi/homepage/views.php
+    #sed -i "/if\(\$_GET\['view'\] == \"Webterm\"\){/i test" "$HOME"/BirdNET-Pi/homepage/views.php
     sed -i "s|deny|SameOrigin|g" "$HOME"/BirdNET-Pi/scripts/adminer.php
 fi
 
