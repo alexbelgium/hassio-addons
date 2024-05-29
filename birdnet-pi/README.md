@@ -109,7 +109,7 @@ Example : https://www.amazon.fr/HUAREW-Valeurs-Ferrite-Suppresseur-Diam%C3%A8tre
 
 ### Microphone comparison
 
-Recommended microphones ([full discussion here](https://github.com/mcguirepr89/BirdNET-Pi/discussions/39): 
+Recommended microphones ([full discussion here](https://github.com/mcguirepr89/BirdNET-Pi/discussions/39)): 
 - Clippy EM272 (https://www.veldshop.nl/en/smart-clippy-em272z1-mono-omni-microphone.html) + ugreen aux to usb connector
 - Boya By-LM40
 
