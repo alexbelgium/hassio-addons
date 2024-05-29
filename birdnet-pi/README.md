@@ -102,6 +102,11 @@ Option 2 : enable port 80, define your BirdNET-Pi URL as https. Certificate will
 
 ---
 
+### Gain for card
+
+Using alsamixer in the Terminal tab, make sure that the sound level is high enough but not too high (not in the red part)
+https://github.com/mcguirepr89/BirdNET-Pi/wiki/Adjusting-your-sound-card
+
 ### Ferrite
 
 Adding ferrite to your cables seems to greatly decrease electronic noise in short frequencies
