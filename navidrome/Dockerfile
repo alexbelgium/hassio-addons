@@ -42,7 +42,7 @@ RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; f
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
 
 # Modules
-ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh"
+ARG MODULES="00-banner.sh 00-global_var.sh 01-custom_script.sh  00-local_mounts.sh 00-smb_mounts.sh"
 
 # Automatic modules download
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
