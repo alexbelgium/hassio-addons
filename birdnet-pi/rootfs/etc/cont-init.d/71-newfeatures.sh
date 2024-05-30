@@ -10,6 +10,7 @@ echo " "
 bashio::log.info "Adding new features"
 
 # Set the online birds info system
+##################################
 if [[ "$(bashio::config "BIRDS_ONLINE_INFO")" == *"ebird"* ]]; then
     echo "... using ebird instead of allaboutbirds"
     # Set ebird database
@@ -36,26 +37,26 @@ else
     sed -i "s|https://allaboutbirds.org/guide/\$comname|https://allaboutbirds.org/guide/\$comnameen|g" "$HOME"/BirdNET-Pi/scripts/stats.php
 fi
 
-# Add birds change option
-if [ ! -f /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh ]; then
-    echo "... adding option to change detected birds"
-    # Clean previous files
-    rm /home/pi/BirdNET-Pi/scripts/play.php
-    rm /home/pi/BirdNET-Pi/homepage/style.css
-    # Download new files
-    curl -s -o /home/pi/BirdNET-Pi/homepage/images/bird.svg https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/images/bird.svg
-    curl -s -o /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/birdnet_changeidentification.sh
-    curl -s -o /home/pi/BirdNET-Pi/scripts/play.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/scripts/play.php
-    curl -s -o /home/pi/BirdNET-Pi/homepage/style.css https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1/homepage/style.css
-    # Correct permissions
-    chmod 777 /home/pi/BirdNET-Pi/scripts/birdnet_changeidentification.sh
-    chmod 777 /home/pi/BirdNET-Pi/scripts/play.php
-    chmod 777 /home/pi/BirdNET-Pi/homepage/style.css
+# Convert Adminer to iframe
+###############################
+if ! grep "iframe src=\'scripts/adminer.php" "$HOME"/BirdNET-Pi/homepage/views.php; then
+    sed -i '/scripts\/adminer.php\\/c\      <button type=\\"submit\\" name=\\"view\\" value=\\"Adminer\\" form=\\"views\\">Database Maintenance</button>' "$HOME"/BirdNET-Pi/homepage/views.php
+    sed -i "/advanced.php/a\  if(\$_GET\['view'\] == \"Adminer\"){echo \"<iframe src='scripts/adminer.php'></iframe>\";}" "$HOME"/BirdNET-Pi/homepage/views.php
+    sed -i "s|deny|SameOrigin|g" "$HOME"/BirdNET-Pi/scripts/adminer.php
+    sed -i "1a echo '<a href=\"'.\$_SERVER\['PHP_SELF'\]\.'\" target=\"_blank\">Open in new page</a>';" "$HOME"/BirdNET-Pi/scripts/adminer.php
+fi
+
+# Add weekly report button
+###############################
+if ! grep -q "Weekly Report" "$HOME"/BirdNET-Pi/homepage/views.php; then
+    sed -i "67a\  <button type=\"submit\" name=\"view\" value=\"Weekly Report\" form=\"views\">Weekly Report</button>" "$HOME"/BirdNET-Pi/homepage/views.php
 fi
 
 # Add species conversion system
-if bashio::config.true "SPECIES_CONVERTER"; then
-    bashio::log.yellow "... adding feature of SPECIES_CONVERTER, a new tab is added to your Tools"
+###############################
+
+if ! grep -q "Converted" "$HOME"/BirdNET-Pi/homepage/views.php; then
+    echo "... adding feature of SPECIES_CONVERTER, a new tab is added to your Tools"
     touch /config/convert_species_list.txt
     chown pi:pi /config/convert_species_list.txt
     sudo -u pi ln -fs /config/convert_species_list.txt "$HOME"/BirdNET-Pi/
@@ -114,18 +115,6 @@ if bashio::config.true "SPECIES_CONVERTER"; then
         sed -i "s|                d = Detection|                    d = Detection|g" "$HOME"/BirdNET-Pi/scripts/server.py
         sed -i "s|                confident_detections|                    confident_detections|g" "$HOME"/BirdNET-Pi/scripts/server.py
     fi
-fi
-
-# Convert Adminer to iframe
-if ! grep "iframe src=\'scripts/adminer.php" "$HOME"/BirdNET-Pi/homepage/views.php; then
-    sed -i '/scripts\/adminer.php\/c\      <button type=\\"submit\\" name=\\"view\\" value=\\"Adminer\\" form=\\"views\\">Database Maintenance</button>' "$HOME"/BirdNET-Pi/homepage/views.php
-    #sed -i "/if\(\$_GET\['view'\] == \"Webterm\"\){/i test" "$HOME"/BirdNET-Pi/homepage/views.php
-    sed -i "s|deny|SameOrigin|g" "$HOME"/BirdNET-Pi/scripts/adminer.php
-fi
-
-# Add weekly report button
-if ! grep -q "Weekly Report" "$HOME"/BirdNET-Pi/homepage/views.php; then
-    sed -i "67a\  <button type=\"submit\" name=\"view\" value=\"Weekly Report\" form=\"views\">Weekly Report</button>" "$HOME"/BirdNET-Pi/homepage/views.php
 fi
 
 echo " "

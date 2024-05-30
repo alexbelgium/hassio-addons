@@ -114,11 +114,11 @@ Example : https://www.amazon.fr/HUAREW-Valeurs-Ferrite-Suppresseur-Diam%C3%A8tre
 
 ### Microphone comparison
 
-Recommended microphones ([full discussion here](https://github.com/mcguirepr89/BirdNET-Pi/discussions/39)): 
+Recommended microphones ([full discussion here](https://github.com/mcguirepr89/BirdNET-Pi/discussions/39)):
 - Clippy EM272 (https://www.veldshop.nl/en/smart-clippy-em272z1-mono-omni-microphone.html) + ugreen aux to usb connector
 - Boya By-LM40
 
-Conclusion, using mic from Dahua is good enough, but Boya by-lm40 is more optimal for range as birndet model analysis the 150-15000Hz range
+Conclusion, using mic from Dahua is good enough, EM272 is optimal, but Boya by-lm40 is a very good compromise as birndet model analysis the 150-15000Hz range
 
 ![image](https://github.com/alexbelgium/hassio-addons/assets/44178713/df992b79-7171-4f73-b0c0-55eb4256cd5b)
 

@@ -94,7 +94,6 @@
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
     "BIRDS_ONLINE_INFO": "list(allaboutbirds.org|ebird.org)",
-    "SPECIES_CONVERTER": "bool?",
     "TZ": "str?",
     "certfile": "str",
     "cifsdomain": "str?",
@@ -111,6 +110,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-46",
+  "version": "0.13-47",
   "video": true
 }
