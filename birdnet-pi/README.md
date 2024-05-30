@@ -109,8 +109,7 @@ https://github.com/mcguirepr89/BirdNET-Pi/wiki/Adjusting-your-sound-card
 
 ### Ferrite
 
-Adding ferrite to your cables seems to greatly decrease electronic noise in short frequencies
-Example : https://www.amazon.fr/HUAREW-Valeurs-Ferrite-Suppresseur-Diam%C3%A8tre/dp/B09WTZNC38
+Adding ferrite beads lead in my case to worst noise
 
 ### Microphone comparison
 
