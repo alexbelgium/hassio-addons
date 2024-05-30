@@ -38,3 +38,6 @@ jobs:
         uses: "pascalgn/automerge-action@v0.16.2"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  Build:
+   needs: automerge
+   uses: ./.github/workflows/onpush_builder.yaml
