@@ -1,3 +1,4 @@
+## 0.13-47 (30-05-2024)
 - Add weekly report button to views
 - Use optional iframe for Adminer
 - Enable species converter by default (only active if used)
