@@ -1,5 +1,4 @@
-# Code to modify the birdnet_analysis.py and restore the Processed folder
-# The last 15 wav files are stored in a dynamic manner in the Processed folder
+import os
 
 def read_file(file_path):
     with open(file_path, 'r') as file:
@@ -50,17 +49,16 @@ def process_code(lines):
 
     return processed_lines
 
-# Paths to the original and new code files
-original_code_path = 'original_code.py'
-new_code_path = 'modified_code.py'
+# Hardcoded path to the birdnet_analysis.py file
+file_path = os.path.expanduser('~/BirdNET-Pi/scripts/birdnet_analysis.py')
 
 # Read the original code
-original_lines = read_file(original_code_path)
+original_lines = read_file(file_path)
 
 # Process the code
 modified_lines = process_code(original_lines)
 
-# Write the modified code to a new file
-write_file(new_code_path, modified_lines)
+# Write the modified code back to the same file
+write_file(file_path, modified_lines)
 
-print(f"The code has been modified and saved to {new_code_path}")
+print(f"The code has been modified and saved to {file_path}")
