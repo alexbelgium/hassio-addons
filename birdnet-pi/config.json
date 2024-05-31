@@ -94,6 +94,7 @@
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
     "BIRDS_ONLINE_INFO": "list(allaboutbirds.org|ebird.org)",
+    "Processed_Files": "int?",
     "TZ": "str?",
     "certfile": "str",
     "cifsdomain": "str?",
