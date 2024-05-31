@@ -112,13 +112,18 @@ https://github.com/mcguirepr89/BirdNET-Pi/wiki/Adjusting-your-sound-card
 
 Adding ferrite beads lead in my case to worst noise
 
+### Aux to usb adapters
+
+Based on my test, only adapters using KT0210 (such as Ugreen's) work. I couldn't get adapters based on ALC to be detected.
+
 ### Microphone comparison
 
 Recommended microphones ([full discussion here](https://github.com/mcguirepr89/BirdNET-Pi/discussions/39)):
-- Clippy EM272 (https://www.veldshop.nl/en/smart-clippy-em272z1-mono-omni-microphone.html) + ugreen aux to usb connector
-- Boya By-LM40
+- Clippy EM272 (https://www.veldshop.nl/en/smart-clippy-em272z1-mono-omni-microphone.html) + ugreen aux to usb connector : best sensitivity with lavalier tech
+- Boya By-LM40 : best quality/price
+- Hyperx Quadcast : best sensitivity with cardioid tech
 
-Conclusion, using mic from Dahua is good enough, EM272 is optimal, but Boya by-lm40 is a very good compromise as birndet model analysis the 150-15000Hz range
+Conclusion, using mic from Dahua is good enough, EM272 is optimal, but Boya by-lm40 is a very good compromise as birndet model analysis the 0-15000Hz range
 
 ![image](https://github.com/alexbelgium/hassio-addons/assets/44178713/df992b79-7171-4f73-b0c0-55eb4256cd5b)
 
@@ -128,6 +133,10 @@ Denoise is frowned upon by serious researchers. However it does seem to signific
 - Using Portainer addon, go in the hassio_audio container, and modify the file /etc/pulse/system.pa to add the line `load-module module-echo-cancel`
 - Go in the Terminal addon, and type `ha audio restart`
 - Select the echo cancelled device as input device in the addon options
+
+### High pass
+
+Should be avoided as the model uses the whole 0-15khz range
 
 ## Common issues
 
