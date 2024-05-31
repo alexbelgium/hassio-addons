@@ -1,4 +1,4 @@
-- Add the "Processed" folder feature : the last 15 wav files will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
+- New option "Processed_Files" : defines the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 
 ## 0.13-47 (30-05-2024)
 - Add weekly report button to views
