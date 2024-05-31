@@ -1,4 +1,7 @@
 
+## 29.0.1 (01-06-2024)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
+
 ## 29.0.0 (27-04-2024)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 - Add preview support for BMP GIF HEIC JPEG Krita PNG XBitmap
