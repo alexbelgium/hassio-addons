@@ -9,43 +9,6 @@ set -e
 echo " "
 bashio::log.info "Adding new features"
 
-# Set the online birds info system
-##################################
-if [[ "$(bashio::config "BIRDS_ONLINE_INFO")" == *"ebird"* ]]; then
-    echo "... using ebird instead of allaboutbirds"
-    # Set ebird database
-    mv /helpers/ebird.txt /home/pi/BirdNET-Pi/model/ebird.txt
-    chown pi:pi /home/pi/BirdNET-Pi/model/ebird.txt
-    # Get language
-    export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
-    # shellcheck disable=SC2016
-    sed -i '/$sciname =/a \\t$ebirdname = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/ebird.txt | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/todays_detections.php
-    sed -i "s|https://allaboutbirds.org/guide/<?php echo \$comname;?>|https://ebird.org/species/<?php echo \$ebirdname;?>?siteLanguage=${DATABASE_LANG}_${DATABASE_LANG}|g" "$HOME"/BirdNET-Pi/scripts/todays_detections.php
-    # shellcheck disable=SC2016
-    sed -i '/$sciname =/a \\t$ebirdname = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/ebird.txt | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/stats.php
-    sed -i "s|https://allaboutbirds.org/guide/\$comname|https://ebird.org/species/\$ebirdname?siteLanguage=${DATABASE_LANG}_${DATABASE_LANG}|g" "$HOME"/BirdNET-Pi/scripts/stats.php
-else
-    # Correct allaboutbirds for non-english names
-    echo "... using allaboutbirds, with correction for non-english names"
-    # shellcheck disable=SC2016
-    sed -i 's|allaboutbirds.org/guide/<?php echo $comname|allaboutbirds.org/guide/<?php echo $comnameen|g' "$HOME"/BirdNET-Pi/scripts/todays_detections.php
-    # shellcheck disable=SC2016
-    sed -i '/$sciname =/a \\t$comnameen = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/labels.bak | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/todays_detections.php
-    # shellcheck disable=SC2016
-    sed -i '/$sciname =/a \\t$comnameen = shell_exec("grep \\"$( echo \\"$sciname\\" | sed '\''s/_/ /g'\'')\\" /home/pi/BirdNET-Pi/model/labels.bak | cut -d'\''_'\'' -f2 | sed '\''s/ /_/g'\''");' "$HOME"/BirdNET-Pi/scripts/stats.php
-    # shellcheck disable=SC2016
-    sed -i "s|https://allaboutbirds.org/guide/\$comname|https://allaboutbirds.org/guide/\$comnameen|g" "$HOME"/BirdNET-Pi/scripts/stats.php
-fi
-
-# Convert Adminer to iframe
-###############################
-if ! grep "iframe src=\'scripts/adminer.php" "$HOME"/BirdNET-Pi/homepage/views.php; then
-    sed -i '/scripts\/adminer.php\\/c\      <button type=\\"submit\\" name=\\"view\\" value=\\"Adminer\\" form=\\"views\\">Database Maintenance</button>' "$HOME"/BirdNET-Pi/homepage/views.php
-    sed -i "/advanced.php/a\  if(\$_GET\['view'\] == \"Adminer\"){echo \"<iframe src='scripts/adminer.php'></iframe>\";}" "$HOME"/BirdNET-Pi/homepage/views.php
-    sed -i "s|deny|SameOrigin|g" "$HOME"/BirdNET-Pi/scripts/adminer.php
-    sed -i "1a echo '<a href=\"'.\$_SERVER\['PHP_SELF'\]\.'\" target=\"_blank\">Open in new page</a>';" "$HOME"/BirdNET-Pi/scripts/adminer.php
-fi
-
 # Add weekly report button
 ###############################
 if ! grep -q "Weekly Report" "$HOME"/BirdNET-Pi/homepage/views.php; then
