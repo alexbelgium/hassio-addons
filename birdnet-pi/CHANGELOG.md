@@ -1,3 +1,4 @@
+## 0.13-48-2 (01-06-2024)
 - New option "Processed_Buffer" : defines the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 
 ## 0.13-48 (01-06-2024)
