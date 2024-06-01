@@ -27,4 +27,4 @@ def modify_code(original_file, modified_file):
         f.writelines(modified_lines)
 
 # Use the function
-modify_code('original.py', 'modified.py')
+modify_code('/home/pi/BirdNET-Pi/scripts/birdnet_analysis.py', '/home/pi/BirdNET-Pi/scripts/birdnet_analysis.py')
