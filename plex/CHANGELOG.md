@@ -1,4 +1,7 @@
 
+## 1.40.2.8395-c67dce28e-ls217 (01-06-2024)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
+
 ## 1.40.2.8395-c67dce28e-ls216 (18-05-2024)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 
