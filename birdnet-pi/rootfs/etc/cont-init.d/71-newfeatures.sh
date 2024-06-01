@@ -83,10 +83,10 @@ fi
 # Enable the Processed folder
 if ! grep -q "Processed_Files" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; then
     echo "... Enabling the Processed folder : the last 15 wav files will be stored there"
-    rm /home/admin/BirdNET-Pi/scripts/birdnet_analysis.py
-    curl -o /home/admin/BirdNET-Pi/scripts/overview.php https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1_processed_restore/scripts/birdnet_analysis.py
-    chown "$USER:$USER" /home/admin/BirdNET-Pi/scripts/birdnet_analysis.py
-    chmod 777 /home/admin/BirdNET-Pi/scripts/birdnet_analysis.py
+    rm /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
+    curl -o /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1_processed_restore/scripts/birdnet_analysis.py
+    chown "$USER:$USER" /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
+    chmod 777 /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
 fi
 
 echo " "
