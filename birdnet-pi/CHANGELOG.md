@@ -1,3 +1,4 @@
+## 0.13-48 (01-06-2024)
 - New option "Processed_Files" : defines the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 - eBird selection feature is now moved to the BirdNET-Pi settings (thanks @nachtzuster)
 
