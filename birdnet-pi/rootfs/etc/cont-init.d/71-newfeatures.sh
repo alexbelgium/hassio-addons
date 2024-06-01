@@ -80,8 +80,6 @@ if ! grep -q "Converted" "$HOME"/BirdNET-Pi/homepage/views.php; then
     fi
 fi
 
-exit 0
-
 # Enable the Processed folder
 if ! grep -q "Processed_Files" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; then
     echo "... Enabling the Processed folder : the last 15 wav files will be stored there"
