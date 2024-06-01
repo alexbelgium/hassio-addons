@@ -1,4 +1,7 @@
 
+## ubuntu-2024-05-31 (2024-05-31)
+- Update to latest version from photoprism/photoprism
+
 ## ubuntu-2024-05-23 (2024-05-23)
 - Update to latest version from photoprism/photoprism
 ## 240420-ef5f14bc4 (18-05-2024)
