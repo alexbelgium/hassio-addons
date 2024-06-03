@@ -51,7 +51,7 @@ while true; do
     if (( wavs > 100 )) && [[ "$state" == "active" ]]; then
         sudo systemctl stop "$srv"
         bashio::log.red "$(date) WARNING stopped $srv service"
-    elif (( wavs <= 100 )) && [[ "$state" == "inactive" ]]; then
+    elif (( wavs <= 100 )) && [[ "$state" != "active" ]]; then
         sudo systemctl start $srv
         bashio::log.yellow "$(date)    INFO started $srv service"
     fi
