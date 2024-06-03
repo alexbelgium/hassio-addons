@@ -9,10 +9,16 @@ set -e
 echo " "
 bashio::log.info "Adding new features"
 
-# Add weekly report button
-###############################
-if ! grep -q "Weekly Report" "$HOME"/BirdNET-Pi/homepage/views.php; then
-    sed -i "67a\  <button type=\"submit\" name=\"view\" value=\"Weekly Report\" form=\"views\">Weekly Report</button>" "$HOME"/BirdNET-Pi/homepage/views.php
+# Add dark mode
+if [ ! -f "$HOME"/BirdNET-Pi/homepage/static/dark-style.css ]; then
+    echo "... enabling the dark mode option"
+    if [ -f /config/birdnet.conf ] && ! grep -q "COLOR_SCHEME" /config/birdnet.conf; then echo "COLOR_SCHEME=light" >> /config/birdnet.conf; fi
+    for file in /homepage/static/dark-style.css /homepage/index.php /homepage/views.php /scripts/common.php /scripts/config.php; do
+        if [ -f "$HOME"/BirdNET-Pi"$file" ]; then rm "$HOME"/BirdNET-Pi"$file"; fi
+        curl -o "$HOME"/BirdNET-Pi"$file" https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-2_darkmode"$file"
+        chown "$USER:$USER" "$HOME"/BirdNET-Pi"$file"
+        chmod 777 "$HOME"/BirdNET-Pi"$file"
+    done
 fi
 
 # Add species conversion system
