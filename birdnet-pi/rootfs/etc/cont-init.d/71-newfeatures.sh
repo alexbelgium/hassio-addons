@@ -27,6 +27,19 @@ fi || true
 #############################
 if ! grep -q "Processed_Files" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; then
     echo "... Enabling the Processed folder : the last 15 wav files will be stored there"
+    # Adapt config.php
+    sed -i "/GET\[\"info_site\"\]/\  \$processed_size = \$_GET\[\"\$processed_size\"\];" "$HOME"/BirdNET-Pi/scripts/config.php
+    sed -i "/preg_replace(\"/INFO_SITE/\  \$contents = preg_replace(\"/PROCESSED_SIZE=\.\*/\", \"PROCESSED_SIZE=\$processed_size\", \$contents);" "$HOME"/BirdNET-Pi/scripts/config.php
+    sed -i "/\"success\"/i      <table class=\"settingstable\"><tr><td>" "$HOME"/BirdNET-Pi/scripts/config.php
+    sed -i "/\"success\"/i      <h2>Processed folder management </h2>" "$HOME"/BirdNET-Pi/scripts/config.php
+    sed -i "/\"success\"/i      <label for=\"processed_size\">Amount of files to keep after analysis :</label>" "$HOME"/BirdNET-Pi/scripts/config.php
+    sed -i "/\"success\"/i      <input name=\"processed_size\" type=\"number\" style=\"width:6em;\" max=\"90\" min=\"0\" step=\"1\" value=\"<\?php print(\$config\['PROCESSED_SIZE'\]);?>\"/>" "$HOME"/BirdNET-Pi/scripts/config.php
+    sed -i "/\"success\"/i      </td></tr><tr><td>" "$HOME"/BirdNET-Pi/scripts/config.php
+    sed -i "/\"success\"/i      Processed is the directory where the formerly 'Analyzed' files are moved after extractions, mostly for troubleshooting purposes.<br>" "$HOME"/BirdNET-Pi/scripts/config.php
+    sed -i "/\"success\"/i      This value defines the maximum amount of files that are kept before replacement with new files.<br>" "$HOME"/BirdNET-Pi/scripts/config.php
+    sed -i "/\"success\"/i      </td></tr></table>" "$HOME"/BirdNET-Pi/scripts/config.php    
+    sed -i "/\"success\"/i\      <br>" "$HOME"/BirdNET-Pi/scripts/config.php
+
     curl -o /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis2.py https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1_processed_restore/scripts/birdnet_analysis.py
     mv /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis2.py /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
     chown "$USER:$USER" /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
