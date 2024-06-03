@@ -93,6 +93,7 @@
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
     "Processed_Buffer": "int?",
+    "SPECIES_CONVERTER": "bool?",
     "TZ": "str?",
     "certfile": "str",
     "cifsdomain": "str?",
