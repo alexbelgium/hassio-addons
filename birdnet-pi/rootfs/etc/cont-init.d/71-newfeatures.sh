@@ -16,7 +16,8 @@ if [ ! -f "$HOME"/BirdNET-Pi/homepage/static/dark-style.css ]; then
     if [ -f /config/birdnet.conf ] && ! grep -q "COLOR_SCHEME" /config/birdnet.conf; then echo "COLOR_SCHEME=light" >> /config/birdnet.conf; fi
     for file in /homepage/static/dark-style.css /homepage/index.php /homepage/views.php /scripts/common.php /scripts/config.php; do
         if [ -f "$HOME"/BirdNET-Pi"$file" ]; then rm "$HOME"/BirdNET-Pi"$file"; fi
-        curl -o "$HOME"/BirdNET-Pi"$file" https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-2_darkmode"$file"
+        curl -o "$HOME"/BirdNET-Pi"$file"2 https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-2_darkmode"$file"
+        mv "$HOME"/BirdNET-Pi"$file"2 "$HOME"/BirdNET-Pi"$file"
         chown "$USER:$USER" "$HOME"/BirdNET-Pi"$file"
         chmod 777 "$HOME"/BirdNET-Pi"$file"
     done
@@ -26,8 +27,8 @@ fi || true
 #############################
 if ! grep -q "Processed_Files" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; then
     echo "... Enabling the Processed folder : the last 15 wav files will be stored there"
-    rm /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
-    curl -o /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1_processed_restore/scripts/birdnet_analysis.py
+    curl -o /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis2.py https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1_processed_restore/scripts/birdnet_analysis.py
+    mv /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis2.py /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
     chown "$USER:$USER" /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
     chmod 777 /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
 fi || true
