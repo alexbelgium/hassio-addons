@@ -1,5 +1,5 @@
-## 0.13-48-4 (03-06-2024)
-- Minor bugs fixed
+- Add darkmode option from the options tag (might require you to manually add the COLOR_SCHEME to your birdnet.conf)
+
 ## 0.13-48-3 (01-06-2024)
 - New option "Processed_Buffer" : defines the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 - eBird selection feature is now moved to the BirdNET-Pi settings (thanks @nachtzuster)
