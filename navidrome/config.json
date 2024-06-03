@@ -25,7 +25,7 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?",
+    "networkdisks": "str?"
   },
   "ports": {
     "4533/tcp": 4533
