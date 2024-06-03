@@ -1,4 +1,4 @@
-- Add darkmode option from the options tag (might require you to manually add the COLOR_SCHEME to your birdnet.conf)
+- New option "Color_scheme" : add darkmode option from the options tag (might require you to manually add the COLOR_SCHEME to your birdnet.conf)
 - New option "Processed_Buffer" : defines the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 
 ## 0.13-48 (30-05-2024)
