@@ -20,8 +20,7 @@ if [ ! -f "$HOME"/BirdNET-Pi/homepage/static/dark-style.css ]; then
         chown "$USER:$USER" "$HOME"/BirdNET-Pi"$file"
         chmod 777 "$HOME"/BirdNET-Pi"$file"
     done
-fi
-
+fi || true
 
 # Enable the Processed folder
 #############################
@@ -31,7 +30,7 @@ if ! grep -q "Processed_Files" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; t
     curl -o /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1_processed_restore/scripts/birdnet_analysis.py
     chown "$USER:$USER" /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
     chmod 777 /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
-fi
+fi || true
 
 # Add species conversion system
 ###############################
@@ -96,6 +95,6 @@ if bashio::config.true "SPECIES_CONVERTER"; then
         sed -i "s|                d = Detection|                    d = Detection|g" "$HOME"/BirdNET-Pi/scripts/server.py
         sed -i "s|                confident_detections|                    confident_detections|g" "$HOME"/BirdNET-Pi/scripts/server.py
     fi
-fi
+fi || true
 
 echo " "
