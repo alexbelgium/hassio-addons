@@ -34,7 +34,6 @@ fi || true
 
 # Add species conversion system
 ###############################
-
 if bashio::config.true "SPECIES_CONVERTER"; then
     echo "... adding feature of SPECIES_CONVERTER, a new tab is added to your Tools"
     touch /config/convert_species_list.txt
