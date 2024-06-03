@@ -10,6 +10,7 @@ echo " "
 bashio::log.info "Adding new features"
 
 # Add dark mode
+###############
 if [ ! -f "$HOME"/BirdNET-Pi/homepage/static/dark-style.css ]; then
     echo "... enabling the dark mode option"
     if [ -f /config/birdnet.conf ] && ! grep -q "COLOR_SCHEME" /config/birdnet.conf; then echo "COLOR_SCHEME=light" >> /config/birdnet.conf; fi
@@ -21,10 +22,21 @@ if [ ! -f "$HOME"/BirdNET-Pi/homepage/static/dark-style.css ]; then
     done
 fi
 
+
+# Enable the Processed folder
+#############################
+if ! grep -q "Processed_Files" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; then
+    echo "... Enabling the Processed folder : the last 15 wav files will be stored there"
+    rm /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
+    curl -o /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1_processed_restore/scripts/birdnet_analysis.py
+    chown "$USER:$USER" /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
+    chmod 777 /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
+fi
+
 # Add species conversion system
 ###############################
 
-if ! grep -q "Converted" "$HOME"/BirdNET-Pi/homepage/views.php; then
+if bashio::config.true "SPECIES_CONVERTER"; then
     echo "... adding feature of SPECIES_CONVERTER, a new tab is added to your Tools"
     touch /config/convert_species_list.txt
     chown pi:pi /config/convert_species_list.txt
@@ -84,17 +96,6 @@ if ! grep -q "Converted" "$HOME"/BirdNET-Pi/homepage/views.php; then
         sed -i "s|                d = Detection|                    d = Detection|g" "$HOME"/BirdNET-Pi/scripts/server.py
         sed -i "s|                confident_detections|                    confident_detections|g" "$HOME"/BirdNET-Pi/scripts/server.py
     fi
-fi
-
-exit 0
-
-# Enable the Processed folder
-if ! grep -q "Processed_Files" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; then
-    echo "... Enabling the Processed folder : the last 15 wav files will be stored there"
-    rm /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
-    curl -o /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-1_processed_restore/scripts/birdnet_analysis.py
-    chown "$USER:$USER" /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
-    chmod 777 /home/"$USER"/BirdNET-Pi/scripts/birdnet_analysis.py
 fi
 
 echo " "
