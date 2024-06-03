@@ -34,7 +34,7 @@ while true; do
        latest="$(cat "$ingest_dir"/analyzing_now.txt)"
        if [[ "$latest" == "$analyzing_now" ]]; then
           echo "$(date) WARNING no change in analyzing_now for 10 iterations, restarting services"
-          "$HOME"/BirdNET-Pi/scripts/restart_services.sh
+          /."$HOME"/BirdNET-Pi/scripts/restart_services.sh
        fi
        counter=10
        analyzing_now=$(cat "$ingest_dir"/analyzing_now.txt)
