@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [WHATSAPPER] WebUI doesn‘t work. Only a blank page comes up (opened 2024-06-05)](https://github.com/alexbelgium/hassio-addons/issues/1422) by [@superpower10](https://github.com/superpower10)
 # Home assistant add-on: Whatsapper
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
