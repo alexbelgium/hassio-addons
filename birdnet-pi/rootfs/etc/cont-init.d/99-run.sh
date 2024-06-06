@@ -52,6 +52,13 @@ bashio::log.info "Starting BirdNET-Pi services"
 chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 
+if bashio::config.true LIVESTREAM_DEFAULT_ENABLED; then
+    echo "... starting livestream"
+    sudo systemctl enable icecast2
+    sudo systemctl start icecast2.service
+    sudo systemctl enable --now livestream.service
+fi
+
 # Correct the phpsysinfo for the correct gotty service
 gottyservice="$(pgrep -l "gotty" | awk '{print $NF}' | head -n 1)"
 echo "... using $gottyservice in phpsysinfo"
