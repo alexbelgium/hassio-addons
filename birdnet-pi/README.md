@@ -51,7 +51,7 @@ Options can be configured through three ways :
 
 ```yaml
 BIRDSONGS_FOLDER: folder to store birdsongs file # It should be an ssd if you want to avoid clogging of analysis
-BIRDS_ONLINE_INFO: uses either allaboutbird (US birds in english) or ebird (universal and translated) to provide online information
+LIVESTREAM_BOOT_ENABLED: start livestream from boot, or from settings
 SPECIES_CONVERTER: if yes, you need to put in the file /config/convert_species_list.txt the list of species you want to convert (example : Falco subbuteo_Faucon hobereau;Falco tinnunculus_Faucon Crécerelle). It will convert on the fly the specie when detected
 Processed_Buffer : defines the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
