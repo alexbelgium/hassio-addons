@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Function to show the current timezone
+show_timezone() {
+    current_timezone=$(date +%Z)
+    echo "Current timezone: $current_timezone"
+}
+
+# Function to set the timezone
+set_timezone() {
+    new_timezone="$1"
+    sudo timedatectl set-timezone "$new_timezone"
+    echo "Timezone set to: $new_timezone"
+}
+
+# Main script
+case "$1" in
+    "set-ntp")
+        case "$2" in
+            "false")
+                sudo timedatectl set-ntp false
+                echo "NTP disabled"
+                ;;
+            "true")
+                sudo timedatectl set-ntp true
+                echo "NTP enabled"
+                ;;
+            *)
+                echo "Invalid argument for set-ntp. Use 'false' or 'true'."
+                ;;
+        esac
+        ;;
+    "show")
+        case "$2" in
+            "--value"|"--property=Timezone")
+                show_timezone
+                ;;
+            *)
+                echo "Invalid argument for show. Use '--value --property=Timezone'."
+                ;;
+        esac
+        ;;
+    "set-timezone")
+        set_timezone "$2"
+        ;;
+    *)
+        echo "Usage: $0 {set-ntp [false|true] | show [--value --property=Timezone] | set-timezone <timezone>}"
+        ;;
+esac
