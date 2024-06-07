@@ -1,4 +1,4 @@
-- Fix timedatctl for time setting in options
+- Fix timedatectl for time setting in options
 - New addon option : LIVESTREAM_BOOT_ENABLED enables livestream from boot. Disable to save resources
 
 ## 0.13-50 (04-06-2024)
