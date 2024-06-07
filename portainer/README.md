@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[Portainer] The addon does not start - s6-mkdir: warning: unable to mkdir /var/run/s6/container_environment: Invalid argument (opened 2024-06-05)](https://github.com/alexbelgium/hassio-addons/issues/1423) by [@pepelatc](https://github.com/pepelatc)
 
 # Home assistant add-on: Portainer
 
