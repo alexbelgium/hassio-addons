@@ -24,8 +24,13 @@ fi || (bashio::log.fatal "Error : $TIMEZONE not found. Here is a list of valid t
 
 # Correcting systemctl
 echo "... correcting systemctl"
-curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl
+mv /helpers/systemctl3.py /bin/systemctl
 chmod a+x /bin/systemctl
+
+# Correcting systemctl
+echo "... correcting datetimectl"
+mv /helpers/timedatectl /usr/bin/timedatectl
+chmod a+x /usr/bin/timedatectl
 
 # Correct language labels
 export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
