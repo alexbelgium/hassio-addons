@@ -93,8 +93,8 @@
   ],
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
-    "Processed_Buffer": "int?",
-    "SPECIES_CONVERTER": "bool?",
+    "PROCESSED_FOLDER_ENABLED": "bool?",
+    "SPECIES_CONVERTER_ENABLED": "bool?",
     "LIVESTREAM_BOOT_ENABLED": "bool",
     "TZ": "str?",
     "certfile": "str",

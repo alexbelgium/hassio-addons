@@ -57,7 +57,7 @@ bashio::log.info "Starting BirdNET-Pi services"
 chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 "$HOME"/BirdNET-Pi/scripts/restart_services.sh
 
-if bashio::config.true LIVESTREAM_DEFAULT_ENABLED; then
+if bashio::config.true LIVESTREAM_BOOT_ENABLED; then
     echo "... starting livestream"
     sudo systemctl enable icecast2
     sudo systemctl start icecast2.service

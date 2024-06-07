@@ -25,7 +25,7 @@ fi || true
 
 # Add species conversion system
 ###############################
-if bashio::config.true "SPECIES_CONVERTER"; then
+if bashio::config.true "SPECIES_CONVERTER_ENABLED"; then
     echo "... adding feature of SPECIES_CONVERTER, a new tab is added to your Tools"
     touch /config/convert_species_list.txt
     chown pi:pi /config/convert_species_list.txt
@@ -87,10 +87,10 @@ if bashio::config.true "SPECIES_CONVERTER"; then
     fi
 fi || true
 
-exit 0
 # Enable the Processed folder
 #############################
-if ! grep -q "processed_size" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; then
+
+if bashio::config.true "PROCESSED_FOLDER_ENABLED" && ! grep -q "processed_size" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; then
     echo "... Enabling the Processed folder : the last 15 wav files will be stored there"
     # Adapt config.php
     sed -i "/GET\[\"info_site\"\]/a\  \$processed_size = \$_GET\[\"processed_size\"\];" "$HOME"/BirdNET-Pi/scripts/config.php
@@ -102,10 +102,10 @@ if ! grep -q "processed_size" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py; th
     sed -i "/\"success\"/i      </td></tr><tr><td>" "$HOME"/BirdNET-Pi/scripts/config.php
     sed -i "/\"success\"/i      Processed is the directory where the formerly 'Analyzed' files are moved after extractions, mostly for troubleshooting purposes.<br>" "$HOME"/BirdNET-Pi/scripts/config.php
     sed -i "/\"success\"/i      This value defines the maximum amount of files that are kept before replacement with new files.<br>" "$HOME"/BirdNET-Pi/scripts/config.php
-    sed -i "/\"success\"/i      </td></tr></table>" "$HOME"/BirdNET-Pi/scripts/config.php    
+    sed -i "/\"success\"/i      </td></tr></table>" "$HOME"/BirdNET-Pi/scripts/config.php
     sed -i "/\"success\"/i\      <br>" "$HOME"/BirdNET-Pi/scripts/config.php
     # Adapt birdnet_analysis.py - move_to_processed
-    sed -i "/log.info('handle_reporting_queue done')/a\        os.remove(files.pop(0))" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py    
+    sed -i "/log.info('handle_reporting_queue done')/a\        os.remove(files.pop(0))" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
     sed -i "/log.info('handle_reporting_queue done')/a\    while len(files) > processed_size:" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
     sed -i "/log.info('handle_reporting_queue done')/a\    files.sort(key=os.path.getmtime)" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
     sed -i "/log.info('handle_reporting_queue done')/a\    files = glob.glob(os.path.join(processed_dir, '*'))" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py

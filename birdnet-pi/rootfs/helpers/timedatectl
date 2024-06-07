@@ -42,20 +42,30 @@ case "$1" in
                 ;;
         esac
         ;;
-    "show")
-        case "$2" in
-            "--value"|"--property=Timezone")
-                show_timezone
-                ;;
-            *)
-                echo "Invalid argument for show. Use '--value --property=Timezone'."
-                ;;
-        esac
+    "show --value --property=Timezone")
+        show_timezone
         ;;
     "set-timezone")
         set_timezone "$2"
         ;;
     *)
-        echo "Usage: $0 {set-ntp [false|true] | show [--value --property=Timezone] | set-timezone <timezone>}"
+        # Get values
+        local_time="$(date)"
+        utc_time="$(date -u)"
+        time_zone="$(show_timezone)"
+        # Check if NTP is used
+        if sudo systemctl status systemd-timesyncd | grep -q "active"; then
+            ntp_status="yes"
+            ntp_service="active"
+        else
+            ntp_status="no"
+            ntp_service="inactive"
+        fi
+        # Print the information
+        echo "Local time: $local_time"
+        echo "Universal time: $utc_time"
+        echo "Time zone: $time_zone"
+        echo "Network time on: $ntp_status"
+        echo "NTP service: $ntp_service"
         ;;
 esac
