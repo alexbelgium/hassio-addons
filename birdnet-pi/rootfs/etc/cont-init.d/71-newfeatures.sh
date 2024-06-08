@@ -9,20 +9,6 @@ set -e
 echo " "
 bashio::log.info "Adding new features"
 
-# Add dark mode
-###############
-if [ ! -f "$HOME"/BirdNET-Pi/homepage/static/dark-style.css ]; then
-    echo "... enabling the dark mode option"
-    if [ -f /config/birdnet.conf ] && ! grep -q "COLOR_SCHEME" /config/birdnet.conf; then echo "COLOR_SCHEME=light" >> /config/birdnet.conf; fi
-    for file in /homepage/static/dark-style.css /homepage/index.php /homepage/views.php /scripts/common.php /scripts/config.php; do
-        if [ -f "$HOME"/BirdNET-Pi"$file" ]; then rm "$HOME"/BirdNET-Pi"$file"; fi
-        curl -o "$HOME"/BirdNET-Pi"$file"2 https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/patch-2_darkmode"$file"
-        mv "$HOME"/BirdNET-Pi"$file"2 "$HOME"/BirdNET-Pi"$file"
-        chown "$USER:$USER" "$HOME"/BirdNET-Pi"$file"
-        chmod 777 "$HOME"/BirdNET-Pi"$file"
-    done
-fi || true
-
 # Add species conversion system
 ###############################
 if bashio::config.true "SPECIES_CONVERTER_ENABLED"; then
