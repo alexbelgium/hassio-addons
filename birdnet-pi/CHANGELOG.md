@@ -1,3 +1,4 @@
+## 0.13-51 (08-06-2024)
 - Update to latest upstream
 - Fix : time setting in options (don't forget that the timezone is set from addon options)
 - New addon option : LIVESTREAM_BOOT_ENABLED enables livestream from boot. Disable to save resources
