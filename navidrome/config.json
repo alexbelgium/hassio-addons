@@ -16,16 +16,16 @@
   "options": {
     "base_url": "localhost",
     "certfile": "fullchain.pem",
-    "data_folder": "/data/data",
-    "keyfile": "privkey.pem",
-    "log_level": "info",
-    "music_folder": "/data/music",
-    "ssl": false,
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "data_folder": "/data/data",
+    "keyfile": "privkey.pem",
     "localdisks": "str?",
-    "networkdisks": "str?"
+    "log_level": "info",
+    "music_folder": "/data/music",
+    "networkdisks": "str?",
+    "ssl": false
   },
   "ports": {
     "4533/tcp": 4533
