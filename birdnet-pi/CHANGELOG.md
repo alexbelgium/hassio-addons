@@ -1,4 +1,4 @@
-- Fix : timezone showing in options
+- Fix : improve timedatectl management in options
 
 ## 0.13-51 (08-06-2024)
 - Update to latest upstream
