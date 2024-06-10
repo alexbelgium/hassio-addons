@@ -42,7 +42,7 @@ case "$1" in
                 ;;
         esac
         ;;
-    "show --value --property=Timezone")
+    "show")
         show_timezone
         ;;
     "set-timezone")
