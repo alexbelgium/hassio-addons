@@ -55,7 +55,7 @@ case "$1" in
         utc_time="$(date -u)"
         time_zone="$(show_timezone)"
         # Check if NTP is used
-        if sudo systemctl status systemd-timesyncd | grep -q "active"; then
+        if sudo systemctl status systemd-timesyncd | grep -q " active"; then
             ntp_status="yes"
             ntp_service="active"
         else
