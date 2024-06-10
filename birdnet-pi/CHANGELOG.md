@@ -1,3 +1,4 @@
+## 0.13-52 (10-06-2024)
 - Fix : improve timedatectl management in options
 
 ## 0.13-51 (08-06-2024)
