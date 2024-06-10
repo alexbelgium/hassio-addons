@@ -115,12 +115,3 @@ LABEL \
 #################
 # 6 Healthcheck #
 #################
-
-ENV HEALTH_PORT="" \
-    HEALTH_URL=""
-HEALTHCHECK \
-    --interval=5s \
-    --retries=5 \
-    --start-period=30s \
-    --timeout=25s \
-    CMD photoprism status || exit 1
