@@ -29,12 +29,13 @@ case "$1" in
     "set-ntp")
         case "$2" in
             "false")
+                sudo systemctl stop systemd-timesyncd
                 sudo systemctl disable systemd-timesyncd
                 echo "NTP disabled"
                 ;;
             "true")
-                sudo systemctl enable systemd-timesyncd
                 sudo systemctl start systemd-timesyncd
+                sudo systemctl enable systemd-timesyncd
                 echo "NTP enabled"
                 ;;
             *)
