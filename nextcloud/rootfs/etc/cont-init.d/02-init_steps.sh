@@ -2,10 +2,6 @@
 # shellcheck shell=bash
 set -e
 
-# Fix app can't install
-sed -i "s|modHeadersAvailable true|modHeadersAvailable false|g" /data/config/nginx/site-confs/*.conf
-sed -i "s|front_controller_active true|front_controller_active false|g" /data/config/nginx/site-confs/*.conf
-
 # Runs only after initialization done
 # shellcheck disable=SC2128
 if [ ! -f /app/www/public/occ ]; then cp /etc/cont-init.d/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
