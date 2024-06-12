@@ -20,7 +20,7 @@ set_timezone() {
     echo "$new_timezone" | sudo tee /etc/timezone >/dev/null
     sudo ln -sf /usr/share/zoneinfo/"$new_timezone" /etc/localtime
     if [ -f /etc/environment ]; then sudo sed -i "/TZ/c\TZ=$new_timezone" /etc/environment; fi
-    if [ -d /var/run/s6/container_environment ]; then sudo echo "$new_timezone" > /var/run/s6/container_environment/TZ; fi
+    if [ -d /var/run/s6/container_environment ]; then echo "$new_timezone" | sudo tee /var/run/s6/container_environment/TZ > /dev/null; fi
     echo "$new_timezone"
 }
 
