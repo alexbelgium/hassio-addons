@@ -41,7 +41,7 @@ echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
 /."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
 
 echo "... starting cron"
-service cron start
+systemctl start cron
 
 # Starting dbus
 echo "... starting dbus"
