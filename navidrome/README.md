@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Navidrome (opened 2024-05-22)](https://github.com/alexbelgium/hassio-addons/issues/1409) by [@baldarn](https://github.com/baldarn)
 # Home assistant add-on: Navidrome
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
