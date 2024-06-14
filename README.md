@@ -75,7 +75,6 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ## Add-ons provided by this repository
 
-
 &#10003;  [Arpspoof (2440x)](arpspoof/) : block internet connection for local network devices
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fconfig.json)
