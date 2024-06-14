@@ -1,3 +1,5 @@
+## 0.52.5-4 (14-06-2024)
+- Minor bugs fixed
 
 ## 0.52.5-3 (13-07-2024)
 - Add rootfs to docker image
