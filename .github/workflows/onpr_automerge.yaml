@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add the automerge label
-        if: contains(github.event.comment.body, '/automerge')  # <--- The other way to compare if it's on a PR or on an issue
+        if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/automerge') }}
         uses: actions/github-script@v4
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
