@@ -1,8 +1,8 @@
 {
-  "last_update": "18-05-2024",
+  "last_update": "15-06-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "code-server",
   "source": "github",
   "upstream_repo": "linuxserver/docker-code-server",
-  "upstream_version": "4.89.1"
+  "upstream_version": "4.90.2"
 }
