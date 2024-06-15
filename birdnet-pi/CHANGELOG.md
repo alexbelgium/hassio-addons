@@ -1,3 +1,4 @@
+## 0.13-53 (15-06-2024)
 - Several upstream improvements
 - Feat : analysis in 24bits with 24BITS_ANALYSIS. The model is however trained in 16bits. Increases resources, and to use only if you have a 24 bits stream
 
