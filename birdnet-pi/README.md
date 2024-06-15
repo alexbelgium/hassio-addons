@@ -50,6 +50,7 @@ Options can be configured through three ways :
 - Addon options
 
 ```yaml
+24BITS_ANALYSIS: analysis in 24bits. The model is however trained in 16bits. Increases resources, and to use only if you have a 24 bits stream
 BIRDSONGS_FOLDER: folder to store birdsongs file # It should be an ssd if you want to avoid clogging of analysis
 LIVESTREAM_BOOT_ENABLED: start livestream from boot, or from settings
 SPECIES_CONVERTER_ENABLED: true/false. if enabled, will create a new setting in the birdnet options where you can specify birds to convert. It will convert on the fly the specie when detected
