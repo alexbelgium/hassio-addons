@@ -70,6 +70,7 @@
   "environment": {
     "CI_PORT": "8080",
     "DOCKER_MODS": "imagegenius/mods:universal-redis",
+    "IMMICH_PORT": 8080,
     "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
     "MACHINE_LEARNING_WORKERS": "1",
     "MACHINE_LEARNING_WORKER_TIMEOUT": "120",
@@ -139,6 +140,6 @@
   "slug": "immich",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.106.4",
+  "version": "1.106.4-2",
   "webui": "http://[HOST]:[PORT:8080]"
 }
