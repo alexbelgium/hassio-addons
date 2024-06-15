@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] Birdnet-Go (opened 2024-05-07)](https://github.com/alexbelgium/hassio-addons/issues/1385) by [@matthew73210](https://github.com/matthew73210)
-## &#9888; Open Issue : [🐛 Birdnet-Go (opened 2024-06-07)](https://github.com/alexbelgium/hassio-addons/issues/1424) by [@matthew73210](https://github.com/matthew73210)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
