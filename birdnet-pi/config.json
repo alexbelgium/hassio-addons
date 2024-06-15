@@ -92,6 +92,7 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
+    "24BITS_ANALYSIS": "bool?",
     "BIRDSONGS_FOLDER": "str?",
     "PROCESSED_FOLDER_ENABLED": "bool?",
     "SPECIES_CONVERTER_ENABLED": "bool?",
@@ -112,6 +113,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-52",
+  "version": "0.13-53",
   "video": true
 }
