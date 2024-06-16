@@ -72,7 +72,7 @@
   "name": "BirdNET-pi",
   "options": {
     "BIRDSONGS_FOLDER": "/config/BirdSongs",
-    "LIVESTREAM_BOOT_ENABLED": true,
+    "LIVESTREAM_BOOT_ENABLED": false,
     "TZ": "Europe/Paris",
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
