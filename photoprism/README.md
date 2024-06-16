@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Photoprism watchdog config (opened 2024-06-10)](https://github.com/alexbelgium/hassio-addons/issues/1427) by [@richard-scott](https://github.com/richard-scott)
 # Home assistant add-on: Photoprism
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
