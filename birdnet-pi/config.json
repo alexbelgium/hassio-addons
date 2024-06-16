@@ -94,9 +94,9 @@
   "schema": {
     "ANALYSIS_24BITS": "bool?",
     "BIRDSONGS_FOLDER": "str?",
+    "LIVESTREAM_BOOT_ENABLED": "bool",
     "PROCESSED_FOLDER_ENABLED": "bool?",
     "SPECIES_CONVERTER_ENABLED": "bool?",
-    "LIVESTREAM_BOOT_ENABLED": "bool",
     "TZ": "str?",
     "certfile": "str",
     "cifsdomain": "str?",
