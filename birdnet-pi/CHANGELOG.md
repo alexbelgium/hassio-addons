@@ -1,6 +1,6 @@
+- Disable by default livrestream on boot : reduce idle cpu by half
+
 ## 0.13-54 (15-06-2024)
-- Minor bugs fixed
-## 0.13-53 (15-06-2024)
 - Several upstream improvements
 - Feat : analysis in 24bits with ANALYSIS_24BITS. The model is however trained in 16bits. Increases resources, and to use only if you have a 24 bits stream
 
