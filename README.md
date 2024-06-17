@@ -1,6 +1,5 @@
 # Home assistant add-on: alexbelgium
 
-
 <!-- markdownlint-disable MD033 -->
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
