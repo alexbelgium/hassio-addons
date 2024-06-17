@@ -1,26 +1,33 @@
 # yamllint disable rule:line-length
 # shellcheck disable=SC2043
 ---
-name: Automerge PRs
-
+name: automerge
 on:
-  issue_comment:
+  pull_request_review:
     types:
-      - created
-
+      - submitted
+  issue_comment:
+    types: created
+  check_suite:
+    types:
+      - completed
+  status: {}
 jobs:
-  automerge:
+  labeler:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if comment contains "/automerge"
-        id: check_comment
-        uses: actions/github-script@v5
+      - name: Add the automerge label
+        if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/automerge') }}
+        uses: actions/github-script@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const comment = context.payload.comment.body;
-            return { automerge: comment.includes('/automerge') };
-
+            github.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['automerge']
+            })
       - name: Merge PR
         if: steps.check_comment.outputs.automerge
         uses: actions/github-script@v5
