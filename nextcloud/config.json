@@ -145,6 +145,7 @@
   "services": [
     "mysql:want"
   ],
+  "startup": "application",
   "slug": "nextcloud_ocr",
   "uart": true,
   "udev": true,
