@@ -92,7 +92,6 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "ANALYSIS_24BITS": "bool?",
     "BIRDSONGS_FOLDER": "str?",
     "PROCESSED_FOLDER_ENABLED": "bool?",
     "SPECIES_CONVERTER_ENABLED": "bool?",
