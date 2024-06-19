@@ -1,3 +1,4 @@
+## 0.13-55 (19-06-2024)
 - Several upstream improvements
 - Disable by default livrestream on boot : reduce idle cpu by half
 - Remove 24bits analysis, did not provide any benefits
