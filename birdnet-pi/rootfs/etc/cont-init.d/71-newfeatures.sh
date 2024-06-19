@@ -9,13 +9,6 @@ set -e
 echo " "
 bashio::log.info "Adding new features"
 
-# Add analysis in 24 bits
-if bashio::config.true "ANALYSIS_24BITS"; then
-    echo "... using 24 bits instead of 64 bits for wav analysis. Use only if you feed a 24 bits stream. For info, the model is trained in 16bits"
-    sed -i "s|s16le|s24le|g" "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
-    sed -i "s|S16_LE|S24_LE|g" "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
-fi
-
 # Add species conversion system
 ###############################
 if bashio::config.true "SPECIES_CONVERTER_ENABLED"; then
