@@ -3,6 +3,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "birdnet-go",
   "source": "github",
-  "upstream_repo": "tphakala/birdnet-go",
-  "upstream_version": "1.5.5"
+  "upstream_repo": "Nachtzuster/BirdNET-Pi",
+  "upstream_version": "1.5.3"
 }
