@@ -1,3 +1,6 @@
+
+## debian-2024-06-16 (2024-06-16)
+- Update to latest version from charlocharlie/epicgames-freegames
 - The last release changelog mentions that automatic redemption is not possible anymore due to epic improvement on automation detection
 A redemption link is sent to your preferred notification method instead of being automated (thanks @Shiroe93) https://github.com/alexbelgium/hassio-addons/issues/1391
 
