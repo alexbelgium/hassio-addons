@@ -66,6 +66,7 @@
     "share:rw"
   ],
   "name": "Comixed",
+  "panel_admin": false,
   "panel_icon": "mdi:book-open",
   "ports": {
     "7171/tcp": 7171

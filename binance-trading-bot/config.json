@@ -84,6 +84,7 @@
     "BINANCE_MODE": "test",
     "BINANCE_SLACK_ENABLED": false
   },
+  "panel_admin": false,
   "panel_icon": "mdi:bitcoin",
   "ports": {
     "80/tcp": null,

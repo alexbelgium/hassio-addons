@@ -86,6 +86,7 @@
     "SECRET_KEY": "YOUR_SECRET_KEY",
     "externalfiles_folder": "/config/addons_config/tandoor_recipes/externalfiles"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:silverware-fork-knife",
   "panel_title": "Tandoor Recipes",
   "ports": {

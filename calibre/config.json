@@ -87,6 +87,7 @@
     "PGID": 0,
     "PUID": 0
   },
+  "panel_admin": false,
   "panel_icon": "mdi:book-multiple",
   "ports": {
     "8080/tcp": 8080,

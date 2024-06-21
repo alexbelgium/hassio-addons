@@ -18,6 +18,7 @@
     "secret_token": "lrMY24Byhx",
     "ui_path": "joal"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:owl",
   "ports": {
     "49152/tcp": null,

@@ -86,6 +86,7 @@
   "options": {
     "Updates": "Hourly"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:glasses",
   "ports": {
     "8080/tcp": 8086,

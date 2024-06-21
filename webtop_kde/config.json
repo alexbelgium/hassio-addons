@@ -91,6 +91,7 @@
     "PUID": 0,
     "additional_apps": "engrampa,libreoffice"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:monitor",
   "ports": {
     "20/tcp": null,

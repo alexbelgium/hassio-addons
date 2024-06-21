@@ -94,6 +94,7 @@
     "ssl": false,
     "whitelist": "localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:progress-download",
   "ports": {
     "59595/tcp": 59595,

@@ -85,6 +85,7 @@
     "PUID": 0,
     "connection_mode": "ingress_noauth"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:movie-outline",
   "ports": {
     "7878/tcp": 7878

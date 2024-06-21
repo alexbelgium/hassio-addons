@@ -103,6 +103,7 @@
     "TZ": "Europe/Paris",
     "data_location": "/share/immich"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:file-search",
   "ports": {
     "8080/tcp": 8181

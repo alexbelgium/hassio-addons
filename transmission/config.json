@@ -88,6 +88,7 @@
     "download_dir": "/share/downloads",
     "incomplete_dir": "/share/incomplete"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:transmission-tower",
   "ports": {
     "51413/tcp": 51413,

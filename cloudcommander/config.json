@@ -79,6 +79,7 @@
     "addons:rw"
   ],
   "name": "Cloudcommander",
+  "panel_admin": false,
   "panel_icon": "mdi:file-search",
   "ports": {
     "8000/tcp": 8000

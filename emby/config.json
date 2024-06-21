@@ -89,6 +89,7 @@
     "PUID": 0,
     "silent": true
   },
+  "panel_admin": false,
   "panel_icon": "mdi:emby",
   "ports": {
     "1900/udp": null,

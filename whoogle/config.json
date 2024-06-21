@@ -80,6 +80,7 @@
     "WHOOGLE_CONFIG_LANGUAGE": "lang_en",
     "WHOOGLE_CONFIG_URL": "https://website.com"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:magnify",
   "ports": {
     "5000/tcp": 5000

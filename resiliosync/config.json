@@ -81,6 +81,7 @@
     "data_location": "/share/resiliosync",
     "downloads_location": "/share/resiliosync_downloads"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:cloud-sync-outline",
   "ports": {
     "55555/tcp": 55555,

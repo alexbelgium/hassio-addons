@@ -28,6 +28,7 @@
     "password": "homeassistant",
     "ssl": false
   },
+  "panel_admin": false,
   "panel_icon": "mdi:docker",
   "ports": {
     "8000/tcp": null,

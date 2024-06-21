@@ -91,6 +91,7 @@
     "database": "sqlite",
     "url": "seafile.example.com"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:library",
   "ports": {
     "8000/tcp": 8000,

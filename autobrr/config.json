@@ -87,6 +87,7 @@
     "PGID": 0,
     "PUID": 0
   },
+  "panel_admin": false,
   "panel_icon": "mdi:television-classic",
   "ports": {
     "7474/tcp": 7474

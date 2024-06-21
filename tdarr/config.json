@@ -101,6 +101,7 @@
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/tdarr"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:file-search",
   "ports": {
     "8265/tcp": 8265,

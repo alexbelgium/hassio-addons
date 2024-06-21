@@ -104,6 +104,7 @@
     "trusted_domains": "your-domain, your-domain2",
     "use_own_certs": false
   },
+  "panel_admin": false,
   "panel_icon": "mdi:cloud",
   "ports": {
     "443/tcp": 8099,

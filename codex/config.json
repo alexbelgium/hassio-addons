@@ -78,6 +78,7 @@
     "PUID": "0",
     "csrf_allowed": "http://homeassistant.local:8123,https://homeassistant.local:8123"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:book-open",
   "ports": {
     "9810/tcp": 9810

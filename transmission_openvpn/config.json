@@ -96,6 +96,7 @@
     "TRANSMISSION_WEB_UI": "flood-for-transmission",
     "WEBPROXY_ENABLED": "true"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:transmission-tower",
   "ports": {
     "51413/tcp": 51413,

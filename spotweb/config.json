@@ -21,6 +21,7 @@
     "keyfile": "privkey.pem",
     "ssl": false
   },
+  "panel_admin": false,
   "panel_icon": "mdi:chart-timeline",
   "panel_title": "Spotweb",
   "ports": {

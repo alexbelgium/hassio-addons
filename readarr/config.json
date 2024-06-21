@@ -84,6 +84,7 @@
     "PUID": 0,
     "connection_mode": "ingress_noauth"
   },
+  "panel_admin": false,
   "panel_icon": "mdi:download-circle",
   "ports": {
     "8787/tcp": 8787
