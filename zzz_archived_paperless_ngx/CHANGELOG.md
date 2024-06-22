@@ -1,4 +1,7 @@
 
+## 2.10.1 (22-06-2024)
+- Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
+
 ## 2.9.0 (08-06-2024)
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
