@@ -79,8 +79,8 @@
   "options": {
     "COMMAND": "realtime"
   },
-  "panel_icon": "mdi:bird",
   "panel_admin": false,
+  "panel_icon": "mdi:bird",
   "ports": {
     "8080/tcp": 8080
   },
