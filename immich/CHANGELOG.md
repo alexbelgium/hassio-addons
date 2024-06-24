@@ -1,3 +1,5 @@
+## 1.106.4-3 (24-06-2024)
+- Minor bugs fixed
 ## 1.106.4-2 (15-06-2024)
 - Minor bugs fixed
 
