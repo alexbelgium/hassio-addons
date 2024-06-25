@@ -34,7 +34,7 @@ fi
 # Remove nginx conf if existing
 if [ -f /data/config/nginx/site-confs/default.conf ]; then
   rm /data/config/nginx/site-confs/default.conf
-  # Avoid
+  # Avoid cannot enable app
   sed -i "s|front_controller_active true|front_controller_active false|g" /defaults/nginx/site-confs/default.conf.sample
 fi
 
