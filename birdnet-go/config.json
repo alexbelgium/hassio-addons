@@ -102,10 +102,11 @@
     "networkdisks": "str?"
   },
   "services": [
-    "mysql:want"
+    "mysql:want",
+    "mqtt:want"
   ],
   "slug": "birdnet-go",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go",
-  "version": "0.5.5"
+  "version": "0.5.5-2"
 }
