@@ -1,3 +1,8 @@
+- [UI] : Improved dark mode
+- [UI] : New standardized behavior of click on Com_Name and Sci_Name
+- [FEAT] : add species whitelist
+- [FEAT] : new disk usage settings
+
 ## 0.13-56 (26-06-2024)
 - Minor bugs fixed
 
