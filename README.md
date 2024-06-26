@@ -142,6 +142,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 ![MariaDB][mariadb-badge]
+![mqtt][mqtt-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
