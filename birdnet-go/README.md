@@ -137,7 +137,7 @@ type: markdown
 title: Birdnet (Wikipedia)
 content: >-
   Time|&nbsp;&nbsp;Bird Name|Number Today| &nbsp;&nbsp;&nbsp;Max
-  [Confidence](http://ip_address_of_HA:8080/)
+  [Confidence](http://192.168.1.25:8081/)
 
   :---|:---|:---:|:---:
 
@@ -179,12 +179,22 @@ card_mod:
         align-items: center;
       }
       .card-header:before {
-        content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAAAXNSR0IArs4c6QAABIRJREFUaEO9Wo1Z3DAMlTeBSXpMAkwCTAI3CXSSu06SRrGdyLZkPfuAfB+lvZOl9/RrOw20PYGIlvhX80FkKm34Esc2+HWITOaeBNbEzMqX6Kbf4sV2EqHvMDmnY26VFoOoaT5Cc3E1EhygpYhoqwYJHV7wKi7mGQAUccyAroPQDbbnlw44CCF+1FCSrjxRAb1L5X0Fdf+emADqplyWDUSntWm9ENEzEY2Rmg9h6RRAj0tIaGQyr+nn7JKqjff6ezMDQeRKIfcJlXozIebIxCIpwPbvTaJqsDrYPlPa5aAxqTekUCDOiCJAZiTlPonoVOnskiqI/DArUesA7ShSZKzAB0cKtoQK6sMWdt2FiO4aW3H5D5M6MHpo1ZQLFGipOk8guixMyNb4SoHe3E17x/subI9NM1j7odZqqN5L84z6QDMmywmcnAHGjHPYhEC0OJvTSsX7auwJAHvvzqjDDU+B6M8Sm01O56+1+fDP3/QbMCli2+VdtqmXtVi4VpDHI8UEeK6dnDnG0X4jClf/ABphpTOeu3dmWY4OR2l/nCS4D0TXUvO2Qg5okbKmNk7BByTqiRDi8E2Gvcp1lD3h1b8GBE3bGpRKKpVNEeS9ywENhI3orduOmQTikslgjHyBRoNBKNFrWbqglHgzKS5ypKHk5bymnHmBrrQQ12b3Gdn6NGmHVZP0iumorIprhcnzU9Xa9hmPBf7ePL6MEtLTDsxX1bXHWgYpI1DUbFW5TIo3xrxmJ8eqZgg1nlNi4GWGdqLgo8gDLTtAPiFf+u16s5xae1w3TijQHS1bt7P2de1NXGZsRfL4PM8djs4j0VLs7pWmwZE6r8earyVFapzQnt/hNXtvKuPEoon1RVRkOkCEDIMXitG6/Um3rKyoo45TiutG7BVbZBAho5spRauVxpj/O9L+HNrvthstMIhtLtXSSJOALRze9PaH+w7mlpThxnBRitWffmOpysXPM8p99pSDPVYKzuwcKlCe5e37MjrakvSZWkOeidTv39dW2d3OIHpcl8fdwYeuqz1bV4RACIE+aQkn9IzigzZd3mkE4gWUMBAJZX0Yn/0ojol36PQVcHvm6Aw9HDPc0Vtkmru5IYOgsN+iDUVlhPrWjEuSKt6d7hV9J/9UDcodtzECc1K10ThqqB+plsxAZAdEVTKdplZ6xH9pvKnyI7OrHYBeQvkgCs9H7pd6IK29ti3wRTJmGhmmIASblXyuyYe6gmajBjCnzqGktRMZHLFsogItdzC+d4sbTeHd/bXsmIldjUaItzO8A6jfNHRbRmF/+0eD6CsQnddLxe4RGuyCZo+zCD0KQkywPcz1/0NFvhjh3/+0ewA0nUYJboTA6GrE5F30dfSlsrRbYwAxNTOD7+ramh/XBjjyO5Xa9HtNAY9dpiOLG4074ApEJFMsCEE+rISgNQiiWx0g59AwqJ/I0+9wlL9TgFyrDkO9cwP6irRN8oKs5/w95UpBbxkArBLJbwrgYTaZBWZTmKFktWFPl/W93sv62vS2bc5h5WpR0+8x6OzYhpYqOP8DUq58TJ+vR7cAAAAASUVORK5CYII=");
-        height: 52px;
+        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='m23 11.5l-3.05-1.13c-.26-1.15-.91-1.81-.91-1.81a4.19 4.19 0 0 0-5.93 0l-1.48 1.48L5 3c-1 4 0 8 2.45 11.22L2 19.5s8.89 2 14.07-2.05c2.76-2.16 3.38-3.42 3.77-4.75zm-5.29.22c-.39.39-1.03.39-1.42 0a.996.996 0 0 1 0-1.41c.39-.39 1.03-.39 1.42 0s.39 1.02 0 1.41'/%3E%3C/svg%3E");
+        height: 42px;
         width: 42px;
         margin-top: 0px;
         padding-left: 0px;
-        padding-right: 18px;
+        padding-right: 14px;
+      }
+      @media (prefers-color-scheme: dark) {
+        .card-header:before {
+          content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23E1E1E1' d='m23 11.5l-3.05-1.13c-.26-1.15-.91-1.81-.91-1.81a4.19 4.19 0 0 0-5.93 0l-1.48 1.48L5 3c-1 4 0 8 2.45 11.22L2 19.5s8.89 2 14.07-2.05c2.76-2.16 3.38-3.42 3.77-4.75zm-5.29.22c-.39.39-1.03.39-1.42 0a.996.996 0 0 1 0-1.41c.39-.39 1.03-.39 1.42 0s.39 1.02 0 1.41'/%3E%3C/svg%3E");
+          height: 42px;
+          width: 42px;
+          margin-top: 0px;
+          padding-left: 0px;
+          padding-right: 14px;
+        }
       }
 
 ```
