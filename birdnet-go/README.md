@@ -24,8 +24,6 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
----
-
 [BirdNET-Go](https://github.com/tphakala/birdnet-go/tree/main) is an AI solution for continuous avian monitoring and identification developed by @tphakala
 
 This addon is based on their docker image.
@@ -54,8 +52,6 @@ Additional variables can be configured using the config.yaml file found in /conf
 Additional environment variables can be configured there
 
 ## Installation
-
----
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
@@ -256,6 +252,56 @@ card_mod:
             padding-right: 18px;
       }
 ```
+## Setting up a RTSP Source using VLC
+
+### Linux instructions
+
+Run vlc without an interface using one of these commands:
+```
+# This should work for most devices
+/usr/bin/vlc -I dummy -vvv alsa://hw:0,0 --sout '#transcode{acodec=mpga}:rtp{dst=192.168.1.21,port=1234,proto=tcp,sdp=rtsp://192.168.1.21:8080/stream.sdp}'
+
+# Try this if the first command does not work
+/usr/bin/vlc -I dummy -vvv alsa://hw:4,0 --sout '#rtp{dst=192.168.1.21,port=1234,proto=tcp,sdp=rtsp://192.168.1.21:8080/stream.sdp}'
+```
+
+Run `arecord -l` to get microphone hardware info
+```
+**** List of CAPTURE Hardware Devices ****
+card 0: PCH [HDA Intel PCH], device 0: ALC3220 Analog [ALC3220 Analog]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 2: S7 [SteelSeries Arctis 7], device 0: USB Audio [USB Audio]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 3: Nano [Yeti Nano], device 0: USB Audio [USB Audio]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 4: Device [USB PnP Sound Device], device 0: USB Audio [USB Audio]
+  Subdevices: 0/1
+  Subdevice #0: subdevice #0
+```
+hw:4,0 = **card 4**: Device [USB PnP Sound Device], **device 0**: USB Audio [USB Audio]
+
+Systemd service file example. Adjust the user:group accordingly. If you want to run as root, you will likely need to run vlc-wrapper instead of vlc.
+```
+[Unit]
+Description=VLC Birdnet RTSP Server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+StandardOutput=journal
+ExecStart=/usr/bin/vlc -I dummy -vvv alsa://hw:0,0 --sout '#transcode{acodec=mpga}:rtp{dst=192.168.1.21,port=1234,proto=tcp,sdp=rtsp://192.168.1.21:8080/stream.sdp}'
+User=someone
+Group=somegroup
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
 ## Common issues
 
 Not yet available
