@@ -195,7 +195,7 @@ card_mod:
 
 ```
 
-![Birdnet-go Markdown Card Wikipedia](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card_wikipedia.png?raw=true)
+![Birdnet-go Markdown Card All About Birds](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card_all_about_birds.png?raw=true)
 
 ```
 type: markdown
