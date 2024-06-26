@@ -100,7 +100,7 @@ RUN \
     rm -rf /var/lib/apt/lists/*
 
 # Add temporary code
-RUN cd $HOME/BirdNET-Pi && \
+RUN cd /home/pi/BirdNET-Pi && \
     git reset --hard && \
     # Species whitelist
     git fetch origin pull/110/head:bb && \ 
