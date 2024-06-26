@@ -103,8 +103,6 @@ RUN \
 RUN cd /home/pi/BirdNET-Pi && \
     git reset --hard || true && \
     git pull origin && \
-    # Improve darkmode
-    git fetch origin pull/115/head:aa && \
     # Species whitelist
     git fetch origin pull/110/head:bb && \ 
     # Updated UI
@@ -113,8 +111,6 @@ RUN cd /home/pi/BirdNET-Pi && \
     git fetch origin pull/121/head:dd && \
     git checkout main && \
     git checkout -b f-merge-prs && \
-    git merge aa --no-edit && \
-    git stash && \
     git merge bb --no-edit && \
     git stash && \
     git merge cc --no-edit && \
@@ -123,7 +119,6 @@ RUN cd /home/pi/BirdNET-Pi && \
     git stash && \
     git checkout main && \
     git merge f-merge-prs && \
-    git branch -d aa && \
     git branch -d bb && \
     git branch -d cc && \
     git branch -d dd && \
