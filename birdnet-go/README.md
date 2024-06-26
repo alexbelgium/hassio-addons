@@ -71,7 +71,7 @@ Birdnet-Go can be integrated with Home Assistant using a MQTT Broker.
 ### Birdnet-Go Events Sensor
 
 Your Home Assistant must be setup with MQTT and Birdnet-Go MQTT integration must be enabled. Modify the Birdnet-Go config.yaml file to enable MQTT. If you are using the Mosquitto Broker addon, you will see a log message during the Birdnet-Go startup showing the internal MQTT server details needed for configuration similar to below.
-```
+```text
 Birdnet-Go log snipped showing MQTT details:
 /etc/cont-init.d/33-mqtt.sh: executing
 ---
@@ -92,7 +92,7 @@ Edit this section of config.yaml found in addon_configs/db21ed7f_birdnet-go/:
 
 Then create a new template sensor using the configuration below.
 
-```
+```yaml
 - trigger:
     - platform: mqtt
       topic: "birdnet"
@@ -128,7 +128,7 @@ There are two versions listed below. One will link the Bird Name to Wikipedia th
 
 ![Birdnet-go Markdown Card Wikipedia](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card_wikipedia.png?raw=true)
 
-```
+```yaml
 type: markdown
 title: Birdnet (Wikipedia)
 content: >-
@@ -192,12 +192,11 @@ card_mod:
           padding-right: 14px;
         }
       }
-
 ```
 
 ![Birdnet-go Markdown Card All About Birds](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card_all_about_birds.png?raw=true)
 
-```
+```yaml
 type: markdown
 title: Birdnet (All About Birds)
 content: >-
@@ -257,7 +256,7 @@ card_mod:
 ### Linux instructions
 
 Run vlc without an interface using one of these commands:
-```
+```bash
 # This should work for most devices
 /usr/bin/vlc -I dummy -vvv alsa://hw:0,0 --sout '#transcode{acodec=mpga}:rtp{dst=192.168.1.21,port=1234,proto=tcp,sdp=rtsp://192.168.1.21:8080/stream.sdp}'
 
@@ -266,7 +265,7 @@ Run vlc without an interface using one of these commands:
 ```
 
 Run `arecord -l` to get microphone hardware info
-```
+```text
 **** List of CAPTURE Hardware Devices ****
 card 0: PCH [HDA Intel PCH], device 0: ALC3220 Analog [ALC3220 Analog]
   Subdevices: 1/1
@@ -284,7 +283,7 @@ card 4: Device [USB PnP Sound Device], device 0: USB Audio [USB Audio]
 hw:4,0 = **card 4**: Device [USB PnP Sound Device], **device 0**: USB Audio [USB Audio]
 
 Systemd service file example. Adjust the user:group accordingly. If you want to run as root, you will likely need to run vlc-wrapper instead of vlc.
-```
+```text
 [Unit]
 Description=VLC Birdnet RTSP Server
 Wants=network-online.target
