@@ -99,6 +99,35 @@ RUN \
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
 
+# Add temporary code
+RUN cd $HOME/BirdNET-Pi && \
+    git reset --hard && \
+    # Species whitelist
+    git fetch origin pull/110/head:bb && \ 
+    # Improve darkmode
+    git fetch origin pull/115/head:aa && \
+    # Updated UI
+    git fetch origin pull/116/head:cc && \
+    # Disk usage
+    git fetch origin pull/121/head:dd && \
+    git checkout main && \
+    git checkout -b f-merge-prs && \
+    git merge aa --no-edit && \
+    git stash && \
+    git merge bb --no-edit && \
+    git stash && \
+    git merge cc --no-edit && \
+    git stash && \
+    git merge dd --no-edit && \
+    git stash && \
+    git checkout main && \
+    git merge f-merge-prs && \
+    git branch -d aa && \
+    git branch -d bb && \
+    git branch -d cc && \
+    git branch -d dd && \
+    git branch -d f-merge-prs
+
 ##################
 # 2 Modify Image #
 ##################
