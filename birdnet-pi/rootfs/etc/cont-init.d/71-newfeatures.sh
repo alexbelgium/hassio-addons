@@ -9,6 +9,30 @@ set -e
 echo " "
 bashio::log.info "Adding new features"
 
+( cd $HOME/BirdNET-Pi
+git reset --hard
+git fetch origin pull/110/head:bb
+git fetch origin pull/115/head:aa
+git fetch origin pull/116/head:cc
+git fetch origin pull/121/head:dd
+git checkout main
+git checkout -b f-merge-prs
+git merge aa --no-edit
+git stash
+git merge bb --no-edit
+git stash
+git merge cc --no-edit
+git stash
+git merge dd --no-edit
+git stash
+git checkout main
+git merge f-merge-prs
+git branch -d aa
+git branch -d bb
+git branch -d cc
+git branch -d dd
+git branch -d f-merge-prs ) &>/dev/null
+
 # Add species conversion system
 ###############################
 if bashio::config.true "SPECIES_CONVERTER_ENABLED"; then
