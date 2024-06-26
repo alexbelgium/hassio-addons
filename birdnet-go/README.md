@@ -72,12 +72,72 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Not yet available
 
+### Birdnet-Go Events Sensor
+
+Your Home Assistant must be setup with MQTT and Birdnet-Go MQTT integration must be enabled. Modify the Birdnet-Go config.yaml file to enable MQTT. If you are using the Mosquitto Broker addon, you will see a log message during the Birdnet-Go startup showing the internal MQTT server details needed for configuration similar to below.
+```
+Birdnet-Go log snipped showing MQTT details:
+/etc/cont-init.d/33-mqtt.sh: executing
+---
+MQTT addon is active on your system! Add the MQTT details below to the Birdnet-go config.yaml :
+MQTT user : addons
+MQTT password : Ri5ahV1aipeiw0aelerooteixai5ohtoeNg6oo3mo0thi5te0phiezuge4Phoore
+MQTT broker : tcp://core-mosquitto:1883
+---
+
+Edit this section of config.yaml found in addon_configs/db21ed7f_birdnet-go/:
+    mqtt:
+        enabled: true # true to enable MQTT
+        broker: tcp://core-mosquitto:1883 # MQTT (tcp://host:port)
+        topic: birdnet # MQTT topic
+        username: addons # MQTT username
+        password: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # MQTT password
+```
+
+Then create a new template sensor using the configuration below.
+
+```
+- trigger:
+    - platform: mqtt
+      topic: "birdnet"
+    - platform: time
+      at: "00:00:00"
+      id: reset
+  sensor:
+    - unique_id: c893533c-3c06-4ebe-a5bb-da833da0a947
+      name: BirdNET-Go Events
+      state: >
+        {% if trigger.id == 'reset' %}
+          {{ now() }}
+        {% else %}
+          {{ today_at(trigger.payload_json.Time) }}
+        {% endif %}
+      attributes:
+        bird_events: >
+          {% if trigger.id == 'reset' %}
+            {{ [] }}
+          {% else %}
+            {% set time = trigger.payload_json.Time %}
+            {% set name = trigger.payload_json.CommonName %}
+            {% set confidence = trigger.payload_json.Confidence|round(2) * 100 ~ '%' %}
+            {% set current = this.attributes.get('bird_events', []) %}
+            {% set new = dict(time=time, name=name, confidence=confidence) %}
+            {{ current + [new] }}
+          {% endif %}
+```
+
+### Birdnet-Go Dashboard Cards
+
+There are two versions listed below. One will link the Bird Name to Wikipedia the other one will link to All About Birds. You will need to modify the Confidence link to match your Home Assistant setup.
+
+![Birdnet-go Markdown Card](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card.png?raw=true)
+
 ```
 type: markdown
 title: Birdnet (Wikipedia)
 content: >-
   Time|&nbsp;&nbsp;Bird Name|Number Today| &nbsp;&nbsp;&nbsp;Max
-  [Confidence](http://192.168.1.25:8081/)
+  [Confidence](http://ip_address_of_HA:8080/)
 
   :---|:---|:---:|:---:
 
