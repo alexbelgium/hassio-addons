@@ -3,9 +3,6 @@
 - [FEAT] : add species whitelist
 - [FEAT] : new disk usage settings
 
-## 0.13-56 (26-06-2024)
-- Minor bugs fixed
-
 ## 0.13-55 (19-06-2024)
 - Several upstream improvements
 - Disable by default livrestream on boot : reduce idle cpu by half
