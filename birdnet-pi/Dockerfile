@@ -101,7 +101,7 @@ RUN \
 
 # Add temporary code
 RUN cd /home/pi/BirdNET-Pi && \
-    git reset --hard && \
+    git reset --hard || true && \
     # Species whitelist
     git fetch origin pull/110/head:bb && \ 
     # Improve darkmode
