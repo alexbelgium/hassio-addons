@@ -70,7 +70,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Integration with HA
 
-Not yet available
+Birdnet-Go can be integrated with Home Assistant using a MQTT Broker
 
 ### Birdnet-Go Events Sensor
 
@@ -130,7 +130,7 @@ Then create a new template sensor using the configuration below.
 
 There are two versions listed below. One will link the Bird Name to Wikipedia the other one will link to All About Birds. You will need to modify the Confidence link to match your Home Assistant setup.
 
-![Birdnet-go Markdown Card](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card.png?raw=true)
+![Birdnet-go Markdown Card Wikipedia](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card_wikipedia.png?raw=true)
 
 ```
 type: markdown
@@ -189,6 +189,63 @@ card_mod:
 
 ```
 
+![Birdnet-go Markdown Card Wikipedia](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card_wikipedia.png?raw=true)
+
+```
+type: markdown
+title: Birdnet (All About Birds)
+content: >-
+  Time|&nbsp;&nbsp;Bird Name|Number Today| &nbsp;&nbsp;&nbsp;Max
+  [Confidence](http://ip_address_of_HA:8080/)
+
+  :---|:---|:---:|:---:
+
+  {%- set t = now() %}
+
+  {%- set bird_list = state_attr('sensor.birdnet_go_events','bird_events') |
+  sort(attribute='time', reverse=true) | map(attribute='name') | unique | list
+  %}
+
+  {%- set bird_objects = state_attr('sensor.birdnet_go_events','bird_events') |
+  sort(attribute='time', reverse=true) %}
+
+  {%- for thisbird in bird_list or [] %}
+
+  {%- set ubird = ((bird_objects | selectattr("name", "equalto", thisbird)) |
+  list)[0] %}
+
+  {%- set ubird_count = ((bird_objects | selectattr("name", "equalto",
+  thisbird)) | list) | length %}
+
+  {%- set ubird_max_confidence = ((bird_objects | selectattr("name", "equalto",
+  thisbird)) | map(attribute='confidence') | map('replace', '%', '') |
+  map('float') | max | round(0)) %}
+
+  {%- if ubird_max_confidence > 70 %}
+
+  {{ubird.time}}
+  |&nbsp;&nbsp;[{{ubird.name}}](https://www.allaboutbirds.org/guide/{{ubird.name
+  | replace(' ', '_')}}) | {{ubird_count}} | {{ ubird_max_confidence }} %
+
+  {%- endif %}
+
+  {%- endfor %}
+card_mod:
+  style:
+    $: |
+      .card-header {
+        display: flex !important;
+        align-items: center;
+      }
+      .card-header:before {
+            content: url("data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDYuODcgMTE2LjY2Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2Y0ZTUwNTt9LmNscy0ye2ZpbGw6I2UzMWUyNjt9LmNscy0ze2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTIwNi4zNywxNi42OHMtMTYuNDQtNC4zNC0yMi43Ni00LjljMCwwLTI1LDEzLjUtMzIsMThhMTkuMTYsMTkuMTYsMCwwLDAtOC42NywxMy44OWwzNS43MS0yNi4zMmgyOEMyMDcuMzEsMTcuMzksMjA2LjM3LDE2LjY4LDIwNi4zNywxNi42OFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMC42MykiLz48cGF0aCBkPSJNMTQ4LjU1LDI3LjMzYzcuMzItNC45LDMyLjYyLTE4LjczLDMyLjYyLTE4LjczbDAsMEEzMC42OSwzMC42OSwwLDAsMCwxNTktLjYzYTQ0LjIzLDQ0LjIzLDAsMCwwLTIwLjcxLDVIMGMwLDMuNzEsNS42LDYuNTYsMTIuMTQsNi41Nkg1Mi4zNkw4Ni42MiwzNS4xMlY3MS4zN2MwLDE1LjczLDguMjYsMjkuNDQsMjEuNzgsMzcuMzVTMTI4LjY4LDExNiwxMzguNjMsMTE2VjQ2Ljg3QzEzOC42Myw0MC43OCwxNDAuNDcsMzIuNzMsMTQ4LjU1LDI3LjMzWk0xNjcuODcsOGEyLjUxLDIuNTEsMCwxLDEtMi41MSwyLjUxQTIuNTEsMi41MSwwLDAsMSwxNjcuODcsOFptLTI5LjEzLDEzLDE1LjY5LTguNjgsNi44OS41N0wxMzguNzQsMjUuMzZaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDAuNjMpIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTIuMzYsMTAuOTFIMTEwYy0xMi44OSwwLTIzLjQsMTAuMzUtMjMuNCwyNC4yMVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMC42MykiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xNzgsMTAuMzNBMzEuNzEsMzEuNzEsMCwwLDAsMTU3Ljc4LDIuOVYtLjYxbDEuMjUsMEEzMC42MywzMC42MywwLDAsMSwxODEuMTcsOC42WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwLjYzKSIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE3OC42MywxNy4zOWwtMjUsMTguNDNzLS4yOS0yLjcsMy40Ny01Ljc0LDI2LjUtMTguMywyNi41LTE4LjNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDAuNjMpIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTI4LjE0LDY0LjQ3VjUyLjE1YzAtNS4xOC0yLjExLTguNzctNi45My0xMi4xOEwxMDAuNzksMjUuNTRhMTQuMzIsMTQuMzIsMCwwLDAsMiwyMVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMC42MykiLz48cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0xMjguMTQsNjQuNDdWNTIuMTVjMC01LjE4LTIuMTEtOC43Ny02LjkzLTEyLjE4TDEwMC43OSwyNS41NGExNC4zMiwxNC4zMiwwLDAsMCwyLDIxWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwLjYzKSIvPjxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTE1MS41OSwyOS44MmM3LTQuNTQsMzItMTgsMzItMThhMTYuMjQsMTYuMjQsMCwwLDAtMi40MS0zLjE1bDAsMHMtMjUuMywxMy44My0zMi42MiwxOC43My05LjU3LDEyLjE3LTkuODcsMThsLS4wNSwxLjUxLDQuMjktMy4xNkExOS4xNiwxOS4xNiwwLDAsMSwxNTEuNTksMjkuODJaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDAuNjMpIi8+PHBhdGggY2xhc3M9ImNscy0zIiBkPSJNMTY3Ljg3LDhhMi41MSwyLjUxLDAsMSwxLTIuNTEsMi41MUEyLjUxLDIuNTEsMCwwLDEsMTY3Ljg3LDhaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDAuNjMpIi8+PHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjEzOC43NCAyMS41NyAxNTQuNDMgMTIuODkgMTYxLjMyIDEzLjQ1IDEzOC43NCAyNS45OCAxMzguNzQgMjEuNTciLz48L3N2Zz4=");
+            height: 20px;
+            width: 60px;
+            margin-top: -10px;
+            padding-left: 8px;
+            padding-right: 18px;
+      }
+```
 ## Common issues
 
 Not yet available
