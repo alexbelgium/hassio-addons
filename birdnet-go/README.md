@@ -18,7 +18,8 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
+
 
 ![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/birdnet-go/stats.png)
 
@@ -126,7 +127,7 @@ Then create a new template sensor using the configuration below.
 
 There are two versions listed below. One will link the Bird Name to Wikipedia the other one will link to All About Birds. You will need to modify the Confidence link to match your Home Assistant setup.
 
-![Birdnet-go Markdown Card Wikipedia](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card_wikipedia.png?raw=true)
+![Birdnet-go Markdown Card Wikipedia](https://raw.githubusercontent.com/thor0215/hassio-addons/master/birdnet-go/images/ha_birdnet_markdown_card_wikipedia.png)
 
 ```yaml
 type: markdown
@@ -194,7 +195,7 @@ card_mod:
       }
 ```
 
-![Birdnet-go Markdown Card All About Birds](https://github.com/thor0215/hassio-addons/blob/master/birdnet-go/images/ha_birdnet_markdown_card_all_about_birds.png?raw=true)
+![Birdnet-go Markdown Card All About Birds](https://raw.githubusercontent.com/thor0215/hassio-addons/master/birdnet-go/images/ha_birdnet_markdown_card_all_about_birds.png)
 
 ```yaml
 type: markdown

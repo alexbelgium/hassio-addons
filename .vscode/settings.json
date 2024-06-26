@@ -4,5 +4,8 @@
   "files.eol": "\n",
   "editor.tabSize": 4,
   "editor.insertSpaces": true,
-  "editor.cursorStyle": "block"
+  "editor.cursorStyle": "block",
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "master"
+  ]
 }
