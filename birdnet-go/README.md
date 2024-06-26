@@ -66,7 +66,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Integration with HA[^1]
 
-Birdnet-Go can be integrated with Home Assistant using a MQTT Broker[^1].
+Birdnet-Go can be integrated with Home Assistant using a MQTT Broker.
 
 ### Birdnet-Go Events Sensor
 
@@ -313,5 +313,7 @@ Create an issue on github
 ---
 
 ![illustration](https://raw.githubusercontent.com/tphakala/birdnet-go/main/doc/BirdNET-Go-dashboard.webp)
+
+## Footnotes
 
 [^1]: [Displaying Birdnet-go detections](https://community.home-assistant.io/t/displaying-birdnet-go-detections/713611/22)
