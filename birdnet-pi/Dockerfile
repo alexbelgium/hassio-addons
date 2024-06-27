@@ -99,6 +99,21 @@ RUN \
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
 
+# Update with my repo if more recent
+RUN \
+    cd "$HOME" && \
+    git clone https://github.com/alexbelgium/BirdNET-Pi BirdNET-additions && \
+    date1="$(cd BirdNET-Pi && git log -1 --format=%cd)" && \
+    timestamp1=$(date -d "$date1" +%s) && \
+    date2=$(cd BirdNET-additions && git log -1 --format=%cd) && \
+    timestamp2=$(date -d "$date2" +%s) && \
+    if [ $timestamp2 -gt $timestamp1 ]; then
+    	cp -Rf BirdNET-additions/* BirdNET-Pi/ && \
+    	rm -r BirdNET-additions && \
+    	sed -i "/find /d" BirdNET-Pi/scripts/*snippets* && \
+    	./BirdNET-Pi/scripts/*snippets*
+    fi
+
 ##################
 # 2 Modify Image #
 ##################
