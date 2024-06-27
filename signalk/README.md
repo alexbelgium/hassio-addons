@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [SignalK] Connecting to ttyUSB* (opened 2024-06-24)](https://github.com/alexbelgium/hassio-addons/issues/1450) by [@MrHobsons](https://github.com/MrHobsons)
 # Home assistant add-on: signalk
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
