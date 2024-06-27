@@ -103,9 +103,9 @@ RUN \
 RUN \
     cd "$HOME" && \
     git clone https://github.com/alexbelgium/BirdNET-Pi BirdNET-additions && \
-    date1="$(cd BirdNET-Pi && git log -1 --format=%cd)" && \
+    date1="$(cd BirdNET-Pi && git show -s --format=%ct HEAD | xargs -I{} date -d @{} +%Y-%m-%d)" && \
     timestamp1=$(date -d "$date1" +%s) && \
-    date2=$(cd BirdNET-additions && git log -1 --format=%cd) && \
+    date2=$(cd BirdNET-additions && git show -s --format=%ct HEAD | xargs -I{} date -d @{} +%Y-%m-%d) && \
     timestamp2=$(date -d "$date2" +%s) && \
     if [ $timestamp2 -gt $timestamp1 ]; then \
     	cp -Rf BirdNET-additions/* BirdNET-Pi/ && \
