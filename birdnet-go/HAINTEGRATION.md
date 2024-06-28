@@ -1,4 +1,4 @@
-# Birdnet-Go Addon: Home Assistant Integration
+# Birdnet-Go Addon: Home Assistant Integration[^1]
 
 Birdnet-Go can be integrated with Home Assistant using a MQTT Broker.
 
