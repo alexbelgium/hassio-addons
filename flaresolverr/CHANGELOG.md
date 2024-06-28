@@ -1,4 +1,7 @@
 
+## 3.3.21 (29-06-2024)
+- Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
+
 ## 3.3.20 (22-06-2024)
 - Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
 
