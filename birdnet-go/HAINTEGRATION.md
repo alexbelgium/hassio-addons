@@ -78,7 +78,7 @@ mqtt:
 ![Birdnet-go MQTT](./images/ha_birdnet_mqtt_sensor.png)
 
 
-## Birdnet-Go Events Sensor
+## Birdnet-Go Events Sensor[^1]
 
 Then create a new template sensor using the configuration below.
 
@@ -241,3 +241,7 @@ card_mod:
             padding-right: 18px;
       }
 ```
+
+## Footnotes
+
+[^1]: [Displaying Birdnet-go detections](https://community.home-assistant.io/t/displaying-birdnet-go-detections/713611/22)

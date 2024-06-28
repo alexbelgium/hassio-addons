@@ -65,7 +65,7 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-## Integration with HA[^1]
+## Integration with HA
 
 Home Assistant Integration instructions are found here, [Birdnet-Go Addon: Home Assistant Integration](./HAINTEGRATION.md)
 
@@ -138,6 +138,3 @@ Create an issue on github
 
 ![illustration](https://raw.githubusercontent.com/tphakala/birdnet-go/main/doc/BirdNET-Go-dashboard.webp)
 
-## Footnotes
-
-[^1]: [Displaying Birdnet-go detections](https://community.home-assistant.io/t/displaying-birdnet-go-detections/713611/22)
