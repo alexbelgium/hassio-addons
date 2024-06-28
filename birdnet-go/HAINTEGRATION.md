@@ -26,9 +26,7 @@ Edit this section of config.yaml found in addon_configs/db21ed7f_birdnet-go/:
 ```
 ## Birdnet-Go MQTT Sensors
 
-![Birdnet-go MQTT](./images/ha_birdnet_mqtt_sensor.png)
-
-Add the [MQTT sensor](https://www.home-assistant.io/integrations/sensor.mqtt/) yaml configuration below to your Home Assistant configuration.yaml
+Add the [MQTT sensor](https://www.home-assistant.io/integrations/sensor.mqtt/) yaml configuration below to your Home Assistant configuration.yaml file. Reload the configuration and once Birdnet-Go publishes a new finding to MQTT the new Birdnet-Go sensors should show that latest finding data.
 
 ```yaml
 mqtt:
@@ -77,6 +75,8 @@ mqtt:
       state_topic: "birdnet"
       value_template: "{{ today_at(value_json.Time) }}"
 ```
+![Birdnet-go MQTT](./images/ha_birdnet_mqtt_sensor.png)
+
 
 ## Birdnet-Go Events Sensor
 
