@@ -1,4 +1,4 @@
-# Home Assistant Integration
+# Birdnet-Go Addon: Home Assistant Integration
 
 Birdnet-Go can be integrated with Home Assistant using a MQTT Broker.
 
@@ -26,8 +26,7 @@ Edit this section of config.yaml found in addon_configs/db21ed7f_birdnet-go/:
 ```
 ## Birdnet-Go MQTT Sensors
 
-
-![Birdnet-go MQTT](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/birdnet-go/images/ha_birdnet_markdown_card_wikipedia.png)
+![Birdnet-go MQTT](./images/ha_birdnet_mqtt_sensor.png)
 
 Add the [MQTT sensor](https://www.home-assistant.io/integrations/sensor.mqtt/) yaml configuration below to your Home Assistant configuration.yaml
 
@@ -115,9 +114,9 @@ Then create a new template sensor using the configuration below.
 
 ### Birdnet-Go Dashboard Cards
 
-There are two versions listed below. One will link the Bird Name to Wikipedia the other one will link to All About Birds. You will need to modify the Confidence link to match your Home Assistant setup.
+There are two versions listed below. The first example will link the Bird Name to Wikipedia. The other example will link to All About Birds. You will need to modify the Confidence link to match your Home Assistant setup.
 
-![Birdnet-go Markdown Card Wikipedia](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/birdnet-go/images/ha_birdnet_markdown_card_wikipedia.png)
+![Birdnet-go Markdown Card Wikipedia](./images/ha_birdnet_markdown_card_wikipedia.png)
 
 ```yaml
 type: markdown
@@ -185,7 +184,7 @@ card_mod:
       }
 ```
 
-![Birdnet-go Markdown Card All About Birds](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/birdnet-go/images/ha_birdnet_markdown_card_all_about_birds.png)
+![Birdnet-go Markdown Card All About Birds](./images/ha_birdnet_markdown_card_all_about_birds.png)
 
 ```yaml
 type: markdown
@@ -242,61 +241,3 @@ card_mod:
             padding-right: 18px;
       }
 ```
-
-## Setting up a RTSP Source using VLC
-
-VLC opens a TCP port but the stream is udp. Because of this will need to configure Birdnet-Go to use udp. Adjust the config.yaml file to udp or use the birdnet-go command line option:
-
-`--rtsptransport udp --rtsp rtsp://192.168.1.21:8080/stream.sdp`
-
-### Linux instructions
-
-Run vlc without an interface using one of these commands:
-
-```bash
-# This should work for most devices
-/usr/bin/vlc -I dummy -vvv alsa://hw:0,0 --no-sout-all --sout-keep --sout '#transcode{acodec=mpga}:rtp{sdp=rtsp://:8080/stream.sdp}'
-
-# Try this if the first command does not work
-/usr/bin/vlc -I dummy -vvv alsa://hw:4,0 --no-sout-all --sout-keep --sout '#rtp{sdp=rtsp://:8080/stream.sdp}'
-```
-
-Run `arecord -l` to get microphone hardware info
-
-```text
-**** List of CAPTURE Hardware Devices ****
-card 0: PCH [HDA Intel PCH], device 0: ALC3220 Analog [ALC3220 Analog]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 2: S7 [SteelSeries Arctis 7], device 0: USB Audio [USB Audio]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 3: Nano [Yeti Nano], device 0: USB Audio [USB Audio]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 4: Device [USB PnP Sound Device], device 0: USB Audio [USB Audio]
-  Subdevices: 0/1
-  Subdevice #0: subdevice #0
-```
-
-hw:4,0 = **card 4**: Device [USB PnP Sound Device], **device 0**: USB Audio [USB Audio]
-
-Systemd service file example. Adjust the user:group accordingly. If you want to run as root, you will likely need to run vlc-wrapper instead of vlc.
-
-```text
-[Unit]
-Description=VLC Birdnet RTSP Server
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-Type=simple
-StandardOutput=journal
-ExecStart=/usr/bin/vlc -I dummy -vvv alsa://hw:0,0 --sout '#transcode{acodec=mpga}:rtp{sdp=rtsp://:8080/stream.sdp}'
-User=someone
-Group=somegroup
-
-[Install]
-WantedBy=multi-user.target
-```
-
