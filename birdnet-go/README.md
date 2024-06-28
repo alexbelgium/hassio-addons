@@ -255,16 +255,20 @@ card_mod:
 
 ## Setting up a RTSP Source using VLC
 
+VLC opens a TCP port but the stream is udp. Because of this will need to configure Birdnet-Go to use udp. Adjust the config.yaml file to udp or use the birdnet-go command line option:
+
+`--rtsptransport udp --rtsp rtsp://192.168.1.21:8080/stream.sdp`
+
 ### Linux instructions
 
 Run vlc without an interface using one of these commands:
 
 ```bash
 # This should work for most devices
-/usr/bin/vlc -I dummy -vvv alsa://hw:0,0 --sout '#transcode{acodec=mpga}:rtp{dst=192.168.1.21,port=1234,proto=tcp,sdp=rtsp://192.168.1.21:8080/stream.sdp}'
+/usr/bin/vlc -I dummy -vvv alsa://hw:0,0 --no-sout-all --sout-keep --sout '#transcode{acodec=mpga}:rtp{sdp=rtsp://:8080/stream.sdp}'
 
 # Try this if the first command does not work
-/usr/bin/vlc -I dummy -vvv alsa://hw:4,0 --sout '#rtp{dst=192.168.1.21,port=1234,proto=tcp,sdp=rtsp://192.168.1.21:8080/stream.sdp}'
+/usr/bin/vlc -I dummy -vvv alsa://hw:4,0 --no-sout-all --sout-keep --sout '#rtp{sdp=rtsp://:8080/stream.sdp}'
 ```
 
 Run `arecord -l` to get microphone hardware info
@@ -298,7 +302,7 @@ After=network-online.target
 [Service]
 Type=simple
 StandardOutput=journal
-ExecStart=/usr/bin/vlc -I dummy -vvv alsa://hw:0,0 --sout '#transcode{acodec=mpga}:rtp{dst=192.168.1.21,port=1234,proto=tcp,sdp=rtsp://192.168.1.21:8080/stream.sdp}'
+ExecStart=/usr/bin/vlc -I dummy -vvv alsa://hw:0,0 --sout '#transcode{acodec=mpga}:rtp{sdp=rtsp://:8080/stream.sdp}'
 User=someone
 Group=somegroup
 
