@@ -40,7 +40,9 @@ Features of the addon :
 ---
 
 Install, then start the addon a first time
-Webui can be found at <http://homeassistant:80>.
+Webui can be found by two ways :
+- Ingress from HA (no password but some functions don't work)
+- Direct access with <http://homeassistant:port>, port being the one defined in the birdnet.conf. The username when asked for a password is `birdnet`, the password is the one that you can define in the birdnet.con (blank by default)
 
 You'll need a microphone : either use one connected to HA or the audio stream of a rstp camera.
 
