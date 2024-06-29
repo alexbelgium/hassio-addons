@@ -1,5 +1,4 @@
-## 0.13-59 (28-06-2024)
-- Update latest upstream
+- [FIX] : safeguard to avoid embedded pulseaudio interference
 
 ## 0.13-58 (27-06-2024)
 - [UI] : Improved dark mode

@@ -28,7 +28,8 @@ done
 
 # Remove pulseaudio server to force using HA one
 echo "... remove embedded pulseaudio"
-for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do
+# shellcheck disable=SC2013
+for file in $(grep -srl "pulseaudio --start" "$HOME"/BirdNET-Pi/scripts); do
     sed -i "/pulseaudio --start/d" "$file"
 done
 
