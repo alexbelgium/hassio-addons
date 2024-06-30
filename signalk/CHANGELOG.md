@@ -1,3 +1,5 @@
+## 2.8.3-4 (30-06-2024)
+- Minor bugs fixed
 ## 2.8.3-2 (29-06-2024)
 - Minor bugs fixed
 
