@@ -1,4 +1,3 @@
-## 0.13-60 (29-06-2024)
 - [FIX] : safeguard to avoid embedded pulseaudio interference
 
 ## 0.13-58 (27-06-2024)
