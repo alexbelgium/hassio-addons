@@ -6,10 +6,10 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "An implementation of a Signal K central server for boats",
-    "devices": [
+  "devices": [
     "/dev/ttyUSB0",
     "/dev/ttyUSB1"
-    ],
+  ],
   "environment": {
     "HOME": "/config",
     "NMEA0183PORT": "10110",
@@ -41,8 +41,9 @@
     "1460/udp": "Custom 3"
   },
   "slug": "signalk",
+  "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "2.8.3-3",
+  "version": "2.8.3-4",
   "webui": "http://[HOST]:[PORT:3000]"
 }
