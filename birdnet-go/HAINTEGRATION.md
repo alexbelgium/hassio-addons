@@ -76,6 +76,7 @@ mqtt:
       state_topic: "birdnet"
       value_template: "{{ today_at(value_json.Time) }}"
 ```
+
 ![BirdNET-go MQTT](./images/ha_birdnet_mqtt_sensor.png)
 
 ## BirdNET-Go Events Sensor[^1]
