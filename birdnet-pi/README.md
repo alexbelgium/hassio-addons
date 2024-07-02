@@ -142,6 +142,10 @@ Denoise is frowned upon by serious researchers. However it does seem to signific
 
 Should be avoided as the model uses the whole 0-15khz range
 
+## Illustration
+
+![image](https://github.com/alexbelgium/hassio-addons/assets/44178713/dddf2ad9-b031-4ab4-9428-303ea56d9700)
+
 ## Common issues
 
 Not yet available
