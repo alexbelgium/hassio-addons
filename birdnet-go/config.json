@@ -77,6 +77,7 @@
   ],
   "name": "Birdnet-go",
   "options": {
+    "BIRDSONGS_FOLDER": "/config/clips",
     "COMMAND": "realtime"
   },
   "panel_admin": false,
@@ -93,6 +94,7 @@
   ],
   "schema": {
     "ALSA_CARD": "int?",
+    "BIRDSONGS_FOLDER": "str?",
     "COMMAND": "str",
     "TZ": "str?",
     "cifsdomain": "str?",
@@ -108,5 +110,5 @@
   "slug": "birdnet-go",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go",
-  "version": "0.5.5-2"
+  "version": "0.5.5-3"
 }
