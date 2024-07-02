@@ -1,3 +1,4 @@
+## 2.8.3-5 (02-07-2024)
 - Fix : permissions access to ttyUSB
 
 ## 2.8.3 (29-06-2024)
