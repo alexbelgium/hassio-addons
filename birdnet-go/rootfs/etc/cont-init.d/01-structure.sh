@@ -30,8 +30,8 @@ bashio::log.info "Correct config for defaults"
 echo "... database location is /config/birdnet.db"
 for configloc in /config/config.yaml /internal/conf/config.yaml; do
     if [ -f "$configloc" ]; then
-        sed -i "/path: birdnet.db/c\    path: /config/birdnet.db  # path to sqlite database" "$configloc"
-        sed -i "/path to sqlite database/c\    path: /config/birdnet.db # path to sqlite database" "$configloc"
+        sed -i "/path: birdnet.db/c\        path: /config/birdnet.db  # path to sqlite database" "$configloc"
+        sed -i "/path to sqlite database/c\        path: /config/birdnet.db # path to sqlite database" "$configloc"
     fi
 done
 
@@ -39,11 +39,10 @@ done
 echo "... audio clips saved to $birdsongsloc"
 for configloc in /config/config.yaml /internal/conf/config.yaml; do
     if [ -f "$configloc" ]; then
-        sed -i "/path: clips/c\      path: $birdsongsloc/  # path to audio clip export directory" "$configloc"
-        sed -i "/audio clip export directory/c\      path: $birdsongsloc/ # path to audio clip export directory" "$configloc"
+        sed -i "/path: clips/c\        path: $birdsongsloc/  # path to audio clip export directory" "$configloc"
+        sed -i "/audio clip export directory/c\        path: $birdsongsloc/ # path to audio clip export directory" "$configloc"
     fi
 done
-
 # If default capture is set at 0%, increase it to 50%
 current_volume="$(amixer sget Capture | grep -oP '\[\d+%]' | tr -d '[]%' | head -1)" 2>/dev/null || true
 current_volume="${current_volume:-100}"

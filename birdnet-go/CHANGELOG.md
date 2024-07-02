@@ -1,3 +1,4 @@
+## 0.5.5-3 (02-07-2024)
 - New option : set the audio clip directory from addon options
 
 ## 0.5.5-2 (25-06-2024)
