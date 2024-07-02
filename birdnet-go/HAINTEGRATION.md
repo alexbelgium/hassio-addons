@@ -1,13 +1,13 @@
-# Birdnet-Go Addon: Home Assistant Integration
+# BirdNET-Go Addon: Home Assistant Integration
 
-Birdnet-Go can be integrated with Home Assistant using a MQTT Broker.
+BirdNET-Go can be integrated with Home Assistant using a MQTT Broker.
 
 ## MQTT Configuration
 
-Your Home Assistant must be setup with MQTT and Birdnet-Go MQTT integration must be enabled. Modify the Birdnet-Go config.yaml file to enable MQTT. If you are using the Mosquitto Broker addon, you will see a log message during the Birdnet-Go startup showing the internal MQTT server details needed for configuration similar to below.
+Your Home Assistant must be setup with MQTT and BirdNET-Go MQTT integration must be enabled. Modify the BirdNET-Go config.yaml file to enable MQTT. If you are using the Mosquitto Broker addon, you will see a log message during the BirdNET-Go startup showing the internal MQTT server details needed for configuration similar to below.
 
 ```text
-Birdnet-Go log snipped showing MQTT details:
+BirdNET-Go log snipped showing MQTT details:
 /etc/cont-init.d/33-mqtt.sh: executing
 ---
 MQTT addon is active on your system! Add the MQTT details below to the Birdnet-go config.yaml :
@@ -24,9 +24,9 @@ Edit this section of config.yaml found in addon_configs/db21ed7f_birdnet-go/:
         username: addons # MQTT username
         password: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # MQTT password
 ```
-## Birdnet-Go MQTT Sensors
+## BirdNET-Go MQTT Sensors
 
-Add the [MQTT sensor](https://www.home-assistant.io/integrations/sensor.mqtt/) yaml configuration below to your Home Assistant configuration.yaml file. Reload the configuration and once Birdnet-Go publishes a new finding to MQTT the new Birdnet-Go sensors should show that latest finding data.
+Add the [MQTT sensor](https://www.home-assistant.io/integrations/sensor.mqtt/) yaml configuration below to your Home Assistant configuration.yaml file. Reload the configuration and once BirdNET-Go publishes a new finding to MQTT the new BirdNET-Go sensors should show that latest finding data.
 
 ```yaml
 mqtt:
@@ -75,10 +75,10 @@ mqtt:
       state_topic: "birdnet"
       value_template: "{{ today_at(value_json.Time) }}"
 ```
-![Birdnet-go MQTT](./images/ha_birdnet_mqtt_sensor.png)
+![BirdNET-go MQTT](./images/ha_birdnet_mqtt_sensor.png)
 
 
-## Birdnet-Go Events Sensor[^1]
+## BirdNET-Go Events Sensor[^1]
 
 Then create a new template sensor using the configuration below.
 
@@ -112,15 +112,15 @@ Then create a new template sensor using the configuration below.
           {% endif %}
 ```
 
-### Birdnet-Go Dashboard Cards
+### BirdNET-Go Dashboard Cards
 
 There are two versions listed below. The first example will link the Bird Name to Wikipedia. The other example will link to All About Birds. You will need to modify the Confidence link to match your Home Assistant setup.
 
-![Birdnet-go Markdown Card Wikipedia](./images/ha_birdnet_markdown_card_wikipedia.png)
+![BirdNET-go Markdown Card Wikipedia](./images/ha_birdnet_markdown_card_wikipedia.png)
 
 ```yaml
 type: markdown
-title: Birdnet (Wikipedia)
+title: BirdNET (Wikipedia)
 content: >-
   Time|&nbsp;&nbsp;Bird Name|Number Today| &nbsp;&nbsp;&nbsp;Max
   [Confidence](http://ip_address_of_HA:8080/)
@@ -184,11 +184,11 @@ card_mod:
       }
 ```
 
-![Birdnet-go Markdown Card All About Birds](./images/ha_birdnet_markdown_card_all_about_birds.png)
+![BirdNET-go Markdown Card All About Birds](./images/ha_birdnet_markdown_card_all_about_birds.png)
 
 ```yaml
 type: markdown
-title: Birdnet (All About Birds)
+title: BirdNET (All About Birds)
 content: >-
   Time|&nbsp;&nbsp;Bird Name|Number Today| &nbsp;&nbsp;&nbsp;Max
   [Confidence](http://ip_address_of_HA:8080/)
