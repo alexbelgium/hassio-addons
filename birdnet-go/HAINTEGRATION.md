@@ -123,7 +123,7 @@ type: markdown
 title: Birdnet (Wikipedia)
 content: >-
   Time|&nbsp;&nbsp;Bird Name|Number Today| &nbsp;&nbsp;&nbsp;Max
-  [Confidence](http://192.168.1.25:8081/)
+  [Confidence](http://ip_address_of_HA:8080/)
 
   :---|:---|:---:|:---:
 

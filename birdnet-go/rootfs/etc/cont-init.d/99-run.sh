@@ -16,8 +16,7 @@ echo " "
 bashio::log.info "Starting app..."
 COMMAND="$(bashio::config "COMMAND")"
 # shellcheck disable=SC2086
-mkdir -p /root/.config/birdnet-go
-cd /root/.config/birdnet-go
+
 /usr/bin/birdnet-go $COMMAND & true
 
 # Wait for app to become available to start nginx
