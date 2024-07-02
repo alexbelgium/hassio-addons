@@ -24,6 +24,7 @@ Edit this section of config.yaml found in addon_configs/db21ed7f_birdnet-go/:
         username: addons # MQTT username
         password: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # MQTT password
 ```
+
 ## BirdNET-Go MQTT Sensors
 
 Add the [MQTT sensor](https://www.home-assistant.io/integrations/sensor.mqtt/) yaml configuration below to your Home Assistant configuration.yaml file. Reload the configuration and once BirdNET-Go publishes a new finding to MQTT the new BirdNET-Go sensors should show that latest finding data.
@@ -76,7 +77,6 @@ mqtt:
       value_template: "{{ today_at(value_json.Time) }}"
 ```
 ![BirdNET-go MQTT](./images/ha_birdnet_mqtt_sensor.png)
-
 
 ## BirdNET-Go Events Sensor[^1]
 
