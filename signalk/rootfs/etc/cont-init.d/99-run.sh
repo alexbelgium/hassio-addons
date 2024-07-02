@@ -14,14 +14,12 @@ ln -sf /config /home/node/.signalk
 chown -R node:node /config
 chown -R node:node /home/node/.signalk
 
-# Define permissions for /dev/ttyUSB
-for device in /dev/ttyUSB /dev/ttyUSB0 /dev/ttyUSB1; do
-    if [ -f "$device" ]; do
-        usermod -a -G "$(stat -c "%G" "$device")" $USER
-        chmod 777 "$device"
-        chown "$USER" "$device"
-    done
-done
+# Give node user permissions for devices
+for group in tty dialout plugdev uucp; do
+    if compgen -g | grep -q "$group"; then
+        usermod -a -G "$group" "$USER" || true
+    fi
+done 
 
 bashio::log.info "Starting application"
 
