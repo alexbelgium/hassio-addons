@@ -39,8 +39,8 @@ done
 echo "... audio clips saved to $birdsongsloc"
 for configloc in /config/config.yaml /internal/conf/config.yaml; do
     if [ -f "$configloc" ]; then
-        sed -i "/path: clips/c\        path: $birdsongsloc  # path to audio clip export directory" "$configloc"
-        sed -i "/audio clip export directory/c\        path: $birdsongsloc # path to audio clip export directory" "$configloc"
+        sed -i "/path: clips/c\        path: $birdsongsloc/  # path to audio clip export directory" "$configloc"
+        sed -i "/audio clip export directory/c\        path: $birdsongsloc/ # path to audio clip export directory" "$configloc"
     fi
 done
 # If default capture is set at 0%, increase it to 50%
