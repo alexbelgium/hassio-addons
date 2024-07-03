@@ -30,8 +30,8 @@ bashio::log.info "Correct config for defaults"
 echo "... database location is /config/birdnet.db"
 for configloc in /config/config.yaml /internal/conf/config.yaml; do
     if [ -f "$configloc" ]; then
-        sed -i "/path: birdnet.db/c\      path: /config/birdnet.db  # path to sqlite database" "$configloc"
-        sed -i "/path to sqlite database/c\      path: /config/birdnet.db # path to sqlite database" "$configloc"
+        sed -i "/path: birdnet.db/c\    path: /config/birdnet.db  # path to sqlite database" "$configloc"
+        sed -i "/path to sqlite database/c\    path: /config/birdnet.db # path to sqlite database" "$configloc"
     fi
 done
 
