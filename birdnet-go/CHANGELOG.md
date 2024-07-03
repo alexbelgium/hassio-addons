@@ -1,3 +1,5 @@
+## 0.5.5-6 (03-07-2024)
+- Minor bugs fixed
 ## 0.5.5-5 (02-07-2024)
 - New option : set the audio clip directory from addon options
 
