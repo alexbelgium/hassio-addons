@@ -7,7 +7,7 @@ set -e
 ################
 
 echo " "
-bashio::log.info "Adding new features"
+bashio::log.info "Adding optional features"
 
 # Add species conversion system
 ###############################

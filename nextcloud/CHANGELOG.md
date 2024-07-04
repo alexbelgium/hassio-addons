@@ -1,3 +1,6 @@
+
+## 29.0.3 (29-06-2024)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 ## 29.0.2-3 (25-06-2024)
 - Fix "cannot enable app"
 

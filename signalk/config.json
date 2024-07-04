@@ -6,6 +6,10 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "An implementation of a Signal K central server for boats",
+  "devices": [
+    "/dev/ttyUSB0",
+    "/dev/ttyUSB1"
+  ],
   "environment": {
     "HOME": "/config",
     "NMEA0183PORT": "10110",
@@ -22,16 +26,24 @@
     "10110/tcp": 10110,
     "3000/tcp": 3000,
     "3443/tcp": 3443,
-    "8375/tcp": 8375
+    "8375/tcp": 8375,
+    "1458/udp": null,
+    "1459/tcp": null,
+    "1460/udp": null
   },
   "ports_description": {
     "10110/tcp": "NMEA0183 port",
     "3000/tcp": "web interface",
     "3443/tcp": "ssl web interface",
-    "8375/tcp": "TCPSTREAM port"
+    "8375/tcp": "TCPSTREAM port",
+    "1458/udp": "Custom 1",
+    "1459/tcp": "Custom 2",
+    "1460/udp": "Custom 3"
   },
   "slug": "signalk",
+  "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.8.2",
+  "usb": true,
+  "version": "2.8.3-4",
   "webui": "http://[HOST]:[PORT:3000]"
 }

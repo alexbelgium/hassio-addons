@@ -1,6 +1,12 @@
+## 0.13-61 (30-06-2024)
+- [FIX] : safeguard to avoid embedded pulseaudio interference
 
-## 0.1 (22-06-2024)
-- Update to latest version from Nachtzuster/BirdNET-Pi (changelog : https://github.com/Nachtzuster/BirdNET-Pi/releases)
+## 0.13-58 (27-06-2024)
+- [UI] : Improved dark mode
+- [UI] : New standardized behavior of click on Com_Name and Sci_Name
+- [FEAT] : add species whitelist
+- [FEAT] : new disk usage settings
+
 ## 0.13-55 (19-06-2024)
 - Several upstream improvements
 - Disable by default livrestream on boot : reduce idle cpu by half

@@ -26,6 +26,13 @@ for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs
     fi
 done
 
+# Remove pulseaudio server to force using HA one
+echo "... remove embedded pulseaudio"
+# shellcheck disable=SC2013
+for file in $(grep -srl "pulseaudio --start" "$HOME"/BirdNET-Pi/scripts); do
+    sed -i "/pulseaudio --start/d" "$file"
+done
+
 # Send services log to container logs
 echo "... send services log to container logs"
 for file in $(find "$HOME"/BirdNET-Pi/templates/birdnet*.service -print0 | xargs -0 basename -a) livestream.service chart_viewer.service chart_viewer.service spectrogram_viewer.service; do
