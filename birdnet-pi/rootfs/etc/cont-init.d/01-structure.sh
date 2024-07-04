@@ -16,6 +16,7 @@ touch /config/include_species_list.txt
 touch /config/exclude_species_list.txt
 if [ ! -f /config/IdentifiedSoFar.txt ]; then echo "" > /config/IdentifiedSoFar.txt; fi
 if [ ! -f /config/disk_check_exclude.txt ]; then echo "" > /config/disk_check_exclude.txt; fi # Using touch caused an issue with stats.php
+if [ ! -f /config/confirmed_species_list.txt ]; then echo "" > /config/confirmed_species_list.txt; fi # Using touch caused an issue with stats.php
 
 # Get BirdSongs folder locations
 BIRDSONGS_FOLDER="/config/BirdSongs"
@@ -57,7 +58,7 @@ cp "$HOME"/BirdNET-Pi/birdnet.conf "$HOME"/BirdNET-Pi/birdnet.bak
 
 # Symlink files
 echo "... creating symlink"
-for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/BirdDB.txt" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt"; do
+for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/BirdDB.txt" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt" "$HOME/BirdNET-Pi/confirmed_species_list.txt"; do
     filename="${files##*/}"
     if [ ! -f /config/"$filename" ]; then
         if [ -f "$files" ]; then 
