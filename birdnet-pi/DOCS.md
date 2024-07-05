@@ -6,7 +6,7 @@ The critical element is the microphone quality : a Boya By-lm 40 or clippy EM272
 Here is some example tests I did (whole threads are really interesting also): https://github.com/mcguirepr89/BirdNET-Pi/discussions/39#discussioncomment-9706951 
 https://github.com/mcguirepr89/BirdNET-Pi/discussions/1092#discussioncomment-9706191
 
-My recommendation :
+My recommendation (https://github.com/mcguirepr89/BirdNET-Pi/discussions/39#discussioncomment-9706951) :
 - Best entry system (< 50€) : Boya By-lm40 (30€) + deadcat (10 €)
 - Best middle system (< 100 €) : HyperX Quadcast (80€) + deadcat (10€) ; but I'm concerned about the longevity of this mic outside
 - Best high end system (< 150 €) : Clippy EM272 (55€) + Rode AI micro trrs to usb (70€) + Rycote deadcat (27€)
