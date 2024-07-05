@@ -63,7 +63,7 @@ def on_disconnect(client, userdata, rc, disconnect_flags, properties=None):
     logging.info(f"Disconnected from MQTT Broker with rc: {rc}")
 
 # Setup MQTT client
-mqtt_client = mqtt_client.Client(client_id)
+mqtt_client = mqtt.Client('birdnet_mqtt')  # Create instance of client with client ID
 mqtt_client.username_pw_set(USERNAME, PASSWORD)
 mqtt_client.on_connect = on_connect
 mqtt_client.on_disconnect = on_disconnect
