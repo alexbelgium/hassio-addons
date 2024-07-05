@@ -141,6 +141,6 @@
   "slug": "immich",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.106.4-3",
+  "version": "1.107.2",
   "webui": "http://[HOST]:[PORT:8080]"
 }
