@@ -108,11 +108,14 @@
     "pi_password": "password",
     "ssl": "bool"
   },
+  "services": [
+    "mqtt:want"
+  ],
   "slug": "birdnet-pi",
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-61",
+  "version": "0.13-62",
   "video": true
 }
