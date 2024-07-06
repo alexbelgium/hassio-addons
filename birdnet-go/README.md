@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Birdnet-Go (opened 2024-05-07)](https://github.com/alexbelgium/hassio-addons/issues/1385) by [@matthew73210](https://github.com/matthew73210)
+## &#9888; Open Issue : [🐛 [Birdnet-go] config.yaml always automatically altered at runtime to fail (opened 2024-07-06)](https://github.com/alexbelgium/hassio-addons/issues/1465) by [@tlj1899](https://github.com/tlj1899)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
