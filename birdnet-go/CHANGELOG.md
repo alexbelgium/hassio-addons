@@ -1,3 +1,5 @@
+- Correct indentation issue
+
 ## 0.5.5-8 (03-07-2024)
 - New option : set the audio clip directory from addon options
 
