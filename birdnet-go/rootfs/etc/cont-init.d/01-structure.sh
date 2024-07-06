@@ -30,8 +30,7 @@ bashio::log.info "Correct config for defaults"
 echo "... database location is /config/birdnet.db"
 for configloc in /config/config.yaml /internal/conf/config.yaml; do
     if [ -f "$configloc" ]; then
-        sed -i "/path: birdnet.db/c\    path: /config/birdnet.db  # path to sqlite database" "$configloc"
-        sed -i "/path to sqlite database/c\    path: /config/birdnet.db # path to sqlite database" "$configloc"
+        sed -i "s| birdnet.db| /config/birdnet.db|g" "$configloc"
     fi
 done
 
@@ -39,8 +38,7 @@ done
 echo "... audio clips saved to $birdsongsloc"
 for configloc in /config/config.yaml /internal/conf/config.yaml; do
     if [ -f "$configloc" ]; then
-        sed -i "/path: clips/c\      path: $birdsongsloc/  # path to audio clip export directory" "$configloc"
-        sed -i "/audio clip export directory/c\      path: $birdsongsloc/ # path to audio clip export directory" "$configloc"
+        sed -E "s|(.*path: ).*( #.*audio clip export directory.*)|\1$birdsongsloc\2|g" "$configloc"
     fi
 done
 
