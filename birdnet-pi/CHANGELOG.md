@@ -1,3 +1,5 @@
+## 0.13-63 (06-07-2024)
+- Minor bugs fixed
 ## 0.13-62 (05-07-2024)
 - [FEAT] : publish mqtt to homeassistant if a server is found
 
