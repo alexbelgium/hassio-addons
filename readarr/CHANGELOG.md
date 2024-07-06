@@ -1,3 +1,5 @@
+## 0.3.30.2576-2 (06-07-2024)
+- Minor bugs fixed
 
 ## 0.3.30.2576 (06-07-2024)
 - Update to latest version from linuxserver/docker-readarr (changelog : https://github.com/linuxserver/docker-readarr/releases)
