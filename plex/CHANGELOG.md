@@ -1,3 +1,5 @@
+## 1.40.3.8555-fef15d30c-ls220-2 (06-07-2024)
+- Minor bugs fixed
 
 ## 1.40.3.8555-fef15d30c-ls220 (06-07-2024)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
