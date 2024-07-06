@@ -1,3 +1,5 @@
+## 5.13-2024-07-03-2 (06-07-2024)
+- Minor bugs fixed
 
 ## 5.13-2024-07-03 (2024-07-03)
 - Update to latest version from mbentley/omada-controller
