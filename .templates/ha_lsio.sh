@@ -51,6 +51,11 @@ if [ -f /etc/s6-overlay/s6-rc.d/svc-cron/run ]; then
     sed -i "/exec \/usr\/sbin\/cron/c exec /usr/sbin/cron -f &>/proc/1/fd/1" /etc/s6-overlay/s6-rc.d/svc-cron/run
 fi
 
+# variables not found
+for file in $(grep -srl "/usr/bin" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do
+    sed -i "1a set +u" "$file"
+done
+
 # Replace lsiown if not found
 if [ ! -f /usr/bin/lsiown ]; then
     for file in $(grep -sril "lsiown" /etc); do
