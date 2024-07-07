@@ -33,14 +33,14 @@ done
 ################
 
 # If default capture is set at 0%, increase it to 50%
-current_volume="$(amixer sget Capture | grep -oP '\[\d+%]' | tr -d '[]%' | head -1)" 2>/dev/null || true
-current_volume="${current_volume:-100}"
+# current_volume="$(amixer sget Capture | grep -oP '\[\d+%]' | tr -d '[]%' | head -1)" 2>/dev/null || true
+# current_volume="${current_volume:-100}"
 
 # Set the default microphone volume to 50% if it's currently at 0%
-if [[ "$current_volume" -eq 0 ]]; then
-    amixer sset Capture 70%
-    bashio::log.warning "Microphone was off, volume set to 70%."
-fi
+# if [[ "$current_volume" -eq 0 ]]; then
+#     amixer sset Capture 70%
+#     bashio::log.warning "Microphone was off, volume set to 70%."
+# fi
 
 ##############
 # CHECK PORT #
