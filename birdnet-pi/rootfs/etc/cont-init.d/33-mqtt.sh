@@ -4,6 +4,8 @@ set -e
 
 # Gives mqtt information
 
+exit 0
+
 if bashio::services.available 'mqtt'; then
     bashio::log.green "---"
     bashio::log.blue "MQTT addon is active on your system! Birdnet-pi is now automatically configured to send its ouptut to MQTT"
