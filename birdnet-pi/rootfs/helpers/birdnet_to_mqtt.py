@@ -1,7 +1,8 @@
 #! /usr/bin/env python3
 # birdnet_to_mqtt.py
 #
-# From https://gist.github.com/deepcoder/c309087c456fc733435b47d83f4113ff
+# Adapted from : https://gist.github.com/deepcoder/c309087c456fc733435b47d83f4113ff
+# Adapted from : https://gist.github.com/JuanMeeske/08b839246a62ff38778f701fc1da5554
 #
 # monitor the records in the syslog file for info from the birdnet system on birds that it detects
 # publish this data to mqtt
@@ -12,8 +13,11 @@ import re
 import dateparser    
 import datetime
 import json
+import logging
 import paho.mqtt.client as mqtt
 
+# Setup basic configuration for logging
+logging.basicConfig(level=logging.INFO)
 
 # this generator function monitors the requested file handle for new lines added at its end
 # the newly added line is returned by the function
@@ -51,6 +55,13 @@ re_high_clean = re.compile(r'(?<=\]:).*\.mp3$')
 
 syslog = open('/proc/1/fd/1', 'r')
 
+def on_connect(client, userdata, flags, rc, properties=None):
+    """ Callback for when the client receives a CONNACK response from the server. """
+    if rc == 0:
+        logging.info("Connected to MQTT Broker!")
+    else:
+        logging.error(f"Failed to connect, return code {rc}\n")
+
 # this little hack is to make each received record for the all birds section unique
 # the date and time that the log returns is only down to the 1 second accuracy, do
 # you can get multiple records with same date and time, this will make Home Assistant not
@@ -62,6 +73,7 @@ ts_noise = 0.0
 mqttc = mqtt.Client('birdnet_mqtt')  # Create instance of client with client ID
 mqttc.username_pw_set(mqtt_user, mqtt_pass) # Use credentials
 mqttc.connect(mqtt_server, mqtt_port)  # Connect to (broker, port, keepalive-time)
+mqttc.on_connect = on_connect
 mqttc.loop_start()
 
 # call the generator function and process each line that is returned
