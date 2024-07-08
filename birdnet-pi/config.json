@@ -72,6 +72,7 @@
   "name": "BirdNET-pi",
   "options": {
     "BIRDSONGS_FOLDER": "/config/BirdSongs",
+    "MQTT_DISABLED": true,
     "LIVESTREAM_BOOT_ENABLED": false,
     "TZ": "Europe/Paris",
     "certfile": "fullchain.pem",
@@ -117,6 +118,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "0.13-65",
+  "version": "0.13-66",
   "video": true
 }
