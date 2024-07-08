@@ -15,6 +15,7 @@ import datetime
 import json
 import logging
 import paho.mqtt.client as mqtt
+import subprocess
 
 # Setup basic configuration for logging
 logging.basicConfig(level=logging.INFO)
@@ -35,11 +36,8 @@ mqtt_user = "%%mqtt_user%%"  # Replace with your MQTT username
 mqtt_pass = "%%mqtt_pass%%"  # Replace with your MQTT password
 mqtt_port = %%mqtt_port%% # port for mqtt
 
-# mqtt topic where all heard birds will be published
-mqtt_topic_all_birds = 'birdpi/all'
-
 # mqtt topic for bird heard above threshold will be published
-mqtt_topic_confident_birds = 'birdpi/confident'
+mqtt_topic_confident_birds = 'birdnet'
 
 # url base for website that will be used to look up info about bird
 bird_lookup_url_base = 'http://en.wikipedia.org/wiki/'
@@ -61,6 +59,17 @@ def on_connect(client, userdata, flags, rc, properties=None):
         logging.info("Connected to MQTT Broker!")
     else:
         logging.error(f"Failed to connect, return code {rc}\n")
+
+def call_php_function(bird_name):
+    php_code = f"""
+    <?php
+    include('/home/pi/BirdNET-Pi/scripts/common.php');
+    echo get_info_url('{bird_name}');
+    ?>
+    """
+    process = subprocess.Popen(['php'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    stdout, _ = process.communicate(php_code.encode())
+    return stdout.decode().strip()
 
 # this little hack is to make each received record for the all birds section unique
 # the date and time that the log returns is only down to the 1 second accuracy, do
@@ -103,9 +112,14 @@ for row in file_row_generator(syslog):
         raw_ts = high_bird_fields[0] + ' ' + high_bird_fields[1]
 
         bird['ts'] = str(datetime.datetime.timestamp(dateparser.parse(raw_ts)))
-        bird['sciname'] = high_bird_fields[2]
-        bird['comname'] = high_bird_fields[3]
-        bird['confidence'] = high_bird_fields[4]
+        bird['Date'] = high_bird_fields[0]
+        bird['Time'] = high_bird_fields[1]
+        bird['ScientificName'] = high_bird_fields[2]
+        bird['CommonName'] = high_bird_fields[3]
+        bird['Confidence'] = high_bird_fields[4]
+        bird['SpeciesCode'] = call_php_function(high_bird_fields[2])
+        bird['ClipName'] = high_bird_fields[12]
+        
         # build a url from scientific name of bird that can be used to lookup info about bird
         bird['url'] = bird_lookup_url_base + high_bird_fields[2].replace(' ', '_')
 
