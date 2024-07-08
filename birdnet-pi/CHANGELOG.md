@@ -1,3 +1,4 @@
+## 0.13-66 (08-07-2024)
 - Disable automatic mqtt by default
 
 ## 0.13-65 (08-07-2024)
