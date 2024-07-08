@@ -21,6 +21,6 @@ if bashio::services.available 'mqtt'; then
     chmod 777 /usr/bin/birdnet_to_mqtt.py
 
     # Start python
-    "$PYTHON_VIRTUAL_ENV" /usr/bin/birdnet_to_mqtt.py & true
+    "$PYTHON_VIRTUAL_ENV" /usr/bin/birdnet_to_mqtt.py &>/proc/1/fd/1 & true
 
 fi
