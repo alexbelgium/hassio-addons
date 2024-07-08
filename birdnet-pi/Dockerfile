@@ -84,11 +84,12 @@ RUN \
     sed -i "/git clone/a chown -R 1000:1000 $HOME" /newinstaller.sh && \
     # Remove all instances of sudo from the newinstaller
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
-    # Add MQTT dependencies
-    echo "dateparser" >> /requirements.txt && \
     \
     # Execute installer
     /./newinstaller.sh && \
+    \
+    # Install dateparser
+    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser && \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
