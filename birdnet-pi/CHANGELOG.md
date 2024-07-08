@@ -1,3 +1,5 @@
+- Disable automatic mqtt by default
+
 ## 0.13-65 (08-07-2024)
 - [FEAT] : publish mqtt to homeassistant if a server is found
 
