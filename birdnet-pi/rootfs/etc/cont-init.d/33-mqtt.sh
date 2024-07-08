@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -e
 
-if bashio::services.available 'mqtt'; then
+if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED' ; then
     bashio::log.green "---"
     bashio::log.blue "MQTT addon is active on your system! Birdnet-pi is now automatically configured to send its ouptut to MQTT"
     bashio::log.blue "MQTT user : $(bashio::services "mqtt" "username")"
@@ -22,5 +22,4 @@ if bashio::services.available 'mqtt'; then
 
     # Start python
     "$PYTHON_VIRTUAL_ENV" /usr/bin/birdnet_to_mqtt.py &>/proc/1/fd/1 & true
-
 fi
