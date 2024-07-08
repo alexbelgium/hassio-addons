@@ -18,7 +18,6 @@ import paho.mqtt.client as mqtt
 # this generator function monitors the requested file handle for new lines added at its end
 # the newly added line is returned by the function
 def file_row_generator(s):
-    s.seek(0,2)
     while True :
         line = s.readline()
         if not line:
@@ -54,7 +53,7 @@ re_log_timestamp = re.compile(r'.+?(?= birdnet-)')
 re_high_found = re.compile(r'(?<=python3\[).*\.mp3$')
 re_high_clean = re.compile(r'(?<=\]:).*\.mp3$')
 
-syslog = open('/test')
+syslog = open('/proc/1/fd/1', 'r')
 
 # this little hack is to make each received record for the all birds section unique
 # the date and time that the log returns is only down to the 1 second accuracy, do
