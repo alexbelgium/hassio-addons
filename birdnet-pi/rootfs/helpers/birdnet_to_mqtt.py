@@ -27,7 +27,7 @@ def file_row_generator(s):
 
 # flag to select whether to process all detections, if False, only the records above the set threshold will be processed
 
-process_all = True
+process_all = False
 
 # mqtt server
 mqtt_server = "%%mqtt_server%%" # server for mqtt
