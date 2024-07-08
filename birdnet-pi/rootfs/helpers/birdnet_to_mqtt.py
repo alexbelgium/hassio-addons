@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # birdnet_to_mqtt.py
 #
-# 202306171542
+# From https://gist.github.com/deepcoder/c309087c456fc733435b47d83f4113ff
 #
 # monitor the records in the syslog file for info from the birdnet system on birds that it detects
 # publish this data to mqtt
