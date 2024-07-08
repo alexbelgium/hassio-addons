@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # birdnet_to_mqtt.py
 #
-# from https://gist.github.com/JuanMeeske/08b839246a62ff38778f701fc1da5554
+# 202306171542
 #
 # monitor the records in the syslog file for info from the birdnet system on birds that it detects
 # publish this data to mqtt
@@ -9,112 +9,146 @@
 
 import time
 import re
-import dateparser
+import dateparser    
 import datetime
 import json
-import sys
-import logging
 import paho.mqtt.client as mqtt
 
-# Setup basic configuration for logging
-logging.basicConfig(level=logging.INFO)
 
-# Constants
-SYSLOG_FILE_PATH = '/proc/1/fd/1'
-MQTT_SERVER = "%%mqtt_server%%"  # Replace with your MQTT server address or hostname
-MQTT_PORT = %%mqtt_port%%
-MQTT_KEEPALIVE = 60
-MQTT_TOPIC_ALL_BIRDS = 'birdnet'
-CLIENT_ID = 'python-mqtt'
-USERNAME = "%%mqtt_user%%"  # Replace with your MQTT username
-PASSWORD = "%%mqtt_pass%%"  # Replace with your MQTT password
-# Extract the value of confidence and convert it to float
-with open('/config/birdnet.conf', 'r') as file:
-    lines = file.readlines()
-    for line in lines:
-        if line.startswith('CONFIDENCE='):
-            CONFIDENCE = float(line.split('=')[1].strip())
+# this generator function monitors the requested file handle for new lines added at its end
+# the newly added line is returned by the function
+def file_row_generator(s):
+    s.seek(0,2)
+    while True :
+        line = s.readline()
+        if not line:
+            time.sleep(0.1)
+            continue
+        yield line
 
-# Regular expression pattern to parse log entries
-RE_BIRD_ENTRY = re.compile(
-    r'(\d{4}-\d{2}-\d{2};\d{2}:\d{2}:\d{2};[^;]+;[^;]+;\d+\.\d+;\d+\.\d+;\d+\.\d+;\d+\.\d+;\d+;\d+\.\d+;\d+\.\d+;)([^ ]+\.mp3)'
-)
+# flag to select whether to process all detections, if False, only the records above the set threshold will be processed
 
-def file_row_generator(file_path):
-    """ Generator that yields new lines from a file continuously. """
-    with open(file_path, 'r') as file:
-        file.seek(0, 2)  # Move the pointer to the end of the file
-        while True:
-            line = file.readline()
-            if not line:
-                time.sleep(0.1)  # Sleep briefly to avoid busy waiting
-                continue
-            yield line
+process_all = True
 
-def on_connect(client, userdata, flags, rc, properties=None):
-    """ Callback for when the client receives a CONNACK response from the server. """
-    if rc == 0:
-        logging.info("Connected to MQTT Broker!")
-    else:
-        logging.error(f"Failed to connect, return code {rc}\n")
+# mqtt server
+mqtt_server = "%%mqtt_server%%" # server for mqtt
+mqtt_user = "%%mqtt_user%%"  # Replace with your MQTT username
+mqtt_pass = "%%mqtt_pass%%"  # Replace with your MQTT password
+mqtt_port = %%mqtt_port%% # port for mqtt
 
-def on_disconnect(client, userdata, rc, disconnect_flags, properties=None):
-    """ Callback for when the client disconnects from the server. """
-    logging.info(f"Disconnected from MQTT Broker with rc: {rc}")
+# mqtt topic where all heard birds will be published
+mqtt_topic_all_birds = 'birdpi/all'
 
-# Setup MQTT client
-mqtt_client = mqtt.Client('birdnet_mqtt')  # Create instance of client with client ID
-mqtt_client.username_pw_set(USERNAME, PASSWORD)
-mqtt_client.on_connect = on_connect
-mqtt_client.on_disconnect = on_disconnect
+# mqtt topic for bird heard above threshold will be published
+mqtt_topic_confident_birds = 'birdpi/confident'
 
-# Connect to MQTT Broker
-mqtt_client.connect(MQTT_SERVER, MQTT_PORT, MQTT_KEEPALIVE)
-mqtt_client.loop_start()
+# url base for website that will be used to look up info about bird
+bird_lookup_url_base = 'http://en.wikipedia.org/wiki/'
 
-try:
-    # Process each new line in the syslog file
-    for row in file_row_generator(SYSLOG_FILE_PATH):
-        try:
-            match = RE_BIRD_ENTRY.search(row)
-            if match:
-                details, mp3_filename = match.groups()
-                details_list = details.split(';')
-                detection_date = details_list[0]
-                detection_time = details_list[1]
-                species = details_list[2]
-                common_name = details_list[3]
-                latitude = float(details_list[5])
-                longitude = float(details_list[6])
+# regular expression patters used to decode the records from birdnet
 
-                confidence = float(details_list[4])
-                if confidence > CONFIDENCE:
-                    bird_data = {
-                        'SourceNode': 'BirdNET-Pi',
-                        'Date': detection_date,
-                        'Time': detection_time,
-                        'ScientificName': species,
-                        'CommonName': common_name,
-                        'Confidence': confidence,
-                        'Latitude': latitude,
-                        'Longitude': longitude,
-                        'ClipName': mp3_filename
-                    }
+re_all_found = re.compile(r'birdnet_analysis\.sh.*\(.*\)')
+re_found_bird = re.compile(r'\(([^)]+)\)')
+re_log_timestamp = re.compile(r'.+?(?= birdnet-)')
 
-                    logging.info(f"Published bird data: {bird_data}")
+re_high_found = re.compile(r'(?<=python3\[).*\.mp3$')
+re_high_clean = re.compile(r'(?<=\]:).*\.mp3$')
 
-                    # Publishing data to MQTT
-                    mqtt_client.publish(MQTT_TOPIC_ALL_BIRDS, json.dumps(bird_data), qos=1)
-                else:
-                    continue  # Skip this iteration if no matching log entry is found
-            else:
-                continue  # Skip this iteration if no matching log entry is found
+syslog = open('/test')
 
-        except Exception as e:
-            logging.error(f"Error processing row: {e}")
+# this little hack is to make each received record for the all birds section unique
+# the date and time that the log returns is only down to the 1 second accuracy, do
+# you can get multiple records with same date and time, this will make Home Assistant not
+# think there is a new reading so we add a incrementing tenth of second to each record received
+ts_noise = 0.0
 
-finally:
-    mqtt_client.loop_stop()
-    mqtt_client.disconnect()
+#try :
+# connect to MQTT server
+mqttc = mqtt.Client('birdnet_mqtt')  # Create instance of client with client ID
+mqttc.username_pw_set(mqtt_user, mqtt_pass) # Use credentials
+mqttc.connect(mqtt_server, mqtt_port)  # Connect to (broker, port, keepalive-time)
+mqttc.loop_start()
 
-sys.exit(0)
+# call the generator function and process each line that is returned
+for row in file_row_generator(syslog):
+    # if line in log is from 'birdnet_analysis.sh' routine, then operate on it
+
+    # if selected the process the line return for every detection, even below threshold, this generates a lot more records to MQTT
+    if process_all and re_all_found.search(row) :
+
+        # get time stamp of the log entry
+        timestamp = str(datetime.datetime.timestamp(dateparser.parse(re.search(re_log_timestamp, row).group(0))) + ts_noise)
+
+        ts_noise = ts_noise + 0.1
+        if ts_noise > 0.9 :
+            ts_noise = 0.0
+
+        # extract the scientific name, common name and confidence level from the log entry
+        res = re.search(re_found_bird, row).group(1).split(',', 1)
+
+        # messy code to deal with single and/or double quotes around scientific name and common name
+        # while keeping a single quote in string of common name if that is part of bird name
+        if '"' in res[0] :
+            res[0] = res[0].replace('"', '')
+        else :
+            res[0] = res[0].replace("'", "")
+
+        # scientific name of bird is found prior to the underscore character
+        # common name of bird is after underscore string
+        # remainder of string is the confidence level
+        sci_name = res[0].split('_', 1)[0]
+        com_name = res[0].split('_', 1)[1]
+        confid = res[1].replace(' ', '')
+
+        # build python structure of fields that we will then turn into a json string
+        bird = {}
+        bird['ts'] = timestamp
+        bird['sciname'] = sci_name
+        bird['comname'] = com_name
+        bird['confidence'] = confid
+        # build a url from scientific name of bird that can be used to lookup info about bird
+        bird['url'] = bird_lookup_url_base + sci_name.replace(' ', '_')
+
+        # convert to json string we can sent to mqtt
+        json_bird = json.dumps(bird)
+
+        print(json_bird)
+
+        mqttc.publish(mqtt_topic_all_birds, json_bird, 1)
+
+    # bird found above confidence level found, process it
+    if re_high_found.search(row) :
+
+        # this slacker regular expression work, extracts the data about the bird found from the log line
+        # I do the parse in two passes, because I did not know the re to do it in one!
+
+        raw_high_bird = re.search(re_high_found, row)
+        raw_high_bird = raw_high_bird.group(0)
+        raw_high_bird = re.search(re_high_clean, raw_high_bird)
+        raw_high_bird = raw_high_bird.group(0)
+
+        # the fields we want are separated by semicolons, so split
+        high_bird_fields = raw_high_bird.split(';')
+
+        # build a structure in python that will be converted to json
+        bird = {}
+
+        # human time in this record is in two fields, date and time. They are human format
+        # combine them together separated by a space and they turn the human data into a python
+        # timestamp
+        raw_ts = high_bird_fields[0] + ' ' + high_bird_fields[1]
+
+        bird['ts'] = str(datetime.datetime.timestamp(dateparser.parse(raw_ts)))
+        bird['sciname'] = high_bird_fields[2]
+        bird['comname'] = high_bird_fields[3]
+        bird['confidence'] = high_bird_fields[4]
+        # build a url from scientific name of bird that can be used to lookup info about bird
+        bird['url'] = bird_lookup_url_base + high_bird_fields[2].replace(' ', '_')
+
+        # convert to json string we can sent to mqtt
+        json_bird = json.dumps(bird)
+
+        print(json_bird)
+
+        mqttc.publish(mqtt_topic_confident_birds, json_bird, 1)
+        
