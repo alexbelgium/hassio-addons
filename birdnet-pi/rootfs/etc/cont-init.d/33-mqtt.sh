@@ -18,8 +18,8 @@ if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED' ; 
 
     # Copy script
     cp /helpers/birdnet_to_mqtt.py /usr/bin/birdnet_to_mqtt.py
+    cp /helpers/birdnet_to_mqtt.sh /custom-services.d
     chmod 777 /usr/bin/birdnet_to_mqtt.py
+    chmod 777 /custom-services.d/birdnet_to_mqtt.sh
 
-    # Start python
-    "$PYTHON_VIRTUAL_ENV" /usr/bin/birdnet_to_mqtt.py &>/proc/1/fd/1 & true
 fi
