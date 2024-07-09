@@ -23,7 +23,6 @@ logging.basicConfig(level=logging.INFO)
 # this generator function monitors the requested file handle for new lines added at its end
 # the newly added line is returned by the function
 def file_row_generator(s):
-    s.seek(0,2)
     while True :
         line = s.readline()
         if not line:
@@ -49,10 +48,10 @@ re_all_found = re.compile(r'birdnet_analysis\.sh.*\(.*\)')
 re_found_bird = re.compile(r'\(([^)]+)\)')
 re_log_timestamp = re.compile(r'.+?(?= birdnet-)')
 
-re_high_found = re.compile(r'(?<=python3\[).*\.mp3$')
+re_high_found = re.compile(r'.*\.mp3$')
 re_high_clean = re.compile(r'(?<=\]:).*\.mp3$')
 
-syslog = open('/config/BirdDB.txt', 'r')
+syslog = open('/proc/1/fd/1', 'r')
 
 def on_connect(client, userdata, flags, rc, properties=None):
     """ Callback for when the client receives a CONNACK response from the server. """
@@ -89,9 +88,11 @@ mqttc.loop_start()
 # call the generator function and process each line that is returned
 for row in file_row_generator(syslog):
     # if line in log is from 'birdnet_analysis.sh' routine, then operate on it
-
+    print(row)
+    
     # bird found above confidence level found, process it
-    if re_high_found.search(row) :
+    if re_high_found.search(row) :    
+        print('yes')
 
         # this slacker regular expression work, extracts the data about the bird found from the log line
         # I do the parse in two passes, because I did not know the re to do it in one!
