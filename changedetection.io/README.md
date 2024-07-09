@@ -28,6 +28,8 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
+### Main app
+
 Webui can be found at `<your-ip>:5000`.
 
 ```yaml
@@ -36,6 +38,18 @@ GPID: user
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 BASE_URL: Specify the full URL (including protocol) when running behind a reverse proxy
 ```
+
+### Connect to browserless chrome (from @RhysMcW)
+
+In HA use the File Editor addon (or Filebrowser) and edit the Changedetection.io config.yaml : /homeassistant/addons_config/changedetection.io/config.yaml
+
+Add the following line to the end of the file: 
+`PLAYWRIGHT_DRIVER_URL: ws://db21ed7f-browserless-chrome.local.hass.io:3000/chromium?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true`
+
+Remember to add a blank line at the end of the file too according to yaml requirements.
+
+The "db21ed7f-browserless-chrome.local.hass.io" hostname was got from the CLI in HA, using arp, but you should also be able to use your HA IP address.
+Then restart the Changedetection.io addon - after that you can use the browser options in Changedetection.io.
 
 ## Installation
 
