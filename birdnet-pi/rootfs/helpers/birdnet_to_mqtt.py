@@ -23,6 +23,7 @@ logging.basicConfig(level=logging.INFO)
 # this generator function monitors the requested file handle for new lines added at its end
 # the newly added line is returned by the function
 def file_row_generator(s):
+    s.seek(0,2)
     while True :
         line = s.readline()
         if not line:
@@ -51,7 +52,7 @@ re_log_timestamp = re.compile(r'.+?(?= birdnet-)')
 re_high_found = re.compile(r'(?<=python3\[).*\.mp3$')
 re_high_clean = re.compile(r'(?<=\]:).*\.mp3$')
 
-syslog = open('/proc/1/fd/1', 'r')
+syslog = open('/config/BirdDB.txt', 'r')
 
 def on_connect(client, userdata, flags, rc, properties=None):
     """ Callback for when the client receives a CONNACK response from the server. """
