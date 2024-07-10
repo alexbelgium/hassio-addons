@@ -54,16 +54,22 @@ def on_connect(client, userdata, flags, rc, properties=None):
     else:
         logging.error(f"Failed to connect, return code {rc}\n")
 
-#def call_php_function(bird_name):
-#    php_code = f"""
-#    <?php
-#    include('/home/pi/BirdNET-Pi/scripts/common.php');
-#    echo get_info_url('{bird_name}');
-#    ?>
-#    """
-#    process = subprocess.Popen(['php'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-#    stdout, _ = process.communicate(php_code.encode())
-#    return stdout.decode().strip()
+def get_bird_code(scientific_name):
+    with open('/home/pi/BirdNET-Pi/scripts/ebird.php', 'r') as file:
+        data = file.read()
+
+    # Extract the array from the PHP file
+    array_str = re.search(r'\$ebirds = \[(.*?)\];', data, re.DOTALL).group(1)
+
+    # Convert the PHP array to a Python dictionary
+    bird_dict = {}
+    for line in array_str.split('\n'):
+        if '=>' in line:
+            key, value = map(lambda x: x.strip(' "'), line.split('=>'))
+            bird_dict[key] = value
+
+    # Return the corresponding value for the given bird's scientific name
+    return bird_dict.get(scientific_name)
 
 # this little hack is to make each received record for the all birds section unique
 # the date and time that the log returns is only down to the 1 second accuracy, do
@@ -101,13 +107,13 @@ for row in file_row_generator(syslog):
         # timestamp
         raw_ts = high_bird_fields[0] + ' ' + high_bird_fields[1]
 
-        bird['ts'] = str(datetime.datetime.timestamp(dateparser.parse(raw_ts)))
+        #bird['ts'] = str(datetime.datetime.timestamp(dateparser.parse(raw_ts)))
         bird['Date'] = high_bird_fields[0]
         bird['Time'] = high_bird_fields[1]
         bird['ScientificName'] = high_bird_fields[2]
         bird['CommonName'] = high_bird_fields[3]
         bird['Confidence'] = high_bird_fields[4]
-        # bird['SpeciesCode'] = call_php_function(high_bird_fields[2])
+        bird['SpeciesCode'] = get_bird_code(high_bird_fields[2])
         bird['ClipName'] = high_bird_fields[11]
         
         # build a url from scientific name of bird that can be used to lookup info about bird
@@ -119,4 +125,3 @@ for row in file_row_generator(syslog):
         print('Posted to MQTT : ok')
 
         mqttc.publish(mqtt_topic_confident_birds, json_bird, 1)
-        
