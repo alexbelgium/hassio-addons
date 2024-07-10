@@ -92,9 +92,14 @@ The installation of this add-on is pretty straightforward and not different in c
 ## Integration with HA
 
 ---
+### Apprise
 
 You can use apprise to send notifications with mqtt, then act on those using HomeAssistant
 Further informations : https://wander.ingstar.com/projects/birdnetpi.html
+
+### Automatic mqtt
+
+If mqtt is installed, the addon automatically updates the birdnet topic with each detected species
 
 ## Using ssl
 
