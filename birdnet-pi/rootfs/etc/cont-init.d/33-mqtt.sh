@@ -9,6 +9,9 @@ if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED' ; 
     bashio::log.blue "MQTT password : $(bashio::services "mqtt" "password")"
     bashio::log.blue "MQTT broker : tcp://$(bashio::services "mqtt" "host"):$(bashio::services "mqtt" "port")"
     bashio::log.green "---"
+    bashio::log.blue "Data will be posted to the topic : 'birdnet'"
+    bashio::log.blue "Json data : {'Date', 'Time', 'ScientificName', 'CommonName', 'Confidence', 'SpeciesCode', 'ClipName', 'url'}"
+    bashio::log.blue "---"
 
     # Apply MQTT settings
     sed -i "s|%%mqtt_server%%|$(bashio::services "mqtt" "host")|g" /helpers/birdnet_to_mqtt.py
