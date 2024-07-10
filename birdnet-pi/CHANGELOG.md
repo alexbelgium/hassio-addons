@@ -1,4 +1,3 @@
-## 0.13-67 (10-07-2024)
 - [FIX] : correct mqtt posting, switch to service 
 
 ## 0.13-65 (08-07-2024)
