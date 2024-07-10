@@ -10,11 +10,10 @@ echo " "
 bashio::log.info "Adding optional features"
 
 # Denoiser
-if bashio::config.true "DENOISER_ANALYSIS_ENABLED"; then
-    sed -i "s|ar 48000|ar 48000 -af \"arnndn=m=sample.rnnn\"|g" "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
-    sed -i "s|ar 48000|ar 48000 -af owdenoise|g" "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
-    sed -i "s|ar 48000|ar 48000 -af afftdn=nr=500:nt=w:om=o|g" "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
-fi
+#if bashio::config.true "DENOISER_ANALYSIS_ENABLED"; then
+#    sed -i "s|ar 48000|ar 48000 -af \"arnndn=m=sample.rnnn\"|g" "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
+#    sed -i "s|ar 48000|ar 48000 -af afftdn=nr=30:nt=w:om=o|g" "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
+#fi
 
 # Add species conversion system
 ###############################
