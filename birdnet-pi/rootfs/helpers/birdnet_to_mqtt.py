@@ -62,11 +62,8 @@ def get_bird_code(scientific_name):
     array_str = re.search(r'\$ebirds = \[(.*?)\];', data, re.DOTALL).group(1)
 
     # Convert the PHP array to a Python dictionary
-    bird_dict = {}
-    for line in array_str.split('\n'):
-        if '=>' in line:
-            key, value = map(lambda x: x.strip(' "'), line.split('=>'))
-            bird_dict[key] = value
+    bird_dict = {re.search(r'"(.*?)"', line).group(1): re.search(r'=> "(.*?)"', line).group(1)
+                 for line in array_str.split('\n') if '=>' in line}
 
     # Return the corresponding value for the given bird's scientific name
     return bird_dict.get(scientific_name)
