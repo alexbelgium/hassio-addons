@@ -44,6 +44,6 @@
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "2.8.3-5",
+  "version": "2.8.3-6",
   "webui": "http://[HOST]:[PORT:3000]"
 }
