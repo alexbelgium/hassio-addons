@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [birdnet-pi] mqtt add (opened 2024-07-05)](https://github.com/alexbelgium/hassio-addons/issues/1464) by [@alexbelgium](https://github.com/alexbelgium)
 # Home assistant add-on: birdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
