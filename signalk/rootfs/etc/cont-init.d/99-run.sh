@@ -17,7 +17,7 @@ chown -R "$USER:$USER" "/home/$USER/.signalk"
 # Define permissions for /dev/ttyUSB
 for device in /dev/ttyUSB /dev/ttyUSB0 /dev/ttyUSB1; do
     if [ -e "$device" ]; then
-        usermod -a -G "$(stat -c "%G" "$device")" $USER
+        sudo usermod -a -G root node || true
     fi
 done
 
