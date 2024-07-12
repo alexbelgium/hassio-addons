@@ -1,4 +1,7 @@
 
+## 1.6.8 (13-07-2024)
+- Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
+
 ## 1.6.3 (29-06-2024)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
 
