@@ -1,3 +1,5 @@
+- [FEAT] : limit a specific number of audio samples per species
+
 ## 0.13-68 (10-07-2024)
 - [FIX] : correct mqtt posting, switch to service 
 
