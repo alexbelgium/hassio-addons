@@ -1,3 +1,6 @@
+
+## ubuntu-2024-07-11 (2024-07-11)
+- Update to latest version from photoprism/photoprism
 ## ubuntu-2024-05-31-3 (10-06-2024)
 - Minor bugs fixed
 
