@@ -94,8 +94,8 @@
   ],
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
-    "MQTT_DISABLED": "bool?",
     "LIVESTREAM_BOOT_ENABLED": "bool",
+    "MQTT_DISABLED": "bool?",
     "PROCESSED_FOLDER_ENABLED": "bool?",
     "SPECIES_CONVERTER_ENABLED": "bool?",
     "TZ": "str?",
