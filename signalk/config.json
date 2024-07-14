@@ -7,6 +7,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "An implementation of a Signal K central server for boats",
   "devices": [
+    "/dev/can0",
+    "/dev/can1",
     "/dev/ttyUSB0",
     "/dev/ttyUSB1"
   ],
