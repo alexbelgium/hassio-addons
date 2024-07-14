@@ -1,3 +1,5 @@
+- [FEAT] : Add manual MQTT options
+
 ## 0.13-69 (12-07-2024)
 - [FEAT] : limit a specific number of audio samples per species
 
