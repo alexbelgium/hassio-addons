@@ -24,5 +24,23 @@ if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED' ; 
     cp /helpers/birdnet_to_mqtt.sh /custom-services.d
     chmod 777 /usr/bin/birdnet_to_mqtt.py
     chmod 777 /custom-services.d/birdnet_to_mqtt.sh
+elif bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQTT_PORT_manual" && bashio::config.has_value "MQTT_USER_manual" && bashio::config.has_value "MQTT_PASSWORD_manual"; then
+    bashio::log.green "---"
+    bashio::log.blue "MQTT is manually configured in the addon options"
+    bashio::log.green "---"
+    bashio::log.blue "Data will be posted to the topic : 'birdnet'"
+    bashio::log.blue "Json data : {'Date', 'Time', 'ScientificName', 'CommonName', 'Confidence', 'SpeciesCode', 'ClipName', 'url'}"
+    bashio::log.blue "---"
 
+    # Apply MQTT settings
+    sed -i "s|%%mqtt_server%%|$(bashio::config "MQTT_HOST_manual")|g" /helpers/birdnet_to_mqtt.py
+    sed -i "s|%%mqtt_port%%|$(bashio::config "MQTT_PORT_manual")|g" /helpers/birdnet_to_mqtt.py
+    sed -i "s|%%mqtt_user%%|$(bashio::config "MQTT_USER_manual")|g" /helpers/birdnet_to_mqtt.py
+    sed -i "s|%%mqtt_pass%%|$(bashio::config "MQTT_PASSWORD_manual")|g" /helpers/birdnet_to_mqtt.py
+
+    # Copy script
+    cp /helpers/birdnet_to_mqtt.py /usr/bin/birdnet_to_mqtt.py
+    cp /helpers/birdnet_to_mqtt.sh /custom-services.d
+    chmod 777 /usr/bin/birdnet_to_mqtt.py
+    chmod 777 /custom-services.d/birdnet_to_mqtt.sh    
 fi
