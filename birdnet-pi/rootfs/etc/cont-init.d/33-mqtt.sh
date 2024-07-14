@@ -24,9 +24,10 @@ if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED' ; 
     cp /helpers/birdnet_to_mqtt.sh /custom-services.d
     chmod 777 /usr/bin/birdnet_to_mqtt.py
     chmod 777 /custom-services.d/birdnet_to_mqtt.sh
-elif bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQTT_PORT_manual" && bashio::config.has_value "MQTT_USER_manual" && bashio::config.has_value "MQTT_PASSWORD_manual"; then
+elif bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQTT_PORT_manual"; then
     bashio::log.green "---"
     bashio::log.blue "MQTT is manually configured in the addon options"
+    bashio::log.blue "Birdnet-pi is now automatically configured to send its ouptut to MQTT"
     bashio::log.green "---"
     bashio::log.blue "Data will be posted to the topic : 'birdnet'"
     bashio::log.blue "Json data : {'Date', 'Time', 'ScientificName', 'CommonName', 'Confidence', 'SpeciesCode', 'ClipName', 'url'}"
