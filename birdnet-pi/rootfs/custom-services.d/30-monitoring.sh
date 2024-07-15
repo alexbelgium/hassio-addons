@@ -24,7 +24,7 @@ mkdir -p "$ingest_dir"
 chown -R pi:pi "$ingest_dir"
 chmod -R 755 "$ingest_dir"
 
-function apprisemessage() {
+function apprisealert() {
     # Set failed check so it only runs once
     touch "$HOME"/BirdNET-Pi/failed_servicescheck
     NOTIFICATION=""
