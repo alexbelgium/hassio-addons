@@ -1,4 +1,5 @@
 {
+  "github_exclude": "202*",
   "last_update": "13-07-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "whatsapper",
