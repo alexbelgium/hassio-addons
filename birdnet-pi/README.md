@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Birdnet-Pi] Birdnet-Analysis fails to start (opened 2024-07-15)](https://github.com/alexbelgium/hassio-addons/issues/1478) by [@jeroenterheerdt](https://github.com/jeroenterheerdt)
 # Home assistant add-on: birdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
