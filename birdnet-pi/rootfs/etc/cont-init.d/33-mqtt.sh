@@ -42,6 +42,6 @@ elif bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQ
     # Copy script
     cp /helpers/birdnet_to_mqtt.py /usr/bin/birdnet_to_mqtt.py
     cp /helpers/birdnet_to_mqtt.sh /custom-services.d
-    chmod 777 /usr/bin/birdnet_to_mqtt.py
-    chmod 777 /custom-services.d/birdnet_to_mqtt.sh    
+    chmod +x /usr/bin/birdnet_to_mqtt.py
+    chmod +x /custom-services.d/birdnet_to_mqtt.sh    
 fi
