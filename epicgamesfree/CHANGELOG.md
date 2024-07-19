@@ -1,4 +1,7 @@
 
+## debian-2024-07-19 (2024-07-19)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## debian-2024-06-16 (2024-06-16)
 - Update to latest version from charlocharlie/epicgames-freegames
 - The last release changelog mentions that automatic redemption is not possible anymore due to epic improvement on automation detection
