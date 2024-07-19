@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Immich] Folder creation error (opened 2024-07-18)](https://github.com/alexbelgium/hassio-addons/issues/1481) by [@YugiFanGX](https://github.com/YugiFanGX)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)
