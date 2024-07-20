@@ -104,6 +104,6 @@
   "slug": "piwigo",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "14.4.0",
+  "version": "14.5.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
