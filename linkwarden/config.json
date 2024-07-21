@@ -7,13 +7,15 @@
   "description": "collaborative bookmark manager to collect, organize, and preserve webpages and articles",
   "environment": {
     "DATABASE_URL": "postgresql://postgres:homeassistant@localhost:5432/linkwarden",
-    "NEXTAUTH_URL": "http://localhost:3000/api/v1/auth",
     "STORAGE_FOLDER": "/config/library",
+    "NEXTAUTH_URL": "http://localhost:3000/api/v1/auth",
     "NEXT_PUBLIC_AUTHENTIK_ENABLED": "false",
+    "NEXT_PUBLIC_CREDENTIALS_ENABLED": "true",
+    "NEXT_PUBLIC_DISABLE_REGISTRATION": "False",
     "AUTHENTIK_CUSTOM_NAME": "Authentik",
     "AUTHENTIK_ISSUER": "https://authentik.my-doma.in/application/o/linkwarden",
     "AUTHENTIK_CLIENT_ID": "CLIENT_ID",
-    "AUTHENTIK_CLIENT_SECRET": "CLIENT_SECRET"
+    "AUTHENTIK_CLIENT_SECRET": "CLIENT_SECRET",
   },
   "image": "ghcr.io/alexbelgium/linkwarden-{arch}",
   "init": false,
@@ -40,6 +42,6 @@
   },
   "slug": "linkwarden",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden",
-  "version": "2.6.0-2",
+  "version": "2.6.0-3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }

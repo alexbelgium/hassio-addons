@@ -1,3 +1,4 @@
+
 # Home assistant add-on: linkwarden
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -40,8 +41,15 @@ Options can be configured through two ways :
 ```yaml
 "NEXTAUTH_SECRET": mandatory, must be filled at start
 "NEXTAUTH_URL": optional, only if linkwarden is kept externally
+"NEXT_PUBLIC_DISABLE_REGISTRATION": If set to true, registration will be disabled.
+"NEXT_PUBLIC_CREDENTIALS_ENABLED": If set to true, users will be able to login with username and password.
 "STORAGE_FOLDER": optional, is /config/library by default
 "DATABASE_URL": optional, if kept blank an internal database will be used. If an external database is used, modify according to this design postgresql://postgres:homeassistant@localhost:5432/linkwarden
+"NEXT_PUBLIC_AUTHENTIK_ENABLED": If set to true, Authentik will be enabled and you'll need to define the variables below.
+"AUTHENTIK_CUSTOM_NAME": Optionally set a custom provider name. (name on the button)
+"AUTHENTIK_ISSUER": This is the "OpenID Configuration Issuer" shown in the Provider Overview. Note that you must delete the "/" at the end of the URL. Should look like: `https://authentik.my-doma.in/application/o/linkwarden`
+"AUTHENTIK_CLIENT_ID": Client ID copied from the Provider Overview screen in Authentik
+"AUTHENTIK_CLIENT_SECRET": Client Secret copied from the Provider Overview screen in Authentik
 ```
 
 - Config.yaml
@@ -64,106 +72,16 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-## Integration with HA
+## Integration with Authentik
 
-Use the [linkwarden integration](https://www.home-assistant.io/integrations/linkwarden/)
+Follow the instruction from the Linkwarden docs page. https://docs.linkwarden.app/self-hosting/sso-oauth#authentik
 
-You can use the following snippets to check and set the alternate speeds (the HA integration above is not needed for this)
 
-```bash
-shell_command:
-  toggle_torrent_speed: curl -X POST https://<YOUR HA IP>:8081/api/v2/transfer/toggleSpeedLimitsMode -k
-sensor:
-  - platform: command_line
-    name: get_torrent_speed
-    command: curl https://<YOUR HA IP>:8081/api/v2/transfer/speedLimitsMode -k
-```
-
-If you're not using the SSL option, you can skip the -k parameter and use http instead of https in the URL
-
-These lines will expose a `sensor.get_torrent_speed` that updates every 60 seconds and returns 1 if the alternate speed mode is enabled, 0 otherwise, and a `shell_command.toggle_torrent_speed` that you can call as a Service in your automations
 
 ## Common issues
 
 <details>
-  <summary>### ipv6 issues with openvpn (@happycoo)</summary>
-Add this code to your .ovpn config
-
-```bash
-# don't route lan through vpn
-route 192.168.1.0 255.255.255.0 net_gateway
-
-# deactivate ipv6
-pull-filter ignore "dhcp-option DNS6"
-pull-filter ignore "tun-ipv6"
-pull-filter ignore "ifconfig-ipv6"
-```
-</details>
-
-<details>
-  <summary>### Monitored folders (@FaliseDotCom)</summary>
-
-- go to config\addons_config\linkwarden
-- find (or create) the file watched_folders.json
-- paste or adjust to the following:
-
-```json
-{
-    "folder/to/watch": {
-        "add_torrent_params": {
-            "category": "",
-            "content_layout": "Original",
-            "download_limit": -1,
-            "download_path": "[folder/for/INCOMPLETE_downloads]",
-            "operating_mode": "AutoManaged",
-            "ratio_limit": -2,
-            "save_path": "[folder/for/COMPLETED_downloads]",
-            "seeding_time_limit": -2,
-            "skip_checking": false,
-            "stopped": false,
-            "tags": [
-            ],
-            "upload_limit": -1,
-            "use_auto_tmm": false,
-            "use_download_path": true
-        },
-        "recursive": false
-    }
-}
-```
-</details>
-
-<details>
-  <summary>### nginx error code (@Nanianmichaels)</summary>
-
-> [cont-init.d] 30-nginx.sh: executing...
-> [cont-init.d] 30-nginx.sh: exited 1.
-
-Wait a couple minutes and restart addon, it could be a temporary unavailability of github
-
-### Local mount with invalid argument (@antonio1475)
-
-> [cont-init.d] 00-local_mounts.sh: executing...
-> Local Disks mounting...
-> mount: mounting /dev/sda1 on /mnt/sda1 failed: Invalid argument
-> [19:19:44] FATAL: Unable to mount local drives! Please check the name.
-> [cont-init.d] 00-local_mounts.sh: exited 0.
-
-Try to mount by putting the partition label in the "localdisks" options instead of the hardware name
-</details>
-
-<details>
-  <summary>### Loss of metadata fetching with openvpn after several days (@almico)</summary>
-
-Add `ping-restart 60` to your config.ovpn
-</details>
-
-<details>
-  <summary>### Downloads info are empty on small scale window (@aviadlevy)</summary>
-
-When my window size width is lower than 960 pixels my downloads are empty.
-Solution is to reset the Vuetorrent settings.
-</details>
+ 
 
 ## Support
 
