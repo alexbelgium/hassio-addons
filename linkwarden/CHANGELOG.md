@@ -1,3 +1,5 @@
+## 2.6.0-3 (21-07-2024)
+- Minor bugs fixed
 ## 2.6.0-2 (21-07-2024)
 - Minor bugs fixed
 
