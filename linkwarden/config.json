@@ -15,7 +15,7 @@
     "AUTHENTIK_CUSTOM_NAME": "Authentik",
     "AUTHENTIK_ISSUER": "https://authentik.my-doma.in/application/o/linkwarden",
     "AUTHENTIK_CLIENT_ID": "CLIENT_ID",
-    "AUTHENTIK_CLIENT_SECRET": "CLIENT_SECRET",
+    "AUTHENTIK_CLIENT_SECRET": "CLIENT_SECRET"
   },
   "image": "ghcr.io/alexbelgium/linkwarden-{arch}",
   "init": false,
