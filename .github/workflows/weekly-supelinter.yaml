@@ -64,6 +64,7 @@ jobs:
 
   check_crlf:
     name: Check CRLF action
+    if: github.repository_owner == 'alexbelgium'
     runs-on: ubuntu-latest
 
     steps:
