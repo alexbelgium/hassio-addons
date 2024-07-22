@@ -7,6 +7,7 @@ on:
   workflow_dispatch: null
 jobs:
   README_updater:
+    if: github.repository_owner == 'alexbelgium'
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout Repo
