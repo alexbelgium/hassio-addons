@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Codex] Codex v1.6.9 is should not be used. (opened 2024-07-23)](https://github.com/alexbelgium/hassio-addons/issues/1491) by [@ajslater](https://github.com/ajslater)
 # Home assistant add-on: Codex
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

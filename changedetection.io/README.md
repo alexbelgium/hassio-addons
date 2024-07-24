@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Changedetection.io] all watches error after update to 0.46.1 (opened 2024-07-22)](https://github.com/alexbelgium/hassio-addons/issues/1489) by [@RhysMcW](https://github.com/RhysMcW)
+## &#9888; Open Request : [✨ [ChangeDetection.io] Any chance its possible to automatically create a sidebar entry? (opened 2024-07-24)](https://github.com/alexbelgium/hassio-addons/issues/1492) by [@igorsantos07](https://github.com/igorsantos07)
 # Home assistant add-on: changedetection.io
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
