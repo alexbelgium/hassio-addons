@@ -44,7 +44,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 92
+- In the repository : 93
 - Installed : 94295
 
 ### Top 3
@@ -102,6 +102,18 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/bird.svg) [BattyBirdNET-Pi](battybirdnet-pi/) : A realtime acoustic bat & bird classification system for the Raspberry Pi 4/5 built on BattyBirdNET-Analyzer
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbattybirdnet-pi%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbattybirdnet-pi%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64no][amd64no-badge]
+![armv7no][armv7no-badge]
+![ingress][ingress-badge]
+![mqtt][mqtt-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
 
 &#10003;  [Bazarr NAS](bazarr/) : Companion application to Sonarr and Radarr to download subtitles
 
