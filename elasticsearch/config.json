@@ -88,5 +88,5 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/elasticsearch",
-  "version": "7.17.9"
+  "version": "8.14.3"
 }
