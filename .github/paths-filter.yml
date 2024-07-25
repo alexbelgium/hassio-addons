@@ -5,6 +5,7 @@ addons_updater: addons_updater/config.* # Image : yes
 arpspoof: arpspoof/config.* # Image : yes
 autobrr: autobrr/config.* # Image : yes
 baikal: baikal/config.* # Image : yes
+battybirdnet-pi: battybirdnet-pi/config.* # Image : yes
 bazarr: bazarr/config.* # Image : yes
 binance-trading-bot: binance-trading-bot/config.* # Image : yes
 birdnet-go: birdnet-go/config.* # Image : yes
