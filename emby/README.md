@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [EMBY] BETA tag is enabled, should be stable? (opened 2024-07-21)](https://github.com/alexbelgium/hassio-addons/issues/1485) by [@brietman](https://github.com/brietman)
 # Home assistant add-on: emby
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
