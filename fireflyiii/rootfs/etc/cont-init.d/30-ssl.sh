@@ -24,7 +24,8 @@ if bashio::config.true 'ssl'; then
 
     sed -i "/proxy_params.conf/a ssl_certificate /ssl/$certfile;" /etc/nginx/servers/ssl.conf
     sed -i "/proxy_params.conf/a ssl_certificate_key /ssl/$keyfile;" /etc/nginx/servers/ssl.conf
-    bashio::log.info "Ssl enabled, please use https for connection. UI is at https://YOURIP:$(bashio::addon.port 2342)"
-else
-    rm -r /etc/nginx/servers/ssl.conf
+    bashio::log.info "Ssl enabled, please use https for connection. UI is at https://YOURIP:$(bashio::addon.port 8443)"
+
+    bashio::log.info "Starting nginx..."
+    nginx & true
 fi
