@@ -82,10 +82,12 @@
     "silent": "true"
   },
   "ports": {
-    "8080/tcp": 3473
+    "8080/tcp": 3473,
+    "8443/tcp": null
   },
   "ports_description": {
-    "8080/tcp": "web interface"
+    "8080/tcp": "web interface",
+    "8443/tcp": "ssl web interface"
   },
   "schema": {
     "APP_KEY": "str",
@@ -97,7 +99,10 @@
     "DB_PORT": "str?",
     "DB_USERNAME": "str?",
     "Updates": "list(|hourly|daily|weekly)?",
-    "silent": "bool?"
+    "keyfile": "str",
+    "certfile": "str",
+    "silent": "bool?",
+    "ssl": "bool"
   },
   "services": [
     "mysql:want"
@@ -106,6 +111,6 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "6.1.19",
+  "version": "6.1.18-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
