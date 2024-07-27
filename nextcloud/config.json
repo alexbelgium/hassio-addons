@@ -77,7 +77,8 @@
   ],
   "environment": {
     "NEXTCLOUD_PATH": "/data/config/www/nextcloud",
-    "SKIP_DATA_DIRECTORY_PERMISSION_CHECK": "yes"
+    "SKIP_DATA_DIRECTORY_PERMISSION_CHECK": "yes",
+    "TRUSTED_PROXIES": "**"
   },
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/nextcloud_ocr-{arch}",
