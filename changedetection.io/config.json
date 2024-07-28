@@ -6,8 +6,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "web page monitoring, notification and change detection",
   "environment": {
-    "TIMEOUT": "60000",
-    "LC_ALL": "en_US.UTF-8"
+    "LC_ALL": "en_US.UTF-8",
+    "TIMEOUT": "60000"
   },
   "image": "ghcr.io/alexbelgium/changedetection.io-{arch}",
   "init": false,
