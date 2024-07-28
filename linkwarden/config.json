@@ -6,16 +6,16 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "collaborative bookmark manager to collect, organize, and preserve webpages and articles",
   "environment": {
+    "AUTHENTIK_CLIENT_ID": "CLIENT_ID",
+    "AUTHENTIK_CLIENT_SECRET": "CLIENT_SECRET",
+    "AUTHENTIK_CUSTOM_NAME": "Authentik",
+    "AUTHENTIK_ISSUER": "https://authentik.my-doma.in/application/o/linkwarden",
     "DATABASE_URL": "postgresql://postgres:homeassistant@localhost:5432/linkwarden",
-    "STORAGE_FOLDER": "/config/library",
     "NEXTAUTH_URL": "http://localhost:3000/api/v1/auth",
     "NEXT_PUBLIC_AUTHENTIK_ENABLED": "false",
     "NEXT_PUBLIC_CREDENTIALS_ENABLED": "true",
     "NEXT_PUBLIC_DISABLE_REGISTRATION": "false",
-    "AUTHENTIK_CUSTOM_NAME": "Authentik",
-    "AUTHENTIK_ISSUER": "https://authentik.my-doma.in/application/o/linkwarden",
-    "AUTHENTIK_CLIENT_ID": "CLIENT_ID",
-    "AUTHENTIK_CLIENT_SECRET": "CLIENT_SECRET"
+    "STORAGE_FOLDER": "/config/library"
   },
   "image": "ghcr.io/alexbelgium/linkwarden-{arch}",
   "init": false,
@@ -30,17 +30,17 @@
     "3000/tcp": "webui"
   },
   "schema": {
+    "AUTHENTIK_CLIENT_ID": "str?",
+    "AUTHENTIK_CLIENT_SECRET": "str?",
+    "AUTHENTIK_CUSTOM_NAME": "str?",
+    "AUTHENTIK_ISSUER": "str?",
     "DATABASE_URL": "str?",
-    "STORAGE_FOLDER": "str?",
     "NEXTAUTH_SECRET": "str",
     "NEXTAUTH_URL": "str?",
     "NEXT_PUBLIC_AUTHENTIK_ENABLED": "bool?",
     "NEXT_PUBLIC_CREDENTIALS_ENABLED": "bool?",
     "NEXT_PUBLIC_DISABLE_REGISTRATION": "bool?",
-    "AUTHENTIK_CUSTOM_NAME": "str?",
-    "AUTHENTIK_ISSUER": "str?",
-    "AUTHENTIK_CLIENT_ID": "str?",
-    "AUTHENTIK_CLIENT_SECRET": "str?"
+    "STORAGE_FOLDER": "str?"
   },
   "slug": "linkwarden",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden",

@@ -99,8 +99,8 @@
     "DB_PORT": "str?",
     "DB_USERNAME": "str?",
     "Updates": "list(|hourly|daily|weekly)?",
-    "keyfile": "str",
     "certfile": "str",
+    "keyfile": "str",
     "silent": "bool?",
     "ssl": "bool"
   },
