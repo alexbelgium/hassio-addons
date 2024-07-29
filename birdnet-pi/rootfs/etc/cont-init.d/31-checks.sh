@@ -54,8 +54,10 @@ fi
 ##################
 # PERFORM UPDATE #
 ##################
+sed -i "s|systemctl list-unit-files|false && echo|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 sed -i "/systemctl /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 sed -i "/find /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/set -x/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 /."$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 
 echo " "
