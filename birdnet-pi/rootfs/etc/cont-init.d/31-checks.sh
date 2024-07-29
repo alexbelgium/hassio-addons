@@ -51,4 +51,11 @@ if [[ "$(bashio::addon.port "80")" == 3000 ]]; then
   sleep infinity
 fi
 
+##################
+# PERFORM UPDATE #
+##################
+sed -i "/systemctl /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/find /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+/."$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+
 echo " "
