@@ -100,7 +100,6 @@
     "MQTT_PORT_manual": "int?",
     "MQTT_USER_manual": "str?",
     "PROCESSED_FOLDER_ENABLED": "bool?",
-    "SPECIES_CONVERTER_ENABLED": "bool?",
     "TZ": "str?",
     "certfile": "str",
     "cifsdomain": "str?",

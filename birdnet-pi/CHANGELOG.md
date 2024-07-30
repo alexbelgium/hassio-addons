@@ -1,3 +1,5 @@
+- REMOVE : SPECIES_CONVERTER_ENABLED option removed, please instead us "exclude species" and "change detection"
+
 ## 0.13-71 (14-07-2024)
 - [FEAT] : Add manual MQTT options
 
@@ -5,7 +7,7 @@
 - [FEAT] : limit a specific number of audio samples per species
 
 ## 0.13-68 (10-07-2024)
-- [FIX] : correct mqtt posting, switch to service 
+- [FIX] : correct mqtt posting, switch to service
 
 ## 0.13-65 (08-07-2024)
 - [FEAT] : publish mqtt to homeassistant if a server is found
