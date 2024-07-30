@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Mealie] ENV Variables not applying (opened 2024-07-30)](https://github.com/alexbelgium/hassio-addons/issues/1500) by [@Gruffuss](https://github.com/Gruffuss)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
