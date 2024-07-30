@@ -28,20 +28,6 @@ grep -o '^[^#=]*=' "$configtemplate" | sed 's/=//' | while read -r var; do
     fi
 done
 
-################
-# CHECK AMIXER #
-################
-
-# If default capture is set at 0%, increase it to 50%
-# current_volume="$(amixer sget Capture | grep -oP '\[\d+%]' | tr -d '[]%' | head -1)" 2>/dev/null || true
-# current_volume="${current_volume:-100}"
-
-# Set the default microphone volume to 50% if it's currently at 0%
-# if [[ "$current_volume" -eq 0 ]]; then
-#     amixer sset Capture 70%
-#     bashio::log.warning "Microphone was off, volume set to 70%."
-# fi
-
 ##############
 # CHECK PORT #
 ##############
@@ -54,10 +40,15 @@ fi
 ##################
 # PERFORM UPDATE #
 ##################
-sed -i "s|systemctl list-unit-files|false && echo|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+
+echo " "
+bashio::log.info "Performing potential updates"
+
+sed -i "s|systemctl list-unit-files|false \&\& echo|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 sed -i "/systemctl /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 sed -i "/find /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 sed -i "/set -x/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/restart_services/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 /."$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 
 echo " "
