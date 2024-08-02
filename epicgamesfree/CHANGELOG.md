@@ -1,4 +1,7 @@
 
+## debian-2024-07-31 (2024-07-31)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## debian-2024-07-19 (2024-07-19)
 - Update to latest version from charlocharlie/epicgames-freegames
 
