@@ -1,4 +1,7 @@
 
+## 1.0.0rc14 (03-08-2024)
+- Update to latest version from m4dm4rtig4n/myelectricaldata (changelog : https://github.com/m4dm4rtig4n/myelectricaldata/releases)
+
 ## 1.0.0rc7 (08-06-2024)
 - Update to latest version from m4dm4rtig4n/myelectricaldata (changelog : https://github.com/m4dm4rtig4n/myelectricaldata/releases)
 
