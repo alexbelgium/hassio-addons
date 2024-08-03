@@ -1,4 +1,7 @@
 
+## 5.1-2024-08-01 (2024-08-01)
+- Update to latest version from mbentley/omada-controller
+
 ## 5.14.26.1-2024-07-26 (2024-07-26)
 - Update to latest version from mbentley/omada-controller
 
