@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Scrutiny] Memory leak since 0.8.1, april 8 (opened 2024-07-30)](https://github.com/alexbelgium/hassio-addons/issues/1501) by [@chertvl](https://github.com/chertvl)
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
