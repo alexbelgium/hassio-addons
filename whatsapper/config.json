@@ -6,7 +6,6 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Whatsapper for Home Assistant",
   "image": "ghcr.io/alexbelgium/whatsapper-{arch}",
-  "init": false,
   "map": [
     "addon_config:rw",
     "share:rw"
