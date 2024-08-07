@@ -1,6 +1,6 @@
-- REMOVE : SPECIES_CONVERTER_ENABLED option removed, please instead us "exclude species" and "change detection"
-- FEAT : Improve dark mode
-- FEAT : Species confirmation
+- [REMOVE] : SPECIES_CONVERTER_ENABLED option removed, please instead us "exclude species" and "change detection"
+- [FEAT] : Improve dark mode
+- [FEAT] : Species confirmation
 
 ## 0.13-71 (14-07-2024)
 - [FEAT] : Add manual MQTT options
