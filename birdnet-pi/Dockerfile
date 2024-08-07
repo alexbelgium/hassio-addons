@@ -105,7 +105,7 @@ RUN \
 
 # Add PR
 RUN \
-    cd /home/pi/BirdNET-pi && \
+    cd /home/pi/BirdNET-Pi && \
     git fetch origin pull/158/head:158 && \
     git checkout main && \
     git branch -D f-merge-prs || true && \
