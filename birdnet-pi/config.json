@@ -61,7 +61,6 @@
   ],
   "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
   "ingress": true,
-  "ingress_stream": true,
   "init": false,
   "map": [
     "addon_config:rw",
