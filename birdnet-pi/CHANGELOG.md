@@ -1,3 +1,5 @@
+- Fix : improve symlinks logic
+
 ## 0.13-73 (07-08-2024)
 - [REMOVE] : SPECIES_CONVERTER_ENABLED option removed, please instead us "exclude species" and "change detection"
 - [FEAT] : Improve dark mode
