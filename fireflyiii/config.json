@@ -71,8 +71,7 @@
   "image": "ghcr.io/alexbelgium/fireflyiii-{arch}",
   "map": [
     "config:rw",
-    "share:rw",
-    "ssl"
+    "share:rw"
   ],
   "name": "Firefly iii",
   "options": {
@@ -99,10 +98,7 @@
     "DB_PORT": "str?",
     "DB_USERNAME": "str?",
     "Updates": "list(|hourly|daily|weekly)?",
-    "certfile": "str",
-    "keyfile": "str",
-    "silent": "bool?",
-    "ssl": "bool"
+    "silent": "bool?"
   },
   "services": [
     "mysql:want"
@@ -111,6 +107,6 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "6.1.18-2test",
+  "version": "6.1.19",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
