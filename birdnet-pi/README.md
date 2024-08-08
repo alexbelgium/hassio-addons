@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] BattyBirdnet-Pi x86-64 (opened 2024-07-29)](https://github.com/alexbelgium/hassio-addons/issues/1498) by [@mrcrunchybeans](https://github.com/mrcrunchybeans)
+## &#9888; Open Issue : [🐛 [BirdNET-Pi] The Detection in the Overview is permanently refreshing (opened 2024-08-07)](https://github.com/alexbelgium/hassio-addons/issues/1506) by [@UlrichThiess](https://github.com/UlrichThiess)
 # Home assistant add-on: birdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
