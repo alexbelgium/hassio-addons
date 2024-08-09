@@ -1,8 +1,7 @@
 {
   "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
+    "arm64v8",
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Python script to update metadata information for movies, shows, and collections as well as automatically build collections",
@@ -95,5 +94,5 @@
   "slug": "kometa",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/kometa",
-  "version": "2.0.2"
+  "version": "2.0.2-ls16"
 }

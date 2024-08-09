@@ -68,7 +68,6 @@ papermerge: papermerge/config.* # Image : yes
 photoprism: photoprism/config.* # Image : yes
 piwigo: piwigo/config.* # Image : yes
 plex: plex/config.* # Image : yes
-plex_meta_manager: plex_meta_manager/config.* # Image : yes
 portainer: portainer/config.* # Image : yes
 portainer_agent: portainer_agent/config.* # Image : yes
 postgres: postgres/config.* # Image : yes
