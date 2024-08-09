@@ -11,12 +11,12 @@ bashio::log.info "Ensuring the file structure is correct :"
 
 # Define structure
 echo "... creating default files"
-touch /config/apprise.txt
-touch /config/include_species_list.txt
-touch /config/exclude_species_list.txt
-if [ ! -f /config/IdentifiedSoFar.txt ]; then echo "" > /config/IdentifiedSoFar.txt; fi
-if [ ! -f /config/disk_check_exclude.txt ]; then echo "" > /config/disk_check_exclude.txt; fi # Using touch caused an issue with stats.php
-if [ ! -f /config/confirmed_species_list.txt ]; then echo "" > /config/confirmed_species_list.txt; fi # Using touch caused an issue with stats.php
+touch /config/include_species_list.txt # Should be null
+for files in apprise.txt exclude_species_list.txt IdentifiedSoFar.txt disk_check_exclude.txt confirmed_species_list.txt blacklisted_images.txt whitelist_species_list.txt; do
+    if [ ! -f /config/"$files" ]; then 
+        echo "" > /config/"$files"
+    fi
+done
 
 # Get BirdSongs folder locations
 BIRDSONGS_FOLDER="/config/BirdSongs"
@@ -58,7 +58,7 @@ cp "$HOME"/BirdNET-Pi/birdnet.conf "$HOME"/BirdNET-Pi/birdnet.bak
 
 # Symlink files
 echo "... creating symlink"
-for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/BirdDB.txt" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt" "$HOME/BirdNET-Pi/confirmed_species_list.txt"; do
+for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/whitelist_species_list.txt" "$HOME/BirdNET-Pi/blacklisted_images.txt" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/BirdDB.txt" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt" "$HOME/BirdNET-Pi/scripts/confirmed_species_list.txt"; do
     filename="${files##*/}"
     if [ ! -f /config/"$filename" ]; then
         if [ -f "$files" ]; then 
@@ -68,7 +68,8 @@ for files in "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/birds.db"
         fi
     fi
     if [ -e "$files" ]; then rm "$files"; fi
-    sudo -u pi ln -fs /config/"$filename" "$files" || bashio::log.fatal "Symlink creation failed for $filename"
+    sudo -u pi ln -fs /config/"$filename" "$HOME/BirdNET-Pi/$filename" || bashio::log.fatal "Symlink creation failed for $filename"
+    sudo -u pi ln -fs /config/"$filename" "$HOME/BirdNET-Pi/scripts/$filename" || bashio::log.fatal "Symlink creation failed for $filename"
     sudo -u pi ln -fs /config/"$filename" /etc/birdnet/"$filename" || bashio::log.fatal "Symlink creation failed for $filename"
 done
 

@@ -6,7 +6,6 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Whatsapper for Home Assistant",
   "image": "ghcr.io/alexbelgium/whatsapper-{arch}",
-  "init": false,
   "map": [
     "addon_config:rw",
     "share:rw"
@@ -21,5 +20,5 @@
   "slug": "whatsapper",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whatsapper",
-  "version": "1.0.0"
+  "version": "1.0.2"
 }

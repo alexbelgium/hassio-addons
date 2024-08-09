@@ -16,7 +16,7 @@
 
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
-[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
 ![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/changedetection.io/stats.png)
 
@@ -30,7 +30,17 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ### Main app
 
-Webui can be found at `<your-ip>:5000`.
+Web UI can be found at `<your-ip>:5000`, also accessible from the add-on page.
+
+#### Sidebar shortcut
+
+You can add a shortcut pointing to your Changedetection.io instance with the following steps:
+1. Go to <kbd>⚙ Settings</kbd> > <kbd>Dashboards</kbd>
+2. Click <kbd>➕ Add Dashboard</kbd> at the bottom corner
+3. Select the <kbd>Webpage</kbd> option, and paste the Web UI URL you got from the add-on page.
+4. Fill in the title for the sidebar item, an icon (suggestion: `mdi:vector-difference`), and a **relative URL** for that panel (e.g. `change-detection`). Lastly, confirm it.
+
+### Configurable options
 
 ```yaml
 PGID: user
@@ -39,17 +49,15 @@ TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of
 BASE_URL: Specify the full URL (including protocol) when running behind a reverse proxy
 ```
 
-### Connect to browserless chrome (from @RhysMcW)
+### Connect to browserless Chrome (from @RhysMcW)
 
-In HA use the File Editor addon (or Filebrowser) and edit the Changedetection.io config.yaml : /homeassistant/addons_config/changedetection.io/config.yaml
-
-Add the following line to the end of the file: 
+In HA, use the File Editor add-on (or Filebrowser) and edit the Changedetection.io config file at `/homeassistant/addons_config/changedetection.io/config.yaml`. Add the following line to the end of it: 
 `PLAYWRIGHT_DRIVER_URL: ws://db21ed7f-browserless-chrome.local.hass.io:3000/chromium?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true`
 
 Remember to add a blank line at the end of the file too according to yaml requirements.
 
 The "db21ed7f-browserless-chrome.local.hass.io" hostname was got from the CLI in HA, using arp, but you should also be able to use your HA IP address.
-Then restart the Changedetection.io addon - after that you can use the browser options in Changedetection.io.
+Then restart the Changedetection.io add-on - after that you can use the browser options in Changedetection.io.
 
 ## Installation
 

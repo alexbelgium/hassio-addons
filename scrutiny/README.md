@@ -110,7 +110,7 @@ rest:
         value_template: '{{ value_json.data.smart_results[0].attrs["198"].raw_value }}'
     binary_sensor:
       - name: "HDD - SMART Status"
-        value_template: "{{ bool(value_json.data.smart_results[0].Status) }}"
+        value_template: "{{ 1 if value_json.data.smart_results[0].Status in [1, 2] else 0 }}"
         device_class: problem
 ```
 

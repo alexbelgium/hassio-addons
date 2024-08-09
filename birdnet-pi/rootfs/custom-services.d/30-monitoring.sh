@@ -24,7 +24,7 @@ mkdir -p "$ingest_dir"
 chown -R pi:pi "$ingest_dir"
 chmod -R 755 "$ingest_dir"
 
-function apprisemessage() {
+function apprisealert() {
     # Set failed check so it only runs once
     touch "$HOME"/BirdNET-Pi/failed_servicescheck
     NOTIFICATION=""
@@ -77,13 +77,15 @@ while true; do
 
     bashio::log.green "$(date)    INFO ${wavs} wav files waiting in $ingest_dir, $srv state is $state"
 
-    if ((wavs > 100)) && [[ "$state" == "active" ]]; then
+    if ((wavs > 100)); then
+        bashio::log.red "$(date) WARNING too many files in queue, pausing $srv"
         sudo systemctl stop "$srv"
-        bashio::log.red "$(date) WARNING stopped $srv service"
+        sudo systemctl restart birdnet_analysis
         if [ -s "$HOME/BirdNET-Pi/apprise.txt" ]; then apprisealert; fi
-    elif ((wavs <= 100)) && [[ "$state" != "active" ]]; then
-        sudo systemctl start $srv
+    elif [[ "$state" != "active" ]]; then
         bashio::log.yellow "$(date)    INFO started $srv service"
+        sudo systemctl start $srv
+        sudo systemctl restart birdnet_analysis
     fi
 
     ((counter--))

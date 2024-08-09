@@ -77,7 +77,8 @@
   ],
   "environment": {
     "NEXTCLOUD_PATH": "/data/config/www/nextcloud",
-    "SKIP_DATA_DIRECTORY_PERMISSION_CHECK": "yes"
+    "SKIP_DATA_DIRECTORY_PERMISSION_CHECK": "yes",
+    "TRUSTED_PROXIES": "**"
   },
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/nextcloud_ocr-{arch}",
@@ -151,6 +152,6 @@
   "uart": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "29.0.3",
+  "version": "29.0.4",
   "webui": "https://[HOST]:[PORT:443]"
 }

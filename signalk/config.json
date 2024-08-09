@@ -7,6 +7,8 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "An implementation of a Signal K central server for boats",
   "devices": [
+    "/dev/can0",
+    "/dev/can1",
     "/dev/ttyUSB0",
     "/dev/ttyUSB1"
   ],
@@ -17,6 +19,7 @@
     "SSLPORT": "3443",
     "TCPSTREAMPORT": "8375"
   },
+  "full_access": true,
   "image": "ghcr.io/alexbelgium/signalk-{arch}",
   "map": [
     "addon_config:rw"
@@ -44,6 +47,6 @@
   "uart": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "2.8.3-6",
+  "version": "2.8.3-7",
   "webui": "http://[HOST]:[PORT:3000]"
 }

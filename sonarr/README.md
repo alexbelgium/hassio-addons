@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Sonarr HA calendar integration l (opened 2024-03-06)](https://github.com/alexbelgium/hassio-addons/issues/1289) by [@FaliseDotCom](https://github.com/FaliseDotCom)
 
 # Home assistant add-on: Sonarr
 

@@ -1,5 +1,19 @@
+## 0.13-75 (08-08-2024)
+- Fix : improve symlinks logic
+
+## 0.13-73 (07-08-2024)
+- [REMOVE] : SPECIES_CONVERTER_ENABLED option removed, please instead us "exclude species" and "change detection"
+- [FEAT] : Improve dark mode
+- [FEAT] : Species confirmation
+
+## 0.13-71 (14-07-2024)
+- [FEAT] : Add manual MQTT options
+
+## 0.13-69 (12-07-2024)
+- [FEAT] : limit a specific number of audio samples per species
+
 ## 0.13-68 (10-07-2024)
-- [FIX] : correct mqtt posting, switch to service 
+- [FIX] : correct mqtt posting, switch to service
 
 ## 0.13-65 (08-07-2024)
 - [FEAT] : publish mqtt to homeassistant if a server is found

@@ -1,7 +1,7 @@
 {
   "last_update": "22-06-2024",
   "repository": "alexbelgium/hassio-addons",
-  "slug": "birdnet-go",
+  "slug": "birdnet-pi",
   "source": "github",
   "upstream_repo": "Nachtzuster/BirdNET-Pi",
   "upstream_version": "0.1"

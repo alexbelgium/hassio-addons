@@ -71,8 +71,7 @@
   "image": "ghcr.io/alexbelgium/fireflyiii-{arch}",
   "map": [
     "config:rw",
-    "share:rw",
-    "ssl"
+    "share:rw"
   ],
   "name": "Firefly iii",
   "options": {
@@ -82,10 +81,12 @@
     "silent": "true"
   },
   "ports": {
-    "8080/tcp": 3473
+    "8080/tcp": 3473,
+    "8443/tcp": null
   },
   "ports_description": {
-    "8080/tcp": "web interface"
+    "8080/tcp": "web interface",
+    "8443/tcp": "ssl web interface"
   },
   "schema": {
     "APP_KEY": "str",
@@ -106,6 +107,6 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "6.1.18",
+  "version": "6.1.19",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

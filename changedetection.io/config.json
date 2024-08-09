@@ -6,6 +6,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "web page monitoring, notification and change detection",
   "environment": {
+    "LC_ALL": "en_US.UTF-8",
     "TIMEOUT": "60000"
   },
   "image": "ghcr.io/alexbelgium/changedetection.io-{arch}",
@@ -35,6 +36,6 @@
   "slug": "changedetection.io",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/changedetection.io",
-  "version": "0.45.25-2",
+  "version": "0.46.2",
   "webui": "http://[HOST]:[PORT:5000]"
 }
