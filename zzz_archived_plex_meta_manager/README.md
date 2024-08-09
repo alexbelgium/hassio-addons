@@ -1,5 +1,6 @@
 ## &#9888; Open Issue : [🐛 [Plex Meta Manager] is now Kometa (opened 2024-04-27)](https://github.com/alexbelgium/hassio-addons/issues/1357) by [@bruvv](https://github.com/bruvv)
-# ⚠️ It is recommended to use Kometa addon (https://github.com/alexbelgium/hassio-addons) instead of this. ⚠️
+
+# ⚠️ It is recommended to use Kometa addon (<https://github.com/alexbelgium/hassio-addons>) instead of this. ⚠️
 # Home assistant add-on: Plex-meta-manager
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

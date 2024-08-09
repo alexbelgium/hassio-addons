@@ -26,7 +26,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [Kometa](https://kometa.wiki/en/latest/) is a Python 3 script that can be continuously run using YAML configuration files to update on a schedule the metadata of the movies, shows, and collections in your libraries as well as automatically build collections based on various methods all detailed in the wiki.
 
-This addon is based on the docker image https://github.com/linuxserver/docker-kometa
+This addon is based on the docker image <https://github.com/linuxserver/docker-kometa>
 
 ## Installation
 
@@ -65,10 +65,9 @@ KOMETA_NO_MISSING: False #Set to True to run without any of the missing movie/sh
 
 - Config.yaml (advanced usage)
 
-Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
+Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : <https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables>
 
-
-The complete list of ENV variables can be seen here : https://kometa.wiki/en/latest/kometa/environmental/
+The complete list of ENV variables can be seen here : <https://kometa.wiki/en/latest/kometa/environmental/>
 
 ## Support
 
