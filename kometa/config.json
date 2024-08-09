@@ -1,6 +1,6 @@
 {
   "arch": [
-    "arm64v8",
+    "aarch64",
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
