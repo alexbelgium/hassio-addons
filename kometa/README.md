@@ -1,5 +1,7 @@
 # Home assistant add-on: Kometa
 
+<!-- markdownlint-disable MD043 -->
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
 
