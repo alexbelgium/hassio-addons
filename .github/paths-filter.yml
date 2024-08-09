@@ -44,6 +44,7 @@ jellyfin: jellyfin/config.* # Image : yes
 jellyseerr: jellyseerr/config.* # Image : yes
 joal: joal/config.* # Image : yes
 joplin: joplin/config.* # Image : yes
+kometa: kometa/config.* # Image : yes
 lidarr: lidarr/config.* # Image : yes
 linkwarden: linkwarden/config.* # Image : yes
 mealie: mealie/config.* # Image : yes
@@ -67,7 +68,6 @@ papermerge: papermerge/config.* # Image : yes
 photoprism: photoprism/config.* # Image : yes
 piwigo: piwigo/config.* # Image : yes
 plex: plex/config.* # Image : yes
-plex_meta_manager: plex_meta_manager/config.* # Image : yes
 portainer: portainer/config.* # Image : yes
 portainer_agent: portainer_agent/config.* # Image : yes
 postgres: postgres/config.* # Image : yes
@@ -106,5 +106,6 @@ zoneminder: zoneminder/config.* # Image : yes
 zzz_archived_bitwarden: zzz_archived_bitwarden/config.* # Image : yes
 zzz_archived_code-server: zzz_archived_code-server/config.* # Image : yes
 zzz_archived_paperless_ngx: zzz_archived_paperless_ngx/config.* # Image : yes
+zzz_archived_plex_meta_manager: zzz_archived_plex_meta_manager/config.* # Image : yes
 zzz_draft_birdnet-pi: zzz_draft_birdnet-pi/config.* # Image : yes
 zzz_draft_overleaf: zzz_draft_overleaf/config.* # Image : yes

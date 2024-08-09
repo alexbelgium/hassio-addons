@@ -72,7 +72,7 @@
     "share:rw",
     "media:rw"
   ],
-  "name": "Plex meta manager",
+  "name": "zzz_archived - Plex meta manager",
   "options": {
     "PGID": 0,
     "PMM_CONFIG": "/config/addons_config/plex-data-manager/config.yml",

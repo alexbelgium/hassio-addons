@@ -1,5 +1,6 @@
-## &#9888; Open Issue : [🐛 [Plex Meta Manager] is now Kometa (opened 2024-04-27)](https://github.com/alexbelgium/hassio-addons/issues/1357) by [@bruvv](https://github.com/bruvv)
-# Home assistant add-on: Plex-meta-manager
+<!-- markdownlint-disable MD043 -->
+
+# Home assistant add-on: Kometa
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
@@ -19,15 +20,15 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/plex_meta_manager/stats.png)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/kometa/stats.png)
 
 ## About
 
 ---
 
-[Plex-meta-manager](https://plex-meta-manager.video/) is a Python 3 script that can be continuously run using YAML configuration files to update on a schedule the metadata of the movies, shows, and collections in your libraries as well as automatically build collections based on various methods all detailed in the wiki.
+[Kometa](https://kometa.wiki/en/latest/) is a Python 3 script that can be continuously run using YAML configuration files to update on a schedule the metadata of the movies, shows, and collections in your libraries as well as automatically build collections based on various methods all detailed in the wiki.
 
-This addon is based on the docker image https://github.com/linuxserver/docker-plex-meta-manager
+This addon is based on the docker image <https://github.com/linuxserver/docker-kometa>
 
 ## Installation
 
@@ -46,8 +47,8 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
-There is a [walkthrough](https://github.com/meisnate12/Plex-Meta-Manager/wiki/Docker-Walkthrough#setting-up-the-initial-config-file) available to help get you up and running.
-For more information see the [official wiki](https://github.com/meisnate12/Plex-Meta-Manager/wiki).
+There is a [walkthrough](https://github.com/Kometa-Team/Kometa#setting-up-the-initial-config-file) available to help get you up and running.
+For more information see the [official wiki](https://github.com/Kometa-Team/Kometa).
 
 Options can be configured through two ways :
 
@@ -57,19 +58,18 @@ Options can be configured through two ways :
 PUID: 1000 #for UserID - see below for explanation
 PGID: 1000 #for GroupID - see below for explanation
 TZ: Europe/London #Specify a timezone to use EG Europe/London.
-PMM_CONFIG: /config/addons_config/plex-data-manager/config/config.yml #Specify a custom config file to use.
-PMM_TIME: 03:00 #Comma-separated list of times to update each day. Format: HH:MM.
-PMM_RUN: False #Set to True to run without the scheduler.
-PMM_TEST: False #Set to True to run in debug mode with only collections that have test: true.
-PMM_NO_MISSING: False #Set to True to run without any of the missing movie/show functions.
+KOMETA_CONFIG: /config/addons_config/kometa/config/config.yml #Specify a custom config file to use.
+KOMETA_TIME: 03:00 #Comma-separated list of times to update each day. Format: HH:MM.
+KOMETA_RUN: False #Set to True to run without the scheduler.
+KOMETA_TEST: False #Set to True to run in debug mode with only collections that have test: true.
+KOMETA_NO_MISSING: False #Set to True to run without any of the missing movie/show functions.
 ```
 
 - Config.yaml (advanced usage)
 
-Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
+Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : <https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables>
 
-
-The complete list of ENV variables can be seen here : https://github.com/meisnate12/Plex-Meta-Manager/wiki/Run-Commands-&-Environmental-Variables
+The complete list of ENV variables can be seen here : <https://kometa.wiki/en/latest/kometa/environmental/>
 
 ## Support
 
