@@ -73,8 +73,8 @@
   ],
   "name": "Kometa",
   "options": {
-    "PGID": 0,
     "KOMETA_CONFIG": "/config/addons_config/kometa/config.yml",
+    "PGID": 0,
     "PUID": 0
   },
   "privileged": [
@@ -82,12 +82,12 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PGID": "int",
     "KOMETA_CONFIG": "str",
     "KOMETA_NO_MISSING": "bool?",
     "KOMETA_RUN": "bool?",
     "KOMETA_TEST": "bool?",
     "KOMETA_TIME": "str?",
+    "PGID": "int",
     "PUID": "int",
     "TZ": "str?"
   },
