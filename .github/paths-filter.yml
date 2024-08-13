@@ -90,6 +90,7 @@ spotweb: spotweb/config.* # Image : yes
 tandoor_recipes: tandoor_recipes/config.* # Image : yes
 tdarr: tdarr/config.* # Image : yes
 teamspeak: teamspeak/config.* # Image : yes
+tor: tor/config.* # Image : yes
 transmission: transmission/config.* # Image : yes
 transmission_openvpn: transmission_openvpn/config.* # Image : yes
 ubooquity: ubooquity/config.* # Image : yes
