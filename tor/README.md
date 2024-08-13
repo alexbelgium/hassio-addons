@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Transmission NAS] Cannot move downloaded data to other CIFS directory (opened 2024-07-25)](https://github.com/alexbelgium/hassio-addons/issues/1494) by [@hiagocosta](https://github.com/hiagocosta)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
