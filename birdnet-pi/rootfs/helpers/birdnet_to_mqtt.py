@@ -146,7 +146,7 @@ for row in file_row_generator(syslog):
                     image_url = ""
             else:
                 image_url = flickr_images[comName]
-            bird['Image'] = image_url
+            bird['Flickrimage'] = image_url
 
         # convert to json string we can sent to mqtt
         json_bird = json.dumps(bird)
