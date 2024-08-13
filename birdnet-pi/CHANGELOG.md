@@ -1,3 +1,4 @@
+## 0.13-79 (13-08-2024)
 - [MQTT] : add Flickrimage to mqtt tags when a flickr API is defined in options
 
 ## 0.13-75 (08-08-2024)
