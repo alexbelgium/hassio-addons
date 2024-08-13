@@ -10,12 +10,21 @@
 
 import time
 import re
-import dateparser    
+import dateparser
 import datetime
 import json
 import logging
 import paho.mqtt.client as mqtt
 import subprocess
+import requests
+import sys
+sys.path.append('/home/pi/BirdNET-Pi/scripts/utils')
+from helpers import get_settings
+
+# Used in flickrimage
+flickr_images = {}
+conf = get_settings()
+settings_dict = dict(conf)
 
 # Setup basic configuration for logging
 logging.basicConfig(level=logging.INFO)
@@ -85,7 +94,7 @@ mqttc.loop_start()
 # call the generator function and process each line that is returned
 for row in file_row_generator(syslog):
     # bird found above confidence level found, process it
-    if re_high_clean.search(row) :    
+    if re_high_clean.search(row) :
 
         # this slacker regular expression work, extracts the data about the bird found from the log line
         # I do the parse in two passes, because I did not know the re to do it in one!
@@ -112,9 +121,32 @@ for row in file_row_generator(syslog):
         bird['Confidence'] = high_bird_fields[4]
         bird['SpeciesCode'] = get_bird_code(high_bird_fields[2])
         bird['ClipName'] = high_bird_fields[11]
-        
+
         # build a url from scientific name of bird that can be used to lookup info about bird
         bird['url'] = bird_lookup_url_base + high_bird_fields[2].replace(' ', '_')
+
+        # Flickimage
+        image_url = ""
+        common_name = high_bird_fields[3]
+        if len(settings_dict.get('FLICKR_API_KEY')) > 0:
+            if common_name not in flickr_images:
+                try:
+                    headers = {'User-Agent': 'Python_Flickr/1.0'}
+                    url = ('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + str(settings_dict.get('FLICKR_API_KEY')) +
+                           '&text=' + str(common_name) + ' bird&sort=relevance&per_page=5&media=photos&format=json&license=2%2C3%2C4%2C5%2C6%2C9&nojsoncallback=1')
+                    resp = requests.get(url=url, headers=headers, timeout=10)
+
+                    resp.encoding = "utf-8"
+                    data = resp.json()["photos"]["photo"][0]
+
+                    image_url = 'https://farm'+str(data["farm"])+'.static.flickr.com/'+str(data["server"])+'/'+str(data["id"])+'_'+str(data["secret"])+'_n.jpg'
+                    flickr_images[comName] = image_url
+                except Exception as e:
+                    print("FLICKR API ERROR: "+str(e))
+                    image_url = ""
+            else:
+                image_url = flickr_images[comName]
+            bird['Image'] = image_url
 
         # convert to json string we can sent to mqtt
         json_bird = json.dumps(bird)
