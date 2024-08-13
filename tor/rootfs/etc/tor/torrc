@@ -1,0 +1,3 @@
+RunAsDaemon 0
+DataDirectory /data
+AvoidDiskWrites 1

@@ -1,0 +1,236 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Community Add-on: Tor
+# Prepares the add-on for startup
+# ==============================================================================
+declare address
+declare clientname
+declare host
+declare key
+declare log_level
+declare port
+declare private_key
+declare public_key
+declare target_port
+declare virtual_port
+
+readonly torrc='/etc/tor/torrc'
+readonly hidden_service_dir='/ssl/tor/hidden_service'
+readonly authorized_clients_dir="${hidden_service_dir}/authorized_clients"
+readonly clients_dir="${hidden_service_dir}/clients"
+readonly hostname_file="${hidden_service_dir}/hostname"
+
+# A hidden service without any ports is kinda useless
+if bashio::config.true 'hidden_services' \
+    && ! bashio::config.has_value 'ports'; then
+    bashio::log.fatal
+    bashio::log.fatal 'Add-on configuration is incomplete.'
+    bashio::log.fatal
+    bashio::log.fatal 'Hidden services where enabled, using the'
+    bashio::log.fatal '"hidden_services" add-on configuration option,'
+    bashio::log.fatal 'But the "port" option does not contain any values!'
+    bashio::log.fatal
+    bashio::log.fatal 'Please configure the "ports" option.'
+    bashio::exit.nok
+fi
+
+# Checks if client names where configured when using stealth mode
+if bashio::config.true 'hidden_services' \
+    && bashio::config.true 'stealth' \
+    && ! bashio::config.has_value 'client_names';
+then
+    bashio::log.fatal
+    bashio::log.fatal 'Add-on configuration is incomplete.'
+    bashio::log.fatal
+    bashio::log.fatal 'Stealth mode is enabled, using the "stealth" add-on'
+    bashio::log.fatal 'configuration option, but there are no client names'
+    bashio::log.fatal 'configured in the "client_names" add-on option.'
+    bashio::log.fatal
+    bashio::log.fatal 'Please configure the "client_names" option.'
+    bashio::exit.nok
+fi
+
+# Created needed directories
+mkdir -p \
+    "${authorized_clients_dir}" \
+    "${clients_dir}" \
+    "${hidden_service_dir}" \
+    || bashio::exit.nok 'Could not create tor data directories'
+chmod -R 0700 /ssl/tor
+
+# Find the matching Tor log level
+if bashio::config.has_value 'log_level'; then
+    case "$(bashio::string.lower "$(bashio::config 'log_level')")" in
+        all|trace)
+            log_level="debug"
+            ;;
+        debug)
+            log_level="info"
+            ;;
+        info|notice)
+            log_level="notice"
+            ;;
+        warning)
+            log_level="warn"
+            ;;
+        error|fatal|off)
+            log_level="err"
+            ;;
+    esac
+
+    echo "Log ${log_level} stdout" >> "${torrc}"
+fi
+
+# Configure Socks proxy
+if bashio::config.true 'socks'; then
+    echo 'SOCKSPort 0.0.0.0:9050' >> "${torrc}"
+else
+    echo 'SOCKSPort 127.0.0.1:9050' >> "${torrc}"
+fi
+
+# Configure hidden services
+if bashio::config.true 'hidden_services'; then
+    echo "HiddenServiceDir ${hidden_service_dir}" >> "${torrc}"
+    
+    for port in $(bashio::config 'ports'); do
+        count=$(echo "${port}" | sed 's/[^:]//g'| awk '{ print length }')
+        if [[ "${count}" == 0 ]]; then
+            host='homeassistant'
+            virtual_port="${port}"
+            target_port="${port}"
+        elif [[ "${count}" == 1 ]]; then
+            # Check if format is hostname/ip:port or port:port
+            first=$(echo "${port}" | cut -f1 -d:)
+            if [[ "${first}" =~ ^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]) ]]; then
+                host='homeassistant'
+                virtual_port=$(echo "${port}" | cut -f1 -d:)
+                target_port=$(echo "${port}" | cut -f2 -d:)
+            else
+                host=$(echo "${port}" | cut -f1 -d:)
+                virtual_port=$(echo "${port}" | cut -f2 -d:)
+                target_port=$(echo "${port}" | cut -f2 -d:)
+            fi
+        elif [[ "${count}" == 2 ]]; then
+            host=$(echo "${port}" | cut -f1 -d:)
+            virtual_port=$(echo "${port}" | cut -f2 -d:)
+            target_port=$(echo "${port}" | cut -f3 -d:)
+        else
+            bashio::log.warning "$port Are not correct format, skipping..."
+        fi
+        if [[ "${count}" -le 2 ]]; then
+            echo "HiddenServicePort ${target_port} ${host}:${virtual_port}" \
+                >> "${torrc}"
+        fi
+    done
+fi
+
+# Configure bridges
+if bashio::config.exists 'bridges' \
+    && ! bashio::config.is_empty 'bridges';
+then
+    bashio::log.info 'Use bridges:'
+    echo "UseBridges 1" >> "${torrc}"
+
+    # Add client for OBFS transport
+    echo "ClientTransportPlugin obfs2,obfs3,obfs4,scramblesuit exec /usr/local/bin/obfs4proxy managed" >> "${torrc}"
+    
+    # Add client for Snowflake transport
+    echo "ClientTransportPlugin snowflake exec /usr/local/bin/snowflake" >> "${torrc}"
+
+    # Add client for WebTunnel transport
+    echo "ClientTransportPlugin webtunnel exec /usr/local/bin/webtunnel" >> "${torrc}"
+    
+    # Add bridges
+    while read -r bridge; do
+        bashio::log.info "Bridge ${bridge}"
+        echo "Bridge ${bridge}" >> "${torrc}"
+    done <<< "$(bashio::config 'bridges')"
+fi
+
+# Figure out the address
+if bashio::config.true 'hidden_services'; then
+    bashio::log.info 'Starting Tor temporarly...'
+
+    exec 3< <(tor)
+
+    until bashio::fs.file_exists "${hostname_file}"; do
+        bashio::log.info "Waiting for service to start..."
+        sleep 1
+    done
+
+    address=$(<"${hostname_file}")
+    grep -m 1 "Bootstrapped 100% (done): Done" <&3 >/dev/null 2>&1
+
+    kill "$(pgrep tor)" >/dev/null 2>&1
+
+    bashio::log.info '---------------------------------------------------------'
+    bashio::log.info 'Your Home Assistant instance is available on Tor!'
+    bashio::log.info "Address: ${address}"
+    bashio::log.info '---------------------------------------------------------'
+fi
+
+# Configure stealth mode
+if bashio::config.true 'hidden_services' && bashio::config.true 'stealth';
+then
+    # Following the documentation at:
+    # https://community.torproject.org/onion-services/advanced/client-auth/
+    while read -r clientname; do
+        # Generate key is they do not exist yet
+        if ! bashio::fs.file_exists "${authorized_clients_dir}/${clientname}.auth"
+        then 
+            key=$(openssl genpkey -algorithm x25519)
+
+            private_key=$(
+                sed \
+                    -e '/----.*PRIVATE KEY----\|^[[:space:]]*$/d' \
+                    <<< "${key}" \
+                    | base64 -d \
+                    | tail -c 32 \
+                    | base32 \
+                    | sed 's/=//g'
+            )
+
+            public_key=$(
+                openssl pkey -pubout \
+                <<< "${key}" \
+                | sed -e '/----.*PUBLIC KEY----\|^[[:space:]]*$/d' \
+                | base64 -d \
+                | tail -c 32 \
+                | base32 \
+                | sed 's/=//g'
+            )
+
+            # Create authorized client file
+            echo "descriptor:x25519:${public_key}" \
+                > "${clients_dir}/${clientname}.auth"
+            echo "descriptor:x25519:${public_key}" \
+                > "${authorized_clients_dir}/${clientname}.auth"
+
+            # Create private key file
+            echo "${private_key}" \
+                > "${clients_dir}/${clientname}.key.txt"
+            echo "${address%.onion}:descriptor:x25519:${private_key}" \
+                > "${clients_dir}/${clientname}.auth_private"
+
+            bashio::log.red
+            bashio::log.red
+            bashio::log.red "Created keys for ${clientname}!"
+            bashio::log.red
+            bashio::log.red "Keys are stored in:"
+            bashio::log.red "${clients_dir}"
+            bashio::log.red
+            bashio::log.red "Public key":
+            bashio::log.red "${public_key}"
+            bashio::log.red
+            bashio::log.red "Private key:"
+            bashio::log.red "${private_key}"
+            bashio::log.red
+            bashio::log.red 
+        else
+            bashio::log.info "Keys for ${clientname} already exists; skipping..."
+        fi
+    done <<< "$(bashio::config 'client_names')"
+
+    echo 'HiddenServiceAllowUnknownPorts 0' >> "${torrc}"
+fi
