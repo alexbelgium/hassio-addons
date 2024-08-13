@@ -1,3 +1,5 @@
+## 0.13-77 (13-08-2024)
+- Minor bugs fixed
 ## 0.13-75 (08-08-2024)
 - Fix : improve symlinks logic
 
