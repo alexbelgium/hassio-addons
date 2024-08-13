@@ -17,7 +17,9 @@ import logging
 import paho.mqtt.client as mqtt
 import subprocess
 import requests
-from .helpers import get_settings
+import sys
+sys.path.append('/home/pi/BirdNET-Pi/scripts/utils')
+from helpers import get_settings
 
 # Used in flickrimage
 flickr_images = {}
