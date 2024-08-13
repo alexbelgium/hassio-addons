@@ -20,7 +20,7 @@
   "slug": "tor",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "dev",
-  "startup": "service",
+  "startup": "services",
   "options": {
     "socks": false,
     "hidden_services": true,
