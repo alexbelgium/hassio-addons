@@ -16,6 +16,13 @@ import json
 import logging
 import paho.mqtt.client as mqtt
 import subprocess
+import requests
+from .helpers import get_settings
+
+# Used in flickrimage
+flickr_images = {}
+conf = get_settings()
+settings_dict = dict(conf)
 
 # Setup basic configuration for logging
 logging.basicConfig(level=logging.INFO)
@@ -118,12 +125,13 @@ for row in file_row_generator(syslog):
 
         # Flickimage
         image_url = ""
+        common_name = high_bird_fields[3]
         if len(settings_dict.get('FLICKR_API_KEY')) > 0:
-            if comName not in flickr_images:
+            if common_name not in flickr_images:
                 try:
                     headers = {'User-Agent': 'Python_Flickr/1.0'}
                     url = ('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + str(settings_dict.get('FLICKR_API_KEY')) +
-                           '&text=' + str(comName) + ' bird&sort=relevance&per_page=5&media=photos&format=json&license=2%2C3%2C4%2C5%2C6%2C9&nojsoncallback=1')
+                           '&text=' + str(common_name) + ' bird&sort=relevance&per_page=5&media=photos&format=json&license=2%2C3%2C4%2C5%2C6%2C9&nojsoncallback=1')
                     resp = requests.get(url=url, headers=headers, timeout=10)
 
                     resp.encoding = "utf-8"
