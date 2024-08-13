@@ -6,6 +6,7 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Protect your privacy and access Home Assistant via Tor",
+  "image": "ghcr.io/alexbelgium/tor-{arch}",
   "init": false,
   "map": [
     "ssl:rw"
