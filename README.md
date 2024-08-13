@@ -44,7 +44,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 94
+- In the repository : 95
 - Installed : 87690
 
 ### Top 3
@@ -794,7 +794,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003; [Tor with bridges](tor/) : Copy of official comunity addon with additional bridges supporting
+&#10003;  [Tor with bridges](tor/) : Protect your privacy and access Home Assistant via Tor
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftor%2Fconfig.json)
 ![aarch64][aarch64-badge]
