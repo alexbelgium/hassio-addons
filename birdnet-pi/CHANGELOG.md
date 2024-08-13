@@ -1,5 +1,4 @@
-## 0.13-78 (13-08-2024)
-- [MQTT] : add flickrimage to mqtt tags when a flickr API is defined in options
+- [MQTT] : add Flickrimage to mqtt tags when a flickr API is defined in options
 
 ## 0.13-75 (08-08-2024)
 - Fix : improve symlinks logic
