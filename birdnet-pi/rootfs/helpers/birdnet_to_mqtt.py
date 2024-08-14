@@ -59,7 +59,7 @@ def automatic_mqtt_publish(file, detections):
         bird['CommonName'] = detection.common_name
         bird['Confidence'] = detection.confidence
         bird['SpeciesCode'] = get_bird_code(detection.scientific_name)
-        bird['ClipName'] = os.path.basename(detection.file_name_ext)
+        bird['ClipName'] = path
         bird['url'] = bird_lookup_url_base + detection.scientific_name
 
         image_url = ""
