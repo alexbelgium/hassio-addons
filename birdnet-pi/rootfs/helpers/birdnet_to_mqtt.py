@@ -14,7 +14,8 @@ import os
 sys.path.append('/home/pi/BirdNET-Pi/scripts/utils')
 from helpers import get_settings
 
-# Setup logging
+# Setup basic configuration for logging
+logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
 # Used in flickrimage
