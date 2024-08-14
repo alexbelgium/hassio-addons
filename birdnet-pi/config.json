@@ -72,6 +72,7 @@
   "options": {
     "BIRDSONGS_FOLDER": "/config/BirdSongs",
     "LIVESTREAM_BOOT_ENABLED": false,
+    "MQTT_DISABLED": true,
     "TZ": "Europe/Paris",
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
