@@ -36,7 +36,7 @@ profile tor_addon flags=(attach_disconnected,mediate_deleted) {
   /usr/bin/** ix,
   /usr/lib/bashio/** ix,
   /etc/s6/** rix,
-  /etc/s6-overlay/** ix,
+  /etc/s6-overlay/** rix,
   /run/s6/** rix,
   /etc/services.d/** rwix,
   /etc/cont-init.d/** rwix,
