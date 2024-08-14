@@ -64,7 +64,7 @@ def automatic_mqtt_publish(file, detections, path):
 
         # Flickimage
         image_url = ""
-        common_name = high_bird_fields[3]
+        common_name = detection.common_name
         if len(settings_dict.get('FLICKR_API_KEY')) > 0:
             if common_name not in flickr_images:
                 try:
@@ -77,12 +77,12 @@ def automatic_mqtt_publish(file, detections, path):
                     data = resp.json()["photos"]["photo"][0]
 
                     image_url = 'https://farm'+str(data["farm"])+'.static.flickr.com/'+str(data["server"])+'/'+str(data["id"])+'_'+str(data["secret"])+'_n.jpg'
-                    flickr_images[comName] = image_url
+                    flickr_images[common_name] = image_url
                 except Exception as e:
                     print("FLICKR API ERROR: "+str(e))
                     image_url = ""
             else:
-                image_url = flickr_images[comName]
+                image_url = flickr_images[common_name]
             bird['Flickrimage'] = image_url
 
         json_bird = json.dumps(bird)
