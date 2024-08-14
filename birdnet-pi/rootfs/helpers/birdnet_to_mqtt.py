@@ -27,8 +27,8 @@ mqtt_server = "%%mqtt_server%%"
 mqtt_user = "%%mqtt_user%%"
 mqtt_pass = "%%mqtt_pass%%"
 mqtt_port = "%%mqtt_port%%"
+mqtt_topic = 'birdnet'
 
-mqtt_topic_confident_birds = 'birdnet'
 bird_lookup_url_base = 'http://en.wikipedia.org/wiki/'
 
 def on_connect(client, userdata, flags, rc, properties=None):
@@ -85,7 +85,7 @@ def automatic_mqtt_publish(file, detections):
             bird['Flickrimage'] = image_url
 
         json_bird = json.dumps(bird)
-        mqttc.publish(mqtt_topic_confident_birds, json_bird, 1)
+        mqttc.publish(mqtt_topic, json_bird, 1)
         log.info("Posted to MQTT: ok")
 
 mqttc = mqtt.Client('birdnet_mqtt')
