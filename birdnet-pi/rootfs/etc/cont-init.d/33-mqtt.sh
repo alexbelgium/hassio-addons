@@ -2,6 +2,17 @@
 # shellcheck shell=bash
 set -e
 
+common_steps () {
+
+    # Copy script
+    cp /helpers/birdnet_to_mqtt.py "$HOME"/BirdNET-Pi/scripts/birdnet_to_mqtt.py
+    chmod +x "$HOME"/BirdNET-Pi/scripts/birdnet_to_mqtt.py
+
+    # Add hook
+    sed -i "/import sendAppriseNotifications/a from .birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/utils/reporting.py
+
+}
+
 if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED' ; then
     bashio::log.green "---"
     bashio::log.blue "MQTT addon is active on your system! Birdnet-pi is now automatically configured to send its ouptut to MQTT"
@@ -19,11 +30,9 @@ if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED' ; 
     sed -i "s|%%mqtt_user%%|$(bashio::services "mqtt" "username")|g" /helpers/birdnet_to_mqtt.py
     sed -i "s|%%mqtt_pass%%|$(bashio::services "mqtt" "password")|g" /helpers/birdnet_to_mqtt.py
 
-    # Copy script
-    cp /helpers/birdnet_to_mqtt.py /usr/bin/birdnet_to_mqtt.py
-    cp /helpers/birdnet_to_mqtt.sh /custom-services.d
-    chmod 777 /usr/bin/birdnet_to_mqtt.py
-    chmod 777 /custom-services.d/birdnet_to_mqtt.sh
+    # Common steps
+    common_steps
+
 elif bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQTT_PORT_manual"; then
     bashio::log.green "---"
     bashio::log.blue "MQTT is manually configured in the addon options"
@@ -39,9 +48,7 @@ elif bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQ
     sed -i "s|%%mqtt_user%%|$(bashio::config "MQTT_USER_manual")|g" /helpers/birdnet_to_mqtt.py
     sed -i "s|%%mqtt_pass%%|$(bashio::config "MQTT_PASSWORD_manual")|g" /helpers/birdnet_to_mqtt.py
 
-    # Copy script
-    cp /helpers/birdnet_to_mqtt.py /usr/bin/birdnet_to_mqtt.py
-    cp /helpers/birdnet_to_mqtt.sh /custom-services.d
-    chmod +x /usr/bin/birdnet_to_mqtt.py
-    chmod +x /custom-services.d/birdnet_to_mqtt.sh    
+    # Common steps
+    common_steps
+
 fi
