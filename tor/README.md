@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Janitorr (opened 2024-03-08)](https://github.com/alexbelgium/hassio-addons/issues/1292) by [@hacshacdgacs](https://github.com/hacshacdgacs)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
