@@ -6,6 +6,7 @@ common_steps () {
 
     # Copy script
     cp /helpers/birdnet_to_mqtt.py "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
+    chown pi:pi "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
     chmod +x "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
 
     # Add hooks
