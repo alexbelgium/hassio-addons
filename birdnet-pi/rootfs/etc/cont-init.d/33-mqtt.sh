@@ -5,11 +5,12 @@ set -e
 common_steps () {
 
     # Copy script
-    cp /helpers/birdnet_to_mqtt.py "$HOME"/BirdNET-Pi/scripts/birdnet_to_mqtt.py
-    chmod +x "$HOME"/BirdNET-Pi/scripts/birdnet_to_mqtt.py
+    cp /helpers/birdnet_to_mqtt.py "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
+    chmod +x "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
 
-    # Add hook
-    sed -i "/import sendAppriseNotifications/a from .birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/utils/reporting.py
+    # Add hooks
+    sed -i "/load_global_model, run_analysis/a from utils.birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
+    sed -i "/heartbeat\(/a\            automatic_mqtt_publish(file, detections)" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
 
 }
 
