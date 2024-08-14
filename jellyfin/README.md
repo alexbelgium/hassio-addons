@@ -22,7 +22,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[jellyfin](https://jellyfin.media/) organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone jellyfin Media Server.
+[jellyfin](https://jellyfin.org/) organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone jellyfin Media Server.
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-jellyfin) from linuxserver.io.
 
