@@ -1,3 +1,5 @@
+## 0.13-84 (15-08-2024)
+- Minor bugs fixed
 ## 0.13-83 (14-08-2024)
 - [MQTT] Change logic as a hook in birdnet_analysis instead of a service 
 - [DEFAULT] disable by default autopublishing of MQTT
