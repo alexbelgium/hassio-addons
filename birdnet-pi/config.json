@@ -6,7 +6,7 @@
   "audio": true,
   "backup": "cold",
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "realtime acoustic bird classification system",
+  "description": "Realtime acoustic bird classification system",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
