@@ -11,7 +11,7 @@ common_steps () {
 
     # Add hooks
     sed -i "/load_global_model, run_analysis/a from utils.birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
-    sed -i '/write_to_db(/a\            automatic_mqtt_publish(file, detections, os.path.basename(detection.file_name_extr))' "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
+    sed -i '/write_to_db(/a\            automatic_mqtt_publish(file, detections)' "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
 
 }
 
