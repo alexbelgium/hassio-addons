@@ -27,12 +27,11 @@ settings_dict = dict(conf)
 mqtt_server = "%%mqtt_server%%"
 mqtt_user = "%%mqtt_user%%"
 mqtt_pass = "%%mqtt_pass%%"
-mqtt_port = "%%mqtt_port%%"
+mqtt_port = %%mqtt_port%%
 mqtt_topic = 'birdnet'
-
 bird_lookup_url_base = 'http://en.wikipedia.org/wiki/'
 
-def on_connect(client, userdata, flags, rc, properties=None):
+def on_connect(client, userdata, flags, rc ): #, properties=None):
     """ Callback for when the client receives a CONNACK response from the server. """
     if rc == 0:
         log.info("Connected to MQTT Broker!")
@@ -50,44 +49,44 @@ def get_bird_code(scientific_name):
 
     return bird_dict.get(scientific_name)
 
-def automatic_mqtt_publish(file, detections):
-    path = ""
-    for detection in detections:
-        bird = {}
-        bird['Date'] = file.date
-        bird['Time'] = file.time
-        bird['ScientificName'] = detection.scientific_name.replace('_', ' ')
-        bird['CommonName'] = detection.common_name
-        bird['Confidence'] = detection.confidence
-        bird['SpeciesCode'] = get_bird_code(detection.scientific_name)
-        bird['ClipName'] = path
-        bird['url'] = bird_lookup_url_base + detection.scientific_name
+def automatic_mqtt_publish(file, detection, path):
+    bird = {}
+    bird['Date'] = file.date
+    bird['Time'] = file.time
+    bird['ScientificName'] = detection.scientific_name.replace('_', ' ')
+    bird['CommonName'] = detection.common_name
+    bird['Confidence'] = detection.confidence
+    bird['SpeciesCode'] = get_bird_code(detection.scientific_name)
+    bird['ClipName'] = path
+    bird['url'] = bird_lookup_url_base + detection.scientific_name.replace(' ', '_')
 
-        # Flickimage
-        image_url = ""
-        common_name = detection.common_name
-        if len(settings_dict.get('FLICKR_API_KEY')) > 0:
-            if common_name not in flickr_images:
-                try:
-                    headers = {'User-Agent': 'Python_Flickr/1.0'}
-                    url = ('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + str(settings_dict.get('FLICKR_API_KEY')) +
-                           '&text=' + str(common_name) + ' bird&sort=relevance&per_page=5&media=photos&format=json&license=2%2C3%2C4%2C5%2C6%2C9&nojsoncallback=1')
-                    resp = requests.get(url=url, headers=headers, timeout=10)
+    # Flickimage
+    image_url = ""
+    common_name = detection.common_name
+    if len(settings_dict.get('FLICKR_API_KEY')) > 0:
+        if common_name not in flickr_images:
+            try:
+                headers = {'User-Agent': 'Python_Flickr/1.0'}
+                url = ('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + str(settings_dict.get('FLICKR_API_KEY')) +
+                       '&text=' + str(common_name) + ' bird&sort=relevance&per_page=5&media=photos&format=json&license=2%2C3%2C4%2C5%2C6%2C9&nojsoncallback=1')
+                resp = requests.get(url=url, headers=headers, timeout=10)
 
-                    resp.encoding = "utf-8"
-                    data = resp.json()["photos"]["photo"][0]
+                resp.encoding = "utf-8"
+                data = resp.json()["photos"]["photo"][0]
 
-                    image_url = 'https://farm'+str(data["farm"])+'.static.flickr.com/'+str(data["server"])+'/'+str(data["id"])+'_'+str(data["secret"])+'_n.jpg'
-                    flickr_images[common_name] = image_url
-                except Exception as e:
-                    print("FLICKR API ERROR: "+str(e))
-                    image_url = ""
-            else:
-                image_url = flickr_images[common_name]
-            bird['Flickrimage'] = image_url
+                image_url = 'https://farm'+str(data["farm"])+'.static.flickr.com/'+str(data["server"])+'/'+str(data["id"])+'_'+str(data["secret"])+'_n.jpg'
+                flickr_images[common_name] = image_url
+            except Exception as e:
+                print("FLICKR API ERROR: "+str(e))
+                image_url = ""
+        else:
+            image_url = flickr_images[common_name]
+
+        bird['FlickrImage'] = image_url
 
         json_bird = json.dumps(bird)
-        mqttc.publish(mqtt_topic, json_bird, 1)
+        mqttc.reconnect()
+        mqttc.publish(mqtt_topic, json_bird, 1) 
         log.info("Posted to MQTT: ok")
 
 mqttc = mqtt.Client('birdnet_mqtt')
