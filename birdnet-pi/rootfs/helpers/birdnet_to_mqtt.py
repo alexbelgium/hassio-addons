@@ -49,8 +49,7 @@ def get_bird_code(scientific_name):
 
     return bird_dict.get(scientific_name)
 
-def automatic_mqtt_publish(file, detection):
-    path = ""
+def automatic_mqtt_publish(file, detection, path):
     bird = {}
     bird['Date'] = file.date
     bird['Time'] = file.time
