@@ -1,3 +1,4 @@
+## 0.13-86 (16-08-2024)
 - [MQTT] Fix auto detection @UlrichThiess
 
 ## 0.13-83 (14-08-2024)
