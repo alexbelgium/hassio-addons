@@ -1,4 +1,7 @@
 
+## 2.7.1 (17-08-2024)
+- Update to latest version from linkwarden/linkwarden (changelog : https://github.com/linkwarden/linkwarden/releases)
+
 ## 2.6.2 (27-07-2024)
 - Update to latest version from linkwarden/linkwarden (changelog : https://github.com/linkwarden/linkwarden/releases)
 ## 2.6.0-3 (21-07-2024)
