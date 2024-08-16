@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [openproject] ENV variables has no effect (opened 2024-08-15)](https://github.com/alexbelgium/hassio-addons/issues/1524) by [@mikes-techzone](https://github.com/mikes-techzone)
 # Home assistant add-on: Openproject
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
