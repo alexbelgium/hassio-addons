@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Guacamole Client - Autologin (opened 2024-03-15)](https://github.com/alexbelgium/hassio-addons/issues/1304) by [@FrancescoC87](https://github.com/FrancescoC87)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
