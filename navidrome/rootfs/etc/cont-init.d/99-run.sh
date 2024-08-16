@@ -13,7 +13,7 @@ if bashio::config.true 'ssl'; then
     bashio::log.info "ssl is enabled"
     ND_TLSCERT=$(bashio::config 'certfile')
     ND_TLSKEY=$(bashio::config 'keyfile')
-end
+fi
 
 
 ##############
@@ -23,3 +23,4 @@ end
 bashio::log.info "Please wait while the app is loading!"
 
 /app/navidrome
+
