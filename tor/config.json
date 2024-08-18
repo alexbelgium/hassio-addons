@@ -12,40 +12,40 @@
     "ssl:rw"
   ],
   "name": "Tor with bridges",
+  "options": {
+    "bridges": [],
+    "client_names": [],
+    "hidden_services": true,
+    "ports": [
+      "8123",
+      "8123:80"
+    ],
+    "socks": false,
+    "stealth": false
+  },
   "ports": {
     "9050/tcp": 9050
   },
   "ports_description": {
     "9050/tcp": "Tor SOCKS proxy port"
   },
-  "slug": "tor",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "startup": "services",
-  "options": {
-    "socks": false,
-    "hidden_services": true,
-    "stealth": false,
-    "client_names": [],
-    "ports": [
-      "8123",
-      "8123:80"
-    ],
-    "bridges": []
-  },
   "schema": {
-    "log_level": "list(trace|debug|info|notice|warning|error|fatal)?",
-    "socks": "bool",
-    "hidden_services": "bool",
-    "stealth": "bool",
+    "bridges": [
+      "str"
+    ],
     "client_names": [
       "match(^[A-Za-z0-9+-_]{1,16}$)"
     ],
+    "hidden_services": "bool",
+    "log_level": "list(trace|debug|info|notice|warning|error|fatal)?",
     "ports": [
       "match(^(.*:)?(?:[0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])?$)"
     ],
-    "bridges":[
-      "str"
-    ]
+    "socks": "bool",
+    "stealth": "bool"
   },
+  "slug": "tor",
+  "startup": "services",
+  "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "5.0.1-4"
 }
