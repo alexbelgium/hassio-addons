@@ -9,7 +9,7 @@
   "init": false,
   "map": [
     "addon_config:rw",
-    "media:rw",
+    "media",
     "share:rw",
     "ssl:rw"
   ],
