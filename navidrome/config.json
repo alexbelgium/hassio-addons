@@ -3,6 +3,9 @@
     "amd64",
     "aarch64"
   ],
+  "backup_exclude": [
+    "**/cache/**"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Navidrome for Home Assistant",
   "image": "ghcr.io/alexbelgium/navidrome-{arch}",
