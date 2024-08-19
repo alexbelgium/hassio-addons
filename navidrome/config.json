@@ -17,15 +17,10 @@
   "options": {
     "base_url": "localhost",
     "certfile": "fullchain.pem",
-    "cifsdomain": "str?",
-    "cifspassword": "str?",
-    "cifsusername": "str?",
-    "data_folder": "/data/data",
+    "data_folder": "/data",
     "keyfile": "privkey.pem",
-    "localdisks": "str?",
     "log_level": "info",
     "music_folder": "/data/music",
-    "networkdisks": "str?",
     "ssl": false
   },
   "ports": {
@@ -33,6 +28,20 @@
   },
   "ports_description": {
     "4533/tcp": "Web interface"
+  },
+  "schema": {
+    "base_url": "str",
+    "certfile": "str?",
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "data_folder": "str",
+    "keyfile": "str?",
+    "localdisks": "str?",
+    "log_level": "str",
+    "music_folder": "str",
+    "networkdisks": "str?",
+    "ssl": "bool"
   },
   "slug": "navidrome",
   "udev": true,
