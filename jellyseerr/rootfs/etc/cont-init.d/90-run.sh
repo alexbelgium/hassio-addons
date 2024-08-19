@@ -3,7 +3,7 @@
 set -e
 
 # Create files
-CONFIG_LOCATION="/config/addons_config/jellyseer"
+CONFIG_LOCATION="/config/addons_config/jellyseerr"
 bashio::log.info "Config stored in $CONFIG_LOCATION"
 mkdir -p "$CONFIG_LOCATION"
 cp -rnT /app/config "$CONFIG_LOCATION"/
