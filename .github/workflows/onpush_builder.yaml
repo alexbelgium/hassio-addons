@@ -16,7 +16,7 @@ on:
 
 jobs:
   correct_path_filters:
-    if: github.repository_owner == 'kool2zero'
+    if: github.repository_owner == 'alexbelgium'
     runs-on: ubuntu-latest
     steps:
       - name: ↩️ Checkout
