@@ -5,6 +5,7 @@
 - Make config options work by splitting default values and schemas
 - Exclude the cache from backups
 - Expose more Navidrome config options
+- Explicitly export shell variables for Navidrome to pick up
 
 ## 0.52.5-6 (17-08-2024)
 
