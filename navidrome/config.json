@@ -3,13 +3,16 @@
     "amd64",
     "aarch64"
   ],
+  "backup_exclude": [
+    "**/cache/**"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Navidrome for Home Assistant",
   "image": "ghcr.io/alexbelgium/navidrome-{arch}",
   "init": false,
   "map": [
     "addon_config:rw",
-    "media:rw",
+    "media",
     "share:rw",
     "ssl:rw"
   ],
@@ -17,15 +20,10 @@
   "options": {
     "base_url": "localhost",
     "certfile": "fullchain.pem",
-    "cifsdomain": "str?",
-    "cifspassword": "str?",
-    "cifsusername": "str?",
-    "data_folder": "/data/data",
+    "data_folder": "/data",
     "keyfile": "privkey.pem",
-    "localdisks": "str?",
     "log_level": "info",
     "music_folder": "/data/music",
-    "networkdisks": "str?",
     "ssl": false
   },
   "ports": {
@@ -34,9 +32,33 @@
   "ports_description": {
     "4533/tcp": "Web interface"
   },
+  "schema": {
+    "base_url": "str",
+    "certfile": "str?",
+    "cifsdomain": "str?",
+    "cifspassword": "str?",
+    "cifsusername": "str?",
+    "data_folder": "str",
+    "default_language": "str?",
+    "image_cache_size": "str?",
+    "keyfile": "str?",
+    "lastfm_api_key": "str?",
+    "lastfm_secret": "str?",
+    "localdisks": "str?",
+    "log_level": "str",
+    "music_folder": "str",
+    "networkdisks": "str?",
+    "password_encryption_key": "str?",
+    "scan_schedule": "str?",
+    "spotify_id": "str?",
+    "spotify_secret": "str?",
+    "ssl": "bool",
+    "transcoding_cache_size": "str?",
+    "welcome_message": "str?"
+  },
   "slug": "navidrome",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/navidrome",
-  "version": "0.52.5-6",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
+  "version": "0.52.5-7",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:4533]"
 }
