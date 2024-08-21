@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 jellyseerr 1.9.2-2 contains bash script error (opened 2024-08-21)](https://github.com/alexbelgium/hassio-addons/issues/1540) by [@swesharkie](https://github.com/swesharkie)
 # Home assistant add-on: jellyseerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
