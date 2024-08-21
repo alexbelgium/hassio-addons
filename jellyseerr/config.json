@@ -5,7 +5,7 @@
     "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "fork of overseerr for jellyfin support",
+  "description": "Fork of overseerr for jellyfin support",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
