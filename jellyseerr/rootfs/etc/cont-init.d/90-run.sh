@@ -19,6 +19,7 @@ if [ -d "$OLD_CONFIG_LOCATION" ];
 	if [ -z "$( ls -A '$OLD_CONFIG_LOCATION' )" ];
 		then
 			#Empty
+                        rmdir "$OLD_CONFIG_LOCATION"
 		else
 			#Not Empty
 			bashio::log.info "Moving old configuration settings from $OLD_CONFIG_LOCATION to $CONFIG_LOCATION"
