@@ -57,7 +57,12 @@ RUN \
     /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Change location of log
-    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root
+    sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
+    \
+    # Disable data check at installation
+    echo "... Disabling check_data_directory_permissions" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
+    echo "sed -i \"/check_data_directory_permissions/d\" /config/www/nextcloud/config/config.php || true" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
+    echo "sed -i \"/datadirectory/a\ \ 'check_data_directory_permissions' => false,\" /config/www/nextcloud/config/config.php || true" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
 
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
