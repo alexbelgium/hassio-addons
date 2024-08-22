@@ -60,7 +60,7 @@ RUN \
     sed -i "s|s6-setuidgid abc php -f /config/www/nextcloud/cron.php|(s6-setuidgid abc php -f /config/www/nextcloud/cron.php) \&>/proc/1/fd/1|g" /etc/crontabs/root && \
     \
     # Disable data check at installation
-    echo "... Disabling check_data_directory_permissions" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
+    echo "echo \"... Disabling check_data_directory_permissions\"" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     echo "sed -i \"/check_data_directory_permissions/d\" /config/www/nextcloud/config/config.php || true" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run && \
     echo "sed -i \"/datadirectory/a\ \ 'check_data_directory_permissions' => false,\" /config/www/nextcloud/config/config.php || true" >> /etc/s6-overlay/s6-rc.d/init-nextcloud-config/run
 
