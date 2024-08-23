@@ -18,13 +18,8 @@
   ],
   "name": "Navidrome",
   "options": {
-    "base_url": "localhost",
-    "certfile": "fullchain.pem",
     "data_folder": "/data",
-    "keyfile": "privkey.pem",
-    "log_level": "info",
-    "music_folder": "/data/music",
-    "ssl": false
+    "music_folder": "/data/music"
   },
   "ports": {
     "4533/tcp": 4533
@@ -33,7 +28,7 @@
     "4533/tcp": "Web interface"
   },
   "schema": {
-    "base_url": "str",
+    "base_url": "str?",
     "certfile": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
@@ -45,14 +40,14 @@
     "lastfm_api_key": "str?",
     "lastfm_secret": "str?",
     "localdisks": "str?",
-    "log_level": "str",
+    "log_level": "str?",
     "music_folder": "str",
     "networkdisks": "str?",
     "password_encryption_key": "str?",
     "scan_schedule": "str?",
     "spotify_id": "str?",
     "spotify_secret": "str?",
-    "ssl": "bool",
+    "ssl": "bool?",
     "transcoding_cache_size": "str?",
     "welcome_message": "str?"
   },

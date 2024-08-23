@@ -11,18 +11,17 @@ export ND_MUSICFOLDER
 ND_DATAFOLDER=$(bashio::config 'data_folder')
 export ND_DATAFOLDER
 
-ND_LOGLEVEL=$(bashio::config 'log_level')
-export ND_LOGLEVEL
-
-ND_BASEURL=$(bashio::config 'base_url')
-export ND_BASEURL
-
 if bashio::config.true 'ssl'; then
     bashio::log.info "ssl is enabled"
     ND_TLSCERT=$(bashio::config 'certfile')
     export ND_TLSCERT
     ND_TLSKEY=$(bashio::config 'keyfile')
     export ND_TLSKEY
+fi
+
+if bashio::config.has_value 'base_url'; then
+  ND_BASEURL=$(bashio::config 'base_url')
+  export ND_BASEURL
 fi
 if bashio::config.has_value 'default_language'; then
     ND_DEFAULTLANGUAGE=$(bashio::config 'default_language')
@@ -39,6 +38,10 @@ fi
 if bashio::config.has_value 'lastfm_secret'; then
     ND_LASTFM_SECRET=$(bashio::config 'lastfm_secret')
     export ND_LASTFM_SECRET
+fi
+if bashio::config.has_value 'log_level'; then
+  ND_LOGLEVEL=$(bashio::config 'log_level')
+  export ND_LOGLEVEL
 fi
 if bashio::config.has_value 'password_encryption_key'; then
     ND_PASSWORDENCRYPTIONKEY=$(bashio::config 'password_encryption_key')
