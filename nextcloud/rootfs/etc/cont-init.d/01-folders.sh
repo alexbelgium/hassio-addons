@@ -40,8 +40,8 @@ fi
 
 echo "... setting permissions"
 mkdir -p "$datadirectory"
-chmod 755 -R "$datadirectory"
-chown -R "$PUID:$PGID" "$datadirectory"
+chmod 755 -R "$datadirectory" || true
+chown -R "$PUID:$PGID" "$datadirectory" || true
 mkdir -p /scripts
 
 echo "... done"
