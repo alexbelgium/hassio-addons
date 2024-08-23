@@ -54,6 +54,6 @@
   "slug": "navidrome",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/navidrome",
-  "version": "0.53.3",
+  "version": "0.53.3-1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:4533]"
 }
