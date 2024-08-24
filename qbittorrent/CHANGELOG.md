@@ -1,4 +1,7 @@
 
+## 4.6.6 (24-08-2024)
+- Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
+
 ## 4.6.5 (01-06-2024)
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 ## 4.6.4-2 (19-04-2024)
