@@ -1,4 +1,7 @@
 
+## 3.0.0.1409 (24-08-2024)
+- Update to latest version from linuxserver/docker-resilio-sync (changelog : https://github.com/linuxserver/docker-resilio-sync/releases)
+
 ## 2.8.1.1390 (08-06-2024)
 - Update to latest version from linuxserver/docker-resilio-sync (changelog : https://github.com/linuxserver/docker-resilio-sync/releases)
 
