@@ -1,4 +1,7 @@
 
+## v24.2-ls155 (24-08-2024)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
+
 ## v24.2-ls154 (17-08-2024)
 - Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
 
