@@ -1,4 +1,7 @@
 
+## 1.21.2.4649-ls83 (24-08-2024)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+
 ## 1.21.2.4649-ls82 (10-08-2024)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 
