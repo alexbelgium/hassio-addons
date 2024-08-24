@@ -76,18 +76,18 @@ RUN \
     curl -o /tmp/qbit_manage.tar.gz -L "https://github.com/StuffAnThings/qbit_manage/tarball/develop" && \
     tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
     \
+    # Clean dependencies
+    sed -i "s/\\(qbittorrent-api\\)==2023.10.54/\\1/" /qbit_manage/requirements.txt && \
+    \
     # Install dependencies
     ## Allow python specific arch
     BUILD_ARCH=$(uname -m) && \
     echo "${BUILD_ARCH}" && \
     BUILD_ARCH=${BUILD_ARCH:-x86} && \
-    if test "${BUILD_ARCH}" != "*amd64*"; then apk add --no-cache python3-dev; else apk add --no-cache python3-dev; fi && \
+    if test "${BUILD_ARCH}" != "*amd64*"; then apk add --no-cache python3-dev; else apk add --no-cache python3; fi && \
     ln -sf python3 /usr/bin/python && \
     apk add --no-cache py3-pip gcc musl-dev && \
-    apk add --no-cache libffi-dev openssl-dev tzdata gcc g++ libxml2-dev libxslt-dev zlib-dev bash curl wget jq grep sed coreutils findutils unzip p7zip ca-certificates \
-    && pip3 install --no-cache-dir --upgrade --break-system-packages --requirement /requirements.txt \
-    && apk del gcc g++ libxml2-dev libxslt-dev zlib-dev \
-    && rm -rf /requirements.txt /tmp/* /var/tmp/* /var/cache/apk/*
+    pip3 install --break-system-packages --no-cache-dir --ignore-installed --upgrade --requirement /qbit_manage/requirements.txt || true
 
 ##################
 # 3 Install apps #
