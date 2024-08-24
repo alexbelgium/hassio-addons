@@ -85,7 +85,7 @@ RUN \
     ln -sf python3 /usr/bin/python && \
     apk add --no-cache py3-pip gcc musl-dev && \
     apk add --no-cache libffi-dev openssl-dev tzdata gcc g++ libxml2-dev libxslt-dev zlib-dev bash curl wget jq grep sed coreutils findutils unzip p7zip ca-certificates \
-    && pip3 install --no-cache-dir --upgrade --requirement /requirements.txt \
+    && pip3 install --no-cache-dir --upgrade --break-system-packages --requirement /requirements.txt \
     && apk del gcc g++ libxml2-dev libxslt-dev zlib-dev \
     && rm -rf /requirements.txt /tmp/* /var/tmp/* /var/cache/apk/*
 
