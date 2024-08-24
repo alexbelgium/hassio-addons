@@ -1,4 +1,7 @@
 
+## 0.8.0 (24-08-2024)
+- Update to latest version from gabe565/CastSponsorSkip (changelog : https://github.com/gabe565/CastSponsorSkip/releases)
+
 ## 0.7.4 (16-03-2024)
 - Update to latest version from gabe565/CastSponsorSkip
 
