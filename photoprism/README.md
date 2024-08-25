@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Photoprism] webdav urls yield a 404 (opened 2024-08-24)](https://github.com/alexbelgium/hassio-addons/issues/1546) by [@pazz](https://github.com/pazz)
 # Home assistant add-on: Photoprism
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
