@@ -11,6 +11,7 @@ concurrency:
 
 jobs:
   lint-bash:
+    if: github.repository_owner == 'alexbelgium'
     name: Lint Bash Scripts
     runs-on: ubuntu-latest
 
