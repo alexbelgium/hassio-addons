@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Mealie] Mealie pulling Nightly, not the latest release version (opened 2024-08-25)](https://github.com/alexbelgium/hassio-addons/issues/1548) by [@andrew-codechimp](https://github.com/andrew-codechimp)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
