@@ -1,3 +1,4 @@
+- BREAKING CHANGE : version 1.12 erroneously updated to 2.0. You need to restore from 1.11 before updating to this version
 
 ## v1.12.0 (24-08-2024)
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
