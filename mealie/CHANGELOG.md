@@ -1,3 +1,4 @@
+## v1.12.0-2 (25-08-2024)
 - BREAKING CHANGE : version 1.12 erroneously updated to 2.0. You need to restore from 1.11 before updating to this version
 
 ## v1.12.0 (24-08-2024)
