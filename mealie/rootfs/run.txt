@@ -36,13 +36,13 @@ done
 ####################
 
 if [ -d /homeassistant/addons_config/mealie_data ] && [ ! -f /homeassistant/addons_config/mealie_data/migrated ]; then
-    bashio::log.warning "Migrating data"
+    bashio::log.warning "Migrating data, current data will not be touched"
     cp -rnf /homeassistant/addons_config/mealie_data/* /config/ || true
     touch /homeassistant/addons_config/mealie_data/migrated
 fi
 
 if [ -f /homeassistant/addons_config/mealie/config.yaml ] && [ ! -f /homeassistant/addons_config/mealie/migrated ]; then
-    bashio::log.warning "Migrating config.yaml"
+    bashio::log.warning "Migrating config.yaml, current data will not be touched"
     cp -nf /homeassistant/addons_config/mealie/config.yaml /config/ || true
     touch /homeassistant/addons_config/mealie/migrated
 fi
