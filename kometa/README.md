@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Plex Meta Manager] is now Kometa (opened 2024-04-27)](https://github.com/alexbelgium/hassio-addons/issues/1357) by [@bruvv](https://github.com/bruvv)
 <!-- markdownlint-disable MD043 -->
 
 # Home assistant add-on: Kometa

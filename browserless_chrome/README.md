@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [changedetection][browserless Chromium] Cron Jobs / Time Between Checks does not appear to be working (opened 2024-08-26)](https://github.com/alexbelgium/hassio-addons/issues/1551) by [@cng3035](https://github.com/cng3035)
 # Home assistant add-on: Browserless Chrome
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
