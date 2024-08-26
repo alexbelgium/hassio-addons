@@ -51,7 +51,7 @@ Options can be configured through two ways :
 ```
 
 - Config.yaml
-  Additional options can be configured using the config.yaml file found in /config/addons_config/mealie/config.yaml
+  Additional options can be configured using the config.yaml file found in /homeassistant/addons_config/xxx-mealie/config.yaml
 
 The complete list of options can be seen here : https://nightly.mealie.io/documentation/getting-started/installation/backend-config/
 

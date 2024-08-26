@@ -31,11 +31,27 @@ for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
     export "$k"="$(bashio::config "$k")"
 done
 
+####################
+# MIGRATE DATA DIR #
+####################
+
+if [ -d /homeassistant/addons_config/mealie_data ] && [ ! -f /homeassistant/addons_config/mealie_data/migrated ]; then
+    bashio::log.warning "Migrating data"
+    cp -rnf /homeassistant/addons_config/mealie_data/* /config/ || true
+    touch /homeassistant/addons_config/mealie_data/migrated
+fi
+
+if [ -f /homeassistant/addons_config/mealie/config.yaml ] && [ ! -f /homeassistant/addons_config/mealie/migrated ]; then
+    bashio::log.warning "Migrating config.yaml"
+    cp -nf /homeassistant/addons_config/mealie/config.yaml /config/ || true
+    touch /homeassistant/addons_config/mealie/migrated
+fi
+
 ###############
 # CONFIG YAML #
 ###############
 
-CONFIGSOURCE="/config/addons_config/mealie/config.yaml"
+CONFIGSOURCE="/config/config.yaml"
 
 if [ -f "$CONFIGSOURCE" ]; then
 bashio::log.info "config.yaml found in $CONFIGSOURCE, exporting variables"
@@ -70,10 +86,10 @@ while IFS= read -r line; do
         echo "secret detected"
         secret=${line#*secret }
         # Check if single match
-        secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
+        secretnum=$(sed -n "/$secret:/=" /homeassistant/secrets.yaml)
         [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
-        secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
+        secret=$(sed -n "/$secret:/p" /homeassistant/secrets.yaml)
         secret=${secret#*: }
         line="${line%%=*}='$secret'"
     fi
