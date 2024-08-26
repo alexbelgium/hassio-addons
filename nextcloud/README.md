@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Nextcloud] FIX for installing on mounted USB (opened 2024-08-16)](https://github.com/alexbelgium/hassio-addons/issues/1531) by [@Arytmia](https://github.com/Arytmia)
-## &#9888; Open Issue : [🐛 [Neextcloud] Nextcloud no working since update  (opened 2024-08-25)](https://github.com/alexbelgium/hassio-addons/issues/1549) by [@jserieye](https://github.com/jserieye)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
