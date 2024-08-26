@@ -1,6 +1,17 @@
 ## v1.12.0-2 (25-08-2024)
 - BACKUP BEFORE UPDATING !!!
-- WARNING : version 1.12 erroneously updated to 2.0. Your database could become corrupted if you update from 1.12. You need to restore your homeassistant config directory before updating to this version
+- WARNING : version 1.12 erroneously updated to 2.0. Your database could become corrupted if you update from 1.12. You need to restore your homeassistant config directory before updating to this version Alas there is no easy solution to move back from Mealie 2.0 to 1.2.
+
+- If you had a backup from mealie :
+  - make a clean install (rename folder /homeassistant/addons_config/mealie_data to mealie_data.bak)
+  - restart the latest version of the addon (which will fully reset) and restore your backup
+- If you have a backup from homeassistant of the /config folder :
+  - you should rename the folder /homeassistant/addons_config/mealie_data to mealie_data.bak
+  - extract your backup
+  - Copy the /homeassistant/addons_config/mealie_data folder from your backup to the same path in homeassistant
+- Wait for the addon to move back to 2.0 to use your database that was upgraded...
+
+If you have neither, alas Mealie has no way to way back from the upgrade that occurred... For info, I've improved the system to make sure that the data is backuped in the future (this function did not exist when I created the addon) but this doesn't help for this specific issue.
 
 ## v1.12.0 (24-08-2024)
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
