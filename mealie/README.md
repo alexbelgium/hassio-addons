@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [mealie] How fix mealie? (opened 2024-08-25)](https://github.com/alexbelgium/hassio-addons/issues/1550) by [@jdeath](https://github.com/jdeath)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
