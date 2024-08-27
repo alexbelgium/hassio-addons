@@ -42,8 +42,12 @@ if df -T /tmp | grep -q "tmpfs"; then
     echo "... tmpfs detected, using it for StreamData and Processed to reduce disk wear"
     mkdir -p /tmp/StreamData
     mkdir -p /tmp/Processed
-    rm -r "$HOME"/BirdSongs/StreamData
-    rm -r "$HOME"/BirdSongs/Processed
+    if [ -d "$HOME"/BirdSongs/StreamData ]; then
+      rm -r "$HOME"/BirdSongs/StreamData
+    fi
+    if [ -d "$HOME"/BirdSongs/Processed ]; then
+      rm -r "$HOME"/BirdSongs/Processed
+    fi
     sudo -u pi ln -fs /tmp/StreamData "$HOME"/BirdSongs/StreamData
     sudo -u pi ln -fs /tmp/Processed "$HOME"/BirdSongs/Processed
 fi
