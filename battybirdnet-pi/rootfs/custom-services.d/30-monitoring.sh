@@ -1,6 +1,8 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
+sleep infinity
+
 echo "Starting service: throttlerecording"
 touch "$HOME"/BirdSongs/StreamData/analyzing_now.txt
 
