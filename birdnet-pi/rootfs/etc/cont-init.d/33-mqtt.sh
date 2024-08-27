@@ -4,14 +4,29 @@ set -e
 
 common_steps () {
 
-    # Copy script
-    cp /helpers/birdnet_to_mqtt.py "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
-    chown pi:pi "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
-    chmod +x "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
+    # Attempt to connect to the MQTT broker
+    TOPIC="birdnet"
+    mosquitto_pub -h "$MQTT_HOST" -p "$MQTT_PORT" -t "$TOPIC" -m "test" -u "$MQTT_USER" -P "$MQTT_PASS" -q 1 -d --will-topic "$TOPIC" --will-payload "Disconnected" --will-qos 1 --will-retain > /dev/null 2>&1
 
-    # Add hooks
-    sed -i "/load_global_model, run_analysis/a from utils.birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
-    sed -i '/write_to_db(/a\                automatic_mqtt_publish(file, detection,os.path.basename(detection.file_name_extr))' "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
+    # If connected
+    if [ $? -eq 0 ]; then
+        # Adapt script
+        sed -i "s|%%mqtt_server%%|$MQTT_HOST|g" /helpers/birdnet_to_mqtt.py
+        sed -i "s|%%mqtt_port%%|$MQTT_PORT|g" /helpers/birdnet_to_mqtt.py
+        sed -i "s|%%mqtt_user%%|$MQTT_USER|g" /helpers/birdnet_to_mqtt.py
+        sed -i "s|%%mqtt_pass%%|$MQTT_PASS|g" /helpers/birdnet_to_mqtt.py
+    
+        # Copy script
+        cp /helpers/birdnet_to_mqtt.py "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
+        chown pi:pi "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
+        chmod +x "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
+    
+        # Add hooks
+        sed -i "/load_global_model, run_analysis/a from utils.birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
+        sed -i '/write_to_db(/a\                automatic_mqtt_publish(file, detection,os.path.basename(detection.file_name_extr))' "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
+    else
+        bashio::log.fatal "MQTT connection failed, it will not be configured"
+    fi
 
 }
 
@@ -27,10 +42,10 @@ if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED' ; 
     bashio::log.blue "---"
 
     # Apply MQTT settings
-    sed -i "s|%%mqtt_server%%|$(bashio::services "mqtt" "host")|g" /helpers/birdnet_to_mqtt.py
-    sed -i "s|%%mqtt_port%%|$(bashio::services "mqtt" "port")|g" /helpers/birdnet_to_mqtt.py
-    sed -i "s|%%mqtt_user%%|$(bashio::services "mqtt" "username")|g" /helpers/birdnet_to_mqtt.py
-    sed -i "s|%%mqtt_pass%%|$(bashio::services "mqtt" "password")|g" /helpers/birdnet_to_mqtt.py
+    MQTT_HOST="$(bashio::services "mqtt" "host")"
+    MQTT_PORT="$(bashio::services "mqtt" "port")"
+    MQTT_USER="$(bashio::services "mqtt" "username")"
+    MQTT_PASS="$(bashio::services "mqtt" "password")"
 
     # Common steps
     common_steps
@@ -45,10 +60,10 @@ elif bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQ
     bashio::log.blue "---"
 
     # Apply MQTT settings
-    sed -i "s|%%mqtt_server%%|$(bashio::config "MQTT_HOST_manual")|g" /helpers/birdnet_to_mqtt.py
-    sed -i "s|%%mqtt_port%%|$(bashio::config "MQTT_PORT_manual")|g" /helpers/birdnet_to_mqtt.py
-    sed -i "s|%%mqtt_user%%|$(bashio::config "MQTT_USER_manual")|g" /helpers/birdnet_to_mqtt.py
-    sed -i "s|%%mqtt_pass%%|$(bashio::config "MQTT_PASSWORD_manual")|g" /helpers/birdnet_to_mqtt.py
+    MQTT_HOST="$(bashio::config "MQTT_HOST_manual")"
+    MQTT_PORT="$(bashio::config "MQTT_PORT_manual")"
+    MQTT_USER="$(bashio::config "MQTT_USER_manual")"
+    MQTT_PASS="$(bashio::config "MQTT_PASSWORD_manual")"
 
     # Common steps
     common_steps
