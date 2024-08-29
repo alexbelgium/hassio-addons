@@ -12,10 +12,10 @@ done
 chown caddy:caddy /run/php/php*-fpm.sock
 sed -i "s|/run/php/php-fpm.sock|$sockfile|g" /helpers/caddy_ingress.sh
 sed -i "s|/run/php/php-fpm.sock|$sockfile|g" /etc/caddy/Caddyfile
-sed -i "s|/run/php/php-fpm.sock|$sockfile|g" "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
+sed -i "s|/run/php/php-fpm.sock|$sockfile|g" "$HOME"/BattyBirdNET-Analyzer/scripts/update_caddyfile.sh
 
 # Update caddyfile with password
-/."$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh &>/dev/null || true
+/."$HOME"/BattyBirdNET-Analyzer/scripts/update_caddyfile.sh &>/dev/null || true
 
 echo "Starting service: caddy"
 /usr/bin/caddy run --config /etc/caddy/Caddyfile

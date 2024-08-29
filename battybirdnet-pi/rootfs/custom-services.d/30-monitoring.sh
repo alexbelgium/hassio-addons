@@ -28,7 +28,7 @@ chmod -R 755 "$ingest_dir"
 
 function apprisealert() {
     # Set failed check so it only runs once
-    touch "$HOME"/BirdNET-Pi/failed_servicescheck
+    touch "$HOME"/BattyBirdNET-Analyzer/failed_servicescheck
     NOTIFICATION=""
     STOPPEDSERVICE="<br><b>Stopped services:</b> "
     services=(birdnet_analysis
@@ -49,10 +49,10 @@ function apprisealert() {
     NOTIFICATION+="<br><b>System:</b> ${SITE_NAME:-$(hostname)}"
     NOTIFICATION+="<br>Available disk space: $(df -h "$(readlink -f "$HOME/BirdSongs")" | awk 'NR==2 {print $4}')"
     if [ -n "$BIRDNETPI_URL" ]; then
-        NOTIFICATION+="<br> <a href=\"$BIRDNETPI_URL\">Access your battybirdnet-pi</a>"
+        NOTIFICATION+="<br> <a href=\"$BIRDNETPI_URL\">Access your battyBattyBirdNET-Analyzer</a>"
     fi
     TITLE="BirdNET-Analyzer stopped"
-    "$HOME"/BirdNET-Pi/birdnet/bin/apprise -vv -t "$TITLE" -b "${NOTIFICATION}" --input-format=html --config="$HOME/BirdNET-Pi/apprise.txt"
+    "$HOME"/BattyBirdNET-Analyzer/birdnet/bin/apprise -vv -t "$TITLE" -b "${NOTIFICATION}" --input-format=html --config="$HOME/BattyBirdNET-Analyzer/apprise.txt"
 }
 
 while true; do
@@ -65,7 +65,7 @@ while true; do
         latest="$(cat "$ingest_dir"/analyzing_now.txt)"
         if [[ "$latest" == "$analyzing_now" ]]; then
             echo "$(date) WARNING no change in analyzing_now for 10 iterations, restarting services"
-            /."$HOME"/BirdNET-Pi/scripts/restart_services.sh
+            /."$HOME"/BattyBirdNET-Analyzer/scripts/restart_services.sh
         fi
         counter=10
         analyzing_now=$(cat "$ingest_dir"/analyzing_now.txt)
@@ -83,7 +83,7 @@ while true; do
         bashio::log.red "$(date) WARNING too many files in queue, pausing $srv"
         sudo systemctl stop "$srv"
         sudo systemctl restart birdnet_analysis
-        if [ -s "$HOME/BirdNET-Pi/apprise.txt" ]; then apprisealert; fi
+        if [ -s "$HOME/BattyBirdNET-Analyzer/apprise.txt" ]; then apprisealert; fi
     elif [[ "$state" != "active" ]]; then
         bashio::log.yellow "$(date)    INFO started $srv service"
         sudo systemctl start $srv

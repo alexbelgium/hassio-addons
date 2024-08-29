@@ -25,8 +25,8 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     PGID=1000 \
     HOME="/home/pi" \
     XDG_RUNTIME_DIR="/run/user/1000" \
-    PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3" \
-    my_dir=/home/pi/BirdNET-Pi/scripts
+    PYTHON_VIRTUAL_ENV="/home/pi/BattyBirdNET-Analyzer/birdnet/bin/python3" \
+    my_dir=/home/pi/BattyBirdNET-Analyzer/scripts
 
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
@@ -58,7 +58,7 @@ RUN \
     git config --global --add safe.directory '*' && \
     \
     # Download installer
-    curl -f -L -s -S "https://raw.githubusercontent.com/rdz-oss/BattyBirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
+    curl -f -L -s -S "https://raw.githubusercontent.com/rdz-oss/BattyBattyBirdNET-Analyzer/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     \
     # Use installer to modify other scripts
@@ -67,10 +67,10 @@ RUN \
     sed -i "1a /./newinstallermod.sh" /newinstaller.sh && \
     echo '#!/bin/bash' >> /newinstallermod.sh && \
     # Remove all instances of sudo from all other scripts
-    echo 'for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' >> /newinstallermod.sh && \
-    echo 'for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
+    echo 'for file in $(grep -srl "sudo" $HOME/BattyBirdNET-Analyzer/scripts); do sed -i "s|sudo ||" "$file"; done' >> /newinstallermod.sh && \
+    echo 'for file in $(grep -srl "my_dir" $HOME/BattyBirdNET-Analyzer/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
     # Disable pulseaudio
-    echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
+    echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BattyBirdNET-Analyzer/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
     # Set permission
     chmod +x /newinstallermod.sh && \
     \
