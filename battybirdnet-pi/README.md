@@ -25,7 +25,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ---
 
-[battybirdnet-pi](https://github.com/Nachtzuster/BirdNET-Pi) is an AI solution for continuous avian monitoring and identification originally developed by @mcguirepr89 on github (https://github.com/mcguirepr89/BirdNET-Pi), whose work is continued by @Nachtzuster and other developers on an active fork (https://github.com/Nachtzuster/BirdNET-Pi)
+[battybirdnet-pi](https://github.com/rdz-oss/BattyBirdNET-Pi) is a realtime acoustic bat & bird classification system for the Raspberry Pi 4/5 built on BattyBirdNET-Analyzer.
 
 Features of the addon :
 - Robust base image provided by [linuxserver](https://github.com/linuxserver/docker-baseimage-debian)
