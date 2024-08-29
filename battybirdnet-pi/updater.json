@@ -1,8 +1,8 @@
 {
   "last_update": "27-07-2024",
   "repository": "alexbelgium/hassio-addons",
-  "slug": "battybattybirdnet-pi",
+  "slug": "BattyBirdNET-pi",
   "source": "github",
-  "upstream_repo": "rdz-oss/Battybattybirdnet-pi",
+  "upstream_repo": "rdz-oss/BattyBirdNET-pi",
   "upstream_version": ""
 }

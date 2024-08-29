@@ -53,7 +53,7 @@ service dbus start
 
 # Starting services
 echo ""
-bashio::log.info "Starting battyBattyBirdNET-Analyzer services"
+bashio::log.info "Starting BattyBirdNET-Analyzer services"
 chmod +x "$HOME"/BattyBirdNET-Analyzer/scripts/restart_services.sh
 "$HOME"/BattyBirdNET-Analyzer/scripts/restart_services.sh
 

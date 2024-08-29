@@ -49,7 +49,7 @@ function apprisealert() {
     NOTIFICATION+="<br><b>System:</b> ${SITE_NAME:-$(hostname)}"
     NOTIFICATION+="<br>Available disk space: $(df -h "$(readlink -f "$HOME/BirdSongs")" | awk 'NR==2 {print $4}')"
     if [ -n "$BIRDNETPI_URL" ]; then
-        NOTIFICATION+="<br> <a href=\"$BIRDNETPI_URL\">Access your battyBattyBirdNET-Analyzer</a>"
+        NOTIFICATION+="<br> <a href=\"$BIRDNETPI_URL\">Access your BattyBirdNET-Analyzer</a>"
     fi
     TITLE="BirdNET-Analyzer stopped"
     "$HOME"/BattyBirdNET-Analyzer/birdnet/bin/apprise -vv -t "$TITLE" -b "${NOTIFICATION}" --input-format=html --config="$HOME/BattyBirdNET-Analyzer/apprise.txt"
