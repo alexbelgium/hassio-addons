@@ -23,7 +23,7 @@ else
     # Legacy config location
     slug="${HOSTNAME#*-}"
     CONFIGLOCATION="/config/addons_autoscripts"
-    CONFIGFILEBROWSER="/homeassistant/addons_autoscripts/${slug}/${slug}.sh"
+    CONFIGFILEBROWSER="/homeassistant/addons_autoscripts/${slug}.sh"
 fi
 
 # Default location
