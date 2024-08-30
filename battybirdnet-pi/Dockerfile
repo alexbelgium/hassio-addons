@@ -25,7 +25,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     PGID=1000 \
     HOME="/home/pi" \
     XDG_RUNTIME_DIR="/run/user/1000" \
-    PYTHON_VIRTUAL_ENV="$HOME/BirdNET-Pi/birdnet/bin/python3" \
+    PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3" \
     my_dir=/home/pi/BattyBirdNET-Analyzer/scripts
 
 # Global LSIO modifications
