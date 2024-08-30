@@ -25,7 +25,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     PGID=1000 \
     HOME="/home/pi" \
     XDG_RUNTIME_DIR="/run/user/1000" \
-    PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3" \
+    PYTHON_VIRTUAL_ENV="$HOME/BirdNET-Pi/birdnet/bin/python3" \
     my_dir=/home/pi/BattyBirdNET-Analyzer/scripts
 
 # Global LSIO modifications
@@ -89,7 +89,7 @@ RUN \
     /./newinstaller.sh && \
     \
     # Install dateparser
-    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser && \
+    /home/pi/BirdNET-Pi/birdnet/bin/python3 /usr/bin/pip3 install dateparser && \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
