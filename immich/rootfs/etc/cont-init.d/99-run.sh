@@ -88,7 +88,7 @@ fi
     printf "%s\n" "DB_DATABASE_NAME=\"$DB_DATABASE_NAME\""
     printf "%s\n" "DB_PORT=\"$DB_PORT\""
     printf "%s\n" "DB_HOSTNAME=\"$DB_HOSTNAME\""
-    printf "%s\n"n" "JWT_SECRET=\"$JWT_SECRET\""
+    printf "%s\n" "JWT_SECRET=\"$JWT_SECRET\""
 } >> ~/.bashrc
 
 ###################
