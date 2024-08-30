@@ -34,7 +34,7 @@ if bashio::config.has_value 'CLI_ARGS'; then
     CLI_ARGS=$(bashio::config 'CLI_ARGS')
     bashio::log.info "Setting arguments to $CLI_ARGS"
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "$CLI_ARGS" >/var/run/s6/container_environment/CLI_ARGS; fi
-    printf "%s" "CLI_ARGS=\"$CLI_ARGS\"" >>~/.bashrc
+    printf "%s\n" "CLI_ARGS=\"$CLI_ARGS\"" >>~/.bashrc
 fi || true
 
 # Set keyboard
@@ -42,7 +42,7 @@ if bashio::config.has_value 'KEYBOARD'; then
     KEYBOARD=$(bashio::config 'KEYBOARD')
     bashio::log.info "Setting keyboard to $KEYBOARD"
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "$KEYBOARD" >/var/run/s6/container_environment/KEYBOARD; fi
-    printf "%s" "KEYBOARD=\"$KEYBOARD\"" >>~/.bashrc
+    printf "%s\n" "KEYBOARD=\"$KEYBOARD\"" >>~/.bashrc
 fi || true
 
 # Set password

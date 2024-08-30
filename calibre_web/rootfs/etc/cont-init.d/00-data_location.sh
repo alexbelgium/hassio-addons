@@ -39,8 +39,8 @@ sed -i "s|/config|$LOCATION|g" /etc/cont-init.d/*
 sed -i "s|/config|$LOCATION|g" /etc/services.d/*/run
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
-printf "%s" "HOME=\"$LOCATION\"" >> ~/.bashrc
-printf "%s" "FM_HOME=\"$LOCATION\"" >> ~/.bashrc
+printf "%s\n" "HOME=\"$LOCATION\"" >> ~/.bashrc
+printf "%s\n" "FM_HOME=\"$LOCATION\"" >> ~/.bashrc
 
 usermod --home "$LOCATION" abc
 

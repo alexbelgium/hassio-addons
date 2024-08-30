@@ -42,7 +42,7 @@ if [[ "$(bashio::config "Mode")" == Collector ]]; then
         echo "export COLLECTOR_API_ENDPOINT=$(bashio::config "COLLECTOR_API_ENDPOINT")" >> /env.sh
         sed -i "1a export COLLECTOR_API_ENDPOINT=$(bashio::config "COLLECTOR_API_ENDPOINT")" /etc/services.d/collector-once/run
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "$COLLECTOR_API_ENDPOINT" > /var/run/s6/container_environment/COLLECTOR_API_ENDPOINT; fi
-        printf "%s" "IN_BACKGROUND=\"$COLLECTOR_API_ENDPOINT\"" >> ~/.bashrc
+        printf "%s\n" "IN_BACKGROUND=\"$COLLECTOR_API_ENDPOINT\"" >> ~/.bashrc
         bashio::log.info "Using 'COLLECTOR_API_ENDPOINT' $(bashio::config "COLLECTOR_API_ENDPOINT")"
     else
         bashio::exit.nok "Mode is set to 'Collector', but 'COLLECTOR_API_ENDPOINT' is not defined"

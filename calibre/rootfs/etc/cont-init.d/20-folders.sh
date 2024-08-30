@@ -56,8 +56,8 @@ usermod --home "$LOCATION" abc
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
 {
-    printf "%s" "HOME=\"$LOCATION\""
-    printf "%s" "FM_HOME=\"$LOCATION\""
+    printf "%s\n" "HOME=\"$LOCATION\""
+    printf "%s\n" "FM_HOME=\"$LOCATION\""
 } >> ~/.bashrc
 
 # Create folder
