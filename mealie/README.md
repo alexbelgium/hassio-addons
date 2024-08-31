@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[Mealie] Unable to locate custom environment variables (opened 2024-08-31)](https://github.com/alexbelgium/hassio-addons/issues/1558) by [@user34756361233](https://github.com/user34756361233)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
