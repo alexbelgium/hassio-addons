@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [FIREFLY III] Error : /etc/cont-init.d/99-run.sh exiting 1 (opened 2024-08-31)](https://github.com/alexbelgium/hassio-addons/issues/1559) by [@AalianKhan](https://github.com/AalianKhan)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
