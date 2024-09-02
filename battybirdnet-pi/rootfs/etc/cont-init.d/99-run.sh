@@ -35,10 +35,10 @@ chmod a+x /usr/bin/timedatectl
 # Correct language labels
 export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"
 # Saving default of en
-cp "$HOME"/BattyBirdNET-Analyzer/model/labels.txt "$HOME"/BattyBirdNET-Analyzer/model/labels.bak
+cp "$HOME"/BirdNET-Pi/model/labels.txt "$HOME"/BirdNET-Pi/model/labels.bak
 # Adapt to new language
 echo "... adapting labels according to birdnet.conf file to $DATABASE_LANG"
-/."$HOME"/BattyBirdNET-Analyzer/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
+/."$HOME"/BirdNET-Pi/scripts/install_language_label_nm.sh -l "$DATABASE_LANG"
 
 echo "... starting cron"
 systemctl start cron
@@ -53,9 +53,9 @@ service dbus start
 
 # Starting services
 echo ""
-bashio::log.info "Starting BattyBirdNET-Analyzer services"
-chmod +x "$HOME"/BattyBirdNET-Analyzer/scripts/restart_services.sh
-"$HOME"/BattyBirdNET-Analyzer/scripts/restart_services.sh
+bashio::log.info "Starting BirdNET-Pi services"
+chmod +x "$HOME"/BirdNET-Pi/scripts/restart_services.sh
+"$HOME"/BirdNET-Pi/scripts/restart_services.sh
 
 if bashio::config.true LIVESTREAM_BOOT_ENABLED; then
     echo "... starting livestream"
@@ -67,6 +67,6 @@ fi
 # Correct the phpsysinfo for the correct gotty service
 gottyservice="$(pgrep -l "gotty" | awk '{print $NF}' | head -n 1)"
 echo "... using $gottyservice in phpsysinfo"
-sed -i "s/,gotty,/,${gottyservice:-gotty},/g" "$HOME"/BattyBirdNET-Analyzer/templates/phpsysinfo.ini
+sed -i "s/,gotty,/,${gottyservice:-gotty},/g" "$HOME"/BirdNET-Pi/templates/phpsysinfo.ini
 
 echo " "

@@ -11,7 +11,7 @@ import requests
 import sys
 import os
 
-sys.path.append('/home/pi/BattyBirdNET-Analyzer/scripts/utils')
+sys.path.append('/home/pi/BirdNET-Pi/scripts/utils')
 from helpers import get_settings
 
 # Setup basic configuration for logging
@@ -39,7 +39,7 @@ def on_connect(client, userdata, flags, rc ): #, properties=None):
         log.error(f"Failed to connect, return code {rc}\n")
 
 def get_bird_code(scientific_name):
-    with open('/home/pi/BattyBirdNET-Analyzer/scripts/ebird.php', 'r') as file:
+    with open('/home/pi/BirdNET-Pi/scripts/ebird.php', 'r') as file:
         data = file.read()
 
     array_str = re.search(r'\$ebirds = \[(.*?)\];', data, re.DOTALL).group(1)

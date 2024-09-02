@@ -10,8 +10,8 @@ echo " "
 bashio::log.info "Checking your birndet.conf file integrity"
 
 # Set variables
-configcurrent="$HOME"/BattyBirdNET-Analyzer/birdnet.conf
-configtemplate="$HOME"/BattyBirdNET-Analyzer/birdnet.bak
+configcurrent="$HOME"/BirdNET-Pi/birdnet.conf
+configtemplate="$HOME"/BirdNET-Pi/birdnet.bak
 
 # Extract variable names from config template and read each one
 grep -o '^[^#=]*=' "$configtemplate" | sed 's/=//' | while read -r var; do

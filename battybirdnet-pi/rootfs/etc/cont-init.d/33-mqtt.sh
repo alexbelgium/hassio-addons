@@ -14,13 +14,13 @@ common_steps () {
         sed -i "s|%%mqtt_pass%%|$MQTT_PASS|g" /helpers/birdnet_to_mqtt.py
 
         # Copy script to the appropriate directory
-        cp /helpers/birdnet_to_mqtt.py "$HOME"/BattyBirdNET-Analyzer/scripts/utils/birdnet_to_mqtt.py
-        chown pi:pi "$HOME"/BattyBirdNET-Analyzer/scripts/utils/birdnet_to_mqtt.py
-        chmod +x "$HOME"/BattyBirdNET-Analyzer/scripts/utils/birdnet_to_mqtt.py
+        cp /helpers/birdnet_to_mqtt.py "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
+        chown pi:pi "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
+        chmod +x "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
 
         # Add hooks to the main analysis script
-        sed -i "/load_global_model, run_analysis/a from utils.birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BattyBirdNET-Analyzer/scripts/birdnet_analysis.py
-        sed -i '/write_to_db(/a\                automatic_mqtt_publish(file, detection, os.path.basename(detection.file_name_extr))' "$HOME"/BattyBirdNET-Analyzer/scripts/birdnet_analysis.py
+        sed -i "/load_global_model, run_analysis/a from utils.birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
+        sed -i '/write_to_db(/a\                automatic_mqtt_publish(file, detection, os.path.basename(detection.file_name_extr))' "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
     else
         bashio::log.fatal "MQTT connection failed, it will not be configured. Error message :"
         mosquitto_pub -h "$MQTT_HOST" -p "$MQTT_PORT" -t "$TOPIC" -m "test" -u "$MQTT_USER" -P "$MQTT_PASS" -q 1 -d --will-topic "$TOPIC" --will-payload "Disconnected" --will-qos 1 --will-retain
@@ -30,7 +30,7 @@ common_steps () {
 # Check if MQTT service is available and not disabled
 if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED'; then
     bashio::log.green "---"
-    bashio::log.blue "MQTT addon is active on your system! BattyBirdNET-Analyzer is now automatically configured to send its output to MQTT"
+    bashio::log.blue "MQTT addon is active on your system! BirdNET-Pi is now automatically configured to send its output to MQTT"
     bashio::log.blue "MQTT user : $(bashio::services "mqtt" "username")"
     bashio::log.blue "MQTT password : $(bashio::services "mqtt" "password")"
     bashio::log.blue "MQTT broker : tcp://$(bashio::services "mqtt" "host"):$(bashio::services "mqtt" "port")"
@@ -52,7 +52,7 @@ if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED'; t
 elif bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQTT_PORT_manual"; then
     bashio::log.green "---"
     bashio::log.blue "MQTT is manually configured in the addon options"
-    bashio::log.blue "BattyBirdNET-Analyzer is now automatically configured to send its output to MQTT"
+    bashio::log.blue "BirdNET-Pi is now automatically configured to send its output to MQTT"
     bashio::log.green "---"
     bashio::log.blue "Data will be posted to the topic : 'birdnet'"
     bashio::log.blue "Json data : {'Date', 'Time', 'ScientificName', 'CommonName', 'Confidence', 'SpeciesCode', 'ClipName', 'url'}"

@@ -27,11 +27,11 @@ sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
 
 echo "... ensuring restricted area access"
 echo "${ingress_entry}" > /ingress_url
-sed -i "/function is_authenticated/a if (strpos(\$_SERVER['HTTP_REFERER'], '/api/hassio_ingress') !== false && strpos(\$_SERVER['HTTP_REFERER'], trim(file_get_contents('/ingress_url'))) !== false) { \$ret = true; return \$ret; }" "$HOME"/BattyBirdNET-Analyzer/scripts/common.php
+sed -i "/function is_authenticated/a if (strpos(\$_SERVER['HTTP_REFERER'], '/api/hassio_ingress') !== false && strpos(\$_SERVER['HTTP_REFERER'], trim(file_get_contents('/ingress_url'))) !== false) { \$ret = true; return \$ret; }" "$HOME"/BirdNET-Pi/scripts/common.php
 
 echo "... adapt Caddyfile for ingress"
 chmod +x /helpers/caddy_ingress.sh
 /./helpers/caddy_ingress.sh
-sed -i "/sudo caddy fmt --overwrite/i /./helpers/caddy_ingress.sh" "$HOME"/BattyBirdNET-Analyzer/scripts/update_caddyfile.sh
+sed -i "/sudo caddy fmt --overwrite/i /./helpers/caddy_ingress.sh" "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
 
 echo " "

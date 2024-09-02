@@ -59,4 +59,4 @@ else
 fi
 
 # Create the spectral analysis
-"$PYTHON_VIRTUAL_ENV" "$HOME"/BattyBirdNET-Analyzer/scripts/spectral_analysis.py
+"$PYTHON_VIRTUAL_ENV" "$HOME"/BirdNET-Pi/scripts/spectral_analysis.py
