@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Webtop_KDE] missing LF in  (opened 2024-08-30)](https://github.com/alexbelgium/hassio-addons/issues/1557) by [@UlrichThiess](https://github.com/UlrichThiess)
 # Home assistant add-on: Webtop KDE Alpine
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
