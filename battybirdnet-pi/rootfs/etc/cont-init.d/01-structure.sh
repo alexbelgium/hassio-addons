@@ -12,6 +12,7 @@ bashio::log.info "Ensuring the file structure is correct :"
 # Define structure
 echo "... creating default files"
 touch /config/include_species_list.txt # Should be null
+touch /home/pi/BirdNET-Pi/scripts/thisrun.txt
 for files in apprise.txt exclude_species_list.txt IdentifiedSoFar.txt disk_check_exclude.txt confirmed_species_list.txt blacklisted_images.txt whitelist_species_list.txt; do
     if [ ! -f /config/"$files" ]; then
         echo "" > /config/"$files"
