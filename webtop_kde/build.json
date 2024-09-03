@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "linuxserver/webtop:arm64v8-ubuntu-xfce",
-    "amd64": "linuxserver/webtop:amd64-ubuntu-xfce"
+    "aarch64": "linuxserver/webtop:arm64v8-ubuntu-kde-108decbb-ls34",
+    "amd64": "linuxserver/webtop:amd64-ubuntu-kde-108decbb-ls34"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
