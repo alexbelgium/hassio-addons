@@ -1,3 +1,5 @@
+## ubuntu-kde-108decbb-ls34 (03-09-2024)
+- Minor bugs fixed
 ## ubuntu-xfce (03-09-2024)
 - Minor bugs fixed
 ## debian-xfce (02-09-2024)
