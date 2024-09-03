@@ -141,6 +141,6 @@
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "debian-xfce",
+  "version": "ubuntu-xfce",
   "video": true
 }
