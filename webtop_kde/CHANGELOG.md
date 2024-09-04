@@ -1,3 +1,5 @@
+## ubuntu-xfce-33543f91-ls159 (04-09-2024)
+- Minor bugs fixed
 
 ## 5c8ffd24-ls153 (04-04-2024)
 - Addition of other ports ; must be manually activated through the addon options
