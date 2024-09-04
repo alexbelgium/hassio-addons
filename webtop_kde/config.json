@@ -141,6 +141,6 @@
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "ubuntu-kde-108decbb-ls34",
+  "version": "ubuntu-xfce-33543f91-ls159",
   "video": true
 }
