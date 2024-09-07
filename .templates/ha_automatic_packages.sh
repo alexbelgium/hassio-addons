@@ -216,10 +216,10 @@ fi
 #######################
 
 # Install micro texteditor
-curl https://getmic.ro | bash
-mv micro /usr/bin
-micro -plugin install bounce
-micro -plugin install filemanager
+curl https://getmic.ro | bash || true
+mv micro /usr/bin || true
+micro -plugin install bounce || true
+micro -plugin install filemanager || true
 
 for files in "/etc/services.d" "/etc/cont-init.d"; do
 
