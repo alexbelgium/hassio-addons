@@ -74,7 +74,7 @@
     "share:rw",
     "media:rw"
   ],
-  "name": "Booksonic-air",
+  "name": "Booksonic air",
   "options": {
     "PGID": 0,
     "PUID": 0
