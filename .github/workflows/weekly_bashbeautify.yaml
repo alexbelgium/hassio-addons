@@ -37,7 +37,7 @@ jobs:
           shopt -u globstar nullglob  
 
       - name: Create New Pull Request If Needed
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           title: "Github bot : script beautyshied"
           branch-suffix: timestamp

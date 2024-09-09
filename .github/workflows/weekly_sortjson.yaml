@@ -25,7 +25,7 @@ jobs:
       shell: bash
     - name: Create New Pull Request If Needed
       if: steps.sort.outputs.changed != ''
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v7
       with:
         title: "Github bot : json sorted"
         branch-suffix: timestamp
