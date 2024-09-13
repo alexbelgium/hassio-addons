@@ -1,4 +1,7 @@
 
+## 10.9.11 (14-09-2024)
+- Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
+
 ## 10.9.10 (31-08-2024)
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
