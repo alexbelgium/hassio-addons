@@ -51,12 +51,23 @@ BASE_URL: Specify the full URL (including protocol) when running behind a revers
 
 ### Connect to browserless Chrome (from @RhysMcW)
 
-In HA, use the File Editor add-on (or Filebrowser) and edit the Changedetection.io config file at `/homeassistant/addons_config/changedetection.io/config.yaml`. Add the following line to the end of it: 
-`PLAYWRIGHT_DRIVER_URL: ws://db21ed7f-browserless-chrome.local.hass.io:3000/chromium?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true`
+In HA, use the File Editor add-on (or Filebrowser) and edit the Changedetection.io config file at `/homeassistant/addons_config/changedetection.io/config.yaml`.
+
+Add the following line to the end of it: 
+```yaml
+PLAYWRIGHT_DRIVER_URL: ws://2937404c-browserless-chrome:3000/chromium?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true
+```
 
 Remember to add a blank line at the end of the file too according to yaml requirements.
 
-The "db21ed7f-browserless-chrome.local.hass.io" hostname was got from the CLI in HA, using arp, but you should also be able to use your HA IP address.
+The `2937404c-browserless-chrome` hostname is displayed in the UI, on the  Browserless Chromium addon page:
+![image](https://github.com/user-attachments/assets/a63514f6-027a-4361-a33f-0d8f87461279)
+
+You can also fetch it:
+* By using SSH and running `docker exec -i hassio_dns cat "/config/hosts"`
+* From the CLI in HA, using arp
+* You should also be able to use your HA IP address.
+
 Then restart the Changedetection.io add-on - after that you can use the browser options in Changedetection.io.
 
 ## Installation
