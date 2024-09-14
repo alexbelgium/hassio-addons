@@ -116,7 +116,7 @@ RUN \
     git checkout main && \
     git merge f-merge-prs && \
     git branch -d f-merge-prs && \
-    git branch -d 158
+    git branch -d 158 || true
 
 # Update with my repo if more recent
 #WORKDIR /home/pi
