@@ -89,4 +89,9 @@ echo "... check permissions"
 chmod -R 755 /config/*
 chmod 777 /config
 
+# Permissions for Matplotlabdir
+mkdir -p "$MPLCONFIGDIR"
+chown pi:pi "$MPLCONFIGDIR"
+chmod 777 "$MPLCONFIGDIR"
+
 echo " "
