@@ -1,4 +1,3 @@
-## 0.13-87 (14-09-2024)
 - Define cache folder for matplotlib
 - Fix confirmed species
 - Update to latest
