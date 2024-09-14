@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [wger] ENV not passing in (opened 2024-09-14)](https://github.com/alexbelgium/hassio-addons/issues/1570) by [@stevetheman1031](https://github.com/stevetheman1031)
 # Hass.io Add-ons: Wger
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
