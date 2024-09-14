@@ -1,4 +1,7 @@
 
+## 2.11.0 (14-09-2024)
+- Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
+
 ## 2.10.0 (07-09-2024)
 - Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
 
