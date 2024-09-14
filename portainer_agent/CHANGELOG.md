@@ -1,4 +1,7 @@
 
+## linux-ppc64le-2.21.1-alpine (14-09-2024)
+- Update to latest version from portainer/agent
+
 ## linux-ppc64le-2.21.0-rc2-alpine (24-08-2024)
 - Update to latest version from portainer/agent
 
