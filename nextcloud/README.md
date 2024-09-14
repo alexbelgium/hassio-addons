@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Nextcloud] Cant use MariaDB when self hosting it (opened 2024-09-10)](https://github.com/alexbelgium/hassio-addons/issues/1567) by [@zagi988](https://github.com/zagi988)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
