@@ -84,7 +84,7 @@
     "share:rw",
     "ssl"
   ],
-  "name": "Webtop LSIO",
+  "name": "Webtop",
   "options": {
     "DNS_server": "8.8.8.8",
     "PGID": 0,
