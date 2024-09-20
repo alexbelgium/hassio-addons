@@ -110,6 +110,6 @@
   "slug": "bazarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bazarr",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:6767]"
 }
