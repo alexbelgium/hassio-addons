@@ -111,7 +111,7 @@ fi
 # Check if there are lines to read
 cp "$CONFIGSOURCE" /tempenv
 sed -i '/^#/d' /tempenv
-sed -i '/^ /d' /tempenv
+sed -i '/^[[:space:]]*$/d' /tempenv
 sed -i '/^$/d' /tempenv
 # Exit if empty
 if [ ! -s /tempenv ]; then
