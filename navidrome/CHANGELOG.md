@@ -1,3 +1,6 @@
+
+## 0.53.1 (21-09-2024)
+- Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 ## 0.52.5-7 (20-08-2024)
 
 - Reduced access to media to read-only as write permissions are not required https://www.navidrome.org/docs/usage/security/#permissions
