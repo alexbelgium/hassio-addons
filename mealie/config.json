@@ -74,8 +74,7 @@
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "map": [
-    "addon_config:rw",
-    "homeassistant_config:rw",
+    "config:rw",
     "share:rw",
     "ssl:rw"
   ],
