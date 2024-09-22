@@ -65,7 +65,7 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "DATA_DIR": "/config",
+    "DATA_DIR": "/config/addons_config/mealie_data",
     "DB_ENGINE": "sqlite",
     "MAX_WORKERS": "1",
     "WEB_CONCURRENCY": "2",
@@ -81,7 +81,7 @@
   "name": "Mealie",
   "options": {
     "ALLOW_SIGNUP": true,
-    "DATA_DIR": "/config",
+    "DATA_DIR": "/config/addons_config/mealie_data",
     "PGID": 1000,
     "PUID": 1000,
     "certfile": "fullchain.pem",
@@ -109,6 +109,6 @@
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v1.12.0-2",
+  "version": "v1.12.0-3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9001]"
 }

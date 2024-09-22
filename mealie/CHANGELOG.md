@@ -1,3 +1,5 @@
+- Another version with 1.12 to try to solve issues with config not recognized
+
 ## v1.12.0-2 (25-08-2024)
 - BACKUP BEFORE UPDATING !!!
 - WARNING : version 1.12 erroneously updated to 2.0. Your database could become corrupted if you update from 1.12. You need to restore your homeassistant config directory before updating to this version Alas there is no easy solution to move back from Mealie 2.0 to 1.2.
