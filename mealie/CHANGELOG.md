@@ -1,3 +1,4 @@
+## v1.12.0-3 (22-09-2024)
 - Another version with 1.12 to try to solve issues with config not recognized
 
 ## v1.12.0-2 (25-08-2024)
