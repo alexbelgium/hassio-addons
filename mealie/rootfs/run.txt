@@ -77,7 +77,7 @@ function parse_yaml {
 }
 
 # Get list of parameters in a file
-parse_yaml /tempenv "" >/tmpfile
+parse_yaml "$CONFIGSOURCE" >/tmpfile
 
 while IFS= read -r line; do
     # Clean output
