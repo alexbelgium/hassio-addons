@@ -59,7 +59,7 @@ RUN \
     git config --global --add safe.directory '*' && \
     \
     # Download installer
-    curl -f -L -s -S "https://raw.githubusercontent.com/Nachtzuster/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
+    curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     \
     # Use installer to modify other scripts
@@ -105,18 +105,18 @@ RUN \
     rm -rf /var/lib/apt/lists/*
 
 # Add PR
-RUN \
-    cd /home/pi/BirdNET-Pi && \
-    git fetch origin pull/158/head:158 && \
-    git checkout main && \
-    git branch -D f-merge-prs || true && \
-    git checkout -b f-merge-prs && \
-    git merge 158 --no-edit && \
-    git stash && \
-    git checkout main && \
-    git merge f-merge-prs && \
-    git branch -d f-merge-prs && \
-    git branch -d 158
+#RUN \
+#    cd /home/pi/BirdNET-Pi && \
+#    git fetch origin pull/158/head:158 && \
+#    git checkout main && \
+#    git branch -D f-merge-prs || true && \
+#    git checkout -b f-merge-prs && \
+#    git merge 158 --no-edit && \
+#    git stash && \
+#    git checkout main && \
+#    git merge f-merge-prs && \
+#    git branch -d f-merge-prs && \
+#    git branch -d 158
 
 # Update with my repo if more recent
 #WORKDIR /home/pi
