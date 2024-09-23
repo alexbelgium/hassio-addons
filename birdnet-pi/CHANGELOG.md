@@ -1,4 +1,5 @@
-- [FEAT] Sort species by max detections
+- [UI] Sort species by max detections
+- [SERVER] Add error messages for species not detected
 
 ## 0.13-88 (14-09-2024)
 - Define cache folder for matplotlib
