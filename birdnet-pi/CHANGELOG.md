@@ -1,3 +1,5 @@
+- [FEAT] Sort species by max detections
+
 ## 0.13-88 (14-09-2024)
 - Define cache folder for matplotlib
 - Fix confirmed species
