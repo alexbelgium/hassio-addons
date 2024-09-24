@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [SignalK] Connecting to ttyUSB* (opened 2024-06-24)](https://github.com/alexbelgium/hassio-addons/issues/1450) by [@MrHobsons](https://github.com/MrHobsons)
 ## &#9888; Open Request : [✨ [REQUEST] Sidebar support for SignalK (opened 2024-09-14)](https://github.com/alexbelgium/hassio-addons/issues/1572) by [@paalkr](https://github.com/paalkr)
 # Home assistant add-on: signalk
 
