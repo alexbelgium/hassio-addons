@@ -1,4 +1,3 @@
-## 0.13-89 (23-09-2024)
 - [UI] Sort species by max detections
 - [UI] Consistent layout between overview and todays pages
 - [SERVER] Add error messages for species not detected
