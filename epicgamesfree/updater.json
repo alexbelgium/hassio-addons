@@ -2,10 +2,10 @@
   "dockerhub_by_date": true,
   "dockerhub_list_size": 2,
   "github_exclude": "-",
-  "last_update": "2024-09-08",
+  "last_update": "2024-09-24",
   "repository": "alexbelgium/hassio-addons",
   "slug": "epicgamesfree",
   "source": "dockerhub",
   "upstream_repo": "charlocharlie/epicgames-freegames",
-  "upstream_version": "debian-2024-09-08"
+  "upstream_version": "debian-2024-09-24"
 }
