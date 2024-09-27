@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Mealie] Not able to restore backup from standalone Mealie 12.2.0 (opened 2024-09-25)](https://github.com/alexbelgium/hassio-addons/issues/1585) by [@phellarv](https://github.com/phellarv)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
