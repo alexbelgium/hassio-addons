@@ -1,9 +1,9 @@
 {
   "github_tagfilter": "alpine",
-  "last_update": "14-09-2024",
+  "last_update": "28-09-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "portainer_agent",
   "source": "dockerhub",
   "upstream_repo": "portainer/agent",
-  "upstream_version": "linux-ppc64le-2.21.1-alpine"
+  "upstream_version": "linux-ppc64le-2.21.2-alpine"
 }
