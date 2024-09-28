@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] Update Logo / Icon for Immich (opened 2024-08-22)](https://github.com/alexbelgium/hassio-addons/issues/1542) by [@jae-tee](https://github.com/jae-tee)
-## &#9888; Open Issue : [🐛 [Immich] Cant access NAS via SMB -- folder cannot be written to (opened 2024-09-19)](https://github.com/alexbelgium/hassio-addons/issues/1576) by [@zd3sf](https://github.com/zd3sf)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)
