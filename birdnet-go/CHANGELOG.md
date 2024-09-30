@@ -1,3 +1,5 @@
+## 0.5.5-10 (30-09-2024)
+- Minor bugs fixed
 ## 0.5.5-9 (06-07-2024)
 - Correct indentation issue
 
