@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] SCRUTINY Time updates (opened 2024-09-30)](https://github.com/alexbelgium/hassio-addons/issues/1590) by [@hiagocosta](https://github.com/hiagocosta)
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
