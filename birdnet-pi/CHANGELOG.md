@@ -1,3 +1,4 @@
+## 0.13-95 (02-10-2024)
 - [UI/Feat] Add toggle switches for purge and confirmed species
 
 ## 0.13-90 (25-09-2024)
