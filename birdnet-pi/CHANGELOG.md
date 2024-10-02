@@ -1,5 +1,4 @@
-## 0.13-94 (02-10-2024)
-- Minor bugs fixed
+- [UI/Feat] Add toggle switches for purge and confirmed species
 
 ## 0.13-90 (25-09-2024)
 - [UI] Sort species by max detections
