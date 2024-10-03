@@ -87,6 +87,7 @@ Then create a new template sensor using the configuration below.
 - trigger:
     - platform: mqtt
       topic: "birdnet"
+      id: birdnet
     - platform: time
       at: "00:00:00"
       id: reset
@@ -96,14 +97,14 @@ Then create a new template sensor using the configuration below.
       state: >
         {% if trigger.id == 'reset' %}
           {{ now() }}
-        {% else %}
+        {% elif trigger.id == 'birdnet' %}
           {{ today_at(trigger.payload_json.Time) }}
         {% endif %}
       attributes:
         bird_events: >
           {% if trigger.id == 'reset' %}
             {{ [] }}
-          {% else %}
+          {% elif trigger.id == 'birdnet' %}
             {% set time = trigger.payload_json.Time %}
             {% set name = trigger.payload_json.CommonName %}
             {% set confidence = trigger.payload_json.Confidence|round(2) * 100 ~ '%' %}
