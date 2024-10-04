@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [qBittorrent] Running addon produces a HAOS full crash & restart (opened 2024-10-04)](https://github.com/alexbelgium/hassio-addons/issues/1594) by [@diamant-x](https://github.com/diamant-x)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

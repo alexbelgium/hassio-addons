@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] BattyBirdnet-Pi x86-64 (opened 2024-07-29)](https://github.com/alexbelgium/hassio-addons/issues/1498) by [@mrcrunchybeans](https://github.com/mrcrunchybeans)
 # Home assistant add-on: battybirdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] BattyBirdnet-Pi x86-64 (opened 2024-07-29)](https://github.com/alexbelgium/hassio-addons/issues/1498) by [@mrcrunchybeans](https://github.com/mrcrunchybeans)
 ## &#9888; Open Issue : [🐛[BirdNET-Pi] Species Stats not found (opened 2024-09-17)](https://github.com/alexbelgium/hassio-addons/issues/1574) by [@kongjudas](https://github.com/kongjudas)
 # Home assistant add-on: birdnet-pi
 
