@@ -1,5 +1,6 @@
-#!/usr/bin/with-contenv bashio
+#!/command/with-contenv bashio
 # shellcheck shell=bash
+set -e
 
 # Check if there are files in "$HOME"/BirdSongs/StreamData and move them to /data/StreamData
 if [ -d /data/StreamData ] && [ "$(ls -A /data/StreamData/)" ]; then
