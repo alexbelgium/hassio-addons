@@ -1,8 +1,7 @@
 {
   "build_from": {
     "aarch64": "ghcr.io/benbusby/whoogle-search:latest",
-    "amd64": "ghcr.io/benbusby/whoogle-search:latest",
-    "armv7": "ghcr.io/benbusby/whoogle-search:latest"
+    "amd64": "ghcr.io/benbusby/whoogle-search:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
