@@ -1,4 +1,3 @@
-## 0.13-96 (05-10-2024)
 - [SERVER] Fix timezone. Use by priority : TZ defined in addon options, TZ defined in BirdNET-options, or automatic TZ
 - [UI] New species are highlighted on top of overview page
 
