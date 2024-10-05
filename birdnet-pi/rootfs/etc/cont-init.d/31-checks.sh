@@ -24,7 +24,7 @@ grep -o '^[^#=]*=' "$configtemplate" | sed 's/=//' | while read -r var; do
     # Check if the variable is in configcurrent, if not, append it
     if ! grep -q "^$var=" "$configcurrent"; then
         bashio::log.warning "...$var was missing from your birdnet.conf file, it was re-added"
-        echo "$(grep "^$var=" "$configtemplate")" >> "$configcurrent"
+        grep "^$var=" "$configtemplate" >> "$configcurrent"
     fi
     # Check for duplicates
     if [ "$(grep -c "^$var=" "$configcurrent")" -gt 1 ]; then
