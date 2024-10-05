@@ -6,7 +6,6 @@ set -e
 # CHECK BIRDNET.CONF #
 ######################
 
-echo " "
 bashio::log.info "Checking your birdnet.conf file integrity"
 
 # Set variables
@@ -46,7 +45,6 @@ fi
 # PERFORM UPDATE #
 ##################
 
-echo " "
 bashio::log.info "Performing potential updates"
 
 # Adapt update_birdnet_snippets
@@ -60,4 +58,3 @@ sed -i "s|/etc/birdnet/birdnet.conf|/config/birdnet.conf|g" "$HOME"/BirdNET-Pi/s
 # Execute update_birdnet_snippets
 "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 
-echo " "

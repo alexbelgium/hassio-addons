@@ -17,7 +17,6 @@ if [ -z "$ingress_entry" ]; then
     exit 0
 fi
 
-echo " "
 bashio::log.info "Adapting for ingress"
 echo "... setting up nginx"
 
@@ -59,4 +58,3 @@ else
     exit 1
 fi
 
-echo " "

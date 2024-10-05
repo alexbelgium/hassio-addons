@@ -6,7 +6,6 @@ set -e
 # SET /CONFIG #
 ###############
 
-echo " "
 bashio::log.info "Ensuring the file structure is correct:"
 
 # Create default configuration files if not present
@@ -87,4 +86,3 @@ mkdir -p "$MPLCONFIGDIR"
 chown pi:pi "$MPLCONFIGDIR"
 chmod 777 "$MPLCONFIGDIR"
 
-echo " "

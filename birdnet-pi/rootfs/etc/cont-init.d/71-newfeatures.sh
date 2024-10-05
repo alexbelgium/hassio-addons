@@ -6,7 +6,6 @@ set -e
 # ADD FEATURES #
 ################
 
-echo " "
 bashio::log.info "Adding optional features"
 
 # Denoiser
@@ -60,4 +59,3 @@ if bashio::config.true "PROCESSED_FOLDER_ENABLED" && ! grep -q "processed_size" 
     sed -i "/os.remove(file.file_name)/c\	            os.remove(file.file_name)" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
 fi || true
 
-echo " "

@@ -37,4 +37,3 @@ if bashio::config.true 'ssl'; then
     fi
 fi
 
-echo " "
