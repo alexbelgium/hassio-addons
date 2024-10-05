@@ -18,7 +18,7 @@
 - [MQTT] Fix auto detection @UlrichThiess
 
 ## 0.13-83 (14-08-2024)
-- [MQTT] Change logic as a hook in birdnet_analysis instead of a service 
+- [MQTT] Change logic as a hook in birdnet_analysis instead of a service
 - [DEFAULT] disable by default autopublishing of MQTT
 
 ## 0.13-79 (13-08-2024)
