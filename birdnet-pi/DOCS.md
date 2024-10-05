@@ -8,13 +8,8 @@ https://github.com/mcguirepr89/BirdNET-Pi/discussions/1092#discussioncomment-970
 
 My recommendation :
 - Best entry system (< 50€) : Boya By-lm40 (30€) + deadcat (10 €)
-- Best middle system (< 100 €) : HyperX Quadcast (80€) + deadcat (10€) ; but I'm concerned about the longevity of this mic outside
-- Best high end system (< 150 €) : Clippy EM272 (55€) + Rode AI micro trrs to usb (70€) + Rycote deadcat (27€)
-
-My current system : 
-- EM272 clippy TTRS
-- AI RODE micro TTRS to USB converter
-- Rpi3b+ that converts the USB signal to rtsp (48khz, 16bits, mono, as this is what the model uses)
+- Best middle end system (< 150 €) : Clippy EM272 (55€) + Rode AI micro trrs to usb (70€) + Rycote deadcat (27€)
+- Best high end system (<300 €) : Clippy EM272 XLR (85€) or LOM Ucho Pro (75€) + Focusrite Scarlet 2i2 4th Gen (200€) + Rycote/Bubblebee deadcat
 
 # App settings recommendation
 - Model
@@ -31,3 +26,54 @@ My current system :
     - Overlap : 0,5s
     - Minimum confidence : 0,7
     - Sigmoid sensitivity : 1,25 _(I've tried 1,00 but it gave much more false positives ; as decreasing this value increases sensitivity)_
+
+# Set RTSP server
+### On your desktop
+Download imager
+Install raspbian lite 64
+
+### With ssh
+sudo apt-get update
+sudo apt-get apt-get dist-upgrade
+
+### Optional : install Focusrite driver
+apt-get install make linux-headers-$(uname -r)`)
+curl -LO https://github.com/geoffreybennett/scarlett-gen2/releases/download/v6.9-v1.3/snd-usb-audio-kmod-6.6-v1.3.tar.gz
+tar -xzf snd-usb-audio-kmod-6.6-v1.3.tar.gz
+cd snd-usb-audio-kmod-6.6-v1.3
+KSRCDIR=/lib/modules/$(uname -r)/build
+make -j4 -C $KSRCDIR M=$(pwd) clean
+make -j4 -C $KSRCDIR M=$(pwd)
+sudo make -j4 -C $KSRCDIR M=$(pwd) INSTALL_MOD_DIR=updates/snd-usb-audio modules_install
+sudo depmod
+sudo reboot
+dmesg | grep -A 5 -B 5 -i focusrite
+
+### Install RTSP server
+wget https://github.com/geoffreybennett/scarlett-gen2/releases/download/v6.9-v1.3/snd-usb-audio-kmod-6.6-v1.3.tar.gz
+
+sudo apt-get install -y micro ffmpeg lsof
+sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.8.3/mediamtx_v1.8.3_linux_arm64v8.tar.gz -O - | sudo tar -xz
+
+### List audio devices
+arecord -l
+
+### Check audio device parameters. Example :
+arecord -D hw:1,0 --dump-hw-params
+
+### Add startup script
+sudo nano startmic.sh
+```
+#!/bin/bash
+echo "Starting birdmic"
+# Disable gigabit ethernet
+sudo ethtool -s eth0 speed 100 duplex full autoneg on
+# Start rtsp server
+./mediamtx & true
+# Create rtsp feed
+sleep 5
+ffmpeg -nostdin -f alsa -acodec pcm_s24le -ac 2 -ar 48000 -i hw:1,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
+
+# Set microphone volume
+sleep 5
+amixer -c 1 sset Mic 71%
