@@ -38,7 +38,7 @@ volumes.
 
 ## RESTORE BACKUP
 
-Open the addon options and set the password to "". Restart the addon, it will allow to restore portainer from a backup. You need to put your backup in an accessible folder such as /share to have it mounted in the addon
+Open the addon options and set the password to "empty". Restart the addon, it will allow to restore portainer from a backup. You need to put your backup in an accessible folder such as /share to have it mounted in the addon
 
 ## WARNING
 
