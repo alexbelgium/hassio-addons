@@ -54,10 +54,12 @@ fi
 if bashio::config.has_value 'password' ; then
   echo -n "${PASSWORD:-empty}" > /data/portainer_password
   options+=(--admin-password-file /data/portainer_password)
-  bashio::log.info "... password set to $PASSWORD"
+  bashio::log.info "... password set according to addon options"
 else
   echo -n "${PASSWORD:-empty}" > /data/portainer_password
   bashio::log.info "... starting without predefined password"
+  bashio::log.warning "If this is your first boot, you have a 5 minutes time period to perform the initial set-up"
+  bashio::log.warning "If you don't do it, you would be faced with a 404 error and will need to restart the addon to access the set-up page"
 fi
 
 ###################
