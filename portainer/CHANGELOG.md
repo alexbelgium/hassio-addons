@@ -1,3 +1,4 @@
+## 2.22.0-2 (06-10-2024)
 - WARNING : logic change for new installations. By default, there is no password set, and the user must complete the initial set-up within a 5 minutes window to set the password. Setting a password from the addon options overules this.
 
 ## 2.22.0 (05-10-2024)
