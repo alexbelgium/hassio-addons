@@ -32,11 +32,47 @@ My recommendation :
 Download imager
 Install raspbian lite 64
 
+### Modify config.txt
+```
+# Audio configuration for Focusrite Scarlett 2i2 on Raspberry Pi 3B+
+
+# Enable audio and USB optimizations
+dtparam=audio=off          # Disable the default onboard audio to prevent conflicts
+dtoverlay=disable-bt        # Disable onboard Bluetooth to reduce USB bandwidth usage
+
+# USB optimizations
+dwc_otg.fiq_fix_enable=1    # Enable FIQ (Fast Interrupt) handling for improved USB performance
+max_usb_current=1           # Increase the available USB current (required if Scarlett is powered over USB)
+
+# CPU and performance tuning
+force_turbo=0               # Ensure the CPU runs at max speed (optional, may reduce stability)
+arm_freq=1400               # Set CPU frequency to 1400 MHz (default max for RPi 3B+)
+core_freq=500               # Increase GPU core frequency for lower latency (optional)
+
+# Additional audio settings (for low-latency operation)
+avoid_pwm_pll=1             # Use a more stable PLL for the audio clock
+
+# Optional: HDMI and other settings can be turned off if not needed
+hdmi_blanking=1             # Disable HDMI (save power and reduce interference)
+```
+
 ### With ssh
+```
+# Update
+
 sudo apt-get update
 sudo apt-get apt-get dist-upgrade
 
+# Disable useless services
+sudo systemctl disable hciuart
+sudo systemctl disable bluetooth
+sudo systemctl disable triggerhappy
+sudo systemctl disable avahi-daemon
+sudo systemctl disable dphys-swapfile
+```
+
 ### Optional : install Focusrite driver
+```
 apt-get install make linux-headers-$(uname -r)`)
 curl -LO https://github.com/geoffreybennett/scarlett-gen2/releases/download/v6.9-v1.3/snd-usb-audio-kmod-6.6-v1.3.tar.gz
 tar -xzf snd-usb-audio-kmod-6.6-v1.3.tar.gz
@@ -48,18 +84,24 @@ sudo make -j4 -C $KSRCDIR M=$(pwd) INSTALL_MOD_DIR=updates/snd-usb-audio modules
 sudo depmod
 sudo reboot
 dmesg | grep -A 5 -B 5 -i focusrite
+```
 
 ### Install RTSP server
+```
 wget https://github.com/geoffreybennett/scarlett-gen2/releases/download/v6.9-v1.3/snd-usb-audio-kmod-6.6-v1.3.tar.gz
-
 sudo apt-get install -y micro ffmpeg lsof
 sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.8.3/mediamtx_v1.8.3_linux_arm64v8.tar.gz -O - | sudo tar -xz
+```
 
 ### List audio devices
+```
 arecord -l
+```
 
 ### Check audio device parameters. Example :
+```
 arecord -D hw:1,0 --dump-hw-params
+```
 
 ### Add startup script
 sudo nano startmic.sh
@@ -72,8 +114,12 @@ sudo ethtool -s eth0 speed 100 duplex full autoneg on
 ./mediamtx & true
 # Create rtsp feed
 sleep 5
+# Using hw
 ffmpeg -nostdin -f alsa -acodec pcm_s24le -ac 2 -ar 48000 -i hw:1,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
+# Using plughw
+ffmpeg -nostdin -f alsa -acodec pcm_s24le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 
 # Set microphone volume
 sleep 5
-amixer -c 1 sset Mic 71%
+amixer -c 1 sset Mic 90%
+```
