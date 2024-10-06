@@ -34,27 +34,16 @@ Install raspbian lite 64
 
 ### Modify config.txt
 ```
-# Audio configuration for Focusrite Scarlett 2i2 on Raspberry Pi 3B+
-
 # Enable audio and USB optimizations
 dtparam=audio=off          # Disable the default onboard audio to prevent conflicts
 dtoverlay=disable-bt        # Disable onboard Bluetooth to reduce USB bandwidth usage
-
 # Limit Ethernet to 100 Mbps (disable Gigabit Ethernet)
 dtparam=eth_max_speed=100
-
 # USB optimizations
 dwc_otg.fiq_fix_enable=1    # Enable FIQ (Fast Interrupt) handling for improved USB performance
 max_usb_current=1           # Increase the available USB current (required if Scarlett is powered over USB)
-
-# CPU and performance tuning
-force_turbo=0               # Ensure the CPU runs at max speed (optional, may reduce stability)
-arm_freq=1400               # Set CPU frequency to 1400 MHz (default max for RPi 3B+)
-core_freq=500               # Increase GPU core frequency for lower latency (optional)
-
 # Additional audio settings (for low-latency operation)
 avoid_pwm_pll=1             # Use a more stable PLL for the audio clock
-
 # Optional: HDMI and other settings can be turned off if not needed
 hdmi_blanking=1             # Disable HDMI (save power and reduce interference)
 ```
