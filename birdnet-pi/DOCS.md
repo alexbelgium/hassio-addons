@@ -114,6 +114,7 @@ ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i hw:0,0 -f rtsp -aco
 # Set microphone volume
 sleep 5
 amixer -c 1 sset Mic 90%
+# amixer -c 0 sset "Line In 1 Gain" 90%
 ```
 
 ### Startup automatically
