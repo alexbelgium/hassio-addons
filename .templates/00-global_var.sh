@@ -54,7 +54,7 @@ for KEYS in "${arr[@]}"; do
             VALUE="$secret"
         fi
         # text
-        if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
+        if bashio::config.false "verbose" || [[ "${KEYS,,}" == *"pass"* ]]; then
             bashio::log.blue "${KEYS}=******"
         else
             bashio::log.blue "$line"
