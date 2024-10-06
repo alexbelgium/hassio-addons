@@ -37,6 +37,7 @@ Install raspbian lite 64
 # Enable audio and USB optimizations
 dtparam=audio=off          # Disable the default onboard audio to prevent conflicts
 dtoverlay=disable-bt        # Disable onboard Bluetooth to reduce USB bandwidth usage
+dtoverlay=disable-wifi      # Disable onboard wifi
 # Limit Ethernet to 100 Mbps (disable Gigabit Ethernet)
 dtparam=eth_max_speed=100
 # USB optimizations
