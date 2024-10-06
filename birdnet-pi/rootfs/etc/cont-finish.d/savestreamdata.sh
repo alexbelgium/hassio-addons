@@ -8,10 +8,12 @@ if [ -d "$HOME"/BirdSongs/StreamData ]; then
     systemctl stop birdnet_analysis &
     systemctl stop birdnet_recording
 
-    # Check if there are files in StreamData and move them to /data/StreamData
+    # Ensure the target directory exists
     mkdir -p /data/StreamData
+
+    # Use rsync to move files to /data/StreamData
     if [ "$(ls -A "$HOME"/BirdSongs/StreamData)" ]; then
-        mv -v "$HOME"/BirdSongs/StreamData/* /data/StreamData/
+        rsync -av --remove-source-files "$HOME"/BirdSongs/StreamData/ /data/StreamData/
     fi
 
     bashio::log.fatal "... files safe, allowing container to stop"
