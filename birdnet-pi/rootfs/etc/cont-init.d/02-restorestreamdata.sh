@@ -18,5 +18,5 @@ if [ -d /data/StreamData ]; then
     fi
 
     # Clean up the source folder if empty
-    find /data/StreamData -type d -empty -delete
+    rm -r /data/StreamData
 fi
