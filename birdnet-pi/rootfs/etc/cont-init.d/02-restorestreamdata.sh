@@ -2,31 +2,21 @@
 # shellcheck shell=bash
 set -e
 
-# Check if the /data/StreamData directory exists
 if [ -d /data/StreamData ]; then
+    bashio::log.fatal "Container was stopped while files were still being analyzed."
 
-    # Check specifically for any .wav files in the directory
-    wav_file_exists=$(find /data/StreamData -type f -name "*.wav" -print -quit)
+    # Check if there are .wav files in /data/StreamData
+    if find /data/StreamData -type f -name "*.wav" | grep -q .; then
+        bashio::log.fatal "Restoring .wav files from /data/StreamData to $HOME/BirdSongs/StreamData."
 
-    # If a .wav file is found
-    if [ -n "$wav_file_exists" ]; then
-        # Count the number of .wav files in /data/StreamData
-        wav_count=$(find /data/StreamData -type f -name "*.wav" | wc -l)
-        bashio::log.warning "Container was stopped while files were still being analyzed, restoring $wav_count .wav files"
+        # Move the .wav files using `mv` to avoid double log entries
+        mv -v /data/StreamData/*.wav "$HOME"/BirdSongs/StreamData/
 
-        # Move files if there are any .wav files
-        if [ "$wav_count" -gt 0 ]; then
-            mv -v /data/StreamData/*.wav "$HOME"/BirdSongs/StreamData/
-        fi
-
-        echo "... done"
-        echo ""
-
-        # Setting permissions
-        chown -R pi:pi "$HOME"/BirdSongs
-        chmod -R 755 "$HOME"/BirdSongs
+        bashio::log.fatal "... files restored successfully, allowing container to stop."
+    else
+        bashio::log.info "No .wav files found to restore."
     fi
 
-    # Cleaning folder only if the directory exists (in case it was modified)
-    rm -r /data/StreamData
+    # Clean up the source folder if empty
+    find /data/StreamData -type d -empty -delete
 fi
