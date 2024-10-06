@@ -1,5 +1,5 @@
-## 2.22.0-2 (06-10-2024)
-- WARNING : logic change for new installations. By default, there is no password set (addon option sets to "empty", and the user must complete the initial set-up within a 5 minutes window to set the password. Setting a password from the addon options overules this. If you already have a password and you set the addon options to "empty", you then reset your database and can perform initial set-up again
+## 2.22.0-3 (06-10-2024)
+- WARNING : logic change for new installations. Type "empty" in the PASSWORD of the addon to reset the database and have a clean initial set-up. Used for example to restore backups
 
 ## 2.22.0 (05-10-2024)
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
