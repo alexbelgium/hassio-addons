@@ -25,6 +25,7 @@
   "options": {
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
+    "password": "homeassistant",
     "ssl": false
   },
   "panel_admin": false,
