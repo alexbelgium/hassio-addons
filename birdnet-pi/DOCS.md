@@ -40,6 +40,9 @@ Install raspbian lite 64
 dtparam=audio=off          # Disable the default onboard audio to prevent conflicts
 dtoverlay=disable-bt        # Disable onboard Bluetooth to reduce USB bandwidth usage
 
+# Limit Ethernet to 100 Mbps (disable Gigabit Ethernet)
+dtparam=eth_max_speed=100
+
 # USB optimizations
 dwc_otg.fiq_fix_enable=1    # Enable FIQ (Fast Interrupt) handling for improved USB performance
 max_usb_current=1           # Increase the available USB current (required if Scarlett is powered over USB)
