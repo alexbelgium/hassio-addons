@@ -25,7 +25,7 @@
   "options": {
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "password": "homeassistant",
+    "password": "empty",
     "ssl": false
   },
   "panel_admin": false,
@@ -47,5 +47,5 @@
   "slug": "portainer",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.22.0-test"
+  "version": "2.22.0-2"
 }
