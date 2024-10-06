@@ -1,3 +1,4 @@
+## 2.22.0-2 (06-10-2024)
 - WARNING : logic change for new installations. By default, there is no password set (addon option sets to "empty", and the user must complete the initial set-up within a 5 minutes window to set the password. Setting a password from the addon options overules this. If you already have a password and you set the addon options to "empty", you then reset your database and can perform initial set-up again
 
 ## 2.22.0 (05-10-2024)
