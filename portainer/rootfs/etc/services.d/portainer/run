@@ -34,9 +34,10 @@ fi
 # Set up the initial password
 PASSWORD_FILE="/data/portainer_password"
 HIDDEN_FILE="/data/hidden"
-PASSWORD="${PASSWORD:-empty}"
 if ! bashio::config.has_value 'password'; then
   PASSWORD="empty"
+else
+  PASSWORD="$(bashio::config 'password')"
 fi
 
 # Check current password
@@ -47,9 +48,10 @@ CURRENTPASSWORD="$(cat "$PASSWORD_FILE")"
 # Reset password if not first run
 if bashio::fs.file_exists "$HIDDEN_FILE"; then
   if [[ "$CURRENTPASSWORD" != "$PASSWORD" ]]; then
-    mv -f /data/portainer.db /data/portainer.old || true
+    BACKUPLOCATION="/share/portainer_$(date +%m-%d-%Y)_$RANDOM.backup"
+    mv -f /data/portainer.db "$BACKUPLOCATION" || true
     rm "$HIDDEN_FILE" || true
-    bashio::log.warning "... password changed, database reset. Previous version stored in /share/portainer_$(date +%m-%d-%Y)_$RANDOM.backup"
+    bashio::log.warning "... password changed, database reset. Previous version stored in $BACKUPLOCATION"
   fi
 fi
 
