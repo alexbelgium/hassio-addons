@@ -32,7 +32,28 @@ My recommendation :
 Download imager
 Install raspbian lite 64
 
+### With ssh, install requisite softwares
+```
+# Update
+
+sudo apt-get update -y
+sudo apt-get dist-upgrade -y
+
+# Disable useless services
+sudo systemctl disable hciuart
+sudo systemctl disable bluetooth
+sudo systemctl disable triggerhappy
+sudo systemctl disable avahi-daemon
+sudo systemctl disable dphys-swapfile
+
+# Install RTSP server
+sudo apt-get install -y micro ffmpeg lsof
+sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.9.1/mediamtx_v1.9.1_linux_arm64v8.tar.gz -O - | sudo tar -xz
+```
+
 ### Modify config.txt
+
+sudo nano /boot/firmware/config.txt
 ```
 # Enable audio and USB optimizations
 dtparam=audio=off          # Disable the default onboard audio to prevent conflicts
@@ -47,27 +68,6 @@ max_usb_current=1           # Increase the available USB current (required if Sc
 avoid_pwm_pll=1             # Use a more stable PLL for the audio clock
 # Optional: HDMI and other settings can be turned off if not needed
 hdmi_blanking=1             # Disable HDMI (save power and reduce interference)
-```
-
-### With ssh
-```
-# Update
-
-sudo apt-get update -y
-sudo apt-get dist-upgrade -y
-
-# Disable useless services
-sudo systemctl disable hciuart
-sudo systemctl disable bluetooth
-sudo systemctl disable triggerhappy
-sudo systemctl disable avahi-daemon
-sudo systemctl disable dphys-swapfile
-```
-
-### Install RTSP server
-```
-sudo apt-get install -y micro ffmpeg lsof
-sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.9.1/mediamtx_v1.9.1_linux_arm64v8.tar.gz -O - | sudo tar -xz
 ```
 
 ### Optional : install Focusrite driver
@@ -85,13 +85,12 @@ sudo reboot
 dmesg | grep -A 5 -B 5 -i focusrite
 ```
 
-### List audio devices
+### Find right device
 ```
+# List audio devices
 arecord -l
-```
 
-### Check audio device parameters. Example :
-```
+# Check audio device parameters. Example :
 arecord -D hw:1,0 --dump-hw-params
 ```
 
@@ -117,8 +116,10 @@ amixer -c 1 sset Mic 90%
 # amixer -c 0 sset "Line In 1 Gain" 90%
 ```
 
-### Startup automatically
-Make the file executable chmod +x startmic.sh
-Execute the crontab command crontab -e and select nano as your editor.
+Startup automatically
+```
+chmod +x startmic.sh
+crontab -e # select nano as your editor
+```
 Paste in `@reboot $HOME/startmic.sh` then save and exit nano.
 Reboot the Pi and test again with VLC to make sure the RTSP stream is live.
