@@ -109,7 +109,7 @@ sleep 5
 # Using hw
 ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 # Using plughw
-# ffmpeg -nostdin -f alsa -acodec pcm_s24le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
+# ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 
 # Set microphone volume
 sleep 5
