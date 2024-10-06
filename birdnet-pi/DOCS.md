@@ -72,7 +72,7 @@ hdmi_blanking=1             # Disable HDMI (save power and reduce interference)
 
 ### Optional : install Focusrite driver
 ```
-apt-get install make linux-headers-$(uname -r)`)
+sudo apt-get install make linux-headers-$(uname -r)
 curl -LO https://github.com/geoffreybennett/scarlett-gen2/releases/download/v6.9-v1.3/snd-usb-audio-kmod-6.6-v1.3.tar.gz
 tar -xzf snd-usb-audio-kmod-6.6-v1.3.tar.gz
 cd snd-usb-audio-kmod-6.6-v1.3
@@ -106,9 +106,9 @@ sudo ethtool -s eth0 speed 100 duplex full autoneg on
 # Create rtsp feed
 sleep 5
 # Using hw
-ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
+# ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 # Using plughw
-# ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
+ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp || ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 
 # Set microphone volume
 sleep 5
