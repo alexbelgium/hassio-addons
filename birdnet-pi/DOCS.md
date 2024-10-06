@@ -119,5 +119,5 @@ amixer -c 1 sset Mic 90%
 ### Startup automatically
 Make the file executable chmod +x startmic.sh
 Execute the crontab command crontab -e and select nano as your editor.
-Paste in @reboot /home/linuxconfig/startmic.sh then save and exit nano.
+Paste in `@reboot $HOME/startmic.sh` then save and exit nano.
 Reboot the Pi and test again with VLC to make sure the RTSP stream is live.
