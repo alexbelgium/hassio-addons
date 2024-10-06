@@ -27,7 +27,7 @@ My recommendation :
     - Minimum confidence : 0,7
     - Sigmoid sensitivity : 1,25 _(I've tried 1,00 but it gave much more false positives ; as decreasing this value increases sensitivity)_
 
-# Set RTSP server
+# Set RTSP server (https://github.com/mcguirepr89/BirdNET-Pi/discussions/1006#discussioncomment-6747450)
 ### On your desktop
 Download imager
 Install raspbian lite 64
@@ -53,8 +53,8 @@ hdmi_blanking=1             # Disable HDMI (save power and reduce interference)
 ```
 # Update
 
-sudo apt-get update
-sudo apt-get apt-get dist-upgrade
+sudo apt-get update -y
+sudo apt-get dist-upgrade -y
 
 # Disable useless services
 sudo systemctl disable hciuart
@@ -62,6 +62,12 @@ sudo systemctl disable bluetooth
 sudo systemctl disable triggerhappy
 sudo systemctl disable avahi-daemon
 sudo systemctl disable dphys-swapfile
+```
+
+### Install RTSP server
+```
+sudo apt-get install -y micro ffmpeg lsof
+sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.9.1/mediamtx_v1.9.1_linux_arm64v8.tar.gz -O - | sudo tar -xz
 ```
 
 ### Optional : install Focusrite driver
@@ -77,13 +83,6 @@ sudo make -j4 -C $KSRCDIR M=$(pwd) INSTALL_MOD_DIR=updates/snd-usb-audio modules
 sudo depmod
 sudo reboot
 dmesg | grep -A 5 -B 5 -i focusrite
-```
-
-### Install RTSP server
-```
-wget https://github.com/geoffreybennett/scarlett-gen2/releases/download/v6.9-v1.3/snd-usb-audio-kmod-6.6-v1.3.tar.gz
-sudo apt-get install -y micro ffmpeg lsof
-sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.8.3/mediamtx_v1.8.3_linux_arm64v8.tar.gz -O - | sudo tar -xz
 ```
 
 ### List audio devices
@@ -108,11 +107,17 @@ sudo ethtool -s eth0 speed 100 duplex full autoneg on
 # Create rtsp feed
 sleep 5
 # Using hw
-ffmpeg -nostdin -f alsa -acodec pcm_s24le -ac 2 -ar 48000 -i hw:1,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
+ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 # Using plughw
-ffmpeg -nostdin -f alsa -acodec pcm_s24le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
+# ffmpeg -nostdin -f alsa -acodec pcm_s24le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 
 # Set microphone volume
 sleep 5
 amixer -c 1 sset Mic 90%
 ```
+
+### Startup automatically
+Make the file executable chmod +x startmic.sh
+Execute the crontab command crontab -e and select nano as your editor.
+Paste in @reboot /home/linuxconfig/startmic.sh then save and exit nano.
+Reboot the Pi and test again with VLC to make sure the RTSP stream is live.
