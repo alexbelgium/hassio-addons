@@ -108,12 +108,13 @@ sleep 5
 # Using hw
 # ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 # Using plughw
-ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp || ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
+ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
 
 # Set microphone volume
 sleep 5
-amixer -c 1 sset Mic 90%
-# amixer -c 0 sset "Line In 1 Gain" 90%
+MICROPHONE_NAME="Line In 1 Gain" # for Focusrite Scarlett 2i2
+amixer -c 0 sset "$MICROPHONE_NAME" 30%
+
 ```
 
 Startup automatically
@@ -123,3 +124,106 @@ crontab -e # select nano as your editor
 ```
 Paste in `@reboot $HOME/startmic.sh` then save and exit nano.
 Reboot the Pi and test again with VLC to make sure the RTSP stream is live.
+
+### Configuration for Focusrite Scarlett 2i2
+
+```
+#!/bin/bash
+
+# Set PCM controls
+amixer -c 0 cset numid=31 'Analogue 1'
+amixer -c 0 cset numid=32 'Analogue 1'
+amixer -c 0 cset numid=33 'Off'
+amixer -c 0 cset numid=34 'Off'
+
+# Set DSP Input controls
+amixer -c 0 cset numid=29 'Off'
+amixer -c 0 cset numid=30 'Off'
+
+# Set Line In 1 controls
+amixer -c 0 cset numid=8 'Off'
+amixer -c 0 cset numid=14 off
+amixer -c 0 cset numid=13 21
+amixer -c 0 cset numid=6 'Line'
+amixer -c 0 cset numid=21 on
+
+# Set Line In 2 controls
+amixer -c 0 cset numid=9 'Off'
+amixer -c 0 cset numid=17 off
+amixer -c 0 cset numid=16 0
+amixer -c 0 cset numid=7 'Line'
+amixer -c 0 cset numid=22 off
+
+# Set Line In 1-2 controls
+amixer -c 0 cset numid=12 off
+amixer -c 0 cset numid=10 on
+
+# Set Mix A controls
+amixer -c 0 cset numid=35 0
+amixer -c 0 cset numid=36 0
+amixer -c 0 cset numid=37 0
+amixer -c 0 cset numid=38 0
+
+# Set Mix B controls
+amixer -c 0 cset numid=39 0
+amixer -c 0 cset numid=40 0
+amixer -c 0 cset numid=41 0
+amixer -c 0 cset numid=42 0
+
+# Set Mix C controls
+amixer -c 0 cset numid=43 0
+amixer -c 0 cset numid=44 0
+amixer -c 0 cset numid=45 0
+amixer -c 0 cset numid=46 0
+
+# Set Mix D controls
+amixer -c 0 cset numid=47 0
+amixer -c 0 cset numid=48 0
+amixer -c 0 cset numid=49 0
+amixer -c 0 cset numid=50 0
+
+# Set Mixer Input controls
+amixer -c 0 cset numid=25 'Off'
+amixer -c 0 cset numid=26 'Off'
+amixer -c 0 cset numid=27 'Off'
+amixer -c 0 cset numid=28 'Off'
+
+# Set Analogue Output controls
+amixer -c 0 cset numid=23 'Mix A'
+amixer -c 0 cset numid=24 'Mix B'
+
+# Set Direct Monitor control
+amixer -c 0 cset numid=53 'Off'
+
+# Set Input Select control
+amixer -c 0 cset numid=11 'Input 1'
+
+# Set Monitor 1 Mix A controls
+amixer -c 0 cset numid=54 153
+amixer -c 0 cset numid=55 0
+amixer -c 0 cset numid=56 0
+amixer -c 0 cset numid=57 0
+
+# Set Monitor 1 Mix B controls
+amixer -c 0 cset numid=58 0
+amixer -c 0 cset numid=59 0
+amixer -c 0 cset numid=60 0
+amixer -c 0 cset numid=61 0
+
+# Set Monitor 2 Mix A controls
+amixer -c 0 cset numid=62 0
+amixer -c 0 cset numid=63 0
+amixer -c 0 cset numid=64 0
+amixer -c 0 cset numid=65 0
+
+# Set Monitor 2 Mix B controls
+amixer -c 0 cset numid=66 0
+amixer -c 0 cset numid=67 0
+amixer -c 0 cset numid=68 0
+amixer -c 0 cset numid=69 0
+
+# Set Sync Status control
+amixer -c 0 cset numid=52 'Locked'
+
+echo "All mixer settings have been defined"
+```
