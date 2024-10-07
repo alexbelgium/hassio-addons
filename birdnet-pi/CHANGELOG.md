@@ -1,3 +1,4 @@
+## 0.13-98 (07-10-2024)
 - [SERVER] Fix timezone not correctly shown in config options
 
 ## 0.13-97 (05-10-2024)
