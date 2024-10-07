@@ -70,6 +70,7 @@ chmod a+x /bin/systemctl
 # Correct timedatectl path
 echo "updating timedatectl path"
 mv /helpers/timedatectl /usr/bin/timedatectl
+chown pi:pi /usr/bin/timedatectl
 chmod a+x /usr/bin/timedatectl
 
 # Correct language labels according to birdnet.conf
