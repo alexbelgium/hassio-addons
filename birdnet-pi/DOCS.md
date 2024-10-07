@@ -143,7 +143,7 @@ amixer -c 0 cset numid=30 'Off'         # 'DSP Input 2'
 # Configure Line In 1 as main input for mono setup
 amixer -c 0 cset numid=8 'Off'          # 'Line In 1 Air' - Keep 'Off'
 amixer -c 0 cset numid=14 off           # 'Line In 1 Autogain' - Disabled
-amixer -c 0 cset numid=13 60%            # 'Line In 1 Gain' - Set gain to 21
+amixer -c 0 cset numid=13 80%            # 'Line In 1 Gain' - Set gain to 21
 amixer -c 0 cset numid=6 'Line'         # 'Line In 1 Level' - Set level to 'Line'
 amixer -c 0 cset numid=21 on           # 'Line In 1 Safe' - Enabled to avoid clipping / noise impact ?
 
