@@ -106,16 +106,16 @@ sudo ethtool -s eth0 speed 100 duplex full autoneg on
 # Create rtsp feed
 sleep 5
 # Using hw
-# ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
+ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 # Using plughw
-ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
+#ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
 # Using plughw with high, lowpass, and limit to avoid clipping
-ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:0,0 -af "highpass=f=100, lowpass=f=15000, alimiter=limit=1.0:attack=5:release=50" -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
+#ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:0,0 -af "highpass=f=100, lowpass=f=15000, alimiter=limit=1.0:attack=5:release=50" -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
 
 # Set microphone volume
 sleep 5
 MICROPHONE_NAME="Line In 1 Gain" # for Focusrite Scarlett 2i2
-amixer -c 0 sset "$MICROPHONE_NAME" 30%
+amixer -c 0 sset "$MICROPHONE_NAME" 60%
 
 ```
 
