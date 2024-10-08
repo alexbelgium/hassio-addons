@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [BirdNET-Go] Error while saving configuration changes (opened 2024-10-08)](https://github.com/alexbelgium/hassio-addons/issues/1597) by [@Maarc](https://github.com/Maarc)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
