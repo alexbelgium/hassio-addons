@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Whatsapper] Normal Addon PowerOff trigger Watchdog (opened 2024-08-03)](https://github.com/alexbelgium/hassio-addons/issues/1503) by [@SiriosDev](https://github.com/SiriosDev)
 # Home assistant add-on: Whatsapper
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
