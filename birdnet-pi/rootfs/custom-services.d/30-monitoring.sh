@@ -1,7 +1,16 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/env bash
 # shellcheck shell=bash
 
-echo "Starting service: throttlerecording"
+# Define logging functions
+log_green() { echo -e "\033[32m$1\033[0m" }
+
+log_red() { echo -e "\033[31m$1\033[0m" }
+
+log_yellow() { echo -e "\033[33m$1\033[0m" }
+
+log_info() { echo -e "\033[34m$1\033[0m" }
+
+echo "$(log_green "Starting service: throttlerecording")"
 touch "$HOME/BirdSongs/StreamData/analyzing_now.txt"
 
 # Read configuration
@@ -52,7 +61,7 @@ while true; do
     if ((counter <= 0)); then
         current_file="$(cat "$ingest_dir/analyzing_now.txt")"
         if [[ "$current_file" == "$analyzing_now" ]]; then
-            echo "$(date) WARNING no change in analyzing_now for 10 iterations, restarting services"
+            log_yellow "$(date) WARNING: no change in analyzing_now for 10 iterations, restarting services"
             "$HOME/BirdNET-Pi/scripts/restart_services.sh"
         fi
         counter=10
@@ -64,25 +73,25 @@ while true; do
     service_state=$(systemctl is-active "$srv")
     analysis_state=$(systemctl is-active "$srv2")
 
-    bashio::log.green "$(date) INFO: $wav_count wav files waiting in $ingest_dir, $srv state is $service_state, $srv2 state is $analysis_state"
+    log_green "$(date) INFO: $wav_count wav files waiting in $ingest_dir, $srv state is $service_state, $srv2 state is $analysis_state"
 
     # Pause recorder if queue is too large
     if ((wav_count > 50)); then
-        bashio::log.red "$(date) WARNING: Too many files in queue, pausing $srv and restarting $srv2"
+        log_red "$(date) WARNING: Too many files in queue, pausing $srv and restarting $srv2"
         sudo systemctl stop "$srv"
         sudo systemctl restart "$srv2"
         [[ -s "$HOME/BirdNET-Pi/apprise.txt" ]] && apprisealert
     elif ((wav_count > 30)); then
-        bashio::log.red "$(date) WARNING: Too many files in queue, restarting $srv2"
+        log_red "$(date) WARNING: Too many files in queue, restarting $srv2"
         sudo systemctl restart "$srv2"
         [[ -s "$HOME/BirdNET-Pi/apprise.txt" ]] && apprisealert
     else
         if [[ "$service_state" != "active" ]]; then
-            bashio::log.yellow "$(date) INFO: Restarting $srv service"
+            log_yellow "$(date) INFO: Restarting $srv service"
             sudo systemctl restart "$srv"
         fi
         if [[ "$analysis_state" != "active" ]]; then
-            bashio::log.yellow "$(date) INFO: Restarting $srv2 service"
+            log_yellow "$(date) INFO: Restarting $srv2 service"
             sudo systemctl restart "$srv2"
         fi
     fi
