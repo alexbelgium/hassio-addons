@@ -1803,7 +1803,7 @@ class Systemctl:
         if self._now:
             basics = self.list_service_unit_basics()
             result = [(name, sysv + " " + filename) for name, sysv, filename in basics]
-        elif self._only_type: 
+        elif self._only_type:
             if "target" in self._only_type:
                 result = self.list_target_unit_files()
             if "service" in self._only_type:
@@ -5933,9 +5933,9 @@ class Systemctl:
                     content = prefix+b": "+line+b"\n"
                     try:
                         os.write(stdout, content)
-                        try: 
+                        try:
                             os.fsync(stdout)
-                        except Exception: 
+                        except Exception:
                             pass
                         printed += 1
                     except BlockingIOError:

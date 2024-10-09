@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/command/with-contenv bashio
 # shellcheck shell=bash
 set -e
 
@@ -7,14 +7,33 @@ set -e
 ###############
 
 if bashio::config.true 'ssl'; then
-    bashio::log.info "Ssl is enabled using addon options, setting up nginx"
+    bashio::log.info "SSL is enabled using addon options, setting up NGINX and Caddy."
+
+    # Check required SSL configurations
     bashio::config.require.ssl
     certfile=$(bashio::config 'certfile')
     keyfile=$(bashio::config 'keyfile')
-    sed -i "2a\    tls /ssl/${certfile} /ssl/${keyfile}" /etc/caddy/Caddyfile
-    sed -i "s|http://:8081|https://:8081|g" /etc/caddy/Caddyfile
-    sed -i "s|http://:8081|https://:8081|g" "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
-    sed -i "/https:/a    tls /ssl/${certfile} /ssl/${keyfile}" "$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh
+
+    # Ensure Caddyfile exists before modifying
+    caddyfile="/etc/caddy/Caddyfile"
+    if [ -f "$caddyfile" ]; then
+        sed -i "2a\    tls /ssl/${certfile} /ssl/${keyfile}" "$caddyfile"
+        sed -i "s|http://:8081|https://:8081|g" "$caddyfile"
+    else
+        bashio::log.error "Caddyfile not found at $caddyfile, skipping SSL configuration."
+        exit 1
+    fi
+
+    # Ensure update_caddyfile.sh exists before modifying
+    update_script="$HOME/BirdNET-Pi/scripts/update_caddyfile.sh"
+    if [ -f "$update_script" ]; then
+        sed -i "s|http://:8081|https://:8081|g" "$update_script"
+        if ! grep -q "tls /ssl/${certfile} /ssl/${keyfile}" "$update_script"; then
+            sed -i "/https:/a\    tls /ssl/${certfile} /ssl/${keyfile}" "$update_script"
+        fi
+    else
+        bashio::log.error "Update script not found: $update_script, skipping SSL setup for update."
+        exit 1
+    fi
 fi
 
-echo " "

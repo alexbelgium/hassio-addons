@@ -1,47 +1,99 @@
 #!/bin/bash
 
-# Function to show the current timezone, with two alternative methods
+# Function to show the current timezone using two alternative methods
 show_timezone() {
-    # Check if the /etc/timezone file exists
-    if [ -f /etc/timezone ]; then
-        timezone=$(cat /etc/timezone)
+    if [ -f /data/timezone ]; then
+        cat /data/timezone
+    elif [ -f /etc/timezone ]; then
+        cat /etc/timezone
     elif [ -f /etc/localtime ]; then
-        timezone=$(readlink /etc/localtime)
-        timezone=${timezone/\/usr\/share\/zoneinfo\//}
+        readlink /etc/localtime | sed 's|/usr/share/zoneinfo/||'
     else
-        timezone="Cannot determine timezone."
+        echo "Cannot determine timezone."
     fi
-    echo "$timezone"
 }
 
 # Function to set the timezone
 set_timezone() {
-    new_timezone="$1"
-    echo "$new_timezone" | sudo tee /etc/timezone >/dev/null
-    sudo ln -sf /usr/share/zoneinfo/"$new_timezone" /etc/localtime
-    if [ -f /etc/environment ]; then sudo sed -i "/TZ/c\TZ=$new_timezone" /etc/environment; fi
-    if [ -d /var/run/s6/container_environment ]; then echo "$new_timezone" | sudo tee /var/run/s6/container_environment/TZ > /dev/null; fi
-    echo "$new_timezone"
+    local new_timezone="$1"
+    if [ ! -f "/usr/share/zoneinfo/$new_timezone" ]; then
+        echo "Invalid timezone: $new_timezone"
+        return 1
+    fi
+
+    echo "$new_timezone" > /data/timezone
+    echo "$new_timezone" > /etc/timezone
+    ln -sf "/usr/share/zoneinfo/$new_timezone" /etc/localtime
+
+    # Update /etc/environment if it exists
+    if [ -f /etc/environment ]; then
+        sed -i "/^TZ=/c\TZ=$new_timezone" /etc/environment
+    fi
+
+    # Update s6 container environment if it exists
+    if [ -d /var/run/s6/container_environment ]; then
+        echo "$new_timezone" > /var/run/s6/container_environment/TZ
+    fi
+
+    echo "Timezone set to: $new_timezone"
 }
 
-# Main script
+# Function to enable or disable NTP
+set_ntp() {
+    case "$1" in
+        "false")
+            systemctl stop systemd-timesyncd
+            systemctl disable systemd-timesyncd
+            echo "NTP disabled"
+            ;;
+        "true")
+            systemctl start systemd-timesyncd
+            systemctl enable systemd-timesyncd
+
+            # Remove the /data/timezone file when NTP is enabled
+            if [ -f /data/timezone ]; then
+                rm -f /data/timezone
+                echo "Timezone configuration file /data/timezone deleted."
+            fi
+
+            echo "NTP enabled"
+            ;;
+        *)
+            echo "Invalid argument for set-ntp. Use 'false' or 'true'."
+            ;;
+    esac
+}
+
+# Function to show detailed time settings
+show_time_details() {
+    local local_time
+    local utc_time
+    local time_zone
+    local ntp_status="no"
+    local ntp_service="inactive"
+
+    local_time="$(date)"
+    utc_time="$(date -u)"
+    time_zone="$(show_timezone)"
+
+    # Check if NTP is used
+    if systemctl is-active --quiet systemd-timesyncd; then
+        ntp_status="yes"
+        ntp_service="active"
+    fi
+
+    # Print the information
+    echo "Local time: $local_time"
+    echo "Universal time: $utc_time"
+    echo "Time zone: $time_zone"
+    echo "Network time on: $ntp_status"
+    echo "NTP service: $ntp_service"
+}
+
+# Main script logic
 case "$1" in
     "set-ntp")
-        case "$2" in
-            "false")
-                sudo systemctl stop systemd-timesyncd
-                sudo systemctl disable systemd-timesyncd
-                echo "NTP disabled"
-                ;;
-            "true")
-                sudo systemctl start systemd-timesyncd
-                sudo systemctl enable systemd-timesyncd
-                echo "NTP enabled"
-                ;;
-            *)
-                echo "Invalid argument for set-ntp. Use 'false' or 'true'."
-                ;;
-        esac
+        set_ntp "$2"
         ;;
     "show")
         show_timezone
@@ -50,23 +102,6 @@ case "$1" in
         set_timezone "$2"
         ;;
     *)
-        # Get values
-        local_time="$(date)"
-        utc_time="$(date -u)"
-        time_zone="$(show_timezone)"
-        # Check if NTP is used
-        if sudo systemctl status systemd-timesyncd | grep -q " active"; then
-            ntp_status="yes"
-            ntp_service="active"
-        else
-            ntp_status="no"
-            ntp_service="inactive"
-        fi
-        # Print the information
-        echo "Local time: $local_time"
-        echo "Universal time: $utc_time"
-        echo "Time zone: $time_zone"
-        echo "Network time on: $ntp_status"
-        echo "NTP service: $ntp_service"
+        show_time_details
         ;;
 esac
