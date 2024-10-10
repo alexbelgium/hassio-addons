@@ -4,11 +4,8 @@
 
 # Define logging functions
 log_green() { echo -e "\033[32m$1\033[0m" }
-
 log_red() { echo -e "\033[31m$1\033[0m" }
-
 log_yellow() { echo -e "\033[33m$1\033[0m" }
-
 log_info() { echo -e "\033[34m$1\033[0m" }
 
 echo "$(log_green "Starting service: throttlerecording")"
@@ -16,13 +13,11 @@ touch "$HOME/BirdSongs/StreamData/analyzing_now.txt"
 
 # Read configuration
 source /config/birdnet.conf 2>/dev/null
-
 # Set constants
 srv="birdnet_recording"
 srv2="birdnet_analysis"
 ingest_dir="$RECS_DIR/StreamData"
 counter=10
-
 # Ensure directories and permissions
 mkdir -p "$ingest_dir"
 chown -R pi:pi "$ingest_dir"
@@ -81,20 +76,23 @@ while true; do
         log_red "$(date) WARNING: Too many files in queue, pausing $srv and restarting $srv2"
         sudo systemctl stop "$srv"
         sudo systemctl restart "$srv2"
-        [[ -s "$HOME/BirdNET-Pi/apprise.txt" ]] && apprisealert
     elif ((wav_count > 30)); then
         log_red "$(date) WARNING: Too many files in queue, restarting $srv2"
         sudo systemctl restart "$srv2"
-        [[ -s "$HOME/BirdNET-Pi/apprise.txt" ]] && apprisealert
-    else
-        if [[ "$service_state" != "active" ]]; then
-            log_yellow "$(date) INFO: Restarting $srv service"
-            sudo systemctl restart "$srv"
+    fi
+
+    # Check service states
+    for service in "$srv" "$srv2"; do
+        local state_var="${service}_state"
+        if [[ "${!state_var}" != "active" ]]; then
+            log_yellow "$(date) INFO: Restarting $service service"
+            sudo systemctl restart "$service"
         fi
-        if [[ "$analysis_state" != "active" ]]; then
-            log_yellow "$(date) INFO: Restarting $srv2 service"
-            sudo systemctl restart "$srv2"
-        fi
+    done
+
+    # Send alert if needed
+    if ((wav_count > 30)) && [[ -s "$HOME/BirdNET-Pi/apprise.txt" ]]; then
+        apprisealert
     fi
 
     ((counter--))
