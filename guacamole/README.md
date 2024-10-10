@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Update Guacamole Client addon to Guacamole 1.5.5 (opened 2024-10-01)](https://github.com/alexbelgium/hassio-addons/issues/1591) by [@andrewjswan](https://github.com/andrewjswan)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
