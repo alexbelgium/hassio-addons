@@ -28,7 +28,7 @@ fi
 
 # Default location
 mkdir -p "$CONFIGLOCATION" || true
-CONFIGSOURCE="$CONFIGLOCATION/${HOSTNAME#*-}.sh"
+CONFIGSOURCE="$CONFIGLOCATION/${HOSTNAME#*_}.sh"
 
 bashio::log.green "Execute $CONFIGFILEBROWSER if existing"
 bashio::log.green "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
