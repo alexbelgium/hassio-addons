@@ -23,14 +23,14 @@ while IFS= read -r file; do
     if [[ "$(basename "$file")" != "birdnet_log.service" ]]; then
         sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$file"
     fi
-done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -print)
+done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -o -name "batnet*.service" -print)
 
 # Send services log to container logs
 echo "... redirecting services logs to container logs"
 while IFS= read -r file; do
     sed -i "/Service/a StandardError=append:/proc/1/fd/1" "$file"
     sed -i "/Service/a StandardOutput=append:/proc/1/fd/1" "$file"
-done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -print)
+done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -o -name "batnet*.service" -print)
 
 # Avoid preselection in include and exclude lists
 echo "... disabling preselecting options in include and exclude lists"
