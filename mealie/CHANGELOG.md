@@ -1,3 +1,5 @@
+- Switched to v2.0 beta, should hopefully solve everyone's issues!
+
 ## v1.12.0-4 (22-09-2024)
 - Minor bugs fixed
 ## v1.12.0-3 (22-09-2024)
