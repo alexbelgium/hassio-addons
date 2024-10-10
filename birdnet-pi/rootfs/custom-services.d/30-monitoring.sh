@@ -76,9 +76,11 @@ while true; do
         log_red "$(date) WARNING: Too many files in queue, pausing $srv and restarting $srv2"
         sudo systemctl stop "$srv"
         sudo systemctl restart "$srv2"
+        sleep 30
     elif ((wav_count > 30)); then
         log_red "$(date) WARNING: Too many files in queue, restarting $srv2"
         sudo systemctl restart "$srv2"
+        sleep 30
     fi
 
     # Check service states
