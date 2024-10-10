@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛[BirdNET-Pi] Species Stats not found (opened 2024-09-17)](https://github.com/alexbelgium/hassio-addons/issues/1574) by [@kongjudas](https://github.com/kongjudas)
-## &#9888; Open Issue : [[BirdNET-Pi] Time zone reset to Europe default after each update (opened 2024-10-04)](https://github.com/alexbelgium/hassio-addons/issues/1595) by [@DemBones78](https://github.com/DemBones78)
 # Home assistant add-on: birdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
