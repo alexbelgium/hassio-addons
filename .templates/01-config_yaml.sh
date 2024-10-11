@@ -13,7 +13,7 @@ if [ ! -d /config ]; then
 fi
 
 # Define slug
-slug="${HOSTNAME//-/_}"
+slug="${HOSTNAME/-/_}"
 
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
