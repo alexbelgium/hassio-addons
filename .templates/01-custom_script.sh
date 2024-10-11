@@ -13,22 +13,22 @@ fi
 
 # Define slug
 slug="${HOSTNAME/-/_}"
+slug="${slug#*_}"
 
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
     # New config location
     CONFIGLOCATION="/config"
-    CONFIGFILEBROWSER="/addon_configs/$slug/${HOSTNAME#*_}.sh"
+    CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/$slug.sh"
 else
     # Legacy config location
-    slug="${HOSTNAME#*_}"
     CONFIGLOCATION="/config/addons_autoscripts"
-    CONFIGFILEBROWSER="/homeassistant/addons_autoscripts/${slug}.sh"
+    CONFIGFILEBROWSER="/homeassistant/addons_autoscripts/$slug.sh"
 fi
 
 # Default location
 mkdir -p "$CONFIGLOCATION" || true
-CONFIGSOURCE="$CONFIGLOCATION/${HOSTNAME#*_}.sh"
+CONFIGSOURCE="$CONFIGLOCATION/$slug.sh"
 
 bashio::log.green "Execute $CONFIGFILEBROWSER if existing"
 bashio::log.green "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
