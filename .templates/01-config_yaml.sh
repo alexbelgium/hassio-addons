@@ -14,15 +14,15 @@ fi
 
 # Define slug
 slug="${HOSTNAME/-/_}"
+slug="${slug#*_}"
 
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
     # New config location
     CONFIGLOCATION="/config"
-    CONFIGFILEBROWSER="/addon_configs/$slug/config.yaml"
+    CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/config.yaml"
 else
     # Legacy config location
-    slug="${slug#*_}"
     CONFIGLOCATION="/config/addons_config/${slug}"
     CONFIGFILEBROWSER="/homeassistant/addons_config/$slug/config.yaml"
 fi
