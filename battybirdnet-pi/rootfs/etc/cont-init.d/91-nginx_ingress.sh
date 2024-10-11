@@ -35,13 +35,10 @@ echo "... ensuring restricted area access"
 echo "${ingress_entry}" > /ingress_url
 
 # Modify PHP file safely
-php_file="$HOME/BirdNET-Pi/scripts/common.php"
-if [ -f "$php_file" ]; then
-    sed -i "/function is_authenticated/a if (strpos(\$_SERVER['HTTP_REFERER'], '/api/hassio_ingress') !== false && strpos(\$_SERVER['HTTP_REFERER'], trim(file_get_contents('/ingress_url'))) !== false) { \$ret = true; return \$ret; }" "$php_file"
-else
-    bashio::log.error "PHP file not found: $php_file"
-    exit 1
-fi
+for php_file in config.php play.php advanced.php overview.php; do
+    sed -i "s|if (\!isset(\$_SERVER\['PHP_AUTH_USER'\])) {|if (\!isset(\$_SERVER\['PHP_AUTH_USER'\]) \&\& strpos(\$_SERVER\['HTTP_REFERER'\], '/api/hassio_ingress') == false) {|g" "$HOME/BirdNET-Pi/scripts/$php_file"
+    sed -i "s+if(\$submittedpwd == \$caddypwd \&\& \$submitteduser == 'birdnet')+if((\$submittedpwd == \$caddypwd \&\& \$submitteduser == 'birdnet') || (strpos(\$_SERVER['HTTP_REFERER'], '/api/hassio_ingress') !== false \&\& strpos(\$_SERVER['HTTP_REFERER'], trim(file_get_contents('/ingress_url'))) !== false)+g" "$HOME/BirdNET-Pi/scripts/$php_file"
+done
 
 echo "... adapting Caddyfile for ingress"
 chmod +x /helpers/caddy_ingress.sh
@@ -57,4 +54,3 @@ else
     bashio::log.error "Caddy update script not found: $caddy_update_script"
     exit 1
 fi
-

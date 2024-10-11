@@ -17,6 +17,12 @@ for file in "${DEFAULT_FILES[@]}"; do
     fi
 done
 touch /config/include_species_list.txt # Ensure this is always created
+cp /config/birdnet.conf "$HOME/BirdNET-Pi/scripts/thisrun.txt"
+cp /config/birdnet.conf "$HOME/BirdNET-Pi/scripts/lastrun.txt"
+chown pi:pi "$HOME/BirdNET-Pi/scripts/thisrun.txt"
+chown pi:pi "$HOME/BirdNET-Pi/scripts/lastrun.txt"
+
+touch "$HOME/BirdNET-Pi/scripts/common.php"
 
 # Set BirdSongs folder location from configuration if specified
 BIRDSONGS_FOLDER="/config/BirdSongs"
@@ -85,4 +91,3 @@ MPLCONFIGDIR="${MPLCONFIGDIR:-$HOME/.config/matplotlib}"
 mkdir -p "$MPLCONFIGDIR"
 chown pi:pi "$MPLCONFIGDIR"
 chmod 777 "$MPLCONFIGDIR"
-

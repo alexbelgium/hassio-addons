@@ -48,12 +48,16 @@ fi
 bashio::log.info "Performing potential updates"
 
 # Adapt update_birdnet_snippets
+sed -i "/USER=/a USER=\"$USER\"" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/HOME=/a HOME=\"$HOME\"" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/chown/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/chmod/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "s|/etc/birdnet/birdnet.conf|/config/birdnet.conf|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/restart_services/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/set -x/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 sed -i "s|systemctl list-unit-files|false \&\& echo|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 sed -i "/systemctl /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 sed -i "/find /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/set -x/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/restart_services/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "s|/etc/birdnet/birdnet.conf|/config/birdnet.conf|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 
 # Execute update_birdnet_snippets
 "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
