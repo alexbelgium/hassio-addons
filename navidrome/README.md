@@ -30,13 +30,8 @@ This addon is based on the [docker image](https://hub.docker.com/r/deluan/navidr
 see https://www.navidrome.org/docs/usage/configuration-options/#available-options
 
 ```yaml
-    "base_url": "localhost",         # Base URL to configure Navidrome behind a proxy
     "music_folder": "/data/music",   # Folder where your music library is stored. Can be read-only
     "data_folder": "/data/data",     # Folder to store application data (DB)
-    "log_level": "info",             # Log level. Useful for troubleshooting. Possible values: error, warn, info, debug, trace
-    "certfile": "fullchain.pem",     # Path for the TLS certificate
-    "keyfile": "privkey.pem",        # Path for the TLS key file
-    "ssl": false                     # should the app use https or not
 ```
 
 Webui can be found at `<your-ip>:port`.
