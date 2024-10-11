@@ -22,7 +22,7 @@ if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; t
     CONFIGFILEBROWSER="/addon_configs/$slug/config.yaml"
 else
     # Legacy config location
-    slug="${HOSTNAME#*_}"
+    slug="${slug#*_}"
     CONFIGLOCATION="/config/addons_config/${slug}"
     CONFIGFILEBROWSER="/homeassistant/addons_config/$slug/config.yaml"
 fi
