@@ -17,10 +17,6 @@ for file in "${DEFAULT_FILES[@]}"; do
     fi
 done
 touch /config/include_species_list.txt # Ensure this is always created
-cp /config/birdnet.conf "$HOME/BirdNET-Pi/scripts/thisrun.txt"
-cp /config/birdnet.conf "$HOME/BirdNET-Pi/scripts/lastrun.txt"
-chown pi:pi "$HOME/BirdNET-Pi/scripts/thisrun.txt"
-chown pi:pi "$HOME/BirdNET-Pi/scripts/lastrun.txt"
 
 touch "$HOME/BirdNET-Pi/scripts/common.php"
 
@@ -72,6 +68,12 @@ for file in "${CONFIG_FILES[@]}"; do
     sudo -u pi ln -fs "/config/$filename" "$HOME/BirdNET-Pi/scripts/$filename"
     sudo -u pi ln -fs "/config/$filename" "/etc/birdnet/$filename"
 done
+
+# thisrun
+cp /config/birdnet.conf "$HOME/BirdNET-Pi/scripts/thisrun.txt"
+cp /config/birdnet.conf "$HOME/BirdNET-Pi/scripts/lastrun.txt"
+chown pi:pi "$HOME/BirdNET-Pi/scripts/thisrun.txt"
+chown pi:pi "$HOME/BirdNET-Pi/scripts/lastrun.txt"
 
 # Symlink BirdSongs folders
 for folder in By_Date Charts; do
