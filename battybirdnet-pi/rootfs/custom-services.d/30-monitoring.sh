@@ -2,6 +2,8 @@
 # shellcheck shell=bash
 # Adapted from https://github.com/mcguirepr89/BirdNET-Pi/issues/393#issuecomment-1166445710
 
+HOME="/home/pi"
+
 # Define logging functions
 log_green() { echo -e "\033[32m$1\033[0m"; }
 log_red() { echo -e "\033[31m$1\033[0m"; }
