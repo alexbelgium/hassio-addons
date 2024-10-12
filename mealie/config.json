@@ -73,6 +73,7 @@
     "WORKERS_PER_CORE": "0.5"
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
+  "ingress": true,
   "map": [
     "config:rw",
     "share:rw",
@@ -81,6 +82,7 @@
   "name": "Mealie",
   "options": {
     "ALLOW_SIGNUP": true,
+    "BASE_SUBPATH": "/mealie",
     "DATA_DIR": "/config/addons_config/mealie_data",
     "PGID": 1000,
     "PUID": 1000,
@@ -99,6 +101,7 @@
   "schema": {
     "ALLOW_SIGNUP": "bool",
     "BASE_URL": "str?",
+    "BASE_SUBPATH": "str?",
     "DATA_DIR": "str?",
     "PGID": "int",
     "PUID": "int",
@@ -109,6 +112,6 @@
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v2.0-beta",
+  "version": "v2.0-beta_ingress_test",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9001]"
 }
