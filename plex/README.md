@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [plex] Plex doesnt pay attention to Plex Media Server Interface port (opened 2024-10-11)](https://github.com/alexbelgium/hassio-addons/issues/1601) by [@rob-deutsch](https://github.com/rob-deutsch)
 
 
 # Home assistant add-on: plex
