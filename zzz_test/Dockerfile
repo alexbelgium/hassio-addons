@@ -63,7 +63,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ###############################################
 
 # Define build arguments for SUB_PATH
-ARG SUB_PATH=/mealie_path/
+ARG SUB_PATH=/hllo/
 ENV SUB_PATH=${SUB_PATH}
 
 # Frontend Builder Stage
@@ -272,3 +272,6 @@ LABEL \
 #################
 # 9 Healthcheck #
 #################
+
+# Assuming healthcheck is already defined in Mealie Production Stage
+# If additional healthchecks are needed, add them here.
