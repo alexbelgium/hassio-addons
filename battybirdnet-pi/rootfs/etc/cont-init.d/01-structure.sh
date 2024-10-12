@@ -54,11 +54,15 @@ chown -R pi:pi /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 chmod -R 755 /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 
 # Create default birds.db
-if [ ! -f "$HOME/BirdNET-Pi/birds.db" ] || [ "$(stat -c%s "$HOME/BirdNET-Pi/birds.db")" -lt 10240 ]; then
-    rm "$HOME/BirdNET-Pi/birds.db"
-fi
-if [ ! -f "$HOME/BirdNET-Pi/birds.db" ]; then
+if [ ! -f /config/birds.db ]; then
+    echo "... creating initial db"
     "$HOME/BirdNET-Pi/scripts/createdb.sh"
+    cp "$HOME/BirdNET-Pi/scripts/birds.db" /config/
+elif [ "$(stat -c%s /config/birds.db)" -lt 10240 ]; then
+    echo "... your db is corrupted, creating new one"
+    rm /config/birds.db
+    "$HOME/BirdNET-Pi/scripts/createdb.sh"
+    cp "$HOME/BirdNET-Pi/scripts/birds.db" /config/
 fi
 
 # Backup default birdnet.conf for sanity check

@@ -54,6 +54,18 @@ chmod -R 755 /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 # Backup default birdnet.conf for sanity check
 cp "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/birdnet.bak"
 
+# Create default birds.db
+if [ ! -f /config/birds.db ]; then
+    echo "... creating initial db"
+    "$HOME/BirdNET-Pi/scripts/createdb.sh"
+    cp "$HOME/BirdNET-Pi/scripts/birds.db" /config/
+elif [ "$(stat -c%s /config/birds.db)" -lt 10240 ]; then
+    echo "... your db is corrupted, creating new one"
+    rm /config/birds.db
+    "$HOME/BirdNET-Pi/scripts/createdb.sh"
+    cp "$HOME/BirdNET-Pi/scripts/birds.db" /config/
+fi
+
 # Symlink configuration files
 echo "... creating symlinks for configuration files"
 CONFIG_FILES=("$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/whitelist_species_list.txt" "$HOME/BirdNET-Pi/blacklisted_images.txt" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/BirdDB.txt" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt" "$HOME/BirdNET-Pi/scripts/confirmed_species_list.txt")
