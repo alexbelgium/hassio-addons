@@ -1,17 +1,13 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
-# Adapted from https://github.com/mcguirepr89/BirdNET-Pi/issues/393#issuecomment-1166445710
 
 # Define logging functions
-log_green() { echo -e "\033[32m$1\033[0m" }
+log_green() { echo -e "\033[32m$1\033[0m"; }
+log_red() { echo -e "\033[31m$1\033[0m"; }
+log_yellow() { echo -e "\033[33m$1\033[0m"; }
+log_info() { echo -e "\033[34m$1\033[0m"; }
 
-log_red() { echo -e "\033[31m$1\033[0m" }
-
-log_yellow() { echo -e "\033[33m$1\033[0m" }
-
-log_info() { echo -e "\033[34m$1\033[0m" }
-
-echo "$(log_green "Starting service: throttlerecording")"
+log_green "Starting service: throttlerecording"
 touch "$HOME/BirdSongs/StreamData/analyzing_now.txt"
 
 # Read configuration
@@ -24,9 +20,7 @@ ingest_dir="$RECS_DIR/StreamData"
 counter=10
 
 # Ensure directories and permissions
-mkdir -p "$ingest_dir"
-chown -R pi:pi "$ingest_dir"
-chmod -R 755 "$ingest_dir"
+mkdir -p "$ingest_dir" && chown -R pi:pi "$ingest_dir" && chmod -R 755 "$ingest_dir"
 
 # Function to send notifications using Apprise
 apprisealert() {
