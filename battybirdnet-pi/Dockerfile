@@ -104,7 +104,7 @@ RUN \
     rm -rf /var/lib/apt/lists/* && \
     \
     # Use only first user
-    for file in $(grep -rl "'/1000/{print \$1}'" "$HOME"); do \
+    for file in $(grep -rl "'/1000/{print \$1}'" "$HOME"/*/scripts); do \
       sed -i "s|'/1000/{print \$1}'|'/1000/{print \$1; exit}'|" "$file" && \
       sed -i "s|'/1000/{print \$6}'|'/1000/{print \$6; exit}'|" "$file"; \
     done
