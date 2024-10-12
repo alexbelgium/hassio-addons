@@ -44,7 +44,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 95
+- In the repository : 96
 - Installed : 71724
 
 ### Top 3
@@ -464,6 +464,15 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/silverware-fork-knife.svg) [Mealie test](zzz_test/) : Mealie is a self hosted recipe manager and meal planner built in Vue
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_test%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_test%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7no][armv7no-badge]
+![ingress][ingress-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/lightning-bolt-outline.svg) [MyElectricalData](enedisgateway2mqtt/) : Use Enedis Gateway API to send data in your MQTT Broker (latest channel)
 
