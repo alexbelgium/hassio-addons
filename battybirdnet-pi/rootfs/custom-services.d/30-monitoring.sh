@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
 
+# Read configuration
+set -u
+source /config/birdnet.conf 2>/dev/null
+set +u
+
 # Define logging functions
 log_green() { echo -e "\033[32m$1\033[0m"; }
 log_red() { echo -e "\033[31m$1\033[0m"; }
@@ -9,9 +14,6 @@ log_info() { echo -e "\033[34m$1\033[0m"; }
 
 log_green "Starting service: throttlerecording"
 touch "$HOME/BirdSongs/StreamData/analyzing_now.txt"
-
-# Read configuration
-source /config/birdnet.conf 2>/dev/null
 
 # Set constants
 srv="birdnet_recording"
