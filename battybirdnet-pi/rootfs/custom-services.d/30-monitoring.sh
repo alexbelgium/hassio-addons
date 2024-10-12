@@ -13,7 +13,7 @@ touch "$HOME/BirdSongs/StreamData/analyzing_now.txt"
 
 # Read configuration
 set -u
-source /config/birdnet.conf 2>/dev/null
+source /etc/birdnet/birdnet.conf
 set +u
 
 # Set constants
