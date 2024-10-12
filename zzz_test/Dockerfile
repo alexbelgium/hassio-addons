@@ -39,7 +39,7 @@ RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/config/addons_config/
 # Add rootfs
 COPY rootfs/ /
 
-# Uses /bin for compatibility purposes
+# Ensure /bin/sh and /bin/bash exist for compatibility
 # hadolint ignore=DL4005
 RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
     if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
@@ -63,7 +63,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ###############################################
 
 # Define build arguments for SUB_PATH
-ARG SUB_PATH=/mealie_path/
+ARG SUB_PATH=/hllo/
 ENV SUB_PATH=${SUB_PATH}
 
 # Frontend Builder Stage
@@ -113,7 +113,7 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 # Create user account
 RUN useradd -u 911 -U -d $MEALIE_HOME -s /bin/bash abc \
     && usermod -G users abc \
-    && mkdir $MEALIE_HOME
+    && mkdir -p $MEALIE_HOME
 
 # Builder Base Image
 FROM mealie-python-base AS mealie-builder-base
@@ -225,18 +225,12 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-# Modify run.sh for ARMv7
-RUN \
-    # Add custom instructions to run.sh on armv7
-    sed -i '1d' /app/run.sh \
-    && cat /app/run.sh >> /run.txt \
-    && cat /run.txt > /app/run.sh \
-    && chmod +x /app/run.sh
+# Download and set the entry.sh from Mealie repository
+ADD "https://raw.githubusercontent.com/mealie-recipes/mealie/mealie-next/docker/entry.sh" "/app/run.sh"
 
-# Copy and set entrypoint script
-COPY ./docker/entry.sh $MEALIE_HOME/run.sh
+# Ensure the entry.sh is executable
+RUN chmod +x /app/run.sh
 
-RUN chmod +x $MEALIE_HOME/run.sh
 ENTRYPOINT ["/app/run.sh"]
 
 ############
@@ -272,3 +266,6 @@ LABEL \
 #################
 # 9 Healthcheck #
 #################
+
+# Healthcheck is already defined earlier in the production stage
+# If additional healthchecks are needed, add them here.
