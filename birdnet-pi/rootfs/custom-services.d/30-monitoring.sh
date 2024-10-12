@@ -12,9 +12,8 @@ echo "$(log_green "Starting service: throttlerecording")"
 touch "$HOME/BirdSongs/StreamData/analyzing_now.txt"
 
 # Read configuration
-set -u
-source /etc/birdnet/birdnet.conf
 set +u
+source /etc/birdnet/birdnet.conf
 
 # Set constants
 srv="birdnet_recording"

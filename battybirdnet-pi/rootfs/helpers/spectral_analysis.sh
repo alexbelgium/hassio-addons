@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # Performs the recording from the specified RTSP stream or soundcard
-set -u
-source /etc/birdnet/birdnet.conf
 set +u
+source /etc/birdnet/birdnet.conf
 
 # Read the logging level from the configuration option
 LOGGING_LEVEL="${LogLevel_BirdnetRecordingService}"
