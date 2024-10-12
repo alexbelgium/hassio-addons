@@ -217,15 +217,7 @@ EXPOSE ${APP_PORT}
 # ----------------------------------
 # 7 Entrypoint and Scripts
 
-# Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
-
-# Entrypoint modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
-RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-
-# Download and set the entry.sh from Mealie repository
+# Add entrypoint script from Mealie repository
 ADD "https://raw.githubusercontent.com/mealie-recipes/mealie/mealie-next/docker/entry.sh" "/app/run.sh"
 
 # Ensure the entry.sh is executable
