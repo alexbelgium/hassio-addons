@@ -102,7 +102,10 @@ RUN \
     \
     # Cleanup
     apt-get clean all && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    \
+    # Install resampy
+    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install resampy
 
 # Add PR
 #RUN \
