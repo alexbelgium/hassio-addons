@@ -54,7 +54,10 @@ chown -R pi:pi /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 chmod -R 755 /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 
 # Create default birds.db
-if [ ! -f "$HOME/BirdNET-Pi/scripts/birds.db" ]; then
+if [ $(stat -c%s "$HOME/BirdNET-Pi/birds.db") -lt 10240 ]; then
+    rm "$HOME/BirdNET-Pi/birds.db"
+fi
+if [ ! -f "$HOME/BirdNET-Pi/birds.db" ]; then
     "$HOME/BirdNET-Pi/scripts/createdb.sh"
 fi
 
