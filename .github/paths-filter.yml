@@ -110,3 +110,4 @@ zzz_archived_paperless_ngx: zzz_archived_paperless_ngx/config.* # Image : yes
 zzz_archived_plex_meta_manager: zzz_archived_plex_meta_manager/config.* # Image : yes
 zzz_draft_birdnet-pi: zzz_draft_birdnet-pi/config.* # Image : yes
 zzz_draft_overleaf: zzz_draft_overleaf/config.* # Image : yes
+zzz_test: zzz_test/config.* # Image : yes
