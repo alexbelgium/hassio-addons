@@ -24,8 +24,7 @@ RUN yarn install \
 RUN yarn generate
 
 # Stage 2: Build the Final Image
-ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM hkotel/mealie:nightly
 
 # Copy the rebuilt frontend files into the final image
 COPY --from=builder /app/frontend/dist /spa/static
