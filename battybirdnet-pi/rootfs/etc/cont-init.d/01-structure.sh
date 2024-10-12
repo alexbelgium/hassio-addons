@@ -53,7 +53,15 @@ echo "... setting permissions for user pi"
 chown -R pi:pi /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 chmod -R 755 /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 
+# Create default birds.db
+if [ ! -f "$HOME/BirdNET-Pi/scripts/birds.db" ]; then
+    "$HOME/BirdNET-Pi/scripts/createdb.sh"
+fi
+
 # Backup default birdnet.conf for sanity check
+if [ ! -f "$HOME/BirdNET-Pi/birdnet.conf" ]; then
+    ln -s /etc/birdnet/birdnet.conf "$HOME/BirdNET-Pi/birdnet.conf"
+fi
 cp "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/birdnet.bak"
 
 # Symlink configuration files
