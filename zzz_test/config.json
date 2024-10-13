@@ -100,8 +100,8 @@
   },
   "schema": {
     "ALLOW_SIGNUP": "bool",
-    "BASE_URL": "str?",
     "BASE_SUBPATH": "str?",
+    "BASE_URL": "str?",
     "DATA_DIR": "str?",
     "PGID": "int",
     "PUID": "int",
