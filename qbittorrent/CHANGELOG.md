@@ -1,3 +1,4 @@
+- Switch to libtorrentv1 to avoid ram issues
 
 ## 5.0.0 (05-10-2024)
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
