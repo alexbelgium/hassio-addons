@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "lscr.io/linuxserver/qbittorrent:arm64v8-latest",
-    "amd64": "lscr.io/linuxserver/qbittorrent:amd64-latest"
+    "aarch64": "lscr.io/linuxserver/qbittorrent:arm64v8-libtorrentv1",
+    "amd64": "lscr.io/linuxserver/qbittorrent:amd64-libtorrentv1"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
