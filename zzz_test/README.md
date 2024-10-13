@@ -1,7 +1,3 @@
-## &#9888; Open Issue : [[Mealie] Unable to locate custom environment variables (opened 2024-08-31)](https://github.com/alexbelgium/hassio-addons/issues/1558) by [@user34756361233](https://github.com/user34756361233)
-## &#9888; Open Issue : [🐛 [Mealie] Mealie not recognising login details (opened 2024-09-20)](https://github.com/alexbelgium/hassio-addons/issues/1580) by [@Valve90210](https://github.com/Valve90210)
-## &#9888; Open Issue : [🐛 [Mealie] Error when starting braking after upgrading from 1.12.0-2 to 1.12.0-4 (opened 2024-09-24)](https://github.com/alexbelgium/hassio-addons/issues/1583) by [@jack5mikemotown](https://github.com/jack5mikemotown)
-## &#9888; Open Issue : [🐛 [Mealie] Not able to restore backup from standalone Mealie 12.2.0 (opened 2024-09-25)](https://github.com/alexbelgium/hassio-addons/issues/1585) by [@phellarv](https://github.com/phellarv)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
