@@ -8,6 +8,21 @@ set -e
 
 bashio::log.info "Adding optional features"
 
+if bashio::config.true "BAT_MODEL_ENABLED"; then
+    bashio::log.warning "... adding bats model"
+    sed -i '/thread_queue_size/a if [[ "$MODEL" == *[Bb][Aa][Tt]* ]]; then python3 "$HOME/BirdNET-Pi/scripts/bat_wav_translate.py" "${RECS_DIR}/StreamData/$(date "+%F")-birdnet-RTSP_${RTSP_STREAMS_STARTED_COUNT}-$(date "+%H:%M:%S").wav"; fi' "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
+    echo "... installing wav translator"
+    cp /helpers/Bat_Model_BE_v1.py "$HOME"/BirdNET-Pi/scripts/bat_wav/translate.py
+    chmod +x "$HOME"/BirdNET-Pi/scripts/bat_wav_translate.py
+    echo "... moving model"
+    cp /helpers/Bat_Model_BE_v1.tflite "$HOME"/BirdNET-Pi/model/
+    chown pi:pi "$HOME"/BirdNET-Pi/model/*
+    echo "... installing labels"
+    mv /helpers/Bat_Model_BE_v1.txt "$HOME"/BirdNET-Pi/scripts/labels.txt
+    echo "... changing model to bats"
+    sed -i "/MODEL/c\MODEL=\"Bat_Model_BE_v1\"" /config/birdnet.conf
+fi
+
 # Denoiser
 #if bashio::config.true "DENOISER_ANALYSIS_ENABLED"; then
 #    sed -i "s|ar 48000|ar 48000 -af \"arnndn=m=sample.rnnn\"|g" "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
