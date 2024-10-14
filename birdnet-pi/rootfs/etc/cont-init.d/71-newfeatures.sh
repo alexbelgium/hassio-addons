@@ -9,8 +9,8 @@ set -e
 bashio::log.info "Adding optional features"
 
 if bashio::config.true "BAT_MODEL_ENABLED"; then
-    bashio::log.warning "... adding bats model"
-    sed -i '/thread_queue_size/a if [[ "$MODEL" == *[Bb][Aa][Tt]* ]]; then python3 "$HOME/BirdNET-Pi/scripts/bat_wav_translate.py" "${RECS_DIR}/StreamData/$(date "+%F")-birdnet-RTSP_${RTSP_STREAMS_STARTED_COUNT}-$(date "+%H:%M:%S").wav"; fi' "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
+    bashio::log.warning "... system will be modified to analyse bats!"
+    sed -i '/thread_queue_size/a\if [[ "$MODEL" == *"Bat"* ]]; then FFMPEG_PARAMS+="-vn -thread_queue_size 512 -i ${i} -map ${MAP_ID}:a:0 -t ${RECORDING_LENGTH} -acodec pcm_s16le -ac 2 file:${RECS_DIR}/StreamData/$(date "+%F")-birdnet-RTSP_${RTSP_STREAMS_STARTED_COUNT}-$(date "+%H:%M:%S").wav && python3 $HOME/BirdNET-Pi/scripts/bat_wav_translate.py ${RECS_DIR}/StreamData/$(date "+%F")-birdnet-RTSP_${RTSP_STREAMS_STARTED_COUNT}-$(date "+%H:%M:%S").wav"; fi' $HOME/*Pi/scripts/birdnet_recording.sh
     echo "... installing wav translator"
     cp /helpers/Bat_Model_BE_v1.py "$HOME"/BirdNET-Pi/scripts/bat_wav/translate.py
     chmod +x "$HOME"/BirdNET-Pi/scripts/bat_wav_translate.py
