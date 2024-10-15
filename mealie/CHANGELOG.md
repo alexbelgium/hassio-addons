@@ -2,6 +2,34 @@
 - Applied new homeassistant config logic, which will allow in the future all Mealie data to be backuped with the addon. All data (+ config) is moved to /addon_configs/db21ed7f_mealie ; the initial data currently in /homeassistant/addons_config/mealie_data and config in /homeassistant/addons_config/mealie will not be moved but a "migrated" file will be added to those folders to show that migration occured. From now on, only data in /addon_configs/db21ed7f_mealie will be used.
 - If it doesn't load, there was perhaps an issue with the migration with a previous version. The solution : go in the Filebrowser addon, open the path /config/db21ed7f_mealie, move everything there in a new folder named old. Go then in the path /homeassistant/addons_config/mealie_data and remove the file named migrated. Restart the addon, and the migration will occur again
 
+- Logic change in terms of files :
+
+  Previous logic :
+  - Paths within container : 
+    - Data: /config/addons_config/mealie_data
+    - Injector script: /config/addons_autoscripts/mealie.sh
+    - Env file : /config/addons_autoscripts/mealie/config.yaml
+  - Paths from HA (for example with Filebrowser) :
+    - Data: /homeassistant/addons_config/mealie_data
+    - Injector script: /homeassistant/addons_autoscripts/mealie.sh
+    - Env file : /homeassistant/addons_autoscripts/mealie/config.yaml
+  - Addon option : DATA_DIR="/config/addons_config/mealie_data"
+
+  New logic : 
+  - Paths within container : 
+    - Data: /config
+    - Injector script: /config/mealie.sh
+    - Env file : /config/config.yaml
+  - Paths from HA (for example with Filebrowser) :
+    - Data: /addon_configs/db21ed7f_mealie
+    - Injector script: /addon_configs/db21ed7f_mealie/mealie.sh
+    - Env file : /addon_configs/db21ed7f_mealie/config.yaml
+  - Previous files backup (will not be used anymore thanks to the "Migrated file" that is now in their folder) :
+    - Data: /homeassistant/addons_config/mealie_data
+    - Injector script: /homeassistant/addons_autoscripts/mealie.sh
+    - Env file : /homeassistant/addons_autoscripts/mealie/config.yaml
+  - Addon option : DATA_DIR="/config"
+
 ## v2.0-beta (10-10-2024)
 - Switched to v2.0 beta, should hopefully solve everyone's issues!
 
