@@ -50,9 +50,9 @@ if [ -f /homeassistant/addons_config/mealie/config.yaml ] && [ ! -f /homeassista
 fi
 
 # Solve issues in migration
-if [ -f /config/mealie.db ] && [ -d /config/addons_config ]; then
-    bashio::log.warning "Deleted /config/addons_config, it shouldn't be there"
-    rm -r /config/addons_config
+if [ -d /config/recipes ] && [ -d /config/backups ]; then
+    [ -d /config/addons_config ] && rm -r /config/addons_config && bashio::log.warning "Deleted /config/addons_config, it shouldn't be there"
+    [ -d /config/addons_autoscripts ] && rm -r /config/addons_autoscripts && bashio::log.warning "Deleted /config/addons_autoscripts, it shouldn't be there"
 fi
 if [[ "$(bashio::config "DATA_DIR")" == "/config/addons_config/mealie_data" ]]; then
     bashio::addon.option "DATA_DIR" "/config"
