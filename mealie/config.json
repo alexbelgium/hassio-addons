@@ -65,7 +65,7 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "DATA_DIR": "/config/addons_config/mealie_data",
+    "DATA_DIR": "/config",
     "DB_ENGINE": "sqlite",
     "MAX_WORKERS": "1",
     "WEB_CONCURRENCY": "2",
@@ -74,14 +74,15 @@
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "map": [
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "ssl:rw"
   ],
   "name": "Mealie",
   "options": {
     "ALLOW_SIGNUP": true,
-    "DATA_DIR": "/config/addons_config/mealie_data",
+    "DATA_DIR": "/config",
     "PGID": 1000,
     "PUID": 1000,
     "certfile": "fullchain.pem",
