@@ -1,5 +1,3 @@
-- Applied new homeassistant config logic, which will allow in the future all Mealie data to be backuped with the addon. All data (+ config) is moved to /addon_configs/db21ed7f_mealie ; the initial data currently in /homeassistant/addons_config/mealie_data and config in /homeassistant/addons_config/mealie will not be moved but a "migrated" file will be added to those folders to show that migration occured. From now on, only data in /addon_configs/db21ed7f_mealie will be used.
-
 ## v2.0-beta (10-10-2024)
 - Switched to v2.0 beta, should hopefully solve everyone's issues!
 
