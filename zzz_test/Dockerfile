@@ -8,20 +8,10 @@ ENV SUB_PATH=$SUB_PATH
 WORKDIR /app
 
 # Clone the Mealie repository to get the frontend source code
-RUN git clone https://github.com/mealie-recipes/mealie.git .
-
-WORKDIR /app/frontend
-
-# Install frontend dependencies
-RUN yarn install \
-    --prefer-offline \
-    --frozen-lockfile \
-    --non-interactive \
-    --production=false \
-    --network-timeout 1000000
-
-# Build the frontend with the specified SUB_PATH
-RUN yarn generate
+RUN git clone https://github.com/mealie-recipes/mealie.git . && \
+    cd /app/frontend && \
+    yarn install --prefer-offline --frozen-lockfile --non-interactive --production=false --network-timeout 1000000 && \
+    yarn generate
 
 # Stage 2: Build the Final Image
 FROM hkotel/mealie:nightly
