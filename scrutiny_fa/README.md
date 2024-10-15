@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Scrutiny (Full Access)] Hourly not working (opened 2024-10-13)](https://github.com/alexbelgium/hassio-addons/issues/1606) by [@NightShaman](https://github.com/NightShaman)
 # Home assistant add-on: Scrutiny Full Access
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

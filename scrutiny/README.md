@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] SCRUTINY Time updates (opened 2024-09-30)](https://github.com/alexbelgium/hassio-addons/issues/1590) by [@hiagocosta](https://github.com/hiagocosta)
+## &#9888; Open Issue : [🐛 [Scrutiny (Full Access)] Hourly not working (opened 2024-10-13)](https://github.com/alexbelgium/hassio-addons/issues/1606) by [@NightShaman](https://github.com/NightShaman)
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

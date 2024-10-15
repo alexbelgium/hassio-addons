@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Gazpar2mqtt] Unable to login to GRDF website (opened 2024-08-16)](https://github.com/alexbelgium/hassio-addons/issues/1527) by [@Cyril035](https://github.com/Cyril035)
 # Home assistant add-on: gazpar2mqtt
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
