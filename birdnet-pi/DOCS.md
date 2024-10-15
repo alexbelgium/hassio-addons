@@ -181,3 +181,284 @@ amixer -c 0 cset numid=52 'Locked'      # 'Sync Status'
 
 echo "Mono optimization applied. Only using primary input and balanced outputs."
 ```
+
+# Autogain script for microphone
+```python
+#!/usr/bin/env python3
+"""
+Microphone Gain Adjustment Script
+
+This script captures audio from an RTSP stream, processes it to calculate the RMS
+within the 2000-4000 Hz frequency band, and adjusts the microphone gain based on
+predefined noise thresholds and trends.
+
+Dependencies:
+- numpy
+- scipy
+- ffmpeg (installed and accessible in PATH)
+- amixer (for microphone gain control)
+
+Author: OpenAI ChatGPT
+Date: 2024-04-27
+"""
+
+import subprocess
+import numpy as np
+from scipy.signal import butter, sosfilt
+import time
+import re
+
+# ---------------------------- Configuration ----------------------------
+
+# Microphone Settings
+MICROPHONE_NAME = "Line In 1 Gain"  # Adjust to match your microphone's control name
+MIN_GAIN_DB = 20                    # Minimum gain in dB
+MAX_GAIN_DB = 50                    # Maximum gain in dB
+DECREASE_GAIN_STEP_DB = 1           # Gain decrease step in dB
+INCREASE_GAIN_STEP_DB = 5           # Gain increase step in dB
+
+# Noise Thresholds
+NOISE_THRESHOLD_HIGH = 0.0035         # Upper threshold for noise RMS amplitude
+NOISE_THRESHOLD_LOW = 0.00035         # Lower threshold for noise RMS amplitude
+
+# Trend Detection
+TREND_COUNT_THRESHOLD = 1           # Number of consecutive trends needed to adjust gain
+
+# RTSP Stream URL
+RTSP_URL = "rtsp://192.168.178.124:8554/birdmic"  # Replace with your RTSP stream URL
+
+# Debug Mode (1 for enabled, 0 for disabled)
+DEBUG = 1
+
+# -----------------------------------------------------------------------
+
+
+def debug(msg):
+    """
+    Prints debug messages if DEBUG mode is enabled.
+
+    :param msg: The debug message to print.
+    """
+    if DEBUG:
+        print(f"[DEBUG] {msg}")
+
+
+def get_gain_db(mic_name):
+    """
+    Retrieves the current gain setting of the specified microphone using amixer.
+
+    :param mic_name: The name of the microphone control in amixer.
+    :return: The current gain in dB as a float, or None if retrieval fails.
+    """
+    cmd = ['amixer', 'sget', mic_name]
+    try:
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
+        # Regex to find patterns like [30.00dB]
+        match = re.search(r'\[(-?\d+(\.\d+)?)dB\]', output)
+        if match:
+            gain_db = float(match.group(1))
+            debug(f"Retrieved gain: {gain_db} dB")
+            return gain_db
+        else:
+            debug("No gain information found in amixer output.")
+            return None
+    except subprocess.CalledProcessError as e:
+        debug(f"amixer sget failed: {e}")
+        return None
+
+
+def set_gain_db(mic_name, gain_db):
+    """
+    Sets the gain of the specified microphone using amixer.
+
+    :param mic_name: The name of the microphone control in amixer.
+    :param gain_db: The desired gain in dB.
+    :return: True if the gain was set successfully, False otherwise.
+    """
+    cmd = ['amixer', 'sset', mic_name, f'{gain_db}dB']
+    try:
+        subprocess.check_call(cmd, stderr=subprocess.STDOUT)
+        debug(f"Set gain to: {gain_db} dB")
+        return True
+    except subprocess.CalledProcessError as e:
+        debug(f"amixer sset failed: {e}")
+        return False
+
+
+def calculate_noise_rms(rtsp_url, bandpass_sos, num_bins=5):
+    """
+    Captures audio from an RTSP stream, applies a bandpass filter, divides the
+    audio into segments, and calculates the RMS of the quietest segment.
+
+    :param rtsp_url: The RTSP stream URL.
+    :param bandpass_sos: Precomputed bandpass filter coefficients (Second-Order Sections).
+    :param num_bins: Number of segments to divide the audio into.
+    :return: The RMS amplitude of the quietest segment as a float, or None on failure.
+    """
+    cmd = [
+        'ffmpeg',
+        '-loglevel', 'error',
+        '-rtsp_transport', 'tcp',
+        '-i', rtsp_url,
+        '-vn',
+        '-f', 's16le',
+        '-acodec', 'pcm_s16le',
+        '-ar', '32000',
+        '-ac', '1',
+        '-t', '5',
+        '-'
+    ]
+
+    try:
+        debug(f"Starting audio capture from {rtsp_url}")
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = process.communicate()
+
+        if process.returncode != 0:
+            debug(f"ffmpeg failed with error: {stderr.decode()}")
+            return None
+
+        # Convert raw PCM data to numpy array
+        audio = np.frombuffer(stdout, dtype=np.int16).astype(np.float32) / 32768.0
+        debug(f"Captured {len(audio)} samples from audio stream.")
+
+        if len(audio) == 0:
+            debug("No audio data captured.")
+            return None
+
+        # Apply bandpass filter
+        filtered = sosfilt(bandpass_sos, audio)
+        debug("Applied bandpass filter to audio data.")
+
+        # Divide into num_bins
+        total_samples = len(filtered)
+        bin_size = total_samples // num_bins
+
+        if bin_size == 0:
+            debug("Bin size is 0; insufficient audio data.")
+            return 0.0
+
+        trimmed_length = bin_size * num_bins
+        trimmed_filtered = filtered[:trimmed_length]
+        segments = trimmed_filtered.reshape(num_bins, bin_size)
+        debug(f"Divided audio into {num_bins} bins of {bin_size} samples each.")
+
+        # Calculate RMS for each segment
+        rms_values = np.sqrt(np.mean(segments ** 2, axis=1))
+        debug(f"Calculated RMS values for each segment: {rms_values}")
+
+        # Return the minimum RMS value
+        min_rms = rms_values.min()
+        debug(f"Minimum RMS value among segments: {min_rms}")
+
+        return min_rms
+
+    except Exception as e:
+        debug(f"Exception during noise RMS calculation: {e}")
+        return None
+
+
+def main():
+    """
+    Main loop that continuously monitors background noise and adjusts microphone gain.
+    """
+    TREND_COUNT = 0
+    PREVIOUS_TREND = 0
+
+    # Precompute the bandpass filter coefficients
+    LOWCUT = 2000    # Lower frequency bound in Hz
+    HIGHCUT = 8000   # Upper frequency bound in Hz
+    FILTER_ORDER = 5 # Order of the Butterworth filter
+
+    sos = butter(FILTER_ORDER, [LOWCUT, HIGHCUT], btype='band', fs=44100, output='sos')
+    debug("Precomputed Butterworth bandpass filter coefficients.")
+
+    # Set the microphone gain to the maximum gain at the start
+    success = set_gain_db(MICROPHONE_NAME, MAX_GAIN_DB)
+    if success:
+        print(f"Microphone gain set to {MAX_GAIN_DB} dB at start.")
+    else:
+        print("Failed to set microphone gain at start. Exiting.")
+        return
+
+    while True:
+        min_rms = calculate_noise_rms(RTSP_URL, sos, num_bins=5)
+
+        if min_rms is None:
+            print("Failed to compute noise RMS. Retrying in 1 minute...")
+            time.sleep(60)
+            continue
+
+        if not isinstance(min_rms, (float, int)):
+            print(f"Invalid noise RMS output detected: {min_rms}. Retrying in 1 minute...")
+            time.sleep(60)
+            continue
+
+        # Print the final converted RMS amplitude (only once)
+        print(f"Converted RMS Amplitude: {min_rms}")
+        debug(f"Current background noise (RMS amplitude): {min_rms}")
+
+        # Determine the noise trend
+        if min_rms > NOISE_THRESHOLD_HIGH:
+            CURRENT_TREND = 1
+        elif min_rms < NOISE_THRESHOLD_LOW:
+            CURRENT_TREND = -1
+        else:
+            CURRENT_TREND = 0
+
+        debug(f"Current trend: {CURRENT_TREND}")
+
+        if CURRENT_TREND != 0:
+            if CURRENT_TREND == PREVIOUS_TREND:
+                TREND_COUNT += 1
+            else:
+                TREND_COUNT = 1
+                PREVIOUS_TREND = CURRENT_TREND
+        else:
+            TREND_COUNT = 0
+
+        debug(f"Trend count: {TREND_COUNT}")
+
+        CURRENT_GAIN_DB = get_gain_db(MICROPHONE_NAME)
+
+        if CURRENT_GAIN_DB is None:
+            print("Failed to get current gain level. Retrying in 1 minute...")
+            time.sleep(60)
+            continue
+
+        debug(f"Current gain: {CURRENT_GAIN_DB} dB")
+
+        if TREND_COUNT >= TREND_COUNT_THRESHOLD:
+            if CURRENT_TREND == 1:
+                # Decrease gain by 1 dB
+                NEW_GAIN_DB = CURRENT_GAIN_DB - DECREASE_GAIN_STEP_DB
+                if NEW_GAIN_DB < MIN_GAIN_DB:
+                    NEW_GAIN_DB = MIN_GAIN_DB
+                success = set_gain_db(MICROPHONE_NAME, NEW_GAIN_DB)
+                if success:
+                    print(f"Decreased gain to {NEW_GAIN_DB} dB")
+                    debug(f"Gain adjusted to {NEW_GAIN_DB} dB")
+                else:
+                    print("Failed to set new gain.")
+            elif CURRENT_TREND == -1:
+                # Increase gain by 5 dB
+                NEW_GAIN_DB = CURRENT_GAIN_DB + INCREASE_GAIN_STEP_DB
+                if NEW_GAIN_DB > MAX_GAIN_DB:
+                    NEW_GAIN_DB = MAX_GAIN_DB
+                success = set_gain_db(MICROPHONE_NAME, NEW_GAIN_DB)
+                if success:
+                    print(f"Increased gain to {NEW_GAIN_DB} dB")
+                    debug(f"Gain adjusted to {NEW_GAIN_DB} dB")
+                else:
+                    print("Failed to set new gain.")
+            TREND_COUNT = 0
+        else:
+            debug("No gain adjustment needed.")
+
+        # Sleep for 1 minute before the next iteration
+        time.sleep(60)
+
+
+if __name__ == "__main__":
+    main()
+```
