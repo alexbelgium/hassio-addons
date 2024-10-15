@@ -35,13 +35,13 @@ done
 # MIGRATE DATA DIR #
 ####################
 
+# Migrate files
 if [ -d /homeassistant/addons_config/mealie_data ] && [ ! -f /homeassistant/addons_config/mealie_data/migrated ]; then
     bashio::log.warning "Migrating data, current data will not be touched"
     cp -rnf /homeassistant/addons_config/mealie_data/* /config/ || true
     touch /homeassistant/addons_config/mealie_data/migrated
     bashio::addon.option "DATA_DIR" "/config"
 fi
-
 if [ -f /homeassistant/addons_config/mealie/config.yaml ] && [ ! -f /homeassistant/addons_config/mealie/migrated ]; then
     bashio::log.warning "Migrating config.yaml, current data will not be touched"
     cp -nf /homeassistant/addons_config/mealie/config.yaml /config/ || true
@@ -49,6 +49,11 @@ if [ -f /homeassistant/addons_config/mealie/config.yaml ] && [ ! -f /homeassista
     bashio::addon.option "DATA_DIR" "/config"
 fi
 
+# Solve issues in migration
+if [ -f /config/mealie.db ] && [ -d /config/addons_config ]; then
+    bashio::log.warning "Deleted /config/addons_config, it shouldn't be there"
+    rm -r /config/addons_config
+fi
 if [[ "$(bashio::config "DATA_DIR")" == "/config/addons_config/mealie_data" ]]; then
     bashio::addon.option "DATA_DIR" "/config"
     bashio::addon.restart
