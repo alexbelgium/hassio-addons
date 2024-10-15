@@ -61,7 +61,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Correct data path
 # hadolint ignore=DL4006
-RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/config/addons_config/mealie_data|g' && \
+RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/config|g' && \
     sed -i "s|change_user$|# change_user|g" /app/run.sh
 
 ##################
