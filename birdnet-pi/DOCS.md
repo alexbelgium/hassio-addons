@@ -28,11 +28,18 @@ My conclusions aren't universal, as it seems to be highly dependent on the regio
     - Sigmoid sensitivity : 1,25 _(I've tried 1,00 but it gave much more false positives ; as decreasing this value increases sensitivity)_
 
 # Set RTSP server (https://github.com/mcguirepr89/BirdNET-Pi/discussions/1006#discussioncomment-6747450)
-### On your desktop
-Download imager
-Install raspbian lite 64
 
-### With ssh, install requisite softwares
+<details>
+<summary>On your desktop</summary>
+   
+- Download imager
+- Install raspbian lite 64
+</details>
+
+<details>
+<summary>With ssh, install requisite softwares</summary>
+
+### 
 ```
 # Update
 
@@ -51,46 +58,11 @@ sudo apt-get install -y micro ffmpeg lsof
 sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.9.1/mediamtx_v1.9.1_linux_arm64v8.tar.gz -O - | sudo tar -xz
 ```
 
-### Modify config.txt
+</details>
 
-sudo nano /boot/firmware/config.txt
-```
-# Enable audio and USB optimizations
-dtparam=audio=off          # Disable the default onboard audio to prevent conflicts
-dtoverlay=disable-bt        # Disable onboard Bluetooth to reduce USB bandwidth usage
-dtoverlay=disable-wifi      # Disable onboard wifi
-# Limit Ethernet to 100 Mbps (disable Gigabit Ethernet)
-dtparam=eth_max_speed=100
-# USB optimizations
-dwc_otg.fiq_fix_enable=1    # Enable FIQ (Fast Interrupt) handling for improved USB performance
-max_usb_current=1           # Increase the available USB current (required if Scarlett is powered over USB)
-# Additional audio settings (for low-latency operation)
-avoid_pwm_pll=1             # Use a more stable PLL for the audio clock
-# Optional: HDMI and other settings can be turned off if not needed
-hdmi_blanking=1             # Disable HDMI (save power and reduce interference)
-```
 
-### Optional : install Focusrite driver
-```
-sudo apt-get install make linux-headers-$(uname -r)
-curl -LO https://github.com/geoffreybennett/scarlett-gen2/releases/download/v6.9-v1.3/snd-usb-audio-kmod-6.6-v1.3.tar.gz
-tar -xzf snd-usb-audio-kmod-6.6-v1.3.tar.gz
-cd snd-usb-audio-kmod-6.6-v1.3
-KSRCDIR=/lib/modules/$(uname -r)/build
-make -j4 -C $KSRCDIR M=$(pwd) clean
-make -j4 -C $KSRCDIR M=$(pwd)
-sudo make -j4 -C $KSRCDIR M=$(pwd) INSTALL_MOD_DIR=updates/snd-usb-audio modules_install
-sudo depmod
-sudo reboot
-dmesg | grep -A 5 -B 5 -i focusrite
-```
-
-### Optional : add ram disk
-```
-sudo cp /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
-sudo systemctl enable tmp.mount
-sudo systemctl start tmp.mount
-```
+<details>
+<summary>Configure Audio</summary>
 
 ### Find right device
 ```
@@ -126,7 +98,11 @@ amixer -c 0 sset "$MICROPHONE_NAME" 60%
 
 ```
 
-Startup automatically
+</details>
+
+<details>
+<summary>Optional : Startup automatically</summary>
+
 ```
 chmod +x startmic.sh
 crontab -e # select nano as your editor
@@ -134,7 +110,62 @@ crontab -e # select nano as your editor
 Paste in `@reboot $HOME/startmic.sh` then save and exit nano.
 Reboot the Pi and test again with VLC to make sure the RTSP stream is live.
 
-### Configuration for Focusrite Scarlett 2i2
+</details>
+
+<details>
+<summary>Optional : optimize config.txt</summary>
+
+sudo nano /boot/firmware/config.txt
+```
+# Enable audio and USB optimizations
+dtparam=audio=off          # Disable the default onboard audio to prevent conflicts
+dtoverlay=disable-bt        # Disable onboard Bluetooth to reduce USB bandwidth usage
+dtoverlay=disable-wifi      # Disable onboard wifi
+# Limit Ethernet to 100 Mbps (disable Gigabit Ethernet)
+dtparam=eth_max_speed=100
+# USB optimizations
+dwc_otg.fiq_fix_enable=1    # Enable FIQ (Fast Interrupt) handling for improved USB performance
+max_usb_current=1           # Increase the available USB current (required if Scarlett is powered over USB)
+# Additional audio settings (for low-latency operation)
+avoid_pwm_pll=1             # Use a more stable PLL for the audio clock
+# Optional: HDMI and other settings can be turned off if not needed
+hdmi_blanking=1             # Disable HDMI (save power and reduce interference)
+```
+
+</details>
+
+<details>
+<summary>Optional : install Focusrite driver</summary>
+    
+```
+sudo apt-get install make linux-headers-$(uname -r)
+curl -LO https://github.com/geoffreybennett/scarlett-gen2/releases/download/v6.9-v1.3/snd-usb-audio-kmod-6.6-v1.3.tar.gz
+tar -xzf snd-usb-audio-kmod-6.6-v1.3.tar.gz
+cd snd-usb-audio-kmod-6.6-v1.3
+KSRCDIR=/lib/modules/$(uname -r)/build
+make -j4 -C $KSRCDIR M=$(pwd) clean
+make -j4 -C $KSRCDIR M=$(pwd)
+sudo make -j4 -C $KSRCDIR M=$(pwd) INSTALL_MOD_DIR=updates/snd-usb-audio modules_install
+sudo depmod
+sudo reboot
+dmesg | grep -A 5 -B 5 -i focusrite
+```
+
+</details>
+
+<details>
+<summary>Optional : add RAM disk</summary>
+    
+```
+sudo cp /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
+sudo systemctl enable tmp.mount
+sudo systemctl start tmp.mount
+```
+
+</details>
+
+<details>
+<summary>Optional : Configuration for Focusrite Scarlett 2i2</summary>
 
 ```
 #!/bin/bash
@@ -188,8 +219,11 @@ amixer -c 0 cset numid=52 'Locked'      # 'Sync Status'
 
 echo "Mono optimization applied. Only using primary input and balanced outputs."
 ```
+</details>
 
-# Autogain script for microphone
+<details>
+<summary>Optional : Autogain script for microphone</summary>
+
 ```python
 #!/usr/bin/env python3
 """
@@ -469,3 +503,5 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+</details>
