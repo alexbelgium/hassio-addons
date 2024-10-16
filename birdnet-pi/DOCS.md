@@ -94,8 +94,8 @@ fi
 # Wait for a moment to check if the process fails
 sleep 5
 
-# Check if GStreamer is still running
-if [ "$gst_pid" -ne 0 ] && ! ps -p "$gst_pid" > /dev/null; then
+# Check if GStreamer is still running using ps aux
+if [ "$gst_pid" -ne 0 ] && ! ps aux | grep "[r]tsp_audio_server.py" > /dev/null; then
     echo "GStreamer failed, switching to ffmpeg"
     
     # Start mediamtx first and give it a moment to initialize
@@ -199,13 +199,15 @@ class PCMStream(GstRtspServer.RTSPMediaFactory):
             # Fallback if 'get_uri()' doesn't exist
             logging.info("Creating pipeline for RTSP stream.")
         
-        # Define the GStreamer pipeline string with Opus encoding for better compatibility
+        # Define the GStreamer pipeline string for PCM streaming
         pipeline_str = (
             f"alsasrc device={self.device} ! "
             f"audio/x-raw, format={self.format}, rate={self.rate}, channels={self.channels} ! "
             "audioconvert ! audioresample ! "
-            "opusenc ! rtpopuspay name=pay0 pt=96"
+            "rtpL16pay name=pay0 pt=96"
         )
+        
+        logging.info(f"Pipeline: {pipeline_str}")
         
         # Parse and launch the pipeline
         pipeline = Gst.parse_launch(pipeline_str)
