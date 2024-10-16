@@ -86,7 +86,8 @@ sudo ethtool -s eth0 speed 100 duplex full autoneg on
 # Create rtsp feed
 sleep 5
 # Using plughw
-ffmpeg -nostdin -f alsa -acodec pcm_s16be -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
+ffmpeg -nostdin -re -f alsa -acodec pcm_s16be -ac 2 -ar 96000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k -rtbufsize 1M -max_delay 500000
+#ffmpeg -nostdin -f alsa -acodec pcm_s16be -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
 #ffmpeg -nostdin -f alsa -acodec pcm_s16be -ac 2 -ar 96000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
 #ffmpeg -nostdin -f alsa -acodec pcm_s32be -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
 
