@@ -74,7 +74,7 @@ arecord -D hw:1,0 --dump-hw-params
 ```
 
 ### Add startup script
-sudo nano startmic.sh
+sudo nano startmic.sh && chmod +x startmic.sh
 ```
 #!/bin/bash
 #!/bin/bash
@@ -177,7 +177,7 @@ sudo systemctl start tmp.mount
 <details>
 <summary>Optional : Configuration for Focusrite Scarlett 2i2</summary>
 
-Add this content in "$HOME/focusrite.sh"
+Add this content in "$HOME/focusrite.sh" && chmod +x "$HOME/focusrite.sh"
 ```
 #!/bin/bash
 
@@ -234,7 +234,7 @@ echo "Mono optimization applied. Only using primary input and balanced outputs."
 <details>
 <summary>Optional : Autogain script for microphone</summary>
 
-Add this content in "$HOME/autogain.py"
+Add this content in "$HOME/autogain.py" && chmod +x "$HOME/autogain.py"
 
 ```python
 #!/usr/bin/env python3
