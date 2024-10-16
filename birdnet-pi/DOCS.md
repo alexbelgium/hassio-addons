@@ -85,10 +85,20 @@ sudo ethtool -s eth0 speed 100 duplex full autoneg on
 ./mediamtx & true
 # Create rtsp feed
 sleep 5
-# Using plughw
-ffmpeg -nostdin -f alsa -acodec pcm_s16be -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
-#ffmpeg -nostdin -f alsa -acodec pcm_s16be -ac 2 -ar 96000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
-#ffmpeg -nostdin -f alsa -acodec pcm_s32be -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
+
+# Using ffmpeg
+ffmpeg -nostdin -use_wallclock_as_timestamps 1 -fflags +genpts -f alsa -acodec pcm_s16be -ac 2 -ar 48000 -i plughw:0,0 -ac 2 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
+#ffmpeg -nostdin -f alsa -acodec pcm_s16be -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
+
+# Using GStreamer pipeline, uncomment to use
+#gst-launch-1.0 -v \
+#  alsasrc device=hw:0,0 ! \
+#  audio/x-raw,format=S16LE,channels=2,rate=48000 ! \
+#  audioconvert ! \
+#  audioresample ! \
+#  rtpL16pay ! \
+#  rtspclientsink location=rtsp://localhost:8554/birdmic protocols=tcp \
+#  2> /tmp/log_rtsp || true &
 
 # Set microphone volume
 sleep 5
@@ -108,6 +118,29 @@ if [ -f "$HOME/autogain.py" ]; then
 fi
 
 ```
+
+</details>
+
+<details>
+<summary>Optional : use gstreamer instead of ffmpeg</summary>
+
+```
+# Install gstreamer
+sudo apt-get update
+sudo apt-get install -y \
+  gstreamer1.0-rtsp \
+  gstreamer1.0-tools \
+  gstreamer1.0-alsa \
+  gstreamer1.0-plugins-base \
+  gstreamer1.0-plugins-good \
+  gstreamer1.0-plugins-bad \
+  gstreamer1.0-plugins-ugly \
+  gstreamer1.0-libav
+```
+
+Remove the ffmpeg line in your startmic.sh and use instead
+
+</details>
 
 </details>
 
