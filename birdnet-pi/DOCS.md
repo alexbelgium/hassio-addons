@@ -85,6 +85,13 @@ sudo reboot
 dmesg | grep -A 5 -B 5 -i focusrite
 ```
 
+### Optional : add ram disk
+```
+sudo cp /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
+sudo systemctl enable tmp.mount
+sudo systemctl start tmp.mount
+```
+
 ### Find right device
 ```
 # List audio devices
