@@ -198,7 +198,6 @@ Dependencies:
 - ffmpeg (installed and accessible in PATH)
 - amixer (for microphone gain control)
 
-Author: OpenAI ChatGPT
 Date: 2024-04-27
 """
 
@@ -213,12 +212,12 @@ import re
 # Microphone Settings
 MICROPHONE_NAME = "Line In 1 Gain"  # Adjust to match your microphone's control name
 MIN_GAIN_DB = 20                    # Minimum gain in dB
-MAX_GAIN_DB = 50                    # Maximum gain in dB
+MAX_GAIN_DB = 45                    # Maximum gain in dB
 DECREASE_GAIN_STEP_DB = 1           # Gain decrease step in dB
 INCREASE_GAIN_STEP_DB = 5           # Gain increase step in dB
 
 # Noise Thresholds
-NOISE_THRESHOLD_HIGH = 0.0035         # Upper threshold for noise RMS amplitude
+NOISE_THRESHOLD_HIGH = 0.001         # Upper threshold for noise RMS amplitude
 NOISE_THRESHOLD_LOW = 0.00035         # Lower threshold for noise RMS amplitude
 
 # Trend Detection
