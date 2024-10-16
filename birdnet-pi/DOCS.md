@@ -77,6 +77,7 @@ arecord -D hw:1,0 --dump-hw-params
 sudo nano startmic.sh
 ```
 #!/bin/bash
+#!/bin/bash
 echo "Starting birdmic"
 # Disable gigabit ethernet
 sudo ethtool -s eth0 speed 100 duplex full autoneg on
@@ -84,17 +85,26 @@ sudo ethtool -s eth0 speed 100 duplex full autoneg on
 ./mediamtx & true
 # Create rtsp feed
 sleep 5
-# Using hw
-ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16le rtsp://localhost:8554/birdmic -rtsp_transport tcp || true & true
 # Using plughw
-#ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:1,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
-# Using plughw with high, lowpass, and limit to avoid clipping
-#ffmpeg -nostdin -f alsa -acodec pcm_s32le -ac 2 -ar 48000 -i plughw:0,0 -af "highpass=f=100, lowpass=f=15000, alimiter=limit=1.0:attack=5:release=50" -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
+ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 96000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
+#ffmpeg -nostdin -f alsa -acodec pcm_s32be -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
 
 # Set microphone volume
 sleep 5
 MICROPHONE_NAME="Line In 1 Gain" # for Focusrite Scarlett 2i2
-amixer -c 0 sset "$MICROPHONE_NAME" 60%
+sudo amixer -c 0 sset "$MICROPHONE_NAME" 40
+
+sleep 60
+
+if [ -f "$HOME/focusrite.sh" ]; then
+    touch /tmp/log /tmp/log_error
+    "$HOME/focusrite.sh" & true >/tmp/log 2>/tmp/log_error
+fi
+
+if [ -f "$HOME/autogain.py" ]; then
+    touch /tmp/log /tmp/log_error
+    python autogain.py & true >/tmp/log 2>/tmp/log_error
+fi
 
 ```
 
@@ -167,55 +177,55 @@ sudo systemctl start tmp.mount
 <details>
 <summary>Optional : Configuration for Focusrite Scarlett 2i2</summary>
 
+Add this content in "$HOME/focusrite.sh"
 ```
 #!/bin/bash
 
 # Set PCM controls for capture
-amixer -c 0 cset numid=31 'Analogue 1'  # 'PCM 01' - Set to 'Analogue 1'
-amixer -c 0 cset numid=32 'Analogue 1'  # 'PCM 02' - Set to 'Analogue 1'
-amixer -c 0 cset numid=33 'Off'         # 'PCM 03' - Disabled
-amixer -c 0 cset numid=34 'Off'         # 'PCM 04' - Disabled
+sudo amixer -c 0 cset numid=31 'Analogue 1'  # 'PCM 01' - Set to 'Analogue 1'
+sudo amixer -c 0 cset numid=32 'Analogue 1'  # 'PCM 02' - Set to 'Analogue 1'
+sudo amixer -c 0 cset numid=33 'Off'         # 'PCM 03' - Disabled
+sudo amixer -c 0 cset numid=34 'Off'         # 'PCM 04' - Disabled
 
 # Set DSP Input controls (Unused, set to Off)
-amixer -c 0 cset numid=29 'Off'         # 'DSP Input 1'
-amixer -c 0 cset numid=30 'Off'         # 'DSP Input 2'
+sudo amixer -c 0 cset numid=29 'Off'         # 'DSP Input 1'
+sudo amixer -c 0 cset numid=30 'Off'         # 'DSP Input 2'
 
 # Configure Line In 1 as main input for mono setup
-amixer -c 0 cset numid=8 'Off'          # 'Line In 1 Air' - Keep 'Off'
-amixer -c 0 cset numid=14 off           # 'Line In 1 Autogain' - Disabled
-amixer -c 0 cset numid=13 80%            # 'Line In 1 Gain' - Set gain to 21
-amixer -c 0 cset numid=6 'Line'         # 'Line In 1 Level' - Set level to 'Line'
-amixer -c 0 cset numid=21 on           # 'Line In 1 Safe' - Enabled to avoid clipping / noise impact ?
+sudo amixer -c 0 cset numid=8 'Off'          # 'Line In 1 Air' - Keep 'Off'
+sudo amixer -c 0 cset numid=14 off           # 'Line In 1 Autogain' - Disabled
+sudo amixer -c 0 cset numid=6 'Line'         # 'Line In 1 Level' - Set level to 'Line'
+sudo amixer -c 0 cset numid=21 on           # 'Line In 1 Safe' - Enabled to avoid clipping / noise impact ?
 
 # Disable Line In 2 to minimize interference (if not used)
-amixer -c 0 cset numid=9 'Off'          # 'Line In 2 Air'
-amixer -c 0 cset numid=17 off           # 'Line In 2 Autogain' - Disabled
-amixer -c 0 cset numid=16 0             # 'Line In 2 Gain' - Set gain to 0 (mute)
-amixer -c 0 cset numid=7 'Line'         # 'Line In 2 Level' - Set to 'Line'
-amixer -c 0 cset numid=22 off           # 'Line In 2 Safe' - Disabled
+sudo amixer -c 0 cset numid=9 'Off'          # 'Line In 2 Air'
+sudo amixer -c 0 cset numid=17 off           # 'Line In 2 Autogain' - Disabled
+sudo amixer -c 0 cset numid=16 0             # 'Line In 2 Gain' - Set gain to 0 (mute)
+sudo amixer -c 0 cset numid=7 'Line'         # 'Line In 2 Level' - Set to 'Line'
+sudo amixer -c 0 cset numid=22 off           # 'Line In 2 Safe' - Disabled
 
 # Set Line In 1-2 controls
-amixer -c 0 cset numid=12 off           # 'Line In 1-2 Link' - No need to link for mono
-amixer -c 0 cset numid=10 on            # 'Line In 1-2 Phantom Power' - Enabled for condenser mics
+sudo amixer -c 0 cset numid=12 off           # 'Line In 1-2 Link' - No need to link for mono
+sudo amixer -c 0 cset numid=10 on            # 'Line In 1-2 Phantom Power' - Enabled for condenser mics
 
 # Set Analogue Outputs to use the same mix for both channels (Mono setup)
-amixer -c 0 cset numid=23 'Mix A'       # 'Analogue Output 01' - Set to 'Mix A'
-amixer -c 0 cset numid=24 'Mix A'       # 'Analogue Output 02' - Same mix as Output 01
+sudo amixer -c 0 cset numid=23 'Mix A'       # 'Analogue Output 01' - Set to 'Mix A'
+sudo amixer -c 0 cset numid=24 'Mix A'       # 'Analogue Output 02' - Same mix as Output 01
 
 # Set Direct Monitor to off to prevent feedback
-amixer -c 0 cset numid=53 'Off'         # 'Direct Monitor'
+sudo amixer -c 0 cset numid=53 'Off'         # 'Direct Monitor'
 
 # Set Input Select to Input 1
-amixer -c 0 cset numid=11 'Input 1'     # 'Input Select'
+sudo amixer -c 0 cset numid=11 'Input 1'     # 'Input Select'
 
 # Optimize Monitor Mix settings for mono output
-amixer -c 0 cset numid=54 153           # 'Monitor 1 Mix A Input 01' - Set to 153 (around -3.50 dB)
-amixer -c 0 cset numid=55 153           # 'Monitor 1 Mix A Input 02' - Set to 153 for balanced output
-amixer -c 0 cset numid=56 0             # 'Monitor 1 Mix A Input 03' - Mute unused channels
-amixer -c 0 cset numid=57 0             # 'Monitor 1 Mix A Input 04'
+sudo amixer -c 0 cset numid=54 153           # 'Monitor 1 Mix A Input 01' - Set to 153 (around -3.50 dB)
+sudo amixer -c 0 cset numid=55 153           # 'Monitor 1 Mix A Input 02' - Set to 153 for balanced output
+sudo amixer -c 0 cset numid=56 0             # 'Monitor 1 Mix A Input 03' - Mute unused channels
+sudo amixer -c 0 cset numid=57 0             # 'Monitor 1 Mix A Input 04'
 
 # Set Sync Status to Locked
-amixer -c 0 cset numid=52 'Locked'      # 'Sync Status'
+sudo amixer -c 0 cset numid=52 'Locked'      # 'Sync Status'
 
 echo "Mono optimization applied. Only using primary input and balanced outputs."
 ```
@@ -223,6 +233,8 @@ echo "Mono optimization applied. Only using primary input and balanced outputs."
 
 <details>
 <summary>Optional : Autogain script for microphone</summary>
+
+Add this content in "$HOME/autogain.py"
 
 ```python
 #!/usr/bin/env python3
