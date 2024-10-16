@@ -91,23 +91,28 @@ else
     gst_pid=0
 fi
 
-# Wait for a moment to check if the process fails
+# Wait for a moment to let GStreamer initialize
 sleep 5
 
-# Check if GStreamer is still running using ps aux
-if [ "$gst_pid" -ne 0 ] && ! ps aux | grep "[r]tsp_audio_server.py" > /dev/null; then
-    echo "GStreamer failed, switching to ffmpeg"
+# Check if the RTSP stream can be accessed (i.e., the feed can be read)
+if ! ffmpeg -rtsp_transport tcp -i rtsp://localhost:8554/birdmic -t 1 -f null - > /dev/null 2>&1; then
+    echo "GStreamer RTSP stream is not accessible, switching to ffmpeg"
+    
+    # Kill the GStreamer process if it's still running
+    if [ "$gst_pid" -ne 0 ]; then
+        kill "$gst_pid"
+    fi
     
     # Start mediamtx first and give it a moment to initialize
     ./mediamtx & 
     sleep 5
     
-    # Run ffmpeg as fallback if GStreamer failed
+    # Run ffmpeg as fallback
     ffmpeg -nostdin -use_wallclock_as_timestamps 1 -fflags +genpts -f alsa -acodec pcm_s16be -ac 2 -ar 96000 \
         -i plughw:0,0 -ac 2 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp \
         -buffer_size 512k 2>/tmp/rtsp_error &
 else
-    echo "GStreamer is running successfully"
+    echo "GStreamer RTSP stream is running successfully"
 fi
 
 # Set microphone volume
