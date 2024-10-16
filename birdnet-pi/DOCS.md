@@ -77,28 +77,38 @@ arecord -D hw:1,0 --dump-hw-params
 sudo nano startmic.sh && chmod +x startmic.sh
 ```
 #!/bin/bash
-#!/bin/bash
 echo "Starting birdmic"
+
 # Disable gigabit ethernet
 sudo ethtool -s eth0 speed 100 duplex full autoneg on
-# Start rtsp server
-./mediamtx & true
-# Create rtsp feed
+
+# Run GStreamer RTSP server if installed
+if command -v gst-launch-1.0 &>/dev/null; then
+    ./rtsp_audio_server.py --device plughw:0,0 --format S16LE --rate 96000 --channels 2 --mount-point /birdmic --port 8554 >/tmp/log_rtsp 2>/tmp/log_rtsp_error &
+    gst_pid=$!
+else
+    echo "GStreamer not found, skipping to ffmpeg fallback"
+    gst_pid=0
+fi
+
+# Wait for a moment to check if the process fails
 sleep 5
 
-# Using ffmpeg
-ffmpeg -nostdin -use_wallclock_as_timestamps 1 -fflags +genpts -f alsa -acodec pcm_s16be -ac 2 -ar 48000 -i plughw:0,0 -ac 2 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
-#ffmpeg -nostdin -f alsa -acodec pcm_s16be -ac 2 -ar 48000 -i hw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
-
-# Using GStreamer pipeline, uncomment to use
-#gst-launch-1.0 -v \
-#  alsasrc device=hw:0,0 ! \
-#  audio/x-raw,format=S16LE,channels=2,rate=48000 ! \
-#  audioconvert ! \
-#  audioresample ! \
-#  rtpL16pay ! \
-#  rtspclientsink location=rtsp://localhost:8554/birdmic protocols=tcp \
-#  2> /tmp/log_rtsp || true &
+# Check if GStreamer is still running
+if [ "$gst_pid" -ne 0 ] && ! ps -p "$gst_pid" > /dev/null; then
+    echo "GStreamer failed, switching to ffmpeg"
+    
+    # Start mediamtx first and give it a moment to initialize
+    ./mediamtx & 
+    sleep 5
+    
+    # Run ffmpeg as fallback if GStreamer failed
+    ffmpeg -nostdin -use_wallclock_as_timestamps 1 -fflags +genpts -f alsa -acodec pcm_s16be -ac 2 -ar 96000 \
+        -i plughw:0,0 -ac 2 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp \
+        -buffer_size 512k 2>/tmp/rtsp_error &
+else
+    echo "GStreamer is running successfully"
+fi
 
 # Set microphone volume
 sleep 5
@@ -107,16 +117,14 @@ sudo amixer -c 0 sset "$MICROPHONE_NAME" 40
 
 sleep 60
 
+# Run focusrite and autogain scripts if present
 if [ -f "$HOME/focusrite.sh" ]; then
-    touch /tmp/log /tmp/log_error
-    "$HOME/focusrite.sh" >/tmp/log_focusrite 2>/tmp/log_focusrite_error & true
+    "$HOME/focusrite.sh" >/tmp/log_focusrite 2>/tmp/log_focusrite_error &
 fi
 
 if [ -f "$HOME/autogain.py" ]; then
-    touch /tmp/log /tmp/log_error
-    python autogain.py >/tmp/log_autogain 2>/tmp/log_autogain_error & true
+    python autogain.py >/tmp/log_autogain 2>/tmp/log_autogain_error &
 fi
-
 ```
 
 </details>
@@ -138,9 +146,207 @@ sudo apt-get install -y \
   gstreamer1.0-libav
 ```
 
-Remove the ffmpeg line in your startmic.sh and use instead
+Create a script named rtsp_audio_server.py
+```
+#!/usr/bin/env python3
 
-</details>
+import sys
+import gi
+import argparse
+import socket
+import logging
+
+gi.require_version('Gst', '1.0')
+gi.require_version('GstRtspServer', '1.0')
+
+from gi.repository import Gst, GstRtspServer, GLib
+
+# Initialize GStreamer
+Gst.init(None)
+
+def get_lan_ip():
+    """
+    Retrieves the LAN IP address by creating a dummy connection.
+    """
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+            # This doesn't send any data; it's just used to get the local IP address
+            s.connect(("8.8.8.8", 80))
+            return s.getsockname()[0]
+    except Exception as e:
+        logging.error(f"Failed to get LAN IP address: {e}")
+        return "127.0.0.1"
+
+class PCMStream(GstRtspServer.RTSPMediaFactory):
+    def __init__(self, device, format, rate, channels):
+        super(PCMStream, self).__init__()
+        self.device = device
+        self.format = format
+        self.rate = rate
+        self.channels = channels
+        self.set_shared(True)
+
+    def do_create_element(self, url):
+        """
+        Overridden method to create the GStreamer pipeline.
+        """
+        # Attempt to retrieve and log the RTSP URL's URI
+        try:
+            # Some versions might have 'get_uri()', others might not
+            uri = url.get_uri()
+            logging.info(f"Creating pipeline for URL: {uri}")
+        except AttributeError:
+            # Fallback if 'get_uri()' doesn't exist
+            logging.info("Creating pipeline for RTSP stream.")
+        
+        # Define the GStreamer pipeline string with Opus encoding for better compatibility
+        pipeline_str = (
+            f"alsasrc device={self.device} ! "
+            f"audio/x-raw, format={self.format}, rate={self.rate}, channels={self.channels} ! "
+            "audioconvert ! audioresample ! "
+            "opusenc ! rtpopuspay name=pay0 pt=96"
+        )
+        
+        # Parse and launch the pipeline
+        pipeline = Gst.parse_launch(pipeline_str)
+        
+        if not pipeline:
+            logging.error("Failed to create GStreamer pipeline.")
+            return None
+        
+        # Get the bus from the pipeline and connect to the message handler
+        bus = pipeline.get_bus()
+        bus.add_signal_watch()
+        bus.connect("message", self.on_message)
+        
+        return pipeline
+
+    def on_message(self, bus, message):
+        t = message.type
+        if t == Gst.MessageType.ERROR:
+            err, debug = message.parse_error()
+            logging.error(f"GStreamer Error: {err}, {debug}")
+        elif t == Gst.MessageType.WARNING:
+            err, debug = message.parse_warning()
+            logging.warning(f"GStreamer Warning: {err}, {debug}")
+        elif t == Gst.MessageType.EOS:
+            logging.info("End-Of-Stream reached.")
+        return True
+
+class GstServer:
+    def __init__(self, mount_point, device, format, rate, channels, port, ip=None):
+        self.mount_point = mount_point
+        self.device = device
+        self.format = format
+        self.rate = rate
+        self.channels = channels
+        self.port = port
+        self.ip = ip
+
+        self.server = GstRtspServer.RTSPServer()
+        self.server.set_service(str(self.port))
+
+        if self.ip:
+            self.server.set_address(self.ip)
+        else:
+            self.server.set_address("0.0.0.0")
+
+        self.factory = PCMStream(self.device, self.format, self.rate, self.channels)
+        self.mount_points = self.server.get_mount_points()
+        self.mount_points.add_factory(self.mount_point, self.factory)
+
+        try:
+            self.server.attach(None)
+        except Exception as e:
+            logging.error(f"Failed to attach RTSP server: {e}")
+            sys.exit(1)
+
+        server_ip = self.ip if self.ip else get_lan_ip()
+
+        # Verify that the server is listening on the desired port
+        if not self.verify_server_binding():
+            logging.error(f"RTSP server failed to bind to port {self.port}. It might already be in use.")
+            sys.exit(1)
+
+        print(f"RTSP server is live at rtsp://{server_ip}:{self.port}{self.mount_point}")
+
+    def verify_server_binding(self):
+        """
+        Verifies if the RTSP server is successfully listening on the specified port.
+        """
+        try:
+            with socket.create_connection(("127.0.0.1", self.port), timeout=2):
+                return True
+        except Exception as e:
+            logging.error(f"Verification failed: {e}")
+            return False
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="GStreamer RTSP Server for 16-bit PCM Audio")
+    parser.add_argument(
+        '--device', type=str, default='plughw:0,0',
+        help='ALSA device to capture audio from (default: plughw:0,0)'
+    )
+    parser.add_argument(
+        '--format', type=str, default='S16LE',
+        help='Audio format (default: S16LE)'
+    )
+    parser.add_argument(
+        '--rate', type=int, default=44100,
+        help='Sampling rate in Hz (default: 44100)'
+    )
+    parser.add_argument(
+        '--channels', type=int, default=1,
+        help='Number of audio channels (default: 1)'
+    )
+    parser.add_argument(
+        '--mount-point', type=str, default='/birdmic',
+        help='RTSP mount point (default: /birdmic)'
+    )
+    parser.add_argument(
+        '--port', type=int, default=8554,
+        help='RTSP server port (default: 8554)'
+    )
+    parser.add_argument(
+        '--ip', type=str, default=None,
+        help='Explicit LAN IP address to bind the RTSP server to (default: auto-detected)'
+    )
+    return parser.parse_args()
+
+def main():
+    # Configure logging to display errors and warnings
+    logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+
+    args = parse_args()
+
+    try:
+        server = GstServer(
+            mount_point=args.mount_point,
+            device=args.device,
+            format=args.format,
+            rate=args.rate,
+            channels=args.channels,
+            port=args.port,
+            ip=args.ip
+        )
+    except Exception as e:
+        logging.error(f"Failed to initialize RTSP server: {e}")
+        sys.exit(1)
+
+    loop = GLib.MainLoop()
+
+    try:
+        loop.run()
+    except KeyboardInterrupt:
+        print("Shutting down RTSP server...")
+        loop.quit()
+    except Exception as e:
+        logging.error(f"An unexpected error occurred: {e}")
+        loop.quit()
+
+if __name__ == "__main__":
+    main()
+```
 
 </details>
 
@@ -327,7 +533,8 @@ def debug(msg):
     :param msg: The debug message to print.
     """
     if DEBUG:
-        print(f"[DEBUG] {msg}")
+        current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        print(f"[{current_time}] [DEBUG] {msg}")
 
 
 def get_gain_db(mic_name):
