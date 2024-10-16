@@ -86,7 +86,8 @@ sudo ethtool -s eth0 speed 100 duplex full autoneg on
 # Create rtsp feed
 sleep 5
 # Using plughw
-ffmpeg -nostdin -f alsa -acodec pcm_s16le -ac 2 -ar 96000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
+ffmpeg -nostdin -f alsa -acodec pcm_s16be -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
+#ffmpeg -nostdin -f alsa -acodec pcm_s16be -ac 2 -ar 96000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k 2> /tmp/log_rtsp || true & true
 #ffmpeg -nostdin -f alsa -acodec pcm_s32be -ac 2 -ar 48000 -i plughw:0,0 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp -buffer_size 512k || true & true
 
 # Set microphone volume
@@ -98,12 +99,12 @@ sleep 60
 
 if [ -f "$HOME/focusrite.sh" ]; then
     touch /tmp/log /tmp/log_error
-    "$HOME/focusrite.sh" & true >/tmp/log 2>/tmp/log_error
+    "$HOME/focusrite.sh" >/tmp/log_focusrite 2>/tmp/log_focusrite_error & true
 fi
 
 if [ -f "$HOME/autogain.py" ]; then
     touch /tmp/log /tmp/log_error
-    python autogain.py & true >/tmp/log 2>/tmp/log_error
+    python autogain.py >/tmp/log_autogain 2>/tmp/log_autogain_error & true
 fi
 
 ```
