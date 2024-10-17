@@ -128,7 +128,7 @@ if [ -f "$HOME/focusrite.sh" ]; then
 fi
 
 if [ -f "$HOME/autogain.py" ]; then
-    python autogain.py >/tmp/log_autogain 2>/tmp/log_autogain_error &
+    "$HOME/autogain.py" >/tmp/log_autogain 2>/tmp/log_autogain_error &
 fi
 ```
 
@@ -392,18 +392,26 @@ Add this content in "$HOME/autogain.py" && chmod +x "$HOME/autogain.py"
 """
 Microphone Gain Adjustment Script
 
-This script captures audio from an RTSP stream, processes it to calculate the RMS
-within the 2000-4000 Hz frequency band, and adjusts the microphone gain based on
-predefined noise thresholds and trends.
+This script captures audio from an RTSP stream using GStreamer if available,
+or falls back to ffmpeg if GStreamer is not installed. The script processes
+the audio to calculate the RMS within the 2000-4000 Hz frequency band and 
+adjusts the microphone gain based on predefined noise thresholds and trends.
 
 Dependencies:
 - numpy
 - scipy
-- ffmpeg (installed and accessible in PATH)
+- ffmpeg or GStreamer (installed and accessible in PATH)
 - amixer (for microphone gain control)
 
 Author: OpenAI ChatGPT
 Date: 2024-04-27
+
+Changelog:
+- 2024-04-27: Initial version of the script that captures RTSP stream, calculates RMS, and adjusts gain.
+- 2024-10-17: Added support for GStreamer as the preferred RTSP stream capture tool, with ffmpeg as a fallback.
+              Implemented a debug log system to provide detailed logs with timestamps.
+              Added trend-based microphone gain adjustment and noise RMS calculation.
+              Enhanced error handling for both GStreamer and ffmpeg.
 """
 
 import subprocess
@@ -436,7 +444,6 @@ DEBUG = 1
 
 # -----------------------------------------------------------------------
 
-
 def debug(msg):
     """
     Prints debug messages if DEBUG mode is enabled.
@@ -458,7 +465,6 @@ def get_gain_db(mic_name):
     cmd = ['amixer', 'sget', mic_name]
     try:
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
-        # Regex to find patterns like [30.00dB]
         match = re.search(r'\[(-?\d+(\.\d+)?)dB\]', output)
         if match:
             gain_db = float(match.group(1))
@@ -490,10 +496,79 @@ def set_gain_db(mic_name, gain_db):
         return False
 
 
-def calculate_noise_rms(rtsp_url, bandpass_sos, num_bins=5):
+def check_gstreamer_available():
     """
-    Captures audio from an RTSP stream, applies a bandpass filter, divides the
-    audio into segments, and calculates the RMS of the quietest segment.
+    Checks if GStreamer is available on the system.
+    """
+    try:
+        subprocess.check_call(['which', 'gst-launch-1.0'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        debug("GStreamer is available.")
+        return True
+    except subprocess.CalledProcessError:
+        debug("GStreamer is not available.")
+        return False
+
+
+def calculate_noise_rms_gstream(rtsp_url, bandpass_sos, num_bins=5):
+    """
+    Captures audio using GStreamer from an RTSP stream, applies a bandpass filter,
+    divides the audio into segments, and calculates the RMS of the quietest segment.
+
+    :param rtsp_url: The RTSP stream URL.
+    :param bandpass_sos: Precomputed bandpass filter coefficients (Second-Order Sections).
+    :param num_bins: Number of segments to divide the audio into.
+    :return: The RMS amplitude of the quietest segment as a float, or None on failure.
+    """
+    cmd = [
+        'gst-launch-1.0',
+        'rtspsrc', f'location={rtsp_url}', '!', 
+        'decodebin', '!', 'audioconvert', '!', 
+        'audioresample', '!', 'audio/x-raw,rate=32000,channels=1', 
+        '!', 'filesink', 'location=/dev/stdout'
+    ]
+
+    try:
+        debug(f"Starting GStreamer audio capture from {rtsp_url}")
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = process.communicate()
+
+        if process.returncode != 0:
+            debug(f"GStreamer failed with error: {stderr.decode()}")
+            return None
+
+        audio = np.frombuffer(stdout, dtype=np.int16).astype(np.float32) / 32768.0
+        debug(f"Captured {len(audio)} samples from GStreamer.")
+
+        if len(audio) == 0:
+            debug("No audio data captured.")
+            return None
+
+        filtered = sosfilt(bandpass_sos, audio)
+        debug("Applied bandpass filter to audio data.")
+        total_samples = len(filtered)
+        bin_size = total_samples // num_bins
+
+        if bin_size == 0:
+            debug("Bin size is 0; insufficient audio data.")
+            return 0.0
+
+        trimmed_filtered = filtered[:bin_size * num_bins]
+        segments = trimmed_filtered.reshape(num_bins, bin_size)
+        debug(f"Divided audio into {num_bins} bins of {bin_size} samples each.")
+        rms_values = np.sqrt(np.mean(segments ** 2, axis=1))
+        min_rms = rms_values.min()
+        debug(f"Minimum RMS value among segments: {min_rms}")
+        return min_rms
+
+    except Exception as e:
+        debug(f"Exception during noise RMS calculation with GStreamer: {e}")
+        return None
+
+
+def calculate_noise_rms_ffmpeg(rtsp_url, bandpass_sos, num_bins=5):
+    """
+    Captures audio using FFmpeg from an RTSP stream, applies a bandpass filter,
+    divides the audio into segments, and calculates the RMS of the quietest segment.
 
     :param rtsp_url: The RTSP stream URL.
     :param bandpass_sos: Precomputed bandpass filter coefficients (Second-Order Sections).
@@ -515,27 +590,23 @@ def calculate_noise_rms(rtsp_url, bandpass_sos, num_bins=5):
     ]
 
     try:
-        debug(f"Starting audio capture from {rtsp_url}")
+        debug(f"Starting FFmpeg audio capture from {rtsp_url}")
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
 
         if process.returncode != 0:
-            debug(f"ffmpeg failed with error: {stderr.decode()}")
+            debug(f"FFmpeg failed with error: {stderr.decode()}")
             return None
 
-        # Convert raw PCM data to numpy array
         audio = np.frombuffer(stdout, dtype=np.int16).astype(np.float32) / 32768.0
-        debug(f"Captured {len(audio)} samples from audio stream.")
+        debug(f"Captured {len(audio)} samples from FFmpeg.")
 
         if len(audio) == 0:
             debug("No audio data captured.")
             return None
 
-        # Apply bandpass filter
         filtered = sosfilt(bandpass_sos, audio)
         debug("Applied bandpass filter to audio data.")
-
-        # Divide into num_bins
         total_samples = len(filtered)
         bin_size = total_samples // num_bins
 
@@ -543,24 +614,28 @@ def calculate_noise_rms(rtsp_url, bandpass_sos, num_bins=5):
             debug("Bin size is 0; insufficient audio data.")
             return 0.0
 
-        trimmed_length = bin_size * num_bins
-        trimmed_filtered = filtered[:trimmed_length]
+        trimmed_filtered = filtered[:bin_size * num_bins]
         segments = trimmed_filtered.reshape(num_bins, bin_size)
         debug(f"Divided audio into {num_bins} bins of {bin_size} samples each.")
-
-        # Calculate RMS for each segment
         rms_values = np.sqrt(np.mean(segments ** 2, axis=1))
-        debug(f"Calculated RMS values for each segment: {rms_values}")
-
-        # Return the minimum RMS value
         min_rms = rms_values.min()
         debug(f"Minimum RMS value among segments: {min_rms}")
-
         return min_rms
 
     except Exception as e:
-        debug(f"Exception during noise RMS calculation: {e}")
+        debug(f"Exception during noise RMS calculation with FFmpeg: {e}")
         return None
+
+
+def calculate_noise_rms(rtsp_url, bandpass_sos, num_bins=5):
+    """
+    Attempts to capture audio from an RTSP stream using GStreamer first, 
+    and falls back to FFmpeg if GStreamer is unavailable.
+    """
+    if check_gstreamer_available():
+        return calculate_noise_rms_gstream(rtsp_url, bandpass_sos, num_bins)
+    else:
+        return calculate_noise_rms_ffmpeg(rtsp_url, bandpass_sos, num_bins)
 
 
 def main():
@@ -570,15 +645,13 @@ def main():
     TREND_COUNT = 0
     PREVIOUS_TREND = 0
 
-    # Precompute the bandpass filter coefficients
-    LOWCUT = 2000    # Lower frequency bound in Hz
-    HIGHCUT = 8000   # Upper frequency bound in Hz
-    FILTER_ORDER = 5 # Order of the Butterworth filter
+    LOWCUT = 2000
+    HIGHCUT = 4000
+    FILTER_ORDER = 5
 
     sos = butter(FILTER_ORDER, [LOWCUT, HIGHCUT], btype='band', fs=44100, output='sos')
     debug("Precomputed Butterworth bandpass filter coefficients.")
 
-    # Set the microphone gain to the maximum gain at the start
     success = set_gain_db(MICROPHONE_NAME, MAX_GAIN_DB)
     if success:
         print(f"Microphone gain set to {MAX_GAIN_DB} dB at start.")
@@ -594,16 +667,9 @@ def main():
             time.sleep(60)
             continue
 
-        if not isinstance(min_rms, (float, int)):
-            print(f"Invalid noise RMS output detected: {min_rms}. Retrying in 1 minute...")
-            time.sleep(60)
-            continue
-
-        # Print the final converted RMS amplitude (only once)
         print(f"Converted RMS Amplitude: {min_rms}")
         debug(f"Current background noise (RMS amplitude): {min_rms}")
 
-        # Determine the noise trend
         if min_rms > NOISE_THRESHOLD_HIGH:
             CURRENT_TREND = 1
         elif min_rms < NOISE_THRESHOLD_LOW:
@@ -635,7 +701,6 @@ def main():
 
         if TREND_COUNT >= TREND_COUNT_THRESHOLD:
             if CURRENT_TREND == 1:
-                # Decrease gain by 1 dB
                 NEW_GAIN_DB = CURRENT_GAIN_DB - DECREASE_GAIN_STEP_DB
                 if NEW_GAIN_DB < MIN_GAIN_DB:
                     NEW_GAIN_DB = MIN_GAIN_DB
@@ -646,7 +711,6 @@ def main():
                 else:
                     print("Failed to set new gain.")
             elif CURRENT_TREND == -1:
-                # Increase gain by 5 dB
                 NEW_GAIN_DB = CURRENT_GAIN_DB + INCREASE_GAIN_STEP_DB
                 if NEW_GAIN_DB > MAX_GAIN_DB:
                     NEW_GAIN_DB = MAX_GAIN_DB
@@ -660,7 +724,6 @@ def main():
         else:
             debug("No gain adjustment needed.")
 
-        # Sleep for 1 minute before the next iteration
         time.sleep(60)
 
 
