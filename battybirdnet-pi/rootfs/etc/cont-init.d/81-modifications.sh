@@ -23,7 +23,7 @@ while IFS= read -r file; do
     if [[ "$(basename "$file")" != "birdnet_log.service" ]]; then
         sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$file"
     fi
-done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -print)
+done < <(find "$HOME/BirdNET-Pi/templates/" -name "b*.service" -print)
 
 # Send services log to container logs
 echo "... redirecting services logs to container logs"
