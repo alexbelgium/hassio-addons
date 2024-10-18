@@ -5,7 +5,7 @@ https://github.com/mcguirepr89/BirdNET-Pi/discussions/1092#discussioncomment-970
 
 My recommendation :
 - Best entry system (< 50€) : Boya By-lm40 (30€) + deadcat (10 €)
-- Best middle end system (< 150 €) : Clippy EM272 (55€) + Rode AI micro trrs to usb (70€) + Rycote deadcat (27€)
+- Best middle end system (< 150 €) : Clippy EM272 TRS/TRRS (55€) + Rode AI micro trs/trrs to usb (70€) + Rycote deadcat (27€)
 - Best high end system (<400 €) : Clippy EM272 XLR (85€) or LOM Ucho Pro (75€) + Focusrite Scarlet 2i2 4th Gen (200€) + Bubblebee Pro Extreme deadcat (45€)
 
 # App settings recommendation
