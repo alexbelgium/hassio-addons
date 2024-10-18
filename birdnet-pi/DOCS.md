@@ -27,7 +27,9 @@ My conclusions aren't universal, as it seems to be highly dependent on the regio
     - Minimum confidence : 0,7
     - Sigmoid sensitivity : 1,25 _(I've tried 1,00 but it gave much more false positives ; as decreasing this value increases sensitivity)_
 
-# Set RTSP server (https://github.com/mcguirepr89/BirdNET-Pi/discussions/1006#discussioncomment-6747450)
+# Set RTSP server
+
+Inspired by : https://github.com/mcguirepr89/BirdNET-Pi/discussions/1006#discussioncomment-6747450
 
 <details>
 <summary>On your desktop</summary>
