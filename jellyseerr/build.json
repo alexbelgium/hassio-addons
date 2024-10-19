@@ -1,8 +1,7 @@
 {
   "build_from": {
     "aarch64": "fallenbagel/jellyseerr:latest",
-    "amd64": "fallenbagel/jellyseerr:latest",
-    "armv7": "fallenbagel/jellyseerr:latest"
+    "amd64": "fallenbagel/jellyseerr:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
