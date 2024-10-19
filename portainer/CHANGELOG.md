@@ -1,3 +1,6 @@
+
+## 2.23.0 (19-10-2024)
+- Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 ## 2.22.0-3 (06-10-2024)
 - WARNING : logic change for new installations. Type "empty" in the PASSWORD of the addon to reset the database and have a clean initial set-up. Used for example to restore backups
 
