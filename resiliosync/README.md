@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [resiliosync] Changed settings are not used by add-on (opened 2024-10-17)](https://github.com/alexbelgium/hassio-addons/issues/1611) by [@carlba](https://github.com/carlba)
 # Home assistant add-on: Resilio Sync
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
