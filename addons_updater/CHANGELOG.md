@@ -1,3 +1,5 @@
+- Avoid blank config.json when using xonfig.yaml
+
 ## 3.19.9
 
 - Automatically add a link to the release tab when using a github repo to facilitate access to upstream changelog
