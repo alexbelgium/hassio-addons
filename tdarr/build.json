@@ -1,8 +1,7 @@
 {
   "build_from": {
     "aarch64": "ghcr.io/haveagitgat/tdarr:latest",
-    "amd64": "ghcr.io/haveagitgat/tdarr:latest",
-    "armv7": "ghcr.io/haveagitgat/tdarr:latest"
+    "amd64": "ghcr.io/haveagitgat/tdarr:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
