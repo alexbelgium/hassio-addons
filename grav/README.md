@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] grav Multisite (opened 2024-10-20)](https://github.com/alexbelgium/hassio-addons/issues/1613) by [@dm82m](https://github.com/dm82m)
 # Home assistant add-on: Grav
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
