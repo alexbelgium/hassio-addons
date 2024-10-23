@@ -1,4 +1,5 @@
 {
+  "github_exclude": "pro",
   "last_update": "10-06-2023",
   "repository": "alexbelgium/hassio-addons",
   "slug": "tdarr",
