@@ -1,4 +1,7 @@
 
+## 1.5.5 (26-10-2024)
+- Update to latest version from spotweb/spotweb (changelog : https://github.com/spotweb/spotweb/releases)
+
 ## 1.5.4-10 (04-12-2023)
 
 - Minor bugs fixed
