@@ -2,7 +2,7 @@
   "github_beta": "true",
   "github_fulltag": "true",
   "last_update": "24-08-2024",
-  "paused": "true",
+  "paused": "false",
   "repository": "alexbelgium/hassio-addons",
   "slug": "mealie",
   "source": "github",
