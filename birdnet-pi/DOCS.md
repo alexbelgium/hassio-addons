@@ -48,13 +48,6 @@ Inspired by : https://github.com/mcguirepr89/BirdNET-Pi/discussions/1006#discuss
 sudo apt-get update -y
 sudo apt-get dist-upgrade -y
 
-# Disable useless services
-sudo systemctl disable hciuart
-sudo systemctl disable bluetooth
-sudo systemctl disable triggerhappy
-sudo systemctl disable avahi-daemon
-sudo systemctl disable dphys-swapfile
-
 # Install RTSP server
 sudo apt-get install -y micro ffmpeg lsof
 sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.9.1/mediamtx_v1.9.1_linux_arm64v8.tar.gz -O - | sudo tar -xz
@@ -277,7 +270,9 @@ Reboot the Pi and test again with VLC to make sure the RTSP stream is live.
 </details>
 
 <details>
-<summary>Optional : optimize config.txt</summary>
+<summary>Optional : disable unecessary elements</summary>
+
+- Optimize config.txt
 
 sudo nano /boot/firmware/config.txt
 ```
@@ -294,6 +289,49 @@ max_usb_current=1           # Increase the available USB current (required if Sc
 avoid_pwm_pll=1             # Use a more stable PLL for the audio clock
 # Optional: HDMI and other settings can be turned off if not needed
 hdmi_blanking=1             # Disable HDMI (save power and reduce interference)
+```
+
+- Disable useless services
+
+```
+
+# Disable useless services
+sudo systemctl disable hciuart
+sudo systemctl disable bluetooth
+sudo systemctl disable triggerhappy
+sudo systemctl disable avahi-daemon
+sudo systemctl disable dphys-swapfile
+sudo systemctl disable hciuart.service
+
+# Disable bluetooth
+for element in bluetooth btbcm hci_uart btintel btrtl btusb; do
+    sudo sed -i "/$element/d" /etc/modprobe.d/raspi-blacklist.conf
+    echo "blacklist $element" | sudo tee -a /etc/modprobe.d/raspi-blacklist.conf
+done
+
+# Disable Video (Including V4L2) on Your Raspberry Pi
+for element in bcm2835_v4l2 bcm2835_codec bcm2835_isp videobuf2_vmalloc videobuf2_memops videobuf2_v4l2 videobuf2_common videodev; do
+    sudo sed -i "/$element/d" /etc/modprobe.d/raspi-blacklist.conf
+    echo "blacklist $element" | sudo tee -a /etc/modprobe.d/raspi-blacklist.conf
+done
+
+# Disable WiFi Power Management
+sudo iw dev wlan0 set power_save off
+for element in brcmfmac brcmutil; do
+    sudo sed -i "/$element/d" /etc/modprobe.d/raspi-blacklist.conf
+    echo "blacklist $element" | sudo tee -a /etc/modprobe.d/raspi-blacklist.conf
+done
+
+# Disable USB Power Management
+echo 'on' | sudo tee /sys/bus/usb/devices/usb*/power/control
+
+# Preventing the Raspberry Pi from Entering Power-Saving Mode
+sudo apt update
+sudo apt install -y cpufrequtils
+echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
+sudo systemctl disable ondemand
+sudo systemctl stop ondemand
+
 ```
 
 </details>
