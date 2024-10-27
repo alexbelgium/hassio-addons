@@ -45,6 +45,9 @@ RUN \
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
     chmod a+x /bin/systemctl && \
     \
+    # Correct for datetimectl
+    sed -i '/CURRENT_TIMEZONE/s/$/ || true/' "$HOME/BirdNET-Pi/scripts/install_birdnet.sh" && \
+    \
     # Change user to pi and create /home/pi
     echo "setting users" && \
     if id abc >/dev/null 2>&1; then groupmod -o -g 101 abc && usermod -o -u 101 abc; fi && \
