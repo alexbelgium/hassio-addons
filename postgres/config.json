@@ -31,7 +31,7 @@
     "POSTGRES_DB": "str?",
     "POSTGRES_HOST_AUTH_METHOD": "str?",
     "POSTGRES_INITDB_ARGS": "str?",
-    "POSTGRES_PASSWORD": "str",
+    "POSTGRES_PASSWORD": "password",
     "POSTGRES_USER": "str?"
   },
   "slug": "postgres",
