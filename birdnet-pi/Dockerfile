@@ -45,10 +45,6 @@ RUN \
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
     chmod a+x /bin/systemctl && \
     \
-    # Coreect for datetimectl
-    curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o $(which timedatectl) && \
-    chmod a+x $(which timedatectl) && \
-    \
     # Change user to pi and create /home/pi
     echo "setting users" && \
     if id abc >/dev/null 2>&1; then groupmod -o -g 101 abc && usermod -o -u 101 abc; fi && \
@@ -76,6 +72,8 @@ RUN \
     echo 'for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
     # Disable pulseaudio
     echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
+    # Disable datetimectl
+    echo 'sed -i "/CURRENT_TIMEZONE/s/^/#/" "$HOME/BirdNET-Pi/scripts/install_birdnet.sh"' >> /newinstallermod.sh && \
     # Set permission
     chmod +x /newinstallermod.sh && \
     \
