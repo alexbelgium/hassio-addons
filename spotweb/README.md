@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Spotweb] Trying to update (1.5.4-10) to recent release 1.5.5 - Internal Server Error (manifest unknown) (opened 2024-10-26)](https://github.com/alexbelgium/hassio-addons/issues/1619) by [@JBakers](https://github.com/JBakers)
 # Home Assistant Add-ons: Spotweb
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
