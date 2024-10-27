@@ -3,11 +3,11 @@
 set -e
 
 if [ -d /data/StreamData ]; then
-    bashio::log.fatal "Container was stopped while files were still being analyzed."
 
     # Check if there are .wav files in /data/StreamData
     if find /data/StreamData -type f -name "*.wav" | grep -q .; then
-        bashio::log.warning "Restoring .wav files from /data/StreamData to $HOME/BirdSongs/StreamData."
+        bashio::log.warning "Container was stopped while files were still being analyzed."
+        echo "... restoring .wav files from /data/StreamData to $HOME/BirdSongs/StreamData."
 
         # Create the destination directory if it does not exist
         mkdir -p "$HOME"/BirdSongs/StreamData
