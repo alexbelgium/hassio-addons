@@ -46,8 +46,8 @@ RUN \
     chmod a+x /bin/systemctl && \
     \
     # Coreect for datetimectl
-    curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o /bin/timedatectl && \
-    chmod a+x /bin/timedatectl && \
+    curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o $(which timedatectl) && \
+    chmod a+x $(which timedatectl) && \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \
