@@ -1,3 +1,5 @@
+## 1.5.5-3 (27-10-2024)
+- Minor bugs fixed
 ## 1.5.5-2 (27-10-2024)
 - Minor bugs fixed
 
