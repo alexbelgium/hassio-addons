@@ -72,8 +72,6 @@ RUN \
     echo 'for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
     # Disable pulseaudio
     echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
-    # Disable datetimectl
-    echo 'sed -i "/CURRENT_TIMEZONE/s/^/#/" "$HOME/BirdNET-Pi/scripts/install_birdnet.sh"' >> /newinstallermod.sh && \
     # Set permission
     chmod +x /newinstallermod.sh && \
     \
@@ -85,6 +83,8 @@ RUN \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
     # Ensure chmod
     sed -i "/git clone/a chown -R 1000:1000 $HOME" /newinstaller.sh && \
+    # Disable datetimectl
+    sed -i '/git clone/a sed -i "/CURRENT_TIMEZONE/s/$/ || true/" $HOME/BirdNET-Pi/scripts/install_birdnet.sh' /newinstaller.sh && \
     # Remove all instances of sudo from the newinstaller
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     \
