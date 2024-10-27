@@ -42,7 +42,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 # hadolint ignore=DL3003
 # Install app dependencies
-ENV PHPVERS=""
+ENV PHPVERS="83"
 RUN apk -U update && \
     # hadolint ignore=DL3017
     apk -U upgrade && \
