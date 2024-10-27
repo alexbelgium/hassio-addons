@@ -13,7 +13,7 @@ declare port
 declare dbname
 
 # Adapt to php version
-mv /etc/php8/* /etc/php${PHP_VERS:-}/ || true
+cp -rf /etc/php8/* /etc/php${PHP_VERS:-}/ || true
 
 if bashio::config.has_value 'remote_mysql_host'; then
   if ! bashio::config.has_value 'remote_mysql_database'; then
