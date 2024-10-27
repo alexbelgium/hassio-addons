@@ -45,8 +45,9 @@ RUN \
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
     chmod a+x /bin/systemctl && \
     \
-    # Correct for datetimectl
-    sed -i '/CURRENT_TIMEZONE/s/$/ || true/' "$HOME/BirdNET-Pi/scripts/install_birdnet.sh" && \
+    # Coreect for datetimectl
+    curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o /bin/timedatectl && \
+    chmod a+x /bin/timedatectl && \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \
