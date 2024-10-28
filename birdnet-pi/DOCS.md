@@ -455,20 +455,25 @@ Changelog:
 - 2024-10-27: Enhanced debug output with logging levels.
 - 2024-10-28: Added summary log mode for simplified output.
 - 2024-10-28: Removed gain stabilization delay for immediate gain adjustments.
+- 2024-10-28: Max gain capped at 40 dB, suppressed `amixer` logging.
+- 2024-10-28: Implemented sampling rate reduction, capture duration reduction, scipy.fft usage, lower filter order, and multiprocessing for efficiency.
 """
 
 import subprocess
 import numpy as np
 from scipy.signal import butter, sosfilt, find_peaks
+from scipy.fft import rfft, rfftfreq
 import time
 import re
+import multiprocessing as mp
+import sys
 
 # ---------------------------- Configuration ----------------------------
 
 # Microphone Settings
 MICROPHONE_NAME = "Line In 1 Gain"
 MIN_GAIN_DB = 20
-MAX_GAIN_DB = 45
+MAX_GAIN_DB = 40  # Capped at 40 dB
 DECREASE_GAIN_STEP_DB = 1
 INCREASE_GAIN_STEP_DB = 5
 CLIPPING_REDUCTION_DB = 3
@@ -481,7 +486,10 @@ NOISE_THRESHOLD_LOW = 0.00035
 TREND_COUNT_THRESHOLD = 3
 
 # Sampling Rate
-SAMPLING_RATE = 48000  # Updated from 32000 to 48000 Hz
+SAMPLING_RATE = 44100  # Reduced from 48000 Hz to 44100 Hz
+
+# Audio Capture Duration
+AUDIO_CAPTURE_DURATION = 2  # Reduced from 5 seconds to 2 seconds
 
 # RTSP Stream URL
 RTSP_URL = "rtsp://192.168.178.124:8554/birdmic"
@@ -500,6 +508,11 @@ REFERENCE_PRESSURE = 20e-6
 # THD Settings
 THD_FUNDAMENTAL_THRESHOLD_DB = 60
 MAX_THD_PERCENTAGE = 5.0
+
+# Filter Settings
+LOWCUT = 2000
+HIGHCUT = 8000
+FILTER_ORDER = 3  # Reduced from 5 to 3 for efficiency
 
 # -----------------------------------------------------------------------
 
@@ -539,28 +552,23 @@ def get_gain_db(mic_name):
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
         match = re.search(r'\[(-?\d+(\.\d+)?)dB\]', output)
         if match:
-            gain_db = float(match.group(1))
-            debug_print(f"Retrieved gain: {gain_db} dB", "info")
-            return gain_db
+            return float(match.group(1))
         else:
-            debug_print("No gain information found in amixer output.", "warning")
             return None
-    except subprocess.CalledProcessError as e:
-        debug_print(f"amixer sget failed: {e}", "error")
+    except subprocess.CalledProcessError:
         return None
 
 
 def set_gain_db(mic_name, gain_db):
     """
     Sets the gain of the specified microphone using amixer.
+    Suppresses logging related to this action.
     """
     cmd = ['amixer', 'sset', mic_name, f'{gain_db}dB']
     try:
         subprocess.check_call(cmd, stderr=subprocess.STDOUT)
-        debug_print(f"Set gain to: {gain_db} dB", "info")
         return True
-    except subprocess.CalledProcessError as e:
-        debug_print(f"amixer sset failed: {e}", "error")
+    except subprocess.CalledProcessError:
         return False
 
 
@@ -591,8 +599,8 @@ def thd_calculation(audio, sampling_rate, num_harmonics=5):
     """
     Calculates Total Harmonic Distortion (THD) for the audio signal.
     """
-    fft_vals = np.fft.rfft(audio)
-    fft_freqs = np.fft.rfftfreq(len(audio), 1 / sampling_rate)
+    fft_vals = rfft(audio)
+    fft_freqs = rfftfreq(len(audio), 1 / sampling_rate)
     fft_magnitude = np.abs(fft_vals)
     fundamental_freq, fundamental_amplitude = find_fundamental_frequency(fft_freqs, fft_magnitude)
 
@@ -642,13 +650,14 @@ def detect_microphone_overload(spl, mic_clipping_spl):
     return False
 
 
-def calculate_noise_rms_and_thd(rtsp_url, bandpass_sos, sampling_rate, num_bins=5):
+def calculate_noise_rms_and_thd(rtsp_url, bandpass_sos, sampling_rate):
     """
     Captures audio from an RTSP stream, calculates RMS, THD, and SPL, and detects microphone overload.
     """
     cmd = [
         'ffmpeg', '-loglevel', 'error', '-rtsp_transport', 'tcp', '-i', rtsp_url,
-        '-vn', '-f', 's16le', '-acodec', 'pcm_s16le', '-ar', str(sampling_rate), '-ac', '1', '-t', '5', '-'
+        '-vn', '-f', 's16le', '-acodec', 'pcm_s16le', '-ar', str(sampling_rate),
+        '-ac', '1', '-t', str(AUDIO_CAPTURE_DURATION), '-'
     ]
 
     retries = 3
@@ -685,18 +694,25 @@ def calculate_noise_rms_and_thd(rtsp_url, bandpass_sos, sampling_rate, num_bins=
     return None, None, None, False
 
 
+def audio_capture_process(queue, rtsp_url, sos, sampling_rate):
+    """
+    Separate process for capturing and processing audio.
+    """
+    while True:
+        rms, thd, spl, overload = calculate_noise_rms_and_thd(rtsp_url, sos, sampling_rate)
+        queue.put((rms, thd, spl, overload))
+        time.sleep(60)  # Wait for the next capture cycle
+
+
 def main():
     """
     Main loop that continuously monitors background noise, detects clipping, calculates THD,
-    and adjusts microphone gain with retry logic for RTSP stream resilience.
+    and adjusts microphone gain with multiprocessing for audio capture and processing.
     """
     TREND_COUNT = 0
     PREVIOUS_TREND = 0
 
-    # Precompute bandpass filter coefficients with updated SAMPLING_RATE
-    LOWCUT = 2000
-    HIGHCUT = 8000
-    FILTER_ORDER = 5
+    # Precompute bandpass filter coefficients with updated SAMPLING_RATE and lower FILTER_ORDER
     sos = butter(FILTER_ORDER, [LOWCUT, HIGHCUT], btype='band', fs=SAMPLING_RATE, output='sos')
 
     # Set the microphone gain to the maximum gain at the start
@@ -705,14 +721,26 @@ def main():
         print(f"Microphone gain set to {MAX_GAIN_DB} dB at start.")
     else:
         print("Failed to set microphone gain at start. Exiting.")
-        return
+        sys.exit(1)
+
+    # Initialize multiprocessing queue
+    manager = mp.Manager()
+    queue = manager.Queue()
+
+    # Start audio capture and processing in a separate process
+    p = mp.Process(target=audio_capture_process, args=(queue, RTSP_URL, sos, SAMPLING_RATE))
+    p.start()
+    debug_print("Started audio capture and processing process.", "info")
 
     while True:
-        rms, thd, spl, overload = calculate_noise_rms_and_thd(RTSP_URL, sos, SAMPLING_RATE)
+        if not queue.empty():
+            rms, thd, spl, overload = queue.get()
+        else:
+            time.sleep(1)
+            continue
 
         if rms is None:
             print("Failed to compute noise RMS. Retrying in 1 minute...")
-            time.sleep(60)
             continue
 
         # Adjust gain if overload detected
@@ -722,12 +750,10 @@ def main():
                 NEW_GAIN_DB = max(current_gain_db - CLIPPING_REDUCTION_DB, MIN_GAIN_DB)
                 if set_gain_db(MICROPHONE_NAME, NEW_GAIN_DB):
                     print(f"Clipping detected. Reduced gain to {NEW_GAIN_DB} dB")
-                    debug_print(f"Gain reduced to {NEW_GAIN_DB} dB due to clipping.", "warning")
-            # No stabilization delay; continue to next iteration
-            # Skip trend adjustment in case of clipping
+                current_gain_db = NEW_GAIN_DB  # Update current gain
+            # Output summary log
             summary_log(current_gain_db if current_gain_db else MIN_GAIN_DB, True, rms, thd)
-            time.sleep(60)
-            continue
+            continue  # Skip trend adjustment in case of clipping
 
         # Handle THD if SPL is above threshold
         if spl >= THD_FUNDAMENTAL_THRESHOLD_DB:
@@ -738,7 +764,7 @@ def main():
                     NEW_GAIN_DB = max(current_gain_db - DECREASE_GAIN_STEP_DB, MIN_GAIN_DB)
                     if set_gain_db(MICROPHONE_NAME, NEW_GAIN_DB):
                         print(f"High THD detected. Decreased gain to {NEW_GAIN_DB} dB")
-                        debug_print(f"Gain decreased to {NEW_GAIN_DB} dB due to high THD.", "info")
+                        current_gain_db = NEW_GAIN_DB  # Update current gain
             else:
                 debug_print("THD within acceptable limits.", "info")
         else:
@@ -769,10 +795,7 @@ def main():
 
         if current_gain_db is None:
             print("Failed to get current gain level. Retrying in 1 minute...")
-            time.sleep(60)
             continue
-
-        debug_print(f"Current gain: {current_gain_db} dB", "info")
 
         # Output summary log for the current state
         summary_log(current_gain_db, overload, rms, thd)
@@ -784,14 +807,14 @@ def main():
                 NEW_GAIN_DB = max(current_gain_db - DECREASE_GAIN_STEP_DB, MIN_GAIN_DB)
                 if set_gain_db(MICROPHONE_NAME, NEW_GAIN_DB):
                     print(f"Background noise high. Decreased gain to {NEW_GAIN_DB} dB")
-                    debug_print(f"Gain decreased to {NEW_GAIN_DB} dB due to high noise.", "info")
+                    current_gain_db = NEW_GAIN_DB  # Update current gain
                 TREND_COUNT = 0
             elif CURRENT_TREND == -1:
                 # Increase gain by INCREASE_GAIN_STEP_DB dB
                 NEW_GAIN_DB = min(current_gain_db + INCREASE_GAIN_STEP_DB, MAX_GAIN_DB)
                 if set_gain_db(MICROPHONE_NAME, NEW_GAIN_DB):
                     print(f"Background noise low. Increased gain to {NEW_GAIN_DB} dB")
-                    debug_print(f"Gain increased to {NEW_GAIN_DB} dB due to low noise.", "info")
+                    current_gain_db = NEW_GAIN_DB  # Update current gain
                 TREND_COUNT = 0
         else:
             debug_print("No gain adjustment needed based on noise trend.", "info")
