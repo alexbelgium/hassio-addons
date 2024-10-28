@@ -4,4 +4,4 @@ set -e
 
 bashio::log.info "Starting PHP-FPM..."
 
-exec "/usr/sbin/php-fpm${PHP_VERS:-}" --nodaemonize
+exec php-fpm"$PHPVERS" --nodaemonize
