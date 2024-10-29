@@ -12,9 +12,10 @@ log_info() { echo -e "\033[34m$1\033[0m"; }
 
 # Read configuration
 set +u
+# shellcheck disable=SC1091
 source /etc/birdnet/birdnet.conf
 
-echo "$(log_green "Starting service: throttlerecording")"
+log_green "Starting service: throttlerecording"
 touch "$HOME/BirdSongs/StreamData/analyzing_now.txt"
 
 # Set constants
