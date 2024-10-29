@@ -32,7 +32,7 @@ while IFS= read -r file; do
     sed -i "/StandardOutput/d" "$file"
     sed -i "/Service/a StandardError=append:/proc/1/fd/1" "$file"
     sed -i "/Service/a StandardOutput=append:/proc/1/fd/1" "$file"
-done < <(find "$HOME/BirdNET-Pi/templates/" -name "*.service" -print) 
+done < <(find "$HOME/BirdNET-Pi/templates/" -name "*.service" -print)
 
 # Avoid preselection in include and exclude lists
 echo "... disabling preselecting options in include and exclude lists"
@@ -50,7 +50,7 @@ caddy fmt --overwrite /etc/caddy/Caddyfile
 #Change port to leave 80 free for certificate requests
 sed -i "s|http://|http://:8081|g" /etc/caddy/Caddyfile
 sed -i "s|http://|http://:8081|g" "$HOME/BirdNET-Pi/scripts/update_caddyfile.sh"
-if [ -f /etc/caddy/Caddyfile.original ]; then 
+if [ -f /etc/caddy/Caddyfile.original ]; then
     rm /etc/caddy/Caddyfile.original
 fi
 
