@@ -69,7 +69,7 @@ while true; do
     fi
 
     # Check recorder state and queue length
-    wav_count=$(find "$ingest_dir" -maxdepth 1 -name '*.wav' | wc -l)
+    wav_count=$(find -L "$ingest_dir" -maxdepth 1 -name '*.wav' | wc -l)
     service_state=$(systemctl is-active "$srv")
     analysis_state=$(systemctl is-active "$srv2")
 
