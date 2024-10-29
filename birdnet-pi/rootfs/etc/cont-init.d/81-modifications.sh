@@ -67,6 +67,15 @@ echo "... updating systemctl path"
 mv /helpers/systemctl3.py /bin/systemctl
 chmod a+x /bin/systemctl
 
+# Improve streamlit cache
+echo "... add streamlit cache"
+sed -i "/def get_data/i \\@st\.cache_resource\(\)" "$HOME/BirdNET-Pi/scripts/plotly_streamlit.py"
+
+# Clean saved mp3 files
+echo ".. add highpass and lowpass to sox extracts"
+sed -i "s|f'={stop}']|f'={stop}', 'highpass', '250', 'lowpass', '15000']|g" "$HOME/BirdNET-Pi/scripts/utils/reporting.py"
+sed -i '/sox.*-V1/s/spectrogram/highpass 250 spectrogram/' "$HOME/BirdNET-Pi/scripts/spectrogram.sh"
+
 # Correct timedatectl path
 echo "updating timedatectl path"
 mv /helpers/timedatectl /usr/bin/timedatectl
