@@ -28,9 +28,11 @@ done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -print)
 # Send services log to container logs
 echo "... redirecting services logs to container logs"
 while IFS= read -r file; do
+    sed -i "/StandardError/d" "$file"
+    sed -i "/StandardOutput/d" "$file"
     sed -i "/Service/a StandardError=append:/proc/1/fd/1" "$file"
     sed -i "/Service/a StandardOutput=append:/proc/1/fd/1" "$file"
-done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -print) 
+done < <(find "$HOME/BirdNET-Pi/templates/" -name "*.service" -print) 
 
 # Avoid preselection in include and exclude lists
 echo "... disabling preselecting options in include and exclude lists"
