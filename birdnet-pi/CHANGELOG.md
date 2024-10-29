@@ -1,7 +1,8 @@
+- Improve logging
+
 ## 0.13-101 (29-10-2024)
-- Minor bugs fixed
-## 0.13-100 (27-10-2024)
-- Minor bugs fixed
+- Update upstream
+
 ## 0.13-98 (07-10-2024)
 - [SERVER] Fix timezone not correctly shown in config options
 
