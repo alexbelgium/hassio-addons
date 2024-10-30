@@ -1,3 +1,5 @@
+## 0.13-104 (30-10-2024)
+- Minor bugs fixed
 ## 0.13-103 (30-10-2024)
 - Fix : recording service always restarting
 
