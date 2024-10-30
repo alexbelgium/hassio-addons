@@ -1,3 +1,5 @@
+- Fix : recording service always restarting
+
 ## 0.13-102 (29-10-2024)
 - Improve logging
 
