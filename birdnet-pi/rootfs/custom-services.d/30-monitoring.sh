@@ -90,8 +90,8 @@ while true; do
 
     # Check service states
     for service in "$srv" "$srv2"; do
-        state_var="${service}_state"
-        if [[ "${state_var:-}" != "active" ]]; then
+        state="$(systemctl is-active "$service")"
+        if [[ "$state" != "active" ]]; then
             log_yellow "$(date) INFO: Restarting $service service"
             sudo systemctl restart "$service"
         fi
