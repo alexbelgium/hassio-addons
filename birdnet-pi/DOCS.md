@@ -544,7 +544,7 @@ def set_gain_db(mic_name, gain_db):
         return False
 
 
-def find_fundamental_frequency(fft_freqs, fft_magnitude, min_freq=100, max_freq=5000):
+def find_fundamental_frequency(fft_freqs, fft_magnitude, min_freq=2000, max_freq=8000):
     """
     Dynamically finds the fundamental frequency within a specified range.
     """
