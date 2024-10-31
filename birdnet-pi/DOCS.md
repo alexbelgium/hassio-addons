@@ -95,11 +95,11 @@ sleep 60
 
 # Run focusrite and autogain scripts if present
 if [ -f "$HOME/focusrite.sh" ]; then
-    python3 -u "$HOME/focusrite.sh" >/tmp/log_focusrite 2>/tmp/log_focusrite_error &
+    sudo python3 -u "$HOME/focusrite.sh" >/tmp/log_focusrite 2>/tmp/log_focusrite_error &
 fi
 
 if [ -f "$HOME/autogain.py" ]; then
-    python3 -u "$HOME/autogain.py" >/tmp/log_autogain 2>/tmp/log_autogain_error &
+    sudo python3 -u "$HOME/autogain.py" >/tmp/log_autogain 2>/tmp/log_autogain_error &
 fi
 ```
 
@@ -502,7 +502,7 @@ def summary_log(current_gain, clipping, rms_amplitude, thd_percentage):
     if SUMMARY_MODE:
         current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         clipping_status = "Yes" if clipping else "No"
-        print(f"[{current_time}] [SUMMARY] Gain: {current_gain:.1f} dB | Clipping: {clipping_status} | "
+        print(f"[{current_time}] Gain: {current_gain:.1f} dB | Clipping: {clipping_status} | "
               f"Noise: {rms_amplitude:.5f} | THD: {thd_percentage:.2f}%")
 
 
