@@ -77,38 +77,14 @@ echo "Starting birdmic"
 # Disable gigabit ethernet
 sudo ethtool -s eth0 speed 100 duplex full autoneg on
 
-# Run GStreamer RTSP server if installed
-if command -v gst-launch-1.0 &>/dev/null; then
-    ./rtsp_audio_server.py & sleep 2 >/tmp/log_rtsp 2>/tmp/log_rtsp_error &
-    gst_pid=$!
-else
-    echo "GStreamer not found, skipping to ffmpeg fallback"
-    gst_pid=0
-fi
-
-# Wait for a moment to let GStreamer initialize
+# Start mediamtx first and give it a moment to initialize
+./mediamtx & 
 sleep 5
-
-# Check if the RTSP stream can be accessed (i.e., the feed can be read)
-if ! ffmpeg -rtsp_transport tcp -i rtsp://localhost:8554/birdmic -t 1 -f null - > /dev/null 2>&1; then
-    echo "GStreamer RTSP stream is not accessible, switching to ffmpeg"
     
-    # Kill the GStreamer process if it's still running
-    if [ "$gst_pid" -ne 0 ]; then
-        kill "$gst_pid"
-    fi
-    
-    # Start mediamtx first and give it a moment to initialize
-    ./mediamtx & 
-    sleep 5
-    
-    # Run ffmpeg as fallback
-    ffmpeg -nostdin -use_wallclock_as_timestamps 1 -fflags +genpts -f alsa -acodec pcm_s16be -ac 2 -ar 96000 \
-        -i plughw:0,0 -ac 2 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp \
-        -buffer_size 512k 2>/tmp/rtsp_error &
-else
-    echo "GStreamer RTSP stream is running successfully"
-fi
+# Run ffmpeg
+ffmpeg -nostdin -use_wallclock_as_timestamps 1 -fflags +genpts -f alsa -acodec pcm_s16be -ac 2 -ar 96000 \
+-i plughw:0,0 -ac 2 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp \
+-buffer_size 512k 2>/tmp/rtsp_error &
 
 # Set microphone volume
 sleep 5
