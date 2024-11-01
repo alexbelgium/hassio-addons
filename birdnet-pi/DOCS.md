@@ -759,14 +759,14 @@ def main():
 
         # Adjust gain based on noise trend if threshold count is reached
         if TREND_COUNT >= TREND_COUNT_THRESHOLD:
-            if CURRENT_TREND == 1:
+            if CURRENT_TREND == 1 and int(current_gain_db) >= MAX_GAIN_DB:
                 # Decrease gain by DECREASE_GAIN_STEP_DB dB
                 NEW_GAIN_DB = max(current_gain_db - DECREASE_GAIN_STEP_DB, MIN_GAIN_DB)
                 if set_gain_db(MICROPHONE_NAME, NEW_GAIN_DB):
                     print(f"Background noise high. Decreased gain to {NEW_GAIN_DB} dB")
                     debug_print(f"Gain decreased to {NEW_GAIN_DB} dB due to high noise.", "info")
                 TREND_COUNT = 0
-            elif CURRENT_TREND == -1:
+            elif CURRENT_TREND == -1 and int(current_gain_db) < MAX_GAIN_DB:
                 # Increase gain by INCREASE_GAIN_STEP_DB dB
                 NEW_GAIN_DB = min(current_gain_db + INCREASE_GAIN_STEP_DB, MAX_GAIN_DB)
                 if set_gain_db(MICROPHONE_NAME, NEW_GAIN_DB):
