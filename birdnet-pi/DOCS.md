@@ -502,7 +502,7 @@ def summary_log(current_gain, clipping, rms_amplitude, thd_percentage):
     if SUMMARY_MODE:
         current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         clipping_status = "Yes" if clipping else "No"
-        print(f"[{current_time}] Gain: {current_gain:.1f} dB | Clipping: {clipping_status} | "
+        print(f"[{current_time}] [SUMMARY] Gain: {current_gain:.1f} dB | Clipping: {clipping_status} | "
               f"Noise: {rms_amplitude:.5f} | THD: {thd_percentage:.2f}%")
 
 
@@ -759,7 +759,7 @@ def main():
 
         # Adjust gain based on noise trend if threshold count is reached
         if TREND_COUNT >= TREND_COUNT_THRESHOLD:
-            if CURRENT_TREND == 1 and int(current_gain_db) >= MAX_GAIN_DB:
+            if CURRENT_TREND == 1 and int(current_gain_db) > MIN_GAIN_DB:
                 # Decrease gain by DECREASE_GAIN_STEP_DB dB
                 NEW_GAIN_DB = max(current_gain_db - DECREASE_GAIN_STEP_DB, MIN_GAIN_DB)
                 if set_gain_db(MICROPHONE_NAME, NEW_GAIN_DB):
