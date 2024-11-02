@@ -108,11 +108,11 @@
     "SMARTCTL_COMMAND_DEVICE_TYPE": "list(auto|ata|scsi|sat|usbcypress|usbjmicron|usbsunplus|sntasmedia|sntjmicron|sntrealtek|marvell|megaraid)?",
     "SMARTCTL_MEGARAID_DISK_NUM": "int?",
     "TZ": "str?",
-    "Updates": "list(Hourly|Daily|Weekly)",
+    "Updates": "list(Quarterly|Hourly|Daily|Weekly)",
     "expose_collector": "bool?"
   },
   "slug": "scrutiny",
   "udev": true,
   "url": "https://github.com/AnalogJ/scrutiny",
-  "version": "v0.8.1-5"
+  "version": "v0.8.1-6"
 }
