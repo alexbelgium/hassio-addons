@@ -51,6 +51,10 @@ FREQUENCY="$(bashio::config 'Updates')"
 bashio::log.info "$FREQUENCY updates"
 
 case "$FREQUENCY" in
+    "Quarterly")
+        sed -i "/customize the cron schedule/a export COLLECTOR_CRON_SCHEDULE=\"*/15 * * * *\"" /etc/cont-init.d/50-cron-config
+        ;;
+
     "Hourly")
         sed -i "/customize the cron schedule/a export COLLECTOR_CRON_SCHEDULE=\"0 * * * *\"" /etc/cont-init.d/50-cron-config
         ;;
