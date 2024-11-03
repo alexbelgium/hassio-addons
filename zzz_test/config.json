@@ -65,6 +65,7 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "BASE_SUBPATH": "/mealie/",
     "DATA_DIR": "/config",
     "DB_ENGINE": "sqlite",
     "MAX_WORKERS": "1",
@@ -83,7 +84,6 @@
   "name": "Mealie test",
   "options": {
     "ALLOW_SIGNUP": true,
-    "BASE_SUBPATH": "/mealie",
     "DATA_DIR": "/config",
     "PGID": 1000,
     "PUID": 1000,
@@ -113,6 +113,6 @@
   "slug": "test",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v2.0-beta_ingress_test7",
+  "version": "v2.0-beta_ingress_test9",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9001]"
 }
