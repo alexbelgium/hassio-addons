@@ -14,9 +14,26 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM
-ARG BUILD_VERSION
-FROM ${BUILD_FROM}
+# Stage 1: Build Frontend with SUB_PATH
+FROM node:16 AS builder
+
+# Set the SUB_PATH environment variable
+ARG SUB_PATH="/mealie/"
+ENV SUB_PATH=$SUB_PATH
+
+WORKDIR /app
+
+# Clone the Mealie repository to get the frontend source code
+RUN git clone https://github.com/mealie-recipes/mealie.git . && \
+    cd /app/frontend && \
+    yarn install --prefer-offline --frozen-lockfile --non-interactive --production=false --network-timeout 1000000 && \
+    yarn generate
+
+# Stage 2: Build the Final Image
+FROM hkotel/mealie:nightly
+
+# Copy the rebuilt frontend files into the final image
+COPY --from=builder /app/frontend/dist /spa/static
 
 ##################
 # 2 Modify Image #
@@ -76,6 +93,12 @@ RUN \
     && cat /app/run.sh >> /run.txt \
     && cat /run.txt > /app/run.sh \
     && chmod +x /app/run.sh
+
+# Expose necessary ports
+EXPOSE 9000
+
+# Set the entrypoint
+ENTRYPOINT ["/app/run.sh"]
 
 ############
 # 5 Labels #
