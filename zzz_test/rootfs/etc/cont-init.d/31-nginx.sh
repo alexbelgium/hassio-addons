@@ -26,7 +26,8 @@ bashio::log.info "Adapting for ingress"
 
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
-base_path="$(bashio::config 'BASE_SUBPATH')"
-sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%BASE_SUBPATH%%/${base_path}/g" /etc/nginx/servers/ingress.conf
+base_path="/mealie/"
+sed -i "s|%%port%%|${ingress_port}|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%BASE_SUBPATH%%|${base_path}|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%BASE_SUBPATH%%|${base_path}|g" /etc/nginx/servers/ssl.conf
