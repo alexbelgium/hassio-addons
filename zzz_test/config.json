@@ -113,6 +113,5 @@
   "slug": "test",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v2.0-beta_ingress_test9",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:9001]"
+  "version": "v2.0-beta_ingress_test9"
 }
