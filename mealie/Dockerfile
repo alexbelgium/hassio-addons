@@ -24,6 +24,7 @@ ENV SUB_PATH=$SUB_PATH
 WORKDIR /app
 
 # Clone the Mealie repository to get the frontend source code
+# hadolint ignore=DL3003
 RUN git clone https://github.com/mealie-recipes/mealie.git . && \
     cd /app/frontend && \
     yarn install --prefer-offline --frozen-lockfile --non-interactive --production=false --network-timeout 1000000 && \
