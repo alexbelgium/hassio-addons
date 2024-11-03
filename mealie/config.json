@@ -65,6 +65,7 @@
     "/dev/nvme2"
   ],
   "environment": {
+    "BASE_SUBPATH": "/mealie/",
     "DATA_DIR": "/config",
     "DB_ENGINE": "sqlite",
     "MAX_WORKERS": "1",
@@ -73,6 +74,7 @@
     "WORKERS_PER_CORE": "0.5"
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
+  "ingress": true,
   "map": [
     "addon_config:rw",
     "homeassistant_config:rw",
@@ -110,6 +112,5 @@
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v2.1.0",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:9001]"
+  "version": "v2.1.0-ingress"
 }

@@ -4,6 +4,8 @@ set -e
 
 if bashio::config.true 'ssl'; then
 
+    bashio::log.info "Add ssl"
+
     # Validate ssl
     bashio::config.require.ssl
 
@@ -19,3 +21,15 @@ else
     sed -i "/ssl/d" /etc/nginx/servers/ssl.conf
 
 fi
+
+bashio::log.info "Adapting for ingress"
+
+ingress_port=$(bashio::addon.ingress_port)
+ingress_interface=$(bashio::addon.ip_address)
+ingress_entry=$(bashio::addon.ingress_entry)
+base_path="/mealie/"
+sed -i "s|%%port%%|${ingress_port}|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%base_subpath%%|${base_path}|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%base_subpath%%|${base_path}|g" /etc/nginx/servers/ssl.conf
