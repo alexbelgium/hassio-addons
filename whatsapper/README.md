@@ -25,6 +25,12 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 Various tweaks and configuration options addition.
 This addon is based on the [docker image](https://hub.docker.com/r/whatsapper/whatsapper).
 
+Add the HACS integration found here
+
+https://github.com/baldarn/whatsapper-ha-integration
+
+and follow the instructions there to configure the system
+
 ## Configuration
 
 ```yaml
