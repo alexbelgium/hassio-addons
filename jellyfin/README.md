@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [qBittorrent , Jellyseerr, Lidarr , Radarr , FlareSolver , Prowlarr , Jellyfin NAS] running any hassio-addons will cause HA not to boot after restart. (opened 2024-10-10)](https://github.com/alexbelgium/hassio-addons/issues/1600) by [@venci1ty](https://github.com/venci1ty)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
