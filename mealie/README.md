@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Mealie] Mealie not recognising login details (opened 2024-09-20)](https://github.com/alexbelgium/hassio-addons/issues/1580) by [@Valve90210](https://github.com/Valve90210)
+## &#9888; Open Issue : [🐛 [Mealie] Recipes gon (opened 2024-11-10)](https://github.com/alexbelgium/hassio-addons/issues/1628) by [@skank01](https://github.com/skank01)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
