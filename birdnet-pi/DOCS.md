@@ -8,6 +8,11 @@ My recommendation :
 - Best middle end system (< 150 €) : Clippy EM272 TRS/TRRS (55€) + Rode AI micro trs/trrs to usb (70€) + Rycote deadcat (27€)
 - Best high end system (<400 €) : Clippy EM272 XLR (85€) or LOM Ucho Pro (75€) + Focusrite Scarlet 2i2 4th Gen (200€) + Bubblebee Pro Extreme deadcat (45€)
 
+Sources for high end microphones in Europe: 
+- Clippy (EM272) : https://www.veldshop.nl/en/clippy-xlr-em272z1-mono-microphone.html
+- LOM (EM272) : https://store.lom.audio/collections/basicucho-series
+  - Immersive sound (AOM5024) : https://immersivesoundscapes.com/earsight-standard-v2/
+
 # App settings recommendation
 I've tested lots of settings by running 2 versions of my HA birdnet-pi addon in parallel using the same rtsp feed, and comparing impact of parameters. 
 My conclusions aren't universal, as it seems to be highly dependent on the region and type of mic used. For example, the old model seems to be better in Australia, while the new one better in Europe.
