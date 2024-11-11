@@ -11,7 +11,7 @@ My recommendation :
 Sources for high end microphones in Europe: 
 - Clippy (EM272) : https://www.veldshop.nl/en/clippy-xlr-em272z1-mono-microphone.html
 - LOM (EM272) : https://store.lom.audio/collections/basicucho-series
-  - Immersive sound (AOM5024) : https://immersivesoundscapes.com/earsight-standard-v2/
+- Immersive sound (AOM5024) : https://immersivesoundscapes.com/earsight-standard-v2/
 
 # App settings recommendation
 I've tested lots of settings by running 2 versions of my HA birdnet-pi addon in parallel using the same rtsp feed, and comparing impact of parameters. 
