@@ -35,7 +35,7 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
-Webui can be found at `<your-ip>:8096`.
+Webui can be found at `<your-ip>:32400`.
 
 ```yaml
 PGID: user
