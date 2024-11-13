@@ -39,7 +39,7 @@ fi
 if bashio::config.has_value "TZ"; then
     TZ="$(bashio::config 'TZ')"
     bashio::log.info "Timezone : $TZ"
-    sed -i "1a export TZ=$TZ" /etc/cont-init.d/10-timezone
+    sed -i "1a export TZ=$TZ" /etc/cont-init.d/01-timezone
 fi
 
 ################
