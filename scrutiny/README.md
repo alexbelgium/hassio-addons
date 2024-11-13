@@ -46,6 +46,7 @@ Enable full access only if you are encountering issues. SMART access should work
 
 ```yaml
 Updates: Hourly, Daily, Weekly
+Updates_custom_time : if you select "Custom" as "Updates" variable, you can define specific updates in natural language in the "Updates_custom_time" field. Example : select "Custom" as "Updates", then type a custom intervals like "5m", "2h", "1w", or "2mo" to have an update every 5 minutes, or every 2 hours, or evey week, or every 2 months
 TZ: timezone
 Mode: Collector+WebUI or Collector only
 ```
