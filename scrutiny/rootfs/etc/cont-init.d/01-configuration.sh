@@ -42,7 +42,7 @@ fi
 
 # Align update with options
 FREQUENCY="$(bashio::config 'Updates')"
-bashio::log.info "$FREQUENCY updates"
+bashio::log.info "$FREQUENCY updates as defined in the 'Updates' option"
 
 case "$FREQUENCY" in
     "Quarterly")
