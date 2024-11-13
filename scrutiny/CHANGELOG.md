@@ -1,3 +1,5 @@
+- New feature : if you select "Custom" as "Updates" variable, you can define specific updates in natural language in the "Updates_custom_time" field. Example : select "Custom" as "Updates", then type a custom intervals like "5m", "2h", "1w", or "2mo" to have an update every 5 minutes, or every 2 hours, or evey week, or every 2 months
+
 ## v0.8.1-6 (02-11-2024)
 - Minor bugs fixed
 ## v0.8.1-5 (22-08-2024)
