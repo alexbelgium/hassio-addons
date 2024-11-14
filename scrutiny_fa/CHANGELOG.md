@@ -1,3 +1,5 @@
+- Align behavior with other addons : map /addons_config/xxx-scrutiny to enable env injection or custom scripts
+
 ## v0.8.1-8 (13-11-2024)
 - Minor bugs fixed
 ## v0.8.1-7 (13-11-2024)

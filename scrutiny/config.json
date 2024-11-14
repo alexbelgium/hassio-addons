@@ -80,7 +80,8 @@
   "ingress": true,
   "init": false,
   "map": [
-    "share:rw"
+    "share:rw",
+    "addon_config:rw"
   ],
   "name": "Scrutiny",
   "options": {
@@ -115,5 +116,5 @@
   "slug": "scrutiny",
   "udev": true,
   "url": "https://github.com/AnalogJ/scrutiny",
-  "version": "v0.8.1-8"
+  "version": "v0.8.1-9"
 }
