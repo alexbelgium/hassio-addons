@@ -34,9 +34,9 @@ This addon is based on the [docker image](https://hub.docker.com/r/hkotel/mealie
 ## Configuration
 
 - Start the addon. Wait a while and check the log for any errors.
-- Open yourdomain.com:9925 (where ":9925" is the port configured in the addon).
+- Open yourdomain.com:9090 (where ":9090" is the port configured in the addon).
 - Default
-  - Username: changeme@email.com
+  - Username: changeme@example.com
   - Password: MyPassword
 
 Options can be configured through two ways :
