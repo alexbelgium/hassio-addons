@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [linkwarden] Needs update to latest version 2.8.x (opened 2024-11-14)](https://github.com/alexbelgium/hassio-addons/issues/1634) by [@b52src](https://github.com/b52src)
 
 # Home assistant add-on: linkwarden
 
