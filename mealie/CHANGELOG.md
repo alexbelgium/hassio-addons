@@ -1,3 +1,6 @@
+
+## v2.2.0 (16-11-2024)
+- Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 ## v2.1.0-2 (03-11-2024)
 - Addition of ingress, first try
 
