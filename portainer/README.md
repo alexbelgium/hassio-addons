@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Portainer] Not possible to perform Initial Setup (opened 2024-09-27)](https://github.com/alexbelgium/hassio-addons/issues/1587) by [@IPTN](https://github.com/IPTN)
 
 # Home assistant add-on: Portainer
 
