@@ -1,6 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Mealie] Mealie not recognising login details (opened 2024-09-20)](https://github.com/alexbelgium/hassio-addons/issues/1580) by [@Valve90210](https://github.com/Valve90210)
 ## &#9888; Open Issue : [🐛 [Mealie] Recipes gon (opened 2024-11-10)](https://github.com/alexbelgium/hassio-addons/issues/1628) by [@skank01](https://github.com/skank01)
-## &#9888; Open Issue : [🐛 [mealie] Environment variables not being imported from the config.yaml (opened 2024-11-14)](https://github.com/alexbelgium/hassio-addons/issues/1635) by [@Jo-AnB](https://github.com/Jo-AnB)
 ## &#9888; Open Issue : [🐛 [mealie] Addon OIDC redirects no longer work in 2.2.0 (opened 2024-11-16)](https://github.com/alexbelgium/hassio-addons/issues/1636) by [@BlackHoleFox](https://github.com/BlackHoleFox)
 # Hass.io Add-ons: Mealie
 
