@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Webtrees] Reverse proxy appends port to the hostname (opened 2024-11-17)](https://github.com/alexbelgium/hassio-addons/issues/1641) by [@matthewturk](https://github.com/matthewturk)
 # Home assistant add-on: Webtrees
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
