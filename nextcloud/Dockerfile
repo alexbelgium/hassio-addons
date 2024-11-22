@@ -31,7 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Specific modifications
-ARG CONFIGLOCATION="/share/nextcloud"
+ARG CONFIGLOCATION="/config/data"
 # hadolint ignore=SC2015,SC2086
 RUN \
     # Change default data location

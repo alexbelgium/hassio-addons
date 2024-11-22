@@ -21,7 +21,7 @@ if [ -f /data/config/www/nextcloud/config/config.php ]; then
     datadirectory="$(sed -n "s|.*datadirectory.*' => '*\(.*[^ ]\) *',.*|\1|p" /data/config/www/nextcloud/config/config.php)"
     echo "... data directory detected : $datadirectory"
 else
-    datadirectory=/share/nextcloud
+    datadirectory=/config/data
     echo "Nextcloud is not installed yet, the default data directory is : $datadirectory. You can change it during nextcloud installation."
 fi
 

@@ -1,5 +1,5 @@
 - Use /addon_configs for config.yaml and nextcloud-ocr.sh to backup them with nextcloud
-- Use /config/data as default folder instead of /share/nextcloud for initial set-up
+- Use /config/data as default folder instead of /config/data for initial set-up
 
 ## 30.0.2 (09-11-2024)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
@@ -342,7 +342,7 @@
 - Repaired increment of trusted domains
 - Repaired setting OCR language
 - New optional config : enable elasticsearch (requires to run in parallel elasticsearch addon)
-- Repaired default data setting in /share/nextcloud
+- Repaired default data setting in /config/data
 
 ## 22.2.0 (02-10-2021)
 
