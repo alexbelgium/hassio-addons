@@ -7,6 +7,7 @@ cp -rnf /var/www/baikal/* /data/
 chown -R nginx:nginx /data
 
 # Start app
-/./etc/init.d/php8.1-fpm start && \
-    chown -R nginx:nginx /data/Specific && \
-    nginx -g "daemon off;"
+# Find the PHP FPM service script and start it
+find /etc/init.d -type f -name "php*-fpm" -exec {} start \; && \
+chown -R nginx:nginx /data/Specific && \
+nginx -g "daemon off;"
