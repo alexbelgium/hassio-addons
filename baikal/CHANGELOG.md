@@ -1,3 +1,5 @@
+## 0.10.1-2 (23-11-2024)
+- Minor bugs fixed
 
 ## 0.10.1 (23-11-2024)
 - Update to latest version from ckulka/baikal-docker (changelog : https://github.com/ckulka/baikal-docker/releases)
