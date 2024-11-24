@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Scrutiny FA] USB SSD doesnt shows (opened 2024-11-17)](https://github.com/alexbelgium/hassio-addons/issues/1640) by [@chertvl](https://github.com/chertvl)
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
