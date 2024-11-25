@@ -14,7 +14,8 @@ server {
 
   location /api {
     proxy_pass {{ .protocol }}://backend;
-    http2_push_preload on;
+    expires 1y;
+    add_header Cache-Control "public, immutable";
     client_max_body_size 10M;
   }
 
