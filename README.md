@@ -45,13 +45,13 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 95
-- Installed : 77734
+- Installed : 76488
 
 ### Top 3
 
-1. Filebrowser (17159x)
+1. Filebrowser (17528x)
 2. Portainer (7030x)
-3. Postgres (3124x)
+3. Postgres (3232x)
 
 ### Architectures used
 
@@ -273,7 +273,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (17159x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
+&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (17528x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fupdater.json)
@@ -635,7 +635,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![armv7][armv7-badge]
 ![full_access][full_access-badge]
 
-&#10003;  [Postgres (3124x) 15](postgres/) : Postgres (3124x) 15 with pgvecto.rs support
+&#10003;  [Postgres (3232x) 15](postgres/) : Postgres (3232x) 15 with pgvecto.rs support
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpostgres%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpostgres%2Fupdater.json)
