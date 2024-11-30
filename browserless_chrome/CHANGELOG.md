@@ -1,4 +1,7 @@
 
+## 2.24.0 (30-11-2024)
+- Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
+
 ## 2.23.0 (02-11-2024)
 - Update to latest version from browserless/chrome (changelog : https://github.com/browserless/chrome/releases)
 
