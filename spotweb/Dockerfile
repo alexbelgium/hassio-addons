@@ -34,7 +34,7 @@ ENV LANG C.UTF-8
 ENV APP_ID="spotweb"
 ENV APP_NAME="Spotweb"
 ENV APP_DIR="/app"
-ENV BUILD_UPSTREAM="1.5.6"
+ENV BUILD_UPSTREAM="1.5.7"
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
