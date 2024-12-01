@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Mealie] Recipes gon (opened 2024-11-10)](https://github.com/alexbelgium/hassio-addons/issues/1628) by [@skank01](https://github.com/skank01)
 ## &#9888; Open Issue : [🐛 [mealie] Addon OIDC redirects no longer work in 2.2.0 (opened 2024-11-16)](https://github.com/alexbelgium/hassio-addons/issues/1636) by [@BlackHoleFox](https://github.com/BlackHoleFox)
 # Hass.io Add-ons: Mealie
 
