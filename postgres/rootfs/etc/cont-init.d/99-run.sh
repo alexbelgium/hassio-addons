@@ -32,14 +32,6 @@ chmod -R 777 "$CONFIG_HOME"
 # Launch App #
 ##############
 
-# Function to handle SIGTERM
-function shutdown_postgres {
-    echo "Received SIGTERM, shutting down PostgreSQL..."
-    gosu postgres pg_ctl -D "$PGDATA" -m fast stop
-    exit 0
-}
-trap 'shutdown_postgres' SIGTERM
-
 # Go to folder
 cd /config || true
 
