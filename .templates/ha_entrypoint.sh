@@ -2,20 +2,6 @@
 # shellcheck shell=bash
 echo "Starting..."
 
-##################
-# Handle sigterm #
-##################
-
-cleanup() {
-    echo "Caught SIGTERM, cleaning up..."
-    # Sends SIGTERM to all child processes
-    pkill -TERM -P $$ || true
-    wait
-    exit 0
-}
-
-trap cleanup SIGTERM || true
-
 ####################
 # Starting scripts #
 ####################
