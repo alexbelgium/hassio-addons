@@ -35,7 +35,7 @@ chmod -R 777 "$CONFIG_HOME"
 # Function to handle SIGTERM
 function shutdown_postgres {
     echo "Received SIGTERM, shutting down PostgreSQL..."
-    pg_ctl -D "$PGDATA" -m fast stop
+    gosu postgres pg_ctl -D "$PGDATA" -m fast stop
     exit 0
 }
 trap 'shutdown_postgres' SIGTERM
