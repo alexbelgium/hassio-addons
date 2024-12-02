@@ -1,6 +1,3 @@
-## 15.7-3 (02-12-2024)
-- Minor bugs fixed
-## 15.7 (02-12-2024)
 - Fix database shutdown
 - Update pgvector to v0.3.0
 
