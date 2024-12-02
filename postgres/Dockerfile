@@ -72,7 +72,9 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-RUN chmod 777 /docker-entrypoint-initdb.d/*
+RUN chmod 777 /docker-entrypoint-initdb.d/* && \
+    # Close gracefully
+    sed -i "2s|^|trap 'echo \"Received SIGTERM, shutting down PostgreSQL...\"; gosu postgres pg_ctl -D \"\$PGDATA\" -m fast stop; exit 0' SIGTERM\n|" /ha_entrypoint.sh
 
 WORKDIR /config
 ENTRYPOINT [ "/usr/bin/env" ]
