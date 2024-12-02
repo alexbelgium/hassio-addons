@@ -32,6 +32,14 @@ chmod -R 777 "$CONFIG_HOME"
 # Launch App #
 ##############
 
+# Function to handle SIGTERM
+function shutdown_postgres {
+    echo "Received SIGTERM, shutting down PostgreSQL..."
+    pg_ctl -D "$PGDATA" -m fast stop
+    exit 0
+}
+trap 'shutdown_postgres' SIGTERM
+
 # Go to folder
 cd /config || true
 
@@ -41,10 +49,13 @@ echo " "
 
 # Add docker-entrypoint command
 if [ "$(bashio::info.arch)" != "armv7" ]; then
-    # Exec vecto modification
+    # Exec vector modification
     /./docker-entrypoint-initdb.d/10-vector.sh & \
-    docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so
+    docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so &
 else
     bashio::log.warning "Your architecture is armv7, pgvecto.rs is disabled as not supported"
-    docker-entrypoint.sh postgres
+    docker-entrypoint.sh postgres &
 fi
+
+# Wait for all background processes to finish
+wait
