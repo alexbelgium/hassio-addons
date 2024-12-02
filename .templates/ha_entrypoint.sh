@@ -2,6 +2,20 @@
 # shellcheck shell=bash
 echo "Starting..."
 
+##################
+# Handle sigterm #
+##################
+
+cleanup() {
+    echo "Caught SIGTERM, cleaning up..."
+    # Sends SIGTERM to all child processes
+    pkill -TERM -P $$ || true
+    wait
+    exit 0
+}
+
+trap cleanup SIGTERM || true
+
 ####################
 # Starting scripts #
 ####################
@@ -40,7 +54,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
         source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     else
         # Support for posix only shell
-        /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+        "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     fi
 
     # Cleanup
