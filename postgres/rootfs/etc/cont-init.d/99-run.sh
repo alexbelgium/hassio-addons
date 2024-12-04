@@ -2,52 +2,58 @@
 # shellcheck shell=bash
 set -e
 
-# Use new config file
 CONFIG_HOME="/config"
 mkdir -p "$CONFIG_HOME"
-if [ ! -f "$CONFIG_HOME"/postgresql.conf ]; then
-    # Copy default config.env
+if [ ! -f "$CONFIG_HOME/postgresql.conf" ]; then
     if [ -f /usr/local/share/postgresql/postgresql.conf.sample ]; then
-        cp /usr/local/share/postgresql/postgresql.conf.sample "$CONFIG_HOME"/postgresql.conf
+        cp /usr/local/share/postgresql/postgresql.conf.sample "$CONFIG_HOME/postgresql.conf"
     elif [ -f /usr/share/postgresql/postgresql.conf.sample ]; then
-        cp /usr/share/postgresql/postgresql.conf.sample "$CONFIG_HOME"/postgresql.conf
+        cp /usr/share/postgresql/postgresql.conf.sample "$CONFIG_HOME/postgresql.conf"
     else
         bashio::exit.nok "Config file not found, please ask maintainer"
+        exit 1
     fi
     bashio::log.warning "A default config.env file was copied in $CONFIG_HOME. Please customize according to https://hub.docker.com/_/postgres and restart the add-on"
 else
-    bashio::log.warning "The config.env file found in $CONFIG_HOME will be used (mapped to /addon_configs/xxx-postgres when accessing from Filebrowser). Please customize according to https://hub.docker.com/_/postgres and restart the add-on"
+    bashio::log.warning "Using existing config.env file in $CONFIG_HOME."
 fi
 
-# Define home
-# Creating config location
+# Setup data directory
 mkdir -p "$PGDATA"
 chown -R postgres:postgres "$PGDATA"
-chmod 777 "$PGDATA"
+chmod 700 "$PGDATA"
 
-# Permissions
-chmod -R 777 "$CONFIG_HOME"
+# Set permissions
+chmod -R 755 "$CONFIG_HOME"
 
 ##############
 # Launch App #
 ##############
 
-# Go to folder
 cd /config || true
 
-echo " "
 bashio::log.info "Starting the app"
-echo " "
 
-# Add docker-entrypoint command
+function shutdown_postgres {
+    echo "Received SIGTERM/SIGINT, shutting down PostgreSQL..."
+    gosu postgres pg_ctl -D "$PGDATA" -m fast stop
+    exit 0
+}
+
+trap 'shutdown_postgres' SIGTERM SIGINT
+
+# Start background tasks
 if [ "$(bashio::info.arch)" != "armv7" ]; then
-    # Exec vector modification
-    /./docker-entrypoint-initdb.d/10-vector.sh & \
+    /./docker-entrypoint-initdb.d/10-vector.sh &
+    VECTOR_PID=$!
+
     docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so &
+    POSTGRES_PID=$!
 else
-    bashio::log.warning "Your architecture is armv7, pgvecto.rs is disabled as not supported"
+    bashio::log.warning "ARMv7 detected: Starting without vectors.so"
     docker-entrypoint.sh postgres &
+    POSTGRES_PID=$!
 fi
 
-# Wait for all background processes to finish
-wait
+# Wait for processes to finish
+wait $VECTOR_PID $POSTGRES_PID
