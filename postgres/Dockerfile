@@ -74,7 +74,7 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 
 RUN chmod 777 /docker-entrypoint-initdb.d/*
 
-RUN echo -e "\n# Simulate long-running process to allow signal handling\nwhile true; do\n    sleep 1\ndone" >> /ha_entrypoint.sh
+RUN echo "\nsleep infinity" >> /ha_entrypoint.sh
 
 WORKDIR /config
 ENTRYPOINT [ "/ha_entrypoint.sh" ]
