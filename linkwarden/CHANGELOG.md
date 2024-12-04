@@ -1,3 +1,5 @@
+## 2.8.4 (04-12-2024)
+- Minor bugs fixed
 
 ## 2.8.3 (16-11-2024)
 - Update to latest version from linkwarden/linkwarden (changelog : https://github.com/linkwarden/linkwarden/releases)
