@@ -1,5 +1,28 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
+
+# Only trap SIGTERM if the script's PID is 1
+if [ "$$" -eq 1 ]; then
+    echo "PID is 1, trapping SIGTERM..."
+    set -m
+    terminate() {
+        echo "Termination signal received, forwarding to subprocesses..."
+        
+        # Check for available commands to terminate subprocesses
+        if command -v pkill &>/dev/null; then
+            pkill -P $$
+        elif command -v kill &>/dev/null; then
+            kill -TERM -- -$$
+        fi
+    
+        # Wait for all child processes to terminate
+        wait
+        echo "All subprocesses terminated. Exiting."
+        exit 0
+    }
+    trap terminate SIGTERM
+fi
+
 echo "Starting..."
 
 ####################
