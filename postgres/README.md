@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [PostgresSQL] does not get shutdown properly when stopping the addon (opened 2024-12-01)](https://github.com/alexbelgium/hassio-addons/issues/1652) by [@paviro](https://github.com/paviro)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
