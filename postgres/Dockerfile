@@ -74,9 +74,8 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 
 RUN chmod 777 /docker-entrypoint-initdb.d/* && \
     # Close gracefully
-    sed -i "1s|^|#!/usr/bin/env bashio\n|" /ha_entrypoint.sh && \
-    sed -i "2s|^|trap 'echo \"Received SIGTERM, shutting down PostgreSQL...\"; gosu postgres pg_ctl -D \"\$PGDATA\" -m fast stop; exit 0' SIGTERM\n|" /ha_entrypoint.sh && \
-    echo -e "\n# Simulate long-running process to allow signal handling\nwhile true; do\n    sleep 1\ndone" >> /ha_entrypoint.sh
+    cat /etc/cont-init.d/99-run.sh >> /ha_entrypoint.sh && \
+    rm /etc/cont-init.d/99-run.sh
 
 WORKDIR /config
 ENTRYPOINT [ "/ha_entrypoint.sh" ]
