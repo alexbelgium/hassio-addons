@@ -56,4 +56,4 @@ else
 fi
 
 # Wait for processes to finish
-# wait "$VECTOR_PID" "$POSTGRES_PID"
+wait "$VECTOR_PID" "$POSTGRES_PID"
