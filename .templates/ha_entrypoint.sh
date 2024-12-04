@@ -20,7 +20,7 @@ if [ "$$" -eq 1 ]; then
         echo "All subprocesses terminated. Exiting."
         exit 0
     }
-    trap terminate SIGTERM
+    trap terminate SIGTERM SIGINT
 fi
 
 echo "Starting..."
