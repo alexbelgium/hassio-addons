@@ -7,8 +7,6 @@ echo "Starting..."
 # Starting scripts #
 ####################
 
-pids=()
-pids+=(1)
 for SCRIPTS in /etc/cont-init.d/*; do
     [ -e "$SCRIPTS" ] || continue
     echo "$SCRIPTS: executing"
@@ -40,10 +38,10 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s/bashio::exit.nok/return 1/g" "$SCRIPTS"
         sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
         # shellcheck source=/dev/null
-        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?" && pids+=($!)
+        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     else
         # Support for posix only shell
-        "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?" && pids+=($!)
+        "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     fi
 
     # Cleanup
@@ -60,10 +58,10 @@ if [ "$$" -eq 1 ]; then
     terminate() {
         echo "Termination signal received, forwarding to subprocesses..."
         
-        # Gracefully terminate subprocesses
-        for pid in "${pids[@]}"; do
+        # Gracefully terminate open subprocesses
+        for pid in $(ls /proc/*/cmdline 2>/dev/null | grep -oP '/proc/\K[0-9]+'); do
             echo "Terminating PID $pid"
-            kill -TERM "$pid" 2>/dev/null
+            kill -TERM "$pid" 2>/dev/null || true
         done
     
         # Wait for all child processes to terminate
