@@ -40,7 +40,7 @@ function shutdown_postgres {
     exit 0
 }
 
-trap 'shutdown_postgres' SIGTERM SIGINT
+#trap 'shutdown_postgres' SIGTERM SIGINT
 
 # Start background tasks
 if [ "$(bashio::info.arch)" != "armv7" ]; then
@@ -54,6 +54,8 @@ else
     docker-entrypoint.sh postgres &
     POSTGRES_PID=$!
 fi
+
+bashio::log.info "Started!"
 
 # Wait for processes to finish
 # wait "$VECTOR_PID" "$POSTGRES_PID"
