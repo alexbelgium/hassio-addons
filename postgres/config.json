@@ -12,7 +12,6 @@
     "PGDATA": "/config/database"
   },
   "image": "ghcr.io/alexbelgium/postgres-{arch}",
-  "init": false,
   "map": [
     "addon_config:rw",
     "homeassistant_config:rw",
