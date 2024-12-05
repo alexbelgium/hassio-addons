@@ -73,7 +73,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 RUN chmod 777 /docker-entrypoint-initdb.d/* && \
-    sed -i "/Termination signal received/a trap 'gosu postgres pg_ctl -D \"\$PGDATA\" -m fast stop' SIGTERM SIGINT" /ha_entrypoint.sh
+    sed -i "/Termination signal received/a gosu postgres pg_ctl -D \"\$PGDATA\" -m fast stop" /ha_entrypoint.sh
 
 WORKDIR /config
 ENTRYPOINT [ "/usr/bin/env" ]
