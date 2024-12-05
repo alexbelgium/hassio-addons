@@ -44,10 +44,12 @@ trap 'shutdown_postgres' SIGTERM SIGINT
 
 # Start background tasks
 if [ "$(bashio::info.arch)" != "armv7" ]; then
-    /./docker-entrypoint-initdb.d/10-vector.sh & VECTOR_PID=$!
+    /./docker-entrypoint-initdb.d/10-vector.sh & true
 
-    docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so & POSTGRES_PID=$!
+    docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so & true
 else
     bashio::log.warning "ARMv7 detected: Starting without vectors.so"
-    docker-entrypoint.sh postgres & POSTGRES_PID=$!
+    docker-entrypoint.sh postgres & true
 fi
+
+while :; do sleep infinity & wait $!; done
