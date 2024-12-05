@@ -59,9 +59,13 @@ if [ "$$" -eq 1 ]; then
         echo "Termination signal received, forwarding to subprocesses..."
         
         # Gracefully terminate open subprocesses
-        for pid in $(grep -l "/etc/cont-init.d" /proc/*/cmdline 2>/dev/null | grep -oP '/proc/\K[0-9]+'); do
-            echo "Terminating PID $pid"
-            kill -TERM "$pid" 2>/dev/null || true
+        for pid in /proc/[0-9]*/; do
+             pid=${pid#/proc/}
+             pid=${pid%/}
+             if [[ "$pid" -ne 1 ]]; then
+                 echo "Terminating PID $pid"
+                 kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
+             fi
         done
     
         # Wait for all child processes to terminate
