@@ -1,8 +1,7 @@
 ## 15.7-4 (05-12-2024)
 - Fix env error
-
-## 15.7-2 (02-12-2024)
 - Fix database shutdown
+- Upgrade postgres to 15.7
 - Update pgvector to v0.3.0
 
 ## 15.5-7 (24-02-2024)
