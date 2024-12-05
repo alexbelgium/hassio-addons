@@ -53,6 +53,7 @@ done
 # Starting container #
 ######################
 
+# If PID 1, keep alive and manage sigterm
 if [ "$$" -eq 1 ]; then
     echo " "
     echo -e "\033[0;32mEverything started!\033[0m"
@@ -60,13 +61,12 @@ if [ "$$" -eq 1 ]; then
         echo "Termination signal received, forwarding to subprocesses..."
 
         if command -v pgrep &>/dev/null; then
-            # Use pgrep if available to find child processes
             for pid in $(pgrep -P $$); do
                 echo "Terminating child PID $pid"
                 kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
             done
         else
-            # Fallback to iterating through /proc
+            # Fallback to iterating through /proc if pgrep is not available
             for pid in /proc/[0-9]*/; do
                 pid=${pid#/proc/}
                 pid=${pid%/}
