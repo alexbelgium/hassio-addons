@@ -59,7 +59,7 @@ if [ "$$" -eq 1 ]; then
     echo -e "\033[0;32mEverything started!\033[0m"
     terminate() {
         echo "Termination signal received, forwarding to subprocesses..."
-
+        # Terminate all subprocesses
         if command -v pgrep &>/dev/null; then
             for pid in $(pgrep -P $$); do
                 echo "Terminating child PID $pid"
