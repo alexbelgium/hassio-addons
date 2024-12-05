@@ -8,11 +8,10 @@ if [ "$$" -eq 1 ]; then
         echo "Termination signal received, forwarding to subprocesses..."
         
         # Gracefully terminate subprocesses
-        if command -v pkill &>/dev/null; then
-            pkill -P $$
-        elif command -v kill &>/dev/null; then
-            kill -TERM -- -$$
-        fi
+        for pid in "${pids[@]}"; do
+            echo "Terminating PID $pid"
+            kill -TERM "$pid" 2>/dev/null
+        done
     
         # Wait for all child processes to terminate
         wait
@@ -22,6 +21,9 @@ if [ "$$" -eq 1 ]; then
 fi
 
 echo "Starting..."
+
+# Array to hold the PIDs of the subprocesses
+pids=()
 
 ####################
 # Starting scripts #
@@ -58,11 +60,14 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s/bashio::exit.nok/return 1/g" "$SCRIPTS"
         sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
         # shellcheck source=/dev/null
-        (source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $? &)
+        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $? &
     else
         # Support for posix only shell
-        ("$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $? &)
+        "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $? &
     fi
+
+    # Track the PID of the background process
+    pids+=($!)
 
     # Cleanup
     rm "$SCRIPTS"
