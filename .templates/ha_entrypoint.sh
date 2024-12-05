@@ -75,6 +75,8 @@ done
 ######################
 
 if [ "$$" -eq 1 ]; then
+    echo " "
+    echo -e "\033[0;32mEverything started!\033[0m"
     sleep infinity
 else
     echo " "
