@@ -34,14 +34,6 @@ cd /config || true
 
 bashio::log.info "Starting the app"
 
-function shutdown_postgres {
-    echo "Received SIGTERM/SIGINT, shutting down PostgreSQL..."
-    gosu postgres pg_ctl -D "$PGDATA" -m fast stop
-    exit 0
-}
-
-trap 'shutdown_postgres' SIGTERM SIGINT
-
 # Start background tasks
 if [ "$(bashio::info.arch)" != "armv7" ]; then
     /./docker-entrypoint-initdb.d/10-vector.sh & VECTOR_PID=$!
