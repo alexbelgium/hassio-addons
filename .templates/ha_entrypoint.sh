@@ -76,7 +76,7 @@ if [ "$$" -eq 1 ]; then
     echo " "
     echo -e "\033[0;32mEverything started!\033[0m"
     trap terminate SIGTERM SIGINT
-    exec sleep infinity
+    while true; do sleep 86400 & wait $!; done
 else
     echo " "
     echo -e "\033[0;32mStarting the upstream container\033[0m"
