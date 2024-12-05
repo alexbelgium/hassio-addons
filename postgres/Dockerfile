@@ -74,7 +74,7 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 
 RUN chmod 777 /docker-entrypoint-initdb.d/* && \
     # Close gracefully
-    sed -i "s|trap terminate|trap 'gosu postgres pg_ctl -D \"\$PGDATA\" -m fast stop; exit 0'|g" /ha_entrypoint.sh
+    sed -i "s|trap terminate|trap 'gosu postgres pg_ctl -D \"\$PGDATA\" -m fast stop'|g" /ha_entrypoint.sh
 
 WORKDIR /config
 ENTRYPOINT [ "/usr/bin/env" ]
