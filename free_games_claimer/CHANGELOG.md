@@ -1,3 +1,5 @@
+## 1.6-3 (05-12-2024)
+- Minor bugs fixed
 ## 1.6-2 (05-12-2024)
 - Minor bugs fixed
 
