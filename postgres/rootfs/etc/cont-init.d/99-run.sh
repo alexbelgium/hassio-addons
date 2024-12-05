@@ -40,7 +40,7 @@ function shutdown_postgres {
     exit 0
 }
 
-#trap 'shutdown_postgres' SIGTERM SIGINT
+trap 'shutdown_postgres' SIGTERM SIGINT
 
 # Start background tasks
 if [ "$(bashio::info.arch)" != "armv7" ]; then
