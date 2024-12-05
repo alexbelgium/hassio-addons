@@ -52,7 +52,5 @@ else
     docker-entrypoint.sh postgres & POSTGRES_PID=$!
 fi
 
-bashio::log.info "Started!"
-
 # Wait for processes to finish
 # wait "$VECTOR_PID" "$POSTGRES_PID"
