@@ -3,12 +3,11 @@
 
 # Only trap SIGTERM if the script's PID is 1
 if [ "$$" -eq 1 ]; then
-    echo "PID is 1, trapping SIGTERM..."
     set -m
     terminate() {
         echo "Termination signal received, forwarding to subprocesses..."
         
-        # Check for available commands to terminate subprocesses
+        # Gracefully terminate subprocesses
         if command -v pkill &>/dev/null; then
             pkill -P $$
         elif command -v kill &>/dev/null; then
@@ -20,7 +19,6 @@ if [ "$$" -eq 1 ]; then
         echo "All subprocesses terminated. Exiting."
         exit 0
     }
-    trap terminate SIGTERM SIGINT
 fi
 
 echo "Starting..."
@@ -77,7 +75,8 @@ done
 if [ "$$" -eq 1 ]; then
     echo " "
     echo -e "\033[0;32mEverything started!\033[0m"
-    sleep infinity
+    trap terminate SIGTERM SIGINT
+    exec sleep infinity
 else
     echo " "
     echo -e "\033[0;32mStarting the upstream container\033[0m"
