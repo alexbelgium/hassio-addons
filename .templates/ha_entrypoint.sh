@@ -34,7 +34,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
     echo "$SCRIPTS: executing"
 
     # Check if run as root
-    if test "$(id -u)" == 0 && test "$(id -u)" == 0; then
+    if [ "$(id -u)" == 0 ]; then
         chown "$(id -u)":"$(id -g)" "$SCRIPTS"
         chmod a+x "$SCRIPTS"
     else
@@ -60,10 +60,10 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s/bashio::exit.nok/return 1/g" "$SCRIPTS"
         sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
         # shellcheck source=/dev/null
-        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $? &
+        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?" &
     else
         # Support for posix only shell
-        "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $? &
+        "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?" &
     fi
 
     # Track the PID of the background process
