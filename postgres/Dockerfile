@@ -73,7 +73,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 RUN chmod 777 /docker-entrypoint-initdb.d/* && \
-    sed -i "s|sleep infinity|bashio::log.info \"Postgres ready to connect\" && sleep infinity|g" /ha_entrypoint.sh
+    sed -i "s|sleep infinity|bashio::log.info \"Postgres ready to connect\" \& sleep infinity|g" /ha_entrypoint.sh
 
 WORKDIR /config
 ENTRYPOINT [ "/usr/bin/env" ]
