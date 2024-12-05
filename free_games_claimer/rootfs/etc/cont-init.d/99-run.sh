@@ -6,29 +6,35 @@ set -e
 # Initialize #
 ##############
 
-# Use new config file
 CONFIG_HOME="$(bashio::config "CONFIG_LOCATION")"
 CONFIG_HOME="$(dirname "$CONFIG_HOME")"
-if [ ! -f "$CONFIG_HOME"/config.env ]; then
+
+# Use new config file
+if [ ! -f "$CONFIG_HOME/config.env" ]; then
     # Copy default config.env
-    cp /templates/config.env "$CONFIG_HOME"/config.env
-    chmod 777 "$CONFIG_HOME"/config.env
-    bashio::log.warning "A default config.env file was copied in $CONFIG_HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
+    cp /templates/config.env "$CONFIG_HOME/"
+    chmod 755 "$CONFIG_HOME/config.env"
+    bashio::log.warning "A default config.env file was copied to $CONFIG_HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
 else
-    bashio::log.warning "The config.env file found in $CONFIG_HOME will be used. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
+    bashio::log.info "Using existing config.env file in $CONFIG_HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
+fi
+
+# Remove erroneous folder named config.env
+if [ -d "$CONFIG_HOME/config.env" ]; then
+    rm -r "$CONFIG_HOME/config.env"
 fi
 
 # Copy new file
 mkdir -p /data/data
-\cp "$CONFIG_HOME"/config.env /data/data/
+cp "$CONFIG_HOME/config.env" /data/data/
 
 # Permissions
-chmod -R 777 "$CONFIG_HOME"
+chmod -R 755 "$CONFIG_HOME"
 
 # Export variables
 set -a
 echo ""
-bashio::log.info "Getting variables from $CONFIG_HOME/config.env"
+bashio::log.info "Sourcing variables from $CONFIG_HOME/config.env"
 cp "$CONFIG_HOME"/config.env /config.env
 # Remove previous instance
 sed -i "s|export ||g" /config.env
@@ -67,8 +73,7 @@ trim() {
 
 # Add docker-entrypoint command
 # Print each value of the array by using the loop
-for val in "${strarr[@]}";
-do
+for val in "${strarr[@]}"; do
     #Removes whitespaces
     val="$(trim "$val")"
     echo " "
@@ -78,6 +83,6 @@ do
     echo "$val" | xargs docker-entrypoint.sh || true
 done
 
-bashio::log.info "All actions concluded, addon will stop in 10 seconds"
+bashio::log.info "All actions concluded. Stopping in 10 seconds."
 sleep 10
 bashio::addon.stop
