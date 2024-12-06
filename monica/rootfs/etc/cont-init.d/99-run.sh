@@ -2,7 +2,15 @@
 # shellcheck shell=bash
 set -e
 
-# Gives mariadb information
+#################
+# Set structure #
+#################
+
+mkdir -p /config/storage
+cp -rf /var/www/html/storage/* /config/storage/
+rm -r /var/www/html/storage
+ln -sf /config/storage /var/www/html/storage
+chown -R www-data:www-data /config
 
 ###################
 # Define database #
