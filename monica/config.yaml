@@ -64,7 +64,7 @@ devices:
 environment: {
   "APP_TRUSTED_PROXIES": "*",
   "APP_ENV": "production",
-  "APP_DEBUG: "false"
+  "APP_DEBUG": "false"
 }
 image: ghcr.io/alexbelgium/monica-{arch}
 init: false
