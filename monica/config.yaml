@@ -74,7 +74,6 @@ options: {
 map:
   - type: addon_config
     read_only: false
-    path: /var/www/html/storage
 name: Monica
 ports:
   8080/tcp: 8181
@@ -93,5 +92,5 @@ services:
 - mysql:want
 slug: monica
 url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
-version: test8
+version: test9
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
