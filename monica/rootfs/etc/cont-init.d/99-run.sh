@@ -42,6 +42,10 @@ case "$database" in
         bashio::log.warning "Monica is using the MariaDB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
+
+        # Create database
+        mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
+
         ;;
 
     # Use Mariadb_addon
@@ -60,6 +64,10 @@ case "$database" in
         if bashio::services.available 'mysql'; then
             bashio::log.warning "The MariaDB addon is available, but you have selected to use your own database by manually configuring the addon options"
         fi
+
+        # Create database
+        mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
+
         ;;
         
 esac
