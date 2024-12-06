@@ -17,7 +17,9 @@ DB_PORT="$(bashio::config 'DB_PORT')"
 DB_USERNAME="$(bashio::config 'DB_USERNAME')"
 
 # Check if at least one variable is not empty
-if [ -n "$DB_DATABASE" ] || [ -n "$DB_HOST" ] || [ -n "$DB_PASSWORD" ] || [ -n "$DB_PORT" ] || [ -n "$DB_USERNAME" ]; then
+for var in DB_DATABASE DB_HOST DB_PASSWORD DB_PORT DB_USERNAME; do
+    if bashio::config.has_value "$var"; then
+    
     # Alert if mariadb is available
     if bashio::services.available 'mysql'; then
         bashio::log.warning "The MariaDB addon is available, but you have selected to use your own database by manually configuring the addon options"
@@ -54,7 +56,13 @@ fi
 # APP_KEY #
 ###########
 
-if [ ${#APP_KEY:=$(bashio::config "APP_KEY")} -ne 32 ]; then
+#!/bin/bash
+
+# Get APP_KEY from bashio::config
+APP_KEY=$(bashio::config "APP_KEY")
+
+# Check if APP_KEY is not 32 characters long
+if [ -z "$APP_KEY" ] || [ ${#APP_KEY} -ne 32 ]; then
     APP_KEY="$(echo -n 'base64:'; openssl rand -base64 32)"
     bashio::addon.option "APP_KEY" "${APP_KEY}"
     bashio::log.warning "The APP_KEY set was invalid, generated a random one: ${APP_KEY}. Restarting to take it into account"
