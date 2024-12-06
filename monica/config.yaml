@@ -61,7 +61,11 @@ devices:
 - "/dev/nvme0"
 - "/dev/nvme1"
 - "/dev/nvme2"
-environment: {}
+environment: {
+  "APP_TRUSTED_PROXIES": "*",
+  "APP_ENV": "production",
+  "APP_DEBUG: "false"
+}
 image: ghcr.io/alexbelgium/monica-{arch}
 init: false
 options: {
@@ -89,5 +93,5 @@ services:
 - mysql:want
 slug: monica
 url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
-version: test7
+version: test8
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
