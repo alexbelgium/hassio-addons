@@ -16,6 +16,7 @@ case "$database" in
     # Use sqlite
     sqlite)
         export DB_DATABASE="/config/database.sqlite"
+        export DB_CONNECTION=sqlite
         touch "$DB_DATABASE"
         chown www-data:www-data "$DB_DATABASE"
         bashio::log.blue "Using $DB_DATABASE"
@@ -24,6 +25,7 @@ case "$database" in
     # Use Mariadb_addon
     MariaDB_addon)
         # Use MariaDB
+        export DB_CONNECTION=mysql
         bashio::log.green "Using MariaDB addon. Requirements: running MariaDB addon. Discovering values..."
         if ! bashio::services.available 'mysql'; then
             bashio::log.fatal "Local database access should be provided by the MariaDB addon"
@@ -44,6 +46,7 @@ case "$database" in
 
     # Use Mariadb_addon
     Mysql_external)
+        export DB_CONNECTION=mysql
         for var in DB_DATABASE DB_HOST DB_PASSWORD DB_PORT DB_USERNAME; do
             # Verify all variables are set
             if ! bashio::config.has_value "$var"; then
