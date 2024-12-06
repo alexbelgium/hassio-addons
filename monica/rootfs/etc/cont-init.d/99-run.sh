@@ -26,6 +26,8 @@ case "$database" in
         export DB_DATABASE="/config/database.sqlite"
         export DB_CONNECTION=sqlite
         touch "$DB_DATABASE"
+        mkdir -p /var/www/html/database
+        ln -sf "$DB_DATABASE" /var/www/html/database/database.sqlite
         chown www-data:www-data "$DB_DATABASE"
         bashio::log.blue "Using $DB_DATABASE"
         ;;
