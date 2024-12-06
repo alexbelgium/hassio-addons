@@ -1,11 +1,9 @@
 {
-  "dockerhub_by_date": true,
-  "dockerhub_list_size": 20,
-  "github_tagfilter": "apache",
-  "last_update": "16-11-2024",
+  "github_beta": true,
+  "github_tagfilter": "v5",
+  "last_update": "06-12-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "monica",
-  "source": "dockerhub",
-  "upstream_repo": "monica",
-  "upstream_version": "5.0-apache"
+  "upstream_repo": "monicahq/monica",
+  "upstream_version": "v5.0.0-beta.4"
 }
