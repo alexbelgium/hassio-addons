@@ -76,9 +76,9 @@ map:
     read_only: false
 name: Monica
 ports:
-  8080/tcp: 8181
+  80/tcp: 8181
 ports_description:
-  8080/tcp: webui
+  80/tcp: webui
 schema: {
   "database": "list(sqlite|MariaDB_addon|Mysql_external)",
   "APP_KEY": "str?",
@@ -92,5 +92,5 @@ services:
 - mysql:want
 slug: monica
 url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
-version: test13
-webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
+version: v5.0.0-beta.4
+webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
