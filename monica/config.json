@@ -1,0 +1,92 @@
+arch:
+- aarch64
+- amd64
+codenotary: alexandrep.github@gmail.com
+description: Personal Relationship Manager
+devices:
+- "/dev/dri"
+- "/dev/dri/card0"
+- "/dev/dri/card1"
+- "/dev/dri/renderD128"
+- "/dev/vchiq"
+- "/dev/video10"
+- "/dev/video11"
+- "/dev/video12"
+- "/dev/video13"
+- "/dev/video14"
+- "/dev/video15"
+- "/dev/video16"
+- "/dev/ttyUSB0"
+- "/dev/sda"
+- "/dev/sdb"
+- "/dev/sdc"
+- "/dev/sdd"
+- "/dev/sde"
+- "/dev/sdf"
+- "/dev/sdg"
+- "/dev/nvme"
+- "/dev/nvme0n1p1"
+- "/dev/nvme0n1p2"
+- "/dev/nvme0n1p3"
+- "/dev/nvme1n1p1"
+- "/dev/nvme1n1p2"
+- "/dev/nvme1n1p3"
+- "/dev/nvme2n1p1"
+- "/dev/nvme2n1p2"
+- "/dev/nvme3n1p3"
+- "/dev/mmcblk"
+- "/dev/fuse"
+- "/dev/sda1"
+- "/dev/sdb1"
+- "/dev/sdc1"
+- "/dev/sdd1"
+- "/dev/sde1"
+- "/dev/sdf1"
+- "/dev/sdg1"
+- "/dev/sda2"
+- "/dev/sdb2"
+- "/dev/sdc2"
+- "/dev/sdd2"
+- "/dev/sde2"
+- "/dev/sdf2"
+- "/dev/sdg2"
+- "/dev/sda3"
+- "/dev/sdb3"
+- "/dev/sda4"
+- "/dev/sdb4"
+- "/dev/sda5"
+- "/dev/sda6"
+- "/dev/sda7"
+- "/dev/sda8"
+- "/dev/nvme0"
+- "/dev/nvme1"
+- "/dev/nvme2"
+environment: {}
+image: ghcr.io/alexbelgium/monica-{arch}
+init: false
+options: {
+  "APP_KEY": "empty"
+}
+map:
+  - type: addon_config
+    read_only: false
+    path: /var/www/html/storage
+name: Monica
+ports:
+  8080/tcp: 8181
+ports_description:
+  8080/tcp: webui
+schema: {
+  "APP_KEY": "str?",
+  "DB_DATABASE": "str?",
+  "DB_HOST": "str?",
+  "DB_PASSWORD": "str?",
+  "DB_PORT": "int?",
+  "DB_USERNAME": "str?"
+}
+services:
+- mysql:want
+slug: monica
+url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
+version: test
+webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"

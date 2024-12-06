@@ -1,0 +1,6 @@
+---
+build_from:
+  aarch64: monica:5.0-apache
+  amd64: monica:5.0-apache
+codenotary:
+  signer: alexandrep.github@gmail.com
