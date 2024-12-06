@@ -69,7 +69,7 @@ esac
 APP_KEY=$(bashio::config "APP_KEY")
 
 # Check if APP_KEY is not 32 characters long
-if [ -z "$APP_KEY" ] || [ ${#APP_KEY} -ne 32 ]; then
+if [ -z "$APP_KEY" ] || [ ${#APP_KEY} -lt 32 ]; then
     APP_KEY="$(echo -n 'base64:'; openssl rand -base64 32)"
     bashio::addon.option "APP_KEY" "${APP_KEY}"
     bashio::log.warning "The APP_KEY set was invalid, generated a random one: ${APP_KEY}. Restarting to take it into account"
