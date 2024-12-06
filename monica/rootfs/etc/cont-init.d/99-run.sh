@@ -33,11 +33,11 @@ case "$database" in
         fi
     
         # Use values
-        export DB_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "DB_HOST=$DB_HOST" && sed "1a export DB_HOST=$DB_HOST" /usr/local/bin/entrypoint.sh
-        export DB_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "DB_PORT=$DB_PORT" && sed "1a export DB_PORT=$DB_PORT" /usr/local/bin/entrypoint.sh
-        export DB_DATABASE=monica && bashio::log.blue "DB_DATABASE=$DB_DATABASE" && sed "1a export DB_DATABASE=$DB_DATABASE" /usr/local/bin/entrypoint.sh
-        export DB_USERNAME=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USERNAME=$DB_USERNAME" && sed "1a export DB_USERNAME=$DB_USERNAME" /usr/local/bin/entrypoint.sh
-        export DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD" && sed "1a export DB_PASSWORD=$DB_PASSWORD" /usr/local/bin/entrypoint.sh
+        export DB_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "DB_HOST=$DB_HOST" && sed -i "1a export DB_HOST=$DB_HOST" /usr/local/bin/entrypoint.sh
+        export DB_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "DB_PORT=$DB_PORT" && sed -i "1a export DB_PORT=$DB_PORT" /usr/local/bin/entrypoint.sh
+        export DB_DATABASE=monica && bashio::log.blue "DB_DATABASE=$DB_DATABASE" && sed -i "1a export DB_DATABASE=$DB_DATABASE" /usr/local/bin/entrypoint.sh
+        export DB_USERNAME=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USERNAME=$DB_USERNAME" && sed -i "1a export DB_USERNAME=$DB_USERNAME" /usr/local/bin/entrypoint.sh
+        export DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD" && sed -i "1a export DB_PASSWORD=$DB_PASSWORD" /usr/local/bin/entrypoint.sh
     
         bashio::log.warning "Monica is using the MariaDB addon"
         bashio::log.warning "Please ensure this is included in your backups"
