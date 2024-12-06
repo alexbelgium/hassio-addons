@@ -1,4 +1,4 @@
-## &#9888; Open Issue : [🐛 [PostgresSQL] does not get shutdown properly when stopping the addon (opened 2024-12-01)](https://github.com/alexbelgium/hassio-addons/issues/1652) by [@paviro](https://github.com/paviro)
+## &#9888; Open Issue : [🐛 [Postgres 15] Password is not specified (opened 2024-12-04)](https://github.com/alexbelgium/hassio-addons/issues/1654) by [@Foshkey](https://github.com/Foshkey)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

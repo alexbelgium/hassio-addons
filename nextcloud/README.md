@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 Nextcloud - upload big size files with desktop client - how to change/edit variables, ie: PHP.ini, www.conf, & nextcloud.conf variables - an avoid error 499 from desktop app (big size file) (opened 2024-11-27)](https://github.com/alexbelgium/hassio-addons/issues/1651) by [@aelg305](https://github.com/aelg305)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

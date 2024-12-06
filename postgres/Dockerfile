@@ -73,12 +73,12 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 RUN chmod 777 /docker-entrypoint-initdb.d/* && \
-    # Close gracefully
-    cat /etc/cont-init.d/99-run.sh >> /ha_entrypoint.sh && \
-    rm /etc/cont-init.d/99-run.sh
+    sed -i "/Termination signal received/a gosu postgres pg_ctl -D \"\$PGDATA\" -m fast stop" /ha_entrypoint.sh
 
 WORKDIR /config
-ENTRYPOINT [ "/ha_entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
