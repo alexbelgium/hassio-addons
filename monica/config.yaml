@@ -89,5 +89,5 @@ services:
 - mysql:want
 slug: monica
 url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
-version: test6
+version: test7
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
