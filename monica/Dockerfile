@@ -68,7 +68,7 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 
 WORKDIR /config
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ENTRYPONT [ /ha_entrypoint.sh ]
+ENTRYPOINT [ /ha_entrypoint.sh ]
 
 ############
 # 5 Labels #
@@ -104,7 +104,7 @@ LABEL \
 # 6 Healthcheck #
 #################
 
-ENV HEALTH_PORT="80" \
+ENV HEALTH_PORT="8080" \
     HEALTH_URL=""
 HEALTHCHECK \
     --interval=5s \
