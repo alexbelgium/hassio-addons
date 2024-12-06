@@ -65,7 +65,7 @@ environment: {}
 image: ghcr.io/alexbelgium/monica-{arch}
 init: false
 options: {
-  "APP_KEY": "empty"
+  "database": "sqlite"
 }
 map:
   - type: addon_config
@@ -77,6 +77,7 @@ ports:
 ports_description:
   8080/tcp: webui
 schema: {
+  "database": "list(sqlite|MariaDB_addon|Mysql_external)"
   "APP_KEY": "str?",
   "DB_DATABASE": "str?",
   "DB_HOST": "str?",
@@ -88,5 +89,5 @@ services:
 - mysql:want
 slug: monica
 url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
-version: test5
+version: test6
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
