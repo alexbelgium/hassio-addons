@@ -15,10 +15,10 @@ case "$database" in
 
     # Use sqlite
     sqlite)
-        mkdir -p database
-        touch database/database.sqlite
-        chown www-data:www-data database/database.sqlite
-        bashio::log.blue "Using database/database.sqlite"
+        export DB_DATABASE="/config/database.sqlite"
+        touch "$DB_DATABASE"
+        chown www-data:www-data "$DB_DATABASE"
+        bashio::log.blue "Using $DB_DATABASE"
         ;;
 
     # Use Mariadb_addon
