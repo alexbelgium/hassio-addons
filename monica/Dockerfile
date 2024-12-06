@@ -67,8 +67,9 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 WORKDIR /config
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ENTRYPOINT [ /ha_entrypoint.sh ]
 
 ############
 # 5 Labels #
