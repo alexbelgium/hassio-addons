@@ -87,11 +87,19 @@ schema: {
   "DB_HOST": "str?",
   "DB_PASSWORD": "str?",
   "DB_PORT": "int?",
-  "DB_USERNAME": "str?"
+  "DB_USERNAME": "str?",
+  "MAIL_MAILER": "str?",
+  "MAIL_HOST": "str?",
+  "MAIL_PORT": "str?",
+  "MAIL_USERNAME": "str?",
+  "MAIL_PASSWORD": "str?",
+  "MAIL_ENCRYPTION": "str?",
+  "MAIL_FROM_ADDRESS": "str?",
+  "MAIL_FROM_NAME": "str?"
 }
 services:
 - mysql:want
 slug: monica
 url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
-version: test2
+version: test3
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
