@@ -65,4 +65,4 @@ export APP_KEY="$(bashio::config "APP_KEY")"
 
 bashio::log.info "Starting Monica"
 
-/./usr/local/bin/entrypoint.sh
+entrypoint.sh apache2-foreground
