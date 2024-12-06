@@ -10,23 +10,24 @@ set -e
 
 bashio::log.info "Defining database"
 
-DB_DATABASE="$(bashio::config 'DB_DATABASE')"
-DB_HOST="$(bashio::config 'DB_HOST')"
-DB_PASSWORD="$(bashio::config 'DB_PASSWORD')"
-DB_PORT="$(bashio::config 'DB_PORT')"
-DB_USERNAME="$(bashio::config 'DB_USERNAME')"
+export DB_DATABASE="$(bashio::config 'DB_DATABASE')"
+export DB_HOST="$(bashio::config 'DB_HOST')"
+export DB_PASSWORD="$(bashio::config 'DB_PASSWORD')"
+export DB_PORT="$(bashio::config 'DB_PORT')"
+export DB_USERNAME="$(bashio::config 'DB_USERNAME')"
 
-# Check if at least one variable is not empty
-for var in DB_DATABASE DB_HOST DB_PASSWORD DB_PORT DB_USERNAME; do
-    if bashio::config.has_value "$var"; then
-    
+# Check if DB_HOST is configured
+if bashio::config.has_value "DB_HOST"; then
+    bashio::log.info "Manual configuration of mysql detected using host : $DB_HOST"
     # Alert if mariadb is available
     if bashio::services.available 'mysql'; then
         bashio::log.warning "The MariaDB addon is available, but you have selected to use your own database by manually configuring the addon options"
     fi
-    # Verify all variables are not empty
-    if [ -z "$DB_DATABASE" ] || [ -z "$DB_HOST" ] || [ -z "$DB_PASSWORD" ] || [ -z "$DB_PORT" ] || [ -z "$DB_USERNAME" ]; then
-        bashio::log.fatal "You have selected to not use the automatic Mariadb detection by manually configuring the addon options, but not all. Ensure all are set: DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USERNAME."
+    # Verify all variables are set
+    for var in DB_DATABASE DB_HOST DB_PASSWORD DB_PORT DB_USERNAME; do
+        if ! bashio::config.has_value "$var"; then
+            bashio::log.fatal "You have selected to not use the automatic Mariadb detection by manually configuring the addon options, but the option $var is not set."
+        fi
         exit 1
     fi
 else
@@ -55,8 +56,6 @@ fi
 ###########
 # APP_KEY #
 ###########
-
-#!/bin/bash
 
 # Get APP_KEY from bashio::config
 APP_KEY=$(bashio::config "APP_KEY")
