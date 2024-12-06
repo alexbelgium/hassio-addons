@@ -50,6 +50,7 @@ linkwarden: linkwarden/config.* # Image : yes
 mealie: mealie/config.* # Image : yes
 mealie_api: mealie_api/config.* # Image : yes
 mealie_frontend: mealie_frontend/config.* # IImage : yes # Image : yes
+monica: monica/config.* # Image : yes
 myelectricaldata: myelectricaldata/config.* # Image : yes
 myelectricaldata_dev: myelectricaldata_dev/config.* # Image : yes
 mylar3: mylar3/config.* # Image : yes
