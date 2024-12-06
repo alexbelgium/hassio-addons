@@ -18,26 +18,24 @@ export DB_USERNAME="$(bashio::config 'DB_USERNAME')"
 
 # Check if DB_HOST is configured
 if bashio::config.has_value "DB_HOST"; then
-    bashio::log.info "Manual configuration of mysql detected using host : $DB_HOST"
-    # Alert if mariadb is available
+    bashio::log.info "Manual configuration of MySQL detected using host: $DB_HOST"
+    # Alert if MariaDB is available
     if bashio::services.available 'mysql'; then
         bashio::log.warning "The MariaDB addon is available, but you have selected to use your own database by manually configuring the addon options"
     fi
     # Verify all variables are set
     for var in DB_DATABASE DB_HOST DB_PASSWORD DB_PORT DB_USERNAME; do
         if ! bashio::config.has_value "$var"; then
-            bashio::log.fatal "You have selected to not use the automatic Mariadb detection by manually configuring the addon options, but the option $var is not set."
+            bashio::log.fatal "You have selected to not use the automatic MariaDB detection by manually configuring the addon options, but the option $var is not set."
+            exit 1
         fi
-        exit 1
-    fi
+    done
 else
-    # User Mariadb
-    bashio::log.info "Using MariaDB addon. Requirements : running MariaDB addon. Discovering values..."
+    # Use MariaDB
+    bashio::log.info "Using MariaDB addon. Requirements: running MariaDB addon. Discovering values..."
     if ! bashio::services.available 'mysql'; then
-        bashio::log.fatal \
-        "Local database access should be provided by the MariaDB addon"
-        bashio::exit.nok \
-        "Please ensure it is installed and started"
+        bashio::log.fatal "Local database access should be provided by the MariaDB addon"
+        bashio::exit.nok "Please ensure it is installed and started"
     fi
 
     # Use values
@@ -47,10 +45,9 @@ else
     export DB_USERNAME=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USERNAME=$DB_USERNAME" && sed "1a export DB_USERNAME=$DB_USERNAME" /usr/local/bin/entrypoint.sh
     export DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD" && sed "1a export DB_PASSWORD=$DB_PASSWORD" /usr/local/bin/entrypoint.sh
 
-    bashio::log.warning "Monica is using the Maria DB addon"
+    bashio::log.warning "Monica is using the MariaDB addon"
     bashio::log.warning "Please ensure this is included in your backups"
     bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
-
 fi
 
 ###########
