@@ -98,8 +98,8 @@
     "DB_USERNAME": "postgres",
     "DISABLE_MACHINE_LEARNING": false,
     "JWT_SECRET": "jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=",
-    "PGID": 1000,
-    "PUID": 1000,
+    "PGID": 0,
+    "PUID": 0,
     "TZ": "Europe/Paris",
     "data_location": "/share/immich"
   },
