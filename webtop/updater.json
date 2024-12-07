@@ -1,6 +1,7 @@
 {
   "github_fulltag": "true",
   "last_update": "07-12-2024",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "webtop_kde",
   "source": "github",
