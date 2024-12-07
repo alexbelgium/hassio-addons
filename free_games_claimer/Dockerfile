@@ -70,7 +70,10 @@ RUN \
     sed -i "s|/fgc|/data|g" /usr/local/bin/docker-entrypoint.sh && \
     # Run scripts only once
     sed -i "1a if [ -f /done ]; then exit 0; fi && touch /done" /ha_entrypoint.sh && \
-    sed -i "s=x11vnc=[[ \"\$(ps aux | grep \"x11vnc\" | grep -v grep)\" ]] || x11vnc=g" /usr/local/bin/docker-entrypoint.sh
+    sed -i "s=x11vnc=[[ \"\$(ps aux | grep \"x11vnc\" | grep -v grep)\" ]] || x11vnc=g" /usr/local/bin/docker-entrypoint.sh && \
+    # Update playwright
+    npx playwright install-deps && \
+    npx playwright install
 
 WORKDIR /data
 ENTRYPOINT [ "/usr/bin/env" ]
