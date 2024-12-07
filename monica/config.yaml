@@ -66,7 +66,8 @@ environment: {
   "APP_ENV": "production",
   "APP_DEBUG": "false",
   "MAIL_MAILER": "log",
-  "DEFAULT_MAX_STORAGE_SIZE": "4096"
+  "DEFAULT_STORAGE_LIMIT": "1024",
+  "DEFAULT_MAX_STORAGE_SIZE": "1024"
 }
 image: ghcr.io/alexbelgium/monica-{arch}
 init: false
