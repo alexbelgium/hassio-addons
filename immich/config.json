@@ -74,8 +74,8 @@
     "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
     "MACHINE_LEARNING_WORKERS": "1",
     "MACHINE_LEARNING_WORKER_TIMEOUT": "120",
-    "PGID": 0,
-    "PUID": 0,
+    "PGID": "0",
+    "PUID": "0",
     "REDIS_HOSTNAME": "localhost",
     "REDIS_PORT": "6379",
     "REVERSE_GEOCODING_DUMP_DIRECTORY": "/data/.reverse-geocoding-dump/",
@@ -139,6 +139,6 @@
   "slug": "immich",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.122.1",
+  "version": "1.122.1-2",
   "webui": "http://[HOST]:[PORT:8080]"
 }
