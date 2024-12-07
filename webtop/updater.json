@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "30-11-2024",
+  "last_update": "07-12-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "webtop_kde",
   "source": "github",
   "upstream_repo": "linuxserver/docker-webtop",
-  "upstream_version": "4.16-r0-ls95"
+  "upstream_version": "4.16-r0-ls93"
 }
