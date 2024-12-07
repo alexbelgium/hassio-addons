@@ -70,12 +70,13 @@
   "image": "ghcr.io/alexbelgium/free_games_claimer-{arch}",
   "init": false,
   "map": [
-    "config:rw"
+    "addon_config:rw",
+    "homeassistant_config:rw"
   ],
   "name": "Free Games Claimer (NoVNC not working)",
   "options": {
     "CMD_ARGUMENTS": "node epic-games ; node prime-gaming ; node gog",
-    "CONFIG_LOCATION": "/config/addons_config/free_games_claimer/config.env"
+    "CONFIG_LOCATION": "/config/config.env"
   },
   "ports": {
     "5900/tcp": null,
@@ -92,6 +93,6 @@
   "slug": "free_games_claimer",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.6-3",
+  "version": "1.6-4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:6080]"
 }
