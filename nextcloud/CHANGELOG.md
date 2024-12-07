@@ -1,3 +1,6 @@
+
+## 30.0.3 (07-12-2024)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 - Use /addon_configs for config.yaml and nextcloud-ocr.sh to backup them with nextcloud
 - Use /config/data as default folder instead of /config/data for initial set-up
 
