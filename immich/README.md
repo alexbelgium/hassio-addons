@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 IMMICH - Failed to write /share/immich/encoded-video/.immich: (opened 2024-11-04)](https://github.com/alexbelgium/hassio-addons/issues/1624) by [@niekbruggeman](https://github.com/niekbruggeman)
-## &#9888; Open Issue : [🐛 [immich] Unable to connect to the database (opened 2024-11-25)](https://github.com/alexbelgium/hassio-addons/issues/1648) by [@lauris-nl](https://github.com/lauris-nl)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)

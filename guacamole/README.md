@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Guacamole]  (opened 2024-11-22)](https://github.com/alexbelgium/hassio-addons/issues/1646) by [@imranh101](https://github.com/imranh101)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
