@@ -1,3 +1,5 @@
+- Fix healthcheck (thanks @red-avtovo)
+
 ## 1.122.1-2 (08-12-2024)
 - Minor bugs fixed
 
