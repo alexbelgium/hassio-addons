@@ -119,7 +119,7 @@ LABEL \
 #################
 
 ENV HEALTH_PORT="8080" \
-    HEALTH_URL="/api/server-info/ping"
+    HEALTH_URL="/api/server/ping"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
