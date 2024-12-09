@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [mealie] Addon OIDC redirects no longer work in 2.2.0 (opened 2024-11-16)](https://github.com/alexbelgium/hassio-addons/issues/1636) by [@BlackHoleFox](https://github.com/BlackHoleFox)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
