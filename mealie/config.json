@@ -64,6 +64,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "discovery": ["mealie"],  
   "environment": {
     "BASE_SUBPATH": "/mealie/",
     "DATA_DIR": "/config",
@@ -109,7 +110,6 @@
     "keyfile": "str",
     "ssl": "bool"
   },
-  "discovery": ["mealie"],
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
