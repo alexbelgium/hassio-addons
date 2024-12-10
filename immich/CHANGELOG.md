@@ -1,3 +1,4 @@
+## 1.122.1-4 (10-12-2024)
 - Fix compatibility with postgres 15 addon
 
 ## 1.122.1-3 (08-12-2024)
