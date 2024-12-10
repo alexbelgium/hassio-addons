@@ -63,7 +63,7 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 
 
 # Manual apps
-ENV PACKAGES="sudo yamllint pip postgresql-client"
+ENV PACKAGES="sudo yamllint pip postgresql-client-15"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
