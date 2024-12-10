@@ -3,7 +3,7 @@
 set -e
 
 # Compensate for old cpu without avx2
-if ! lscpu | grep -q avx2; then
+if lscpu | grep -q "Flags" && ! lscpu | grep -q "avx2"; then
     bashio::log.warning "NON SUPPORTED CPU DETECTED"
     bashio::log.warning "Your cpu doesn't support avx2, the analyzer service will likely won't work"
     bashio::log.warning "Trying to install tensorflow instead of tflite_runtime instead"
