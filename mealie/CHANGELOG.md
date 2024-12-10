@@ -1,3 +1,4 @@
+- Add discovery to Mealie config (Thanks @andrew-codechimp)
 
 ## v2.3.0 (30-11-2024)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
