@@ -109,6 +109,7 @@
     "keyfile": "str",
     "ssl": "bool"
   },
+  "discovery": ["mealie"],
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
