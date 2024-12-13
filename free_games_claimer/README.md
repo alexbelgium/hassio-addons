@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [free_games_claimer] secrets.yaml not found (opened 2024-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1669) by [@robvangeloven](https://github.com/robvangeloven)
 ## &#9888; VNC not working on several machines. Please use config.env to execute the script
 
 # Home assistant add-on: Free Games Claimer
