@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Sidebar support for SignalK (opened 2024-09-14)](https://github.com/alexbelgium/hassio-addons/issues/1572) by [@paalkr](https://github.com/paalkr)
 # Home assistant add-on: signalk
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

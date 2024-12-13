@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Postgres 15] Password is not specified (opened 2024-12-04)](https://github.com/alexbelgium/hassio-addons/issues/1654) by [@Foshkey](https://github.com/Foshkey)
+## &#9888; Open Issue : [🐛 [Postgres 15] Postgres logs, network error (opened 2024-12-12)](https://github.com/alexbelgium/hassio-addons/issues/1665) by [@Blendi](https://github.com/Blendi)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
