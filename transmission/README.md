@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [transmission-openvpn] Addon fails to start due to new permission requirements (opened 2024-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1666) by [@santaryan](https://github.com/santaryan)
+## &#9888; Open Issue : [🐛 [transmission] transmission-web-control not available (opened 2024-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1668) by [@bilak](https://github.com/bilak)
 
 # Home assistant add-on: Transmission
 
