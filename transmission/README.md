@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [transmission-openvpn] Addon fails to start due to new permission requirements (opened 2024-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1666) by [@santaryan](https://github.com/santaryan)
 
 # Home assistant add-on: Transmission
 
