@@ -157,6 +157,10 @@ parse_yaml "$CONFIGSOURCE" "" >/tmpfile
 # Escape dollars
 sed -i 's|$.|\$|g' /tmpfile
 
+# Look where secrets.yaml is located
+SECRETSFILE="/config/secrets.yaml"
+if [ -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
+
 while IFS= read -r line; do
     # Clean output
     line="${line//[\"\']/}"
@@ -165,10 +169,10 @@ while IFS= read -r line; do
         echo "secret detected"
         secret=${line#*secret }
         # Check if single match
-        secretnum=$(sed -n "/$secret:/=" /config/secrets.yaml)
+        secretnum=$(sed -n "/$secret:/=" "$SECRETSFILE")
         [[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
         # Get text
-        secret=$(sed -n "/$secret:/p" /config/secrets.yaml)
+        secret=$(sed -n "/$secret:/p" "$SECRETSFILE")
         secret=${secret#*: }
         line="${line%%=*}='$secret'"
     fi
