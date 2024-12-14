@@ -1,4 +1,7 @@
 
+## 30.0.4 (14-12-2024)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
+
 ## 30.0.3 (07-12-2024)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 - Use /addon_configs for config.yaml and nextcloud-ocr.sh to backup them with nextcloud
