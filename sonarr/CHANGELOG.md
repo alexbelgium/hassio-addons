@@ -1,4 +1,7 @@
 
+## 4.0.11.2743 (14-12-2024)
+- Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
+
 ## 4.0.11.2724 (07-12-2024)
 - Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
 
