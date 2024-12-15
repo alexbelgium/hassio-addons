@@ -64,7 +64,9 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "discovery": ["mealie"],  
+  "discovery": [
+    "mealie"
+  ],
   "environment": {
     "BASE_SUBPATH": "/mealie/",
     "DATA_DIR": "/config",
