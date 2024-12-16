@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [jellyseerr] New 2.1.0 version is not working (opened 2024-11-25)](https://github.com/alexbelgium/hassio-addons/issues/1650) by [@AnshulJ999](https://github.com/AnshulJ999)
 # Home assistant add-on: jellyseerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

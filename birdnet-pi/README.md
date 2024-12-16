@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛[BirdNET-Pi] Species Stats not found (opened 2024-09-17)](https://github.com/alexbelgium/hassio-addons/issues/1574) by [@kongjudas](https://github.com/kongjudas)
 ## &#9888; Open Issue : [🐛 [BirdNET-Pi] timezone (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1664) by [@alexbelgium](https://github.com/alexbelgium)
 # Home assistant add-on: birdnet-pi
 
