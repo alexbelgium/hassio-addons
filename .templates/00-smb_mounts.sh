@@ -19,6 +19,7 @@ test_mount () {
     fi
 
     # Exit if can't write
+    [[ -e "/mnt/$diskname/testaze" ]] && rm -r "/mnt/$diskname/testaze"
     # shellcheck disable=SC2015
     mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" || ERROR_MOUNT=true
     if [[ "$ERROR_MOUNT" == "true" ]]; then
