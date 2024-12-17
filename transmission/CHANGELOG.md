@@ -1,5 +1,7 @@
 ## 4.0.6-r0-ls272 (17-12-2024)
 - Minor bugs fixed
+- Fix transmission web control
+- Update to latest
 
 ## 4.0.6 (22-06-2024)
 - Update to latest version from linuxserver/docker-transmission (changelog : https://github.com/linuxserver/docker-transmission/releases)
