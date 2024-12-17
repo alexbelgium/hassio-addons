@@ -126,5 +126,5 @@
   "slug": "transmission_ls",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.0.6"
+  "version": "4.0.6-r0-ls272"
 }
