@@ -1,5 +1,6 @@
 ## &#9888; Open Issue : [🐛 [transmission-openvpn] Addon fails to start due to new permission requirements (opened 2024-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1666) by [@santaryan](https://github.com/santaryan)
 ## &#9888; Open Issue : [🐛 [transmission] transmission-web-control not available (opened 2024-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1668) by [@bilak](https://github.com/bilak)
+## &#9888; Open Issue : [🐛 [Transmission] Disk is mounted, however unable to write in the shared disk (opened 2024-12-16)](https://github.com/alexbelgium/hassio-addons/issues/1673) by [@redb0](https://github.com/redb0)
 
 # Home assistant add-on: Transmission
 
