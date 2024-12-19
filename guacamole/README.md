@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Guacamole] Cant connect to Macos VNC (opened 2024-12-17)](https://github.com/alexbelgium/hassio-addons/issues/1675) by [@ymurawski](https://github.com/ymurawski)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
