@@ -144,5 +144,5 @@
   "slug": "qbittorrent",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.0.2"
+  "version": "5.0.3"
 }
