@@ -1,3 +1,5 @@
+## v2.4.1-2 (21-12-2024)
+- Minor bugs fixed
 
 ## v2.4.1 (21-12-2024)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
