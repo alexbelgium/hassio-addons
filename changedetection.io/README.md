@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [changedetection.io] No Connection Changedetection ?? error while submitting email to smtp.gmail.com. Reason: [Errno 101] Network unreachable (opened 2024-12-19)](https://github.com/alexbelgium/hassio-addons/issues/1678) by [@ymurawski](https://github.com/ymurawski)
 # Home assistant add-on: changedetection.io
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
