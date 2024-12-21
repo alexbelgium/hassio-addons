@@ -81,7 +81,7 @@ if [ "$$" -eq 1 ]; then
         echo "All subprocesses terminated. Exiting."
         exit 0
     }
-    trap terminate SIGTERM SIGINT
+    trap terminate SIGTERM
     while :; do sleep infinity & wait $!; done
 else
     echo " "
