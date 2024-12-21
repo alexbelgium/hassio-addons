@@ -25,13 +25,13 @@ WORKDIR /app
 
 # Clone the Mealie repository to get the frontend source code
 # hadolint ignore=DL3003
-RUN git clone https://github.com/mealie-recipes/mealie.git . && \
+RUN git clone --branch v2.4.1 https://github.com/mealie-recipes/mealie.git . && \
     cd /app/frontend && \
     yarn install --prefer-offline --frozen-lockfile --non-interactive --production=false --network-timeout 1000000 && \
     yarn generate
 
 # Stage 2: Build the Final Image
-FROM hkotel/mealie:nightly
+FROM hkotel/mealie:v2.4.1
 
 # Copy the rebuilt frontend files into the final image
 COPY --from=builder /app/frontend/dist /spa/static
