@@ -34,6 +34,6 @@
   "stage": "deprecated",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/bitwarden",
-  "version": "1.32.6",
+  "version": "1.32.7",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:7277]"
 }
