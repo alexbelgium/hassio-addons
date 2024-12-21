@@ -1,9 +1,9 @@
 {
   "github_beta": true,
-  "last_update": "14-12-2024",
+  "last_update": "21-12-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "sonarr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-sonarr",
-  "upstream_version": "4.0.11.2743"
+  "upstream_version": "4.0.11.2774"
 }
