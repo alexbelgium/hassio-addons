@@ -119,6 +119,6 @@
   "slug": "calibre",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
-  "version": "7.22.0",
+  "version": "7.23.0",
   "video": true
 }

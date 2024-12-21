@@ -1,9 +1,9 @@
 {
   "github_fulltag": "false",
-  "last_update": "30-11-2024",
+  "last_update": "21-12-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "calibre",
   "source": "github",
   "upstream_repo": "linuxserver/docker-calibre",
-  "upstream_version": "7.22.0"
+  "upstream_version": "7.23.0"
 }
