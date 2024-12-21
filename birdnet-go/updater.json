@@ -1,8 +1,8 @@
 {
-  "last_update": "22-06-2024",
+  "last_update": "21-12-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "birdnet-go",
   "source": "github",
   "upstream_repo": "tphakala/birdnet-go",
-  "upstream_version": "0.5.5"
+  "upstream_version": "25"
 }

@@ -110,5 +110,5 @@
   "slug": "birdnet-go",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go",
-  "version": "0.5.5-11"
+  "version": "25"
 }
