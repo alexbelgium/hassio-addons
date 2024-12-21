@@ -28,5 +28,5 @@
   "slug": "sponsorblockcast",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast",
-  "version": "0.8.0"
+  "version": "0.8.1"
 }
