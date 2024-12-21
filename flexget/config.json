@@ -97,6 +97,6 @@
   "slug": "flexget",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.13.1",
+  "version": "3.13.4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:5050]"
 }
