@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Mealie] Not using mentioned version but nightly/dev (opened 2024-12-21)](https://github.com/alexbelgium/hassio-addons/issues/1679) by [@jpelgrom](https://github.com/jpelgrom)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
