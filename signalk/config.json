@@ -22,6 +22,8 @@
     "SSLPORT": "3443",
     "TCPSTREAMPORT": "8375"
   },
+  "full_access": true,
+  "protected": false,
   "image": "ghcr.io/alexbelgium/signalk-{arch}",
   "map": [
     "addon_config:rw"
@@ -50,6 +52,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "2.12.0-4",
+  "version": "2.12.0-5",
   "webui": "http://[HOST]:[PORT:3000]"
 }
