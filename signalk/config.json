@@ -10,7 +10,9 @@
     "/dev/can0",
     "/dev/can1",
     "/dev/ttyUSB0",
-    "/dev/ttyUSB1"
+    "/dev/ttyUSB1",
+    "/dev/ttyACM0",
+    "/dev/ttyACM1"
   ],
   "environment": {
     "HOME": "/config",
@@ -47,6 +49,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "2.12.0-2",
+  "version": "2.12.0-3",
   "webui": "http://[HOST]:[PORT:3000]"
 }
