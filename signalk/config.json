@@ -1,4 +1,5 @@
 {
+  "apparmor": false,
   "arch": [
     "aarch64",
     "amd64",
@@ -49,6 +50,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "2.12.0-3",
+  "version": "2.12.0-4",
   "webui": "http://[HOST]:[PORT:3000]"
 }
