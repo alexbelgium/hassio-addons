@@ -748,6 +748,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
+![full_access][full_access-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/television-classic.svg) [Sonarr](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them
 
