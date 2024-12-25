@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Firefly iii FinTS Importer] Update base image please (opened 2024-12-19)](https://github.com/alexbelgium/hassio-addons/issues/1677) by [@baflo](https://github.com/baflo)
 # Home assistant add-on: Fireflyiii fints importer
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
