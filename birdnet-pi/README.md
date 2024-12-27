@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [BirdNET-Pi] timezone (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1664) by [@alexbelgium](https://github.com/alexbelgium)
+## &#9888; Open Request : [✨ [REQUEST] BirdNET-Pi Improved support for standalone usage outside of Home Assistant (opened 2024-12-26)](https://github.com/alexbelgium/hassio-addons/issues/1681) by [@DavidValeri](https://github.com/DavidValeri)
 # Home assistant add-on: birdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
