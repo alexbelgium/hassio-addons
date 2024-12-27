@@ -1,7 +1,6 @@
 {
   "arch": [
-    "amd64",
-    "aarch64"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Whatsapper for Home Assistant",
