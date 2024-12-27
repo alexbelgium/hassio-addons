@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Whatsapper] Fails to start on RPI4 (opened 2024-12-27)](https://github.com/alexbelgium/hassio-addons/issues/1683) by [@paoloantinori](https://github.com/paoloantinori)
 # Home assistant add-on: Whatsapper
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
