@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Nextcloud] Nextcloud-ocr.sh gets deleted on startup (opened 2024-12-27)](https://github.com/alexbelgium/hassio-addons/issues/1682) by [@tsvi](https://github.com/tsvi)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
