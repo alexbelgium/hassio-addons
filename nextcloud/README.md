@@ -49,7 +49,7 @@ To run custom commands at boot you can try a code such as :
 # Runs only after initialization done
 # shellcheck disable=SC2128
 mkdir -p /scripts
-if [ ! -f /app/www/public/occ ]; then cp /addon_configs/db21ed7f_nextcloud-ocr/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
+if [ ! -f /app/www/public/occ ]; then cp /config/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
 
 echo "Scanning files"
 sudo -u abc php /app/www/public/occ files:scan --all
