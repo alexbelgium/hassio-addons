@@ -1,9 +1,9 @@
 {
   "github_beta": "true",
-  "last_update": "21-12-2024",
+  "last_update": "28-12-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "readarr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-readarr",
-  "upstream_version": "0.4.6.2711"
+  "upstream_version": "0.4.7.2715"
 }
