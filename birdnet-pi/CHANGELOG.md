@@ -1,3 +1,5 @@
+- Install tensorflow if avx2 not available
+
 ## 0.13-106 (30-10-2024)
 - Implement interactive plot
 
