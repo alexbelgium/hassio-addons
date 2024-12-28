@@ -28,16 +28,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-    - gramps_users:/app/users  # persist user database
-    - gramps_index:/app/indexdir  # persist search index
-    - gramps_thumb_cache:/app/thumbnail_cache  # persist thumbnails
-    - gramps_cache:/app/cache  # persist export and report caches
-    - gramps_secret:/app/secret  # persist flask secret
-    - gramps_db:/root/.gramps/grampsdb  # persist Gramps database
-    - gramps_media:/app/media  # persist media files
-    - gramps_tmp:/tmp
-
-
 ##################
 # 3 Install apps #
 ##################
