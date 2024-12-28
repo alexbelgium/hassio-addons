@@ -25,15 +25,24 @@ fi
 #####################
 # Create secret key #
 #####################
-if [ ! -s /config/secret/secret ]
-then
-    mkdir -p /config/secret
-    python3 -c "import secrets;print(secrets.token_urlsafe(32))"  | tr -d "\n" > /config/secret/secret
-fi
-# use the secret key if none is set (will be overridden by config file if present)
-if [ -z "$SECRET_KEY" ]
-then
-    export SECRET_KEY=$(cat /config/secret/secret)
+# Check if the secret key is defined in addon options
+if bashio::config.has_value "GRAMPSWEB_SECRET_KEY"; then
+    bashio::log.warning "Using the secret key defined in the addon options."
+    export SECRET_KEY="$(bashio::config "GRAMPSWEB_SECRET_KEY")"
+    export GRAMPSWEB_SECRET_KEY="$SECRET_KEY"
+else
+    # Check if the secret file exists; if not, create a new one
+    if [ ! -s /config/secret/secret ]; then
+        bashio::log.warning "No secret key found in /config/secret/secret, generating a new one."
+        mkdir -p /config/secret
+        python3 -c "import secrets; print(secrets.token_urlsafe(32))" | tr -d "\n" > /config/secret/secret
+        bashio::log.warning "New secret key generated and stored in /config/secret/secret"
+    fi
+    bashio::log.warning "Using existing secret key from /config/secret/secret."
+    bashio::log.warning "Secret key saved to addon options."
+    export SECRET_KEY="$(cat /config/secret/secret)"
+    bashio::addon.option "GRAMPSWEB_SECRET_KEY" "$SECRET_KEY"
+    export GRAMPSWEB_SECRET_KEY="$SECRET_KEY"
 fi
 
 ##################
