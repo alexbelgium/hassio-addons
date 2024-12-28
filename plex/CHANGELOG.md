@@ -1,3 +1,6 @@
+
+## 1.41.3.9314-a0bfb8370-ls250 (28-12-2024)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 ## 1.41.3.9314-a0bfb8370-ls249-2 (22-12-2024)
 - Add support for tuner devices (thanks @Benjamin5896)
 
