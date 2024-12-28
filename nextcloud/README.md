@@ -33,7 +33,7 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ### Custom scripts
 
-/config/addons_autoscripts/nextcloud-ocr.sh will be executed at boot.
+/addon_configs/db21ed7f_nextcloud-ocr/nextcloud-ocr.sh will be executed at boot.
 To run custom commands at boot you can try a code such as :
 ```bash
 #!/usr/bin/with-contenv bashio
