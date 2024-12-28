@@ -69,38 +69,18 @@ environment: {
 }
 image: ghcr.io/alexbelgium/grampsweb-{arch}
 init: false
-options: {
-  "database": "sqlite"
-}
 map:
   - type: addon_config
     read_only: false
 name: Grampsweb
 ports:
-  80/tcp: 5000
+  5000/tcp: 5000
 ports_description:
-  80/tcp: webui
-schema: {
-  "database": "list(sqlite|MariaDB_addon|Mysql_external)",
-  "APP_KEY": "str?",
-  "DB_DATABASE": "str?",
-  "DB_HOST": "str?",
-  "DB_PASSWORD": "str?",
-  "DB_PORT": "int?",
-  "DB_USERNAME": "str?",
-  "MAIL_MAILER": "str?",
-  "MAIL_HOST": "str?",
-  "MAIL_PORT": "str?",
-  "MAIL_USERNAME": "str?",
-  "MAIL_PASSWORD": "str?",
-  "MAIL_ENCRYPTION": "str?",
-  "MAIL_FROM_ADDRESS": "str?",
-  "MAIL_FROM_NAME": "str?"
-}
+  5000/tcp: webui
 services:
 - mysql:want
 slug: grampsweb
 tmpfs: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/grampsweb
 version: "0.2"
-webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
+webui: "[PROTO:ssl]://[HOST]:[PORT:5000]"
