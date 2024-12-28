@@ -75,7 +75,7 @@ options: {
 map:
   - type: addon_config
     read_only: false
-name: Monica
+name: Grampsweb
 ports:
   80/tcp: 5000
 ports_description:
