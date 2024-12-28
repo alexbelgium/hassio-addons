@@ -2,6 +2,11 @@
 # shellcheck shell=bash
 set -e
 
+if [[ "$(uname -m)" = "x86_64" && ! grep -q "avx2" /proc/cpuinfo ]]; then
+    bashio::log.fatal "❌ Your CPU is x86_64 but doesn't support AVX2. BirdNET-Go requires Intel Haswell (2013) or newer CPU with AVX2 support."
+    exit 1
+fi
+
 #################
 # INITALISATION #
 #################
