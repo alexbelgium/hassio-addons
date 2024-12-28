@@ -1,3 +1,5 @@
+- avx2 support added by @tphakala
+
 ## 25-2 (21-12-2024)
 - Minor bugs fixed
 
