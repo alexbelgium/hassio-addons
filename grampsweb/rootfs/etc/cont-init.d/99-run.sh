@@ -5,7 +5,7 @@ set -e
 #################
 # Set structure #
 #################
-cp -rf /app /config
+cp -rf /app/* /config/
 rm -r /app
 ln -s /config /app
 
