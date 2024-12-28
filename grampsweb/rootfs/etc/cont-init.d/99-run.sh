@@ -5,9 +5,20 @@ set -e
 #################
 # Set structure #
 #################
-cp -rf /app/* /config/
-rm -r /app
-ln -s /config /app
+for folders in config users indexdir database secret media cache thumbnail_cache grampsdb; do
+    mkdir -p /config/"$folders"
+    if [ -d /app/"$folders" ] && [ "$(ls -A /app/"$folders")" ]; then
+        cp -rf /app/"$folders"/* /config/"$folders"
+    fi
+    rm -rf /app/"$folders"
+    ln -sf /config/"$folders" /app/"$folders"
+done
+
+if [ -d /root/.gramps/grampsdb ] && [ "$(ls -A /root/.gramps/grampsdb)" ]; then
+    cp -rf /root/.gramps/grampsdb/* /config/grampsdb
+    rm -rf /root/.gramps/grampsdb
+    ln -sf /config/grampsdb /root/.gramps/grampsdb
+fi
 
 #####################
 # Create secret key #
