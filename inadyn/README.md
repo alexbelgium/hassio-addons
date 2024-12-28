@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Inadyn] Custom provider ignores ssl variables (opened 2024-12-27)](https://github.com/alexbelgium/hassio-addons/issues/1684) by [@luisbandalap](https://github.com/luisbandalap)
 # Home assistant add-on: Inadyn
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
