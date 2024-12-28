@@ -28,10 +28,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-# Modify config location
-RUN for file in $(grep -Esril "/app[ '\"/]|/app\$" /usr /var); do sed -Ei "s=(/app)+(/| |$|\"|\')=/config\2=g" "$file"; done && \
-    sed -i "s|/app|/config|g" /docker-entrypoint.sh
-
 ##################
 # 3 Install apps #
 ##################
