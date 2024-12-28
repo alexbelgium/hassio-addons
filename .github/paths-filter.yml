@@ -34,6 +34,7 @@ flexget: flexget/config.* # Image : yes
 free_games_claimer: free_games_claimer/config.* # Image : yes
 gazpar2mqtt: gazpar2mqtt/config.* # Image : yes
 gitea: gitea/config.* # Image : yes
+grampsweb: grampsweb/config.* # Image : yes
 grav: grav/config.* # Image : yes
 guacamole: guacamole/config.* # Image : yes
 immich: immich/config.* # Image : yes
