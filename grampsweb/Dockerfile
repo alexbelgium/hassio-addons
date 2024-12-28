@@ -29,7 +29,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Modify config location
-RUN for file in $(grep -Esril "/app[ '\"/]|/app\$" /usr /var); do sed -Ei "s=(/app)+(/| |$|\"|\')=/config\2=g" "$file"; done
+RUN for file in $(grep -Esril "/app[ '\"/]|/app\$" /usr /var); do sed -Ei "s=(/app)+(/| |$|\"|\')=/config\2=g" "$file"; done && \
+    sed -i "s|/app|/config|g" /docker-entrypoint.sh
 
 ##################
 # 3 Install apps #
@@ -69,6 +70,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
+WORKDIR /config
 ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 
@@ -105,12 +107,3 @@ LABEL \
 #################
 # 6 Healthcheck #
 #################
-
-ENV HEALTH_PORT="8080" \
-    HEALTH_URL=""
-HEALTHCHECK \
-    --interval=5s \
-    --retries=5 \
-    --start-period=30s \
-    --timeout=25s \
-    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
