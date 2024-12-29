@@ -35,8 +35,7 @@ fi
 # Check if the secret key is defined in addon options
 if bashio::config.has_value "GRAMPSWEB_SECRET_KEY"; then
     bashio::log.warning "Using the secret key defined in the addon options."
-    export SECRET_KEY="$(bashio::config "GRAMPSWEB_SECRET_KEY")"
-    export GRAMPSWEB_SECRET_KEY="$SECRET_KEY"
+    export GRAMPSWEB_SECRET_KEY="$(bashio::config "GRAMPSWEB_SECRET_KEY")"
 else
     # Check if the secret file exists; if not, create a new one
     if [ ! -s /config/secret/secret ]; then
@@ -47,9 +46,8 @@ else
     fi
     bashio::log.warning "Using existing secret key from /config/secret/secret."
     bashio::log.warning "Secret key saved to addon options."
-    export SECRET_KEY="$(cat /config/secret/secret)"
-    bashio::addon.option "GRAMPSWEB_SECRET_KEY" "$SECRET_KEY"
-    export GRAMPSWEB_SECRET_KEY="$SECRET_KEY"
+    export GRAMPSWEB_SECRET_KEY="$(cat /config/secret/secret)"
+    bashio::addon.option "GRAMPSWEB_SECRET_KEY" "$GRAMPSWEB_SECRET_KEY"
 fi
 
 ##################
@@ -78,7 +76,7 @@ CELERY_PID=$!
 # Staring nginx #
 #################
 echo "Starting nginx..."
-exec nginx & bashio::log.info "Starting nginx"
+#exec nginx & bashio::log.info "Starting nginx"
 NGINX_PID=$!
 
 # Wait for all background processes
