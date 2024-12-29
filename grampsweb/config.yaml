@@ -79,7 +79,8 @@ image: ghcr.io/alexbelgium/grampsweb-{arch}
 init: false
 options: {
  "certfile": "fullchain.pem",
- "keyfile": "privkey.pem"
+ "keyfile": "privkey.pem",
+ "ssl": false
 }
 map:
   - type: addon_config
@@ -94,14 +95,14 @@ ports_description:
 schema: {
   "GRAMPSWEB_SECRET_KEY": "str?",
   "GRAMPSWEB_BASE_URL": "str?",
-  "certfile": "str",
-  "keyfile": "str",
-  "ssl": "bool"
+  "certfile": "str?",
+  "keyfile": "str?",
+  "ssl": "bool?"
 }
 services:
 - mysql:want
 slug: grampsweb
 tmpfs: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/grampsweb
-version: "1.6"
+version: "1.7"
 webui: "[PROTO:ssl]://[HOST]:[PORT:5001]"
