@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 Codex - Cannot add libraries (opened 2024-12-13)](https://github.com/alexbelgium/hassio-addons/issues/1670) by [@akaheisenberg](https://github.com/akaheisenberg)
 # Home assistant add-on: Codex
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
