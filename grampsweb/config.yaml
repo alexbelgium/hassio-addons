@@ -77,22 +77,31 @@ environment: {
 }
 image: ghcr.io/alexbelgium/grampsweb-{arch}
 init: false
+options: {
+ "certfile": "fullchain.pem",
+ "keyfile": "privkey.pem"
+}
 map:
   - type: addon_config
     read_only: false
+  - type: ssl
+    read_only: true
 name: "Grampsweb not working"
 ports:
-  5000/tcp: 5000
+  5001/tcp: 5000
 ports_description:
-  5000/tcp: webui
+  5001/tcp: webui
 schema: {
   "GRAMPSWEB_SECRET_KEY": "str?",
-  "GRAMPSWEB_BASE_URL": "str?"
+  "GRAMPSWEB_BASE_URL": "str?",
+  "certfile": "str",
+  "keyfile": "str",
+  "ssl": "bool"
 }
 services:
 - mysql:want
 slug: grampsweb
 tmpfs: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/grampsweb
-version: "1.5"
-webui: "[PROTO:ssl]://[HOST]:[PORT:5000]"
+version: "1.6"
+webui: "[PROTO:ssl]://[HOST]:[PORT:5001]"
