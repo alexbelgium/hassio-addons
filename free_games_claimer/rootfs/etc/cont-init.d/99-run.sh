@@ -19,9 +19,12 @@ else
     bashio::log.info "Using existing config.env file in $CONFIG_HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
 fi
 
-# Remove erroneous folder named config.env
+# Remove erroneous folder named config.env (bug fix for looping issue)
 if [ -d "$CONFIG_HOME/config.env" ]; then
-    rm -r "$CONFIG_HOME/config.env"
+    bashio::log.warning "Found directory named config.env, deleting it..."
+    rm -rf "$CONFIG_HOME/config.env" # Fix: Ensures directory removal even if it exists
+    cp /templates/config.env "$CONFIG_HOME/config.env" # Recreate as a valid file
+    chmod 755 "$CONFIG_HOME/config.env"
 fi
 
 # Copy new file
@@ -58,28 +61,22 @@ cd /data || true
 # Fetch commands
 CMD_ARGUMENTS="$(bashio::config "CMD_ARGUMENTS")"
 IFS=';'
-# shellcheck disable=SC2162
 read -a strarr <<< "$CMD_ARGUMENTS"
 
 # Sanitizes commands
 trim() {
     local var="$*"
-    # remove leading whitespace characters
     var="${var#"${var%%[![:space:]]*}"}"
-    # remove trailing whitespace characters
     var="${var%"${var##*[![:space:]]}"}"
     printf '%s' "$var"
 }
 
 # Add docker-entrypoint command
-# Print each value of the array by using the loop
 for val in "${strarr[@]}"; do
-    #Removes whitespaces
     val="$(trim "$val")"
     echo " "
     bashio::log.info "Starting the app with arguments \"$val\""
     echo " "
-    # shellcheck disable=SC2086
     echo "$val" | xargs docker-entrypoint.sh || true
 done
 
