@@ -65,7 +65,15 @@ environment: {
   "GRAMPSWEB_TREE": "Gramps Web",
   "GRAMPSWEB_CELERY_CONFIG__broker_url": "redis://localhost:6379/0",
   "GRAMPSWEB_CELERY_CONFIG__result_backend": "redis://localhost:6379/0",
-  "GRAMPSWEB_RATELIMIT_STORAGE_URI": "redis://localhost:6379/1"
+  "GRAMPSWEB_RATELIMIT_STORAGE_URI": "redis://localhost:6379/1",
+  "GRAMPS_API_CONFIG": "/config/config/config.cfg",
+  "GRAMPSWEB_USER_DB_URI": "sqlite:////config/users/users.sqlite",
+  "GRAMPSWEB_MEDIA_BASE_DIR": "/config/media",
+  "GRAMPSWEB_SEARCH_INDEX_DB_URI": "sqlite:////config/indexdir/search_index.db",
+  "GRAMPSWEB_STATIC_PATH": "/app/static",
+  "GRAMPSWEB_THUMBNAIL_CACHE_CONFIG__CACHE_DIR": "/config/thumbnail_cache",
+  "GRAMPSWEB_REPORT_DIR": "/config/cache/reports",
+  "GRAMPSWEB_EXPORT_DIR": "/config/cache/export"
 }
 image: ghcr.io/alexbelgium/grampsweb-{arch}
 init: false
@@ -85,5 +93,5 @@ services:
 slug: grampsweb
 tmpfs: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/grampsweb
-version: "1.3"
+version: "1.4"
 webui: "[PROTO:ssl]://[HOST]:[PORT:5000]"
