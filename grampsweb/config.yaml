@@ -87,7 +87,7 @@ map:
     read_only: false
   - type: ssl
     read_only: true
-name: "Grampsweb not working"
+name: "Grampsweb"
 ports:
   5001/tcp: 5000
 ports_description:
