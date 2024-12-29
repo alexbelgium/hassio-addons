@@ -14,15 +14,6 @@ for folders in config users indexdir database secret media cache thumbnail_cache
     ln -sf /config/"$folders" /app/"$folders"
 done
 
-for files in /app/dump.rdb; do
-    if [ -f "$files" ]; then
-        cp -n "$files" /config/"$(basename "$files")"
-    fi
-    touch /config/"$(basename "$files")"
-    rm -rf "$files"
-    ln -sf /config/"$(basename "$files")" "$files"
-done
-
 if [ -d /root/.gramps/grampsdb ] && [ "$(ls -A /root/.gramps/grampsdb)" ]; then
     mkdir -p /config/grampsdb
     cp -rn /root/.gramps/grampsdb/* /config/grampsdb
@@ -55,7 +46,7 @@ fi
 # Starting Redis #
 ##################
 echo "Starting Redis..."
-redis-server &
+redis-server --dbfilename redis.rdb --dir /config &
 REDIS_PID=$!
 
 ###############
