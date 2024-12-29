@@ -5,17 +5,26 @@ set -e
 #################
 # Set structure #
 #################
-for folders in config users indexdir database secret media cache thumbnail_cache grampsdb; do
+for folders in config users indexdir database secret media cache thumbnail_cache db persist; do
     mkdir -p /config/"$folders"
     if [ -d /app/"$folders" ] && [ "$(ls -A /app/"$folders")" ]; then
-        cp -rf /app/"$folders"/* /config/"$folders"
+        cp -rn /app/"$folders"/* /config/"$folders"
     fi
     rm -rf /app/"$folders"
     ln -sf /config/"$folders" /app/"$folders"
 done
 
+for files in /app/dump.rdb; do
+    if [ -f "$files" ]; then
+        cp -n "$files" /config/"$(basename "$files")"
+    fi
+    rm -rf "$files"
+    ln -sf /config/"$(basename "$files")" "$files"
+done
+
 if [ -d /root/.gramps/grampsdb ] && [ "$(ls -A /root/.gramps/grampsdb)" ]; then
-    cp -rf /root/.gramps/grampsdb/* /config/grampsdb
+    mkdir -p /config/grampsdb
+    cp -rn /root/.gramps/grampsdb/* /config/grampsdb
     rm -rf /root/.gramps/grampsdb
     ln -sf /config/grampsdb /root/.gramps/grampsdb
 fi
