@@ -67,9 +67,9 @@ environment: {
   "GRAMPSWEB_CELERY_CONFIG__result_backend": "redis://localhost:6379/0",
   "GRAMPSWEB_RATELIMIT_STORAGE_URI": "redis://localhost:6379/1",
   "GRAMPS_API_CONFIG": "/config/config/config.cfg",
-  "GRAMPSWEB_USER_DB_URI": "sqlite:////config/users/users.sqlite",
+  "GRAMPSWEB_USER_DB_URI": "sqlite:///config/users/users.sqlite",
   "GRAMPSWEB_MEDIA_BASE_DIR": "/config/media",
-  "GRAMPSWEB_SEARCH_INDEX_DB_URI": "sqlite:////config/indexdir/search_index.db",
+  "GRAMPSWEB_SEARCH_INDEX_DB_URI": "sqlite:///config/indexdir/search_index.db",
   "GRAMPSWEB_STATIC_PATH": "/app/static",
   "GRAMPSWEB_THUMBNAIL_CACHE_CONFIG__CACHE_DIR": "/config/thumbnail_cache",
   "GRAMPSWEB_REPORT_DIR": "/config/cache/reports",
@@ -93,5 +93,5 @@ services:
 slug: grampsweb
 tmpfs: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/grampsweb
-version: "1.0"
+version: "1.1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:5000]"
