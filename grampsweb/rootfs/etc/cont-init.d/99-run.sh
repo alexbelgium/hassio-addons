@@ -5,7 +5,7 @@ set -e
 #################
 # Set structure #
 #################
-for folders in config users indexdir database secret media cache thumbnail_cache db persist; do
+for folders in config users indexdir secret media cache thumbnail_cache persist; do
     mkdir -p /config/"$folders"
     if [ -d /app/"$folders" ] && [ "$(ls -A /app/"$folders")" ]; then
         cp -rn /app/"$folders"/* /config/"$folders"
