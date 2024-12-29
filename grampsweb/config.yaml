@@ -80,7 +80,7 @@ init: false
 map:
   - type: addon_config
     read_only: false
-name: Grampsweb
+name: "Grampsweb not working"
 ports:
   5000/tcp: 5000
 ports_description:
