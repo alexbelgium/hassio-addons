@@ -14,9 +14,10 @@ for folders in config users indexdir database secret media cache thumbnail_cache
     ln -sf /config/"$folders" /app/"$folders"
 done
 
+# Expose database and plugins
 if [ -d /root/.gramps ] && [ "$(ls -A /root/.gramps)" ]; then
     mkdir -p /config/gramps
-    cp -rn /root/.gramps/* /config/gramps
+    cp -rf /root/.gramps/* /config/gramps
     rm -rf /root/.gramps
     ln -sf /config/gramps /root/.gramps
 fi
