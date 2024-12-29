@@ -95,6 +95,12 @@ ports_description:
 schema: {
   "GRAMPSWEB_SECRET_KEY": "str?",
   "GRAMPSWEB_BASE_URL": "str?",
+  "GRAMPSWEB_EMAIL_HOST": "str?",
+  "GRAMPSWEB_EMAIL_PORT": "int?",
+  "GRAMPSWEB_EMAIL_USE_TLS": "bool?",
+  "GRAMPSWEB_EMAIL_HOST_USER": "str?",
+  "GRAMPSWEB_EMAIL_HOST_PASSWORD": "password?",
+  "GRAMPSWEB_DEFAULT_FROM_EMAIL": "email?",
   "certfile": "str?",
   "keyfile": "str?",
   "ssl": "bool?"
@@ -104,5 +110,5 @@ services:
 slug: grampsweb
 tmpfs: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/grampsweb
-version: "1.7"
+version: "1.8"
 webui: "[PROTO:ssl]://[HOST]:[PORT:5001]"
