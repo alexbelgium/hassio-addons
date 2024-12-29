@@ -69,7 +69,7 @@ CELERY_PID=$!
 # Staring nginx #
 #################
 echo "Starting nginx..."
-#exec nginx & bashio::log.info "Starting nginx"
+exec nginx & bashio::log.info "Starting nginx"
 NGINX_PID=$!
 
 # Wait for all background processes
