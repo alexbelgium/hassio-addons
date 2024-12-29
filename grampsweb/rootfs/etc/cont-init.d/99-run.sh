@@ -18,6 +18,7 @@ for files in /app/dump.rdb; do
     if [ -f "$files" ]; then
         cp -n "$files" /config/"$(basename "$files")"
     fi
+    touch /config/"$(basename "$files")"
     rm -rf "$files"
     ln -sf /config/"$(basename "$files")" "$files"
 done
