@@ -1,9 +1,8 @@
 {
   "github_beta": true,
-  "github_tagfilter": "v5",
   "last_update": "07-12-2024",
   "repository": "alexbelgium/hassio-addons",
   "slug": "grampsweb",
-  "upstream_repo": "grampswebhq/grampsweb",
-  "upstream_version": ""
+  "upstream_repo": "gramps-project/gramps-web",
+  "upstream_version": "24.12.1"
 }
