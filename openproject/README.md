@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [OpenProject] unable to change the host name in the System Settings   (opened 2024-12-29)](https://github.com/alexbelgium/hassio-addons/issues/1690) by [@kejXero](https://github.com/kejXero)
 # Home assistant add-on: Openproject
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
