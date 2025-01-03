@@ -38,5 +38,5 @@
   "slug": "postgres",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/postgres",
-  "version": "15.7-5"
+  "version": "15.7-6"
 }
