@@ -1,4 +1,3 @@
-## 15.7-5 (03-01-2025)
 - Fix vector.rs not found at startup
 
 ## 15.7-4 (05-12-2024)
