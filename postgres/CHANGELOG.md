@@ -1,3 +1,5 @@
+- Fix vector.rs not found at startup
+
 ## 15.7-4 (05-12-2024)
 - Fix env error
 - Fix database shutdown
