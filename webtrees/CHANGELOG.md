@@ -1,3 +1,5 @@
+- MAJOR CODE REFACTOR : please be sure to backup your system before updating. The data location is now configurable through an option. It will now by default move files to /config/data ; accessible by an external editor through /addon_configs/xxx-webtrees/data. I haven't tested it with all configurations (including mariadb) so be careful before updating! However, it will be much more robust & reliable in the future. And should allow to move data storage location
+
 ## 2.2.1-2 (02-01-2025)
 - Minor bugs fixed
 
