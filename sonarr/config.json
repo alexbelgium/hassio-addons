@@ -111,5 +111,5 @@
   "slug": "sonarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/sonarr",
-  "version": "4.0.11.2800"
+  "version": "4.0.11.2815"
 }
