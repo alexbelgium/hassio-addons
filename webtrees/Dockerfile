@@ -49,7 +49,7 @@ RUN \
     && cp -rf /var/* /var2/ \
     && chown -R www-data:www-data /var2/www/webtrees \
     # Allow healthcheck
-    && for files in /etc/apache2/sites-available/*; do sed -i "/<Directory/i\    BrowserMatchNoCase ^healthcheck nolog" "$files"; done
+    && for files in /etc/apache2/sites-*/*.conf; do sed -i "/<Directory/i\    BrowserMatchNoCase ^healthcheck nolog" "$files"; done \
 
 ##################
 # 3 Install apps #
