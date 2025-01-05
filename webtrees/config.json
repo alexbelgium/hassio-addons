@@ -67,12 +67,6 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "DB_HOST": "http://127.0.0.1",
-    "DB_NAME": "webtrees",
-    "DB_PASS": "databasepassword",
-    "DB_PORT": "80",
-    "DB_PREFIX": "wt_",
-    "DB_USER": "databaseuser",
     "LANG": "en-US",
     "PORT": "80",
     "PRETTY_URLS": "1",
@@ -128,6 +122,6 @@
   "slug": "webtrees",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.2.1-2",
+  "version": "2.2.1-2_test2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
