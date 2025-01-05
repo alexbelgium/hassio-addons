@@ -144,9 +144,6 @@ fi
 
 bashio::log.info "Data is stored in $DATA_LOCATION"
 
-echo "... Starting nginx"
-nginx & true
-
 # Execute main script
 source /etc/apache2/envvars
 echo "python3 /docker-entrypoint.py"
