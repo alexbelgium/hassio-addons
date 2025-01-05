@@ -1,0 +1,11 @@
+{
+  "build_from": {
+    "aarch64": "netalertx:latest",
+    "amd64": "netalertx:latest",
+    "armv7": "netalertx:latest",
+    "armv6": "netalertx:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}

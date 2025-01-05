@@ -1,0 +1,43 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+##################
+# SYMLINK CONFIG #
+##################
+
+#Create folders
+
+if [ ! -d /share/netalertx ]; then
+    echo "Creating /share/netalertx"
+    mkdir -p /share/netalertx
+    chown -R "$PUID:$PGID" /share/netalertx
+else
+    chown -R "$PUID:$PGID" /share/netalertx
+fi
+
+mkdir -p /config/www/local
+if [ ! -d /share/netalertx/config ] && [ -d /config/www/local/config ]; then
+    echo "moving config folder"
+    mv /config/www/local/config /share/netalertx
+    ln -s /share/netalertx/config /config/www/local
+    echo "links done"
+else
+    if [ -d /config/www/local/config ]; then rm -r /config/www/local/config; fi
+    ln -s /share/netalertx/config /config/www/local
+    echo "Using existing config"
+fi
+
+mkdir -p /config/keys
+if [ ! -d /share/netalertx/keys ]; then
+    echo "moving keys folder"
+    mv /config/keys /share/netalertx
+    ln -s /share/netalertx/keys /config
+    echo "links done"
+else
+    rm -r /config/keys
+    ln -s /share/netalertx/keys /config
+    echo "Using existing keys folder"
+fi
+
+
