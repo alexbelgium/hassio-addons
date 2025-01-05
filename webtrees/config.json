@@ -76,24 +76,22 @@
     "LANG": "en-US",
     "PORT": "80",
     "PRETTY_URLS": "1",
-    "WEBTREES_HOME": "/data/webtrees",
-    "WT_EMAIL": "me@example.com",
-    "WT_NAME": "Full Name",
-    "WT_PASS": "mybadpassword",
-    "WT_USER": "admin"
+    "PUID": "1000",
+    "PGID": "1000",
+    "WEBTREES_HOME": "/var2/www/webtrees"
   },
   "image": "ghcr.io/alexbelgium/webtrees-{arch}",
   "init": false,
   "map": [
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "ssl"
   ],
   "name": "Webtrees",
   "options": {
     "BASE_URL": "http://192.168.178.23",
-    "CONFIG_LOCATION": "/config/addons_config/webtrees/config.yaml",
-    "DB_TYPE": "sqlite",
+    "DATA_LOCATION": "/config/data",
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "ssl": false
@@ -112,8 +110,7 @@
   ],
   "schema": {
     "BASE_URL": "url",
-    "CONFIG_LOCATION": "str",
-    "DB_TYPE": "list(sqlite|external|mariadb_addon)",
+    "DATA_LOCATION": "str",
     "base_url_portless": "bool?",
     "certfile": "str",
     "cifsdomain": "str?",
@@ -131,6 +128,6 @@
   "slug": "webtrees",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.2.1-2",
+  "version": "2.2.1-2_test",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
