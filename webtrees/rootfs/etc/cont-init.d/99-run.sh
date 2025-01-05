@@ -147,7 +147,7 @@ bashio::log.info "Data is stored in $DATA_LOCATION"
 # Execute main script
 source /etc/apache2/envvars
 echo "python3 /docker-entrypoint.py"
-cd /var2/www/webtrees
+cd /var2/www/webtrees || exit 1
 if [ ! -f "${DATA_LOCATION}/config.ini.php" ]; then
     bashio::log.info "First boot : open the UI at $BASE_URL to access the start-up wizard"
     python3 /docker-entrypoint.py
