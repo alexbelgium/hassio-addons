@@ -47,9 +47,9 @@ RUN \
     && sed -i 's|/var/www/webtrees|/var2/www/webtrees|g' /docker-entrypoint.py \
     && mkdir -p /var2 \
     && cp -rf /var/* /var2/ \
-    && chown -R www-data:www-data /var2/www/webtrees
-# Add end script
-# && sed -i '$ d' /docker-entrypoint.py
+    && chown -R www-data:www-data /var2/www/webtrees \
+    # Allow healthcheck
+    && for files in /etc/apache2/sites-available/*; do sed -i "/<Directory/i\    BrowserMatchNoCase ^healthcheck nolog" "$files"; done
 
 ##################
 # 3 Install apps #
