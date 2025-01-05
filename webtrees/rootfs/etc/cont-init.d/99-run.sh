@@ -146,17 +146,11 @@ fi
 # Execute main script
 # shellcheck ignore=SC1091
 source /etc/apache2/envvars
-echo "python3 /docker-entrypoint.py"
+echo "Adapting start script"
 cd /var2/www/webtrees || exit 1
-if [ ! -f "${DATA_LOCATION}/config.ini.php" ]; then
-    bashio::log.info "First boot : open the UI at $BASE_URL to access the start-up wizard"
-    if bashio::services.available 'mysql'; then
-        bashio::log.info "MariaDB is available, if you want to use it please fill the values seen above in the log"
-    else
-        bashio::log.info "As you don't have the MariaDB addon running, you should likely select sqlite as database"
-    fi
-    python3 /docker-entrypoint.py
-else
-    bashio::log.info "Webtrees started. You can access your webui at : $BASE_URL"
-    python3 /docker-entrypoint.py
-fi
+sed -i "s|%%data_location%%|${DATA_LOCATION}|g" /etc/scripts/launcher.sh
+sed -i "s|%%base_url%%|${BASE_URL}|g" /etc/scripts/launcher.sh
+sed -i "/Starting Apache/a\    subprocess.run('/etc/scripts/launcher.sh', shell=True, check=True)" /docker-entrypoint.py
+
+bashio::log.info "Starting webtrees launcher"
+python3 /docker-entrypoint.py
