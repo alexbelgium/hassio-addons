@@ -44,7 +44,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 95
+- In the repository : 96
 - Installed : 81481
 
 ### Top 3
@@ -503,6 +503,16 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
+![smb][smb-badge]
+![localdisks][localdisks-badge]
+
+&#10003;  [NetAlertX](netalertx/) : 🖧🔍 WIFI / LAN scanner, intruder, and presence detector
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnetalertx%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnetalertx%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7][armv7-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
 
