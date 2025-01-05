@@ -73,7 +73,7 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 # Manual apps
 ENV PACKAGES="jq \
     curl \
-    yamllint nginx"
+    yamllint"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
