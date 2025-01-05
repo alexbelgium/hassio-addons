@@ -162,6 +162,7 @@ echo " "
 ############
 
 # Execute main script
+# shellcheck ignore=SC1091
 source /etc/apache2/envvars
 echo "python3 /docker-entrypoint.py"
 cd /var2/www/webtrees || exit 1
