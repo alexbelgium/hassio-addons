@@ -1,0 +1,8 @@
+{
+  "last_update": "23-12-2024",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "netalertx",
+  "source": "github",
+  "upstream_repo": "jokob-sk/netalertx",
+  "upstream_version": "24.12.23"
+}
