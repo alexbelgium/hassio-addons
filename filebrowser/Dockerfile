@@ -106,6 +106,22 @@ LABEL \
 # 6 Healthcheck #
 #################
 
+# Avoid spamming logs
+# hadolint ignore=SC2016
+RUN \
+    # Handle Apache configuration
+    if [ -d /etc/apache2/sites-available ]; then \
+        for file in /etc/apache2/sites-*/*.conf; do \
+            sed -i '/<VirtualHost/a \ \n    # Match requests with the custom User-Agent "HealthCheck" \n    SetEnvIf User-Agent "HealthCheck" dontlog \n    # Exclude matching requests from access logs \n    CustomLog ${APACHE_LOG_DIR}/access.log combined env=!dontlog' "$file"; \
+        done; \
+    fi && \
+    \
+    # Handle Nginx configuration
+    if [ -f /etc/nginx/nginx.conf ]; then \
+        awk '/http \{/{print; print "map $http_user_agent $dontlog {\n  default 0;\n  \"~*HealthCheck\" 1;\n}\naccess_log /var/log/nginx/access.log combined if=$dontlog;"; next}1' /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.new && \
+        mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf; \
+    fi
+
 ENV HEALTH_PORT="8080" \
     HEALTH_URL=""
 HEALTHCHECK \
