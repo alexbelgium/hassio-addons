@@ -6,7 +6,7 @@
     "armv6"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "🖧🔍 WIFI / LAN scanner, intruder, and presence detector ",
+  "description": "🖧🔍 WIFI / LAN scanner, intruder, and presence detector",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
