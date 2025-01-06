@@ -2,8 +2,7 @@
   "arch": [
     "aarch64",
     "amd64",
-    "armv7",
-    "armv6"
+    "armv7"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "🖧🔍 WIFI / LAN scanner, intruder, and presence detector",
@@ -71,6 +70,7 @@
     "TZ": "Europe/Berlin",
     "APP_CONF_OVERRIDE":{"GRAPHQL_PORT":"20212"}
   },
+  "host_network": true,
   "image": "ghcr.io/alexbelgium/netalertx-{arch}",
   "init": false,
   "map": [
