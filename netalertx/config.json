@@ -67,8 +67,7 @@
   ],
   "environment": {
     "PORT": "20211",
-    "TZ": "Europe/Berlin",
-    "APP_CONF_OVERRIDE":{"GRAPHQL_PORT":"20212"}
+    "TZ": "Europe/Berlin"
   },
   "host_network": true,
   "image": "ghcr.io/alexbelgium/netalertx-{arch}",
