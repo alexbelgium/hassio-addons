@@ -40,7 +40,7 @@ ENV APACHE_RUN_USER=www-data \
 # Global variables
 ENV WEBTREES_HOME="/var2/www/webtrees"
 WORKDIR $WEBTREES_HOME
-# hadolint ignore=DL4006
+# hadolint ignore=DL4006, SC2016
 RUN \
     # Change data location
     grep -rl "/var/www/webtrees" /etc | xargs sed -i 's|/var/www/webtrees|/var2/www/webtrees|g' \
@@ -127,6 +127,9 @@ LABEL \
 #################
 # 6 Healthcheck #
 #################
+
+# Avoid spamming logs with Apache
+RUN if [ -d /etc/apache2/sites-available ]; then for file in /etc/apache2/sites-*/*.conf; do sed -i '/<VirtualHost/a # Match requests with the custom User-Agent "HealthCheck" \n SetEnvIf User-Agent "HealthCheck" dontlog \n # Exclude matching requests from access logs \n CustomLog ${APACHE_LOG_DIR}/access.log combined env=!dontlog' "$file"; done; fi
 
 ENV HEALTH_PORT="80" \
     HEALTH_URL=""
