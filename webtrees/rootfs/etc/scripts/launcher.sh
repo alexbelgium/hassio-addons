@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/env bashio
 # shellcheck shell=bash
 set -e
 
@@ -18,5 +18,5 @@ if [ ! -f "%%data_location%%/config.ini.php" ]; then
         bashio::log.info "As you don't have the MariaDB addon running, you should likely select sqlite as database, when the name webtrees"
     fi
 else
-    bashio::log.info "Webtrees started. You can access your webui at : %%baseurl%%"
+    bashio::log.info "Webtrees started. You can access your webui at : %%base_url%%"
 fi
