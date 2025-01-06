@@ -49,7 +49,7 @@ RUN \
     && cp -rf /var/* /var2/ \
     && chown -R www-data:www-data /var2/www/webtrees \
     # Avoid log spam
-    && [ -d /etc/apache2/sites-available ] && for file in /etc/apache2/sites-*/*.conf; do sed -i '/<VirtualHost/a \# Match requests with the custom User-Agent "HealthCheck"\\nSetEnvIf User-Agent "HealthCheck" dontlog\\n\# Exclude matching requests from access logs\\nCustomLog ${APACHE_LOG_DIR}/access.log combined env=!dontlog' "$file"; done
+    && [ -d /etc/apache2/sites-available ] && for file in /etc/apache2/sites-*/*.conf; do sed -i '/<VirtualHost/a \# Match requests with the custom User-Agent "HealthCheck"\\nSetEnvIf User-Agent "*HealthCheck*" dontlog\\n\# Exclude matching requests from access logs\\nCustomLog ${APACHE_LOG_DIR}/access.log combined env=!dontlog' "$file"; done
     
 ##################
 # 3 Install apps #
