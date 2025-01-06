@@ -40,17 +40,15 @@ ENV APACHE_RUN_USER=www-data \
 # Global variables
 ENV WEBTREES_HOME="/var2/www/webtrees"
 WORKDIR $WEBTREES_HOME
-# hadolint ignore=DL4006, SC2016
+# hadolint ignore=DL4006
 RUN \
     # Change data location
     grep -rl "/var/www/webtrees" /etc | xargs sed -i 's|/var/www/webtrees|/var2/www/webtrees|g' \
     && sed -i 's|/var/www/webtrees|/var2/www/webtrees|g' /docker-entrypoint.py \
     && mkdir -p /var2 \
     && cp -rf /var/* /var2/ \
-    && chown -R www-data:www-data /var2/www/webtrees \
-    # Avoid log spam
-    && [ -d /etc/apache2/sites-available ] && for file in /etc/apache2/sites-*/*.conf; do sed -i '/<VirtualHost/a \# Match requests with the custom User-Agent "HealthCheck"\\nSetEnvIf User-Agent "*HealthCheck*" dontlog\\n\# Exclude matching requests from access logs\\nCustomLog ${APACHE_LOG_DIR}/access.log combined env=!dontlog' "$file"; done
-    
+    && chown -R www-data:www-data /var2/www/webtrees
+
 ##################
 # 3 Install apps #
 ##################
@@ -129,6 +127,7 @@ LABEL \
 #################
 
 # Avoid spamming logs with Apache
+# hadolint ignore=SC2016
 RUN if [ -d /etc/apache2/sites-available ]; then for file in /etc/apache2/sites-*/*.conf; do sed -i '/<VirtualHost/a # Match requests with the custom User-Agent "HealthCheck" \n SetEnvIf User-Agent "HealthCheck" dontlog \n # Exclude matching requests from access logs \n CustomLog ${APACHE_LOG_DIR}/access.log combined env=!dontlog' "$file"; done; fi
 
 ENV HEALTH_PORT="80" \
