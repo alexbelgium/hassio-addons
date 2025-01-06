@@ -47,11 +47,8 @@ RUN \
     && sed -i 's|/var/www/webtrees|/var2/www/webtrees|g' /docker-entrypoint.py \
     && mkdir -p /var2 \
     && cp -rf /var/* /var2/ \
-    && chown -R www-data:www-data /var2/www/webtrees \
-    # Allow healthcheck
-    && for file in /etc/apache2/sites-*/*.conf; do \
-    sed -i '/<VirtualHost/a\\n    # Match requests with the custom User-Agent "HealthCheck"\\n    SetEnvIf User-Agent "HealthCheck" dontlog\\n    # Exclude matching requests from access logs\\n    CustomLog /var/log/apache2/access.log combined env=!dontlog' "$file"; done
-
+    && chown -R www-data:www-data /var2/www/webtrees
+    
 ##################
 # 3 Install apps #
 ##################
