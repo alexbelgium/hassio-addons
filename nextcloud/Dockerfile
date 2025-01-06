@@ -166,4 +166,4 @@ HEALTHCHECK \
     --retries=5 \
     --start-period=720s \
     --timeout=45s \
-    CMD curl --fail "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || curl --fail http://127.0.0.1:443 || exit 1
+    CMD curl -A "HealthCheck: Docker/1.0" -s -f "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || curl --fail http://127.0.0.1:443 || exit 1
