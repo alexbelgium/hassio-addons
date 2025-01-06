@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "aarch64": "netalertx",
-    "amd64": "netalertx",
-    "armv7": "netalertx"
+    "aarch64": "jokobsk/netalertx:latest",
+    "amd64": "jokobsk/netalertx:latest",
+    "armv7": "jokobsk/netalertx:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
