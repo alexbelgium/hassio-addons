@@ -1,5 +1,5 @@
 - BREAKING CHANGE : please be sure to backup your system (HA, and backup from webtrees UI) before updating
-  - Major code refactor
+  - Major code refactor : there is no automatic first user creation, it now opens the wizard and provides additional instructions in the addon log (detecting if it is a first launch or not)
   - Data location change : the data location is now configurable through an option. It will now by default move files to /config/data ; accessible by an external editor through /addon_configs/xxx-webtrees/data. I haven't tested it with all configurations (including mariadb) so be careful before updating! However, it will be much more robust & reliable in the future. And should allow to move data storage location
   - Database logic change : database selection (sqlite, mysql, psql) is done through the initial startup wizard. If you want to change it, you need to modify manually the config.php.ini file in /config/data (mapped to /addon_configs/xxx-webtrees/data when accessing using a third party tool)
 
