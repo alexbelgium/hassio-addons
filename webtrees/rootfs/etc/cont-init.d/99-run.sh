@@ -148,6 +148,7 @@ fi
 source /etc/apache2/envvars
 echo "Adapting start script"
 cd /var2/www/webtrees || exit 1
+chmod +x /etc/scripts/launcher.sh
 sed -i "s|%%data_location%%|${DATA_LOCATION}|g" /etc/scripts/launcher.sh
 sed -i "s|%%base_url%%|${BASE_URL}|g" /etc/scripts/launcher.sh
 sed -i "/Starting Apache/a\    subprocess.run('/etc/scripts/launcher.sh', shell=True, check=True)" /docker-entrypoint.py
