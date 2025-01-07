@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Jellyseerr] Jellyseerr wont start due to nvme permission problem (opened 2025-01-07)](https://github.com/alexbelgium/hassio-addons/issues/1701) by [@PetitSphincter](https://github.com/PetitSphincter)
 # Home assistant add-on: jellyseerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
