@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Mealie] Mealie does not start since last updates (opened 2025-01-07)](https://github.com/alexbelgium/hassio-addons/issues/1700) by [@duczz](https://github.com/duczz)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
