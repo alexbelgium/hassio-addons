@@ -1,5 +1,6 @@
 ## &#9888; Open Issue : [🐛 [Mealie] Mealie does not start since last updates (opened 2025-01-07)](https://github.com/alexbelgium/hassio-addons/issues/1700) by [@duczz](https://github.com/duczz)
 ## &#9888; Open Issue : [🐛 [Mealie] Failed to install add-on (opened 2025-01-07)](https://github.com/alexbelgium/hassio-addons/issues/1702) by [@klaptafel](https://github.com/klaptafel)
+## &#9888; Open Issue : [🐛 [Mealie] redirecting to localhost:9000 when Accepting invitation or changeing language (opened 2025-01-07)](https://github.com/alexbelgium/hassio-addons/issues/1703) by [@phlo-c](https://github.com/phlo-c)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
