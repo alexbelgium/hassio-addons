@@ -96,14 +96,7 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PGID": "int",
-    "PUID": "int",
-    "TZ": "str?",
-    "cifsdomain": "str?",
-    "cifspassword": "str?",
-    "cifsusername": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?"
+    "TZ": "str?"
   },
   "slug": "netalertx",
   "udev": true,

@@ -22,7 +22,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-🖧🔍 WIFI / LAN intruder detector. Scans for devices connected to your network and alerts you if new and unknown devices are found. 
+🖧🔍 WIFI / LAN intruder detector. Scans for devices connected to your network and alerts you if new and unknown devices are found.
 This addon is based on the [docker image](https://github.com/jokob-sk/NetAlertX/tree/main/dockerfiles) from jokob-sk.
 
 ## Installation
@@ -39,19 +39,16 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-1. If unavailable, the app generates a default app.conf and app.db file on the first run.
-1. The preferred way is to manage the configuration via the Settings section in the UI, if UI is inaccessible you can modify app.conf in the /app/config/ folder directly
-1. You have to specify which network(s) should be scanned. This is done by entering subnets that are accessible from the host. If you use the default ARPSCAN plugin, you have to specify at least one valid subnet and interface in the SCAN_SUBNETS setting. See the [documentation on How to set up multiple SUBNETS, VLANs and what are limitations](https://github.com/jokob-sk/NetAlertX/blob/main/docs/SUBNETS.md) for troubleshooting and more advanced scenarios.
+1. If unavailable, the app generates a default `app.conf` and `app.db` file on the first run.
+1. The preferred way is to manage the configuration via the Settings section in the UI, if UI is inaccessible you can modify `app.conf` in the `/app/config/` folder directly.
+1. You have to specify which network(s) should be scanned. This is done by entering subnets that are accessible from the host. If you use the default `ARPSCAN` plugin, you have to specify at least one valid subnet and interface in the `SCAN_SUBNETS` setting. See the [documentation on How to set up multiple SUBNETS, VLANs and what are limitations](https://github.com/jokob-sk/NetAlertX/blob/main/docs/SUBNETS.md) and for troubleshooting and more advanced scenarios.
+1. Read how to get devices into your [Home Assistant instance via the MQTT plugin](https://github.com/jokob-sk/NetAlertX/blob/main/docs/HOME_ASSISTANT.md)
 
 Webui can be found at <http://homeassistant:20211>.
 
 ```yaml
 PGID: user
 GPID: user
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
-cifsusername: "username" # smb username (optional)
-cifspassword: "password" # smb password (optional)
 ```
 
 [repository]: https://github.com/alexbelgium/hassio-addons
