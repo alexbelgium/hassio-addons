@@ -51,7 +51,7 @@ def get_bird_code(scientific_name):
 
 def automatic_mqtt_publish(file, detection, path):
     bird = {}
-    bird['Date'] = file.date
+    bird['Date'] = file.file_date
     bird['Time'] = file.time
     bird['ScientificName'] = detection.scientific_name.replace('_', ' ')
     bird['CommonName'] = detection.common_name
