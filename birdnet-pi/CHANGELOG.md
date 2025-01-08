@@ -1,3 +1,4 @@
+## 2025.01 (08-01-2025)
 - Older CPU support : install tensorflow if avx2 not available
 - Align to upstream
 
