@@ -1,3 +1,7 @@
+## 0.0.5
+
+- attempt at starting start.sh, back to prod image
+
 ## 0.0.4
 
 - removal of unnecessary files WARNING: dev image
