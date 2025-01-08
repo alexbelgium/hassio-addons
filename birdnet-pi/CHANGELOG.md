@@ -1,4 +1,4 @@
-- Install tensorflow if avx2 not available
+- Older CPU support : install tensorflow if avx2 not available
 - Align to upstream
 
 ## 0.13-106 (30-10-2024)
