@@ -73,7 +73,7 @@
   "image": "ghcr.io/alexbelgium/netalertx-{arch}",
   "init": false,
   "map": [
-    "config:rw",
+    "addon_config:rw",
     "media:rw",
     "share:rw",
     "ssl"
