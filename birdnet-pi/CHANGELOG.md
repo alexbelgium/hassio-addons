@@ -1,4 +1,4 @@
-- Try fix mqtt autodetect script
+- Fix mqtt autodetect script
 
 ## 2025.01-4 (08-01-2025)
 - Older CPU support : install tensorflow if avx2 not available
