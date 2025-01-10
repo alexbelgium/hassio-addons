@@ -1,3 +1,5 @@
+## 1.5.8-2 (10-01-2025)
+- Use /usr/bin/maria instead of mysql
 
 ## 1.5.8 (21-12-2024)
 - Update to latest version from spotweb/spotweb (changelog : https://github.com/spotweb/spotweb/releases)
