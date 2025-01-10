@@ -1,3 +1,7 @@
+## 0.0.7
+
+- re-add oneshot type
+
 ## 0.0.6
 
 - test symlinks
