@@ -101,6 +101,6 @@
   "slug": "netalertx",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.0.1",
+  "version": "0.0.1-test",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:20211]"
 }
