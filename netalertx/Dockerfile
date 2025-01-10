@@ -28,9 +28,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Global LSIO modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-ARG CONFIGLOCATION="/config/addons_config/netalertx"
-RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
+#ARG CONFIGLOCATION="/config/addons_config/netalertx"
+#RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 ##################
 # 3 Install apps #
@@ -72,11 +72,6 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-# hadolint ignore=SC2013
-RUN \
-    for file in $(grep -Esril "/local/config/addons_config/netalertx" /etc /defaults); do sed -i "s=/local/config/addons_config/netalertx=/local/config=g" "$file"; done
-
-
 #
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
@@ -116,3 +111,8 @@ LABEL \
 ####################
 # 6 HealthcheckNOT #
 ####################
+# # In the dockerfile Changing hard links if possible
+# RUN for folder in config db; do \
+#     echo "Adapting hard links" && \
+#     grep -rl "/app/$folder" / 2>/dev/null | xargs sed -i "s|/app/$folder|/config/$folder|g"; \
+# done
