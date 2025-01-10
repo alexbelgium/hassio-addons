@@ -33,3 +33,11 @@ sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%base_subpath%%|${base_path}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%base_subpath%%|${base_path}|g" /etc/nginx/servers/ssl.conf
+
+if bashio::config.has_value "BASE_URL"; then
+    BASE_URL="$(bashio::config "BASE_URL")"
+    BASE_URL="${BASE_URL#*://}:$(bashio::addon.port 9001)"
+    sed -i "s|%%BASE_URL%%|$BASE_URL|g" /etc/nginx/servers/ssl.conf
+else
+    sed -i "/BASE_URL/d" /etc/nginx/servers/ssl.conf
+fi
