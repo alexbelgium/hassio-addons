@@ -1,3 +1,7 @@
+## 0.0.6
+
+- test symlinks
+
 ## 0.0.5
 
 - attempt at starting start.sh, back to prod image

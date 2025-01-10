@@ -111,3 +111,8 @@ LABEL \
 ####################
 # 6 HealthcheckNOT #
 ####################
+# # In the dockerfile Changing hard links if possible
+# RUN for folder in config db; do \
+#     echo "Adapting hard links" && \
+#     grep -rl "/app/$folder" / 2>/dev/null | xargs sed -i "s|/app/$folder|/config/$folder|g"; \
+# done
