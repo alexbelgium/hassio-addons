@@ -1,3 +1,5 @@
+## 0.0.8 (10-01-2025)
+- Minor bugs fixed
 ## 0.0.7
 
 - re-add oneshot type
