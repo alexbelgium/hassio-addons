@@ -35,7 +35,7 @@ ARG CONFIGLOCATION="/config/addons_config/immich"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 # Install REDIS
-#ENV DOCKER_MODS="imagegenius/mods:universal-redis"
+ENV DOCKER_MODS="imagegenius/mods:universal-redis"
 
 #    && chmod 777 -R /docker-mods \
 #        && /./docker-mods/* || ls / \
