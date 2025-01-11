@@ -111,5 +111,5 @@
   "slug": "radarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/radarr",
-  "version": "5.16.3.9541"
+  "version": "5.17.2.9580"
 }
