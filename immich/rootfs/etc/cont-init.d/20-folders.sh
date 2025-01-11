@@ -15,8 +15,12 @@ fi
 # DATA_LOCATION #
 #################
 
-PUID="$(bashio::config 'PUID')"
-PGID="$(bashio::config 'PGID')"
+if bashio::config.has_value "PUID"; then
+    PUID="$(bashio::config 'PUID')"
+fi
+if bashio::config.has_value "PGID"; then
+    PGID="$(bashio::config 'PGID')"
+fi
 
 bashio::log.info "Setting data location"
 DATA_LOCATION="$(bashio::config 'data_location')"
