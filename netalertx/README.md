@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Netalertx] Repository Error (opened 2025-01-10)](https://github.com/alexbelgium/hassio-addons/issues/1711) by [@pedromfa](https://github.com/pedromfa)
 # Home assistant add-on: NetAlertX
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
