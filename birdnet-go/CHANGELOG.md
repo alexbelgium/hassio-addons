@@ -1,3 +1,6 @@
+
+## 20250103 (11-01-2025)
+- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 ## 25-4 (29-12-2024)
 - Fixed https://github.com/alexbelgium/hassio-addons/issues/1687
 
