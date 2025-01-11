@@ -1,3 +1,6 @@
+## 0.0.8 (11-01-2025)
+- Docs, symlink test
+
 ## 0.0.8 (10-01-2025)
 - Minor bugs fixed
 ## 0.0.7
