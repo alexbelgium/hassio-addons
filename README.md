@@ -513,8 +513,6 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
-![smb][smb-badge]
-![localdisks][localdisks-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/cloud.svg) [Nextcloud](nextcloud/) : Nextcloud for Homeassistant
 
