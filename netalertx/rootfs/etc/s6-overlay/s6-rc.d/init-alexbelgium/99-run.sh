@@ -20,6 +20,10 @@ for folder in config db; do
 done
 
 
+chmod a+rwx /config/db/app.db
+sudo chown -R nginx:www-data /config/db/
+sudo chown -R nginx:www-data /config/config/
+
 ##############
 # LAUNCH APP #
 ##############
