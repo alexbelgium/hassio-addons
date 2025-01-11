@@ -1,5 +1,9 @@
-## 0.0.8 (11-01-2025)
+
+## 25.1.8.9 (11-01-2025)
 - Docs, symlink test
+
+## 25.1.8 (11-01-2025)
+- Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
 
 ## 0.0.8 (10-01-2025)
 - Minor bugs fixed

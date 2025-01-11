@@ -88,6 +88,6 @@
   "slug": "ombi",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/ombi",
-  "version": "4.44.1",
+  "version": "4.47.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3579]"
 }
