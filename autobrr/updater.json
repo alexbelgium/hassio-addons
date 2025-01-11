@@ -1,8 +1,8 @@
 {
-  "last_update": "04-01-2025",
+  "last_update": "11-01-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "autborr",
   "source": "github",
   "upstream_repo": "autobrr/autobrr",
-  "upstream_version": "1.56.1"
+  "upstream_version": "1.57.0"
 }
