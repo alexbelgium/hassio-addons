@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Mealie] redirecting to localhost:9000 when Accepting invitation or changeing language (opened 2025-01-07)](https://github.com/alexbelgium/hassio-addons/issues/1703) by [@phlo-c](https://github.com/phlo-c)
 ## &#9888; Open Issue : [🐛 [Mealie] Profile pictures do not show in ingress (opened 2025-01-11)](https://github.com/alexbelgium/hassio-addons/issues/1714) by [@IceBotYT](https://github.com/IceBotYT)
 # Hass.io Add-ons: Mealie
 
