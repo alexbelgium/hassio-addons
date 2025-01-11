@@ -1,4 +1,7 @@
 
+## nightly-1.30.0.4920-ls140 (11-01-2025)
+- Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
+
 ## nightly-1.29.2.4913-ls134 (04-01-2025)
 - Update to latest version from linuxserver/docker-prowlarr (changelog : https://github.com/linuxserver/docker-prowlarr/releases)
 
