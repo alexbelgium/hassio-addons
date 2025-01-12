@@ -1,6 +1,6 @@
 ## 25.1.10 (12-01-2025)
 
--  /etc/cont-init.d/99-run.sh
+-  Moving 99-run.sh to cont-init.d
 
 ## 25.1.9 (12-01-2025)
 
