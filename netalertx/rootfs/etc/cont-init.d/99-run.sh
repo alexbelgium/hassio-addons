@@ -29,5 +29,5 @@ fi
 # LAUNCH APP #
 ##############
 
-chmod +x /app/dockerfiles/start.sh
-/app/dockerfiles/start.sh
+#chmod +x /app/dockerfiles/start.sh
+#/app/dockerfiles/start.sh
