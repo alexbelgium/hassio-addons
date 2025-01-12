@@ -1,6 +1,6 @@
 ## 25.1.10 (12-01-2025)
 
--  Moving 99-run.sh to cont-init.d
+- Moving 99-run.sh to cont-init.d
 
 ## 25.1.9 (12-01-2025)
 
