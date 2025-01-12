@@ -1,5 +1,3 @@
-## 25.1.10 (12-01-2025)
-- Minor bugs fixed
 ## 25.1.8.9 (11-01-2025)
 - Docs, symlink test
 
