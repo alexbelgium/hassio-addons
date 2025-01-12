@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Immich] Freshly installed addon not starting. (opened 2024-12-19)](https://github.com/alexbelgium/hassio-addons/issues/1676) by [@CForChrisProooo](https://github.com/CForChrisProooo)
-## &#9888; Open Issue : [🐛 [Immich] boot loop missing error handler on this Redis client (opened 2025-01-11)](https://github.com/alexbelgium/hassio-addons/issues/1715) by [@jdumeez](https://github.com/jdumeez)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)

@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Transmission] Default config missing customUI option + issues with Transmissionic and Combustion (opened 2025-01-11)](https://github.com/alexbelgium/hassio-addons/issues/1718) by [@igorsantos07](https://github.com/igorsantos07)
 
 # Home assistant add-on: Transmission
 
