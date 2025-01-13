@@ -1,3 +1,5 @@
+## 1.5.8-3 (13-01-2025)
+- Minor bugs fixed
 ## 1.5.8-2 (10-01-2025)
 - Use /usr/bin/maria instead of mysql
 
