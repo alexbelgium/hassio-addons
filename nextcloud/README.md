@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Nextcloud] Nextcloud-ocr.sh gets deleted on startup (opened 2024-12-27)](https://github.com/alexbelgium/hassio-addons/issues/1682) by [@tsvi](https://github.com/tsvi)
 ## &#9888; Open Issue : [🐛 [Nextcloud] Générer une connexion sécurisée en HTTPS (opened 2025-01-11)](https://github.com/alexbelgium/hassio-addons/issues/1717) by [@jserieye](https://github.com/jserieye)
 # Home assistant add-on: Nextcloud
 
