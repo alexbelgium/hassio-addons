@@ -92,7 +92,7 @@ do
 done
 
  # Check if database already exists
-RESULT=`/usr/bin/maria -u "${username}" -p"${password}" -h "${host}" -P "${port}" --skip-column-names -e "SHOW DATABASES LIKE '${dbname}'"`
+RESULT=`/usr/bin/mariadb -u "${username}" -p"${password}" -h "${host}" -P "${port}" --skip-column-names -e "SHOW DATABASES LIKE '${dbname}'"`
 if [ "$RESULT" == "$dbname" ]; then
     # database already exists, do healthcheck with upgrade-db
     bashio::log.info "Existing database, checking health with upgrade-db...."
@@ -104,7 +104,7 @@ if [ "$RESULT" == "$dbname" ]; then
 else
     # database does not yet exist
     bashio::log.info "Creating database with default settings...."
-    /usr/bin/maria \
+    /usr/bin/mariadb \
         -u "${username}" -p"${password}" \
         -h "${host}" -P "${port}" \
         -e "CREATE DATABASE ${dbname};"
@@ -113,7 +113,7 @@ else
     # set systemtype to public (as we're behind ingress)
     s6-setuidgid nginx php /app/bin/upgrade-db.php --set-systemtype public
     # we also set some sane default settings
-    /usr/bin/maria \
+    /usr/bin/mariadb \
         -u "${username}" -p"${password}" \
         -h "${host}" -P "${port}" \
         -D "${dbname}" \
