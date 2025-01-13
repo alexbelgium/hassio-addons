@@ -42,7 +42,11 @@ echo "... using data folder $DATA_LOCATION"
 echo -n "$DATA_LOCATION" > "$DATA_LOCATION_FILE"
 
 # Update entrypoint
+# Correct data directory
 sed -i "s|DATA_DIR = os.path.join(ROOT, \"data\")|DATA_DIR = \"$DATA_LOCATION\"|" /docker-entrypoint.py
+# Correct default PUID/PGID
+sed -i "s|\"PUID\", \"33\"|\"PUID\", \"${PUID:-1000}\"|" /docker-entrypoint.py
+sed -i "s|\"PGID\", \"33\"|\"PGID\", \"${PGID:-1000}\"|" /docker-entrypoint.py
 
 # Creating symlinks
 echo "... creating symlinks"
