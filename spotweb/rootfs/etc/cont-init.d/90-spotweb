@@ -92,7 +92,7 @@ do
 done
 
  # Check if database already exists
-RESULT=`/usr/bin/mariadb -u "${username}" -p"${password}" -h "${host}" -P "${port}" --skip-column-names -e "SHOW DATABASES LIKE '${dbname}'" --ssl-mode=PREFERRED`
+RESULT=`/usr/bin/mariadb -u "${username}" -p"${password}" -h "${host}" -P "${port}" --skip-column-names -e "SHOW DATABASES LIKE '${dbname}'" --skip-ssl`
 if [ "$RESULT" == "$dbname" ]; then
     # database already exists, do healthcheck with upgrade-db
     bashio::log.info "Existing database, checking health with upgrade-db...."
@@ -107,7 +107,7 @@ else
     /usr/bin/mariadb \
         -u "${username}" -p"${password}" \
         -h "${host}" -P "${port}" \
-        --ssl-mode=PREFERRED \
+        --skip-ssl \
         -e "CREATE DATABASE ${dbname};"
     # init database with default values
     s6-setuidgid nginx php /app/bin/upgrade-db.php
@@ -117,7 +117,7 @@ else
     /usr/bin/mariadb \
         -u "${username}" -p"${password}" \
         -h "${host}" -P "${port}" \
-        -D "${dbname}" --ssl-mode=PREFERRED \
+        -D "${dbname}" --skip-ssl \
         -e "REPLACE INTO usergroups(userid, groupid) VALUES (1, 2); \
             REPLACE INTO usergroups(userid, groupid) VALUES (1, 3); \
             REPLACE INTO usergroups(userid, groupid) VALUES (1, 4); \
