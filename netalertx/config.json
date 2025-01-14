@@ -41,6 +41,7 @@
     "NET_RAW"
   ],
   "schema": {
+    "APP_CONF_OVERRIDE": "str?",
     "TZ": "str?"
   },
   "services": [
