@@ -19,9 +19,11 @@ export DB_PORT
 export DB_HOSTNAME
 export DB_USERNAME
 export DB_PASSWORD
+touch /setup_postgres.sql
+chmod 755 /setup_postgres.sql
 echo "DROP EXTENSION IF EXISTS vectors;
     CREATE EXTENSION vectors;
-\q"> setup_postgres.sql
+\q" > /setup_postgres.sql
 
 # Enable vectors
-psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" < setup_postgres.sql >/dev/null || true
+psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" < /setup_postgres.sql >/dev/null || true
