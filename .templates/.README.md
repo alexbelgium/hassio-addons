@@ -69,9 +69,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Stars evolution
 
-<a href="https://star-history.com">
-  <img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/starsevol.svg" width=500px>
-</a>
+[![Star History Chart](https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date)](https://star-history.com/#alexbelgium/hassio-addons&Date)
 
 ## Add-ons provided by this repository
 
