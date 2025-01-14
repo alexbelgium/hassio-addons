@@ -47,6 +47,7 @@ comparison to installing any other Hass.io add-on.
 1. Back everything up by following the [Backups documentation](https://github.com/jokob-sk/NetAlertX/blob/main/docs/BACKUPS.md).
 
 Webui can be found at <http://homeassistant:20211> or using HA ingress
+
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/fd74af43-091a-4f38-9879-037ca64cfab9" />
 
 ```yaml
