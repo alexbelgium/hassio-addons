@@ -15,3 +15,7 @@ if [ -f /homeassistant/addons_config/postgres/config.yaml ]; then
     # Correct database location
     sed -i "s|/data/database|/config/database|g" /config/postgresql.conf
 fi
+
+# touch sql file
+touch /setup_postgres.sql
+chmod 755 /setup_postgres.sql
