@@ -68,10 +68,10 @@
   ],
   "environment": {
     "LANG": "en-US",
+    "PGID": "1000",
     "PORT": "80",
     "PRETTY_URLS": "1",
     "PUID": "1000",
-    "PGID": "1000",
     "WEBTREES_HOME": "/var2/www/webtrees"
   },
   "image": "ghcr.io/alexbelgium/webtrees-{arch}",
