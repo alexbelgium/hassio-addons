@@ -46,7 +46,8 @@ comparison to installing any other Hass.io add-on.
 1. Read how to get devices into your [Home Assistant instance via the MQTT plugin](https://github.com/jokob-sk/NetAlertX/blob/main/docs/HOME_ASSISTANT.md)
 1. Back everything up by following the [Backups documentation](https://github.com/jokob-sk/NetAlertX/blob/main/docs/BACKUPS.md).
 
-Webui can be found at <http://homeassistant:20211>.
+Webui can be found at <http://homeassistant:20211> or using HA ingress
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/fd74af43-091a-4f38-9879-037ca64cfab9" />
 
 ```yaml
 PGID: user
