@@ -5,7 +5,7 @@ set -e
 bashio::log.info "Waiting for port 5432 to open..."
 
 # Wait for transmission to become available
-bashio::net.wait_for 5432 localhost 900
+( bashio::net.wait_for 5432 localhost 900
 
 bashio::log.info "Enabling vector.rs"
 
@@ -26,3 +26,4 @@ echo "DROP EXTENSION IF EXISTS vectors;
 # Enable vectors
 psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" < /setup_postgres.sql >/dev/null || true
 rm /setup_postgres.sql
+) & true
