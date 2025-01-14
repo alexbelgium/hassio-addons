@@ -72,6 +72,8 @@
   "host_network": true,
   "image": "ghcr.io/alexbelgium/netalertx-{arch}",
   "init": false,
+  "ingress": true,
+  "ingress_port": 0,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -83,6 +85,7 @@
     "PGID": 0,
     "PUID": 0
   },
+  "panel_icon": "mdi:wifi-check",
   "ports": {
     "20211/tcp": 20211,
     "20212/tcp": 20212
@@ -104,6 +107,5 @@
   "slug": "netalertx",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "25.1.11",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:20211]"
+  "version": "25.1.12"
 }

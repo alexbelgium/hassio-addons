@@ -4,8 +4,6 @@ set -e
 
 bashio::log.warning "App starting."
 
-
-
 # In the addon script, make symlinks on the fly
 echo "Creating symlinks"
 for folder in config db; do
@@ -24,10 +22,3 @@ sudo chown -R nginx:www-data /config/config/
 if [ -f /config/db/app.db ]; then
     chmod a+rwx /config/db/app.db
 fi
-
-##############
-# LAUNCH APP #
-##############
-
-#chmod +x /app/dockerfiles/start.sh
-#/app/dockerfiles/start.sh

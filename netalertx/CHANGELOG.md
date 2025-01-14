@@ -1,21 +1,8 @@
+- Addition of ingress
+
 ## 25.1.11 (12-01-2025)
 - Moving 99-run.sh to cont-init.d
-
-## 25.1.9 (12-01-2025)
-
-- Minor bugs fixed
-
-## 25.1.8.9 (11-01-2025)
-
 - Docs, symlink test
-
-## 25.1.8 (11-01-2025)
-
-- Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
-
-## 0.0.8 (10-01-2025)
-
-- Minor bugs fixed
 
 ## 0.0.7
 
