@@ -1,3 +1,5 @@
+- Automatic configuration of homeassistant local environment
+
 ## 25.1.12 (14-01-2025)
 - Addition of ingress
 
