@@ -12,6 +12,7 @@
     "PUID": "0",
     "TZ": "Europe/Berlin"
   },
+  "hassio_api": true,
   "host_network": true,
   "image": "ghcr.io/alexbelgium/netalertx-{arch}",
   "init": false,
