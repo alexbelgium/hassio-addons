@@ -37,8 +37,8 @@ bashio::log.info "Starting the app"
 # Start background tasks
 if [ "$(bashio::info.arch)" != "armv7" ]; then
 #    /./docker-entrypoint-initdb.d/10-vector.sh & true
-    docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so -c search_path="public, vectors" -c logging_collector=on
+    docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so -c search_path="public, vectors" & true
 else
     bashio::log.warning "ARMv7 detected: Starting without vectors.so"
-    docker-entrypoint.sh postgres
+    docker-entrypoint.sh postgres & true
 fi
