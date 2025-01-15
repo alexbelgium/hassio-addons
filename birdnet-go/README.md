@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [BirdNET-Go] In ingress mode no date / stats. (opened 2025-01-15)](https://github.com/alexbelgium/hassio-addons/issues/1722) by [@rwijbenga](https://github.com/rwijbenga)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

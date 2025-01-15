@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Spotweb] not starting with external mariadb (opened 2025-01-13)](https://github.com/alexbelgium/hassio-addons/issues/1721) by [@remb0](https://github.com/remb0)
 # Home Assistant Add-ons: Spotweb
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
