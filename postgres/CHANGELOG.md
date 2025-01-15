@@ -1,5 +1,4 @@
-## 15.7-10 (14-01-2025)
-- Minor bugs fixed
+- Removed vector.rs installation script, it is now part of the upstream entrypoint
 
 ## 15.7-7 (03-01-2025)
 - Fix vector.rs not found at startup
