@@ -1,6 +1,5 @@
 ## 15.7-13 (15-01-2025)
-- Minor bugs fixed
-## 15.7-12 (15-01-2025)
+- Redirect logs to addons log
 - Removed vector.rs installation script, it is now part of the upstream entrypoint
 
 ## 15.7-7 (03-01-2025)
