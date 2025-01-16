@@ -11,6 +11,15 @@ done
 DEFAULT_BIRDSONGS_FOLDER="/data/clips/"
 CONFIG_LOCATIONS=("/config/config.yaml" "/internal/conf/config.yaml")
 
+# Database location
+bashio::log.info "Setting database location to /config/birdnet.db"
+for configloc in "${CONFIG_LOCATIONS[@]}"; do
+    if [ -f "$configloc" ]; then
+        yq -i -y ".output.sqlite.path = \"/config/birdnet.db\"" "$configloc"
+        bashio::log.info "Updated database path in $configloc"
+    fi
+done
+
 # Migrate Database
 if [ -f /data/birdnet.db ]; then
     bashio::log.warning "Moving db to /config"
