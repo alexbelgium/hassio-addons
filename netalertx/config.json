@@ -18,6 +18,7 @@
   "init": false,
   "ingress": true,
   "ingress_port": 0,
+  "ingress_stream": true,
   "map": [
     "addon_config:rw",
     "media:rw",
