@@ -12,7 +12,7 @@ LOCATION=$(bashio::config 'data_location')
 
 if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
     # Default location
-    LOCATION="/share/webtop_kde"
+    LOCATION="/config/data_kde"
 else
     bashio::log.warning "Warning : a custom data location was selected, but the previous folder will NOT be copied. You need to do it manually"
 
@@ -25,7 +25,7 @@ else
     done
 
     if [ -z "$LOCATIONOK" ]; then
-        LOCATION="/share/webtop_kde"
+        LOCATION="/config/data_kde"
         bashio::log.fatal "Your data_location value can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $LOCATION"
     fi
 
@@ -45,7 +45,7 @@ done
 # Correct home location
 for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
     if [ -d "$folders" ]; then
-        sed -i "s|/share/webtop_kde|$LOCATION|g" $(find "$folders" -type f) &>/dev/null || true
+        sed -i "s|/config/data_kde|$LOCATION|g" $(find "$folders" -type f) &>/dev/null || true
     fi
 done
 
