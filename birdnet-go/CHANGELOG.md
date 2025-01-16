@@ -1,3 +1,5 @@
+- BREAKING CHANGE : force implementation 
+
 ## 20250103-5 (16-01-2025)
 - Fix ingress issues
 
