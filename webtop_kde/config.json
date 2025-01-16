@@ -79,7 +79,7 @@
   "ingress": true,
   "init": false,
   "map": [
-    "config:rw",
+    "addon_config:rw",
     "media:rw",
     "share:rw",
     "ssl"
