@@ -1,3 +1,5 @@
+- Improve ingress parameters
+
 ## 25.1.13 (14-01-2025)
 - Automatic configuration of homeassistant local environment
 - Add APP_CONF_OVERRIDE option
