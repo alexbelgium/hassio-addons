@@ -84,7 +84,7 @@
     "share:rw",
     "ssl"
   ],
-  "name": "Webtop",
+  "name": "Webtop xfce",
   "options": {
     "DNS_server": "8.8.8.8",
     "PGID": 0,
