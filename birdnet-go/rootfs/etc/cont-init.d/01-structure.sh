@@ -20,6 +20,7 @@ if [ -d /data/clips ]; then
     cp -rnf /data/clips/* "$birdsongsloc"/
     rm -r /data/clips
 fi
+ln -sf "$birdsongsloc" /data/clips
 
 ####################
 # Correct defaults #
