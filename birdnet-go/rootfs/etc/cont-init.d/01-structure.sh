@@ -10,17 +10,45 @@ if [ -f /data/birdnet.db ]; then
     mv /data/birdnet.db /config
 fi
 
-# Audio clips location
-birdsongsloc="$(bashio::config "BIRDSONGS_FOLDER")"
-birdsongsloc="${birdsongsloc:-/config/clips}"
-birdsongsloc="${birdsongsloc%/}"
-mkdir -p "$birdsongsloc"
-if [ -d /data/clips ]; then
-    bashio::log.warning "Audio clips found in /data, moving to the new location"
-    cp -rnf /data/clips/* "$birdsongsloc"/
-    rm -r /data/clips
+######################
+# Birdsongs location #
+######################
+
+# Get current settings
+CURRENT_BIRDSONGS_FOLDER="clips/"
+if [ -f /config/config.yaml ]; then
+    CURRENT_BIRDSONGS_FOLDER="$(yq '.realtime.audio.export.path' /config/config.yaml)"
+    CURRENT_BIRDSONGS_FOLDER="${CURRENT_BIRDSONGS_FOLDER//\"/}"
 fi
-ln -sf "$birdsongsloc" /data/clips
+# If default, converts it to its default path
+if [[ "$CURRENT_BIRDSONGS_FOLDER" == "clips/" ]]; then
+    CURRENT_BIRDSONGS_FOLDER="/data/clips/"
+fi
+
+# Get new setting
+BIRDSONGS_FOLDER="$(bashio::config "BIRDSONGS_FOLDER")"
+BIRDSONGS_FOLDER="${BIRDSONGS_FOLDER:-/config/clips}"
+BIRDSONGS_FOLDER="${BIRDSONGS_FOLDER%/}"
+mkdir -p "$BIRDSONGS_FOLDER" || bashio::log.fatal "Warning, birdsongs folder $BIRDSONGS_FOLDER cannot be created"
+bashio::log.info "... audio clips saved to $BIRDSONGS_FOLDER according to addon options"
+
+# Migrate data if different
+if [[ "$CURRENT_BIRDSONGS_FOLDER" != "$BIRDSONGS_FOLDER" ]]; then
+    bashio::log.warning "The birdsongs folder was changed from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER"
+    # Migrate files
+    if [[ -d "$CURRENT_BIRDSONGS_FOLDER" ]] && [[ "$(ls -A "$CURRENT_BIRDSONGS_FOLDER")" ][; then
+        bashio::log.warning "... audio clips found in $CURRENT_BIRDSONGS_FOLDER, migrating to $CURRENT_BIRDSONGS_FOLDER. Previous files will be kept in place with the folder renamed to $CURRENT_BIRDSONGS_FOLDER_migrated"
+        cp -rnf "$CURRENT_BIRDSONGS_FOLDER"/* "$BIRDSONGS_FOLDER"/
+        mv "$CURRENT_BIRDSONGS_FOLDER" "$CURRENT_BIRDSONGS_FOLDER"_migrated
+    fi
+    # Adapt config file
+    echo "... adapting config.yaml"
+    for configloc in /config/config.yaml /internal/conf/config.yaml; do
+        if [ -f "$configloc" ]; then
+            yq -i -y ".realtime.audio.export.path = \"$BIRDSONGS_FOLDER/\"" "$configloc"
+        fi
+    done
+fi
 
 ####################
 # Correct defaults #
@@ -31,15 +59,7 @@ bashio::log.info "Correct config for defaults"
 echo "... database location is /config/birdnet.db"
 for configloc in /config/config.yaml /internal/conf/config.yaml; do
     if [ -f "$configloc" ]; then
-        sed -i "s| birdnet.db| /config/birdnet.db|g" "$configloc"
-    fi
-done
-
-# Birdsongs location
-echo "... audio clips saved to $birdsongsloc"
-for configloc in /config/config.yaml /internal/conf/config.yaml; do
-    if [ -f "$configloc" ]; then
-        sed -E "s|(.*path: ).*( #.*audio clip export directory.*)|\1$birdsongsloc\2|g" "$configloc"
+        yq -i -y ".output.sqlite.path = \"/config/birdnet.db\"" "$configloc"
     fi
 done
 
