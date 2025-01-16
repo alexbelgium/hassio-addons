@@ -89,7 +89,8 @@
     "DNS_server": "8.8.8.8",
     "PGID": 0,
     "PUID": 0,
-    "additional_apps": "engrampa,libreoffice"
+    "additional_apps": "engrampa,libreoffice",
+    "data_location": "/config/data"
   },
   "panel_admin": false,
   "panel_icon": "mdi:monitor",
