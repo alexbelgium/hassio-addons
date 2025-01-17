@@ -39,19 +39,19 @@ fi
 
 # Set the new birdsongs folder
 BIRDSONGS_FOLDER="$(bashio::config "BIRDSONGS_FOLDER")"
-BIRDSONGS_FOLDER="${BIRDSONGS_FOLDER:-/config/clips}"
+BIRDSONGS_FOLDER="${BIRDSONGS_FOLDER:-clips/}"
 BIRDSONGS_FOLDER="${BIRDSONGS_FOLDER%/}"
 if [[ ! "$BIRDSONGS_FOLDER" == /* ]]; then
-    if [ ! -d /config/"$BIRDSONGS_FOLDER" ]; then
-        mkdir -p /config/"$BIRDSONGS_FOLDER"
+    if [ ! -d "/config/$BIRDSONGS_FOLDER" ]; then
+        mkdir -p "/config/$BIRDSONGS_FOLDER"
     fi
-    if [ -d /data/"$BIRDSONGS_FOLDER" ]; then
-        if "$(ls -A /data/"$BIRDSONGS_FOLDER")"; then
-            cp -rf /data/"$BIRDSONGS_FOLDER"/* /config/"$BIRDSONGS_FOLDER"/*
+    if [ -d "/data/$BIRDSONGS_FOLDER" ]; then
+        if [ -n "$(ls -A /data/"$BIRDSONGS_FOLDER" 2>/dev/null)" ]; then
+            cp -rf /data/"$BIRDSONGS_FOLDER"/* /config/"$BIRDSONGS_FOLDER"/
         fi
-        rm -r /data/"$BIRDSONGS_FOLDER"
+        rm -r "/data/$BIRDSONGS_FOLDER"
     fi
-    ln -sf /config/"$BIRDSONGS_FOLDER" /data/"$BIRDSONGS_FOLDER"
+    ln -sf "/config/$BIRDSONGS_FOLDER" "/data/$BIRDSONGS_FOLDER"
 fi
 
 bashio::log.info "... audio clips saved to $BIRDSONGS_FOLDER according to addon options"
