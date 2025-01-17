@@ -1,4 +1,5 @@
 - BREAKING CHANGE : improve implementation of addon options such as Birdsongs folder. Please check the log at first start if anything is different than you expected
+- Solve empty summary
 
 ## 20250103-5 (16-01-2025)
 - Fix ingress issues
