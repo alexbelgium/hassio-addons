@@ -48,20 +48,32 @@ fi
 bashio::log.info "... audio clips saved to $BIRDSONGS_FOLDER according to addon options"
 
 # Migrate data if the folder has changed
-if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "$BIRDSONGS_FOLDER" ]]; then
+if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${$BIRDSONGS_FOLDER%/}" ]]; then
     bashio::log.warning "Birdsongs folder changed from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER"
-    if [[ -d "$CURRENT_BIRDSONGS_FOLDER" && "$(ls -A "$CURRENT_BIRDSONGS_FOLDER")" ]]; then
-        bashio::log.warning "Migrating files from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER"
-        cp -rnf "$CURRENT_BIRDSONGS_FOLDER"/* "$BIRDSONGS_FOLDER"/
-        mv "${CURRENT_BIRDSONGS_FOLDER%/}" "${CURRENT_BIRDSONGS_FOLDER%/}_migrated"
-    fi
-
     # Update config files with the new birdsongs folder path
     for configloc in "${CONFIG_LOCATIONS[@]}"; do
         if [ -f "$configloc" ]; then
             yq -i -y ".realtime.audio.export.path = \"$BIRDSONGS_FOLDER/\"" "$configloc"
         fi
     done
+    # Move files only if sqlite paths changed
+    if [[ -d "$CURRENT_BIRDSONGS_FOLDER" && "$(ls -A "$CURRENT_BIRDSONGS_FOLDER")" ]]; then
+        bashio::log.warning "Migrating files from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER"
+        cp -rnf "$CURRENT_BIRDSONGS_FOLDER"/* "$BIRDSONGS_FOLDER"/
+        mv "${CURRENT_BIRDSONGS_FOLDER%/}" "${CURRENT_BIRDSONGS_FOLDER%/}_migrated"
+    fi
+    # Define the SQLite database file
+    DB_FILE="your_database.db"
+    # SQL query to update the paths
+    SQL_QUERY="UPDATE notes SET clip_name = REPLACE(clip_name, 'clips/', '/zlkrj/zer');"
+    # Execute the query using sqlite3
+    sqlite3 "$DB_FILE" "$SQL_QUERY"
+    # Check if the operation was successful
+    if [ $? -eq 0 ]; then
+        echo "Paths have been successfully updated."
+    else
+        bashio::log.warning "An error occurred while updating the paths."
+    fi
 fi
 
 ####################
