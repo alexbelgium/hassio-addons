@@ -62,17 +62,22 @@ if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${$BIRDSONGS_FOLDER%/}" ]]; then
         cp -rnf "$CURRENT_BIRDSONGS_FOLDER"/* "$BIRDSONGS_FOLDER"/
         mv "${CURRENT_BIRDSONGS_FOLDER%/}" "${CURRENT_BIRDSONGS_FOLDER%/}_migrated"
     fi
-    # Define the SQLite database file
-    DB_FILE="your_database.db"
-    # SQL query to update the paths
-    SQL_QUERY="UPDATE notes SET clip_name = REPLACE(clip_name, 'clips/', '/zlkrj/zer');"
-    # Execute the query using sqlite3
-    sqlite3 "$DB_FILE" "$SQL_QUERY"
-    # Check if the operation was successful
-    if [ $? -eq 0 ]; then
-        echo "Paths have been successfully updated."
-    else
-        bashio::log.warning "An error occurred while updating the paths."
+    # Adapt the database
+    if [ -f /config/birdnet.db ]; then
+        # SQL query to update the paths
+        bashio::log.warning "Modifying database paths from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER. A backup will be created before"
+        cp /config/birdnet.db /config/birdnet.db_$(date +%Y%m%d_%H%M%S) 
+        SQL_QUERY="UPDATE notes SET clip_name = REPLACE(clip_name, '^${CURRENT_BIRDSONGS_FOLDER}/', '${BIRDSONGS_FOLDER%/}/');"
+        
+        # Execute the query using sqlite3
+        sqlite3 /config/birdnet.db "$SQL_QUERY"
+        
+        # Check if the operation was successful
+        if [ $? -eq 0 ]; then
+            echo "Paths have been successfully updated."
+        else
+            bashio::log.warning "An error occurred while updating the paths."
+        fi
     fi
 fi
 
