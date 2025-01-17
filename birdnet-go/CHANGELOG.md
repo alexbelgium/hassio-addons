@@ -1,5 +1,4 @@
-## 20250103-9 (17-01-2025)
-- Revert : it was showing only the daily summary and not latest detections anymore
+- Revert : it was showing only the daily summary and not latest detections anymore. Also, when files were moved to the new folder it didn't change the sqlite paths which led to files not available in the UI
 
 ## 20250103-8 (17-01-2025)
 - BREAKING CHANGE : improve implementation of addon options such as Birdsongs folder. Please check the log at first start if anything is different than you expected
