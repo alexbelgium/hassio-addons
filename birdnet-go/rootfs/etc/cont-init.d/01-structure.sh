@@ -48,7 +48,7 @@ fi
 bashio::log.info "... audio clips saved to $BIRDSONGS_FOLDER according to addon options"
 
 # Migrate data if the folder has changed
-if [[ "$CURRENT_BIRDSONGS_FOLDER" != "$BIRDSONGS_FOLDER" ]]; then
+if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "$BIRDSONGS_FOLDER" ]]; then
     bashio::log.warning "Birdsongs folder changed from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER"
     if [[ -d "$CURRENT_BIRDSONGS_FOLDER" && "$(ls -A "$CURRENT_BIRDSONGS_FOLDER")" ]]; then
         bashio::log.warning "Migrating files from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER"
