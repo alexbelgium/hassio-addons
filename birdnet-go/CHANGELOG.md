@@ -1,3 +1,4 @@
+## 20250103-9 (17-01-2025)
 - Revert : it was showing only the daily summary and not latest detections anymore
 
 ## 20250103-8 (17-01-2025)
