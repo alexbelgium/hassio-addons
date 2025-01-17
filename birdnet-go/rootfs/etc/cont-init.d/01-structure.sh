@@ -64,19 +64,31 @@ if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${$BIRDSONGS_FOLDER%/}" ]]; then
     fi
     # Adapt the database
     if [ -f /config/birdnet.db ]; then
-        # SQL query to update the paths
-        bashio::log.warning "Modifying database paths from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER. A backup will be created before"
-        cp /config/birdnet.db /config/birdnet.db_$(date +%Y%m%d_%H%M%S) 
-        SQL_QUERY="UPDATE notes SET clip_name = REPLACE(clip_name, '^${CURRENT_BIRDSONGS_FOLDER}/', '${BIRDSONGS_FOLDER%/}/');"
-        
+        # Prepare
+        backup="$(date +%Y%m%d_%H%M%S)"
+        bashio::log.warning "Modifying database paths from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER. A backup named birdnet.db_$backup will be created before"
+
+        # Create backup
+        cp /config/birdnet.db "birdnet.db_$backup"
+        if [ $? -ne 0 ]; then
+            bashio::log.error "Failed to create a backup of the database. Aborting path modification."
+            exit 1
+        fi
+
         # Execute the query using sqlite3
+        SQL_QUERY="UPDATE notes SET clip_name = '${BIRDSONGS_FOLDER%/}/' || substr(clip_name, length('${CURRENT_BIRDSONGS_FOLDER%/}/') + 1) WHERE clip_name LIKE '${CURRENT_BIRDSONGS_FOLDER%/}/%';"
         sqlite3 /config/birdnet.db "$SQL_QUERY"
-        
-        # Check if the operation was successful
         if [ $? -eq 0 ]; then
             echo "Paths have been successfully updated."
         else
-            bashio::log.warning "An error occurred while updating the paths."
+            bashio::log.warning "An error occurred while updating the paths. The database backup will be restored."
+            BACKUP_FILE="/config/birdnet.db_$(date +%Y%m%d_%H%M%S)"  # Make sure this matches the earlier backup filename
+            if [ -f "$BACKUP_FILE" ]; then
+                mv "$BACKUP_FILE" /config/birdnet.db
+                bashio::log.info "The database backup has been restored."
+            else
+                bashio::log.error "Backup file not found! Manual intervention required."
+            fi
         fi
     fi
 fi
