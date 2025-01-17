@@ -48,7 +48,7 @@ fi
 bashio::log.info "... audio clips saved to $BIRDSONGS_FOLDER according to addon options"
 
 # Migrate data if the folder has changed
-if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${$BIRDSONGS_FOLDER%/}" ]]; then
+if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${BIRDSONGS_FOLDER%/}" ]]; then
     bashio::log.warning "Birdsongs folder changed from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER"
     # Update config files with the new birdsongs folder path
     for configloc in "${CONFIG_LOCATIONS[@]}"; do
@@ -69,16 +69,14 @@ if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${$BIRDSONGS_FOLDER%/}" ]]; then
         bashio::log.warning "Modifying database paths from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER. A backup named birdnet.db_$backup will be created before"
 
         # Create backup
-        cp /config/birdnet.db "birdnet.db_$backup"
-        if [ $? -ne 0 ]; then
+        if ! cp /config/birdnet.db "birdnet.db_$backup"; then
             bashio::log.error "Failed to create a backup of the database. Aborting path modification."
             exit 1
         fi
 
         # Execute the query using sqlite3
         SQL_QUERY="UPDATE notes SET clip_name = '${BIRDSONGS_FOLDER%/}/' || substr(clip_name, length('${CURRENT_BIRDSONGS_FOLDER%/}/') + 1) WHERE clip_name LIKE '${CURRENT_BIRDSONGS_FOLDER%/}/%';"
-        sqlite3 /config/birdnet.db "$SQL_QUERY"
-        if [ $? -eq 0 ]; then
+        if ! sqlite3 /config/birdnet.db "$SQL_QUERY"; then
             echo "Paths have been successfully updated."
         else
             bashio::log.warning "An error occurred while updating the paths. The database backup will be restored."
