@@ -1,3 +1,5 @@
+- Revert : it was showing only the daily summary and not latest detections anymore
+
 ## 20250103-8 (17-01-2025)
 - BREAKING CHANGE : improve implementation of addon options such as Birdsongs folder. Please check the log at first start if anything is different than you expected
 - Fix ingress issues
