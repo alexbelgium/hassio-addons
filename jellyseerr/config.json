@@ -90,6 +90,6 @@
   "slug": "jellyseerr",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/jellyseerr",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:5055]"
 }
