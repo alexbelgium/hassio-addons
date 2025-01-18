@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Home Assistant Ingress Proxy for Tandoor Recipes (opened 2024-11-04)](https://github.com/alexbelgium/hassio-addons/issues/1625) by [@kylepyke](https://github.com/kylepyke)
 # Hass.io Add-ons: Tandoor recipes
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
