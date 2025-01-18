@@ -134,6 +134,6 @@
   "stage": "deprecated",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.13.5",
+  "version": "2.14.3",
   "webui": "http://[HOST]:[PORT:8000]"
 }
