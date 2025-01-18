@@ -1,4 +1,7 @@
 
+## 0.4.9.2730 (18-01-2025)
+- Update to latest version from linuxserver/docker-readarr (changelog : https://github.com/linuxserver/docker-readarr/releases)
+
 ## 0.4.8.2726 (11-01-2025)
 - Update to latest version from linuxserver/docker-readarr (changelog : https://github.com/linuxserver/docker-readarr/releases)
 
