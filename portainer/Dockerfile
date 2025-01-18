@@ -31,7 +31,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-ARG BUILD_UPSTREAM="2.25.1"
+ARG BUILD_UPSTREAM="2.26.0"
 
 # spellcheck disable=SC2015
 # hadolint ignore=SC2015
