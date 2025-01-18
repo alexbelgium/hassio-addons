@@ -1,3 +1,5 @@
+- Ingress removed as not compatible with special characters
+
 ## 25.1.14 (16-01-2025)
 - Improve ingress parameters
 
