@@ -47,9 +47,9 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
         "transmissionic")
             TRANSMISSIONIC_VERSION=$(curl -s -L "https://api.github.com/repos/6c65726f79/Transmissionic/releases/latest" | jq -r .tag_name)
             echo "**** grab transmissionic ****" && \
-            if [ -z ${TRANSMISSIONIC_VERSION+x} ]; then \
-                TRANSMISSIONIC_VERSION=$(curl -s "https://api.github.com/repos/6c65726f79/Transmissionic/releases/latest" \
-                | jq -rc ".tag_name"); \
+            if [ -z "${TRANSMISSIONIC_VERSION+x}" ]; then \
+                TRANSMISSIONIC_VERSION="$(curl -s "https://api.github.com/repos/6c65726f79/Transmissionic/releases/latest" \
+                | jq -rc ".tag_name")"; \
             fi && \
             curl -o \
                 /tmp/transmissionic.zip -L \
@@ -67,7 +67,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     esac
 
     # Define variable
-    $CUSTOMUI="/${CUSTOMUI}"
+    CUSTOMUI="/${CUSTOMUI}"
     chown -R abc:abc "$CUSTOMUI"
     if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export TRANSMISSION_WEB_HOME=$CUSTOMUI" /etc/services.d/*/*run* 2>/dev/null; fi
     if [ -d /var/run/s6/container_environment ]; then printf "%s" "$CUSTOMUI" > /var/run/s6/container_environment/TRANSMISSION_WEB_HOME; fi
