@@ -85,9 +85,8 @@ if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${BIRDSONGS_FOLDER%/}" ]]; then
 
         # Execute the query using sqlite3
         SQL_QUERY="UPDATE notes SET clip_name = '${BIRDSONGS_FOLDER%/}/' || substr(clip_name, length('${CURRENT_BIRDSONGS_FOLDER%/}/') + 1) WHERE clip_name LIKE '${CURRENT_BIRDSONGS_FOLDER%/}/%';"
+        
         if ! sqlite3 /config/birdnet.db "$SQL_QUERY"; then
-            echo "Paths have been successfully updated."
-        else
             bashio::log.warning "An error occurred while updating the paths. The database backup will be restored."
             BACKUP_FILE="/config/birdnet.db_$(date +%Y%m%d_%H%M%S)"  # Make sure this matches the earlier backup filename
             if [ -f "$BACKUP_FILE" ]; then
@@ -96,7 +95,25 @@ if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${BIRDSONGS_FOLDER%/}" ]]; then
             else
                 bashio::log.error "Backup file not found! Manual intervention required."
             fi
+        else
+            echo "Paths have been successfully updated."
         fi
+    fi
+fi
+
+##################
+# Correct sqlite #
+##################
+if [ -f /config/birdnet.db ]; then
+    CHECK_QUERY="SELECT COUNT(*) FROM notes WHERE clip_name LIKE '%//%';"
+    UPDATE_QUERY="UPDATE notes SET clip_name = REPLACE(clip_name, '//', '/') WHERE clip_name LIKE '%//%';"
+    # Check for occurrences of '//' in clip_name
+    COUNT=$(sqlite3 "$DB_FILE" "$CHECK_QUERY")
+    
+    if [ "$COUNT" -gt 0 ]; then
+      echo "Found $COUNT rows with '//' in clip_name. Running the update query..."
+      sqlite3 "$DB_FILE" "$UPDATE_QUERY"
+      echo "Update completed"
     fi
 fi
 
