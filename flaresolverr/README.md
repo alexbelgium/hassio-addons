@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Flaresolverr - alternative addon for ygg (opened 2024-11-16)](https://github.com/alexbelgium/hassio-addons/issues/1638) by [@o0larrylurex0o](https://github.com/o0larrylurex0o)
 
 # Home assistant add-on: Flaresolver
 
