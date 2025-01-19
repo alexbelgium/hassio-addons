@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [BirdNET-Go] In ingress mode no date / stats. (opened 2025-01-15)](https://github.com/alexbelgium/hassio-addons/issues/1722) by [@rwijbenga](https://github.com/rwijbenga)
+## &#9888; Open Issue : [🐛 [BirdNET-Go] Addon Loses Access to Clips (opened 2025-01-19)](https://github.com/alexbelgium/hassio-addons/issues/1729) by [@loganYdid](https://github.com/loganYdid)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
