@@ -7,18 +7,18 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "🖧🔍 WIFI / LAN scanner, intruder, and presence detector",
   "environment": {
-    "PORT": "20211",
     "PGID": "0",
+    "PORT": "20211",
     "PUID": "0",
     "TZ": "Europe/Berlin"
   },
   "hassio_api": true,
   "host_network": true,
   "image": "ghcr.io/alexbelgium/netalertx-{arch}",
-  "init": false,
   "ingress": true,
   "ingress_port": 0,
   "ingress_stream": true,
+  "init": false,
   "map": [
     "addon_config:rw",
     "media:rw",
