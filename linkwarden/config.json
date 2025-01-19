@@ -40,7 +40,9 @@
     "NEXT_PUBLIC_AUTHENTIK_ENABLED": "bool?",
     "NEXT_PUBLIC_CREDENTIALS_ENABLED": "bool?",
     "NEXT_PUBLIC_DISABLE_REGISTRATION": "bool?",
-    "STORAGE_FOLDER": "str?"
+    "STORAGE_FOLDER": "str?",
+    "NEXT_PUBLIC_OLLAMA_ENDPOINT_URL": "str?",
+    "OLLAMA_MODEL": "str?"
   },
   "slug": "linkwarden",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden",
