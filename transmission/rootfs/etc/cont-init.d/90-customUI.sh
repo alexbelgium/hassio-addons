@@ -27,7 +27,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
         "transmission-web-control")
             ### Install WebUI
             mkdir -p /transmission-web-control
-            curl -sL $(curl -s https://api.github.com/repos/ronggang/transmission-web-control/releases/latest | jq --raw-output '.tarball_url') | tar -C /transmission-web-control/ --strip-components=2 -xz \
+            curl -sL "$(curl -s https://api.github.com/repos/ronggang/transmission-web-control/releases/latest | jq --raw-output '.tarball_url')" | tar -C /transmission-web-control/ --strip-components=2 -xz \
             # Enables the original UI button in transmission-web-control
             ln -s /usr/share/transmission/public_html/* /transmission-web-control/ 2>/dev/null || true
             ln -s /usr/share/transmission/public_html/index.html /transmission-web-control/index.original.html
