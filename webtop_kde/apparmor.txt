@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile webtop_kde_addon flags=(attach_disconnected,mediate_deleted) {
+profile webtop_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,
