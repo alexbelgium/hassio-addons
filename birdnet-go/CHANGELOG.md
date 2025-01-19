@@ -1,3 +1,5 @@
+## 0.6.0-3 (19-01-2025)
+- Minor bugs fixed
 ## 0.6.0-2 (19-01-2025)
 - Correct sqlite for //
 
