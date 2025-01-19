@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [netalertx] Dropdown fields not populated in ingress mode (opened 2025-01-17)](https://github.com/alexbelgium/hassio-addons/issues/1724) by [@jokob-sk](https://github.com/jokob-sk)
 # Home assistant add-on: NetAlertX
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
