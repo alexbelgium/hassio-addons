@@ -1,3 +1,6 @@
+- Selected flood as default ui
+- Disabled ui with issues https://github.com/alexbelgium/hassio-addons/issues/1718
+
 ## 4.0.6-r0-ls272 (17-12-2024)
 - Minor bugs fixed
 - Fix transmission web control

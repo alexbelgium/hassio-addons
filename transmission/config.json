@@ -85,6 +85,7 @@
     "DNS_server": "8.8.8.8,1.1.1.1",
     "PGID": 0,
     "PUID": 0,
+    "customUI": "flood-for-transmission",
     "download_dir": "/share/downloads",
     "incomplete_dir": "/share/incomplete"
   },
@@ -112,7 +113,7 @@
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
-    "customUI": "list(standard|combustion-release|transmission-web-control|kettu|flood-for-transmission|transmissionic)",
+    "customUI": "list(standard|transmission-web-control|kettu|flood-for-transmission)",
     "download_dir": "str",
     "incomplete_dir": "str?",
     "localdisks": "str?",
