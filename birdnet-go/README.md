@@ -1,5 +1,6 @@
 ## &#9888; Open Issue : [🐛 [BirdNET-Go] In ingress mode no date / stats. (opened 2025-01-15)](https://github.com/alexbelgium/hassio-addons/issues/1722) by [@rwijbenga](https://github.com/rwijbenga)
 ## &#9888; Open Issue : [🐛 [BirdNET-Go] Addon Loses Access to Clips (opened 2025-01-19)](https://github.com/alexbelgium/hassio-addons/issues/1729) by [@loganYdid](https://github.com/loganYdid)
+## &#9888; Open Issue : [🐛 [Birdnet-go] Fails to restart with DB-FILE: unbound variable error (opened 2025-01-19)](https://github.com/alexbelgium/hassio-addons/issues/1730) by [@paulgee31](https://github.com/paulgee31)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
