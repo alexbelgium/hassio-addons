@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [piwigo] cifs mount is on /mnt/  and piwigo data location is in /gallery (opened 2025-01-20)](https://github.com/alexbelgium/hassio-addons/issues/1734) by [@lpt2007](https://github.com/lpt2007)
 # Home assistant add-on: Piwigo
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
