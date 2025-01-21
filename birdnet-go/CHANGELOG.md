@@ -1,6 +1,4 @@
-## 0.6.0-3 (19-01-2025)
-- Minor bugs fixed
-## 0.6.0-2 (19-01-2025)
+- Fix sounds play
 - Correct sqlite for //
 
 ## 0.6.0 (18-01-2025)
