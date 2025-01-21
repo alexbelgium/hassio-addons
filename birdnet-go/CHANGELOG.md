@@ -1,3 +1,4 @@
+## 0.6.0-4 (21-01-2025)
 - Fix sounds play
 - Correct sqlite for //
 
