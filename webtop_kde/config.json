@@ -77,7 +77,6 @@
   "host_dbus": true,
   "image": "ghcr.io/alexbelgium/webtop-{arch}",
   "ingress": true,
-  "init": false,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -148,6 +147,6 @@
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "fb06d0b4-ls71-2",
+  "version": "fb06d0b4-ls71-3",
   "video": true
 }
