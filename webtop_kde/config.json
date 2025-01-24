@@ -77,6 +77,7 @@
   "host_dbus": true,
   "image": "ghcr.io/alexbelgium/webtop-{arch}",
   "ingress": true,
+  "init": false,
   "map": [
     "addon_config:rw",
     "media:rw",
