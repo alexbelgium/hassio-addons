@@ -71,7 +71,7 @@
     "PGID": "0",
     "PUID": "0",
     "START_DOCKER": "false",
-    "TITLE": "Ubuntu XFCE webtop",
+    "TITLE": "Ubuntu KDE webtop",
     "shm_size": "1gb"
   },
   "host_dbus": true,
