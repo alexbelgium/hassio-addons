@@ -5,5 +5,5 @@
   "slug": "webtop",
   "source": "github",
   "upstream_repo": "linuxserver/docker-webtop",
-  "upstream_version": "4.16-r0-ls93"
+  "upstream_version": "fb06d0b4-ls71"
 }
