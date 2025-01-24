@@ -1,2 +1,3 @@
-- First version of Ubuntu KDE webtop
+- First version of Ubuntu KDE
 - Use own ssl certificates
+- 
