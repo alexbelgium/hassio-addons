@@ -1,3 +1,6 @@
+
+## githubtest (25-01-2025)
+- Update to latest version from abesnier/guacamole
 ## 1.5.5 (08-10-2024)
 - Info : https://hub.docker.com/r/abesnier/guacamole
 

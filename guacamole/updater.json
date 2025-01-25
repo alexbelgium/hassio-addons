@@ -1,8 +1,8 @@
 {
-  "last_update": "11-11-2023",
+  "last_update": "25-01-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "guacamole",
   "source": "dockerhub",
   "upstream_repo": "abesnier/guacamole",
-  "upstream_version": "testnoupload"
+  "upstream_version": "githubtest"
 }
