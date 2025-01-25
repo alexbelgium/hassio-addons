@@ -123,5 +123,5 @@
   "slug": "whoogle-search",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
-  "version": "0.9.1"
+  "version": "0.9.3"
 }
