@@ -82,6 +82,6 @@
   "slug": "epicgamesfree",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "debian-2024-12-09",
+  "version": "debian-2025-01-23",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
