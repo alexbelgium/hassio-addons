@@ -1,4 +1,7 @@
 
+## 1.5.5-pg17 (25-01-2025)
+- Update to latest version from abesnier/guacamole
+
 ## githubtest (25-01-2025)
 - Update to latest version from abesnier/guacamole
 ## 1.5.5 (08-10-2024)
