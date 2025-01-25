@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] qBittorrent Gluetun (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1661) by [@xtian47](https://github.com/xtian47)
+## &#9888; Open Issue : [🐛 [Qbittorrent] cifusername and cifpassword seem to be switched (opened 2025-01-21)](https://github.com/alexbelgium/hassio-addons/issues/1737) by [@TomJansen](https://github.com/TomJansen)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
