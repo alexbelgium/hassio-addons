@@ -1,3 +1,5 @@
+## 0.6.0-nightly-20250124 (25-01-2025)
+- Minor bugs fixed
 ## 0.6.0-4 (21-01-2025)
 - Fix sounds play
 - Correct sqlite for //
