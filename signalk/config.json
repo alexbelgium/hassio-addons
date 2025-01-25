@@ -45,7 +45,6 @@
     "3443/tcp": "ssl web interface",
     "8375/tcp": "TCPSTREAM port"
   },
-  "protected": false,
   "slug": "signalk",
   "uart": true,
   "udev": true,
