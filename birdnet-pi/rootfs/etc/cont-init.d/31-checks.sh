@@ -55,9 +55,7 @@ sed -i "/find /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Not us
 sed -i "/set -x/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Not useful
 sed -i "/restart_services/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh  # Not useful
 sed -i "s|/etc/birdnet/birdnet.conf|/config/birdnet.conf|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/update_caddyfile.sh/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "s|\[ -L \/config\/birdnet.conf \]|\[ -L \/config\/birdnet.conf \] \&\& false|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/update_caddyfile/c echo \"yes\"" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Avoid systemctl
 
 # Execute update_birdnet_snippets
 "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-
