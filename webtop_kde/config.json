@@ -89,8 +89,8 @@
     "PGID": 0,
     "PUID": 0,
     "additional_apps": "engrampa,libreoffice",
-    "data_location": "/config/data",
     "certfile": "fullchain.pem",
+    "data_location": "/config/data",
     "keyfile": "privkey.pem",
     "use_own_certs": true
   },
