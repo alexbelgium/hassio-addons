@@ -23,6 +23,7 @@ srv="birdnet_recording"
 srv2="birdnet_analysis"
 ingest_dir="$RECS_DIR/StreamData"
 counter=10
+no_files_counter=0
 # Ensure directories and permissions
 mkdir -p "$ingest_dir"
 chown -R pi:pi "$ingest_dir"
@@ -32,6 +33,7 @@ chmod -R 755 "$ingest_dir"
 apprisealert() {
     local notification=""
     local stopped_service="<br><b>Stopped services:</b> "
+    local no_files_alert="${1:-}"
 
     # Check for stopped services
     services=(birdnet_analysis chart_viewer spectrogram_viewer icecast2 birdnet_recording birdnet_log birdnet_stats)
@@ -48,6 +50,7 @@ apprisealert() {
     notification+="<br><b>System:</b> ${SITE_NAME:-$(hostname)}"
     notification+="<br>Available disk space: $(df -h "$HOME/BirdSongs" | awk 'NR==2 {print $4}')"
     [[ -n "$BIRDNETPI_URL" ]] && notification+="<br><a href=\"$BIRDNETPI_URL\">Access your BirdNET-Pi</a>"
+    [[ -n "$no_files_alert" ]] && notification+="<br><b>Alert:</b> No files in folder for at least 30 seconds."
 
     # Send notification
     TITLE="BirdNET-Analyzer stopped"
@@ -75,6 +78,20 @@ while true; do
     analysis_state=$(systemctl is-active "$srv2")
 
     log_green "$(date) INFO: $wav_count wav files waiting in $ingest_dir, $srv state is $service_state, $srv2 state is $analysis_state"
+
+    # Alert if no files in the folder for at least 30 seconds
+    if ((wav_count == 0)); then
+        ((no_files_counter++))
+        if ((no_files_counter >= 1)); then
+            log_red "$(date) WARNING: No files in folder for at least 30 seconds"
+            if [[ -s "$HOME/BirdNET-Pi/apprise.txt" ]]; then
+                apprisealert "no_files"
+            fi
+            no_files_counter=0
+        fi
+    else
+        no_files_counter=0
+    fi
 
     # Pause recorder if queue is too large
     if ((wav_count > 50)); then
