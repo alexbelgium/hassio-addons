@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Spotweb] not starting with external mariadb (opened 2025-01-13)](https://github.com/alexbelgium/hassio-addons/issues/1721) by [@remb0](https://github.com/remb0)
 ## &#9888; Open Issue : [🐛 [Spotweb] access denied after rights removal of anonymus, no login prompt (opened 2025-01-18)](https://github.com/alexbelgium/hassio-addons/issues/1725) by [@MijnSpam](https://github.com/MijnSpam)
 # Home Assistant Add-ons: Spotweb
 
