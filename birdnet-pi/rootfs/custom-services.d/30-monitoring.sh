@@ -90,15 +90,10 @@ while true; do
         apprisealert "Too many files in queue (>50)"
         sudo systemctl stop "$srv"
         sudo systemctl restart "$srv2"
-        sleep 30
+        sleep 60
     elif ((wav_count > 30)); then
         log_red "$(date) WARNING: Too many files in queue, restarting $srv2"
         apprisealert "Queue growing large (>30)"
-        sudo systemctl restart "$srv2"
-        sleep 30
-    elif ((wav_count == 0)); then
-        log_red "$(date) WARNING: No files in queue, restarting $srv2"
-        apprisealert "No files in queue"
         sudo systemctl restart "$srv2"
         sleep 30
     fi
