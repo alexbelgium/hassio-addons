@@ -42,6 +42,34 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ARG CONFIGLOCATION="/config/data_kde"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
+# Install edge
+RUN \
+  echo "**** add icon ****" && \
+  curl -o \
+    /kclient/public/icon.png \
+    https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/edge-logo.png && \
+  apt-get update && \
+  echo "**** install edge ****" && \
+  if [ -z ${EDGE_VERSION+x} ]; then \
+    EDGE_VERSION=$(curl -sL https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/ | awk -F'(<a href="microsoft-edge-stable_|_amd64.deb")' '/href=/ {print $2}' | sort --version-sort | tail -1); \
+  fi && \
+  curl -o \
+    /tmp/edge.deb -L \
+    "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_${EDGE_VERSION}_amd64.deb" && \
+  apt install --no-install-recommends -y \
+    /tmp/edge.deb && \
+  echo "**** edge docker tweaks ****" && \
+  mv \
+    /usr/bin/microsoft-edge \
+    /usr/bin/microsoft-edge-real && \
+  echo "**** cleanup ****" && \
+  apt-get autoclean && \
+  rm -rf \
+    /config/.cache \
+    /var/lib/apt/lists/* \
+    /var/tmp/* \
+    /tmp/*
+
 ##################
 # 3 Install apps #
 ##################
