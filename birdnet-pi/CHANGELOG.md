@@ -1,4 +1,5 @@
 - New audio player
+- Upgraded upstream code : various improvements
 
 ## 2025.01-7 (09-01-2025)
 - Fix mqtt autodetect script
