@@ -27,7 +27,7 @@ for KEYS in "${arr[@]}"; do
     VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
     # Check if the value is an array
     if [[ "$VALUE" == \[* ]]; then
-        bashio::log.warning "$VALUE is an array, skipping"
+        bashio::log.warning "One of your option is an array, skipping"
     else
         # Continue for single values
         VALUE="${VALUE//[\"\']/}"
