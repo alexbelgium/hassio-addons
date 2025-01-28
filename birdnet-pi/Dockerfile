@@ -83,7 +83,7 @@ RUN \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
     # Ensure chmod
     sed -i "/git clone/a chown -R 1000:1000 $HOME" /newinstaller.sh && \
-    sed -i "/git clone/a chmod 777 \$HOME/BirdNET-Pi/scripts/install_config.sh" /newinstaller.sh && \
+    sed -i "/git clone/a chmod 777 \$HOME/BirdNET-Pi/scripts/*.sh" /newinstaller.sh && \
     # Disable datetimectl
     sed -i '/git clone/a sed -i "/CURRENT_TIMEZONE/s/$/ || true/" $HOME/BirdNET-Pi/scripts/install_birdnet.sh' /newinstaller.sh && \
     # Remove all instances of sudo from the newinstaller
