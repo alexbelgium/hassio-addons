@@ -27,7 +27,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
 # load volume
 VOLUME [ "/sys/fs/cgroup" ]
 
@@ -43,14 +42,15 @@ ARG CONFIGLOCATION="/config/data_kde"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 # Install edge
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && \
     echo "**** install edge ****" && \
-    apt-get install -y ca-certificates && \
+    apt-get install --no-install-recommends -y ca-certificates && \
     if [ -z ${EDGE_VERSION+x} ]; then \
         EDGE_VERSION=$(curl -sL https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/ | \
         awk -F'(<a href="microsoft-edge-stable_|_amd64.deb\")' '/href=/ {print $2}' | sort --version-sort | tail -1); \
     fi && \
-    for i in {1..5}; do \
+    for i in $(seq 1 5); do \
         curl -o /tmp/edge.deb -L "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_${EDGE_VERSION}_amd64.deb" && \
         dpkg -I /tmp/edge.deb && break || sleep 10; \
     done && \
@@ -96,11 +96,9 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-#
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
