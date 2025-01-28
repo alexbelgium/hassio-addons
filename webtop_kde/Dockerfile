@@ -44,10 +44,6 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 
 # Install edge
 RUN \
-  echo "**** add icon ****" && \
-  curl -o \
-    /kclient/public/icon.png \
-    https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/edge-logo.png && \
   apt-get update && \
   echo "**** install edge ****" && \
   if [ -z ${EDGE_VERSION+x} ]; then \
