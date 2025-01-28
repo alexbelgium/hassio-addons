@@ -56,7 +56,7 @@ RUN apt-get update && \
     done && \
     apt-get install --no-install-recommends -y /tmp/edge.deb && \
     echo "**** edge docker tweaks ****" && \
-    mv /usr/bin/microsoft-edge /usr/bin/microsoft-edge-real || true
+    mv /usr/bin/microsoft-edge /usr/bin/microsoft-edge-real
 
 ##################
 # 3 Install apps #
