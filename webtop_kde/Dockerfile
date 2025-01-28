@@ -51,11 +51,12 @@ RUN apt-get update && \
         awk -F'(<a href="microsoft-edge-stable_|_amd64.deb\")' '/href=/ {print $2}' | sort --version-sort | tail -1); \
     fi && \
     for i in {1..5}; do \
-        curl -o /tmp/edge.deb -L "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_${EDGE_VERSION}_amd64.deb" && break || sleep 10; \
+        curl -o /tmp/edge.deb -L "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_${EDGE_VERSION}_amd64.deb" && \
+        dpkg -I /tmp/edge.deb && break || sleep 10; \
     done && \
-    apt install --no-install-recommends -y /tmp/edge.deb && \
+    apt-get install --no-install-recommends -y /tmp/edge.deb && \
     echo "**** edge docker tweaks ****" && \
-    mv /usr/bin/microsoft-edge /usr/bin/microsoft-edge-real
+    mv /usr/bin/microsoft-edge /usr/bin/microsoft-edge-real || true
 
 ##################
 # 3 Install apps #
