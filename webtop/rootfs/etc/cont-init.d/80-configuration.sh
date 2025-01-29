@@ -42,4 +42,8 @@ if bashio::config.has_value 'PASSWORD'; then
     PASSWORD=$(bashio::config 'PASSWORD')
     passwd -d abc
     echo -e "$PASSWORD\n$PASSWORD" | passwd abc
-fi || true
+elif ! bashio::config.has_value 'PASSWORD' && [[ -z "$(bashio::addon.port "3000")" ]] && [[ -z $(bashio::addon.port "3001") ]]; then
+    bashio::log.warning "SEVERE RISK IDENTIFIED"
+    bashio::log.warning "You are opening an external port but your password is not defined"
+    bashio::log.warning "You risk being hacked ! Please disable the external ports, or use a password"
+fi
