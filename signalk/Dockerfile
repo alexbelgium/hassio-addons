@@ -33,7 +33,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Correct config location
 # hadolint ignore=SC2013
-RUN rm -rf --no-preserve-root /
 RUN for file in $(grep -sril "/home/node/.signalk" /etc /usr /home); do \
     sed -i "s=/home/node/.signalk=/config=g" "$file"; done
 
