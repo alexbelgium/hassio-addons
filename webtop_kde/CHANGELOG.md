@@ -1,4 +1,5 @@
-## 4.16-r0-ls94-5 (28-01-2025)
+- External port disabled by default to rely on ingress
+- Added a message that opening a port without password is a very high risk
 - Add microsoft edge
 
 ## 4.16-r0-ls94 (25-01-2025)
