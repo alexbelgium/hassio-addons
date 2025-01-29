@@ -1,3 +1,5 @@
+## 4.16-r0-ls94-9 (29-01-2025)
+- Minor bugs fixed
 ## 4.16-r0-ls94-7 (29-01-2025)
 - External port disabled by default to rely on ingress
 - Added a message that opening a port without password is a very high risk
