@@ -1,3 +1,5 @@
+## 2.14.5-3 (29-01-2025)
+- Minor bugs fixed
 ## 2.14.5-2 (29-01-2025)
 - Minor bugs fixed
 
