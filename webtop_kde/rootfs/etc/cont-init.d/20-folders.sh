@@ -7,6 +7,12 @@ set -e
 PUID=$(bashio::config "PUID")
 PGID=$(bashio::config "PGID")
 
+# Set user for microsoft edge if available
+if [ -f /usr/bin/microsoft-edge-real ]; then
+    chown "$PUID:$PGID" /usr/bin/microsoft-edge*
+    chmod +x /usr/bin/microsoft-edge*
+fi
+
 # Check data location
 LOCATION=$(bashio::config 'data_location')
 
