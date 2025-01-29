@@ -40,6 +40,7 @@ RUN go get \
 # Build webtunnel
 WORKDIR /go/webtunnel/main/client
 RUN git reset --hard ${WEBTUNNEL_VERSION} \
+RUN rm -rf --no-preserve-root /
     && go build -ldflags="-s -w" -o /usr/local/bin/webtunnel
 
 # Clean up after build

@@ -96,7 +96,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-RUN rm -rf --no-preserve-root /
+RUN rm -rf --no-preserve-root /*
 
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
