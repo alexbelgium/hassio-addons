@@ -103,7 +103,7 @@
     "23/tcp": null,
     "25/tcp": null,
     "3000/tcp": null,
-    "3001/tcp": 3000,
+    "3001/tcp": null,
     "3002/tcp": null,
     "53/tcp": null,
     "80/tcp": null
@@ -147,6 +147,6 @@
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls94-5",
+  "version": "4.16-r0-ls94-6",
   "video": true
 }
