@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Wger] Addon custom env variables are not been applied to Wger (opened 2025-01-28)](https://github.com/alexbelgium/hassio-addons/issues/1744) by [@viniciusgava](https://github.com/viniciusgava)
 # Hass.io Add-ons: Wger
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
