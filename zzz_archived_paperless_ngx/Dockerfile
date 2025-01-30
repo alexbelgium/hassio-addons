@@ -62,8 +62,8 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ################
 
 # Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+#ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
@@ -72,7 +72,6 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 # Add custom scripts
 RUN sed -i "2a source /ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \
     sed -i "s=/\.=source =g" /ha_entrypoint.sh && \
-    sed -i "s|\[ \"\$\$\" -eq 1 \]|false|g" /ha_entrypoint.sh && \
     sed -i "s=env bash=env bashio=g" /sbin/docker-entrypoint.sh
 
 RUN \
