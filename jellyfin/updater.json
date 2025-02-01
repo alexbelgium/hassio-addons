@@ -1,9 +1,9 @@
 {
   "github_fulltag": "false",
-  "last_update": "25-01-2025",
+  "last_update": "01-02-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "jellyfin",
   "source": "github",
   "upstream_repo": "linuxserver/docker-jellyfin",
-  "upstream_version": "10.10.4"
+  "upstream_version": "10.10.5"
 }
