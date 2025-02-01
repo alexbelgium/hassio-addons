@@ -1,4 +1,7 @@
 
+## 1.58.0 (01-02-2025)
+- Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
+
 ## 1.57.0 (11-01-2025)
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
