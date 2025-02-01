@@ -32,7 +32,7 @@ RUN git clone --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/meali
     yarn generate
 
 # Stage 2: Build the Final Image
-FROM hkotel/mealie:"$MEALIE_VERSION"
+FROM hkotel/mealie:latest
 
 # Copy the rebuilt frontend files into the final image
 COPY --from=builder /app/frontend/dist /spa/static
