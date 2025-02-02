@@ -23,6 +23,10 @@ if [ -f /data/config/www/nextcloud/config/config.php ]; then
 else
     datadirectory=/config/data
     echo "Nextcloud is not installed yet, the default data directory is : $datadirectory. You can change it during nextcloud installation."
+    mkdir -p /config/data
+    chmod 777 /config/data
+    mkdir -p /share/nextcloud
+    chmod 777 /share/nextcloud
 fi
 
 # Is the directory valid
