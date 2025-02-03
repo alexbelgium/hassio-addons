@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [postgres] jemalloc Unsupported system page size on PI 5 (8GB RAM Version) (opened 2025-01-15)](https://github.com/alexbelgium/hassio-addons/issues/1723) by [@pddd](https://github.com/pddd)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
