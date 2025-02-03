@@ -15,6 +15,9 @@ set +u
 # shellcheck disable=SC1091
 source /etc/birdnet/birdnet.conf
 
+# Wait 5 minutes
+sleep 5m
+
 log_green "Starting service: throttlerecording"
 touch "$HOME/BirdSongs/StreamData/analyzing_now.txt"
 
