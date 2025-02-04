@@ -26,6 +26,7 @@ srv="birdnet_recording"
 srv2="birdnet_analysis"
 ingest_dir="$RECS_DIR/StreamData"
 counter=10
+last_notification_time=0
 
 # Ensure directories and permissions
 mkdir -p "$ingest_dir"
@@ -35,6 +36,15 @@ chmod -R 755 "$ingest_dir"
 # Function to send notifications using Apprise
 apprisealert() {
     local issue_message="$1"
+    local current_time=$(date +%s)
+    local time_diff=$((current_time - last_notification_time))
+
+    # Check if 30 minutes have passed since the last notification
+    if ((time_diff < 1800)); then
+        log_yellow "Notification suppressed to avoid spamming (last sent $time_diff seconds ago)"
+        return
+    fi
+
     local notification=""
     local stopped_service="<br><b>Stopped services:</b> "
 
@@ -59,6 +69,7 @@ apprisealert() {
     TITLE="BirdNET-Analyzer Alert"
     if [[ -f "$HOME/BirdNET-Pi/birdnet/bin/apprise" && -s "$HOME/BirdNET-Pi/apprise.txt" ]]; then
         "$HOME/BirdNET-Pi/birdnet/bin/apprise" -vv -t "$TITLE" -b "$notification" --input-format=html --config="$HOME/BirdNET-Pi/apprise.txt"
+        last_notification_time=$current_time
     else
         log_red "Apprise not configured or missing!"
     fi
