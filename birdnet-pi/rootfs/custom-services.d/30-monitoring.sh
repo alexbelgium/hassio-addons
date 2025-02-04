@@ -101,26 +101,27 @@ while true; do
     # Pause recorder if queue is too large
     if ((wav_count > 50)); then
         log_red "$(date) WARNING: Too many files in queue, pausing $srv and restarting $srv2"
-        apprisealert "Too many files in queue (>50)"
+        apprisealert "Too many files in queue (>50), $srv paused, $srv2 restarted"
         sudo systemctl stop "$srv"
         sudo systemctl restart "$srv2"
-        sleep 60
     elif ((wav_count > 30)); then
-        log_red "$(date) WARNING: Too many files in queue, restarting $srv2"
+        log_red "$(date) WARNING: Too many files in queue, $srv2 restarted"
         apprisealert "Queue growing large (>30)"
         sudo systemctl restart "$srv2"
-        sleep 30
+    else
+        # Check service states
+        for service in "$srv" "$srv2"; do
+            state="$(systemctl is-active "$service")"
+            if [[ "$state" != "active" ]]; then
+                log_yellow "$(date) INFO: Restarting $service service"
+                sudo systemctl restart "$service"
+                wait 5
+                if [[ "$state" != "active" ]]; then
+                    log_red "$(date) WARNING: $service could not restart"
+                    apprisealert "$service cannot restart"
+                fi
+            fi
+        done
     fi
-
-    # Check service states
-    for service in "$srv" "$srv2"; do
-        state="$(systemctl is-active "$service")"
-        if [[ "$state" != "active" ]]; then
-            log_yellow "$(date) INFO: Restarting $service service"
-            apprisealert "$service is not active, restarting"
-            sudo systemctl restart "$service"
-        fi
-    done
-
     ((counter--))
 done
