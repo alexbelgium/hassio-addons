@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Immich] Freshly installed addon not starting. (opened 2024-12-19)](https://github.com/alexbelgium/hassio-addons/issues/1676) by [@CForChrisProooo](https://github.com/CForChrisProooo)
+## &#9888; Open Issue : [🐛 [Immich] Missing e-mail server settings (opened 2025-02-04)](https://github.com/alexbelgium/hassio-addons/issues/1752) by [@JohnnyPicnic](https://github.com/JohnnyPicnic)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)
