@@ -113,11 +113,11 @@ check_and_restart_service() {
     if [[ "$state" != "active" ]]; then
         log_yellow "$(date) INFO: Restarting $service_name"
         sudo systemctl restart "$service_name"
-        sleep 5
+        sleep 61
         state=$(systemctl is-active "$service_name")
         if [[ "$state" != "active" ]]; then
             log_red "$(date) WARNING: $service_name could not restart"
-            apprisealert "$service_name cannot restart"
+            apprisealert "$service_name cannot restart ! Your system seems stuck."
         fi
     fi
 }
