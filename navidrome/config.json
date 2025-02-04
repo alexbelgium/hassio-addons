@@ -18,7 +18,7 @@
   ],
   "name": "Navidrome",
   "options": {
-    "base_url": "localhost",
+    "base_url": "/",
     "certfile": "fullchain.pem",
     "data_folder": "/data",
     "keyfile": "privkey.pem",
