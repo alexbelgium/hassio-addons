@@ -43,12 +43,13 @@ chown -R pi:pi "$INGEST_DIR" || log_yellow "Could not change ownership for $INGE
 chmod -R 755 "$INGEST_DIR" || log_yellow "Could not set permissions for $INGEST_DIR"
 
 # Services to monitor
-SERVICES=(birdnet_analysis chart_viewer spectrogram_viewer icecast2 birdnet_recording birdnet_log birdnet_stats)
+SERVICES=(birdnet_analysis chart_viewer spectrogram_viewer birdnet_recording birdnet_log birdnet_stats)
 
 # Notification settings
 NOTIFICATION_INTERVAL=1800  # seconds (30 minutes)
 last_notification_time=0
 issue_reported=0  # 1 = an issue was reported, 0 = system is normal
+declare -A SERVICE_INACTIVE_COUNT=()
 
 # Disk usage threshold (percentage)
 DISK_USAGE_THRESHOLD=95
@@ -191,20 +192,46 @@ check_queue() {
 }
 
 check_services() {
-    local inactive_services=()
+    local any_inactive=0
+
     for service in "${SERVICES[@]}"; do
         if [[ "$(systemctl is-active "$service")" != "active" ]]; then
-            inactive_services+=("$service")
+
+            # Increment the service's inactive counter
+            SERVICE_INACTIVE_COUNT["$service"]=$(( SERVICE_INACTIVE_COUNT["$service"] + 1 ))
+
+            if (( SERVICE_INACTIVE_COUNT["$service"] == 1 )); then
+                # First time we see it inactive in a row => Try restarting (silent recovery attempt)
+                log_yellow "$(date) INFO: Service '$service' is inactive. Attempting to start..."
+                systemctl start "$service"
+                any_inactive=1
+
+            elif (( SERVICE_INACTIVE_COUNT["$service"] == 2 )); then
+                # Second consecutive time => Send an alert
+                log_red "$(date) INFO: Service '$service' is still inactive after restart attempt."
+                apprisealert "Service '$service' remains inactive after restart attempt."
+                any_inactive=1
+
+            else
+                # If it is still inactive beyond 2 checks, keep trying or do advanced actions
+                log_red "$(date) INFO: Service '$service' has been inactive for ${SERVICE_INACTIVE_COUNT["$service"]} checks in a row."
+                any_inactive=1
+            fi
+
+        else
+            # Service is active => reset the inactive counter
+            if (( SERVICE_INACTIVE_COUNT["$service"] > 0 )); then
+                log_green "$(date) INFO: Service '$service' is back to active. Resetting counter."
+            fi
+            SERVICE_INACTIVE_COUNT["$service"]=0
         fi
     done
 
-    if (( ${#inactive_services[@]} == 0 )); then
-        # Example: "Tue Feb 4 20:18:50 CET 2025 INFO: All services are active"
+    if (( any_inactive == 0 )); then
         log_green "$(date) INFO: All services are active"
         return 0
     else
-        log_red "$(date) INFO: Some services are NOT active: ${inactive_services[*]}"
-        apprisealert "One or more services inactive: ${inactive_services[*]}"
+        log_red "$(date) INFO: One or more services are inactive"
         return 1
     fi
 }
