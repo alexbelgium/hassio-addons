@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
-# Improved BirdNET-Pi Monitoring Script with Recovery Alerts
+# Improved BirdNET-Pi Monitoring Script with Recovery Alerts and Detailed Logs
 
 HOME="/home/pi"
 
@@ -20,7 +20,7 @@ set +u
 source /etc/birdnet/birdnet.conf
 
 ########################################
-# Wait 5 minute for system stabilization
+# Wait 5 minutes for system stabilization
 ########################################
 sleep 5m
 
@@ -135,7 +135,11 @@ check_and_restart_service() {
         if [[ "$state" != "active" ]]; then
             log_red "$(date) WARNING: $service_name could not restart"
             apprisealert "$service_name cannot restart! Your system seems stuck."
+        else
+            log_green "$(date) INFO: $service_name restarted successfully."
         fi
+    else
+        log_green "$(date) INFO: $service_name is running normally."
     fi
 }
 
@@ -148,6 +152,8 @@ check_disk_space() {
         log_red "$(date) WARNING: Disk usage is at ${current_usage}%"
         apprisealert "Disk usage critical: ${current_usage}%"
         return 1  # Indicate there is an issue
+    else
+        log_green "$(date) INFO: Disk usage is within acceptable limits (${current_usage}%)."
     fi
     return 0  # No disk issue
 }
@@ -171,6 +177,7 @@ handle_queue() {
         # Check if services are alive; attempt restarts if needed
         check_and_restart_service "$RECORDER_SERVICE"
         check_and_restart_service "$ANALYZER_SERVICE"
+        log_green "$(date) INFO: Queue is at a manageable level (${wav_count} wav files)."
     fi
 
     return 0
@@ -179,8 +186,11 @@ handle_queue() {
 ########################################
 # Main Monitoring Loop
 ########################################
+iteration=1
 while true; do
     sleep 61
+    log_info "----------------------------------------"
+    log_info "$(date) INFO: Starting monitoring iteration $iteration"
 
     # Track whether any issue is found this iteration
     any_issue=0
@@ -194,13 +204,15 @@ while true; do
     current_file=$(cat "$ANALYZING_NOW_FILE" 2>/dev/null)
     if [[ "$current_file" == "$analyzing_now" ]]; then
         (( same_file_counter++ ))
+        log_red "$(date) WARNING: 'analyzing_now' file unchanged (${same_file_counter} consecutive iterations)"
     else
         same_file_counter=0
         analyzing_now="$current_file"
+        log_green "$(date) INFO: 'analyzing_now' file has been updated."
     fi
 
     if (( same_file_counter >= SAME_FILE_THRESHOLD )); then
-        log_yellow "$(date) WARNING: 'analyzing_now' unchanged for ${SAME_FILE_THRESHOLD} iterations"
+        log_red "$(date) ERROR: 'analyzing_now' unchanged for ${SAME_FILE_THRESHOLD} iterations"
         apprisealert "No change in analyzing_now for ${SAME_FILE_THRESHOLD} iterations"
         "$HOME/BirdNET-Pi/scripts/restart_services.sh"
         same_file_counter=0
@@ -209,7 +221,7 @@ while true; do
 
     # 3) Queue check
     wav_count=$(find -L "$INGEST_DIR" -maxdepth 1 -name '*.wav' | wc -l)
-    log_green "$(date) INFO: ${wav_count} wav files waiting in ${INGEST_DIR}"
+    log_info "$(date) INFO: ${wav_count} wav files waiting in ${INGEST_DIR}"
     if ! handle_queue "$wav_count"; then
         any_issue=1
     fi
@@ -217,17 +229,21 @@ while true; do
     # 4) Check all essential services are running
     services=(birdnet_analysis chart_viewer spectrogram_viewer icecast2 birdnet_recording birdnet_log birdnet_stats)
     for service in "${services[@]}"; do
-        # If a service is inactive, we attempt to restart it in check_and_restart_service
-        # but we also want to mark that there's an issue so we don't send a false 'recovery' message
         if [[ "$(systemctl is-active "$service")" != "active" ]]; then
+            log_red "$(date) ERROR: Service $service is not active!"
             any_issue=1
-            break
+        else
+            log_green "$(date) INFO: Service $service is active."
         fi
     done
 
-    # If no issues are active but we had reported an issue previously,
-    # send a single "System Recovered" message.
+    # Summary log for the iteration
     if (( any_issue == 0 )); then
+        log_green "$(date) INFO: All systems are functioning normally in iteration $iteration."
         apprisealert_recovery
+    else
+        log_red "$(date) ERROR: Issues detected in iteration $iteration. System status remains degraded."
     fi
+
+    iteration=$((iteration+1))
 done
