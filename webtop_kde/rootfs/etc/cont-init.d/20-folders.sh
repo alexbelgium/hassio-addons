@@ -70,6 +70,15 @@ if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var
 echo "Creating $LOCATION"
 mkdir -p "$LOCATION"
 
+# Create cache
+mkdir -p /.cache
+chmod 777 /.cache
+if [ -d "/config/.cache" ]; then
+    cp -rf /config/.cache /.cache
+    rm -r /config/.cache
+fi
+ln -sf /config/.cache /.cache
+
 # Set ownership
 bashio::log.info "Setting ownership to $PUID:$PGID"
 chown -R "$PUID":"$PGID" "$LOCATION"
