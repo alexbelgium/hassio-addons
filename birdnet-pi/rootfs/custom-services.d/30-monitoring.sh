@@ -21,9 +21,9 @@ set +u
 source /etc/birdnet/birdnet.conf
 
 ########################################
-# Wait 5 minutes for system stabilization
+# Wait 1 minutes for system stabilization
 ########################################
-sleep 5m
+sleep 1m
 
 log_green "Starting service: throttlerecording"
 
