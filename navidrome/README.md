@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [navidrome] panic when starting with default settings (opened 2025-02-03)](https://github.com/alexbelgium/hassio-addons/issues/1751) by [@feamsr00](https://github.com/feamsr00)
 # Home assistant add-on: Navidrome
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
