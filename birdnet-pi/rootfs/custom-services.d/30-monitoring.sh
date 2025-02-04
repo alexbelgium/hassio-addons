@@ -212,8 +212,8 @@ check_services() {
 
 while true; do
     sleep 61
+    log_info "----------------------------------------"
     log_info "$(date) INFO: Starting monitoring check"
-
     any_issue=0
 
     # 1) Disk usage
@@ -236,4 +236,5 @@ while true; do
     else
         log_red "$(date) INFO: Issues detected. System status is not fully operational."
     fi
+    log_info "----------------------------------------"
 done
