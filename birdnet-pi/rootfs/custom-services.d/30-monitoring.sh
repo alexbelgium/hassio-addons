@@ -54,7 +54,7 @@ DISK_USAGE_THRESHOLD=95
 same_file_counter=0
 SAME_FILE_THRESHOLD=10  
 if [[ -f "$ANALYZING_NOW_FILE" ]]; then
-    analyzing_now=$(cat "$ANALYZING_NOW_FILE")
+    analyzing_now=$(<"$ANALYZING_NOW_FILE")
 else
     analyzing_now=""
 fi
@@ -104,6 +104,7 @@ apprisealert() {
 
 # Send a "System is back to normal" notification
 apprisealert_recovery() {
+    # Only send a recovery message if we had previously reported an issue
     if (( issue_reported == 1 )); then
         log_green "$(date) INFO: System is back to normal. Sending recovery notification."
 
@@ -146,9 +147,9 @@ check_disk_space() {
     if (( current_usage >= DISK_USAGE_THRESHOLD )); then
         log_red "$(date) WARNING: Disk usage is at ${current_usage}%"
         apprisealert "Disk usage critical: ${current_usage}%"
-    else
-        apprisealert_recovery
+        return 1  # Indicate there is an issue
     fi
+    return 0  # No disk issue
 }
 
 # Handle queue size
@@ -160,15 +161,19 @@ handle_queue() {
         apprisealert "Queue >50: ${RECORDER_SERVICE} paused, ${ANALYZER_SERVICE} restarted"
         sudo systemctl stop "$RECORDER_SERVICE"
         sudo systemctl restart "$ANALYZER_SERVICE"
+        return 1
     elif (( wav_count > 30 )); then
         log_red "$(date) WARNING: Queue >30. Restarting ${ANALYZER_SERVICE}"
         apprisealert "Queue >30: ${ANALYZER_SERVICE} restarted"
         sudo systemctl restart "$ANALYZER_SERVICE"
+        return 1
     else
+        # Check if services are alive; attempt restarts if needed
         check_and_restart_service "$RECORDER_SERVICE"
         check_and_restart_service "$ANALYZER_SERVICE"
-        apprisealert_recovery
     fi
+
+    return 0
 }
 
 ########################################
@@ -176,8 +181,16 @@ handle_queue() {
 ########################################
 while true; do
     sleep 61
-    check_disk_space
 
+    # Track whether any issue is found this iteration
+    any_issue=0
+
+    # 1) Check disk space
+    if ! check_disk_space; then
+        any_issue=1
+    fi
+
+    # 2) Check if analyzing_now file is stuck
     current_file=$(cat "$ANALYZING_NOW_FILE" 2>/dev/null)
     if [[ "$current_file" == "$analyzing_now" ]]; then
         (( same_file_counter++ ))
@@ -191,9 +204,30 @@ while true; do
         apprisealert "No change in analyzing_now for ${SAME_FILE_THRESHOLD} iterations"
         "$HOME/BirdNET-Pi/scripts/restart_services.sh"
         same_file_counter=0
+        any_issue=1
     fi
 
+    # 3) Queue check
     wav_count=$(find -L "$INGEST_DIR" -maxdepth 1 -name '*.wav' | wc -l)
     log_green "$(date) INFO: ${wav_count} wav files waiting in ${INGEST_DIR}"
-    handle_queue "$wav_count"
+    if ! handle_queue "$wav_count"; then
+        any_issue=1
+    fi
+
+    # 4) Check all essential services are running
+    services=(birdnet_analysis chart_viewer spectrogram_viewer icecast2 birdnet_recording birdnet_log birdnet_stats)
+    for service in "${services[@]}"; do
+        # If a service is inactive, we attempt to restart it in check_and_restart_service
+        # but we also want to mark that there's an issue so we don't send a false 'recovery' message
+        if [[ "$(systemctl is-active "$service")" != "active" ]]; then
+            any_issue=1
+            break
+        fi
+    done
+
+    # If no issues are active but we had reported an issue previously,
+    # send a single "System Recovered" message.
+    if (( any_issue == 0 )); then
+        apprisealert_recovery
+    fi
 done
