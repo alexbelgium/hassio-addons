@@ -30,6 +30,7 @@ log_green "Starting service: throttlerecording"
 # Define Directories, Files, and Constants
 ########################################
 INGEST_DIR="${RECS_DIR/StreamData:-$HOME/BirdSongs/StreamData}"
+INGEST_DIR=$(readlink -f "$INGEST_DIR")
 if [ /tmp/StreamData ]; then
     INGEST_DIR="/tmp/StreamData"
 fi
