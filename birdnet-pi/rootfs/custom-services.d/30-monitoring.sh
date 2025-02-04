@@ -231,7 +231,7 @@ while true; do
     fi
 
     # 4) Check all essential services are running
-    services=(birdnet_analysis chart_viewer spectrogram_viewer icecast2 birdnet_recording birdnet_log birdnet_stats)
+    services=(birdnet_analysis chart_viewer spectrogram_viewer birdnet_recording birdnet_log birdnet_stats)
     for service in "${services[@]}"; do
         if [[ "$(systemctl is-active "$service")" != "active" ]]; then
             log_red "$(date) ERROR: Service $service is not active!"
