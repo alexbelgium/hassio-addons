@@ -55,7 +55,7 @@ DISK_USAGE_THRESHOLD=95
 
 # "Analyzing" file check variables
 same_file_counter=0
-SAME_FILE_THRESHOLD=10  
+SAME_FILE_THRESHOLD=2  
 if [[ -f "$ANALYZING_NOW_FILE" ]]; then
     analyzing_now=$(<"$ANALYZING_NOW_FILE")
 else
@@ -70,11 +70,11 @@ apprisealert() {
     local issue_message="$1"
     local current_time
     current_time=$(date +%s)
-    local time_diff=$(( current_time - last_notification_time ))
-
+    local time_diff=$(( (current_time - last_notification_time) / 60 ))  # Convert to minutes
+    
     # Throttle notifications
-    if (( time_diff < NOTIFICATION_INTERVAL )); then
-        log_yellow "Notification suppressed (last sent ${time_diff} seconds ago)."
+    if (( time_diff < NOTIFICATION_INTERVAL_IN_MINUTES )); then
+        log_yellow "Notification suppressed (last sent ${time_diff} minutes ago)."
         return
     fi
 
@@ -89,7 +89,9 @@ apprisealert() {
     notification+="$stopped_service"
     notification+="<br><b>System:</b> ${SITE_NAME:-$(hostname)}"
     notification+="<br>Available disk space: $(df -h "$HOME/BirdSongs" | awk 'NR==2 {print $4}')"
+    notification+="<br>----------------------"
     notification+="<br>3 last log lines: $(timeout 15 cat /proc/1/fd/1 | head -n 3)"
+    notification+="<br>----------------------"
     [[ -n "$BIRDNETPI_URL" ]] && notification+="<br><a href=\"$BIRDNETPI_URL\">Access your BirdNET-Pi</a>"
 
     local TITLE="BirdNET-Analyzer Alert"
