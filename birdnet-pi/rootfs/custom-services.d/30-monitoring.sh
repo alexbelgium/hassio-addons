@@ -115,7 +115,8 @@ while true; do
             if [[ "$state" != "active" ]]; then
                 log_yellow "$(date) INFO: Restarting $service service"
                 sudo systemctl restart "$service"
-                wait 5
+                sleep 5
+                state="$(systemctl is-active "$service")"
                 if [[ "$state" != "active" ]]; then
                     log_red "$(date) WARNING: $service could not restart"
                     apprisealert "$service cannot restart"
