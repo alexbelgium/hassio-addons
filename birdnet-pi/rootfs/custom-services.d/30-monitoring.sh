@@ -42,8 +42,11 @@ chmod -R 755 "$INGEST_DIR" || log_yellow "Could not set permissions for $INGEST_
 # Services to monitor
 SERVICES=(birdnet_analysis chart_viewer spectrogram_viewer birdnet_recording birdnet_log birdnet_stats)
 
+########################################
 # Notification settings
-NOTIFICATION_INTERVAL=1800  # seconds (30 minutes)
+########################################
+NOTIFICATION_INTERVAL=1800  # 30 minutes in seconds
+NOTIFICATION_INTERVAL_IN_MINUTES=$(( NOTIFICATION_INTERVAL / 60 ))
 last_notification_time=0
 issue_reported=0  # 1 = an issue was reported, 0 = system is normal
 declare -A SERVICE_INACTIVE_COUNT=()
@@ -63,12 +66,13 @@ fi
 ########################################
 # Notification Functions
 ########################################
-
 apprisealert() {
     local issue_message="$1"
     local current_time
     current_time=$(date +%s)
-    local time_diff=$(( (current_time - last_notification_time) / 60 ))  # Convert to minutes
+
+    # Calculate time_diff in minutes since last notification
+    local time_diff=$(( (current_time - last_notification_time) / 60 ))
 
     # Throttle notifications
     if (( time_diff < NOTIFICATION_INTERVAL_IN_MINUTES )); then
@@ -134,7 +138,6 @@ check_disk_space() {
         apprisealert "Disk usage critical: ${current_usage}%"
         return 1
     else
-        # Example: "Tue Feb 4 20:18:49 CET 2025 INFO: Disk usage is within acceptable limits (30%)."
         log_green "$(date) INFO: Disk usage is within acceptable limits (${current_usage}%)."
         return 0
     fi
@@ -169,10 +172,8 @@ check_queue() {
     local wav_count
     wav_count=$(find -L "$INGEST_DIR" -maxdepth 1 -name '*.wav' | wc -l)
 
-    # Example: "Tue Feb 4 20:18:50 CET 2025 INFO: Queue is at a manageable level (1 wav files)."
     log_green "$(date) INFO: Queue is at a manageable level (${wav_count} wav files)."
 
-    # Below are your existing thresholds/logic. Adjust as needed:
     if (( wav_count > 50 )); then
         log_red "$(date) INFO: Queue >50. Stopping recorder + restarting analyzer."
         apprisealert "Queue exceeded 50: stopping recorder, restarting analyzer."
@@ -193,30 +194,25 @@ check_services() {
 
     for service in "${SERVICES[@]}"; do
         if [[ "$(systemctl is-active "$service")" != "active" ]]; then
-
-            # Increment the service's inactive counter
             SERVICE_INACTIVE_COUNT["$service"]=$(( SERVICE_INACTIVE_COUNT["$service"] + 1 ))
 
             if (( SERVICE_INACTIVE_COUNT["$service"] == 1 )); then
-                # First time we see it inactive in a row => Try restarting (silent recovery attempt)
+                # First time inactive => Try to start
                 log_yellow "$(date) INFO: Service '$service' is inactive. Attempting to start..."
                 systemctl start "$service"
                 any_inactive=1
-
             elif (( SERVICE_INACTIVE_COUNT["$service"] == 2 )); then
                 # Second consecutive time => Send an alert
                 log_red "$(date) INFO: Service '$service' is still inactive after restart attempt."
                 apprisealert "Service '$service' remains inactive after restart attempt."
                 any_inactive=1
-
             else
-                # If it is still inactive beyond 2 checks, keep trying or do advanced actions
-                log_red "$(date) INFO: Service '$service' has been inactive for ${SERVICE_INACTIVE_COUNT["$service"]} checks in a row."
+                # Beyond second check => keep logging or do advanced actions
+                log_red "$(date) INFO: Service '$service' inactive for ${SERVICE_INACTIVE_COUNT["$service"]} checks in a row."
                 any_inactive=1
             fi
-
         else
-            # Service is active => reset the inactive counter
+            # Service is active => reset counter
             if (( SERVICE_INACTIVE_COUNT["$service"] > 0 )); then
                 log_green "$(date) INFO: Service '$service' is back to active. Resetting counter."
             fi
@@ -236,7 +232,6 @@ check_services() {
 ########################################
 # Main Monitoring Loop
 ########################################
-
 while true; do
     sleep 61
     log_blue "----------------------------------------"
@@ -257,7 +252,6 @@ while true; do
 
     # Final summary
     if (( any_issue == 0 )); then
-        # Example: "Tue Feb 4 20:18:50 CET 2025 INFO: All systems are functioning normally"
         log_green "$(date) INFO: All systems are functioning normally"
         apprisealert_recovery
     else
