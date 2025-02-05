@@ -10,7 +10,7 @@ HOME="/home/pi"
 log_green()   { echo -e "\033[32m$1\033[0m"; }
 log_red()     { echo -e "\033[31m$1\033[0m"; }
 log_yellow()  { echo -e "\033[33m$1\033[0m"; }
-log_info()    { echo -e "\033[34m$1\033[0m"; }
+log_blue()    { echo -e "\033[34m$1\033[0m"; }
 
 ########################################
 # Read configuration
@@ -53,7 +53,7 @@ DISK_USAGE_THRESHOLD=95
 
 # "Analyzing" file check variables
 same_file_counter=0
-SAME_FILE_THRESHOLD=2  
+SAME_FILE_THRESHOLD=2
 if [[ -f "$ANALYZING_NOW_FILE" ]]; then
     analyzing_now=$(<"$ANALYZING_NOW_FILE")
 else
@@ -69,7 +69,7 @@ apprisealert() {
     local current_time
     current_time=$(date +%s)
     local time_diff=$(( (current_time - last_notification_time) / 60 ))  # Convert to minutes
-    
+
     # Throttle notifications
     if (( time_diff < NOTIFICATION_INTERVAL_IN_MINUTES )); then
         log_yellow "Notification suppressed (last sent ${time_diff} minutes ago)."
@@ -87,7 +87,7 @@ apprisealert() {
     notification+="$stopped_service"
     notification+="<br><b>System:</b> ${SITE_NAME:-$(hostname)}"
     notification+="<br>Available disk space: $(df -h "$BIRDSONGS_DIR" | awk 'NR==2 {print $4}')"
-    notification+="<br>----Last log lines----"    
+    notification+="<br>----Last log lines----"
     notification+="<br> $(timeout 15 cat /proc/1/fd/1 | head -n 5)"
     notification+="<br>----------------------"
     [[ -n "$BIRDNETPI_URL" ]] && notification+="<br><a href=\"$BIRDNETPI_URL\">Access your BirdNET-Pi</a>"
@@ -239,8 +239,8 @@ check_services() {
 
 while true; do
     sleep 61
-    log_info "----------------------------------------"
-    log_info "$(date) INFO: Starting monitoring check"
+    log_blue "----------------------------------------"
+    log_blue "$(date) INFO: Starting monitoring check"
     any_issue=0
 
     # 1) Disk usage
@@ -263,5 +263,5 @@ while true; do
     else
         log_red "$(date) INFO: Issues detected. System status is not fully operational."
     fi
-    log_info "----------------------------------------"
+    log_blue "----------------------------------------"
 done
