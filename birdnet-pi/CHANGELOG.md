@@ -1,6 +1,5 @@
-## 2025.01-12 (05-02-2025)
 - Improved monitoring system
-- Improved audio player
+- Improved audio player (clear browser cache)
 
 ## 2025.01-11 (28-01-2025)
 - New audio player
