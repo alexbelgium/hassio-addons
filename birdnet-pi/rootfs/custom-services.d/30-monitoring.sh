@@ -90,8 +90,8 @@ apprisealert() {
     notification+="$stopped_service"
     notification+="<br><b>System:</b> ${SITE_NAME:-$(hostname)}"
     notification+="<br>Available disk space: $(df -h "$HOME/BirdSongs" | awk 'NR==2 {print $4}')"
-    notification+="<br>----------------------"
-    notification+="<br>3 last log lines: $(timeout 15 cat /proc/1/fd/1 | head -n 3)"
+    notification+="<br>----Last log lines----"    
+    notification+="<br> $(timeout 15 cat /proc/1/fd/1 | head -n 5)"
     notification+="<br>----------------------"
     [[ -n "$BIRDNETPI_URL" ]] && notification+="<br><a href=\"$BIRDNETPI_URL\">Access your BirdNET-Pi</a>"
 
