@@ -1,3 +1,6 @@
+- Improved monitoring system
+- Improved audio player
+
 ## 2025.01-11 (28-01-2025)
 - New audio player
 - Upgraded upstream code : various improvements
