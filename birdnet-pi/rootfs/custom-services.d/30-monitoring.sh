@@ -170,7 +170,7 @@ check_queue() {
     wav_count=$(find -L "$INGEST_DIR" -maxdepth 1 -name '*.wav' | wc -l)
 
     # Example: "Tue Feb 4 20:18:50 CET 2025 INFO: Queue is at a manageable level (1 wav files)."
-    log_info "$(date) INFO: Queue is at a manageable level (${wav_count} wav files)."
+    log_green "$(date) INFO: Queue is at a manageable level (${wav_count} wav files)."
 
     # Below are your existing thresholds/logic. Adjust as needed:
     if (( wav_count > 50 )); then
