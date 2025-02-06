@@ -57,7 +57,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="cron bash sudo"
+ENV PACKAGES="cron bash sudo source"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
@@ -76,11 +76,12 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 # Entrypoint
-RUN echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    chown -R www-data:www-data /etc/cont-init.d/* && \
-    chmod 777 /ha_entrypoint.sh && \
-    sed -i "s| sh| bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
-    sed -i "1a source /./ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
+RUN sed -i "1a \#\!/bin/bash bashio" /ha_entrypoint.sh
+#RUN echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+#    chown -R www-data:www-data /etc/cont-init.d/* && \
+#    chmod 777 /ha_entrypoint.sh && \
+#    sed -i "s| sh| bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
+#    sed -i "1a source /./ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
 
 #USER www-data
 
