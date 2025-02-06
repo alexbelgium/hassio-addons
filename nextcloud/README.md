@@ -1,6 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Nextcloud] Générer une connexion sécurisée en HTTPS (opened 2025-01-11)](https://github.com/alexbelgium/hassio-addons/issues/1717) by [@jserieye](https://github.com/jserieye)
 ## &#9888; Open Issue : [🐛 [Nextcloud] Ошибка (opened 2025-01-19)](https://github.com/alexbelgium/hassio-addons/issues/1728) by [@ops244](https://github.com/ops244)
-## &#9888; Open Issue : [🐛 [Nextcloud] Stuck on Grant access when logging into iOS or MacOS client (opened 2025-02-04)](https://github.com/alexbelgium/hassio-addons/issues/1754) by [@e12023212](https://github.com/e12023212)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
