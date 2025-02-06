@@ -19,9 +19,9 @@ if [ -d "/homeassistant/addons_config/$slug" ] && [ ! -f "/homeassistant/addons_
 fi
 
 # Create directory
-mkdir -p "$CONFIGSOURCE"/import_files
-mkdir -p "$CONFIGSOURCE"/configurations
+sudo mkdir -p "$CONFIGSOURCE"/import_files
+sudo mkdir -p "$CONFIGSOURCE"/configurations
 
 # Make sure permissions are right
-chown -R "www-data:www-data" "$CONFIGSOURCE"
-chmod -R 755 "$CONFIGSOURCE"
+sudo chown -R "www-data:www-data" "$CONFIGSOURCE"
+sudo chmod -R 755 "$CONFIGSOURCE"
