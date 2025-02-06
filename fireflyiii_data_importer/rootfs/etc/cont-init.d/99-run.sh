@@ -76,14 +76,10 @@ if bashio::config.true 'silent'; then
     export silent="true"
 fi
 
-11-execute-things.sh
-
 sudo -E su - www-data -s /bin/bash -c 'cd /var/www/html
-for SCRIPTS in /scripts/*; do
-    [ -e "$SCRIPTS" ] || continue
-    echo "$SCRIPTS: executing"
-    source "$SCRIPTS" || { echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"; exit $?; }
-done
+echo "Execute 11-execute-things.sh"
+/./11-execute-things.sh
+
 if [[ "$silent" == "true" ]]; then
     echo "Starting : php-fpm"
     /usr/local/sbin/php-fpm --nodaemonize >/dev/null
