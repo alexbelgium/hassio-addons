@@ -85,7 +85,7 @@ RUN sed -i "1a \#\!/bin/bash bashio" /ha_entrypoint.sh
 
 #USER www-data
 
-ENTRYPOINT [ "/usr/bin/env" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
 CMD [ "/ha_entrypoint.sh" ]
 
 ############
