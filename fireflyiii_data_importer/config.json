@@ -97,7 +97,8 @@
     "NORDIGEN_KEY": "str?",
     "SPECTRE_APP_ID": "str?",
     "SPECTRE_SECRET": "str?",
-    "Updates": "list(hourly|daily|weekly)?"
+    "Updates": "list(hourly|daily|weekly)?",
+    "silent": "bool?"
   },
   "slug": "fireflyiii_data_importer",
   "udev": true,
