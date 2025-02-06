@@ -83,8 +83,6 @@ sudo -E su - www-data -s /bin/bash -c 'cd /var/www/html
 echo "Execute 11-execute-things.sh"
 /./scripts/11-execute-things.sh
 
-sleep infinity
-
 if [[ "$silent" == "true" ]]; then
     echo "Starting : php-fpm"
     /usr/local/sbin/php-fpm --nodaemonize >/dev/null
