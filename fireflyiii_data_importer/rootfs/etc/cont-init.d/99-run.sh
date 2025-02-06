@@ -76,6 +76,9 @@ if bashio::config.true 'silent'; then
     export silent="true"
 fi
 
+mkdir -p /storage
+chown www-data:www-data /storage
+
 sudo -E su - www-data -s /bin/bash -c 'cd /var/www/html
 echo "Execute 11-execute-things.sh"
 /./scripts/11-execute-things.sh
