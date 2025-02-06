@@ -79,6 +79,10 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
+# Adapt shebang
+RUN \
+    sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh
+
 #RUN cat /ha_entrypoint.sh && \
 #    sed -i "1i \#\!/bin/bash" /ha_entrypoint.sh
 
