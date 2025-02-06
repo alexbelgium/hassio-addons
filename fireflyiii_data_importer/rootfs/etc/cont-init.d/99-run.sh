@@ -64,7 +64,3 @@ else
     bashio::log.info "Automatic updates not set in addon config. If you add configuration files in ${CONFIGSOURCE}/import_files, they won't be automatically updated."
 
 fi
-
-##############
-# LAUNCH APP #
-##############
