@@ -23,5 +23,5 @@ mkdir -p "$CONFIGSOURCE"/import_files
 mkdir -p "$CONFIGSOURCE"/configurations
 
 # Make sure permissions are right
-chown -R "root:root" "$CONFIGSOURCE"
+chown -R "www-data:www-data" "$CONFIGSOURCE"
 chmod -R 755 "$CONFIGSOURCE"
