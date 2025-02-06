@@ -32,6 +32,10 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 #ENV FIREFLY_III_PATH="/data/firefly"
 #WORKDIR $FIREFLY_III_PATH
+RUN \
+    sed -i "s|/usr/local|sudo -u www-data /usr/local|g" /etc/s6-overlay/s6-rc.d/php-fpm/run && \
+    sed -i "s|nginx|sudo -u www-data nginx|g" /etc/s6-overlay/s6-rc.d/nginx/run
+
 #RUN \
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
