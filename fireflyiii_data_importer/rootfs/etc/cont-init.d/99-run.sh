@@ -12,7 +12,6 @@ if [ "$(ls -A "$CONFIGSOURCE/configurations")" ]; then
     bashio::log.info "Configurations were found in $CONFIGSOURCE/configurations, they will be loaded."
     JSON_CONFIGURATION_DIR="$CONFIGSOURCE/configurations"
     export JSON_CONFIGURATION_DIR
-    sudo chown -R www-data:www-data "$CONFIGSOURCE"
 fi
 
 # Allow config dir
@@ -39,14 +38,14 @@ if bashio::config.has_value 'Updates'; then
     echo ""
 
     # Sets cron // do not delete this message
-    sudo cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
-    sudo chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
+    cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
+    chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
 
     # Sets cron to run with www-data user
     # sed -i 's|root|www-data|g' /etc/crontab
 
     # Starts cron
-    sudo service cron start
+    service cron start
 
     # Export variables
     IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"
@@ -64,3 +63,25 @@ else
     bashio::log.info "Automatic updates not set in addon config. If you add configuration files in ${CONFIGSOURCE}/import_files, they won't be automatically updated."
 
 fi
+
+##############
+# LAUNCH APP #
+##############
+
+bashio::log.info "Please wait while the app is loading !"
+
+for SCRIPTS in /etc/entrypoint.d/*; do
+    [ -e "$SCRIPTS" ] || continue
+    echo "$SCRIPTS: executing"
+    source "$SCRIPTS" || { echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"; exit $?; }
+done
+
+bashio::log.info "Starting nginx"
+nginx & true
+
+bashio::log.info "Starting php-fpm"
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php "$@"
+fi
+sudo su - www-data -c 'cd /var/www/html && /usr/local/sbin/php-fpm --nodaemonize'
