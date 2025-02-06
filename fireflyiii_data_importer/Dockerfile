@@ -78,6 +78,7 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 # Entrypoint
 RUN echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     chown -R www-data:www-data /etc/cont-init.d/* && \
+    chmod 777 /ha_entrypoint.sh && \
     sed -i "s| sh| bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
     sed -i "1a source /./ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
 
