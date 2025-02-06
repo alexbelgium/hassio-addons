@@ -70,7 +70,7 @@ fi
 
 bashio::log.info "Starting entrypoint scripts"
 
-sudo su - www-data -s /bin/bash -c 'cd /var/www/html
+sudo -E su - www-data -s /bin/bash -c 'cd /var/www/html
 for SCRIPTS in /etc/entrypoint.d/*; do
     [ -e "$SCRIPTS" ] || continue
     echo "$SCRIPTS: executing"
