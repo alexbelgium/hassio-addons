@@ -14,14 +14,14 @@ CONFIGSOURCE="$(bashio::config "CONFIG_LOCATION")"
 
 if [ -d "/homeassistant/addons_config/$slug" ] && [ ! -f "/homeassistant/addons_config/$slug/migrated" ]; then
     echo "Migrating /homeassistant/addons_config/$slug"
-    sudo mv /homeassistant/addons_config/"$slug"/* "$CONFIGSOURCE"/
-    sudo touch /homeassistant/addons_config/$slug/migrated
+    mv /homeassistant/addons_config/"$slug"/* "$CONFIGSOURCE"/
+    touch /homeassistant/addons_config/$slug/migrated
 fi
 
 # Create directory
-sudo mkdir -p "$CONFIGSOURCE"/import_files
-sudo mkdir -p "$CONFIGSOURCE"/configurations
+mkdir -p "$CONFIGSOURCE"/import_files
+mkdir -p "$CONFIGSOURCE"/configurations
 
 # Make sure permissions are right
-sudo chown -R "www-data:www-data" "$CONFIGSOURCE"
-sudo chmod -R 755 "$CONFIGSOURCE"
+chown -R "www-data:www-data" "$CONFIGSOURCE"
+chmod -R 755 "$CONFIGSOURCE"
