@@ -79,6 +79,9 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
+RUN cat /ha_entrypoint.sh && \
+    sed -i "1i \#\!/bin/bash" /ha_entrypoint.sh
+
 # Entrypoint
 #RUN sed -i "1a \#\!/bin/bash bashio" /ha_entrypoint.sh
 #RUN echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
