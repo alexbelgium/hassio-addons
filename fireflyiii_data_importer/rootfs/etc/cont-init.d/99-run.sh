@@ -68,20 +68,16 @@ fi
 # LAUNCH APP #
 ##############
 
-bashio::log.info "Please wait while the app is loading !"
+bashio::log.info "Starting entrypoint scripts"
 
+sudo su - www-data -s /bin/bash -c 'cd /var/www/html
 for SCRIPTS in /etc/entrypoint.d/*; do
     [ -e "$SCRIPTS" ] || continue
     echo "$SCRIPTS: executing"
     source "$SCRIPTS" || { echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"; exit $?; }
 done
-
-bashio::log.info "Starting nginx"
+echo "Starting : php-fpm"
+/usr/local/sbin/php-fpm --nodaemonize
+echo "Starting : nginx"
 nginx & true
-
-bashio::log.info "Starting php-fpm"
-# first arg is `-f` or `--some-option`
-if [ "${1#-}" != "$1" ]; then
-	set -- php "$@"
-fi
-sudo su - www-data -c 'cd /var/www/html && /usr/local/sbin/php-fpm --nodaemonize'
+'
