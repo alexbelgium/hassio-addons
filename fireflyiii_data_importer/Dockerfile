@@ -82,10 +82,10 @@ RUN echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     sed -i "s| sh| bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
     sed -i "1a source /./ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
 
-USER www-data
+#USER www-data
 
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/ha_entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
