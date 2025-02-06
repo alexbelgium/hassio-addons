@@ -34,8 +34,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 #WORKDIR $FIREFLY_III_PATH
 
 RUN \
-    mv /etc/entrypoint.d/11-execute-things.sh / && \
-    mv /etc/entrypoint.d/* /etc/cont-init.d/
+    mkdir -p /scripts && \
+    mv /etc/entrypoint.d/* /scripts/
 
 #RUN \
 #    # Change data location
