@@ -68,13 +68,3 @@ fi
 ##############
 # LAUNCH APP #
 ##############
-
-bashio::log.info "Please wait while the app is loading !"
-
-cd /var/www/html || true
-if bashio::config.true 'silent'; then
-    bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
-    sudo -E su - www-data -s /bin/bash -c 'cd /var/www/html && /./usr/local/bin/entrypoint.sh' >/dev/null
-else
-    sudo -E su - www-data -s /bin/bash -c 'cd /var/www/html && /./usr/local/bin/entrypoint.sh'
-fi
