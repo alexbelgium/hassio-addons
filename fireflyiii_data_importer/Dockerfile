@@ -81,7 +81,8 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 
 # Adapt shebang
 RUN \
-    sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh
+    sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
+    mv /ha_entrypoint.sh /etc/entrypoint.d/99-ha_entrypoint.sh
 
 #RUN cat /ha_entrypoint.sh && \
 #    sed -i "1i \#\!/bin/bash" /ha_entrypoint.sh
