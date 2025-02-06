@@ -76,17 +76,17 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 # Entrypoint
-RUN sed -i "1a \#\!/bin/bash bashio" /ha_entrypoint.sh
-#RUN echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-#    chown -R www-data:www-data /etc/cont-init.d/* && \
-#    chmod 777 /ha_entrypoint.sh && \
-#    sed -i "s| sh| bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
-#    sed -i "1a source /./ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
+#RUN sed -i "1a \#\!/bin/bash bashio" /ha_entrypoint.sh
+RUN echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    chown -R www-data:www-data /etc/cont-init.d/* && \
+    chmod 777 /ha_entrypoint.sh && \
+    sed -i "s| sh| bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
+    sed -i "1a source /ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
 
-#USER www-data
+USER www-data
 
 #ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+#CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
