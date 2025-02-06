@@ -12,6 +12,7 @@ if [ "$(ls -A "$CONFIGSOURCE/configurations")" ]; then
     bashio::log.info "Configurations were found in $CONFIGSOURCE/configurations, they will be loaded."
     JSON_CONFIGURATION_DIR="$CONFIGSOURCE/configurations"
     export JSON_CONFIGURATION_DIR
+    chown -R www-data:www-data "$CONFIGSOURCE"
 fi
 
 # Allow config dir
@@ -73,7 +74,7 @@ bashio::log.info "Please wait while the app is loading !"
 cd /var/www/html || true
 if bashio::config.true 'silent'; then
     bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
-    /./usr/local/bin/entrypoint.sh >/dev/null
+    sudo su - www-data -s /bin/bash -c 'cd /var/www/html && /./usr/local/bin/entrypoint.sh' >/dev/null
 else
-    /./usr/local/bin/entrypoint.sh
+    sudo su - www-data -s /bin/bash -c 'cd /var/www/html && /./usr/local/bin/entrypoint.sh'
 fi
