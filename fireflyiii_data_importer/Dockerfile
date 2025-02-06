@@ -33,6 +33,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 #ENV FIREFLY_III_PATH="/data/firefly"
 #WORKDIR $FIREFLY_III_PATH
 
+RUN \
+    mv /etc/entrypoint.d/* /etc/cont-init.d/
+
 #RUN \
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
