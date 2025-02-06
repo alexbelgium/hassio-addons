@@ -70,14 +70,27 @@ fi
 
 bashio::log.info "Starting entrypoint scripts"
 
+export silent="false"
+if bashio::config.true 'silent'; then
+    bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
+    export silent="true"
+fi
+
 sudo -E su - www-data -s /bin/bash -c 'cd /var/www/html
 for SCRIPTS in /etc/entrypoint.d/*; do
     [ -e "$SCRIPTS" ] || continue
     echo "$SCRIPTS: executing"
     source "$SCRIPTS" || { echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"; exit $?; }
 done
-echo "Starting : php-fpm"
-/usr/local/sbin/php-fpm --nodaemonize
-echo "Starting : nginx"
-nginx & true
+if [[ "$silent" == "true" ]]; then
+    echo "Starting : php-fpm"
+    /usr/local/sbin/php-fpm --nodaemonize >/dev/null
+    echo "Starting : nginx"
+    nginx >/dev/null & true
+else
+    echo "Starting : php-fpm"
+    /usr/local/sbin/php-fpm --nodaemonize
+    echo "Starting : nginx"
+    nginx & true
+fi
 '
