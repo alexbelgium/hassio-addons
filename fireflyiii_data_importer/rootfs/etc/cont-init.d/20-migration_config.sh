@@ -14,8 +14,8 @@ CONFIGSOURCE="$(bashio::config "CONFIG_LOCATION")"
 
 if [ -d "/homeassistant/addons_config/$slug" ] && [ ! -f "/homeassistant/addons_config/$slug/migrated" ]; then
     echo "Migrating /homeassistant/addons_config/$slug"
-    mv /homeassistant/addons_config/"$slug"/* "$CONFIGSOURCE"/
-    touch /homeassistant/addons_config/$slug/migrated
+    sudo mv /homeassistant/addons_config/"$slug"/* "$CONFIGSOURCE"/
+    sudo touch /homeassistant/addons_config/$slug/migrated
 fi
 
 # Create directory
