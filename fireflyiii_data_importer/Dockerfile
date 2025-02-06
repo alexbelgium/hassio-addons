@@ -32,9 +32,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 #ENV FIREFLY_III_PATH="/data/firefly"
 #WORKDIR $FIREFLY_III_PATH
-RUN \
-    sed -i "s|/usr/local|sudo -u www-data /usr/local|g" /etc/s6-overlay/s6-rc.d/php-fpm/run && \
-    sed -i "s|nginx|sudo -u www-data nginx|g" /etc/s6-overlay/s6-rc.d/nginx/run
 
 #RUN \
 #    # Change data location
@@ -71,12 +68,20 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ################
 
 # Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+#ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
+
+# Entrypoint
+RUN echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    chown -R www-data:www-data /etc/cont-init.d/* && \
+    sed -i "s| sh| bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
+    sed -i "1a source /./ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
+
+USER www-data
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
