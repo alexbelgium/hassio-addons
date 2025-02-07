@@ -77,7 +77,9 @@ if bashio::config.true 'silent'; then
 fi
 
 mkdir -p /storage
-chown www-data:www-data /storage
+sudo chown www-data:www-data /storage
+
+exit 0
 
 sudo -E su - www-data -s /bin/bash -c 'cd /var/www/html
 echo "Execute 11-execute-things.sh"
