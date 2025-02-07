@@ -77,24 +77,4 @@ if bashio::config.true 'silent'; then
 fi
 
 mkdir -p /storage
-sudo chown www-data:www-data /storage
-
-exit 0
-
-sudo -E su - www-data -s /bin/bash -c 'cd /var/www/html
-echo "Execute 11-execute-things.sh"
-/./scripts/11-execute-things.sh
-
-if [[ "$silent" == "true" ]]; then
-    echo "Starting : php-fpm"
-    /usr/local/sbin/php-fpm --nodaemonize >/dev/null
-    echo "Starting : nginx"
-    nginx >/dev/null & true
-else
-    echo "Starting : php-fpm"
-    /usr/local/sbin/php-fpm --nodaemonize
-    echo "Starting : nginx"
-    nginx & true
-fi
-'
-sleep infinity
+chown www-data:www-data /storage
