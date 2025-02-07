@@ -1,3 +1,5 @@
+- Fix audio not playing in microsoft edge
+
 ## 2025.02.01 (05-02-2025)
 - Improved monitoring system
 - Improved audio player (clear browser cache)
