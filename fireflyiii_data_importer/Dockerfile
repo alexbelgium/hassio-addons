@@ -86,11 +86,12 @@ RUN \
     # Move execute things
     mkdir -p /scripts && \
     mv /etc/entrypoint.d/11-execute-things.sh /scripts/ && \
+    # Allow passwordless root
+    echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     # Adapt files
     for files in /etc/cont-init.d/*; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"; done
     #sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
-    # Allow passwordless root
-    #echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+
     # Execute entrypoint
     #sed -i "s|/usr/bin/env sh|/usr/bin/env bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
     #chmod 777 /ha_entrypoint.sh && \
