@@ -73,4 +73,4 @@ bashio::log.info "Starting entrypoint scripts"
 mkdir -p /storage
 chown www-data:www-data /storage
 
-gosu www-data /scripts/11-execute-things.sh
+sudo -Eu www-data /scripts/11-execute-things.sh
