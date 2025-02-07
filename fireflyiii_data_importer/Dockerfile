@@ -83,6 +83,9 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 RUN \
     # Run as www-data
     sed -i "s|/usr|gosu www-data /usr|g" /etc/s6*/s6*/php-fpm/run && \
+    # Move execute things
+    mkdir -p /scripts && \
+    mv /etc/entrypoint.d/11-execute-things.sh /scripts/ && \
     # Adapt files
     for files in /etc/cont-init.d/*; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"; done
     #sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
