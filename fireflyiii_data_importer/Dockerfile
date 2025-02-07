@@ -81,6 +81,8 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 
 # Adapt shebang
 RUN \
+    # Run as www-data
+    sed -i "s|/usr|sudo -u www-data /usr|g" /etc/s6*/s6*/php-fpm/run && \
     # Adapt files
     for files in /etc/cont-init.d/*; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"; done
     #sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
