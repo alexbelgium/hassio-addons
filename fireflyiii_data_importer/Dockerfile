@@ -33,9 +33,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 #ENV FIREFLY_III_PATH="/data/firefly"
 #WORKDIR $FIREFLY_III_PATH
 
-RUN \
-    mkdir -p /scripts && \
-    mv /etc/entrypoint.d/11-execute-things.sh /scripts/
+#RUN \
+#    mkdir -p /scripts && \
+#    mv /etc/entrypoint.d/11-execute-things.sh /scripts/
 
 #RUN \
 #    # Change data location
@@ -82,7 +82,12 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 # Adapt shebang
 RUN \
     sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
-    rm -r /etc/s6*
+    # Allow passwordless root
+    echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    # Execute entrypoint
+    sed -i "s|/usr/bin/env sh|/usr/bin/env bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
+    chmod 777 /ha_entrypoint.sh && \
+    sed -i "1a source /ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
 #RUN cat /ha_entrypoint.sh && \
 #    sed -i "1i \#\!/bin/bash" /ha_entrypoint.sh
 
