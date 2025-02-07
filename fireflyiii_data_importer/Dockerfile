@@ -81,13 +81,15 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 
 # Adapt shebang
 RUN \
-    sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
+    # Adapt files
+    for files in /etc/cont-init.d; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"
+    #sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
     # Allow passwordless root
-    echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    #echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     # Execute entrypoint
-    sed -i "s|/usr/bin/env sh|/usr/bin/env bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
-    chmod 777 /ha_entrypoint.sh && \
-    sed -i "1a sudo /./ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
+    #sed -i "s|/usr/bin/env sh|/usr/bin/env bashio|g" /etc/entrypoint.d/11-execute-things.sh && \
+    #chmod 777 /ha_entrypoint.sh && \
+    #sed -i "1a sudo /./ha_entrypoint.sh" /etc/entrypoint.d/11-execute-things.sh
 #RUN cat /ha_entrypoint.sh && \
 #    sed -i "1i \#\!/bin/bash" /ha_entrypoint.sh
 
@@ -101,7 +103,7 @@ RUN \
 
 #ENV ha_entry_source="true"
 
-USER www-data
+#USER www-data
 
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
