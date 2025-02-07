@@ -83,7 +83,7 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
     # Run as www-data
-    sed -i "s|/usr|sudo -Eu www-data /usr|g" /etc/s6*/s6*/php-fpm/run && \
+    sed -i "s|/usr|exec sudo -Eu www-data /usr|g" /etc/s6*/s6*/php-fpm/run && \
     # Move execute things
     mkdir -p /scripts && \
     mv /etc/entrypoint.d/11-execute-things.sh /scripts/ && \
