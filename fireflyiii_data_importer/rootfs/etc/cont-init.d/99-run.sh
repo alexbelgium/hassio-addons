@@ -70,11 +70,5 @@ fi
 
 bashio::log.info "Starting entrypoint scripts"
 
-export silent="false"
-if bashio::config.true 'silent'; then
-    bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
-    export silent="true"
-fi
-
 mkdir -p /storage
 chown www-data:www-data /storage
