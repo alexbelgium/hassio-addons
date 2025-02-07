@@ -1,6 +1,6 @@
 {
   "arch": [
-    "aarch64",
+    "aarch64",Update Dockerfile
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
@@ -103,6 +103,6 @@
   "slug": "fireflyiii_data_importer",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "20250126.1-test21",
+  "version": "20250126.1-test22",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
