@@ -1,3 +1,4 @@
+- Adapt to new upstream logic
 
 ## 20250126.1 (01-02-2025)
 - Update to latest version from firefly-iii/data-importer (changelog : https://github.com/firefly-iii/data-importer/releases)
