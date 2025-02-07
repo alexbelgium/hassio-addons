@@ -82,7 +82,7 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 # Adapt shebang
 RUN \
     # Adapt files
-    for files in /etc/cont-init.d; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"
+    for files in /etc/cont-init.d; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"; done
     #sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
     # Allow passwordless root
     #echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
