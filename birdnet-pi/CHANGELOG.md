@@ -1,3 +1,4 @@
+## 2025.02.02 (07-02-2025)
 - Fix audio not playing in microsoft edge
 
 ## 2025.02.01 (05-02-2025)
