@@ -80,6 +80,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 # Adapt shebang
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
     # Run as www-data
     sed -i "s|/usr|sudo -Eu www-data /usr|g" /etc/s6*/s6*/php-fpm/run && \
