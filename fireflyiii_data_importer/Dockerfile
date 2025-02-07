@@ -91,7 +91,7 @@ RUN \
     echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     # Change output lots
     sed -i "s|/proc/self/fd/2|/proc/1/fd/1|g" /etc/entrypoint.d/1-log-output-level.sh && \
-    grep -rl "/proc/self/fd/2" /usr | while read -r files; do sed -i "s|/proc/self/fd/2|/proc/1/fd/1|g" "$files"; done && \
+    grep -rl "/proc/self/fd/2" /usr/local/etc | while read -r files; do sed -i "s|/proc/self/fd/2|/proc/1/fd/1|g" "$files"; done && \
     # Adapt files
     for files in /etc/cont-init.d/*; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"; done
     #sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
