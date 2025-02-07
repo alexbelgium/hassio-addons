@@ -90,8 +90,9 @@ RUN \
     # Allow passwordless root
     echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     # Change output lots
-    sed -i "s|/proc/self/fd/2|/dev/stderr|g" /etc/entrypoint.d/1-log-output-level.sh && \
-    grep -rl "/proc/self/fd/2" /usr/local/etc | while read -r files; do sed -i "s|/proc/self/fd/2|/dev/stderr|g" "$files"; done && \
+    sed -i "s|/proc/self/fd/2|/log_php|g" /etc/entrypoint.d/1-log-output-level.sh && \
+    grep -rl "/proc/self/fd/2" /usr/local/etc | while read -r files; do sed -i "s|/proc/self/fd/2|/log_php|g" "$files"; done && \
+    touch 
     # Adapt files
     for files in /etc/cont-init.d/*; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"; done
     #sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
