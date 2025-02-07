@@ -88,6 +88,8 @@ RUN \
     mv /etc/entrypoint.d/11-execute-things.sh /scripts/ && \
     # Allow passwordless root
     echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    # Change output lots
+    sed -i "s|/proc/self/fd/2|/proc/1/fd/1|g" /etc/entrypoint.d/1-log-output-level.sh && \
     # Adapt files
     for files in /etc/cont-init.d/*; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"; done
     #sed -i "s|/command/with-contenv bashio|/bin/bash bashio|g" /ha_entrypoint.sh && \
