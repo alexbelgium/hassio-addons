@@ -22,7 +22,7 @@ ARG SUB_PATH="/mealie/"
 ENV SUB_PATH=$SUB_PATH
 
 WORKDIR /app
-ENV MEALIE_VERSION="v2.5.0"
+ENV MEALIE_VERSION="v2.6.0"
 
 # Clone the Mealie repository to get the frontend source code
 # hadolint ignore=DL3003
