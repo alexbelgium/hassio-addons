@@ -1,8 +1,8 @@
 {
-  "last_update": "25-01-2025",
+  "last_update": "08-02-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "cloudcommander",
   "source": "github",
   "upstream_repo": "coderaiser/cloudcmd",
-  "upstream_version": "18.5.0"
+  "upstream_version": "18.5.1"
 }
