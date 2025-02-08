@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [fireflyiii] not building WIP (opened 2025-02-08)](https://github.com/alexbelgium/hassio-addons/issues/1757) by [@alexbelgium](https://github.com/alexbelgium)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
