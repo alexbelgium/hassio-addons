@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Firefly iii] Cannot update to version 20250205.2 (opened 2025-02-08)](https://github.com/alexbelgium/hassio-addons/issues/1758) by [@joluas](https://github.com/joluas)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
