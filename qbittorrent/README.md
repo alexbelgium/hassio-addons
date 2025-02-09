@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Qbittorrent] cifusername and cifpassword seem to be switched (opened 2025-01-21)](https://github.com/alexbelgium/hassio-addons/issues/1737) by [@TomJansen](https://github.com/TomJansen)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

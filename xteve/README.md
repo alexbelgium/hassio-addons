@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 Xteve Update logo (opened 2025-01-09)](https://github.com/alexbelgium/hassio-addons/issues/1708) by [@euhkah](https://github.com/euhkah)
-## &#9888; Open Issue : [🐛 Xteve Logos TV (opened 2025-01-09)](https://github.com/alexbelgium/hassio-addons/issues/1709) by [@euhkah](https://github.com/euhkah)
 # Home assistant add-on: xTeVe
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Transmission] Default config missing customUI option + issues with Transmissionic and Combustion (opened 2025-01-11)](https://github.com/alexbelgium/hassio-addons/issues/1718) by [@igorsantos07](https://github.com/igorsantos07)
 ## &#9888; Open Issue : [🐛 [Transmission] If defined user and pass, the container start longer and report unhealthy (opened 2025-02-05)](https://github.com/alexbelgium/hassio-addons/issues/1755) by [@myhomeiot](https://github.com/myhomeiot)
 
 # Home assistant add-on: Transmission

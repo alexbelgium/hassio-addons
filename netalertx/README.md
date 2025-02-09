@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 NetAlertX - unsuccessful install in HomeAssistant (opened 2025-02-08)](https://github.com/alexbelgium/hassio-addons/issues/1759) by [@DieterTHeck](https://github.com/DieterTHeck)
 # Home assistant add-on: NetAlertX
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
