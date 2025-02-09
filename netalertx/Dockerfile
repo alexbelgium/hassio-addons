@@ -52,9 +52,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="jq \
-    curl \
-    cifs-utils"
+ENV PACKAGES="sudo"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
@@ -72,7 +70,14 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-#
+# Adapt shebang
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN \
+    # Run as www-data
+    sed -i "s|/usr|exec sudo -Eu www-data /usr|g" /etc/s6*overlay/s6*/php-fpm/run && \
+    # Allow passwordless root
+    echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
 #WORKDIR /
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
