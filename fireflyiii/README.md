@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [fireflyiii] not building WIP (opened 2025-02-08)](https://github.com/alexbelgium/hassio-addons/issues/1757) by [@alexbelgium](https://github.com/alexbelgium)
 ## &#9888; Open Issue : [🐛 [Firefly iii] Cannot update to version 20250205.2 (opened 2025-02-08)](https://github.com/alexbelgium/hassio-addons/issues/1758) by [@joluas](https://github.com/joluas)
 # Home assistant add-on: fireflyiii
 
