@@ -33,6 +33,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
 
+USER root
+
 RUN \
     # Change upload folder to "ha_upload" since the default one is binded to a volume (see base image)
     sed -i "s/'root'   => storage_path('upload'),/'root'   => storage_path('ha_upload'),/g" /var/www/html/config/filesystems.php
