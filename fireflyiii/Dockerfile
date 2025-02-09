@@ -27,14 +27,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
 #ENV FIREFLY_III_PATH="/data/firefly"
 #WORKDIR $FIREFLY_III_PATH
 #RUN \
 #    # Change data location
 #    grep -rl "/var/www/html" /etc/ | xargs sed -i 's|/var/www/html|/data/firefly|g'
 
-ARG BUILD_UPSTREAM="6.1.16"
 RUN \
     # Change upload folder to "ha_upload" since the default one is binded to a volume (see base image)
     sed -i "s/'root'   => storage_path('upload'),/'root'   => storage_path('ha_upload'),/g" /var/www/html/config/filesystems.php
@@ -59,7 +57,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="cron mariadb-client"
+ENV PACKAGES="cron mariadb-client sudo"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
@@ -70,16 +68,32 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ################
 
 # Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+#ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/ha_entrypoint.sh" ]
 
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+# Adapt shebang
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN \
+    # Run as www-data
+    sed -i "s|/usr|exec sudo -Eu www-data /usr|g" /etc/s6*/s6*/php-fpm/run && \
+    # Move execute things
+    mkdir -p /scripts && \
+    mv /etc/entrypoint.d/11-execute-things.sh /scripts/ && \
+    # Allow passwordless root
+    echo "www-data ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    # Change output lots
+    sed -i "s|/proc/self/fd/2|/log_php|g" /etc/entrypoint.d/1-log-output-level.sh && \
+    grep -rl "/proc/self/fd/2" /usr/local/etc | while read -r files; do sed -i "s|/proc/self/fd/2|/log_php|g" "$files"; done && \
+    touch /log_php && chown www-data:www-data /log_php && \
+    # Adapt files
+    for files in /etc/cont-init.d/*; do sed -i "s|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g" "$files"; done
 
 ############
 # 5 Labels #

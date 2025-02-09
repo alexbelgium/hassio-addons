@@ -180,7 +180,7 @@ bashio::log.info "Please wait while the app is loading !"
 
 if bashio::config.true 'silent'; then
     bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
-    /./usr/local/bin/entrypoint.sh >/dev/null
+    sudo -Eu www-data bash -c 'cd /var/www/html && /scripts/11-execute-things.sh >/dev/null'
 else
-    /./usr/local/bin/entrypoint.sh
+    sudo -Eu www-data bash -c 'cd /var/www/html && /scripts/11-execute-things.sh'
 fi
