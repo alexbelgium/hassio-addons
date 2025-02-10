@@ -73,7 +73,8 @@
   "ingress": true,
   "init": false,
   "map": [
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "media:rw"
   ],
@@ -107,5 +108,5 @@
   "slug": "nzbget",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v24.5-ls180"
+  "version": "v24.5-ls180-2"
 }
