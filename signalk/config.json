@@ -45,11 +45,15 @@
     "3443/tcp": "ssl web interface",
     "8375/tcp": "TCPSTREAM port"
   },
+  "privileged": {
+    "SYS_ADMIN",
+    "SYS_RAWIO"
+  },
   "slug": "signalk",
   "uart": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "2.13.1",
+  "version": "2.13.1-test1",
   "webui": "http://[HOST]:[PORT:3000]"
 }
