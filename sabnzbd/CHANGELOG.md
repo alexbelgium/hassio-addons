@@ -1,3 +1,4 @@
+## 4.4.1-2 (10-02-2025)
 - New config logic, files migrated to /addon_configs/xxx-sabnzbd
 
 ## 4.4.1 (21-12-2024)
