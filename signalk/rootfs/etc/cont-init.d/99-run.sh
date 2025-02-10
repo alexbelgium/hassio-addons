@@ -23,4 +23,4 @@ done
 
 bashio::log.info "Starting application"
 
-sudo -u "$USER" -s /bin/sh -c "/home/node/signalk/startup.sh"
+sudo -Eu "$USER" -s /bin/bash -c "/home/node/signalk/startup.sh"
