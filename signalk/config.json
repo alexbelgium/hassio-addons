@@ -45,10 +45,10 @@
     "3443/tcp": "ssl web interface",
     "8375/tcp": "TCPSTREAM port"
   },
-  "privileged": {
+  "privileged": [
     "SYS_ADMIN",
     "SYS_RAWIO"
-  },
+  ],
   "slug": "signalk",
   "uart": true,
   "udev": true,
