@@ -10,4 +10,9 @@ if [ -d "/homeassistant/addons_config/$slug" ]; then
     mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi
 
+if [ -f "/homeassistant/addons_autoscripts/$slug.sh" ]; then
+    bashio::log.warning "Migrating autoscript"
+    mv /homeassistant/addons_autoscripts/$slug.sh /config/
+fi
+
 chmod 777 /config/*
