@@ -6,7 +6,6 @@ set -e
 # Set configuration directory
 mkdir -p /config/.signalk
 if [ -d "/home/node/.signalk" ]; then
-    cp -rnf /home/node/.signalk/* /config/.signalk/
     rm -r "/home/node/.signalk"
 fi
 ln -sf /config "/home/node/.signalk"
