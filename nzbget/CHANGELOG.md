@@ -1,3 +1,4 @@
+## v24.5-ls180-3 (10-02-2025)
 - New config logic, files migrated to /addon_configs/xxx-nzbget
 
 ## v24.5-ls180 (08-02-2025)
