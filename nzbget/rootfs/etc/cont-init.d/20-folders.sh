@@ -4,10 +4,10 @@ set -e
 
 slug=nzbget
 
-if [ -d "/homeassistant/addons_config/$slug" ] && [ ! -f "/homeassistant/addons_config/$slug/migrated" ]; then
-    echo "Migrating /homeassistant/addons_config/$slug"
-    mv /homeassistant/addons_config/"$slug"/* /config/
-    touch /homeassistant/addons_config/$slug/migrated
+if [ -d "/homeassistant/addons_config/$slug" ]; then
+    echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
+    cp -rnf /homeassistant/addons_config/"$slug"/* /config/
+    mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi
 
 chmod 777 /config/*
