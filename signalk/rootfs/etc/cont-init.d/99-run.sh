@@ -4,7 +4,7 @@ set -e
 # hadolint ignore=SC2155
 
 # Variables
-USER=node
+USER=root
 
 # Set configuration directory
 if [ -d "/home/$USER/.signalk" ]; then
@@ -13,6 +13,12 @@ fi
 ln -sf /config "/home/$USER/.signalk"
 chown -R "$USER:$USER" /config
 chown -R "$USER:$USER" "/home/$USER/.signalk"
+if [ -f /config/.signalk/ssl-key.pem ]; then
+    chmod -600 /config/.signalk/ssl-key.pem
+fi
+if [ -f /config/.signalk/ssl-cert.pem ]; then
+    chmod -600 /config/.signalk/ssl-cert.pem
+fi
 
 # Define permissions for /dev/ttyUSB
 for device in /dev/ttyUSB /dev/ttyUSB0 /dev/ttyUSB1; do
@@ -23,4 +29,4 @@ done
 
 bashio::log.info "Starting application"
 
-sudo -Eu "$USER" -s /bin/bash -c "/home/node/signalk/startup.sh"
+/./home/node/signalk/startup.sh
