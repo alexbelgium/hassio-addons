@@ -14,10 +14,10 @@ fi
 ln -sf /config/.signalk "/home/node/.signalk"
 
 # Set single user for ssl files
-for files in ssl-key.pem ssl-cert.pem; do
-    if [ -e /config/.signalk/"$files" ]; then
-        chown "${(id -u)}:${(id -g)}" /config/.signalk/"$files"
-        chmod 600 /config/.signalk/"$files"
+for file in ssl-key.pem ssl-cert.pem; do
+    if [ -e /config/.signalk/"$file" ]; then
+        chown "$(id -u):$(id -g)" /config/.signalk/"$file"
+        chmod 600 /config/.signalk/"$file"
     fi
 done
 
