@@ -1,3 +1,4 @@
+- New config logic, files migrated to /addon_configs/xxx-sabnzbd
 
 ## 4.4.1 (21-12-2024)
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)

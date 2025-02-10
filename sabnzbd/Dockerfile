@@ -29,7 +29,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-ARG CONFIGLOCATION="/config/addons_config/sabnzbd"
+ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 ##################

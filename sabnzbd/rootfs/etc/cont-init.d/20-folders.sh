@@ -4,17 +4,15 @@ set -e
 
 slug=sabnzbd
 
-if [ ! -d /config/addons_config/$slug ]; then
-
-    if [ -d /config/$slug ]; then
-        echo "Moving to new location /config/addons_config/$slug"
-        mkdir -p /config/addons_config/$slug
-        chmod 777 /config/addons_config/$slug
-        mv /config/$slug/* /config/addons_config/$slug/
-        rm -r /config/$slug
-    fi
-
-    echo "Creating /config/addons_config/$slug"
-    mkdir -p /config/addons_config/$slug
-    chmod 777 /config/addons_config/$slug
+if [ -d "/homeassistant/addons_config/$slug" ]; then
+    echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
+    cp -rnf /homeassistant/addons_config/"$slug"/* /config/
+    mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi
+
+if [ -f "/homeassistant/addons_autoscripts/$slug.sh" ]; then
+    bashio::log.warning "Migrating autoscript"
+    mv /homeassistant/addons_autoscripts/$slug.sh /config/
+fi
+
+chmod 777 /config/*

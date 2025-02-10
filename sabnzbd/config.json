@@ -72,7 +72,8 @@
   "ingress_entry": "sabnzbd",
   "init": false,
   "map": [
-    "config:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "media:rw"
   ],
@@ -106,6 +107,6 @@
   "slug": "sabnzbd",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.4.1",
+  "version": "4.4.1-2",
   "webui": "http://[HOST]:[PORT:8080]"
 }
