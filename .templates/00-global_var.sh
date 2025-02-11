@@ -2,6 +2,11 @@
 # shellcheck shell=bash
 set -e
 
+if ! bashio::supervisor.ping 2>/dev/null; then
+    bashio::log.blue "Please use ENV variables to define variables"
+    exit 0
+fi
+
 ###################################
 # Export all addon options as env #
 ###################################
