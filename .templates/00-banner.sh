@@ -4,12 +4,17 @@ set -e
 # ==============================================================================
 # Displays a simple add-on banner on startup
 # ==============================================================================
+
 if ! bashio::supervisor.ping 2>/dev/null; then
+    # Degraded mode if no homeassistant
     bashio::log.blue \
         '-----------------------------------------------------------'
     bashio::log.blue " Starting addon without HA support"
     bashio::log.blue \
         '-----------------------------------------------------------'
+    # Fake options.json
+    mkdir -p /data
+    touch /data/option.json
     exit 0
 fi
 
