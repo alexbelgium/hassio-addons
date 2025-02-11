@@ -8,6 +8,7 @@ set -e
 
 # Exit if /config is not mounted or HA not used
 if [ ! -d /config ] || ! bashio::supervisor.ping 2>/dev/null; then
+    echo "..."
     exit 0
 fi
 
