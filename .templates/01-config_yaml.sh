@@ -9,6 +9,7 @@ set -e
 
 # Disable if config not present
 if [ ! -d /config ] || ! bashio::supervisor.ping 2>/dev/null; then
+    echo "..."
     exit 0
 fi
 
