@@ -6,8 +6,8 @@ set -e
 # INITIALIZATION #
 ##################
 
-# Exit if /config is not mounted
-if [ ! -d /config ]; then
+# Exit if /config is not mounted or HA not used
+if [ ! -d /config ] || ! bashio::supervisor.ping 2>/dev/null; then
     exit 0
 fi
 
