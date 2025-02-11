@@ -10,6 +10,7 @@ if ! bashio::supervisor.ping 2>/dev/null; then
     bashio::log.blue " Starting addon without HA support"
     bashio::log.blue \
         '-----------------------------------------------------------'
+    exit 0
 fi
 
 bashio::log.blue \
