@@ -76,4 +76,4 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
 fi
 
 # Clean bashrc file safely
-if [ -f ~/.bashrc ]; then > ~/.bashrc; fi
+if [ -f ~/.bashrc ]; then : > ~/.bashrc; fi
