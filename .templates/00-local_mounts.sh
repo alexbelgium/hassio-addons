@@ -3,7 +3,7 @@
 set -e
 
 if ! bashio::supervisor.ping 2>/dev/null; then
-    bashio::log.blue "Disabled : please use another method"
+    echo "..."
     exit 0
 fi
 
