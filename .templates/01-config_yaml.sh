@@ -7,12 +7,8 @@ set -e
 # INITIALIZATION #
 ##################
 
-if ! bashio::supervisor.ping 2>/dev/null; then
-    exit 0
-fi
-
-# Exit if /config is not mounted
-if [ ! -d /config ]; then
+# Disable if config not present
+if [ ! -d /config ] || ! bashio::supervisor.ping 2>/dev/null; then
     exit 0
 fi
 
