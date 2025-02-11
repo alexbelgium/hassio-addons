@@ -3,7 +3,7 @@
 set -e
 
 if ! bashio::supervisor.ping 2>/dev/null; then
-    bashio::log.blue "Please use ENV variables to define variables"
+    echo "..."
     exit 0
 fi
 
