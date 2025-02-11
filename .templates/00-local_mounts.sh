@@ -2,6 +2,11 @@
 # shellcheck shell=bash
 set -e
 
+if ! bashio::supervisor.ping 2>/dev/null; then
+    bashio::log.blue "Disabled : please use another method"
+    exit 0
+fi
+
 ######################
 # MOUNT LOCAL SHARES #
 ######################
