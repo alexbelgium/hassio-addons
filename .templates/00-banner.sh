@@ -9,7 +9,8 @@ if ! bashio::supervisor.ping 2>/dev/null; then
     # Degraded mode if no homeassistant
     bashio::log.blue \
         '-----------------------------------------------------------'
-    bashio::log.blue " Starting addon without HA support"
+    bashio::log.blue "Starting addon without HA support"
+    bashio::log.blue "Please use Docker Compose for env variables"
     bashio::log.blue \
         '-----------------------------------------------------------'
     # Fake options.json
