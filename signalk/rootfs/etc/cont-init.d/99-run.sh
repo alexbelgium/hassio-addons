@@ -16,6 +16,7 @@ if [ -d "/home/node/.signalk" ]; then
 fi
 ln -sf /config "/home/node/.signalk"
 chown -R "$USER:$USER" /config
+chown -R "$USER:$USER" "/home/node"
 chown -R "$USER:$USER" "/home/node/.signalk"
 
 # Option 1 : define permissions for /dev/ttyUSB
@@ -29,14 +30,13 @@ for device in /dev/ttyUSB /dev/ttyUSB0 /dev/ttyUSB1; do
             echo "User 'node' is already in group 'root'."
         fi
     fi
-done
+done || true
 
 
 # Option 2 : set single user for SSL files
 for file in ssl-key.pem ssl-cert.pem; do
-    if [ -e "/config/.signalk/$file" ]; then
-        chown "$USER:$USER" "/config/.signalk/$file"
-        chmod 600 "/config/.signalk/$file"
+    if [ -e "/home/node/.signalk/$file" ]; then
+        chmod 600 "/home/node/.signalk/$file"
     fi
 done
 
