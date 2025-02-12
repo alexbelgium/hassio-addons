@@ -16,23 +16,17 @@ if bashio::config.true "RUN_AS_ROOT"; then
     ln -sf /config "/root/.signalk"
     ln -sf /usr/lib/node_modules/signalk-server /root/signalk
 fi
+echo "... creating symlinks and checking permissions"
 ln -sf /config "/home/node/.signalk"
 chown -R "$USER:$USER" /config
 
-# Option 1 : define permissions for /dev/ttyUSB
-for device in /dev/ttyUSB /dev/ttyUSB0 /dev/ttyUSB1; do
-    if [ -e "$device" ]; then
-        # Check if 'node' is already in the 'root' group before modifying
-        if ! groups node | grep -q '\broot\b'; then
-            sudo usermod -a -G root node || true
-            echo "User 'node' added to group 'root'."
-        else
-            echo "User 'node' is already in group 'root'."
-        fi
-    fi
-done || true
+# Set permissions
+echo "... setting permissions for node user"
+usermod -o -u 0 node
+groupmod -o -g 0 node
 
-# Option 2 : set single user for SSL files
+# Ensure 600 for SSL files
+echo "... specifying security files permissions"
 for file in ssl-key.pem ssl-cert.pem security.json; do
     if [ -e "/config/$file" ]; then
         chmod 600 "/config/$file"
