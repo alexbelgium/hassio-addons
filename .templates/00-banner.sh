@@ -22,6 +22,7 @@ if ! bashio::supervisor.ping 2>/dev/null; then
                -e 's/bashio::services[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/\${\1}/g' \
                -e 's/bashio::addon.ingress_port/\${INGRESS_PORT}/g' \
                -e 's/bashio::addon.ip_address/\${IP_ADDRESS}/g' \
+               -e '/bashio::config.require.ssl/d' \
                -e 's/bashio::addon.ingress_entry/\${INGRESS_ENTRY}/g' "$scripts" || true
     done
     exit 0
