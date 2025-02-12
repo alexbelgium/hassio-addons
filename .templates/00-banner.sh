@@ -15,7 +15,13 @@ if ! bashio::supervisor.ping 2>/dev/null; then
         '-----------------------------------------------------------'
     # Use environment variables instead of addon options
     echo "... convert scripts to use environment variables instead of addon options"
-    sed -i -e 's/bashio::config.has_value[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z \${\1+x} ]/g' -e 's/bashio::config[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/\${\1}/g' /etc/cont-init.d/*
+    for scripts in /etc/cont-init.d/*; do
+        sed -i -e 's/bashio::config.has_value[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z \${\1+x} ]/g' \
+               -e 's/bashio::config[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/\${\1}/g' \
+               -e 's/bashio::addon.port[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/\${\1}/g' \
+               -e 's/bashio::services[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/\${\1}/g' \
+               -e 's/bashio::addon.ip_address/\${IP_ADDRESS}/g' "$scripts" || true
+    done
     # Fake options.json
     echo "... create empty /data/options.json for bashio compatibility"
     mkdir -p /data
