@@ -13,7 +13,11 @@ if ! bashio::supervisor.ping 2>/dev/null; then
     bashio::log.blue "Please use Docker Compose for env variables"
     bashio::log.blue \
         '-----------------------------------------------------------'
+    # Use environment variables instead of addon options
+    echo "... convert scripts to use environment variables instead of addon options"
+    sed -i -e 's/bashio::config.has_value[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z \${\1+x} ]/g' -e 's/bashio::config[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/\${\1}/g' /etc/cont-init.d/*
     # Fake options.json
+    echo "... create empty /data/options.json for bashio compatibility"
     mkdir -p /data
     touch /data/option.json
     exit 0
