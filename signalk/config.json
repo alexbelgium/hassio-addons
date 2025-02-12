@@ -41,7 +41,7 @@
     "1458/udp": "Custom 1",
     "1459/tcp": "Custom 2",
     "1460/udp": "Custom 3",
-    "3000/tcp": "web interface",
+    "3000/tcp": "Web interface",
     "3443/tcp": "ssl web interface",
     "8375/tcp": "TCPSTREAM port"
   },
