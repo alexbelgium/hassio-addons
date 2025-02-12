@@ -50,7 +50,7 @@
     "SYS_RAWIO"
   ],
   "schema": {
-    "RUN_AS": "str?"
+    "RUN_AS_ROOT": "bool?"
   },
   "slug": "signalk",
   "uart": true,
