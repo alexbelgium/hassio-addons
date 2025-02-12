@@ -22,10 +22,6 @@ if ! bashio::supervisor.ping 2>/dev/null; then
                -e 's/bashio::services[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/\${\1}/g' \
                -e 's/bashio::addon.ip_address/\${IP_ADDRESS}/g' "$scripts" || true
     done
-    # Fake options.json
-    echo "... create empty /data/options.json for bashio compatibility"
-    mkdir -p /data
-    touch /data/option.json
     exit 0
 fi
 
