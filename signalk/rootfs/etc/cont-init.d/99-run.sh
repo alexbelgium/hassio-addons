@@ -5,8 +5,8 @@ set -e
 
 # Variables
 USER=node
-if bashio::config_has.value "RUN_AS"; then
-    USER="$(bashio::config "RUN_AS")"
+if bashio::config.true "RUN_AS_ROOT"; then
+    USER="root"
     bashio::log.warning "RUN_AS is set, app will run as $USER"
 fi
 
