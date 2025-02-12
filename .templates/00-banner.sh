@@ -16,15 +16,14 @@ if ! bashio::supervisor.ping 2>/dev/null; then
     # Use environment variables instead of addon options
     echo "... convert scripts to use environment variables instead of addon options"
     for scripts in /etc/cont-init.d/*; do
-        sed -i -e 's/bashio::config.has_value[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z \${\1+x} ]/g' \
-               -e 's/bashio::config[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/\${\1}/g' \
-               -e 's/bashio::addon.port[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/echo \1/g' \
-               -e 's/bashio::services[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/\${\1}/g' \
-               -e 's/bashio::addon.ingress_port/\${INGRESS_PORT}/g' \
-               -e 's/bashio::addon.ip_address/\${IP_ADDRESS}/g' \
-               -e '/bashio::config.require.ssl/d' \
-               -e 's|set -e|set +e|g' \
-               -e 's/bashio::addon.ingress_entry/\${INGRESS_ENTRY}/g' "$scripts" || true
+        sed -i -e 's/bashio::config.has_value[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z "$\1" ]/g' \
+            -e 's/bashio::config.true[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z "$\1" ] \&\& [ "$\1" = "true" ]/g' \
+            -e 's/\$(bashio::config[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"'])/$\1/g' \
+            -e 's/\$(bashio::addon.port[[:space:]]*["'"'"']\([0-9]*\)["'"'"'])/\1/g' \
+            -e 's/bashio::config.require.ssl/true/g' \
+            -e 's/\$(bashio::addon.ingress_port)/""/g' \
+            -e 's/\$(bashio::addon.ip_address)/""/g' \
+            -e '/^[[:space:]]*set -e[[:space:]]*$/d' "$scripts" || true
     done
     exit 0
 fi
