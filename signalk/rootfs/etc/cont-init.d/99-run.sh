@@ -12,17 +12,12 @@ fi
 USER=node
 if bashio::config.true "RUN_AS_ROOT"; then
     USER="root"
-    HOMEDIR="/root"
     bashio::log.warning "RUN_AS is set, app will run as $USER"
     ln -sf /config "/root/.signalk"
-else
-    HOMEDIR="/home/node"
-    ln -sf /config "/home/node/.signalk"
+    ln -sf /usr/lib/node_modules/signalk-server /root/signalk
 fi
+ln -sf /config "/home/node/.signalk"
 chown -R "$USER:$USER" /config
-ln -sf /config "$HOMEDIR/.signalk"
-chown -R "$USER:$USER" "$HOMEDIR"
-chown -R "$USER:$USER" "$HOMEDIR/.signalk"
 
 # Option 1 : define permissions for /dev/ttyUSB
 for device in /dev/ttyUSB /dev/ttyUSB0 /dev/ttyUSB1; do
@@ -36,7 +31,6 @@ for device in /dev/ttyUSB /dev/ttyUSB0 /dev/ttyUSB1; do
         fi
     fi
 done || true
-
 
 # Option 2 : set single user for SSL files
 for file in ssl-key.pem ssl-cert.pem security.json; do
