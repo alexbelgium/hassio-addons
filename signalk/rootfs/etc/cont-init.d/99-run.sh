@@ -3,21 +3,26 @@
 set -e
 # hadolint ignore=SC2155
 
-# Variables
-USER=node
-if bashio::config.true "RUN_AS_ROOT"; then
-    USER="root"
-    bashio::log.warning "RUN_AS is set, app will run as $USER"
-fi
-
 # Set configuration directory
 if [ -d "/home/node/.signalk" ]; then
     rm -r "/home/node/.signalk"
 fi
-ln -sf /config "/home/node/.signalk"
+
+# Variables
+USER=node
+if bashio::config.true "RUN_AS_ROOT"; then
+    USER="root"
+    HOMEDIR="/root"
+    bashio::log.warning "RUN_AS is set, app will run as $USER"
+    ln -sf /config "/root/.signalk"
+else
+    HOMEDIR="/home/node"
+    ln -sf /config "/home/node/.signalk"
+fi
 chown -R "$USER:$USER" /config
-chown -R "$USER:$USER" "/home/node"
-chown -R "$USER:$USER" "/home/node/.signalk"
+ln -sf /config "$HOMEDIR/.signalk"
+chown -R "$USER:$USER" "$HOMEDIR"
+chown -R "$USER:$USER" "$HOMEDIR/.signalk"
 
 # Option 1 : define permissions for /dev/ttyUSB
 for device in /dev/ttyUSB /dev/ttyUSB0 /dev/ttyUSB1; do
@@ -34,12 +39,11 @@ done || true
 
 
 # Option 2 : set single user for SSL files
-for file in ssl-key.pem ssl-cert.pem; do
-    if [ -e "/home/node/.signalk/$file" ]; then
-        chmod 600 "/home/node/.signalk/$file"
+for file in ssl-key.pem ssl-cert.pem security.json; do
+    if [ -e "/config/$file" ]; then
+        chmod 600 "/config/$file"
     fi
 done
 
 bashio::log.info "Starting application"
-
 sudo -u "$USER" -s /bin/sh -c "/home/node/signalk/startup.sh"
