@@ -7,7 +7,9 @@ set -e
 ##############
 
 bashio::log.info "Setting password for the user pi"
-echo "pi:$(bashio::config "pi_password")" | chpasswd
+if bashio::config.has_value "pi_password"; then
+    echo "pi:$(bashio::config "pi_password")" | chpasswd
+fi
 bashio::log.info "Password set successfully for user pi."
 
 bashio::log.info "Setting timezone :"
