@@ -12,12 +12,12 @@ COPY rootfs /
 RUN \
     apk add --no-cache \
     coreutils=9.5-r2 \
-    openssl=3.3.2-r6 \
-    tor=0.4.8.14-r1 \
-    go=1.23.6-r0 \
-    git=2.47.2-r0 \
+    openssl=3.3.3-r0 \
+    tor=0.4.8.14-r0 \
+    go=1.22.10-r0 \
+    git=2.45.3-r0 \
     ca-certificates=20241121-r1 \
-    libcap=2.71-r0
+    libcap=2.70-r0
 
 # Download pluggable-transports sources
 WORKDIR /go
