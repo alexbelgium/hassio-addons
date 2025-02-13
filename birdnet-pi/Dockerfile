@@ -18,6 +18,8 @@ ARG BUILD_VERSION
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
+# Install locales
+RUN apt-get update && apt-get install -y locales && locale-gen en_US.UTF-8
 ENV DEBIAN_FRONTEND="noninteractive" \
     BIRDNET_USER="pi" \
     USER="pi" \
@@ -27,8 +29,11 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     XDG_RUNTIME_DIR="/run/user/1000" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3" \
     my_dir=/home/pi/BirdNET-Pi/scripts \
-    MPLCONFIGDIR="/tmp/.cache/matplotlib"
-
+    MPLCONFIGDIR="/tmp/.cache/matplotlib" \
+    LANG en_US.UTF-8 \
+    LANGUAGE en_US:en \
+    LC_ALL en_US.UTF-8
+    
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
