@@ -42,6 +42,10 @@ The installation of this add-on is pretty straightforward and not different in c
 
 You should follow to the initial guide for configuring base addon options. Here will described only extra options in comparisons with base:
 
+### Option: `http_tunnel`
+
+Setting this option to true opens port 9080 to listen for connections from HTTP-speaking applications. Enabling this feature allows you to use other applications on your network to use the Tor network via http proxy.
+
 ### Option: `bridges`
 
 > Ensure the option value is clear to avoid unintended use of transport plugins and bridges.
