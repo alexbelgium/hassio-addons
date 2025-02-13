@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/hassio-addons/base:16.2.0",
-    "amd64": "ghcr.io/hassio-addons/base:16.2.0",
-    "armv7": "ghcr.io/hassio-addons/base:16.2.0"
+    "aarch64": "ghcr.io/hassio-addons/base:17.1.4",
+    "amd64": "ghcr.io/hassio-addons/base:17.1.4",
+    "armv7": "ghcr.io/hassio-addons/base:17.1.4"
   },
   "codenotary": {
     "base_image": "codenotary@frenck.dev",
