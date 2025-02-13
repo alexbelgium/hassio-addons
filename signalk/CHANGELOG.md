@@ -1,3 +1,4 @@
+## 2.13.1-3 (13-02-2025)
 - Enable usage of serial by usb devices
 
 ## 2.13.1 (08-02-2025)
