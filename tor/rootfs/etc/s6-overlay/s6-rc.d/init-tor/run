@@ -91,7 +91,7 @@ fi
 
 # Configure Http tunnel port
 if bashio::config.true 'http_tunnel'; then
-    echo 'HTTPTunnelPort 9080' >> "${torrc}"
+    echo 'HTTPTunnelPort 0.0.0.0:9080' >> "${torrc}"
 fi
 
 # Configure hidden services
