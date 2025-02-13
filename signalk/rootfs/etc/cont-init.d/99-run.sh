@@ -10,12 +10,6 @@ fi
 
 # Variables
 USER=node
-if bashio::config.true "RUN_AS_ROOT"; then
-    USER="root"
-    bashio::log.warning "RUN_AS is set, app will run as $USER"
-    ln -sf /config "/root/.signalk"
-    ln -sf /usr/lib/node_modules/signalk-server /root/signalk
-fi
 echo "... creating symlinks and checking permissions"
 ln -sf /config "/home/node/.signalk"
 chown -R "$USER:$USER" /config
