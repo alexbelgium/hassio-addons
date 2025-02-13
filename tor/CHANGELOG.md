@@ -13,3 +13,12 @@
 ## 5.0.1-4 (14-08-2024)
 
 - Add execution permission for permission for /etc/s6-overlay/s6-overlay/s6-rc.d/init-tor/run file
+
+## 5.0.2-1 (13-02-2025)
+
+- HTTP tunneling
+
+## 5.0.2-2 (13-02-2025)
+
+- Fix snowflake build
+- Lint issues

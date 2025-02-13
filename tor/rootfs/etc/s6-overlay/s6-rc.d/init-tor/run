@@ -89,10 +89,15 @@ else
     echo 'SOCKSPort 127.0.0.1:9050' >> "${torrc}"
 fi
 
+# Configure Http tunnel port
+if bashio::config.true 'http_tunnel'; then
+    echo 'HTTPTunnelPort 9080' >> "${torrc}"
+fi
+
 # Configure hidden services
 if bashio::config.true 'hidden_services'; then
     echo "HiddenServiceDir ${hidden_service_dir}" >> "${torrc}"
-    
+
     for port in $(bashio::config 'ports'); do
         count=$(echo "${port}" | sed 's/[^:]//g'| awk '{ print length }')
         if [[ "${count}" == 0 ]]; then
@@ -134,13 +139,13 @@ then
 
     # Add client for OBFS transport
     echo "ClientTransportPlugin obfs2,obfs3,obfs4,scramblesuit exec /usr/local/bin/obfs4proxy managed" >> "${torrc}"
-    
+
     # Add client for Snowflake transport
     echo "ClientTransportPlugin snowflake exec /usr/local/bin/snowflake" >> "${torrc}"
 
     # Add client for WebTunnel transport
     echo "ClientTransportPlugin webtunnel exec /usr/local/bin/webtunnel" >> "${torrc}"
-    
+
     # Add bridges
     while read -r bridge; do
         bashio::log.info "Bridge ${bridge}"
@@ -178,7 +183,7 @@ then
     while read -r clientname; do
         # Generate key is they do not exist yet
         if ! bashio::fs.file_exists "${authorized_clients_dir}/${clientname}.auth"
-        then 
+        then
             key=$(openssl genpkey -algorithm x25519)
 
             private_key=$(
@@ -226,7 +231,7 @@ then
             bashio::log.red "Private key:"
             bashio::log.red "${private_key}"
             bashio::log.red
-            bashio::log.red 
+            bashio::log.red
         else
             bashio::log.info "Keys for ${clientname} already exists; skipping..."
         fi
