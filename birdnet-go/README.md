@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 Birdnet-Go title (opened 2025-02-11)](https://github.com/alexbelgium/hassio-addons/issues/1763) by [@WvanWaas](https://github.com/WvanWaas)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
