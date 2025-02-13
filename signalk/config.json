@@ -49,14 +49,11 @@
     "SYS_ADMIN",
     "SYS_RAWIO"
   ],
-  "schema": {
-    "RUN_AS_ROOT": "bool?"
-  },
   "slug": "signalk",
   "uart": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "2.13.1-2_test4",
+  "version": "2.13.1-3",
   "webui": "http://[HOST]:[PORT:3000]"
 }
