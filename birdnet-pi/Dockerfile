@@ -30,9 +30,9 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3" \
     my_dir=/home/pi/BirdNET-Pi/scripts \
     MPLCONFIGDIR="/tmp/.cache/matplotlib" \
-    LANG en_US.UTF-8 \
-    LANGUAGE en_US:en \
-    LC_ALL en_US.UTF-8
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
     
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
