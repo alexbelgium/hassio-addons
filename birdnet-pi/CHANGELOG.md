@@ -1,3 +1,5 @@
+- Allow usage as a standalone container (thanks @gotschi) https://github.com/mcguirepr89/BirdNET-Pi/issues/211#issuecomment-2650095952
+
 ## 2025.02.02 (07-02-2025)
 - Fix audio not playing in microsoft edge
 
