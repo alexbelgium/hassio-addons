@@ -21,3 +21,4 @@
 ## 5.0.2-2 (13-02-2025)
 
 - Fix snowflake build
+- Lint issues
