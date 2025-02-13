@@ -17,3 +17,7 @@
 ## 5.0.2-1 (13-02-2025)
 
 - HTTP tunneling
+
+## 5.0.2-2 (13-02-2025)
+
+- Fix snowflake build

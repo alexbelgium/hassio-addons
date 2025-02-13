@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:17.1.4
+ARG BUILD_FROM
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -35,11 +35,11 @@ RUN go build -o /usr/local/bin/obfs4proxy ./obfs4proxy
 # Build snowflake
 WORKDIR /go/snowflake/client
 RUN go get \
-    && go build -o /usr/local/bin/snowflake
+    && go build -ldflags '-extldflags "-static" -w -s' -o /usr/local/bin/snowflake
 
 # Build webtunnel
 WORKDIR /go/webtunnel/main/client
-RUN git reset --hard ${WEBTUNNEL_VERSION} \
+RUN go get \
     && go build -ldflags="-s -w" -o /usr/local/bin/webtunnel
 
 # Clean up after build
