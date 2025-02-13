@@ -22,3 +22,7 @@
 
 - Fix snowflake build
 - Lint issues
+
+## 5.0.2-3 (13-02-2025)
+
+- Fix network for http tunel
