@@ -1,3 +1,4 @@
+## 2025.02.14 (14-02-2025)
 - Allow usage as a standalone container (thanks @gotschi) https://github.com/mcguirepr89/BirdNET-Pi/issues/211#issuecomment-2650095952
 - Corrected a bug preventing to create db
 
