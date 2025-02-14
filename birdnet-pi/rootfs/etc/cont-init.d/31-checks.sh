@@ -60,5 +60,5 @@ sed -i "/update_caddyfile/c echo \"yes\"" "$HOME"/BirdNET-Pi/scripts/update_bird
 # Execute update_birdnet_snippets
 export RECS_DIR="$HOME/BirdSongs"
 export EXTRACTED="$HOME/BirdSongs/Extracted"
-chmod +777 "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+chmod +x "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
