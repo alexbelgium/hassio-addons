@@ -34,3 +34,7 @@
 ## 5.0.2-5 (13-02-2025)
 
 - Init build procedure
+
+## 5.0.2-6 (13-02-2025)
+
+- Remove excess depents

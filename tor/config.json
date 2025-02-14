@@ -51,5 +51,5 @@
   "slug": "tor",
   "startup": "services",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.0.2-5"
+  "version": "5.0.2-6"
 }
