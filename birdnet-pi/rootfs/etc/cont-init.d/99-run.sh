@@ -54,7 +54,7 @@ chmod +x "$HOME/BirdNET-Pi/scripts/restart_services.sh" >/dev/null
 "$HOME/BirdNET-Pi/scripts/restart_services.sh" >/dev/null
 
 # Start livestream services if enabled in configuration
-if bashio::config.true LIVESTREAM_BOOT_ENABLED; then
+if bashio::config.true "LIVESTREAM_BOOT_ENABLED"; then
     echo "... starting livestream services"
     systemctl enable icecast2 >/dev/null
     systemctl start icecast2.service >/dev/null
