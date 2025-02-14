@@ -96,6 +96,9 @@ sed -i -e '/<option disabled selected>/s/selected//' \
 
 # Correct language labels according to birdnet.conf
 echo "... adapting labels according to birdnet.conf"
-export "$(grep "^DATABASE_LANG" /config/birdnet.conf)" || bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
-bashio::log.info "Setting language to ${DATABASE_LANG:-eng}"
-"$HOME/BirdNET-Pi/scripts/install_language_label_nm.sh" -l "$DATABASE_LANG" &>/dev/null || bashio::log.warning "Failed to update language labels"
+if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
+    bashio::log.info "Setting language to ${DATABASE_LANG:-en}"
+else
+    bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
+fi
+"$HOME/BirdNET-Pi/scripts/install_language_label_nm.sh" -l "${DATABASE_LANG:-}" &>/dev/null || bashio::log.warning "Failed to update language labels"
