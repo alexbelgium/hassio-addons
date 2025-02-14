@@ -56,7 +56,7 @@ cp "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/birdnet.bak"
 
 # Create default birdnet.conf if not existing
 if [ ! -f /config/birdnet.conf ]; then
-    cp -rf "$HOME/BirdNET-Pi/birdnet.conf" /config/
+    cp -f "$HOME/BirdNET-Pi/birdnet.conf" /config/
 fi
 
 # Create default birds.db
