@@ -68,7 +68,7 @@ fi
 
 # Symlink configuration files
 echo "... creating symlinks for configuration files"
-CONFIG_FILES=("/etc/birdnet/birdnet.conf" "$HOME/BirdNET-Pi/scripts/whitelist_species_list.txt" "$HOME/BirdNET-Pi/blacklisted_images.txt" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/BirdDB.txt" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt" "$HOME/BirdNET-Pi/scripts/confirmed_species_list.txt")
+CONFIG_FILES=("$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/whitelist_species_list.txt" "$HOME/BirdNET-Pi/blacklisted_images.txt" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/BirdDB.txt" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt" "$HOME/BirdNET-Pi/scripts/confirmed_species_list.txt")
 
 for file in "${CONFIG_FILES[@]}"; do
     filename="${file##*/}"
