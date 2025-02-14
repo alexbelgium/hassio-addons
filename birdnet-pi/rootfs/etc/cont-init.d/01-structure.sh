@@ -54,6 +54,11 @@ chmod -R 755 /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 # Backup default birdnet.conf for sanity check
 cp "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/birdnet.bak"
 
+# Create default birdnet.conf if not existing
+if [ ! -f /config/birdnet.conf ]; then
+    cp -rf "$HOME/BirdNET-Pi/birdnet.conf" /config/
+fi
+
 # Create default birds.db
 if [ ! -f /config/birds.db ]; then
     echo "... creating initial db"
