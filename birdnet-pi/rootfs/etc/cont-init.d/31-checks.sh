@@ -58,5 +58,6 @@ sed -i "s|/etc/birdnet/birdnet.conf|/config/birdnet.conf|g" "$HOME"/BirdNET-Pi/s
 sed -i "/update_caddyfile/c echo \"yes\"" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Avoid systemctl
 
 # Execute update_birdnet_snippets
+export RECS_DIR="$HOME/BirdSongs"
 chmod +777 "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
