@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv bashio
-# shellcheck shell=bash ignore=SC2016
+# shellcheck shell=bash disable=SC2016
 set -e
 # ==============================================================================
 # Displays a simple add-on banner on startup
@@ -22,7 +22,7 @@ if ! bashio::supervisor.ping 2>/dev/null; then
             -e 's/\$(bashio::addon.port[[:space:]]*["'"'"']\([0-9]*\)["'"'"'])/${\1:-}/g' \
             -e 's/bashio::config.require.ssl/true/g' \
             -e 's/\$(bashio::addon.ingress_port)/""/g' \
-            -e 's/\$(bashio::addon.ip_address)/""/g' || true
+            -e 's/\$(bashio::addon.ip_address)/""/g' "$scripts"
     done
     exit 0
 fi
