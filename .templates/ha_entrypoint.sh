@@ -84,7 +84,9 @@ if [ "$$" -eq 1 ]; then
         exit 0
     }
     trap terminate SIGTERM
-    while :; do sleep infinity & wait $!; done
+    while :; do
+        sleep 1
+    done
 else
     echo " "
     echo -e "\033[0;32mStarting the upstream container\033[0m"
