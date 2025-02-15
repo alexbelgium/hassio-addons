@@ -58,11 +58,29 @@ fi
 ###############################
 
 bashio::log.info "Waiting for PostgreSQL to start..."
+
+# Set PostgreSQL connection variables
+DB_PORT=5432
+DB_HOSTNAME=localhost
+DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
+DB_USERNAME=postgres
+if bashio::config.has_value "POSTGRES_USER"; then
+    DB_USERNAME="$(bashio::config "POSTGRES_USER")"
+fi
+export DB_PORT DB_HOSTNAME DB_USERNAME DB_PASSWORD
+
 ( bashio::net.wait_for 5432 localhost 900
+
+until pg_isready -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" >/dev/null 2>&1; do
+    echo "PostgreSQL is starting up..."
+    sleep 2
+done
 
 ###############################
 # PostgreSQL Major Version Upgrade #
 ###############################
+
+update_postgres() {
 
 # Read the previous PostgreSQL version from file
 OLD_PG_VERSION=$(cat "$PG_VERSION_FILE" 2>/dev/null || echo "$PG_MAJOR_VERSION")
@@ -113,20 +131,11 @@ if [ "$OLD_PG_VERSION" != "$PG_MAJOR_VERSION" ]; then
     # Store the new PostgreSQL version
     echo "$PG_MAJOR_VERSION" > "$PG_VERSION_FILE"
 fi
+}
 
 #####################################
 # Enable & Upgrade pgvector.rs      #
 #####################################
-
-# Set PostgreSQL connection variables
-DB_PORT=5432
-DB_HOSTNAME=localhost
-DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
-DB_USERNAME=postgres
-if bashio::config.has_value "POSTGRES_USER"; then
-    DB_USERNAME="$(bashio::config "POSTGRES_USER")"
-fi
-export DB_PORT DB_HOSTNAME DB_USERNAME DB_PASSWORD
 
 # Function: Check if 'vectors' extension is enabled
 check_vector_extension() {
@@ -203,7 +212,8 @@ troubleshoot_vector_extension() {
 # Main Extension Handling         #
 ###################################
 
-sleep 10
+# Store previous vector version
+update_postgres
 
 if ! check_vector_extension; then
     enable_vector_extension
