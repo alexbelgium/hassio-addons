@@ -1,3 +1,6 @@
+
+## v24.5-ls181 (15-02-2025)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
 ## v24.5-ls180-3 (10-02-2025)
 - New config logic, files migrated to /addon_configs/xxx-nzbget
 
