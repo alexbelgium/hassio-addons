@@ -1,3 +1,6 @@
+
+## 20250126 (15-02-2025)
+- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 ## 0.6.0-nightly-20250124 (25-01-2025)
 - Minor bugs fixed
 ## 0.6.0-4 (21-01-2025)
