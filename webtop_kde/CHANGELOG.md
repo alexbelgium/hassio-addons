@@ -1,4 +1,7 @@
 
+## 4.16-r0-ls94 (15-02-2025)
+- Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
+
 ## 4.16-r0-ls92 (08-02-2025)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 ## 4.16-r0-ls94-9 (29-01-2025)
