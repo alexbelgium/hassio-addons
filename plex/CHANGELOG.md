@@ -1,4 +1,7 @@
 
+## 1.41.4.9463-630c9f557-ls255 (15-02-2025)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
+
 ## 1.41.3.9314-a0bfb8370-ls253 (08-02-2025)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 
