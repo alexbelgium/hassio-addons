@@ -1,3 +1,6 @@
+
+## 2.13.2 (15-02-2025)
+- Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
 ## 2.13.1-3 (13-02-2025)
 - Enable usage of serial by usb devices
 
