@@ -40,9 +40,9 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s/(.*\s|^)exit ([0-9]+)/\1 return \2 || exit \2/g" "$SCRIPTS"
         sed -i "s/bashio::exit.nok/return 1/g" "$SCRIPTS"
         sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
-        source "$SCRIPTS" || { echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"; exit $?; }
+        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     else
-        "$SCRIPTS" || { echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"; exit $?; }
+        "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
     fi
 
     # Cleanup
@@ -83,10 +83,8 @@ if [ "$$" -eq 1 ]; then
         echo "All subprocesses terminated. Exiting."
         exit 0
     }
-    trap terminate SIGTERM
-    while :; do
-        sleep 1
-    done
+    trap terminate SIGTERM SIGINT
+    while :; do sleep infinity & wait $!; done
 else
     echo " "
     echo -e "\033[0;32mStarting the upstream container\033[0m"
