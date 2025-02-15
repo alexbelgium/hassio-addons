@@ -3,6 +3,7 @@
 - SECURITY FIX : avoid hardcoding the postgres root password and change it if was already applied
 - Ensure host is reachable before starting
 - Autocorrect homeassistant.local to local ip
+- Align configuration with /addon_configs
 
 ## 1.126.1 (15-02-2025)
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)

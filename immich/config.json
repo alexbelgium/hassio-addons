@@ -85,10 +85,10 @@
   "image": "ghcr.io/alexbelgium/immich-{arch}",
   "init": false,
   "map": [
-    "media:rw",
-    "config:rw",
-    "addons:rw",
+    "addon_config:rw",
     "backup:rw",
+    "homeassistant_config:rw",
+    "media:rw",
     "share:rw",
     "ssl:rw"
   ],
@@ -141,6 +141,6 @@
   "slug": "immich",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.126.1-3",
+  "version": "1.126.1-4",
   "webui": "http://[HOST]:[PORT:8080]"
 }
