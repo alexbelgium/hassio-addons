@@ -56,7 +56,8 @@ for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.
 done
 
 #  Change user home
-usermod --home "$LOCATION" abc
+sed -i "s|^\(abc:[^:]*:[^:]*:[^:]*:[^:]*:\)[^:]*|\1$LOCATION|" /etc/passwd
+#usermod --home "$LOCATION" abc || true
 
 # Add environment variables
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
