@@ -20,8 +20,6 @@ if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
     # Default location
     LOCATION="/config/data_kde"
 else
-    bashio::log.warning "Warning : a custom data location was selected, but the previous folder will NOT be copied. You need to do it manually"
-
     # Check if config is located in an acceptable location
     LOCATIONOK=""
     for location in "/share" "/config" "/data" "/mnt"; do
@@ -34,7 +32,6 @@ else
         LOCATION="/config/data_kde"
         bashio::log.fatal "Your data_location value can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $LOCATION"
     fi
-
 fi
 
 # Set data location
