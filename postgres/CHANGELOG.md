@@ -1,4 +1,3 @@
-## 15.7-23 (15-02-2025)
 - Major update, please backup first
 - Automatic handling of upgrades
 - Restore clean shutdown

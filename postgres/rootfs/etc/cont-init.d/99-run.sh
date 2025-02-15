@@ -147,6 +147,7 @@ check_vector_extension() {
 enable_vector_extension() {
     bashio::log.info "Enabling 'vectors' extension..."
     psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -c "DROP EXTENSION IF EXISTS vectors; CREATE EXTENSION vectors;" >/dev/null 2>&1
+    psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -c "ALTER EXTENSION vectors UPDATE; SELECT pgvectors_upgrade();" >/dev/null 2>&1
 }
 
 # Function: Store the current pgvector.rs version in a file
