@@ -203,6 +203,8 @@ troubleshoot_vector_extension() {
 # Main Extension Handling         #
 ###################################
 
+sleep 10
+
 if ! check_vector_extension; then
     enable_vector_extension
 fi
