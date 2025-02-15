@@ -87,7 +87,7 @@ setup_root_user() {
     else
         bashio::log.warning "DB_ROOT_PASSWORD not set. Generating a random 12-character alphanumeric password and storing it in the addon options."
         export DB_ROOT_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c12)"
-        bashio::config "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
+         bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
 
         # Store generated password in the s6 environment if available
         if [ -d /var/run/s6/container_environment ]; then
