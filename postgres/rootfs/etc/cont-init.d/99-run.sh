@@ -59,6 +59,8 @@ fi
 
 bashio::log.info "Waiting for PostgreSQL to start..."
 
+( bashio::net.wait_for 5432 localhost 900
+
 # Set PostgreSQL connection variables
 DB_PORT=5432
 DB_HOSTNAME=localhost
@@ -68,8 +70,6 @@ if bashio::config.has_value "POSTGRES_USER"; then
     DB_USERNAME="$(bashio::config "POSTGRES_USER")"
 fi
 export DB_PORT DB_HOSTNAME DB_USERNAME DB_PASSWORD
-
-( bashio::net.wait_for 5432 localhost 900
 
 until pg_isready -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" >/dev/null 2>&1; do
     echo "PostgreSQL is starting up..."
@@ -81,56 +81,55 @@ done
 ###############################
 
 update_postgres() {
+    # Read the previous PostgreSQL version from file
+    OLD_PG_VERSION=$(cat "$PG_VERSION_FILE" 2>/dev/null || echo "$PG_MAJOR_VERSION")
 
-# Read the previous PostgreSQL version from file
-OLD_PG_VERSION=$(cat "$PG_VERSION_FILE" 2>/dev/null || echo "$PG_MAJOR_VERSION")
+    if [ "$OLD_PG_VERSION" != "$PG_MAJOR_VERSION" ]; then
+        bashio::log.warning "PostgreSQL major version changed ($OLD_PG_VERSION → $PG_MAJOR_VERSION). Running upgrade..."
 
-if [ "$OLD_PG_VERSION" != "$PG_MAJOR_VERSION" ]; then
-    bashio::log.warning "PostgreSQL major version changed ($OLD_PG_VERSION → $PG_MAJOR_VERSION). Running upgrade..."
+        OLD_BIN_DIR="/usr/lib/postgresql/$OLD_PG_VERSION/bin"
+        NEW_BIN_DIR="/usr/lib/postgresql/$PG_MAJOR_VERSION/bin"
 
-    OLD_BIN_DIR="/usr/lib/postgresql/$OLD_PG_VERSION/bin"
-    NEW_BIN_DIR="/usr/lib/postgresql/$PG_MAJOR_VERSION/bin"
+        # Check if the old PostgreSQL binaries exist
+        if [ ! -d "$OLD_BIN_DIR" ]; then
+            bashio::log.warning "Old PostgreSQL binaries ($OLD_PG_VERSION) not found! Downloading..."
 
-    # Check if the old PostgreSQL binaries exist
-    if [ ! -d "$OLD_BIN_DIR" ]; then
-        bashio::log.warning "Old PostgreSQL binaries ($OLD_PG_VERSION) not found! Downloading..."
+            # Determine the package URL (adjust this as needed for your PostgreSQL distribution)
+            PG_DOWNLOAD_URL="https://ftp.postgresql.org/pub/source/v$OLD_PG_VERSION/postgresql-$OLD_PG_VERSION.tar.gz"
 
-        # Determine the package URL (adjust this as needed for your PostgreSQL distribution)
-        PG_DOWNLOAD_URL="https://ftp.postgresql.org/pub/source/v$OLD_PG_VERSION/postgresql-$OLD_PG_VERSION.tar.gz"
+            # Create a temporary directory for the download
+            TMP_DIR=$(mktemp -d)
+            cd "$TMP_DIR" || exit 1
 
-        # Create a temporary directory for the download
-        TMP_DIR=$(mktemp -d)
-        cd "$TMP_DIR" || exit 1
+            # Download and extract PostgreSQL source
+            wget "$PG_DOWNLOAD_URL" -O postgresql.tar.gz
+            tar -xzf postgresql.tar.gz
 
-        # Download and extract PostgreSQL source
-        wget "$PG_DOWNLOAD_URL" -O postgresql.tar.gz
-        tar -xzf postgresql.tar.gz
+            # Build only the necessary binaries
+            cd "postgresql-$OLD_PG_VERSION" || exit 1
+            ./configure --prefix="$OLD_BIN_DIR"
+            make -j$(nproc)
+            make install
 
-        # Build only the necessary binaries
-        cd "postgresql-$OLD_PG_VERSION" || exit 1
-        ./configure --prefix="$OLD_BIN_DIR"
-        make -j$(nproc)
-        make install
+            # Clean up
+            cd /config || exit 1
+            rm -rf "$TMP_DIR"
+        fi
 
-        # Clean up
-        cd /config || exit 1
-        rm -rf "$TMP_DIR"
+        # Run pg_upgrade with the correct paths
+        pg_upgrade --old-datadir="$PGDATA" \
+                --new-datadir="$PGDATA-new" \
+                --old-bindir="$OLD_BIN_DIR" \
+                --new-bindir="$NEW_BIN_DIR"
+
+        # Replace old data directory with upgraded one
+        mv "$PGDATA" "$PGDATA-old"
+        mv "$PGDATA-new" "$PGDATA"
+        rm -rf "$PGDATA-old"
+
+        # Store the new PostgreSQL version
+        echo "$PG_MAJOR_VERSION" > "$PG_VERSION_FILE"
     fi
-
-    # Run pg_upgrade with the correct paths
-    pg_upgrade --old-datadir="$PGDATA" \
-               --new-datadir="$PGDATA-new" \
-               --old-bindir="$OLD_BIN_DIR" \
-               --new-bindir="$NEW_BIN_DIR"
-
-    # Replace old data directory with upgraded one
-    mv "$PGDATA" "$PGDATA-old"
-    mv "$PGDATA-new" "$PGDATA"
-    rm -rf "$PGDATA-old"
-
-    # Store the new PostgreSQL version
-    echo "$PG_MAJOR_VERSION" > "$PG_VERSION_FILE"
-fi
 }
 
 #####################################
