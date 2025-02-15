@@ -118,40 +118,37 @@ EOF
 setup_database() {
     bashio::log.info "Setting up external PostgreSQL database..."
 
-    # Ensure the user exists (or create/update if necessary)
-    if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}/postgres" -tAc \
-        "SELECT 1 FROM pg_roles WHERE rolname='${DB_USERNAME}';" | grep -q 1; then
-        bashio::log.info "User ${DB_USERNAME} does not exist. Creating it now..."
-        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
-CREATE USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${DB_PASSWORD}';
-EOF
-    else
-        bashio::log.info "User ${DB_USERNAME} already exists. Updating password..."
-        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
-ALTER USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${DB_PASSWORD}';
-EOF
-    fi
-
-    # Ensure the database exists (or create it if necessary)
+    # Create the database if it does not exist
     if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}/postgres" -tAc \
         "SELECT 1 FROM pg_database WHERE datname='${DB_DATABASE_NAME}';" | grep -q 1; then
-        bashio::log.info "Database ${DB_DATABASE_NAME} does not exist. Creating it now..."
+        bashio::log.info "Database does not exist. Creating it now..."
         psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
-CREATE DATABASE ${DB_DATABASE_NAME} OWNER ${DB_USERNAME};
+CREATE DATABASE ${DB_DATABASE_NAME};
 EOF
     else
-        bashio::log.info "Database ${DB_DATABASE_NAME} already exists. Ensuring proper permissions..."
+        bashio::log.info "Database ${DB_DATABASE_NAME} already exists. Ensuring it is configured correctly."
     fi
 
-    # Ensure the user has the correct privileges
+    # Ensure the user exists and update its password
     psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
-GRANT ALL PRIVILEGES ON DATABASE ${DB_DATABASE_NAME} TO ${DB_USERNAME};
-ALTER DATABASE ${DB_DATABASE_NAME} OWNER TO ${DB_USERNAME};
+DO \$\$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '${DB_USERNAME}') THEN
+        CREATE USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${DB_PASSWORD}';
+    ELSE
+        ALTER USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${DB_PASSWORD}';
+    END IF;
+END
+\$\$;
 EOF
 
-    bashio::log.info "Database setup complete."
-}
+    # Ensure the user has full privileges on the database
+    psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+GRANT ALL PRIVILEGES ON DATABASE ${DB_DATABASE_NAME} TO ${DB_USERNAME};
+EOF
 
+    bashio::log.info "Database setup completed successfully."
+}
 
 #########################
 # Main script execution #
