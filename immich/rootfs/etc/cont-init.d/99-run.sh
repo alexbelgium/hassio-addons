@@ -3,68 +3,166 @@
 # shellcheck disable=SC2155,SC2016
 set -e
 
-###################################
-# Export all addon options as env #
-###################################
+# Function to export options from JSON to env variables
+export_options() {
+    local json_source="/data/options.json"
+    bashio::log.info "Exporting addon options from ${json_source}"
 
-bashio::log.info "Setting variables"
+    # Get all keys and export their raw values
+    mapfile -t keys < <(jq -r 'keys[]' "${json_source}")
+    for key in "${keys[@]}"; do
+        local value
+        value=$(jq -r ".${key}" "${json_source}")
+        if bashio::config.false "verbose" || [[ "$key" == *"PASS"* ]]; then
+            bashio::log.blue "${key}=******"
+        else
+            bashio::log.blue "${key}='${value}'"
+        fi
+        export "${key}=${value}"
+    done
+}
 
-# For all keys in options.json
-JSONSOURCE="/data/options.json"
-
-# Export keys as env variables
-# echo "All addon options were exported as variables"
-mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
-
-for KEYS in "${arr[@]}"; do
-    # export key
-    VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
-    line="${KEYS}='${VALUE//[\"\']/}'"
-    # text
-    if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
-        bashio::log.blue "${KEYS}=******"
-    else
-        bashio::log.blue "$line"
+# Function to check and adjust DB_HOSTNAME if necessary
+check_db_hostname() {
+    if [[ "$DB_HOSTNAME" == "homeassistant.local" ]]; then
+        local host_ip
+        host_ip=$(bashio::network.ipv4_address)
+        host_ip=${host_ip%/*}
+        export DB_HOSTNAME="$host_ip"
+        bashio::log.warning "DB_HOSTNAME was set to homeassistant.local. Using detected IP: $DB_HOSTNAME"
     fi
-    # Use locally
-    export "${KEYS}=${VALUE//[\"\']/}"
-done
 
-######################
-# Switch of database #
-######################
+    if ! ping -c 1 -W 3 "$DB_HOSTNAME" >/dev/null 2>&1; then
+        bashio::log.warning "------------------------------------"
+        bashio::log.warning "DB_HOSTNAME ($DB_HOSTNAME) is not reachable."
+        bashio::log.warning "Please set it to the IP address of your database."
+        bashio::log.warning "The addon will stop until this is fixed."
+        bashio::log.warning "------------------------------------"
+        sleep 30
+        bashio::addon.stop
+    else
+        echo "$DB_HOSTNAME is reachable."
+    fi
+}
 
-if [ -f /share/postgresql_immich.tar.gz ]; then
-    bashio::log.warning "Your previous database was exported to /share/postgresql_immich.tar.gz"
-elif [ -d /data/postgresql ]; then
-    bashio::log.warning "------------------------------------"
-    bashio::log.warning "Internal postgres database detected, copying to /share/postgresql_immich.tar.gz"
-    bashio::log.warning "------------------------------------"
-    tar -zcvf /share/postgresql_immich.tar.gz /data/postgresql
-    rm -r /data/postgresql
-fi
+# Function to migrate internal database to external storage if needed
+migrate_database() {
+    if [ -f /share/postgresql_immich.tar.gz ]; then
+        bashio::log.warning "Previous database export found at /share/postgresql_immich.tar.gz"
+    elif [ -d /data/postgresql ]; then
+        bashio::log.warning "Internal Postgres database detected. Migrating to /share/postgresql_immich.tar.gz"
+        tar -zcvf /share/postgresql_immich.tar.gz /data/postgresql
+        rm -rf /data/postgresql
+    fi
+}
 
-###################
-# Define database #
-###################
+# Function to validate required configuration values
+validate_config() {
+    local missing=false
+    for var in DB_USERNAME DB_HOSTNAME DB_PASSWORD DB_DATABASE_NAME DB_PORT JWT_SECRET; do
+        if ! bashio::config.has_value "${var}"; then
+            bashio::log.error "Missing required configuration: ${var}"
+            missing=true
+        fi
+    done
+    if [ "$missing" = true ]; then
+        bashio::exit.nok "Please ensure all required options are set."
+    fi
+}
 
-bashio::log.info "Defining database"
-bashio::log.info "-----------------"
+# Function to export DB variables to s6 environment if applicable
+export_db_env() {
+    if [ -d /var/run/s6/container_environment ]; then
+        for var in DB_USERNAME DB_PASSWORD DB_DATABASE_NAME DB_PORT DB_HOSTNAME JWT_SECRET; do
+            printf "%s" "${!var}" > "/var/run/s6/container_environment/${var}"
+        done
+    fi
+}
 
-bashio::log.info "Connecting to external postgresql"
-bashio::log.info ""
+# Function to set up the root user with a secure password
+setup_root_user() {
+    # Generate DB_ROOT_PASSWORD if not set (12-character alphanumeric).
+    if bashio::config.has_value "DB_ROOT_PASSWORD"; then
+        export DB_ROOT_PASSWORD="$(bashio::config 'DB_ROOT_PASSWORD')"
+    else
+        bashio::log.warning "DB_ROOT_PASSWORD not set. Generating a random 12-character alphanumeric password and storing it in the addon options."
+        export DB_ROOT_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c12)"
+        bashio::config "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
 
-# Check if values exist
-if ! bashio::config.has_value 'DB_USERNAME' && \
-    ! bashio::config.has_value 'DB_HOSTNAME' && \
-    ! bashio::config.has_value 'DB_PASSWORD' && \
-    ! bashio::config.has_value 'DB_DATABASE_NAME' && \
-    ! bashio::config.has_value 'JWT_SECRET' && \
-    ! bashio::config.has_value 'DB_PORT'; then
-    bashio::exit.nok "Please make sure that the following options are set : DB_USERNAME, DB_HOSTNAME, DB_PASSWORD, DB_DATABASE_NAME, DB_PORT"
-fi
+        # Store generated password in the s6 environment if available
+        if [ -d /var/run/s6/container_environment ]; then
+            printf "%s" "${DB_ROOT_PASSWORD}" > "/var/run/s6/container_environment/DB_ROOT_PASSWORD"
+        fi
+    fi
 
-# Settings parameters
+    # Try to connect as root using the default insecure password.
+    if psql "postgres://root:securepassword@${DB_HOSTNAME}:${DB_PORT}/postgres" -c '\q' 2>/dev/null; then
+        bashio::log.info "Detected root user with default password. Updating to new DB_ROOT_PASSWORD..."
+        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+ALTER ROLE root WITH PASSWORD '${DB_ROOT_PASSWORD}';
+EOF
+    else
+        # Check if the root user exists.
+        if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" -tAc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
+            bashio::log.info "Root user does not exist. Creating root user with DB_ROOT_PASSWORD..."
+            psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD '${DB_ROOT_PASSWORD}';
+EOF
+        else
+            bashio::log.info "Root user exists with a non-default password. No migration needed."
+        fi
+    fi
+}
+
+# Function to set up the database
+setup_database() {
+    bashio::log.info "Setting up external PostgreSQL database..."
+
+    # Ensure the user exists (or create/update if necessary)
+    if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}/postgres" -tAc \
+        "SELECT 1 FROM pg_roles WHERE rolname='${DB_USERNAME}';" | grep -q 1; then
+        bashio::log.info "User ${DB_USERNAME} does not exist. Creating it now..."
+        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+CREATE USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${DB_PASSWORD}';
+EOF
+    else
+        bashio::log.info "User ${DB_USERNAME} already exists. Updating password..."
+        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+ALTER USER ${DB_USERNAME} WITH ENCRYPTED PASSWORD '${DB_PASSWORD}';
+EOF
+    fi
+
+    # Ensure the database exists (or create it if necessary)
+    if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}/postgres" -tAc \
+        "SELECT 1 FROM pg_database WHERE datname='${DB_DATABASE_NAME}';" | grep -q 1; then
+        bashio::log.info "Database ${DB_DATABASE_NAME} does not exist. Creating it now..."
+        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+CREATE DATABASE ${DB_DATABASE_NAME} OWNER ${DB_USERNAME};
+EOF
+    else
+        bashio::log.info "Database ${DB_DATABASE_NAME} already exists. Ensuring proper permissions..."
+    fi
+
+    # Ensure the user has the correct privileges
+    psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+GRANT ALL PRIVILEGES ON DATABASE ${DB_DATABASE_NAME} TO ${DB_USERNAME};
+ALTER DATABASE ${DB_DATABASE_NAME} OWNER TO ${DB_USERNAME};
+EOF
+
+    bashio::log.info "Database setup complete."
+}
+
+
+#########################
+# Main script execution #
+#########################
+
+export_options
+check_db_hostname
+migrate_database
+validate_config
+
+# Reload DB configuration from the addon options (this ensures we have the correct values)
 export DB_USERNAME=$(bashio::config 'DB_USERNAME')
 export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
 export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
@@ -72,34 +170,7 @@ export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
 export DB_PORT=$(bashio::config 'DB_PORT')
 export JWT_SECRET=$(bashio::config 'JWT_SECRET')
 
-# Export variables
-if [ -d /var/run/s6/container_environment ]; then
-    printf "%s" "$DB_USERNAME" > /var/run/s6/container_environment/DB_USERNAME
-    printf "%s" "$DB_PASSWORD" > /var/run/s6/container_environment/DB_PASSWORD
-    printf "%s" "$DB_DATABASE_NAME" > /var/run/s6/container_environment/DB_DATABASE_NAME
-    printf "%s" "$DB_PORT" > /var/run/s6/container_environment/DB_PORT
-    printf "%s" "$DB_HOSTNAME" > /var/run/s6/container_environment/DB_HOSTNAME
-    printf "%s" "$JWT_SECRET" > /var/run/s6/container_environment/JWT_SECRET
-fi
+export_db_env
 
-{
-    printf "%s\n" "DB_USERNAME=\"$DB_USERNAME\""
-    printf "%s\n" "DB_PASSWORD=\"$DB_PASSWORD\""
-    printf "%s\n" "DB_DATABASE_NAME=\"$DB_DATABASE_NAME\""
-    printf "%s\n" "DB_PORT=\"$DB_PORT\""
-    printf "%s\n" "DB_HOSTNAME=\"$DB_HOSTNAME\""
-    printf "%s\n" "JWT_SECRET=\"$JWT_SECRET\""
-} >> ~/.bashrc
-
-###################
-# Create database #
-###################
-
-# Create database if does not exist
-echo "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'securepassword';
-     CREATE DATABASE immich; CREATE USER immich WITH ENCRYPTED PASSWORD 'immich'; GRANT ALL PRIVILEGES ON DATABASE immich to immich;
-\q"> setup_postgres.sql
-psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" < setup_postgres.sql || true
-
-# Clean
-rm setup_postgres.sql
+setup_root_user
+setup_database

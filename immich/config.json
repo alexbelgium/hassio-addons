@@ -81,6 +81,7 @@
     "REVERSE_GEOCODING_DUMP_DIRECTORY": "/data/.reverse-geocoding-dump/",
     "TRANSFORMERS_CACHE": "/data/machine-learning"
   },
+  "hassio_api": true,
   "image": "ghcr.io/alexbelgium/immich-{arch}",
   "init": false,
   "map": [
@@ -121,6 +122,7 @@
     "DB_PASSWORD": "str",
     "DB_PORT": "int",
     "DB_USERNAME": "str",
+    "DB_ROOT_PASSWORD": "str?",
     "DISABLE_MACHINE_LEARNING": "bool?",
     "JWT_SECRET": "str",
     "MACHINE_LEARNING_WORKERS": "int?",

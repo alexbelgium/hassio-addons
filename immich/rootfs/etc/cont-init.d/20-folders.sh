@@ -17,9 +17,13 @@ fi
 
 if bashio::config.has_value "PUID"; then
     PUID="$(bashio::config 'PUID')"
+else
+    PUID=0
 fi
 if bashio::config.has_value "PGID"; then
     PGID="$(bashio::config 'PGID')"
+else
+    PGID=0
 fi
 
 bashio::log.info "Setting data location"
