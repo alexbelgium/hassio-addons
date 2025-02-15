@@ -65,7 +65,7 @@ bashio::log.info "Waiting for PostgreSQL to start..."
 ###############################
 
 # Read the previous PostgreSQL version from file
-OLD_PG_VERSION=$(cat "$PG_VERSION_FILE" 2>/dev/null || echo "")
+OLD_PG_VERSION=$(cat "$PG_VERSION_FILE" 2>/dev/null || echo "$PG_MAJOR_VERSION")
 
 if [ "$OLD_PG_VERSION" != "$PG_MAJOR_VERSION" ]; then
     bashio::log.warning "PostgreSQL major version changed ($OLD_PG_VERSION → $PG_MAJOR_VERSION). Running upgrade..."
