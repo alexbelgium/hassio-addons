@@ -1,9 +1,9 @@
 {
   "dockerhub_list_size": "10",
-  "last_update": "08-02-2025",
+  "last_update": "15-02-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "flexget",
   "source": "dockerhub",
   "upstream_repo": "wiserain/flexget",
-  "upstream_version": "3.14.4"
+  "upstream_version": "3.15.6"
 }
