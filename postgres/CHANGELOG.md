@@ -1,10 +1,6 @@
-## 15.7-22 (15-02-2025)
-- Minor bugs fixed
-## 15.7-21 (15-02-2025)
-- Minor bugs fixed
-## 15.7-20 (15-02-2025)
 - Major update, please backup first
 - Automatic handling of upgrades
+- Restore clean shutdown
 
 ## 15.7-16 (22-01-2025)
 - Minor bugs fixed
