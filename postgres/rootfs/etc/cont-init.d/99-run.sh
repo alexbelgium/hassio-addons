@@ -14,7 +14,7 @@ VECTOR_VERSION_FILE="$PGDATA/pgvector_version"
 # Create necessary directories with secure permissions
 mkdir -p "$CONFIG_HOME" "$PGDATA"
 chown -R postgres:postgres "$PGDATA"
-chmod 700 "$PGDATA" "$CONFIG_HOME"
+chmod 755 "$PGDATA" "$CONFIG_HOME"
 
 # Detect PostgreSQL Major Version from ENV (default to 15 if not set)
 PG_MAJOR_VERSION="${PG_MAJOR:-15}"
@@ -33,9 +33,10 @@ bashio::log.info "Starting PostgreSQL..."
 
 if [ "$(bashio::info.arch)" = "armv7" ]; then
     bashio::log.warning "ARMv7 detected: Starting without vectors.so"
-    nohup docker-entrypoint.sh postgres 2>&1 &
+    docker-entrypoint.sh postgres & true
+    exit 0
 else
-    nohup docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so -c search_path="public, vectors" 2>&1 &
+    docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so -c search_path="public, vectors" & true
 fi
 
 ###############################
