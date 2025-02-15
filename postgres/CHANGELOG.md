@@ -1,3 +1,5 @@
+## 15.7-18 (15-02-2025)
+- Minor bugs fixed
 ## 15.7-17 (15-02-2025)
 - Major update, please backup first
 - Automatic handling of upgrades
