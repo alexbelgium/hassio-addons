@@ -67,6 +67,8 @@ if bashio::config.has_value "library_location"; then
     bashio::log.info "Setting library location to $LIBRARY_LOCATION. This will not move any of your files, you'll need to do this manually"
     mkdir -p "$LIBRARY_LOCATION"
     chown -R "$PUID":"$PGID" "$LIBRARY_LOCATION"
+    
+    # Check if the existing library is a directory and not a symlink and has contents
     if [ -d "$DATA_LOCATION/library" ] && [ ! -L "$DATA_LOCATION/library" ] && [ "$(ls -A "$DATA_LOCATION/library")" ]; then
         bashio::log.yellow "-------------------------------"
         bashio::log.warning "Library folder in $DATA_LOCATION/library already exists, is a real folder, and is not empty. Moving to $DATA_LOCATION/library_old"
@@ -74,7 +76,11 @@ if bashio::config.has_value "library_location"; then
         mv "$DATA_LOCATION/library" "$DATA_LOCATION/library_old"
         sleep 5
     fi
-    ln -sf "$LIBRARY_LOCATION" "$DATA_LOCATION"/library
+    
+    # Create symbolic link only if it doesn't already exist or is incorrect
+    if [ ! -L "$DATA_LOCATION/library" ] || [ "$(readlink -f "$DATA_LOCATION/library")" != "$LIBRARY_LOCATION" ]; then
+        ln -sf "$LIBRARY_LOCATION" "$DATA_LOCATION/library"
+    fi
 fi
 
 ##################
