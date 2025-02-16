@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Immich] Freshly installed addon not starting. (opened 2024-12-19)](https://github.com/alexbelgium/hassio-addons/issues/1676) by [@CForChrisProooo](https://github.com/CForChrisProooo)
-## &#9888; Open Issue : [🐛 [Immich] Missing e-mail server settings (opened 2025-02-04)](https://github.com/alexbelgium/hassio-addons/issues/1752) by [@JohnnyPicnic](https://github.com/JohnnyPicnic)
 ## &#9888; Open Request : [✨ [REQUEST] Immich Frame (opened 2025-02-13)](https://github.com/alexbelgium/hassio-addons/issues/1764) by [@NickBootOne](https://github.com/NickBootOne)
 # Home assistant add-on: immich
 
