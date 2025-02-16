@@ -1,0 +1,66 @@
+#include <tunables/global>
+
+profile db21ed7f_qbittorrent flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  capability,
+  file,
+  signal,
+  mount,
+  umount,
+  remount,
+  network udp,
+  network tcp,
+  network dgram,
+  network stream,
+  network inet,
+  network inet6,
+  network netlink raw,
+  network unix dgram,
+
+  capability setgid,
+  capability setuid,
+  capability sys_admin,
+  capability dac_read_search,
+  # capability dac_override,
+  # capability sys_rawio,
+
+# S6-Overlay
+  /init ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /run/{,**} rwk,
+  /dev/tty rw,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /usr/lib/bashio/** ix,
+  /etc/s6/** rix,
+  /run/s6/** rix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /init rix,
+  /var/run/** mrwkl,
+  /var/run/ mrwkl,
+  /dev/i2c-1 mrwkl,
+  # Files required
+  /dev/fuse mrwkl,
+  /dev/sda1 mrwkl,
+  /dev/sdb1 mrwkl,
+  /dev/nvme0 mrwkl,
+  /dev/nvme1 mrwkl,
+  /dev/mmcblk0p1 mrwkl,
+  /dev/* mrwkl,
+  /tmp/** mrkwl,
+
+  # Data access
+  /data/** rw,
+
+  # suppress ptrace denials when using 'docker ps' or using 'ps' inside a container
+  ptrace (trace,read) peer=docker-default,
+
+  # docker daemon confinement requires explict allow rule for signal
+  signal (receive) set=(kill,term) peer=/usr/bin/docker,
+
+}
