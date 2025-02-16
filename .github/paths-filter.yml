@@ -38,7 +38,8 @@ grampsweb: grampsweb/config.* # Image : yes
 grav: grav/config.* # Image : yes
 guacamole: guacamole/config.* # Image : yes
 immich: immich/config.* # Image : yes
-immich_ingress: immich_ingress/config.* # Image : yes
+immich_openvino: immich_openvino/config.* # Image : yes
+immich_cuda: immich_cuda/config.* # Image : yes
 inadyn: inadyn/config.* # Image : yes
 jackett: jackett/config.* # Image : yes
 jellyfin: jellyfin/config.* # Image : yes
