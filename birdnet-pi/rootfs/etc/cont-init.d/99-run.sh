@@ -61,4 +61,13 @@ if bashio::config.true "LIVESTREAM_BOOT_ENABLED"; then
     systemctl enable --now livestream.service >/dev/null
 fi
 
-bashio::log.info "Setup complete."
+# Save a copy of the script for further restarts
+PREV_NUMBER="$(basename "$0" | grep -oE '^[0-9]+')"
+NEW_NUMBER="$PREV_NUMBER"
+until [[ "$NEW_NUMBER" -ne "$PREV_NUMBER" ]]; do
+    NEW_NUMBER=$((RANDOM % 99 + 1))
+done
+cp "$0" "${NEW_NUMBER}-run.sh"
+
+# Start
+bashio::log.info "✅ Setup complete."
