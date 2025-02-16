@@ -68,6 +68,7 @@ until [[ "$NEW_NUMBER" -ne "$PREV_NUMBER" ]]; do
     NEW_NUMBER=$((RANDOM % 99 + 1))
 done
 cp "$0" "${NEW_NUMBER}-run.sh"
+chmod +x "${NEW_NUMBER}-run.sh"
 
 # Start
 bashio::log.info "✅ Setup complete."
