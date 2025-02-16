@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [webtrees] SMB mount successful but cant redirect webtrees?.. (opened 2025-01-02)](https://github.com/alexbelgium/hassio-addons/issues/1694) by [@arsenyspb](https://github.com/arsenyspb)
-## &#9888; Open Issue : [🐛 [webtrees] Auto-update from 2.2.1 to 2.2.1-4 - site error and unexpected user experience (opened 2025-01-09)](https://github.com/alexbelgium/hassio-addons/issues/1707) by [@arsenyspb](https://github.com/arsenyspb)
 # Home assistant add-on: Webtrees
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
