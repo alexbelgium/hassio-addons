@@ -1,3 +1,5 @@
+## 2025.02.22 (16-02-2025)
+- Minor bugs fixed
 ## 2025.02.19 (15-02-2025)
 - WARNING 2025.02.14/16 was buggy. If you installed it you need to restore a backup or delete manually your /addon_configs/xxx-birdnet-pi/birdnet.conf file and recreate it
 - Allow usage as a standalone container (thanks @gotschi) https://github.com/mcguirepr89/BirdNET-Pi/issues/211#issuecomment-2650095952
