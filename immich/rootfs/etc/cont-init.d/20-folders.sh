@@ -2,6 +2,21 @@
 # shellcheck shell=bash
 set -e
 
+######################
+# GENERAL PARAMETERS #
+######################
+
+if bashio::config.has_value "PUID"; then
+    PUID="$(bashio::config 'PUID')"
+else
+    PUID=0
+fi
+if bashio::config.has_value "PGID"; then
+    PGID="$(bashio::config 'PGID')"
+else
+    PGID=0
+fi
+
 ##########################
 # MIGRATIONS AND UPDATES #
 ##########################
@@ -14,17 +29,6 @@ fi
 #################
 # DATA_LOCATION #
 #################
-
-if bashio::config.has_value "PUID"; then
-    PUID="$(bashio::config 'PUID')"
-else
-    PUID=0
-fi
-if bashio::config.has_value "PGID"; then
-    PGID="$(bashio::config 'PGID')"
-else
-    PGID=0
-fi
 
 bashio::log.info "Setting data location"
 DATA_LOCATION="$(bashio::config 'data_location')"
@@ -53,6 +57,25 @@ chown -R "$PUID":"$PGID" "$MACHINE_LEARNING_CACHE_FOLDER"
 chown -R "$PUID":"$PGID" "$REVERSE_GEOCODING_DUMP_DIRECTORY"
 chown -R "$PUID":"$PGID" /data
 chmod 777 /data
+
+####################
+# LIBRARY LOCATION #
+####################
+
+if bashio::config.has_value "library_location"; then
+    LIBRARY_LOCATION="$(bashio::config 'library_location')"
+    bashio::log.info "Setting library location to $LIBRARY_LOCATION. This will not move any of your files, you'll need to do this manually"
+    mkdir -p "$LIBRARY_LOCATION"
+    chown -R "$PUID":"$PGID" "$LIBRARY_LOCATION"
+    if [ -d "$DATA_LOCATION/library" ] && [ ! -L "$DATA_LOCATION/library" ] && [ "$(ls -A "$DATA_LOCATION/library")" ]; then
+        bashio::log.yellow "-------------------------------"
+        bashio::log.warning "Library folder in $DATA_LOCATION/library already exists, is a real folder, and is not empty. Moving to $DATA_LOCATION/library_old"
+        bashio::log.yellow "-------------------------------"
+        mv "$DATA_LOCATION/library" "$DATA_LOCATION/library_old"
+        sleep 5
+    fi
+    ln -sf "$LIBRARY_LOCATION" "$DATA_LOCATION"/library
+fi
 
 ##################
 # REDIS LOCATION #

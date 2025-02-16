@@ -1,10 +1,10 @@
-## 1.126.1-4 (15-02-2025)
 - RISK OF BREAKING CHANGE : backup both immich & postgres before starting
 - RISK OF BREAKING CHANGE : rewrite and improve database creation tool using addon options (overwritting manual database creation)
 - SECURITY FIX : avoid hardcoding the postgres root password and change it if was already applied
 - Ensure host is reachable before starting
 - Autocorrect homeassistant.local to local ip
 - Align configuration with /addon_configs
+- NEW FUNCTION : allow to define a library path outside of the data location. For example, if you specify /mnt/NAS/MyPictures as "library_location", and /mnt/NAS/Immich as "data_location", it will then create the whole structure in /mnt/NAS/Immich including the /mnt/NAS/Immich/library. However, this will just be a symlink to /mnt/NAS/MyPictures ; allowing people to still manage their hard drives in a more linear manner
 
 ## 1.126.1 (15-02-2025)
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)

@@ -132,6 +132,7 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str",
+    "library_location": "str?",
     "localdisks": "str?",
     "networkdisks": "str?"
   },
@@ -141,6 +142,6 @@
   "slug": "immich",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.126.1-4",
+  "version": "1.126.1-5",
   "webui": "http://[HOST]:[PORT:8080]"
 }
