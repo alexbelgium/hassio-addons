@@ -46,7 +46,10 @@ for SCRIPTS in /etc/cont-init.d/*; do
     fi
 
     # Cleanup
-    rm "$SCRIPTS"
+    if bashio::supervisor.ping 2>/dev/null; then
+        rm "$SCRIPTS"
+    fi
+
 done
 
 ######################
