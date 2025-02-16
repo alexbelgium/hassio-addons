@@ -21,9 +21,6 @@ jobs:
     steps:
       - name: ↩️ Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          follow-symlinks: true
       - name: Update path_filters
         run: |
           # Init
@@ -62,9 +59,6 @@ jobs:
     steps:
       - name: ↩️ Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          follow-symlinks: true
       - name: 📂 Detect changed files
         uses: dorny/paths-filter@v3
         id: filter
@@ -87,9 +81,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          follow-symlinks: true
       - name: Make scripts executable
         run: |
           echo "Starting"
@@ -118,9 +109,6 @@ jobs:
     steps:
       - name: ↩️ Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          follow-symlinks: true
       - name: 🔎 Run Home Assistant Add-on Lint
         uses: frenck/action-addon-linter@v2
         with:
@@ -140,9 +128,7 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          follow-symlinks: true
+
       - name: Get information
         id: info
         uses: home-assistant/actions/helpers/info@master
@@ -206,9 +192,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          follow-symlinks: true
       - name: Update changelog for minor versions
         run: |
           echo "Starting"
