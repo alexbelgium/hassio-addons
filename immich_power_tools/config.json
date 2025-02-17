@@ -1,0 +1,35 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "Power tools for organizing your immich library",
+  "hassio_api": true,
+  "image": "ghcr.io/alexbelgium/immich-{arch}",
+  "init": false,
+  "map": [
+    "addon_config:rw"
+  ],
+  "name": "Immich Power Tools",
+  "ports": {
+    "3000/tcp": 8001
+  },
+  "ports_description": {
+    "3000/tcp": "Web UI port"
+  },
+  "schema": {
+    "IMMICH_API_KEY": "str",
+    "IMMICH_URL": "str",
+    "EXTERNAL_IMMICH_URL": "str",
+    "GOOGLE_MAPS_API_KEY": "str?",
+    "GEMINI_API_KEY": "str?"
+  },
+  "slug": "immich_power_tools",
+  "udev": true,
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "usb": true,
+  "version": "0.14.0",
+  "video": true,
+  "webui": "http://[HOST]:[PORT:3000]"
+}

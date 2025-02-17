@@ -1,0 +1,9 @@
+{
+  "github_beta": "false",
+  "last_update": "15-02-2025",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "immich-power-tools",
+  "source": "github",
+  "upstream_repo": "varun-raj/immich-power-tools",
+  "upstream_version": "0.14.0"
+}

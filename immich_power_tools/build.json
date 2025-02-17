@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "ghcr.io/varun-raj/immich-power-tools:latest",
+    "amd64": "ghcr.io/varun-raj/immich-power-tools:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
