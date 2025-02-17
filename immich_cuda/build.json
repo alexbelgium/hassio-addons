@@ -1,7 +1,7 @@
 {
     "build_from": {
-      "aarch64": "ghcr.io/imagegenius/immich:arm64v8-cuda",
-      "amd64": "ghcr.io/imagegenius/immich:amd64-cuda"
+      "aarch64": "ghcr.io/imagegenius/immich:cuda",
+      "amd64": "ghcr.io/imagegenius/immich:cuda"
     },
     "codenotary": {
       "signer": "alexandrep.github@gmail.com"
