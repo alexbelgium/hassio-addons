@@ -26,10 +26,7 @@
     "GEMINI_API_KEY": "str?"
   },
   "slug": "immich_power_tools",
-  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "usb": true,
   "version": "0.14.0",
-  "video": true,
   "webui": "http://[HOST]:[PORT:3000]"
 }
