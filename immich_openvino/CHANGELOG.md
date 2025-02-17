@@ -1,3 +1,5 @@
+## 1.126.1-10 (17-02-2025)
+- Minor bugs fixed
 ## 1.126.1-7 (16-02-2025)
 - RISK OF BREAKING CHANGE : backup both immich & postgres before starting
 - RISK OF BREAKING CHANGE : rewrite and improve database creation tool using addon options (overwritting manual database creation)
