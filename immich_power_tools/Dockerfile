@@ -121,8 +121,8 @@ RUN \
         mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf; \
     fi
 
-ENV HEALTH_PORT="8080" \
-    HEALTH_URL="/api/server/ping"
+ENV HEALTH_PORT="3001" \
+    HEALTH_URL="/"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
