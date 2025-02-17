@@ -19,6 +19,11 @@
     "3000/tcp": "Web UI port"
   },
   "schema": {
+    "DB_USERNAME": "str",
+    "DB_PASSWORD": "str",
+    "DB_HOST": "str",
+    "DB_PORT": "str",
+    "DB_DATABASE_NAME": "str",
     "IMMICH_API_KEY": "str",
     "IMMICH_URL": "str",
     "EXTERNAL_IMMICH_URL": "str",
@@ -27,6 +32,6 @@
   },
   "slug": "immich_power_tools",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.14.0",
+  "version": "0.14.0-2",
   "webui": "http://[HOST]:[PORT:3000]"
 }
