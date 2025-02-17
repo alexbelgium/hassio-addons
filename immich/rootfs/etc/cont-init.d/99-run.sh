@@ -175,7 +175,7 @@ validate_config
 
 # Reload DB configuration from the addon options (this ensures we have the correct values)
 export DB_USERNAME=$(bashio::config 'DB_USERNAME')
-export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
+#export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
 export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
 export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
 export DB_PORT=$(bashio::config 'DB_PORT')
