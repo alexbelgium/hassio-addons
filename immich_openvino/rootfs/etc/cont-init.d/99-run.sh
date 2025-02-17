@@ -186,3 +186,11 @@ export_db_env
 setup_root_user
 setup_database
 check_vector_extension
+
+echo ""
+bashio::log.yellow "-----------------------------------------------"
+bashio::low.warning "EXPERIMENTAL ADDON, CAN SHUTDOWN YOUR HA DUE TO RESOURCES EXCESSIVE USAGE"
+bashio::log.yellow "-----------------------------------------------"
+echo ""
+
+sleep 5
