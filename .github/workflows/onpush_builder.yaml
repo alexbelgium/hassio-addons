@@ -77,7 +77,7 @@ jobs:
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     needs: [check-addon-changes, correct-CRLF]
     runs-on: ubuntu-latest
-    strategy: 
+    strategy:
       fail-fast: false
       matrix:
         addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
