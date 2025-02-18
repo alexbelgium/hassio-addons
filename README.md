@@ -44,7 +44,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 99
+- In the repository : 100
 - Installed : 84812
 
 ### Top 3
@@ -396,6 +396,14 @@ If you want to do add the repository manually, please follow the procedure highl
 ![MariaDB][mariadb-badge]
 ![smb][smb-badge]
 ![localdisks][localdisks-badge]
+
+&#10003;  [Immich Power Tools](immich_power_tools/) : Power tools for organizing your immich library
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich_power_tools%2Fconfig.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich_power_tools%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Inadyn](inadyn/) : Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)
 
@@ -753,7 +761,6 @@ If you want to do add the repository manually, please follow the procedure highl
 &#10003; ![image](https://api.iconify.design/mdi/glasses.svg) [Scrutiny (Full Access)](scrutiny_fa/) : Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_fa%2Fconfig.json)
-![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fscrutiny_fa%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
