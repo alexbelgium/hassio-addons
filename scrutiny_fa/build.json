@@ -1,9 +1,1 @@
-{
-  "build_from": {
-    "aarch64": "ghcr.io/analogj/scrutiny:master-omnibus",
-    "amd64": "ghcr.io/analogj/scrutiny:master-omnibus"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
-  }
-}
+../scrutiny/build.json
