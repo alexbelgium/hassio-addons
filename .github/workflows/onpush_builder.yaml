@@ -136,8 +136,6 @@ jobs:
             target="$(readlink -f "$link")"
             # Remove the symlink
             rm "$link"
-            
-            # Copy the file or directory in place
             if [ -d "$target" ]; then
               cp -R "$target" "$link"
             else
