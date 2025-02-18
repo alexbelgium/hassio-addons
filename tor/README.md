@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] qBittorrent Gluetun (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1661) by [@xtian47](https://github.com/xtian47)
+## &#9888; Open Issue : [🐛 [Repository] No repository information exists at /data/addons/git/db21ed7f (opened 2025-02-16)](https://github.com/alexbelgium/hassio-addons/issues/1776) by [@bcutter](https://github.com/bcutter)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
