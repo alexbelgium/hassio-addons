@@ -32,6 +32,6 @@
   },
   "slug": "immich_power_tools",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.14.0-3",
+  "version": "0.14.0-4",
   "webui": "http://[HOST]:[PORT:3000]"
 }
