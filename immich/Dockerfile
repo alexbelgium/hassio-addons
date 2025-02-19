@@ -83,6 +83,7 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 RUN sed -i "s|postgresql-16|postgresql-15|g" /etc/s6-overlay/s6-rc.d/init-test-run/run
 
 # Install dependencies
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && apt-get install -y --no-install-recommends \
     lsb-release \
     wget \
