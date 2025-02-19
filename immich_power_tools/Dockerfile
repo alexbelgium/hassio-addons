@@ -128,4 +128,4 @@ HEALTHCHECK \
     --retries=5 \
     --start-period=30s \
     --timeout=25s \
-    CMD ping "127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" &>/dev/null || exit 1
+    CMD ! nc -z 127.0.0.1 -p ${HEALTH_PORT} &>/dev/null || exit 1
