@@ -65,6 +65,7 @@ bashio::log.info "Waiting for PostgreSQL to start..."
 DB_PORT=5432
 DB_HOSTNAME=localhost
 DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
+DB_PASSWORD="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
 DB_USERNAME=postgres
 if bashio::config.has_value "POSTGRES_USER"; then
     DB_USERNAME="$(bashio::config "POSTGRES_USER")"
