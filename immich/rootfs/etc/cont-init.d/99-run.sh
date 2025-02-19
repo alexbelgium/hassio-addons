@@ -13,11 +13,13 @@ export_options() {
     for key in "${keys[@]}"; do
         local value
         value=$(jq -r ".${key}" "${json_source}")
+        # Hide passwords
         if bashio::config.false "verbose" || [[ "$key" == *"PASS"* ]]; then
             bashio::log.blue "${key}=******"
         else
             bashio::log.blue "${key}='${value}'"
         fi
+        # Export value
         export "${key}=${value}"
     done
 }
@@ -169,20 +171,12 @@ check_vector_extension() {
 #########################
 
 export_options
+# Encode password
+DB_PASSWORD="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
 check_db_hostname
 migrate_database
 validate_config
-
-# Reload DB configuration from the addon options (this ensures we have the correct values)
-export DB_USERNAME=$(bashio::config 'DB_USERNAME')
-#export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
-export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
-export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
-export DB_PORT=$(bashio::config 'DB_PORT')
-export JWT_SECRET=$(bashio::config 'JWT_SECRET')
-
 export_db_env
-
 setup_root_user
 setup_database
 check_vector_extension
