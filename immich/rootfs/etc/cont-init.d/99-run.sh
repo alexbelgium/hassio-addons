@@ -171,8 +171,6 @@ check_vector_extension() {
 #########################
 
 export_options
-# Encode password
-DB_PASSWORD="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
 check_db_hostname
 migrate_database
 validate_config
