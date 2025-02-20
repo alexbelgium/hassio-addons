@@ -166,11 +166,31 @@ check_vector_extension() {
     fi
 }
 
+url_encode() {
+    local string="${1}"
+    local length="${#string}"
+    local encoded=""
+    for (( i = 0; i < length; i++ )); do
+        local c="${string:i:1}"
+        case $c in
+            [a-zA-Z0-9.~_-])
+                encoded+="$c"
+                ;;
+            *)
+                printf -v hex '%%%02X' "'$c"
+                encoded+="${hex}"
+                ;;
+        esac
+    done
+    echo "${encoded}"
+}
+
 #########################
 # Main script execution #
 #########################
 
 export_options
+DB_PASSWORD="$(url_encode "${DB_PASSWORD}")"
 check_db_hostname
 migrate_database
 validate_config
