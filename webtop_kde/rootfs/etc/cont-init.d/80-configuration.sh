@@ -49,8 +49,6 @@ elif ! bashio::config.has_value 'PASSWORD' && [[ -n "$(bashio::addon.port "3000"
 fi
 
 # Set permissions
-
-# Set permissions
 echo "... setting permissions for node user"
 usermod -o -u 0 abc &>/dev/null
 groupmod -o -g 0 abc &>/dev/null
