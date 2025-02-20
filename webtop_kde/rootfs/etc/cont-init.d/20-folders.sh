@@ -60,8 +60,8 @@ sed -i "s|^\(abc:[^:]*:[^:]*:[^:]*:[^:]*:\)[^:]*|\1$LOCATION|" /etc/passwd
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/HOME; fi
 if [ -d /var/run/s6/container_environment ]; then printf "%s" "$LOCATION" > /var/run/s6/container_environment/FM_HOME; fi
 {
-    printf "%s\n" "HOME=\"$LOCATION\""
-    printf "%s\n" "FM_HOME=\"$LOCATION\""
+    printf "%s\n" "export HOME=\"$LOCATION\""
+    printf "%s\n" "export FM_HOME=\"$LOCATION\""
 } >> ~/.bashrc
 
 # Create folder
