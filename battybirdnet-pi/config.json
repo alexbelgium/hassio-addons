@@ -28,6 +28,8 @@
     "/dev/sdf",
     "/dev/sdg",
     "/dev/nvme",
+    "/dev/nvme0",
+    "/dev/nvme0n1",
     "/dev/nvme0n1p1",
     "/dev/nvme0n1p2",
     "/dev/mmcblk",
