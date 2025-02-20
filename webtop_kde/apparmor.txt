@@ -49,6 +49,7 @@ profile webtop_addon flags=(attach_disconnected,mediate_deleted) {
   /dev/sda1 mrwkl,
   /dev/sdb1 mrwkl,
   /dev/nvme0 mrwkl,
+  /dev/nvme0n1 mrwkl,
   /dev/nvme1 mrwkl,
   /dev/mmcblk0p1 mrwkl,
   /dev/* mrwkl,
