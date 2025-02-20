@@ -89,7 +89,7 @@ setup_root_user() {
     else
         bashio::log.warning "DB_ROOT_PASSWORD not set. Generating a random 12-character alphanumeric password and storing it in the addon options."
         export DB_ROOT_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c12)"
-         bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
+        bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
 
         # Store generated password in the s6 environment if available
         if [ -d /var/run/s6/container_environment ]; then
@@ -97,17 +97,21 @@ setup_root_user() {
         fi
     fi
 
-    # Try to connect as root using the default insecure password.
-    if psql "postgres://root:securepassword@${DB_HOSTNAME}:${DB_PORT}/postgres" -c '\q' 2>/dev/null; then
+    # 1. Try connecting as root with the known default password "securepassword"
+    if PGPASSWORD="securepassword" psql -U root -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres -c '\q' 2>/dev/null; then
+        # If successful, root has the default password; update it
         bashio::log.info "Detected root user with default password. Updating to new DB_ROOT_PASSWORD..."
-        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+        PGPASSWORD="securepassword" psql -U root -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
 ALTER ROLE root WITH PASSWORD '${DB_ROOT_PASSWORD}';
 EOF
     else
-        # Check if the root user exists.
-        if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" -tAc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
+        # 2. If that fails, check if the root user exists at all
+        if ! PGPASSWORD="${DB_PASSWORD}" \
+             psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres -tAc \
+             "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
+            # 3. Create root user if it doesn't exist
             bashio::log.info "Root user does not exist. Creating root user with DB_ROOT_PASSWORD..."
-            psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+            PGPASSWORD="${DB_PASSWORD}" psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
 CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD '${DB_ROOT_PASSWORD}';
 EOF
         else
@@ -121,10 +125,11 @@ setup_database() {
     bashio::log.info "Setting up external PostgreSQL database..."
 
     # Create the database if it does not exist
-    if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}/postgres" -tAc \
-        "SELECT 1 FROM pg_database WHERE datname='${DB_DATABASE_NAME}';" | grep -q 1; then
+    if ! PGPASSWORD="${DB_PASSWORD}" \
+         psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres -tAc \
+         "SELECT 1 FROM pg_database WHERE datname='${DB_DATABASE_NAME}';" | grep -q 1; then
         bashio::log.info "Database does not exist. Creating it now..."
-        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+        PGPASSWORD="${DB_PASSWORD}" psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
 CREATE DATABASE ${DB_DATABASE_NAME};
 EOF
     else
@@ -132,7 +137,7 @@ EOF
     fi
 
     # Ensure the user exists and update its password
-    psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+    PGPASSWORD="${DB_PASSWORD}" psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
 DO \$\$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '${DB_USERNAME}') THEN
@@ -145,7 +150,7 @@ END
 EOF
 
     # Ensure the user has full privileges on the database
-    psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
+    PGPASSWORD="${DB_PASSWORD}" psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
 GRANT ALL PRIVILEGES ON DATABASE ${DB_DATABASE_NAME} TO ${DB_USERNAME};
 EOF
 
@@ -155,7 +160,9 @@ EOF
 # Function to check if vectors extension is enabled
 check_vector_extension() {
     echo "Checking if 'vectors' extension is enabled..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
+    RESULT=$(PGPASSWORD="${DB_PASSWORD}" \
+        psql -U "$DB_USERNAME" -h "$DB_HOSTNAME" -p "$DB_PORT" -d "$DB_DATABASE_NAME" -tAc \
+        "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
 
     if [[ "$RESULT" == "vectors" ]]; then
         echo "✅ 'vectors' extension is enabled."
@@ -166,31 +173,11 @@ check_vector_extension() {
     fi
 }
 
-url_encode() {
-    local string="${1}"
-    local length="${#string}"
-    local encoded=""
-    for (( i = 0; i < length; i++ )); do
-        local c="${string:i:1}"
-        case $c in
-            [a-zA-Z0-9.~_-])
-                encoded+="$c"
-                ;;
-            *)
-                printf -v hex '%%%02X' "'$c"
-                encoded+="${hex}"
-                ;;
-        esac
-    done
-    echo "${encoded}"
-}
-
 #########################
 # Main script execution #
 #########################
 
 export_options
-DB_PASSWORD="$(url_encode "${DB_PASSWORD}")"
 check_db_hostname
 migrate_database
 validate_config
