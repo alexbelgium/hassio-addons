@@ -47,3 +47,10 @@ elif ! bashio::config.has_value 'PASSWORD' && [[ -n "$(bashio::addon.port "3000"
     bashio::log.warning "You are opening an external port but your password is not defined"
     bashio::log.warning "You risk being hacked ! Please disable the external ports, or use a password"
 fi
+
+# Set permissions
+
+# Set permissions
+echo "... setting permissions for node user"
+usermod -o -u 0 abc &>/dev/null
+groupmod -o -g 0 abc &>/dev/null
