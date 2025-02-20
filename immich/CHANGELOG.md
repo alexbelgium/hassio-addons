@@ -1,3 +1,4 @@
+## 1.126.1-13 (20-02-2025)
 - Allow special characters in DB_PASSWORD
 
 ## 1.126.1-7 (16-02-2025)
