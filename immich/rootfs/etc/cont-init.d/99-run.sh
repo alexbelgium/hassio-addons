@@ -13,13 +13,11 @@ export_options() {
     for key in "${keys[@]}"; do
         local value
         value=$(jq -r ".${key}" "${json_source}")
-        # Hide passwords
         if bashio::config.false "verbose" || [[ "$key" == *"PASS"* ]]; then
             bashio::log.blue "${key}=******"
         else
             bashio::log.blue "${key}='${value}'"
         fi
-        # Export value
         export "${key}=${value}"
     done
 }
@@ -89,7 +87,7 @@ setup_root_user() {
     else
         bashio::log.warning "DB_ROOT_PASSWORD not set. Generating a random 12-character alphanumeric password and storing it in the addon options."
         export DB_ROOT_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c12)"
-        bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
+         bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
 
         # Store generated password in the s6 environment if available
         if [ -d /var/run/s6/container_environment ]; then
@@ -97,21 +95,17 @@ setup_root_user() {
         fi
     fi
 
-    # 1. Try connecting as root with the known default password "securepassword"
-    if PGPASSWORD="securepassword" psql -U root -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres -c '\q' 2>/dev/null; then
-        # If successful, root has the default password; update it
+    # Try to connect as root using the default insecure password.
+    if psql "postgres://root:securepassword@${DB_HOSTNAME}:${DB_PORT}/postgres" -c '\q' 2>/dev/null; then
         bashio::log.info "Detected root user with default password. Updating to new DB_ROOT_PASSWORD..."
-        PGPASSWORD="securepassword" psql -U root -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
+        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
 ALTER ROLE root WITH PASSWORD '${DB_ROOT_PASSWORD}';
 EOF
     else
-        # 2. If that fails, check if the root user exists at all
-        if ! PGPASSWORD="${DB_PASSWORD}" \
-             psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres -tAc \
-             "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
-            # 3. Create root user if it doesn't exist
+        # Check if the root user exists.
+        if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" -tAc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
             bashio::log.info "Root user does not exist. Creating root user with DB_ROOT_PASSWORD..."
-            PGPASSWORD="${DB_PASSWORD}" psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
+            psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
 CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD '${DB_ROOT_PASSWORD}';
 EOF
         else
@@ -125,11 +119,10 @@ setup_database() {
     bashio::log.info "Setting up external PostgreSQL database..."
 
     # Create the database if it does not exist
-    if ! PGPASSWORD="${DB_PASSWORD}" \
-         psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres -tAc \
-         "SELECT 1 FROM pg_database WHERE datname='${DB_DATABASE_NAME}';" | grep -q 1; then
+    if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}/postgres" -tAc \
+        "SELECT 1 FROM pg_database WHERE datname='${DB_DATABASE_NAME}';" | grep -q 1; then
         bashio::log.info "Database does not exist. Creating it now..."
-        PGPASSWORD="${DB_PASSWORD}" psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
+        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
 CREATE DATABASE ${DB_DATABASE_NAME};
 EOF
     else
@@ -137,7 +130,7 @@ EOF
     fi
 
     # Ensure the user exists and update its password
-    PGPASSWORD="${DB_PASSWORD}" psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
+    psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
 DO \$\$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '${DB_USERNAME}') THEN
@@ -150,7 +143,7 @@ END
 EOF
 
     # Ensure the user has full privileges on the database
-    PGPASSWORD="${DB_PASSWORD}" psql -U "${DB_USERNAME}" -h "${DB_HOSTNAME}" -p "${DB_PORT}" -d postgres <<EOF
+    psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
 GRANT ALL PRIVILEGES ON DATABASE ${DB_DATABASE_NAME} TO ${DB_USERNAME};
 EOF
 
@@ -160,9 +153,7 @@ EOF
 # Function to check if vectors extension is enabled
 check_vector_extension() {
     echo "Checking if 'vectors' extension is enabled..."
-    RESULT=$(PGPASSWORD="${DB_PASSWORD}" \
-        psql -U "$DB_USERNAME" -h "$DB_HOSTNAME" -p "$DB_PORT" -d "$DB_DATABASE_NAME" -tAc \
-        "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
 
     if [[ "$RESULT" == "vectors" ]]; then
         echo "✅ 'vectors' extension is enabled."
@@ -181,7 +172,17 @@ export_options
 check_db_hostname
 migrate_database
 validate_config
+
+# Reload DB configuration from the addon options (this ensures we have the correct values)
+export DB_USERNAME=$(bashio::config 'DB_USERNAME')
+#export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
+export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
+export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
+export DB_PORT=$(bashio::config 'DB_PORT')
+export JWT_SECRET=$(bashio::config 'JWT_SECRET')
+
 export_db_env
+
 setup_root_user
 setup_database
 check_vector_extension
