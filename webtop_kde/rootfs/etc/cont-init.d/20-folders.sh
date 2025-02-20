@@ -80,4 +80,4 @@ ln -sf /config/.cache /.cache
 # Set ownership
 bashio::log.info "Setting ownership to $PUID:$PGID"
 chown -R "$PUID":"$PGID" "$LOCATION"
-chmod -R 755 "$LOCATION"
+chmod -R 700 "$LOCATION"
