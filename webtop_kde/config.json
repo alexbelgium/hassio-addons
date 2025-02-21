@@ -144,6 +144,7 @@
     "data_location": "str?",
     "keyfile": "str",
     "localdisks": "str?",
+    "install_ms_edge": "bool?",
     "networkdisks": "str?",
     "use_own_certs": "bool?"
   },
