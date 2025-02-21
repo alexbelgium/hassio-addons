@@ -1,3 +1,6 @@
+
+## 25.2.0 (21-02-2025)
+- Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
 ## "25.1.1" (01-02-2025)
 - Minor bugs fixed
 
