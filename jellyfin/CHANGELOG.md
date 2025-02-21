@@ -1,3 +1,4 @@
+- Change default data location to /share rather than main system config folder. This is fully customizable through the data_location option. Also, is now allowing to use /config for a seemless backup of the library with the addon (not recommended as will mean very large backups at each update)
 
 ## 10.10.5 (01-02-2025)
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
