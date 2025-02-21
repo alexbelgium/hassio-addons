@@ -9,7 +9,7 @@ if [[ "$LOCATION" == "/config/addons_config/"* ]]; then
     bashio::log.warning "Data folder was $LOCATION, it is migrated to /config/data. The previous folder is renamed to _migrated"    
     LOCATION="${LOCATION/config/homeassistant}"
     mkdir -p /config/data
-    if [ -d $LOCATION ]; then
+    if [ -d "$LOCATION" ]; then
         cp -rf "$LOCATION"/* /config/data/
         mv "$LOCATION" "$LOCATION"_migrated
     fi
