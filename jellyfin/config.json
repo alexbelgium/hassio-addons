@@ -95,7 +95,7 @@
   "options": {
     "PGID": 0,
     "PUID": 0,
-    "data_location": "/config/addons_config/jellyfin"
+    "data_location": "/share/jellyfin"
   },
   "panel_admin": false,
   "panel_icon": "mdi:billiards-rack",
