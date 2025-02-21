@@ -3,6 +3,16 @@
 set -e
 
 slug=jellyfin
+LOCATION="$(bashio::config 'data_location')"
+
+if [[ "$LOCATION" == "/share/jellyfin" ]] && [ ! -d /share/jellyfin ] && [ -d /homeassistant/addons_config/jellyfin ]; then
+    mkdir -p /share/jellyfin
+    if [ -d /homeassistant/addons_config/jellyfin ]; then
+        bashio::log.warning "Data folder was /config/addons_config/jellyfin, it is migrated to /share/data. The previous folder is renamed to _migrated"    
+        cp -rn /homeassistant/addons_config/jellyfin/* /share/jellyfin/ || true
+        mv /homeassistant/addons_config/jellyfin /homeassistant/addons_config/jellyfin_migrated
+    fi
+fi
 
 # Migration to new /config logic
 if [[ "$LOCATION" == "/config/addons_config/"* ]]; then
