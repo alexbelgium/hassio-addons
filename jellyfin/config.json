@@ -10,7 +10,8 @@
     "**/transcode/"
   ],
   "breaking_versions": [
-    "10.10.5-2"
+    "10.10.5-2",
+    "10.10.6"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media",
