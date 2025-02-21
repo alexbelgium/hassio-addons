@@ -1,4 +1,7 @@
 
+## 5.3-amd64-2025-02-20 (2025-02-20)
+- Update to latest version from mbentley/omada-controller
+
 ## 5.3-amd64-2025-02-08 (2025-02-08)
 - Update to latest version from mbentley/omada-controller
 
