@@ -7,8 +7,10 @@
   "backup_exclude": [
     "**/cache/",
     "**/log/",
-    "**/transcode/",
-    "**/metadata/"
+    "**/transcode/"
+  ],
+  "breaking_versions": [
+    "10.10.5-2"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media",
@@ -83,9 +85,10 @@
   "ingress_stream": true,
   "init": false,
   "map": [
-    "config:rw",
-    "share:rw",
+    "addon_config:rw",
+    "homeassistant_config:rw",
     "media:rw",
+    "share:rw",
     "ssl"
   ],
   "name": "Jellyfin NAS",
@@ -128,6 +131,6 @@
   "slug": "jellyfin",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.10.5",
+  "version": "10.10.5-2",
   "video": true
 }
