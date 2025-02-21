@@ -1,9 +1,9 @@
 {
   "github_beta": "true",
-  "last_update": "09-11-2024",
+  "last_update": "21-02-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "binance-trading-bot",
   "source": "github",
   "upstream_repo": "chrisleekr/binance-trading-bot",
-  "upstream_version": "0.0.99"
+  "upstream_version": "0.0.100"
 }
