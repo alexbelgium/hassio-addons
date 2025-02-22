@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Firefly iii] Updater pulls pre-releases (opened 2025-02-22)](https://github.com/alexbelgium/hassio-addons/issues/1783) by [@dreautall](https://github.com/dreautall)
 # Home assistant add-on: addons updater
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
