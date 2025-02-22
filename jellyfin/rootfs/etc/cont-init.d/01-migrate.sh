@@ -14,6 +14,10 @@ if [[ "$LOCATION" == "/share/jellyfin" ]] && [ ! -d /share/jellyfin ] && [ -d /h
     fi
 fi
 
+if [ -d /homeassistant/addons_config/jellyfin_migrated ]; then
+  ln -sf "$LOCATION" /config/addons_config/jellyfin
+fi
+
 # Migration to new /config logic
 if [[ "$LOCATION" == "/config/addons_config/"* ]]; then
     bashio::log.warning "Data folder was $LOCATION, it is migrated to /config/data. The previous folder is renamed to _migrated"    
