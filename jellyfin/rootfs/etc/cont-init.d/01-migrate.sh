@@ -15,6 +15,7 @@ if [[ "$LOCATION" == "/share/jellyfin" ]] && [ ! -d /share/jellyfin ] && [ -d /h
 fi
 
 if [ -d /homeassistant/addons_config/jellyfin_migrated ]; then
+  mkdir -p /config/addons_config
   ln -sf "$LOCATION" /config/addons_config/jellyfin
 fi
 
