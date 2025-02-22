@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Jellyfin] File Not Found Errors (opened 2025-02-22)](https://github.com/alexbelgium/hassio-addons/issues/1784) by [@Tntdruid](https://github.com/Tntdruid)
 # Home assistant add-on: jellyfin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
