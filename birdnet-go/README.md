@@ -1,5 +1,6 @@
 ## &#9888; Open Issue : [🐛 Birdnet-Go title (opened 2025-02-11)](https://github.com/alexbelgium/hassio-addons/issues/1763) by [@WvanWaas](https://github.com/WvanWaas)
 ## &#9888; Open Issue : [🐛 [Birdnet-go] Uploads failing to Birdweather (opened 2025-02-20)](https://github.com/alexbelgium/hassio-addons/issues/1779) by [@Lotwook](https://github.com/Lotwook)
+## &#9888; Open Issue : [🐛 [Birdnet-go] Audio settings overwritten on restart (opened 2025-02-21)](https://github.com/alexbelgium/hassio-addons/issues/1781) by [@Lotwook](https://github.com/Lotwook)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
