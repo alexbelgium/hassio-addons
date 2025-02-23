@@ -1,9 +1,9 @@
 {
-    "build_from": {
-      "aarch64": "ghcr.io/imagegenius/immich:openvino",
-      "amd64": "ghcr.io/imagegenius/immich:openvino"
-    },
-    "codenotary": {
-      "signer": "alexandrep.github@gmail.com"
-    }
+  "build_from": {
+    "aarch64": "ghcr.io/imagegenius/immich:openvino",
+    "amd64": "ghcr.io/imagegenius/immich:openvino"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
   }
+}

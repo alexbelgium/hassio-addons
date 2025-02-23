@@ -19,16 +19,16 @@
     "3000/tcp": "Web UI port"
   },
   "schema": {
-    "DB_USERNAME": "str",
-    "DB_PASSWORD": "str",
-    "DB_HOST": "str",
-    "DB_PORT": "str",
     "DB_DATABASE_NAME": "str",
-    "IMMICH_API_KEY": "str",
-    "IMMICH_URL": "str",
+    "DB_HOST": "str",
+    "DB_PASSWORD": "str",
+    "DB_PORT": "str",
+    "DB_USERNAME": "str",
     "EXTERNAL_IMMICH_URL": "str",
+    "GEMINI_API_KEY": "str?",
     "GOOGLE_MAPS_API_KEY": "str?",
-    "GEMINI_API_KEY": "str?"
+    "IMMICH_API_KEY": "str",
+    "IMMICH_URL": "str"
   },
   "slug": "immich_power_tools",
   "url": "https://github.com/alexbelgium/hassio-addons",
