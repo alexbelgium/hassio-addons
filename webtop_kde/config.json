@@ -142,9 +142,9 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "data_location": "str?",
+    "install_ms_edge": "bool?",
     "keyfile": "str",
     "localdisks": "str?",
-    "install_ms_edge": "bool?",
     "networkdisks": "str?",
     "use_own_certs": "bool?"
   },
