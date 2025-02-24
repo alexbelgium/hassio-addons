@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Nextcloud] Générer une connexion sécurisée en HTTPS (opened 2025-01-11)](https://github.com/alexbelgium/hassio-addons/issues/1717) by [@jserieye](https://github.com/jserieye)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

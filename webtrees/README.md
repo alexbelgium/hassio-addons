@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [webtrees] SMB mount successful but cant redirect webtrees?.. (opened 2025-01-02)](https://github.com/alexbelgium/hassio-addons/issues/1694) by [@arsenyspb](https://github.com/arsenyspb)
 # Home assistant add-on: Webtrees
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

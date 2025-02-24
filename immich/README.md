@@ -1,6 +1,7 @@
 ## &#9888; Open Issue : [🐛 [Immich] Freshly installed addon not starting. (opened 2024-12-19)](https://github.com/alexbelgium/hassio-addons/issues/1676) by [@CForChrisProooo](https://github.com/CForChrisProooo)
 ## &#9888; Open Request : [✨ [REQUEST] Immich Frame (opened 2025-02-13)](https://github.com/alexbelgium/hassio-addons/issues/1764) by [@NickBootOne](https://github.com/NickBootOne)
 ## &#9888; Open Issue : [🐛 [immich] 99-run.sh error, followed by Redis client error (opened 2025-02-16)](https://github.com/alexbelgium/hassio-addons/issues/1775) by [@chaples55](https://github.com/chaples55)
+## &#9888; Open Issue : [🐛 [Immich] env injector IMMICH_CONFIG_FILE no longer working (opened 2025-02-22)](https://github.com/alexbelgium/hassio-addons/issues/1785) by [@jdumeez](https://github.com/jdumeez)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)
