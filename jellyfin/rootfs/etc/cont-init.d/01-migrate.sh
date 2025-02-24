@@ -17,6 +17,7 @@ fi
 if [ -d /homeassistant/addons_config/jellyfin_migrated ]; then
   mkdir -p /config/addons_config
   ln -sf "$LOCATION" /config/addons_config/jellyfin
+  chown -R "$PUID:$PGID" "$LOCATION"
 fi
 
 # Migration to new /config logic
