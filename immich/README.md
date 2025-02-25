@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] Immich Frame (opened 2025-02-13)](https://github.com/alexbelgium/hassio-addons/issues/1764) by [@NickBootOne](https://github.com/NickBootOne)
-## &#9888; Open Issue : [🐛 [immich] 99-run.sh error, followed by Redis client error (opened 2025-02-16)](https://github.com/alexbelgium/hassio-addons/issues/1775) by [@chaples55](https://github.com/chaples55)
 ## &#9888; Open Issue : [🐛 [Immich] env injector IMMICH_CONFIG_FILE no longer working (opened 2025-02-22)](https://github.com/alexbelgium/hassio-addons/issues/1785) by [@jdumeez](https://github.com/jdumeez)
 # Home assistant add-on: immich
 
