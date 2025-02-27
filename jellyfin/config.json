@@ -10,7 +10,8 @@
     "**/transcode/"
   ],
   "breaking_versions": [
-    "10.10.5-2",
+    "10.10.6-3",
+    "10.10.6-2",
     "10.10.6"
   ],
   "codenotary": "alexandrep.github@gmail.com",
@@ -132,6 +133,6 @@
   "slug": "jellyfin",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.10.6-2",
+  "version": "10.10.6-3",
   "video": true
 }
