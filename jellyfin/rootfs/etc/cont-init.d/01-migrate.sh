@@ -26,9 +26,18 @@ if [[ "$LOCATION" == "/config/addons_config/"* ]]; then
     LOCATION="${LOCATION/config/homeassistant}"
     mkdir -p /config/data
     if [ -d "$LOCATION" ]; then
-        cp -rf "$LOCATION"/* /config/data/
+        cp -rn "$LOCATION"/* /config/data/
         mv "$LOCATION" "$LOCATION"_migrated
     fi
+    bashio::addon.option "data_location" "/config/data"
+fi
+
+if [[ -d "/homeassistant/addons_config/jellyfin" ]]; then
+    bashio::log.warning "Data folder was found in /config/addons_config/jellyfin, it is migrated to /config/data. The previous folder is renamed to _migrated"
+    mkdir -p /config/data
+    cp -rn "/homeassistant/addons_config/jellyfin/*" /config/data/
+    mv /homeassistant/addons_config/jellyfin /homeassistant/addons_config/jellyfin_migrated
+    ln -sf /config/data /config/addons_config/jellyfin
     bashio::addon.option "data_location" "/config/data"
 fi
 
