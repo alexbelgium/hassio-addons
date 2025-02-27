@@ -86,3 +86,10 @@ if [ ! -d /jellyfin/root ]; then
     chown -R "$PUID:$PGID" "$LOCATION"/root
     ln -s "$LOCATION"/root /jellyfin/root
 fi
+
+# Legacy mode
+echo "Enable legacy mode"
+mkdir -p /config/addons_config
+ln -sf "$LOCATION" /config/addons_config/jellyfin
+chown -R "$PUID:$PGID" "$LOCATION"
+
