@@ -34,13 +34,6 @@ if [[ -d "/homeassistant/addons_config/jellyfin" ]]; then
     mv /homeassistant/addons_config/jellyfin /homeassistant/addons_config/jellyfin_migrated
 fi
 
-# Legacy mode
-if [ -d /homeassistant/addons_config/jellyfin_migrated ]; then
-  mkdir -p /config/addons_config
-  ln -sf "$LOCATION" /config/addons_config/jellyfin
-  chown -R "$PUID:$PGID" "$LOCATION"
-fi
-
 # Migrate autoscripts
 if [ -f "/homeassistant/addons_autoscripts/$slug.sh" ]; then
     bashio::log.warning "Migrating autoscript"
