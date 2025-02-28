@@ -35,7 +35,7 @@ if [[ -d "/homeassistant/addons_config/jellyfin" ]]; then
 fi
 
 # Correct metadata path
-grep -rl "/config/addons_config/jellyfin" "$LOCATION" | xargs sed -i "s|/config/addons_config/jellyfin|$LOCATION|g"
+grep -rl "/config/addons_config/jellyfin" "$LOCATION" --include="*.xml" | xargs sed -i "s|/config/addons_config/jellyfin|$LOCATION|g" || true
 
 # Migrate autoscripts
 if [ -f "/homeassistant/addons_autoscripts/$slug.sh" ]; then
