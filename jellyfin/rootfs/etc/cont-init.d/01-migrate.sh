@@ -34,6 +34,9 @@ if [[ -d "/homeassistant/addons_config/jellyfin" ]]; then
     mv /homeassistant/addons_config/jellyfin /homeassistant/addons_config/jellyfin_migrated
 fi
 
+# Correct metadata path
+grep -rl "/config/addons_config/jellyfin" "$LOCATION" | xargs sed -i "s|/config/addons_config/jellyfin|$LOCATION|g"
+
 # Migrate autoscripts
 if [ -f "/homeassistant/addons_autoscripts/$slug.sh" ]; then
     bashio::log.warning "Migrating autoscript"
