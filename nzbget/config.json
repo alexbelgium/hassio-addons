@@ -112,5 +112,5 @@
   "slug": "nzbget",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v24.5-ls181"
+  "version": "v24.6-ls183"
 }
