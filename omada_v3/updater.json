@@ -1,11 +1,11 @@
 {
   "dockerhub_by_date": true,
   "github_tagfilter": "5.3-amd64",
-  "last_update": "2025-02-20",
+  "last_update": "2025-02-22",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "omada_v3",
   "source": "dockerhub",
   "upstream_repo": "mbentley/omada-controller",
-  "upstream_version": "5.3-amd64-2025-02-20"
+  "upstream_version": "5.3-amd64-2025-02-22"
 }

@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] qBittorrent Gluetun (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1661) by [@xtian47](https://github.com/xtian47)
 ## &#9888; Open Issue : [🐛 [Repository] No repository information exists at /data/addons/git/db21ed7f (opened 2025-02-16)](https://github.com/alexbelgium/hassio-addons/issues/1776) by [@bcutter](https://github.com/bcutter)
 ## &#9888; Open Issue : [🐛 [Immich] env injector IMMICH_CONFIG_FILE no longer working (opened 2025-02-22)](https://github.com/alexbelgium/hassio-addons/issues/1785) by [@jdumeez](https://github.com/jdumeez)
 # Hass.io Add-ons: Tor with bridges

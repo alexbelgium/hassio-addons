@@ -1,4 +1,7 @@
 
+## 5.19.3.9730 (01-03-2025)
+- Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
+
 ## 5.18.4.9674 (08-02-2025)
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 

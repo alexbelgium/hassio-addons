@@ -22,7 +22,7 @@ ARG SUB_PATH="/mealie/"
 ENV SUB_PATH=$SUB_PATH
 
 WORKDIR /app
-ENV MEALIE_VERSION="v2.6.0"
+ENV MEALIE_VERSION="v2.7.1"
 
 # Clone the Mealie repository to get the frontend source code
 # hadolint ignore=DL3003
@@ -48,8 +48,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Correct data path
 # hadolint ignore=DL4006
-RUN grep -rl "/app/data" /app | xargs sed -i 's|/app/data|/config|g' && \
-    sed -i "s|change_user$|# change_user|g" /app/run.sh
+RUN sed -i "s|change_user$|# change_user|g" /app/run.sh
 
 ##################
 # 3 Install apps #
