@@ -1,6 +1,8 @@
 
 ## 25.3.1 (01-03-2025)
+- Move to GitHub Container Registry (GHCR)
 - Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
+
 ## 25.2.8-3 (09-02-2025)
 - Minor bugs fixed
 ## 25.2.8-2 (09-02-2025)
