@@ -48,7 +48,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Correct data path
 # hadolint ignore=DL4006
-RUN sed -i "s|change_user$|# change_user|g" /app/run.sh
+RUN sed -i "s|change_user$|# change_user|g" /app/run.sh && 
+    # Avoid unbound error
+    sed -i 's|\${!file_var}|${!file_var:-}|g' /app/run.sh
 
 ##################
 # 3 Install apps #
