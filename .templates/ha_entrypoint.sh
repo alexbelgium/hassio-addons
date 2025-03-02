@@ -28,7 +28,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
     currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$SCRIPTS")"
     if [ ! -f "${currentshebang%% *}" ]; then
         for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do 
-            if [ -f "${shebang%% *}" ]; then 
+            if [ -f "${shebang%% *}" ] && [[ "${shebang%% *} echo \"yes\"" ]]; then
                 break
             fi
         done
