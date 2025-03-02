@@ -13,15 +13,15 @@ fi
 # SET SYSTEM #
 ##############
 
+# Set password
 bashio::log.info "Setting password for the user pi"
 if bashio::config.has_value "pi_password"; then
     echo "pi:$(bashio::config "pi_password")" | chpasswd
 fi
 bashio::log.info "Password set successfully for user pi."
 
-bashio::log.info "Setting timezone :"
-
 # Use timezone defined in add-on options if available
+bashio::log.info "Setting timezone :"
 if bashio::config.has_value 'TZ'; then
     TZ_VALUE="$(bashio::config 'TZ')"
     if timedatectl set-timezone "$TZ_VALUE"; then
@@ -48,6 +48,10 @@ else
         bashio::log.fatal "Couldn't set automatic timezone! Please set a manual one from the options."
     fi
 fi
+
+# Ensure minimal structure
+mkdir -p "$HOME"/BirdSongs/StreamData
+touch "$HOME"/BirdSongs/StreamData/analyzing_now.txt
 
 bashio::log.info "Starting system services"
 
