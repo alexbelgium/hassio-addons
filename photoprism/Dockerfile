@@ -54,7 +54,8 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 
 # Manual apps
 ENV PACKAGES="jq \
-    mariadb-client \
+    curl \
+    cifs-utils \
     keyutils \
     coreutils\
     nginx"
