@@ -1,3 +1,4 @@
+## ubuntu-2025-02-28-8 (02-03-2025)
 - Fix ssl error
 - Update to latest version from photoprism/photoprism
 
