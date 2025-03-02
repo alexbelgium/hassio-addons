@@ -15,19 +15,19 @@
 #################
 
 # Stage 1: Build Frontend with SUB_PATH
-FROM node:16 AS builder
+FROM node:16 AS frontend-builder
 
 # Set the SUB_PATH environment variable
 ARG SUB_PATH="/mealie/"
 ENV SUB_PATH=$SUB_PATH
 
-WORKDIR /app
 ENV MEALIE_VERSION="v2.7.1"
 
 # Clone the Mealie repository to get the frontend source code
 # hadolint ignore=DL3003
-RUN git clone --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/mealie.git . && \
-    cd /app/frontend && \
+WORKDIR /frontend
+RUN mkdir tempdir && cd tempdir && git clone --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/mealie.git . && \
+    cp -rf frontend/* /frontend && cd /frontend && rm -r tempdir && \
     yarn install --prefer-offline --frozen-lockfile --non-interactive --production=false --network-timeout 1000000 && \
     yarn generate
 
@@ -35,7 +35,8 @@ RUN git clone --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/meali
 FROM hkotel/mealie:latest
 
 # Copy the rebuilt frontend files into the final image
-COPY --from=builder /app/frontend/dist /spa/static
+WORKDIR /mealie
+COPY --from=frontend-builder /frontend/dist /mealie/frontend
 
 ##################
 # 2 Modify Image #
@@ -48,7 +49,12 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Correct data path
 # hadolint ignore=DL4006
-RUN sed -i "s|change_user$|# change_user|g" /app/run.sh && sed -i 's|\${!file_var}|${!file_var:-}|g' /app/run.sh
+RUN \
+    # Copy frontend
+    rm -r /opt/mealie/lib/python*/site-packages/mealie/frontend && \
+    mv /mealie/frontend /opt/mealie/lib/python3.12/site-packages/mealie && \
+    # avoid changing user
+    sed -i "s|change_user$|# change_user|g" /app/run.sh && sed -i 's|\${!file_var}|${!file_var:-}|g' /app/run.sh
 
 ##################
 # 3 Install apps #
