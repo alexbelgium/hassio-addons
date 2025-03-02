@@ -61,17 +61,17 @@ case $(bashio::config 'DB_TYPE') in
 
         # Create database
         /usr/bin/mariadb \
-            -u "$PHOTOPRISM_DATABASE_USER" -p"$mariadb_port" \
-            -h "$mariadb_host" -P "$mariadb_port" \
-            --skip-ssl \
-            -e "CREATE DATABASE IF NOT EXISTS \`$PHOTOPRISM_DATABASE_NAME\`;"
-
+        -u "$PHOTOPRISM_DATABASE_USER" -p "$PHOTOPRISM_DATABASE_PASSWORD" \
+        -h "${mariadb_host}" -P "${mariadb_port}" \
+        --skip-ssl \
+        -e "CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME;"
+        
         # Force character set
         /usr/bin/mariadb \
-            -u "$PHOTOPRISM_DATABASE_USER" -p"$PHOTOPRISM_DATABASE_PASSWORD" \
-            -h "$mariadb_host" -P "$mariadb_port" \
-            --skip-ssl \
-            -e "ALTER DATABASE \`$PHOTOPRISM_DATABASE_NAME\` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;"
+        -u "$PHOTOPRISM_DATABASE_USER" -p "$PHOTOPRISM_DATABASE_PASSWORD" \
+        -h "${mariadb_host}" -P "${mariadb_port}" \
+        --skip-ssl \
+        -e "ALTER DATABASE $PHOTOPRISM_DATABASE_NAME CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;" || true
         ;;
 esac
 
