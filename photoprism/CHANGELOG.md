@@ -1,6 +1,4 @@
-## ubuntu-2025-02-28-6 (02-03-2025)
-- Minor bugs fixed
-## ubuntu-2025-02-28-5 (02-03-2025)
+- Fix ssl error
 - Update to latest version from photoprism/photoprism
 
 ## ubuntu-2024-09-15 (2024-09-15)
