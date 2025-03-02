@@ -39,12 +39,6 @@ mkdir -p /run/s6/container_environment
 
 # Check if shebang exists
 for shebang in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
-    if [ -f "${shebang%% *}" ] && [[ "${shebang%% *} echo \"yes\"" ]]; then
-        break
-    fi
-done
-
-for shebang in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
     command_path="${shebang%% *}"
     if [ -x "$command_path" ] && "$command_path" echo "yes" >/dev/null 2>&1; then
         echo "Valid shebang: $shebang"
