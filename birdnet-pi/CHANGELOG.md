@@ -1,3 +1,4 @@
+- Allow standalone restart
 - Fix non-avx2 cpu support
 
 ## 2025.02.23 (16-02-2025)
