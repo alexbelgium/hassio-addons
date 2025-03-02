@@ -36,8 +36,8 @@ Ensure you have the following installed on your system:
          - "8001:8081"  # Used to access WebUI
          - "80:80"  # Optional: set to 80 to use Caddy's automatic SSL. Can otherwise be set to null to avoid opening an additional port
        environment:
-         - TZ=Europe/Vienna  # Optional: Set your timezone
-         - BIRDSONGS_FOLDER=/config/BirdSongs  # Folder to store bird songs
+         - TZ=Europe/Vienna  # Optional: Set your timezone according to https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+         - BIRDSONGS_FOLDER=/config/BirdSongs  # Folder to store bird songs, be sure to use a path that is mapped to a volume (such as /config)
          - LIVESTREAM_BOOT_ENABLED=false  # Enable/disable livestream on boot
          - ssl=false  # Enable/disable SSL
          - certfile=fullchain.pem  # SSL certificate file (located in /ssl/)
@@ -48,7 +48,7 @@ Ensure you have the following installed on your system:
          - MQTT_PORT_manual=  # Optional: Manual MQTT port
          - MQTT_USER_manual=  # Optional: Manual MQTT user
        volumes:
-         - ./config:/config  # Configuration files
+         - ./config:/config  # All your configuration files - and location of the default Birdsongs folder
          - ./ssl:/ssl  # SSL certificates
          - /dev/shm:/dev/shm  # Shared memory
        tmpfs:
