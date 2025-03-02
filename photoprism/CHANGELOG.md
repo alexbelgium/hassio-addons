@@ -1,3 +1,5 @@
+## ubuntu-2025-02-28-2 (02-03-2025)
+- Minor bugs fixed
 
 ## ubuntu-2025-02-28 (2025-02-28)
 - Update to latest version from photoprism/photoprism
