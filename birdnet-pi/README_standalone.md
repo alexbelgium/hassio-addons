@@ -22,7 +22,7 @@ Ensure you have the following installed on your system:
    ```sh
    nano docker-compose.yml
    ```
-   
+
    Copy and paste the following configuration:
    ```yaml
    version: '3.8'
@@ -51,6 +51,8 @@ Ensure you have the following installed on your system:
          - ./config:/config  # Configuration files
          - ./ssl:/ssl  # SSL certificates
          - /dev/shm:/dev/shm  # Shared memory
+       tmpfs:
+         - /tmp # Optional
    ```
 
 3. **Start the Container**
@@ -62,7 +64,7 @@ Ensure you have the following installed on your system:
 
 4. **Access BirdNET-Pi Web UI**
    Open your browser and navigate to:
-   ```
+   ```sh
    http://localhost:8001 # Or whatever port you have configured
    ```
    Replace `localhost` with your server's IP address if running on another machine.
@@ -74,7 +76,7 @@ To check for new versions of the container and update:
 1. **Check for the latest version**
    Visit the container registry:
    [https://github.com/alexbelgium/hassio-addons/pkgs/container/birdnet-pi-amd64](https://github.com/alexbelgium/hassio-addons/pkgs/container/birdnet-pi-amd64)
-   
+
    The latest version tag (e.g., `2025.02.23`) will be listed.
 
 2. **Update and restart the container**
