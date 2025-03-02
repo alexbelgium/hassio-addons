@@ -27,8 +27,10 @@ for SCRIPTS in /etc/cont-init.d/*; do
     # Get current shebang, if not available use another
     currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$SCRIPTS")"
     if [ ! -f "${currentshebang%% *}" ]; then
-        for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do 
-            if [ -f "${shebang%% *}" ] && [[ "${shebang%% *} echo \"yes\"" ]]; then
+        for shebang in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
+            command_path="${shebang%% *}"
+            if [ -x "$command_path" ] && "$command_path" echo "yes" >/dev/null 2>&1; then
+                echo "Valid shebang: $shebang"
                 break
             fi
         done
