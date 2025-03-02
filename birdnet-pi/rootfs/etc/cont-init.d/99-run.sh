@@ -1,6 +1,8 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 
+set -eu
+
 # Save a copy of the script for further restarts
 if [ -f /etc/cont-init.d/99-run.sh ]; then
     mkdir -p /etc/scripts-init
