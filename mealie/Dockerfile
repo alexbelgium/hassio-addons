@@ -52,7 +52,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 RUN \
     # Copy frontend
     rm -r /opt/mealie/lib/python*/site-packages/mealie/frontend && \
-    mv /mealie/frontend /opt/mealie/lib/python3.12/site-packages/mealie && \
+    mv /mealie/frontend /opt/mealie/lib/python*/site-packages/mealie && \
     # avoid changing user
     sed -i "s|change_user$|# change_user|g" /app/run.sh && sed -i 's|\${!file_var}|${!file_var:-}|g' /app/run.sh
 
