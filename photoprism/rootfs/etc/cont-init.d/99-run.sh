@@ -29,8 +29,10 @@ case $(bashio::config 'DB_TYPE') in
         pip install pymysql &>/dev/null || true
 
         # Use values
+        mariadb_host="$(bashio::services 'mysql' 'host')"
+        mariadb_port="$(bashio::services 'mysql' 'port')"
         PHOTOPRISM_DATABASE_DRIVER="mysql"
-        PHOTOPRISM_DATABASE_SERVER="$(bashio::services 'mysql' 'host'):$(bashio::services 'mysql' 'port')"
+        PHOTOPRISM_DATABASE_SERVER="$mariadb_host:$mariadb_port"
         PHOTOPRISM_DATABASE_NAME="photoprism"
         PHOTOPRISM_DATABASE_USER="$(bashio::services 'mysql' 'username')"
         PHOTOPRISM_DATABASE_PASSWORD="$(bashio::services 'mysql' 'password')"
@@ -58,9 +60,18 @@ case $(bashio::config 'DB_TYPE') in
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
         # Create database
-        mysql ----ssl=0 --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME;"
+        /usr/bin/mariadb \
+        -u "$PHOTOPRISM_DATABASE_USER" -p "$PHOTOPRISM_DATABASE_PASSWORD" \
+        -h "${mariadb_host}" -P "${mariadb_port}" \
+        --skip-ssl \
+        -e "CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME;"
+        
         # Force character set
-        mysql ----ssl=0 --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"ALTER DATABASE $PHOTOPRISM_DATABASE_NAME CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;" || true
+        /usr/bin/mariadb \
+        -u "$PHOTOPRISM_DATABASE_USER" -p "$PHOTOPRISM_DATABASE_PASSWORD" \
+        -h "${mariadb_host}" -P "${mariadb_port}" \
+        --skip-ssl \
+        -e "ALTER DATABASE $PHOTOPRISM_DATABASE_NAME CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;" || true
         ;;
 esac
 
