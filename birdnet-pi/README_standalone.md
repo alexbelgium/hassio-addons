@@ -2,6 +2,8 @@
 
 This guide provides instructions on how to install and run the BirdNET-Pi container using Docker Compose without dependency on HomeAssistant.
 
+Thanks to @gotschi for the initial Docker Compose
+
 ## Prerequisites
 
 Ensure you have the following installed on your system:
@@ -23,6 +25,8 @@ Ensure you have the following installed on your system:
    
    Copy and paste the following configuration:
    ```yaml
+   version: '3.8'
+   
    services:
      birdnet-pi:
        container_name: birdnet-pi
@@ -32,20 +36,20 @@ Ensure you have the following installed on your system:
          - "8001:8081"  # Used to access WebUI
          - "80:80"  # Optional: set to 80 to use Caddy's automatic SSL. Can otherwise be set to null to avoid opening an additional port
        environment:
-         - TZ=Europe/Vienna  # Optional, for timezone setting
-         - BIRDSONGS_FOLDER=/config/BirdSongs  # Where songs are stored
-         - LIVESTREAM_BOOT_ENABLED=false  # If true
-         - ssl=false  # In lowercase
-         - certfile=fullchain.pem  # Should be located in /ssl/ to use external certificates
-         - keyfile=privkey.pem  # Should be located in /ssl/ to use external certificates
-         - pi_password=  # Optional, set the user password in SSH
-         - MQTT_HOST_manual=  # Optional, allows automatic MQTT
-         - MQTT_PASSWORD_manual=  # Optional, allows automatic MQTT
-         - MQTT_PORT_manual=  # Optional, allows automatic MQTT
-         - MQTT_USER_manual=  # Optional, allows automatic MQTT
+         - TZ=Europe/Vienna  # Optional: Set your timezone
+         - BIRDSONGS_FOLDER=/config/BirdSongs  # Folder to store bird songs
+         - LIVESTREAM_BOOT_ENABLED=false  # Enable/disable livestream on boot
+         - ssl=false  # Enable/disable SSL
+         - certfile=fullchain.pem  # SSL certificate file (located in /ssl/)
+         - keyfile=privkey.pem  # SSL key file (located in /ssl/)
+         - pi_password=  # Optional: Set SSH user password
+         - MQTT_HOST_manual=  # Optional: Manual MQTT host
+         - MQTT_PASSWORD_manual=  # Optional: Manual MQTT password
+         - MQTT_PORT_manual=  # Optional: Manual MQTT port
+         - MQTT_USER_manual=  # Optional: Manual MQTT user
        volumes:
-         - ./config:/config
-         - ./ssl:/ssl
+         - ./config:/config  # Configuration files
+         - ./ssl:/ssl  # SSL certificates
          - /dev/shm:/dev/shm  # Shared memory
    ```
 
