@@ -1,7 +1,6 @@
 ## &#9888; Open Issue : [🐛 [BirdNET-Pi] timezone (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1664) by [@alexbelgium](https://github.com/alexbelgium)
-# Home assistant add-on: birdnet-pi
 
-For usage without HomeAssistant (classic docker container), see here : https://github.com/alexbelgium/hassio-addons/blob/master/birdnet-pi/README_standalone.md
+# Home assistant add-on: birdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
@@ -24,6 +23,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/birdnet-pi/stats.png)
 
 ## About
+
+_Note : For usage without HomeAssistant (classic docker container), see [here](https://github.com/alexbelgium/hassio-addons/blob/master/birdnet-pi/README_standalone.md)_
 
 ---
 
