@@ -1,6 +1,11 @@
 # BirdNET-Pi Docker Installation Guide
 
+[![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+[![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
+
 This guide provides instructions on how to install and run the BirdNET-Pi container using Docker Compose without dependency on HomeAssistant.
+
+_Note : For usage as an HomeAssistant addon, see [here](https://github.com/alexbelgium/hassio-addons/blob/master/birdnet-pi/README.md)_
 
 Thanks to @gotschi for the initial Docker Compose
 
