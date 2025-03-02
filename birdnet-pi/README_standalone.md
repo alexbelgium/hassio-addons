@@ -25,8 +25,6 @@ Ensure you have the following installed on your system:
 
    Copy and paste the following configuration:
    ```yaml
-   version: '3.8'
-   
    services:
      birdnet-pi:
        container_name: birdnet-pi
