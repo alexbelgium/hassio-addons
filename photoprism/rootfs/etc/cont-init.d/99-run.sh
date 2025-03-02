@@ -58,9 +58,9 @@ case $(bashio::config 'DB_TYPE') in
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
         # Create database
-        mysql ----ssl=0 --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME;"
+        mysql --skip-ssl --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $PHOTOPRISM_DATABASE_NAME;"
         # Force character set
-        mysql ----ssl=0 --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"ALTER DATABASE $PHOTOPRISM_DATABASE_NAME CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;" || true
+        mysql --skip-ssl --host="$(bashio::services 'mysql' 'host')" --port="$(bashio::services 'mysql' 'port')" --user="$PHOTOPRISM_DATABASE_USER" --password="$PHOTOPRISM_DATABASE_PASSWORD" -e"ALTER DATABASE $PHOTOPRISM_DATABASE_NAME CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;" || true
         ;;
 esac
 
