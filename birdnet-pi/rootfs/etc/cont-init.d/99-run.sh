@@ -47,11 +47,11 @@ else
     else
         bashio::log.fatal "Couldn't set automatic timezone! Please set a manual one from the options."
     fi
-fi
+fi || true
 
 # Ensure minimal structure
-mkdir -p "$HOME"/BirdSongs/StreamData
-touch "$HOME"/BirdSongs/StreamData/analyzing_now.txt
+mkdir -p "$HOME"/BirdSongs/StreamData || true
+touch "$HOME"/BirdSongs/StreamData/analyzing_now.txt || true
 
 bashio::log.info "Starting system services"
 
