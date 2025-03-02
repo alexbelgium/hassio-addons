@@ -51,8 +51,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # hadolint ignore=DL4006
 RUN \
     # Copy frontend
-    rm -r /opt/mealie/lib/python*/site-packages/mealie/frontend && \
-    mv /mealie/frontend /opt/mealie/lib/python*/site-packages/mealie && \
+    cd /opt/mealie/lib/python*/site-packages/mealie && \
+    rm -r frontend && mv /mealie/frontend . && \
     # avoid changing user
     sed -i "s|change_user$|# change_user|g" /app/run.sh && sed -i 's|\${!file_var}|${!file_var:-}|g' /app/run.sh
 
