@@ -1,6 +1,8 @@
 ## &#9888; Open Issue : [🐛 [BirdNET-Pi] timezone (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1664) by [@alexbelgium](https://github.com/alexbelgium)
 # Home assistant add-on: birdnet-pi
 
+For usage without HomeAssistant (classic docker container), see here : https://github.com/alexbelgium/hassio-addons/blob/master/birdnet-pi/README_standalone.md
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
 
