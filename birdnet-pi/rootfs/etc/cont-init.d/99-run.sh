@@ -11,6 +11,10 @@ if [ -f /etc/cont-init.d/99-run.sh ]; then
     cp /etc/cont-init.d/99-run.sh /etc/scripts-init/
 fi
 
+# Recreate folders if needed
+mkdir -p /tmp/StreamData /tmp/Processed
+chown pi:pi /tmp/StreamData /tmp/Processed
+
 ##############
 # SET SYSTEM #
 ##############
