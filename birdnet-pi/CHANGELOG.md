@@ -1,6 +1,8 @@
+- [DOCKER] Allow files recovery on restart
+
 ## 2025.03.03 (02-03-2025)
-- Allow standalone restart
-- Fix non-avx2 cpu support
+- [DOCKER] Allow standalone restart
+- [ALL] Fix non-avx2 cpu support
 
 ## 2025.02.23 (16-02-2025)
 - WARNING 2025.02.14/16 was buggy. If you installed it you need to restore a backup or delete manually your /addon_configs/xxx-birdnet-pi/birdnet.conf file and recreate it
