@@ -51,10 +51,6 @@ else
     fi
 fi || true
 
-# Ensure minimal structure
-mkdir -p "$HOME"/BirdSongs/StreamData || true
-touch "$HOME"/BirdSongs/StreamData/analyzing_now.txt || true
-
 bashio::log.info "Starting system services"
 
 bashio::log.info "Starting cron service"
