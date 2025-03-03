@@ -29,7 +29,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     XDG_RUNTIME_DIR="/run/user/1000" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3" \
     my_dir=/home/pi/BirdNET-Pi/scripts \
-    MPLCONFIGDIR="/tmp/.cache/matplotlib" \
+    MPLCONFIGDIR="/tmp/matplotlib" \
     LANGUAGE=en_US:en
     
 # Global LSIO modifications
