@@ -2,6 +2,14 @@
 # shellcheck shell=bash
 set -e
 
+# Save a copy of the script for further restarts
+if [ -f /etc/cont-init.d/99-run.sh ]; then
+    mkdir -p /etc/scripts-init
+    sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
+    sed -i "/ rm/d" /ha_entrypoint.sh
+    cp /etc/cont-init.d/99-run.sh /etc/scripts-init/
+fi
+
 ######################
 # CHECK BIRDNET.CONF #
 ######################
