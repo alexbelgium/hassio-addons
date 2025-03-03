@@ -6,7 +6,7 @@ bashio::log.info "Starting Immich Power Tools"
 extract_ip_or_domain() {
     local url="$1"
     if [[ ! "$url" =~ ^https?:// ]]; then
-        bashio::warning "URL $url has a http:// or https:// prefix. This should not be, it is removed automatically"
+        bashio::log.warning "URL $url has a http:// or https:// prefix. This should not be, it is removed automatically"
         echo "$url" | sed -E 's|https?://([^/]+).*|\1|'
     fi
 }
@@ -17,7 +17,7 @@ export DB_HOST
 ensure_http_prefix() {
     local url="$1"
     if [[ ! "$url" =~ ^https?:// ]]; then
-        bashio::warning "URL $url does not have http:// or https:// prefix. Adding http:// by default. If cannot connect to immich, please adapt in your addon options"
+        bashio::log.warning "URL $url does not have http:// or https:// prefix. Adding http:// by default. If cannot connect to immich, please adapt in your addon options"
         echo "http://$url"
     else
         echo "$url"
