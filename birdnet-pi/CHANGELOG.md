@@ -1,3 +1,4 @@
+## 2025.03.04 (03-03-2025)
 - [DOCKER] Allow files recovery on restart
 
 ## 2025.03.03 (02-03-2025)
