@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [BirdNET-Pi] timezone (opened 2024-12-10)](https://github.com/alexbelgium/hassio-addons/issues/1664) by [@alexbelgium](https://github.com/alexbelgium)
+## &#9888; Open Issue : [🐛 [Birdnet-PI] HA in a VM on Sinology Non supported CPU (opened 2025-03-02)](https://github.com/alexbelgium/hassio-addons/issues/1798) by [@Grey-Lancaster](https://github.com/Grey-Lancaster)
 
 # Home assistant add-on: birdnet-pi
 
