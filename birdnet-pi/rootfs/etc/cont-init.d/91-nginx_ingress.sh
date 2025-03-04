@@ -32,6 +32,9 @@ else
     exit 1
 fi
 
+# Disable log
+sed -i "/View Log/d" "$HOME/BirdNET-Pi/homepage/views.php"
+
 echo "... ensuring restricted area access"
 echo "${ingress_entry}" > /ingress_url
 
@@ -58,4 +61,3 @@ else
     bashio::log.error "Caddy update script not found: $caddy_update_script"
     exit 1
 fi
-
