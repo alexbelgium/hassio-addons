@@ -1,3 +1,5 @@
+- [ADDON] Allow statistics in ingress
+
 ## 2025.03.08 (04-03-2025)
 - [ALL] Fix stats bug
 
