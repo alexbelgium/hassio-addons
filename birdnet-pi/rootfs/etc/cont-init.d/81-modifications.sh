@@ -2,6 +2,17 @@
 # shellcheck shell=bash
 set -e
 
+##################
+# ALLOW RESTARTS #
+##################
+
+if [ -f /etc/cont-init.d/99-run.sh ]; then
+    mkdir -p /etc/scripts-init
+    sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
+    sed -i "/ rm/d" /ha_entrypoint.sh
+    cp /etc/cont-init.d/99-run.sh /etc/scripts-init/
+fi
+
 ################
 # MODIFY WEBUI #
 ################
@@ -14,16 +25,20 @@ sed -i '/>System Controls/d' "$HOME/BirdNET-Pi/homepage/views.php"
 
 # Remove Ram drive option from webui
 echo "... removing Ram drive from webui as it is handled from HA"
-sed -i '/Ram drive/{n;s/center"/center" style="display: none;"/;}' "$HOME/BirdNET-Pi/scripts/service_controls.php"
-sed -i '/Ram drive/d' "$HOME/BirdNET-Pi/scripts/service_controls.php"
+if grep -q "Ram drive" "$HOME/BirdNET-Pi/scripts/service_controls.php"; then
+    sed -i '/Ram drive/{n;s/center"/center" style="display: none;"/;}' "$HOME/BirdNET-Pi/scripts/service_controls.php"
+    sed -i '/Ram drive/d' "$HOME/BirdNET-Pi/scripts/service_controls.php"
+fi
 
 # Correct services to start as user pi
 echo "... updating services to start as user pi"
-while IFS= read -r file; do
-    if [[ "$(basename "$file")" != "birdnet_log.service" ]]; then
-        sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$file"
-    fi
-done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -print) 
+if ! grep -q "/usr/bin/sudo" "$HOME/BirdNET-Pi/templates/birdnet_log.service"; then
+    while IFS= read -r file; do
+        if [[ "$(basename "$file")" != "birdnet_log.service" ]]; then
+            sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$file"
+        fi
+    done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -print)
+fi
 
 # Send services log to container logs
 echo "... redirecting services logs to container logs"
@@ -52,16 +67,20 @@ sed -i "/PHP_SERVICE=/c PHP_SERVICE=\$(systemctl list-unit-files -t service --no
 echo "... modifying Caddyfile configurations"
 caddy fmt --overwrite /etc/caddy/Caddyfile
 #Change port to leave 80 free for certificate requests
-sed -i "s|http://|http://:8081|g" /etc/caddy/Caddyfile
-sed -i "s|http://|http://:8081|g" "$HOME/BirdNET-Pi/scripts/update_caddyfile.sh"
-if [ -f /etc/caddy/Caddyfile.original ]; then
-    rm /etc/caddy/Caddyfile.original
+if ! grep -q "http://:8081" /etc/caddy/Caddyfile; then
+    sed -i "s|http://|http://:8081|g" /etc/caddy/Caddyfile
+    sed -i "s|http://|http://:8081|g" "$HOME/BirdNET-Pi/scripts/update_caddyfile.sh"
+    if [ -f /etc/caddy/Caddyfile.original ]; then
+        rm /etc/caddy/Caddyfile.original
+    fi
 fi
 
 # Correct webui paths
 echo "... correcting webui paths"
-sed -i "s|/stats|/stats/|g" "$HOME/BirdNET-Pi/homepage/views.php"
-sed -i "s|/log|/log/|g" "$HOME/BirdNET-Pi/homepage/views.php"
+if ! grep -q "/stats/" "$HOME/BirdNET-Pi/homepage/views.php"; then
+    sed -i "s|/stats|/stats/|g" "$HOME/BirdNET-Pi/homepage/views.php"
+    sed -i "s|/log|/log/|g" "$HOME/BirdNET-Pi/homepage/views.php"
+fi
 
 # Check if port 80 is correctly configured
 if [ -n "$(bashio::addon.port "80")" ] && [ "$(bashio::addon.port "80")" != 80 ]; then
@@ -70,12 +89,14 @@ fi
 
 # Correct systemctl path
 echo "... updating systemctl path"
-mv /helpers/systemctl3.py /bin/systemctl
-chmod a+x /bin/systemctl
+if [[ -f /helpers/systemctl3.py ]]; then
+    mv /helpers/systemctl3.py /bin/systemctl
+    chmod a+x /bin/systemctl
+fi
 
 # Improve streamlit cache
-echo "... add streamlit cache"
-sed -i "/def get_data/i \\@st\.cache_resource\(\)" "$HOME/BirdNET-Pi/scripts/plotly_streamlit.py"
+#echo "... add streamlit cache"
+#sed -i "/def get_data/i \\@st\.cache_resource\(\)" "$HOME/BirdNET-Pi/scripts/plotly_streamlit.py"
 
 # Allow reverse proxy for streamlit
 echo "... allow reverse proxy for streamlit"
@@ -88,9 +109,11 @@ sed -i '/sox.*-V1/s/spectrogram/highpass 250 spectrogram/' "$HOME/BirdNET-Pi/scr
 
 # Correct timedatectl path
 echo "updating timedatectl path"
-mv /helpers/timedatectl /usr/bin/timedatectl
-chown pi:pi /usr/bin/timedatectl
-chmod a+x /usr/bin/timedatectl
+if [[ -f /helpers/timedatectl ]]; then
+    mv /helpers/timedatectl /usr/bin/timedatectl
+    chown pi:pi /usr/bin/timedatectl
+    chmod a+x /usr/bin/timedatectl
+fi
 
 # Correct timezone showing in config.php
 sed -i -e '/<option disabled selected>/s/selected//' \
@@ -105,4 +128,5 @@ if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
 else
     bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
 fi
+
 "$HOME/BirdNET-Pi/scripts/install_language_label_nm.sh" -l "${DATABASE_LANG:-}" &>/dev/null || bashio::log.warning "Failed to update language labels"
