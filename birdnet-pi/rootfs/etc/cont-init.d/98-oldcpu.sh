@@ -26,6 +26,7 @@ if [[ "$(uname -m)" = "x86_64" ]]; then
         bashio::log.warning "Trying to install tensorflow instead of tflite_runtime instead"
         mkdir -p /home/pi/.cache/pip
         chmod 777 /home/pi/.cache/pip
+        # shellcheck disable=SC1091
         source /home/pi/BirdNET-Pi/birdnet/bin/activate
         pip3 uninstall -y tflite_runtime
         pip3 install tensorflow
