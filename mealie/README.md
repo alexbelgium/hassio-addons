@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Mealie] Profile pictures do not show in ingress (opened 2025-01-11)](https://github.com/alexbelgium/hassio-addons/issues/1714) by [@IceBotYT](https://github.com/IceBotYT)
-## &#9888; Open Issue : [🐛 [Mealie] cant update to 2.7.1 (opened 2025-03-01)](https://github.com/alexbelgium/hassio-addons/issues/1792) by [@collateral87](https://github.com/collateral87)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
