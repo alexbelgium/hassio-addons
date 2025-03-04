@@ -1,7 +1,5 @@
-## 2025.03.07 (04-03-2025)
-- Minor bugs fixed
-## 2025.03.06 (03-03-2025)
-- Minor bugs fixed
+- [ALL] Fix stats bug
+
 ## 2025.03.04 (03-03-2025)
 - [DOCKER] Allow files recovery on restart
 
