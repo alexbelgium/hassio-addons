@@ -75,6 +75,10 @@ Ensure you have the following installed on your system:
    ```
    Replace `localhost` with your server's IP address if running on another machine.
 
+## troubleshoot
+
+If rtsp feed doesn't work, perhaps you need to add "-rtsp-transport tcp" to your ffmpeg instruction, or allow udp on your network
+
 ## Updating to the Latest Version
 
 To check for new versions of the container and update:
