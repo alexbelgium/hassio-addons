@@ -79,7 +79,7 @@ sed -i "/def get_data/i \\@st\.cache_resource\(\)" "$HOME/BirdNET-Pi/scripts/plo
 
 # Allow reverse proxy for streamlit
 echo "... allow reverse proxy for streamlit"
-sed -i "s|plotly_streamlit.py|plotly_streamlit.py --server.enableXsrfProtection=false --server.enableCORS=false|g" "$HOME/BirdNET-Pi/scripts/install_services.sh"
+sed -i "s|plotly_streamlit.py --browser.gatherUsageStats|plotly_streamlit.py --server.enableXsrfProtection=false --server.enableCORS=false --browser.gatherUsageStats|g" "$HOME/BirdNET-Pi/templates/birdnet_stats.service"
 
 # Clean saved mp3 files
 echo ".. add highpass and lowpass to sox extracts"
