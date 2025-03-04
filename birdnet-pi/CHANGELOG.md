@@ -1,3 +1,4 @@
+## 2025.03.10 (04-03-2025)
 - [ALL] Fix stats bug
 - [ADDON] Fix clicking on links on dynamic graph
 - [ADDON] Allow statistics in ingress
