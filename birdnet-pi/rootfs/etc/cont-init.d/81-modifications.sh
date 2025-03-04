@@ -77,6 +77,10 @@ chmod a+x /bin/systemctl
 echo "... add streamlit cache"
 sed -i "/def get_data/i \\@st\.cache_resource\(\)" "$HOME/BirdNET-Pi/scripts/plotly_streamlit.py"
 
+# Allow reverse proxy for streamlit
+echo "... allow reverse proxy for streamlit"
+sed -i "s|plotly_streamlit.py|plotly_streamlit.py --server.enableXsrfProtection=false --server.enableCORS=false|g" "$HOME/BirdNET-Pi/scripts/install_services.sh"
+
 # Clean saved mp3 files
 echo ".. add highpass and lowpass to sox extracts"
 sed -i "s|f'={stop}']|f'={stop}', 'highpass', '250', 'lowpass', '15000']|g" "$HOME/BirdNET-Pi/scripts/utils/reporting.py"
