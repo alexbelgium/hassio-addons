@@ -184,7 +184,7 @@ jobs:
       - name: Build ${{ matrix.addon }} add-on
         id: builderstep
         if: steps.check.outputs.build_arch == 'true'
-        uses: home-assistant/builder@2024.08.1
+        uses: home-assistant/builder@2025.02.0
         env:
           CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
         with:
