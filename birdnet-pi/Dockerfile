@@ -95,8 +95,8 @@ RUN \
     # Execute installer
     /./newinstaller.sh && \
     \
-    # Install dateparser
-    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser && \
+    # Install dateparser and resampy
+    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser resampy && \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
@@ -108,10 +108,7 @@ RUN \
     \
     # Cleanup
     apt-get clean all && \
-    rm -rf /var/lib/apt/lists/* && \
-    \
-    # Install resampy
-    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install resampy
+    rm -rf /var/lib/apt/lists/*
 
 # Add PR
 #RUN \
