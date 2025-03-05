@@ -29,7 +29,7 @@ if [[ "$(uname -m)" = "x86_64" ]]; then
         mkdir -p /home/pi/.cache/pip || true &>/dev/null
         chmod 777 /home/pi/.cache/pip || true &>/dev/null
         pip3 uninstall -y tflite_runtime &>/dev/null
-        pip3 install tensorflow==2.16.1 &>/dev/null
+        pip3 install "tensorflow==2.15"
         deactivate
     fi
   fi
