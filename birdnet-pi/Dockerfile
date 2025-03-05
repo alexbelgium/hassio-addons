@@ -89,6 +89,9 @@ RUN \
     sed -i "/git clone/a chmod 777 \$HOME/BirdNET-Pi/scripts/*.sh" /newinstaller.sh && \
     # Disable datetimectl
     sed -i '/git clone/a sed -i "/CURRENT_TIMEZONE/s/$/ || true/" $HOME/BirdNET-Pi/scripts/install_birdnet.sh' /newinstaller.sh && \
+    # Upgrade tflite runtime
+    sed -i '/git clone/a sed -i "s|https://github.com/Nachtzuster/BirdNET-Pi/releases/download/v0.1/|https://github.com/feranick/TFlite-builds/releases/download/v2.17.1/|g" $HOME/BirdNET-Pi/scripts/install_helpers.sh' /newinstaller.sh && \
+    sed -i '/git clone/a sed -i "s|2.11.0|2.17.1|g" $HOME/BirdNET-Pi/scripts/install_helpers.sh' /newinstaller.sh && \
     # Remove all instances of sudo from the newinstaller
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     \
@@ -96,7 +99,7 @@ RUN \
     /./newinstaller.sh && \
     \
     # Install dateparser and resampy, upgrade numpy
-    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser resampy numpy==1.26.4 && \
+    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser resampy && \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
