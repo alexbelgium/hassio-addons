@@ -28,7 +28,7 @@ if [[ "$(uname -m)" = "x86_64" ]]; then
         chmod 777 /home/pi/.cache/pip
         source /home/pi/BirdNET-Pi/birdnet/bin/activate
         pip3 uninstall -y tflite_runtime
-        pip3 install tensorflow
+        pip3 install tensorflow==2.16.1
         deactivate
     fi
   fi
