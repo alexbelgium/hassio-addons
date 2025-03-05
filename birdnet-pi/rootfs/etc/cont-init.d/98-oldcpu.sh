@@ -23,12 +23,13 @@ if [[ "$(uname -m)" = "x86_64" ]]; then
     if ! lscpu | grep -q "avx2"; then
         bashio::log.warning "NON SUPPORTED CPU DETECTED"
         bashio::log.warning "Your cpu doesn't support avx2, the analyzer service will likely won't work"
-        bashio::log.warning "Trying to install tensorflow instead of tflite_runtime instead"
-        mkdir -p /home/pi/.cache/pip
-        chmod 777 /home/pi/.cache/pip
+        bashio::log.warning "Trying to install tensorflow instead of tflite_runtime instead. This might take some time."
+        bashio::log.warning "You would have much better chance trying Birdnet-Go, which has an addon and a docker image, and supports your cpu"
         source /home/pi/BirdNET-Pi/birdnet/bin/activate
-        pip3 uninstall -y tflite_runtime
-        pip3 install tensorflow==2.16.1
+        mkdir -p /home/pi/.cache/pip || true &>/dev/null
+        chmod 777 /home/pi/.cache/pip || true &>/dev/null
+        pip3 uninstall -y tflite_runtime &>/dev/null
+        pip3 install tensorflow==2.16.1 &>/dev/null
         deactivate
     fi
   fi
