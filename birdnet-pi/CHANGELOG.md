@@ -1,5 +1,5 @@
-## 2025.03.11 (05-03-2025)
-- Minor bugs fixed
+- Upgrade tflite from 2.11 to 2.17.1
+
 ## 2025.03.10 (04-03-2025)
 - [ALL] Fix stats bug
 - [ADDON] Fix clicking on links on dynamic graph
