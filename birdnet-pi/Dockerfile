@@ -95,8 +95,8 @@ RUN \
     # Execute installer
     /./newinstaller.sh && \
     \
-    # Install dateparser and resampy
-    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser resampy && \
+    # Install dateparser and resampy, upgrade tflite and numpy
+    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser resampy tflite_runtime==2.14.0 numpy==1.25 && \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
