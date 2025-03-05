@@ -6,11 +6,11 @@ set -e
 # ALLOW RESTARTS #
 ##################
 
-if [ -f /etc/cont-init.d/99-run.sh ]; then
+if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
     mkdir -p /etc/scripts-init
     sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
     sed -i "/ rm/d" /ha_entrypoint.sh
-    cp /etc/cont-init.d/99-run.sh /etc/scripts-init/
+    cp "${BASH_SOURCE[0]}" /etc/scripts-init/
 fi
 
 ###############
