@@ -1,5 +1,5 @@
-## 2025.03.13 (05-03-2025)
-- Upgrade tflite from 2.11 to 2.17.1
+- [ALL] Upgrade tflite from 2.11 to 2.17.1
+- [DOCKER] Improved restart mode
 
 ## 2025.03.10 (04-03-2025)
 - [ALL] Fix stats bug
