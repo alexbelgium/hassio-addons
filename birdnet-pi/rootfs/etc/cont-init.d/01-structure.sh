@@ -107,10 +107,9 @@ echo "... checking and setting permissions"
 chmod -R 755 /config/*
 chmod 777 /config
 
-# Create Matplotlib configuration directory
+# Create folder for matplotlib
 echo "... setting up Matplotlabdir"
-MPLCONFIGDIR="${MPLCONFIGDIR:-$HOME/.config/matplotlib}"
-mkdir -p "$MPLCONFIGDIR"
-chown pi:pi "$MPLCONFIGDIR"
-chmod 777 "$MPLCONFIGDIR"
+mkdir -p "$HOME"/.cache/matplotlib
+chown -R "pi:pi" "$HOME"/.cache/matplotlib
+chmod 777 "$HOME"/.cache/matplotlib
 
