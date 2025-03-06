@@ -16,7 +16,8 @@ if ! bashio::supervisor.ping 2>/dev/null; then
         '-----------------------------------------------------------'
     # Use environment variables instead of addon options
     echo "... convert scripts to use environment variables instead of addon options"
-    for scripts in $(grep -srl "bashio" /etc/cont-init.d /etc/s6-overlay/s6-rc.d /custom-services.d); do
+    while IFS= read -r scripts
+    do
         sed -i -e 's/bashio::config.has_value[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z "${\1:-}" ]/g' \
             -e 's/bashio::config.true[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z "${\1:-}" ] \&\& [ "${\1:-}" = "true" ]/g' \
             -e 's/\$(bashio::config[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"'])/${\1:-}/g' \
@@ -25,7 +26,7 @@ if ! bashio::supervisor.ping 2>/dev/null; then
             -e 's/\$(bashio::addon.ingress_port)/""/g' \
             -e 's/\$(bashio::addon.ingress_entry)/""/g' \
             -e 's/\$(bashio::addon.ip_address)/""/g' "$scripts"
-    done
+    done < <(grep -srl "bashio" /etc/cont-init.d /etc/s6-overlay/s6-rc.d /custom-services.d)
     exit 0
 fi
 
