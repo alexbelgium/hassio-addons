@@ -24,7 +24,7 @@ ingress_entry=$(bashio::addon.ingress_entry)
 
 # Quits if ingress is not active
 if [ -z "$ingress_entry" ]; then
-    bashio::log.warning "Ingress entry is not set, exiting configuration."
+    bashio::log.info "Ingress entry is not set, exiting configuration."
     sed -i "1a sleep infinity" /custom-services.d/02-nginx.sh
     exit 0
 fi
