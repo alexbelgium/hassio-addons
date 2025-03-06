@@ -29,6 +29,7 @@ if [[ "$(uname -m)" = "x86_64" ]]; then
         mkdir -p /home/pi/.cache/pip || true &>/dev/null
         chmod 777 /home/pi/.cache/pip || true &>/dev/null
         pip3 uninstall -y tflite_runtime
+        pip install --upgrade packaging==23.2
         pip3 install --upgrade --force-reinstall "https://github.com/snowzach/tensorflow-multiarch/releases/download/v2.16.1/tensorflow-2.16.1-cp311-cp311-linux_x86_64.whl"
         deactivate
     fi
