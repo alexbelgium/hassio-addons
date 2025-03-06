@@ -1,4 +1,5 @@
 - [ALL] Upgrade tflite from 2.11 to 2.17.1
+- [ALL] Use tensorflow 1.5 if non-avx2 detected
 - [DOCKER] Improved restart mode
 
 ## 2025.03.10 (04-03-2025)
