@@ -1,5 +1,5 @@
 #!/command/with-contenv bashio
-# shellcheck shell=bash
+# shellcheck shell=bash disable=SC2016
 set -e
 
 ##################
