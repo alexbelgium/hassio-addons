@@ -54,6 +54,11 @@ echo "... disabling preselecting options in include and exclude lists"
 sed -i "s|option selected|option disabled|g" "$HOME/BirdNET-Pi/scripts/include_list.php"
 sed -i "s|option selected|option disabled|g" "$HOME/BirdNET-Pi/scripts/exclude_list.php"
 
+# Preencode API key
+if ! grep -q "FLICKR_API_KEY" "$HOME/BirdNET-Pi/scripts/common.php"; do
+    sed -i "/return \$_SESSION\['my_config'\];/i\ \ \ \ if (isset(\$_SESSION\['my_config'\]) \&\& empty(\$_SESSION\['my_config'\]\['FLICKR_API_KEY'\])) {\n\ \ \ \ \ \ \ \ \$_SESSION\['my_config'\]\['FLICKR_API_KEY'\] = \"221160312e1c22ec60ecf336951b0e77\";\n\ \ \ \ }" "$HOME"/BirdNET-Pi/scripts/common.php
+fi
+
 # Correct log services to show /proc/1/fd/1
 echo "... redirecting birdnet_log service output to /logs"
 sed -i "/User=pi/d" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
