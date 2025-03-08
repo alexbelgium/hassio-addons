@@ -1,3 +1,4 @@
+## 2025.03.19 (08-03-2025)
 - [ALL] Default Flickr API key if not provided
 - [Non-avx2] Use tflite built with non-avx2 instructions
 
