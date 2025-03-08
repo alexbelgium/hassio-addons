@@ -1,4 +1,7 @@
 
+## 0.8.2 (08-03-2025)
+- Update to latest version from gabe565/CastSponsorSkip (changelog : https://github.com/gabe565/CastSponsorSkip/releases)
+
 ## 0.8.1 (21-12-2024)
 - Update to latest version from gabe565/CastSponsorSkip (changelog : https://github.com/gabe565/CastSponsorSkip/releases)
 
