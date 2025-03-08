@@ -30,7 +30,7 @@ if [[ "$(uname -m)" = "x86_64" ]]; then
         chmod 777 /home/pi/.cache/pip || true &>/dev/null
         pip3 uninstall -y tflite_runtime
         pip install --upgrade packaging==23.2
-        pip3 install --upgrade --force-reinstall "https://github.com/alexbelgium/TFlite-bookworm/releases/download/2.17.1/tflite_runtime-2.17.1-cp311-cp311-linux_x86_64.whl" numpy==1.26.4
+        pip3 install --upgrade --force-reinstall "https://github.com/alexbelgium/TFlite-bookworm/releases/download/2.17.1/tflite_runtime-2.17.1_noavx-cp311-cp311-linux_x86_64.whl" numpy==1.26.4
         deactivate
     fi
   fi
