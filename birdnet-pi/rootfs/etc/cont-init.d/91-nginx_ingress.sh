@@ -23,7 +23,7 @@ ingress_interface=$(bashio::addon.ip_address)
 ingress_entry=$(bashio::addon.ingress_entry)
 
 # Quits if ingress is not active
-if [ -z "$ingress_entry" ]; then
+if [[ "$ingress_entry" != "/api"* ]]; then
     bashio::log.info "Ingress entry is not set, exiting configuration."
     sed -i "1a sleep infinity" /custom-services.d/02-nginx.sh
     exit 0
