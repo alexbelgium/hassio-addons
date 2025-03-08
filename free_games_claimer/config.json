@@ -97,6 +97,6 @@
   "slug": "free_games_claimer",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.6-6",
+  "version": "1.7",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:6080]"
 }
