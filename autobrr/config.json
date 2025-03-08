@@ -116,5 +116,5 @@
   "slug": "autobrr",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/autobrr",
-  "version": "1.58.0"
+  "version": "1.59.0"
 }
