@@ -121,6 +121,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "2025.03.19",
+  "version": "2025.03.20",
   "video": true
 }
