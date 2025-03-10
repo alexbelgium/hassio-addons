@@ -42,10 +42,13 @@ if [ -f /data/config/nginx/site-confs/default.conf ]; then
   sed -i "s|front_controller_active true|front_controller_active false|g" /defaults/nginx/site-confs/default.conf.sample
 fi
 
-echo "... setting permissions"
 mkdir -p "$datadirectory"
-chmod 755 -R "$datadirectory" || true
-chown -R "$PUID:$PGID" "$datadirectory" || true
+if [[ "$PUID" != "0" ]] && [[ "$PGID" != "0" ]];
+  echo "... setting permissions"
+  chmod 755 -R "$datadirectory" || true
+  chown -R "$PUID:$PGID" "$datadirectory" || true
+fi
+
 mkdir -p /scripts
 
 echo "... done"
