@@ -43,7 +43,7 @@ if [ -f /data/config/nginx/site-confs/default.conf ]; then
 fi
 
 mkdir -p "$datadirectory"
-if [[ "$PUID" != "0" ]] && [[ "$PGID" != "0" ]];
+if [[ "$PUID" != "0" ]] && [[ "$PGID" != "0" ]]; then
   echo "... setting permissions"
   chmod 755 -R "$datadirectory" || true
   chown -R "$PUID:$PGID" "$datadirectory" || true
