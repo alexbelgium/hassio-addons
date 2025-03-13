@@ -89,7 +89,6 @@ RUN \
     # Disable datetimectl
     sed -i '/git clone/a sed -i "/CURRENT_TIMEZONE/s/$/ || true/" $HOME/BirdNET-Pi/scripts/install_birdnet.sh' /newinstaller.sh && \
     # Upgrade tflite runtime
-    sed -i '/git clone/a sed -i "s|https://github.com/Nachtzuster/BirdNET-Pi/releases/download/v0.1/|https://github.com/feranick/TFlite-builds/releases/download/v2.17.1/|g" $HOME/BirdNET-Pi/scripts/install_helpers.sh' /newinstaller.sh && \
     sed -i '/git clone/a sed -i "s|2.11.0|2.17.1|g" $HOME/BirdNET-Pi/scripts/install_helpers.sh' /newinstaller.sh && \
     sed -i '/git clone/a sed -i "s|2.11.0|2.17.1|g" $HOME/BirdNET-Pi/scripts/update_birdnet_snippets.sh' /newinstaller.sh && \    
     sed -i '/git clone/a sed -i "s|numpy==1.23.5|numpy-1.26.4|g" $HOME/BirdNET-Pi/scripts/update_birdnet_snippets.sh' /newinstaller.sh && \    
