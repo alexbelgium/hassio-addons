@@ -1,5 +1,5 @@
-## 2025.03.21 (09-03-2025)
-- Minor bugs fixed
+- [ALL] Use Nachtzuster universal tflite 2.17.1 runtimes allowing full compatibility with non avx cpu
+
 ## 2025.03.19 (08-03-2025)
 - [ALL] Default Flickr API key if not provided
 - [Non-avx2] Use tflite built with non-avx2 instructions
