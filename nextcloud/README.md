@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Nextcloud] NTFS support (opened 2025-02-27)](https://github.com/alexbelgium/hassio-addons/issues/1789) by [@Nidalone29](https://github.com/Nidalone29)
-## &#9888; Open Issue : [🐛 [NextCloud] Addon unable to start following HAOS reboot. (opened 2025-03-10)](https://github.com/alexbelgium/hassio-addons/issues/1807) by [@bb12ett](https://github.com/bb12ett)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
