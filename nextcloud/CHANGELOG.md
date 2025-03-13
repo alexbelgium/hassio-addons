@@ -1,3 +1,4 @@
+- New option : skip_permissions_check to skip permissions check
 
 ## 31.0.0 (01-03-2025)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)

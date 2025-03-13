@@ -148,6 +148,7 @@
     "keyfile": "str",
     "localdisks": "str?",
     "networkdisks": "str?",
+    "skip_permissions_check": "bool?",
     "trusted_domains": "str?",
     "use_own_certs": "bool"
   },
@@ -158,6 +159,6 @@
   "uart": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "31.0.0",
+  "version": "31.0.0-2",
   "webui": "https://[HOST]:[PORT:443]"
 }

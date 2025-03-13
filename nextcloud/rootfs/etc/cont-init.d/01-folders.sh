@@ -42,9 +42,18 @@ if [ -f /data/config/nginx/site-confs/default.conf ]; then
   sed -i "s|front_controller_active true|front_controller_active false|g" /defaults/nginx/site-confs/default.conf.sample
 fi
 
+# Set permissions
 mkdir -p "$datadirectory"
-if [[ "$PUID" != "0" ]] && [[ "$PGID" != "0" ]]; then
-  echo "... setting permissions"
+if bashio::config.true "skip_permissions_check"; then
+  bashio::log.yellow "--------------------------------------------"
+  bashio::log.yellow "Permissions check skipped : \"skip_permissions_check\" is true"
+  bashio::log.yellow "--------------------------------------------"
+elif [[ "$PUID" != "0" ]] && [[ "$PGID" != "0" ]]; then
+  bashio::log.yellow "--------------------------------------------"
+  bashio::log.yellow "Permissions check skipped : \"PUID and PGID are 0\" is true"
+  bashio::log.yellow "--------------------------------------------"
+else
+  bashio::log.yellow "... setting permissions, this might take a long time. If it takes too long at each boot, you could instead activate skip_permissions_check in the addon options"
   chmod 755 -R "$datadirectory" || true
   chown -R "$PUID:$PGID" "$datadirectory" || true
 fi
