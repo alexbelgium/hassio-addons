@@ -1,6 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Immich Frame (opened 2025-02-13)](https://github.com/alexbelgium/hassio-addons/issues/1764) by [@NickBootOne](https://github.com/NickBootOne)
 ## &#9888; Open Issue : [🐛 [Immich] Addon not starting: Cant write /data/addons/data/db21ed7f_immich/options.json (opened 2025-03-01)](https://github.com/alexbelgium/hassio-addons/issues/1794) by [@MarzyCoder](https://github.com/MarzyCoder)
-## &#9888; Open Request : [✨ [REQUEST] immich and Nextcloud Ingress support (opened 2025-03-15)](https://github.com/alexbelgium/hassio-addons/issues/1812) by [@bessertristan09](https://github.com/bessertristan09)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)

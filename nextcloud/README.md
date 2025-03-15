@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [Nextcloud] NTFS support (opened 2025-02-27)](https://github.com/alexbelgium/hassio-addons/issues/1789) by [@Nidalone29](https://github.com/Nidalone29)
-## &#9888; Open Request : [✨ [REQUEST] immich and Nextcloud Ingress support (opened 2025-03-15)](https://github.com/alexbelgium/hassio-addons/issues/1812) by [@bessertristan09](https://github.com/bessertristan09)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
