@@ -108,6 +108,6 @@
   "slug": "mylar3",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.1.1",
+  "version": "0.8.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8090]"
 }
