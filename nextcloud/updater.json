@@ -1,8 +1,8 @@
 {
-  "last_update": "01-03-2025",
+  "last_update": "15-03-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "nextcloud",
   "source": "github",
   "upstream_repo": "linuxserver/docker-nextcloud",
-  "upstream_version": "31.0.0"
+  "upstream_version": "31.0.1"
 }
