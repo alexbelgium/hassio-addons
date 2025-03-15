@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Birdnet-Pi] 3.22 stopped analyzing on Synology VM (opened 2025-03-15)](https://github.com/alexbelgium/hassio-addons/issues/1811) by [@Grey-Lancaster](https://github.com/Grey-Lancaster)
 
 # Home assistant add-on: birdnet-pi
 
