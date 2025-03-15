@@ -1,4 +1,7 @@
 
+## 0.55.0 (15-03-2025)
+- Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
+
 ## 0.54.5 (21-02-2025)
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 ## 0.54.4-2 (15-02-2025)
