@@ -82,13 +82,21 @@ echo "Starting birdmic"
 # Disable gigabit ethernet
 sudo ethtool -s eth0 speed 100 duplex full autoneg on
 
+# Detect Scarlett 2i2 card index - relevant only if you use that card
+SCARLETT_INDEX=$(arecord -l | grep -i "Scarlett" | awk '{print $2}' | sed 's/://')
+
+if [ -z "$SCARLETT_INDEX" ]; then
+    echo "Error: Scarlett 2i2 not found! Using 0 as default"
+    SCARLETT_INDEX="0"
+fi
+
 # Start mediamtx first and give it a moment to initialize
 ./mediamtx & 
 sleep 5
     
 # Run ffmpeg
 ffmpeg -nostdin -use_wallclock_as_timestamps 1 -fflags +genpts -f alsa -acodec pcm_s16be -ac 2 -ar 96000 \
--i plughw:0,0 -ac 2 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp \
+-i plughw:$SCARLETT_INDEX,0 -ac 2 -f rtsp -acodec pcm_s16be rtsp://localhost:8554/birdmic -rtsp_transport tcp \
 -buffer_size 512k 2>/tmp/rtsp_error &
 
 # Set microphone volume
