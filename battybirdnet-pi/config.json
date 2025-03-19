@@ -1,6 +1,7 @@
 {
   "arch": [
-    "aarch64"
+    "aarch64",
+    "amd64"
   ],
   "audio": true,
   "backup": "cold",
@@ -121,6 +122,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/battybirdnet-pi",
   "usb": true,
-  "version": "0.95",
+  "version": "0.96",
   "video": true
 }
