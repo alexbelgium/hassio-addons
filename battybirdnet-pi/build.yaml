@@ -1,5 +1,6 @@
 ---
 build_from:
   aarch64: ghcr.io/linuxserver/baseimage-debian:arm64v8-bookworm
+  amd64: ghcr.io/linuxserver/baseimage-debian:amd64-bookworm
 codenotary:
   signer: alexandrep.github@gmail.com
