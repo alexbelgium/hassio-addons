@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [NetAlertX - able to see devices two vlans but not the third - !????!?!?!? (opened 2025-03-18)](https://github.com/alexbelgium/hassio-addons/issues/1816) by [@KruseLuds](https://github.com/KruseLuds)
 # Home assistant add-on: NetAlertX
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
