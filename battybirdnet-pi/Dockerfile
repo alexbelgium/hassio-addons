@@ -58,7 +58,7 @@ RUN \
     git config --global --add safe.directory '*' && \
     \
     # Download installer
-    curl -f -L -s -S "https://raw.githubusercontent.com/rdz-oss/BattyBirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
+    curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/BattyBirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     \
     # Use installer to modify other scripts
