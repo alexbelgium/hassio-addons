@@ -79,12 +79,6 @@ sed -i -e '/<option disabled selected>/s/selected//' \
        -e "/\$date = new DateTime('now');/i \$current_timezone = trim(shell_exec(\"timedatectl show --value --property=Timezone\"));" \
        -e "/\$date = new DateTime('now');/i date_default_timezone_set(\$current_timezone);" "$HOME/BirdNET-Pi/scripts/config.php"
 
-# Correct language labels according to birdnet.conf
-echo "... adapting labels according to birdnet.conf"
-export "$(grep "^DATABASE_LANG" /config/birdnet.conf)" || bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
-bashio::log.info "Setting language to $DATABASE_LANG"
-"$HOME/BirdNET-Pi/scripts/install_language_label_nm.sh" -l "$DATABASE_LANG" &>/dev/null || bashio::log.warning "Failed to update language labels"
-
 # Use only first user
 echo "... correcting for multiple users"
 for file in $(grep -rl "/1000/{print" "$HOME"/BirdNET-Pi/scripts); do
