@@ -2,7 +2,7 @@
 #  ALEXBELGIUM'S DOCKERFILE  #
 #============================#
 #           _.------.
-#       _.-`    ('>.-`"""-.
+#       _.-`    ('>.-`"""-.port
 # '.--'`       _'`   _ .--.)
 #    -'         '-.-';`   `
 #    ' -      _.'  ``'--.
@@ -18,6 +18,8 @@ ARG BUILD_VERSION
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
+# Install locales
+RUN apt-get update && apt-get install --no-install-recommends -y locales && locale-gen en_US.UTF-8
 ENV DEBIAN_FRONTEND="noninteractive" \
     BIRDNET_USER="pi" \
     USER="pi" \
@@ -26,7 +28,8 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     HOME="/home/pi" \
     XDG_RUNTIME_DIR="/run/user/1000" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3" \
-    my_dir=/home/pi/BattyBirdNET-Analyzer/scripts
+    my_dir=/home/pi/BirdNET-Pi/scripts \
+    LANGUAGE=en_US:en
 
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
@@ -47,7 +50,7 @@ RUN \
     # Correct for timedatectl
     if [[ -f /usr/bin/timedatectl ]]; then rm -r /usr/bin/timedatectl; fi && \
     curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o /usr/bin/timedatectl && \
-    chown pi:pi /usr/bin/timedatectl && chmod a+x /usr/bin/timedatectl \
+    chmod 777 /usr/bin/timedatectl \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \
