@@ -54,6 +54,10 @@ else
     fi
 fi || true
 
+# Fix timezone as per installer
+CURRENT_TIMEZONE="$(timedatectl show --value --property=Timezone)"
+[ -f /etc/timezone ] && echo "$CURRENT_TIMEZONE" | sudo tee /etc/timezone > /dev/null
+
 bashio::log.info "Starting system services"
 
 bashio::log.info "Starting cron service"
