@@ -50,7 +50,7 @@ RUN \
     # Correct for timedatectl
     if [[ -f /usr/bin/timedatectl ]]; then rm -r /usr/bin/timedatectl; fi && \
     curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o /usr/bin/timedatectl && \
-    chmod 777 /usr/bin/timedatectl \
+    chmod 777 /usr/bin/timedatectl && \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \
