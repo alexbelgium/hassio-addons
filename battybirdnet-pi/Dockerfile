@@ -45,8 +45,9 @@ RUN \
     chmod a+x /bin/systemctl && \
     \
     # Correct for timedatectl
-    curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o /bin/timedatectl && \
-    chmod a+x /bin/timedatectl && \
+    if [[ -f /usr/bin/timedatectl ]]; then rm -r /usr/bin/timedatectl; fi && \
+    curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o /usr/bin/timedatectl && \
+    chown pi:pi /usr/bin/timedatectl && chmod a+x /usr/bin/timedatectl \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \
@@ -71,10 +72,11 @@ RUN \
     sed -i "1a /./newinstallermod.sh" /newinstaller.sh && \
     echo '#!/bin/bash' >> /newinstallermod.sh && \
     # Remove all instances of sudo from all other scripts
-    echo 'for file in $(grep -srl "sudo" $HOME/BattyBirdNET-Analyzer/scripts); do sed -i "s|sudo ||" "$file"; done' >> /newinstallermod.sh && \
-    echo 'for file in $(grep -srl "my_dir" $HOME/BattyBirdNET-Analyzer/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
+    echo 'for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' >> /newinstallermod.sh && \
+    echo 'for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
     # Disable pulseaudio
-    echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BattyBirdNET-Analyzer/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
+    echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
+    echo 'sed -i /timedatectl/d $HOME/BirdNET-pi/scripts/install_birdnet.sh' >> /newinstallermod.sh && \
     # Set permission
     chmod +x /newinstallermod.sh && \
     \
