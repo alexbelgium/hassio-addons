@@ -44,6 +44,10 @@ RUN \
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
     chmod a+x /bin/systemctl && \
     \
+    # Correct for timedatectl
+    curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o /bin/timedatectl && \
+    chmod a+x /bin/timedatectl && \
+    \
     # Change user to pi and create /home/pi
     echo "setting users" && \
     if id abc >/dev/null 2>&1; then groupmod -o -g 101 abc && usermod -o -u 101 abc; fi && \
