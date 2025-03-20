@@ -94,11 +94,11 @@ if [ -n "$(bashio::addon.port "80")" ] && [ "$(bashio::addon.port "80")" != 80 ]
 fi
 
 # Correct systemctl path
-echo "... updating systemctl path"
-if [[ -f /helpers/systemctl3.py ]]; then
-    mv /helpers/systemctl3.py /bin/systemctl
-    chmod a+x /bin/systemctl
-fi
+#echo "... updating systemctl path"
+#if [[ -f /helpers/systemctl3.py ]]; then
+#    mv /helpers/systemctl3.py /bin/systemctl
+#    chmod a+x /bin/systemctl
+#fi
 
 # Improve streamlit cache
 #echo "... add streamlit cache"
