@@ -109,6 +109,9 @@ RUN \
     # Give access to caddy for files owned by the user, to allow files modification
     groupmod -o -g 1000 caddy && usermod -o -u 1000 caddy && \
     \
+    # Ensure always pi is used
+    for file in $(grep -srl "/etc/passwd" $HOME/BirdNET-Pi/); do sed -i "s=/etc/passwd=/etc/passwd | head -1=g" "$file"; done && \
+    \
     # Cleanup
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
