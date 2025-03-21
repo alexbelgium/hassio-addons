@@ -66,8 +66,10 @@ sed -i "/User=pi/d" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
 sed -i "s|birdnet_log.sh|cat /proc/1/fd/1|g" "$HOME/BirdNET-Pi/templates/birdnet_log.service"
 
 # Correct backup script
-echo "... correct backup script"
-sed -i "/PHP_SERVICE=/c PHP_SERVICE=\$(systemctl list-unit-files -t service --no-pager | grep 'php' | grep 'fpm' | awk '{print \$1}')" "$HOME/BirdNET-Pi/scripts/backup_data.sh"
+if [[ -f "$HOME/BirdNET-Pi/scripts/backup_data.sh" ]]; then
+    echo "... correct backup script"
+    sed -i "/PHP_SERVICE=/c PHP_SERVICE=\$(systemctl list-unit-files -t service --no-pager | grep 'php' | grep 'fpm' | awk '{print \$1}')" "$HOME/BirdNET-Pi/scripts/backup_data.sh"
+fi
 
 # Caddyfile modifications
 echo "... modifying Caddyfile configurations"
