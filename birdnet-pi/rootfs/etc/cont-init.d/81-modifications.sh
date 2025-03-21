@@ -55,7 +55,7 @@ sed -i "s|option selected|option disabled|g" "$HOME/BirdNET-Pi/scripts/include_l
 sed -i "s|option selected|option disabled|g" "$HOME/BirdNET-Pi/scripts/exclude_list.php"
 
 # Preencode API key
-if ! grep -q "221160312" "$HOME/BirdNET-Pi/scripts/common.php"; then
+if [[ -f "$HOME/BirdNET-Pi/scripts/common.php" ]] && ! grep -q "221160312" "$HOME/BirdNET-Pi/scripts/common.php"; then
     sed -i "/return \$_SESSION\['my_config'\];/i\ \ \ \ if (isset(\$_SESSION\['my_config'\]) \&\& empty(\$_SESSION\['my_config'\]\['FLICKR_API_KEY'\])) {\n\ \ \ \ \ \ \ \ \$_SESSION\['my_config'\]\['FLICKR_API_KEY'\] = \"221160312e1c22\";\n\ \ \ \ }" "$HOME"/BirdNET-Pi/scripts/common.php
     sed -i "s|e1c22|e1c22ec60ecf336951b0e77|g" "$HOME"/BirdNET-Pi/scripts/common.php
 fi
