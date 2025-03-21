@@ -121,14 +121,6 @@ if [[ -f /helpers/timedatectl ]]; then
     chmod a+x /usr/bin/timedatectl
 fi
 
-# Correct timezone showing in config.php
-# shellcheck disable=SC2016
-echo "... updating timezone in config.php"
-sed -i -e '/<option disabled selected>/s/selected//' \
-       -e '/\$current_timezone = trim(shell_exec("timedatectl show --value --property=Timezone"));/d' \
-       -e "/\$date = new DateTime('now');/i \$current_timezone = trim(shell_exec(\"timedatectl show --value --property=Timezone\"));" \
-       -e "/\$date = new DateTime('now');/i date_default_timezone_set(\$current_timezone);" "$HOME/BirdNET-Pi/scripts/config.php"
-
 # Correct language labels according to birdnet.conf
 echo "... adapting labels according to birdnet.conf"
 if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
