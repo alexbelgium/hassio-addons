@@ -101,6 +101,9 @@ touch "$HOME"/BirdNET-Pi/scripts/lastrun.txt
 chown pi:pi "$HOME"/BirdNET-Pi/scripts/thisrun.txt
 chown pi:pi "$HOME"/BirdNET-Pi/scripts/lastrun.txt
 
+# Symlink
+chown pi:pi /usr/local/bin/*
+
 # Symlink BirdSongs folders
 for folder in By_Date Charts; do
     echo "... creating symlink for $BIRDSONGS_FOLDER/$folder"
