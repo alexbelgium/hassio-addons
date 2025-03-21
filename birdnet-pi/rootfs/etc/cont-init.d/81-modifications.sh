@@ -33,8 +33,8 @@ fi
 # Allow symlinks
 echo "... ensuring symlinks work"
 for files in "$HOME"/BirdNET-Pi/scripts/*.sh; do
-  sed -i "s|find |find -L|g" "$files"
-  sed -i "s|find -L -L|find -L|g" "$files"
+  sed -i "s|find |find -L |g" "$files"
+  sed -i "s|find -L -L |find -L |g" "$files"
 done
 
 # Correct services to start as user pi
