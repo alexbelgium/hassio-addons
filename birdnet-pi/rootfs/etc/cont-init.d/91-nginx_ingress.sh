@@ -54,7 +54,7 @@ php_file="$HOME/BirdNET-Pi/scripts/common.php"
 if [ -f "$php_file" ]; then
     sed -i "/function is_authenticated/a if (strpos(\$_SERVER['HTTP_REFERER'], '/api/hassio_ingress') !== false && strpos(\$_SERVER['HTTP_REFERER'], trim(file_get_contents('/ingress_url'))) !== false) { \$ret = true; return \$ret; }" "$php_file"
 else
-    bashio::log.yellow "PHP file not found: $php_file"
+    bashio::log.warning "PHP file not found: $php_file"
 fi
 
 echo "... adapting Caddyfile for ingress"
