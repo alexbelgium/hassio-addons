@@ -159,6 +159,10 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
+RUN \
+    # Remove not working elements
+    sed -i "1a exit 0" /etc/cont-init.d/33-mqtt.sh
+
 # Avoid config.yaml interference
 WORKDIR /config
 #ENTRYPOINT ["/lib/systemd/systemd"]
