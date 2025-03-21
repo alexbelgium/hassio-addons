@@ -97,7 +97,9 @@ done
 
 # Create thisrun.txt for legacy modes
 cp "$HOME"/BirdNET-Pi/birdnet.conf "$HOME"/BirdNET-Pi/scripts/thisrun.txt
+touch "$HOME"/BirdNET-Pi/scripts/lastrun.txt
 chown pi:pi "$HOME"/BirdNET-Pi/scripts/thisrun.txt
+chown pi:pi "$HOME"/BirdNET-Pi/scripts/lastrun.txt
 
 # Symlink BirdSongs folders
 for folder in By_Date Charts; do
