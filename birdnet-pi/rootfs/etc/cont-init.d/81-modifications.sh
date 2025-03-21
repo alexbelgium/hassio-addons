@@ -111,9 +111,11 @@ echo "... allow reverse proxy for streamlit"
 sed -i "s|plotly_streamlit.py --browser.gatherUsageStats|plotly_streamlit.py --server.enableXsrfProtection=false --server.enableCORS=false --browser.gatherUsageStats|g" "$HOME/BirdNET-Pi/templates/birdnet_stats.service"
 
 # Clean saved mp3 files
-echo ".. add highpass and lowpass to sox extracts"
-sed -i "s|f'={stop}']|f'={stop}', 'highpass', '250', 'lowpass', '15000']|g" "$HOME/BirdNET-Pi/scripts/utils/reporting.py"
-sed -i '/sox.*-V1/s/spectrogram/highpass 250 spectrogram/' "$HOME/BirdNET-Pi/scripts/spectrogram.sh"
+if [[ -f "$HOME/BirdNET-Pi/scripts/utils/reporting.py" ]]; then
+    echo ".. add highpass and lowpass to sox extracts"
+    sed -i "s|f'={stop}']|f'={stop}', 'highpass', '250', 'lowpass', '15000']|g" "$HOME/BirdNET-Pi/scripts/utils/reporting.py"
+    sed -i '/sox.*-V1/s/spectrogram/highpass 250 spectrogram/' "$HOME/BirdNET-Pi/scripts/spectrogram.sh"
+fi
 
 # Correct timedatectl path
 echo "updating timedatectl path"
