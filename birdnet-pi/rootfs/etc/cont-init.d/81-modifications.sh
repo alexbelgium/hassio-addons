@@ -30,6 +30,13 @@ if grep -q "Ram drive" "$HOME/BirdNET-Pi/scripts/service_controls.php"; then
     sed -i '/Ram drive/d' "$HOME/BirdNET-Pi/scripts/service_controls.php"
 fi
 
+# Allow symlinks
+echo "... ensuring symlinks work"
+for files in "$HOME"/BirdNET-Pi/scripts/*.sh; do
+  sed -i "s|find |find -L|g" "$files"
+  sed -i "s|find -L -L|find -L|g" "$files"
+done
+
 # Correct services to start as user pi
 echo "... updating services to start as user pi"
 if ! grep -q "/usr/bin/sudo" "$HOME/BirdNET-Pi/templates/birdnet_log.service"; then
