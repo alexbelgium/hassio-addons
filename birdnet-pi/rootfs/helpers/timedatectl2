@@ -1,0 +1,268 @@
+#!/usr/bin/env bash
+#
+# A simple bash script to replicate essential "timedatectl" functionality:
+# - Show current time and time zone
+# - List available time zones
+# - Set time or time zone
+# - Enable/disable/verify NTP
+# - Configure RTC as localtime or UTC
+
+# ------------------------------------------------------------------------------
+# Utility functions
+# ------------------------------------------------------------------------------
+
+print_usage() {
+  cat <<EOF
+Usage: $(basename "$0") COMMAND [ARGS...]
+
+Commands:
+  status                Show current time/date, timezone, RTC mode, NTP status
+  set-time [TIME]       Set system clock to TIME (e.g. "2025-03-21 18:00:00")
+  set-timezone [ZONE]   Set system timezone to ZONE (Region/City)
+  list-timezones        List all known timezones in /usr/share/zoneinfo
+  set-local-rtc [0|1]   Set whether RTC is in local time (1) or UTC (0)
+  set-ntp [true|false]  Enable or disable systemd-timesyncd (if available)
+
+Examples:
+  $(basename "$0") status
+  $(basename "$0") set-time "2025-03-21 18:00:00"
+  $(basename "$0") set-timezone America/New_York
+  $(basename "$0") set-local-rtc 1
+  $(basename "$0") set-ntp true
+
+Note: Most operations require root privileges. Use sudo if necessary.
+EOF
+}
+
+# Safely exit on errors
+abort() {
+  echo "Error: $*" >&2
+  exit 1
+}
+
+# ------------------------------------------------------------------------------
+# Functions for each major operation
+# ------------------------------------------------------------------------------
+
+show_status() {
+  echo "=== System Time/Date ==="
+  date
+
+  echo
+  echo "=== Time Zone ==="
+  # Attempt to parse the symlink at /etc/localtime
+  # On many systems, /etc/localtime is a symlink to /usr/share/zoneinfo/Region/City
+  if [ -L /etc/localtime ]; then
+    local tz_target
+    tz_target=$(readlink -f /etc/localtime)
+    # Remove the /usr/share/zoneinfo/ part to display just Region/City
+    local tz_name
+    tz_name="${tz_target#/usr/share/zoneinfo/}"
+    echo "Time zone: $tz_name"
+  else
+    # Some distros have /etc/localtime as a copy of the zone file
+    # Try to read /etc/timezone as a fallback (Debian-based)
+    if [ -f /etc/timezone ]; then
+      echo "Time zone: $(cat /etc/timezone)"
+    else
+      echo "Time zone: Unknown (not a symlink, and /etc/timezone missing)"
+    fi
+  fi
+
+  echo
+  echo "=== RTC in local TZ? ==="
+  # If /etc/adjtime exists and the last line is "LOCAL", that typically indicates localtime
+  # If it’s "UTC" or absent, the RTC is typically in UTC.
+  if [ -f /etc/adjtime ]; then
+    local rtc_mode
+    rtc_mode=$(tail -n 1 /etc/adjtime)
+    if [ "$rtc_mode" = "LOCAL" ]; then
+      echo "RTC is in local time."
+    else
+      echo "RTC is in UTC."
+    fi
+  else
+    echo "Cannot determine RTC mode (no /etc/adjtime)."
+  fi
+
+  echo
+  echo "=== NTP Service Status ==="
+  # Attempt to detect if systemd-timesyncd is enabled/active
+  if command -v systemctl &>/dev/null; then
+    if systemctl is-enabled systemd-timesyncd &>/dev/null; then
+      echo "systemd-timesyncd service is enabled."
+    else
+      echo "systemd-timesyncd service is disabled."
+    fi
+
+    if systemctl is-active systemd-timesyncd &>/dev/null; then
+      echo "systemd-timesyncd service is active (running)."
+    else
+      echo "systemd-timesyncd service is not running."
+    fi
+  else
+    echo "systemctl is not available. Cannot determine NTP status this way."
+  fi
+
+  echo
+}
+
+set_time() {
+  local new_time="$1"
+
+  if [ -z "$new_time" ]; then
+    abort "Please specify a time, e.g. '2025-03-21 18:00:00'"
+  fi
+
+  echo "Setting system time to: $new_time"
+  # Using 'date' to set system time.
+  # Format can be e.g. "YYYY-MM-DD HH:MM:SS"
+  # Usually you need root privileges for this:
+  if ! date -s "$new_time"; then
+    abort "Failed to set system time. Check your permissions?"
+  fi
+
+  # Also sync to hardware clock:
+  if command -v hwclock &>/dev/null; then
+    hwclock --systohc || echo "Warning: couldn't sync with HW clock."
+  fi
+}
+
+list_timezones() {
+  local zoneinfo_dir="/usr/share/zoneinfo"
+  if [ ! -d "$zoneinfo_dir" ]; then
+    abort "Cannot find $zoneinfo_dir directory."
+  fi
+
+  echo "List of available time zones (under $zoneinfo_dir):"
+  # We filter out possible files that are not real zone data.
+  # On some systems, zone data might be in subdirectories (Region/City).
+  find "$zoneinfo_dir" -type f | sed "s|^$zoneinfo_dir/||"
+}
+
+set_timezone() {
+  local tz="$1"
+
+  if [ -z "$tz" ]; then
+    abort "Please specify a time zone, e.g. 'America/New_York'"
+  fi
+
+  local zoneinfo_file="/usr/share/zoneinfo/$tz"
+  if [ ! -f "$zoneinfo_file" ]; then
+    abort "Time zone '$tz' not found under /usr/share/zoneinfo"
+  fi
+
+  echo "Linking /etc/localtime to $zoneinfo_file"
+  ln -sf "$zoneinfo_file" /etc/localtime || abort "Failed to link /etc/localtime"
+
+  # Some distros use /etc/timezone to store the name of the current timezone
+  if [ -w /etc/timezone ]; then
+    echo "$tz" >/etc/timezone
+  fi
+
+  echo "Time zone changed to $tz."
+}
+
+set_local_rtc() {
+  local is_local="$1"
+
+  if [ -z "$is_local" ]; then
+    abort "Please specify 0 or 1. Example: set-local-rtc 1"
+  fi
+
+  # We update /etc/adjtime accordingly:
+  # - If local time: last line should be LOCAL
+  # - If UTC: last line should be UTC
+  # We also update the hardware clock accordingly.
+  if [ "$is_local" = "1" ]; then
+    echo "Configuring RTC to use local time."
+    # "hwclock --localtime" is fairly ambiguous (it sets hardware clock from system time).
+    # We use the below approach:
+    hwclock --systohc --localtime || echo "Warning: couldn't set HW clock localtime."
+    # Overwrite /etc/adjtime fully:
+    cat <<EOF >/etc/adjtime
+0.0 0 0.0
+0
+LOCAL
+EOF
+  else
+    echo "Configuring RTC to use UTC."
+    hwclock --systohc --utc || echo "Warning: couldn't set HW clock to UTC."
+    cat <<EOF >/etc/adjtime
+0.0 0 0.0
+0
+UTC
+EOF
+  fi
+}
+
+set_ntp() {
+  local enable_ntp="$1"
+  if ! command -v systemctl &>/dev/null; then
+    echo "systemctl not available. Cannot manage systemd-timesyncd. Exiting."
+    return 1
+  fi
+
+  # systemd-timesyncd is the typical built-in NTP client for systemd-based systems
+  case "$enable_ntp" in
+    true|True|1|on)
+      echo "Enabling and starting systemd-timesyncd..."
+      systemctl enable systemd-timesyncd || echo "Failed to enable timesyncd."
+      systemctl start systemd-timesyncd  || echo "Failed to start timesyncd."
+      ;;
+    false|False|0|off)
+      echo "Disabling and stopping systemd-timesyncd..."
+      systemctl disable systemd-timesyncd || echo "Failed to disable timesyncd."
+      systemctl stop systemd-timesyncd    || echo "Failed to stop timesyncd."
+      ;;
+    *)
+      abort "Unknown argument '$enable_ntp'. Use 'true' or 'false'."
+      ;;
+  esac
+}
+
+# ------------------------------------------------------------------------------
+# Main
+# ------------------------------------------------------------------------------
+
+main() {
+  local cmd="$1"
+  shift || true
+
+  case "$cmd" in
+    status)
+      show_status
+      ;;
+    set-time)
+      set_time "$@"
+      ;;
+    set-timezone)
+      set_timezone "$@"
+      ;;
+    list-timezones)
+      list_timezones
+      ;;
+    set-local-rtc)
+      set_local_rtc "$@"
+      ;;
+    set-ntp)
+      set_ntp "$@"
+      ;;
+    ""|help|--help|-h)
+      print_usage
+      ;;
+    *)
+      echo "Unknown command: $cmd"
+      print_usage
+      exit 1
+      ;;
+  esac
+}
+
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+  if [ $# -lt 1 ]; then
+    print_usage
+    exit 0
+  fi
+  main "$@"
+fi
