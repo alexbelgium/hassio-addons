@@ -51,8 +51,8 @@ def get_bird_code(scientific_name):
 
 def automatic_mqtt_publish(file, detection, path):
     bird = {}
-    bird['Date'] = file.date
-    bird['Time'] = file.time
+    bird['Date'] = detection.date
+    bird['Time'] = detection.time
     bird['ScientificName'] = detection.scientific_name.replace('_', ' ')
     bird['CommonName'] = detection.common_name
     bird['Confidence'] = detection.confidence
@@ -86,7 +86,7 @@ def automatic_mqtt_publish(file, detection, path):
 
         json_bird = json.dumps(bird)
         mqttc.reconnect()
-        mqttc.publish(mqtt_topic, json_bird, 1)
+        mqttc.publish(mqtt_topic, json_bird, 1) 
         log.info("Posted to MQTT: ok")
 
 mqttc = mqtt.Client('birdnet_mqtt')

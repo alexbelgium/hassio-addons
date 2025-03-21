@@ -1,18 +1,32 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
-set -e
+
+set -eu
+
+##################
+# ALLOW RESTARTS #
+##################
+
+if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+    mkdir -p /etc/scripts-init
+    sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
+    sed -i "/ rm/d" /ha_entrypoint.sh
+    cp "${BASH_SOURCE[0]}" /etc/scripts-init/
+fi
 
 ##############
 # SET SYSTEM #
 ##############
 
+# Set password
 bashio::log.info "Setting password for the user pi"
-echo "pi:$(bashio::config "pi_password")" | chpasswd
+if bashio::config.has_value "pi_password"; then
+    echo "pi:$(bashio::config "pi_password")" | chpasswd
+fi
 bashio::log.info "Password set successfully for user pi."
 
-bashio::log.info "Setting timezone :"
-
 # Use timezone defined in add-on options if available
+bashio::log.info "Setting timezone :"
 if bashio::config.has_value 'TZ'; then
     TZ_VALUE="$(bashio::config 'TZ')"
     if timedatectl set-timezone "$TZ_VALUE"; then
@@ -38,7 +52,11 @@ else
     else
         bashio::log.fatal "Couldn't set automatic timezone! Please set a manual one from the options."
     fi
-fi
+fi || true
+
+# Fix timezone as per installer
+CURRENT_TIMEZONE="$(timedatectl show --value --property=Timezone)"
+[ -f /etc/timezone ] && echo "$CURRENT_TIMEZONE" | sudo tee /etc/timezone > /dev/null
 
 bashio::log.info "Starting system services"
 
@@ -53,11 +71,12 @@ chmod +x "$HOME/BirdNET-Pi/scripts/restart_services.sh" >/dev/null
 "$HOME/BirdNET-Pi/scripts/restart_services.sh" >/dev/null
 
 # Start livestream services if enabled in configuration
-if bashio::config.true LIVESTREAM_BOOT_ENABLED; then
+if bashio::config.true "LIVESTREAM_BOOT_ENABLED"; then
     echo "... starting livestream services"
     systemctl enable icecast2 >/dev/null
     systemctl start icecast2.service >/dev/null
     systemctl enable --now livestream.service >/dev/null
 fi
 
-bashio::log.info "Setup complete."
+# Start
+bashio::log.info "✅ Setup complete."

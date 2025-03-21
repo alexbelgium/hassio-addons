@@ -21,8 +21,8 @@ import fnmatch
 import re
 from types import GeneratorType
 
-__copyright__ = "(C) 2016-2024 Guido U. Draheim, licensed under the EUPL"
-__version__ = "1.5.8066"
+__copyright__ = "(C) 2016-2025 Guido U. Draheim, licensed under the EUPL"
+__version__ = "1.5.9063"
 
 # |
 # |
@@ -561,9 +561,8 @@ def shutil_truncate(filename):
     filedir = os.path.dirname(filename)
     if not os.path.isdir(filedir):
         os.makedirs(filedir)
-    f = open(filename, "w")
-    f.write("")
-    f.close()
+    with open(filename, "w") as f:
+        f.write("")
 
 # http://stackoverflow.com/questions/568271/how-to-check-if-there-exists-a-process-with-a-given-pid
 def pid_exists(pid):
@@ -615,9 +614,10 @@ def _pid_zombie(pid):
         raise ValueError('invalid PID 0')
     check = _proc_pid_status.format(**locals())
     try:
-        for line in open(check):
-            if line.startswith("State:"):
-                return "Z" in line
+        with open(check) as f:
+            for line in f:
+                if line.startswith("State:"):
+                    return "Z" in line
     except IOError as e:
         if e.errno != errno.ENOENT:
             logg.error("%s (%s): %s", check, e.errno, e)
@@ -770,46 +770,49 @@ class SystemctlConfigParser(SystemctlConfData):
         name, text = "", ""
         if os.path.isfile(filename):
             self._files.append(filename)
-        for orig_line in open(filename):
-            if nextline:
-                text += orig_line
-                if text.rstrip().endswith("\\") or text.rstrip().endswith("\\\n"):
-                    text = text.rstrip() + "\n"
+        with open(filename) as f:
+            for orig_line in f:
+                if nextline:
+                    text += orig_line
+                    if text.rstrip().endswith("\\") or text.rstrip().endswith("\\\n"):
+                        text = text.rstrip() + "\n"
+                    else:
+                        self.set(section, name, text)
+                        nextline = False
+                    continue
+                line = orig_line.strip()
+                if not line:
+                    continue
+                if line.startswith("#"):
+                    continue
+                if line.startswith(";"):
+                    continue
+                if line.startswith(".include"):
+                    logg.error("the '.include' syntax is deprecated. Use x.service.d/ drop-in files!")
+                    includefile = re.sub(r'^\.include[ ]*', '', line).rstrip()
+                    if not os.path.isfile(includefile):
+                        raise Exception("tried to include file that doesn't exist: %s" % includefile)
+                    self.read_sysd(includefile)
+                    continue
+                if line.startswith("["):
+                    x = line.find("]")
+                    if x > 0:
+                        section = line[1:x]
+                        self.add_section(section)
+                    continue
+                m = re.match(r"(\w+) *=(.*)", line)
+                if not m:
+                    logg.warning("bad ini line: %s", line)
+                    raise Exception("bad ini line")
+                name, text = m.group(1), m.group(2).strip()
+                if text.endswith("\\") or text.endswith("\\\n"):
+                    nextline = True
+                    text = text + "\n"
                 else:
-                    self.set(section, name, text)
-                    nextline = False
-                continue
-            line = orig_line.strip()
-            if not line:
-                continue
-            if line.startswith("#"):
-                continue
-            if line.startswith(";"):
-                continue
-            if line.startswith(".include"):
-                logg.error("the '.include' syntax is deprecated. Use x.service.d/ drop-in files!")
-                includefile = re.sub(r'^\.include[ ]*', '', line).rstrip()
-                if not os.path.isfile(includefile):
-                    raise Exception("tried to include file that doesn't exist: %s" % includefile)
-                self.read_sysd(includefile)
-                continue
-            if line.startswith("["):
-                x = line.find("]")
-                if x > 0:
-                    section = line[1:x]
-                    self.add_section(section)
-                continue
-            m = re.match(r"(\w+) *=(.*)", line)
-            if not m:
-                logg.warning("bad ini line: %s", line)
-                raise Exception("bad ini line")
-            name, text = m.group(1), m.group(2).strip()
-            if text.endswith("\\") or text.endswith("\\\n"):
-                nextline = True
-                text = text + "\n"
-            else:
-                # hint: an empty line shall reset the value-list
-                self.set(section, name, text and text or None)
+                    # hint: an empty line shall reset the value-list
+                    self.set(section, name, text and text or None)
+            if nextline:
+                self.set(section, name, text)
         return self
     def read_sysv(self, filename):
         """ an LSB header is scanned and converted to (almost)
@@ -819,20 +822,21 @@ class SystemctlConfigParser(SystemctlConfData):
         section = "GLOBAL"
         if os.path.isfile(filename):
             self._files.append(filename)
-        for orig_line in open(filename):
-            line = orig_line.strip()
-            if line.startswith("#"):
-                if " BEGIN INIT INFO" in line:
-                    initinfo = True
-                    section = "init.d"
-                if " END INIT INFO" in line:
-                    initinfo = False
-                if initinfo:
-                    m = re.match(r"\S+\s*(\w[\w_-]*):(.*)", line)
-                    if m:
-                        key, val = m.group(1), m.group(2).strip()
-                        self.set(section, key, val)
-                continue
+        with open(filename) as f:
+            for orig_line in f:
+                line = orig_line.strip()
+                if line.startswith("#"):
+                    if " BEGIN INIT INFO" in line:
+                        initinfo = True
+                        section = "init.d"
+                    if " END INIT INFO" in line:
+                        initinfo = False
+                    if initinfo:
+                        m = re.match(r"\S+\s*(\w[\w_-]*):(.*)", line)
+                        if m:
+                            key, val = m.group(1), m.group(2).strip()
+                            self.set(section, key, val)
+                    continue
         self.systemd_sysv_generator(filename)
         return self
     def systemd_sysv_generator(self, filename):
@@ -962,8 +966,9 @@ class PresetFile:
         return None
     def read(self, filename):
         self._files.append(filename)
-        for line in open(filename):
-            self._lines.append(line.strip())
+        with open(filename) as f:
+            for line in f:
+                self._lines.append(line.strip())
         return self
     def get_preset(self, unit):
         for line in self._lines:
@@ -1834,10 +1839,11 @@ class Systemctl:
             return default
         try:
             # some pid-files from applications contain multiple lines
-            for line in open(pid_file):
-                if line.strip():
-                    pid = to_intN(line.strip())
-                    break
+            with open(pid_file) as f:
+                for line in f:
+                    if line.strip():
+                        pid = to_intN(line.strip())
+                        break
         except Exception as e:
             logg.warning("bad read of pid file '%s': %s", pid_file, e)
         return pid
@@ -1953,15 +1959,16 @@ class Systemctl:
             return status
         try:
             if DEBUG_STATUS: logg.debug("reading %s", status_file)
-            for line in open(status_file):
-                if line.strip():
-                    m = re.match(r"(\w+)[:=](.*)", line)
-                    if m:
-                        key, value = m.group(1), m.group(2)
-                        if key.strip():
-                            status[key.strip()] = value.strip()
-                    else:  # pragma: no cover
-                        logg.warning("ignored %s", line.strip())
+            with open(status_file) as f:
+                for line in f:
+                    if line.strip():
+                        m = re.match(r"(\w+)[:=](.*)", line)
+                        if m:
+                            key, value = m.group(1), m.group(2)
+                            if key.strip():
+                                status[key.strip()] = value.strip()
+                        else:  # pragma: no cover
+                            logg.warning("ignored %s", line.strip())
         except:
             logg.warning("bad read of status file '%s'", status_file)
         return status
@@ -2060,7 +2067,6 @@ class Systemctl:
                 assert isinstance(line, bytes)
                 if line.startswith(b"btime"):
                     system_btime = float(line.decode().split()[1])
-        f.closed
         if DEBUG_BOOTTIME:
             logg.debug("  BOOT 2. System btime secs: %.3f (%s)", system_btime, system_stat)
 
@@ -2113,22 +2119,23 @@ class Systemctl:
                 logg.debug("file does not exist: %s", real_file)
             return
         try:
-            for real_line in open(os_path(self._root, env_file)):
-                line = real_line.strip()
-                if not line or line.startswith("#"):
-                    continue
-                m = re.match(r"(?:export +)?([\w_]+)[=]'([^']*)'", line)
-                if m:
-                    yield m.group(1), m.group(2)
-                    continue
-                m = re.match(r'(?:export +)?([\w_]+)[=]"([^"]*)"', line)
-                if m:
-                    yield m.group(1), m.group(2)
-                    continue
-                m = re.match(r'(?:export +)?([\w_]+)[=](.*)', line)
-                if m:
-                    yield m.group(1), m.group(2)
-                    continue
+            with open(os_path(self._root, env_file)) as f:
+                for real_line in f:
+                    line = real_line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    m = re.match(r"(?:export +)?([\w_]+)[=]'([^']*)'", line)
+                    if m:
+                        yield m.group(1), m.group(2)
+                        continue
+                    m = re.match(r'(?:export +)?([\w_]+)[=]"([^"]*)"', line)
+                    if m:
+                        yield m.group(1), m.group(2)
+                        continue
+                    m = re.match(r'(?:export +)?([\w_]+)[=](.*)', line)
+                    if m:
+                        yield m.group(1), m.group(2)
+                        continue
         except Exception as e:
             logg.info("while reading %s: %s", env_file, e)
     def read_env_part(self, env_part): # -> generate[ (name, value) ]
@@ -5293,18 +5300,18 @@ class Systemctl:
                 logg.error(" %s: %s has no ExecStart= setting, which is only allowed for Type=oneshot services. Refusing.", unit, section)
                 errors += 101
         if len(usedExecStart) > 1 and haveType != "oneshot":
-            logg.error(" %s: there may be only one %s ExecStart statement (unless for 'oneshot' services)."
-                       + "\n\t\t\tYou can use ExecStartPre / ExecStartPost to add additional commands.", unit, section)
+            logg.error(" %s: there may be only one %s ExecStart statement (unless for 'oneshot' services)." +
+                       "\n\t\t\tYou can use ExecStartPre / ExecStartPost to add additional commands.", unit, section)
             errors += 1
         if len(usedExecStop) > 1 and haveType != "oneshot":
-            logg.info(" %s: there should be only one %s ExecStop statement (unless for 'oneshot' services)."
-                      + "\n\t\t\tYou can use ExecStopPost to add additional commands (also executed on failed Start)", unit, section)
+            logg.info(" %s: there should be only one %s ExecStop statement (unless for 'oneshot' services)." +
+                      "\n\t\t\tYou can use ExecStopPost to add additional commands (also executed on failed Start)", unit, section)
         if len(usedExecReload) > 1:
-            logg.info(" %s: there should be only one %s ExecReload statement."
-                      + "\n\t\t\tUse ' ; ' for multiple commands (ExecReloadPost or ExedReloadPre do not exist)", unit, section)
+            logg.info(" %s: there should be only one %s ExecReload statement." +
+                      "\n\t\t\tUse ' ; ' for multiple commands (ExecReloadPost or ExedReloadPre do not exist)", unit, section)
         if len(usedExecReload) > 0 and "/bin/kill " in usedExecReload[0]:
-            logg.warning(" %s: the use of /bin/kill is not recommended for %s ExecReload as it is asynchronous."
-                         + "\n\t\t\tThat means all the dependencies will perform the reload simultaneously / out of order.", unit, section)
+            logg.warning(" %s: the use of /bin/kill is not recommended for %s ExecReload as it is asynchronous." +
+                         "\n\t\t\tThat means all the dependencies will perform the reload simultaneously / out of order.", unit, section)
         if conf.getlist(Service, "ExecRestart", []):  # pragma: no cover
             logg.error(" %s: there no such thing as an %s ExecRestart (ignored)", unit, section)
         if conf.getlist(Service, "ExecRestartPre", []):  # pragma: no cover
@@ -5961,7 +5968,7 @@ class Systemctl:
         interval = conf.get(Service, "StartLimitIntervalSec", strE(defaults)) # 10s
         return time_to_seconds(interval, maximum)
     def get_RestartSec(self, conf, maximum = None):
-        maximum = maximum or DefaultStartLimitIntervalSec
+        maximum = maximum or DefaultMaximumTimeout
         delay = conf.get(Service, "RestartSec", strE(DefaultRestartSec))
         return time_to_seconds(delay, maximum)
     def restart_failed_units(self, units, maximum = None):
@@ -6186,11 +6193,12 @@ class Systemctl:
                 zombie = False
                 ppid = -1
                 try:
-                    for line in open(proc_status):
-                        m = re.match(r"State:\s*Z.*", line)
-                        if m: zombie = True
-                        m = re.match(r"PPid:\s*(\d+)", line)
-                        if m: ppid = int(m.group(1))
+                    with open(proc_status) as f:
+                        for line in f:
+                            m = re.match(r"State:\s*Z.*", line)
+                            if m: zombie = True
+                            m = re.match(r"PPid:\s*(\d+)", line)
+                            if m: ppid = int(m.group(1))
                 except IOError as e:
                     logg.warning("%s : %s", proc_status, e)
                     continue
@@ -6263,13 +6271,14 @@ class Systemctl:
                 proc_status = _proc_pid_status.format(**locals())
                 if os.path.isfile(proc_status):
                     try:
-                        for line in open(proc_status):
-                            if line.startswith("PPid:"):
-                                ppid_text = line[len("PPid:"):].strip()
-                                try: ppid = int(ppid_text)
-                                except: continue
-                                if ppid in pidlist and pid not in pids:
-                                    pids += [pid]
+                        with open(proc_status) as f:
+                            for line in f:
+                                if line.startswith("PPid:"):
+                                    ppid_text = line[len("PPid:"):].strip()
+                                    try: ppid = int(ppid_text)
+                                    except: continue
+                                    if ppid in pidlist and pid not in pids:
+                                        pids += [pid]
                     except IOError as e:
                         logg.warning("%s : %s", proc_status, e)
                         continue
@@ -6302,7 +6311,8 @@ class Systemctl:
                 if pid:
                     try:
                         cmdline = _proc_pid_cmdline.format(**locals())
-                        cmd = open(cmdline).read().split("\0")
+                        with open(cmdline) as f:
+                            cmd = f.read().split("\0")
                         if DEBUG_KILLALL: logg.debug("cmdline %s", cmd)
                         found = None
                         cmd_exe = os.path.basename(cmd[0])
@@ -6333,33 +6343,33 @@ class Systemctl:
         logg.debug("checking hosts sysconf for '::1 localhost'")
         lines = []
         sysconf_hosts = os_path(self._root, _etc_hosts)
-        for line in open(sysconf_hosts):
-            if "::1" in line:
-                newline = re.sub("\\slocalhost\\s", " ", line)
-                if line != newline:
-                    logg.info("%s: '%s' => '%s'", _etc_hosts, line.rstrip(), newline.rstrip())
-                    line = newline
-            lines.append(line)
-        f = open(sysconf_hosts, "w")
-        for line in lines:
-            f.write(line)
-        f.close()
+        with open(sysconf_hosts) as f:
+            for line in f:
+                if "::1" in line:
+                    newline = re.sub("\\slocalhost\\s", " ", line)
+                    if line != newline:
+                        logg.info("%s: '%s' => '%s'", _etc_hosts, line.rstrip(), newline.rstrip())
+                        line = newline
+                lines.append(line)
+        with open(sysconf_hosts, "w") as f:
+            for line in lines:
+                f.write(line)
     def force_ipv6(self, *args):
         """ only ipv4 localhost in /etc/hosts """
         logg.debug("checking hosts sysconf for '127.0.0.1 localhost'")
         lines = []
         sysconf_hosts = os_path(self._root, _etc_hosts)
-        for line in open(sysconf_hosts):
-            if "127.0.0.1" in line:
-                newline = re.sub("\\slocalhost\\s", " ", line)
-                if line != newline:
-                    logg.info("%s: '%s' => '%s'", _etc_hosts, line.rstrip(), newline.rstrip())
-                    line = newline
-            lines.append(line)
-        f = open(sysconf_hosts, "w")
-        for line in lines:
-            f.write(line)
-        f.close()
+        with open(sysconf_hosts) as f:
+            for line in f:
+                if "127.0.0.1" in line:
+                    newline = re.sub("\\slocalhost\\s", " ", line)
+                    if line != newline:
+                        logg.info("%s: '%s' => '%s'", _etc_hosts, line.rstrip(), newline.rstrip())
+                        line = newline
+                lines.append(line)
+        with open(sysconf_hosts, "w") as f:
+            for line in lines:
+                f.write(line)
     def help_modules(self, *args):
         """[command] -- show this help
         """
@@ -6523,7 +6533,12 @@ def print_str_dict_dict(result):
         logg.log(HINT, "EXEC END %i items", shown)
         logg.debug("    END %s", result)
 
-def run(command, *modules):
+def runcommand(command, *modules):
+    systemctl = Systemctl()
+    if FORCE_IPV4:
+        systemctl.force_ipv4()
+    elif FORCE_IPV6:
+        systemctl.force_ipv6()
     exitcode = 0
     if command in ["help"]:
         print_str_list(systemctl.help_modules(*modules))
@@ -6770,6 +6785,8 @@ if __name__ == "__main__":
     _only_type = opt.only_type
     _only_property = opt.only_property
     _only_what = opt.only_what
+    FORCE_IPV4 = opt.ipv4
+    FORCE_IPV6 = opt.ipv6
     # being PID 1 (or 0) in a container will imply --init
     _pid = os.getpid()
     _init = opt.init or _pid in [1, 0]
@@ -6829,7 +6846,6 @@ if __name__ == "__main__":
     #
     print_begin(sys.argv, args)
     #
-    systemctl = Systemctl()
     if opt.version:
         args = ["version"]
     if not args:
@@ -6844,8 +6860,4 @@ if __name__ == "__main__":
         modules.remove("service")
     except ValueError:
         pass
-    if opt.ipv4:
-        systemctl.force_ipv4()
-    elif opt.ipv6:
-        systemctl.force_ipv6()
-    sys.exit(run(command, *modules))
+    sys.exit(runcommand(command, *modules))

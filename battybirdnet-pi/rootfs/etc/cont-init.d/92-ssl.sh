@@ -2,6 +2,17 @@
 # shellcheck shell=bash
 set -e
 
+##################
+# ALLOW RESTARTS #
+##################
+
+if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+    mkdir -p /etc/scripts-init
+    sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
+    sed -i "/ rm/d" /ha_entrypoint.sh
+    cp "${BASH_SOURCE[0]}" /etc/scripts-init/
+fi
+
 ###############
 # SSL SETTING #
 ###############

@@ -2,22 +2,38 @@
 # shellcheck shell=bash
 set -e
 
-if [ -d /data/StreamData ]; then
-    bashio::log.fatal "Container was stopped while files were still being analyzed."
+##################
+# ALLOW RESTARTS #
+##################
 
-    # Check if there are .wav files in /data/StreamData
-    if find /data/StreamData -type f -name "*.wav" | grep -q .; then
-        bashio::log.warning "Restoring .wav files from /data/StreamData to $HOME/BirdSongs/StreamData."
+if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+    mkdir -p /etc/scripts-init
+    sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
+    sed -i "/ rm/d" /ha_entrypoint.sh
+    cp "${BASH_SOURCE[0]}" /etc/scripts-init/
+fi
+
+######################
+# RESTORE STREAMDATA #
+######################
+
+if [ -d /config/TemporaryFiles ]; then
+
+    # Check if there are .wav files in /config/TemporaryFiles
+    if find /config/TemporaryFiles -type f -name "*.wav" | grep -q .; then
+        bashio::log.warning "Container was stopped while files were still being analyzed."
+        echo "... restoring .wav files from /config/TemporaryFiles to $HOME/BirdSongs/StreamData."
 
         # Create the destination directory if it does not exist
         mkdir -p "$HOME"/BirdSongs/StreamData
 
         # Count the number of .wav files to be moved
-        file_count=$(find /data/StreamData -type f -name "*.wav" | wc -l)
+        file_count=$(find /config/TemporaryFiles -type f -name "*.wav" | wc -l)
         echo "... found $file_count .wav files to restore."
 
         # Move the .wav files using `mv` to avoid double log entries
-        mv -v /data/StreamData/*.wav "$HOME"/BirdSongs/StreamData/
+        mv -v /config/TemporaryFiles/*.wav "$HOME"/BirdSongs/StreamData/
+        rm -r /config/TemporaryFiles
 
         # Update permissions only if files were moved successfully
         if [ "$file_count" -gt 0 ]; then
@@ -30,7 +46,7 @@ if [ -d /data/StreamData ]; then
     fi
 
     # Clean up the source folder if it is empty
-    if [ -z "$(ls -A /data/StreamData)" ]; then
-        rm -r /data/StreamData
+    if [ -z "$(ls -A /config/TemporaryFiles)" ]; then
+        rm -r /config/TemporaryFiles
     fi
 fi

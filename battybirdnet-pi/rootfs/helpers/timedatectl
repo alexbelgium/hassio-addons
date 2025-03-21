@@ -75,7 +75,7 @@ show_time_details() {
     local_time="$(date)"
     utc_time="$(date -u)"
     time_zone="$(show_timezone)"
-
+    
     # Check if NTP is used
     if systemctl is-active --quiet systemd-timesyncd; then
         ntp_status="yes"

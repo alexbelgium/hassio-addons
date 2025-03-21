@@ -2,6 +2,17 @@
 # shellcheck shell=bash
 set -e
 
+##################
+# ALLOW RESTARTS #
+##################
+
+if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+    mkdir -p /etc/scripts-init
+    sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
+    sed -i "/ rm/d" /ha_entrypoint.sh
+    cp "${BASH_SOURCE[0]}" /etc/scripts-init/
+fi
+
 ###############
 # SET /CONFIG #
 ###############
@@ -17,8 +28,6 @@ for file in "${DEFAULT_FILES[@]}"; do
     fi
 done
 touch /config/include_species_list.txt # Ensure this is always created
-
-touch "$HOME/BirdNET-Pi/scripts/common.php"
 
 # Set BirdSongs folder location from configuration if specified
 BIRDSONGS_FOLDER="/config/BirdSongs"
@@ -53,6 +62,14 @@ echo "... setting permissions for user pi"
 chown -R pi:pi /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 chmod -R 755 /config /etc/birdnet "$BIRDSONGS_FOLDER" /tmp
 
+# Backup default birdnet.conf for sanity check
+cp "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/birdnet.bak"
+
+# Create default birdnet.conf if not existing
+if [ ! -f /config/birdnet.conf ]; then
+    cp -f "$HOME/BirdNET-Pi/birdnet.conf" /config/
+fi
+
 # Create default birds.db
 if [ ! -f /config/birds.db ]; then
     echo "... creating initial db"
@@ -64,12 +81,6 @@ elif [ "$(stat -c%s /config/birds.db)" -lt 10240 ]; then
     "$HOME/BirdNET-Pi/scripts/createdb.sh"
     cp "$HOME/BirdNET-Pi/scripts/birds.db" /config/
 fi
-
-# Backup default birdnet.conf for sanity check
-if [ ! -f "$HOME/BirdNET-Pi/birdnet.conf" ]; then
-    ln -s /etc/birdnet/birdnet.conf "$HOME/BirdNET-Pi/birdnet.conf"
-fi
-cp "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/birdnet.bak"
 
 # Symlink configuration files
 echo "... creating symlinks for configuration files"
@@ -84,12 +95,6 @@ for file in "${CONFIG_FILES[@]}"; do
     sudo -u pi ln -fs "/config/$filename" "/etc/birdnet/$filename"
 done
 
-# thisrun
-cp /config/birdnet.conf "$HOME/BirdNET-Pi/scripts/thisrun.txt"
-cp /config/birdnet.conf "$HOME/BirdNET-Pi/scripts/lastrun.txt"
-chown pi:pi "$HOME/BirdNET-Pi/scripts/thisrun.txt"
-chown pi:pi "$HOME/BirdNET-Pi/scripts/lastrun.txt"
-
 # Symlink BirdSongs folders
 for folder in By_Date Charts; do
     echo "... creating symlink for $BIRDSONGS_FOLDER/$folder"
@@ -102,9 +107,9 @@ echo "... checking and setting permissions"
 chmod -R 755 /config/*
 chmod 777 /config
 
-# Create Matplotlib configuration directory
+# Create folder for matplotlib
 echo "... setting up Matplotlabdir"
-MPLCONFIGDIR="${MPLCONFIGDIR:-$HOME/.config/matplotlib}"
-mkdir -p "$MPLCONFIGDIR"
-chown pi:pi "$MPLCONFIGDIR"
-chmod 777 "$MPLCONFIGDIR"
+mkdir -p "$HOME"/.cache/matplotlib
+chown -R "pi:pi" "$HOME"/.cache/matplotlib
+chmod 777 "$HOME"/.cache/matplotlib
+

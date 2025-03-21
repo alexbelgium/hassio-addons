@@ -2,6 +2,17 @@
 # shellcheck shell=bash
 set -e
 
+##################
+# ALLOW RESTARTS #
+##################
+
+if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+    mkdir -p /etc/scripts-init
+    sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
+    sed -i "/ rm/d" /ha_entrypoint.sh
+    cp "${BASH_SOURCE[0]}" /etc/scripts-init/
+fi
+
 ######################
 # CHECK BIRDNET.CONF #
 ######################
@@ -48,17 +59,17 @@ fi
 bashio::log.info "Performing potential updates"
 
 # Adapt update_birdnet_snippets
-sed -i "/USER=/a USER=\"$USER\"" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/HOME=/a HOME=\"$HOME\"" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/chown/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/chmod/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "s|systemctl list-unit-files|false \&\& echo|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Avoid systemctl
+sed -i "/systemctl /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Avoid systemctl
+sed -i "/install_tmp_mount/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Use HA tmp
+sed -i "/find /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Not useful
+sed -i "/set -x/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Not useful
+sed -i "/restart_services/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh  # Not useful
 sed -i "s|/etc/birdnet/birdnet.conf|/config/birdnet.conf|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/restart_services/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/set -x/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "s|systemctl list-unit-files|false \&\& echo|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/systemctl /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/find /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
+sed -i "/update_caddyfile/c echo \"yes\"" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Avoid systemctl
 
 # Execute update_birdnet_snippets
+export RECS_DIR="$HOME/BirdSongs"
+export EXTRACTED="$HOME/BirdSongs/Extracted"
+chmod +x "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
 "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-
