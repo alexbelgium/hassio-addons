@@ -134,10 +134,17 @@ jobs:
           # Find all symlinks and replace them with the real files or directories
           find . -type l | while read -r link; do
             target="$(readlink -f "$link")"
-            # Remove the symlink
+            if [ -z "$target" ]; then
+              echo "Skipping broken symlink: $link"
+              continue
+            fi
+          
             rm "$link"
+            
+            # If target is directory, copy contents into link's parent directory
             if [ -d "$target" ]; then
-              cp -R "$target" "$link"
+              mkdir -p "$link"
+              cp -a "$target/." "$link/"
             else
               cp "$target" "$link"
             fi
