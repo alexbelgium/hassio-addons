@@ -95,8 +95,8 @@ for file in "${CONFIG_FILES[@]}"; do
     sudo -u pi ln -fs "/config/$filename" "/etc/birdnet/$filename"
 done
 
-# Touch thisrun.txt for legacy modes
-touch "$HOME"/BirdNET-Pi/scripts/thisrun.txt
+# Create thisrun.txt for legacy modes
+cp "$HOME"/BirdNET-Pi/birdnet.conf "$HOME"/BirdNET-Pi/scripts/thisrun.txt
 chown pi:pi "$HOME"/BirdNET-Pi/scripts/thisrun.txt
 
 # Symlink BirdSongs folders
