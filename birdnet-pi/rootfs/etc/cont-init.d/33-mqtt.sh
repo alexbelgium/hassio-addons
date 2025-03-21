@@ -63,7 +63,7 @@ if [[ -f "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py ]] && bashio::services.a
     common_steps
 
 # Check if manual MQTT configuration is provided
-elif bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQTT_PORT_manual"; then
+elif [[ -f "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py ]] && bashio::config.has_value "MQTT_HOST_manual" && bashio::config.has_value "MQTT_PORT_manual"; then
     bashio::log.green "---"
     bashio::log.blue "MQTT is manually configured in the addon options"
     bashio::log.blue "Birdnet-pi is now automatically configured to send its output to MQTT"
