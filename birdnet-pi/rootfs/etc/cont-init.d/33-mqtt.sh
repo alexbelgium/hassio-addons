@@ -42,7 +42,7 @@ common_steps () {
 }
 
 # Check if MQTT service is available and not disabled
-if bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED'; then
+if [[ -f "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py ]] && bashio::services.available 'mqtt' && ! bashio::config.true 'MQTT_DISABLED'; then
     bashio::log.green "---"
     bashio::log.blue "MQTT addon is active on your system! Birdnet-pi is now automatically configured to send its output to MQTT"
     bashio::log.blue "MQTT user : $(bashio::services "mqtt" "username")"
