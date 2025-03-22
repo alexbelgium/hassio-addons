@@ -21,7 +21,7 @@ FROM node:16 AS frontend-builder
 ARG SUB_PATH="/mealie/"
 ENV SUB_PATH=$SUB_PATH
 
-ENV MEALIE_VERSION="v2.7.1"
+ENV MEALIE_VERSION="v2.8.0"
 
 # Clone the Mealie repository to get the frontend source code
 # hadolint ignore=DL3003
