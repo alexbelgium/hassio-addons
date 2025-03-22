@@ -47,5 +47,5 @@
   "slug": "portainer",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.27.1"
+  "version": "2.28.1"
 }
