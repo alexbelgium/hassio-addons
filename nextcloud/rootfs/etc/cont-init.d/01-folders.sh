@@ -48,7 +48,7 @@ if bashio::config.true "skip_permissions_check"; then
   bashio::log.yellow "--------------------------------------------"
   bashio::log.yellow "Permissions check skipped : \"skip_permissions_check\" is true"
   bashio::log.yellow "--------------------------------------------"
-elif [[ "$PUID" != "0" ]] && [[ "$PGID" != "0" ]]; then
+elif [[ "$PUID" = "0" ]] && [[ "$PGID" = "0" ]]; then
   bashio::log.yellow "--------------------------------------------"
   bashio::log.yellow "Permissions check skipped : \"PUID and PGID are 0\" is true"
   bashio::log.yellow "--------------------------------------------"
