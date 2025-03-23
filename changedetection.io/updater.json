@@ -5,5 +5,5 @@
   "slug": "changedetection.io",
   "source": "github",
   "upstream_repo": "linuxserver/docker-changedetection.io",
-  "upstream_version": "0.49.4"
+  "upstream_version": "0.49.6"
 }
