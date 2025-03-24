@@ -44,7 +44,7 @@ if ! grep -q "/usr/bin/sudo" "$HOME/BirdNET-Pi/templates/birdnet_analysis.servic
         if [[ "$(basename "$file")" != "birdnet_log.service" ]]; then
             sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$file"
         fi
-    done < <(find "$HOME/BirdNET-Pi/templates/" -name "birdnet*.service" -print)
+    done < <(find "$HOME/BirdNET-Pi/templates/" -name "*net*.service" -print)
 fi
 
 # Send services log to container logs
