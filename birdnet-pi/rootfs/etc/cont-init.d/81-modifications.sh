@@ -39,7 +39,7 @@ done
 
 # Correct services to start as user pi
 echo "... updating services to start as user pi"
-if ! grep -q "/usr/bin/sudo" "$HOME/BirdNET-Pi/templates/birdnet_log.service"; then
+if ! grep -q "/usr/bin/sudo" "$HOME/BirdNET-Pi/templates/birdnet_analysis.service"; then
     while IFS= read -r file; do
         if [[ "$(basename "$file")" != "birdnet_log.service" ]]; then
             sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$file"
