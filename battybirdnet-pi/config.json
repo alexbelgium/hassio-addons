@@ -122,6 +122,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/battybirdnet-pi",
   "usb": true,
-  "version": "2025.03.06",
+  "version": "2025.03.07",
   "video": true
 }
