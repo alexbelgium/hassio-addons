@@ -19,9 +19,28 @@ fi
 
 bashio::log.info "Adapting webui"
 
-# Remove services tab from webui
-echo "... removing System Controls from webui as should be used from HA"
-sed -i '/>System Controls/d' "$HOME/BirdNET-Pi/homepage/views.php"
+# HA specific elements
+######################
+
+if bashio::supervisor.ping 2>/dev/null; then
+    # Remove services tab from webui
+    echo "... removing System Controls from webui as should be used from HA"
+    sed -i '/>System Controls/d' "$HOME/BirdNET-Pi/homepage/views.php"
+
+    # Remove pulseaudio
+    echo "... disabling pulseaudio as managed by HomeAssistant"
+    for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do
+        sed -i "s|! pulseaudio --check|pulseaudio --check|g" "$file"
+    done
+    
+    # Check if port 80 is correctly configured
+    if [ -n "$(bashio::addon.port "80")" ] && [ "$(bashio::addon.port "80")" != 80 ]; then
+        bashio::log.fatal "The port 80 is enabled, but should still be 80 if you want automatic SSL certificates generation to work."
+    fi
+fi
+
+# General elements
+##################
 
 # Remove Ram drive option from webui
 echo "... removing Ram drive from webui as it is handled from HA"
@@ -97,20 +116,11 @@ if ! grep -q "/stats/" "$HOME/BirdNET-Pi/homepage/views.php"; then
     sed -i "s|/log|/log/|g" "$HOME/BirdNET-Pi/homepage/views.php"
 fi
 
-# Check if port 80 is correctly configured
-if [ -n "$(bashio::addon.port "80")" ] && [ "$(bashio::addon.port "80")" != 80 ]; then
-    bashio::log.fatal "The port 80 is enabled, but should still be 80 if you want automatic SSL certificates generation to work."
-fi
-
 # Correct systemctl path
 echo "... updating systemctl path"
 curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl || mv /helpers/systemctl3.py /bin/systemctl
 chown pi:pi /bin/systemctl
 chmod a+x /bin/systemctl
-
-# Improve streamlit cache
-#echo "... add streamlit cache"
-#sed -i "/def get_data/i \\@st\.cache_resource\(\)" "$HOME/BirdNET-Pi/scripts/plotly_streamlit.py"
 
 # Allow reverse proxy for streamlit
 echo "... allow reverse proxy for streamlit"
