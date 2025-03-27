@@ -1,3 +1,4 @@
+## 2025.03.25 (27-03-2025)
 - [DOCKER] Enable pulseaudio if HA is not used
 
 ## 2025.03.22 (13-03-2025)
