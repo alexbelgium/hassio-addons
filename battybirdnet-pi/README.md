@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [BattybirdNET-Pi Docker Standalone] You cannot edit the settings for this installation (opened 2025-03-26)](https://github.com/alexbelgium/hassio-addons/issues/1821) by [@Bongo2](https://github.com/Bongo2)
 # Home assistant add-on: battybirdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
