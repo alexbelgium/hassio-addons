@@ -42,9 +42,6 @@ fi
 # General elements
 ##################
 
-# Fix numpy
-"$PYTHON_VIRTUAL_ENV" /usr/bin/pip install numpy==1.26.4
-
 # Remove Ram drive option from webui
 echo "... removing Ram drive from webui as it is handled from HA"
 if grep -q "Ram drive" "$HOME/BirdNET-Pi/scripts/service_controls.php"; then
