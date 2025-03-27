@@ -32,7 +32,7 @@ if bashio::supervisor.ping 2>/dev/null; then
     for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do
         sed -i "s|! pulseaudio --check|pulseaudio --check|g" "$file"
     done
-    
+
     # Check if port 80 is correctly configured
     if [ -n "$(bashio::addon.port "80")" ] && [ "$(bashio::addon.port "80")" != 80 ]; then
         bashio::log.fatal "The port 80 is enabled, but should still be 80 if you want automatic SSL certificates generation to work."
@@ -134,12 +134,23 @@ if [[ -f "$HOME/BirdNET-Pi/scripts/utils/reporting.py" ]]; then
 fi
 
 # Correct timedatectl path
-echo "updating timedatectl path"
+echo "... updating timedatectl path"
 if [[ -f /helpers/timedatectl ]]; then
     mv /helpers/timedatectl /usr/bin/timedatectl
     chown pi:pi /usr/bin/timedatectl
     chmod a+x /usr/bin/timedatectl
 fi
+
+# Set RECS_DIR
+echo "... setting RECS_DIR to /tmp"
+grep -rl "RECS_DIR" $HOME | while read -r file; do
+    sed -i "s|conf\['RECS_DIR'\]|'/tmp'|g" "$file"
+    sed -i "s|\$RECS_DIR|/tmp|g" "$file"
+    sed -i "s|\${RECS_DIR}|/tmp|g" "$file"
+    sed -i "/^RECS_DIR=/c RECS_DIR=/tmp" "$file"
+    sed -i "/^\$RECS_DIR=/c \$RECS_DIR=/tmp" "$file"
+done
+mkdir -p /tmp
 
 # Correct language labels according to birdnet.conf
 echo "... adapting labels according to birdnet.conf"
