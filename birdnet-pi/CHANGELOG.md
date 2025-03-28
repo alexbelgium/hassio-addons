@@ -1,7 +1,5 @@
-## 2025.03.27 (27-03-2025)
-- Minor bugs fixed
-## 2025.03.26 (27-03-2025)
-- Minor bugs fixed
+- [DOCKER] Use ALSA_CARD to define card to use ; or else use REC_CARD in birdnet.conf
+
 ## 2025.03.25 (27-03-2025)
 - [DOCKER] Enable pulseaudio if HA is not used
 
