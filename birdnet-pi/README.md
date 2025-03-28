@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [BattybirdNET-Pi Docker Standalone] You cannot edit the settings for this installation (opened 2025-03-26)](https://github.com/alexbelgium/hassio-addons/issues/1821) by [@Bongo2](https://github.com/Bongo2)
+## &#9888; Open Issue : [🐛 [Birdnet-Pi] Backup/Restore/Move (opened 2025-03-28)](https://github.com/alexbelgium/hassio-addons/issues/1823) by [@Grey-Lancaster](https://github.com/Grey-Lancaster)
 
 # Home assistant add-on: birdnet-pi
 
