@@ -57,6 +57,16 @@ else
     fi
 fi || true
 
+# Use ALSA CARD defined in add-on options if available
+if [ ! -z "${ALSA_CARD:-}" ]; then
+    bashio::log.warning "ALSA_CARD is defined, the birdnet.conf is adapt to use device $ALSA_CARD"
+    for file in "$HOME"/BirdNET-Pi/birdnet.conf /config/birdnet.conf; do
+        if [ -f "$file" ]; then
+            sed -i "/^REC_CARD/c\REC_CARD=$ALSA_CARD" "$file"
+        fi
+    done
+fi
+
 # Fix timezone as per installer
 CURRENT_TIMEZONE="$(timedatectl show --value --property=Timezone)"
 [ -f /etc/timezone ] && echo "$CURRENT_TIMEZONE" | sudo tee /etc/timezone > /dev/null
