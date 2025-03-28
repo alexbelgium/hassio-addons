@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Firefly iii] Updater pulls pre-releases (opened 2025-02-22)](https://github.com/alexbelgium/hassio-addons/issues/1783) by [@dreautall](https://github.com/dreautall)
 ## &#9888; Open Issue : [🐛 [FireflyIII] Cant change languages (opened 2025-03-23)](https://github.com/alexbelgium/hassio-addons/issues/1819) by [@FryggFR](https://github.com/FryggFR)
 # Home assistant add-on: fireflyiii
 
