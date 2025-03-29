@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Birdnet-Pi] Backup/Restore/Move (opened 2025-03-28)](https://github.com/alexbelgium/hassio-addons/issues/1823) by [@Grey-Lancaster](https://github.com/Grey-Lancaster)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
