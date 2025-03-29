@@ -1,3 +1,5 @@
+## 0.55.1-2 (29-03-2025)
+- Minor bugs fixed
 
 ## 0.55.1 (22-03-2025)
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
