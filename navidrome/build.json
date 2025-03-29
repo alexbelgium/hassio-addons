@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "deluan/navidrome:0.52.5",
-    "amd64": "deluan/navidrome:0.52.5"
+    "aarch64": "deluan/navidrome:latest",
+    "amd64": "deluan/navidrome:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
