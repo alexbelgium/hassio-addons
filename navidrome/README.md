@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Navidrome] Not updating (opened 2025-03-29)](https://github.com/alexbelgium/hassio-addons/issues/1825) by [@Bowl2much](https://github.com/Bowl2much)
 # Home assistant add-on: Navidrome
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
