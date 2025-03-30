@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [OpenProject] unable to change the host name in the System Settings   (opened 2024-12-29)](https://github.com/alexbelgium/hassio-addons/issues/1690) by [@kejXero](https://github.com/kejXero)
 ## &#9888; Open Issue : [🐛 [OpenProject] Addon killed pre-maturely due to health-check failure (opened 2025-03-06)](https://github.com/alexbelgium/hassio-addons/issues/1803) by [@Venefilyn](https://github.com/Venefilyn)
 # Home assistant add-on: Openproject
 
