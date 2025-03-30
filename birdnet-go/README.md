@@ -1,6 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Birdnet-go] Audio settings overwritten on restart (opened 2025-02-21)](https://github.com/alexbelgium/hassio-addons/issues/1781) by [@Lotwook](https://github.com/Lotwook)
 ## &#9888; Open Issue : [🐛 [Birdnet-go] USB microphones selectable in UI, but not working (opened 2025-03-12)](https://github.com/alexbelgium/hassio-addons/issues/1808) by [@melor](https://github.com/melor)
-## &#9888; Open Issue : [🐛 [BirdNET-Go] Unable to submit Detection Review (opened 2025-03-29)](https://github.com/alexbelgium/hassio-addons/issues/1826) by [@marcjay](https://github.com/marcjay)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
