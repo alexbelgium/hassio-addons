@@ -1,0 +1,56 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "🖧🔍 WIFI / LAN scanner, intruder, and presence detector",
+  "environment": {
+    "PGID": "102",
+    "PORT": "20211",
+    "PUID": "102",
+    "TZ": "Europe/Berlin"
+  },
+  "full_access": true,
+  "hassio_api": true,
+  "host_network": true,
+  "image": "ghcr.io/alexbelgium/netalertx-{arch}",
+  "ingress": true,
+  "ingress_port": 0,
+  "ingress_stream": true,
+  "init": false,
+  "map": [
+    "addon_config:rw",
+    "media:rw",
+    "share:rw",
+    "ssl"
+  ],
+  "name": "NetAlertX Full Access",
+  "panel_icon": "mdi:wifi-check",
+  "ports": {
+    "20211/tcp": 20211,
+    "20212/tcp": 20212
+  },
+  "ports_description": {
+    "20211/tcp": "WebUI port",
+    "20212/tcp": "GraphQL port"
+  },
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN",
+    "NET_RAW"
+  ],
+  "schema": {
+    "APP_CONF_OVERRIDE": "str?",
+    "TZ": "str?"
+  },
+  "services": [
+    "mqtt:want"
+  ],
+  "slug": "netalertx_fa",
+  "udev": true,
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "25.3.1"
+}
