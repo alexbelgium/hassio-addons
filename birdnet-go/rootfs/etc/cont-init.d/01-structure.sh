@@ -101,22 +101,6 @@ if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${BIRDSONGS_FOLDER%/}" ]]; then
     fi
 fi
 
-##################
-# Correct sqlite #
-##################
-if [ -f /config/birdnet.db ]; then
-    CHECK_QUERY="SELECT COUNT(*) FROM notes WHERE clip_name LIKE '%//%';"
-    UPDATE_QUERY="UPDATE notes SET clip_name = REPLACE(clip_name, '//', '/') WHERE clip_name LIKE '%//%';"
-    # Check for occurrences of '//' in clip_name
-    COUNT=$(sqlite3 /config/birdnet.db "$CHECK_QUERY")
-    
-    if [ "$COUNT" -gt 0 ]; then
-      echo "Found $COUNT rows with '//' in clip_name. Running the update query..."
-      sqlite3 /config/birdnet.db "$UPDATE_QUERY"
-      echo "Update completed"
-    fi
-fi
-
 ####################
 # Correct Defaults
 ####################
