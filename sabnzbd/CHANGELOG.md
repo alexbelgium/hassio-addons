@@ -1,3 +1,6 @@
+
+## 4.5.0 (05-04-2025)
+- Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 ## 4.4.1-2 (10-02-2025)
 - New config logic, files migrated to /addon_configs/xxx-sabnzbd
 
