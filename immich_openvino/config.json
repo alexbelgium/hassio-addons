@@ -75,7 +75,6 @@
   "environment": {
     "CI_PORT": "8080",
     "DOCKER_MODS": "imagegenius/mods:universal-redis",
-    "IMMICH_PORT": "8080",
     "MACHINE_LEARNING_CACHE_FOLDER": "/data/machine-learning",
     "MACHINE_LEARNING_WORKERS": "1",
     "MACHINE_LEARNING_WORKER_TIMEOUT": "120",
@@ -148,7 +147,7 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "1.131.3-2",
+  "version": "1.131.3-3",
   "video": true,
   "webui": "http://[HOST]:[PORT:8080]"
 }
