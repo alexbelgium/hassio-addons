@@ -7,8 +7,7 @@
   "backup_exclude": [
     "*/cache/",
     "*/transcoding-temp/",
-    "*/logs/*",
-    "*/metadata/"
+    "*/logs/*"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A free Software Media System that puts you in control of managing and streaming your media",
