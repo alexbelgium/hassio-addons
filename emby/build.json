@@ -2,7 +2,7 @@
   "build_from": {
     "aarch64": "lscr.io/linuxserver/emby:arm64v8-latest",
     "amd64": "lscr.io/linuxserver/emby:amd64-latest",
-    "armv7": "lscr.io/linuxserver/emby:arm32v7-4.8.0-latest"
+    "armv7": "lscr.io/linuxserver/emby:arm32v7-4.8.0"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
