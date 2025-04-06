@@ -1,3 +1,4 @@
+## 2025.04.01 (06-04-2025)
 - Align to upstream
 - Fix timezone https://github.com/alexbelgium/hassio-addons/issues/1664
 
