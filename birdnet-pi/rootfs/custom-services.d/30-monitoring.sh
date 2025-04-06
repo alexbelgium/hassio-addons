@@ -232,6 +232,9 @@ check_services() {
 ########################################
 # Main Monitoring Loop
 ########################################
+TZ_VALUE="$(timedatectl show -p Timezone --value)"
+export TZ="$TZ_VALUE"
+
 while true; do
     sleep 61
     log_blue "----------------------------------------"
