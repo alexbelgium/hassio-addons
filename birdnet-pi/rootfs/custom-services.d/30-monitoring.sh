@@ -229,6 +229,18 @@ check_services() {
     fi
 }
 
+check_for_empty_stream() {
+    local log_tail
+    log_tail=$(timeout 15 cat /proc/1/fd/1 | tail -n 5)
+
+    if echo "$log_tail" | grep -q "Haliastur indus"; then
+        log_red "$(date) INFO: Potential empty stream detected (frequent 'Haliastur indus')."
+        apprisealert "Potential empty stream detected — frequent 'Haliastur indus' in log"
+        return 1
+    fi
+    return 0
+}
+
 ########################################
 # Main Monitoring Loop
 ########################################
@@ -252,6 +264,9 @@ while true; do
 
     # 4) Services check
     check_services || any_issue=1
+
+    # 5) Check for potential empty stream
+    check_for_empty_stream || any_issue=1
 
     # Final summary
     if (( any_issue == 0 )); then
