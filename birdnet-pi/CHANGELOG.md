@@ -1,3 +1,6 @@
+- Align to upstream
+- Fix timezone https://github.com/alexbelgium/hassio-addons/issues/1664
+
 ## 2025.03.29 (28-03-2025)
 - [DOCKER] Use ALSA_CARD to define card to use ; or else use REC_CARD in birdnet.conf
 
