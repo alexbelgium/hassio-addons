@@ -1,6 +1,6 @@
 ---
 build_from:
-  aarch64: ghcr.io/tphakala/birdnet-go:latest
-  amd64: ghcr.io/tphakala/birdnet-go:latest
+  aarch64: ghcr.io/tphakala/birdnet-go:nightly
+  amd64: ghcr.io/tphakala/birdnet-go:nightly
 codenotary:
   signer: alexandrep.github@gmail.com
