@@ -58,7 +58,7 @@ else
 fi || true
 
 # Use ALSA CARD defined in add-on options if available
-if [ ! -z "${ALSA_CARD:-}" ]; then
+if [ -n "${ALSA_CARD:-}" ]; then
     bashio::log.warning "ALSA_CARD is defined, the birdnet.conf is adapt to use device $ALSA_CARD"
     for file in "$HOME"/BirdNET-Pi/birdnet.conf /config/birdnet.conf; do
         if [ -f "$file" ]; then

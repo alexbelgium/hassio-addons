@@ -39,7 +39,7 @@ done
 # Avoid chmod /config if ha config mounted
 if [ -f /config/configuration.yaml ] || [ -f /config/configuration.json ]; then
     for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*; do
-        if [ -f "$file" ] && [ ! -z "$(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' "$file")" ]; then
+        if [ -f "$file" ] && [ -n "$(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' "$file")" ]; then
             sed -i "s|/config$|/data|g" "$file"
         fi
     done

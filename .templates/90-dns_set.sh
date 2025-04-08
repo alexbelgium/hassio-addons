@@ -29,7 +29,7 @@ if bashio::config.has_value 'DNS_server'; then
 
     # Only add DNS if there are DNS set
     # shellcheck disable=SC2236
-    if [[ ! -z "$DNS" ]]; then
+    if [[ -n "${DNS:-}" ]]; then
         # Write resolv.conf
         # shellcheck disable=SC2059
         printf "${DNS}" >/etc/resolv.conf

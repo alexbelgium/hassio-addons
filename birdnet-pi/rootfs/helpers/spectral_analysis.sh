@@ -18,7 +18,7 @@ fi
 
 filename="Spectrum_$(date "+%Y-%m-%d_%H:%M").wav"
 
-if [ ! -z "$RTSP_STREAM" ];then
+if [ -n "${RTSP_STREAM:-}" ];then
   # Explode the RSPT steam setting into an array so we can count the number we have
   RTSP_STREAMS_EXPLODED_ARRAY=("${RTSP_STREAM//,/ }")
 
