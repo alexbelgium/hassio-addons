@@ -25,7 +25,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 [arpspoof](https://github.com/t0mer/Arpspoof-Docker) adds ability to block internet connection for local network devices
 This addon is based on the docker image https://hub.docker.com/r/techblog/arpspoof-docker
 
-See all informations here : https://en.techblog.co.il/2021/03/15/home-assistant-cut-internet-connection-using-arpspoof/ , on in the upstream image documentation : https://github.com/t0mer/Arpspoof-Docker
+See all informations here : https://en.techblog.co.il/home-assistant-cut-internet-connection-using-arpspoof/ , on in the upstream image documentation : https://github.com/t0mer/Arpspoof-Docker
 
 ## Installation
 
