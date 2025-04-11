@@ -1,9 +1,9 @@
 {
   "github_beta": "true",
-  "last_update": "09-12-2023",
+  "last_update": "12-04-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "wger",
   "source": "dockerhub",
   "upstream_repo": "wger/server",
-  "upstream_version": "2.3-dev"
+  "upstream_version": "2.4-dev"
 }
