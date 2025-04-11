@@ -56,6 +56,10 @@ for file in $(grep -srl "/usr/bin" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do
     sed -i "1a set +u" "$file"
 done
 
+# Allow running abc as user 1
+sed -i '/usermod/s/$/ 2>/dev/null || true/' /etc/s6-overlay/s6-rc.d/init-adduser/run
+sed -i '/groupmod/s/$/ 2>/dev/null || true/' /etc/s6-overlay/s6-rc.d/init-adduser/run
+
 # Replace lsiown if not found
 if [ ! -f /usr/bin/lsiown ]; then
     for file in $(grep -sril "lsiown" /etc); do
