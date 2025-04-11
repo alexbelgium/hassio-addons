@@ -1,3 +1,5 @@
+- Activate NO_NOISE_MODEL option to use the high fidelity models
+
 ## 2025.03.07 (27-03-2025)
 - Minor bugs fixed
 ## 2025.03.06 (26-03-2025)
