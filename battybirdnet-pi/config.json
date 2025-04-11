@@ -102,6 +102,7 @@
     "MQTT_PASSWORD_manual": "password?",
     "MQTT_PORT_manual": "int?",
     "MQTT_USER_manual": "str?",
+    "NO_NOISE_MODEL": "bool?",
     "PROCESSED_FOLDER_ENABLED": "bool?",
     "TZ": "str?",
     "certfile": "str",
