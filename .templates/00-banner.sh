@@ -18,8 +18,8 @@ if ! bashio::supervisor.ping 2>/dev/null; then
     echo "... convert scripts to use environment variables instead of addon options"
     while IFS= read -r scripts
     do
-        sed -i -e 's/bashio::config.has_value[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ -n "${\1:-}" ]/g' \
-            -e 's/bashio::config.true[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ -n "${\1:-}" ] \&\& [ "${\1:-}" = "true" ]/g' \
+        sed -i -e 's/bashio::config.has_value[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z "${\1:-}" ]/g' \
+            -e 's/bashio::config.true[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z "${\1:-}" ] \&\& [ "${\1:-}" = "true" ]/g' \
             -e 's/\$(bashio::config[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"'])/${\1:-}/g' \
             -e 's/\$(bashio::addon.port[[:space:]]*["'"'"']\([0-9]*\)["'"'"'])/${\1:-}/g' \
             -e 's/bashio::config.require.ssl/true/g' \
@@ -74,7 +74,7 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     PGID="$(bashio::config "PGID")"
     bashio::log.blue "User UID: $PUID"
     bashio::log.blue "User GID: $PGID"
-
+    
     # Only modify user/group if they exist
     if id abc &>/dev/null; then
         usermod -o -u "$PUID" abc &>/dev/null
@@ -82,7 +82,7 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     if getent group abc &>/dev/null; then
         groupmod -o -g "$PGID" abc &>/dev/null
     fi
-
+    
     bashio::log.blue \
         '-----------------------------------------------------------'
 fi
