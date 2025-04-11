@@ -8,6 +8,10 @@ if bashio::config.true "NO_NOISE_MODEL"; then
   sed -i "s|server.py --area|server.py --no_noise on --area|g" "$HOME"/BirdNET-Pi/scripts/batnet_analysis.sh
 fi
 
+# Add batnet service to monitoring service
+sed -i "/sudo systemctl restart birdnet_analysis/a\sudo systemctl restart batnet_analysis" /custom-services.d/30-monitoring.sh
+sed -i "s|spectrogram_viewer |spectrogram_viewer batnet_server |g" /custom-services.d/30-monitoring.sh
+
 # Install gotty for amd64
 if [ "$(uname -m)" == "x86_64" ]; then
   bashio::log.info "Install gotty for amd64"
