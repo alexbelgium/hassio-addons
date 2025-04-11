@@ -131,6 +131,6 @@
   "slug": "jellyfin",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "10.10.6-4",
+  "version": "10.10.7",
   "video": true
 }
