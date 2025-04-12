@@ -1,6 +1,4 @@
 
-## 4.8.11.0 (12-04-2025)
-- Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 ## 4.9.0.43-3 (05-04-2025)
 - Minor bugs fixed
 
