@@ -1,3 +1,4 @@
+- Disabled migration script
 
 ## 10.10.7 (12-04-2025)
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
