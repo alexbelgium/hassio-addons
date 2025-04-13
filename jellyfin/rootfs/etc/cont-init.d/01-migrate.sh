@@ -2,6 +2,8 @@
 # shellcheck shell=bash
 set -e
 
+exit 0
+
 slug=jellyfin
 LOCATION="$(bashio::config 'data_location')"
 
