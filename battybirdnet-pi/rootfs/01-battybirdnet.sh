@@ -9,7 +9,7 @@ if bashio::config.true "NO_NOISE_MODEL"; then
 fi
 
 # Add batnet service to monitoring service
-sed -i "/sudo systemctl restart birdnet_analysis/a\sudo systemctl restart batnet_analysis" /custom-services.d/30-monitoring.sh
+sed -i "/sudo systemctl restart birdnet_analysis/a\sudo systemctl restart batnet_server" /custom-services.d/30-monitoring.sh
 sed -i "s|spectrogram_viewer |spectrogram_viewer batnet_server |g" /custom-services.d/30-monitoring.sh
 
 # Install gotty for amd64
