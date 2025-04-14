@@ -29,13 +29,13 @@ if [ -d "$HOME"/BirdSongs/StreamData ]; then
     wait
 
     # Create the destination directory
-    mkdir -p /data/StreamData
+    mkdir -p /config/TemporaryFiles
 
     # Move only valid WAV files under 50MB
     shopt -s nullglob  # Prevent errors if no files match
     for file in "$HOME"/BirdSongs/StreamData/*.wav; do
         if [ -f "$file" ] && [ "$(stat --format="%s" "$file")" -lt "$MAX_SIZE" ] && is_valid_wav "$file"; then
-            if mv -v "$file" /data/StreamData/; then
+            if mv -v "$file" /config/TemporaryFiles/; then
                 bashio::log.info "Moved valid WAV file: $(basename "$file")"
             else
                 bashio::log.error "Failed to move: $(basename "$file")"
