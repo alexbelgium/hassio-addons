@@ -75,11 +75,6 @@ while IFS= read -r file; do
     sed -i "/\[Service/a StandardOutput=append:/proc/1/fd/1" "$file"
 done < <(find "$HOME/BirdNET-Pi/templates/" -name "*.service" -print)
 
-# Avoid preselection in include and exclude lists
-echo "... disabling preselecting options in include and exclude lists"
-sed -i "s|option selected|option disabled|g" "$HOME/BirdNET-Pi/scripts/include_list.php"
-sed -i "s|option selected|option disabled|g" "$HOME/BirdNET-Pi/scripts/exclude_list.php"
-
 # Preencode API key
 if [[ -f "$HOME/BirdNET-Pi/scripts/common.php" ]] && ! grep -q "221160312" "$HOME/BirdNET-Pi/scripts/common.php"; then
     sed -i "/return \$_SESSION\['my_config'\];/i\ \ \ \ if (isset(\$_SESSION\['my_config'\]) \&\& empty(\$_SESSION\['my_config'\]\['FLICKR_API_KEY'\])) {\n\ \ \ \ \ \ \ \ \$_SESSION\['my_config'\]\['FLICKR_API_KEY'\] = \"221160312e1c22\";\n\ \ \ \ }" "$HOME"/BirdNET-Pi/scripts/common.php
