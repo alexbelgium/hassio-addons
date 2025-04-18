@@ -1,3 +1,6 @@
+
+## 31.0.4 (19-04-2025)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 ## 31.0.2-2 (23-03-2025)
 - Fix permissions check
 
