@@ -38,7 +38,6 @@ if [ -d /config/TemporaryFiles ]; then
 
         # Move the .wav files using `mv` to avoid double log entries
         mv -v /config/TemporaryFiles/*.wav "$HOME"/BirdSongs/StreamData/
-        rm -r /config/TemporaryFiles
 
         # Update permissions only if files were moved successfully
         if [ "$file_count" -gt 0 ]; then
@@ -51,7 +50,6 @@ if [ -d /config/TemporaryFiles ]; then
     fi
 
     # Clean up the source folder if it is empty
-    if [ -z "$(ls -A /config/TemporaryFiles)" ]; then
-        rm -r /config/TemporaryFiles
-    fi
+    rm -r /config/TemporaryFiles
+
 fi
