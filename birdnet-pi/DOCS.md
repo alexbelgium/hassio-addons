@@ -452,6 +452,7 @@ NOISE_THRESHOLD_LOW  = 0.001
 # No-signal detection
 NO_SIGNAL_THRESHOLD = 1e-6
 NO_SIGNAL_COUNT_THRESHOLD = 3
+NO_SIGNAL_ACTION = "scarlett2 reboot && sudo reboot"
 
 SAMPLING_RATE = 48000  # 48 kHz
 LOWCUT        = 2000
@@ -674,7 +675,7 @@ def test_mode():
 # ---------------------- Dynamic Gain Control Loop ----------------------
 
 def dynamic_gain_control():
-    debug_print("Starting dynamic gain controller...")
+    debug_print("Starting dynamic gain controller...", "info")
     set_gain_db(MICROPHONE_NAME, (MIN_GAIN_DB + MAX_GAIN_DB) // 2)
 
     no_signal_count = 0
@@ -695,8 +696,8 @@ def dynamic_gain_control():
             no_signal_count += 1
             debug_print(f"No signal detected ({no_signal_count}/{NO_SIGNAL_COUNT_THRESHOLD})", "warning")
             if no_signal_count >= NO_SIGNAL_COUNT_THRESHOLD:
-                debug_print("No signal for too long, rebooting Scarlett + system...", "error")
-                subprocess.call("scarlett2 reboot && sudo reboot", shell=True)
+                debug_print("No signal for too long, executing action...", "error")
+                subprocess.call(NO_SIGNAL_ACTION, shell=True)
         else:
             no_signal_count = 0
 
@@ -737,6 +738,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 ```
 
 </details>
