@@ -9,7 +9,7 @@
     "*/logs/*"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "A free Software Media System that puts you in control of managing and streaming your media",
+  "description": "A free Software Media System that puts you in control of managing and streaming your media (beta version)",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
@@ -74,7 +74,7 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "data_location": "/config/database"
+    "data_location": "/share/emby"
   },
   "host_network": true,
   "image": "ghcr.io/alexbelgium/emby-{arch}",
@@ -84,11 +84,12 @@
   "init": false,
   "map": [
     "addon_config:rw",
+    "homeassistant_config:rw",
     "share:rw",
     "media:rw",
     "ssl:rw"
   ],
-  "name": "Emby",
+  "name": "Emby Beta",
   "options": {
     "PGID": 0,
     "PUID": 0,
@@ -124,9 +125,9 @@
     "silent": "bool?",
     "smbv1": "bool?"
   },
-  "slug": "emby",
+  "slug": "emby_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby",
-  "version": "4.8.11.0",
+  "version": "4.9.0.48_test",
   "video": true
 }
