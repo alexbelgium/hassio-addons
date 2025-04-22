@@ -31,6 +31,11 @@ if [ -d /homeassistant/emby ]; then
     chown -R "$PUID:$PGID" "$config_location"
 fi
 
+if [ -f /homeassistant/addons_autoscripts/emby-nas.sh ]; then
+    cp -rf /homeassistant/addons_autoscripts/emby-nas.sh "$config_location"/
+    mv /homeassistant/addons_autoscripts/emby-nas.sh /homeassistant/addons_autoscripts/emby-nas_migrated.sh
+fi
+
 declare -A links=(
     ["/emby/cache"]="$data_location/cache"
     ["/emby/config"]="$config_location"
