@@ -23,6 +23,7 @@ codex: codex/config.* # Image : yes
 comixed: comixed/config.* # Image : yes
 elasticsearch: elasticsearch/config.* # Image : yes
 emby: emby/config.* # Image : yes
+emby_beta: emby_beta/config.* # Image : yes
 enedisgateway2mqtt: enedisgateway2mqtt/config.* # Image : yes
 enedisgateway2mqtt_dev: enedisgateway2mqtt_dev/config.* # Image : yes
 epicgamesfree: epicgamesfree/config.* # Image : yes
