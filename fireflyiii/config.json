@@ -111,6 +111,6 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "20241231",
+  "version": "6.2.12",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
