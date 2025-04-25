@@ -125,7 +125,6 @@ sed -i "s|plotly_streamlit.py --browser.gatherUsageStats|plotly_streamlit.py --s
 if [[ -f "$HOME/BirdNET-Pi/scripts/utils/reporting.py" ]]; then
     echo ".. add highpass and lowpass to sox extracts"
     sed -i "s|f'={stop}']|f'={stop}', 'highpass', '250']|g" "$HOME/BirdNET-Pi/scripts/utils/reporting.py"
-    sed -i '/sox.*-V1/s/spectrogram/highpass 250 spectrogram/' "$HOME/BirdNET-Pi/scripts/spectrogram.sh"
 fi
 
 # Correct timedatectl path
