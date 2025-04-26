@@ -61,12 +61,6 @@ ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh 00-local_mounts.s
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl dos2unix vim ca-certificates yamllint jq \
- && curl -sS https://bootstrap.pypa.io/get-pip.py | python3 \
- && ln -s /usr/local/bin/pip3 /usr/local/bin/pip \
- && rm -rf /var/lib/apt/lists/*
-
 # Manual apps
 ENV PACKAGES="sudo yamllint pip jq"
 
