@@ -17,11 +17,6 @@ fi
 # RESTORE STREAMDATA #
 ######################
 
-# Fix code issue
-if [ -d /data/StreamData ]; then
-  rm -r /data/StreamData
-fi
-
 if [ -d /config/TemporaryFiles ]; then
 
     # Check if there are .wav files in /config/TemporaryFiles
