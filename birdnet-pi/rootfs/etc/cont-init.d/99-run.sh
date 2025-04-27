@@ -25,9 +25,6 @@ if bashio::config.has_value "pi_password"; then
 fi
 bashio::log.info "Password set successfully for user pi."
 
-# Ensure permissions
-chown pi:pi /usr/local/bin/*
-
 # Use timezone defined in add-on options if available
 bashio::log.info "Setting timezone :"
 if bashio::config.has_value 'TZ'; then
