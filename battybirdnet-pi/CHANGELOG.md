@@ -1,3 +1,5 @@
+- Major refactor : based now on BirdNET-Pi. Please backup before update
+
 ## 2025.04.11 (19-04-2025)
 - Minor bugs fixed
 ## 2025.04.10 (14-04-2025)
