@@ -30,7 +30,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3" \
     my_dir=/home/pi/BirdNET-Pi/scripts \
     LANGUAGE=en_US:en
-
+    
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
@@ -47,11 +47,6 @@ RUN \
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
     chmod a+x /bin/systemctl && \
     \
-    # Correct for timedatectl
-    if [[ -f /usr/bin/timedatectl ]]; then rm -r /usr/bin/timedatectl; fi && \
-    curl -f -L -s -S https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/birdnet-pi/rootfs/helpers/timedatectl -o /usr/bin/timedatectl && \
-    chmod 777 /usr/bin/timedatectl && \
-    \
     # Change user to pi and create /home/pi
     echo "setting users" && \
     if id abc >/dev/null 2>&1; then groupmod -o -g 101 abc && usermod -o -u 101 abc; fi && \
@@ -66,7 +61,7 @@ RUN \
     git config --global --add safe.directory '*' && \
     \
     # Download installer
-    curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/BattyBirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
+    curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/battybirdnet-pi/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
     \
     # Use installer to modify other scripts
@@ -77,9 +72,6 @@ RUN \
     # Remove all instances of sudo from all other scripts
     echo 'for file in $(grep -srl "sudo" $HOME/BirdNET-Pi/scripts); do sed -i "s|sudo ||" "$file"; done' >> /newinstallermod.sh && \
     echo 'for file in $(grep -srl "my_dir" $HOME/BirdNET-Pi/scripts); do sed -i "s|\$my_dir|/config|" "$file"; done' >> /newinstallermod.sh && \
-    # Disable pulseaudio
-    echo 'for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do sed -i "/pulseaudio --start/d" "$file"; done' >> /newinstallermod.sh && \
-    echo 'sed -i /timedatectl/d $HOME/BirdNET-pi/scripts/install_birdnet.sh' >> /newinstallermod.sh && \
     # Set permission
     chmod +x /newinstallermod.sh && \
     \
@@ -91,14 +83,17 @@ RUN \
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
     # Ensure chmod
     sed -i "/git clone/a chown -R 1000:1000 $HOME" /newinstaller.sh && \
+    sed -i "/git clone/a chmod 777 \$HOME/BirdNET-Pi/scripts/*.sh" /newinstaller.sh && \
+    # Disable datetimectl
+    sed -i '/git clone/a sed -i "/CURRENT_TIMEZONE/s/$/ || true/" $HOME/BirdNET-Pi/scripts/install_birdnet.sh' /newinstaller.sh && \
     # Remove all instances of sudo from the newinstaller
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     \
     # Execute installer
     /./newinstaller.sh && \
     \
-    # Install dateparser
-    /home/pi/BirdNET-Pi/birdnet/bin/python3 /usr/bin/pip3 install dateparser && \
+    # Install dateparser and resampy, upgrade numpy
+    $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser resampy && \
     \
     # Adapt for lsio usage of /app
     if [ -d /app ]; then rm -r /app; fi && \
@@ -144,7 +139,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="alsa-utils libasound2-plugins mosquitto-clients file python-is-python3"
+ENV PACKAGES="alsa-utils libasound2-plugins mosquitto-clients file pulseaudio"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
@@ -161,8 +156,6 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-
-RUN mv /01-battybirdnet.sh /etc/cont-init.d/ && chmod +x /etc/cont-init.d/01-battybirdnet.sh
 
 # Avoid config.yaml interference
 WORKDIR /config
