@@ -66,6 +66,9 @@ if ! grep -q "/usr/bin/sudo" "$HOME/BirdNET-Pi/templates/birdnet_analysis.servic
     done < <(find "$HOME/BirdNET-Pi/templates/" -name "*net*.service" -print)
 fi
 
+# Allow pulseaudio system
+sed -i "s/pulseaudio --start/pulseaudio --start 2>/dev/null && pulseaudio --check || pulseaudio --system/g" "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
+
 # Send services log to container logs
 echo "... redirecting services logs to container logs"
 while IFS= read -r file; do
