@@ -45,7 +45,7 @@ Webui can be found by two ways :
 - Ingress from HA (no password but some functions don't work)
 - Direct access with <http://homeassistant:port>, port being the one defined in the birdnet.conf. The username when asked for a password is `birdnet`, the password is the one that you can define in the birdnet.con (blank by default). This is different than the password from the addon options, which is the one that must be used to access the web terminal
 
-Web terminal access : uesrname `pi`, password : as defined in the addon options
+Web terminal access : username `pi`, password : as defined in the addon options
 
 You'll need a microphone : either use one connected to HA or the audio stream of a rstp camera.
 
