@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "lscr.io/linuxserver/librespeed:arm64v8-latest",
+    "amd64": "lscr.io/linuxserver/librespeed:amd64-latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
