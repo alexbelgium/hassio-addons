@@ -72,7 +72,7 @@
     "PGID": "0",
     "PUID": "0"
   },
-  "image": "ghcr.io/alexbelgium/librespeed-{arch}",
+  "image": "lscr.io/linuxserver/librespeed-{arch}",
   "init": false,
   "map": [
     "config:rw",

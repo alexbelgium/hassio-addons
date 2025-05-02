@@ -1,6 +1,6 @@
 #include <tunables/global>
 
-profile mylar3_addon flags=(attach_disconnected,mediate_deleted) {
+profile librespeed_addon flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   capability,
