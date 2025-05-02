@@ -48,6 +48,8 @@ Configurations can be done through the app webUI, except for the following optio
 PGID: user
 GPID: user
 TZ: timezone
+PASSWORD: "" # optional
+CUSTOM_RESULTS: false # optional
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares
