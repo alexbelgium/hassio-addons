@@ -84,6 +84,8 @@
     "PGID": 0,
     "PUID": 0
   },
+  "panel_admin": false,
+  "panel_icon": "mdi:speedometer",
   "ports": {
     "8096/tcp": 8096
   },
@@ -98,6 +100,8 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "PASSWORD": "str?",
+    "CUSTOM_RESULTS": "bool?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
@@ -107,6 +111,6 @@
   "slug": "librespeed",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.8.2",
+  "version": "5.4.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8096]"
 }
