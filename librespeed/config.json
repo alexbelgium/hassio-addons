@@ -96,8 +96,8 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PGID": "int",
-    "PUID": "int",
+    "PGID": "int?",
+    "PUID": "int?",
     "IPINFO_APIKEY": "str?",
     "CUSTOM_RESULTS": "bool?",
     "PASSWORD": "str?",
@@ -111,5 +111,5 @@
   "slug": "librespeed",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.4.1a"
+  "version": "5.4.1b"
 }
