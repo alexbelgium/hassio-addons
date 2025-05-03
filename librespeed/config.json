@@ -85,7 +85,7 @@
   "panel_admin": false,
   "panel_icon": "mdi:speedometer",
   "ports": {
-    "80/tcp": 80
+    "80/tcp": 8096
   },
   "ports_description": {
     "80/tcp": "web interface (Not required for Ingress)"
