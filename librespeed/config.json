@@ -74,10 +74,10 @@
   },
   "image": "ghcr.io/alexbelgium/librespeed-{arch}",
   "init": false,
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw"
+    "addon_config:rw"
   ],
   "name": "LibreSpeed",
   "options": {
@@ -90,7 +90,7 @@
     "8096/tcp": 8096
   },
   "ports_description": {
-    "8096/tcp": "web interface"
+    "8096/tcp": "web interface (Not required for Ingress)"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -100,6 +100,7 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "IPINFO_APIKEY": "str?",
     "PASSWORD": "str?",
     "CUSTOM_RESULTS": "bool?",
     "cifsdomain": "str?",
@@ -111,6 +112,5 @@
   "slug": "librespeed",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.4.1",
-  "webui": "http://[HOST]:[PORT:8096]"
+  "version": "5.4.1a"
 }
