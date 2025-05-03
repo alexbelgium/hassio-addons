@@ -68,11 +68,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {
-    "PGID": "0",
-    "PUID": "0"
-  },
-  "image": "ghcr.io/alexbelgium/librespeed-{arch}",
   "init": false,
   "ingress": true,
   "ingress_stream": true,
@@ -80,10 +75,6 @@
     "addon_config:rw"
   ],
   "name": "LibreSpeed",
-  "options": {
-    "PGID": 0,
-    "PUID": 0
-  },
   "panel_admin": false,
   "panel_icon": "mdi:speedometer",
   "ports": {
@@ -101,8 +92,8 @@
     "PUID": "int",
     "TZ": "str?",
     "IPINFO_APIKEY": "str?",
-    "PASSWORD": "str?",
     "CUSTOM_RESULTS": "bool?",
+    "PASSWORD": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
@@ -112,5 +103,5 @@
   "slug": "librespeed",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.4.1a"
+  "version": "5.4.1b"
 }
