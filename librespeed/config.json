@@ -74,10 +74,11 @@
   },
   "image": "ghcr.io/alexbelgium/librespeed-{arch}",
   "init": false,
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "config:rw",
-    "share:rw",
-    "media:rw"
+    "share:rw"
   ],
   "name": "LibreSpeed",
   "options": {
@@ -100,6 +101,7 @@
     "PGID": "int",
     "PUID": "int",
     "TZ": "str?",
+    "IPINFO_APIKEY": "str?",
     "PASSWORD": "str?",
     "CUSTOM_RESULTS": "bool?",
     "cifsdomain": "str?",
@@ -111,6 +113,6 @@
   "slug": "librespeed",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.4.1",
+  "version": "5.4.1a",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8096]"
 }

@@ -1,0 +1,11 @@
+---
+configuration:
+  CUSTOM_RESULTS:
+    name: Custom results
+    description: >-
+      (optional) set to true to enable custom results page in /config/www/results/index.php.
+      To enable a custom results page set the environment variable CUSTOM_RESULTS=true and start (or restart) the container at least once for /config/www/results/index.php to be created and modify this file to your liking.
+  IPINFO_APIKEY:
+    name: ipinfo.io API key
+    description: >-
+      (optional) Access token from ipinfo.io. Required for detailed IP information.
