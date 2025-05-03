@@ -68,20 +68,18 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {
-    "PGID": "1000",
-    "PUID": "1000"
-  },
   "init": false,
   "ingress": true,
-  "ingress_stream": true,
+  "ingress_port": 8096,
   "map": [
     "addon_config:rw"
   ],
   "name": "LibreSpeed",
   "options": {
     "IPINFO_APIKEY": "",
-    "CUSTOM_RESULTS": false
+    "CUSTOM_RESULTS": false,
+    "PGID": "1000",
+    "PUID": "1000"
   },
   "panel_admin": false,
   "panel_icon": "mdi:speedometer",
@@ -91,25 +89,15 @@
   "ports_description": {
     "8096/tcp": "web interface (Not required for Ingress)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
   "schema": {
-    "PGID": "int?",
-    "PUID": "int?",
     "IPINFO_APIKEY": "str?",
     "CUSTOM_RESULTS": "bool?",
     "PASSWORD": "str?",
     "TZ": "str?",
-    "cifsdomain": "str?",
-    "cifspassword": "str?",
-    "cifsusername": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?"
+    "PGID": "int",
+    "PUID": "int"
   },
   "slug": "librespeed",
-  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "5.4.1b"
 }
