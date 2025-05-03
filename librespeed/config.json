@@ -112,5 +112,5 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "5.4.1",
-  "webui": "[PROTO:ssl]://[HOST]:[PORT:8096]"
+  "webui": "http://[HOST]:[PORT:8096]"
 }
