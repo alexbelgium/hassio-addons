@@ -1,6 +1,7 @@
 ## 5.4.1b (03-04-2025)
 
-- Fix PGID issue
+- Fix default PGID
+- Fix ingress port
 
 ## 5.4.1a (03-04-2025)
 
