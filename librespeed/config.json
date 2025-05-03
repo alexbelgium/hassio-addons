@@ -68,10 +68,6 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {
-    "PGID": "1000",
-    "PUID": "1000"
-  },
   "init": false,
   "ingress": true,
   "ingress_port": 8096,
