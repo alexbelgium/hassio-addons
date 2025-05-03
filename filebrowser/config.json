@@ -80,7 +80,7 @@
   },
   "ingress": true,
   "ingress_stream": true,
-  "ingress_port": 8080,
+  "ingress_port": 8071,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -102,7 +102,7 @@
   "panel_admin": false,
   "panel_icon": "mdi:file-search",
   "ports": {
-    "8080/tcp": null
+    "8080/tcp": 8071
   },
   "ports_description": {
     "8080/tcp": "Web UI port"
@@ -127,5 +127,5 @@
   "slug": "filebrowser",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.32.0"
+  "version": "2.32.0a"
 }
