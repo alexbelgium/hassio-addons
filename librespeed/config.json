@@ -88,8 +88,6 @@
     "DAC_READ_SEARCH"
   ],
   "schema": {
-    "PGID": "int",
-    "PUID": "int",
     "TZ": "str?",
     "IPINFO_APIKEY": "str?",
     "CUSTOM_RESULTS": "bool?",
