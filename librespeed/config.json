@@ -70,7 +70,8 @@
   ],
   "init": false,
   "ingress": true,
-  "ingress_port": 8096,
+  "ingress_port": 80,
+  "ingress_stream": true,
   "map": [
     "addon_config:rw"
   ],
@@ -84,10 +85,10 @@
   "panel_admin": false,
   "panel_icon": "mdi:speedometer",
   "ports": {
-    "8096/tcp": 8096
+    "80/tcp": 80
   },
   "ports_description": {
-    "8096/tcp": "web interface (Not required for Ingress)"
+    "80/tcp": "web interface (Not required for Ingress)"
   },
   "schema": {
     "IPINFO_APIKEY": "str?",
