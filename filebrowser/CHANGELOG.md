@@ -1,7 +1,13 @@
+## 2.32.0 (03-04-2025)
+
+- Update to latest image
+
 ## 2.23.0_14 (21-04-2024)
+
 - Fix : allows absence of legacy folders (addons_config and addons_autoscripts)
 
 ## 2.23.0_13 (06-04-2024)
+
 - Allow mdadm RAID (thanks @zagi988)
 
 ## 2.23.0_12 (08-01-2024)
