@@ -78,9 +78,9 @@
     "PGID": "0",
     "PUID": "0"
   },
-  "image": "ghcr.io/alexbelgium/filebrowser-{arch}",
   "ingress": true,
   "ingress_stream": true,
+  "ingress_port": 8080,
   "map": [
     "addon_config:rw",
     "media:rw",
@@ -127,5 +127,5 @@
   "slug": "filebrowser",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.23.0_14"
+  "version": "2.23.0_15"
 }
