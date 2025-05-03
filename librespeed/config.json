@@ -68,6 +68,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "image": "ghcr.io/alexbelgium/librespeed-{arch}",
   "init": false,
   "ingress": true,
   "ingress_port": 80,
@@ -79,8 +80,8 @@
   "options": {
     "IPINFO_APIKEY": "",
     "CUSTOM_RESULTS": false,
-    "PGID": "1000",
-    "PUID": "1000"
+    "PGID": 1000,
+    "PUID": 1000
   },
   "panel_admin": false,
   "panel_icon": "mdi:speedometer",
