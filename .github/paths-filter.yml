@@ -50,6 +50,7 @@ jellyseerr: jellyseerr/config.* # Image : yes
 joal: joal/config.* # Image : yes
 joplin: joplin/config.* # Image : yes
 kometa: kometa/config.* # Image : yes
+librespeed: librespeed/config.* # Image : yes
 lidarr: lidarr/config.* # Image : yes
 linkwarden: linkwarden/config.* # Image : yes
 mealie: mealie/config.* # Image : yes
