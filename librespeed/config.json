@@ -77,8 +77,7 @@
   "ingress": true,
   "ingress_stream": true,
   "map": [
-    "config:rw",
-    "share:rw"
+    "addon_config:rw"
   ],
   "name": "LibreSpeed",
   "options": {
@@ -91,7 +90,7 @@
     "8096/tcp": 8096
   },
   "ports_description": {
-    "8096/tcp": "web interface"
+    "8096/tcp": "web interface (Not required for Ingress)"
   },
   "privileged": [
     "SYS_ADMIN",
@@ -113,6 +112,5 @@
   "slug": "librespeed",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "5.4.1a",
-  "webui": "http://[HOST]:[PORT:8096]"
+  "version": "5.4.1a"
 }
