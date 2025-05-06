@@ -1,7 +1,7 @@
 {
   "github_beta": "true",
   "last_update": "31-01-2025",
-  "paused": true,
+  "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "filebrowser",
   "source": "github",
