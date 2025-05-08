@@ -1,5 +1,5 @@
 ## 2.32.0 (03-04-2025)
-
+- Requires homeassistant core > 2025.5.0
 - Update to latest image
 
 ## 2.23.0_14 (21-04-2024)
