@@ -78,6 +78,7 @@
     "PGID": "0",
     "PUID": "0"
   },
+  "homeassistant": "2025.5.0",
   "image": "ghcr.io/alexbelgium/filebrowser-{arch}",
   "ingress": true,
   "ingress_stream": true,
