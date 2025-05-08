@@ -40,21 +40,21 @@ jobs:
               SLUG="$(jq -r '.image' "$f/config.json" | awk -F 'alexbelgium/|-{arch' '{print $2}')"
               if [[ "$(jq '.arch[]' "$f/config.json")" == *"armv7"* ]]; then
                 ARCH=armv7 && COUNT="$(curl  --connect-timeout 5 -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-                until [ -n "$COUNT" ]; do COUNT="$(curl --connect-timeout 5 -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; ((c++)) && echo "repeat $c" && if [[ "$c" == 10 ]]; then count=0; fi; done
+                until [ -n "$COUNT" ]; do COUNT="$(curl --connect-timeout 5 -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; ((c++)) && echo "repeat $c" && if [[ "$c" == 10 ]]; then COUNT=0; fi; done
                 COUNT="${COUNT//,/}"
                 COUNT1="$COUNT"
                 echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
               else COUNT1="-"; fi
               if [[ "$(jq '.arch[]' "$f/config.json")" == *"amd64"* ]]; then
                 ARCH=amd64 && COUNT="$(curl  --connect-timeout 5 -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-                until [ -n "$COUNT" ]; do COUNT="$(curl --connect-timeout 5 -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; ((c++)) && echo "repeat $c" && if [[ "$c" == 10 ]]; then count=0; fi; done
+                until [ -n "$COUNT" ]; do COUNT="$(curl --connect-timeout 5 -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; ((c++)) && echo "repeat $c" && if [[ "$c" == 10 ]]; then COUNT=0; fi; done
                 COUNT="${COUNT//,/}"
                 COUNT2="$COUNT"
                 echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
               else COUNT2="-"; fi
               if [[ "$(jq '.arch[]' "$f/config.json")" == *"aarch64"* ]]; then
                 ARCH=aarch64 && COUNT="$(curl --connect-timeout 5 -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')"
-                until [ -n "$COUNT" ]; do COUNT="$(curl --connect-timeout 5 -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; ((c++)) && echo "repeat $c" && if [[ "$c" == 10 ]]; then count=0; fi; done
+                until [ -n "$COUNT" ]; do COUNT="$(curl --connect-timeout 5 -f -s -L https://github.com/alexbelgium/hassio-addons/pkgs/container/$SLUG-$ARCH/latest | awk '/Total downloads/{getline; print}' | awk -F '<|>' '{print $3}')" && sleep 5; ((c++)) && echo "repeat $c" && if [[ "$c" == 10 ]]; then COUNT=0; fi; done
                 COUNT="${COUNT//,/}"
                 COUNT3="$COUNT"
                 echo "$COUNT $ARCH users with $SLUG" && DOWNLOADS="$(( DOWNLOADS + COUNT))"
