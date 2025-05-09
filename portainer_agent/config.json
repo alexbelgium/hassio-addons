@@ -45,5 +45,5 @@
   "slug": "portainer_agent",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "linux-ppc64le-2.21.5-alpine"
+  "version": "linux-arm64-2.21.5-alpine"
 }
