@@ -10,7 +10,7 @@ on:
 jobs:
   sort_json:
     if: github.repository_owner == 'alexbelgium'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4

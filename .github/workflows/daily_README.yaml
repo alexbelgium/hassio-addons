@@ -8,7 +8,7 @@ on:
 jobs:
   README_updater:
     if: github.repository_owner == 'alexbelgium'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
                 mv "$f" "$NAME"
               fi
             fi
-          done      
+          done
 
 
           # Populate template
@@ -45,19 +45,19 @@ jobs:
           find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
             # $f is an addon directory
             if [ -f "$f/config.json" ]; then
-              
+
               echo "Project $f"
-              
+
               # Get variables
               if [ -f "$f/oldname" ]; then FOLDERNAME="$(cat "$f/oldname")"; else FOLDERNAME="$f"; fi
               NAME="$(jq -r '.name' "$f/config.json")"
               DESCRIPTION="$(jq -r '.description' "$f/config.json")"
               # Get icon
-              if [ "$(jq '.panel_icon' "$f/config.json")" != null ]; then 
+              if [ "$(jq '.panel_icon' "$f/config.json")" != null ]; then
                 ICON="$(jq -r '.panel_icon' "$f/config.json")"
                 ICON="${ICON#*:}"
                 ICON="![image](https://api.iconify.design/mdi/$ICON.svg)"
-              else 
+              else
                 ICON=""
               fi
 
@@ -73,10 +73,10 @@ jobs:
               if [[ "$(jq '.arch[]' "$f/config.json")" == *"armv7"* ]]; then
                 sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md
               else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi || true
-              if [[ "$(jq '.arch[]' "$f/config.json")" == *"amd64"* ]]; then 
+              if [[ "$(jq '.arch[]' "$f/config.json")" == *"amd64"* ]]; then
                 sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md
               else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi || true
-              if [[ "$(jq '.arch[]' "$f/config.json")" == *"aarch64"* ]]; then 
+              if [[ "$(jq '.arch[]' "$f/config.json")" == *"aarch64"* ]]; then
                 sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md
               else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi || true
               if [[ -f "$f/updater.json" ]]; then sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md; fi
