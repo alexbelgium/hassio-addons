@@ -1,4 +1,5 @@
-## 2.32.0 (03-04-2025)
+## 2.32.0 (09-05-2025)
+
 - Requires homeassistant core > 2025.5.0
 - Update to latest image
 
