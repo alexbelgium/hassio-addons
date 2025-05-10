@@ -71,10 +71,9 @@ ENV PYTHONUNBUFFERED=1
 
 # halodint disable=DL3019,SC3010
 RUN \
-    # Install qbit_manage
-    mkdir -p /qbit_manage && \
-    curl -o /tmp/qbit_manage.tar.gz -L "https://github.com/StuffAnThings/qbit_manage/tarball/develop" && \
-    tar xf /tmp/qbit_manage.tar.gz -C /qbit_manage --strip-components=1 && \
+    apk add --no-cache git && \
+    git clone --branch master https://github.com/StuffAnThings/qbit_manage.git /qbit_manage && \
+    sed -i "s/\(qbittorrent-api\)==2025.4.1/\1/" /qbit_manage/requirements.txt && \
     \
     # Clean dependencies
     sed -i "s/\\(qbittorrent-api\\)==2023.10.54/\\1/" /qbit_manage/requirements.txt && \
