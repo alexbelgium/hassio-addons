@@ -49,5 +49,4 @@ fi
 ########################
 
 bashio::log.info "Starting app..."
-yarn prisma migrate deploy
-docker-entrypoint.sh yarn start
+yarn prisma:deploy && yarn concurrently:start
