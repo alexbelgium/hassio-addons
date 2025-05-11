@@ -69,17 +69,17 @@
     "/dev/nvme2"
   ],
   "image": "ghcr.io/alexbelgium/librespeed-{arch}",
-  "init": false,
   "ingress": true,
   "ingress_port": 80,
   "ingress_stream": true,
+  "init": false,
   "map": [
     "addon_config:rw"
   ],
   "name": "LibreSpeed",
   "options": {
-    "IPINFO_APIKEY": "",
     "CUSTOM_RESULTS": false,
+    "IPINFO_APIKEY": "",
     "PGID": 1000,
     "PUID": 1000
   },
@@ -92,12 +92,12 @@
     "80/tcp": "web interface (Not required for Ingress)"
   },
   "schema": {
-    "IPINFO_APIKEY": "str?",
     "CUSTOM_RESULTS": "bool?",
+    "IPINFO_APIKEY": "str?",
     "PASSWORD": "str?",
-    "TZ": "str?",
     "PGID": "int",
-    "PUID": "int"
+    "PUID": "int",
+    "TZ": "str?"
   },
   "slug": "librespeed",
   "url": "https://github.com/alexbelgium/hassio-addons",

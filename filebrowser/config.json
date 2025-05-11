@@ -81,8 +81,8 @@
   "homeassistant": "2025.5.0",
   "image": "ghcr.io/alexbelgium/filebrowser-{arch}",
   "ingress": true,
-  "ingress_stream": true,
   "ingress_port": 8071,
+  "ingress_stream": true,
   "map": [
     "addon_config:rw",
     "media:rw",
