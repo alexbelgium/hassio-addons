@@ -59,14 +59,6 @@ If you want to do add the repository manually, please follow the procedure highl
 - aarch64: 36%
 - armv7: 4%
 
-### Total downloads evolution
-
-<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stats.png" width=500px>
-
-### Specific downloads evolution
-
-<img src="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stats_addons.png" width=500px>
-
 ### Stars evolution
 
 [![Star History Chart](https://api.star-history.com/svg?repos=alexbelgium/hassio-addons&type=Date)](https://star-history.com/#alexbelgium/hassio-addons&Date)
