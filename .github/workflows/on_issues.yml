@@ -22,7 +22,7 @@ jobs:
         curl -s -L https://api.github.com/repos/alexbelgium/hassio-addons/issues > issueslist
         # Go through all folders, add to filters if not existing
         for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
-          if [ -f "$f"/config.json ] && [ ! "$f"/README.md ]; then
+          if [ -f "$f"/config.json ] && [ -f "$f"/README.md ]; then
             
             # Clean previously reported issues
             sed -i "/Open Issue :/d" "$f"/README.md
