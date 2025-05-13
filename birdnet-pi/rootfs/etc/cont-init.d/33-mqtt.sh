@@ -24,7 +24,7 @@ common_steps () {
     if mosquitto_pub -h "$MQTT_HOST" -p "$MQTT_PORT" -t "$TOPIC" -m "test" -u "$MQTT_USER" -P "$MQTT_PASS" -q 1 -d --will-topic "$TOPIC" --will-payload "Disconnected" --will-qos 1 --will-retain > /dev/null 2>&1; then
         # Adapt script with MQTT settings
         sed -i "s|%%mqtt_server%%|$MQTT_HOST|g" /helpers/birdnet_to_mqtt.py
-        sed -i "s|%%mqtt_port%%|$MQTT_PORT|g" /helpers/birdnet_to_mqtt.py
+        sed -i "s|\"%%mqtt_port%%\"|$MQTT_PORT|g" /helpers/birdnet_to_mqtt.py
         sed -i "s|%%mqtt_user%%|$MQTT_USER|g" /helpers/birdnet_to_mqtt.py
         sed -i "s|%%mqtt_pass%%|$MQTT_PASS|g" /helpers/birdnet_to_mqtt.py
 
