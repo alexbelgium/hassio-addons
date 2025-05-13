@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [FireflyIII] Cant change languages (opened 2025-03-23)](https://github.com/alexbelgium/hassio-addons/issues/1819) by [@FryggFR](https://github.com/FryggFR)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
