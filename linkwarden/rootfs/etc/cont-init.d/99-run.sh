@@ -41,7 +41,7 @@ if [[ "$DATABASE_URL" == *"localhost"* ]]; then
     # Create database if does not exist
     echo "CREATE DATABASE linkwarden; GRANT ALL PRIVILEGES ON DATABASE linkwarden to postgres;
     \q"> setup_postgres.sql
-    sudo -u postgres bash -c 'psql "postgres://postgres:homeassistant@localhost:5432"' < setup_postgres.sql || true
+    sudo -u postgres bash -c 'cat setup_postgres.sql | psql "postgres://postgres:homeassistant@localhost:5432"' || true
 fi
 
 ########################
