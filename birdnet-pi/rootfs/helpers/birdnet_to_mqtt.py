@@ -27,7 +27,7 @@ settings_dict = dict(conf)
 mqtt_server = "%%mqtt_server%%"
 mqtt_user = "%%mqtt_user%%"
 mqtt_pass = "%%mqtt_pass%%"
-mqtt_port = %%mqtt_port%%
+mqtt_port = "%%mqtt_port%%"
 mqtt_topic = 'birdnet'
 bird_lookup_url_base = 'http://en.wikipedia.org/wiki/'
 
