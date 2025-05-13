@@ -23,8 +23,10 @@ case "$database" in
 
     # Use sqlite
     sqlite)
-        export DB_DATABASE="/config/database.sqlite"
-        export DB_CONNECTION=sqlite
+        DB_DATABASE="/config/database.sqlite"
+        export DB_DATABASE
+        DB_CONNECTION=sqlite
+        export DB_CONNECTION
         touch "$DB_DATABASE"
         mkdir -p /var/www/html/database
         ln -sf "$DB_DATABASE" /var/www/html/database/database.sqlite
@@ -35,20 +37,26 @@ case "$database" in
     # Use Mariadb_addon
     MariaDB_addon)
         # Use MariaDB
-        export DB_CONNECTION=mysql
+        DB_CONNECTION=mysql
+        export DB_CONNECTION
         bashio::log.green "Using MariaDB addon. Requirements: running MariaDB addon. Discovering values..."
         if ! bashio::services.available 'mysql'; then
             bashio::log.fatal "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok "Please ensure it is installed and started"
         fi
-    
+
         # Use values
-        export DB_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "DB_HOST=$DB_HOST" && sed -i "1a export DB_HOST=$DB_HOST" /usr/local/bin/entrypoint.sh
-        export DB_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "DB_PORT=$DB_PORT" && sed -i "1a export DB_PORT=$DB_PORT" /usr/local/bin/entrypoint.sh
-        export DB_DATABASE=monica && bashio::log.blue "DB_DATABASE=$DB_DATABASE" && sed -i "1a export DB_DATABASE=$DB_DATABASE" /usr/local/bin/entrypoint.sh
-        export DB_USERNAME=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USERNAME=$DB_USERNAME" && sed -i "1a export DB_USERNAME=$DB_USERNAME" /usr/local/bin/entrypoint.sh
-        export DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD" && sed -i "1a export DB_PASSWORD=$DB_PASSWORD" /usr/local/bin/entrypoint.sh
-    
+        DB_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "DB_HOST=$DB_HOST" && sed -i "1a export DB_HOST=$DB_HOST" /usr/local/bin/entrypoint.sh
+        DB_PORT=$(bashio::services "mysql" "port") && bashio::log.blue "DB_PORT=$DB_PORT" && sed -i "1a export DB_PORT=$DB_PORT" /usr/local/bin/entrypoint.sh
+        DB_DATABASE=monica && bashio::log.blue "DB_DATABASE=$DB_DATABASE" && sed -i "1a export DB_DATABASE=$DB_DATABASE" /usr/local/bin/entrypoint.sh
+        DB_USERNAME=$(bashio::services "mysql" "username") && bashio::log.blue "DB_USERNAME=$DB_USERNAME" && sed -i "1a export DB_USERNAME=$DB_USERNAME" /usr/local/bin/entrypoint.sh
+        DB_PASSWORD=$(bashio::services "mysql" "password") && bashio::log.blue "DB_PASSWORD=$DB_PASSWORD" && sed -i "1a export DB_PASSWORD=$DB_PASSWORD" /usr/local/bin/entrypoint.sh
+        export DB_HOST
+        export DB_PORT
+        export DB_DATABASE
+        export DB_USERNAME
+        export DB_PASSWORD
+
         bashio::log.warning "Monica is using the MariaDB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
@@ -60,14 +68,16 @@ case "$database" in
 
     # Use Mariadb_addon
     Mysql_external)
-        export DB_CONNECTION=mysql
+        DB_CONNECTION=mysql
+        export DB_CONNECTION
         for var in DB_DATABASE DB_HOST DB_PASSWORD DB_PORT DB_USERNAME; do
             # Verify all variables are set
             if ! bashio::config.has_value "$var"; then
                 bashio::log.fatal "You have selected to not use the automatic MariaDB detection by manually configuring the addon options, but the option $var is not set."
                 exit 1
             fi
-            export "$var=$(bashio::config "var")"
+            "$var=$(bashio::config "var")"
+            export "$var"
             bashio::log.blue "$var=$(bashio::config "var")"
         done
         # Alert if MariaDB is available
@@ -79,7 +89,7 @@ case "$database" in
         mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
 
         ;;
-        
+
 esac
 
 ###########
@@ -97,7 +107,8 @@ if [ -z "$APP_KEY" ] || [ ${#APP_KEY} -lt 32 ]; then
     echo "${APP_KEY}" >> /config/APP_KEY
     bashio::addon.restart
 fi
-export APP_KEY="$(bashio::config "APP_KEY")"
+APP_KEY="$(bashio::config "APP_KEY")"
+export APP_KEY
 
 bashio::log.info "Starting Monica"
 
