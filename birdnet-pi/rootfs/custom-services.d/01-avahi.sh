@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 # Waiting for dbus
 until [[ -e /var/run/dbus/system_bus_socket ]]; do
     sleep 1s
