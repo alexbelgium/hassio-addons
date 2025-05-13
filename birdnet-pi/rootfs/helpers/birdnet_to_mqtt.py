@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 # birdnet_to_mqtt.py
 
+import os
+import sys
 import time
 import re
 import datetime
@@ -8,8 +10,6 @@ import json
 import logging
 import paho.mqtt.client as mqtt
 import requests
-import sys
-import os
 
 sys.path.append('/home/pi/BirdNET-Pi/scripts/utils')
 from helpers import get_settings
