@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-MIGRATED=""
 PREVIOUS_FOLDER="immich"
 
 # Move main folder
@@ -18,5 +17,5 @@ fi
 # Move autoscript
 if [ -f /homeassistant/addons_autoscrips/immich.sh ]; then
     cp -rnf /homeassistant/addons_autoscrips/"$PREVIOUS_FOLDER".sh /config/ &>/dev/null || true
-    bashio::log.yellow "... moved "$PREVIOUS_FOLDER".sh from /config/addons_autoscripts to /addon_configs/$HOSTNAME"
+    bashio::log.yellow "... moved $PREVIOUS_FOLDER.sh from /config/addons_autoscripts to /addon_configs/$HOSTNAME"
 fi
