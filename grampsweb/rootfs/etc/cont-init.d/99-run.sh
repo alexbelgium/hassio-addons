@@ -28,7 +28,8 @@ fi
 # Check if the secret key is defined in addon options
 if bashio::config.has_value "GRAMPSWEB_SECRET_KEY"; then
     bashio::log.warning "Using the secret key defined in the addon options."
-    export GRAMPSWEB_SECRET_KEY="$(bashio::config "GRAMPSWEB_SECRET_KEY")"
+    GRAMPSWEB_SECRET_KEY="$(bashio::config "GRAMPSWEB_SECRET_KEY")"
+    export GRAMPSWEB_SECRET_KEY
 else
     # Check if the secret file exists; if not, create a new one
     if [ ! -s /config/secret/secret ]; then
@@ -39,7 +40,8 @@ else
     fi
     bashio::log.warning "Using existing secret key from /config/secret/secret."
     bashio::log.warning "Secret key saved to addon options."
-    export GRAMPSWEB_SECRET_KEY="$(cat /config/secret/secret)"
+    GRAMPSWEB_SECRET_KEY="$(cat /config/secret/secret)"
+    export GRAMPSWEB_SECRET_KEY
     bashio::addon.option "GRAMPSWEB_SECRET_KEY" "$GRAMPSWEB_SECRET_KEY"
 fi
 
@@ -54,7 +56,7 @@ REDIS_PID=$!
 # Starting App #
 ###############
 echo "Starting Gramps Web App..."
-/docker-entrypoint.sh gunicorn -w ${GUNICORN_NUM_WORKERS:-8} -b 0.0.0.0:5000 gramps_webapi.wsgi:app --timeout ${GUNICORN_TIMEOUT:-120} --limit-request-line 8190 &
+/docker-entrypoint.sh gunicorn -w "${GUNICORN_NUM_WORKERS:-8}" -b 0.0.0.0:5000 gramps_webapi.wsgi:app --timeout "${GUNICORN_TIMEOUT:-120}" --limit-request-line 8190 &
 APP_PID=$!
 
 ##################
