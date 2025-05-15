@@ -2,17 +2,9 @@
 # shellcheck shell=bash
 set -e
 
-# Ensure required commands are installed
-for cmd in yq amixer; do
-    command -v "$cmd" >/dev/null 2>&1 || { bashio::log.fatal "$cmd is required but not installed. Exiting."; exit 1; }
-done
-
 # Default Variables
 DEFAULT_BIRDSONGS_FOLDER="/data/clips/"
 CONFIG_LOCATION="/config/config.yaml"
-touch "$CONFIG_LOCATION"
-mkdir -p /root/.config/birdnet-go/
-ln -sf "$CONFIG_LOCATION" /root/.config/birdnet-go/config.yaml
 
 #################
 # Migrate Database
