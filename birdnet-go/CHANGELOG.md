@@ -1,3 +1,4 @@
+## 20250427-4 (15-05-2025)
 - TEST VERSION
 - Breaking change: COMMAND addon option removed. Please instead use the config.yaml to define the RTSP feeds
 
