@@ -1,3 +1,5 @@
+## 31.0.4-3 (15-05-2025)
+- Minor bugs fixed
 ## 31.0.4-2 (15-05-2025)
 - Disable upload file limits
 
