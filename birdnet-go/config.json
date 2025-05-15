@@ -69,7 +69,10 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {},
+  "environment": {
+    "BIRDNET_UID": "0",
+    "BIRDNET_GID": "0"
+  },
   "image": "ghcr.io/alexbelgium/birdnet-go-{arch}",
   "ingress": true,
   "ingress_stream": true,
