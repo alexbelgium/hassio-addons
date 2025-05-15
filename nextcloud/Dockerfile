@@ -53,7 +53,7 @@ RUN \
     # modify nginx limits file
     sed -i \
     -e '/client_max_body_size/c client_max_body_size 0;' \
-    -e '/post_max_size/c client_body_timeout 900s;' \
+    -e '/post_max_size/c client_body_timeout 3600s;' \
     /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Change location of log
