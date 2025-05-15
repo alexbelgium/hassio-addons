@@ -39,20 +39,20 @@ RUN \
     \
     # modify data limits file
     sed -i \
-    -e '/upload_max_filesize/c upload_max_filesize=8192M' \
-    -e '/post_max_size/c post_max_size=8192M' \
+    -e '/upload_max_filesize/c upload_max_filesize=0' \
+    -e '/post_max_size/c post_max_size=0' \
     -e '/max_execution_time/c max_execution_time=3600' \
     /etc/php*/php.ini && \
     \
     sed -i \
-    -e '/upload_max_filesize/c upload_max_filesize=8192M' \
-    -e '/post_max_size/c post_max_size=8192M' \
+    -e '/upload_max_filesize/c upload_max_filesize=0' \
+    -e '/post_max_size/c post_max_size=0' \
     -e '/max_execution_time/c max_execution_time=3600' \
     /etc/php*/conf.d/nextcloud.ini && \
     \
     # modify nginx limits file
     sed -i \
-    -e '/client_max_body_size/c client_max_body_size 8192M;' \
+    -e '/client_max_body_size/c client_max_body_size 0;' \
     -e '/post_max_size/c client_body_timeout 900s;' \
     /defaults/nginx/site-confs/default.conf.sample && \
     \
