@@ -81,8 +81,7 @@
   ],
   "name": "Birdnet-go",
   "options": {
-    "BIRDSONGS_FOLDER": "/config/clips",
-    "COMMAND": "realtime"
+    "BIRDSONGS_FOLDER": "/config/clips"
   },
   "panel_admin": false,
   "panel_icon": "mdi:bird",
@@ -99,7 +98,6 @@
   "schema": {
     "ALSA_CARD": "int?",
     "BIRDSONGS_FOLDER": "str?",
-    "COMMAND": "str",
     "TZ": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
