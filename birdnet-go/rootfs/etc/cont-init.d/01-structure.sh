@@ -13,7 +13,7 @@ fi
 
 # Use alternative location in case of need
 mkdir -p /root/.config/birdnet-go/
-ln -sf "$CONFIG_LOCATION" /root/.config/birdnet-go/
+ln -sf "$CONFIG_LOCATION" /root/.config/birdnet-go/config.yaml
 
 #################
 # Migrate Database
