@@ -41,19 +41,19 @@ RUN \
     sed -i \
     -e '/upload_max_filesize/c upload_max_filesize=0' \
     -e '/post_max_size/c post_max_size=0' \
-    -e '/max_execution_time/c max_execution_time=3600' \
+    -e '/max_execution_time/c max_execution_time=7200' \
     /etc/php*/php.ini && \
     \
     sed -i \
     -e '/upload_max_filesize/c upload_max_filesize=0' \
     -e '/post_max_size/c post_max_size=0' \
-    -e '/max_execution_time/c max_execution_time=3600' \
+    -e '/max_execution_time/c max_execution_time=7200' \
     /etc/php*/conf.d/nextcloud.ini && \
     \
     # modify nginx limits file
     sed -i \
     -e '/client_max_body_size/c client_max_body_size 0;' \
-    -e '/post_max_size/c client_body_timeout 3600s;' \
+    -e '/post_max_size/c client_body_timeout 7200;' \
     /defaults/nginx/site-confs/default.conf.sample && \
     \
     # Change location of log
