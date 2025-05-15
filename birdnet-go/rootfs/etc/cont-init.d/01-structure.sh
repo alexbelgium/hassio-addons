@@ -11,6 +11,10 @@ if [ ! -f /config/config.yaml ]; then
     curl -L -s -S https://raw.githubusercontent.com/tphakala/birdnet-go/refs/heads/main/internal/conf/config.yaml -o /config/config.yaml
 fi
 
+# Use alternative location in case of need
+mkdir -p /root/.config/birdnet-go/
+ln -sf "$CONFIG_LOCATION" /root/.config/birdnet-go/config.yaml
+
 #################
 # Migrate Database
 #################
