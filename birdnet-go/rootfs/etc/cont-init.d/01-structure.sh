@@ -100,10 +100,3 @@ bashio::log.info "Correcting configuration for defaults"
 # Update database location in config files
 yq -i -y ".output.sqlite.path = \"/config/birdnet.db\"" "$CONFIG_LOCATION"
 bashio::log.info "... database is located in /config/birdnet.db"
-
-# Adjust microphone volume if needed
-current_volume="$(amixer sget Capture | grep -oP '\[\d+%\]' | tr -d '[]%' | head -1 2>/dev/null || echo "100")" || true
-if [[ "$current_volume" -eq 0 ]]; then
-    amixer sset Capture 70%
-    bashio::log.warning "Microphone was off, volume set to 70%."
-fi || true
