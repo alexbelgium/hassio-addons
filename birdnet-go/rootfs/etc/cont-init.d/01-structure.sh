@@ -4,11 +4,11 @@ set -e
 
 # Default Variables
 DEFAULT_BIRDSONGS_FOLDER="/data/clips/"
-CONFIG_LOCATIONS=("/config/config.yaml" "/internal/conf/config.yaml")
+CONFIG_LOCATIONS=("/config/config.yaml")
 
 if [ ! -f /config/config.yaml ]; then
-    bashio::log.warning "There is no config.yaml yet in the config folder, creating a default one. Please customize"
-    cp /internal/conf/config.yaml /config/
+    bashio::log.warning "There is no config.yaml yet in the config folder, downloading a default one. Please customize"
+    curl -L -s -S https://raw.githubusercontent.com/tphakala/birdnet-go/refs/heads/main/internal/conf/config.yaml -o /config/config.yaml
 fi
 
 #################
