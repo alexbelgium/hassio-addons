@@ -1,10 +1,10 @@
 {
   "dockerhub_by_date": true,
   "dockerhub_list_size": 2,
-  "last_update": "08-03-2025",
+  "last_update": "17-05-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "free_games_claimer",
   "source": "github",
   "upstream_repo": "vogler/free-games-claimer",
-  "upstream_version": "1.7"
+  "upstream_version": "1.8"
 }

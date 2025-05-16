@@ -1,4 +1,7 @@
 
+## 1.8 (17-05-2025)
+- Update to latest version from vogler/free-games-claimer (changelog : https://github.com/vogler/free-games-claimer/releases)
+
 ## 1.7 (08-03-2025)
 - Update to latest version from vogler/free-games-claimer (changelog : https://github.com/vogler/free-games-claimer/releases)
 ## 1.6-6 (29-12-2024)
