@@ -1,3 +1,6 @@
+
+## 20250419 (17-05-2025)
+- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 ## 20250427-7 (15-05-2025)
 - Breaking change: COMMAND addon option removed. Please instead use the config.yaml to define the RTSP feeds
 - Use entrypoint
