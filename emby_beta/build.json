@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "lscr.io/linuxserver/emby:arm64v8-beta",
-    "amd64": "lscr.io/linuxserver/emby:amd64-beta"
+    "aarch64": "ghcr.io/linuxserver/emby:arm64v8-beta",
+    "amd64": "ghcr.io/linuxserver/emby:amd64-beta"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
