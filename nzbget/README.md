@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [nzbget] unknown manifest (opened 2025-05-17)](https://github.com/alexbelgium/hassio-addons/issues/1868) by [@dm82m](https://github.com/dm82m)
 # Home assistant add-on: nzbget
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

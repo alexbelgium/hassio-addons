@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [navidrome] issue using network share, Unable to apply new capability set (opened 2025-05-04)](https://github.com/alexbelgium/hassio-addons/issues/1859) by [@zerovox](https://github.com/zerovox)
 # Home assistant add-on: Navidrome
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
