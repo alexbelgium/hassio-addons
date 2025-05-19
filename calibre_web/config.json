@@ -84,7 +84,7 @@
   "map": [
     "media:rw",
     "share:rw",
-    "addon_config:rw",
+    "addon_configs:rw",
     "homeassistant_config:rw",
     "ssl"
   ],
