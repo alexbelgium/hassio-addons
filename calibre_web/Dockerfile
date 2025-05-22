@@ -72,7 +72,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 
 # Install sqlite3 & set defaults
 RUN if ! command -v sqlite3 > /dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends sqlite3 || apk add --no-cache sqlite3) > /dev/null; fi \
-    && [[ -f /defaults/app.db ]] && sqlite3 /defaults/app.db 'update settings set config_reverse_proxy_login_header_name="X-WebAuth-User",config_allow_reverse_proxy_header_login=1'
+    && echo "sqlite3 /config/app.db 'update settings set config_reverse_proxy_login_header_name=\"X-WebAuth-User\",config_allow_reverse_proxy_header_login=1'" >> /etc/s6-overlay/s6-rc.d/init-calibre-web-config/run
 
 ################
 # 4 Entrypoint #
