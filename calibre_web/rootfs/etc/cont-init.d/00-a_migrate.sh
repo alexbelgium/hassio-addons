@@ -12,4 +12,5 @@ if [ -d /homeassistant/addons_config/calibre-web ]; then
     rm -r /homeassistant/addons_config/calibre-web
 fi
 
+# Provide retrocompatibility
 ln -sf /config /homeassistant/addons_config/calibre-web
