@@ -11,3 +11,5 @@ if [ -d /homeassistant/addons_config/calibre-web ]; then
     cp -rf /homeassistant/addons_config/calibre-web/* /config/
     rm -r /homeassistant/addons_config/calibre-web
 fi
+
+ln -sf /config /homeassistant/addons_config/calibre-web
