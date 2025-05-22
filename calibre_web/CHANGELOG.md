@@ -1,3 +1,5 @@
+## 0.6.24-4 (22-05-2025)
+- Minor bugs fixed
 
 ## 0.6.24 (23-11-2024)
 - Update to latest version from linuxserver/docker-calibre-web (changelog : https://github.com/linuxserver/docker-calibre-web/releases)
