@@ -1,3 +1,5 @@
+## 0.6.24-5 (23-05-2025)
+- Minor bugs fixed
 ## 0.6.24-4 (22-05-2025)
 - Minor bugs fixed
 
