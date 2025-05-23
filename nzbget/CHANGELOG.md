@@ -1,3 +1,6 @@
+
+## v25.0-ls199 (24-05-2025)
+- Update to latest version from linuxserver/docker-nzbget (changelog : https://github.com/linuxserver/docker-nzbget/releases)
 ## v25.0-ls198-2 (21-05-2025)
 - Minor bugs fixed
 
