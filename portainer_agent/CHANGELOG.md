@@ -1,4 +1,7 @@
 
+## alpine-sts (24-05-2025)
+- Update to latest version from portainer/agent
+
 ## linux-arm64-2.21.5-alpine (10-05-2025)
 - Update to latest version from portainer/agent
 
