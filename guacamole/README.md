@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [Guacamole Client - Sometime cant type, can only click (opened 2025-05-19)](https://github.com/alexbelgium/hassio-addons/issues/1872) by [@DJIronic](https://github.com/DJIronic)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
