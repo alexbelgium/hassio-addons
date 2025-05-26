@@ -174,7 +174,7 @@ check_vchord_extension() {
         exit 0
     else
         bashio::log.warning "❌ 'vchord' extension is NOT enabled."
-        check_vector_extension
+        return 1
     fi
 }
 
@@ -199,4 +199,4 @@ export_db_env
 
 setup_root_user
 setup_database
-check_vchord_extension
+check_vchord_extension || check_vector_extension
