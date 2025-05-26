@@ -150,16 +150,16 @@ EOF
     bashio::log.info "Database setup completed successfully."
 }
 
-# Function to check if vectorchord extension is enabled
-check_vectorchord_extension() {
-    echo "Checking if 'vectorchord' extension is enabled..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectorchord';")
+# Function to check if vchord extension is enabled
+check_vchord_extension() {
+    echo "Checking if 'vchord' extension is enabled..."
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vchord';")
 
-    if [[ "$RESULT" == "vectorchord" ]]; then
-        echo "✅ 'vectorchord' extension is enabled."
+    if [[ "$RESULT" == "vchord" ]]; then
+        echo "✅ 'vchord' extension is enabled."
         exit 0
     else
-        bashio::log.warning "❌ 'vectorchord' extension is NOT enabled."
+        bashio::log.warning "❌ 'vchord' extension is NOT enabled."
         return 1
     fi
 }
@@ -185,4 +185,4 @@ export_db_env
 
 setup_root_user
 setup_database
-check_vectorchord_extension
+check_vchord_extension
