@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [openproject] Addon fails to start (opened 2025-05-07)](https://github.com/alexbelgium/hassio-addons/issues/1860) by [@alanpaone](https://github.com/alanpaone)
 # Home assistant add-on: Openproject
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
