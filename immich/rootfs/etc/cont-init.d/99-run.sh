@@ -150,6 +150,20 @@ EOF
     bashio::log.info "Database setup completed successfully."
 }
 
+# Function to check if vectors extension is enabled
+check_vector_extension() {
+    echo "Checking if 'vectors' extension is enabled..."
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
+
+    if [[ "$RESULT" == "vectors" ]]; then
+        echo "✅ 'vectors' extension is enabled."
+        exit 0
+    else
+        bashio::log.warning "❌ 'vectors' extension is NOT enabled."
+        return 1
+    fi
+}
+
 # Function to check if vchord extension is enabled
 check_vchord_extension() {
     echo "Checking if 'vchord' extension is enabled..."
@@ -160,7 +174,7 @@ check_vchord_extension() {
         exit 0
     else
         bashio::log.warning "❌ 'vchord' extension is NOT enabled."
-        return 1
+        check_vector_extension
     fi
 }
 
