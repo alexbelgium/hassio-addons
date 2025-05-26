@@ -9,7 +9,7 @@ set -e
 CONFIG_HOME="/config"
 PGDATA="${PGDATA:-/config/database}"
 PG_VERSION_FILE="$PGDATA/pg_major_version"
-vchord_VERSION_FILE="$PGDATA/vchord_version"
+VCHORD_VERSION_FILE="$PGDATA/vchord_version"
 
 # Define current PostgreSQL major version
 PG_MAJOR_VERSION="${PG_MAJOR:-15}"
@@ -141,13 +141,13 @@ store_vchord_version() {
     local version
     version=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" \
                -tAc "SELECT extversion FROM pg_extension WHERE extname = 'vchord';")
-    echo "$version" > "$vchord_VERSION_FILE"
+    echo "$version" > "$VCHORD_VERSION_FILE"
 }
 
 # Function: Detect previous and new vchord versions, and upgrade if needed
 upgrade_vchord_extension() {
     local current_version desired_version
-    current_version=$(cat "$vchord_VERSION_FILE" 2>/dev/null || echo "unknown")
+    current_version=$(cat "$VCHORD_VERSION_FILE" 2>/dev/null || echo "unknown")
     desired_version=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" \
                     -tAc "SELECT extversion FROM pg_extension WHERE extname = 'vchord';")
 
@@ -161,7 +161,7 @@ upgrade_vchord_extension() {
             -c "DROP INDEX IF EXISTS clip_index;" >/dev/null 2>&1
 
         # Store new vchord version
-        echo "$desired_version" > "$vchord_VERSION_FILE"
+        echo "$desired_version" > "$VCHORD_VERSION_FILE"
     else
         bashio::log.info "'vchord' extension is already at the latest version ($desired_version)."
     fi
