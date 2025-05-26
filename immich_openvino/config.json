@@ -147,7 +147,7 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "1.133.1",
+  "version": "1.133.1_vectorchord",
   "video": true,
   "webui": "http://[HOST]:[PORT:8080]"
 }
