@@ -96,7 +96,7 @@ update_postgres() {
 
         # Install binaries
         apt-get update &>/dev/null
-        install -y procps rsync postgresql-$PG_MAJOR_VERSION postgresql-$OLD_PG_VERSION &>/dev/null
+        install -y procps rsync postgresql-"$PG_MAJOR_VERSION" postgresql-"$OLD_PG_VERSION" &>/dev/null
 
         # Download and run the upgrade script
         TMP_SCRIPT=$(mktemp)
