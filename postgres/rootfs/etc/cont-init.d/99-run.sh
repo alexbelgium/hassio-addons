@@ -47,10 +47,10 @@ bashio::log.info "Starting PostgreSQL..."
 
 if [ "$(bashio::info.arch)" = "armv7" ]; then
     bashio::log.warning "ARMv7 detected: Starting without extensions"
-    docker-entrypoint.sh postgres & true
+    immich-docker-entrypoint.sh postgres & true
     exit 0
 else
-    docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
+    immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
 fi
 
 ###############################
