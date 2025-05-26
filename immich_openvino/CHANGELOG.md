@@ -1,3 +1,4 @@
+## 1.133.1-2 (26-05-2025)
 - MAJOR CHANGE : please backup your database before updating
 - Added VectorChord support https://github.com/immich-app/immich/releases/tag/v1.133.0
 
