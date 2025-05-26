@@ -6,7 +6,7 @@
   ],
   "backup": "cold",
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Postgres 15 with pgvecto.rs support",
+  "description": "Postgres 15 with VectorChord support",
   "environment": {
     "CONFIG_LOCATION": "/config/postgresql.conf",
     "PGDATA": "/config/database"
@@ -38,5 +38,5 @@
   "slug": "postgres",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/postgres",
-  "version": "15.7-29"
+  "version": "15.7-30"
 }
