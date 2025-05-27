@@ -79,7 +79,7 @@ bashio::log.warning "Username: comixedreader@localhost Password: comixedreader"
 
 bashio::log.info "Starting..."
 
-# shellcheck disable=SC2086
+# shellcheck disable=SC2086,SC2211
 /./app/comixed-release*/bin/run.sh -L /config/comixed.log
 
 #& true
