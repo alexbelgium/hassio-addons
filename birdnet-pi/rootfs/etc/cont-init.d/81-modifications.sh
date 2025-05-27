@@ -29,7 +29,7 @@ if bashio::supervisor.ping 2>/dev/null; then
 
     # Remove pulseaudio
     echo "... disabling pulseaudio as managed by HomeAssistant"
-    for file in $(grep -srl "pulseaudio --start" $HOME/BirdNET-Pi/scripts); do
+    grep -srl "pulseaudio --start" "$HOME/BirdNET-Pi/scripts" | while read -r file; do
         sed -i "s|! pulseaudio --check|pulseaudio --check|g" "$file"
     done
 
