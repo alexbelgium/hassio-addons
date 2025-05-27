@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Performs the recording from the specified RTSP stream or soundcard
 set +u
+# shellcheck disable=SC1091
 source /etc/birdnet/birdnet.conf
 
 # Read the logging level from the configuration option
