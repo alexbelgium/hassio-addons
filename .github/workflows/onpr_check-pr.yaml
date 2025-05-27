@@ -2,6 +2,7 @@
 # shellcheck disable=SC2043
 ---
 name: PR Check Build
+
 on:
   pull_request:
     branches:
@@ -23,7 +24,7 @@ jobs:
         with:
           filters: .github/paths-filter.yml
 
-      - name: 📂 Detect chanced files
+      - name: 📂 Detect changed files
         uses: dorny/paths-filter@v3
         id: changed-files
         with:
@@ -31,11 +32,12 @@ jobs:
           filters: |
             changelogs:
               - '**/CHANGELOG.md'
+
   check-changed-changelog:
     name: Check if CHANGELOG.md changed
+    needs: check-addon-changes
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     runs-on: ubuntu-latest
-    needs: check-addon-changes
     strategy:
       fail-fast: false
       matrix:
@@ -46,15 +48,15 @@ jobs:
         run: |
           # shellcheck disable=SC2076,SC2059
           if [[ ! "${{ needs.check-addon-changes.outputs.changedChangelogFiles }}" =~ "${{ matrix.addon }}/CHANGELOG.md" ]]; then
-              echo "::error::No new entries in ${{ matrix.addon }} CHANGELOG.md file!"
-              exit 1
+            echo "::error::No new entries in ${{ matrix.addon }} CHANGELOG.md file!"
+            exit 1
           fi
 
   check-addon-label:
-    name: Check for existance of the addon label
+    name: Check for existence of the addon label
+    needs: check-addon-changes
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     runs-on: ubuntu-latest
-    needs: check-addon-changes
     strategy:
       fail-fast: false
       matrix:
@@ -66,16 +68,17 @@ jobs:
       - name: 🔎 Check if a label for the addon exists
         shell: bash
         run: |
-          labeltext=$(sed -nr "/${{ matrix.addon }}/p" '.github/paths-filter.yml')
+          labeltext=$(grep -E "^\s*${{ matrix.addon }}:" '.github/paths-filter.yml' || true)
           if [[ -z "$labeltext" ]]; then
-              echo "::error::There is no label for this addon! Please add it to .github/paths-filter.yml"
-              exit 1
+            echo "::error::There is no label for this addon! Please add it to .github/paths-filter.yml"
+            exit 1
           fi
+
   addon-linter:
     name: Addon linting
+    needs: check-addon-changes
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     runs-on: ubuntu-latest
-    needs: check-addon-changes
     strategy:
       fail-fast: false
       matrix:
@@ -91,9 +94,9 @@ jobs:
 
   check-build:
     name: Test addon build
+    needs: check-addon-changes
     if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
     runs-on: ubuntu-latest
-    needs: check-addon-changes
     strategy:
       fail-fast: false
       matrix:
@@ -113,38 +116,67 @@ jobs:
         with:
           path: /tmp/buildx-cache
           key: ${{ runner.os }}-buildx-${{ matrix.addon }}-${{ hashFiles('**/Dockerfile') }}
-          restore-keys: ${{ runner.os }}-buildx-${{ matrix.addon }}-
+          restore-keys: |
+            ${{ runner.os }}-buildx-${{ matrix.addon }}-
 
       - name: 🔖 Create addon image tags
         id: tags
         shell: bash
         run: |
-          imagetemplate=${{ steps.information.outputs.image }}
-          version=${{ steps.information.outputs.version }}
-          echo "Using imagetemplate '$imagetemplate'"
+          imagetemplate="${{ steps.information.outputs.image }}"
+          version="${{ steps.information.outputs.version }}"
+          echo "Using imagetemplate '${imagetemplate}'"
           # shellcheck disable=SC2129
           echo "armhf=${imagetemplate/\{arch\}/armhf}:${version}" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
           echo "armv7=${imagetemplate/\{arch\}/armv7}:${version}" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
           echo "aarch64=${imagetemplate/\{arch\}/aarch64}:${version}" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
           echo "amd64=${imagetemplate/\{arch\}/amd64}:${version}" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
           echo "i386=${imagetemplate/\{arch\}/i386}:${version}" >> "$GITHUB_OUTPUT"
+
+      - name: 🏷️ Create addon labels
+        id: labels
+        shell: bash
+        run: |
+          # shellcheck disable=SC2076,SC2059
+          labels="io.hass.version=${{ steps.information.outputs.version }}"
+          labels=$(printf '%s' "$labels\nio.hass.name=${{ steps.information.outputs.name }}")
+          labels=$(printf '%s' "$labels\nio.hass.description=${{ steps.information.outputs.description }}")
+          labels=$(printf '%s' "$labels\nio.hass.type=addon")
+          labels=$(printf '%s' "$labels\nio.hass.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.title=${{ steps.information.outputs.name }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.description=${{ steps.information.outputs.description }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.version=${{ steps.information.outputs.version }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.authors=Poeschl <Poeschl@users.noreply.github.com>")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.created=$(date -Is)")
+          labels=$(printf '%s' "$labels\norg.opencontainers.image.revision=${GITHUB_SHA}")
+          echo "Generic labels: $labels"
+          armhf_labels=$(printf '%s' "$labels\nio.hass.arch=armhf")
+          armv7_labels=$(printf '%s' "$labels\nio.hass.arch=armv7")
+          aarch64_labels=$(printf '%s' "$labels\nio.hass.arch=aarch64")
+          amd64_labels=$(printf '%s' "$labels\nio.hass.arch=amd64")
+          i386_labels=$(printf '%s' "$labels\nio.hass.arch=i386")
+          # allow multiline outputs, see https://github.community/t/set-output-truncates-multiline-strings/16852
+          armhf_labels="${armhf_labels//$'\n'/'%0A'}"
+          armv7_labels="${armv7_labels//$'\n'/'%0A'}"
+          aarch64_labels="${aarch64_labels//$'\n'/'%0A'}"
+          amd64_labels="${amd64_labels//$'\n'/'%0A'}"
+          i386_labels="${i386_labels//$'\n'/'%0A'}"
+          echo "armhf=$armhf_labels" >> "$GITHUB_OUTPUT"
+          echo "armv7=$armv7_labels" >> "$GITHUB_OUTPUT"
+          echo "aarch64=$aarch64_labels" >> "$GITHUB_OUTPUT"
+          echo "amd64=$amd64_labels" >> "$GITHUB_OUTPUT"
+          echo "i386=$i386_labels" >> "$GITHUB_OUTPUT"
+
       - name: 💽 Create addon build-args
         id: build_args
         shell: bash
         run: |
-          # shellcheck disable=SC2129
           echo "armhf=BUILD_FROM=$(jq -r .build_from.armhf // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
           echo "armv7=BUILD_FROM=$(jq -r .build_from.armv7 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
           echo "aarch64=BUILD_FROM=$(jq -r .build_from.aarch64 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
           echo "amd64=BUILD_FROM=$(jq -r .build_from.amd64 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
           echo "i386=BUILD_FROM=$(jq -r .build_from.i386 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
 
       - name: 🏗️ Set up QEMU
@@ -162,8 +194,7 @@ jobs:
           load: true
           file: ${{ matrix.addon }}/Dockerfile
           tags: ${{ steps.tags.outputs.armhf }}
-          labels: |
-            ${{ steps.labels.outputs.armhf }}
+          labels: ${{ steps.labels.outputs.armhf }}
           build-args: ${{ steps.build_args.outputs.armhf }}
           cache-from: type=local,src=/tmp/buildx-cache/armhf
           cache-to: type=local,dest=/tmp/buildx-cache-new/armhf
@@ -177,8 +208,7 @@ jobs:
           load: true
           file: ${{ matrix.addon }}/Dockerfile
           tags: ${{ steps.tags.outputs.armv7 }}
-          labels: |
-            ${{ steps.labels.outputs.armv7 }}
+          labels: ${{ steps.labels.outputs.armv7 }}
           build-args: ${{ steps.build_args.outputs.armv7 }}
           cache-from: type=local,src=/tmp/buildx-cache/armv7
           cache-to: type=local,dest=/tmp/buildx-cache-new/armv7
@@ -192,8 +222,7 @@ jobs:
           load: true
           file: ${{ matrix.addon }}/Dockerfile
           tags: ${{ steps.tags.outputs.aarch64 }}
-          labels: |
-            ${{ steps.labels.outputs.aarch64 }}
+          labels: ${{ steps.labels.outputs.aarch64 }}
           build-args: ${{ steps.build_args.outputs.aarch64 }}
           cache-from: type=local,src=/tmp/buildx-cache/aarch64
           cache-to: type=local,dest=/tmp/buildx-cache-new/aarch64
@@ -207,8 +236,7 @@ jobs:
           load: true
           file: ${{ matrix.addon }}/Dockerfile
           tags: ${{ steps.tags.outputs.amd64 }}
-          labels: |
-            ${{ steps.labels.outputs.amd64 }}
+          labels: ${{ steps.labels.outputs.amd64 }}
           build-args: ${{ steps.build_args.outputs.amd64 }}
           cache-from: type=local,src=/tmp/buildx-cache/amd64
           cache-to: type=local,dest=/tmp/buildx-cache-new/amd64
@@ -222,13 +250,11 @@ jobs:
           load: true
           file: ${{ matrix.addon }}/Dockerfile
           tags: ${{ steps.tags.outputs.i386 }}
-          labels: |
-            ${{ steps.labels.outputs.i386 }}
+          labels: ${{ steps.labels.outputs.i386 }}
           build-args: ${{ steps.build_args.outputs.i386 }}
           cache-from: type=local,src=/tmp/buildx-cache/i386
           cache-to: type=local,dest=/tmp/buildx-cache-new/i386
 
-      # Fix for https://github.com/docker/build-push-action/issues/252
       - name: 🗄️ Update cache Folder
         run: |
           rm -rf /tmp/buildx-cache
