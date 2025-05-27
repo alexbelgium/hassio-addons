@@ -50,7 +50,7 @@ if [ "$(bashio::info.arch)" = "armv7" ]; then
     immich-docker-entrypoint.sh postgres & true
     exit 0
 else
-    immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
+    immich-docker-entrypoint.sh postgres "-c config_file=/etc/postgresql/postgresql.conf" & true
 fi
 
 ###############################
@@ -180,7 +180,7 @@ troubleshoot_vchord_extension() {
     ext_check=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" \
                 -tAc "SELECT count(*) FROM pg_available_extensions WHERE name = 'vchord';")
     if [[ "$ext_check" -eq 0 ]]; then
-        bashio::log.error "'vchord' extension is missing. Ensure vchord is installed."
+        bashio::log.error "'vchord' extension is missing. Ensure vchord is installed. If this is your first boot it will be installed later"
         exit 1
     fi
 }
