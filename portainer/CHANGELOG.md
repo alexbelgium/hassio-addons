@@ -1,3 +1,4 @@
+- Map internal /config to allow for custom scripts execution and variables
 
 ## 2.30.1 (24-05-2025)
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
