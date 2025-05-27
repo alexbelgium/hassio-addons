@@ -16,7 +16,7 @@ on:
 
 jobs:
   correct_path_filters:
-    if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message), 'nobuild') }}
+    if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message, 'nobuild') }}
     runs-on: ubuntu-latest
     steps:
       - name: ↩️ Checkout
