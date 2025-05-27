@@ -18,7 +18,7 @@ echo ""
 
 echo "Migration (thanks @eikeja) : 
 - Install the new addon
-- Make a backup of the old Paperless directory. In my case "/addon_configs/db21ed7f_paperless_ng"
+- Make a backup of the old Paperless directory. In my case '/addon_configs/db21ed7f_paperless_ng'
 - View the folder structure of the new instance, assign files from the old instance to the folders of the new instance.
 
 Start new Paperless - all data is there!
