@@ -3,6 +3,7 @@
 
 # Get values
 set +u
+# shellcheck disable=SC1091
 source /etc/birdnet/birdnet.conf
 
 # Create ingress configuration for Caddyfile
