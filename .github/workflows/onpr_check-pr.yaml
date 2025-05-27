@@ -126,18 +126,18 @@ jobs:
           imagetemplate="${{ steps.information.outputs.image }}"
           version="${{ steps.information.outputs.version }}"
           echo "Using imagetemplate '${imagetemplate}'"
-          # shellcheck disable=SC2129
-          echo "armhf=${imagetemplate/\{arch\}/armhf}:${version}" >> "$GITHUB_OUTPUT"
-          echo "armv7=${imagetemplate/\{arch\}/armv7}:${version}" >> "$GITHUB_OUTPUT"
-          echo "aarch64=${imagetemplate/\{arch\}/aarch64}:${version}" >> "$GITHUB_OUTPUT"
-          echo "amd64=${imagetemplate/\{arch\}/amd64}:${version}" >> "$GITHUB_OUTPUT"
-          echo "i386=${imagetemplate/\{arch\}/i386}:${version}" >> "$GITHUB_OUTPUT"
+          {
+            echo "armhf=${imagetemplate/\{arch\}/armhf}:${version}"
+            echo "armv7=${imagetemplate/\{arch\}/armv7}:${version}"
+            echo "aarch64=${imagetemplate/\{arch\}/aarch64}:${version}"
+            echo "amd64=${imagetemplate/\{arch\}/amd64}:${version}"
+            echo "i386=${imagetemplate/\{arch\}/i386}:${version}"
+          } >> "$GITHUB_OUTPUT"
 
       - name: 🏷️ Create addon labels
         id: labels
         shell: bash
         run: |
-          # shellcheck disable=SC2076,SC2059
           labels="io.hass.version=${{ steps.information.outputs.version }}"
           labels=$(printf '%s' "$labels\nio.hass.name=${{ steps.information.outputs.name }}")
           labels=$(printf '%s' "$labels\nio.hass.description=${{ steps.information.outputs.description }}")
@@ -157,27 +157,30 @@ jobs:
           aarch64_labels=$(printf '%s' "$labels\nio.hass.arch=aarch64")
           amd64_labels=$(printf '%s' "$labels\nio.hass.arch=amd64")
           i386_labels=$(printf '%s' "$labels\nio.hass.arch=i386")
-          # allow multiline outputs, see https://github.community/t/set-output-truncates-multiline-strings/16852
           armhf_labels="${armhf_labels//$'\n'/'%0A'}"
           armv7_labels="${armv7_labels//$'\n'/'%0A'}"
           aarch64_labels="${aarch64_labels//$'\n'/'%0A'}"
           amd64_labels="${amd64_labels//$'\n'/'%0A'}"
           i386_labels="${i386_labels//$'\n'/'%0A'}"
-          echo "armhf=$armhf_labels" >> "$GITHUB_OUTPUT"
-          echo "armv7=$armv7_labels" >> "$GITHUB_OUTPUT"
-          echo "aarch64=$aarch64_labels" >> "$GITHUB_OUTPUT"
-          echo "amd64=$amd64_labels" >> "$GITHUB_OUTPUT"
-          echo "i386=$i386_labels" >> "$GITHUB_OUTPUT"
+          {
+            echo "armhf=$armhf_labels"
+            echo "armv7=$armv7_labels"
+            echo "aarch64=$aarch64_labels"
+            echo "amd64=$amd64_labels"
+            echo "i386=$i386_labels"
+          } >> "$GITHUB_OUTPUT"
 
       - name: 💽 Create addon build-args
         id: build_args
         shell: bash
         run: |
-          echo "armhf=BUILD_FROM=$(jq -r .build_from.armhf // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
-          echo "armv7=BUILD_FROM=$(jq -r .build_from.armv7 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
-          echo "aarch64=BUILD_FROM=$(jq -r .build_from.aarch64 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
-          echo "amd64=BUILD_FROM=$(jq -r .build_from.amd64 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
-          echo "i386=BUILD_FROM=$(jq -r .build_from.i386 // empty ${{ steps.information.outputs.build }})" >> "$GITHUB_OUTPUT"
+          {
+            echo "armhf=BUILD_FROM=$(jq -r .build_from.armhf // empty ${{ steps.information.outputs.build }})"
+            echo "armv7=BUILD_FROM=$(jq -r .build_from.armv7 // empty ${{ steps.information.outputs.build }})"
+            echo "aarch64=BUILD_FROM=$(jq -r .build_from.aarch64 // empty ${{ steps.information.outputs.build }})"
+            echo "amd64=BUILD_FROM=$(jq -r .build_from.amd64 // empty ${{ steps.information.outputs.build }})"
+            echo "i386=BUILD_FROM=$(jq -r .build_from.i386 // empty ${{ steps.information.outputs.build }})"
+          } >> "$GITHUB_OUTPUT"
 
       - name: 🏗️ Set up QEMU
         uses: docker/setup-qemu-action@v3
