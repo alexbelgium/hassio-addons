@@ -5,7 +5,8 @@ set +u
 source /etc/birdnet/birdnet.conf
 
 # Read the logging level from the configuration option
-LOGGING_LEVEL="${LogLevel_BirdnetRecordingService}"
+# shellcheck disable=SC2154
+LOGGING_LEVEL="${LogLevel_BirdnetRecordingService:-error}"
 # If empty for some reason default to log level of error
 [ -z "$LOGGING_LEVEL" ] && LOGGING_LEVEL='error'
 # Additionally if we're at debug or info level then allow printing of script commands and variables
