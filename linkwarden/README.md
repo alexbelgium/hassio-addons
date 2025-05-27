@@ -81,7 +81,7 @@ Follow the instruction from the Linkwarden docs page. https://docs.linkwarden.ap
 ## Common issues
 
 <details>
- 
+
 
 ## Support
 
