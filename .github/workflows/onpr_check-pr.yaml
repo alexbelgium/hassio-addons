@@ -132,47 +132,6 @@ jobs:
           echo "amd64=${imagetemplate/\{arch\}/amd64}:${version}" >> "$GITHUB_OUTPUT"
           # shellcheck disable=SC2129
           echo "i386=${imagetemplate/\{arch\}/i386}:${version}" >> "$GITHUB_OUTPUT"
-      - name: 🏷️ Create addon labels
-        id: labels
-        shell: bash
-        run: |
-          exit 0
-          # shellcheck disable=SC2076,SC2059
-          labels="io.hass.version=${{ steps.information.outputs.version }}"
-          labels=$(printf '%s' "$labels\nio.hass.name=${{ steps.information.outputs.name }}")
-          labels=$(printf '%s' "$labels\nio.hass.description=${{ steps.information.outputs.description }}")
-          labels=$(printf '%s' "$labels\nio.hass.type=addon")
-          labels=$(printf '%s' "$labels\nio.hass.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.title=${{ steps.information.outputs.name }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.description=${{ steps.information.outputs.description }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.version=${{ steps.information.outputs.version }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.authors=Poeschl <Poeschl@users.noreply.github.com>")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/master/${{ matrix.addon }}")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.created=$(date -Is)")
-          labels=$(printf '%s' "$labels\norg.opencontainers.image.revision=${GITHUB_SHA}")
-          echo "Generic labels: $labels"
-          armhf_labels=$(printf '%s' "$labels\nio.hass.arch=armhf")
-          armv7_labels=$(printf '%s' "$labels\nio.hass.arch=armv7")
-          aarch64_labels=$(printf '%s' "$labels\nio.hass.arch=aarch64")
-          amd64_labels=$(printf '%s' "$labels\nio.hass.arch=amd64")
-          i386_labels=$(printf '%s' "$labels\nio.hass.arch=i386")
-          # allow multiline outputs, see https://github.community/t/set-output-truncates-multiline-strings/16852
-          armhf_labels="${armhf_labels//$'\n'/'%0A'}"
-          armv7_labels="${armv7_labels//$'\n'/'%0A'}"
-          aarch64_labels="${aarch64_labels//$'\n'/'%0A'}"
-          amd64_labels="${amd64_labels//$'\n'/'%0A'}"
-          i386_labels="${i386_labels//$'\n'/'%0A'}"
-          # shellcheck disable=SC2129
-          echo "armhf=$armhf_labels" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
-          echo "armv7=$armv7_labels" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
-          echo "aarch64=$aarch64_labels" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
-          echo "amd64=$amd64_labels" >> "$GITHUB_OUTPUT"
-          # shellcheck disable=SC2129
-          echo "i386=$i386_labels" >> "$GITHUB_OUTPUT"
       - name: 💽 Create addon build-args
         id: build_args
         shell: bash
