@@ -77,7 +77,7 @@ case "$database" in
                 exit 1
             fi
             "$var=$(bashio::config "var")"
-            export "$var"
+            export "${var?}"
             bashio::log.blue "$var=$(bashio::config "var")"
         done
         # Alert if MariaDB is available
