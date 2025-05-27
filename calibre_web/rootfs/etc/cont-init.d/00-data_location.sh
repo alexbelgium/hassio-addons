@@ -57,8 +57,9 @@ chown "$PUID":"$PGID" "$LOCATION"
 ####################
 
 if [ -d /homeassistant/addons_config/calibre-web ]; then
-    echo "Moving database to new location /config"
-    cp -rf /homeassistant/addons_config/calibre-web/* "$LOCATION"/
-    rm -r /homeassistant/addons_config/calibre-web
+    if [ "$(ls -A /homeassistant/addons_config/calibre-web)" ]; then
+        echo "Moving database to new location /config"
+        cp -rf /homeassistant/addons_config/calibre-web/* "$LOCATION"/
+    fi
+    rm -r /homeassistant/addons_config/calibre-web
 fi
-
