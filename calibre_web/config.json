@@ -82,10 +82,11 @@
   "ingress": true,
   "init": false,
   "map": [
-    "media:rw",
-    "share:rw",
+    "addon_config:rw",    
     "all_addon_configs:rw",
     "homeassistant_config:rw",
+    "media:rw",
+    "share:rw",
     "ssl"
   ],
   "name": "Calibre-web",
@@ -122,6 +123,6 @@
   "slug": "calibre-web",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre_web",
-  "version": "0.6.24-6",
+  "version": "0.6.24-7",
   "video": true
 }
