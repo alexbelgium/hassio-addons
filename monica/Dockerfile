@@ -59,10 +59,13 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ################
 
 # Fix Monica issues
-RUN for file in $(grep -rl "could you verify your email address by clicking on the link we just emailed to you" /var/www/html 2>/dev/null); do sed -i "s|we just emailed to you|that you can find in the addon log, starting with Please click the button below to verify your email address|g" "$file"; done && \
+RUN grep -rl "could you verify your email address by clicking on the link we just emailed to you" /var/www/html 2>/dev/null | \
+    while IFS= read -r file; do \
+        sed -i "s|we just emailed to you|that you can find in the addon log, starting with Please click the button below to verify your email address|g" "$file"; \
+    done && \
     \
     # Fix dummy password
-    sed -i "s|admin123|Changeme123\!|g" /var/www/html/app/Console/Commands/Local/SetupDummyAccount.php
+    sed -i "s|admin123|Changeme123\\!|g" /var/www/html/app/Console/Commands/Local/SetupDummyAccount.php
 
 # Add entrypoint
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
