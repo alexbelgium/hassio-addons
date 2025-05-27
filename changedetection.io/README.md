@@ -53,7 +53,7 @@ BASE_URL: Specify the full URL (including protocol) when running behind a revers
 
 In HA, use the File Editor add-on (or Filebrowser) and edit the Changedetection.io config file at `/homeassistant/addons_config/changedetection.io/config.yaml`.
 
-Add the following line to the end of it: 
+Add the following line to the end of it:
 ```yaml
 PLAYWRIGHT_DRIVER_URL: ws://2937404c-browserless-chrome:3000/chromium?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true
 ```
