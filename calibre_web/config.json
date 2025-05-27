@@ -4,7 +4,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "browsing, reading and downloading eBooks using an existing Calibre database",
+  "description": "Browsing, reading and downloading eBooks using an existing Calibre database",
   "devices": [
     "/dev/dri",
     "/dev/dri/card0",
