@@ -1,6 +1,6 @@
 #!/usr/bin/env bashio
 # shellcheck shell=bash
-# shellcheck disable=SC2155
+# shellcheck disable=SC2155,SC1091
 
 #############
 # STRUCTURE #
@@ -154,7 +154,6 @@ fi
 ############
 
 # Execute main script
-# shellcheck ignore=SC1091
 source /etc/apache2/envvars
 echo "Adapting start script"
 cd /var2/www/webtrees || exit 1
