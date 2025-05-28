@@ -1,12 +1,12 @@
 #! /usr/bin/env python3
 # birdnet_to_mqtt.py
 
-import sys
-import re
 import json
 import logging
 import paho.mqtt.client as mqtt
 import requests
+import re
+import sys
 from helpers import get_settings
 
 sys.path.append("/home/pi/BirdNET-Pi/scripts/utils")
@@ -75,7 +75,8 @@ def automatic_mqtt_publish(file, detection, path):
                     + str(settings_dict.get("FLICKR_API_KEY"))
                     + "&text="
                     + str(common_name)
-                    + " bird&sort=relevance&per_page=5&media=photos&format=json&license=2%2C3%2C4%2C5%2C6%2C9&nojsoncallback=1"
+                    + " bird&sort=relevance&per_page=5&media=photos&format=json&license=2%2C3%2C4%2C5%2C6%2C9"
+                    + "&nojsoncallback=1"
                 )
                 resp = requests.get(url=url, headers=headers, timeout=10)
 
