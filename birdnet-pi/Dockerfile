@@ -30,7 +30,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     PYTHON_VIRTUAL_ENV="/home/pi/BirdNET-Pi/birdnet/bin/python3" \
     my_dir=/home/pi/BirdNET-Pi/scripts \
     LANGUAGE=en_US:en
-    
+
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
@@ -44,8 +44,14 @@ RUN \
     apt-get update -y && apt-get install curl gcc python3-dev git jq sudo php-mbstring procps -y && \
     \
     # Correct for systemctl
-    curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl && \
+    curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /helpers/systemctl && \
+    cp -rf /helpers/systemctl /bin/systemctl && \
     chmod a+x /bin/systemctl && \
+    \
+    # Correct for journalctl
+    curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/journalctl3.py -o /helpers/journalctl && \
+    cp -rf /helpers/journalctl /bin/journalctl && \
+    chmod a+x /bin/journalctl && \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \

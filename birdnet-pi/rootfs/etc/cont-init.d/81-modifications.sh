@@ -116,10 +116,13 @@ if ! grep -q "/stats/" "$HOME/BirdNET-Pi/homepage/views.php"; then
 fi
 
 # Correct systemctl path
-echo "... updating systemctl path"
-curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /bin/systemctl || mv /helpers/systemctl3.py /bin/systemctl
-chown pi:pi /bin/systemctl
-chmod a+x /bin/systemctl
+if [ -f /helpers/systemctl ] && [ -f /helpers/journalctl ]; then
+    echo "... updating systemctl and journalctl"
+    cp -rf /helpers/systemctl /bin/systemctl
+    cp -rf /helpers/journalctl /bin/journalctl
+    chown pi:pi /bin/systemctl /bin/journalctl
+    chmod a+x /bin/systemctl /bin/journalctl
+fi
 
 # Allow reverse proxy for streamlit
 echo "... allow reverse proxy for streamlit"
