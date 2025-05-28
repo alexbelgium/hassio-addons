@@ -8,6 +8,7 @@ set -e
 
 CONFIG_HOME="/config"
 PGDATA="${PGDATA:-/config/database}"
+export PGDATA
 PG_VERSION_FILE="$PGDATA/pg_major_version"
 VECTOR_VERSION_FILE="$PGDATA/pgvector_version"
 
@@ -21,6 +22,11 @@ chmod 700 "$PGDATA"
 
 # Set permissions
 chmod -R 755 "$CONFIG_HOME"
+
+bashio::log.info "Starting entrypoint"
+/usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf
+
+exit 0
 
 # Ensure PostgreSQL config file exists
 if [ ! -f "$CONFIG_HOME/postgresql.conf" ]; then
