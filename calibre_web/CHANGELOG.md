@@ -1,13 +1,5 @@
-## 0.6.24-9 (27-05-2025)
-- Minor bugs fixed
-## 0.6.24-8 (27-05-2025)
-- Minor bugs fixed
-## 0.6.24-6 (25-05-2025)
-- Minor bugs fixed
-## 0.6.24-5 (23-05-2025)
-- Minor bugs fixed
-## 0.6.24-4 (22-05-2025)
-- Minor bugs fixed
+- Fix migration script
+- Allow access to Calibre folder through /addon_configs/xxx-Calibre
 
 ## 0.6.24 (23-11-2024)
 - Update to latest version from linuxserver/docker-calibre-web (changelog : https://github.com/linuxserver/docker-calibre-web/releases)
