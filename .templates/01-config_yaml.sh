@@ -59,7 +59,7 @@ fi
 # Migrate if needed
 if [[ "$CONFIGLOCATION" == "/config" ]]; then
     # Migrate file
-    if [ -f "/homeassistant/addons_config/${slug}/config.yaml" ]; then
+    if [ -f "/homeassistant/addons_config/${slug}/config.yaml" ] && [ ! -L "/homeassistant/addons_config/${slug}" ]; then
         echo "Migrating config.yaml to new config location"
         mv /homeassistant/addons_config/"${slug}"/config.yaml /config/config.yaml
     fi
@@ -143,13 +143,13 @@ function parse_yaml {
         -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
         -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
     awk -F$fs '{
-      indent = length($1)/2;
-      vname[indent] = $2;
-      for (i in vname) {if (i > indent) {delete vname[i]}}
-      if (length($3) > 0) {
-         vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-      }
+indent = length($1)/2;
+vname[indent] = $2;
+for (i in vname) {if (i > indent) {delete vname[i]}}
+if (length($3) > 0) {
+vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+}
     }'
 }
 
