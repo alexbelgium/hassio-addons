@@ -86,7 +86,7 @@ def automatic_mqtt_publish(file, detection, path):
 
         json_bird = json.dumps(bird)
         mqttc.reconnect()
-        mqttc.publish(mqtt_topic, json_bird, 1) 
+        mqttc.publish(mqtt_topic, json_bird, 1)
         log.info("Posted to MQTT: ok")
 
 mqttc = mqtt.Client('birdnet_mqtt')
