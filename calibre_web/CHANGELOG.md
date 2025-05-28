@@ -1,3 +1,4 @@
+## 0.6.24-10 (28-05-2025)
 - Fix migration script
 - Allow access to Calibre folder through /addon_configs/xxx-Calibre
 
