@@ -3,10 +3,11 @@
 
 import json
 import logging
-import paho.mqtt.client as mqtt
-import requests
 import re
 import sys
+
+import paho.mqtt.client as mqtt
+import requests
 from helpers import get_settings
 
 sys.path.append("/home/pi/BirdNET-Pi/scripts/utils")
