@@ -114,6 +114,11 @@ LABEL \
 # 6 HealthcheckNOT #
 ####################
 
-HEALTHCHECK NONE
-
-# Can't be implemented as container is optimized for memory usage, so the webserver and Node are spun down during idle
+ENV HEALTH_PORT="" \
+    HEALTH_URL=""
+HEALTHCHECK \
+    --interval=5s \
+    --retries=5 \
+    --start-period=90s \
+    --timeout=25s \
+    CMD pg_isready || exit 1
