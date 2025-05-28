@@ -50,7 +50,7 @@ if [ "$(bashio::info.arch)" = "armv7" ]; then
     immich-docker-entrypoint.sh postgres & true
     exit 0
 else
-    immich-docker-entrypoint.sh postgres "-c config_file=/etc/postgresql/postgresql.conf" & true
+    immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
 fi
 
 ###############################
