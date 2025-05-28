@@ -23,26 +23,6 @@ chmod 700 "$PGDATA"
 # Set permissions
 chmod -R 755 "$CONFIG_HOME"
 
-bashio::log.info "Starting entrypoint"
-/usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf
-
-exit 0
-
-# Ensure PostgreSQL config file exists
-if [ ! -f "$CONFIG_HOME/postgresql.conf" ]; then
-    if [ -f /usr/local/share/postgresql/postgresql.conf.sample ]; then
-        cp /usr/local/share/postgresql/postgresql.conf.sample "$CONFIG_HOME/postgresql.conf"
-    elif [ -f /usr/share/postgresql/postgresql.conf.sample ]; then
-        cp /usr/share/postgresql/postgresql.conf.sample "$CONFIG_HOME/postgresql.conf"
-    else
-        bashio::exit.nok "Config file not found, please ask maintainer"
-        exit 1
-    fi
-    bashio::log.warning "A default postgresql.conf file was copied to $CONFIG_HOME. Please customize it and restart the add-on."
-else
-    bashio::log.info "Using existing postgresql.conf file in $CONFIG_HOME."
-fi
-
 ###############################
 # Launch PostgreSQL           #
 ###############################
@@ -53,11 +33,13 @@ bashio::log.info "Starting PostgreSQL..."
 
 if [ "$(bashio::info.arch)" = "armv7" ]; then
     bashio::log.warning "ARMv7 detected: Starting without vectors.so"
-    docker-entrypoint.sh postgres & true
+    /usr/local/bin/immich-docker-entrypoint.sh postgres & true
     exit 0
 else
-    docker-entrypoint.sh postgres -c shared_preload_libraries=vectors.so -c search_path="public, vectors" & true
+    /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
 fi
+
+exit 0
 
 ###############################
 # Wait for PostgreSQL Startup #
