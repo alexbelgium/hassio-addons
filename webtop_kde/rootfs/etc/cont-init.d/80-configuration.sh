@@ -70,8 +70,3 @@ if bashio::config.true 'install_ms_edge'; then
     fi
     mv /helpers/microsoft-edge-stable /usr/bin/
 fi
-
-# Set permissions
-echo "... setting permissions for node user"
-usermod -o -u 0 abc &>/dev/null
-groupmod -o -g 0 abc &>/dev/null
