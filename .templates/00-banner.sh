@@ -68,20 +68,14 @@ bashio::log.blue \
 # ==============================================================================
 # Global actions for all addons
 # ==============================================================================
-if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
+if bashio::config.has_value "PUID" && bashio::config.has_value "PGID" && id abc &>/dev/null; then
     bashio::log.green ' Defining permissions for main user : '
     PUID="$(bashio::config "PUID")"
-    PGID="$(bashio::config "PGID")"
-    bashio::log.blue "User UID: $PUID"
-    bashio::log.blue "User GID: $PGID"
-    
-    # Only modify user/group if they exist
-    if id abc &>/dev/null; then
-        usermod -o -u "$PUID" abc &>/dev/null
-    fi
-    if getent group abc &>/dev/null; then
-        groupmod -o -g "$PGID" abc &>/dev/null
-    fi
+    PGID="$(bashio::config "PGID")"  
+    usermod -o -u "$PUID" abc
+    groupmod -o -g "$PGID" abc
+    bashio::log.blue "User UID: $(id -u abc)"
+    bashio::log.blue "User GID: $(id -g abc)"
     
     bashio::log.blue \
         '-----------------------------------------------------------'
