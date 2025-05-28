@@ -51,15 +51,3 @@ mkdir -p "$LOCATION"
 # Set ownership
 bashio::log.info "Setting ownership to $PUID:$PGID"
 chown "$PUID":"$PGID" "$LOCATION"
-
-####################
-# Migrate database #
-####################
-
-if [ -d /homeassistant/addons_config/calibre-web ]; then
-    if [ "$(ls -A /homeassistant/addons_config/calibre-web)" ]; then
-        echo "Moving database to new location /config"
-        cp -rf /homeassistant/addons_config/calibre-web/* "$LOCATION"/
-    fi
-    rm -r /homeassistant/addons_config/calibre-web
-fi
