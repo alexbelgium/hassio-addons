@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Portainer] cant login / creat container / enter container etc. (opened 2025-05-26)](https://github.com/alexbelgium/hassio-addons/issues/1877) by [@Joriex](https://github.com/Joriex)
 
 # Home assistant add-on: Portainer
 
