@@ -46,7 +46,18 @@ install_vchord_and_vectors_for_old_pg() {
     local old_pgver="$1"
     local vectorchord_tag="${VECTORCHORD_TAG:-0.3.0}"
     local pgvectors_tag="${PGVECTORS_TAG:-0.3.0}"
-    local targetarch="${TARGETARCH:-amd64}"
+    case "$(uname -m)" in
+        x86_64 | amd64 | AMD64 | x86-64)
+            targetarch=amd64
+            ;;
+        aarch64 | arm64 | ARM64)
+            targetarch=arm64
+            ;;
+        *)
+            echo "Unsupported architecture: $(uname -m)"
+            exit 1
+            ;;
+    esac
     local vchord_url
     local vectors_url
     local vchord_deb
@@ -87,7 +98,7 @@ upgrade_postgres_if_needed() {
         export SUPPORTED_POSTGRES_VERSIONS="$CLUSTER_VERSION $IMAGE_VERSION"
 
         apt-get update &>/dev/null
-        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION" &>/dev/null
+        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION"
 
         if [ ! -d "$BINARIES_DIR/$CLUSTER_VERSION/bin" ]; then
             bashio::log.error "Old postgres binaries not found at $BINARIES_DIR/$CLUSTER_VERSION/bin"

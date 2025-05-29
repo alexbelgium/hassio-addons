@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/immich-app/postgres:17-vectorchord0.3.0-pgvectors0.3.0",
-    "amd64": "ghcr.io/immich-app/postgres:17-vectorchord0.3.0-pgvectors0.3.0",
+    "aarch64": "ghcr.io/immich-app/postgres:15-vectorchord0.3.0-pgvectors0.3.0",
+    "amd64": "ghcr.io/immich-app/postgres:15-vectorchord0.3.0-pgvectors0.3.0",
     "armv7": "postgres:15-alpine"
   },
   "codenotary": {
