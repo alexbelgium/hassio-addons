@@ -154,7 +154,6 @@ show_db_extensions() {
     bashio::log.info "=============================================="
 }
 
-
 # --------- Main logic ----------
 
 upgrade_postgres_if_needed() {
@@ -170,14 +169,12 @@ upgrade_postgres_if_needed() {
         export PSQL_VERSION="$IMAGE_VERSION"
 
         apt-get update &>/dev/null
-        apt-get install -y procps rsync postgresql-$IMAGE_VERSION postgresql-$CLUSTER_VERSION &>/dev/null
+        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION" &>/dev/null
 
         TMP_SCRIPT=$(mktemp)
         wget https://raw.githubusercontent.com/linkyard/postgres-upgrade/refs/heads/main/upgrade-postgres.sh -O "$TMP_SCRIPT"
         chmod +x "$TMP_SCRIPT"
-        "$TMP_SCRIPT"
-        UPGRADE_STATUS=$?
-        if [ "$UPGRADE_STATUS" -ne 0 ]; then
+        if ! "$TMP_SCRIPT"; then
             bashio::log.error "Postgres major version upgrade failed. Aborting startup."
             exit 1
         fi
@@ -211,9 +208,12 @@ upgrade_extension_if_needed() {
             compare_versions "$installed_version" "$available_version"
             if [ $? -eq 0 ]; then
                 bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
-                psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;" \
-                    && RESTART_NEEDED=true \
-                    || { bashio::log.error "Failed to upgrade $extname in $db. Aborting startup."; exit 1; }
+                if psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
+                    RESTART_NEEDED=true
+                else
+                    bashio::log.error "Failed to upgrade $extname in $db. Aborting startup."
+                    exit 1
+                fi
             else
                 bashio::log.info "$extname in $db already at latest version ($installed_version)"
             fi
