@@ -2,17 +2,13 @@
 # shellcheck shell=bash
 set -euo pipefail
 
-# ----------------------- General setup -----------------------
-
 CONFIG_HOME="/config"
 PGDATA="${PGDATA:-/config/database}"
 export PGDATA
 PG_MAJOR_VERSION="${PG_MAJOR:-15}"
 RESTART_FLAG_FILE="$CONFIG_HOME/restart_needed"
 
-# Ensure permissions and folder structure
-
-fix_permissions(){
+fix_permissions() {
     mkdir -p "$PGDATA"
     chown -R postgres:postgres "$PGDATA"
     chmod 700 "$PGDATA"
@@ -24,8 +20,6 @@ RESTART_NEEDED=false
 
 cd /config || true
 
-# ------------------ PGDATA version detection ------------------
-
 get_pgdata_version() {
     if [ -f "$PGDATA/PG_VERSION" ]; then
         cat "$PGDATA/PG_VERSION"
@@ -35,36 +29,67 @@ get_pgdata_version() {
     fi
 }
 
-# ------------------ Cluster upgrade logic ---------------------
+# ---------------- Ensure shared_preload_libraries globally ----------------
 
-install_vchord_and_vectors() {
-    local pgver
+set_shared_preload_libraries() {
+    local libs="vchord,vectors"
+    local conf_file="/etc/postgresql/postgresql.conf"
+
+    if [ ! -f "$conf_file" ]; then
+        bashio::log.error "Could not find global /etc/postgresql/postgresql.conf"
+        exit 1
+    fi
+
+    if grep -q "^shared_preload_libraries" "$conf_file"; then
+        sed -i "s|^shared_preload_libraries.*|shared_preload_libraries = '$libs'|" "$conf_file"
+    else
+        echo "shared_preload_libraries = '$libs'" >> "$conf_file"
+    fi
+    bashio::log.info "Set shared_preload_libraries = '$libs' in $conf_file"
+}
+
+# --------- Only extract vchord/vectors .so for OLD version ---------
+extract_so_from_deb() {
+    local debfile="$1"
+    local targetdir="$2"
+    local sofile="$3"
+    local tmpdir
+    tmpdir=$(mktemp -d)
+
+    dpkg-deb -x "$debfile" "$tmpdir"
+    find "$tmpdir" -name "$sofile" -exec cp {} "$targetdir" \;
+    rm -rf "$tmpdir"
+}
+
+install_vchord_and_vectors_for_old_pg() {
+    local old_pgver="$1"
     local vectorchord_tag="${VECTORCHORD_TAG:-0.3.0}"
     local pgvectors_tag="${PGVECTORS_TAG:-0.3.0}"
     local targetarch="${TARGETARCH:-amd64}"
+    local vchord_url
+    local vectors_url
+    local vchord_deb
+    local vectors_deb
+    local old_pg_lib="/usr/lib/postgresql/$old_pgver/lib"
 
-    for pgver in "$1" "$2"; do
-        # vchord
-        local vchord_url="https://github.com/tensorchord/VectorChord/releases/download/${vectorchord_tag}/postgresql-${pgver}-vchord_${vectorchord_tag}-1_${targetarch}.deb"
-        bashio::log.info "Downloading $vchord_url"
-        wget -nv -O "/tmp/vchord-${pgver}.deb" "$vchord_url"
-        apt-get install -y "/tmp/vchord-${pgver}.deb"
-        rm -f "/tmp/vchord-${pgver}.deb"
+    # Make sure libdir exists
+    mkdir -p "$old_pg_lib"
 
-        # vectors (optional, skip if empty)
-        if [ -n "${pgvectors_tag}" ]; then
-            vectors_url="https://github.com/tensorchord/pgvecto.rs/releases/download/v${pgvectors_tag}/vectors-pg${pgver}_${pgvectors_tag#v}_${targetarch}"
-            if [ "${pgvectors_tag}" = "0.3.0" ]; then
-                vectors_url="${vectors_url}_vectors"
-            fi
-            vectors_url="${vectors_url}.deb"
-            bashio::log.info "Downloading $vectors_url"
-            wget -nv -O "/tmp/pgvectors-${pgver}.deb" "$vectors_url"
-            apt-get install -y "/tmp/pgvectors-${pgver}.deb"
-            rm -f "/tmp/pgvectors-${pgver}.deb"
-        fi
-    done
-    apt-get clean -y && rm -rf /var/lib/apt/lists/*
+    # Download and extract vchord.so
+    vchord_url="https://github.com/tensorchord/VectorChord/releases/download/${vectorchord_tag}/postgresql-${old_pgver}-vchord_${vectorchord_tag}-1_${targetarch}.deb"
+    vchord_deb="/tmp/vchord-${old_pgver}.deb"
+    bashio::log.info "Downloading $vchord_url"
+    wget -nv -O "$vchord_deb" "$vchord_url"
+    extract_so_from_deb "$vchord_deb" "$old_pg_lib" "vchord.so"
+    rm -f "$vchord_deb"
+
+    # Download and extract vectors.so
+    vectors_url="https://github.com/tensorchord/pgvecto.rs/releases/download/v${pgvectors_tag}/vectors-pg${old_pgver}_${pgvectors_tag}_vectors_${targetarch}.deb"
+    vectors_deb="/tmp/pgvectors-${old_pgver}.deb"
+    bashio::log.info "Downloading $vectors_url"
+    wget -nv -O "$vectors_deb" "$vectors_url"
+    extract_so_from_deb "$vectors_deb" "$old_pg_lib" "vectors.so"
+    rm -f "$vectors_deb"
 }
 
 upgrade_postgres_if_needed() {
@@ -80,11 +105,9 @@ upgrade_postgres_if_needed() {
         export PSQL_VERSION="$IMAGE_VERSION"
         export SUPPORTED_POSTGRES_VERSIONS="$CLUSTER_VERSION $IMAGE_VERSION"
 
-        # Ensure both old and new server binaries are present
-        apt-get update &>/dev/null
-        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION" &>/dev/null
+        apt-get update
+        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION"
 
-        # Sanity checks
         if [ ! -d "$BINARIES_DIR/$CLUSTER_VERSION/bin" ]; then
             bashio::log.error "Old postgres binaries not found at $BINARIES_DIR/$CLUSTER_VERSION/bin"
             exit 1
@@ -94,8 +117,8 @@ upgrade_postgres_if_needed() {
             exit 1
         fi
 
-        # Install extensions
-        install_vchord_and_vectors "$CLUSTER_VERSION" "$IMAGE_VERSION"
+        # Only for the old version: download and extract .so files for old lib
+        install_vchord_and_vectors_for_old_pg "$CLUSTER_VERSION"
 
         # Prepare backup
         mkdir -p "$BACKUP_DIR"
@@ -109,9 +132,11 @@ upgrade_postgres_if_needed() {
 
         fix_permissions
 
-        # Start old Postgres
+        # Set preload libs in /etc/postgresql/postgresql.conf for both old and new
+        set_shared_preload_libraries
+
         bashio::log.info "Starting old Postgres ($CLUSTER_VERSION) to capture encoding/locale settings"
-        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' start"
+        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" start"
 
         LC_COLLATE=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW LC_COLLATE;'")
         LC_CTYPE=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW LC_CTYPE;'")
@@ -119,30 +144,21 @@ upgrade_postgres_if_needed() {
 
         bashio::log.info "Detected cluster: LC_COLLATE=$LC_COLLATE, LC_CTYPE=$LC_CTYPE, ENCODING=$ENCODING"
 
-        # Stop old Postgres
         bashio::log.info "Stopping old Postgres ($CLUSTER_VERSION)"
-        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' stop"
+        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" stop"
 
-        # Move aside data directory
         rm -rf "$PGDATA"
 
         fix_permissions
 
-        # Init new cluster
         bashio::log.info "Initializing new data cluster for $IMAGE_VERSION"
         su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/initdb --encoding=$ENCODING --lc-collate=$LC_COLLATE --lc-ctype=$LC_CTYPE -D '$PGDATA'"
 
         fix_permissions
 
-        # --- Ensure vchord is loaded via shared_preload_libraries before pg_upgrade ---
-        if grep -q '^shared_preload_libraries' "$PGDATA/postgresql.conf"; then
-            sed -i "s/^shared_preload_libraries.*/shared_preload_libraries = 'vchord,vectors'/" "$PGDATA/postgresql.conf"
-        else
-            echo "shared_preload_libraries = 'vchord,vectors'" >> "$PGDATA/postgresql.conf"
-        fi
-        bashio::log.info "Set shared_preload_libraries = 'vchord,vectors' in $PGDATA/postgresql.conf"
+        # Again set shared_preload_libraries for new cluster
+        set_shared_preload_libraries
 
-        # Upgrade using pg_upgrade
         bashio::log.info "Running pg_upgrade from $CLUSTER_VERSION → $IMAGE_VERSION"
         chmod 700 "$PGDATA"
         chmod 700 "$backup_target"
@@ -150,14 +166,13 @@ upgrade_postgres_if_needed() {
             -b '$BINARIES_DIR/$CLUSTER_VERSION/bin' \
             -B '$BINARIES_DIR/$IMAGE_VERSION/bin' \
             -d '$backup_target' \
-            -D '$PGDATA'"
+            -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" -O \"-c config_file=/etc/postgresql/postgresql.conf\""
 
         if [ $? -ne 0 ]; then
             bashio::log.error "pg_upgrade failed!"
             exit 1
         fi
 
-        # Copy original postgresql.conf back if needed
         if [ -f "$backup_target/postgresql.conf" ]; then
             cp "$backup_target/postgresql.conf" "$PGDATA"
         fi
@@ -185,11 +200,9 @@ start_postgres() {
 
 # ------------------- Main start/upgrade flow ------------------
 
-# 1. Always check/upgrade the cluster BEFORE starting the server!
 bashio::log.info "Checking for required PostgreSQL cluster upgrade before server start..."
 upgrade_postgres_if_needed
 
-# 2. Only now is it safe to start Postgres with current data dir
 start_postgres
 
 bashio::log.info "Waiting for PostgreSQL to start..."
