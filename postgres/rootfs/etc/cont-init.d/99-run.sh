@@ -12,9 +12,8 @@ RESTART_FLAG_FILE="$CONFIG_HOME/restart_needed"
 
 # Ensure permissions and folder structure
 
-mkdir -p "$PGDATA"
-
 fix_permissions(){
+    mkdir -p "$PGDATA"
     chown -R postgres:postgres "$PGDATA"
     chmod 700 "$PGDATA"
 }
@@ -91,10 +90,10 @@ upgrade_postgres_if_needed() {
         bashio::log.info "Stopping old Postgres ($CLUSTER_VERSION)"
         su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' stop"
 
-        fix_permissions
-
         # Move aside data directory
         rm -rf "$PGDATA"
+
+        fix_permissions
 
         # Init new cluster
         bashio::log.info "Initializing new data cluster for $IMAGE_VERSION"
