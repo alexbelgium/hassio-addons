@@ -40,38 +40,80 @@ upgrade_postgres_if_needed() {
     if [ "$CLUSTER_VERSION" != "$IMAGE_VERSION" ]; then
         bashio::log.warning "Postgres data directory version is $CLUSTER_VERSION but image wants $IMAGE_VERSION. Running upgrade..."
 
-        # Export variables for the upgrade script
         export DATA_DIR="$PGDATA"
         export BINARIES_DIR="/usr/lib/postgresql"
         export BACKUP_DIR="/config/backups"
         export PSQL_VERSION="$IMAGE_VERSION"
-        export SUPPORTED_POSTGRES_VERSIONS="$CLUSTER_VERSION $IMAGE_VERSION"  # Fix for linkyard script bug
+        export SUPPORTED_POSTGRES_VERSIONS="$CLUSTER_VERSION $IMAGE_VERSION"
 
         # Ensure both old and new server binaries are present
         apt-get update &>/dev/null
         apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION" &>/dev/null
 
-        # Download and execute the upgrade script as the postgres user
-        TMP_SCRIPT=$(mktemp)
-        wget https://raw.githubusercontent.com/linkyard/postgres-upgrade/refs/heads/main/upgrade-postgres.sh -O "$TMP_SCRIPT"
-        chmod +x "$TMP_SCRIPT"
-
-        # Run as the postgres user (required by pg_ctl)
-        if command -v gosu >/dev/null 2>&1; then
-            if ! gosu postgres bash -u "$TMP_SCRIPT"; then
-                bashio::log.error "Postgres major version upgrade failed. Aborting startup."
-                exit 1
-            fi
-        else
-            if ! su - postgres -c "bash -u $TMP_SCRIPT"; then
-                bashio::log.error "Postgres major version upgrade failed. Aborting startup."
-                exit 1
-            fi
+        # Sanity checks
+        if [ ! -d "$BINARIES_DIR/$CLUSTER_VERSION/bin" ]; then
+            bashio::log.error "Old postgres binaries not found at $BINARIES_DIR/$CLUSTER_VERSION/bin"
+            exit 1
+        fi
+        if [ ! -d "$BINARIES_DIR/$IMAGE_VERSION/bin" ]; then
+            bashio::log.error "New postgres binaries not found at $BINARIES_DIR/$IMAGE_VERSION/bin"
+            exit 1
         fi
 
-        bashio::log.info "PostgreSQL major version upgrade complete."
+        # Prepare backup
+        mkdir -p "$BACKUP_DIR"
+        backup_target="$BACKUP_DIR/postgresql-$CLUSTER_VERSION"
+        bashio::log.info "Backing up data directory to $backup_target..."
+        rsync -a --delete "$PGDATA/" "$backup_target/"
+        if [ $? -ne 0 ]; then
+            bashio::log.error "Backup with rsync failed!"
+            exit 1
+        fi
+
+        # Start old Postgres
+        bashio::log.info "Starting old Postgres ($CLUSTER_VERSION) to capture encoding/locale settings"
+        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' start"
+
+        LC_COLLATE=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW LC_COLLATE;'")
+        LC_CTYPE=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW LC_CTYPE;'")
+        ENCODING=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW server_encoding;'")
+
+        bashio::log.info "Detected cluster: LC_COLLATE=$LC_COLLATE, LC_CTYPE=$LC_CTYPE, ENCODING=$ENCODING"
+
+        # Stop old Postgres
+        bashio::log.info "Stopping old Postgres ($CLUSTER_VERSION)"
+        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' stop"
+
+        # Move aside data directory
+        rm -rf "$PGDATA"
+
+        # Init new cluster
+        bashio::log.info "Initializing new data cluster for $IMAGE_VERSION"
+        su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/initdb --encoding=$ENCODING --lc-collate=$LC_COLLATE --lc-ctype=$LC_CTYPE -D '$PGDATA'"
+
+        # Upgrade using pg_upgrade
+        bashio::log.info "Running pg_upgrade from $CLUSTER_VERSION → $IMAGE_VERSION"
+        chmod 700 "$PGDATA"
+        chmod 700 "$backup_target"
+        su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/pg_upgrade \
+            -b '$BINARIES_DIR/$CLUSTER_VERSION/bin' \
+            -B '$BINARIES_DIR/$IMAGE_VERSION/bin' \
+            -d '$backup_target' \
+            -D '$PGDATA'"
+
+        if [ $? -ne 0 ]; then
+            bashio::log.error "pg_upgrade failed!"
+            exit 1
+        fi
+
+        # Copy original postgresql.conf back if needed
+        if [ -f "$backup_target/postgresql.conf" ]; then
+            cp "$backup_target/postgresql.conf" "$PGDATA"
+        fi
+
+        bashio::log.info "Upgrade completed successfully."
         RESTART_NEEDED=true
-        # After upgrade, PGDATA version matches IMAGE_VERSION
+
     else
         bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)."
     fi
