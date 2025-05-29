@@ -84,6 +84,36 @@ install_vchord_and_vectors_for_old_pg() {
     rm -f "$vectors_deb"
 }
 
+# ───----  NEW  drop_vectors_everywhere  ----──────────────────────────────
+drop_vectors_everywhere() {
+    local old_pgver="$1"
+
+    # 1. start the old cluster on a private socket/port
+    su - postgres -c "$BINARIES_DIR/$old_pgver/bin/pg_ctl \
+            -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf \
+            -c listen_addresses='' -c port=65432\" start"
+
+    # 2. loop over non-template databases
+    for db in $(su - postgres -c \
+            "$BINARIES_DIR/$old_pgver/bin/psql -Atc \
+            \"SELECT datname FROM pg_database
+              WHERE datistemplate = false AND datallowconn\""); do
+        # does the extension exist?
+        if su - postgres -c \
+           "$BINARIES_DIR/$old_pgver/bin/psql -d $db -Atc \
+            \"SELECT 1 FROM pg_extension WHERE extname='vectors'\"" \
+           | grep -q 1; then
+            bashio::log.warning "Dropping extension vectors from DB $db"
+            su - postgres -c \
+               "$BINARIES_DIR/$old_pgver/bin/psql -d $db -c \
+                'DROP EXTENSION vectors CASCADE;'"
+        fi
+    done
+
+    # 3. stop the cluster again
+    su - postgres -c "$BINARIES_DIR/$old_pgver/bin/pg_ctl -w -D '$PGDATA' stop"
+}
+
 upgrade_postgres_if_needed() {
     CLUSTER_VERSION=$(get_pgdata_version)
     IMAGE_VERSION="$PG_MAJOR_VERSION"
@@ -121,6 +151,9 @@ upgrade_postgres_if_needed() {
             bashio::log.error "Backup with rsync failed!"
             exit 1
         fi
+
+        # Drop vectors
+        drop_vectors_everywhere "$CLUSTER_VERSION"
 
         # Create postgresql.conf if not existing
         cp -n --preserve=mode "/var/postgresql-conf-tpl/postgresql.hdd.conf" /etc/postgresql/postgresql.conf
