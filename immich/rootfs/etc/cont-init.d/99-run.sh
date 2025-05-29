@@ -87,7 +87,7 @@ setup_root_user() {
     else
         bashio::log.warning "DB_ROOT_PASSWORD not set. Generating a random 12-character alphanumeric password and storing it in the addon options."
         export DB_ROOT_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c12)"
-         bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
+        bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
 
         # Store generated password in the s6 environment if available
         if [ -d /var/run/s6/container_environment ]; then
@@ -150,31 +150,69 @@ EOF
     bashio::log.info "Database setup completed successfully."
 }
 
-# Function to check if vectors extension is enabled
+# Function to check if vectors extension is enabled in the Immich DB
 check_vector_extension() {
     echo "Checking if 'vectors' extension is enabled..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
-
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$DB_DATABASE_NAME" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
     if [[ "$RESULT" == "vectors" ]]; then
         echo "✅ 'vectors' extension is enabled."
-        exit 0
+        return 0
     else
         bashio::log.warning "❌ 'vectors' extension is NOT enabled."
         return 1
     fi
 }
 
-# Function to check if vchord extension is enabled
+# Function to check if vchord extension is enabled in the Immich DB
 check_vchord_extension() {
     echo "Checking if 'vchord' extension is enabled..."
-    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vchord';")
-
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$DB_DATABASE_NAME" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vchord';")
     if [[ "$RESULT" == "vchord" ]]; then
         echo "✅ 'vchord' extension is enabled."
-        exit 0
+        return 0
     else
         bashio::log.warning "❌ 'vchord' extension is NOT enabled."
         return 1
+    fi
+}
+
+# Function to check if vchord (vectorchord) is available in the Postgres instance
+check_vchord_available() {
+    RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$DB_DATABASE_NAME" -tAc "SELECT 1 FROM pg_available_extensions WHERE name = 'vchord';")
+    if [[ "$RESULT" == "1" ]]; then
+        echo "'vchord' extension is available for installation."
+        return 0
+    else
+        echo "'vchord' extension is NOT available."
+        return 1
+    fi
+}
+
+# ---- NEW FUNCTION: vectors → vchord migration ----
+migrate_vectors_to_vectorchord() {
+    bashio::log.info "Checking if migration from vectors to vchord is needed..."
+
+    check_vector_extension
+    HAS_VECTORS=$?
+    check_vchord_extension
+    HAS_VCHORD=$?
+    check_vchord_available
+    VCHORD_AVAILABLE=$?
+
+    if [[ "$HAS_VECTORS" == 0 && "$HAS_VCHORD" != 0 && "$VCHORD_AVAILABLE" == 0 ]]; then
+        bashio::log.warning "Database uses 'vectors' but 'vchord' is available. Migrating to vectorchord (see https://immich.app/docs/administration/postgres-standalone/#migrating-to-vectorchord)..."
+
+        # Run the migration commands per Immich documentation
+        psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$DB_DATABASE_NAME" <<EOF
+BEGIN;
+DROP EXTENSION IF EXISTS vectors CASCADE;
+CREATE EXTENSION IF NOT EXISTS vchord;
+COMMIT;
+EOF
+
+        bashio::log.info "Migration from vectors to vchord completed."
+    else
+        bashio::log.info "No migration from vectors to vchord needed."
     fi
 }
 
@@ -189,7 +227,6 @@ validate_config
 
 # Reload DB configuration from the addon options (this ensures we have the correct values)
 export DB_USERNAME=$(bashio::config 'DB_USERNAME')
-#export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
 export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
 export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
 export DB_PORT=$(bashio::config 'DB_PORT')
@@ -199,4 +236,9 @@ export_db_env
 
 setup_root_user
 setup_database
+
+# ---- NEW LOGIC: Migrate to vectorchord if needed ----
+migrate_vectors_to_vectorchord
+
+# Now check which extension is active, for info/logging
 check_vchord_extension || check_vector_extension
