@@ -29,25 +29,6 @@ get_pgdata_version() {
     fi
 }
 
-# ---------------- Ensure shared_preload_libraries globally ----------------
-
-set_shared_preload_libraries() {
-    local libs="vchord,vectors"
-    local conf_file="/etc/postgresql/postgresql.conf"
-
-    if [ ! -f "$conf_file" ]; then
-        bashio::log.error "Could not find global /etc/postgresql/postgresql.conf"
-        exit 1
-    fi
-
-    if grep -q "^shared_preload_libraries" "$conf_file"; then
-        sed -i "s|^shared_preload_libraries.*|shared_preload_libraries = '$libs'|" "$conf_file"
-    else
-        echo "shared_preload_libraries = '$libs'" >> "$conf_file"
-    fi
-    bashio::log.info "Set shared_preload_libraries = '$libs' in $conf_file"
-}
-
 # --------- Only extract vchord/vectors .so for OLD version ---------
 extract_so_from_deb() {
     local debfile="$1"
@@ -84,7 +65,7 @@ install_vchord_and_vectors_for_old_pg() {
     rm -f "$vchord_deb"
 
     # Download and extract vectors.so
-    vectors_url="https://github.com/tensorchord/pgvecto.rs/releases/download/v${pgvectors_tag}/vectors-pg${old_pgver}_${pgvectors_tag}_vectors_${targetarch}.deb"
+    vectors_url="https://github.com/tensorchord/pgvecto.rs/releases/download/v${pgvectors_tag}/vectors-pg${old_pgver}_${pgvectors_tag}_${targetarch}.deb"
     vectors_deb="/tmp/pgvectors-${old_pgver}.deb"
     bashio::log.info "Downloading $vectors_url"
     wget -nv -O "$vectors_deb" "$vectors_url"
@@ -105,8 +86,8 @@ upgrade_postgres_if_needed() {
         export PSQL_VERSION="$IMAGE_VERSION"
         export SUPPORTED_POSTGRES_VERSIONS="$CLUSTER_VERSION $IMAGE_VERSION"
 
-        apt-get update
-        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION"
+        apt-get update &>/dev/null
+        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION" &>/dev/null
 
         if [ ! -d "$BINARIES_DIR/$CLUSTER_VERSION/bin" ]; then
             bashio::log.error "Old postgres binaries not found at $BINARIES_DIR/$CLUSTER_VERSION/bin"
@@ -130,10 +111,11 @@ upgrade_postgres_if_needed() {
             exit 1
         fi
 
-        fix_permissions
+        # Create postgresql.conf if not existing
+        cp -n --preserve=mode "/var/postgresql-conf-tpl/postgresql.hdd.conf" /etc/postgresql/postgresql.conf
+        sed -i "s@##PGDATA@$PGDATA@" /etc/postgresql/postgresql.conf
 
-        # Set preload libs in /etc/postgresql/postgresql.conf for both old and new
-        set_shared_preload_libraries
+        fix_permissions
 
         bashio::log.info "Starting old Postgres ($CLUSTER_VERSION) to capture encoding/locale settings"
         su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" start"
@@ -155,9 +137,6 @@ upgrade_postgres_if_needed() {
         su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/initdb --encoding=$ENCODING --lc-collate=$LC_COLLATE --lc-ctype=$LC_CTYPE -D '$PGDATA'"
 
         fix_permissions
-
-        # Again set shared_preload_libraries for new cluster
-        set_shared_preload_libraries
 
         bashio::log.info "Running pg_upgrade from $CLUSTER_VERSION → $IMAGE_VERSION"
         chmod 700 "$PGDATA"
