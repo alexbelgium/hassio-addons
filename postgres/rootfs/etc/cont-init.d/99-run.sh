@@ -2,30 +2,19 @@
 # shellcheck shell=bash
 set -e
 
-###############################
-# Configuration & Setup       #
-###############################
-
 CONFIG_HOME="/config"
 PGDATA="${PGDATA:-/config/database}"
 export PGDATA
 PG_VERSION_FILE="$PGDATA/pg_major_version"
-VECTOR_VERSION_FILE="$PGDATA/pgvector_version"
 
-# Define current PostgreSQL major version
 PG_MAJOR_VERSION="${PG_MAJOR:-15}"
 
-# Setup data directory
 mkdir -p "$PGDATA"
 chown -R postgres:postgres "$PGDATA"
 chmod 700 "$PGDATA"
-
-# Set permissions
 chmod -R 755 "$CONFIG_HOME"
 
-###############################
-# Launch PostgreSQL           #
-###############################
+RESTART_NEEDED=false
 
 cd /config || true
 
@@ -39,17 +28,11 @@ else
     /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
 fi
 
-exit 0
-
-###############################
-# Wait for PostgreSQL Startup #
-###############################
-
 bashio::log.info "Waiting for PostgreSQL to start..."
 
-( bashio::net.wait_for 5432 localhost 900
+(
+bashio::net.wait_for 5432 localhost 900
 
-# Set PostgreSQL connection variables
 DB_PORT=5432
 DB_HOSTNAME=localhost
 DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
@@ -65,131 +48,111 @@ until pg_isready -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" >/dev/null 2>
     sleep 2
 done
 
-###############################
-# PostgreSQL Major Version Upgrade #
-###############################
-
 update_postgres() {
-    # Read the previous PostgreSQL version from file
     OLD_PG_VERSION=$(cat "$PG_VERSION_FILE" 2>/dev/null || echo "$PG_MAJOR_VERSION")
-
     if [ "$OLD_PG_VERSION" != "$PG_MAJOR_VERSION" ]; then
         bashio::log.warning "PostgreSQL major version changed ($OLD_PG_VERSION → $PG_MAJOR_VERSION). Running upgrade..."
 
-        # Set environment variables for the upgrade script
         export DATA_DIR="$PGDATA"
         export BINARIES_DIR="/usr/lib/postgresql/$PG_MAJOR_VERSION/bin"
         export BACKUP_DIR="/config/backups"
         export PSQL_VERSION="$PG_MAJOR_VERSION"
 
-        # Install binaries
         apt-get update &>/dev/null
-        install -y procps rsync postgresql-$PG_MAJOR_VERSION postgresql-$OLD_PG_VERSION &>/dev/null
+        apt-get install -y procps rsync postgresql-$PG_MAJOR_VERSION postgresql-$OLD_PG_VERSION &>/dev/null
 
-        # Download and run the upgrade script
         TMP_SCRIPT=$(mktemp)
         wget https://raw.githubusercontent.com/linkyard/postgres-upgrade/refs/heads/main/upgrade-postgres.sh -O "$TMP_SCRIPT"
         chmod +x "$TMP_SCRIPT"
         "$TMP_SCRIPT"
 
-        # Store the new PostgreSQL version if successful
         echo "$PG_MAJOR_VERSION" > "$PG_VERSION_FILE"
+        bashio::log.info "PostgreSQL major version upgrade complete."
+        RESTART_NEEDED=true
     fi
 }
 
-#####################################
-# Enable & Upgrade pgvector.rs      #
-#####################################
+get_available_extension_version() {
+    local extname="$1"
+    psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/postgres" -tAc \
+        "SELECT default_version FROM pg_available_extensions WHERE name = '$extname';" 2>/dev/null | xargs
+}
 
-# Function: Check if 'vectors' extension is enabled
-check_vector_extension() {
-    bashio::log.info "Checking if 'vectors' extension is enabled..."
+is_extension_available() {
+    local extname="$1"
     local result
-    result=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" \
-               -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
-    if [[ "$result" == "vectors" ]]; then
-        bashio::log.info "'vectors' extension is enabled."
-        return 0
-    else
-        bashio::log.error "'vectors' extension is NOT enabled."
-        return 1
+    result=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/postgres" -tAc \
+        "SELECT 1 FROM pg_available_extensions WHERE name = '$extname';" 2>/dev/null | xargs)
+    [[ "$result" == "1" ]]
+}
+
+get_user_databases() {
+    psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/postgres" -tAc \
+        "SELECT datname FROM pg_database WHERE datistemplate = false AND datallowconn = true;"
+}
+
+get_installed_extension_version() {
+    local extname="$1"
+    local dbname="$2"
+    psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$dbname" -tAc \
+        "SELECT extversion FROM pg_extension WHERE extname = '$extname';" 2>/dev/null | xargs
+}
+
+compare_versions() {
+    # Compares version strings (e.g., 0.3.0 vs 0.4.0)
+    if [ "$1" = "$2" ]; then
+        return 1 # Same
     fi
+    # Split version by dots and compare segments
+    IFS=. read -r a1 a2 a3 <<<"$1"
+    IFS=. read -r b1 b2 b3 <<<"$2"
+    if [ "$a1" -lt "$b1" ]; then return 0; fi
+    if [ "$a1" -gt "$b1" ]; then return 1; fi
+    if [ "$a2" -lt "$b2" ]; then return 0; fi
+    if [ "$a2" -gt "$b2" ]; then return 1; fi
+    if [ "$a3" -lt "$b3" ]; then return 0; fi
+    return 1
 }
 
-# Function: Enable (or re-create) 'vectors' extension
-enable_vector_extension() {
-    bashio::log.info "Enabling 'vectors' extension..."
-    psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -c "DROP EXTENSION IF EXISTS vectors; CREATE EXTENSION vectors;" >/dev/null 2>&1
-    psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -c "ALTER EXTENSION vectors UPDATE; SELECT pgvectors_upgrade();" >/dev/null 2>&1
-}
-
-# Function: Store the current pgvector.rs version in a file
-store_vector_version() {
-    local version
-    version=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" \
-               -tAc "SELECT extversion FROM pg_extension WHERE extname = 'vectors';")
-    echo "$version" > "$VECTOR_VERSION_FILE"
-}
-
-# Function: Detect previous and new pgvector.rs versions, and upgrade if needed
-upgrade_vector_extension() {
-    local current_version desired_version
-    current_version=$(cat "$VECTOR_VERSION_FILE" 2>/dev/null || echo "unknown")
-    desired_version=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" \
-                    -tAc "SELECT extversion FROM pg_extension WHERE extname = 'vectors';")
-
-    if [[ "$current_version" != "$desired_version" ]]; then
-        bashio::log.warning "Upgrading 'vectors' extension from version $current_version → $desired_version..."
-        psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -c "ALTER EXTENSION vectors UPDATE;" >/dev/null 2>&1
-
-        # Cleanup outdated indexes
-        bashio::log.info "Cleaning up outdated vector indexes..."
-        psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" \
-            -c "DROP INDEX IF EXISTS clip_index;" >/dev/null 2>&1
-
-        # Store new pgvector version
-        echo "$desired_version" > "$VECTOR_VERSION_FILE"
-    else
-        bashio::log.info "'vectors' extension is already at the latest version ($desired_version)."
+upgrade_extension_if_needed() {
+    local extname="$1"
+    if ! is_extension_available "$extname"; then
+        bashio::log.info "$extname extension not available on this Postgres instance."
+        return
     fi
+    local available_version
+    available_version=$(get_available_extension_version "$extname")
+    if [ -z "$available_version" ]; then
+        bashio::log.info "Could not determine available version for $extname."
+        return
+    fi
+    for db in $(get_user_databases); do
+        local installed_version
+        installed_version=$(get_installed_extension_version "$extname" "$db")
+        if [ -n "$installed_version" ]; then
+            compare_versions "$installed_version" "$available_version"
+            if [ $? -eq 0 ]; then
+                bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
+                psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$db" -c "ALTER EXTENSION $extname UPDATE;" \
+                    && RESTART_NEEDED=true \
+                    || bashio::log.warning "Failed to upgrade $extname in $db"
+            else
+                bashio::log.info "$extname in $db already at latest version ($installed_version)"
+            fi
+        fi
+    done
 }
 
-# Function: Troubleshoot vector extension
-troubleshoot_vector_extension() {
-    bashio::log.error "Troubleshooting pgvector.rs installation..."
-
-    if ! pg_isready -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" >/dev/null 2>&1; then
-        bashio::log.error "PostgreSQL is not running or unreachable."
-        exit 1
-    fi
-
-    local ext_check
-    ext_check=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" \
-                -tAc "SELECT count(*) FROM pg_available_extensions WHERE name = 'vectors';")
-    if [[ "$ext_check" -eq 0 ]]; then
-        bashio::log.error "'vectors' extension is missing. Ensure pgvector.rs is installed."
-        exit 1
-    fi
-}
-
-###################################
-# Main Extension Handling         #
-###################################
-
-# Store previous vector version
 update_postgres
 
-if ! check_vector_extension; then
-    enable_vector_extension
+upgrade_extension_if_needed "vectors"
+upgrade_extension_if_needed "vchord"
+
+if [ "$RESTART_NEEDED" = true ]; then
+    bashio::log.warning "A critical update (Postgres or extension) occurred. Restarting the addon for changes to take effect."
+    bashio::addon.restart
+    exit 0
 fi
 
-# Store previous vector version
-store_vector_version
-
-# Upgrade vector extension if needed
-upgrade_vector_extension
-
-# Final verification
-check_vector_extension || troubleshoot_vector_extension
-
-bashio::log.info "All initialization steps completed successfully!" ) & true
+bashio::log.info "All initialization/version check steps completed successfully!"
+) & true
