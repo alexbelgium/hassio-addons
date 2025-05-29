@@ -11,9 +11,14 @@ PG_MAJOR_VERSION="${PG_MAJOR:-15}"
 RESTART_FLAG_FILE="$CONFIG_HOME/restart_needed"
 
 # Ensure permissions and folder structure
+
 mkdir -p "$PGDATA"
-chown -R postgres:postgres "$PGDATA"
-chmod 700 "$PGDATA"
+
+fix_permissions(){
+    chown -R postgres:postgres "$PGDATA"
+    chmod 700 "$PGDATA"
+}
+
 chmod -R 755 "$CONFIG_HOME"
 
 RESTART_NEEDED=false
@@ -70,6 +75,8 @@ upgrade_postgres_if_needed() {
             exit 1
         fi
 
+        fix_permissions
+
         # Start old Postgres
         bashio::log.info "Starting old Postgres ($CLUSTER_VERSION) to capture encoding/locale settings"
         su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' start"
@@ -84,12 +91,16 @@ upgrade_postgres_if_needed() {
         bashio::log.info "Stopping old Postgres ($CLUSTER_VERSION)"
         su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' stop"
 
+        fix_permissions
+
         # Move aside data directory
         rm -rf "$PGDATA"
 
         # Init new cluster
         bashio::log.info "Initializing new data cluster for $IMAGE_VERSION"
         su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/initdb --encoding=$ENCODING --lc-collate=$LC_COLLATE --lc-ctype=$LC_CTYPE -D '$PGDATA'"
+
+        fix_permissions
 
         # Upgrade using pg_upgrade
         bashio::log.info "Running pg_upgrade from $CLUSTER_VERSION → $IMAGE_VERSION"
