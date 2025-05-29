@@ -17,15 +17,66 @@ RESTART_NEEDED=false
 
 cd /config || true
 
-bashio::log.info "Starting PostgreSQL..."
+get_pgdata_version() {
+    if [ -f "$PGDATA/PG_VERSION" ]; then
+        cat "$PGDATA/PG_VERSION"
+    else
+        bashio::log.error "FATAL: $PGDATA/PG_VERSION not found; cannot determine cluster version."
+        exit 1
+    fi
+}
 
-if [ "$(bashio::info.arch)" = "armv7" ]; then
-    bashio::log.warning "ARMv7 detected: Starting without vectors.so"
-    /usr/local/bin/immich-docker-entrypoint.sh postgres & true
-    exit 0
-else
-    /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
-fi
+# --------- Main logic for cluster upgrade ----------
+
+upgrade_postgres_if_needed() {
+    CLUSTER_VERSION=$(get_pgdata_version)
+    IMAGE_VERSION="$PG_MAJOR_VERSION"
+
+    if [ "$CLUSTER_VERSION" != "$IMAGE_VERSION" ]; then
+        bashio::log.warning "Postgres data directory version is $CLUSTER_VERSION but image wants $IMAGE_VERSION. Running upgrade..."
+
+        export DATA_DIR="$PGDATA"
+        export BINARIES_DIR="/usr/lib/postgresql/$IMAGE_VERSION/bin"
+        export BACKUP_DIR="/config/backups"
+        export PSQL_VERSION="$IMAGE_VERSION"
+
+        apt-get update &>/dev/null
+        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION" &>/dev/null
+
+        TMP_SCRIPT=$(mktemp)
+        wget https://raw.githubusercontent.com/linkyard/postgres-upgrade/refs/heads/main/upgrade-postgres.sh -O "$TMP_SCRIPT"
+        chmod +x "$TMP_SCRIPT"
+        if ! "$TMP_SCRIPT"; then
+            bashio::log.error "Postgres major version upgrade failed. Aborting startup."
+            exit 1
+        fi
+
+        bashio::log.info "PostgreSQL major version upgrade complete."
+        RESTART_NEEDED=true
+        # After upgrade, PGDATA version matches IMAGE_VERSION
+    else
+        bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)."
+    fi
+}
+
+# --------- Start PostgreSQL ----------
+
+start_postgres() {
+    bashio::log.info "Starting PostgreSQL..."
+    if [ "$(bashio::info.arch)" = "armv7" ]; then
+        bashio::log.warning "ARMv7 detected: Starting without vectors.so"
+        /usr/local/bin/immich-docker-entrypoint.sh postgres & true
+        exit 0
+    else
+        /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
+    fi
+}
+
+bashio::log.info "Checking for required PostgreSQL cluster upgrade before server start..."
+upgrade_postgres_if_needed
+
+# Only now is it safe to start Postgres
+start_postgres
 
 bashio::log.info "Waiting for PostgreSQL to start..."
 
@@ -91,15 +142,6 @@ restart_immich_addons_if_flagged
 
 # --------- Version detection directly from cluster & databases ----------
 
-get_pgdata_version() {
-    if [ -f "$PGDATA/PG_VERSION" ]; then
-        cat "$PGDATA/PG_VERSION"
-    else
-        bashio::log.error "FATAL: $PGDATA/PG_VERSION not found; cannot determine cluster version."
-        exit 1
-    fi
-}
-
 get_available_extension_version() {
     local extname="$1"
     psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/postgres" -v ON_ERROR_STOP=1 -tAc \
@@ -154,40 +196,7 @@ show_db_extensions() {
     bashio::log.info "=============================================="
 }
 
-# --------- Main logic ----------
-
-upgrade_postgres_if_needed() {
-    CLUSTER_VERSION=$(get_pgdata_version)
-    IMAGE_VERSION="$PG_MAJOR_VERSION"
-
-    if [ "$CLUSTER_VERSION" != "$IMAGE_VERSION" ]; then
-        bashio::log.warning "Postgres data directory version is $CLUSTER_VERSION but image wants $IMAGE_VERSION. Running upgrade..."
-
-        export DATA_DIR="$PGDATA"
-        export BINARIES_DIR="/usr/lib/postgresql/$IMAGE_VERSION/bin"
-        export BACKUP_DIR="/config/backups"
-        export PSQL_VERSION="$IMAGE_VERSION"
-
-        apt-get update &>/dev/null
-        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION" &>/dev/null
-
-        TMP_SCRIPT=$(mktemp)
-        wget https://raw.githubusercontent.com/linkyard/postgres-upgrade/refs/heads/main/upgrade-postgres.sh -O "$TMP_SCRIPT"
-        chmod +x "$TMP_SCRIPT"
-        if ! "$TMP_SCRIPT"; then
-            bashio::log.error "Postgres major version upgrade failed. Aborting startup."
-            exit 1
-        fi
-
-        bashio::log.info "PostgreSQL major version upgrade complete."
-        RESTART_NEEDED=true
-
-        wait_for_postgres
-    else
-        bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)."
-        show_db_extensions
-    fi
-}
+# --------- Main logic for extensions ----------
 
 upgrade_extension_if_needed() {
     local extname="$1"
@@ -208,7 +217,7 @@ upgrade_extension_if_needed() {
             compare_versions "$installed_version" "$available_version"
             if [ $? -eq 0 ]; then
                 bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
-                if psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
+                if psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME@$DB_PORT/$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
                     RESTART_NEEDED=true
                 else
                     bashio::log.error "Failed to upgrade $extname in $db. Aborting startup."
@@ -221,11 +230,13 @@ upgrade_extension_if_needed() {
     done
 }
 
-# --------- Run logic ----------
+# --------- Upgrade extensions and maybe trigger deferred restart ----------
 
-upgrade_postgres_if_needed
 upgrade_extension_if_needed "vectors"
 upgrade_extension_if_needed "vchord"
+
+# Show the extensions summary for visibility
+show_db_extensions
 
 if [ "$RESTART_NEEDED" = true ]; then
     bashio::log.warning "A critical update (Postgres or extension) occurred. Will trigger Immich add-on restart after DB comes back up."
