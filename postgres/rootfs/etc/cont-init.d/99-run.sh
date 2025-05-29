@@ -37,6 +37,36 @@ get_pgdata_version() {
 
 # ------------------ Cluster upgrade logic ---------------------
 
+install_vchord_and_vectors() {
+    local pgver
+    local vectorchord_tag="${VECTORCHORD_TAG:-v0.4.1}"
+    local pgvectors_tag="${PGVECTORS_TAG:-0.3.0}"
+    local targetarch="${TARGETARCH:-amd64}"
+
+    for pgver in "$1" "$2"; do
+        # vchord
+        local vchord_url="https://github.com/tensorchord/VectorChord/releases/download/${vectorchord_tag}/postgresql-${pgver}-vchord_${vectorchord_tag#v}-1_${targetarch}.deb"
+        bashio::log.info "Downloading $vchord_url"
+        wget -nv -O "/tmp/vchord-${pgver}.deb" "$vchord_url"
+        apt-get install -y "/tmp/vchord-${pgver}.deb"
+        rm -f "/tmp/vchord-${pgver}.deb"
+
+        # vectors (optional, skip if empty)
+        if [ -n "${pgvectors_tag}" ]; then
+            vectors_url="https://github.com/tensorchord/pgvecto.rs/releases/download/v${pgvectors_tag}/vectors-pg${pgver}_${pgvectors_tag#v}_${targetarch}"
+            if [ "${pgvectors_tag}" = "0.3.0" ]; then
+                vectors_url="${vectors_url}_vectors"
+            fi
+            vectors_url="${vectors_url}.deb"
+            bashio::log.info "Downloading $vectors_url"
+            wget -nv -O "/tmp/pgvectors-${pgver}.deb" "$vectors_url"
+            apt-get install -y "/tmp/pgvectors-${pgver}.deb"
+            rm -f "/tmp/pgvectors-${pgver}.deb"
+        fi
+    done
+    apt-get clean -y && rm -rf /var/lib/apt/lists/*
+}
+
 upgrade_postgres_if_needed() {
     CLUSTER_VERSION=$(get_pgdata_version)
     IMAGE_VERSION="$PG_MAJOR_VERSION"
@@ -63,6 +93,9 @@ upgrade_postgres_if_needed() {
             bashio::log.error "New postgres binaries not found at $BINARIES_DIR/$IMAGE_VERSION/bin"
             exit 1
         fi
+
+        # Install extensions
+        install_vchord_and_vectors "$CLUSTER_VERSION" "$IMAGE_VERSION"
 
         # Prepare backup
         mkdir -p "$BACKUP_DIR"
