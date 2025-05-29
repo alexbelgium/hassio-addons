@@ -1,3 +1,4 @@
+## 15.7-37 (29-05-2025)
 
 - BREAKING CHANGE : please backup your database before updating
 - Automatically restarts immich addons after upgrade
