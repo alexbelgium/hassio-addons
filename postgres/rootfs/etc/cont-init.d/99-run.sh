@@ -134,6 +134,14 @@ upgrade_postgres_if_needed() {
 
         fix_permissions
 
+        # --- Ensure vchord is loaded via shared_preload_libraries before pg_upgrade ---
+        if grep -q '^shared_preload_libraries' "$PGDATA/postgresql.conf"; then
+            sed -i "s/^shared_preload_libraries.*/shared_preload_libraries = 'vchord,vectors'/" "$PGDATA/postgresql.conf"
+        else
+            echo "shared_preload_libraries = 'vchord,vectors'" >> "$PGDATA/postgresql.conf"
+        fi
+        bashio::log.info "Set shared_preload_libraries = 'vchord,vectors' in $PGDATA/postgresql.conf"
+
         # Upgrade using pg_upgrade
         bashio::log.info "Running pg_upgrade from $CLUSTER_VERSION → $IMAGE_VERSION"
         chmod 700 "$PGDATA"
