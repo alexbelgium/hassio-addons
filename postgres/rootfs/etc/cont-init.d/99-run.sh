@@ -6,6 +6,7 @@ CONFIG_HOME="/config"
 PGDATA="${PGDATA:-/config/database}"
 export PGDATA
 PG_MAJOR_VERSION="${PG_MAJOR:-15}"
+RESTART_FLAG_FILE="$CONFIG_HOME/restart_needed"
 
 mkdir -p "$PGDATA"
 chown -R postgres:postgres "$PGDATA"
@@ -53,6 +54,40 @@ fi
 export DB_PORT DB_HOSTNAME DB_USERNAME DB_PASSWORD
 
 wait_for_postgres
+
+# --------- Handle deferred Immich restart if flagged ---------
+restart_immich_addons_if_flagged() {
+    if [ -f "$RESTART_FLAG_FILE" ]; then
+        bashio::log.warning "Detected pending Immich add-on restart flag. Restarting all running Immich add-ons..."
+        # Query Supervisor API for all addons
+        local addons slug found=0
+        addons=$(curl -s -H "Authorization: Bearer $SUPERVISOR_TOKEN" http://supervisor/addons)
+        if command -v jq >/dev/null; then
+            for slug in $(echo "$addons" | jq -r '.data.addons[] | select(.state=="started") | .slug'); do
+                if [[ "$slug" == *immich* ]]; then
+                    bashio::log.info "Restarting addon $slug"
+                    curl -s -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" "http://supervisor/addons/$slug/restart"
+                    found=1
+                fi
+            done
+        else
+            # Crude fallback using grep/cut
+            for slug in $(echo "$addons" | grep -o '"slug":"[^"]*"' | cut -d: -f2 | tr -d '"'); do
+                if [[ "$slug" == *immich* ]]; then
+                    bashio::log.info "Restarting addon $slug"
+                    curl -s -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" "http://supervisor/addons/$slug/restart"
+                    found=1
+                fi
+            done
+        fi
+        if [ "$found" -eq 0 ]; then
+            bashio::log.info "No Immich-related addon found running."
+        fi
+        rm -f "$RESTART_FLAG_FILE"
+    fi
+}
+
+restart_immich_addons_if_flagged
 
 # --------- Version detection directly from cluster & databases ----------
 
@@ -119,6 +154,7 @@ show_db_extensions() {
     bashio::log.info "=============================================="
 }
 
+
 # --------- Main logic ----------
 
 upgrade_postgres_if_needed() {
@@ -149,7 +185,6 @@ upgrade_postgres_if_needed() {
         bashio::log.info "PostgreSQL major version upgrade complete."
         RESTART_NEEDED=true
 
-        # Wait for server to come back online after upgrade
         wait_for_postgres
     else
         bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)."
@@ -189,12 +224,12 @@ upgrade_extension_if_needed() {
 # --------- Run logic ----------
 
 upgrade_postgres_if_needed
-
 upgrade_extension_if_needed "vectors"
 upgrade_extension_if_needed "vchord"
 
 if [ "$RESTART_NEEDED" = true ]; then
-    bashio::log.warning "A critical update (Postgres or extension) occurred. Restarting the addon for changes to take effect."
+    bashio::log.warning "A critical update (Postgres or extension) occurred. Will trigger Immich add-on restart after DB comes back up."
+    touch "$RESTART_FLAG_FILE"
     bashio::addon.restart
     exit 0
 fi
