@@ -39,13 +39,13 @@ get_pgdata_version() {
 
 install_vchord_and_vectors() {
     local pgver
-    local vectorchord_tag="${VECTORCHORD_TAG:-v0.4.1}"
+    local vectorchord_tag="${VECTORCHORD_TAG:-0.3.0}"
     local pgvectors_tag="${PGVECTORS_TAG:-0.3.0}"
     local targetarch="${TARGETARCH:-amd64}"
 
     for pgver in "$1" "$2"; do
         # vchord
-        local vchord_url="https://github.com/tensorchord/VectorChord/releases/download/${vectorchord_tag}/postgresql-${pgver}-vchord_${vectorchord_tag#v}-1_${targetarch}.deb"
+        local vchord_url="https://github.com/tensorchord/VectorChord/releases/download/${vectorchord_tag}/postgresql-${pgver}-vchord_${vectorchord_tag}-1_${targetarch}.deb"
         bashio::log.info "Downloading $vchord_url"
         wget -nv -O "/tmp/vchord-${pgver}.deb" "$vchord_url"
         apt-get install -y "/tmp/vchord-${pgver}.deb"
