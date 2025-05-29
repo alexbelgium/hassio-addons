@@ -1,5 +1,3 @@
-## 15.7-32 (29-05-2025)
-- Use vectorchord0.4.1 + pgvectors0.3.0 (for migration)
 
 ## 15.7-31 (28-05-2025)
 - BREAKING CHANGE : please backup your database before updating

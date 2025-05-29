@@ -102,6 +102,23 @@ compare_versions() {
     return 1
 }
 
+show_db_extensions() {
+    bashio::log.info "==== PostgreSQL databases and enabled extensions ===="
+    for db in $(get_user_databases); do
+        bashio::log.info "Database: $db"
+        exts=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$db" -tAc \
+            "SELECT extname || ' (v' || extversion || ')' FROM pg_extension ORDER BY extname;")
+        if [ -n "$exts" ]; then
+            while read -r ext; do
+                [ -n "$ext" ] && bashio::log.info "    - $ext"
+            done <<< "$exts"
+        else
+            bashio::log.info "    (no extensions enabled)"
+        fi
+    done
+    bashio::log.info "=============================================="
+}
+
 # --------- Main logic ----------
 
 upgrade_postgres_if_needed() {
@@ -136,6 +153,7 @@ upgrade_postgres_if_needed() {
         wait_for_postgres
     else
         bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)."
+        show_db_extensions
     fi
 }
 
