@@ -22,7 +22,6 @@ cd /config || true
 
 # ------------------ PGDATA version detection ------------------
 
-# Get the current data directory version (from cluster files, not image)
 get_pgdata_version() {
     if [ -f "$PGDATA/PG_VERSION" ]; then
         cat "$PGDATA/PG_VERSION"
@@ -34,7 +33,6 @@ get_pgdata_version() {
 
 # ------------------ Cluster upgrade logic ---------------------
 
-# Upgrade Postgres cluster if data dir version differs from server binary
 upgrade_postgres_if_needed() {
     CLUSTER_VERSION=$(get_pgdata_version)
     IMAGE_VERSION="$PG_MAJOR_VERSION"
@@ -44,7 +42,7 @@ upgrade_postgres_if_needed() {
 
         # Export variables for the upgrade script
         export DATA_DIR="$PGDATA"
-        export BINARIES_DIR="/usr/lib/postgresql/$IMAGE_VERSION/bin"
+        export BINARIES_DIR="/usr/lib/postgresql"
         export BACKUP_DIR="/config/backups"
         export PSQL_VERSION="$IMAGE_VERSION"
         export SUPPORTED_POSTGRES_VERSIONS="$CLUSTER_VERSION $IMAGE_VERSION"  # Fix for linkyard script bug
@@ -53,13 +51,22 @@ upgrade_postgres_if_needed() {
         apt-get update &>/dev/null
         apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION" &>/dev/null
 
-        # Download and execute the upgrade script
+        # Download and execute the upgrade script as the postgres user
         TMP_SCRIPT=$(mktemp)
         wget https://raw.githubusercontent.com/linkyard/postgres-upgrade/refs/heads/main/upgrade-postgres.sh -O "$TMP_SCRIPT"
         chmod +x "$TMP_SCRIPT"
-        if ! bash -u "$TMP_SCRIPT"; then
-            bashio::log.error "Postgres major version upgrade failed. Aborting startup."
-            exit 1
+
+        # Run as the postgres user (required by pg_ctl)
+        if command -v gosu >/dev/null 2>&1; then
+            if ! gosu postgres bash -u "$TMP_SCRIPT"; then
+                bashio::log.error "Postgres major version upgrade failed. Aborting startup."
+                exit 1
+            fi
+        else
+            if ! su - postgres -c "bash -u $TMP_SCRIPT"; then
+                bashio::log.error "Postgres major version upgrade failed. Aborting startup."
+                exit 1
+            fi
         fi
 
         bashio::log.info "PostgreSQL major version upgrade complete."
@@ -72,7 +79,6 @@ upgrade_postgres_if_needed() {
 
 # ------------------ Start PostgreSQL server -------------------
 
-# Only start the server after upgrade (if needed)
 start_postgres() {
     bashio::log.info "Starting PostgreSQL..."
     if [ "$(bashio::info.arch)" = "armv7" ]; then
@@ -125,7 +131,6 @@ wait_for_postgres
 
 # ------------------ Immich restart logic (if flagged) ---------------
 
-# Restart all running Immich add-ons if needed
 restart_immich_addons_if_flagged() {
     if [ -f "$RESTART_FLAG_FILE" ]; then
         bashio::log.warning "Detected pending Immich add-on restart flag. Restarting all running Immich add-ons..."
@@ -159,14 +164,12 @@ restart_immich_addons_if_flagged
 
 # ----------- Postgres/extension version and upgrade logic ------------
 
-# Query the default version available for an extension
 get_available_extension_version() {
     local extname="$1"
     psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/postgres" -v ON_ERROR_STOP=1 -tAc \
         "SELECT default_version FROM pg_available_extensions WHERE name = '$extname';" 2>/dev/null | xargs
 }
 
-# Check if extension is available on this server
 is_extension_available() {
     local extname="$1"
     local result
@@ -175,13 +178,11 @@ is_extension_available() {
     [[ "$result" == "1" ]]
 }
 
-# Get all databases that allow user connections
 get_user_databases() {
     psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/postgres" -v ON_ERROR_STOP=1 -tAc \
         "SELECT datname FROM pg_database WHERE datistemplate = false AND datallowconn = true;"
 }
 
-# Get installed version of an extension in a database
 get_installed_extension_version() {
     local extname="$1"
     local dbname="$2"
@@ -189,7 +190,6 @@ get_installed_extension_version() {
         "SELECT extversion FROM pg_extension WHERE extname = '$extname';" 2>/dev/null | xargs
 }
 
-# Compare two versions (returns 0 if $1 < $2)
 compare_versions() {
     local v1="$1"
     local v2="$2"
@@ -200,7 +200,6 @@ compare_versions() {
     return 1
 }
 
-# List all DBs and extensions/versions enabled
 show_db_extensions() {
     bashio::log.info "==== PostgreSQL databases and enabled extensions ===="
     for db in $(get_user_databases); do
@@ -218,7 +217,6 @@ show_db_extensions() {
     bashio::log.info "=============================================="
 }
 
-# Upgrade extension in all DBs if version differs from default
 upgrade_extension_if_needed() {
     local extname="$1"
     if ! is_extension_available "$extname"; then
@@ -251,13 +249,10 @@ upgrade_extension_if_needed() {
     done
 }
 
-# --------- Main extension upgrade calls and summary reporting ----------
-
 upgrade_extension_if_needed "vectors"
 upgrade_extension_if_needed "vchord"
-show_db_extensions
 
-# --------- Trigger Immich restart after updates, if needed --------------
+show_db_extensions
 
 if [ "$RESTART_NEEDED" = true ]; then
     bashio::log.warning "A critical update (Postgres or extension) occurred. Will trigger Immich add-on restart after DB comes back up."
@@ -267,4 +262,10 @@ if [ "$RESTART_NEEDED" = true ]; then
 fi
 
 bashio::log.info "All initialization/version check steps completed successfully!"
+
+if [ -d /config/backups ]; then
+    echo "Cleaning /config/backups now that upgrade is done"
+    rm -r /config/backups
+fi
+
 ) & true
