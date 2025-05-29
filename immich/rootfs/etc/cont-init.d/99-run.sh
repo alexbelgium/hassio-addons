@@ -8,7 +8,7 @@ export_options() {
     local json_source="/data/options.json"
     bashio::log.info "Exporting addon options from ${json_source}"
 
-    # Get all keys and export their raw values
+    # WARNING: Exporting all keys can cause trouble if your config contains unsafe or untrusted keys!
     mapfile -t keys < <(jq -r 'keys[]' "${json_source}")
     for key in "${keys[@]}"; do
         local value
@@ -24,7 +24,7 @@ export_options() {
 
 # Function to check and adjust DB_HOSTNAME if necessary
 check_db_hostname() {
-    if [[ "$DB_HOSTNAME" == "homeassistant.local" ]]; then
+    if [[ "${DB_HOSTNAME}" == "homeassistant.local" ]]; then
         local host_ip
         host_ip=$(bashio::network.ipv4_address)
         host_ip=${host_ip%/*}
@@ -74,7 +74,9 @@ validate_config() {
 export_db_env() {
     if [ -d /var/run/s6/container_environment ]; then
         for var in DB_USERNAME DB_PASSWORD DB_DATABASE_NAME DB_PORT DB_HOSTNAME JWT_SECRET; do
-            printf "%s" "${!var}" > "/var/run/s6/container_environment/${var}"
+            if [ -n "${!var:-}" ]; then
+                printf "%s" "${!var}" > "/var/run/s6/container_environment/${var}"
+            fi
         done
     fi
 }
@@ -87,7 +89,7 @@ setup_root_user() {
     else
         bashio::log.warning "DB_ROOT_PASSWORD not set. Generating a random 12-character alphanumeric password and storing it in the addon options."
         export DB_ROOT_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c12)"
-         bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
+        bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
 
         # Store generated password in the s6 environment if available
         if [ -d /var/run/s6/container_environment ]; then
@@ -154,10 +156,9 @@ EOF
 check_vector_extension() {
     echo "Checking if 'vectors' extension is enabled..."
     RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vectors';")
-
     if [[ "$RESULT" == "vectors" ]]; then
         echo "✅ 'vectors' extension is enabled."
-        exit 0
+        return 0
     else
         bashio::log.warning "❌ 'vectors' extension is NOT enabled."
         return 1
@@ -168,10 +169,9 @@ check_vector_extension() {
 check_vchord_extension() {
     echo "Checking if 'vchord' extension is enabled..."
     RESULT=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT" -tAc "SELECT extname FROM pg_extension WHERE extname = 'vchord';")
-
     if [[ "$RESULT" == "vchord" ]]; then
         echo "✅ 'vchord' extension is enabled."
-        exit 0
+        return 0
     else
         bashio::log.warning "❌ 'vchord' extension is NOT enabled."
         return 1
@@ -183,20 +183,18 @@ check_vchord_extension() {
 #########################
 
 export_options
+validate_config
+# Always reload DB config from options (to ensure up-to-date values after export)
+export DB_USERNAME="$(bashio::config 'DB_USERNAME')"
+export DB_PASSWORD="$(bashio::config 'DB_PASSWORD')"
+export DB_DATABASE_NAME="$(bashio::config 'DB_DATABASE_NAME')"
+export DB_PORT="$(bashio::config 'DB_PORT')"
+export JWT_SECRET="$(bashio::config 'JWT_SECRET')"
+export DB_HOSTNAME="$(bashio::config 'DB_HOSTNAME')"
+
 check_db_hostname
 migrate_database
-validate_config
-
-# Reload DB configuration from the addon options (this ensures we have the correct values)
-export DB_USERNAME=$(bashio::config 'DB_USERNAME')
-#export DB_HOSTNAME=$(bashio::config 'DB_HOSTNAME')
-export DB_PASSWORD=$(bashio::config 'DB_PASSWORD')
-export DB_DATABASE_NAME=$(bashio::config 'DB_DATABASE_NAME')
-export DB_PORT=$(bashio::config 'DB_PORT')
-export JWT_SECRET=$(bashio::config 'JWT_SECRET')
-
 export_db_env
-
 setup_root_user
 setup_database
 check_vchord_extension || check_vector_extension
