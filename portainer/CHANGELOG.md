@@ -1,3 +1,4 @@
+## 2.30.1-2 (30-05-2025)
 - Map internal /config to allow for custom scripts execution and variables
 - Fix invalid origin
 
