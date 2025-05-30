@@ -272,10 +272,10 @@ upgrade_postgres_if_needed() {
             exit 1
         fi
 
-        drop_vectors_everywhere "$CLUSTER_VERSION"
-
         cp -n --preserve=mode "/var/postgresql-conf-tpl/postgresql.hdd.conf" /etc/postgresql/postgresql.conf
         sed -i "s@##PGDATA@$PGDATA@" /etc/postgresql/postgresql.conf
+
+        drop_vectors_everywhere "$CLUSTER_VERSION"
 
         fix_permissions
 
@@ -326,7 +326,9 @@ upgrade_postgres_if_needed() {
 
 main() {
     bashio::log.info "Checking for required PostgreSQL cluster upgrade before server start..."
-    upgrade_postgres_if_needed
+    if [ -f /config/database/PG_VERSION]; then
+        upgrade_postgres_if_needed
+    fi
 
     start_postgres
 
