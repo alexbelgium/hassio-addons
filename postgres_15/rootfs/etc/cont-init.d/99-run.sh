@@ -12,6 +12,10 @@ fix_permissions() {
     mkdir -p "$PGDATA"
     chown -R postgres:postgres "$PGDATA"
     chmod 700 "$PGDATA"
+    if [ -d /config/backups ]; then
+        chown -R postgres:postgres /config/backups
+        chmod 700 /config/backups
+    fi
 }
 
 chmod -R 755 "$CONFIG_HOME"
@@ -81,6 +85,7 @@ install_vchord_and_vectors_for_old_pg() {
 
 drop_vectors_everywhere() {
     local old_pgver="$1"
+    fix_permissions
     su - postgres -c "$BINARIES_DIR/$old_pgver/bin/pg_ctl \
             -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf \
             -c listen_addresses='' -c port=65432\" start"
