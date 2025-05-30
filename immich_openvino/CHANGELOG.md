@@ -1,3 +1,4 @@
+## 1.133.1-3 (30-05-2025)
 - MAJOR CHANGE : please backup your database before updating
 - Added vector.rs to vectorchord migration script for immich database
 
