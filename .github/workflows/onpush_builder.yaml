@@ -50,12 +50,12 @@ jobs:
   # All jobs after this use the changedAddons output from above as matrix
 
   correct-CRLF:
-    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: detect-changed-addons
     uses: ./.github/workflows/weekly_crlftolf.yaml
 
   make-executable:
-    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, correct-CRLF]
     runs-on: ubuntu-latest
     strategy:
@@ -79,7 +79,7 @@ jobs:
           default_author: github_actions
 
   normalize-spaces:
-    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, make-executable, correct-CRLF]
     runs-on: ubuntu-latest
     strategy:
@@ -103,7 +103,7 @@ jobs:
           default_author: github_actions
 
   lint_config:
-    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs:
       [detect-changed-addons, normalize-spaces, correct-CRLF, make-executable]
     runs-on: ubuntu-latest
@@ -119,7 +119,7 @@ jobs:
           path: "./${{ matrix.addon }}"
 
   build:
-    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, lint_config]
     runs-on: ubuntu-latest
     environment: CR_PAT
@@ -193,7 +193,7 @@ jobs:
             --addon
 
   make-changelog:
-    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, build]
     runs-on: ubuntu-latest
     strategy:
