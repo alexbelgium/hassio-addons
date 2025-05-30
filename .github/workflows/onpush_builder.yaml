@@ -29,8 +29,8 @@ jobs:
       - name: Find changed addon directories
         id: find_addons
         run: |
-          git fetch origin ${{ github.event.before }} || true
-          changed_config_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
+          git fetch origin "${{ github.event.before }}" || true
+          changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "Changed config files:"
           echo "$changed_config_files"
           changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
@@ -125,14 +125,14 @@ jobs:
           HEAD: "${{ github.head_ref }}"
         run: |
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
-             echo "build_arch=true" >> $GITHUB_OUTPUT;
-             echo "image=$(echo ${{ steps.info.outputs.image }} | cut -d'/' -f3)" >> $GITHUB_OUTPUT;
+             echo "build_arch=true" >> "$GITHUB_OUTPUT";
+             echo "image=$(echo "${{ steps.info.outputs.image }}" | cut -d'/' -f3)" >> "$GITHUB_OUTPUT";
              if [[ -z "$HEAD" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
-                 echo "BUILD_ARGS=" >> $GITHUB_ENV;
+                 echo "BUILD_ARGS=" >> "$GITHUB_ENV";
              fi
           else
              echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
-             echo "build_arch=false" >> $GITHUB_OUTPUT;
+             echo "build_arch=false" >> "$GITHUB_OUTPUT";
           fi
       - name: Use action to check for mixed line endings (CRLF and LF)
         uses: ymwymw/check-mixed-line-endings@v2
@@ -153,7 +153,7 @@ jobs:
           args: |
             ${{ env.BUILD_ARGS }} \
             --${{ matrix.arch }} \
-            --target /data/${{ matrix.addon }} \
+            --target "/data/${{ matrix.addon }}" \
             --image "${{ steps.check.outputs.image }}" \
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon
