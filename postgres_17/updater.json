@@ -1,0 +1,12 @@
+{
+  "dockerhub_by_date": true,
+  "dockerhub_list_size": 2,
+  "github_tagfilter": "15",
+  "last_update": "11-11-2023",
+  "paused": true,
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "postgres",
+  "source": "github",
+  "upstream_repo": "tensorchord/pgvecto.rs",
+  "upstream_version": "15.5"
+}
