@@ -84,32 +84,35 @@ install_vchord_and_vectors_for_old_pg() {
     rm -f "$vectors_deb"
 }
 
-# ───----  drop_vectors_extension  ----──────────────────────────────
-drop_vectors_extension() {
-    local pgver="$1"
-    local databases="$2"
-    local extname="vectors"
-    local bin_dir="$BINARIES_DIR/$pgver/bin"
-    local dbs=""
+# ───----  NEW  drop_vectors_everywhere  ----──────────────────────────────
+drop_vectors_everywhere() {
+    local old_pgver="$1"
 
-    if [ "$databases" = "all" ]; then
-        dbs=$(su - postgres -c \
-            "$bin_dir/psql -Atc \"SELECT datname FROM pg_database WHERE datistemplate = false AND datallowconn\"" )
-    else
-        dbs="$databases"
-    fi
+    # 1. start the old cluster on a private socket/port
+    su - postgres -c "$BINARIES_DIR/$old_pgver/bin/pg_ctl \
+            -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf \
+            -c listen_addresses='' -c port=65432\" start"
 
-    for db in $dbs; do
-        # Does the extension exist in this db?
+    # 2. loop over non-template databases
+    for db in $(su - postgres -c \
+            "$BINARIES_DIR/$old_pgver/bin/psql -Atc \
+            \"SELECT datname FROM pg_database
+              WHERE datistemplate = false AND datallowconn\""); do
+        # does the extension exist?
         if su - postgres -c \
-           "$bin_dir/psql -d $db -Atc \"SELECT 1 FROM pg_extension WHERE extname='$extname'\"" | grep -q 1; then
-            bashio::log.warning "Dropping extension $extname from DB $db"
+           "$BINARIES_DIR/$old_pgver/bin/psql -d $db -Atc \
+            \"SELECT 1 FROM pg_extension WHERE extname='vectors'\"" \
+           | grep -q 1; then
+            bashio::log.warning "Dropping extension vectors from DB $db"
             su - postgres -c \
-               "$bin_dir/psql -d $db -c 'DROP EXTENSION $extname CASCADE;'"
+               "$BINARIES_DIR/$old_pgver/bin/psql -d $db -c \
+                'DROP EXTENSION vectors CASCADE;'"
         fi
     done
-}
 
+    # 3. stop the cluster again
+    su - postgres -c "$BINARIES_DIR/$old_pgver/bin/pg_ctl -w -D '$PGDATA' stop"
+}
 
 upgrade_postgres_if_needed() {
     CLUSTER_VERSION=$(get_pgdata_version)
@@ -150,7 +153,7 @@ upgrade_postgres_if_needed() {
         fi
 
         # Drop vectors
-        drop_vectors_extension "$CLUSTER_VERSION" all
+        drop_vectors_everywhere "$CLUSTER_VERSION"
 
         # Create postgresql.conf if not existing
         cp -n --preserve=mode "/var/postgresql-conf-tpl/postgresql.hdd.conf" /etc/postgresql/postgresql.conf
@@ -374,9 +377,6 @@ upgrade_extension_if_needed() {
         fi
     done
 }
-
-# Drop vectors from the postgres database, this is not needed
-drop_vectors_extension "$PG_MAJOR_VERSION" "postgres"
 
 upgrade_extension_if_needed "vectors"
 upgrade_extension_if_needed "vchord"
