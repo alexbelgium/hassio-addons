@@ -326,7 +326,7 @@ upgrade_postgres_if_needed() {
 
 main() {
     bashio::log.info "Checking for required PostgreSQL cluster upgrade before server start..."
-    if [ -f /config/database/PG_VERSION]; then
+    if [ -f /config/database/PG_VERSION ]; then
         upgrade_postgres_if_needed
     fi
 
