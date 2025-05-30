@@ -222,8 +222,7 @@ upgrade_extension_if_needed() {
         local installed_version
         installed_version=$(get_installed_extension_version "$extname" "$db")
         if [ -n "$installed_version" ]; then
-            compare_versions "$installed_version" "$available_version"
-            if [ $? -eq 0 ]; then
+            if compare_versions "$installed_version" "$available_version"; then
                 bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
                 if psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME@$DB_PORT/$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
                     RESTART_NEEDED=true
@@ -268,8 +267,7 @@ upgrade_postgres_if_needed() {
         mkdir -p "$BACKUP_DIR"
         backup_target="$BACKUP_DIR/postgresql-$CLUSTER_VERSION"
         bashio::log.info "Backing up data directory to $backup_target..."
-        rsync -a --delete "$PGDATA/" "$backup_target/"
-        if [ $? -ne 0 ]; then
+        if ! rsync -a --delete "$PGDATA/" "$backup_target/"; then
             bashio::log.error "Backup with rsync failed!"
             exit 1
         fi
@@ -305,13 +303,11 @@ upgrade_postgres_if_needed() {
         bashio::log.info "Running pg_upgrade from $CLUSTER_VERSION → $IMAGE_VERSION"
         chmod 700 "$PGDATA"
         chmod 700 "$backup_target"
-        su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/pg_upgrade \
+        if ! su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/pg_upgrade \
             -b '$BINARIES_DIR/$CLUSTER_VERSION/bin' \
             -B '$BINARIES_DIR/$IMAGE_VERSION/bin' \
             -d '$backup_target' \
-            -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" -O \"-c config_file=/etc/postgresql/postgresql.conf\""
-
-        if [ $? -ne 0 ]; then
+            -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" -O \"-c config_file=/etc/postgresql/postgresql.conf\""; then
             bashio::log.error "pg_upgrade failed!"
             exit 1
         fi
