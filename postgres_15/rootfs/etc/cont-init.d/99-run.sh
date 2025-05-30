@@ -321,6 +321,10 @@ upgrade_postgres_if_needed() {
             cp "$backup_target/postgresql.conf" "$PGDATA"
         fi
 
+        if [ -f "$backup_target/pg_hba.conf" ]; then
+            cp -f "$backup_target/pg_hba.conf" "$PGDATA"
+        fi
+
         bashio::log.info "Upgrade completed successfully."
         RESTART_NEEDED=true
 
