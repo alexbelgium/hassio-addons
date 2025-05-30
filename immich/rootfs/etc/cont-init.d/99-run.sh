@@ -197,4 +197,4 @@ migrate_database
 export_db_env
 setup_root_user
 setup_database
-check_vchord_extension || check_vector_extension
+# check_vchord_extension || check_vector_extension
