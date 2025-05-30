@@ -17,7 +17,7 @@ on:
 jobs:
   # Step 1: Find changed addon folders from config file changes
   detect-changed-addons:
-    if: ${{ github.repository_owner == 'alexbelgium' && !contains(toLower(github.event.head_commit.message), 'nobuild') }}
+    if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message, 'nobuild') }}
     runs-on: ubuntu-latest
     outputs:
       changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
