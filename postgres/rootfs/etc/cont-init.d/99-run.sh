@@ -332,42 +332,38 @@ main() {
 
     bashio::log.info "Waiting for PostgreSQL to start..."
 
-    (
-        DB_PORT=5432
-        DB_HOSTNAME=localhost
-        DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
-        DB_PASSWORD="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
-        DB_USERNAME=postgres
-        if bashio::config.has_value "POSTGRES_USER"; then
-            DB_USERNAME="$(bashio::config "POSTGRES_USER")"
-        fi
-        export DB_PORT DB_HOSTNAME DB_USERNAME DB_PASSWORD
+    DB_PORT=5432
+    DB_HOSTNAME=localhost
+    DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
+    DB_PASSWORD="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
+    DB_USERNAME=postgres
+    if bashio::config.has_value "POSTGRES_USER"; then
+        DB_USERNAME="$(bashio::config "POSTGRES_USER")"
+    fi
+    export DB_PORT DB_HOSTNAME DB_USERNAME DB_PASSWORD
 
-        wait_for_postgres
+    wait_for_postgres
+    restart_immich_addons_if_flagged
 
-        restart_immich_addons_if_flagged
+    su - postgres -c "psql -d postgres -c 'DROP EXTENSION IF EXISTS vectors CASCADE;'"
 
-        # Remove vectors from 'postgres' db only (safe, idempotent)
-        su - postgres -c "psql -d postgres -c 'DROP EXTENSION IF EXISTS vectors CASCADE;'"
+    upgrade_extension_if_needed "vectors"
+    upgrade_extension_if_needed "vchord"
+    show_db_extensions
 
-        upgrade_extension_if_needed "vectors"
-        upgrade_extension_if_needed "vchord"
-        show_db_extensions
+    if [ "$RESTART_NEEDED" = true ]; then
+        bashio::log.warning "A critical update (Postgres or extension) occurred. Will trigger Immich add-on restart after DB comes back up."
+        touch "$RESTART_FLAG_FILE"
+        bashio::addon.restart
+        exit 0
+    fi
 
-        if [ "$RESTART_NEEDED" = true ]; then
-            bashio::log.warning "A critical update (Postgres or extension) occurred. Will trigger Immich add-on restart after DB comes back up."
-            touch "$RESTART_FLAG_FILE"
-            bashio::addon.restart
-            exit 0
-        fi
+    bashio::log.info "All initialization/version check steps completed successfully!"
 
-        bashio::log.info "All initialization/version check steps completed successfully!"
-
-        if [ -d /config/backups ]; then
-            echo "Cleaning /config/backups now that upgrade is done"
-            rm -r /config/backups
-        fi
-    ) & true
+    if [ -d /config/backups ]; then
+        echo "Cleaning /config/backups now that upgrade is done"
+        rm -r /config/backups
+    fi
 }
 
 main
