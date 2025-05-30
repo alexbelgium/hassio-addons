@@ -1,10 +1,7 @@
 # yamllint disable rule:line-length
-# inspired from https://github.com/Poeschl/Hassio-Addons
+# inspired by Poeschl/Hassio-Addons, optimized by ChatGPT
 ---
 name: Builder
-
-env:
-  BUILD_ARGS: ""
 
 on:
   workflow_call:
@@ -14,110 +11,79 @@ on:
     paths:
       - "**/config.*"
 
+env:
+  BUILD_ARGS: ""
+
 jobs:
-  # Step 1: Find changed addon folders from config file changes
+  # 1. Detect which add-on folders changed (by config.json|yaml|yml modification)
   detect-changed-addons:
     if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message, 'nobuild') }}
     runs-on: ubuntu-latest
     outputs:
       changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
     steps:
-      - name: Checkout Repo
+      - name: Checkout repo
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 1
       - name: Find changed addon directories
         id: find_addons
         run: |
-          echo "Finding changed addons from config.* files"
-          # Get changed files between this and previous commit
-          # Works for push and PR, but you might want to tweak if you use merge commits, etc.
           git fetch origin ${{ github.event.before }} || true
-
-          # Get list of changed config files
           changed_config_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
-
-          # For debugging
           echo "Changed config files:"
           echo "$changed_config_files"
-
-          # Get the unique top-level addon directories (by extracting the folder names)
           changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
-
           echo "Changed addons: $changed_addons"
           echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
-        shell: bash
 
-  # All jobs after this use the changedAddons output from above as matrix
-
-  correct-CRLF:
+  # 2. Pre-build sanitize: normalize spaces, fix script permissions, single commit per add-on
+  prebuild-sanitize:
     if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: detect-changed-addons
-    uses: ./.github/workflows/weekly_crlftolf.yaml
-
-  make-executable:
-    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
-    needs: [detect-changed-addons, correct-CRLF]
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-      - name: Make scripts executable
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Normalize unicode spaces & make scripts executable
         run: |
-          echo "Starting"
-          git pull origin master
-          git config core.filemode true
-          chmod u+x $(find "${{ matrix.addon }}" -type f -iname "*.sh") || true
+          set -e
+          cd "${{ matrix.addon }}"
+          # Normalize unicode (non-breaking) spaces to regular spaces
+          find . -type f ! -path "./.git/*" | while read -r file; do
+            LC_ALL=C sed -i 's/\xC2\xA0/ /g' "$file"
+          done
+          # Make all .sh scripts executable
+          find . -type f -iname "*.sh" -exec chmod u+x {} \;
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
           commit: -u
-          message: "GitHub bot : scripts executable"
+          message: "GitHub bot: normalize and chmod"
           default_author: github_actions
 
-  normalize-spaces:
-    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
-    needs: [detect-changed-addons, make-executable, correct-CRLF]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-      - name: Normalize all non-breaking spaces to regular spaces
-        run: |
-          set -e
-          cd "${{ matrix.addon }}"
-          find . -type f ! -path "./.git/*" | while read -r file; do
-            LC_ALL=C sed -i 's/\xC2\xA0/ /g' "$file"
-          done
-      - name: Commit if normalization was needed
-        uses: EndBug/add-and-commit@v9
-        with:
-          commit: -u
-          message: "GitHub bot : normalize unicode spaces"
-          default_author: github_actions
-
+  # 3. Lint add-on configs
   lint_config:
     if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
-    needs:
-      [detect-changed-addons, normalize-spaces, correct-CRLF, make-executable]
+    needs: [detect-changed-addons, prebuild-sanitize]
     runs-on: ubuntu-latest
     strategy:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
       - name: Run Home Assistant Add-on Lint
         uses: frenck/action-addon-linter@v2
         with:
           path: "./${{ matrix.addon }}"
 
+  # 4. Build images for changed addons/arches
   build:
     if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, lint_config]
@@ -128,11 +94,11 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
         arch: ["aarch64", "amd64", "armv7"]
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-      - name: Resolve Symlinks
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Resolve Symlinks (in repo)
         run: |
           find . -type l | while read -r link; do
             target="$(readlink -f "$link")"
@@ -153,7 +119,7 @@ jobs:
         uses: home-assistant/actions/helpers/info@master
         with:
           path: "./${{ matrix.addon }}"
-      - name: Check if add-on should be built
+      - name: Check if add-on should be built for arch
         id: check
         env:
           HEAD: "${{ github.head_ref }}"
@@ -164,7 +130,7 @@ jobs:
              if [[ -z "$HEAD" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
                  echo "BUILD_ARGS=" >> $GITHUB_ENV;
              fi
-           else
+          else
              echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
              echo "build_arch=false" >> $GITHUB_OUTPUT;
           fi
@@ -192,6 +158,7 @@ jobs:
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon
 
+  # 5. Update changelog if needed (for each changed add-on)
   make-changelog:
     if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, build]
@@ -200,8 +167,9 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
       - name: Update changelog for minor versions
         run: |
           echo "Starting"
@@ -228,7 +196,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           commit: -u
-          message: "GitHub bot : changelog"
+          message: "GitHub bot: changelog"
           default_author: github_actions
           fetch: --force
           push: --force
