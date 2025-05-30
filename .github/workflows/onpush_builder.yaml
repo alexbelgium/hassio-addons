@@ -1,6 +1,6 @@
 # yamllint disable rule:line-length
-# Build all add-ons, continue matrix even if one fails
-
+# inspired from https://github.com/Poeschl/Hassio-Addons
+---
 name: Builder
 
 env:
@@ -15,26 +15,53 @@ on:
       - "**/config.*"
 
 jobs:
-  list-addons:
+  # Step 1: Find changed addon folders from config file changes
+  detect-changed-addons:
+    if: ${{ github.repository_owner == 'alexbelgium' && !contains(toLower(github.event.head_commit.message), 'nobuild') }}
     runs-on: ubuntu-latest
     outputs:
-      addons: ${{ steps.find_addons.outputs.addons }}
+      changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - id: find_addons
+
+      - name: Find changed addon directories
+        id: find_addons
         run: |
-          # Find all folders (max depth 2) that have a config.json and output as JSON array
-          ADDONS=$(find . -maxdepth 2 -type f -name "config.json" | sed 's|^\./||;s|/config.json||' | jq -R -s -c 'split("\n")[:-1]')
-          echo "addons=$ADDONS" >> $GITHUB_OUTPUT
+          echo "Finding changed addons from config.* files"
+          # Get changed files between this and previous commit
+          # Works for push and PR, but you might want to tweak if you use merge commits, etc.
+          git fetch origin ${{ github.event.before }} || true
+
+          # Get list of changed config files
+          changed_config_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
+
+          # For debugging
+          echo "Changed config files:"
+          echo "$changed_config_files"
+
+          # Get the unique top-level addon directories (by extracting the folder names)
+          changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+
+          echo "Changed addons: $changed_addons"
+          echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+  # All jobs after this use the changedAddons output from above as matrix
+
+  correct-CRLF:
+    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    needs: detect-changed-addons
+    uses: ./.github/workflows/weekly_crlftolf.yaml
 
   make-executable:
-    needs: list-addons
+    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    needs: [detect-changed-addons, correct-CRLF]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        addon: ${{ fromJSON(needs.list-addons.outputs.addons) }}
+        addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -52,12 +79,12 @@ jobs:
           default_author: github_actions
 
   normalize-spaces:
-    needs: [list-addons, make-executable]
+    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    needs: [detect-changed-addons, make-executable, correct-CRLF]
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        addon: ${{ fromJSON(needs.list-addons.outputs.addons) }}
+        addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -76,12 +103,13 @@ jobs:
           default_author: github_actions
 
   lint_config:
-    needs: [list-addons, normalize-spaces, make-executable]
+    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    needs:
+      [detect-changed-addons, normalize-spaces, correct-CRLF, make-executable]
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        addon: ${{ fromJSON(needs.list-addons.outputs.addons) }}
+        addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -91,20 +119,19 @@ jobs:
           path: "./${{ matrix.addon }}"
 
   build:
-    needs: [list-addons, lint_config]
+    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    needs: [detect-changed-addons, lint_config]
     runs-on: ubuntu-latest
     environment: CR_PAT
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
     strategy:
-      fail-fast: false
       matrix:
-        addon: ${{ fromJSON(needs.list-addons.outputs.addons) }}
+        addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
         arch: ["aarch64", "amd64", "armv7"]
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
       - name: Resolve Symlinks
         run: |
           find . -type l | while read -r link; do
@@ -121,13 +148,11 @@ jobs:
               cp "$target" "$link"
             fi
           done
-
       - name: Get information
         id: info
         uses: home-assistant/actions/helpers/info@master
         with:
           path: "./${{ matrix.addon }}"
-
       - name: Check if add-on should be built
         id: check
         env:
@@ -143,10 +168,8 @@ jobs:
              echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
              echo "build_arch=false" >> $GITHUB_OUTPUT;
           fi
-
       - name: Use action to check for mixed line endings (CRLF and LF)
         uses: ymwymw/check-mixed-line-endings@v2
-
       - name: Login to GitHub Container Registry
         if: env.BUILD_ARGS != '--test'
         uses: docker/login-action@v3.1.0
@@ -154,11 +177,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build ${{ matrix.addon }} add-on
         id: builderstep
         if: steps.check.outputs.build_arch == 'true'
-        continue-on-error: true # <-- This makes the matrix continue if a build fails
         uses: home-assistant/builder@2025.03.0
         env:
           CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
@@ -172,12 +193,12 @@ jobs:
             --addon
 
   make-changelog:
-    needs: [list-addons, build]
+    if: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) != [] }}
+    needs: [detect-changed-addons, build]
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        addon: ${{ fromJSON(needs.list-addons.outputs.addons) }}
+        addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
