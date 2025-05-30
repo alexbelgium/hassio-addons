@@ -145,5 +145,5 @@
   "slug": "transmission_openvpn",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v5.3.1-6"
+  "version": "v5.3.2"
 }
