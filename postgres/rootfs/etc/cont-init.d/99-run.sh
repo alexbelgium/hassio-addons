@@ -381,6 +381,9 @@ upgrade_extension_if_needed() {
 upgrade_extension_if_needed "vectors"
 upgrade_extension_if_needed "vchord"
 
+# Remove vectors from postgres database
+su - postgres -c "psql -d postgres -c 'DROP EXTENSION vectors CASCADE;'"
+
 show_db_extensions
 
 if [ "$RESTART_NEEDED" = true ]; then
