@@ -29,14 +29,12 @@ get_pgdata_version() {
     fi
 }
 
-# --------- Only extract vchord/vectors .so for OLD version ---------
 extract_so_from_deb() {
     local debfile="$1"
     local targetdir="$2"
     local sofile="$3"
     local tmpdir
     tmpdir=$(mktemp -d)
-
     dpkg-deb -x "$debfile" "$tmpdir"
     find "$tmpdir" -name "$sofile" -exec cp {} "$targetdir" \;
     rm -rf "$tmpdir"
@@ -64,10 +62,8 @@ install_vchord_and_vectors_for_old_pg() {
     local vectors_deb
     local old_pg_lib="/usr/lib/postgresql/$old_pgver/lib"
 
-    # Make sure libdir exists
     mkdir -p "$old_pg_lib"
 
-    # Download and extract vchord.so
     vchord_url="https://github.com/tensorchord/VectorChord/releases/download/${vectorchord_tag}/postgresql-${old_pgver}-vchord_${vectorchord_tag}-1_${targetarch}.deb"
     vchord_deb="/tmp/vchord-${old_pgver}.deb"
     bashio::log.info "Downloading $vchord_url"
@@ -75,7 +71,6 @@ install_vchord_and_vectors_for_old_pg() {
     extract_so_from_deb "$vchord_deb" "$old_pg_lib" "vchord.so"
     rm -f "$vchord_deb"
 
-    # Download and extract vectors.so
     vectors_url="https://github.com/tensorchord/pgvecto.rs/releases/download/v${pgvectors_tag}/vectors-pg${old_pgver}_${pgvectors_tag}_${targetarch}.deb"
     vectors_deb="/tmp/pgvectors-${old_pgver}.deb"
     bashio::log.info "Downloading $vectors_url"
@@ -84,21 +79,14 @@ install_vchord_and_vectors_for_old_pg() {
     rm -f "$vectors_deb"
 }
 
-# ───----  NEW  drop_vectors_everywhere  ----──────────────────────────────
 drop_vectors_everywhere() {
     local old_pgver="$1"
-
-    # 1. start the old cluster on a private socket/port
     su - postgres -c "$BINARIES_DIR/$old_pgver/bin/pg_ctl \
             -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf \
             -c listen_addresses='' -c port=65432\" start"
-
-    # 2. loop over non-template databases
     for db in $(su - postgres -c \
             "$BINARIES_DIR/$old_pgver/bin/psql -Atc \
-            \"SELECT datname FROM pg_database
-              WHERE datistemplate = false AND datallowconn\""); do
-        # does the extension exist?
+            \"SELECT datname FROM pg_database WHERE datistemplate = false AND datallowconn\""); do
         if su - postgres -c \
            "$BINARIES_DIR/$old_pgver/bin/psql -d $db -Atc \
             \"SELECT 1 FROM pg_extension WHERE extname='vectors'\"" \
@@ -109,106 +97,8 @@ drop_vectors_everywhere() {
                 'DROP EXTENSION vectors CASCADE;'"
         fi
     done
-
-    # 3. stop the cluster again
     su - postgres -c "$BINARIES_DIR/$old_pgver/bin/pg_ctl -w -D '$PGDATA' stop"
 }
-
-upgrade_postgres_if_needed() {
-    CLUSTER_VERSION=$(get_pgdata_version)
-    IMAGE_VERSION="$PG_MAJOR_VERSION"
-
-    if [ "$CLUSTER_VERSION" != "$IMAGE_VERSION" ]; then
-        bashio::log.warning "Postgres data directory version is $CLUSTER_VERSION but image wants $IMAGE_VERSION. Running upgrade..."
-
-        export DATA_DIR="$PGDATA"
-        export BINARIES_DIR="/usr/lib/postgresql"
-        export BACKUP_DIR="/config/backups"
-        export PSQL_VERSION="$IMAGE_VERSION"
-        export SUPPORTED_POSTGRES_VERSIONS="$CLUSTER_VERSION $IMAGE_VERSION"
-
-        apt-get update &>/dev/null
-        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION"
-
-        if [ ! -d "$BINARIES_DIR/$CLUSTER_VERSION/bin" ]; then
-            bashio::log.error "Old postgres binaries not found at $BINARIES_DIR/$CLUSTER_VERSION/bin"
-            exit 1
-        fi
-        if [ ! -d "$BINARIES_DIR/$IMAGE_VERSION/bin" ]; then
-            bashio::log.error "New postgres binaries not found at $BINARIES_DIR/$IMAGE_VERSION/bin"
-            exit 1
-        fi
-
-        # Only for the old version: download and extract .so files for old lib
-        install_vchord_and_vectors_for_old_pg "$CLUSTER_VERSION"
-
-        # Prepare backup
-        mkdir -p "$BACKUP_DIR"
-        backup_target="$BACKUP_DIR/postgresql-$CLUSTER_VERSION"
-        bashio::log.info "Backing up data directory to $backup_target..."
-        rsync -a --delete "$PGDATA/" "$backup_target/"
-        if [ $? -ne 0 ]; then
-            bashio::log.error "Backup with rsync failed!"
-            exit 1
-        fi
-
-        # Drop vectors
-        drop_vectors_everywhere "$CLUSTER_VERSION"
-
-        # Create postgresql.conf if not existing
-        cp -n --preserve=mode "/var/postgresql-conf-tpl/postgresql.hdd.conf" /etc/postgresql/postgresql.conf
-        sed -i "s@##PGDATA@$PGDATA@" /etc/postgresql/postgresql.conf
-
-        fix_permissions
-
-        bashio::log.info "Starting old Postgres ($CLUSTER_VERSION) to capture encoding/locale settings"
-        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" start"
-
-        LC_COLLATE=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW LC_COLLATE;'")
-        LC_CTYPE=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW LC_CTYPE;'")
-        ENCODING=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW server_encoding;'")
-
-        bashio::log.info "Detected cluster: LC_COLLATE=$LC_COLLATE, LC_CTYPE=$LC_CTYPE, ENCODING=$ENCODING"
-
-        bashio::log.info "Stopping old Postgres ($CLUSTER_VERSION)"
-        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" stop"
-
-        rm -rf "$PGDATA"
-
-        fix_permissions
-
-        bashio::log.info "Initializing new data cluster for $IMAGE_VERSION"
-        su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/initdb --encoding=$ENCODING --lc-collate=$LC_COLLATE --lc-ctype=$LC_CTYPE -D '$PGDATA'"
-
-        fix_permissions
-
-        bashio::log.info "Running pg_upgrade from $CLUSTER_VERSION → $IMAGE_VERSION"
-        chmod 700 "$PGDATA"
-        chmod 700 "$backup_target"
-        su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/pg_upgrade \
-            -b '$BINARIES_DIR/$CLUSTER_VERSION/bin' \
-            -B '$BINARIES_DIR/$IMAGE_VERSION/bin' \
-            -d '$backup_target' \
-            -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" -O \"-c config_file=/etc/postgresql/postgresql.conf\""
-
-        if [ $? -ne 0 ]; then
-            bashio::log.error "pg_upgrade failed!"
-            exit 1
-        fi
-
-        if [ -f "$backup_target/postgresql.conf" ]; then
-            cp "$backup_target/postgresql.conf" "$PGDATA"
-        fi
-
-        bashio::log.info "Upgrade completed successfully."
-        RESTART_NEEDED=true
-
-    else
-        bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)."
-    fi
-}
-
-# ------------------ Start PostgreSQL server -------------------
 
 start_postgres() {
     bashio::log.info "Starting PostgreSQL..."
@@ -220,18 +110,6 @@ start_postgres() {
         /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
     fi
 }
-
-# ------------------- Main start/upgrade flow ------------------
-
-bashio::log.info "Checking for required PostgreSQL cluster upgrade before server start..."
-upgrade_postgres_if_needed
-
-start_postgres
-
-bashio::log.info "Waiting for PostgreSQL to start..."
-
-(
-# ------------------ Wait for Postgres server ready --------------
 
 wait_for_postgres() {
     local tries=0
@@ -245,20 +123,6 @@ wait_for_postgres() {
         sleep 2
     done
 }
-
-DB_PORT=5432
-DB_HOSTNAME=localhost
-DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
-DB_PASSWORD="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
-DB_USERNAME=postgres
-if bashio::config.has_value "POSTGRES_USER"; then
-    DB_USERNAME="$(bashio::config "POSTGRES_USER")"
-fi
-export DB_PORT DB_HOSTNAME DB_USERNAME DB_PASSWORD
-
-wait_for_postgres
-
-# ------------------ Immich restart logic (if flagged) ---------------
 
 restart_immich_addons_if_flagged() {
     if [ -f "$RESTART_FLAG_FILE" ]; then
@@ -288,10 +152,6 @@ restart_immich_addons_if_flagged() {
         rm -f "$RESTART_FLAG_FILE"
     fi
 }
-
-restart_immich_addons_if_flagged
-
-# ----------- Postgres/extension version and upgrade logic ------------
 
 get_available_extension_version() {
     local extname="$1"
@@ -365,7 +225,7 @@ upgrade_extension_if_needed() {
             compare_versions "$installed_version" "$available_version"
             if [ $? -eq 0 ]; then
                 bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
-                if psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
+                if psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME@$DB_PORT/$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
                     RESTART_NEEDED=true
                 else
                     bashio::log.error "Failed to upgrade $extname in $db. Aborting startup."
@@ -378,26 +238,140 @@ upgrade_extension_if_needed() {
     done
 }
 
-upgrade_extension_if_needed "vectors"
-upgrade_extension_if_needed "vchord"
+upgrade_postgres_if_needed() {
+    CLUSTER_VERSION=$(get_pgdata_version)
+    IMAGE_VERSION="$PG_MAJOR_VERSION"
 
-# Remove vectors from postgres database
-su - postgres -c "psql -d postgres -c 'DROP EXTENSION IF EXISTS vectors CASCADE;'" || true
+    if [ "$CLUSTER_VERSION" != "$IMAGE_VERSION" ]; then
+        bashio::log.warning "Postgres data directory version is $CLUSTER_VERSION but image wants $IMAGE_VERSION. Running upgrade..."
 
-show_db_extensions
+        export DATA_DIR="$PGDATA"
+        export BINARIES_DIR="/usr/lib/postgresql"
+        export BACKUP_DIR="/config/backups"
+        export PSQL_VERSION="$IMAGE_VERSION"
+        export SUPPORTED_POSTGRES_VERSIONS="$CLUSTER_VERSION $IMAGE_VERSION"
 
-if [ "$RESTART_NEEDED" = true ]; then
-    bashio::log.warning "A critical update (Postgres or extension) occurred. Will trigger Immich add-on restart after DB comes back up."
-    touch "$RESTART_FLAG_FILE"
-    bashio::addon.restart
-    exit 0
-fi
+        apt-get update &>/dev/null
+        apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION"
 
-bashio::log.info "All initialization/version check steps completed successfully!"
+        if [ ! -d "$BINARIES_DIR/$CLUSTER_VERSION/bin" ]; then
+            bashio::log.error "Old postgres binaries not found at $BINARIES_DIR/$CLUSTER_VERSION/bin"
+            exit 1
+        fi
+        if [ ! -d "$BINARIES_DIR/$IMAGE_VERSION/bin" ]; then
+            bashio::log.error "New postgres binaries not found at $BINARIES_DIR/$IMAGE_VERSION/bin"
+            exit 1
+        fi
 
-if [ -d /config/backups ]; then
-    echo "Cleaning /config/backups now that upgrade is done"
-    rm -r /config/backups
-fi
+        install_vchord_and_vectors_for_old_pg "$CLUSTER_VERSION"
 
-) & true
+        mkdir -p "$BACKUP_DIR"
+        backup_target="$BACKUP_DIR/postgresql-$CLUSTER_VERSION"
+        bashio::log.info "Backing up data directory to $backup_target..."
+        rsync -a --delete "$PGDATA/" "$backup_target/"
+        if [ $? -ne 0 ]; then
+            bashio::log.error "Backup with rsync failed!"
+            exit 1
+        fi
+
+        drop_vectors_everywhere "$CLUSTER_VERSION"
+
+        cp -n --preserve=mode "/var/postgresql-conf-tpl/postgresql.hdd.conf" /etc/postgresql/postgresql.conf
+        sed -i "s@##PGDATA@$PGDATA@" /etc/postgresql/postgresql.conf
+
+        fix_permissions
+
+        bashio::log.info "Starting old Postgres ($CLUSTER_VERSION) to capture encoding/locale settings"
+        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" start"
+
+        LC_COLLATE=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW LC_COLLATE;'")
+        LC_CTYPE=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW LC_CTYPE;'")
+        ENCODING=$(su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/psql -d postgres -Atc 'SHOW server_encoding;'")
+
+        bashio::log.info "Detected cluster: LC_COLLATE=$LC_COLLATE, LC_CTYPE=$LC_CTYPE, ENCODING=$ENCODING"
+
+        bashio::log.info "Stopping old Postgres ($CLUSTER_VERSION)"
+        su - postgres -c "$BINARIES_DIR/$CLUSTER_VERSION/bin/pg_ctl -w -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" stop"
+
+        rm -rf "$PGDATA"
+
+        fix_permissions
+
+        bashio::log.info "Initializing new data cluster for $IMAGE_VERSION"
+        su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/initdb --encoding=$ENCODING --lc-collate=$LC_COLLATE --lc-ctype=$LC_CTYPE -D '$PGDATA'"
+
+        fix_permissions
+
+        bashio::log.info "Running pg_upgrade from $CLUSTER_VERSION → $IMAGE_VERSION"
+        chmod 700 "$PGDATA"
+        chmod 700 "$backup_target"
+        su - postgres -c "$BINARIES_DIR/$IMAGE_VERSION/bin/pg_upgrade \
+            -b '$BINARIES_DIR/$CLUSTER_VERSION/bin' \
+            -B '$BINARIES_DIR/$IMAGE_VERSION/bin' \
+            -d '$backup_target' \
+            -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" -O \"-c config_file=/etc/postgresql/postgresql.conf\""
+
+        if [ $? -ne 0 ]; then
+            bashio::log.error "pg_upgrade failed!"
+            exit 1
+        fi
+
+        if [ -f "$backup_target/postgresql.conf" ]; then
+            cp "$backup_target/postgresql.conf" "$PGDATA"
+        fi
+
+        bashio::log.info "Upgrade completed successfully."
+        RESTART_NEEDED=true
+
+    else
+        bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)."
+    fi
+}
+
+main() {
+    bashio::log.info "Checking for required PostgreSQL cluster upgrade before server start..."
+    upgrade_postgres_if_needed
+
+    start_postgres
+
+    bashio::log.info "Waiting for PostgreSQL to start..."
+
+    (
+        DB_PORT=5432
+        DB_HOSTNAME=localhost
+        DB_PASSWORD="$(bashio::config 'POSTGRES_PASSWORD')"
+        DB_PASSWORD="$(jq -rn --arg x "$DB_PASSWORD" '$x|@uri')"
+        DB_USERNAME=postgres
+        if bashio::config.has_value "POSTGRES_USER"; then
+            DB_USERNAME="$(bashio::config "POSTGRES_USER")"
+        fi
+        export DB_PORT DB_HOSTNAME DB_USERNAME DB_PASSWORD
+
+        wait_for_postgres
+
+        restart_immich_addons_if_flagged
+
+        # Remove vectors from 'postgres' db only (safe, idempotent)
+        su - postgres -c "psql -d postgres -c 'DROP EXTENSION IF EXISTS vectors CASCADE;'"
+
+        upgrade_extension_if_needed "vectors"
+        upgrade_extension_if_needed "vchord"
+        show_db_extensions
+
+        if [ "$RESTART_NEEDED" = true ]; then
+            bashio::log.warning "A critical update (Postgres or extension) occurred. Will trigger Immich add-on restart after DB comes back up."
+            touch "$RESTART_FLAG_FILE"
+            bashio::addon.restart
+            exit 0
+        fi
+
+        bashio::log.info "All initialization/version check steps completed successfully!"
+
+        if [ -d /config/backups ]; then
+            echo "Cleaning /config/backups now that upgrade is done"
+            rm -r /config/backups
+        fi
+    ) & true
+}
+
+main
