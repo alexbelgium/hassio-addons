@@ -1,3 +1,5 @@
+## 17.1 (30-05-2025)
+- Minor bugs fixed
 ## 15.7-41 (30-05-2025)
 - BREAKING CHANGE : please backup your database before updating
 - Automatically restarts immich addons after upgrade
