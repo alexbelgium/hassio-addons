@@ -11,6 +11,7 @@
     "PGDATA": "/config/database"
   },
   "hassio_api": true,
+  "hassio_role": "manager",
   "image": "ghcr.io/alexbelgium/postgres_17-{arch}",
   "init": false,
   "map": [
@@ -38,5 +39,5 @@
   "slug": "postgres_latest",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/postgres",
-  "version": "17.4-3"
+  "version": "17.4-4"
 }
