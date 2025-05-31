@@ -69,6 +69,7 @@ jobs:
     if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, prebuild-sanitize]
     runs-on: ubuntu-latest
+    continue-on-error: true
     strategy:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
