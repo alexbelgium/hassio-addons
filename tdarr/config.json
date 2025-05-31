@@ -130,7 +130,7 @@
   "slug": "tdarr",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.40.01",
+  "version": "2.41.02",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8265]"
 }
