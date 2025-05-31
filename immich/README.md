@@ -1,6 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Immich Frame (opened 2025-02-13)](https://github.com/alexbelgium/hassio-addons/issues/1764) by [@NickBootOne](https://github.com/NickBootOne)
 ## &#9888; Open Request : [✨ [REQUEST] immich and Nextcloud Ingress support (opened 2025-03-15)](https://github.com/alexbelgium/hassio-addons/issues/1812) by [@bessertristan09](https://github.com/bessertristan09)
-## &#9888; Open Request : [✨ [REQUEST] Immich v1.133.0 react on db breaking changes (opened 2025-05-24)](https://github.com/alexbelgium/hassio-addons/issues/1874) by [@frostworx](https://github.com/frostworx)
 ## &#9888; Open Issue : [🐛 [Immich] Face Recognition is not working (opened 2025-05-29)](https://github.com/alexbelgium/hassio-addons/issues/1880) by [@Marty56](https://github.com/Marty56)
 # Home assistant add-on: immich
 
