@@ -24,8 +24,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Find changed addon directories
         id: find_addons
         run: |
@@ -76,8 +74,6 @@ jobs:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Run Home Assistant Add-on Lint
         uses: frenck/action-addon-linter@v2
         with:
@@ -96,8 +92,6 @@ jobs:
         arch: ["aarch64", "amd64", "armv7"]
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Resolve Symlinks (in repo)
         run: |
           find . -type l | while read -r link; do
