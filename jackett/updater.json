@@ -4,5 +4,5 @@
   "slug": "jackett",
   "source": "github",
   "upstream_repo": "linuxserver/docker-jackett",
-  "upstream_version": "0.22.1971"
+  "upstream_version": "0.22.1974"
 }
