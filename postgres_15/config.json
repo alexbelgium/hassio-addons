@@ -12,6 +12,7 @@
     "PGDATA": "/config/database"
   },
   "hassio_api": true,
+  "hassio_role": "manager",
   "image": "ghcr.io/alexbelgium/postgres-{arch}",
   "init": false,
   "map": [
