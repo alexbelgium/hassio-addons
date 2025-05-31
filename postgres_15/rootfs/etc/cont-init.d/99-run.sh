@@ -132,25 +132,38 @@ wait_for_postgres() {
 restart_immich_addons_if_flagged() {
     if [ -f "$RESTART_FLAG_FILE" ]; then
         bashio::log.warning "Detected pending Immich add-on restart flag. Restarting all running Immich add-ons..."
-        local addons slug found=0
-        addons=$(curl -s -H "Authorization: Bearer $SUPERVISOR_TOKEN" http://supervisor/addons)
+
+        local addons_json slug found=0
+
+        # Get the add-ons list, fail on HTTP errors, show errors if API call fails
+        addons_json=$(curl -fsSL -H "Authorization: Bearer $SUPERVISOR_TOKEN" http://supervisor/addons) || {
+            bashio::log.error "Supervisor API call failed or unauthorized: $addons_json"
+            rm -f "$RESTART_FLAG_FILE"
+            return 1
+        }
+
         if command -v jq >/dev/null; then
-            for slug in $(echo "$addons" | jq -r '.data.addons[] | select(.state=="started") | .slug'); do
+            # Use correct JSON path for modern Supervisor API
+            for slug in $(echo "$addons_json" | jq -r '.addons[] | select(.state=="started") | .slug'); do
                 if [[ "$slug" == *immich* ]]; then
                     bashio::log.info "Restarting addon $slug"
-                    curl -s -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" "http://supervisor/addons/$slug/restart"
+                    curl -fsSL -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
+                        "http://supervisor/addons/$slug/restart"
                     found=1
                 fi
             done
         else
-            for slug in $(echo "$addons" | grep -o '"slug":"[^"]*"' | cut -d: -f2 | tr -d '"'); do
+            # Fallback: grep/cut for legacy environments, less robust
+            for slug in $(echo "$addons_json" | grep -o '"slug":"[^"]*"' | cut -d: -f2 | tr -d '"'); do
                 if [[ "$slug" == *immich* ]]; then
                     bashio::log.info "Restarting addon $slug"
-                    curl -s -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" "http://supervisor/addons/$slug/restart"
+                    curl -fsSL -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
+                        "http://supervisor/addons/$slug/restart"
                     found=1
                 fi
             done
         fi
+
         if [ "$found" -eq 0 ]; then
             bashio::log.info "No Immich-related addon found running."
         fi
