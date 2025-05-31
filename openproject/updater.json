@@ -4,5 +4,5 @@
   "slug": "opf/openproject",
   "source": "github",
   "upstream_repo": "openproject/openproject",
-  "upstream_version": ""
+  "upstream_version": "16.0"
 }
