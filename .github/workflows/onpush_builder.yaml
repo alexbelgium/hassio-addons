@@ -45,8 +45,6 @@ jobs:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Normalize unicode spaces & make scripts executable
         run: |
           set -e
@@ -63,6 +61,9 @@ jobs:
           commit: -u
           message: "GitHub bot: normalize and chmod"
           default_author: github_actions
+          pull: --rebase      # <--- add this line!
+          fetch: --tags --force
+          push: true
 
   # 3. Lint add-on configs
   lint_config:
@@ -193,5 +194,6 @@ jobs:
           commit: -u
           message: "GitHub bot: changelog"
           default_author: github_actions
+          pull: --rebase
           fetch: --force
           push: --force
