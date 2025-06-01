@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "ghcr.io/imagegenius/immich:noml",
+    "amd64": "ghcr.io/imagegenius/immich:noml"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
