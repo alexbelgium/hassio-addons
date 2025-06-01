@@ -2,14 +2,17 @@
 
 bashio::log.info "Starting OpenProject"
 
-for folders in pg assets; do
-    mkdir -p /config/"$folders"/
-    if [ -d /data/"$folders" ]; then
-        bashio::log.warning "Migrating /data/$folders to /config/$folders"
-        cp -rf /data/"$folders"/ /config/"$folders"/
-        rm -r /data/"$folders"
+# Ensure persistence for PGDATA and asset folders
+for folder in pg assets; do
+    mkdir -p /config/"$folder"
+    if [ -d /data/"$folder" ] && [ "$(ls -A /data/"$folder")" ]; then
+        # Copy only if source is non-empty
+        cp -a /data/"$folder"/. /config/"$folder"/
+        rm -rf /data/"$folder"
     fi
 done
+
+mkdir -p /config/assets/files
 
 cd /app || true
 
