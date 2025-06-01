@@ -27,27 +27,14 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-ENV OPENPROJECT_SECRET_KEY_BASE=addon_secret \
-    OPENPROJECT_HOST__NAME=localhost:8080 \
-    OPENPROJECT_HTTPS=false \
-    OPENPROJECT_DEFAULT__LANGUAGE=en \
-    OPENPROJECT_EDITION=bim \
-    PGDATA=/data/pg\
-    APP_DATA_PATH=/data/assets
-
 USER root
-
-# hadolint ignore=SC2154
-RUN sed -i "s|/bin/bash|/bin/bashio|g" /app/docker/prod/entrypoint.sh && \
-    sed -i "1a /./ha_entrypoint.sh" /app/docker/prod/entrypoint.sh && \
-    sed -i "2a\for variable in OPENPROJECT_SECRET_KEY_BASE OPENPROJECT_HOST__NAME OPENPROJECT_HTTPS OPENPROJECT_DEFAULT__LANGUAGE; do if bashio::config.has_value \$variable; then export \$variable=\"\$(bashio::config $variable)\"; fi; done" /app/docker/prod/entrypoint.sh
 
 ##################
 # 3 Install apps #
 ##################
 
 # Copy local files
-# COPY rootfs/ /
+COPY rootfs/ /
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
@@ -82,7 +69,8 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-# ENTRYPOINT [ "/ha_entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #

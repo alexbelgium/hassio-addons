@@ -5,6 +5,13 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Openproject for Home Assistant",
+  "environment": {
+    "OPENPROJECT_SECRET_KEY_BASE": "addon_secret",
+    "OPENPROJECT_EDITION": "bim",
+    "PGDATA": "/config/pg",
+    "APP_DATA_PATH": "/config/assets",
+    "OPENPROJECT_ATTACHMENTS__STORAGE__PATH": "/config/files"
+  },
   "image": "ghcr.io/alexbelgium/openproject-{arch}",
   "init": false,
   "map": [
@@ -32,6 +39,6 @@
   "slug": "openproject",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/openproject",
-  "version": "16.0-4",
+  "version": "16.0-5",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
