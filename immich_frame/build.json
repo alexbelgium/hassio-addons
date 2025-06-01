@@ -1,0 +1,9 @@
+{
+  "build_from": {
+    "aarch64": "ghcr.io/immichframe/immichframe:latest",
+    "amd64": "ghcr.io/immichframe/immichframe:latest"
+  },
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
+}
