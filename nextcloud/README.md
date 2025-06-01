@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] immich and Nextcloud Ingress support (opened 2025-03-15)](https://github.com/alexbelgium/hassio-addons/issues/1812) by [@bessertristan09](https://github.com/bessertristan09)
-## &#9888; Open Issue : [🐛 [Nextcloud] Unable to Upload Large Files (opened 2025-05-15)](https://github.com/alexbelgium/hassio-addons/issues/1866) by [@HaltingSleuth42](https://github.com/HaltingSleuth42)
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
