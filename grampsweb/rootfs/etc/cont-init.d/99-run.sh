@@ -14,13 +14,15 @@ for folders in config users indexdir secret media cache thumbnail_cache persist;
     ln -sf /config/"$folders" /app/"$folders"
 done
 
-# Expose database and plugins
-if [ -d /root/.gramps ] && [ "$(ls -A /root/.gramps)" ]; then
-    mkdir -p /config/gramps
-    cp -rf /root/.gramps/* /config/gramps
+# Persist database and plugins
+mkdir -p /config/gramps
+if [ -d /root/.gramps ]; then
+    if [ "$(ls -A /root/.gramps)" ]; then 
+        cp -rf /root/.gramps/* /config/gramps
+    fi
     rm -rf /root/.gramps
-    ln -sf /config/gramps /root/.gramps
 fi
+ln -sf /config/gramps /root/.gramps
 
 #####################
 # Create secret key #
