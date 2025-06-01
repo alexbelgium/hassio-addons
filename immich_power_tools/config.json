@@ -6,7 +6,7 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Power tools for organizing your immich library",
   "hassio_api": true,
-  "image": "ghcr.io/alexbelgium/immich-{arch}",
+  "image": "ghcr.io/alexbelgium/immich_power_tools-{arch}",
   "init": false,
   "map": [
     "addon_config:rw"
@@ -32,6 +32,6 @@
   },
   "slug": "immich_power_tools",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.16.0",
+  "version": "0.16.0-2",
   "webui": "http://[HOST]:[PORT:3000]"
 }
