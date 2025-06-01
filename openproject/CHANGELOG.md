@@ -1,8 +1,6 @@
 ## 16.0 (31-05-2025)
 - Minor bugs fixed
 
-##  (31-05-2025)
-- Update to latest version from openproject/openproject (changelog : https://github.com/openproject/openproject/releases)
 ## 25-05-2024
 - Update to latest version from openproject/openproject (changelog : https://github.com/openproject/openproject/releases)
 
