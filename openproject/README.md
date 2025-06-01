@@ -22,14 +22,12 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-Various tweaks and configuration options addition.
 This addon is based on the [docker image](https://hub.docker.com/r/openproject/openproject).
 
 ## Configuration
 
-```yaml
-TODO
-```
+Fill the default addon options to be able to start the addon. Be sure especially to configure the hostname with your homeassistant ip + addon exposed port
+For additional options, use the config.yaml system : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
 
 Webui can be found at `<your-ip>:port`.
 
