@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "openproject/openproject:latest",
-    "amd64": "openproject/openproject:latest"
+    "aarch64": "openproject/openproject:16",
+    "amd64": "openproject/openproject:16"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
