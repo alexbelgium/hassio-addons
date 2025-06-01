@@ -1,3 +1,5 @@
+## "25.5.2-2" (01-06-2025)
+- Minor bugs fixed
 ## "25.5.2" (24-05-2025)
 - Minor bugs fixed
 
