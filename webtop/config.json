@@ -79,7 +79,7 @@
     "shm_size": "1gb"
   },
   "host_dbus": true,
-  "image": "ghcr.io/alexbelgium/webtop_kde-{arch}",
+  "image": "ghcr.io/alexbelgium/webtop-{arch}",
   "ingress": true,
   "init": false,
   "map": [
@@ -145,6 +145,6 @@
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls95-3",
+  "version": "4.16-r0-ls95-4",
   "video": true
 }

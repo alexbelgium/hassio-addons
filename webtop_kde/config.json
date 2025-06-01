@@ -76,7 +76,7 @@
     "TITLE": "Ubuntu KDE webtop",
     "shm_size": "1gb"
   },
-  "image": "ghcr.io/alexbelgium/webtop-{arch}",
+  "image": "ghcr.io/alexbelgium/webtop_kde-{arch}",
   "ingress": true,
   "init": false,
   "map": [
@@ -150,6 +150,6 @@
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls94-5",
+  "version": "4.16-r0-ls94-6",
   "video": true
 }
