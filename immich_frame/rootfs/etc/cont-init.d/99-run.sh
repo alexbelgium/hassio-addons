@@ -8,5 +8,4 @@ if [ -f /app/Config]; then
 fi
 ln -sf /app/Config /config/Config
 
-bashio::log.info "Starting app"
 exec dotnet ImmichFrame.WebApi.dll
