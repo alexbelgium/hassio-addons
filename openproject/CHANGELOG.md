@@ -1,3 +1,4 @@
+## 16.0-6 (01-06-2025)
 - BREAKING CHANGE : now options must be configured from the addon options : OPENPROJECT_SECRET_KEY_BASE ; OPENPROJECT_HOST__NAME ; OPENPROJECT_HTTPS ; OPENPROJECT_DEFAULT__LANGUAGE
 - BREAKING CHANGE : enable config.yaml for additional environment variables
 - BREAKING CHANGE : moved files to /config instead of /data to be able to see them
