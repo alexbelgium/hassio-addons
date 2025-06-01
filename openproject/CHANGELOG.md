@@ -1,3 +1,5 @@
+## 16.0-3 (01-06-2025)
+- Minor bugs fixed
 ## 16.0 (31-05-2025)
 - Minor bugs fixed
 
