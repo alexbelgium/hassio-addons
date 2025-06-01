@@ -37,7 +37,9 @@ ENV OPENPROJECT_SECRET_KEY_BASE=addon_secret \
 
 USER root
 
-RUN sed -i "1a /./ha_entrypoint.sh" /app/docker/prod/entrypoint.sh
+RUN sed -i "s|/bin/bash|/bin/bashio|g" /app/docker/prod/entrypoint.sh && \
+    sed -i "1a /./ha_entrypoint.sh" /app/docker/prod/entrypoint.sh && \
+    sed -i '2a\for variable in OPENPROJECT_SECRET_KEY_BASE OPENPROJECT_HOST__NAME OPENPROJECT_HTTPS OPENPROJECT_DEFAULT__LANGUAGE; do if bashio::config.has_value $variable; then export $variable="$(bashio::config $variable)"; fi; done' /app/docker/prod/entrypoint.sh
 
 ##################
 # 3 Install apps #

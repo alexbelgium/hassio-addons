@@ -12,15 +12,26 @@
     "share:rw"
   ],
   "name": "Openproject",
+  "options": {
+    "OPENPROJECT_HOST__NAME": "homeassistant:8080",
+    "OPENPROJECT_HTTPS": "false",
+    "OPENPROJECT_DEFAULT__LANGUAGE": "en"
+  },
   "ports": {
     "8080/tcp": 8080
   },
   "ports_description": {
     "8080/tcp": "Web interface"
   },
+  "schema": {
+    "OPENPROJECT_SECRET_KEY_BASE": "str",
+    "OPENPROJECT_HOST__NAME": "str",
+    "OPENPROJECT_HTTPS": "bool",
+    "OPENPROJECT_DEFAULT__LANGUAGE": "str"
+  },
   "slug": "openproject",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/openproject",
-  "version": "16.0-3",
+  "version": "16.0-4",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
