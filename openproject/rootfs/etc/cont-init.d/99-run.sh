@@ -10,9 +10,12 @@ for folder in pg assets; do
         cp -a /data/"$folder"/. /config/"$folder"/
         rm -rf /data/"$folder"
     fi
+    chmod 700 /config/"$folder"
 done
 
+echo "Setting permissions"
 mkdir -p /config/assets/files
+chown -R postgres:postgres /config
 
 cd /app || true
 

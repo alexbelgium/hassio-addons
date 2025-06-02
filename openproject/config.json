@@ -8,9 +8,9 @@
   "environment": {
     "OPENPROJECT_SECRET_KEY_BASE": "addon_secret",
     "OPENPROJECT_EDITION": "bim",
-    "PGDATA": "/data/pg",
-    "APP_DATA_PATH": "/data/assets",
-    "OPENPROJECT_ATTACHMENTS__STORAGE__PATH": "/data/assets/files"
+    "PGDATA": "/config/pg",
+    "APP_DATA_PATH": "/config/assets",
+    "OPENPROJECT_ATTACHMENTS__STORAGE__PATH": "/config/assets/files"
   },
   "image": "ghcr.io/alexbelgium/openproject-{arch}",
   "init": false,
@@ -39,6 +39,6 @@
   "slug": "openproject",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/openproject",
-  "version": "16.0-6",
+  "version": "16.0-7",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
