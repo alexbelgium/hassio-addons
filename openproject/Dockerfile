@@ -32,9 +32,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     OPENPROJECT_HTTPS=false \
     OPENPROJECT_DEFAULT__LANGUAGE=en \
     OPENPROJECT_EDITION=bim \
-    PGDATA=/config/pg \
-    APP_DATA_PATH=/config/assets \
-    OPENPROJECT_ATTACHMENTS__STORAGE__PATH=/config/assets/files
+    PGDATA=/data/pg \
+    APP_DATA_PATH=/data/assets \
+    OPENPROJECT_ATTACHMENTS__STORAGE__PATH=/data/assets/files
 
 USER root
 
