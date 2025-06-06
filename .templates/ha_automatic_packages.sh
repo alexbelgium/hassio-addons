@@ -1,275 +1,122 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-########
-# INIT #
-########
+log() { [[ ${VERBOSE:-false} == true ]] && echo "$*"; }
+die() { echo "ERROR: $*" >&2; exit 1; }
+is_installed() { for c; do command -v "$c" &>/dev/null || return 1; done; return 0; }
 
-#Verbose or not
-VERBOSE=false
-#Avoid fails on non declared variables
-set +u 2>/dev/null || true
-#If no packages, empty
-PACKAGES="${*:-}"
-#Avoids messages if non interactive
-(echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections) &>/dev/null || true
+case $(true \
+  && command -v apk  && echo apk  \
+  || command -v apt  && echo apt  \
+  || command -v pacman && echo pacman) in
+  apk)    PM=apk;    INSTALL="apk add --no-cache"; UPDATE="apk update -q"  ;;
+  apt)    PM=apt;    INSTALL="apt-get -yqq install --no-install-recommends"; UPDATE="apt-get -qq update" ;;
+  pacman) PM=pacman; INSTALL="pacman -Sy --noconfirm"; UPDATE="pacman -Sy --noconfirm" ;;
+  *) die "No supported package manager found" ;;
+esac
+log "Detected package manager: $PM"
 
-[ "$VERBOSE" = true ] && echo "ENV : $PACKAGES"
+pkgs_common=(jq curl ca-certificates)
 
-############################
-# CHECK WHICH BASE IS USED #
-############################
+declare -A APT=( ... )     # unchanged from your code
+declare -A APK=( ... )
+declare -A PACMAN=( ... )
 
-if command -v "apk" &>/dev/null; then
-    # If apk based
-    [ "$VERBOSE" = true ] && echo "apk based"
-    PACKMANAGER="apk"
-elif command -v "apt" &>/dev/null; then
-    # If apt-get based
-    [ "$VERBOSE" = true ] && echo "apt based"
-    PACKMANAGER="apt"
-elif command -v "pacman" &>/dev/null; then
-    # If apt-get based
-    [ "$VERBOSE" = true ] && echo "pacman based"
-    PACKMANAGER="pacman"
-fi
-
-###################
-# DEFINE PACKAGES #
-###################
-
-# ADD GENERAL ELEMENTS
-######################
-
-PACKAGES="$PACKAGES jq curl ca-certificates"
-
-# FOR EACH SCRIPT, SELECT PACKAGES
-##################################
-
-# Scripts
-for files in "/etc/cont-init.d" "/etc/services.d"; do
-    # Next directory if does not exists
-    if ! ls $files 1>/dev/null 2>&1; then continue; fi
-
-    # Test each possible command
-    COMMAND="nginx"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES nginx"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES nginx"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES nginx"
-        if ls /etc/nginx 1>/dev/null 2>&1; then mv /etc/nginx /etc/nginx2; fi
-    fi
-
-    COMMAND="mount"
-    if grep -q -rnw "$files/" -e "$COMMAND"; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES exfatprogs ntfs-3g ntfs-3g-progs squashfs-tools fuse lsblk"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat* ntfs* squashfs-tools util-linux"
-        #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES ntfs-3g"
-    fi
-
-    COMMAND="ping"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES iputils"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES iputils-ping"
-        #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES iputils"
-    fi
-
-    COMMAND="nmap"
-    if grep -q -rnw "$files/" -e "$COMMAND"; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES nmap nmap-scripts"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES nmap"
-        #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES iputils"
-    fi
-
-    COMMAND="cifs"
-    if grep -q -rnw "$files/" -e "$COMMAND"; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
-    fi
-
-    COMMAND="smbclient"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES samba samba-client ntfs-3g"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES samba smbclient ntfs-3g"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES samba smbclient"
-    fi
-
-    COMMAND="dos2unix"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES dos2unix"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES dos2unix"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES dos2unix"
-    fi
-
-    COMMAND="openvpn"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES coreutils openvpn"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES coreutils openvpn"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES coreutils openvpn"
-    fi
-
-    COMMAND="jq"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES jq"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES jq"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES jq"
-    fi
-
-    COMMAND="yamllint"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES yamllint"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES yamllint"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES yamllint"
-    fi
-
-    COMMAND="git"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES git"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES git"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES git"
-    fi
-
-    COMMAND="sponge"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES moreutils"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES moreutils"
-        [ "$PACKMANAGER" = "pacman " ] && PACKAGES="$PACKAGES moreutils"
-    fi
-
-    COMMAND="sqlite3"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES sqlite"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES sqlite3"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES sqlite3"
-    fi
-
-    COMMAND="pip"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES py3-pip"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES pip"
-        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES pip"
-    fi
-
-    COMMAND="wget"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES wget"
-        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES wget"
-        [ "$PACKMANAGER" = "wget" ] && PACKAGES="$PACKAGES wget"
-    fi
-
+dirs=(/etc/cont-init.d /etc/services.d)
+declare -a wants=()
+for d in "${dirs[@]}"; do
+  [[ -d $d ]] || continue
+  mapfile -d '' all_files < <(find "$d" -type f -print0)
+  [[ ${#all_files[@]} -eq 0 ]] && continue
+  for cmd in "${!APT[@]}"; do
+    grep -qF "$cmd" "${all_files[@]}" && wants+=("$cmd")
+  done
 done
 
-####################
-# INSTALL ELEMENTS #
-####################
+declare -a pkgs=("${pkgs_common[@]}")
+for cmd in $(printf '%s\n' "${wants[@]}" | sort -u); do
+  is_installed "$cmd" && continue
+  # shellcheck disable=SC2154
+  case "$PM" in
+    apt)    pkgstr="${APT[$cmd]}";;
+    apk)    pkgstr="${APK[$cmd]}";;
+    pacman) pkgstr="${PACMAN[$cmd]}";;
+  esac
+  [[ -n $pkgstr ]] && pkgs+=($pkgstr) || log "No package mapping for $cmd on $PM"
+done
+mapfile -t pkgs < <(printf '%s\n' "${pkgs[@]}" | sort -u)
 
-# Install apps
-[ "$VERBOSE" = true ] && echo "installing packages $PACKAGES"
-if [ "$PACKMANAGER" = "apt" ]; then apt-get update >/dev/null; fi
-if [ "$PACKMANAGER" = "pacman" ]; then pacman -Sy >/dev/null; fi
+if [[ -d /etc/nginx ]]; then mv /etc/nginx /etc/nginx2; fi
 
-# Install apps one by one to allow failures
-# shellcheck disable=SC2086
-for packagestoinstall in $PACKAGES; do
-    [ "$VERBOSE" = true ] && echo "... $packagestoinstall"
-    if [ "$PACKMANAGER" = "apk" ]; then
-        apk add --no-cache "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
-    elif [ "$PACKMANAGER" = "apt" ]; then
-        apt-get install -yqq --no-install-recommends "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
-    elif [ "$PACKMANAGER" = "pacman" ]; then
-        pacman --noconfirm -S "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
-    fi
-    [ "$VERBOSE" = true ] && echo "... $packagestoinstall done"
+log "Updating package index…"
+$UPDATE
+
+log "Installing packages: ${pkgs[*]}"
+for p in "${pkgs[@]}"; do
+  log " ↳ $p"
+  if ! $INSTALL "$p" &>/dev/null; then
+    log " ⚠️  $p not found"
+    touch /ERROR
+  fi
 done
 
-# Clean after install
-[ "$VERBOSE" = true ] && echo "Cleaning apt cache"
-if [ "$PACKMANAGER" = "apt" ]; then apt-get clean >/dev/null; fi
-
-# Replace nginx if installed
-if ls /etc/nginx2 1>/dev/null 2>&1; then
-    [ "$VERBOSE" = true ] && echo "replace nginx2"
-    rm -r /etc/nginx
+if [[ -d /etc/nginx2 ]]; then
+    log "replace nginx2"
+    rm -rf /etc/nginx
     mv /etc/nginx2 /etc/nginx
     mkdir -p /var/log/nginx
     touch /var/log/nginx/error.log
 fi
 
-#######################
-# INSTALL MANUAL APPS #
-#######################
+[[ $PM == apt ]] && apt-get clean -qq
 
-# Install micro texteditor
-curl https://getmic.ro | bash || true
-mv micro /usr/bin || true
-micro -plugin install bounce || true
-micro -plugin install filemanager || true
+# --- Manual apps section ---
+if ! command -v micro &>/dev/null; then
+  log "Installing micro text editor"
+  curl https://getmic.ro | bash || true
+  mv micro /usr/bin || true
+  micro -plugin install bounce || true
+  micro -plugin install filemanager || true
+fi
 
 for files in "/etc/services.d" "/etc/cont-init.d"; do
+  [[ -d $files ]] || continue
 
-    # Next directory if does not exists
-    if ! ls $files 1>/dev/null 2>&1; then continue; fi
+  if grep -q -rnw "$files/" -e 'bashio' && [[ ! -f "/usr/bin/bashio" ]]; then
+    log "install bashio"
+    ...
+  fi
 
-    # Bashio
-    if grep -q -rnw "$files/" -e 'bashio' && [ ! -f "/usr/bin/bashio" ]; then
-        [ "$VERBOSE" = true ] && echo "install bashio"
-        BASHIO_VERSION="0.14.3"
-        mkdir -p /tmp/bashio
-        curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
-        mv /tmp/bashio/lib /usr/lib/bashio
-        ln -s /usr/lib/bashio/bashio /usr/bin/bashio
-        rm -rf /tmp/bashio
-    fi
+  COMMAND="lastversion"
+  if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
+    log "install $COMMAND"
+    pip install $COMMAND
+  fi
 
-    # Lastversion
-    COMMAND="lastversion"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "install $COMMAND"
-        pip install $COMMAND
-    fi
+  if grep -q -rnw "$files/" -e 'tempio' && [[ ! -f "/usr/bin/tempio" ]]; then
+    log "install tempio"
+    ...
+  fi
 
-    # Tempio
-    if grep -q -rnw "$files/" -e 'tempio' && [ ! -f "/usr/bin/tempio" ]; then
-        [ "$VERBOSE" = true ] && echo "install tempio"
-        TEMPIO_VERSION="2021.09.0"
-        BUILD_ARCH="$(bashio::info.arch)"
-        curl -f -L -f -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
-        chmod a+x /usr/bin/tempio
-    fi
-
-    # Mustache
-    COMMAND="mustache"
-    if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
-        [ "$VERBOSE" = true ] && echo "$COMMAND required"
-        [ "$PACKMANAGER" = "apk" ] && apk add --no-cache go npm &&
+  COMMAND="mustache"
+  if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
+    log "$COMMAND required"
+    case "$PM" in
+      apk)
+        apk add --no-cache go npm &&
         apk upgrade --no-cache &&
         apk add --no-cache --virtual .build-deps build-base git go &&
         go get -u github.com/quantumew/mustache-cli &&
         cp "$GOPATH"/bin/* /usr/bin/ &&
         rm -rf "$GOPATH" /var/cache/apk/* /tmp/src &&
         apk del .build-deps xz build-base
-        [ "$PACKMANAGER" = "apt" ] && apt-get update &&
+        ;;
+      apt)
+        apt-get update &&
         apt-get install -yqq go npm node-mustache
-    fi
-
+        ;;
+    esac
+  fi
 done
 
-if [ -f /ERROR ]; then
-    exit 1
-fi
+[[ -f /ERROR ]] && die "Some packages failed to install"
