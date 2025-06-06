@@ -27,7 +27,6 @@ def get_stargazers(repo):
     return users
 
 def get_user_country(login):
-    # Always use the latest info, but skip if empty
     url = f"https://api.github.com/users/{login}"
     r = requests.get(url, headers=HEADERS)
     profile = r.json()
