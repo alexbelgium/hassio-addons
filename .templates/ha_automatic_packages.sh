@@ -93,6 +93,13 @@ declare -A PACMAN=(
 ########################
 dirs=(/etc/cont-init.d /etc/services.d)
 declare -a wants=()
+
+# 1. Add command-line arguments (if any)
+for arg in "$@"; do
+  wants+=("$arg")
+done
+
+# 2. Add detected commands from scanning the folders
 for d in "${dirs[@]}"; do
   [[ -d $d ]] || continue
   mapfile -d '' all_files < <(find "$d" -type f -print0)
