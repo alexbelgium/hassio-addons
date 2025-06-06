@@ -1,108 +1,125 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-set -e
 
-if ! bashio::supervisor.ping 2>/dev/null; then
-    echo "..."
+###############################################################################
+# Strong defaults                                                             #
+###############################################################################
+set -Eeuo pipefail
+shopt -s inherit_errexit
+
+trap 'bashio::log.fatal "Line ${LINENO}: command «${BASH_COMMAND}» failed"; exit 1' ERR
+
+###############################################################################
+# Helpers                                                                     #
+###############################################################################
+
+log()  { bashio::log.green   "$*"; }
+warn() { bashio::log.yellow  "$*"; }
+die()  { bashio::log.fatal   "$*"; }
+
+# Return first existing path for $1 (device name, UUID, or LABEL), else 1.
+resolve_device() {
+    local d="$1"
+    for p in "/dev/${d}" \
+             "/dev/disk/by-uuid/${d}" \
+             "/dev/disk/by-label/${d}" ; do
+        [[ -e $p ]] && { echo "$p"; return 0; }
+    done
+    return 1
+}
+
+safe_mount() {                     # safe_mount SRC MNT FSTYPE OPTS
+    local src=$1 mnt=$2 fstype=$3 opts=$4
+
+    # Already mounted?
+    if findmnt -rn --source "$src" --target "$mnt" &>/dev/null; then
+        warn "$src is already mounted on $mnt – skipping"
+        return 0
+    fi
+
+    bashio::log.blue "→ mount -t ${fstype} -o ${opts} ${src} ${mnt}"
+    mount -t "$fstype" -o "$opts" "$src" "$mnt"
+}
+
+supported_fs() {
+    grep -v nodev /proc/filesystems | awk '{print $1}'
+}
+
+###############################################################################
+# Early exit if supervisor not present (addon start during build, etc.)       #
+###############################################################################
+if ! bashio::supervisor.ping &>/dev/null; then
+    log "Supervisor not reachable – nothing to mount"
     exit 0
 fi
 
-######################
-# MOUNT LOCAL SHARES #
-######################
-
-# Mount local Share if configured
-if bashio::config.has_value 'localdisks'; then
-
-    # Available devices
-    blkid | awk '{print substr($1, 0, length($1) - 1)}' | awk -F'/' '{print $NF}' > availabledisks
-    echo "NAME" >> availabledisks
-
-    ## List available Disk with Labels and Id
-    bashio::log.blue "---------------------------------------------------"
-    bashio::log.info "Available Disks for mounting :"
-    lsblk -o name,label,size,fstype,ro | awk '$4 != "" { print $0 }' | grep -f availabledisks
-    bashio::log.blue "---------------------------------------------------"
-    rm availabledisks
-
-    # Show support fs https://github.com/dianlight/hassio-addons/blob/2e903184254617ac2484fe7c03a6e33e6987151c/sambanas/rootfs/etc/s6-overlay/s6-rc.d/init-automount/run#L106
-    fstypessupport=$(grep -v nodev </proc/filesystems | awk '{$1=" "$1}1' | tr -d '\n\t')
-    bashio::log.green "Supported fs : ${fstypessupport}"
-    bashio::log.green "Inspired from : github.com/dianlight"
-    bashio::log.blue "---------------------------------------------------"
-
-    MOREDISKS=$(bashio::config 'localdisks')
-    echo "Local Disks mounting..."
-
-    # Separate comma separated values
-    # shellcheck disable=SC2086
-    for disk in ${MOREDISKS//,/ }; do
-
-        # Remove text until last slash
-        disk="${disk##*/}"
-
-        # Function to check what is the type of device
-        if [ -e /dev/"$disk" ]; then
-            echo "... $disk is a physical device"
-            devpath=/dev
-        elif [ -e /dev/disk/by-uuid/"$disk" ] || lsblk -o UUID | grep -q "$disk"; then
-            echo "... $disk is a device by UUID"
-            devpath=/dev/disk/by-uuid
-        elif [ -e /dev/disk/by-label/"$disk" ] || lsblk -o LABEL | grep -q "$disk"; then
-            echo "... $disk is a device by label"
-            devpath=/dev/disk/by-label
-        else
-            bashio::log.fatal "$disk does not match any known physical device, UUID, or label. "
-            continue
-        fi
-
-        # Creates dir
-        mkdir -p /mnt/"$disk"
-        if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
-            PUID="$(bashio::config 'PUID')"
-            PGID="$(bashio::config 'PGID')"
-            chown "$PUID:$PGID" /mnt/"$disk"
-        fi
-
-        # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)
-        fstype=$(lsblk "$devpath"/"$disk" -no fstype)
-        options="nosuid,relatime,noexec"
-        type="auto"
-
-        # Check if supported
-        if [[ "${fstypessupport}" != *"${fstype}"* ]]; then
-            bashio::log.fatal : "${fstype} type for ${disk} is not supported"
-            break
-        fi
-
-        # Mount drive
-        bashio::log.info "Mounting ${disk} of type ${fstype}"
-        case "$fstype" in
-            exfat | vfat | msdos)
-                bashio::log.warning "${fstype} permissions and ACL don't works and this is an EXPERIMENTAL support"
-                options="${options},umask=000"
-                ;;
-            ntfs)
-                bashio::log.warning "${fstype} is an EXPERIMENTAL support"
-                options="${options},umask=000"
-                type="ntfs"
-                ;;
-            squashfs)
-                bashio::log.warning "${fstype} is an EXPERIMENTAL support"
-                options="loop"
-                type="squashfs"
-                ;;
-        esac
-
-        # Legacy mounting : mount to share if still exists (avoid breaking changes)
-        dirpath="/mnt"
-        if [ -d /share/"$disk" ]; then dirpath="/share"; fi
-
-        # shellcheck disable=SC2015
-        mount -t $type "$devpath"/"$disk" "$dirpath"/"$disk" -o $options && bashio::log.info "Success! $disk mounted to /mnt/$disk" || \
-            (bashio::log.fatal "Unable to mount local drives! Please check the name."
-            rmdir /mnt/"$disk"
-        bashio::addon.stop)
-    done
-
+###############################################################################
+# Disk discovery & presentation                                               #
+###############################################################################
+if ! bashio::config.has_value 'localdisks'; then
+    log "No «localdisks» option – skipping local mounts"
+    exit 0
 fi
+
+mapfile -t SUPPORTED < <(supported_fs)
+declare -A FS_OK
+for f in "${SUPPORTED[@]}"; do FS_OK["$f"]=1; done
+
+bashio::log.blue "---------------------------------------------------"
+log  "Supported filesystems : ${SUPPORTED[*]}"
+bashio::log.blue "---------------------------------------------------"
+log  "Available block devices:"
+lsblk -o NAME,LABEL,UUID,SIZE,FSTYPE,RO
+bashio::log.blue "---------------------------------------------------"
+
+###############################################################################
+# Main loop                                                                   #
+###############################################################################
+IFS=',' read -ra DISKS <<< "$(bashio::config 'localdisks')"
+
+for raw in "${DISKS[@]}"; do
+    disk="${raw##*/}"                      # strip /path/ if user pasted one
+    dev=$(resolve_device "$disk") || { warn "${disk}: no matching device"; continue; }
+
+    fstype=$(lsblk -no FSTYPE "$dev")
+    [[ -z $fstype ]] && { warn "${disk}: could not detect filesystem"; continue; }
+
+    if [[ -z ${FS_OK["$fstype"]+1} ]]; then
+        warn "${disk}: filesystem ${fstype} not supported by kernel – skipping"
+        continue
+    fi
+
+    # Default options
+    opts="nosuid,relatime,noexec"
+    type="$fstype"
+
+    case "$fstype" in
+        exfat|vfat|msdos)
+            warn "${fstype}: experimental support – ACLs not honoured"
+            opts+=",umask=000"
+            ;;
+        ntfs)
+            warn "NTFS: experimental support"
+            opts+=",umask=000"
+            type="ntfs"        # for ntfs-3g
+            ;;
+        squashfs)
+            warn "squashfs is read-only; mounting with loop"
+            opts="loop"
+            ;;
+    esac
+
+    mnt="/mnt/${disk}"
+    mkdir -p "$mnt"
+    if mountpoint -q "$mnt"; then umount "$mnt"; fi
+
+    if bashio::config.has_value 'PUID' && bashio::config.has_value 'PGID'; then
+        chown "$(bashio::config 'PUID'):$(bashio::config 'PGID')" "$mnt"
+    fi
+
+    if safe_mount "$dev" "$mnt" "$type" "$opts"; then
+        log "Mounted ${disk} on ${mnt}"
+    else
+        die "Failed to mount ${disk}"
+    fi
+done
