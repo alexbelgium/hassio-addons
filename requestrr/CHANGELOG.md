@@ -1,4 +1,7 @@
 
+## 2.1.8 (07-06-2025)
+- Update to latest version from thomst08/requestrr (changelog : https://github.com/thomst08/requestrr/releases)
+
 ## 2.1.7 (21-09-2024)
 - Update to latest version from thomst08/requestrr (changelog : https://github.com/thomst08/requestrr/releases)
 ## 2.1.6 (27-03-2024)

@@ -101,6 +101,6 @@
   "slug": "requestrr",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:4545]"
 }
