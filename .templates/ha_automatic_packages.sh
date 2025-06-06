@@ -11,15 +11,21 @@ is_installed() { for c; do command -v "$c" &>/dev/null || return 1; done; return
 #########################
 # detect package system #
 #########################
-case $(true \
-  && command -v apk  && echo apk  \
-  || command -v apt  && echo apt  \
-  || command -v pacman && echo pacman) in
-  apk)    PM=apk;    INSTALL="apk add --no-cache"; UPDATE="apk update -q"  ;;
-  apt)    PM=apt;    INSTALL="apt-get -yqq install --no-install-recommends"; UPDATE="apt-get -qq update" ;;
-  pacman) PM=pacman; INSTALL="pacman -Sy --noconfirm"; UPDATE="pacman -Sy --noconfirm" ;;
-  *) die "No supported package manager found" ;;
-esac
+if command -v apk &>/dev/null; then
+  PM=apk
+  INSTALL="apk add --no-cache"
+  UPDATE="apk update -q"
+elif command -v apt-get &>/dev/null; then
+  PM=apt
+  INSTALL="apt-get -yqq install --no-install-recommends"
+  UPDATE="apt-get -qq update"
+elif command -v pacman &>/dev/null; then
+  PM=pacman
+  INSTALL="pacman -Sy --noconfirm"
+  UPDATE="pacman -Sy --noconfirm"
+else
+  die "No supported package manager found"
+fi
 log "Detected package manager: $PM"
 
 ############################
