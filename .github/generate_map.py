@@ -1,17 +1,15 @@
 import os
 import requests
 import time
-import folium
-import pycountry
-from geopy.geocoders import Nominatim
-from collections import Counter, defaultdict
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
 
 REPO = os.environ.get("REPO")
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"}
-
-MAP_OUTPUT = "map/index.html"
-os.makedirs("map", exist_ok=True)
+COUNTRY_FILE = "stargazers_countries.csv"
+PNG_FILE = "stargazer_map.png"
 
 def get_stargazers(repo):
     users = []
@@ -19,6 +17,8 @@ def get_stargazers(repo):
     while True:
         url = f"https://api.github.com/repos/{repo}/stargazers?per_page=100&page={page}"
         r = requests.get(url, headers={**HEADERS, "Accept": "application/vnd.github.v3.star+json"})
+        if r.status_code != 200:
+            raise RuntimeError(f"GitHub API error: {r.status_code}")
         data = r.json()
         if not data:
             break
@@ -26,20 +26,20 @@ def get_stargazers(repo):
         page += 1
     return users
 
-def get_user_country(login, loc_cache):
-    if login in loc_cache:
-        return loc_cache[login]
+def get_user_country(login):
+    # Always use the latest info, but skip if empty
     url = f"https://api.github.com/users/{login}"
     r = requests.get(url, headers=HEADERS)
     profile = r.json()
     location = profile.get('location')
     country = None
     if location:
-        geolocator = Nominatim(user_agent="github-stargazer-map")
         try:
+            import pycountry
+            from geopy.geocoders import Nominatim
+            geolocator = Nominatim(user_agent="github-stargazer-map")
             geo = geolocator.geocode(location, language="en", timeout=10)
             if geo and geo.raw.get("display_name"):
-                # Try to extract country
                 parts = geo.raw["display_name"].split(",")
                 for part in reversed(parts):
                     try:
@@ -50,72 +50,50 @@ def get_user_country(login, loc_cache):
                         continue
         except Exception:
             pass
-        time.sleep(1)  # To avoid being rate-limited by Nominatim
-    loc_cache[login] = country
+        time.sleep(1)
     return country
 
 def main():
-    print("Fetching stargazers…")
-    users = get_stargazers(REPO)
-    print(f"Found {len(users)} stargazers")
-
-    # Caching location lookups
-    cache_path = ".github/loc_cache.json"
-    if os.path.exists(cache_path):
-        import json
-        with open(cache_path) as f:
-            loc_cache = json.load(f)
+    # Step 1: Load or create user-country cache
+    if os.path.exists(COUNTRY_FILE):
+        df = pd.read_csv(COUNTRY_FILE)
     else:
-        loc_cache = {}
+        users = get_stargazers(REPO)
+        countries = []
+        for i, user in enumerate(users):
+            print(f"{i+1}/{len(users)}: {user}")
+            country = get_user_country(user)
+            print(f"    => {country}")
+            countries.append((user, country or "Unknown"))
+            # Save progress
+            pd.DataFrame(countries, columns=["user", "country"]).to_csv(COUNTRY_FILE, index=False)
+        df = pd.DataFrame(countries, columns=["user", "country"])
 
-    country_counts = Counter()
-    for i, login in enumerate(users):
-        country = get_user_country(login, loc_cache)
-        if country:
-            country_counts[country] += 1
-        print(f"{i+1}/{len(users)}: {login} -> {country}")
-        # Save cache after each user (robust)
-        with open(cache_path, "w") as f:
-            import json; json.dump(loc_cache, f)
+    # Step 2: Calculate stargazer percentages per country
+    country_counts = df['country'].value_counts()
+    total = country_counts.sum()
+    country_perc = (country_counts / total * 100).to_dict()
 
-    total = sum(country_counts.values())
-    percent_by_country = {k: v / total for k, v in country_counts.items()}
+    # Step 3: Plot map with colored countries
+    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+    world['country'] = world['name']
+    world['stargazer_perc'] = world['country'].map(country_perc).fillna(0)
 
-    print("Generating map…")
-    m = folium.Map(location=[20,0], zoom_start=2, tiles="cartodb positron")
-    import branca.colormap as cm
+    fig, ax = plt.subplots(figsize=(18, 9))
+    world.plot(column='stargazer_perc',
+               ax=ax,
+               cmap='Greens',
+               linewidth=0.8,
+               edgecolor='0.8',
+               legend=True,
+               legend_kwds={'label': "Stargazers per country (%)", 'shrink': 0.6})
 
-    # Prepare color map: 0 (white) to 1 (green)
-    colormap = cm.linear.YlGn_09.scale(0, max(percent_by_country.values()) if percent_by_country else 1)
-
-    import json
-    # Get country geometries from folium's world geojson
-    world = requests.get("https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/world-countries.json").json()
-
-    def country_fill(feature):
-        country = feature['properties']['name']
-        pct = percent_by_country.get(country, 0)
-        return {
-            "fillColor": colormap(pct),
-            "color": "black",
-            "weight": 0.5,
-            "fillOpacity": 0.8 if pct > 0 else 0,
-        }
-
-    folium.GeoJson(
-        world,
-        style_function=country_fill,
-        tooltip=folium.GeoJsonTooltip(fields=["name"]),
-        highlight_function=lambda f: {"weight": 2, "color": "black"}
-    ).add_to(m)
-
-    # Add legend
-    colormap.caption = "Percentage of Stargazers"
-    m.add_child(colormap)
-
-    # Save map
-    m.save(MAP_OUTPUT)
-    print(f"Map saved to {MAP_OUTPUT}")
+    ax.set_title(f"GitHub Stargazers by Country: {REPO}", fontsize=18)
+    ax.axis('off')
+    plt.tight_layout()
+    plt.savefig(PNG_FILE, dpi=200)
+    print(f"Map saved to {PNG_FILE}")
+    print(f"Countries saved to {COUNTRY_FILE}")
 
 if __name__ == "__main__":
     main()
