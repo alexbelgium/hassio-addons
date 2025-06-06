@@ -60,7 +60,7 @@ def main():
     print(f"Found {len(users)} stargazers")
 
     # Caching location lookups
-    cache_path = ".github/scripts/loc_cache.json"
+    cache_path = ".github/loc_cache.json"
     if os.path.exists(cache_path):
         import json
         with open(cache_path) as f:
