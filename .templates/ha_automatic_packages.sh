@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+####################
+# helper functions #
+####################
 log() { [[ ${VERBOSE:-false} == true ]] && echo "$*"; }
 die() { echo "ERROR: $*" >&2; exit 1; }
 is_installed() { for c; do command -v "$c" &>/dev/null || return 1; done; return 0; }
 
+#########################
+# detect package system #
+#########################
 case $(true \
   && command -v apk  && echo apk  \
   || command -v apt  && echo apt  \
@@ -16,12 +22,72 @@ case $(true \
 esac
 log "Detected package manager: $PM"
 
+############################
+# static base dependencies #
+############################
 pkgs_common=(jq curl ca-certificates)
 
-declare -A APT=( ... )     # unchanged from your code
-declare -A APK=( ... )
-declare -A PACMAN=( ... )
+#########################################
+# map  tool → packages (per PM) in YAML |
+#########################################
+# shellcheck disable=SC2034
+declare -A APT=(
+  [nginx]="nginx"
+  [mount]="exfat-fuse ntfs-3g squashfs-tools util-linux"
+  [ping]="iputils-ping"
+  [nmap]="nmap"
+  [cifs]="cifs-utils keyutils"
+  [smbclient]="samba smbclient ntfs-3g"
+  [dos2unix]="dos2unix"
+  [openvpn]="openvpn coreutils"
+  [jq]="jq"
+  [yamllint]="yamllint"
+  [git]="git"
+  [sponge]="moreutils"
+  [sqlite3]="sqlite3"
+  [pip]="python3-pip"
+  [wget]="wget"
+)
 
+declare -A APK=(
+  [nginx]="nginx"
+  [mount]="exfatprogs ntfs-3g squashfs-tools fuse lsblk"
+  [ping]="iputils"
+  [nmap]="nmap nmap-scripts"
+  [cifs]="cifs-utils keyutils"
+  [smbclient]="samba samba-client ntfs-3g"
+  [dos2unix]="dos2unix"
+  [openvpn]="openvpn coreutils"
+  [jq]="jq"
+  [yamllint]="yamllint"
+  [git]="git"
+  [sponge]="moreutils"
+  [sqlite3]="sqlite"
+  [pip]="py3-pip"
+  [wget]="wget"
+)
+
+declare -A PACMAN=(
+  [nginx]="nginx"
+  [mount]="exfat-utils ntfs-3g squashfs-tools util-linux fuse2fs"
+  [ping]="iputils"
+  [nmap]="nmap"
+  [cifs]="cifs-utils keyutils"
+  [smbclient]="samba smbclient"
+  [dos2unix]="dos2unix"
+  [openvpn]="openvpn coreutils"
+  [jq]="jq"
+  [yamllint]="yamllint"
+  [git]="git"
+  [sponge]="moreutils"
+  [sqlite3]="sqlite"
+  [pip]="python-pip"
+  [wget]="wget"
+)
+
+########################
+# scan service scripts #
+########################
 dirs=(/etc/cont-init.d /etc/services.d)
 declare -a wants=()
 for d in "${dirs[@]}"; do
@@ -33,6 +99,9 @@ for d in "${dirs[@]}"; do
   done
 done
 
+######################
+# build package list #
+######################
 declare -a pkgs=("${pkgs_common[@]}")
 for cmd in $(printf '%s\n' "${wants[@]}" | sort -u); do
   is_installed "$cmd" && continue
@@ -44,10 +113,14 @@ for cmd in $(printf '%s\n' "${wants[@]}" | sort -u); do
   esac
   [[ -n $pkgstr ]] && pkgs+=($pkgstr) || log "No package mapping for $cmd on $PM"
 done
+# de-dup final list
 mapfile -t pkgs < <(printf '%s\n' "${pkgs[@]}" | sort -u)
 
 if [[ -d /etc/nginx ]]; then mv /etc/nginx /etc/nginx2; fi
 
+################
+# installation #
+################
 log "Updating package index…"
 $UPDATE
 
@@ -70,7 +143,9 @@ fi
 
 [[ $PM == apt ]] && apt-get clean -qq
 
-# --- Manual apps section ---
+############
+#  extras  #
+############
 if ! command -v micro &>/dev/null; then
   log "Installing micro text editor"
   curl https://getmic.ro | bash || true
