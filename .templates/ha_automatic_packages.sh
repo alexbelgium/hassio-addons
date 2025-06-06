@@ -28,9 +28,8 @@ log "Detected package manager: $PM"
 pkgs_common=(jq curl ca-certificates)
 
 #########################################
-# map  tool → packages (per PM) in YAML |
+# map  tool → packages (per PM) in YAML #
 #########################################
-# shellcheck disable=SC2034
 declare -A APT=(
   [nginx]="nginx"
   [mount]="exfat-fuse ntfs-3g squashfs-tools util-linux"
@@ -48,7 +47,6 @@ declare -A APT=(
   [pip]="python3-pip"
   [wget]="wget"
 )
-
 declare -A APK=(
   [nginx]="nginx"
   [mount]="exfatprogs ntfs-3g squashfs-tools fuse lsblk"
@@ -66,7 +64,6 @@ declare -A APK=(
   [pip]="py3-pip"
   [wget]="wget"
 )
-
 declare -A PACMAN=(
   [nginx]="nginx"
   [mount]="exfat-utils ntfs-3g squashfs-tools util-linux fuse2fs"
@@ -105,13 +102,18 @@ done
 declare -a pkgs=("${pkgs_common[@]}")
 for cmd in $(printf '%s\n' "${wants[@]}" | sort -u); do
   is_installed "$cmd" && continue
-  # shellcheck disable=SC2154
   case "$PM" in
     apt)    pkgstr="${APT[$cmd]}";;
     apk)    pkgstr="${APK[$cmd]}";;
     pacman) pkgstr="${PACMAN[$cmd]}";;
   esac
-  [[ -n $pkgstr ]] && pkgs+=($pkgstr) || log "No package mapping for $cmd on $PM"
+  # FIX: explicit if, safe splitting
+  if [[ -n $pkgstr ]]; then
+    read -r -a pkgarr <<< "$pkgstr"
+    pkgs+=("${pkgarr[@]}")
+  else
+    log "No package mapping for $cmd on $PM"
+  fi
 done
 # de-dup final list
 mapfile -t pkgs < <(printf '%s\n' "${pkgs[@]}" | sort -u)
@@ -159,7 +161,12 @@ for files in "/etc/services.d" "/etc/cont-init.d"; do
 
   if grep -q -rnw "$files/" -e 'bashio' && [[ ! -f "/usr/bin/bashio" ]]; then
     log "install bashio"
-    ...
+    BASHIO_VERSION="0.14.3"
+    mkdir -p /tmp/bashio
+    curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
+    mv /tmp/bashio/lib /usr/lib/bashio
+    ln -s /usr/lib/bashio/bashio /usr/bin/bashio
+    rm -rf /tmp/bashio
   fi
 
   COMMAND="lastversion"
@@ -168,9 +175,13 @@ for files in "/etc/services.d" "/etc/cont-init.d"; do
     pip install $COMMAND
   fi
 
-  if grep -q -rnw "$files/" -e 'tempio' && [[ ! -f "/usr/bin/tempio" ]]; then
-    log "install tempio"
-    ...
+  # Tempio
+  if grep -q -rnw "$files/" -e 'tempio' && [ ! -f "/usr/bin/tempio" ]; then
+    [ "$VERBOSE" = true ] && echo "install tempio"
+    TEMPIO_VERSION="2021.09.0"
+    BUILD_ARCH="$(bashio::info.arch)"
+    curl -f -L -f -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
+    chmod a+x /usr/bin/tempio
   fi
 
   COMMAND="mustache"
