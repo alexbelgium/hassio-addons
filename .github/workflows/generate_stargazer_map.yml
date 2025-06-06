@@ -27,7 +27,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: alexbelgium/hassio-addons
-        run: python .github/generate_map.py
+        run: python .github/generate_stargazer_map.py
 
       - name: Commit and push CSV and PNG
         run: |
