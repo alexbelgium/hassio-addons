@@ -23,7 +23,7 @@ jobs:
       - name: Run script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: your-user/your-repo      # <-- CHANGE THIS
+          REPO: alexbelgium/hassio-addons
         run: python .github/generate_map.py
 
       - name: Commit PNG + CSV
