@@ -23,6 +23,11 @@ jobs:
           sudo apt-get install -y gdal-bin
           pip install requests pandas geopandas matplotlib pycountry geopy
 
+      - name: Download shapefile
+        run: |
+          wget https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip
+          unzip -o ne_110m_admin_0_countries.zip
+
       - name: Run script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
