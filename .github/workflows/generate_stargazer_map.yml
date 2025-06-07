@@ -36,7 +36,7 @@ jobs:
           REPO: alexbelgium/hassio-addons
         run: python .github/generate_stargazer_map.py
 
-      - name: Commit and push CSV and PNG
+      - name: Commit and push CSV and PNG only
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
