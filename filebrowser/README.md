@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Filebrowser]  HA Core hangs after 2 file uploads (opened 2025-06-06)](https://github.com/alexbelgium/hassio-addons/issues/1884) by [@UplandJacob](https://github.com/UplandJacob)
 # Home assistant add-on: Filebrowser
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
