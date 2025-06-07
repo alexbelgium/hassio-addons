@@ -1,45 +1,35 @@
-name: Generate Stargazer Map
+name: Stargazer map & cache
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * 0' # weekly
+  workflow_dispatch:      # manual
+  schedule:               # weekly on Sunday 00:00 UTC
+    - cron: '0 0 * * 0'
 
 jobs:
-  generate-map:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Install deps
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gdal-bin
-          pip install requests pandas geopandas matplotlib pycountry geopy
-
-      - name: Download shapefile into .github
-        run: |
-          mkdir -p .github
-          cd .github
-          wget https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip
-          unzip -o ne_110m_admin_0_countries.zip
+          pip install requests geopy pycountry plotly kaleido
 
       - name: Run script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: alexbelgium/hassio-addons
-        run: python .github/generate_stargazer_map.py
+          REPO: your-user/your-repo      # <-- CHANGE THIS
+        run: python .github/generate_map.py
 
-      - name: Commit and push CSV and PNG only
+      - name: Commit PNG + CSV
         run: |
-          git config --global user.name "github-actions[bot]"
+          git config --global user.name  "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/stargazers_countries.csv .github/stargazer_map.png
-          git commit -m "Update stargazer map and countries CSV" || echo "No changes to commit"
+          git add .github/stargazer_map.png .github/stargazer_countries.csv
+          git commit -m "Update stargazer map & cache" || echo "No changes"
           git push --force
