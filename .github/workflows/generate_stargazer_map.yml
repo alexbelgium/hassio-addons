@@ -18,7 +18,7 @@ jobs:
 
       - name: Install deps
         run: |
-          pip install requests numpy geopy pycountry plotly kaleido
+          pip install requests numpy pandas geopy pycountry plotly kaleido
 
       - name: Run script
         env:
