@@ -20,6 +20,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
+![map](https://raw.githubusercontent.com/alexbelgium/hassio-addons/refs/heads/master/.github/stargazer_map.png)
+
 _Thanks to all contributors !_
 
 [![contributors](https://contrib.rocks/image?repo=alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/graphs/contributors)
