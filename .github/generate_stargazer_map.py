@@ -8,8 +8,11 @@ import matplotlib.pyplot as plt
 REPO = os.environ.get("REPO")
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"}
-COUNTRY_FILE = "stargazers_countries.csv"
-PNG_FILE = "stargazer_map.png"
+
+GITHUB_DIR = ".github"
+COUNTRY_FILE = os.path.join(GITHUB_DIR, "stargazers_countries.csv")
+PNG_FILE = os.path.join(GITHUB_DIR, "stargazer_map.png")
+SHAPEFILE = os.path.join(GITHUB_DIR, "ne_110m_admin_0_countries.shp")
 
 def get_stargazers(repo):
     users = []
@@ -65,6 +68,7 @@ def main():
             print(f"    => {country}")
             countries.append((user, country or "Unknown"))
             # Save progress
+            os.makedirs(GITHUB_DIR, exist_ok=True)
             pd.DataFrame(countries, columns=["user", "country"]).to_csv(COUNTRY_FILE, index=False)
         df = pd.DataFrame(countries, columns=["user", "country"])
 
@@ -74,8 +78,10 @@ def main():
     country_perc = (country_counts / total * 100).to_dict()
 
     # Step 3: Plot map with colored countries
-    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-    world['country'] = world['name']
+    if not os.path.exists(SHAPEFILE):
+        raise FileNotFoundError(f"Shapefile {SHAPEFILE} not found! Download it first.")
+    world = gpd.read_file(SHAPEFILE)
+    world['country'] = world['NAME'] if 'NAME' in world.columns else world['name']
     world['stargazer_perc'] = world['country'].map(country_perc).fillna(0)
 
     fig, ax = plt.subplots(figsize=(18, 9))
