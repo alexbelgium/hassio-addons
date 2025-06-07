@@ -23,8 +23,10 @@ jobs:
           sudo apt-get install -y gdal-bin
           pip install requests pandas geopandas matplotlib pycountry geopy
 
-      - name: Download shapefile
+      - name: Download shapefile into .github
         run: |
+          mkdir -p .github
+          cd .github
           wget https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip
           unzip -o ne_110m_admin_0_countries.zip
 
@@ -38,6 +40,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stargazers_countries.csv stargazer_map.png
+          git add .github/stargazers_countries.csv .github/stargazer_map.png
           git commit -m "Update stargazer map and countries CSV" || echo "No changes to commit"
           git push --force
