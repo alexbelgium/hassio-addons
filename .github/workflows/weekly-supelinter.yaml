@@ -32,11 +32,13 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_CHECKOV: false
           VALIDATE_PYTHON_PYLINT: false
+          FIX_ENV: true
+          FIX_HTML_PRETTIER: true
           FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
           FIX_JSON: true
           FIX_JSON_PRETTIER: true
-          FIX_MARKDOWN: true
+          FIX_MARKDOWN_PRETTIER: true
           FIX_PYTHON_BLACK: true
           FIX_PYTHON_ISORT: true
           # Add more FIX_ variables as needed
