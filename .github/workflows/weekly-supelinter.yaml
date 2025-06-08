@@ -1,78 +1,48 @@
-# This workflow executes several linters on changed files based on languages used in your code base whenever
-# you push a code or open a pull request.
-#
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/github/super-linter
----
-name: Lint Code Base
+name: Lint
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 0 * * 0"
-  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: read
+  statuses: write
 
 jobs:
-  make-executable:
-    if: github.repository_owner == 'alexbelgium'
+  super-lint:
+    name: Lint and Autofix
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-        
-      - name: Make scripts executable
-        run: |
-          echo "Starting"
-          git config core.filemode true
-          # shellcheck disable=SC2086,SC2046
-          #git update-index --chmod=+x $(find . -type f -iname "*.sh")
-          chmod u+x $(find . -type f -iname "*.sh") 
-          #git commit -am "fixing the script permissions..."
+    permissions:
+      contents: write
+      statuses: write
+      packages: read
 
-      - name: Commit if needed
-        uses: EndBug/add-and-commit@v9
-        with:
-          commit: -u
-          message: "GitHub bot : scripts executable"
-          default_author: github_actions
-
-  run-lint:
-    runs-on: ubuntu-latest
-    needs: make-executable
     steps:
-      ##########################
-      # Checkout the code base #
-      ##########################
-      - name: Checkout the code base
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
-          
-       ####################
-       # Run Super Linter #
-       ####################
-      - name: Lint Code Base
-        uses: docker://github/super-linter:slim-v4
+
+      - name: Run Super Linter
+        uses: super-linter/super-linter/slim@master
         env:
-          VALIDATE_ALL_CODEBASE: true
-          DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_NATURAL_LANGUAGE: false
-          ACTION_ACTIONLINT_DISABLE_ERRORS: true
+          FIX_SHELL_SHFMT: true
+          FIX_YAML_PRETTIER: true
+          # Add more FIX_ variables as needed
 
+      - name: Check for linting changes
+        id: changed
+        run: |
+          git diff --quiet || echo "changed=true" >> $GITHUB_OUTPUT
 
-  check_crlf:
-    name: Check CRLF action
-    if: github.repository_owner == 'alexbelgium'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository contents
-        uses: actions/checkout@v4
-
-      - name: Use action to check for CRLF endings
-        uses: erclu/check-crlf@v1.2.0
-
-      - name: check-mixed-line-endings
-        uses: ymwymw/check-mixed-line-endings@v2
+      - name: Create New Pull Request If Needed
+        if: steps.changed.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "Github bot : fix linting issues"
+          commit_options: "--no-verify --signoff"
+          commit_user_name: super-linter
+          commit_user_email: super-linter@super-linter.dev
