@@ -45,12 +45,15 @@ jobs:
           FIX_PYTHON_BLACK: true
           FIX_PYTHON_ISORT: true
           FIX_PYTHON_RUFF: true
-          # Add more FIX_ variables as needed
 
       - name: Check for linting changes
         id: changed
         run: |
-          git diff --quiet || echo "changed=true" >> "$GITHUB_OUTPUT"
+          if ! git diff --quiet; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Create New Pull Request If Needed
         if: steps.changed.outputs.changed == 'true'
@@ -63,3 +66,5 @@ jobs:
           signoff: true
           delete-branch: true
           branch: lint/autofix
+          body: |
+            This pull request was automatically created by the GitHub Actions Super-Linter workflow to fix detected linting issues.
