@@ -29,6 +29,8 @@ jobs:
         uses: super-linter/super-linter/slim@v7.4.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_CHECKOV: false
           VALIDATE_PYTHON_PYLINT: false
           FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
