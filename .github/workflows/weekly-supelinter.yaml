@@ -31,6 +31,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
+          FIX_JSON: true
+          FIX_JSON_PRETTIER: true
+          FIX_MARKDOWN: true
+          FIX_PYTHON_BLACK: true
+          FIX_PYTHON_ISORT: true
           # Add more FIX_ variables as needed
 
       - name: Check for linting changes
