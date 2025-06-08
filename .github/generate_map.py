@@ -8,29 +8,32 @@ up once (unless the country entry is blank).
 
 import csv
 import os
-import time
 import sys
-import requests
+import time
 from collections import Counter
 from pathlib import Path
 
 import plotly.express as px
 import pycountry
+import requests
 from geopy.geocoders import Nominatim
 
 # ---- Configuration ----------------------------------------------------------
-REPO          = os.getenv("REPO")            # expected   "owner/repo"
-GITHUB_TOKEN  = os.getenv("GITHUB_TOKEN")    # provided by workflow
-CSV_PATH      = Path(".github/stargazer_countries.csv")
-PNG_PATH      = Path(".github/stargazer_map.png")
+
+REPO = os.getenv("REPO")  # expected   "owner/repo"
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")  # provided by workflow
+CSV_PATH = Path(".github/stargazer_countries.csv")
+PNG_PATH = Path(".github/stargazer_map.png")
 
 HEADERS = {
     "Authorization": f"token {GITHUB_TOKEN}",
     "Accept": "application/vnd.github.v3+json",
 }
-GEOL   = Nominatim(user_agent="gh-stargazer-map")
+GEOL = Nominatim(user_agent="gh-stargazer-map")
+
 
 # -----------------------------------------------------------------------------
+
 
 def github_paginated(url):
     page = 1
@@ -43,15 +46,18 @@ def github_paginated(url):
         yield from data
         page += 1
 
+
 def fetch_stargazer_usernames():
     url = f"https://api.github.com/repos/{REPO}/stargazers"
     return [s["login"] for s in github_paginated(url)]
+
 
 def load_cache():
     if not CSV_PATH.exists():
         return {}
     with CSV_PATH.open(newline="", encoding="utf-8") as f:
         return {row["username"]: row["country"] for row in csv.DictReader(f)}
+
 
 def save_cache(cache):
     CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -60,6 +66,7 @@ def save_cache(cache):
         w.writerow(["username", "country"])
         for user, country in sorted(cache.items()):
             w.writerow([user, country or ""])
+
 
 def username_to_country(login):
     """Return readable country name or '' if unknown."""
@@ -84,6 +91,7 @@ def username_to_country(login):
             pass
     return ""
 
+
 def build_choropleth(percent_by_iso):
     # build dataframe-like structure for plotly
     iso, vals = zip(*percent_by_iso.items())
@@ -96,10 +104,11 @@ def build_choropleth(percent_by_iso):
     )
     fig.update_layout(
         coloraxis_colorbar={"title": "% stargazers"},
-        margin=dict(l=0, r=0, t=0, b=0)
+        margin=dict(l=0, r=0, t=0, b=0),
     )
     PNG_PATH.parent.mkdir(parents=True, exist_ok=True)
     fig.write_image(str(PNG_PATH), scale=2)
+
 
 def main():
     if not REPO or not GITHUB_TOKEN:
@@ -131,7 +140,7 @@ def main():
     # Build stats
     countries = [c for c in cache.values() if c]
     counts = Counter(countries)
-    total  = sum(counts.values()) or 1
+    total = sum(counts.values()) or 1
     pct_by_country = {c: v / total for c, v in counts.items()}
 
     # convert to ISO-3 for plotly
@@ -139,15 +148,19 @@ def main():
     for c, pct in pct_by_country.items():
         try:
             iso = pycountry.countries.lookup(c).alpha_3
-            pct_by_iso[iso] = pct*100  # plotly wants numeric
+            pct_by_iso[iso] = pct * 100  # plotly wants numeric
         except LookupError:
             print("Skip unknown country:", c)
 
     print("Rendering PNG map…")
     build_choropleth(pct_by_iso)
-    print("Done – files saved:",
-          CSV_PATH.relative_to('.'),
-          PNG_PATH.relative_to('.'), sep="\n• ")
+    print(
+        "Done – files saved:",
+        CSV_PATH.relative_to("."),
+        PNG_PATH.relative_to("."),
+        sep="\n• ",
+    )
+
 
 if __name__ == "__main__":
     main()
