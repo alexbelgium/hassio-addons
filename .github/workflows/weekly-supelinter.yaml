@@ -27,7 +27,6 @@ jobs:
 
       - name: Run Super Linter
         uses: super-linter/super-linter/slim@main
-        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: true
@@ -60,12 +59,13 @@ jobs:
         if: steps.changed.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          title: "Github bot: fix linting issues"
+          title: "Github bot: fix linting issues nobuild"
           commit-message: "fix: auto-fix linting issues"
           committer: super-linter <super-linter@super-linter.dev>
           author: super-linter <super-linter@super-linter.dev>
           signoff: true
           delete-branch: true
           branch: lint/autofix
+          clean: true
           body: |
             This pull request was automatically created by the GitHub Actions Super-Linter workflow to fix detected linting issues.
