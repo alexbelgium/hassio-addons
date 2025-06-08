@@ -56,7 +56,10 @@ jobs:
         if: steps.changed.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          title: "Github bot : fix linting issues"
-          commit_options: "--no-verify --signoff"
-          commit_user_name: super-linter
-          commit_user_email: super-linter@super-linter.dev
+          title: "Github bot: fix linting issues"
+          commit-message: "fix: auto-fix linting issues"
+          committer: super-linter <super-linter@super-linter.dev>
+          author: super-linter <super-linter@super-linter.dev>
+          signoff: true
+          delete-branch: true
+          branch: lint/autofix
