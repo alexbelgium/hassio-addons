@@ -48,7 +48,7 @@ jobs:
           FIX_PYTHON_RUFF: true
 
       - name: Remove Super-Linter output (prevent checkout conflict)
-        run: rm -rf super-linter-output/
+        run: sudo rm -rf super-linter-output/
 
       - name: Check for linting changes
         id: changed
