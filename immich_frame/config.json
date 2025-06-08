@@ -19,9 +19,9 @@
     "8080/tcp": "Web UI port"
   },
   "schema": {
-    "TZ": "str?",
+    "ApiKey": "str",
     "ImmichServerUrl": "str",
-    "ApiKey": "str"
+    "TZ": "str?"
   },
   "slug": "immich_frame",
   "url": "https://github.com/alexbelgium/hassio-addons",
