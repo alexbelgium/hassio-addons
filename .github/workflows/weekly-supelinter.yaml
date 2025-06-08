@@ -44,7 +44,7 @@ jobs:
       - name: Check for linting changes
         id: changed
         run: |
-          git diff --quiet || echo "changed=true" >> $GITHUB_OUTPUT
+          git diff --quiet || echo "changed=true" >> "$GITHUB_OUTPUT"
 
       - name: Create New Pull Request If Needed
         if: steps.changed.outputs.changed == 'true'
