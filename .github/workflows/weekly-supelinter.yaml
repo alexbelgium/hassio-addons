@@ -1,4 +1,4 @@
-name: Lint
+name: Lint Codebase
 
 on:
   workflow_dispatch:
