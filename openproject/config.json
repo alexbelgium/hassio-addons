@@ -6,11 +6,11 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Openproject for Home Assistant",
   "environment": {
-    "OPENPROJECT_SECRET_KEY_BASE": "addon_secret",
-    "OPENPROJECT_EDITION": "bim",
-    "PGDATA": "/data/pg",
     "APP_DATA_PATH": "/data/assets",
-    "OPENPROJECT_ATTACHMENTS__STORAGE__PATH": "/data/assets/files"
+    "OPENPROJECT_ATTACHMENTS__STORAGE__PATH": "/data/assets/files",
+    "OPENPROJECT_EDITION": "bim",
+    "OPENPROJECT_SECRET_KEY_BASE": "addon_secret",
+    "PGDATA": "/data/pg"
   },
   "image": "ghcr.io/alexbelgium/openproject-{arch}",
   "init": false,
@@ -20,9 +20,9 @@
   ],
   "name": "Openproject",
   "options": {
+    "OPENPROJECT_DEFAULT__LANGUAGE": "en",
     "OPENPROJECT_HOST__NAME": "homeassistant:8080",
-    "OPENPROJECT_HTTPS": "false",
-    "OPENPROJECT_DEFAULT__LANGUAGE": "en"
+    "OPENPROJECT_HTTPS": "false"
   },
   "ports": {
     "8080/tcp": 8080
@@ -31,10 +31,10 @@
     "8080/tcp": "Web interface"
   },
   "schema": {
-    "OPENPROJECT_SECRET_KEY_BASE": "str",
+    "OPENPROJECT_DEFAULT__LANGUAGE": "str",
     "OPENPROJECT_HOST__NAME": "str",
     "OPENPROJECT_HTTPS": "bool",
-    "OPENPROJECT_DEFAULT__LANGUAGE": "str"
+    "OPENPROJECT_SECRET_KEY_BASE": "str"
   },
   "slug": "openproject",
   "udev": true,
