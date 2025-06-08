@@ -6,7 +6,11 @@ stargazers that come from each country.  The script maintains a CSV
 up once (unless the country entry is blank).
 """
 
-import csv, os, time, sys, json, requests
+import csv
+import os
+import time
+import sys
+import requests
 from collections import Counter
 from pathlib import Path
 
