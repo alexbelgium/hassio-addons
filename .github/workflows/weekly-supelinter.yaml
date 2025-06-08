@@ -26,7 +26,7 @@ jobs:
           fetch-depth: 0
 
       - name: Run Super Linter
-        uses: super-linter/super-linter/slim@v7.4.0
+        uses: super-linter/super-linter/slim@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: true
