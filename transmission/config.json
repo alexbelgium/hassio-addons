@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Bittorrent client based on linuxserver image",
   "devices": [
@@ -78,12 +74,7 @@
   "image": "ghcr.io/alexbelgium/transmission_ls-{arch}",
   "ingress": true,
   "init": false,
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Transmission",
   "options": {
     "DNS_server": "8.8.8.8,1.1.1.1",
@@ -105,10 +96,7 @@
     "51413/udp": "Peer port (setup router port forwarding to this port)",
     "9091/tcp": "Web UI port (required)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "DNS_server": "str?",
     "PGID": "int",

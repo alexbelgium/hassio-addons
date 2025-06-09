@@ -1,4 +1,3 @@
-
 # Home assistant add-on: Transmission
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -58,6 +57,7 @@ Webui can be found at `<your-ip>:9091`.
 ## Issues
 
 # If settings.json gets reseted in the log https://github.com/alexbelgium/hassio-addons/issues/1269
+
 - Install the Filebrowser addon
 - Delete the folders /homeassistant/addons_config/transmission and /homeassistant/addons_config/transmission-ls
 

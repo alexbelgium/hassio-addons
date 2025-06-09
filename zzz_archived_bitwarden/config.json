@@ -1,16 +1,10 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Deprecated - please use community version",
   "image": "ghcr.io/alexbelgium/vaultwarden-{arch}",
   "init": false,
-  "map": [
-    "ssl"
-  ],
+  "map": ["ssl"],
   "name": "zzz_archived - Vaultwarden",
   "options": {
     "certfile": "fullchain.pem",

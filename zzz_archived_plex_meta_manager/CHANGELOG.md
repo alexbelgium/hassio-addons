@@ -1,8 +1,9 @@
-
 ## 1.21.1 (27-04-2024)
+
 - Update to latest version from linuxserver/docker-plex-meta-manager (changelog : https://github.com/linuxserver/docker-plex-meta-manager/releases)
 
 ## 1.21.0 (06-04-2024)
+
 - Update to latest version from linuxserver/docker-plex-meta-manager (changelog : https://github.com/linuxserver/docker-plex-meta-manager/releases)
 
 ## 1.20.0 (13-01-2024)
@@ -20,6 +21,7 @@
 ## v1.19.0-ls73 (26-08-2023)
 
 - Update to latest version from linuxserver/docker-plex-meta-manager
+
 ## v1.19.0-ls72-2 (19-08-2023)
 
 - Minor bugs fixed
@@ -52,6 +54,7 @@
 ## v1.19.0-ls66 (08-07-2023)
 
 - Update to latest version from linuxserver/docker-plex-meta-manager
+
 ## v1.19.0-ls65-2 (24-06-2023)
 
 - Minor bugs fixed

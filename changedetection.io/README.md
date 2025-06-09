@@ -35,6 +35,7 @@ Web UI can be found at `<your-ip>:5000`, also accessible from the add-on page.
 #### Sidebar shortcut
 
 You can add a shortcut pointing to your Changedetection.io instance with the following steps:
+
 1. Go to <kbd>⚙ Settings</kbd> > <kbd>Dashboards</kbd>
 2. Click <kbd>➕ Add Dashboard</kbd> at the bottom corner
 3. Select the <kbd>Webpage</kbd> option, and paste the Web UI URL you got from the add-on page.
@@ -54,19 +55,21 @@ BASE_URL: Specify the full URL (including protocol) when running behind a revers
 In HA, use the File Editor add-on (or Filebrowser) and edit the Changedetection.io config file at `/homeassistant/addons_config/changedetection.io/config.yaml`.
 
 Add the following line to the end of it:
+
 ```yaml
 PLAYWRIGHT_DRIVER_URL: ws://2937404c-browserless-chrome:3000/chromium?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true
 ```
 
 Remember to add a blank line at the end of the file too according to yaml requirements.
 
-The `2937404c-browserless-chrome` hostname is displayed in the UI, on the  Browserless Chromium addon page:
+The `2937404c-browserless-chrome` hostname is displayed in the UI, on the Browserless Chromium addon page:
 ![image](https://github.com/user-attachments/assets/a63514f6-027a-4361-a33f-0d8f87461279)
 
 You can also fetch it:
-* By using SSH and running `docker exec -i hassio_dns cat "/config/hosts"`
-* From the CLI in HA, using arp
-* You should also be able to use your HA IP address.
+
+- By using SSH and running `docker exec -i hassio_dns cat "/config/hosts"`
+- From the CLI in HA, using arp
+- You should also be able to use your HA IP address.
 
 Then restart the Changedetection.io add-on - after that you can use the browser options in Changedetection.io.
 

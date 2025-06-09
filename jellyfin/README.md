@@ -45,17 +45,20 @@ DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-am
 ```
 
 ### Enable ssl
+
 #### Creating the PFX certificate file first
+
 1. This part assumes you already have SSL certs in PEM format using the Let's Encrypt add on
 2. Run this command `openssl pkcs12 -export -in fullchain.pem -inkey private_key.pem -passout pass: -out server.pfx`
 3. Set the permission using `chmod 0700 server.pfx`
-> Note:
-> The above command creates a PFX file without a password, you can fill in a password with `-passout pass:"your-password"`
-> but will also have to provide `your-password` to Jellyfin's configuration
+   > Note:
+   > The above command creates a PFX file without a password, you can fill in a password with `-passout pass:"your-password"`
+   > but will also have to provide `your-password` to Jellyfin's configuration
 
 #### Automating the PFX certificate
 
 #### Jellyfin configuration
+
 1. From the sidebar, click on `Administration` -> `Dashboard`
 2. Under `Networking`, `Server Address Settings`, tick `Enable HTTPS`
 3. Under `HTTPS Settings`, tick `Require HTTPS`

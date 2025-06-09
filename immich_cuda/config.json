@@ -1,11 +1,6 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
-  "backup_exclude": [
-    "**/machine-learning/*"
-  ],
+  "arch": ["aarch64", "amd64"],
+  "backup_exclude": ["**/machine-learning/*"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted photo and video backup solution directly from your mobile phone",
   "devices": [
@@ -116,10 +111,7 @@
   "ports_description": {
     "8080/tcp": "Web UI port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "DB_DATABASE_NAME": "str",
     "DB_HOSTNAME": "str",
@@ -140,9 +132,7 @@
     "localdisks": "str?",
     "networkdisks": "str?"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "immich_cuda",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",

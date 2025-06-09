@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted open source note-taking application",
   "devices": [
@@ -72,10 +69,7 @@
     "APP_PORT": "22300"
   },
   "image": "ghcr.io/alexbelgium/joplin-{arch}",
-  "map": [
-    "config:rw",
-    "share:rw"
-  ],
+  "map": ["config:rw", "share:rw"],
   "name": "Joplin Server",
   "options": {
     "APP_BASE_URL": "http://your_domain:port",
@@ -87,9 +81,7 @@
   "ports_description": {
     "22300/tcp": "Web interface"
   },
-  "privileged": [
-    "SYS_TIME"
-  ],
+  "privileged": ["SYS_TIME"],
   "schema": {
     "APP_BASE_URL": "str",
     "DB_CLIENT": "str?",

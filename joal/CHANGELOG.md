@@ -1,4 +1,3 @@
-
 ## 2.1.36 (04-11-2023)
 
 - Update to latest version from anthonyraymond/joal

@@ -1,12 +1,17 @@
-
 ## 0.14.5 (03-08-2024)
+
 - Update to latest version from Unpackerr/unpackerr (changelog : https://github.com/Unpackerr/unpackerr/releases)
 
 ## 0.14.0 (13-07-2024)
+
 - Update to latest version from Unpackerr/unpackerr (changelog : https://github.com/Unpackerr/unpackerr/releases)
+
 ## 0.13.1-8 (13-03-2024)
+
 - Minor bugs fixed
+
 ## 0.13.1-7 (13-03-2024)
+
 - Fix : not starting https://github.com/alexbelgium/hassio-addons/issues/1270
 
 ## 0.13.1 (27-01-2024)
@@ -16,6 +21,7 @@
 ## 0.13.0 (20-01-2024)
 
 - Update to latest version from Unpackerr/unpackerr
+
 ## 0.12.0-3 (31-12-2023)
 
 - Minor bugs fixed

@@ -46,7 +46,6 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Webui can be found at <http://homeassistant:8787/readarr> or with ingress ☝️ by clicking the `Open Web UI` button.
 
-
 The default username/password : described in the startup log.
 
 ## Configuration

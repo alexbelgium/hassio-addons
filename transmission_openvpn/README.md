@@ -41,7 +41,7 @@ comparison to installing any other Hass.io add-on.
 
 Options : see https://github.com/haugene/docker-transmission-openvpn for documentation
 
-For setting a custom openvpn file (even if using AIRVPN), you should set OPENVPN_PROVIDER to "custom", then reference your ovpn file in your "OPENVPN_CONFIG". For example, if AIRVPN has provided to you an *.ovpn filed named AIRVPN.ovpn, you need to install an addon such as Filebrowser, go in the /config/addons_config/transmission/openvpn folder and put the AIRVPN.ovpn here. Then, in the addon option you need to write "AIRVPN" in the "OPENVPN_CONFIG" option
+For setting a custom openvpn file (even if using AIRVPN), you should set OPENVPN_PROVIDER to "custom", then reference your ovpn file in your "OPENVPN_CONFIG". For example, if AIRVPN has provided to you an \*.ovpn filed named AIRVPN.ovpn, you need to install an addon such as Filebrowser, go in the /config/addons_config/transmission/openvpn folder and put the AIRVPN.ovpn here. Then, in the addon option you need to write "AIRVPN" in the "OPENVPN_CONFIG" option
 
 Complete transmission options are in /config/addons_config/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
 

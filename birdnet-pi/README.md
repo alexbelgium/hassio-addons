@@ -1,4 +1,3 @@
-
 # Home assistant add-on: birdnet-pi
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -30,6 +29,7 @@ _Note : For usage without HomeAssistant (classic docker container), see [here](h
 [birdnet-pi](https://github.com/Nachtzuster/BirdNET-Pi) is an AI solution for continuous avian monitoring and identification originally developed by @mcguirepr89 on github (https://github.com/mcguirepr89/BirdNET-Pi), whose work is continued by @Nachtzuster and other developers on an active fork (https://github.com/Nachtzuster/BirdNET-Pi)
 
 Features of the addon :
+
 - Robust base image provided by [linuxserver](https://github.com/linuxserver/docker-baseimage-debian)
 - Working docker system thanks to https://github.com/gdraheim/docker-systemctl-replacement
 - Uses HA pulseaudio server
@@ -44,6 +44,7 @@ Features of the addon :
 
 Install, then start the addon a first time
 Webui can be found by two ways :
+
 - Ingress from HA (no password but some functions don't work)
 - Direct access with <http://homeassistant:port>, port being the one defined in the birdnet.conf. The username when asked for a password is `birdnet`, the password is the one that you can define in the birdnet.con (blank by default). This is different than the password from the addon options, which is the one that must be used to access the web terminal
 
@@ -57,9 +58,9 @@ Options can be configured through three ways :
 
 ```yaml
 BIRDSONGS_FOLDER: folder to store birdsongs file # It should be an ssd if you want to avoid clogging of analysis
-MQTT_DISABLED : if true, disables automatic mqtt publishing. Only valid if there is a local broker already available
+MQTT_DISABLED: if true, disables automatic mqtt publishing. Only valid if there is a local broker already available
 LIVESTREAM_BOOT_ENABLED: start livestream from boot, or from settings
-PROCESSED_FOLDER_ENABLED : if enabled, you need to set in the birdnet.conf (or the setting of birdnet) the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
+PROCESSED_FOLDER_ENABLED: if enabled, you need to set in the birdnet.conf (or the setting of birdnet) the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 pi_password: set the user password to access the web terminal
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
@@ -70,10 +71,10 @@ cifsdomain: "domain" # optional, allow setting the domain for the smb share
 ```
 
 - Config.yaml
-Additional variables can be configured using the config.yaml file found in /config/db21ed7f_birdnet-pi/config.yaml using the Filebrowser addon
+  Additional variables can be configured using the config.yaml file found in /config/db21ed7f_birdnet-pi/config.yaml using the Filebrowser addon
 
 - Config_env.yaml
-Additional environment variables can be configured there
+  Additional environment variables can be configured there
 
 ## Installation
 
@@ -93,6 +94,7 @@ The installation of this add-on is pretty straightforward and not different in c
 ## Integration with HA
 
 ---
+
 ### Apprise
 
 You can use apprise to send notifications with mqtt, then act on those using HomeAssistant
@@ -130,6 +132,7 @@ Based on my test, only adapters using KT0210 (such as Ugreen's) work. I couldn't
 ### Microphone comparison
 
 Recommended microphones ([full discussion here](https://github.com/mcguirepr89/BirdNET-Pi/discussions/39)):
+
 - Clippy EM272 (https://www.veldshop.nl/en/smart-clippy-em272z1-mono-omni-microphone.html) + ugreen aux to usb connector : best sensitivity with lavalier tech
 - Boya By-LM40 : best quality/price
 - Hyperx Quadcast : best sensitivity with cardioid tech
@@ -141,6 +144,7 @@ Conclusion, using mic from Dahua is good enough, EM272 is optimal, but Boya by-l
 ### Denoise ([Full discussion here](https://github.com/mcguirepr89/BirdNET-Pi/discussions/597))
 
 Denoise is frowned upon by serious researchers. However it does seem to significantly increase quality of detection ! Here is how to do it in HA :
+
 - Using Portainer addon, go in the hassio_audio container, and modify the file /etc/pulse/system.pa to add the line `load-module module-echo-cancel`
 - Go in the Terminal addon, and type `ha audio restart`
 - Select the echo cancelled device as input device in the addon options

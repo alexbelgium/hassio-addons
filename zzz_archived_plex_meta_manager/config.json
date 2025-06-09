@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Python script to update metadata information for movies, shows, and collections as well as automatically build collections",
   "devices": [
@@ -71,21 +67,14 @@
   ],
   "image": "ghcr.io/alexbelgium/plex-media-manager-{arch}",
   "init": false,
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw"],
   "name": "zzz_archived - Plex meta manager",
   "options": {
     "PGID": 0,
     "PMM_CONFIG": "/config/addons_config/plex-data-manager/config.yml",
     "PUID": 0
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PMM_CONFIG": "str",

@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Browsing, reading and downloading eBooks using an existing Calibre database",
   "devices": [
@@ -102,11 +99,7 @@
   "ports_description": {
     "8083/tcp": "Calibre-web webui (Not required for Ingress)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH",
-    "NET_ADMIN"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "schema": {
     "DOCKER_MODS": "str?",
     "OAUTHLIB_RELAX_TOKEN_SCOPE": "str?",

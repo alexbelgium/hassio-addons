@@ -1,22 +1,28 @@
 ## 2.2.1-4 (06-01-2025)
+
 - BREAKING CHANGE : please be sure to backup your system (HA, and backup from webtrees UI) before updating
   - Major code refactor : there is no automatic first user creation, it now opens the wizard and provides additional instructions in the addon log (detecting if it is a first launch or not)
   - Data location change : the data location is now configurable through an option. It will now by default move files to /config/data ; accessible by an external editor through /addon_configs/xxx-webtrees/data. I haven't tested it with all configurations (including mariadb) so be careful before updating! However, it will be much more robust & reliable in the future. And should allow to move data storage location
   - Database logic change : database selection (sqlite, mysql, psql) is done through the initial startup wizard. If you want to change it, you need to modify manually the config.php.ini file in /config/data (mapped to /addon_configs/xxx-webtrees/data when accessing using a third party tool)
 
 ## 2.2.1-2 (02-01-2025)
+
 - Minor bugs fixed
 
 ## 2.2.1 (07-12-2024)
+
 - Update to latest version from nathanvaughn/webtrees-docker (changelog : https://github.com/nathanvaughn/webtrees-docker/releases)
 
 ## 2.2.0 (30-11-2024)
+
 - Update to latest version from nathanvaughn/webtrees-docker (changelog : https://github.com/nathanvaughn/webtrees-docker/releases)
 
 ## 2.1.20 (13-04-2024)
+
 - Update to latest version from nathanvaughn/webtrees-docker (changelog : https://github.com/nathanvaughn/webtrees-docker/releases)
 
 ## 2.1.19 (23-03-2024)
+
 - Update to latest version from nathanvaughn/webtrees-docker
 
 ## 2.1.18 (20-10-2023)

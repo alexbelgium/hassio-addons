@@ -1,43 +1,55 @@
-
 ## debian-2025-02-28 (2025-02-28)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2025-01-23 (2025-01-23)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-12-09 (2024-12-09)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-10-23 (2024-10-23)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-09-24 (2024-09-24)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-09-08 (2024-09-08)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-07-31 (2024-07-31)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-07-19 (2024-07-19)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-06-16 (2024-06-16)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 - The last release changelog mentions that automatic redemption is not possible anymore due to epic improvement on automation detection
-A redemption link is sent to your preferred notification method instead of being automated (thanks @Shiroe93) https://github.com/alexbelgium/hassio-addons/issues/1391
+  A redemption link is sent to your preferred notification method instead of being automated (thanks @Shiroe93) https://github.com/alexbelgium/hassio-addons/issues/1391
 
 ## debian-2024-04-28 (2024-04-28)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-03-17-2 (31-03-2024)
+
 - Minor bugs fixed
 
 ## debian-2024-03-17 (2024-03-17)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-03-15 (2024-03-15)
+
 - Update to latest version from charlocharlie/epicgames-freegames
 
 ## debian-2024-03-03 (2024-03-03)
@@ -101,6 +113,7 @@ A redemption link is sent to your preferred notification method instead of being
 ## bullseye-slim-2023-05-03 (2023-05-03)
 
 - Update to latest version from charlocharlie/epicgames-freegames
+
 ## c0dfe30ee94fa609a9efcb5eb2b8fd0c1dafe6e2-2023-05-03-2 (24-05-2023)
 
 - Minor bugs fixed
@@ -179,6 +192,7 @@ A redemption link is sent to your preferred notification method instead of being
 ## 3d0cbfc49854ad026fd10a36966442235084baff-2022-11-05 (2022-11-05)
 
 - Update to latest version from charlocharlie/epicgames-freegames
+
 ## 30-10-2022
 
 - New config.js update

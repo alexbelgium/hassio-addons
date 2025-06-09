@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "voice communication for online gaming, education and training",
   "environment": {
@@ -16,9 +12,7 @@
   },
   "image": "ghcr.io/alexbelgium/teamspeak-{arch}",
   "init": false,
-  "map": [
-    "share:rw"
-  ],
+  "map": ["share:rw"],
   "name": "Teamspeak server",
   "ports": {
     "10011/tcp": 10011,

@@ -1,9 +1,6 @@
 {
   "apparmor": "true",
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Scrutiny webUI for smartd S.M.A.R.T monitoring",
   "devices": [
@@ -83,10 +80,7 @@
   "image": "ghcr.io/alexbelgium/scrutiny-{arch}",
   "ingress": true,
   "init": false,
-  "map": [
-    "share:rw",
-    "addon_config:rw"
-  ],
+  "map": ["share:rw", "addon_config:rw"],
   "name": "Scrutiny",
   "options": {
     "Updates": "Hourly"
@@ -101,11 +95,7 @@
     "8080/tcp": "Web UI port",
     "8086/tcp": "InfluxDB admin"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "SYS_RAWIO",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
   "schema": {
     "COLLECTOR_API_ENDPOINT": "str?",
     "COLLECTOR_HOST_ID": "str?",

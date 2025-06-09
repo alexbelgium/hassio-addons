@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Python script to update metadata information for movies, shows, and collections as well as automatically build collections",
   "devices": [
@@ -70,21 +67,14 @@
   ],
   "image": "ghcr.io/alexbelgium/kometa-{arch}",
   "init": false,
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw"],
   "name": "Kometa",
   "options": {
     "KOMETA_CONFIG": "/config/addons_config/kometa/config.yml",
     "PGID": 0,
     "PUID": 0
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "KOMETA_CONFIG": "str",
     "KOMETA_NO_MISSING": "bool?",

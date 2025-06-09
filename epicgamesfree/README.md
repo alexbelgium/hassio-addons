@@ -1,4 +1,3 @@
-
 # Home assistant add-on: Epic Games Free
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

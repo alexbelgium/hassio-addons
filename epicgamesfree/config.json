@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Automatically login and redeem promotional free games from Epic Games Store",
   "devices": [
@@ -73,9 +70,7 @@
   },
   "image": "ghcr.io/alexbelgium/epicgamesfree-{arch}",
   "init": false,
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Epic Games Free",
   "ports": {
     "3000/tcp": 3000

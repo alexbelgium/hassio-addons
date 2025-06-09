@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Calendar+Contacts server",
   "devices": [
@@ -70,12 +66,7 @@
     "/dev/nvme2"
   ],
   "image": "ghcr.io/alexbelgium/baikal-{arch}",
-  "map": [
-    "addon_config:rw",
-    "homeassistant_config:rw",
-    "share:rw",
-    "ssl:ro"
-  ],
+  "map": ["addon_config:rw", "homeassistant_config:rw", "share:rw", "ssl:ro"],
   "name": "Baikal",
   "ports": {
     "80/tcp": 8013

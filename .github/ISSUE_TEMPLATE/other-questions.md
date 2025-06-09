@@ -2,7 +2,7 @@
 name: "\u2753 Any other question"
 about: Other questions or remarks not related to bugs or features
 title: "\u2753 [addon] title"
-labels: ['prevent stale']
+labels: ["prevent stale"]
 assignees: ""
 ---
 

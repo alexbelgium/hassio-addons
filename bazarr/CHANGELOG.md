@@ -1,20 +1,25 @@
-
 ## 1.5.2 (17-05-2025)
+
 - Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
 
 ## 1.5.1 (04-01-2025)
+
 - Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
 
 ## 1.5.0 (28-12-2024)
+
 - Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
 
 ## 1.4.5 (05-10-2024)
+
 - Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
 
 ## 1.4.4 (21-09-2024)
+
 - Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
 
 ## 1.4.3 (08-06-2024)
+
 - Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
 
 ## 1.4.2 (24-02-2024)
@@ -24,6 +29,7 @@
 ## 1.4.1 (10-02-2024)
 
 - Update to latest version from linuxserver/docker-bazarr
+
 ## 1.4.0-2 (04-12-2023)
 
 - Minor bugs fixed
@@ -43,6 +49,7 @@
 ## 1.2.4 (22-07-2023)
 
 - Update to latest version from linuxserver/docker-bazarr
+
 ## 1.2.3-2 (16-07-2023)
 
 - Minor bugs fixed
@@ -59,6 +66,7 @@
 ## 1.2.1 (06-05-2023)
 
 - Update to latest version from linuxserver/docker-bazarr
+
 ## 1.2.0-1 (21-04-2023)
 
 - Minor bugs fixed

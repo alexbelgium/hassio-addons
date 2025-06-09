@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Scan, index and archive all your physical documents",
   "devices": [
@@ -106,10 +103,7 @@
     "8000/tcp": "http web interface",
     "8443/tcp": "https web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "CONFIG_LOCATION": "str",
     "OCRLANG": "str?",
@@ -131,9 +125,7 @@
     "networkdisks": "str?",
     "ssl": "bool"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "paperless_ng",
   "stage": "deprecated",
   "udev": true,

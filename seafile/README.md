@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Seafile] Download URLs seems incorrect (opened 2025-02-04)](https://github.com/alexbelgium/hassio-addons/issues/1753) by [@igorsantos07](https://github.com/igorsantos07)
+
 # Home assistant add-on: seafile
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

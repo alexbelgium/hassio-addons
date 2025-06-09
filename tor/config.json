@@ -1,26 +1,17 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Protect your privacy and access Home Assistant via Tor",
   "image": "ghcr.io/alexbelgium/tor-{arch}",
   "init": false,
-  "map": [
-    "ssl:rw"
-  ],
+  "map": ["ssl:rw"],
   "name": "Tor with bridges",
   "options": {
     "bridges": [],
     "client_names": [],
     "hidden_services": true,
     "http_tunnel": false,
-    "ports": [
-      "8123",
-      "8123:80"
-    ],
+    "ports": ["8123", "8123:80"],
     "socks": false,
     "stealth": false
   },
@@ -33,12 +24,8 @@
     "9080/tcp": "Tor HTTP tunnel port"
   },
   "schema": {
-    "bridges": [
-      "str"
-    ],
-    "client_names": [
-      "match(^[A-Za-z0-9+-_]{1,16}$)"
-    ],
+    "bridges": ["str"],
+    "client_names": ["match(^[A-Za-z0-9+-_]{1,16}$)"],
     "hidden_services": "bool",
     "http_tunnel": "bool",
     "log_level": "list(trace|debug|info|notice|warning|error|fatal)?",

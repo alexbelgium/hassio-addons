@@ -1,9 +1,5 @@
 {
   "threshold": 0,
   "reporters": ["html", "markdown"],
-  "ignore": [
-    "**/.git/**",
-    "**/*.md",
-    "**/.github/**"
-  ]
+  "ignore": ["**/.git/**", "**/*.md", "**/.github/**"]
 }

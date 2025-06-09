@@ -5,7 +5,5 @@
   "editor.tabSize": 4,
   "editor.insertSpaces": true,
   "editor.cursorStyle": "block",
-  "githubPullRequests.ignoredPullRequestBranches": [
-    "master"
-  ]
+  "githubPullRequests.ignoredPullRequestBranches": ["master"]
 }

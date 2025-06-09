@@ -1,8 +1,9 @@
-
 ## 2.1.5 (19-10-2024)
+
 - Update to latest version from linuxserver/docker-ubooquity (changelog : https://github.com/linuxserver/docker-ubooquity/releases)
 
 ## 2.1.4 (21-09-2024)
+
 - Update to latest version from linuxserver/docker-ubooquity (changelog : https://github.com/linuxserver/docker-ubooquity/releases)
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 - Feat : cifsdomain added

@@ -90,6 +90,7 @@ PHOTOPRISM_DATABASE_NAME: "photoprism"
 PHOTOPRISM_DATABASE_USER: "USERNAME"
 PHOTOPRISM_DATABASE_PASSWORD: "PASSWORD
 ```
+
 ## Using Photoprism Command-Line Interface
 
 Photoprism also provides a command line interface:

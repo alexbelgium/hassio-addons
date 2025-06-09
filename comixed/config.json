@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "managing digital comics",
   "devices": [
@@ -62,11 +59,7 @@
   "hassio_api": true,
   "homeassistant_api": true,
   "image": "ghcr.io/alexbelgium/comixed-{arch}",
-  "map": [
-    "addon_config:rw",
-    "media:rw",
-    "share:rw"
-  ],
+  "map": ["addon_config:rw", "media:rw", "share:rw"],
   "name": "Comixed",
   "panel_admin": false,
   "panel_icon": "mdi:book-open",
@@ -76,10 +69,7 @@
   "ports_description": {
     "7171/tcp": "Web UI port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "TZ": "str?",
     "cifsdomain": "str?",

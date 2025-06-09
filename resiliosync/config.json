@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted file share and collaboration platform on the web",
   "devices": [
@@ -72,11 +69,7 @@
   "image": "ghcr.io/alexbelgium/resiliosync-{arch}",
   "ingress": true,
   "init": false,
-  "map": [
-    "share:rw",
-    "config:rw",
-    "media:rw"
-  ],
+  "map": ["share:rw", "config:rw", "media:rw"],
   "name": "ResilioSync",
   "options": {
     "PGID": 0,
@@ -95,11 +88,7 @@
     "55555/tcp": "Sync Port",
     "8888/tcp": "Web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH",
-    "NET_ADMIN"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "schema": {
     "PGID": "int",
     "PUID": "int",

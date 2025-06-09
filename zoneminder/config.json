@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A full-featured, open source, state-of-the-art video surveillance software system",
   "devices": [
@@ -76,12 +72,7 @@
     "ZM_DIR_EVENTS": "/var/cache/zoneminder/events2"
   },
   "image": "ghcr.io/alexbelgium/zoneminder-{arch}",
-  "map": [
-    "config:rw",
-    "media:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "media:rw", "share:rw", "ssl"],
   "name": "Zoneminder",
   "options": {
     "Images_location": "/config/addons_config/zoneminder/images"
@@ -95,9 +86,7 @@
   "schema": {
     "Images_location": "str"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "zoneminder",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",

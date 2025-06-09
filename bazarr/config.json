@@ -1,14 +1,6 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
-  "backup_exclude": [
-    "**/Backups/*",
-    "**/logs/*",
-    "**/MediaCover/*"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
+  "backup_exclude": ["**/Backups/*", "**/logs/*", "**/MediaCover/*"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Companion application to Sonarr and Radarr to download subtitles",
   "devices": [
@@ -80,12 +72,7 @@
   },
   "image": "ghcr.io/alexbelgium/bazarr-{arch}",
   "init": false,
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Bazarr NAS",
   "options": {
     "PGID": 0,
@@ -97,10 +84,7 @@
   "ports_description": {
     "6767/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",

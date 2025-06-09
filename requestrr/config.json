@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat",
   "devices": [
@@ -75,9 +71,7 @@
   },
   "image": "ghcr.io/alexbelgium/requestrr-{arch}",
   "init": false,
-  "map": [
-    "addon_config:rw"
-  ],
+  "map": ["addon_config:rw"],
   "name": "Requestrr",
   "options": {
     "PGID": 0,
@@ -89,10 +83,7 @@
   "ports_description": {
     "4545/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",

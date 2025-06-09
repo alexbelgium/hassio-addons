@@ -1,76 +1,101 @@
 ## 5.3-2025-05-30 (31-05-2025)
+
 - Minor bugs fixed
 
 ## 5.3-amd64-2025-05-30 (2025-05-30)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2025-05-07 (2025-05-07)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2025-04-04 (2025-04-04)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2025-03-18 (2025-03-18)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2025-03-04 (2025-03-04)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2025-02-22 (2025-02-22)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2025-02-20 (2025-02-20)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2025-02-08 (2025-02-08)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2025-02-04 (2025-02-04)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2025-01-09 (2025-01-09)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-11-20 (2024-11-20)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-11-12 (2024-11-12)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-09-27 (2024-09-27)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-09-13 (2024-09-13)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-08-09 (2024-08-09)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-08-01 (2024-08-01)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-06-27 (2024-06-27)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-06-07 (2024-06-07)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-05-10 (2024-05-10)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-04-19 (2024-04-19)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-04-11 (2024-04-11)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-04-04 (2024-04-04)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-03-19 (2024-03-19)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-03-15 (2024-03-15)
+
 - Update to latest version from mbentley/omada-controller
 
 ## 5.3-amd64-2024-02-28 (2024-02-28)
@@ -178,6 +203,7 @@
 ## 5.3-test-2022-06-13 (2022-06-13)
 
 - Update to latest version from mbentley/omada-controller
+
 ## 5.3-chromium-2023-06-05 (03-06-2023)
 
 - Minor bugs fixed

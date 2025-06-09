@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] [spotweb] Own dbsettings.inc.php (opened 2025-04-29)](https://github.com/alexbelgium/hassio-addons/issues/1850) by [@wimb0](https://github.com/wimb0)
+
 # Home Assistant Add-ons: Spotweb
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

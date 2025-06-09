@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A server-based application for browsing, organizing and sharing your personal photo collection",
   "devices": [
@@ -79,12 +76,7 @@
   "image": "ghcr.io/alexbelgium/photoprism-{arch}",
   "ingress": true,
   "ingress_stream": true,
-  "map": [
-    "media:rw",
-    "share:rw",
-    "config:rw",
-    "ssl:ro"
-  ],
+  "map": ["media:rw", "share:rw", "config:rw", "ssl:ro"],
   "name": "Photoprism",
   "options": {
     "BACKUP_PATH": "/share/photoprism/backup",
@@ -106,11 +98,7 @@
   "ports_description": {
     "2342/tcp": "Web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "SYS_RAWIO",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "SYS_RAWIO", "DAC_READ_SEARCH"],
   "schema": {
     "BACKUP_PATH": "str",
     "CONFIG_LOCATION": "str",
@@ -130,9 +118,7 @@
     "networkdisks": "str?",
     "ssl": "bool"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "photoprism",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",

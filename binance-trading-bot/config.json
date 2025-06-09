@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Automated Binance trading bot - Trade multiple cryptocurrencies. Buy low/sell high with Grid Trading. Integrated with TradingView technical analysis",
   "devices": [
@@ -78,9 +75,7 @@
   "image": "ghcr.io/alexbelgium/binance_trading_bot-{arch}",
   "ingress": true,
   "ingress_stream": true,
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Binance Trading Bot",
   "options": {
     "BINANCE_AUTHENTICATION_ENABLED": true,
@@ -98,10 +93,7 @@
     "80/tcp": "Web UI port",
     "8080/tcp": "Trading View port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "BINANCE_AUTHENTICATION_ENABLED": "bool",
     "BINANCE_AUTHENTICATION_PASSWORD": "str",

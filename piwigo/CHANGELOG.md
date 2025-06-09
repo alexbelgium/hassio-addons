@@ -1,23 +1,29 @@
-
 ## 15.5.0 (15-03-2025)
+
 - Update to latest version from linuxserver/docker-piwigo (changelog : https://github.com/linuxserver/docker-piwigo/releases)
 
 ## 15.4.0 (01-03-2025)
+
 - Update to latest version from linuxserver/docker-piwigo (changelog : https://github.com/linuxserver/docker-piwigo/releases)
 
 ## 15.3.0 (21-12-2024)
+
 - Update to latest version from linuxserver/docker-piwigo (changelog : https://github.com/linuxserver/docker-piwigo/releases)
 
 ## 15.1.0 (16-11-2024)
+
 - Update to latest version from linuxserver/docker-piwigo (changelog : https://github.com/linuxserver/docker-piwigo/releases)
 
 ## 15.0.0 (26-10-2024)
+
 - Update to latest version from linuxserver/docker-piwigo (changelog : https://github.com/linuxserver/docker-piwigo/releases)
 
 ## 14.5.0 (20-07-2024)
+
 - Update to latest version from linuxserver/docker-piwigo (changelog : https://github.com/linuxserver/docker-piwigo/releases)
 
 ## 14.4.0 (20-04-2024)
+
 - Update to latest version from linuxserver/docker-piwigo (changelog : https://github.com/linuxserver/docker-piwigo/releases)
 
 ## 14.3.0 (02-03-2024)

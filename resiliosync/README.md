@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Addon ResilioSync - License Management (opened 2025-02-16)](https://github.com/alexbelgium/hassio-addons/issues/1773) by [@rsstrene](https://github.com/rsstrene)
+
 # Home assistant add-on: Resilio Sync
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

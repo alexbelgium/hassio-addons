@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "High performance file syncing and sharing, with also Markdown WYSIWYG editing, Wiki, file label and other knowledge management features",
   "devices": [
@@ -75,11 +71,7 @@
     "PUID": "1000"
   },
   "image": "ghcr.io/alexbelgium/seafile-{arch}",
-  "map": [
-    "config:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "ssl"],
   "name": "Seafile",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/seafile/config.yaml",
@@ -105,11 +97,7 @@
     "8000/tcp": "Seahub",
     "8082/tcp": "File server"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH",
-    "NET_ADMIN"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "schema": {
     "CONFIG_LOCATION": "str?",
     "FILE_SERVER_ROOT": "str",
@@ -129,9 +117,7 @@
     "networkdisks": "str?",
     "url": "str"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "seafile",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",

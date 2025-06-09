@@ -1,4 +1,3 @@
-
 # Home assistant add-on: linkwarden
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -53,7 +52,7 @@ Options can be configured through two ways :
 ```
 
 - Config.yaml
-All other options can be configured using the config.yaml file found in /config/db21ed7f_filebrowser/config.yaml using the Filebrowser addon.
+  All other options can be configured using the config.yaml file found in /config/db21ed7f_filebrowser/config.yaml using the Filebrowser addon.
 
 The complete list of options can be seen here : https://docs.linkwarden.app/self-hosting/environment-variables
 
@@ -76,12 +75,9 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Follow the instruction from the Linkwarden docs page. https://docs.linkwarden.app/self-hosting/sso-oauth#authentik
 
-
-
 ## Common issues
 
 <details>
-
 
 ## Support
 

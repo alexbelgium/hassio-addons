@@ -1,52 +1,69 @@
 - Disabled migration script
 
 ## 10.10.7 (12-04-2025)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.10.6 (21-02-2025)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 - BREAKING CHANGE : Change default data location to /share rather than main system config folder. This is fully customizable through the data_location option. Also, is now allowing to use /config for a seemless backup of the library with the addon (not recommended as will mean very large backups at each update)
 - Manual update forced
 
 ## 10.10.5 (01-02-2025)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.10.4 (25-01-2025)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.10.3 (23-11-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.10.1 (09-11-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.10.0 (02-11-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.9.11 (14-09-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.9.10 (31-08-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.9.9 (10-08-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.9.8 (27-07-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.9.7 (29-06-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.9.6 (08-06-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
+
 ## 10.9.3-2 (01-06-2024)
+
 - Minor bugs fixed
 
 ## 10.9.3 (01-06-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.9.2 (18-05-2024)
+
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 
 ## 10.8.13-3-3 (10-12-2023)
@@ -61,9 +78,11 @@
 ## 10.8.13 (02-12-2023)
 
 - Update to latest version from linuxserver/docker-jellyfin
+
 ## 10.8.12-4 (21-11-2023)
 
 - Minor bugs fixed
+
 ## 10.8.12-2 (12-11-2023)
 
 - Minor bugs fixed

@@ -1,5 +1,3 @@
-
-
 # Home assistant add-on: plex
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

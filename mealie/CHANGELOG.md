@@ -1,46 +1,65 @@
-
 ## v2.8.0 (22-03-2025)
+
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
+
 ## v2.7.1-6 (02-03-2025)
+
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 
 ## v2.6.0 (08-02-2025)
+
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 
 ## v2.5.0-3 (01-02-2025)
+
 - Minor bugs fixed
 
 ## v2.5.0 (25-01-2025)
+
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
+
 ## v2.4.2-3 (09-01-2025)
+
 - Minor bugs fixed
+
 ## v2.4.2-2 (08-01-2025)
+
 - Minor bugs fixed
+
 ## v2.4.1-2 (21-12-2024)
+
 - Minor bugs fixed
 
 ## v2.4.1 (21-12-2024)
+
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 - Add discovery to Mealie config (Thanks @andrew-codechimp)
 
 ## v2.3.0 (30-11-2024)
+
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 
 ## v2.2.0 (16-11-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
+
 ## v2.1.0-2 (03-11-2024)
+
 - Addition of ingress, first try
 
 ## v2.1.0 (02-11-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 
 ## v2.0-beta5 (15-10-2024)
+
 - Applied new homeassistant config logic, which will allow in the future all Mealie data to be backuped with the addon. All data (+ config) is moved to /addon_configs/db21ed7f_mealie ; the initial data currently in /homeassistant/addons_config/mealie_data and config in /homeassistant/addons_config/mealie will not be moved but a "migrated" file will be added to those folders to show that migration occured. From now on, only data in /addon_configs/db21ed7f_mealie will be used.
 - If it doesn't load, there was perhaps an issue with the migration with a previous version. The solution : go in the Filebrowser addon, open the path /config/db21ed7f_mealie, move everything there in a new folder named old. Go then in the path /homeassistant/addons_config/mealie_data and remove the file named migrated. Restart the addon, and the migration will occur again
 
 - Logic change in terms of files :
 
   Previous logic :
+
   - Paths within container :
     - Data: /config/addons_config/mealie_data
     - Injector script: /config/addons_autoscripts/mealie.sh
@@ -52,6 +71,7 @@
   - Addon option : DATA_DIR="/config/addons_config/mealie_data"
 
   New logic :
+
   - Paths within container :
     - Data: /config
     - Injector script: /config/mealie.sh
@@ -67,12 +87,15 @@
   - Addon option : DATA_DIR="/config"
 
 ## v2.0-beta (10-10-2024)
+
 - Switched to v2.0 beta, should hopefully solve everyone's issues!
 
 ## v1.12.0-3 (22-09-2024)
+
 - Another version with 1.12 to try to solve issues with config not recognized
 
 ## v1.12.0-2 (25-08-2024)
+
 - BACKUP BEFORE UPDATING !!!
 - WARNING : version 1.12 erroneously updated to 2.0. Your database could become corrupted if you update from 1.12. You need to restore your homeassistant config directory before updating to this version Alas there is no easy solution to move back from Mealie 2.0 to 1.2.
 
@@ -88,35 +111,47 @@
 If you have neither, alas Mealie has no way to way back from the upgrade that occurred... For info, I've improved the system to make sure that the data is backuped in the future (this function did not exist when I created the addon) but this doesn't help for this specific issue.
 
 ## v1.12.0 (24-08-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 
 ## v1.11.0 (03-08-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 
 ## v1.10.2 (06-07-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 
 ## v1.9.0 (22-06-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 
 ## v1.8.0 (08-06-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 
 ## v1.7.0 (25-05-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 
 ## v1.6.0 (11-05-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
+
 ## v1.5.1-2 (01-05-2024)
+
 - Minor bugs fixed
 
 ## v1.5.1 (20-04-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 
 ## v1.4.0 (06-04-2024)
+
 - Update to latest version from hay-kot/mealie (changelog : https://github.com/hay-kot/mealie/releases)
 
 ## v1.3.2 (16-03-2024)
+
 - Update to latest version from hay-kot/mealie
 
 ## v1.3.1 (09-03-2024)
@@ -130,6 +165,7 @@ If you have neither, alas Mealie has no way to way back from the upgrade that oc
 ## v1.1.1 (03-02-2024)
 
 - Update to latest version from hay-kot/mealie
+
 ## v1.0.0-11 (30-01-2024)
 
 - Fix : incorrect redirect https://github.com/alexbelgium/hassio-addons/issues/1210
@@ -168,9 +204,11 @@ If you have neither, alas Mealie has no way to way back from the upgrade that oc
 ## v1.0.0-RC1.1 (14-10-2023)
 
 - Update to latest version from hay-kot/mealie
+
 ## v1.0.0-beta-5-4 (20-06-2023)
 
 - Minor bugs fixed
+
 ## v1.0.0-beta-5-3 (07-06-2023)
 
 - Minor bugs fixed

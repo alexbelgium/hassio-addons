@@ -1,4 +1,5 @@
-## &#9888; Open Issue : [🐛 [Filebrowser]  HA Core hangs after 2 file uploads (opened 2025-06-06)](https://github.com/alexbelgium/hassio-addons/issues/1884) by [@UplandJacob](https://github.com/UplandJacob)
+## &#9888; Open Issue : [🐛 [Filebrowser] HA Core hangs after 2 file uploads (opened 2025-06-06)](https://github.com/alexbelgium/hassio-addons/issues/1884) by [@UplandJacob](https://github.com/UplandJacob)
+
 # Home assistant add-on: Filebrowser
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -38,7 +39,7 @@ ssl: true/false
 certfile: fullchain.pem #ssl certificate
 keyfile: privkey.pem #sslkeyfile
 NoAuth: true/false #Remove password. Resets database when changed.
-disable_thumbnails : true/false (set disable_thumbnails to true or false ; default true for speed)
+disable_thumbnails: true/false (set disable_thumbnails to true or false ; default true for speed)
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares

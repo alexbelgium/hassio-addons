@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them",
   "devices": [
@@ -77,12 +73,7 @@
   "ingress": true,
   "ingress_entry": "sonarr",
   "init": false,
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
   "name": "Sonarr",
   "options": {
     "PGID": 0,
@@ -97,10 +88,7 @@
   "ports_description": {
     "8989/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",

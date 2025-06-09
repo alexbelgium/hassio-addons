@@ -1,16 +1,11 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Power tools for organizing your immich library",
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/immich_power_tools-{arch}",
   "init": false,
-  "map": [
-    "addon_config:rw"
-  ],
+  "map": ["addon_config:rw"],
   "name": "Immich Power Tools",
   "ports": {
     "3000/tcp": 8001

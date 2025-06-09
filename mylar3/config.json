@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Automated comic book downloader for use with NZB and torrents",
   "devices": [
@@ -75,11 +71,7 @@
   },
   "image": "ghcr.io/alexbelgium/mylar3-{arch}",
   "init": false,
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw"],
   "name": "Mylar3",
   "options": {
     "PGID": 0,
@@ -91,10 +83,7 @@
   "ports_description": {
     "8090/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",

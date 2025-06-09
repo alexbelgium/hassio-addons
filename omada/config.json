@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "TP-Link Omada Controller",
   "devices": [
@@ -76,10 +73,7 @@
     "TZ": "Etc/UTC"
   },
   "image": "ghcr.io/alexbelgium/omada-{arch}",
-  "map": [
-    "addon_config:rw",
-    "ssl:ro"
-  ],
+  "map": ["addon_config:rw", "ssl:ro"],
   "name": "Omada",
   "ports": {
     "29810/udp": 29810,

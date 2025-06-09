@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "web's leading on-line collaborative genealogy application",
   "devices": [
@@ -80,12 +76,7 @@
   },
   "image": "ghcr.io/alexbelgium/webtrees-{arch}",
   "init": false,
-  "map": [
-    "addon_config:rw",
-    "homeassistant_config:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["addon_config:rw", "homeassistant_config:rw", "share:rw", "ssl"],
   "name": "Webtrees",
   "options": {
     "BASE_URL": "http://192.168.178.23",
@@ -102,10 +93,7 @@
     "443/tcp": "Https web interface",
     "80/tcp": "Web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "BASE_URL": "url",
     "DATA_LOCATION": "str",
@@ -120,9 +108,7 @@
     "ssl": "bool",
     "trusted_headers": "str?"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "webtrees",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",

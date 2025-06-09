@@ -1,32 +1,41 @@
-
 ## 2.11.2.4629 (03-05-2025)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.10.3.4602 (29-03-2025)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.9.6.4552 (08-02-2025)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.8.2.4493 (21-12-2024)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.7.1.4417 (02-11-2024)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.6.4.4402 (12-10-2024)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.5.3.4341 (07-09-2024)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.4.3.4248 (20-07-2024)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.3.3.4204 (18-05-2024)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.2.5.4141 (20-04-2024)
+
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
 ## 2.1.7.4030 (17-02-2024)
@@ -89,6 +98,7 @@
 ## 1.1.4.3027-ls123 (10-06-2023)
 
 - Update to latest version from linuxserver/docker-lidarr
+
 ## 1.1.4.3027-ls122-2 (08-06-2023)
 
 - Minor bugs fixed

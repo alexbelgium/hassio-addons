@@ -18,18 +18,23 @@ Optional :
     "POSTGRES_DB": "str?" # Needed for postgresql_external
     "externalfiles_folder": "str?" # a folder that you want to map in to tandoor. Not needed as /share/ and /media/ are mapped. This folder will be created if it doesn't already exist.
 ```
+
 ### Mariadb
+
 Mariadb is a popular addon in the home assistant community, however it is not supported by the Tandoor Recipes application.
 
 ### Debug mode
+
 This is the "Environment" setting.
 0 is normal mode  
 1 is debug mode.
 
 ### Authentication
+
 using external authentication. Tandoor Recipes supports this, but it is not implemented yet.
 
 ### Gunicorn Media
+
 Disabling gunicorn media is a good idea, but needs a webserver running to host the media files. The webserver should map `/media/`.  
 See https://docs.tandoor.dev/install/docker/#nginx-vs-gunicorn for more information on this.  
 0 is gunicorn DISABLED - media won't work without an nginx webserver.  
@@ -39,6 +44,7 @@ See https://docs.tandoor.dev/install/docker/#nginx-vs-gunicorn for more informat
 
 The directory `/config/addons_config/tandoor_recipes/externalfiles` can be used for importing external files in to Tandoor. You can map this with /opt/recipes/externalfiles within Docker. As per directions here: https://docs.tandoor.dev/features/external_recipes/
 The directories `/config`, `/media/`, and `/share/` are mapped in to the addon. you can create a folder manually in any of these locations and map it in to tandoor:
+
 - create a directory in the location you want, e.g. `/share/tandoor/recipebook/`
 - create an externalstorage location in tandoor - `/share/tandoor/`
 - watch the specific folder - `/share/tandoor/recipebook/`

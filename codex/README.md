@@ -57,10 +57,10 @@ You can place the user folder from the theme/skeleton in /share/codex/www/user,
 ```yaml
 PGID: user
 GPID: user
-TZ : will explicitly the timezone in long format (e.g. "America/Los Angeles"). This is useful inside Docker because codex cannot automatically detect the host machine's timezone
-CODEX_RESET_ADMIN=1 : will reset the admin user and its password to defaults when codex starts.
-CODEX_SKIP_INTEGRITY_CHECK=1 : will skip the database integrity repair that runs when codex starts
-csrf_allowed : comma separated list of addresses allowed to access the app
+TZ: will explicitly the timezone in long format (e.g. "America/Los Angeles"). This is useful inside Docker because codex cannot automatically detect the host machine's timezone
+CODEX_RESET_ADMIN=1: will reset the admin user and its password to defaults when codex starts.
+CODEX_SKIP_INTEGRITY_CHECK=1: will skip the database integrity repair that runs when codex starts
+csrf_allowed: comma separated list of addresses allowed to access the app
 localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
 networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
 cifsusername: "username" # optional, smb username, same for all smb shares

@@ -1,14 +1,17 @@
-
 ## 1.7.48 (02-11-2024)
+
 - Update to latest version from linuxserver/docker-grav (changelog : https://github.com/linuxserver/docker-grav/releases)
 
 ## 1.7.47 (26-10-2024)
+
 - Update to latest version from linuxserver/docker-grav (changelog : https://github.com/linuxserver/docker-grav/releases)
 
 ## 1.7.46 (18-05-2024)
+
 - Update to latest version from linuxserver/docker-grav (changelog : https://github.com/linuxserver/docker-grav/releases)
 
 ## 1.7.45 (23-03-2024)
+
 - Update to latest version from linuxserver/docker-grav
 
 ## 1.7.44 (06-01-2024)
@@ -93,6 +96,7 @@
 ## 1.7.28 (25-01-2022)
 
 - Update to latest version from linuxserver/docker-grav
+
 ## 1.7.27.1 (15-01-2022)
 
 - Update to latest version from linuxserver/docker-grav

@@ -15,23 +15,27 @@ Thanks to @gotschi for the initial Docker Compose
 ## Prerequisites
 
 Ensure you have the following installed on your system:
+
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Installation
 
 1. **Create a directory for BirdNET-Pi**
+
    ```sh
    mkdir -p ~/birdnet-pi && cd ~/birdnet-pi
    ```
 
 2. **Create a `docker-compose.yml` file**
    Create and open the file with:
+
    ```sh
    nano docker-compose.yml
    ```
 
    Copy and paste the following configuration:
+
    ```yaml
    services:
      birdnet-pi:
@@ -39,33 +43,35 @@ Ensure you have the following installed on your system:
        image: ghcr.io/alexbelgium/birdnet-pi-amd64:latest # or ghcr.io/alexbelgium/birdnet-pi-aarch64:latest depending on your system
        restart: unless-stopped
        ports:
-         - "8001:8081"  # Used to access WebUI
-         - "80:80"  # Optional: set to 80 to use Caddy's automatic SSL. Can otherwise be set to null to avoid opening an additional port
+         - "8001:8081" # Used to access WebUI
+         - "80:80" # Optional: set to 80 to use Caddy's automatic SSL. Can otherwise be set to null to avoid opening an additional port
        environment:
-         - TZ=Europe/Vienna  # Optional: Set your timezone according to https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-         - BIRDSONGS_FOLDER=/config/BirdSongs  # Folder to store bird songs, be sure to use a path that is mapped to a volume (such as /config)
-         - LIVESTREAM_BOOT_ENABLED=false  # Enable/disable livestream on boot
-         - ssl=false  # Enable/disable SSL
-         - certfile=fullchain.pem  # SSL certificate file (located in /ssl/)
-         - keyfile=privkey.pem  # SSL key file (located in /ssl/)
-         - pi_password=  # Optional: Set SSH user password
-         - MQTT_HOST_manual=  # Optional: Manual MQTT host
-         - MQTT_PASSWORD_manual=  # Optional: Manual MQTT password
-         - MQTT_PORT_manual=  # Optional: Manual MQTT port
-         - MQTT_USER_manual=  # Optional: Manual MQTT user
+         - TZ=Europe/Vienna # Optional: Set your timezone according to https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+         - BIRDSONGS_FOLDER=/config/BirdSongs # Folder to store bird songs, be sure to use a path that is mapped to a volume (such as /config)
+         - LIVESTREAM_BOOT_ENABLED=false # Enable/disable livestream on boot
+         - ssl=false # Enable/disable SSL
+         - certfile=fullchain.pem # SSL certificate file (located in /ssl/)
+         - keyfile=privkey.pem # SSL key file (located in /ssl/)
+         - pi_password= # Optional: Set SSH user password
+         - MQTT_HOST_manual= # Optional: Manual MQTT host
+         - MQTT_PASSWORD_manual= # Optional: Manual MQTT password
+         - MQTT_PORT_manual= # Optional: Manual MQTT port
+         - MQTT_USER_manual= # Optional: Manual MQTT user
        volumes:
-         - ./config:/config  # All your configuration files - and location of the default Birdsongs folder
-         - ./ssl:/ssl  # SSL certificates
-         - /dev/shm:/dev/shm  # Shared memory
+         - ./config:/config # All your configuration files - and location of the default Birdsongs folder
+         - ./ssl:/ssl # SSL certificates
+         - /dev/shm:/dev/shm # Shared memory
        tmpfs:
          - /tmp # Optional
    ```
 
 3. **Start the Container**
    Run the following command in the same directory as `docker-compose.yml`:
+
    ```sh
    docker compose up -d
    ```
+
    This will start the BirdNET-Pi container in detached mode.
 
 4. **Access BirdNET-Pi Web UI**
@@ -91,10 +97,12 @@ To check for new versions of the container and update:
 
 2. **Update and restart the container**
    Run the following commands:
+
    ```sh
    docker compose pull birdnet-pi
    docker compose up -d --force-recreate
    ```
+
    This pulls the latest image and restarts the container.
 
 3. **Verify the update**
@@ -106,6 +114,7 @@ To check for new versions of the container and update:
 ## Stopping and Removing the Container
 
 To stop and remove the container, run:
+
 ```sh
 docker compose down
 ```

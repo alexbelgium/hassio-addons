@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] immich and Nextcloud Ingress support (opened 2025-03-15)](https://github.com/alexbelgium/hassio-addons/issues/1812) by [@bessertristan09](https://github.com/bessertristan09)
+
 # Home assistant add-on: Nextcloud
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -35,6 +36,7 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 /config/addons_autoscripts/nextcloud-ocr.sh will be executed at boot.
 To run custom commands at boot you can try a code such as :
+
 ```bash
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash

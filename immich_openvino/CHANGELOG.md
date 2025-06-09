@@ -1,45 +1,67 @@
 ## 1.134.0-2 (31-05-2025)
+
 - Minor bugs fixed
 
 ## 1.134.0 (31-05-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
+
 ## 1.133.1-3 (30-05-2025)
+
 - MAJOR CHANGE : please backup your database before updating
 - Added vector.rs to vectorchord migration script for immich database
 
 ## 1.133.1-2 (26-05-2025)
+
 - MAJOR CHANGE : please backup your database before updating
 - Added VectorChord support https://github.com/immich-app/immich/releases/tag/v1.133.0
 
 ## 1.133.1 (24-05-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.132.3 (03-05-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.132.1 (26-04-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
+
 ## 1.131.3-3 (05-04-2025)
+
 - Minor bugs fixed
+
 ## 1.131.3-2 (05-04-2025)
+
 - Minor bugs fixed
 
 ## 1.131.3 (05-04-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.130.3 (29-03-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.129.0 (08-03-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.128.0 (01-03-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
+
 ## 1.126.1-12 (20-02-2025)
+
 - Minor bugs fixed
+
 ## 1.126.1-11 (19-02-2025)
+
 - Minor bugs fixed
+
 ## 1.126.1-7 (16-02-2025)
+
 - RISK OF BREAKING CHANGE : backup both immich & postgres before starting
 - RISK OF BREAKING CHANGE : rewrite and improve database creation tool using addon options (overwritting manual database creation)
 - SECURITY FIX : avoid hardcoding the postgres root password and change it if was already applied
@@ -50,110 +72,151 @@
 - Add gpu access
 
 ## 1.126.1 (15-02-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.125.7 (01-02-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.125.2 (25-01-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
+
 ## 1.124.2-2 (11-01-2025)
+
 - Minor bugs fixed
 
 ## 1.124.2 (11-01-2025)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.123.0 (21-12-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.122.3 (14-12-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
+
 ## 1.122.1-4 (10-12-2024)
+
 - Fix compatibility with postgres 15 addon
 
 ## 1.122.1-3 (08-12-2024)
+
 - Fix healthcheck (thanks @red-avtovo)
 
 ## 1.122.1-2 (08-12-2024)
+
 - Minor bugs fixed
 
 ## 1.122.1 (07-12-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.121.0 (23-11-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.120.2 (16-11-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.120.1 (09-11-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.119.1 (02-11-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.118.2 (19-10-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.117.0 (05-10-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.116.2 (28-09-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.115.0 (14-09-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.114.0 (07-09-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.113.0 (31-08-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.112.1 (17-08-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.111.0 (03-08-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.110.0 (27-07-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.109.2 (20-07-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.108.0 (13-07-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.107.2 (06-07-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
+
 ## 1.106.4-3 (24-06-2024)
+
 - Minor bugs fixed
+
 ## 1.106.4-2 (15-06-2024)
+
 - Minor bugs fixed
 
 ## 1.106.4 (15-06-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.105.1 (18-05-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.103.1 (04-05-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.102.3 (27-04-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.101.0 (06-04-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.100.0 (30-03-2024)
+
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
 
 ## 1.99.0 (23-03-2024)
+
 - Update to latest version from imagegenius/docker-immich
 
 ## 1.98.2 (16-03-2024)
+
 - Update to latest version from imagegenius/docker-immich
 
 ## 1.98.1 (09-03-2024)
@@ -186,6 +249,7 @@
 ## 1.89.0 (02-12-2023)
 
 - Update to latest version from imagegenius/docker-immich
+
 ## 1.88.2-3 (27-11-2023)
 
 - Minor bugs fixed
@@ -194,12 +258,15 @@
 ## 1.88.2 (25-11-2023)
 
 - Update to latest version from imagegenius/docker-immich
+
 ## 1.88.1-7 (24-11-2023)
 
 - Minor bugs fixed
+
 ## 1.88.1-6 (23-11-2023)
 
 - Minor bugs fixed
+
 ## 1.88.1-5 (23-11-2023)
 
 - Minor bugs fixed
@@ -232,6 +299,7 @@
 ## 1.81.1 (07-10-2023)
 
 - Update to latest version from imagegenius/docker-immich
+
 ## 1.79.1-2 (24-09-2023)
 
 - Minor bugs fixed
@@ -240,9 +308,11 @@
 ## 1.79.1 (23-09-2023)
 
 - Update to latest version from imagegenius/docker-immich
+
 ## 1.78.1-6 (22-09-2023)
 
 - Minor bugs fixed
+
 ## 1.78.1-5 (21-09-2023)
 
 - Minor bugs fixed

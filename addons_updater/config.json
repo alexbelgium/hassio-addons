@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "boot": "manual",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Automatic addons update by aligning version tag with upstream releases",
@@ -12,9 +8,7 @@
   },
   "image": "ghcr.io/alexbelgium/addons_updater-{arch}",
   "init": false,
-  "map": [
-    "addon_config:rw"
-  ],
+  "map": ["addon_config:rw"],
   "name": "Repository Updater",
   "options": {
     "gitapi": "gitapi",

@@ -1,17 +1,11 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "An open source command line RatioMaster with WebUI",
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/joal-{arch}",
   "ingress": true,
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Joal",
   "options": {
     "run_duration": "12h",

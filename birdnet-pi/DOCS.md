@@ -24,7 +24,7 @@ Here are some example tests I did (the whole threads are really interesting also
 I've tested lots of settings by running 2 versions of my HA birdnet-pi addon in parallel using the same RTSP feed and comparing the impact of parameters. My conclusions aren't universal, as it seems to be highly dependent on the region and type of mic used. For example, the old model seems to be better in Australia, while the new one is better in Europe.
 
 - **Model**
-  - **Version:** 6k_v2.4 _(performs better in Europe at least, the 6k performs better in Australia)_
+  - **Version:** 6k*v2.4 *(performs better in Europe at least, the 6k performs better in Australia)\_
   - **Species range model:** v1 _(uncheck v2.4; seems more robust in Europe)_
   - **Species occurrence threshold:** 0.001 _(was 0.00015 using v2.4; use the Species List Tester to check the correct value for you)_
 - **Audio settings**
@@ -62,6 +62,7 @@ sudo apt-get dist-upgrade -y
 sudo apt-get install -y micro ffmpeg lsof
 sudo -s cd /root && wget -c https://github.com/bluenviron/mediamtx/releases/download/v1.9.1/mediamtx_v1.9.1_linux_arm64v8.tar.gz -O - | sudo tar -xz
 ```
+
 </details>
 
 <details>
@@ -123,6 +124,7 @@ if [ -f "$HOME/autogain.py" ]; then
     sudo python3 -u "$HOME/autogain.py" >/tmp/log_autogain 2>/tmp/log_autogain_error &
 fi
 ```
+
 </details>
 
 <details>
@@ -243,6 +245,7 @@ if __name__ == "__main__":
 
     main()
 ```
+
 </details>
 
 <details>
@@ -252,6 +255,7 @@ if __name__ == "__main__":
 chmod +x startmic.sh
 crontab -e # select nano as your editor
 ```
+
 Paste in:
 
 ```bash
@@ -330,6 +334,7 @@ echo 'GOVERNOR="performance"' | sudo tee /etc/default/cpufrequtils
 sudo systemctl disable ondemand
 sudo systemctl stop ondemand
 ```
+
 </details>
 
 <details>
@@ -348,6 +353,7 @@ sudo depmod
 sudo reboot
 dmesg | grep -A 5 -B 5 -i focusrite
 ```
+
 </details>
 
 <details>
@@ -358,6 +364,7 @@ sudo cp /usr/share/systemd/tmp.mount /etc/systemd/system/tmp.mount
 sudo systemctl enable tmp.mount
 sudo systemctl start tmp.mount
 ```
+
 </details>
 
 <details>

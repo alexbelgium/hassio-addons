@@ -1,5 +1,7 @@
 ## &#9888; Open Issue : [🐛 [Birdnet-go] USB microphones selectable in UI, but not working (opened 2025-03-12)](https://github.com/alexbelgium/hassio-addons/issues/1808) by [@melor](https://github.com/melor)
+
 ## &#9888; Open Issue : [🐛 [BirdNET-Go] HA Ingress url does not redirect to url with date (opened 2025-04-02)](https://github.com/alexbelgium/hassio-addons/issues/1830) by [@phobiac](https://github.com/phobiac)
+
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -19,7 +21,6 @@
 _Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://reporoster.com/stars/alexbelgium/hassio-addons)](https://github.com/alexbelgium/hassio-addons/stargazers)
-
 
 ![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/birdnet-go/stats.png)
 
@@ -41,16 +42,16 @@ Options can be configured through three ways :
 - Addon options
 
 ```yaml
-ALSA_CARD : number of the card (0 or 1 usually), see https://github.com/tphakala/birdnet-go/blob/main/doc/installation.md#deciding-alsa_card-value
+ALSA_CARD: number of the card (0 or 1 usually), see https://github.com/tphakala/birdnet-go/blob/main/doc/installation.md#deciding-alsa_card-value
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
-COMMAND : realtime --rtsp url # allows to provide arguments to birdnet-go
+COMMAND: realtime --rtsp url # allows to provide arguments to birdnet-go
 ```
 
 - Config.yaml
-Additional variables can be configured using the config.yaml file found in /config/db21ed7f_birdnet-go/config.yaml using the Filebrowser addon
+  Additional variables can be configured using the config.yaml file found in /config/db21ed7f_birdnet-go/config.yaml using the Filebrowser addon
 
 - Config_env.yaml
-Additional environment variables can be configured there
+  Additional environment variables can be configured there
 
 ## Installation
 
@@ -59,6 +60,7 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
 
    [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
 1. Set the add-on options to your preferences
@@ -138,4 +140,3 @@ Create an issue on github
 ---
 
 ![illustration](https://raw.githubusercontent.com/tphakala/birdnet-go/main/doc/BirdNET-Go-dashboard.webp)
-

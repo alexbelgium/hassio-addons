@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Free and Open, Distributed, RESTful Search Engine",
   "devices": [
@@ -76,9 +73,7 @@
   },
   "host_network": true,
   "image": "ghcr.io/alexbelgium/elasticsearch-{arch}",
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Elasticsearch server",
   "ports": {
     "9200/tcp": 9200,

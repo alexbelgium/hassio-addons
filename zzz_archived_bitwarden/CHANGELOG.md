@@ -1,44 +1,57 @@
-
 ## 1.34.1 (31-05-2025)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.33.2 (15-02-2025)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.33.1 (08-02-2025)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.33.0 (01-02-2025)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.32.7 (21-12-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.32.6 (14-12-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.32.5 (23-11-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.32.4 (16-11-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.32.3 (02-11-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.32.2 (19-10-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.32.1 (05-10-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.32.0 (17-08-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.31.0 (13-07-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
 ## 1.30.5 (04-05-2024)
+
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 - Deprecated, please use version from community repository. Just export your vault from this addon, and import it in the official addon.
 
@@ -49,6 +62,7 @@
 ## 1.30.0 (11-11-2023)
 
 - Update to latest version from dani-garcia/bitwarden_rs
+
 ## 1.29.2-2 (02-09-2023)
 
 - Minor bugs fixed

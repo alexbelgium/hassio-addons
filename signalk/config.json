@@ -1,10 +1,6 @@
 {
   "apparmor": false,
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "An implementation of a Signal K central server for boats",
   "devices": [
@@ -23,9 +19,7 @@
     "TCPSTREAMPORT": "8375"
   },
   "image": "ghcr.io/alexbelgium/signalk-{arch}",
-  "map": [
-    "addon_config:rw"
-  ],
+  "map": ["addon_config:rw"],
   "name": "Signalk Server",
   "ports": {
     "10110/tcp": 10110,
@@ -45,10 +39,7 @@
     "3443/tcp": "ssl web interface",
     "8375/tcp": "TCPSTREAM port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "SYS_RAWIO"
-  ],
+  "privileged": ["SYS_ADMIN", "SYS_RAWIO"],
   "slug": "signalk",
   "uart": true,
   "udev": true,

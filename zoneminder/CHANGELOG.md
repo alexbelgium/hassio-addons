@@ -1,8 +1,9 @@
-
 ## 1.36.35 (26-10-2024)
+
 - Update to latest version from zoneminder-containers/zoneminder-base (changelog : https://github.com/zoneminder-containers/zoneminder-base/releases)
 
 ## 1.36.34 (17-08-2024)
+
 - Update to latest version from zoneminder-containers/zoneminder-base (changelog : https://github.com/zoneminder-containers/zoneminder-base/releases)
 
 ## 1.36.33-3 (30-06-2023)

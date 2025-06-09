@@ -1,4 +1,3 @@
-
 # Home assistant add-on: Autobrrf
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

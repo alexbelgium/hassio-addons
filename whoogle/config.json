@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted, ad-free, privacy-respecting metasearch engine",
   "devices": [
@@ -74,9 +71,7 @@
   "image": "ghcr.io/alexbelgium/whoogle-search-{arch}",
   "ingress": true,
   "ingress_stream": true,
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Whoogle Search",
   "options": {
     "TZ": "Europe/Amsterdam",

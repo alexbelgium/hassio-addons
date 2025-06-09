@@ -1,27 +1,42 @@
 ## 1.5.8-5 (13-01-2025)
+
 - Allow non ssl servers
 - Use /usr/bin/maria instead of mysql
 
 ## 1.5.8 (21-12-2024)
+
 - Update to latest version from spotweb/spotweb (changelog : https://github.com/spotweb/spotweb/releases)
 
 ## 1.5.7 (30-11-2024)
+
 - Update to latest version from spotweb/spotweb (changelog : https://github.com/spotweb/spotweb/releases)
 
 ## 1.5.6 (23-11-2024)
+
 - Update to latest version from spotweb/spotweb (changelog : https://github.com/spotweb/spotweb/releases)
+
 ## 1.5.5-6 (28-10-2024)
+
 - Minor bugs fixed
+
 ## 1.5.5-5 (27-10-2024)
+
 - Minor bugs fixed
+
 ## 1.5.5-4 (27-10-2024)
+
 - Minor bugs fixed
+
 ## 1.5.5-3 (27-10-2024)
+
 - Minor bugs fixed
+
 ## 1.5.5-2 (27-10-2024)
+
 - Minor bugs fixed
 
 ## 1.5.5 (26-10-2024)
+
 - Update to latest version from spotweb/spotweb (changelog : https://github.com/spotweb/spotweb/releases)
 
 ## 1.5.4-10 (04-12-2023)

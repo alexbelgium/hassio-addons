@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "description": "e-book manager",
   "devices": [
     "/dev/dri",
@@ -103,11 +100,7 @@
     "8081/tcp": "Calibre webserver gui, to be enabled within the desktop gui",
     "9090/tcp": "Calibre wireless connection, to be enabled within the desktop gui"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH",
-    "NET_ADMIN"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "schema": {
     "CLI_ARGS": "str?",
     "PASSWORD": "str?",

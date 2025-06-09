@@ -1,4 +1,3 @@
-
 # Home assistant add-on: Papermerge
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

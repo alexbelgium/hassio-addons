@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Fast, Simple, and Flexible, file-based Web-platform",
   "devices": [
@@ -70,11 +67,7 @@
   ],
   "image": "ghcr.io/alexbelgium/grav-{arch}",
   "init": false,
-  "map": [
-    "share:rw",
-    "media:rw",
-    "config:rw"
-  ],
+  "map": ["share:rw", "media:rw", "config:rw"],
   "name": "Grav web server",
   "options": {
     "PGID": 1000,

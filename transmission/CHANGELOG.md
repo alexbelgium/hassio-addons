@@ -1,19 +1,28 @@
 ## 4.0.6-r0-ls272-4 (21-02-2025)
+
 - Minor bugs fixed
+
 ## 4.0.6-r0-ls272-3 (20-02-2025)
+
 - Minor bugs fixed
+
 ## 4.0.6-r0-ls272-2 (19-01-2025)
+
 - Selected flood as default ui
 - Disabled ui with issues https://github.com/alexbelgium/hassio-addons/issues/1718
 
 ## 4.0.6-r0-ls272 (17-12-2024)
+
 - Minor bugs fixed
 - Fix transmission web control
 - Update to latest
 
 ## 4.0.6 (22-06-2024)
+
 - Update to latest version from linuxserver/docker-transmission (changelog : https://github.com/linuxserver/docker-transmission/releases)
+
 ## 4.0.5-3 (06-04-2024)
+
 - Minor bugs fixed
 
 ## 4.0.5-2 (05-03-2024)
@@ -23,6 +32,7 @@
 ## 4.0.5 (09-12-2023)
 
 - Update to latest version from linuxserver/docker-transmission
+
 ## 4.0.4-2 (27-11-2023)
 
 - Minor bugs fixed

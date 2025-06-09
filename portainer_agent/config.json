@@ -1,12 +1,6 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
-  "backup_exclude": [
-    "backups"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
+  "backup_exclude": ["backups"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "An agent used to manage all the resources in a Swarm cluster",
   "docker_api": true,
@@ -14,11 +8,7 @@
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/portainer_agent-{arch}",
   "init": false,
-  "map": [
-    "config:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "ssl"],
   "name": "Portainer Agent",
   "ports": {
     "80/tcp": null,

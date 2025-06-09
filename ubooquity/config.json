@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Free, lightweight, and easy-to-use home server for your comics and ebooks",
   "devices": [
@@ -70,12 +67,7 @@
   ],
   "image": "ghcr.io/alexbelgium/ubooquity-{arch}",
   "init": false,
-  "map": [
-    "media:rw",
-    "config:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["media:rw", "config:rw", "share:rw", "ssl"],
   "name": "Ubooquity",
   "options": {
     "PGID": 0,
@@ -94,10 +86,7 @@
     "2205/tcp": "Library page (to expose)",
     "2206/tcp": "Admin page (local)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",

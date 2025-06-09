@@ -1,10 +1,11 @@
-
 ## 1.34.0 (29-03-2025)
+
 - Update to latest version from linuxserver/docker-overseerr (changelog : https://github.com/linuxserver/docker-overseerr/releases)
 
 ## 1.33.2 (29-07-2023)
 
 - Update to latest version from linuxserver/docker-overseerr
+
 ## 1.33.1 (26-07-2023)
 
 - Minor bugs fixed

@@ -55,7 +55,6 @@ Options can be configured through two ways :
 
 Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
 
-
 The complete list of ENV variables can be seen here : https://github.com/firefly-iii/data-importer/blob/main/.env.example
 
 ## Installation

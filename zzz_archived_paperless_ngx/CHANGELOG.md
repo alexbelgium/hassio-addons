@@ -1,83 +1,111 @@
-
 ## 2.15.1 (12-04-2025)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.14.7 (01-02-2025)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
+
 ## 2.14.5-4 (30-01-2025)
+
 - Minor bugs fixed
+
 ## 2.14.5-3 (29-01-2025)
+
 - Minor bugs fixed
+
 ## 2.14.5-2 (29-01-2025)
+
 - Minor bugs fixed
 
 ## 2.14.5 (25-01-2025)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.14.3 (18-01-2025)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.13.5 (16-11-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.13.4 (09-11-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.13.2 (02-11-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.13.0 (26-10-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.12.1 (21-09-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.12.0 (14-09-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.11.6 (24-08-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.11.4 (17-08-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.11.3 (10-08-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.11.2 (03-08-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.11.1 (27-07-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.11.0 (13-07-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.10.2 (29-06-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.10.1 (22-06-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.9.0 (08-06-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.8.6 (18-05-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.8.3 (11-05-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.7.2 (13-04-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx (changelog : https://github.com/paperless-ngx/paperless-ngx/releases)
 
 ## 2.6.3 (23-03-2024)
+
 - Update to latest version from paperless-ngx/paperless-ngx
 
 ## 2.6.2-2 (09-03-2024)
 
 - Minor bugs fixed
-Migration (thanks @eikeja) :
+  Migration (thanks @eikeja) :
 - Install the new addon
 - Make a backup of the old Paperless directory. In my case "/addon_configs/db21ed7f_paperless_ng"
 - View the folder structure of the new instance, assign files from the old instance to the folders of the new instance.
@@ -113,6 +141,7 @@ Folder assignment:
 ## 2.4.0 (20-01-2024)
 
 - Update to latest version from paperless-ngx/paperless-ngx
+
 ## 2.3.3-4 (13-01-2024)
 
 - Tentative fix : paperless not starting https://github.com/alexbelgium/hassio-addons/issues/1178

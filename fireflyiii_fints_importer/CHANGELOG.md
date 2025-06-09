@@ -1,4 +1,3 @@
-
 ## 1.3.0 (05-11-2023)
 
 - Adds working cron job

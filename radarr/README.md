@@ -1,4 +1,3 @@
-
 # Home assistant add-on: Radarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

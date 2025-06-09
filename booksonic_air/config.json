@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "platform for accessing the audiobooks you own wherever you are",
   "devices": [
@@ -74,10 +71,7 @@
   },
   "image": "ghcr.io/alexbelgium/calibre_web-{arch}",
   "init": false,
-  "map": [
-    "share:rw",
-    "media:rw"
-  ],
+  "map": ["share:rw", "media:rw"],
   "name": "Booksonic air",
   "options": {
     "PGID": 0,
@@ -89,10 +83,7 @@
   "ports_description": {
     "4040/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",

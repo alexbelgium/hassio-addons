@@ -1,19 +1,25 @@
 ## 1.0.3 (21-05-2025)
+
 - Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases)
 
 ## 1.0.2 (04-08-2024)
+
 - Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases)
 
 ## 1.0.1-2 (05-08-2024)
+
 - Minor bugs fixed
 
 ## 1.0.1 (25-07-2024)
+
 - Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases)
 
 ## 1.0.0 (11-07-2024)
+
 - Update to version 1.0.0 of baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases)
 
 ## 2024.1.30 (04-05-2024)
+
 - Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases)
 
 ## 2024.4.29-2 (29-04-2024)

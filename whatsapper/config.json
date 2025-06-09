@@ -1,14 +1,9 @@
 {
-  "arch": [
-    "amd64"
-  ],
+  "arch": ["amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Whatsapper for Home Assistant",
   "image": "ghcr.io/alexbelgium/whatsapper-{arch}",
-  "map": [
-    "addon_config:rw",
-    "share:rw"
-  ],
+  "map": ["addon_config:rw", "share:rw"],
   "name": "Whatsapper",
   "ports": {
     "3000/tcp": 4000

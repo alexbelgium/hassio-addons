@@ -4,7 +4,7 @@ bashio::log.info "Starting Immich Frame"
 
 mkdir -p /config/Config
 if [ -f /app/Config ]; then
-  rm -r /app/Config
+	rm -r /app/Config
 fi
 ln -sf /app/Config /config/Config
 

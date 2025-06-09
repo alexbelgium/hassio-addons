@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "amd64",
-    "aarch64"
-  ],
+  "arch": ["amd64", "aarch64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Import financial transactions from your FinTS enabled bank into Firefly III",
   "devices": [
@@ -72,11 +69,7 @@
     "TRUSTED_PROXIES": "**"
   },
   "image": "ghcr.io/alexbelgium/fireflyiii_fints_importer-{arch}",
-  "map": [
-    "config:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "share:rw", "ssl"],
   "name": "Firefly iii FinTS Importer",
   "ports": {
     "8080/tcp": 3476

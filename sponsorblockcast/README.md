@@ -1,4 +1,3 @@
-
 # Home assistant add-on: CastSponsorSkip
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -28,6 +27,7 @@ CastSponsorSkip is a Go program that skips sponsored YouTube content and skippab
 This app is developed by @gabe565 here : https://github.com/gabe565/CastSponsorSkip
 
 Feedback from @diamant-x :
+
 > Special attention that it only works when casting to a chromecast a youtube video. It mostly removes manual interaction, can't magically skip ads when they are forced to be viewed.
 > Also, it doesn't seem to work when playing on an android tv through native youtube app, which would be a great addition, or on a smartphone.
 

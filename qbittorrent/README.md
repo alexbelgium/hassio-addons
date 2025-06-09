@@ -121,6 +121,7 @@ pull-filter ignore "dhcp-option DNS6"
 pull-filter ignore "tun-ipv6"
 pull-filter ignore "ifconfig-ipv6"
 ```
+
 </details>
 
 <details>
@@ -132,28 +133,28 @@ pull-filter ignore "ifconfig-ipv6"
 
 ```json
 {
-    "folder/to/watch": {
-        "add_torrent_params": {
-            "category": "",
-            "content_layout": "Original",
-            "download_limit": -1,
-            "download_path": "[folder/for/INCOMPLETE_downloads]",
-            "operating_mode": "AutoManaged",
-            "ratio_limit": -2,
-            "save_path": "[folder/for/COMPLETED_downloads]",
-            "seeding_time_limit": -2,
-            "skip_checking": false,
-            "stopped": false,
-            "tags": [
-            ],
-            "upload_limit": -1,
-            "use_auto_tmm": false,
-            "use_download_path": true
-        },
-        "recursive": false
-    }
+  "folder/to/watch": {
+    "add_torrent_params": {
+      "category": "",
+      "content_layout": "Original",
+      "download_limit": -1,
+      "download_path": "[folder/for/INCOMPLETE_downloads]",
+      "operating_mode": "AutoManaged",
+      "ratio_limit": -2,
+      "save_path": "[folder/for/COMPLETED_downloads]",
+      "seeding_time_limit": -2,
+      "skip_checking": false,
+      "stopped": false,
+      "tags": [],
+      "upload_limit": -1,
+      "use_auto_tmm": false,
+      "use_download_path": true
+    },
+    "recursive": false
+  }
 }
 ```
+
 </details>
 
 <details>
@@ -173,12 +174,14 @@ Wait a couple minutes and restart addon, it could be a temporary unavailability 
 > [cont-init.d] 00-local_mounts.sh: exited 0.
 
 Try to mount by putting the partition label in the "localdisks" options instead of the hardware name
+
 </details>
 
 <details>
   <summary>### Loss of metadata fetching with openvpn after several days (@almico)</summary>
 
 Add `ping-restart 60` to your config.ovpn
+
 </details>
 
 <details>
@@ -186,6 +189,7 @@ Add `ping-restart 60` to your config.ovpn
 
 When my window size width is lower than 960 pixels my downloads are empty.
 Solution is to reset the Vuetorrent settings.
+
 </details>
 
 ## Support

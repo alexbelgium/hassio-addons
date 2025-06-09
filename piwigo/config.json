@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Piwigo is a photo gallery software for the web",
   "devices": [
@@ -74,12 +70,7 @@
   },
   "image": "ghcr.io/alexbelgium/piwigo-{arch}",
   "init": false,
-  "map": [
-    "config:rw",
-    "media:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["config:rw", "media:rw", "share:rw", "ssl"],
   "name": "Piwigo",
   "options": {
     "PGID": 0,
@@ -91,10 +82,7 @@
   "ports_description": {
     "80/tcp": "WebUI port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",

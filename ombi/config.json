@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted Plex Request and user management system",
   "devices": [
@@ -71,9 +67,7 @@
   ],
   "image": "ghcr.io/alexbelgium/ombi-{arch}",
   "init": false,
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Ombi",
   "options": {
     "PGID": 0,

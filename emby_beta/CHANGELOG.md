@@ -1,131 +1,172 @@
-
 ## 4.9.1.0 (31-05-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.60 (24-05-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.56 (17-05-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.52 (10-05-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.51 (03-05-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.50 (26-04-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 - WARNING : migration of config to addon_config instead of homeassistant config folder. Allows automatic backups. The location of the database however is not changed.
 
 ## 4.9.0.48 (19-04-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.43-3 (05-04-2025)
+
 - Minor bugs fixed
 
 ## 4.9.0.43 (05-04-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.42 (15-03-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.41 (08-03-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.40 (01-03-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.38 (08-02-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.37 (25-01-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.35 (11-01-2025)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.34 (28-12-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.33 (14-12-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.32 (23-11-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.31 (09-11-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.30 (31-08-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.29 (10-08-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.28 (27-07-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.27 (20-07-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.26 (29-06-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.25 (22-06-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.24 (15-06-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.23 (08-06-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.22 (01-06-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.21 (25-05-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.19 (18-05-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.18 (11-05-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.16 (04-05-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.15 (27-04-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.14 (20-04-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.13 (13-04-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.12 (30-03-2024)
+
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
 
 ## 4.9.0.11 (23-03-2024)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.9.0.10 (16-03-2024)
+
 - Update to latest version from linuxserver/docker-emby
 
 ## 4.9.0.8 (02-03-2024)
 
 - Update to latest version from linuxserver/docker-emby
+
 ## 4.9.0.5-5 (27-02-2024)
 
 - Minor bugs fixed
+
 ## 4.9.0.5-4 (26-02-2024)
 
 - Minor bugs fixed
+
 ## 4.9.0.5-3 (26-02-2024)
 
 - Minor bugs fixed
+
 ## 4.9.0.5-2 (26-02-2024)
 
 - Minor bugs fixed
@@ -137,6 +178,7 @@
 ## 4.9.0.4 (17-02-2024)
 
 - Update to latest version from linuxserver/docker-emby
+
 ## 4.9.0.1-2 (13-02-2024)
 
 - Minor bugs fixed
@@ -216,18 +258,23 @@
 ## 4.8.0.52 (13-10-2023)
 
 - Update to latest version from linuxserver/docker-emby
+
 ## 4.8.0.49-6 (05-10-2023)
 
 - Minor bugs fixed
+
 ## 4.8.0.49-5 (05-10-2023)
 
 - Minor bugs fixed
+
 ## 4.8.0.49-4 (05-10-2023)
 
 - Minor bugs fixed
+
 ## 4.8.0.49-3 (05-10-2023)
 
 - Minor bugs fixed
+
 ## 4.8.0.49-2 (04-10-2023)
 
 - Minor bugs fixed
@@ -248,6 +295,7 @@
 ## 4.8.0.46 (16-09-2023)
 
 - Update to latest version from linuxserver/docker-emby
+
 ## 4.8.0.45-2 (09-09-2023)
 
 - Minor bugs fixed

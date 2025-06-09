@@ -1,71 +1,93 @@
-
 ## 1.62.0 (10-05-2025)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.61.0 (19-04-2025)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.60.0 (22-03-2025)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.59.0 (08-03-2025)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.58.0 (01-02-2025)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.57.0 (11-01-2025)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.56.1 (04-01-2025)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.56.0 (28-12-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.54.0 (21-12-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.53.1 (14-12-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.52.0 (07-12-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.51.1 (30-11-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.50.0 (16-11-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.49.0 (09-11-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.48.0 (26-10-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.47.1 (12-10-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.46.1 (14-09-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.45.0 (31-08-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.44.0 (27-07-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.43.0 (22-06-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.42.0 (11-05-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.41.0 (20-04-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.40.1 (30-03-2024)
+
 - Update to latest version from autobrr/autobrr (changelog : https://github.com/autobrr/autobrr/releases)
 
 ## 1.39.1 (02-03-2024)

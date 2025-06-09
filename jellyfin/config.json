@@ -1,17 +1,7 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
-  "backup_exclude": [
-    "**/cache/",
-    "**/log/",
-    "**/transcode/"
-  ],
-  "breaking_versions": [
-    "10.10.6*"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
+  "backup_exclude": ["**/cache/", "**/log/", "**/transcode/"],
+  "breaking_versions": ["10.10.6*"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A Free Software Media System that puts you in control of managing and streaming your media",
   "devices": [
@@ -111,11 +101,7 @@
     "8096/tcp": "web interface",
     "8920/tcp": "https web interface (optional)"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH",
-    "NET_ADMIN"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
   "schema": {
     "DOCKER_MODS": "list(linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg|)?",
     "PGID": "int",

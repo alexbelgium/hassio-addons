@@ -1,20 +1,29 @@
-
 ## 1.5.5-bullseye (25-01-2025)
+
 - Update to latest version from abesnier/guacamole
 
 ## 1.5.5-pg17 (25-01-2025)
+
 - Update to latest version from abesnier/guacamole
 
 ## githubtest (25-01-2025)
+
 - Update to latest version from abesnier/guacamole
+
 ## 1.5.5 (08-10-2024)
+
 - Info : https://hub.docker.com/r/abesnier/guacamole
 
 ## TEST3 (18-03-2024)
+
 - Minor bugs fixed
+
 ## TEST2 (18-03-2024)
+
 - Minor bugs fixed
+
 ## TEST1 (17-03-2024)
+
 - ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/hassio_addons/guacamole to a folder only accessible from my Filebrowser addon called /addon_configs/something-guacamole. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data, custom configs, and custom scripts should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/ https://github.com/alexbelgium/hassio-addons/issues/1309
 
 ## testnoupload (11-11-2023)
@@ -56,6 +65,7 @@
 ## 1.5.1-pg15 (27-05-2023)
 
 - Update to latest version from abesnier/guacamole
+
 ## 1.5.1-2 (04-05-2023)
 
 - Minor bugs fixed
@@ -63,6 +73,7 @@
 ## 1.5.1-pg14 (23-04-2023)
 
 - Update to latest version from abesnier/guacamole
+
 ## 1.5.1 (22-04-2023)
 
 - Minor bugs fixed

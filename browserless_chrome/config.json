@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Chromium as a service container",
   "devices": [
@@ -73,9 +70,7 @@
   },
   "image": "ghcr.io/alexbelgium/browserless_chrome-{arch}",
   "init": false,
-  "map": [
-    "addon_config:rw"
-  ],
+  "map": ["addon_config:rw"],
   "name": "Browserless Chromium",
   "options": {
     "TIMEOUT": "60000"

@@ -7,9 +7,9 @@ set -e
 ####################
 
 if [ -f /homeassistant/addons_config/cloudcommander ]; then
-    echo "Moving database to new location /config"
-    cp -rnf /homeassistant/addons_config/cloudcommander/* /config/ || true
-    rm -r /homeassistant/addons_config/cloudcommander
+	echo "Moving database to new location /config"
+	cp -rnf /homeassistant/addons_config/cloudcommander/* /config/ || true
+	rm -r /homeassistant/addons_config/cloudcommander
 fi
 
 ######################
@@ -22,12 +22,12 @@ find /homeassistant/addons_config -maxdepth 1 -type l -delete
 
 # Remove erroneous folders
 if [ -d /homeassistant ]; then
-    if [ -d /config/addons_config ]; then
-        rm -r /config/addons_config
-    fi
-    if [ -d /config/addons_autoscripts ]; then
-        rm -r /config/addons_autoscripts
-    fi
+	if [ -d /config/addons_config ]; then
+		rm -r /config/addons_config
+	fi
+	if [ -d /config/addons_autoscripts ]; then
+		rm -r /config/addons_autoscripts
+	fi
 fi
 
 # Create symlinks
@@ -50,8 +50,8 @@ export CLOUDCMD_PREFIX
 
 declare ADDON_PROTOCOL=http
 if bashio::config.true 'ssl'; then
-    ADDON_PROTOCOL=https
-    bashio::config.require.ssl
+	ADDON_PROTOCOL=https
+	bashio::config.require.ssl
 fi
 
 # port=$(bashio::addon.port 80)
@@ -68,15 +68,15 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 ###############
 
 if bashio::config.has_value 'CUSTOM_OPTIONS'; then
-    CUSTOMOPTIONS=" $(bashio::config 'CUSTOM_OPTIONS')"
+	CUSTOMOPTIONS=" $(bashio::config 'CUSTOM_OPTIONS')"
 else
-    CUSTOMOPTIONS=""
+	CUSTOMOPTIONS=""
 fi
 
 if bashio::config.has_value 'DROPBOX_TOKEN'; then
-    DROPBOX_TOKEN="--dropbox --dropbox-token $(bashio::config 'DROPBOX_TOKEN')"
+	DROPBOX_TOKEN="--dropbox --dropbox-token $(bashio::config 'DROPBOX_TOKEN')"
 else
-    DROPBOX_TOKEN=""
+	DROPBOX_TOKEN=""
 fi
 
 bashio::log.info "Starting..."

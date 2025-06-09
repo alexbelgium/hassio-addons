@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "backup": "cold",
   "backup_exclude": [
     "*/cache/",
@@ -114,10 +111,7 @@
     "8265/tcp": "Web UI port",
     "8266/tcp": "Server Port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "CONFIG_LOCATION": "str",
     "TZ": "str?",

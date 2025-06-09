@@ -1,31 +1,49 @@
 ## v0.8.1-9 (14-11-2024)
+
 - Align behavior with other addons : map /addons_config/xxx-scrutiny to enable env injection or custom scripts
 
 ## v0.8.1-8 (13-11-2024)
+
 - Minor bugs fixed
+
 ## v0.8.1-7 (13-11-2024)
+
 - New feature : if you select "Custom" as "Updates" variable, you can define specific updates in natural language in the "Updates_custom_time" field. Example : select "Custom" as "Updates", then type a custom intervals like "5m", "2h", "1w", or "2mo" to have an update every 5 minutes, or every 2 hours, or evey week, or every 2 months
 
 ## v0.8.1-6 (02-11-2024)
+
 - Minor bugs fixed
+
 ## v0.8.1-5 (22-08-2024)
+
 - Minor bugs fixed
+
 ## v0.8.1-4 (30-07-2024)
+
 - Minor bugs fixed
+
 ## v0.8.1-3 (11-06-2024)
+
 - Minor bugs fixed
+
 ## v0.8.1-2 (13-04-2024)
+
 - Minor bugs fixed
 
 ## v0.8.1 (13-04-2024)
+
 - Update to latest version from analogj/scrutiny (changelog : https://github.com/analogj/scrutiny/releases)
+
 ## v0.8.0-3 (18-03-2024)
+
 -Avoid overriding the smartctl command https://github.com/alexbelgium/hassio-addons/issues/1308
 
 ## v0.8.0-2 (17-03-2024)
+
 - Minor bugs fixed
 
 ## v0.8.0 (16-03-2024)
+
 - Update to latest version from analogj/scrutiny
 
 ## v0.7.3 (02-03-2024)

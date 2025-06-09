@@ -28,6 +28,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 This addon is based on the docker image https://hub.docker.com/r/browserless/chrome/
 
 ## Configuration
+
 ---
 
 Webui can be found at <http://homeassistant:PORT>.

@@ -58,8 +58,9 @@ Disable protection mode, then from the other Portainer cluster, add a new enviro
 ---
 
 Main options :
+
 ```yaml
-    "PORTAINER_AGENT_ARGS": Command line arguments to the portainer-agent executable
+"PORTAINER_AGENT_ARGS": Command line arguments to the portainer-agent executable
 ```
 
 Other options : see https://github.com/portainer/agent#deployment-options

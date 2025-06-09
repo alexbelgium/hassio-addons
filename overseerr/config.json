@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Request management and media discovery tool built to work with your existing Plex ecosystem",
   "devices": [
@@ -71,9 +68,7 @@
   "environment": {},
   "image": "ghcr.io/alexbelgium/overseerr-{arch}",
   "init": false,
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Overseerr",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/overseerr",
