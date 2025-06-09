@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Papermerge] Not installing with Home Assistant 2025.6 (opened 2025-06-08)](https://github.com/alexbelgium/hassio-addons/issues/1888) by [@dimitripb](https://github.com/dimitripb)
 
 # Home assistant add-on: Papermerge
 
