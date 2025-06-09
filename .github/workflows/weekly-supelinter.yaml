@@ -5,19 +5,10 @@ on:
   schedule:
     - cron: "0 0 * * 0"
 
-permissions:
-  contents: write
-  packages: read
-  statuses: write
-
 jobs:
   super-lint:
     name: Lint and Autofix
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      statuses: write
-      packages: read
 
     steps:
       - name: Checkout repository
