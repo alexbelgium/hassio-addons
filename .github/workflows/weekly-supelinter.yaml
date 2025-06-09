@@ -65,10 +65,5 @@ jobs:
         with:
           title: "Github bot: fix linting issues nobuild"
           commit-message: "fix: auto-fix linting issues"
-          committer: super-linter <super-linter@super-linter.dev>
-          author: super-linter <super-linter@super-linter.dev>
-          signoff: true
-          delete-branch: true
-          branch: lint/autofix
-          body: |
-            This pull request was automatically created by the GitHub Actions Super-Linter workflow to fix detected linting issues.
+          branch-suffix: timestamp
+  
