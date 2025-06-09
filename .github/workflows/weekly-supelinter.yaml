@@ -35,6 +35,7 @@ jobs:
           VALIDATE_PYTHON_PYLINT: false
           VALIDATE_JSCPD: false
           VALIDATE_NATURAL_LANGUAGE: false
+          FILTER_REGEX_EXCLUDE: .github/workflows/.*
           FIX_ENV: true
           FIX_HTML_PRETTIER: true
           FIX_SHELL_SHFMT: true
