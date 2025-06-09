@@ -32,9 +32,9 @@ jobs:
           FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
           FIX_JSON: true
-          FIX_JSON_PRETTIER: true
+          #FIX_JSON_PRETTIER: true
           FIX_MARKDOWN: true
-          FIX_MARKDOWN_PRETTIER: true
+          #FIX_MARKDOWN_PRETTIER: true
           FIX_PYTHON_BLACK: true
           FIX_PYTHON_ISORT: true
           FIX_PYTHON_RUFF: true
@@ -58,4 +58,3 @@ jobs:
           title: "Github bot: fix linting issues nobuild"
           commit-message: "fix: auto-fix linting issues"
           branch-suffix: timestamp
-  

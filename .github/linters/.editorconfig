@@ -1,0 +1,7 @@
+# Top-most EditorConfig file
+root = true
+
+# 2 spaces for shell scripts
+[*.sh]
+indent_style = space
+indent_size = 2
