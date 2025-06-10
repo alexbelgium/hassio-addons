@@ -1,11 +1,18 @@
-oot = trueAdd commentMore actions
+indent: 2
+use_tabs: false
+binary_next_line: true
+case_indent: true
+simplify: true
+language_variant: bash
+func_style: 1
+keep_column_alignment: true
 
 [*]
-indent_style = space
-indent_size = 2
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
+indent_style: space
+indent_size: 2
+end_of_line: lf
+charset: utf-8
+trim_trailing_whitespace: true
+insert_final_newline: true
 [*.md]
-trim_trailing_whitespace = false
+trim_trailing_whitespace: false
