@@ -5,7 +5,7 @@ set -e
 if [ ! -f /touched ]; then
     until [[ -n $(cat /data/*_1.log 2>/dev/null) ]]; do
         sleep 1
-    done
+  done
     bashio::log.info "Here are the admin informations:"
     cat /data/*_1.log
     touch /touched

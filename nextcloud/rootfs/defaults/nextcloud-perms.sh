@@ -25,7 +25,7 @@ for folder in "$ocpath"/data "$ocpath"/assets "$ocpath"/updater "$ocpath"/apps "
     if [ ! -d "$folder" ]; then
         echo "... $folder"
         mkdir -p "$folder" || true
-    fi
+  fi
 done
 
 printf "chmod Files and Directories.  This could take some time, please wait...\n"

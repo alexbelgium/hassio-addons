@@ -36,46 +36,46 @@ CONFIGSOURCE="$CONFIGLOCATION"/config.yaml
 if bashio::config.has_value 'CONFIG_LOCATION'; then
 
     CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-    if [[ "$CONFIGSOURCE" == *.* ]]; then
+    if [[ $CONFIGSOURCE == *.*   ]]; then
         CONFIGSOURCE=$(dirname "$CONFIGSOURCE")
-    fi
+  fi
     # If does not end by config.yaml, remove trailing slash and add config.yaml
-    if [[ "$CONFIGSOURCE" != *".yaml" ]]; then
+    if [[ $CONFIGSOURCE != *".yaml"   ]]; then
         CONFIGSOURCE="${CONFIGSOURCE%/}"/config.yaml
-    fi
+  fi
     # Check if config is located in an acceptable location
     LOCATIONOK=""
     for location in "/share" "/config" "/data"; do
-        if [[ "$CONFIGSOURCE" == "$location"* ]]; then
+        if [[ $CONFIGSOURCE == "$location"*   ]]; then
             LOCATIONOK=true
-        fi
-    done
+    fi
+  done
     if [ -z "$LOCATIONOK" ]; then
         bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGLOCATION/config.yaml"
         CONFIGSOURCE="$CONFIGLOCATION"/config.yaml
-    fi
+  fi
 fi
 
 # Migrate if needed
-if [[ "$CONFIGLOCATION" == "/config" ]]; then
+if [[ $CONFIGLOCATION == "/config"   ]]; then
     # Migrate file
     if [ -f "/homeassistant/addons_config/${slug}/config.yaml" ] && [ ! -L "/homeassistant/addons_config/${slug}" ]; then
         echo "Migrating config.yaml to new config location"
         mv /homeassistant/addons_config/"${slug}"/config.yaml /config/config.yaml
-    fi
+  fi
     # Migrate option
     if [[ "$(bashio::config "CONFIG_LOCATION")" == "/config/addons_config"* ]] && [ -f /config/config.yaml ]; then
         bashio::addon.option "CONFIG_LOCATION" "/config/config.yaml"
         CONFIGSOURCE="/config/config.yaml"
-    fi
+  fi
 fi
 
-if [[ "$CONFIGSOURCE" != *".yaml" ]]; then
+if [[ $CONFIGSOURCE != *".yaml"   ]]; then
     bashio::log.error "Something is going wrong in the config location, quitting"
 fi
 
 # Permissions
-if [[ "$CONFIGSOURCE" == *".yaml" ]]; then
+if [[ $CONFIGSOURCE == *".yaml"   ]]; then
     echo "Setting permissions for the config.yaml directory"
     mkdir -p "$(dirname "${CONFIGSOURCE}")"
     chmod -R 755 "$(dirname "${CONFIGSOURCE}")" 2>/dev/null
@@ -87,7 +87,7 @@ fi
 
 echo ""
 bashio::log.green "Load environment variables from $CONFIGSOURCE if existing"
-if [[ "$CONFIGSOURCE" == "/config"* ]]; then
+if [[ $CONFIGSOURCE == "/config"*   ]]; then
     bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGFILEBROWSER"
 else
     bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGSOURCE"
@@ -105,11 +105,11 @@ if [ ! -f "$CONFIGSOURCE" ]; then
     if [ -f /templates/config.yaml ]; then
         # Use available template
         cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
-    else
+  else
         # Download template
         TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/config.template"
         curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
-    fi
+  fi
 fi
 
 # Check if there are lines to read
@@ -166,7 +166,7 @@ while IFS= read -r line; do
     # Clean output
     line="${line//[\"\']/}"
     # Check if secret
-    if [[ "${line}" == *'!secret '* ]]; then
+    if [[ ${line} == *'!secret '*   ]]; then
         echo "secret detected"
         secret=${line#*secret }
         # Check if single match
@@ -176,9 +176,9 @@ while IFS= read -r line; do
         secret=$(sed -n "/$secret:/p" "$SECRETSFILE")
         secret=${secret#*: }
         line="${line%%=*}='$secret'"
-    fi
+  fi
     # Data validation
-    if [[ "$line" =~ ^.+[=].+$ ]]; then
+    if [[ $line =~ ^.+[=].+$   ]]; then
         # extract keys and values
         KEYS="${line%%=*}"
         VALUE="${line#*=}"
@@ -186,23 +186,23 @@ while IFS= read -r line; do
         export "$line"
         # export to python
         if command -v "python3" &>/dev/null; then
-            [ ! -f /env.py ] && echo "import os" > /env.py
-            echo "os.environ['${KEYS}'] = '${VALUE//[\"\']/}'" >> /env.py
+            [ ! -f /env.py ] && echo "import os" >/env.py
+            echo "os.environ['${KEYS}'] = '${VALUE//[\"\']/}'" >>/env.py
             python3 /env.py
-        fi
+    fi
         # set .env
-        if [ -f /.env ]; then echo "$line" >> /.env; fi
+        if [ -f /.env ]; then echo "$line" >>/.env;  fi
         mkdir -p /etc
-        echo "$line" >> /etc/environment
+        echo "$line" >>/etc/environment
         # Export to scripts
         if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
         if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
         # For s6
-        if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-        echo "export $line" >> ~/.bashrc
+        if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" >/var/run/s6/container_environment/"${KEYS}";  fi
+        echo "export $line" >>~/.bashrc
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
-    else
+  else
         bashio::log.red "$line does not follow the correct structure. Please check your yaml file."
-    fi
+  fi
 done <"/tmpfile"

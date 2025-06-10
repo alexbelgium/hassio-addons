@@ -55,7 +55,6 @@ if bashio::config.has_value 'SavePath'; then
         -e "/\[BitTorrent\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" \
         -e "/\[BitTorrent\]/a Session\\\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
 
-
     # Info
     bashio::log.info "Downloads can be found in $DOWNLOADS"
 fi
@@ -123,7 +122,7 @@ WHITELIST="${WHITELIST//,/,\ }"
 #clean data
 sed -i '/AuthSubnetWhitelist/d' qBittorrent.conf
 
-if [[ "${#WHITELIST}" -gt 5 ]]; then
+if [[ ${#WHITELIST} -gt 5   ]]; then
     sed -i "$LINE i\WebUI\\\AuthSubnetWhitelistEnabled=true" qBittorrent.conf
     sed -i "$LINE i\WebUI\\\AuthSubnetWhitelist=$WHITELIST" qBittorrent.conf
     bashio::log.info "Whitelisted subsets will not require a password : $WHITELIST"
@@ -161,7 +160,7 @@ fi
 # Reboot if first time password is set, or if password is changed
 
 # Check file size
-if [[ "$ORIGINAL_SIZE" != "$(wc -c "$CONFIG_LOCATION"/qBittorrent.conf)" ]]; then
+if [[ $ORIGINAL_SIZE != "$(  wc -c "$CONFIG_LOCATION"/qBittorrent.conf)" ]]; then
     bashio::log.warning "Configuration changed, rebooting"
     sleep 5
     bashio::addon.restart
@@ -217,7 +216,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
             curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
             ;;
 
-    esac || { bashio::log.warning "$CUSTOMUI could not be downloaded, please raise an issue on the github repository. The default UI will be used" && exit 0 ; }
+  esac   || { bashio::log.warning "$CUSTOMUI could not be downloaded, please raise an issue on the github repository. The default UI will be used" && exit 0;  }
 
     ### Install WebUI
     mkdir -p /webui/"$CUSTOMUI"
@@ -227,10 +226,10 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     sed -i "$LINE i\WebUI\\\AlternativeUIEnabled=true" "$CONFIG_LOCATION"/qBittorrent.conf
     sed -i "$LINE i\WebUI\\\RootFolder=$CUSTOMUIDIR" "$CONFIG_LOCATION"/qBittorrent.conf
     # Set ingress ui
-    if [[ "$CUSTOMUI" != qbit-matUI ]]; then
+    if [[ $CUSTOMUI != qbit-matUI   ]]; then
         sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf || true
         sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf || true
-    fi
+  fi
 fi
 
 ##########

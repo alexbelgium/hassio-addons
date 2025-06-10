@@ -53,15 +53,14 @@ if [ ! -f "${currentshebang%% *}" ]; then
 fi
 
 # Check if there is actual commands
-while IFS= read -r line
-do
+while IFS= read -r line; do
     # Remove leading and trailing whitespaces
     line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 
     # Check if line is not empty and does not start with #
-    if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
+    if [[ -n $line   ]] && [[ ! $line =~ ^#   ]]; then
         bashio::log.green "... script found, executing"
         /."$CONFIGSOURCE"
         exit 0
-    fi
-done < "$CONFIGSOURCE"
+  fi
+done <"$CONFIGSOURCE"

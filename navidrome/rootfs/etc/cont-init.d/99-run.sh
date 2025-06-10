@@ -65,7 +65,6 @@ if bashio::config.has_value 'welcome_message'; then
     export ND_UIWELCOMEMESSAGE
 fi
 
-
 ##############
 # LAUNCH APP #
 ##############

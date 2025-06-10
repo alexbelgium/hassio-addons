@@ -11,7 +11,7 @@ set -e
 APP_KEY="$(bashio::config 'APP_KEY')"
 
 # If not base64
-if [[ ! "$APP_KEY" == *"base64"* ]]; then
+if [[ $APP_KEY != *"base64"*     ]]; then
     # Check APP_KEY format
     if [ ! "${#APP_KEY}" = 32 ]; then bashio::exit.nok "Your APP_KEY has ${#APP_KEY} instead of 32 characters"; fi
 fi
@@ -64,7 +64,7 @@ case $(bashio::config 'DB_CONNECTION') in
             php artisan migrate:refresh --seed --quiet
             php artisan firefly-iii:upgrade-database --quiet
             php artisan passport:install --quiet
-        fi
+    fi
 
         # Creating symlink
         rm -r /var/www/html/storage/database
@@ -84,7 +84,7 @@ case $(bashio::config 'DB_CONNECTION') in
                 "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok \
                 "Please ensure it is installed and started"
-        fi
+    fi
 
         # Use values
         DB_CONNECTION=mysql
@@ -108,7 +108,7 @@ case $(bashio::config 'DB_CONNECTION') in
         mysql \
             -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
             -h "${DB_HOST}" -P "${DB_PORT}" \
-            -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
+            -e 'CREATE DATABASE IF NOT EXISTS `firefly` ;'
         ;;
 
         # Use remote
@@ -117,8 +117,8 @@ case $(bashio::config 'DB_CONNECTION') in
         for conditions in "DB_HOST" "DB_PORT" "DB_DATABASE" "DB_USERNAME" "DB_PASSWORD"; do
             if ! bashio::config.has_value "$conditions"; then
                 bashio::exit.nok "Remote database has been specified but $conditions is not defined in addon options"
-            fi
-        done
+      fi
+    done
         ;;
 
 esac
@@ -148,7 +148,10 @@ chmod -R 775 /config/addons_config/fireflyiii
 
 # Test
 f=/config/addons_config/fireflyiii
-while [[ $f != / ]]; do chmod 777 "$f"; f=$(dirname "$f"); done;
+while [[ $f != / ]]; do
+                        chmod 777 "$f"
+                                        f=$(dirname "$f")
+done
 
 ################
 # CRON OPTIONS #

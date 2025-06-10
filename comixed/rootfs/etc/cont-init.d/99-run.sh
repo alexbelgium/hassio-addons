@@ -11,9 +11,9 @@ if bashio::config.has_value 'TZ'; then
     if [ -f /usr/share/zoneinfo/"$TIMEZONE" ]; then
         ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime
         echo "$TIMEZONE" >/etc/timezone
-    else
+  else
         bashio::log.fatal "$TIMEZONE not found, are you sure it is a valid timezone?"
-    fi
+  fi
 fi
 
 #################
@@ -21,22 +21,22 @@ fi
 #################
 
 INGRESS="false"
-if [[ "$INGRESS" == "true" ]]; then
+if [[ $INGRESS == "true"   ]]; then
     #declare port
     #declare certfile
     declare ingress_interface
     declare ingress_port
     #declare keyfile
-    
+
     FB_BASEURL="$(bashio::addon.ingress_entry)"
     export FB_BASEURL
-    
+
     declare ADDON_PROTOCOL=http
     # Generate Ingress configuration
     if bashio::config.true 'ssl'; then
         ADDON_PROTOCOL=https
-    fi
-    
+  fi
+
     #port=$(bashio::addon.port 80)
     ingress_port=$(bashio::addon.ingress_port)
     ingress_interface=$(bashio::addon.ip_address)
@@ -45,14 +45,14 @@ if [[ "$INGRESS" == "true" ]]; then
     sed -i "s|%%interface%%|${ingress_interface}|g" /etc/nginx/servers/ingress.conf
     sed -i "s|%%subpath%%|${FB_BASEURL}/|g" /etc/nginx/servers/ingress.conf
     mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
-    
+
     # Correct baseurl
     for file in /config/hypercorn.toml $(find /usr -name hypercorn.toml.default); do
         if [ -f "$file" ]; then
             sed -i "/root_path/d" "$file"
             sed -i "1a root_path = \"${FB_BASEURL}\"" "$file"
-        fi
-    done
+    fi
+  done
 fi
 
 ###########

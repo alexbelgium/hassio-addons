@@ -12,4 +12,3 @@ if bashio::services.available 'mqtt'; then
     bashio::log.blue "MQTT broker : tcp://$(bashio::services "mqtt" "host"):$(bashio::services "mqtt" "port")"
     bashio::log.green "---"
 fi
-

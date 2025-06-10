@@ -60,6 +60,6 @@ if [ -f "$CONFIG_LOCATION" ]; then
             sed -i "/UrlBase/d" "$CONFIG_LOCATION"
             sed -i "/<AuthenticationMethod>external/d" "$CONFIG_LOCATION"
             ;;
-    esac
+  esac
 
 fi

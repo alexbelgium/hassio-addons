@@ -31,7 +31,7 @@ if bashio::config.has_value 'trusted_domains'; then
     until [ $i -gt 5 ]; do
         $LAUNCHER config:system:delete trusted_domains $i &&
         ((i = i + 1)) || exit
-    done
+  done
 
     ###########################
     # Add new trusted domains #
@@ -43,7 +43,7 @@ if bashio::config.has_value 'trusted_domains'; then
         # shellcheck disable=SC2086
         $LAUNCHER config:system:set trusted_domains $i --value="${domain}"
         i=$((i + 1))
-    done
+  done
 
     bashio::log.info "Remaining configurated trusted domains :"
     bashio::log.info "$($LAUNCHER config:system:get trusted_domains)" || exit

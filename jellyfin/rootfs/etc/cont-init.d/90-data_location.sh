@@ -8,7 +8,7 @@ PGID=$(bashio::config "PGID")
 
 # Check data location
 LOCATION=$(bashio::config 'data_location')
-if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then LOCATION=/config/addons_config/${HOSTNAME#*-}; fi
+if [[ $LOCATION == "null" || -z $LOCATION    ]]; then LOCATION=/config/addons_config/${HOSTNAME#*-}; fi
 
 # Set data location
 bashio::log.info "Setting data location to $LOCATION"

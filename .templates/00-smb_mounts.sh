@@ -12,7 +12,7 @@ fi
 # DEFINE FUNCTIONS #
 ####################
 
-test_mount () {
+test_mount()  {
 
     # Set initial test
     MOUNTED=false
@@ -21,23 +21,23 @@ test_mount () {
     # Exit if not mounted
     if ! mountpoint -q /mnt/"$diskname"; then
         return 0
-    fi
+  fi
 
     # Exit if can't write
     [[ -e "/mnt/$diskname/testaze" ]] && rm -r "/mnt/$diskname/testaze"
     # shellcheck disable=SC2015
     mkdir "/mnt/$diskname/testaze" && touch "/mnt/$diskname/testaze/testaze" && rm -r "/mnt/$diskname/testaze" || ERROR_MOUNT=true
-    if [[ "$ERROR_MOUNT" == "true" ]]; then
+    if [[ $ERROR_MOUNT == "true"   ]]; then
         # Test write permissions
-        if [[ "$MOUNTOPTIONS" == *"noserverino"* ]]; then
+        if [[ $MOUNTOPTIONS == *"noserverino"*   ]]; then
             bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
-        else
+    else
             MOUNTOPTIONS="$MOUNTOPTIONS,noserverino"
             echo "... testing with noserverino"
             mount_drive "$MOUNTOPTIONS"
             return 0
-        fi
     fi
+  fi
 
     # Set correctly mounted bit
     MOUNTED=true
@@ -45,7 +45,7 @@ test_mount () {
 
 }
 
-mount_drive () {
+mount_drive()  {
 
     # Define options
     MOUNTED=true
@@ -55,10 +55,10 @@ mount_drive () {
     mount -t cifs -o "$MOUNTOPTIONS" "$disk" /mnt/"$diskname" 2>ERRORCODE || MOUNTED=false
 
     # Test if succesful
-    if [[ "$MOUNTED" == "true" ]]; then
+    if [[ $MOUNTED == "true"   ]]; then
         # shellcheck disable=SC2015
         test_mount
-    fi
+  fi
 
 }
 
@@ -73,7 +73,7 @@ if bashio::config.has_value 'networkdisks'; then
         bashio::log.warning "------------------------"
         bashio::log.warning "This is a new code, please report any issues on https://github.com/alexbelgium/hassio-addons"
         bashio::log.warning "------------------------"
-    fi
+  fi
 
     echo 'Mounting smb share(s)...'
 
@@ -101,7 +101,7 @@ if bashio::config.has_value 'networkdisks'; then
         echo "... using domain $(bashio::config 'cifsdomain')"
         DOMAIN=",domain=$(bashio::config 'cifsdomain')"
         DOMAINCLIENT="--workgroup=$(bashio::config 'cifsdomain')"
-    fi
+  fi
 
     # Is  UID/GID set
     PUID=",uid=$(id -u)"
@@ -110,7 +110,7 @@ if bashio::config.has_value 'networkdisks'; then
         echo "... using PUID $(bashio::config 'PUID') and PGID $(bashio::config 'PGID')"
         PUID=",uid=$(bashio::config 'PUID')"
         PGID=",gid=$(bashio::config 'PGID')"
-    fi
+  fi
 
     ##################
     # Mounting disks #
@@ -131,11 +131,11 @@ if bashio::config.has_value 'networkdisks'; then
         echo "... mounting $disk"
 
         # Data validation
-        if [[ ! "$disk" =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$ ]]; then
+        if [[ ! $disk =~ ^.*+[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+[/]+.*+$   ]]; then
             bashio::log.fatal "...... the structure of your \"networkdisks\" option : \"$disk\" doesn't seem correct, please use a structure like //123.12.12.12/sharedfolder,//123.12.12.12/sharedfolder2. If you don't use it, you can simply remove the text, this will avoid this error message in the future."
             touch ERRORCODE
             continue
-        fi
+    fi
 
         # Prepare mount point
         mkdir -p /mnt/"$diskname"
@@ -157,14 +157,14 @@ if bashio::config.has_value 'networkdisks'; then
                     bashio::log.fatal "...... $server is reachable but SMB port not opened, stopping script"
                     touch ERRORCODE
                     continue
-                else
+        else
                     bashio::log.fatal "...... fatal : $server not reachable, is it correct"
                     touch ERRORCODE
                     continue
-                fi
-            else
+        fi
+      else
                 echo "...... $server is confirmed reachable"
-            fi
+      fi
 
             # Are credentials correct
             OUTPUT="$(smbclient -t 2 -L "$disk" -U "$USERNAME"%"$PASSWORD" -c "exit" $DOMAINCLIENT 2>&1 || true)"
@@ -175,19 +175,19 @@ if bashio::config.has_value 'networkdisks'; then
                 if ! smbclient -t 2 -L $disk -N $DOMAINCLIENT -c "exit" &>/dev/null; then
                     bashio::log.fatal "...... perhaps a workgroup must be specified"
                     touch ERRORCODE
-                fi
+        fi
                 continue
-            elif echo "$OUTPUT" | grep -q "tree connect failed" || echo "$OUTPUT" | grep -q "NT_STATUS_CONNECTION_DISCONNECTED"; then
+      elif       echo "$OUTPUT" | grep -q "tree connect failed" || echo "$OUTPUT" | grep -q "NT_STATUS_CONNECTION_DISCONNECTED"; then
                 echo "... testing path"
                 bashio::log.fatal "...... invalid or inaccessible SMB path. Script will stop."
                 touch ERRORCODE
                 continue
-            elif ! echo "$OUTPUT" | grep -q "Disk"; then
+      elif       ! echo "$OUTPUT" | grep -q "Disk"; then
                 echo "... testing path"
                 bashio::log.fatal "...... no shares found. Invalid or inaccessible SMB path?"
-            else
+      else
                 echo "...... credentials are valid"
-            fi
+      fi
 
             # Extracting SMB versions and normalize output
             # shellcheck disable=SC2210,SC2094
@@ -197,7 +197,7 @@ if bashio::config.has_value 'networkdisks'; then
             # Manage output
             if [ -n "$SMBVERS" ]; then
                 case $SMBVERS in
-                    "202"|"200"|"20")
+                    "202" | "200" | "20")
                         SMBVERS="2.0"
                         ;;
                     21)
@@ -212,28 +212,28 @@ if bashio::config.has_value 'networkdisks'; then
                     "3.1")
                         echo "SMB 3.1 detected, converting to 3.0"
                         SMBVERS="3.0"
-                        ;;          
-                esac
+                        ;;
+        esac
                 echo "...... SMB version detected : $SMBVERS"
                 SMBVERS=",vers=$SMBVERS"
-            elif smbclient -t 2 -L "$server" -m NT1 -N $DOMAINCLIENT &>/dev/null; then
+      elif       smbclient -t 2 -L "$server" -m NT1 -N $DOMAINCLIENT &>/dev/null; then
                 echo "...... SMB version : only SMBv1 is supported, this can lead to issues"
                 SECVERS=",sec=ntlm"
                 SMBVERS=",vers=1.0"
-            else
+      else
                 echo "...... SMB version : couldn't detect, default used"
                 SMBVERS=""
-            fi
+      fi
 
             # Test with different security versions
             #######################################
             for SECVERS in "$SECVERS" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
                 if [ "$MOUNTED" = false ]; then
                     mount_drive "rw,file_mode=0775,dir_mode=0775,username=${USERNAME},password=${PASSWORD},nobrl${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}${DOMAIN}"
-                fi
-            done
-
         fi
+      done
+
+    fi
 
         # Messages
         if [ "$MOUNTED" = true ]; then
@@ -242,16 +242,16 @@ if bashio::config.has_value 'networkdisks'; then
             # Remove errorcode
             if [ -f ERRORCODE ]; then
                 rm ERRORCODE
-            fi
+      fi
 
             # Alert if smbv1
-            if [[ "$MOUNTOPTIONS" == *"1.0"* ]]; then
+            if [[ $MOUNTOPTIONS == *"1.0"*   ]]; then
                 bashio::log.warning ""
                 bashio::log.warning "Your smb system requires smbv1. This is an obsolete protocol. Please correct this to prevent issues."
                 bashio::log.warning ""
-            fi
+      fi
 
-        else
+    else
             # Mounting failed messages
             bashio::log.fatal "Error, unable to mount $disk to /mnt/$diskname with username $USERNAME, $PASSWORD. Please check your remote share path, username, password, domain, try putting 0 in UID and GID"
             bashio::log.fatal "Here is some debugging info :"
@@ -275,8 +275,8 @@ if bashio::config.has_value 'networkdisks'; then
             # Stop addon
             bashio::addon.stop
 
-        fi
+    fi
 
-    done
+  done
 
 fi

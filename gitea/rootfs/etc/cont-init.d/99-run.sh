@@ -6,7 +6,7 @@ for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
 
     if [ ! -f "$file" ]; then
         continue
-    fi
+  fi
 
     ##############
     # SSL CONFIG #
@@ -26,10 +26,10 @@ for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
         sed -i "/server/a CERT_FILE=/ssl/$(bashio::config 'certfile')" "$file"
         sed -i "/server/a KEY_FILE=/ssl/$(bashio::config 'keyfile')" "$file"
         chmod 744 /ssl/*
-    else
+  else
         PROTOCOL=http
         sed -i "/server/a PROTOCOL=http" "$file"
-    fi
+  fi
 
     ##################
     # ADAPT ROOT_URL #
@@ -37,11 +37,11 @@ for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
 
     if bashio::config.has_value 'ROOT_URL'; then
         bashio::log.blue "ROOT_URL set, using value : $(bashio::config 'ROOT_URL')"
-    else
+  else
         ROOT_URL="$PROTOCOL://$(bashio::config 'DOMAIN'):$(bashio::addon.port 3000)"
         bashio::log.blue "ROOT_URL not set, using extrapolated value : $ROOT_URL"
         sed -i "/server/a ROOT_URL=$ROOT_URL" "$file"
-    fi
+  fi
 
     ####################
     # ADAPT PARAMETERS #
@@ -59,9 +59,9 @@ for file in /data/gitea/conf/app.ini /etc/templates/app.ini; do
             # Allow at setup
             sed -i "1a $param=\"$(bashio::config "$param")\"" /etc/s6/gitea/setup
 
-        fi
+    fi
 
-    done
+  done
 
 done
 

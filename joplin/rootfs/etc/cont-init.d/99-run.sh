@@ -7,7 +7,7 @@ bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores a
 
 # Check data location
 LOCATION=$(bashio::config 'data_location')
-if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
+if [[ $LOCATION == "null" || -z $LOCATION    ]]; then
     # Default location
     LOCATION="/config/addons_config/joplin"
 else

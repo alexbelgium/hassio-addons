@@ -50,7 +50,7 @@ case "$(bashio::config 'database')" in
                 "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok \
                 "Please ensure it is installed and started"
-        fi
+    fi
 
         # Use values
         export PAPERLESS_DBENGINE=mariadb
@@ -68,7 +68,6 @@ case "$(bashio::config 'database')" in
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
         ;;
-
 
         # Use sqlite
     *)
@@ -97,25 +96,27 @@ for variable in PAPERLESS_DATA_DIR PAPERLESS_MEDIA_ROOT PAPERLESS_CONSUMPTION_DI
     # Export
     export "$variable"="$variablecontent"
     # Add to bashrc
-    eval echo "$variable=\"$variablecontent\"" >> ~/.bashrc
+    eval echo "$variable=\"$variablecontent\"" >>~/.bashrc
     # set .env
-    echo "$variable=\"$variablecontent\"" >> /.env || true
+    echo "$variable=\"$variablecontent\"" >>/.env  || true
     # set /etc/environment
     mkdir -p /etc
-    echo "$variable=\"$variablecontent\"" >> /etc/environment
+    echo "$variable=\"$variablecontent\"" >>/etc/environment
     # For s6
-    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${variablecontent}" > /var/run/s6/container_environment/"${variable}"; fi
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${variablecontent}" >/var/run/s6/container_environment/"${variable}";  fi
 done
 
 #################
 # Staring redis #
 #################
-exec redis-server & bashio::log.info "Starting redis"
+exec redis-server &
+                    bashio::log.info "Starting redis"
 
 #################
 # Staring nginx #
 #################
-exec nginx & bashio::log.info "Starting nginx"
+exec nginx &
+             bashio::log.info "Starting nginx"
 
 ###############
 # Starting app #

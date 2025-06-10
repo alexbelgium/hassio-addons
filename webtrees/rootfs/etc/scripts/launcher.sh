@@ -14,9 +14,9 @@ if [ ! -f "%%data_location%%/config.ini.php" ]; then
         bashio::log.blue "Database name : webtrees"
         bashio::log.blue "Database prefix : wt_"
         bashio::log.green "---"
-    else
+  else
         bashio::log.info "As you don't have the MariaDB addon running, you should likely select sqlite as database, when the name webtrees"
-    fi
+  fi
 else
     bashio::log.info "Webtrees started. You can access your webui at : %%base_url%%"
 fi

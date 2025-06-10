@@ -61,7 +61,7 @@ cd /data || true
 # Fetch commands
 CMD_ARGUMENTS="$(bashio::config "CMD_ARGUMENTS")"
 IFS=';'
-read -ar strarr <<< "$CMD_ARGUMENTS"
+read -ar strarr <<<"$CMD_ARGUMENTS"
 
 # Sanitizes commands
 trim() {

@@ -29,7 +29,7 @@ case "$(bashio::config "DB_CONNECTION")" in
                 "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok \
                 "Please ensure it is installed and started"
-        fi
+    fi
 
         # Use values
         DB_CONNECTION=mysql
@@ -54,7 +54,7 @@ case "$(bashio::config "DB_CONNECTION")" in
         mysql \
             -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
             -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
-            -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
+            -e 'CREATE DATABASE IF NOT EXISTS `firefly` ;'
         ;;
 
         # Use remote
@@ -63,10 +63,9 @@ case "$(bashio::config "DB_CONNECTION")" in
         for conditions in "ZM_DB_HOST" "ZM_DB_PORT" "ZM_DB_NAME" "ZM_DB_USER" "ZM_DB_PASS"; do
             if ! bashio::config.has_value "$conditions"; then
                 bashio::exit.nok "Remote database has been specified but $conditions is not defined in addon options"
-            fi
-        done
+      fi
+    done
         ;;
-
 
         # Use remote
     *)

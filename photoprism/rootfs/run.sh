@@ -34,7 +34,7 @@ export PHOTOPRISM_BACKUP_PATH=$(bashio::config 'BACKUP_PATH')
     printf "%s\n" "PHOTOPRISM_ORIGINALS_PATH=\"${PHOTOPRISM_ORIGINALS_PATH}\""
     printf "%s\n" "PHOTOPRISM_IMPORT_PATH=\"${PHOTOPRISM_IMPORT_PATH}\""
     printf "%s\n" "PHOTOPRISM_BACKUP_PATH=\"${PHOTOPRISM_BACKUP_PATH}\""
-} >> ~/.bashrc
+} >>~/.bashrc
 
 if bashio::config.has_value 'CUSTOM_OPTIONS'; then
     CUSTOMOPTIONS=$(bashio::config 'CUSTOM_OPTIONS')
@@ -47,10 +47,10 @@ for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPR
     # Check if path exists
     if bashio::fs.directory_exists "$variabletest"; then
         true
-    else
+  else
         bashio::log.info "Path $variabletest doesn't exist. Creating it now..."
         mkdir -p "$variabletest" || bashio::log.fatal "Can't create $variabletest path"
-    fi
+  fi
     # Check if path writable
     # shellcheck disable=SC2015
     touch "$variabletest"/aze && rm "$variabletest"/aze || bashio::log.fatal "$variabletest path is not writable"

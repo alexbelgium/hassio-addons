@@ -7,7 +7,7 @@ set -eu
 # ALLOW RESTARTS #
 ##################
 
-if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+if [[ ${BASH_SOURCE[0]} == /etc/cont-init.d/*   ]]; then
     mkdir -p /etc/scripts-init
     sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
     sed -i "/ rm/d" /ha_entrypoint.sh
@@ -31,27 +31,27 @@ if bashio::config.has_value 'TZ'; then
     TZ_VALUE="$(bashio::config 'TZ')"
     if timedatectl set-timezone "$TZ_VALUE"; then
         echo "... timezone set to $TZ_VALUE as defined in add-on options (BirdNET config ignored)."
-    else
+  else
         bashio::log.warning "Couldn't set timezone to $TZ_VALUE. Refer to the list of valid timezones: https://manpages.ubuntu.com/manpages/focal/man3/DateTime::TimeZone::Catalog.3pm.html"
         timedatectl set-ntp true &>/dev/null
-    fi
+  fi
 # Use BirdNET-defined timezone if no add-on option is provided
 elif [ -f /data/timezone ]; then
     BIRDN_CONFIG_TZ="$(cat /data/timezone)"
     timedatectl set-ntp false &>/dev/null
     if timedatectl set-timezone "$BIRDN_CONFIG_TZ"; then
         echo "... set to $BIRDN_CONFIG_TZ as defined in BirdNET config."
-    else
+  else
         bashio::log.warning "Couldn't set timezone to $BIRDN_CONFIG_TZ. Reverting to automatic timezone."
         timedatectl set-ntp true &>/dev/null
-    fi
+  fi
 # Fallback to automatic timezone if no manual settings are found
 else
     if timedatectl set-ntp true &>/dev/null; then
         bashio::log.info "... automatic timezone enabled."
-    else
+  else
         bashio::log.fatal "Couldn't set automatic timezone! Please set a manual one from the options."
-    fi
+  fi
 fi || true
 
 # Use ALSA CARD defined in add-on options if available
@@ -60,13 +60,13 @@ if [ -n "${ALSA_CARD:-}" ]; then
     for file in "$HOME"/BirdNET-Pi/birdnet.conf /config/birdnet.conf; do
         if [ -f "$file" ]; then
             sed -i "/^REC_CARD/c\REC_CARD=$ALSA_CARD" "$file"
-        fi
-    done
+    fi
+  done
 fi
 
 # Fix timezone as per installer
 CURRENT_TIMEZONE="$(timedatectl show --value --property=Timezone)"
-[ -f /etc/timezone ] && echo "$CURRENT_TIMEZONE" | sudo tee /etc/timezone > /dev/null
+[ -f /etc/timezone ] && echo "$CURRENT_TIMEZONE" | sudo tee /etc/timezone >/dev/null
 
 bashio::log.info "Starting system services"
 

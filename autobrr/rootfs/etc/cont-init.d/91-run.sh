@@ -9,7 +9,8 @@ set -e
 # Set UrlBase
 
 bashio::log.info "Starting NGinx..."
-nginx & true
+nginx &
+        true
 
 #############
 # Start app #

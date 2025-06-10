@@ -9,7 +9,7 @@ for folder in pg assets; do
         # Copy only if source is non-empty
         cp -rf /config/"$folder"/. /data/"$folder"/
         rm -rf /config/"$folder"
-    fi
+  fi
     chmod 700 /data/"$folder"
 done
 

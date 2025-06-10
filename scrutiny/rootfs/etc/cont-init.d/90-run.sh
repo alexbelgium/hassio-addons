@@ -9,14 +9,14 @@ set -e
 if bashio::config.true "expose_collector"; then
     bashio::log.info "collector.yaml exposed in /share/scrutiny"
     mkdir -p /share/scrutiny
-    if [ -f /data/config/collector.yaml ] ; then
+    if [ -f /data/config/collector.yaml ]; then
         cp -rnf /data/config/collector.yaml /share/scrutiny || true
         rm -R /data/config/collector.yaml
-    fi
-    if [ -f /opt/scrutiny/config/collector.yaml ] ; then
+  fi
+    if [ -f /opt/scrutiny/config/collector.yaml ]; then
         cp -rnf /opt/scrutiny/config/collector.yaml /share/scrutiny || true
         rm /opt/scrutiny/config/collector.yaml
-    fi
+  fi
     touch /share/scrutiny/collector.yaml
     ln -sf /share/scrutiny/collector.yaml /data/config || true
     mkdir -p /opt/scrutiny/config
@@ -39,12 +39,12 @@ if [[ "$(bashio::config "Mode")" == Collector ]]; then
 
     # Check collector
     if bashio::config.has_value "COLLECTOR_API_ENDPOINT"; then
-        echo "export COLLECTOR_API_ENDPOINT=$(bashio::config "COLLECTOR_API_ENDPOINT")" >> /env.sh
+        echo "export COLLECTOR_API_ENDPOINT=$(bashio::config "COLLECTOR_API_ENDPOINT")" >>/env.sh
         sed -i "1a export COLLECTOR_API_ENDPOINT=$(bashio::config "COLLECTOR_API_ENDPOINT")" /etc/services.d/collector-once/run
-        if [ -d /var/run/s6/container_environment ]; then printf "%s" "$COLLECTOR_API_ENDPOINT" > /var/run/s6/container_environment/COLLECTOR_API_ENDPOINT; fi
-        printf "%s\n" "IN_BACKGROUND=\"$COLLECTOR_API_ENDPOINT\"" >> ~/.bashrc
+        if [ -d /var/run/s6/container_environment ]; then printf "%s" "$COLLECTOR_API_ENDPOINT" >/var/run/s6/container_environment/COLLECTOR_API_ENDPOINT;  fi
+        printf "%s\n" "IN_BACKGROUND=\"$COLLECTOR_API_ENDPOINT\"" >>~/.bashrc
         bashio::log.info "Using 'COLLECTOR_API_ENDPOINT' $(bashio::config "COLLECTOR_API_ENDPOINT")"
-    else
+  else
         bashio::exit.nok "Mode is set to 'Collector', but 'COLLECTOR_API_ENDPOINT' is not defined"
-    fi
+  fi
 fi

@@ -6,7 +6,7 @@ set -e
 # ALLOW RESTARTS #
 ##################
 
-if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+if [[ ${BASH_SOURCE[0]} == /etc/cont-init.d/*   ]]; then
     mkdir -p /etc/scripts-init
     sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
     sed -i "/ rm/d" /ha_entrypoint.sh
@@ -18,7 +18,7 @@ fi
 ######################
 
 # Check if the CPU supports AVX2
-if [[ "$(uname -m)" = "x86_64" ]]; then
+if [[ "$(uname -m)" == "x86_64" ]]; then
   if lscpu | grep -q "Flags"; then
     if ! lscpu | grep -q "avx2"; then
         bashio::log.warning "NON SUPPORTED CPU DETECTED"

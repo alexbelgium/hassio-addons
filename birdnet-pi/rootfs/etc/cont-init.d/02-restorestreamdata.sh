@@ -6,7 +6,7 @@ set -e
 # ALLOW RESTARTS #
 ##################
 
-if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+if [[ ${BASH_SOURCE[0]} == /etc/cont-init.d/*   ]]; then
     mkdir -p /etc/scripts-init
     sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
     sed -i "/ rm/d" /ha_entrypoint.sh
@@ -37,12 +37,12 @@ if [ -d /config/TemporaryFiles ]; then
         # Update permissions only if files were moved successfully
         if [ "$file_count" -gt 0 ]; then
             chown -R pi:pi "$HOME"/BirdSongs/StreamData
-        fi
+    fi
 
         echo "... $file_count files restored successfully."
-    else
+  else
         echo "... no .wav files found to restore."
-    fi
+  fi
 
     # Clean up the source folder if it is empty
     rm -r /config/TemporaryFiles

@@ -12,12 +12,12 @@ if bashio::config.has_value 'additional_apps'; then
         bashio::log.green "... $packagestoinstall"
         if command -v "apk" &>/dev/null; then
             apk add --no-cache "$packagestoinstall" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
-        elif command -v "apt" &>/dev/null; then
+    elif     command -v "apt" &>/dev/null; then
             apt-get install -yqq --no-install-recommends "$packagestoinstall" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
-        elif command -v "pacman" &>/dev/null; then
+    elif     command -v "pacman" &>/dev/null; then
             pacman --noconfirm -S "$packagestoinstall" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
-        fi
-    done
+    fi
+  done
 fi
 
 # Set TZ
@@ -32,8 +32,8 @@ fi || (bashio::log.fatal "Error : $TIMEZONE not found. Here is a list of valid t
 if bashio::config.has_value 'KEYBOARD'; then
     KEYBOARD=$(bashio::config 'KEYBOARD')
     bashio::log.info "Setting keyboard to $KEYBOARD"
-    if [ -d /var/run/s6/container_environment ]; then printf "%s" "$KEYBOARD" > /var/run/s6/container_environment/KEYBOARD; fi
-    printf "%s\n" "KEYBOARD=\"$KEYBOARD\"" >> ~/.bashrc
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "$KEYBOARD" >/var/run/s6/container_environment/KEYBOARD;  fi
+    printf "%s\n" "KEYBOARD=\"$KEYBOARD\"" >>~/.bashrc
 fi || true
 
 # Set password
@@ -55,18 +55,18 @@ if bashio::config.true 'install_ms_edge'; then
     apt-get update
     echo "**** install edge ****"
     apt-get install --no-install-recommends -y ca-certificates
-    if [ -z ${EDGE_VERSION+x} ]; then \
-        EDGE_VERSION=$(curl -sL https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/ | \
-        awk -F'(<a href="microsoft-edge-stable_|_amd64.deb\")' '/href=/ {print $2}' | sort --version-sort | tail -1); \
-    fi
+    if [ -z ${EDGE_VERSION+x} ]; then
+        EDGE_VERSION=$(curl -sL https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/ |
+        awk -F'(<a href="microsoft-edge-stable_|_amd64.deb\")' '/href=/ {print $2}' | sort --version-sort | tail -1)
+  fi
     curl -o /tmp/edge.deb -L "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_${EDGE_VERSION}_amd64.deb"
     dpkg -I /tmp/edge.deb
     apt-get install --no-install-recommends -y /tmp/edge.deb
     echo "**** edge docker tweaks ****"
     if [ -f /usr/bin/microsoft-edge-stable ]; then
         mv /usr/bin/microsoft-edge-stable /usr/bin/microsoft-edge-real
-    else
+  else
         mv /usr/bin/microsoft-edge /usr/bin/microsoft-edge-real
-    fi
+  fi
     mv /helpers/microsoft-edge-stable /usr/bin/
 fi

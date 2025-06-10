@@ -15,8 +15,8 @@ if bashio::config.true 'use_own_certs'; then
         sed -i "s|/config/data/ssl/cert.pem|/ssl/$CERTFILE|g" "$NGINX_CONFIG"
         sed -i "s|/config/data/ssl/cert.key|/ssl/$KEYFILE|g" "$NGINX_CONFIG"
         echo "... done"
-    else
+  else
         bashio::log.warning "...  certificate /ssl/$CERTFILE and /ssl/$KEYFILE and not found, using self-generated certificates"
-    fi
+  fi
 
 fi

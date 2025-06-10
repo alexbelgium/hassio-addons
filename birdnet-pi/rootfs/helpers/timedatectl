@@ -4,13 +4,13 @@
 show_timezone() {
     if [ -f /data/timezone ]; then
         cat /data/timezone
-    elif [ -f /etc/timezone ]; then
+  elif   [ -f /etc/timezone ]; then
         cat /etc/timezone
-    elif [ -f /etc/localtime ]; then
+  elif   [ -f /etc/localtime ]; then
         readlink /etc/localtime | sed 's|/usr/share/zoneinfo/||'
-    else
+  else
         echo "Cannot determine timezone."
-    fi
+  fi
 }
 
 # Function to set the timezone
@@ -19,21 +19,21 @@ set_timezone() {
     if [ ! -f "/usr/share/zoneinfo/$new_timezone" ]; then
         echo "Invalid timezone: $new_timezone"
         return 1
-    fi
+  fi
 
-    echo "$new_timezone" > /data/timezone
-    echo "$new_timezone" > /etc/timezone
+    echo "$new_timezone" >/data/timezone
+    echo "$new_timezone" >/etc/timezone
     ln -sf "/usr/share/zoneinfo/$new_timezone" /etc/localtime
 
     # Update /etc/environment if it exists
     if [ -f /etc/environment ]; then
         sed -i "/^TZ=/c\TZ=$new_timezone" /etc/environment
-    fi
+  fi
 
     # Update s6 container environment if it exists
     if [ -d /var/run/s6/container_environment ]; then
-        echo "$new_timezone" > /var/run/s6/container_environment/TZ
-    fi
+        echo "$new_timezone" >/var/run/s6/container_environment/TZ
+  fi
 
     echo "Timezone set to: $new_timezone"
 }
@@ -54,14 +54,14 @@ set_ntp() {
             if [ -f /data/timezone ]; then
                 rm -f /data/timezone
                 echo "Timezone configuration file /data/timezone deleted."
-            fi
+      fi
 
             echo "NTP enabled"
             ;;
         *)
             echo "Invalid argument for set-ntp. Use 'false' or 'true'."
             ;;
-    esac
+  esac
 }
 
 # Function to show detailed time settings
@@ -75,12 +75,12 @@ show_time_details() {
     local_time="$(date)"
     utc_time="$(date -u)"
     time_zone="$(show_timezone)"
-    
+
     # Check if NTP is used
     if systemctl is-active --quiet systemd-timesyncd; then
         ntp_status="yes"
         ntp_service="active"
-    fi
+  fi
 
     # Print the information
     echo "Local time: $local_time"

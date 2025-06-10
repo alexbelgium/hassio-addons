@@ -12,12 +12,12 @@ if bashio::config.has_value 'additional_apps'; then
         bashio::log.green "... $packagestoinstall"
         if command -v "apk" &>/dev/null; then
             apk add --no-cache "$packagestoinstall" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
-        elif command -v "apt" &>/dev/null; then
+    elif     command -v "apt" &>/dev/null; then
             apt-get install -yqq --no-install-recommends "$packagestoinstall" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
-        elif command -v "pacman" &>/dev/null; then
+    elif     command -v "pacman" &>/dev/null; then
             pacman --noconfirm -S "$packagestoinstall" &>/dev/null || (bashio::log.fatal "Error : $packagestoinstall not found")
-        fi
-    done
+    fi
+  done
 fi
 
 # Set TZ

@@ -56,7 +56,7 @@ if bashio::config.has_value 'Updates'; then
     if [ ! "$(ls -A "${CONFIGSOURCE}"/import_files)" ]; then
         bashio::log.fatal "Automatic updates were requested, but there are no configuration files in ${CONFIGSOURCE}/import_files. There will therefore be be no automatic updates."
         true
-    fi
+  fi
 
 else
 

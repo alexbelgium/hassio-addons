@@ -41,7 +41,7 @@ if [ -e "/MODULESFILE" ] && [ ! -f /ha_entrypoint.sh ]; then
         chmod a+x /etc/cont-init.d/"$scripts"
         /./etc/cont-init.d/"$scripts" || echo "/etc/cont-init.d/$scripts: exiting $?"
         rm /etc/cont-init.d/"$scripts"
-    done | tac
+  done   | tac
 fi
 
 #######################

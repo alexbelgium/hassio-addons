@@ -23,7 +23,7 @@ case $(bashio::config 'DB_TYPE') in
                 "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok \
                 "Please ensure it is installed and started"
-        fi
+    fi
 
         # Install mysqlclient
         pip install pymysql &>/dev/null || true
@@ -34,15 +34,15 @@ case $(bashio::config 'DB_TYPE') in
         PHOTOPRISM_DATABASE_NAME="photoprism"
         PHOTOPRISM_DATABASE_USER="$(bashio::services 'mysql' 'username')"
         PHOTOPRISM_DATABASE_PASSWORD="$(bashio::services 'mysql' 'password')"
-        export PHOTOPRISM_DATABASE_DRIVER && \
+        export PHOTOPRISM_DATABASE_DRIVER &&
             bashio::log.blue "PHOTOPRISM_DATABASE_DRIVER=$PHOTOPRISM_DATABASE_DRIVER"
-        export PHOTOPRISM_DATABASE_SERVER && \
+        export PHOTOPRISM_DATABASE_SERVER &&
             bashio::log.blue "PHOTOPRISM_DATABASE_SERVER=$PHOTOPRISM_DATABASE_SERVER"
-        export PHOTOPRISM_DATABASE_NAME && \
+        export PHOTOPRISM_DATABASE_NAME &&
             bashio::log.blue "PHOTOPRISM_DATABASE_NAME=$PHOTOPRISM_DATABASE_NAME"
-        export PHOTOPRISM_DATABASE_USER && \
+        export PHOTOPRISM_DATABASE_USER &&
             bashio::log.blue "PHOTOPRISM_DATABASE_USER=$PHOTOPRISM_DATABASE_USER"
-        export PHOTOPRISM_DATABASE_PASSWORD && \
+        export PHOTOPRISM_DATABASE_PASSWORD &&
             bashio::log.blue "PHOTOPRISM_DATABASE_PASSWORD=$PHOTOPRISM_DATABASE_PASSWORD"
 
         {
@@ -51,7 +51,7 @@ case $(bashio::config 'DB_TYPE') in
             echo "export PHOTOPRISM_DATABASE_NAME=\"${PHOTOPRISM_DATABASE_NAME}\""
             echo "export PHOTOPRISM_DATABASE_USER=\"${PHOTOPRISM_DATABASE_USER}\""
             echo "export PHOTOPRISM_DATABASE_PASSWORD=\"${PHOTOPRISM_DATABASE_PASSWORD}\""
-        } >> ~/.bashrc
+    }     >>~/.bashrc
 
         bashio::log.warning "Photoprism is using the Maria DB addon"
         bashio::log.warning "Please ensure this is included in your backups"
@@ -77,7 +77,7 @@ if bashio::config.true "ingress_disabled"; then
 else
     PHOTOPRISM_SITE_URL="$(bashio::addon.ingress_entry)/"
     export PHOTOPRISM_SITE_URL
-    echo "export PHOTOPRISM_SITE_URL=\"${PHOTOPRISM_SITE_URL}\"" >> ~/.bashrc
+    echo "export PHOTOPRISM_SITE_URL=\"${PHOTOPRISM_SITE_URL}\"" >>~/.bashrc
     bashio::log.warning "Ingress is enabled. To connect, you must add $PHOTOPRISM_SITE_URL to the end of your access point. Example : http://my-url:8123$PHOTOPRISM_SITE_URL"
 fi
 
@@ -103,17 +103,17 @@ export PHOTOPRISM_BACKUP_PATH
     echo "export PHOTOPRISM_ORIGINALS_PATH=\"${PHOTOPRISM_ORIGINALS_PATH}\""
     echo "export PHOTOPRISM_IMPORT_PATH=\"${PHOTOPRISM_IMPORT_PATH}\""
     echo "export PHOTOPRISM_BACKUP_PATH=\"${PHOTOPRISM_BACKUP_PATH}\""
-} >> ~/.bashrc
+} >>~/.bashrc
 
 # Test configs
 for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPRISM_IMPORT_PATH $PHOTOPRISM_BACKUP_PATH; do
     # Check if path exists
     if bashio::fs.directory_exists "$variabletest"; then
         true
-    else
+  else
         bashio::log.info "Path $variabletest doesn't exist. Creating it now..."
         mkdir -p "$variabletest" || bashio::log.fatal "Can't create $variabletest path"
-    fi
+  fi
     # Check if path writable
     # shellcheck disable=SC2015
     touch "$variabletest"/aze && rm "$variabletest"/aze || bashio::log.fatal "$variabletest path is not writable"
@@ -130,7 +130,7 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     {
         echo "export PHOTOPRISM_UID=\"${PHOTOPRISM_UID}\""
         echo "export PHOTOPRISM_GID=\"${PHOTOPRISM_GID}\""
-    } >> ~/.bashrc
+  }   >>~/.bashrc
 fi
 
 # Start messages
@@ -138,7 +138,8 @@ bashio::log.info "Please wait 1 or 2 minutes to allow the server to load"
 bashio::log.info 'Default username : admin, default password: "please_change_password"'
 
 # shellcheck disable=SC1091
-. /scripts/entrypoint.sh photoprism start & bashio::log.info "Starting, please wait for next green text..."
+. /scripts/entrypoint.sh photoprism start &
+                                            bashio::log.info "Starting, please wait for next green text..."
 
 bashio::net.wait_for 2341 localhost 900
 bashio::log.info "App launched"

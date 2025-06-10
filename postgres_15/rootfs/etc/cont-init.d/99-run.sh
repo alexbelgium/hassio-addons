@@ -15,7 +15,7 @@ fix_permissions() {
     if [ -d /config/backups ]; then
         chown -R postgres:postgres /config/backups
         chmod 700 /config/backups
-    fi
+  fi
 }
 
 chmod -R 755 "$CONFIG_HOME"
@@ -27,10 +27,10 @@ cd /config || true
 get_pgdata_version() {
     if [ -f "$PGDATA/PG_VERSION" ]; then
         cat "$PGDATA/PG_VERSION"
-    else
+  else
         bashio::log.error "FATAL: $PGDATA/PG_VERSION not found; cannot determine cluster version."
         exit 1
-    fi
+  fi
 }
 
 extract_so_from_deb() {
@@ -59,7 +59,7 @@ install_vchord_and_vectors_for_old_pg() {
             echo "Unsupported architecture: $(uname -m)"
             exit 1
             ;;
-    esac
+  esac
     local vchord_url
     local vectors_url
     local vchord_deb
@@ -94,14 +94,14 @@ drop_vectors_everywhere() {
             \"SELECT datname FROM pg_database WHERE datistemplate = false AND datallowconn\""); do
         if su - postgres -c \
            "$BINARIES_DIR/$old_pgver/bin/psql -d $db -Atc \
-            \"SELECT 1 FROM pg_extension WHERE extname='vectors'\"" \
-           | grep -q 1; then
+            \"SELECT 1 FROM pg_extension WHERE extname='vectors'\"" |
+             grep -q 1; then
             bashio::log.warning "Dropping extension vectors from DB $db"
             su - postgres -c \
                "$BINARIES_DIR/$old_pgver/bin/psql -d $db -c \
                 'DROP EXTENSION vectors CASCADE;'"
-        fi
-    done
+    fi
+  done
     su - postgres -c "$BINARIES_DIR/$old_pgver/bin/pg_ctl -w -D '$PGDATA' stop"
 }
 
@@ -109,24 +109,26 @@ start_postgres() {
     bashio::log.info "Starting PostgreSQL..."
     if [ "$(bashio::info.arch)" = "armv7" ]; then
         bashio::log.warning "ARMv7 detected: Starting without vectors.so"
-        /usr/local/bin/immich-docker-entrypoint.sh postgres & true
+        /usr/local/bin/immich-docker-entrypoint.sh postgres &
+                                                              true
         exit 0
-    else
-        /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf & true
-    fi
+  else
+        /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf &
+                                                                                                             true
+  fi
 }
 
 wait_for_postgres() {
     local tries=0
     while ! pg_isready -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" >/dev/null 2>&1; do
-        tries=$((tries+1))
+        tries=$((tries + 1))
         if [ "$tries" -ge 60 ]; then
             bashio::log.error "Postgres did not start after 2 minutes, aborting."
             exit 1
-        fi
+    fi
         echo "PostgreSQL is starting up... ($tries/60)"
         sleep 2
-    done
+  done
 }
 
 restart_immich_addons_if_flagged() {
@@ -140,35 +142,35 @@ restart_immich_addons_if_flagged() {
             bashio::log.error "Supervisor API call failed or unauthorized: $addons_json"
             rm -f "$RESTART_FLAG_FILE"
             return 1
-        }
+    }
 
         if command -v jq >/dev/null; then
             # Use correct JSON path for modern Supervisor API
             for slug in $(echo "$addons_json" | jq -r '.addons[] | select(.state=="started") | .slug'); do
-                if [[ "$slug" == *immich* ]]; then
+                if [[ $slug == *immich*   ]]; then
                     bashio::log.info "Restarting addon $slug"
                     curl -fsSL -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
                         "http://supervisor/addons/$slug/restart"
                     found=1
-                fi
-            done
-        else
+        fi
+      done
+    else
             # Fallback: grep/cut for legacy environments, less robust
             for slug in $(echo "$addons_json" | grep -o '"slug":"[^"]*"' | cut -d: -f2 | tr -d '"'); do
-                if [[ "$slug" == *immich* ]]; then
+                if [[ $slug == *immich*   ]]; then
                     bashio::log.info "Restarting addon $slug"
                     curl -fsSL -X POST -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
                         "http://supervisor/addons/$slug/restart"
                     found=1
-                fi
-            done
         fi
+      done
+    fi
 
         if [ "$found" -eq 0 ]; then
             bashio::log.info "No Immich-related addon found running."
-        fi
-        rm -f "$RESTART_FLAG_FILE"
     fi
+        rm -f "$RESTART_FLAG_FILE"
+  fi
 }
 
 get_available_extension_version() {
@@ -182,7 +184,7 @@ is_extension_available() {
     local result
     result=$(psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME:$DB_PORT/postgres" -v ON_ERROR_STOP=1 -tAc \
         "SELECT 1 FROM pg_available_extensions WHERE name = '$extname';" 2>/dev/null | xargs)
-    [[ "$result" == "1" ]]
+    [[ $result == "1"   ]]
 }
 
 get_user_databases() {
@@ -203,7 +205,7 @@ compare_versions() {
     if [ "$v1" = "$v2" ]; then return 1; fi
     if [ "$(printf '%s\n' "$v1" "$v2" | sort -V | head -n1)" = "$v1" ]; then
         return 0
-    fi
+  fi
     return 1
 }
 
@@ -216,11 +218,11 @@ show_db_extensions() {
         if [ -n "$exts" ]; then
             while read -r ext; do
                 [ -n "$ext" ] && bashio::log.info "    - $ext"
-            done <<< "$exts"
-        else
+      done       <<<"$exts"
+    else
             bashio::log.info "    (no extensions enabled)"
-        fi
-    done
+    fi
+  done
     bashio::log.info "=============================================="
 }
 
@@ -229,13 +231,13 @@ upgrade_extension_if_needed() {
     if ! is_extension_available "$extname"; then
         bashio::log.info "$extname extension not available on this Postgres instance."
         return
-    fi
+  fi
     local available_version
     available_version=$(get_available_extension_version "$extname")
     if [ -z "$available_version" ]; then
         bashio::log.info "Could not determine available version for $extname."
         return
-    fi
+  fi
     for db in $(get_user_databases); do
         local installed_version
         installed_version=$(get_installed_extension_version "$extname" "$db")
@@ -244,15 +246,15 @@ upgrade_extension_if_needed() {
                 bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
                 if psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME@$DB_PORT/$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
                     RESTART_NEEDED=true
-                else
+        else
                     bashio::log.error "Failed to upgrade $extname in $db. Aborting startup."
                     exit 1
-                fi
-            else
-                bashio::log.info "$extname in $db already at latest version ($installed_version)"
-            fi
         fi
-    done
+      else
+                bashio::log.info "$extname in $db already at latest version ($installed_version)"
+      fi
+    fi
+  done
 }
 
 upgrade_postgres_if_needed() {
@@ -274,11 +276,11 @@ upgrade_postgres_if_needed() {
         if [ ! -d "$BINARIES_DIR/$CLUSTER_VERSION/bin" ]; then
             bashio::log.error "Old postgres binaries not found at $BINARIES_DIR/$CLUSTER_VERSION/bin"
             exit 1
-        fi
+    fi
         if [ ! -d "$BINARIES_DIR/$IMAGE_VERSION/bin" ]; then
             bashio::log.error "New postgres binaries not found at $BINARIES_DIR/$IMAGE_VERSION/bin"
             exit 1
-        fi
+    fi
 
         install_vchord_and_vectors_for_old_pg "$CLUSTER_VERSION"
 
@@ -288,7 +290,7 @@ upgrade_postgres_if_needed() {
         if ! rsync -a --delete "$PGDATA/" "$backup_target/"; then
             bashio::log.error "Backup with rsync failed!"
             exit 1
-        fi
+    fi
 
         cp -n --preserve=mode "/var/postgresql-conf-tpl/postgresql.hdd.conf" /etc/postgresql/postgresql.conf
         sed -i "s@##PGDATA@$PGDATA@" /etc/postgresql/postgresql.conf
@@ -328,29 +330,29 @@ upgrade_postgres_if_needed() {
             -D '$PGDATA' -o \"-c config_file=/etc/postgresql/postgresql.conf\" -O \"-c config_file=/etc/postgresql/postgresql.conf\""; then
             bashio::log.error "pg_upgrade failed!"
             exit 1
-        fi
+    fi
 
         if [ -f "$backup_target/postgresql.conf" ]; then
             cp "$backup_target/postgresql.conf" "$PGDATA"
-        fi
+    fi
 
         if [ -f "$backup_target/pg_hba.conf" ]; then
             cp -f "$backup_target/pg_hba.conf" "$PGDATA"
-        fi
+    fi
 
         bashio::log.info "Upgrade completed successfully."
         RESTART_NEEDED=true
 
-    else
+  else
         bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)."
-    fi
+  fi
 }
 
 main() {
     bashio::log.info "Checking for required PostgreSQL cluster upgrade before server start..."
     if [ -f /config/database/PG_VERSION ]; then
         upgrade_postgres_if_needed
-    fi
+  fi
 
     start_postgres
 
@@ -363,7 +365,7 @@ main() {
     DB_USERNAME=postgres
     if bashio::config.has_value "POSTGRES_USER"; then
         DB_USERNAME="$(bashio::config "POSTGRES_USER")"
-    fi
+  fi
     export DB_PORT DB_HOSTNAME DB_USERNAME DB_PASSWORD
 
     wait_for_postgres
@@ -380,14 +382,14 @@ main() {
         touch "$RESTART_FLAG_FILE"
         bashio::addon.restart
         exit 0
-    fi
+  fi
 
     bashio::log.info "All initialization/version check steps completed successfully!"
 
     if [ -d /config/backups ]; then
         echo "Cleaning /config/backups now that upgrade is done"
         rm -r /config/backups
-    fi
+  fi
 }
 
 main

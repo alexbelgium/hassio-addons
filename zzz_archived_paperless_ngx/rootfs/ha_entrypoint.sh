@@ -14,21 +14,21 @@ for SCRIPTS in /etc/cont-init.d/*; do
     if test "$(id -u)" == 0 && test "$(id -u)" == 0; then
         chown "$(id -u)":"$(id -g)" "$SCRIPTS"
         chmod a+x "$SCRIPTS"
-    else
+  else
         bashio::log.warning "Script executed with user $(id -u):$(id -g), things can break and chown won't work"
         # Disable chown and chmod in scripts
         sed -i "s/^chown /true # chown /g" "$SCRIPTS"
         sed -i "s/ chown / true # chown /g" "$SCRIPTS"
         sed -i "s/^chmod /true # chmod /g" "$SCRIPTS"
         sed -i "s/ chmod / true # chmod /g" "$SCRIPTS"
-    fi
+  fi
 
     # Get current shebang, if not available use another
     currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$SCRIPTS")"
     if [ ! -f "${currentshebang%% *}" ]; then
         for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do if [ -f "${shebang%% *}" ]; then break; fi; done
         sed -i "s|$currentshebang|$shebang|g" "$SCRIPTS"
-    fi
+  fi
 
     # Use source to share env variables when requested
     if [ "${ha_entry_source:-null}" = true ] && command -v "source" &>/dev/null; then
@@ -38,10 +38,10 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
         # shellcheck source=/dev/null
         source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
-    else
+  else
         # Support for posix only shell
         /."$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
-    fi
+  fi
 
     # Cleanup
     rm "$SCRIPTS"
