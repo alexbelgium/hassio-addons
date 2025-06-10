@@ -102,8 +102,8 @@ def build_choropleth(percent_by_iso):
         color_continuous_scale="Greens",
         range_color=(0, max(vals) if vals else 1),
     )
-    fig.update_layout(            
-        coloraxis_colorbar=dict(
+    fig.update_layout(
+        coloraxis_colorbar=dict(
             title="% stargazers",
             len=0.5,
             thickness=15,
