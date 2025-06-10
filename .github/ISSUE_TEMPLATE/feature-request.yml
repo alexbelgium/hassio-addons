@@ -2,10 +2,7 @@
 name: "✨ Feature request"
 description: Suggest an idea for this project
 title: "✨ [REQUEST] Addon name"
-labels: [
-  "prevent stale",
-  "enhancement"
-]
+labels: ["prevent stale", "enhancement"]
 body:
   - type: markdown
     attributes:
