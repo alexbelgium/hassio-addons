@@ -15,15 +15,29 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fix non-breaking spaces
+      - name: Fix non-breaking spaces in changed text files
         run: |
-          echo "Replacing non-breaking spaces (U+00A0) with regular spaces..."
-          find . -type f -not -path "./.git/*" -exec sed -i 's/\xC2\xA0/ /g' {} +
+          echo "Finding changed files..."
+          CHANGED_FILES=$(git diff --name-only origin/master...HEAD)
+      
+          echo "Filtering text files..."
+          for file in $CHANGED_FILES; do
+            if [ -f "$file" ]; then
+              MIME_TYPE=$(file --mime-type -b "$file")
+              if [[ "$MIME_TYPE" == text/* ]]; then
+                echo "Fixing: $file"
+                sed -i 's/\xC2\xA0/ /g' "$file"
+              else
+                echo "Skipping non-text file: $file ($MIME_TYPE)"
+              fi
+            fi
+          done
+      
           if [[ -n "$(git status --porcelain)" ]]; then
             git config user.name "github-actions"
             git config user.email "github-actions@github.com"
             git add .
-            git commit -m "fix: replace non-breaking spaces with regular spaces"
+            git commit -m "fix: replace non-breaking spaces in changed text files"
             git push
           else
             echo "No changes to commit."
