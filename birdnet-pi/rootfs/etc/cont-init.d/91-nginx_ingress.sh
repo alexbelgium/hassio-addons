@@ -47,7 +47,7 @@ fi
 sed -i "/View Log/d" "$HOME/BirdNET-Pi/homepage/views.php"
 
 echo "... ensuring restricted area access"
-echo "${ingress_entry}" > /ingress_url
+echo "${ingress_entry}" >/ingress_url
 
 # Modify PHP file safely
 php_file="$HOME/BirdNET-Pi/scripts/common.php"

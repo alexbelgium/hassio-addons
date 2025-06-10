@@ -24,10 +24,10 @@ find /homeassistant/addons_config -maxdepth 1 -type l -delete
 if [ -d /homeassistant ]; then
     if [ -d /config/addons_config ]; then
         rm -r /config/addons_config
-    fi
+  fi
     if [ -d /config/addons_autoscripts ]; then
         rm -r /config/addons_autoscripts
-    fi
+  fi
 fi
 
 # Create symlinks

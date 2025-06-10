@@ -15,11 +15,11 @@ export_options() {
         value=$(jq -r ".${key}" "${json_source}")
         if bashio::config.false "verbose" || [[ "$key" == *"PASS"* ]]; then
             bashio::log.blue "${key}=******"
-        else
+    else
             bashio::log.blue "${key}='${value}'"
-        fi
+    fi
         export "${key}=${value}"
-    done
+  done
 }
 
 # Function to check and adjust DB_HOSTNAME if necessary
@@ -30,7 +30,7 @@ check_db_hostname() {
         host_ip=${host_ip%/*}
         export DB_HOSTNAME="$host_ip"
         bashio::log.warning "DB_HOSTNAME was set to homeassistant.local. Using detected IP: $DB_HOSTNAME"
-    fi
+  fi
 
     if ! ping -c 1 -W 3 "$DB_HOSTNAME" >/dev/null 2>&1; then
         bashio::log.warning "------------------------------------"
@@ -40,20 +40,20 @@ check_db_hostname() {
         bashio::log.warning "------------------------------------"
         sleep 30
         bashio::addon.stop
-    else
+  else
         echo "$DB_HOSTNAME is reachable."
-    fi
+  fi
 }
 
 # Function to migrate internal database to external storage if needed
 migrate_database() {
     if [ -f /share/postgresql_immich.tar.gz ]; then
         bashio::log.warning "Previous database export found at /share/postgresql_immich.tar.gz"
-    elif [ -d /data/postgresql ]; then
+  elif   [ -d /data/postgresql ]; then
         bashio::log.warning "Internal Postgres database detected. Migrating to /share/postgresql_immich.tar.gz"
         tar -zcvf /share/postgresql_immich.tar.gz /data/postgresql
         rm -rf /data/postgresql
-    fi
+  fi
 }
 
 # Function to validate required configuration values
@@ -63,11 +63,11 @@ validate_config() {
         if ! bashio::config.has_value "${var}"; then
             bashio::log.error "Missing required configuration: ${var}"
             missing=true
-        fi
-    done
+    fi
+  done
     if [ "$missing" = true ]; then
         bashio::exit.nok "Please ensure all required options are set."
-    fi
+  fi
 }
 
 # Function to export DB variables to s6 environment if applicable
@@ -75,10 +75,10 @@ export_db_env() {
     if [ -d /var/run/s6/container_environment ]; then
         for var in DB_USERNAME DB_PASSWORD DB_DATABASE_NAME DB_PORT DB_HOSTNAME JWT_SECRET; do
             if [ -n "${!var:-}" ]; then
-                printf "%s" "${!var}" > "/var/run/s6/container_environment/${var}"
-            fi
-        done
-    fi
+                printf "%s" "${!var}" >"/var/run/s6/container_environment/${var}"
+      fi
+    done
+  fi
 }
 
 # Function to set up the root user with a secure password
@@ -86,16 +86,16 @@ setup_root_user() {
     # Generate DB_ROOT_PASSWORD if not set (12-character alphanumeric).
     if bashio::config.has_value "DB_ROOT_PASSWORD"; then
         export DB_ROOT_PASSWORD="$(bashio::config 'DB_ROOT_PASSWORD')"
-    else
+  else
         bashio::log.warning "DB_ROOT_PASSWORD not set. Generating a random 12-character alphanumeric password and storing it in the addon options."
         export DB_ROOT_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c12)"
         bashio::addon.option "DB_ROOT_PASSWORD" "${DB_ROOT_PASSWORD}"
 
         # Store generated password in the s6 environment if available
         if [ -d /var/run/s6/container_environment ]; then
-            printf "%s" "${DB_ROOT_PASSWORD}" > "/var/run/s6/container_environment/DB_ROOT_PASSWORD"
-        fi
+            printf "%s" "${DB_ROOT_PASSWORD}" >"/var/run/s6/container_environment/DB_ROOT_PASSWORD"
     fi
+  fi
 
     # Try to connect as root using the default insecure password.
     if psql "postgres://root:securepassword@${DB_HOSTNAME}:${DB_PORT}/postgres" -c '\q' 2>/dev/null; then
@@ -103,17 +103,17 @@ setup_root_user() {
         psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
 ALTER ROLE root WITH PASSWORD '${DB_ROOT_PASSWORD}';
 EOF
-    else
+  else
         # Check if the root user exists.
         if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" -tAc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
             bashio::log.info "Root user does not exist. Creating root user with DB_ROOT_PASSWORD..."
             psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
 CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD '${DB_ROOT_PASSWORD}';
 EOF
-        else
+    else
             bashio::log.info "Root user exists with a non-default password. No migration needed."
-        fi
     fi
+  fi
 }
 
 # Function to set up the database
@@ -127,9 +127,9 @@ setup_database() {
         psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
 CREATE DATABASE ${DB_DATABASE_NAME};
 EOF
-    else
+  else
         bashio::log.info "Database ${DB_DATABASE_NAME} already exists. Ensuring it is configured correctly."
-    fi
+  fi
 
     # Ensure the user exists and update its password
     psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" <<EOF
@@ -159,10 +159,10 @@ check_vector_extension() {
     if [[ "$RESULT" == "vectors" ]]; then
         echo "✅ 'vectors' extension is enabled."
         return 0
-    else
+  else
         bashio::log.warning "❌ 'vectors' extension is NOT enabled."
         return 1
-    fi
+  fi
 }
 
 # Function to check if vchord extension is enabled
@@ -172,10 +172,10 @@ check_vchord_extension() {
     if [[ "$RESULT" == "vchord" ]]; then
         echo "✅ 'vchord' extension is enabled."
         return 0
-    else
+  else
         bashio::log.warning "❌ 'vchord' extension is NOT enabled."
         return 1
-    fi
+  fi
 }
 
 #########################

@@ -24,7 +24,7 @@ if [ -f "$TRANSMISSION_HOME"/settings.json ]; then
     if bashio::config.has_value 'TRANSMISSION_INCOMPLETE_DIR'; then
         sed -i "/\"incomplete-dir\"/c     \"incomplete-dir\": \"$(bashio::config 'TRANSMISSION_INCOMPLETE_DIR')\"," "$TRANSMISSION_HOME"/settings.json || true
         sed -i "/\"incomplete-dir-enabled\"/c     \"incomplete-dir-enabled\": true," "$TRANSMISSION_HOME"/settings.json || true
-    fi
+  fi
     sed -i "/watch-dir/c     \"watch-dir\": \"$(bashio::config 'TRANSMISSION_WATCH_DIR')\"," "$TRANSMISSION_HOME"/settings.json || true
     sed -i.bak ':begin;$!N;s/,\n}/\n}/g;tbegin;P;D' "$TRANSMISSION_HOME"/settings.json
 fi
@@ -72,7 +72,7 @@ if bashio::config.true 'OPENVPN_CUSTOM_PROVIDER'; then
 fi
 
 # Function to check for files path
-function check_path () {
+function check_path()  {
 
     # Get variable
     file="$1"
@@ -81,13 +81,12 @@ function check_path () {
     if [ ! -f "$file" ]; then
         bashio::warning "$file not found"
         return 1
-    fi
+  fi
 
     cp "$file" /tmpfile
 
     # Loop through each line of the input file
-    while read -r line
-    do
+    while read -r line; do
         # Check if the line contains a txt file
         if [[ "$line" =~ \.txt ]] || [[ "$line" =~ \.crt ]]; then
             # Extract the txt file name from the line
@@ -100,14 +99,14 @@ function check_path () {
                     sed -i "s|$file_name|/etc/openvpn/custom/${file_name##*/}|g" "$file"
                     # Print a success message
                     bashio::log.warning "Appended /etc/openvpn/custom/ to ${file_name##*/} in $file"
-                else
+        else
                     # Print an error message
                     bashio::log.warning "$file_name is referenced in your ovpn file but does not exist in the $TRANSMISSION_HOME/openvpn folder"
                     sleep 5
-                fi
-            fi
         fi
-    done < /tmpfile
+      fi
+    fi
+  done   </tmpfile
 
     rm /tmpfile
 
@@ -127,7 +126,7 @@ if [ "$(bashio::config "OPENVPN_PROVIDER")" == "custom" ]; then
         bashio::log.warning "OPENVPN_CONFIG should not end by ovpn, correcting"
         bashio::addon.option 'OPENVPN_CONFIG' "${openvpn_config%.ovpn}"
         bashio::addon.restart
-    fi
+  fi
 
     # Add ovpn
     openvpn_config="${openvpn_config}.ovpn"
@@ -145,9 +144,9 @@ if [ "$(bashio::config "OPENVPN_PROVIDER")" == "custom" ]; then
         ln -s "$TRANSMISSION_HOME"/openvpn /etc/openvpn/custom
         # Check path
         check_path /etc/openvpn/custom/"$openvpn_config"
-    else
+  else
         bashio::exit.nok "Configured ovpn file : $openvpn_config not found! Are you sure you added it in $TRANSMISSION_HOME/openvpn ?"
-    fi
+  fi
 
 else
 
@@ -171,7 +170,10 @@ ip route add 172.30.0.0/16 via 172.30.32.1
 if bashio::config.true 'auto_restart'; then
 
     bashio::log.info "Auto restarting addon if openvpn down"
-    (set -o posix; export -p) > /env.sh
+    (
+     set -o posix
+                   export -p
+  )                           >/env.sh
     chmod 777 /env.sh
     chmod +x /usr/bin/restart_addon
     sed -i "1a . /env.sh; /usr/bin/restart_addon >/proc/1/fd/1 2>/proc/1/fd/2" /etc/openvpn/tunnelDown.sh
@@ -201,7 +203,8 @@ if [ "$(bashio::config "OPENVPN_PROVIDER")" == "mullvad" ]; then
 fi
 
 bashio::log.info "Starting app"
-/./etc/openvpn/start.sh & echo ""
+/./etc/openvpn/start.sh &
+                          echo ""
 
 #################
 # Allow ingress #

@@ -205,12 +205,12 @@ set_ntp() {
 
   # systemd-timesyncd is the typical built-in NTP client for systemd-based systems
   case "$enable_ntp" in
-    true|True|1|on)
+    true | True | 1 | on)
       echo "Enabling and starting systemd-timesyncd..."
       systemctl enable systemd-timesyncd || echo "Failed to enable timesyncd."
       systemctl start systemd-timesyncd  || echo "Failed to start timesyncd."
       ;;
-    false|False|0|off)
+    false | False | 0 | off)
       echo "Disabling and stopping systemd-timesyncd..."
       systemctl disable systemd-timesyncd || echo "Failed to disable timesyncd."
       systemctl stop systemd-timesyncd    || echo "Failed to stop timesyncd."
@@ -248,7 +248,7 @@ main() {
     set-ntp)
       set_ntp "$@"
       ;;
-    ""|help|--help|-h)
+    "" | help | --help | -h)
       print_usage
       ;;
     *)

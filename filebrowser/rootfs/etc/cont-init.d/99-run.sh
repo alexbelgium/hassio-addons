@@ -12,9 +12,9 @@ if bashio::config.has_value 'TZ'; then
     if [ -f /usr/share/zoneinfo/"$TIMEZONE" ]; then
         ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime
         echo "$TIMEZONE" >/etc/timezone
-    else
+  else
         bashio::log.fatal "$TIMEZONE not found, are you sure it is a valid timezone?"
-    fi
+  fi
 fi
 
 ###################
@@ -73,7 +73,7 @@ if bashio::config.true 'NoAuth'; then
         touch /data/noauth
         NOAUTH="--noauth"
         bashio::log.warning "Auth method change, database reset"
-    fi
+  fi
     bashio::log.info "NoAuth option selected"
 else
     if ! bashio::fs.file_exists "/data/auth"; then
@@ -81,7 +81,7 @@ else
         rm /config/filebrowser.dB &>/dev/null || true
         touch /data/auth
         bashio::log.warning "Auth method change, database reset"
-    fi
+  fi
     bashio::log.info "Default username/password : admin/admin"
 fi
 

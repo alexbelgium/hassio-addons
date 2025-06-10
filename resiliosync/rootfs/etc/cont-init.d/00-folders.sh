@@ -13,7 +13,7 @@ PGID=$(bashio::config "PGID")
 # Create function #
 ###################
 
-change_folders () {
+change_folders()  {
     CONFIGLOCATION=$1
     ORIGINALLOCATION=$2
     TYPE=$3
@@ -32,28 +32,28 @@ change_folders () {
         for FILE in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
             if [ "$TYPE" = "config_location" ]; then
                 [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.storage_path = $variable' "$FILE" | sponge "$FILE"
-            fi
+      fi
             if [ "$TYPE" = "data_location" ]; then
                 [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.directory_root = $variable' "$FILE" | sponge "$FILE"
-            fi
+      fi
             if [ "$TYPE" = "downloads_location" ]; then
                 [ -f "$FILE" ] && jq --arg variable "$CONFIGLOCATION" '.files_default_path = $variable' "$FILE" | sponge "$FILE"
-            fi
-        done
+      fi
+    done
 
         # Transfer files
         if [ -d "$ORIGINALLOCATION" ] && [ "$(ls -A "$ORIGINALLOCATION" 2>/dev/null)" ]; then
             echo "Files were existing in $ORIGINALLOCATION, they will be moved to $CONFIGLOCATION"
             mv "$ORIGINALLOCATION"/* "$CONFIGLOCATION"/
             rmdir "$ORIGINALLOCATION"
-        fi 2>/dev/null || true
-    fi
+    fi     2>/dev/null || true
+  fi
 
     # Create folders
     echo "Checking if folders exist"
     for FOLDER in "$CONFIGLOCATION" "$CONFIGLOCATION"/folders "$CONFIGLOCATION"/mounted_folders "$CONFIGLOCATION"/downloads; do
         [ ! -d "$FOLDER" ] && echo "Creating $FOLDER" && mkdir -p "$FOLDER"
-    done
+  done
 
     # Set permissions
     echo "Setting ownership to $PUID:$PGID"

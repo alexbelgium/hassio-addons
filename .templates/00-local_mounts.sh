@@ -15,8 +15,8 @@ fi
 if bashio::config.has_value 'localdisks'; then
 
     # Available devices
-    blkid | awk '{print substr($1, 0, length($1) - 1)}' | awk -F'/' '{print $NF}' > availabledisks
-    echo "NAME" >> availabledisks
+    blkid | awk '{print substr($1, 0, length($1) - 1)}' | awk -F'/' '{print $NF}' >availabledisks
+    echo "NAME" >>availabledisks
 
     ## List available Disk with Labels and Id
     bashio::log.blue "---------------------------------------------------"
@@ -45,16 +45,16 @@ if bashio::config.has_value 'localdisks'; then
         if [ -e /dev/"$disk" ]; then
             echo "... $disk is a physical device"
             devpath=/dev
-        elif [ -e /dev/disk/by-uuid/"$disk" ] || lsblk -o UUID | grep -q "$disk"; then
+    elif     [ -e /dev/disk/by-uuid/"$disk" ] || lsblk -o UUID | grep -q "$disk"; then
             echo "... $disk is a device by UUID"
             devpath=/dev/disk/by-uuid
-        elif [ -e /dev/disk/by-label/"$disk" ] || lsblk -o LABEL | grep -q "$disk"; then
+    elif     [ -e /dev/disk/by-label/"$disk" ] || lsblk -o LABEL | grep -q "$disk"; then
             echo "... $disk is a device by label"
             devpath=/dev/disk/by-label
-        else
+    else
             bashio::log.fatal "$disk does not match any known physical device, UUID, or label. "
             continue
-        fi
+    fi
 
         # Creates dir
         mkdir -p /mnt/"$disk"
@@ -62,7 +62,7 @@ if bashio::config.has_value 'localdisks'; then
             PUID="$(bashio::config 'PUID')"
             PGID="$(bashio::config 'PGID')"
             chown "$PUID:$PGID" /mnt/"$disk"
-        fi
+    fi
 
         # Check FS type and set relative options (thanks @https://github.com/dianlight/hassio-addons)
         fstype=$(lsblk "$devpath"/"$disk" -no fstype)
@@ -73,7 +73,7 @@ if bashio::config.has_value 'localdisks'; then
         if [[ "${fstypessupport}" != *"${fstype}"* ]]; then
             bashio::log.fatal : "${fstype} type for ${disk} is not supported"
             break
-        fi
+    fi
 
         # Mount drive
         bashio::log.info "Mounting ${disk} of type ${fstype}"
@@ -92,17 +92,19 @@ if bashio::config.has_value 'localdisks'; then
                 options="loop"
                 type="squashfs"
                 ;;
-        esac
+    esac
 
         # Legacy mounting : mount to share if still exists (avoid breaking changes)
         dirpath="/mnt"
         if [ -d /share/"$disk" ]; then dirpath="/share"; fi
 
         # shellcheck disable=SC2015
-        mount -t $type "$devpath"/"$disk" "$dirpath"/"$disk" -o $options && bashio::log.info "Success! $disk mounted to /mnt/$disk" || \
-            (bashio::log.fatal "Unable to mount local drives! Please check the name."
+        mount -t $type "$devpath"/"$disk" "$dirpath"/"$disk" -o $options && bashio::log.info "Success! $disk mounted to /mnt/$disk" ||
+            (
+             bashio::log.fatal "Unable to mount local drives! Please check the name."
             rmdir /mnt/"$disk"
-        bashio::addon.stop)
-    done
+        bashio::addon.stop
+      )
+  done
 
 fi

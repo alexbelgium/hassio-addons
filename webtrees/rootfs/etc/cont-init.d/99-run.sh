@@ -33,13 +33,13 @@ fi
 if [[ "$DATA_LOCATION_CURRENT" != "$DATA_LOCATION" ]] && [[ "$(ls -A "$DATA_LOCATION_CURRENT")" ]]; then
     bashio::log.warning "Data location was changed from $DATA_LOCATION_CURRENT to $DATA_LOCATION, migrating files"
     cp -rnf "$DATA_LOCATION_CURRENT"/* "$DATA_LOCATION"/ &>/dev/null || true
-    echo "Files moved to $DATA_LOCATION" > "$DATA_LOCATION_CURRENT"/migrated
+    echo "Files moved to $DATA_LOCATION" >"$DATA_LOCATION_CURRENT"/migrated
     mv "$DATA_LOCATION_CURRENT" "${DATA_LOCATION_CURRENT}_migrated"
 fi
 
 # Saving data location
 echo "... using data folder $DATA_LOCATION"
-echo -n "$DATA_LOCATION" > "$DATA_LOCATION_FILE"
+echo -n "$DATA_LOCATION" >"$DATA_LOCATION_FILE"
 
 # Update entrypoint
 # Correct data directory

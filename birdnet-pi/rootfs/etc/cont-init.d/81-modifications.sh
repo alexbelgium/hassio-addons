@@ -31,12 +31,12 @@ if bashio::supervisor.ping 2>/dev/null; then
     echo "... disabling pulseaudio as managed by HomeAssistant"
     grep -srl "pulseaudio --start" "$HOME/BirdNET-Pi/scripts" | while read -r file; do
         sed -i "s|! pulseaudio --check|pulseaudio --check|g" "$file"
-    done
+  done
 
     # Check if port 80 is correctly configured
     if [ -n "$(bashio::addon.port "80")" ] && [ "$(bashio::addon.port "80")" != 80 ]; then
         bashio::log.fatal "The port 80 is enabled, but should still be 80 if you want automatic SSL certificates generation to work."
-    fi
+  fi
 fi
 
 # General elements
@@ -62,8 +62,8 @@ if ! grep -q "/usr/bin/sudo" "$HOME/BirdNET-Pi/templates/birdnet_analysis.servic
     while IFS= read -r file; do
         if [[ "$(basename "$file")" != "birdnet_log.service" ]]; then
             sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$file"
-        fi
-    done < <(find "$HOME/BirdNET-Pi/templates/" -name "*net*.service" -print)
+    fi
+  done   < <(find "$HOME/BirdNET-Pi/templates/" -name "*net*.service" -print)
 fi
 
 # Allow pulseaudio system
@@ -105,7 +105,7 @@ if ! grep -q "http://:8081" /etc/caddy/Caddyfile; then
     sed -i "s|http://|http://:8081|g" "$HOME/BirdNET-Pi/scripts/update_caddyfile.sh"
     if [ -f /etc/caddy/Caddyfile.original ]; then
         rm /etc/caddy/Caddyfile.original
-    fi
+  fi
 fi
 
 # Correct webui paths

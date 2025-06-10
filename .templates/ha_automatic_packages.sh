@@ -59,7 +59,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES nginx"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES nginx"
         if ls /etc/nginx 1>/dev/null 2>&1; then mv /etc/nginx /etc/nginx2; fi
-    fi
+  fi
 
     COMMAND="mount"
     if grep -q -rnw "$files/" -e "$COMMAND"; then
@@ -67,7 +67,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES exfatprogs ntfs-3g ntfs-3g-progs squashfs-tools fuse lsblk"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES exfat* ntfs* squashfs-tools util-linux"
         #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES ntfs-3g"
-    fi
+  fi
 
     COMMAND="ping"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -75,7 +75,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES iputils"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES iputils-ping"
         #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES iputils"
-    fi
+  fi
 
     COMMAND="nmap"
     if grep -q -rnw "$files/" -e "$COMMAND"; then
@@ -83,7 +83,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES nmap nmap-scripts"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES nmap"
         #[ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES iputils"
-    fi
+  fi
 
     COMMAND="cifs"
     if grep -q -rnw "$files/" -e "$COMMAND"; then
@@ -91,7 +91,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
-    fi
+  fi
 
     COMMAND="smbclient"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -99,7 +99,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES samba samba-client ntfs-3g"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES samba smbclient ntfs-3g"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES samba smbclient"
-    fi
+  fi
 
     COMMAND="dos2unix"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -107,7 +107,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES dos2unix"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES dos2unix"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES dos2unix"
-    fi
+  fi
 
     COMMAND="openvpn"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -115,7 +115,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES coreutils openvpn"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES coreutils openvpn"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES coreutils openvpn"
-    fi
+  fi
 
     COMMAND="jq"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -123,7 +123,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES jq"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES jq"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES jq"
-    fi
+  fi
 
     COMMAND="yamllint"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -131,7 +131,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES yamllint"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES yamllint"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES yamllint"
-    fi
+  fi
 
     COMMAND="git"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -139,7 +139,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES git"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES git"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES git"
-    fi
+  fi
 
     COMMAND="sponge"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -147,7 +147,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES moreutils"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES moreutils"
         [ "$PACKMANAGER" = "pacman " ] && PACKAGES="$PACKAGES moreutils"
-    fi
+  fi
 
     COMMAND="sqlite3"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -155,7 +155,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES sqlite"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES sqlite3"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES sqlite3"
-    fi
+  fi
 
     COMMAND="pip"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -163,7 +163,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES py3-pip"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES pip"
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES pip"
-    fi
+  fi
 
     COMMAND="wget"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
@@ -171,7 +171,7 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES wget"
         [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES wget"
         [ "$PACKMANAGER" = "wget" ] && PACKAGES="$PACKAGES wget"
-    fi
+  fi
 
 done
 
@@ -190,11 +190,11 @@ for packagestoinstall in $PACKAGES; do
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall"
     if [ "$PACKMANAGER" = "apk" ]; then
         apk add --no-cache "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
-    elif [ "$PACKMANAGER" = "apt" ]; then
+  elif   [ "$PACKMANAGER" = "apt" ]; then
         apt-get install -yqq --no-install-recommends "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
-    elif [ "$PACKMANAGER" = "pacman" ]; then
+  elif   [ "$PACKMANAGER" = "pacman" ]; then
         pacman --noconfirm -S "$packagestoinstall" &>/dev/null || (echo "Error : $packagestoinstall not found" && touch /ERROR)
-    fi
+  fi
     [ "$VERBOSE" = true ] && echo "... $packagestoinstall done"
 done
 
@@ -235,14 +235,14 @@ for files in "/etc/services.d" "/etc/cont-init.d"; do
         mv /tmp/bashio/lib /usr/lib/bashio
         ln -s /usr/lib/bashio/bashio /usr/bin/bashio
         rm -rf /tmp/bashio
-    fi
+  fi
 
     # Lastversion
     COMMAND="lastversion"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &>/dev/null; then
         [ "$VERBOSE" = true ] && echo "install $COMMAND"
         pip install $COMMAND
-    fi
+  fi
 
     # Tempio
     if grep -q -rnw "$files/" -e 'tempio' && [ ! -f "/usr/bin/tempio" ]; then
@@ -251,7 +251,7 @@ for files in "/etc/services.d" "/etc/cont-init.d"; do
         BUILD_ARCH="$(bashio::info.arch)"
         curl -f -L -f -s -o /usr/bin/tempio "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
         chmod a+x /usr/bin/tempio
-    fi
+  fi
 
     # Mustache
     COMMAND="mustache"
@@ -266,7 +266,7 @@ for files in "/etc/services.d" "/etc/cont-init.d"; do
         apk del .build-deps xz build-base
         [ "$PACKMANAGER" = "apt" ] && apt-get update &&
         apt-get install -yqq go npm node-mustache
-    fi
+  fi
 
 done
 

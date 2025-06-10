@@ -55,7 +55,6 @@ if bashio::config.has_value 'SavePath'; then
         -e "/\[BitTorrent\]/a Downloads\\\DefaultSavePath=$DOWNLOADS" \
         -e "/\[BitTorrent\]/a Session\\\DefaultSavePath=$DOWNLOADS" qBittorrent.conf
 
-
     # Info
     bashio::log.info "Downloads can be found in $DOWNLOADS"
 fi
@@ -217,7 +216,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
             curl -f -s -S -J -L -o /webui/release.zip "$(curl -f -s -L https://api.github.com/repos/CzBiX/qb-web/releases | grep -o "http.*qb-web-.*zip" | head -1)" >/dev/null
             ;;
 
-    esac || { bashio::log.warning "$CUSTOMUI could not be downloaded, please raise an issue on the github repository. The default UI will be used" && exit 0 ; }
+  esac   || { bashio::log.warning "$CUSTOMUI could not be downloaded, please raise an issue on the github repository. The default UI will be used" && exit 0;  }
 
     ### Install WebUI
     mkdir -p /webui/"$CUSTOMUI"
@@ -230,7 +229,7 @@ if bashio::config.has_value 'customUI' && [ ! "$CUSTOMUI" = default ] && [ ! "$C
     if [[ "$CUSTOMUI" != qbit-matUI ]]; then
         sed -i "s=/vuetorrent/public/=$CUSTOMUIDIR/public/=g" /etc/nginx/servers/ingress.conf || true
         sed -i "s=vue.torrent=$CUSTOMUI.torrent=g" /etc/nginx/servers/ingress.conf || true
-    fi
+  fi
 fi
 
 ##########

@@ -34,15 +34,15 @@ if $LAUNCHER fulltextsearch:test &>/dev/null; then
             echo "... installing apps : $app"
             $LAUNCHER app:install $app >/dev/null
             $LAUNCHER app:enable $app >/dev/null
-        done
+    done
         chown -R "$PUID":"$PGID" $NEXTCLOUD_PATH/apps
 
         if bashio::config.has_value 'elasticsearch_server'; then
             HOST=$(bashio::config 'elasticsearch_server')
-        else
+    else
             bashio::log.warning 'Please define elasticsearch server url in addon options. Default value of http://db21ed7f-elasticsearch:9200 will be used'
             HOST=http://db21ed7f-elasticsearch:9200
-        fi
+    fi
 
         # Final setup
         echo "... settings apps"
@@ -59,11 +59,11 @@ if $LAUNCHER fulltextsearch:test &>/dev/null; then
         if $LAUNCHER fulltextsearch:test &>/dev/null; then
             bashio::log.info "Full Text Search was successfully installed using elasticsearch server $HOST!"
 
-        else
+    else
 
             bashio::log.warning "Elasticsearch can't connect. Please manually define its server in the options"
-        fi
-    else
-        echo "Full_Text_Search option not set"
     fi
+  else
+        echo "Full_Text_Search option not set"
+  fi
 fi

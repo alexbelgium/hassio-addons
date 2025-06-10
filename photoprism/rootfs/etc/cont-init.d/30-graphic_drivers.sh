@@ -32,5 +32,5 @@ if bashio::config.has_value 'graphic_drivers'; then
             echo "... no drivers selected"
             ;;
 
-    esac
+  esac
 fi

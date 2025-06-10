@@ -18,14 +18,13 @@ if bashio::config.has_value 'DNS_server'; then
     # shellcheck disable=SC2086
     for server in ${DNSSERVER//,/ }; do # Separate comma separated values
         # Only add DNS if successful
-        if ping -c 1 "$server" &> /dev/null
-        then
+        if ping -c 1 "$server" &>/dev/null; then
             DNS="${DNS}nameserver $server\n"
             DNSLIST="$server $DNSLIST"
-        else
+    else
             bashio::log.warning "DNS $server was requested but can't be pinged. It won't be used"
-        fi
-    done
+    fi
+  done
 
     # Only add DNS if there are DNS set
     # shellcheck disable=SC2236
@@ -35,9 +34,9 @@ if bashio::config.has_value 'DNS_server'; then
         printf "${DNS}" >/etc/resolv.conf
         chmod 644 /etc/resolv.conf
         bashio::log.info "DNS SERVERS set to $DNSLIST"
-    else
+  else
         bashio::log.warning "No valid DNS were found. Using default router (or HA) dns servers."
-    fi
+  fi
 
 else
     bashio::log.info "DNS Servers option empty. Using default router (or HA) dns servers."

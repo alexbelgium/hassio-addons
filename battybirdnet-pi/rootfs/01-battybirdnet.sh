@@ -22,7 +22,7 @@ if [ "$(uname -m)" == "x86_64" ]; then
 fi
 
 # Make sure bats model is on
-echo 'sed -i "/BATS_ANALYSIS=/c\BATS_ANALYSIS=1" /config/birdnet.conf' >> /etc/cont-init.d/81-modifications.sh
+echo 'sed -i "/BATS_ANALYSIS=/c\BATS_ANALYSIS=1" /config/birdnet.conf' >>/etc/cont-init.d/81-modifications.sh
 
 # Disable monitoring service
 sed -i "1a sleep infinity" /custom-services.d/30-monitoring.sh

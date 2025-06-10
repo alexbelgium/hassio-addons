@@ -24,7 +24,7 @@ echo "... specifying security files permissions"
 for file in ssl-key.pem ssl-cert.pem security.json; do
     if [ -e "/config/$file" ]; then
         chmod 600 "/config/$file"
-    fi
+  fi
 done
 
 bashio::log.info "Starting application"

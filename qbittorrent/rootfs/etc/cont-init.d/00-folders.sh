@@ -15,7 +15,7 @@ if [ -f /homeassistant/addons_config/qBittorrent/qBittorrent.conf ] && [ ! -f /h
     cp -rnp /homeassistant/addons_config/qBittorrent/* /config/qBittorrent/ &>/dev/null || true
     if [ -d /config/qBittorrent/addons_config ]; then rm -r /config/qBittorrent/addons_config; fi
     if [ -d /config/qBittorrent/qBittorrent ]; then rm -r /config/qBittorrent/qBittorrent; fi
-    echo "Files moved to /addon_configs/$HOSTNAME/openvpn" > /homeassistant/addons_config/qBittorrent/migrated
+    echo "Files moved to /addon_configs/$HOSTNAME/openvpn" >/homeassistant/addons_config/qBittorrent/migrated
     bashio::log.yellow "... moved files from /config/addons_config/qBittorrent to /addon_configs/$HOSTNAME/qBitorrent (must be accessed with my Filebrowser addon)"
     MIGRATED=true
 fi
@@ -33,8 +33,8 @@ fi
 if [ -d /homeassistant/openvpn ]; then
     if [ ! -f /homeassistant/openvpn/migrated ] && [ "$(ls -A /homeassistant/openvpn)" ]; then
         cp -rnf /homeassistant/openvpn/* /config/openvpn &>/dev/null || true
-        echo "Files moved to /addon_configs/$HOSTNAME/openvpn" > /homeassistant/openvpn/migrated
-    fi
+        echo "Files moved to /addon_configs/$HOSTNAME/openvpn" >/homeassistant/openvpn/migrated
+  fi
 fi
 
 # Move config.yaml

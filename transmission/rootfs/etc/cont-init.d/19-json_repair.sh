@@ -17,7 +17,7 @@ if [ -f "${JSONTOCHECK}" ]; then
         mv "${JSONSOURCE}" "${JSONSOURCE}"_old
         cp "${JSONSOURCE}" "${JSONTOCHECK}"
         exit 0
-    fi
+  fi
 
     # Get the default keys from the original file
     mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
@@ -34,8 +34,8 @@ if [ -f "${JSONTOCHECK}" ]; then
             sed -i "3 i\"${KEYS}\": \"${JSONSOURCEVALUE}\"," "${JSONTOCHECK}"
             # Message
             bashio::log.warning "${KEYS} was missing from your settings.json, it was added with the default value ${JSONSOURCEVALUE}"
-        fi
-    done
+    fi
+  done
 
     # Show structure in a nice way
     jq . -S "${JSONTOCHECK}" | cat >temp.json && mv temp.json "${JSONTOCHECK}"

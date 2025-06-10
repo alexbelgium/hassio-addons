@@ -9,7 +9,7 @@ if bashio::config.has_value "graphic_driver"; then
         # shellcheck disable=SC2128
         bashio::log.fatal "Error: Run $(basename "${BASH_SOURCE}") as root" 1>&2
         exit 1
-    fi
+  fi
 
     # Get installer type
     if [ -f /usr/bin/apt ]; then
@@ -18,9 +18,9 @@ if bashio::config.has_value "graphic_driver"; then
         add-apt-repository ppa:kisak/kisak-mesa >/dev/null
         apt-get update >/dev/null
         apt-get install -yqq mesa
-    elif [ -f /usr/bin/apk ]; then
+  elif   [ -f /usr/bin/apk ]; then
         bashio::log.info "... Distribution detected : Alpine"
-    fi
+  fi
 
     # Detect GPU
     # shellcheck disable=SC2207
@@ -49,7 +49,7 @@ if bashio::config.has_value "graphic_driver"; then
             bashio::log.fatal "Unsupported Machine Architecture: $BUILD_ARCH" 1>&2
             exit 1
             ;;
-    esac
+  esac
     bashio::log.info "... architecture detected: ${BUILD_ARCH}"
 
     #graphic_driver="$(bashio::config "graphic_driver")"
@@ -79,7 +79,7 @@ if bashio::config.has_value "graphic_driver"; then
             [ -f /usr/bin/apt ] && apt-get -yqq install libgles2-mesa libgles2-mesa-dev xorg-dev >/dev/null && bashio::log.green "... done"
             ;;
 
-    esac
+  esac
 
     # Main run logic
     run_mods() {
@@ -94,37 +94,37 @@ if bashio::config.has_value "graphic_driver"; then
                 TAG="${DOCKER_MOD#*:}"
                 if [[ ${TAG} == "${DOCKER_MOD}" ]]; then
                     TAG="latest"
-                fi
+        fi
                 FILENAME="${USERNAME}.${REPO}.${TAG}"
                 AUTH_URL="https://ghcr.io/token?scope=repository%3A${USERNAME}%2F${REPO}%3Apull"
                 MANIFEST_URL="https://ghcr.io/v2/${ENDPOINT}/manifests/${TAG}"
                 BLOB_URL="https://ghcr.io/v2/${ENDPOINT}/blobs/"
                 MODE="ghcr"
-            else
+      else
                 ENDPOINT="${DOCKER_MOD%%:*}"
                 USERNAME="${DOCKER_MOD%%/*}"
                 REPO="${ENDPOINT#*/}"
                 TAG="${DOCKER_MOD#*:}"
                 if [[ ${TAG} == "${DOCKER_MOD}" ]]; then
                     TAG="latest"
-                fi
+        fi
                 FILENAME="${USERNAME}.${REPO}.${TAG}"
                 AUTH_URL="https://auth.docker.io/token?service=registry.docker.io&scope=repository:${ENDPOINT}:pull"
                 MANIFEST_URL="https://registry-1.docker.io/v2/${ENDPOINT}/manifests/${TAG}"
                 BLOB_URL="https://registry-1.docker.io/v2/${ENDPOINT}/blobs/"
                 MODE="dockerhub"
-            fi
+      fi
             # Kill off modification logic if any of the usernames are banned
             for BANNED in $(curl -s https://raw.githubusercontent.com/linuxserver/docker-mods/master/blacklist.txt); do
                 if [[ "${BANNED,,}" == "${USERNAME,,}" ]]; then
                     if [[ -z ${RUN_BANNED_MODS+x} ]]; then
                         echo "[mod-init] ${DOCKER_MOD} is banned from use due to reported abuse aborting mod logic"
                         return
-                    else
+          else
                         echo "[mod-init] You have chosen to run banned mods ${DOCKER_MOD} will be applied"
-                    fi
-                fi
-            done
+          fi
+        fi
+      done
             echo "[mod-init] Applying ${DOCKER_MOD} files to container"
             # Get Dockerhub token for api operations
             TOKEN="$(
@@ -133,13 +133,13 @@ if bashio::config.has_value "graphic_driver"; then
                     --header 'GET' \
                     "${AUTH_URL}" |
                 jq -r '.token'
-            )"
+      )"
             # Determine first and only layer of image
             SHALAYER=$(get_blob_sha "${MODE}" "${TOKEN}" "${MANIFEST_URL}")
             # Check if we have allready applied this layer
             if [[ -f "/${FILENAME}" ]] && [[ "${SHALAYER}" == "$(cat /"${FILENAME}")" ]]; then
                 echo "[mod-init] ${DOCKER_MOD} at ${SHALAYER} has been previously applied skipping"
-            else
+      else
                 # Download and extract layer to /
                 curl -f --retry 10 --retry-max-time 60 --retry-connrefused \
                     --silent \
@@ -153,11 +153,11 @@ if bashio::config.has_value "graphic_driver"; then
                 if [[ -d /tmp/mod/etc/s6-overlay ]]; then
                     if [[ -d /tmp/mod/etc/cont-init.d ]]; then
                         rm -rf /tmp/mod/etc/cont-init.d
-                    fi
+          fi
                     if [[ -d /tmp/mod/etc/services.d ]]; then
                         rm -rf /tmp/mod/etc/services.d
-                    fi
-                fi
+          fi
+        fi
                 shopt -s dotglob
                 cp -R /tmp/mod/* /
                 shopt -u dotglob
@@ -165,8 +165,8 @@ if bashio::config.has_value "graphic_driver"; then
                 rm -rf /modtarball.tar.xz
                 echo "${SHALAYER}" >"/${FILENAME}"
                 echo "[mod-init] ${DOCKER_MOD} applied to container"
-            fi
-        done
-    }
+      fi
+    done
+  }
 
 fi

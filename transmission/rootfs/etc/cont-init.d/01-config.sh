@@ -86,7 +86,7 @@ if bashio::config.has_value 'watch_dir'; then
 fi
 
 echo "${CONFIG}" >"$CONFIGDIR"/settings.json &&
-jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json $CONFIGDIR/settings.json
+  jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json $CONFIGDIR/settings.json
 
 # USER and PASS
 ###############
@@ -105,7 +105,7 @@ CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-authentication-required\"=${BOOLEAN}")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-username\"=\"${USER}\"")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-password\"=\"${PASS}\"")
 echo "${CONFIG}" >"$CONFIGDIR"/settings.json &&
-jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json "$CONFIGDIR"/settings.json
+  jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json "$CONFIGDIR"/settings.json
 
 # WHITELIST
 ###########
@@ -122,4 +122,4 @@ fi
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-whitelist-enabled\"=${BOOLEAN}")
 CONFIG=$(bashio::jq "${CONFIG}" ".\"rpc-whitelist\"=\"$WHITELIST\"")
 echo "${CONFIG}" >"$CONFIGDIR"/settings.json &&
-jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json "$CONFIGDIR"/settings.json
+  jq . -S "$CONFIGDIR"/settings.json | cat >temp.json && mv temp.json "$CONFIGDIR"/settings.json

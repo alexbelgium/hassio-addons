@@ -28,13 +28,12 @@ if bashio::config.has_value 'Updates'; then
         bashio::log.info "$FREQUENCY updates"
         echo ""
 
-        for i in $(seq 4 2 12)
-        do
+        for i in $(seq 4 2 12); do
             hour="   $i"
             freqDir="/etc/periodic/daily$i"
-            echo "0    ${hour:(-4)}       *       *       *       run-parts \"$freqDir\"" >> /etc/crontabs/root
+            echo "0    ${hour:(-4)}       *       *       *       run-parts \"$freqDir\"" >>/etc/crontabs/root
             mkdir "$freqDir"
-        done
+    done
 
         # Sets cron // do not delete this message
         freqDir="/etc/periodic/${FREQUENCY}"
@@ -47,7 +46,7 @@ if bashio::config.has_value 'Updates'; then
         # Starts cron
         echo "Timezone $TZ"
         export TZ
-        crond -l 2 -f > /dev/stdout 2> /dev/stderr &
+        crond -l 2 -f >/dev/stdout  2>/dev/stderr &
 
         # Export variables
         IMPORT_DIR_WHITELIST="${CONFIGSOURCE}/import_files"
@@ -55,9 +54,9 @@ if bashio::config.has_value 'Updates'; then
 
         bashio::log.info "Automatic updates were requested. The files in ${CONFIGSOURCE} will be imported $FREQUENCY."
 
-    else
+  else
         bashio::log.fatal "Automatic updates were requested, but there are no configuration files in ${CONFIGSOURCE}. There will therefore be be no automatic updates."
-    fi
+  fi
 
 fi
 

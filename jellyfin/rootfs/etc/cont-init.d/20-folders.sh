@@ -9,7 +9,7 @@ LOCATIONOK=""
 for location in "/share" "/config" "/data" "/mnt"; do
     if [[ "$LOCATION" == "$location"* ]]; then
         LOCATIONOK=true
-    fi
+  fi
 done
 
 if [ -z "$LOCATIONOK" ]; then
@@ -92,4 +92,3 @@ echo "Enable legacy mode"
 mkdir -p /config/addons_config
 ln -sf "$LOCATION" /config/addons_config/jellyfin
 chown -R "$PUID:$PGID" "$LOCATION"
-

@@ -16,7 +16,7 @@ if bashio::config.true "ingress_disabled"; then
 
     # Create index.html
     touch /etc/ingress.html
-    cat > /etc/ingress.html << EOF
+    cat >/etc/ingress.html  <<EOF
 <!DOCTYPE html>
 <html>
   <head>

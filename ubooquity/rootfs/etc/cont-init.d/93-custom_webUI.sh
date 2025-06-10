@@ -28,7 +28,7 @@ if bashio::config.has_value 'theme'; then
             exit 0
             ;;
 
-    esac
+  esac
 
     ### Clean files
     rm /data/release.zip || true

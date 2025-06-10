@@ -21,12 +21,12 @@ if [ "$CONFIGLOCATION" != "/config" ]; then
     # Create new config folder if needed
     for file in $(grep -srl "PUID" /etc/cont-init.d /etc/s6-overlay/s6-rc.d); do
         sed -i "1a mkdir -p $CONFIGLOCATION" "$file"
-    done
+  done
 
     # Correct config location
     for file in $(grep -Esril "/config[ '\"/]|/config\$" /etc /defaults); do
         sed -Ei "s=(/config)+(/| |$|\"|\')=$CONFIGLOCATION\2=g" "$file"
-    done
+  done
 
 fi
 
@@ -41,8 +41,8 @@ if [ -f /config/configuration.yaml ] || [ -f /config/configuration.json ]; then
     for file in /etc/services.d/*/* /etc/cont-init.d/* /etc/s6-overlay/s6-rc.d/*/*; do
         if [ -f "$file" ] && [ -n "$(awk '/chown.*abc:abc.*\\/,/.*\/config( |$)/{print FILENAME}' "$file")" ]; then
             sed -i "s|/config$|/data|g" "$file"
-        fi
-    done
+    fi
+  done
 fi
 
 # Send crond logs to addon logs
@@ -64,5 +64,5 @@ sed -i '/groupmod/ s/$/ 2>\/dev\/null || true/' /etc/s6-overlay/s6-rc.d/init-add
 if [ ! -f /usr/bin/lsiown ]; then
     for file in $(grep -sril "lsiown" /etc); do
         sed -i "s|lsiown|chown|g" "$file"
-    done
+  done
 fi

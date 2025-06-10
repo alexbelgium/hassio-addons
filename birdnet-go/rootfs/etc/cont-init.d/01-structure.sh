@@ -39,13 +39,13 @@ BIRDSONGS_FOLDER="${BIRDSONGS_FOLDER%/}"  # Remove trailing slash if present
 if [[ ! "$BIRDSONGS_FOLDER" == /* ]]; then
     if [ ! -d "/config/$BIRDSONGS_FOLDER" ]; then
         mkdir -p "/config/$BIRDSONGS_FOLDER"
-    fi
+  fi
     if [ -d "/data/$BIRDSONGS_FOLDER" ]; then
         if [ -n "$(ls -A /data/"$BIRDSONGS_FOLDER" 2>/dev/null)" ]; then
             cp -rf /data/"$BIRDSONGS_FOLDER"/* "/config/$BIRDSONGS_FOLDER"/
-        fi
-        rm -r "/data/$BIRDSONGS_FOLDER"
     fi
+        rm -r "/data/$BIRDSONGS_FOLDER"
+  fi
     ln -sf "/config/$BIRDSONGS_FOLDER" "/data/$BIRDSONGS_FOLDER"
 fi
 
@@ -61,7 +61,7 @@ if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${BIRDSONGS_FOLDER%/}" ]]; then
         bashio::log.warning "Migrating files from $CURRENT_BIRDSONGS_FOLDER to $BIRDSONGS_FOLDER"
         cp -rnf "$CURRENT_BIRDSONGS_FOLDER"/* "$BIRDSONGS_FOLDER"/
         mv "${CURRENT_BIRDSONGS_FOLDER%/}" "${CURRENT_BIRDSONGS_FOLDER%/}_migrated"
-    fi
+  fi
     # Adapt the database
     if [ -f /config/birdnet.db ]; then
         # Prepare
@@ -72,24 +72,24 @@ if [[ "${CURRENT_BIRDSONGS_FOLDER%/}" != "${BIRDSONGS_FOLDER%/}" ]]; then
         if ! cp /config/birdnet.db "birdnet.db_$backup"; then
             bashio::log.error "Failed to create a backup of the database. Aborting path modification."
             exit 1
-        fi
+    fi
 
         # Execute the query using sqlite3
         SQL_QUERY="UPDATE notes SET clip_name = '${BIRDSONGS_FOLDER%/}/' || substr(clip_name, length('${CURRENT_BIRDSONGS_FOLDER%/}/') + 1) WHERE clip_name LIKE '${CURRENT_BIRDSONGS_FOLDER%/}/%';"
-        
+
         if ! sqlite3 /config/birdnet.db "$SQL_QUERY"; then
             bashio::log.warning "An error occurred while updating the paths. The database backup will be restored."
             BACKUP_FILE="/config/birdnet.db_$(date +%Y%m%d_%H%M%S)"  # Make sure this matches the earlier backup filename
             if [ -f "$BACKUP_FILE" ]; then
                 mv "$BACKUP_FILE" /config/birdnet.db
                 bashio::log.info "The database backup has been restored."
-            else
+      else
                 bashio::log.error "Backup file not found! Manual intervention required."
-            fi
-        else
+      fi
+    else
             echo "Paths have been successfully updated."
-        fi
     fi
+  fi
 fi
 
 ####################
