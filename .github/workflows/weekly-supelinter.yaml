@@ -16,6 +16,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Run shfmt on all .sh files
+        run: |
+          sudo apt-get update && sudo apt-get install -y shfmt
+          shfmt -i 2 -ci -s -bn -sr -kp -ln=bash -w $(find . -type f -name "*.sh")
+
       - name: Run Super Linter
         uses: super-linter/super-linter/slim@main
         continue-on-error: true
@@ -29,8 +34,7 @@ jobs:
           FILTER_REGEX_EXCLUDE: .github/workflows/.*
           FIX_ENV: true
           FIX_HTML_PRETTIER: true
-          FIX_SHELL_SHFMT: true
-          SHELL_SHFMT_FIX_MODE_OPTIONS: "--write -i 2 -ci -s -bn -sr -kp -ln=bash"
+          #FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
           FIX_JSON: true
           #FIX_JSON_PRETTIER: true
