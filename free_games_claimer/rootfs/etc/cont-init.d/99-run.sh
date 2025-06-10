@@ -11,20 +11,20 @@ CONFIG_HOME="$(dirname "$CONFIG_HOME")"
 
 # Use new config file
 if [ ! -f "$CONFIG_HOME/config.env" ]; then
-    # Copy default config.env
-    cp /templates/config.env "$CONFIG_HOME/"
-    chmod 755 "$CONFIG_HOME/config.env"
-    bashio::log.warning "A default config.env file was copied to $CONFIG_HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
+  # Copy default config.env
+  cp /templates/config.env "$CONFIG_HOME/"
+  chmod 755 "$CONFIG_HOME/config.env"
+  bashio::log.warning "A default config.env file was copied to $CONFIG_HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
 else
-    bashio::log.info "Using existing config.env file in $CONFIG_HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
+  bashio::log.info "Using existing config.env file in $CONFIG_HOME. Please customize according to https://github.com/vogler/free-games-claimer/tree/main#configuration--options and restart the add-on"
 fi
 
 # Remove erroneous folder named config.env (bug fix for looping issue)
 if [ -d "$CONFIG_HOME/config.env" ]; then
-    bashio::log.warning "Found directory named config.env, deleting it..."
-    rm -rf "$CONFIG_HOME/config.env" # Fix: Ensures directory removal even if it exists
-    cp /templates/config.env "$CONFIG_HOME/config.env" # Recreate as a valid file
-    chmod 755 "$CONFIG_HOME/config.env"
+  bashio::log.warning "Found directory named config.env, deleting it..."
+  rm -rf "$CONFIG_HOME/config.env"                   # Fix: Ensures directory removal even if it exists
+  cp /templates/config.env "$CONFIG_HOME/config.env" # Recreate as a valid file
+  chmod 755 "$CONFIG_HOME/config.env"
 fi
 
 # Copy new file
@@ -61,23 +61,23 @@ cd /data || true
 # Fetch commands
 CMD_ARGUMENTS="$(bashio::config "CMD_ARGUMENTS")"
 IFS=';'
-read -ar strarr <<< "$CMD_ARGUMENTS"
+read -ar strarr <<<"$CMD_ARGUMENTS"
 
 # Sanitizes commands
 trim() {
-    local var="$*"
-    var="${var#"${var%%[![:space:]]*}"}"
-    var="${var%"${var##*[![:space:]]}"}"
-    printf '%s' "$var"
+  local var="$*"
+  var="${var#"${var%%[![:space:]]*}"}"
+  var="${var%"${var##*[![:space:]]}"}"
+  printf '%s' "$var"
 }
 
 # Add docker-entrypoint command
 for val in "${strarr[@]}"; do
-    val="$(trim "$val")"
-    echo " "
-    bashio::log.info "Starting the app with arguments \"$val\""
-    echo " "
-    echo "$val" | xargs docker-entrypoint.sh || true
+  val="$(trim "$val")"
+  echo " "
+  bashio::log.info "Starting the app with arguments \"$val\""
+  echo " "
+  echo "$val" | xargs docker-entrypoint.sh || true
 done
 
 bashio::log.info "All actions concluded. Stopping in 10 seconds."

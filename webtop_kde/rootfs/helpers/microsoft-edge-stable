@@ -7,4 +7,4 @@ ${BIN} \
   --password-store=basic \
   --no-sandbox \
   --test-type \
-  "$@" > /dev/null 2>&1
+  "$@" >/dev/null 2>&1

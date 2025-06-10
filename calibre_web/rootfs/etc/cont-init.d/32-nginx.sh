@@ -42,7 +42,7 @@ declare ingress_port
 
 ingress_user='admin'
 if bashio::config.has_value 'ingress_user'; then
-    ingress_user=$(bashio::config 'ingress_user')
+  ingress_user=$(bashio::config 'ingress_user')
 fi
 
 ingress_port=$(bashio::addon.ingress_port)

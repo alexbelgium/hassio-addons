@@ -12,12 +12,12 @@ echo "To download : $MODULES"
 
 # Install bash if not available
 if ! command -v bash >/dev/null 2>/dev/null; then
-    (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null
+  (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null
 fi
 
 # Install curl if not available
 if ! command -v curl >/dev/null 2>/dev/null; then
-    (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null
+  (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null
 fi
 
 # Install ca-certificates if not available
@@ -28,7 +28,7 @@ mkdir -p /etc/cont-init.d
 
 # Download scripts
 for scripts in $MODULES; do
-    echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" &&
+  echo "$scripts" && curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$scripts" -o /etc/cont-init.d/"$scripts" &&
     [ "$(sed -n '/\/bin/p;q' /etc/cont-init.d/"$scripts")" != "" ] ||
     (echo "script failed to install $scripts" && exit 1)
 done

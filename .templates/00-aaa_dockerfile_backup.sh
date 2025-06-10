@@ -7,11 +7,11 @@ set -e
 # Automatic modules download #
 ##############################
 if [ -e "/MODULESFILE" ]; then
-    MODULES=$(</MODULESFILE)
-    MODULES="${MODULES:-00-banner.sh}"
-    echo "Executing modules script : $MODULES"
+  MODULES=$(</MODULESFILE)
+  MODULES="${MODULES:-00-banner.sh}"
+  echo "Executing modules script : $MODULES"
 
-    if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi &&
+  if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi &&
     if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi &&
     apt-get update && apt-get install -yqq --no-install-recommends ca-certificates || apk add --no-cache ca-certificates >/dev/null || true &&
     mkdir -p /etc/cont-init.d &&
@@ -23,10 +23,10 @@ fi
 # Automatic installer #
 #######################
 if [ -e "/ENVFILE" ]; then
-    PACKAGES=$(</ENVFILE)
-    echo "Executing dependency script with custom elements : $PACKAGES"
+  PACKAGES=$(</ENVFILE)
+  echo "Executing dependency script with custom elements : $PACKAGES"
 
-    if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi &&
+  if ! command -v bash >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends bash || apk add --no-cache bash) >/dev/null; fi &&
     if ! command -v curl >/dev/null 2>/dev/null; then (apt-get update && apt-get install -yqq --no-install-recommends curl || apk add --no-cache curl) >/dev/null; fi &&
     curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automatic_packages.sh" --output /ha_automatic_packages.sh &&
     chmod 777 /ha_automatic_packages.sh &&
@@ -35,13 +35,13 @@ if [ -e "/ENVFILE" ]; then
 fi
 
 if [ -e "/MODULESFILE" ] && [ ! -f /ha_entrypoint.sh ]; then
-    for scripts in $MODULES; do
-        echo "$scripts : executing"
-        chown "$(id -u)":"$(id -g)" /etc/cont-init.d/"$scripts"
-        chmod a+x /etc/cont-init.d/"$scripts"
-        /./etc/cont-init.d/"$scripts" || echo "/etc/cont-init.d/$scripts: exiting $?"
-        rm /etc/cont-init.d/"$scripts"
-    done | tac
+  for scripts in $MODULES; do
+    echo "$scripts : executing"
+    chown "$(id -u)":"$(id -g)" /etc/cont-init.d/"$scripts"
+    chmod a+x /etc/cont-init.d/"$scripts"
+    /./etc/cont-init.d/"$scripts" || echo "/etc/cont-init.d/$scripts: exiting $?"
+    rm /etc/cont-init.d/"$scripts"
+  done | tac
 fi
 
 #######################

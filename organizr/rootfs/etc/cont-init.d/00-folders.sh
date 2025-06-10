@@ -3,7 +3,7 @@
 set -e
 
 if [ ! -d /data/organizr ]; then
-    echo "Creating /data/organizr"
-    mkdir -p /data/organizr
-    chown -R "$PUID:$PGID" /data/organizr
+  echo "Creating /data/organizr"
+  mkdir -p /data/organizr
+  chown -R "$PUID:$PGID" /data/organizr
 fi

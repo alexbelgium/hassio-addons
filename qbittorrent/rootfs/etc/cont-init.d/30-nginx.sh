@@ -16,7 +16,7 @@ declare qbittorrent_protocol=http
 
 # Generate Ingress configuration
 if bashio::config.true 'ssl'; then
-    qbittorrent_protocol=https
+  qbittorrent_protocol=https
 fi
 
 [ "$DEBUG" = "debug" ] && echo "Before cp"

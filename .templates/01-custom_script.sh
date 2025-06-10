@@ -8,8 +8,8 @@ set -e
 
 # Exit if /config is not mounted or HA not used
 if [ ! -d /config ] || ! bashio::supervisor.ping 2>/dev/null; then
-    echo "..."
-    exit 0
+  echo "..."
+  exit 0
 fi
 
 # Define slug
@@ -18,13 +18,13 @@ slug="${slug#*_}"
 
 # Check type of config folder
 if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
-    # New config location
-    CONFIGLOCATION="/config"
-    CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/$slug.sh"
+  # New config location
+  CONFIGLOCATION="/config"
+  CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/$slug.sh"
 else
-    # Legacy config location
-    CONFIGLOCATION="/config/addons_autoscripts"
-    CONFIGFILEBROWSER="/homeassistant/addons_autoscripts/$slug.sh"
+  # Legacy config location
+  CONFIGLOCATION="/config/addons_autoscripts"
+  CONFIGFILEBROWSER="/homeassistant/addons_autoscripts/$slug.sh"
 fi
 
 # Default location
@@ -36,9 +36,9 @@ bashio::log.green "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons
 
 # Download template if no script found and exit
 if [ ! -f "$CONFIGSOURCE" ]; then
-    TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/script.template"
-    curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE" || true
-    exit 0
+  TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/script.template"
+  curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE" || true
+  exit 0
 fi
 
 # Convert scripts to linux
@@ -48,20 +48,19 @@ chmod +x "$CONFIGSOURCE"
 # Get current shebang, if not available use another
 currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$CONFIGSOURCE")"
 if [ ! -f "${currentshebang%% *}" ]; then
-    for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do if [ -f "${shebang%% *}" ]; then break; fi; done
-    sed -i "s|$currentshebang|$shebang|g" "$CONFIGSOURCE"
+  for shebang in "/command/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/bin/bash" "/bin/sh"; do if [ -f "${shebang%% *}" ]; then break; fi; done
+  sed -i "s|$currentshebang|$shebang|g" "$CONFIGSOURCE"
 fi
 
 # Check if there is actual commands
-while IFS= read -r line
-do
-    # Remove leading and trailing whitespaces
-    line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+while IFS= read -r line; do
+  # Remove leading and trailing whitespaces
+  line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 
-    # Check if line is not empty and does not start with #
-    if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
-        bashio::log.green "... script found, executing"
-        /."$CONFIGSOURCE"
-        exit 0
-    fi
-done < "$CONFIGSOURCE"
+  # Check if line is not empty and does not start with #
+  if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
+    bashio::log.green "... script found, executing"
+    /."$CONFIGSOURCE"
+    exit 0
+  fi
+done <"$CONFIGSOURCE"

@@ -6,15 +6,15 @@ CONFIGSOURCE="/data"
 
 # Use ssl
 if [ -d /ssl ]; then
-    mkdir -p /cert
-    cp /ssl/* /cert 2>/dev/null
-    chown -R 508:508 /cert
+  mkdir -p /cert
+  cp /ssl/* /cert 2>/dev/null
+  chown -R 508:508 /cert
 fi
 
 # Create directory
 if [ ! -d "$CONFIGSOURCE" ]; then
-    echo "Creating directory"
-    mkdir -p "$CONFIGSOURCE"
+  echo "Creating directory"
+  mkdir -p "$CONFIGSOURCE"
 fi
 
 # Ensure structure is correct
