@@ -29,8 +29,8 @@ jobs:
           FILTER_REGEX_EXCLUDE: .github/workflows/.*
           FIX_ENV: true
           FIX_HTML_PRETTIER: true
-          #FIX_SHELL_SHFMT: true
-          SHELL_SHFMT_FILE_NAME: ".shfmt.yaml"
+          FIX_SHELL_SHFMT: true
+          SHELL_SHFMT_FIX_MODE_OPTIONS: "--write -i 2 -ci -s -bn -sr -kp -ln=bash"
           FIX_YAML_PRETTIER: true
           FIX_JSON: true
           #FIX_JSON_PRETTIER: true
