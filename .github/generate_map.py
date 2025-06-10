@@ -104,12 +104,12 @@ def build_choropleth(percent_by_iso):
     )
     fig.update_layout(
         coloraxis_colorbar=dict(
-            title="% stargazers",
-            len=0.5,
-            thickness=15,
-            x=0.95,
-            y=0.5,
-        ),
+            title="% stargazers",
+            len=0.5,
+            thickness=15,
+            x=0.95,
+            y=0.5,
+        ),
         margin=dict(l=0, r=0, t=0, b=0),
     )
     PNG_PATH.parent.mkdir(parents=True, exist_ok=True)
