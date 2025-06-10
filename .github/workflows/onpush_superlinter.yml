@@ -43,13 +43,14 @@ jobs:
             echo "No changes to commit."
           fi
 
-      - name: Lint Code Base
+      - name: Run Super Linter
         uses: super-linter/super-linter/slim@main
         env:
-          VALIDATE_ALL_CODEBASE: false
           VALIDATE_CHECKOV: false
           VALIDATE_PYTHON_PYLINT: false
           VALIDATE_JSCPD: false
+          VALIDATE_NATURAL_LANGUAGE: false
+          FILTER_REGEX_EXCLUDE: .github/workflows/.*
+          VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_NATURAL_LANGUAGE: false
