@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [FlareSolverr] Fails to launch after the latest update (opened 2025-06-07)](https://github.com/alexbelgium/hassio-addons/issues/1886) by [@mindogo1](https://github.com/mindogo1)
 
 # Home assistant add-on: Flaresolver
 
