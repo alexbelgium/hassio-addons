@@ -1,10 +1,3 @@
-# This workflow executes several linters on changed files based on languages used in your code base whenever
-# you push a code or open a pull request.
-#
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/github/super-linter
----
 name: Lint On Change
 
 on:
@@ -12,16 +5,29 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-jobs:
 
+jobs:
   run-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
+
+      - name: Fix non-breaking spaces
+        run: |
+          echo "Replacing non-breaking spaces (U+00A0) with regular spaces..."
+          find . -type f -not -path "./.git/*" -exec sed -i 's/\xC2\xA0/ /g' {} +
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
+            git add .
+            git commit -m "fix: replace non-breaking spaces with regular spaces"
+            git push
+          else
+            echo "No changes to commit."
+          fi
 
       - name: Lint Code Base
         uses: super-linter/super-linter/slim@main
