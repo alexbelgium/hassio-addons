@@ -7,14 +7,14 @@ set -e
 ############
 
 if bashio::config.has_value 'TZ'; then
-    TIMEZONE=$(bashio::config 'TZ')
-    bashio::log.info "Setting timezone to $TIMEZONE"
-    if [ -f /usr/share/zoneinfo/"$TIMEZONE" ]; then
-        ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime
-        echo "$TIMEZONE" >/etc/timezone
-    else
-        bashio::log.fatal "$TIMEZONE not found, are you sure it is a valid timezone?"
-    fi
+	TIMEZONE=$(bashio::config 'TZ')
+	bashio::log.info "Setting timezone to $TIMEZONE"
+	if [ -f /usr/share/zoneinfo/"$TIMEZONE" ]; then
+		ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime
+		echo "$TIMEZONE" >/etc/timezone
+	else
+		bashio::log.fatal "$TIMEZONE not found, are you sure it is a valid timezone?"
+	fi
 fi
 
 ###################
@@ -23,13 +23,13 @@ fi
 
 bashio::config.require.ssl
 if bashio::config.true 'ssl'; then
-    bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
-    #set variables
-    CERTFILE="-t /ssl/$(bashio::config 'certfile')"
-    KEYFILE="-k /ssl/$(bashio::config 'keyfile')"
+	bashio::log.info "ssl enabled. If webui don't work, disable ssl or check your certificate paths"
+	#set variables
+	CERTFILE="-t /ssl/$(bashio::config 'certfile')"
+	KEYFILE="-k /ssl/$(bashio::config 'keyfile')"
 else
-    CERTFILE=""
-    KEYFILE=""
+	CERTFILE=""
+	KEYFILE=""
 fi
 
 #################
@@ -48,7 +48,7 @@ export FB_BASEURL
 declare ADDON_PROTOCOL=http
 # Generate Ingress configuration
 if bashio::config.true 'ssl'; then
-    ADDON_PROTOCOL=https
+	ADDON_PROTOCOL=https
 fi
 
 #port=$(bashio::addon.port 80)
@@ -67,41 +67,41 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 NOAUTH=""
 
 if bashio::config.true 'NoAuth'; then
-    if ! bashio::fs.file_exists "/data/noauth"; then
-        rm /data/auth &>/dev/null || true
-        rm /config/filebrowser.dB &>/dev/null || true
-        touch /data/noauth
-        NOAUTH="--noauth"
-        bashio::log.warning "Auth method change, database reset"
-    fi
-    bashio::log.info "NoAuth option selected"
+	if ! bashio::fs.file_exists "/data/noauth"; then
+		rm /data/auth &>/dev/null || true
+		rm /config/filebrowser.dB &>/dev/null || true
+		touch /data/noauth
+		NOAUTH="--noauth"
+		bashio::log.warning "Auth method change, database reset"
+	fi
+	bashio::log.info "NoAuth option selected"
 else
-    if ! bashio::fs.file_exists "/data/auth"; then
-        rm /data/noauth &>/dev/null || true
-        rm /config/filebrowser.dB &>/dev/null || true
-        touch /data/auth
-        bashio::log.warning "Auth method change, database reset"
-    fi
-    bashio::log.info "Default username/password : admin/admin"
+	if ! bashio::fs.file_exists "/data/auth"; then
+		rm /data/noauth &>/dev/null || true
+		rm /config/filebrowser.dB &>/dev/null || true
+		touch /data/auth
+		bashio::log.warning "Auth method change, database reset"
+	fi
+	bashio::log.info "Default username/password : admin/admin"
 fi
 
 # Set base folder
 if bashio::config.has_value 'base_folder'; then
-    BASE_FOLDER=$(bashio::config 'base_folder')
+	BASE_FOLDER=$(bashio::config 'base_folder')
 else
-    BASE_FOLDER=/
+	BASE_FOLDER=/
 fi
 
 # Disable thumbnails
 if bashio::config.true 'disable_thumbnails'; then
-    DISABLE_THUMBNAILS="--disable-thumbnails"
+	DISABLE_THUMBNAILS="--disable-thumbnails"
 else
-    DISABLE_THUMBNAILS=""
+	DISABLE_THUMBNAILS=""
 fi
 
 # Remove configuration file
 if [ -f /.filebrowser.json ]; then
-    rm /.filebrowser.json
+	rm /.filebrowser.json
 fi
 
 bashio::log.info "Starting..."
