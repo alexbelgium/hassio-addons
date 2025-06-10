@@ -77,7 +77,7 @@
     "ssl",
     "config:rw"
   ],
-  "name": "Papermerge",
+  "name": "zzz_archived - Papermerge",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/papermerge",
     "PGID": 0,
@@ -114,6 +114,7 @@
     "storage_dir": "str"
   },
   "slug": "papermerge",
+  "stage": "deprecated",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "v2.0.1-ls60-bugfix",
