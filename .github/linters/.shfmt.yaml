@@ -27,7 +27,6 @@ func_style: 1
 
 # Keep column alignment for continuation lines
 keep_column_alignment: true
-
 # Minify scripts by removing comments and extra whitespace
 # minify: false
 

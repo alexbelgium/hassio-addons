@@ -7,7 +7,7 @@ set -e
 ####################
 
 if [ -d /homeassistant/addons_config/baikal ]; then
-    echo "Moving database to new location /config, you won't be able to restore previous versions of the addon"
-    cp -rf /homeassistant/addons_config/baikal/* /config/
-    rm -r /homeassistant/addons_config/baikal
+	echo "Moving database to new location /config, you won't be able to restore previous versions of the addon"
+	cp -rf /homeassistant/addons_config/baikal/* /config/
+	rm -r /homeassistant/addons_config/baikal
 fi
