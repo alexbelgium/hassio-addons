@@ -8,22 +8,22 @@ bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores a
 # Check data location
 LOCATION=$(bashio::config 'data_location')
 if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
-    # Default location
-    LOCATION="/config/addons_config/joplin"
+	# Default location
+	LOCATION="/config/addons_config/joplin"
 else
-    bashio::log.warning "Warning : a custom data location was selected, but the previous folder will NOT be copied. You need to do it manually"
+	bashio::log.warning "Warning : a custom data location was selected, but the previous folder will NOT be copied. You need to do it manually"
 fi
 
 # Create folder
 if [ ! -d "$LOCATION" ]; then
-    echo "Creating $LOCATION"
-    mkdir -p "$LOCATION"
+	echo "Creating $LOCATION"
+	mkdir -p "$LOCATION"
 fi
 
 touch "$LOCATION"/database.sqlite
 
 if [ ! -d "$LOCATION"/resources ]; then
-    mkdir -p "$LOCATION"/resources
+	mkdir -p "$LOCATION"/resources
 fi
 ln -s "$LOCATION"/resources /home/joplin/packages/server
 
@@ -33,17 +33,17 @@ chmod 777 "$LOCATION/database.sqlite"
 export SQLITE_DATABASE="$LOCATION/database.sqlite"
 
 if bashio::config.has_value 'POSTGRES_DATABASE'; then
-    bashio::log.info "Using postgres"
+	bashio::log.info "Using postgres"
 
-    bashio::config.has_value 'DB_CLIENT' && export DB_CLIENT=$(bashio::config 'DB_CLIENT') && bashio::log.info 'Database client set'
-    bashio::config.has_value 'POSTGRES_PASSWORD' && export POSTGRES_PASSWORD=$(bashio::config 'POSTGRES_PASSWORD') && bashio::log.info 'Postgrep Password set'
-    bashio::config.has_value 'POSTGRES_DATABASE' && export POSTGRES_DATABASE=$(bashio::config 'POSTGRES_DATABASE') && bashio::log.info 'Postgrep Database set'
-    bashio::config.has_value 'POSTGRES_USER' && export POSTGRES_USER=$(bashio::config 'POSTGRES_USER') && bashio::log.info 'Postgrep User set'
-    bashio::config.has_value 'POSTGRES_PORT' && export POSTGRES_PORT=$(bashio::config 'POSTGRES_PORT') && bashio::log.info 'Postgrep Port set'
-    bashio::config.has_value 'POSTGRES_HOST' && export POSTGRES_HOST=$(bashio::config 'POSTGRES_HOST') && bashio::log.info 'Postgrep Host set'
+	bashio::config.has_value 'DB_CLIENT' && export DB_CLIENT=$(bashio::config 'DB_CLIENT') && bashio::log.info 'Database client set'
+	bashio::config.has_value 'POSTGRES_PASSWORD' && export POSTGRES_PASSWORD=$(bashio::config 'POSTGRES_PASSWORD') && bashio::log.info 'Postgrep Password set'
+	bashio::config.has_value 'POSTGRES_DATABASE' && export POSTGRES_DATABASE=$(bashio::config 'POSTGRES_DATABASE') && bashio::log.info 'Postgrep Database set'
+	bashio::config.has_value 'POSTGRES_USER' && export POSTGRES_USER=$(bashio::config 'POSTGRES_USER') && bashio::log.info 'Postgrep User set'
+	bashio::config.has_value 'POSTGRES_PORT' && export POSTGRES_PORT=$(bashio::config 'POSTGRES_PORT') && bashio::log.info 'Postgrep Port set'
+	bashio::config.has_value 'POSTGRES_HOST' && export POSTGRES_HOST=$(bashio::config 'POSTGRES_HOST') && bashio::log.info 'Postgrep Host set'
 else
 
-    bashio::log.info "Using sqlite"
+	bashio::log.info "Using sqlite"
 
 fi
 
