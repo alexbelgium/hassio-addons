@@ -6,7 +6,7 @@ set -e
 # ALLOW RESTARTS #
 ##################
 
-if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+if [[ ${BASH_SOURCE[0]} == /etc/cont-init.d/*   ]]; then
     mkdir -p /etc/scripts-init
     sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
     sed -i "/ rm/d" /ha_entrypoint.sh
@@ -18,7 +18,7 @@ fi
 ############
 
 # Function to perform common setup steps
-common_steps () {
+common_steps()  {
     # Attempt to connect to the MQTT broker
     TOPIC="birdnet"
     if mosquitto_pub -h "$MQTT_HOST" -p "$MQTT_PORT" -t "$TOPIC" -m "test" -u "$MQTT_USER" -P "$MQTT_PASS" -q 1 -d --will-topic "$TOPIC" --will-payload "Disconnected" --will-qos 1 --will-retain > /dev/null 2>&1; then
@@ -36,9 +36,9 @@ common_steps () {
         # Add hooks to the main analysis script
         sed -i "/load_global_model, run_analysis/a from utils.birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
         sed -i '/write_to_db(/a\                automatic_mqtt_publish(file, detection, os.path.basename(detection.file_name_extr))' "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
-    else
+  else
         bashio::log.fatal "MQTT connection failed, it will not be configured"
-    fi
+  fi
 }
 
 # Check if MQTT service is available and not disabled

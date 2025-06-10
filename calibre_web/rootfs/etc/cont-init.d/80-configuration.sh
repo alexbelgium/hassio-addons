@@ -7,11 +7,11 @@ set -e
 if bashio::config.has_value 'TZ'; then
     TIMEZONE=$(bashio::config 'TZ')
     bashio::log.info "Setting timezone to $TIMEZONE"
-    ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime && echo "$TIMEZONE" >/etc/timezone
+    ln -snf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime && echo "$TIMEZONE" > /etc/timezone
 fi
 
 bashio::log.info "Install libnss3"
-apt-get update && apt-get install libnss3 &>/dev/null
+apt-get update && apt-get install libnss3 &> /dev/null
 
 # Set Ingress login
 if [ ! -f /config/app.db ]; then

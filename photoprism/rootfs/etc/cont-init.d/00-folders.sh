@@ -6,8 +6,8 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     PUID="$(bashio::config "PUID")"
     PGID="$(bashio::config "PGID")"
     bashio::log.green "Setting user to $PUID:$PGID"
-    id -u photoprism &>/dev/null || usermod -o -u "$PUID" photoprism || true
-    id -g photoprism &>/dev/null || groupmod -o -g "$PGID" photoprism || true
+    id -u photoprism &> /dev/null || usermod -o -u "$PUID" photoprism || true
+    id -g photoprism &> /dev/null || groupmod -o -g "$PGID" photoprism || true
 fi
 
 bashio::log.info "Preparing scripts"

@@ -50,7 +50,7 @@ case "$(bashio::config 'database')" in
                 "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok \
                 "Please ensure it is installed and started"
-        fi
+    fi
 
         # Use values
         export PAPERLESS_DBENGINE=mariadb
@@ -68,7 +68,6 @@ case "$(bashio::config 'database')" in
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
         ;;
-
 
         # Use sqlite
     *)
@@ -110,12 +109,14 @@ done
 #################
 # Staring redis #
 #################
-exec redis-server & bashio::log.info "Starting redis"
+exec redis-server &
+                    bashio::log.info "Starting redis"
 
 #################
 # Staring nginx #
 #################
-exec nginx & bashio::log.info "Starting nginx"
+exec nginx &
+             bashio::log.info "Starting nginx"
 
 ###############
 # Starting app #

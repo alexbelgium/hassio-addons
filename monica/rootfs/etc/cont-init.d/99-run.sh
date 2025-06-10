@@ -43,7 +43,7 @@ case "$database" in
         if ! bashio::services.available 'mysql'; then
             bashio::log.fatal "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok "Please ensure it is installed and started"
-        fi
+    fi
 
         # Use values
         DB_HOST=$(bashio::services "mysql" "host") && bashio::log.blue "DB_HOST=$DB_HOST" && sed -i "1a export DB_HOST=$DB_HOST" /usr/local/bin/entrypoint.sh
@@ -75,15 +75,15 @@ case "$database" in
             if ! bashio::config.has_value "$var"; then
                 bashio::log.fatal "You have selected to not use the automatic MariaDB detection by manually configuring the addon options, but the option $var is not set."
                 exit 1
-            fi
+      fi
             "$var=$(bashio::config "var")"
             export "${var?}"
             bashio::log.blue "$var=$(bashio::config "var")"
-        done
+    done
         # Alert if MariaDB is available
         if bashio::services.available 'mysql'; then
             bashio::log.warning "The MariaDB addon is available, but you have selected to use your own database by manually configuring the addon options"
-        fi
+    fi
 
         # Create database
         mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USERNAME" --password="$DB_PASSWORD" -e"CREATE DATABASE IF NOT EXISTS $DB_DATABASE;"
@@ -101,7 +101,10 @@ APP_KEY=$(bashio::config "APP_KEY")
 
 # Check if APP_KEY is not 32 characters long
 if [ -z "$APP_KEY" ] || [ ${#APP_KEY} -lt 32 ]; then
-    APP_KEY="$(echo -n 'base64:'; openssl rand -base64 32)"
+    APP_KEY="$(
+               echo -n 'base64:'
+                                  openssl rand -base64 32
+  )"
     bashio::addon.option "APP_KEY" "${APP_KEY}"
     bashio::log.warning "The APP_KEY set was invalid, generated a random one: ${APP_KEY}. Restarting to take it into account"
     echo "${APP_KEY}" >> /config/APP_KEY

@@ -28,7 +28,7 @@ if bashio::config.has_value 'csrf_allowed'; then
 
     while read -r line; do
         urls+=("$line")
-    done <<< "$(bashio::config 'csrf_allowed')"
+  done   <<< "$(bashio::config 'csrf_allowed')"
 fi
 
 # Add internal and external URL as it
@@ -42,13 +42,13 @@ fi
 # Loop through URls to add them in the CSRF string
 for url in "${urls[@]}"; do
     if  bashio::var.has_value "${url}"; then
-        if [[ "${url}" != "null" ]] && [[ "${url}" != "null.local" ]]; then
+        if [[ ${url} != "null"   ]] && [[ ${url} != "null.local"   ]]; then
             CSRF="https://${url}:${port},http://${url}:${port},https://${url},http://${url}",${CSRF}
             if bashio::var.has_value "$(bashio::addon.port 9810)"; then
                 CSRF="https://${url}:${addon_port},http://${url}:${addon_port}",${CSRF}
-            fi
-        fi
+      fi
     fi
+  fi
 done
 CSRF=${CSRF::-1}
 

@@ -21,10 +21,10 @@ fi
 if [ "$VERBOSE" = true ]; then
     curl --progress-bar -f -J -L -o /tmp/joal.tar.gz "$(curl -f -s -L https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")"
 else
-    curl --progress-bar -f -S -J -L -o /tmp/joal.tar.gz "$(curl -f -s -L https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")" >/dev/null
+    curl --progress-bar -f -S -J -L -o /tmp/joal.tar.gz "$(curl -f -s -L https://api.github.com/repos/anthonyraymond/joal/releases/latest | grep -o "http.*joal.tar.gz")" > /dev/null
 fi
 mkdir -p /data/joal
-tar zxvf /tmp/joal.tar.gz -C /data/joal >/dev/null
+tar zxvf /tmp/joal.tar.gz -C /data/joal > /dev/null
 chown -R "$(id -u):$(id -g)" /data/joal
 rm /data/joal/jack-of*
 bashio::log.info "Joal updated"
@@ -89,7 +89,7 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 if [ "$VERBOSE" = true ]; then
     nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="${UIPATH}" --joal.ui.secret-token="$TOKEN"
 else
-    nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="${UIPATH}" --joal.ui.secret-token="$TOKEN" >/dev/null
+    nohup java -jar /joal/joal.jar --joal-conf=/data/joal --spring.main.web-environment=true --server.port="8081" --joal.ui.path.prefix="${UIPATH}" --joal.ui.secret-token="$TOKEN" > /dev/null
 fi &
 bashio::log.info "Please wait, loading..."
 
@@ -118,9 +118,9 @@ exec nginx &
 if bashio::config.has_value 'run_duration'; then
     RUNTIME=$(bashio::config 'run_duration')
     bashio::log.info "Addon will stop after $RUNTIME"
-    sleep "$RUNTIME" &&
-    bashio::log.info "Timeout achieved, addon will stop !" &&
-    exit 0
+    sleep "$RUNTIME" \
+                     && bashio::log.info "Timeout achieved, addon will stop !" \
+                                                           && exit 0
 else
     bashio::log.info "Run_duration option not defined, addon will run continuously"
 fi

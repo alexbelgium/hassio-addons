@@ -18,12 +18,12 @@ if [ -d "$OLD_CONFIG_LOCATION" ]; then
     if [ -z "$(ls -A "$OLD_CONFIG_LOCATION")" ]; then
         # Empty
         rmdir "$OLD_CONFIG_LOCATION"
-    else
+  else
         # Not Empty
         bashio::log.info "Moving old configuration settings from $OLD_CONFIG_LOCATION to $CONFIG_LOCATION"
         cp -rnT "$OLD_CONFIG_LOCATION" "$CONFIG_LOCATION/"
         rm -r "$OLD_CONFIG_LOCATION"
-    fi
+  fi
 fi
 
 # Create files

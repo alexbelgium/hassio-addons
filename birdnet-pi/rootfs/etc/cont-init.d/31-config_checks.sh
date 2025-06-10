@@ -6,7 +6,7 @@ set -e
 # ALLOW RESTARTS #
 ##################
 
-if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+if [[ ${BASH_SOURCE[0]} == /etc/cont-init.d/*   ]]; then
     mkdir -p /etc/scripts-init
     sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
     sed -i "/ rm/d" /ha_entrypoint.sh
@@ -35,12 +35,12 @@ grep -o '^[^#=]*=' "$configtemplate" | sed 's/=//' | while read -r var; do
     if ! grep -q "^$var=" "$configcurrent"; then
         bashio::log.warning "...$var was missing from your birdnet.conf file, it was re-added"
         grep "^$var=" "$configtemplate" >> "$configcurrent"
-    fi
+  fi
     # Check for duplicates
     if [ "$(grep -c "^$var=" "$configcurrent")" -gt 1 ]; then
         bashio::log.error "Duplicate variable $var found in $configcurrent, all were commented out except for the first one"
         sed -i "0,/^$var=/!s/^$var=/#$var=/" "$configcurrent"
-    fi
+  fi
 done
 
 ##############
@@ -66,7 +66,7 @@ sed -i "/find /d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Not us
 sed -i "/set -x/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Not useful
 sed -i "/restart_services/d" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh  # Not useful
 sed -i "s|/etc/birdnet/birdnet.conf|/config/birdnet.conf|g" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh
-sed -i "/update_caddyfile/c echo \"yes\"" "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Avoid systemctl
+sed -i '/update_caddyfile/c echo "yes"'   "$HOME"/BirdNET-Pi/scripts/update_birdnet_snippets.sh # Avoid systemctl
 
 # Execute update_birdnet_snippets
 export RECS_DIR="$HOME/BirdSongs"

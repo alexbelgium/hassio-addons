@@ -15,9 +15,9 @@ DATA_LOCATION_FILE="/data/oldwebtreeshome"
 # Create folders
 mkdir -p "$DATA_LOCATION"
 mkdir -p /config/modules_v4
-cp -rn /var2/www/webtrees/data/* "$DATA_LOCATION"/ &>/dev/null || true
-cp -rn /var2/www/webtrees/data/.* "$DATA_LOCATION"/ &>/dev/null || true
-cp -rn /var2/www/webtrees/modules_v4/* /config/modules_v4/ &>/dev/null || true
+cp -rn /var2/www/webtrees/data/* "$DATA_LOCATION"/ &> /dev/null || true
+cp -rn /var2/www/webtrees/data/.* "$DATA_LOCATION"/ &> /dev/null || true
+cp -rn /var2/www/webtrees/modules_v4/* /config/modules_v4/ &> /dev/null || true
 
 # Check if a migration is needed
 if bashio::fs.file_exists "$DATA_LOCATION_FILE"; then
@@ -30,9 +30,9 @@ else
 fi
 
 # Migrate files
-if [[ "$DATA_LOCATION_CURRENT" != "$DATA_LOCATION" ]] && [[ "$(ls -A "$DATA_LOCATION_CURRENT")" ]]; then
+if [[ $DATA_LOCATION_CURRENT != "$DATA_LOCATION"   ]] && [[ "$(ls -A "$DATA_LOCATION_CURRENT")" ]]; then
     bashio::log.warning "Data location was changed from $DATA_LOCATION_CURRENT to $DATA_LOCATION, migrating files"
-    cp -rnf "$DATA_LOCATION_CURRENT"/* "$DATA_LOCATION"/ &>/dev/null || true
+    cp -rnf "$DATA_LOCATION_CURRENT"/* "$DATA_LOCATION"/ &> /dev/null || true
     echo "Files moved to $DATA_LOCATION" > "$DATA_LOCATION_CURRENT"/migrated
     mv "$DATA_LOCATION_CURRENT" "${DATA_LOCATION_CURRENT}_migrated"
 fi
@@ -94,7 +94,7 @@ if bashio::config.true 'ssl'; then
     export SSL=true
     export HTTPS_REDIRECT=true
     BASE_URL_PORT=":$(bashio::addon.port 443)"
-    if [[ "$BASE_URL_PORT" == ":443" ]]; then BASE_URL_PORT=""; fi
+    if [[ $BASE_URL_PORT == ":443"   ]]; then BASE_URL_PORT=""; fi
     BASE_URL_PROTO="https"
 
     #Communication
@@ -104,11 +104,11 @@ else
     export SSL=false
     export HTTPS_REDIRECT=false
     BASE_URL_PORT=":$(bashio::addon.port 80)"
-    if [[ "$BASE_URL_PORT" == ":80" ]]; then BASE_URL_PORT=""; fi
+    if [[ $BASE_URL_PORT == ":80"   ]]; then BASE_URL_PORT=""; fi
     BASE_URL_PROTO="http"
 fi
 
-if [[ "$BASE_URL_PORT" == ":" ]]; then
+if [[ $BASE_URL_PORT == ":"   ]]; then
     bashio::log.fatal "Your $BASE_URL_PROTO port is not set in the addon options, please check your configuration and restart"
     bashio::addon.stop
 fi
@@ -146,7 +146,7 @@ if bashio::config.has_value "trusted_headers" && [ -f "$DATA_LOCATION"/config.in
 elif [ -f "$DATA_LOCATION"/config.ini.php ]; then
     bashio::log.info "Aligning trusted_headers addon config with cf-connecting-ip"
     sed -i "/trusted_headers/ d" "$DATA_LOCATION"/config.ini.php
-    sed -i "1a trusted_headers=\"cf-connecting-ip\"" "$DATA_LOCATION"/config.ini.php
+    sed -i '1a trusted_headers="cf-connecting-ip"'   "$DATA_LOCATION"/config.ini.php
 fi
 
 ############

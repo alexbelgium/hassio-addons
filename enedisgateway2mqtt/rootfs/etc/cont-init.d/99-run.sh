@@ -82,13 +82,13 @@ if [ -f "$CONFIGSOURCE" ]; then
 
     # Check if yaml is valid
     EXIT_CODE=0
-    yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
+    yamllint -d relaxed "$CONFIGSOURCE" &> ERROR || EXIT_CODE=$?
     if [ "$EXIT_CODE" = 0 ]; then
         echo "Config file is a valid yaml"
-    else
+  else
         cat ERROR
         bashio::log.fatal "Config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above. You can check yaml validity with the online tool yamllint.com"
-    fi
+  fi
 else
     # Create symlink for addon to create config
     cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"/
@@ -102,7 +102,8 @@ fi
 # Launch App #
 ##############
 echo " "
-nginx & bashio::log.info "Starting nginx"
+nginx &
+        bashio::log.info "Starting nginx"
 echo " "
 bashio::log.info "Starting the app"
 echo " "

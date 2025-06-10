@@ -86,8 +86,8 @@ fi
 ###########################
 
 echo "... Clean potential errors"
-sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair" >/dev/null || true
-sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair-share-owner" >/dev/null || true
+sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair" > /dev/null || true
+sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:repair-share-owner" > /dev/null || true
 sudo -u abc -s /bin/bash -c "php /app/www/public/occ maintenance:mode --off" || true
 
 ##############
@@ -114,7 +114,7 @@ for files in /defaults/config.php /data/config/www/nextcloud/config/config.php; 
     if [ -f "$files" ]; then
         sed -i "/check_data_directory_permissions/d" "$files"
         sed -i "/datadirectory/a\ \ 'check_data_directory_permissions' => false," "$files"
-    fi
+  fi
 done
 timeout 10 sudo -u abc php /app/www/public/occ config:system:set check_data_directory_permissions --value=false --type=bool || echo "Please install nextcloud first"
 
@@ -128,7 +128,7 @@ for variable in env_memory_limit env_upload_max_filesize env_post_max_size; do
         sed -i "/$variable/c $variable = $(bashio::config "env_$variable")" /etc/php*/conf.d/nextcloud.ini
         sed -i "/$variable/c $variable = $(bashio::config "env_$variable")" /etc/php*/php.ini
         bashio::log.blue "$variable set to $(bashio::config "env_$variable")"
-    fi
+  fi
 done
 
 #####################
@@ -142,9 +142,9 @@ if bashio::config.true "enable_thumbnails"; then
     sudo -u abc php /app/www/public/occ config:system:set enable_previews --value=true
     i=0
     for element in AVI BMP Font GIF HEIC Image JPEG Krita MarkDown MKV Movie MP3 MP4 OpenDocument PDF PNG SVG TIFF TXT XBitmap; do # Comma separated values
-        sudo -u abc php /app/www/public/occ config:system:set enabledPreviewProviders "$i" --value="OC\\Preview\\${element}" >/dev/null
+        sudo -u abc php /app/www/public/occ config:system:set enabledPreviewProviders "$i" --value="OC\\Preview\\${element}" > /dev/null
         i=$((i + 1))
-    done
+  done
 else
     # Remove variables
     echo "... disabling thumbnails"

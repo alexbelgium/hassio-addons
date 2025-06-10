@@ -26,7 +26,6 @@ if bashio::config.true 'ssl'; then
     [ ! -f /ssl/"$certfile" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$certfile not found" && bashio::exit.nok
     [ ! -f /ssl/"$keyfile" ] && bashio::log.fatal "... use_own_certs is true but certificate /ssl/$keyfile not found" && bashio::exit.nok
 
-
     sed -i "s|default_server|ssl|g" /etc/nginx/servers/ssl.conf
     sed -i "/proxy_params.conf/a ssl_certificate /ssl/$certfile;" /etc/nginx/servers/ssl.conf
     sed -i "/proxy_params.conf/a ssl_certificate_key /ssl/$keyfile;" /etc/nginx/servers/ssl.conf

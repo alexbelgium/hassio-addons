@@ -6,7 +6,7 @@ set -e
 # ALLOW RESTARTS #
 ##################
 
-if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+if [[ ${BASH_SOURCE[0]} == /etc/cont-init.d/*   ]]; then
     mkdir -p /etc/scripts-init
     sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
     sed -i "/ rm/d" /ha_entrypoint.sh
@@ -22,7 +22,7 @@ bashio::log.info "Adapting webui"
 # HA specific elements
 ######################
 
-if bashio::supervisor.ping 2>/dev/null; then
+if bashio::supervisor.ping 2> /dev/null; then
     # Remove services tab from webui
     echo "... removing System Controls from webui as should be used from HA"
     sed -i '/>System Controls/d' "$HOME/BirdNET-Pi/homepage/views.php"
@@ -31,12 +31,12 @@ if bashio::supervisor.ping 2>/dev/null; then
     echo "... disabling pulseaudio as managed by HomeAssistant"
     grep -srl "pulseaudio --start" "$HOME/BirdNET-Pi/scripts" | while read -r file; do
         sed -i "s|! pulseaudio --check|pulseaudio --check|g" "$file"
-    done
+  done
 
     # Check if port 80 is correctly configured
     if [ -n "$(bashio::addon.port "80")" ] && [ "$(bashio::addon.port "80")" != 80 ]; then
         bashio::log.fatal "The port 80 is enabled, but should still be 80 if you want automatic SSL certificates generation to work."
-    fi
+  fi
 fi
 
 # General elements
@@ -62,8 +62,8 @@ if ! grep -q "/usr/bin/sudo" "$HOME/BirdNET-Pi/templates/birdnet_analysis.servic
     while IFS= read -r file; do
         if [[ "$(basename "$file")" != "birdnet_log.service" ]]; then
             sed -i "s|ExecStart=|ExecStart=/usr/bin/sudo -u pi |g" "$file"
-        fi
-    done < <(find "$HOME/BirdNET-Pi/templates/" -name "*net*.service" -print)
+    fi
+  done   < <(find "$HOME/BirdNET-Pi/templates/" -name "*net*.service" -print)
 fi
 
 # Allow pulseaudio system
@@ -105,7 +105,7 @@ if ! grep -q "http://:8081" /etc/caddy/Caddyfile; then
     sed -i "s|http://|http://:8081|g" "$HOME/BirdNET-Pi/scripts/update_caddyfile.sh"
     if [ -f /etc/caddy/Caddyfile.original ]; then
         rm /etc/caddy/Caddyfile.original
-    fi
+  fi
 fi
 
 # Correct webui paths
@@ -146,10 +146,10 @@ fi
 echo "... setting RECS_DIR to /tmp"
 grep -rl "RECS_DIR" "$HOME" --exclude="*.php" | while read -r file; do
     sed -i "s|conf\['RECS_DIR'\]|'/tmp'|g" "$file"
-    sed -i "s|\$RECS_DIR|/tmp|g" "$file"
-    sed -i "s|\${RECS_DIR}|/tmp|g" "$file"
+    sed -i 's|$RECS_DIR|/tmp|g'  "$file"
+    sed -i 's|${RECS_DIR}|/tmp|g'  "$file"
     sed -i "/^RECS_DIR=/c RECS_DIR=/tmp" "$file"
-    sed -i "/^\$RECS_DIR=/c \$RECS_DIR=/tmp" "$file"
+    sed -i '/^$RECS_DIR=/c $RECS_DIR=/tmp'   "$file"
 done
 mkdir -p /tmp
 
@@ -157,7 +157,7 @@ mkdir -p /tmp
 echo "... adapting labels according to birdnet.conf"
 if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
     bashio::log.info "Setting language to ${DATABASE_LANG:-en}"
-    "$HOME/BirdNET-Pi/scripts/install_language_label_nm.sh" -l "${DATABASE_LANG:-}" &>/dev/null || bashio::log.warning "Failed to update language labels"
+    "$HOME/BirdNET-Pi/scripts/install_language_label_nm.sh" -l "${DATABASE_LANG:-}" &> /dev/null || bashio::log.warning "Failed to update language labels"
 else
     bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
 fi

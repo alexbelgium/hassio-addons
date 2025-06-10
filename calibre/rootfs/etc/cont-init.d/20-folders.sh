@@ -10,7 +10,7 @@ PGID=$(bashio::config "PGID")
 # Check data location
 LOCATION=$(bashio::config 'data_location')
 
-if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
+if [[ $LOCATION == "null" || -z $LOCATION    ]]; then
     # Default location
     LOCATION="/config"
 else
@@ -19,15 +19,15 @@ else
     # Check if config is located in an acceptable location
     LOCATIONOK=""
     for location in "/share" "/config" "/data" "/mnt"; do
-        if [[ "$LOCATION" == "$location"* ]]; then
+        if [[ $LOCATION == "$location"*   ]]; then
             LOCATIONOK=true
-        fi
-    done
+    fi
+  done
 
     if [ -z "$LOCATIONOK" ]; then
         LOCATION="/config"
         bashio::log.fatal "Your data_location value can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $LOCATION"
-    fi
+  fi
 
 fi
 
@@ -39,14 +39,14 @@ for file in /etc/s6-overlay/s6-rc.d/*/run; do
     if [ "$(sed -n '1{/bash/p};q' "$file")" ]; then
         sed -i "1a export HOME=$LOCATION" "$file"
         sed -i "1a export FM_HOME=$LOCATION" "$file"
-    fi
+  fi
 done
 
 # Correct home location
 for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
     if [ -d "$folders" ]; then
-        sed -i "s|/config|$LOCATION|g" $(find "$folders" -type f) &>/dev/null || true
-    fi
+        sed -i "s|/config|$LOCATION|g" $(find "$folders" -type f) &> /dev/null || true
+  fi
 done
 
 #  Change user home

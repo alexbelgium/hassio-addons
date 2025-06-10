@@ -9,7 +9,7 @@ PGID=$(bashio::config "PGID")
 # Check data location
 LOCATION=$(bashio::config 'data_location')
 
-if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
+if [[ $LOCATION == "null" || -z $LOCATION    ]]; then
     # Default location
     LOCATION="/config"
 else
@@ -18,15 +18,15 @@ else
     # Check if config is located in an acceptable location
     LOCATIONOK=""
     for location in "/share" "/config" "/data" "/mnt"; do
-        if [[ "$LOCATION" == "$location"* ]]; then
+        if [[ $LOCATION == "$location"*   ]]; then
             LOCATIONOK=true
-        fi
-    done
+    fi
+  done
 
     if [ -z "$LOCATIONOK" ]; then
         LOCATION=/config
         bashio::log.fatal "Your data_location value can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $LOCATION"
-    fi
+  fi
 
 fi
 

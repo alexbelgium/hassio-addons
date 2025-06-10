@@ -7,7 +7,7 @@ set -e
 ##################
 
 # Exit if /config is not mounted or HA not used
-if [ ! -d /config ] || ! bashio::supervisor.ping 2>/dev/null; then
+if [ ! -d /config ] || ! bashio::supervisor.ping 2> /dev/null; then
     echo "..."
     exit 0
 fi
@@ -42,7 +42,7 @@ if [ ! -f "$CONFIGSOURCE" ]; then
 fi
 
 # Convert scripts to linux
-dos2unix "$CONFIGSOURCE" &>/dev/null || true
+dos2unix "$CONFIGSOURCE" &> /dev/null || true
 chmod +x "$CONFIGSOURCE"
 
 # Get current shebang, if not available use another
@@ -53,15 +53,14 @@ if [ ! -f "${currentshebang%% *}" ]; then
 fi
 
 # Check if there is actual commands
-while IFS= read -r line
-do
+while IFS= read -r line; do
     # Remove leading and trailing whitespaces
     line="$(echo "$line" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 
     # Check if line is not empty and does not start with #
-    if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
+    if [[ -n $line   ]] && [[ ! $line =~ ^#   ]]; then
         bashio::log.green "... script found, executing"
         /."$CONFIGSOURCE"
         exit 0
-    fi
+  fi
 done < "$CONFIGSOURCE"

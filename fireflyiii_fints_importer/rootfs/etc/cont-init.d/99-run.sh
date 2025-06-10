@@ -28,13 +28,12 @@ if bashio::config.has_value 'Updates'; then
         bashio::log.info "$FREQUENCY updates"
         echo ""
 
-        for i in $(seq 4 2 12)
-        do
+        for i in $(seq 4 2 12); do
             hour="   $i"
             freqDir="/etc/periodic/daily$i"
-            echo "0    ${hour:(-4)}       *       *       *       run-parts \"$freqDir\"" >> /etc/crontabs/root
+            echo "0    ${hour: -4}       *       *       *       run-parts \"$freqDir\""  >> /etc/crontabs/root
             mkdir "$freqDir"
-        done
+    done
 
         # Sets cron // do not delete this message
         freqDir="/etc/periodic/${FREQUENCY}"
@@ -55,9 +54,9 @@ if bashio::config.has_value 'Updates'; then
 
         bashio::log.info "Automatic updates were requested. The files in ${CONFIGSOURCE} will be imported $FREQUENCY."
 
-    else
+  else
         bashio::log.fatal "Automatic updates were requested, but there are no configuration files in ${CONFIGSOURCE}. There will therefore be be no automatic updates."
-    fi
+  fi
 
 fi
 
@@ -69,7 +68,7 @@ bashio::log.info "Please wait while the app is loading !"
 
 if bashio::config.true 'silent'; then
     bashio::log.warning "Silent mode activated. Only errors will be shown. Please disable in addon options if you need to debug"
-    php -S 0.0.0.0:8080 /app/index.php >/dev/null
+    php -S 0.0.0.0:8080 /app/index.php > /dev/null
 else
     php -S 0.0.0.0:8080 /app/index.php
 fi

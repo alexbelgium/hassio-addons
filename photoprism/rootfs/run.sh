@@ -12,8 +12,8 @@ for SCRIPTS in "/00-banner.sh" "/00-local_mounts.sh" "/00-smb_mounts.sh"; do
     chown "$(id -u)":"$(id -g)" "$SCRIPTS"
     chmod a+x $SCRIPTS
     sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' $SCRIPTS
-    /.$SCRIPTS &&
-    true || true # Prevents script crash on failure
+    /.$SCRIPTS \
+               && true || true # Prevents script crash on failure
     echo "exit $?"
 done
 
@@ -47,10 +47,10 @@ for variabletest in $PHOTOPRISM_STORAGE_PATH $PHOTOPRISM_ORIGINALS_PATH $PHOTOPR
     # Check if path exists
     if bashio::fs.directory_exists "$variabletest"; then
         true
-    else
+  else
         bashio::log.info "Path $variabletest doesn't exist. Creating it now..."
         mkdir -p "$variabletest" || bashio::log.fatal "Can't create $variabletest path"
-    fi
+  fi
     # Check if path writable
     # shellcheck disable=SC2015
     touch "$variabletest"/aze && rm "$variabletest"/aze || bashio::log.fatal "$variabletest path is not writable"

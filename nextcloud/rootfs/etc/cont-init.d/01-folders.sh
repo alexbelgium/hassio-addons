@@ -6,8 +6,8 @@ if bashio::config.has_value "PUID" && bashio::config.has_value "PGID"; then
     PUID="$(bashio::config "PUID")"
     PGID="$(bashio::config "PGID")"
     bashio::log.green "Setting user to $PUID:$PGID"
-    id -u abc &>/dev/null || usermod -o -u "$PUID" abc || true
-    id -g abc &>/dev/null || groupmod -o -g "$PGID" abc || true
+    id -u abc &> /dev/null || usermod -o -u "$PUID" abc || true
+    id -g abc &> /dev/null || groupmod -o -g "$PGID" abc || true
 fi
 
 echo "Updating permissions..."
@@ -30,7 +30,7 @@ else
 fi
 
 # Is the directory valid
-if [[ "$datadirectory" == *"/mnt/"* ]] && [ ! -f "$datadirectory"/index.html ]; then
+if [[ $datadirectory == *"/mnt/"*   ]] && [ ! -f "$datadirectory"/index.html ]; then
     bashio::log.fatal "Data directory does not seem to be valid. Is your drive connected? Stopping to avoid corrupting the data directory."
     bashio::addon.stop
 fi
@@ -46,11 +46,11 @@ fi
 mkdir -p "$datadirectory"
 if bashio::config.true "skip_permissions_check"; then
   bashio::log.yellow "--------------------------------------------"
-  bashio::log.yellow "Permissions check skipped : \"skip_permissions_check\" is true"
+  bashio::log.yellow 'Permissions check skipped : "skip_permissions_check" is true'
   bashio::log.yellow "--------------------------------------------"
-elif [[ "$PUID" = "0" ]] && [[ "$PGID" = "0" ]]; then
+elif [[ $PUID == "0"  ]] && [[ $PGID == "0"  ]]; then
   bashio::log.yellow "--------------------------------------------"
-  bashio::log.yellow "Permissions check skipped : \"PUID and PGID are 0\" is true"
+  bashio::log.yellow 'Permissions check skipped : "PUID and PGID are 0" is true'
   bashio::log.yellow "--------------------------------------------"
 else
   bashio::log.yellow "... setting permissions, this might take a long time. If it takes too long at each boot, you could instead activate skip_permissions_check in the addon options"

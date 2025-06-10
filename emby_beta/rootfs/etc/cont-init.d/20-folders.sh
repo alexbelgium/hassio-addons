@@ -11,11 +11,11 @@ log() {
 log "Updating folder structure and permission : data stored in $data_location"
 
 declare -A directories=(
-    ["/emby"]=""
-    ["/share/storage/tv"]=""
-    ["/share/storage/movies"]=""
-    ["$data_location"]=""
-    ["$config_location"]=""
+     ["/emby"]=""
+     ["/share/storage/tv"]=""
+     ["/share/storage/movies"]=""
+     ["$data_location"]=""
+     ["$config_location"]=""
 )
 
 for dir in "${!directories[@]}"; do
@@ -37,13 +37,13 @@ if [ -f /homeassistant/addons_autoscripts/emby-nas.sh ]; then
 fi
 
 declare -A links=(
-    ["/emby/cache"]="$data_location/cache"
-    ["/emby/config"]="$config_location"
-    ["/emby/data"]="$data_location/data"
-    ["/emby/logs"]="$data_location/logs"
-    ["/emby/metadata"]="$data_location/metadata"
-    ["/emby/plugins"]="$data_location/plugins"
-    ["/emby/root"]="$data_location/root"
+     ["/emby/cache"]="$data_location/cache"
+     ["/emby/config"]="$config_location"
+     ["/emby/data"]="$data_location/data"
+     ["/emby/logs"]="$data_location/logs"
+     ["/emby/metadata"]="$data_location/metadata"
+     ["/emby/plugins"]="$data_location/plugins"
+     ["/emby/root"]="$data_location/root"
 )
 
 for link in "${!links[@]}"; do
@@ -52,5 +52,5 @@ for link in "${!links[@]}"; do
         mkdir -p "${links[$link]}"
         chown -R "$PUID:$PGID" "${links[$link]}"
         ln -s "${links[$link]}" "$link"
-    fi
+  fi
 done

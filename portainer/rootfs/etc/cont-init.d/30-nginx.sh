@@ -27,7 +27,7 @@ bashio::var.json \
     protocol "${portainer_protocol}" \
     certfile "$(bashio::config 'certfile')" \
     keyfile "$(bashio::config 'keyfile')" \
-    ssl "^$(bashio::config 'ssl')" |
-tempio \
+    ssl "^$(bashio::config 'ssl')" \
+                                   | tempio \
     -template /etc/nginx/templates/ingress.gtpl \
     -out /etc/nginx/servers/ingress.conf

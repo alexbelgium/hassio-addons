@@ -12,19 +12,19 @@ if bashio::config.has_value 'graphic_drivers'; then
 
         "mesa")
             apt-get update
-            apt-get install -yqq -- *mesa* >/dev/null
+            apt-get install -yqq -- *mesa* > /dev/null
             echo "... done"
             ;;
 
         "nvidia")
             apt-get update
-            apt-get install -yqq -- *nvidia* >/dev/null
+            apt-get install -yqq -- *nvidia* > /dev/null
             echo "... done"
             ;;
 
         "radeon")
             apt-get update
-            apt-get install -yqq -- *radeon* >/dev/null
+            apt-get install -yqq -- *radeon* > /dev/null
             echo "... done"
             ;;
 
@@ -32,5 +32,5 @@ if bashio::config.has_value 'graphic_drivers'; then
             echo "... no drivers selected"
             ;;
 
-    esac
+  esac
 fi

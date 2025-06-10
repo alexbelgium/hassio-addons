@@ -21,15 +21,15 @@ for KEYS in "${arr[@]}"; do
     VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
     line="${KEYS}='${VALUE//[\"\']/}'"
     # text
-    if bashio::config.false "verbose" || [[ "${KEYS}" == *"PASS"* ]]; then
+    if bashio::config.false "verbose" || [[ ${KEYS} == *"PASS"*   ]]; then
         bashio::log.blue "${KEYS}=******"
-    else
+  else
         bashio::log.blue "$line"
-    fi
+  fi
     # Use locally
     export "${KEYS}=${VALUE//[\"\']/}"
     # Export the variable to run scripts
-    sed -i "1a export $line" /home/seafile/*.sh 2>/dev/null
+    sed -i "1a export $line" /home/seafile/*.sh 2> /dev/null
     find /opt/seafile -name '*.sh' -print0 | xargs -0 sed -i "1a export $line"
 done
 
@@ -86,7 +86,7 @@ case $(bashio::config 'database') in
                 "Local database access should be provided by the MariaDB addon"
             bashio::exit.nok \
                 "Please ensure it is installed and started"
-        fi
+    fi
 
         # Use values
         export MYSQL_HOST="$(bashio::services 'mysql' 'host')" && sed -i "1a export MYSQL_HOST=$(bashio::services 'mysql' 'host')" /home/seafile/*.sh

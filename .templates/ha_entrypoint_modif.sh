@@ -40,10 +40,10 @@ mkdir -p /run/s6/container_environment
 # Check if shebang exists
 for shebang in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
     command_path="${shebang%% *}"
-    if [ -x "$command_path" ] && "$command_path" echo "yes" >/dev/null 2>&1; then
+    if [ -x "$command_path" ] && "$command_path" echo "yes" > /dev/null 2>&1; then
         echo "Valid shebang: $shebang"
         break
-    fi
+  fi
 done
 
 # Define shebang
@@ -53,7 +53,7 @@ sed -i "s|/command/with-contenv bashio|$shebang|g" /ha_entrypoint.sh
 for string in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio"; do
     grep -sril "$string" /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d | while read -r files; do
         sed -i "s|$string|$shebang|g" "$files"
-    done
+  done
 done
 
 # Avoid interference with LOG_LEVEL used in the app

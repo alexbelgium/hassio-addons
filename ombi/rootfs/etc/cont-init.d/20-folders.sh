@@ -12,7 +12,7 @@ if [ ! -d /config/addons_config/$slug ]; then
         chmod 777 /config/addons_config/$slug
         mv /config/$slug/* /config/addons_config/$slug/
         rm -r /config/$slug
-    fi
+  fi
 
     echo "Creating /config/addons_config/$slug"
     mkdir -p /config/addons_config/$slug

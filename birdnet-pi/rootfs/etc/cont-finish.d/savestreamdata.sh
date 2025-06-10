@@ -18,12 +18,12 @@ if [ -d "$HOME"/BirdSongs/StreamData ]; then
     if systemctl is-active --quiet birdnet_analysis; then
         bashio::log.info "Stopping birdnet_analysis service."
         systemctl stop birdnet_analysis &
-    fi
+  fi
 
     if systemctl is-active --quiet birdnet_recording; then
         bashio::log.info "Stopping birdnet_recording service."
         systemctl stop birdnet_recording &
-    fi
+  fi
 
     # Wait for both services to stop
     wait
@@ -37,13 +37,13 @@ if [ -d "$HOME"/BirdSongs/StreamData ]; then
         if [ -f "$file" ] && [ "$(stat --format="%s" "$file")" -lt "$MAX_SIZE" ] && is_valid_wav "$file"; then
             if mv -v "$file" /config/TemporaryFiles/; then
                 bashio::log.info "Moved valid WAV file: $(basename "$file")"
-            else
+      else
                 bashio::log.error "Failed to move: $(basename "$file")"
-            fi
-        else
+      fi
+    else
             bashio::log.warning "Skipping invalid or large file: $(basename "$file")"
-        fi
-    done
+    fi
+  done
 
     bashio::log.info "... files safe, allowing container to stop."
 else

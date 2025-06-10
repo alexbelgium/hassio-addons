@@ -7,7 +7,7 @@ CONFIGSOURCE="/data"
 # Use ssl
 if [ -d /ssl ]; then
     mkdir -p /cert
-    cp /ssl/* /cert 2>/dev/null
+    cp /ssl/* /cert 2> /dev/null
     chown -R 508:508 /cert
 fi
 

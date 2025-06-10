@@ -6,7 +6,7 @@ set -e
 # ALLOW RESTARTS #
 ##################
 
-if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
+if [[ ${BASH_SOURCE[0]} == /etc/cont-init.d/*   ]]; then
     mkdir -p /etc/scripts-init
     sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
     sed -i "/ rm/d" /ha_entrypoint.sh
@@ -25,7 +25,7 @@ DEFAULT_FILES=("apprise.txt" "exclude_species_list.txt" "IdentifiedSoFar.txt" "d
 for file in "${DEFAULT_FILES[@]}"; do
     if [ ! -f "/config/$file" ]; then
         echo "" > "/config/$file"
-    fi
+  fi
 done
 touch /config/include_species_list.txt # Ensure this is always created
 
@@ -38,9 +38,9 @@ if bashio::config.has_value "BIRDSONGS_FOLDER"; then
     chown -R pi:pi "$BIRDSONGS_FOLDER_OPTION" || bashio::log.fatal "...... folder couldn't be given permissions for 1000:1000"
     if [ -d "$BIRDSONGS_FOLDER_OPTION" ] && [ "$(stat -c '%u:%g' "$BIRDSONGS_FOLDER_OPTION")" == "1000:1000" ]; then
         BIRDSONGS_FOLDER="$BIRDSONGS_FOLDER_OPTION"
-    else
+  else
         bashio::log.warning "BIRDSONGS_FOLDER reverted to /config/BirdSongs"
-    fi
+  fi
 fi
 
 # Create default folders
@@ -121,4 +121,3 @@ echo "... setting up Matplotlabdir"
 mkdir -p "$HOME"/.cache/matplotlib
 chown -R "pi:pi" "$HOME"/.cache/matplotlib
 chmod 777 "$HOME"/.cache/matplotlib
-

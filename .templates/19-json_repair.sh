@@ -12,13 +12,13 @@ if [ -f "${JSONTOCHECK}" ]; then
     echo "Checking settings.json format"
 
     # Check if json file valid or not
-    jq . -S "${JSONTOCHECK}" &>/dev/null && ERROR=false || ERROR=true
+    jq . -S "${JSONTOCHECK}" &> /dev/null && ERROR=false || ERROR=true
     if [ "$ERROR" = true ]; then
         bashio::log.fatal "Settings.json structure is abnormal, restoring options from scratch. Your old file is renamed as settings.json_old"
         mv "${JSONSOURCE}" "${JSONSOURCE}"_old
         cp "${JSONSOURCE}" "${JSONTOCHECK}"
         exit 0
-    fi
+  fi
 
     # Get the default keys from the original file
     mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
@@ -35,11 +35,11 @@ if [ -f "${JSONTOCHECK}" ]; then
             sed -i "3 i\"${KEYS}\": \"${JSONSOURCEVALUE}\"," "${JSONTOCHECK}"
             # Message
             bashio::log.warning "${KEYS} was missing from your settings.json, it was added with the default value ${JSONSOURCEVALUE}"
-        fi
-    done
+    fi
+  done
 
     # Show structure in a nice way
-    jq . -S "${JSONTOCHECK}" | cat >temp.json && mv temp.json "${JSONTOCHECK}"
+    jq . -S "${JSONTOCHECK}" | cat > temp.json && mv temp.json "${JSONTOCHECK}"
 
     # Message
     bashio::log.info "Your settings.json was checked and seems perfectly normal!"

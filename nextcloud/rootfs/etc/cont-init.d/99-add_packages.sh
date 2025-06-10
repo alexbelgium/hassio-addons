@@ -12,7 +12,7 @@ if [ ! -d /data/config/www/nextcloud/apps/pdfannotate ]; then
     cd /data/config/www/nextcloud/apps || exit
     git clone https://gitlab.com/nextcloud-other/nextcloud-annotate pdfannotate
     cd "$CURRENT" || exit
-    apk add --no-cache ghostscript >/dev/null
+    apk add --no-cache ghostscript > /dev/null
     echo "Nextcloud annotate app added to Nextcloud app store"
 fi
 
@@ -25,14 +25,13 @@ if bashio::config.has_value 'additional_apps'; then
     re='^( *).*'
     read -ra array <<< "$NEWAPPS"
     IFS=$OIFS
-    for element in "${array[@]}"
-    do
+    for element in "${array[@]}"; do
         if [[ $element =~ $re ]]; then
             # shellcheck disable=SC2295
             APP="${element#${BASH_REMATCH[1]}}"
             bashio::log.green "... $APP"
             # shellcheck disable=SC2015,SC2086
-            apk add --no-cache $APP >/dev/null || bashio::log.red "... not successful, please check $APP package name"
-        fi
-    done
+            apk add --no-cache $APP > /dev/null || bashio::log.red "... not successful, please check $APP package name"
+    fi
+  done
 fi
