@@ -1,35 +1,11 @@
-# ==================================================================================
-# shfmt Configuration - Shell Script Formatting Standards
-# ==================================================================================
+oot = trueAdd commentMore actions
 
-# Indent with 2 spaces
-indent: 2
-
-# Use spaces instead of tabs
-use_tabs: false
-
-# Put binary operators at the beginning of lines
-binary_next_line: true
-
-# Put case statement patterns on the same line as the case
-case_indent: true
-
-# Simplify the code
-simplify: true
-
-# Language variant (bash, posix, mksh)
-language_variant: bash
-
-# Function declaration style
-# func_style: 0  # function name() { ... }
-# func_style: 1  # name() { ... }
-func_style: 1
-
-# Keep column alignment for continuation lines
-keep_column_alignment: true
-
-# Minify scripts by removing comments and extra whitespace
-# minify: false
-
-# Apply formatting recursively to included files
-# find: true
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+[*.md]
+trim_trailing_whitespace = false
