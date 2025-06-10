@@ -19,7 +19,7 @@ jobs:
       - name: Run shfmt on all .sh files
         run: |
           sudo apt-get update && sudo apt-get install -y shfmt
-          shfmt -i 2 -kp -ln=bash -w .
+          shfmt -i 2 -ln=bash -w .
 
       - name: Run Super Linter
         uses: super-linter/super-linter/slim@main
