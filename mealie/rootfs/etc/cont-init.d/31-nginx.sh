@@ -4,21 +4,21 @@ set -e
 
 if bashio::config.true 'ssl'; then
 
-    bashio::log.info "Add ssl"
+	bashio::log.info "Add ssl"
 
-    # Validate ssl
-    bashio::config.require.ssl
+	# Validate ssl
+	bashio::config.require.ssl
 
-    # Adapt nginx template
-    certfile=$(bashio::config 'certfile')
-    keyfile=$(bashio::config 'keyfile')
-    sed -i "s|%%certfile%%|${certfile}|g" /etc/nginx/servers/ssl.conf
-    sed -i "s|%%keyfile%%|${keyfile}|g" /etc/nginx/servers/ssl.conf
-    sed -i "s|9001;|9001 ssl;|g" /etc/nginx/servers/ssl.conf
+	# Adapt nginx template
+	certfile=$(bashio::config 'certfile')
+	keyfile=$(bashio::config 'keyfile')
+	sed -i "s|%%certfile%%|${certfile}|g" /etc/nginx/servers/ssl.conf
+	sed -i "s|%%keyfile%%|${keyfile}|g" /etc/nginx/servers/ssl.conf
+	sed -i "s|9001;|9001 ssl;|g" /etc/nginx/servers/ssl.conf
 
 else
 
-    sed -i "/ssl/d" /etc/nginx/servers/ssl.conf
+	sed -i "/ssl/d" /etc/nginx/servers/ssl.conf
 
 fi
 
@@ -35,9 +35,9 @@ sed -i "s|%%base_subpath%%|${base_path}|g" /etc/nginx/servers/ingress.conf
 sed -i "s|%%base_subpath%%|${base_path}|g" /etc/nginx/servers/ssl.conf
 
 if bashio::config.has_value "BASE_URL"; then
-    BASE_URL="$(bashio::config "BASE_URL")"
-    BASE_URL="${BASE_URL#*://}:$(bashio::addon.port 9001)"
-    sed -i "s|%%BASE_URL%%|$BASE_URL|g" /etc/nginx/servers/ssl.conf
+	BASE_URL="$(bashio::config "BASE_URL")"
+	BASE_URL="${BASE_URL#*://}:$(bashio::addon.port 9001)"
+	sed -i "s|%%BASE_URL%%|$BASE_URL|g" /etc/nginx/servers/ssl.conf
 else
-    sed -i "/BASE_URL/d" /etc/nginx/servers/ssl.conf
+	sed -i "/BASE_URL/d" /etc/nginx/servers/ssl.conf
 fi

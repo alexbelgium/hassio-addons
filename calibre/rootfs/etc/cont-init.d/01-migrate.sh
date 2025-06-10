@@ -7,9 +7,9 @@ set -e
 ####################
 
 if [ -d /homeassistant/addons_config/calibre ]; then
-    echo "Moving database to new location /config"
-    cp -rf /homeassistant/addons_config/calibre/* /config/
-    rm -r /homeassistant/addons_config/calibre
+	echo "Moving database to new location /config"
+	cp -rf /homeassistant/addons_config/calibre/* /config/
+	rm -r /homeassistant/addons_config/calibre
 fi
 
 # Legacy path
