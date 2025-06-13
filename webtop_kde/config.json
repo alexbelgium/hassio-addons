@@ -150,6 +150,6 @@
   "tmpfs": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "4.16-r0-ls93-2",
+  "version": "4.16-r0-ls94",
   "video": true
 }
