@@ -109,6 +109,6 @@
   "slug": "lidarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/README.md",
-  "version": "2.11.2.4629",
+  "version": "2.12.4.4658",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8686]"
 }
