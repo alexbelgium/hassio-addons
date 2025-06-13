@@ -50,8 +50,10 @@ jobs:
           set -e
           cd "${{ matrix.addon }}"
           # Normalize unicode (non-breaking) spaces to regular spaces
-          find . -type f ! -path "./.git/*" | while read -r file; do
-            LC_ALL=C sed -i 's/\xC2\xA0/ /g' "$file"
+          find . -type f ! -path "./.git/*" \
+          ! -iname "*.png" ! -iname "*.jpg" ! -iname "*.jpeg" \
+          ! -iname "*.gif" ! -iname "*.svg" ! -iname "*.webp" ! -iname "*.ico" ! -iname "*.bmp" \
+          ! -iname "*.pdf" | while read -r file; do LC_ALL=C sed -i 's/\xC2\xA0/ /g' "$file"
           done
           # Make all .sh scripts executable
           find . -type f -iname "*.sh" -exec chmod u+x {} \;
