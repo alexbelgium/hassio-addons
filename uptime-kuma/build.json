@@ -1,0 +1,10 @@
+{
+    "build_from": {
+        "aarch64": "louislam/uptime-kuma:1.23.8",
+        "amd64": "louislam/uptime-kuma:1.23.8",
+        "armv7": "louislam/uptime-kuma:1.23.8"
+    },
+    "codenotary": {
+        "signer": "alexandrep.github@gmail.com"
+    }
+}
