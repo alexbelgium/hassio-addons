@@ -4,5 +4,9 @@
 | -------------------------- | ----------------- |
 | GITLEAKS                   | Pass ✅           |
 | GIT_MERGE_CONFLICT_MARKERS | Pass ✅           |
+| JSON                       | Pass ✅           |
+| JSON_PRETTIER              | Fail ❌           |
+| MARKDOWN                   | Pass ✅           |
+| MARKDOWN_PRETTIER          | Fail ❌           |
 
-All files and directories linted successfully
+Super-linter detected linting errors
