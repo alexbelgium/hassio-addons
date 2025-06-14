@@ -37,7 +37,7 @@ LABEL \
     io.hass.description="A powerful data logger for Tesla vehicles" \
     io.hass.type="addon" \
     maintainer="alexbelgium" \
-    url="https://github.com/alexbelgium/hassio-addons"
+    url="https://github.com/bruvv/hassio-addons"
 
 # Environment
 ENV \

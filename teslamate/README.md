@@ -39,7 +39,7 @@ TeslaMate is a sophisticated self-hosted data logger for your Tesla vehicles. It
 
 1. Click the Home Assistant My button below to add the TeslaMate repository to your Home Assistant instance:
 
-   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https://github.com/alexbelgium/hassio-addons)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https://github.com/bruvv/hassio-addons)
 
 2. Install the TeslaMate add-on.
 3. Configure your database settings.
