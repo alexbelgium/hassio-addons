@@ -70,7 +70,6 @@ jobs:
           default_author: github_actions
           pull: --rebase --autostash
           fetch: --tags --force
-          push: --force
 
   # 3. Lint add-on configs
   lint_config:
