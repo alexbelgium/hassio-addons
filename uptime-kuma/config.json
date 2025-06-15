@@ -11,7 +11,8 @@
 	"map": ["config:rw", "ssl"],
 	"name": "Uptime Kuma",
 	"options": {
-		"ssl": false
+		"ssl": false,
+		"local_storage": true
 	},
 	"panel_admin": false,
 	"panel_icon": "mdi:chart-timeline",
