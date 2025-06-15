@@ -45,18 +45,25 @@ jobs:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
       - uses: actions/checkout@v4
-      - name: Normalize unicode spaces & make scripts executable
+      - name: Fix non-printable Unicode spaces in changed text files
         run: |
-          set -e
-          cd "${{ matrix.addon }}"
-          # Normalize unicode (non-breaking) spaces to regular spaces
-          find . -type f ! -path "./.git/*" \
-          ! -iname "*.png" ! -iname "*.jpg" ! -iname "*.jpeg" \
-          ! -iname "*.gif" ! -iname "*.svg" ! -iname "*.webp" ! -iname "*.ico" ! -iname "*.bmp" \
-          ! -iname "*.pdf" | while read -r file; do LC_ALL=C sed -i 's/\xC2\xA0/ /g' "$file"
+          echo "Finding changed files..."
+          CHANGED_FILES=$(git diff --name-only origin/master...HEAD)
+      
+          # Unicode blanks regex (covers all mentioned codepoints)
+          UNICODE_SPACES_REGEX=$'[\u00A0\u2002\u2003\u2007\u2008\u2009\u202F\u205F\u3000\u200B]'
+      
+          for file in $CHANGED_FILES; do
+            if [ -f "$file" ]; then
+              MIME_TYPE=$(file --mime-type -b "$file")
+              if [[ "$MIME_TYPE" == text/* ]]; then
+                echo "Fixing: $file"
+                perl -CSD -pe "s/$UNICODE_SPACES_REGEX/ /g" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+              else
+                echo "Skipping non-text file: $file ($MIME_TYPE)"
+              fi
+            fi
           done
-          # Make all .sh scripts executable
-          find . -type f -iname "*.sh" -exec chmod u+x {} \;
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
