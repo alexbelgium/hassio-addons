@@ -58,10 +58,19 @@ jobs:
           FIX_PYTHON_ISORT: true
           FIX_PYTHON_RUFF: true
 
+      - name: Remove Super-Linter output (prevent checkout conflict)
+        run: sudo rm -rf super-linter-output/
+
+      - name: Pull latest changes to avoid non-fast-forward push errors
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git fetch origin master
+          git pull --rebase origin master
+
       - name: Commit and push linting fixes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: fix linting issues"
-          commit_user_name: super-linter
-          commit_user_email: super-linter@super-linter.dev
-          push_options: '--force'
+          commit_user_name: "github-actions"
+          commit_user_email: "github-actions@github.com"
