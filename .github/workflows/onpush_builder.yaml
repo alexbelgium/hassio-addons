@@ -45,27 +45,22 @@ jobs:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
       - uses: actions/checkout@v4
-      - name: Fix non-printable Unicode spaces in changed text files
+      - name: Fix non-printable Unicode spaces in all text files for this add-on
         run: |
-          echo "Finding changed files..."
-          CHANGED_FILES=$(git diff --name-only origin/master...HEAD)
-      
-          # Unicode blanks regex (covers all mentioned codepoints)
+          cd "${{ matrix.addon }}"
           UNICODE_SPACES_REGEX=$'[\u00A0\u2002\u2003\u2007\u2008\u2009\u202F\u205F\u3000\u200B]'
-      
-          for file in $CHANGED_FILES; do
-            if [ -f "$file" ]; then
-              MIME_TYPE=$(file --mime-type -b "$file")
-              if [[ "$MIME_TYPE" == text/* ]]; then
-                echo "Fixing: $file"
-                perl -CSD -pe "s/$UNICODE_SPACES_REGEX/ /g" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
-              else
-                echo "Skipping non-text file: $file ($MIME_TYPE)"
-              fi
+          find . -type f | while read -r file; do
+            MIME_TYPE=$(file --mime-type -b "$file")
+            if [[ "$MIME_TYPE" == text/* ]]; then
+              echo "Fixing: $file"
+              perl -CSD -pe "s/$UNICODE_SPACES_REGEX/ /g" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+            else
+              echo "Skipping non-text file: $file ($MIME_TYPE)"
             fi
           done
       - name: Make all .sh scripts executable
         run: |
+          cd "${{ matrix.addon }}"
           find . -type f -iname "*.sh" -exec chmod u+x {} \;
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
