@@ -1,41 +1,28 @@
 {
-    "name": "Uptime Kuma",
-    "version": "1.23.8",
-    "slug": "uptime-kuma",
-    "description": "A modern uptime monitoring solution with sleek interface and API",
-    "url": "https://github.com/alexbelgium/hassio-addons/tree/master/uptime-kuma",
-    "codenotary": "alexandrep.github@gmail.com",
-    "arch": ["aarch64", "amd64", "armv7"],
-    "init": false,
-    "startup": "services",
-    "boot": "auto",
-    "map": ["ssl"],
-    "ingress": true,
-    "ingress_port": 3001,
-    "ingress_entry": "/",
-    "panel_icon": "mdi:chart-timeline",
-    "panel_title": "Uptime Kuma",
-    "ports": {
-        "3001/tcp": "Web interface (Not required with ingress)"
-    },
-    "ports_description": {
-        "3001/tcp": "Web interface (Not required with ingress)"
-    },
-    "hassio_api": true,
-    "hassio_role": "default",
-    "webui": "http://[HOST]:[PORT:3001]",
-    "watchdog": "http://[HOST]:[PORT:3001]",
-    "schema": {
-        "ssl": "bool?",
-        "certfile": "str?",
-        "keyfile": "str?",
-        "proxy_host": "str?",
-        "proxy_port": "port?",
-        "proxy_ssl": "bool?",
-        "username": "str?",
-        "password": "password?"
-    },
-    "options": {
-        "ssl": false
-    }
+	"arch": ["aarch64", "amd64", "armv7"],
+	"codenotary": "alexandrep.github@gmail.com",
+	"description": "A modern uptime monitoring solution with sleek interface and API",
+	"image": "ghcr.io/alexbelgium/uptime-kuma-{arch}",
+	"ingress": true,
+	"ingress_entry": "/",
+	"ingress_port": 3001,
+	"connection_mode": "ingress_noauth",
+	"init": false,
+	"map": ["config:rw", "ssl"],
+	"name": "Uptime Kuma",
+	"options": {
+		"ssl": false
+	},
+	"panel_admin": false,
+	"panel_icon": "mdi:chart-timeline",
+	"ports": {
+		"3001/tcp": "Web interface (Not required with ingress)"
+	},
+	"ports_description": {
+		"3001/tcp": "Web interface (Not required with ingress)"
+	},
+	"slug": "uptime-kuma",
+	"udev": false,
+	"url": "https://github.com/alexbelgium/hassio-addons/tree/master/uptime-kuma",
+	"version": "1.23.8"
 }
