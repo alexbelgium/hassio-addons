@@ -1,5 +1,5 @@
 {
-	"arch": ["aarch64", "amd64", "armv7"],
+	"arch": ["arm64", "amd64", "armv7"],
 	"codenotary": "alexandrep.github@gmail.com",
 	"description": "A modern uptime monitoring solution with sleek interface and API",
 	"image": "ghcr.io/alexbelgium/uptime-kuma-{arch}",
