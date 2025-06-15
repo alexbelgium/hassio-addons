@@ -15,14 +15,20 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set diff range
+        id: diff
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "DIFF_RANGE=${{ github.event.pull_request.base.sha }}...${{ github.sha }}" >> $GITHUB_ENV
+          else
+            echo "DIFF_RANGE=${{ github.event.before }}...${{ github.sha }}" >> $GITHUB_ENV
+          fi
+
       - name: Fix non-printable Unicode spaces in changed text files
         run: |
-          echo "Finding changed files..."
-          CHANGED_FILES=$(git diff --name-only origin/master...HEAD)
-      
-          # Unicode blanks regex (covers all mentioned codepoints)
+          echo "Finding changed files in $DIFF_RANGE..."
+          CHANGED_FILES=$(git diff --name-only $DIFF_RANGE)
           UNICODE_SPACES_REGEX=$'[\u00A0\u2002\u2003\u2007\u2008\u2009\u202F\u205F\u3000\u200B]'
-      
           for file in $CHANGED_FILES; do
             if [ -f "$file" ]; then
               MIME_TYPE=$(file --mime-type -b "$file")
@@ -51,9 +57,9 @@ jobs:
           FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
           FIX_JSON: true
-          #FIX_JSON_PRETTIER: true
+          FIX_JSON_PRETTIER: true
           FIX_MARKDOWN: true
-          #FIX_MARKDOWN_PRETTIER: true
+          FIX_MARKDOWN_PRETTIER: true
           FIX_PYTHON_BLACK: true
           FIX_PYTHON_ISORT: true
           FIX_PYTHON_RUFF: true
@@ -65,7 +71,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           commit: -u
-          message: "GitHub bot: fix linting issues"
+          message: "GitHub bot: fix linting issues (nobuild)"
           default_author: github_actions
           pull: --rebase --autostash
           fetch: --tags --force
