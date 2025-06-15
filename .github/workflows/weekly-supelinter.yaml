@@ -16,6 +16,21 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Fix non-printable Unicode spaces in all text files
+        run: |
+          echo "Searching for all files in the repository..."
+          UNICODE_SPACES_REGEX=$'[\u00A0\u2002\u2003\u2007\u2008\u2009\u202F\u205F\u3000\u200B]'
+          # Find all regular files, excluding .git directory
+          find . -type f ! -path "./.git/*" | while read -r file; do
+            MIME_TYPE=$(file --mime-type -b "$file")
+            if [[ "$MIME_TYPE" == text/* ]]; then
+              echo "Fixing: $file"
+              perl -CSD -pe "s/$UNICODE_SPACES_REGEX/ /g" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+            else
+              echo "Skipping non-text file: $file ($MIME_TYPE)"
+            fi
+          done
+
       - name: Run Super Linter
         uses: super-linter/super-linter/slim@main
         continue-on-error: true
