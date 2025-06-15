@@ -2,7 +2,7 @@
 """
 Generate a static PNG world map colour-coded by the percentage of your
 stargazers that come from each country.  The script maintains a CSV
-".github/stargazer_countries.csv" cache so that locations are only looked
+in .github/stargazer_countries.csv cache so that locations are only looked
 up once (unless the country entry is blank).
 """
 
