@@ -4,7 +4,11 @@
 | -------------------------- | ----------------- |
 | GITLEAKS                   | Pass ✅           |
 | GIT_MERGE_CONFLICT_MARKERS | Pass ✅           |
-| MARKDOWN                   | Pass ✅           |
-| MARKDOWN_PRETTIER          | Pass ✅           |
+| PYTHON_BLACK               | Fail ❌           |
+| PYTHON_FLAKE8              | Fail ❌           |
+| PYTHON_ISORT               | Pass ✅           |
+| PYTHON_MYPY                | Fail ❌           |
+| PYTHON_PYINK               | Fail ❌           |
+| PYTHON_RUFF                | Fail ❌           |
 
-All files and directories linted successfully
+Super-linter detected linting errors
