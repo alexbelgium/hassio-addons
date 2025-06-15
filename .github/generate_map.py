@@ -104,7 +104,7 @@ def build_choropleth(percent_by_iso):
     )
     fig.update_layout(
         coloraxis_colorbar=dict(
-            title="% stargazers",
+        title="% stargazers",
             len=0.5,
             thickness=15,
             x=0.95,
