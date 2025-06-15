@@ -15,50 +15,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fix non-breaking spaces in changed text files
+      - name: Fix non-printable Unicode spaces in changed text files
         run: |
           echo "Finding changed files..."
           CHANGED_FILES=$(git diff --name-only origin/master...HEAD)
       
-          echo "Filtering text files..."
-
-          # Define fake Unicode blanks to normalize
-          declare -a UNICODE_SPACES=(
-              $'\xC2\xA0'       # U+00A0 NBSP
-              $'\xE2\x80\x82'   # U+2002 EN SPACE
-              $'\xE2\x80\x83'   # U+2003 EM SPACE
-              $'\xE2\x80\x87'   # U+2007 FIGURE SPACE
-              $'\xE2\x80\x88'   # U+2008 PUNCTUATION SPACE
-              $'\xE2\x80\x89'   # U+2009 THIN SPACE
-              $'\xE2\x80\xAF'   # U+202F NARROW NBSP
-              $'\xE2\x81\x9F'   # U+205F MEDIUM MATH SPACE
-              $'\xE3\x80\x80'   # U+3000 IDEOGRAPHIC SPACE
-              $'\xE2\x80\x8B'   # U+200B ZERO-WIDTH SPACE
-          )
-
+          # Unicode blanks regex (covers all mentioned codepoints)
+          UNICODE_SPACES_REGEX=$'[\u00A0\u2002\u2003\u2007\u2008\u2009\u202F\u205F\u3000\u200B]'
+      
           for file in $CHANGED_FILES; do
             if [ -f "$file" ]; then
               MIME_TYPE=$(file --mime-type -b "$file")
               if [[ "$MIME_TYPE" == text/* ]]; then
                 echo "Fixing: $file"
-                for blank in "${UNICODE_SPACES[@]}"; do
-                  sed -i "s/$blank/ /g" "$file"
-                done
+                perl -CSD -pe "s/$UNICODE_SPACES_REGEX/ /g" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
               else
                 echo "Skipping non-text file: $file ($MIME_TYPE)"
               fi
             fi
           done
-      
-          if [[ -n "$(git status --porcelain)" ]]; then
-            git config user.name "github-actions"
-            git config user.email "github-actions@github.com"
-            git add .
-            git commit -m "fix: replace non-breaking spaces in changed text files"
-            git push
-          else
-            echo "No changes to commit."
-          fi
 
       - name: Run Super Linter
         uses: super-linter/super-linter/slim@main
