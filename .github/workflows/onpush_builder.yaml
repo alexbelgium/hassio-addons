@@ -64,6 +64,9 @@ jobs:
               fi
             fi
           done
+      - name: Make all .sh scripts executable
+        run: |
+          find . -type f -iname "*.sh" -exec chmod u+x {} \;
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
