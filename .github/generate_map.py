@@ -104,13 +104,13 @@ def build_choropleth(percent_by_iso):
     fig.update_layout(
         coloraxis_colorbar=dict(
             title="% stargazers",
-            orientation="h",     # <-- échelle horizontale
-            x=0.5,               # <-- centré
-            y=0,                 # <-- tout en bas
+            orientation="h",  # <-- échelle horizontale
+            x=0.5,  # <-- centré
+            y=0,  # <-- tout en bas
             xanchor="center",
             yanchor="bottom",
             thickness=15,
-            len=0.7,             # <-- longueur de l'échelle, ajustable
+            len=0.7,  # <-- longueur de l'échelle, ajustable
         ),
         margin=dict(l=0, r=0, t=0, b=0),
     )
