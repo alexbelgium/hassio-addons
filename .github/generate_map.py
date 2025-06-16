@@ -93,7 +93,6 @@ def username_to_country(login):
 
 
 def build_choropleth(percent_by_iso):
-    # build dataframe-like structure for plotly
     iso, vals = zip(*percent_by_iso.items())
     fig = px.choropleth(
         locations=list(iso),
@@ -105,10 +104,13 @@ def build_choropleth(percent_by_iso):
     fig.update_layout(
         coloraxis_colorbar=dict(
             title="% stargazers",
-            len=0.5,
+            orientation="h",     # <-- échelle horizontale
+            x=0.5,               # <-- centré
+            y=0,                 # <-- tout en bas
+            xanchor="center",
+            yanchor="bottom",
             thickness=15,
-            x=0.95,
-            y=0.5,
+            len=0.7,             # <-- longueur de l'échelle, ajustable
         ),
         margin=dict(l=0, r=0, t=0, b=0),
     )
