@@ -1,3 +1,5 @@
+## 25.6.7-2 (16-06-2025)
+- IPv6 Fix
 
 ## 25.6.7 (07-06-2025)
 - Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
