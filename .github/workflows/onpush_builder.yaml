@@ -34,6 +34,16 @@ jobs:
           changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
           echo "Changed addons: $changed_addons"
           echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
+      - name: Check for Dockerfile (case-insensitive)
+        id: dockerfile_check
+        run: |
+          cd "${{ matrix.addon }}"
+          if find . -maxdepth 1 -type f -iname "dockerfile" | grep -q .; then
+            echo "dockerfile_exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No Dockerfile found in ${{ matrix.addon }}, skipping build"
+            echo "dockerfile_exists=false" >> "$GITHUB_OUTPUT"
+          fi
 
   # 2. Pre-build sanitize: normalize spaces, fix script permissions, single commit per add-on
   prebuild-sanitize:
@@ -147,7 +157,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build ${{ matrix.addon }} add-on
         id: builderstep
-        if: steps.check.outputs.build_arch == 'true'
+        if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.dockerfile_exists == 'true'
         uses: home-assistant/builder@2025.03.0
         env:
           CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
