@@ -99,7 +99,7 @@ jobs:
 
   # 4. Build images for changed addons/arches
   build:
-    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]'  && steps.dockerfile_check.outputs.dockerfile_exists == 'true' }}
     needs: [detect-changed-addons, lint_config]
     runs-on: ubuntu-latest
     environment: CR_PAT
@@ -157,7 +157,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build ${{ matrix.addon }} add-on
         id: builderstep
-        if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.dockerfile_exists == 'true'
+        if: steps.check.outputs.build_arch == 'true'
         uses: home-assistant/builder@2025.03.0
         env:
           CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
