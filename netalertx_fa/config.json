@@ -1,5 +1,5 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": ["aarch64", "amd64", "armv7 "],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "🖧🔍 WIFI / LAN scanner, intruder, and presence detector",
   "environment": {
