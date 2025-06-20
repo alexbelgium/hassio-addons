@@ -1,88 +1,121 @@
-
 ## 6.2.18 (21-06-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.2.17 (13-06-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.2.16 (31-05-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.2.12 (17-05-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 20241231 (10-05-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.2.12 (26-04-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 20241231 (19-04-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.2.10 (29-03-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.2.9 (15-03-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 20250222.5 (01-03-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 20250220.2 (22-02-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 20250220.1 (21-02-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.2.6 (15-02-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
+
 ## 20250205.2-2 (09-02-2025)
+
 - Minor bugs fixed
+
 ## 20250205.2-1 (09-02-2025)
+
 - Try adapt new logic
 
 ## 20250205.2 (08-02-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 20250119.1 (25-01-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 20250106.1 (11-01-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 20250101.1 (04-01-2025)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.1.25 (21-12-2024)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
+
 ## 6.1.24 (25-11-2024)
+
 - Minor bugs fixed
 
 ## 6.1.22 (16-11-2024)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.1.21 (05-10-2024)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.1.19 (27-07-2024)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.1.18 (22-06-2024)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
+
 ## 6.1.17 (16-06-2024)
+
 - Minor bugs fixed
 
 ## 6.1.16 (25-05-2024)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.1.15 (27-04-2024)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.1.13 (06-04-2024)
+
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 
 ## 6.1.12 (23-03-2024)
+
 - Update to latest version from firefly-iii/firefly-iii
 
 ## 6.1.10 (09-03-2024)
@@ -124,6 +157,7 @@
 ## 6.0.26 (30-09-2023)
 
 - Update to latest version from firefly-iii/firefly-iii
+
 ## 6.0.25 (23-09-2023)
 
 - Update to latest version from firefly-iii/firefly-iii
@@ -226,6 +260,7 @@
 ## 5.7.15 (02-11-2022)
 
 - Update to latest version from firefly-iii/firefly-iii
+
 ## 5.7.14-2 (29-10-2022)
 
 - Fix bug #530
