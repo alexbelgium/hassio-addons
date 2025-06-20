@@ -25,6 +25,6 @@
   },
   "slug": "immich_frame",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.26.2-3",
+  "version": "1.0.27.1",
   "webui": "http://[HOST]:[PORT:8080]"
 }
