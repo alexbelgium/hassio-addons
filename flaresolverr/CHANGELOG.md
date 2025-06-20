@@ -1,24 +1,33 @@
-
 ## 3.3.25 (21-06-2025)
+
 - Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
+
 ## 3.3.24-3 (10-06-2025)
+
 - Minor bugs fixed
+
 ## 3.3.24-2 (09-06-2025)
+
 - Minor bugs fixed
 
 ## 3.3.24 (07-06-2025)
+
 - Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
 
 ## 3.3.21 (29-06-2024)
+
 - Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
 
 ## 3.3.20 (22-06-2024)
+
 - Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
 
 ## 3.3.19 (25-05-2024)
+
 - Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
 
 ## 3.3.17 (13-04-2024)
+
 - Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
 
 ## 3.3.16 (02-03-2024)
@@ -32,6 +41,7 @@
 ## 3.3.14 (17-02-2024)
 
 - Update to latest version from FlareSolverr/FlareSolverr
+
 ## 3.3.13-2 (15-01-2024)
 
 - Correct healthcheck endpoint (thanks @override80)
@@ -43,6 +53,7 @@
 ## 3.3.12 (16-12-2023)
 
 - Update to latest version from FlareSolverr/FlareSolverr
+
 ## 3.3.10-4 (10-12-2023)
 
 - Minor bugs fixed
@@ -58,6 +69,7 @@
 ## 3.3.6 (16-09-2023)
 
 - Update to latest version from FlareSolverr/FlareSolverr
+
 ## 3.3.4-2 (09-09-2023)
 
 - Minor bugs fixed
