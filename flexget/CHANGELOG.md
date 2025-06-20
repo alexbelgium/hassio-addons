@@ -1,152 +1,201 @@
-
 ## 3.16.6 (21-06-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.16.5 (14-06-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.16.3 (31-05-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.16.0 (24-05-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.42 (17-05-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.40 (10-05-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.38 (03-05-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.37 (26-04-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.34 (19-04-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.31 (05-04-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.30 (29-03-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.29 (22-03-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.26 (15-03-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.22 (08-03-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.17 (01-03-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.11 (22-02-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.15.6 (15-02-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.14.4 (08-02-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.13.26 (01-02-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.13.23 (25-01-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.13.16 (18-01-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.13.11 (11-01-2025)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.13.5 (28-12-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.13.4 (21-12-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.13.1 (14-12-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.12.1 (07-12-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.58 (23-11-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.57 (16-11-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.56 (09-11-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.52 (02-11-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.49 (19-10-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.48 (12-10-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.46 (21-09-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.45 (14-09-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.43 (17-08-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.42 (10-08-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.41 (20-07-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.40 (13-07-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.39 (22-06-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.37 (15-06-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.36 (08-06-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.35 (01-06-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.34 (25-05-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.33 (11-05-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.30 (04-05-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.29 (27-04-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.28 (20-04-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.27 (30-03-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.26 (23-03-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.23 (16-03-2024)
+
 - Update to latest version from wiserain/flexget
 
 ## 3.11.22 (09-03-2024)
