@@ -1,9 +1,9 @@
 {
   "github_beta": "false",
-  "last_update": "31-05-2025",
+  "last_update": "21-06-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich",
   "source": "github",
   "upstream_repo": "imagegenius/docker-immich",
-  "upstream_version": "1.134.0"
+  "upstream_version": "1.135.3"
 }
