@@ -1,3 +1,5 @@
+## 3.0.3.1065-2 (20-06-2025)
+- Minor bugs fixed
 
 ## 3.0.3.1065 (15-03-2025)
 - Update to latest version from linuxserver/docker-resilio-sync (changelog : https://github.com/linuxserver/docker-resilio-sync/releases)
