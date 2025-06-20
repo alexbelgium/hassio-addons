@@ -51,7 +51,7 @@ base_url_portless: base url without port
 
 - Config.yaml
 
-Custom env variables can be added to the config.yaml file referenced in the addon options. Folder containing this is not a part of root/config directory (where HA's configuration.yaml is), but /root/addon_configs ([HA documentation](https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/)).  Full env variables can be found here : https://github.com/linuxserver/docker-paperless-ng. It must be entered in a valid yaml format, that is verified at launch of the addon.
+Custom env variables can be added to the config.yaml file referenced in the addon options. Folder containing this is not a part of root/config directory (where HA's configuration.yaml is), but /root/addon_configs ([HA documentation](https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/)). Full env variables can be found here : https://github.com/linuxserver/docker-paperless-ng. It must be entered in a valid yaml format, that is verified at launch of the addon.
 
 ## Installation
 
@@ -65,6 +65,7 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
+
 ## Remote access
 
 It is possible to expose this add-on for external access (for family and friends).
@@ -73,11 +74,12 @@ One of the solutions for this is a [Cloudflare tunnel](https://github.com/brenne
 Here are the considerations for configuring the integrations:
 
 Webtrees config
+
 ```yaml
-BASE_URL: httpS://your_tunnel_domain_name.example.com 
-# This is the external URL you'll be accessing the page with. 
-# Even though the base configuration of the add-on doesn't use SSL, when using Cloudflare it's important the base_url has https 
-# This is because when tunnel is running, Cloudflare will apply its own SSL to connection. 
+BASE_URL: httpS://your_tunnel_domain_name.example.com
+# This is the external URL you'll be accessing the page with.
+# Even though the base configuration of the add-on doesn't use SSL, when using Cloudflare it's important the base_url has https
+# This is because when tunnel is running, Cloudflare will apply its own SSL to connection.
 # If base_url has http://, this will cause a mismatch and some blocks will not load correctly
 ssl: false #disabled, Cloudflare takes care of this
 base_url_portless: true #must be enabled
@@ -87,7 +89,9 @@ DATA_LOCATION: /config/data
 certfile: fullchain.pem
 keyfile: privkey.pem
 ```
+
 Cloudflared config
+
 ```yaml
 external_hostname: "" #none, to keep HA accessible only through Nabu Casa, but can be used to do both
 additional_hosts:
@@ -103,5 +107,3 @@ Create an issue on github
 ## Illustration
 
 ![illustration](https://installatron.infomaniak.com/installatron//images/ss2_webtrees.jpg)
-
-
