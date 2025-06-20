@@ -1,9 +1,9 @@
 {
   "github_exclude": "2025",
-  "last_update": "13-06-2025",
+  "last_update": "21-06-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "fireflyiii",
   "source": "github",
   "upstream_repo": "firefly-iii/firefly-iii",
-  "upstream_version": "6.2.17"
+  "upstream_version": "6.2.18"
 }
