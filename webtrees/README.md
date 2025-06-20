@@ -93,7 +93,8 @@ external_hostname: "" #none, to keep HA accessible only through Nabu Casa, but c
 additional_hosts:
   - hostname: your_tunnel_domain_name.example.com #notice that it's the same as in webtrees config
     service: http://your_HA_IP:9999 #notice that here it's http and with port, despite webtrees being configured portless
-tunnel_name: Your_tunnel_name```
+tunnel_name: Your_tunnel_name
+```
 
 ## Support
 
