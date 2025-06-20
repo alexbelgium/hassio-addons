@@ -115,5 +115,5 @@
   "slug": "readarr_nas",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/readarr",
-  "version": "0.4.18.2805"
+  "version": "0.4.19.2810"
 }
