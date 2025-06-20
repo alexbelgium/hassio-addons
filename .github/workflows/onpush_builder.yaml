@@ -16,34 +16,25 @@ env:
 
 jobs:
   # 1. Detect which add-on folders changed (by config.json|yaml|yml modification)
-  detect-changed-addons:
-    if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message, 'nobuild') }}
-    runs-on: ubuntu-latest
-    outputs:
-      changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Find changed addon directories
-        id: find_addons
-        run: |
-          git fetch origin "${{ github.event.before }}" || true
-          changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
-          echo "Changed config files:"
-          echo "$changed_config_files"
-          changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
-          echo "Changed addons: $changed_addons"
-          echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
-      - name: Check for Dockerfile (case-insensitive)
-        id: dockerfile_check
-        run: |
-          cd "${{ matrix.addon }}"
-          if find . -maxdepth 1 -type f -iname "dockerfile" | grep -q .; then
-            echo "dockerfile_exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "No Dockerfile found in ${{ matrix.addon }}, skipping build"
-            echo "dockerfile_exists=false" >> "$GITHUB_OUTPUT"
-          fi
+detect-changed-addons:
+  if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message, 'nobuild') }}
+  runs-on: ubuntu-latest
+  outputs:
+    changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
+    dockerfile_exists: ${{ steps.dockerfile_check.outputs.dockerfile_exists }}
+  steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+    - name: Find changed addon directories
+      id: find_addons
+      run: |
+        git fetch origin "${{ github.event.before }}" || true
+        changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
+        echo "Changed config files:"
+        echo "$changed_config_files"
+        changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+        echo "Changed addons: $changed_addons"
+        echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
 
   # 2. Pre-build sanitize: normalize spaces, fix script permissions, single commit per add-on
   prebuild-sanitize:
@@ -99,7 +90,7 @@ jobs:
 
   # 4. Build images for changed addons/arches
   build:
-    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]'  && steps.dockerfile_check.outputs.dockerfile_exists == 'true' }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, lint_config]
     runs-on: ubuntu-latest
     environment: CR_PAT
