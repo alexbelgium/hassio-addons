@@ -1,85 +1,113 @@
-
 ## 8.5.0 (21-06-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 8.4.0 (10-05-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 8.3.0 (19-04-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 8.2.100 (12-04-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 8.2.1 (05-04-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 8.1.1 (29-03-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 8.0.1 (22-03-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.26.0 (15-02-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.25.0 (08-02-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.24.0 (11-01-2025)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.23.0 (21-12-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.22.0 (30-11-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.21.0 (09-11-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.20.0 (19-10-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.19.0 (28-09-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.18.0 (14-09-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.17.0 (24-08-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.16.0 (03-08-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.15.0 (20-07-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.14.0 (13-07-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.13.0 (29-06-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.12.0 (01-06-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.11.0 (25-05-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.10.0 (04-05-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.9.0 (20-04-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.8.0 (06-04-2024)
+
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 
 ## 7.7.0 (16-03-2024)
+
 - Update to latest version from linuxserver/docker-calibre
+
 ## 7.6.0-2 (14-03-2024)
+
 - Fix KasmVNC https://github.com/alexbelgium/hassio-addons/issues/1301
 
 ## 7.6.0 (02-03-2024)
