@@ -39,6 +39,6 @@
   "slug": "openproject",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/openproject",
-  "version": "16.0.1",
+  "version": "16.1.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
