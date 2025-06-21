@@ -1,64 +1,85 @@
-
 ## 5.26.2.10099 (21-06-2025)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.25.0.10024 (31-05-2025)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.23.3.9987 (24-05-2025)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.22.4.9896 (26-04-2025)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.21.1.9799 (29-03-2025)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.20.2.9777 (22-03-2025)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.19.3.9730 (01-03-2025)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.18.4.9674 (08-02-2025)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.17.2.9580 (11-01-2025)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.16.3.9541 (21-12-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.15.1.9463 (23-11-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.14.0.9383 (02-11-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.12.2.9335 (19-10-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.11.0.9244 (28-09-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.9.1.9070 (24-08-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.8.3.8933 (27-07-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.7.0.8882 (22-06-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.6.0.8846 (18-05-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
+
 ## 5.4.6.8723-5 (22-04-2024)
+
 - Fix : not starting
 
 ## 5.4.6.8723-4 (21-04-2024)
+
 - BREAKING CHANGE : ingress_disabled option removed. Instead, a new option connection_mode is added. It has 3 modes : ingress_noauth (default, disables authentification to allow a seamless ingress integration), noingress_auth (disables ingress to allow a simpler external url, enables authentification), ingress_auth (enables both ingress and authentification). Thanks @Ni3kjm !
 
 ## 5.4.6.8723 (20-04-2024)
+
 - Update to latest version from linuxserver/docker-radarr (changelog : https://github.com/linuxserver/docker-radarr/releases)
 
 ## 5.3.6.8612 (24-02-2024)
@@ -69,6 +90,7 @@
 ## 5.2.6.8376 (30-12-2023)
 
 - Update to latest version from linuxserver/docker-radarr
+
 ## 5.1.3.8246-4 (02-12-2023)
 
 - Minor bugs fixed
@@ -77,6 +99,7 @@
 ## 5.1.3.8246 (18-11-2023)
 
 - Update to latest version from linuxserver/docker-radarr
+
 ## 5.0.3.8127-2 (01-11-2023)
 
 - Minor bugs fixed
@@ -102,6 +125,7 @@
 ## 4.5.2.7388 (03-06-2023)
 
 - Update to latest version from linuxserver/docker-radarr
+
 ## 4.4.4.7068-2 (12-05-2023)
 
 - Minor bugs fixed
@@ -109,6 +133,7 @@
 ## 4.4.4.7068 (21-04-2023)
 
 - Update to latest version from linuxserver/docker-radarr
+
 ## 4.3.2.6857-21 (17-03-2023)
 
 - Minor bugs fixed
