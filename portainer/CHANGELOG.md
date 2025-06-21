@@ -1,76 +1,100 @@
-
 ## 2.31.1 (21-06-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.31.0 (13-06-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
+
 ## 2.30.1-2 (30-05-2025)
+
 - Map internal /config to allow for custom scripts execution and variables
 - Fix invalid origin
 
 ## 2.30.1 (24-05-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.30.0 (17-05-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.29.2 (26-04-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.29.0 (19-04-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.28.1 (22-03-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.27.1 (01-03-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.27.0 (21-02-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.26.1 (25-01-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.26.0 (18-01-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.25.1 (21-12-2024)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.24.1 (07-12-2024)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.24.0 (23-11-2024)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.23.0 (19-10-2024)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
+
 ## 2.22.0-3 (06-10-2024)
+
 - WARNING : logic change for new installations. Type "empty" in the PASSWORD of the addon to reset the database and have a clean initial set-up. Used for example to restore backups
 
 ## 2.22.0 (05-10-2024)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.21.2 (28-09-2024)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.21.1 (14-09-2024)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.21.0 (31-08-2024)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.20.1 (13-04-2024)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
 ## 2.20.0 (23-03-2024)
+
 - Update to latest version from portainer/portainer
 
 ## 2.19.4-3 (11-12-2023)
 
 - Minor bugs fixed
-- When database is reset, the previous one is stored in /share/portainer_$(date +%m-%d-%Y)_$RANDOM".backup. In case of unwanted database wipe, you can therefore restore it from the portainer options
+- When database is reset, the previous one is stored in /share/portainer*$(date +%m-%d-%Y)*$RANDOM".backup. In case of unwanted database wipe, you can therefore restore it from the portainer options
 
 ## 2.19.4 (09-12-2023)
 
@@ -79,6 +103,7 @@
 ## 2.19.3 (25-11-2023)
 
 - Update to latest version from portainer/portainer
+
 ## 2.19.2-3 (21-11-2023)
 
 - Minor bugs fixed
