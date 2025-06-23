@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Firefly iii] Slow (opened 2025-06-09)](https://github.com/alexbelgium/hassio-addons/issues/1891) by [@jandechent](https://github.com/jandechent)
 # Home assistant add-on: fireflyiii
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
