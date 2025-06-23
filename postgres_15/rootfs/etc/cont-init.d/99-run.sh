@@ -227,36 +227,36 @@ show_db_extensions() {
 }
 
 upgrade_extension_if_needed() {
-    local extname="$1"
-    if ! is_extension_available "$extname"; then
-        bashio::log.info "$extname extension not available on this Postgres instance."
-        return
-    fi
-    local available_version
-    available_version=$(get_available_extension_version "$extname")
-    if [ -z "$available_version" ]; then
-        bashio::log.info "Could not determine available version for $extname."
-        return
-    fi
-    for db in $(get_user_databases); do
-        local installed_version
-        installed_version=$(get_installed_extension_version "$extname" "$db")
-        if [ -n "$installed_version" ]; then
-            if compare_versions "$installed_version" "$available_version"; then
-                bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
-                if psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
-                    bashio::log.info "Reindexing database $db"
-                    psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -v ON_ERROR_STOP=1 -c "REINDEX DATABASE $db;"
-                    RESTART_NEEDED=true
-                else
-                    bashio::log.error "Failed to upgrade $extname in $db. Aborting startup."
-                    exit 1
-                fi
-            else
-                bashio::log.info "$extname in $db already at latest version ($installed_version)"
-            fi
-        fi
-    done
+	local extname="$1"
+	if ! is_extension_available "$extname"; then
+		bashio::log.info "$extname extension not available on this Postgres instance."
+		return
+	fi
+	local available_version
+	available_version=$(get_available_extension_version "$extname")
+	if [ -z "$available_version" ]; then
+		bashio::log.info "Could not determine available version for $extname."
+		return
+	fi
+	for db in $(get_user_databases); do
+		local installed_version
+		installed_version=$(get_installed_extension_version "$extname" "$db")
+		if [ -n "$installed_version" ]; then
+			if compare_versions "$installed_version" "$available_version"; then
+				bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
+				if psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
+					bashio::log.info "Reindexing database $db"
+					psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -v ON_ERROR_STOP=1 -c "REINDEX DATABASE $db;"
+					RESTART_NEEDED=true
+				else
+					bashio::log.error "Failed to upgrade $extname in $db. Aborting startup."
+					exit 1
+				fi
+			else
+				bashio::log.info "$extname in $db already at latest version ($installed_version)"
+			fi
+		fi
+	done
 }
 
 upgrade_postgres_if_needed() {
