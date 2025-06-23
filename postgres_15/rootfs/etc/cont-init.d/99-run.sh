@@ -358,10 +358,10 @@ needs_vectorchord_reindex() {
 			WHERE pg_get_indexdef(i.indexrelid) ILIKE '%vectorchord%'
 			LIMIT 1;" >/dev/null 2>&1; then
 			bashio::log.info "Reindex required in $db (likely vectorchord format error)"
-			return 0  # Reindex needed
+			return 0 # Reindex needed
 		fi
 	done
-	return 1  # No reindex needed
+	return 1 # No reindex needed
 }
 
 reindex_vectorchord_indexes() {
@@ -411,10 +411,10 @@ main() {
 	upgrade_extension_if_needed "vectors"
 	upgrade_extension_if_needed "vchord"
 	if needs_vectorchord_reindex; then
-	  reindex_vectorchord_indexes
-        else
-	  bashio::log.info "No VectorChord reindexing needed."
-        fi
+		reindex_vectorchord_indexes
+	else
+		bashio::log.info "No VectorChord reindexing needed."
+	fi
 	show_db_extensions
 
 	if [ "$RESTART_NEEDED" = true ]; then
