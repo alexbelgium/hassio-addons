@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "backup": "cold",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Postgres 17 with VectorChord support",
@@ -14,11 +11,7 @@
   "hassio_role": "manager",
   "image": "ghcr.io/alexbelgium/postgres_17-{arch}",
   "init": false,
-  "map": [
-    "addon_config:rw",
-    "homeassistant_config:rw",
-    "media:rw"
-  ],
+  "map": ["addon_config:rw", "homeassistant_config:rw", "media:rw"],
   "name": "Postgres 17",
   "options": {
     "POSTGRES_PASSWORD": "homeassistant"
