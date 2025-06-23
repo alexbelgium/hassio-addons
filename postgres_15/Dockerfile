@@ -121,4 +121,4 @@ HEALTHCHECK \
     --retries=5 \
     --start-period=90s \
     --timeout=25s \
-    CMD pg_isready -d postgres || exit 1
+    CMD pg_isready --dbname="${POSTGRES_DB}" --username="${POSTGRES_USER}" || exit 1
