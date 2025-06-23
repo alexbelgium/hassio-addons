@@ -244,7 +244,7 @@ upgrade_extension_if_needed() {
 		if [ -n "$installed_version" ]; then
 			if compare_versions "$installed_version" "$available_version"; then
 				bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
-				if psql "postgres://$DB_USERNAME:$DB_PASSWORD@$DB_HOSTNAME@$DB_PORT/$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
+				if psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
 					RESTART_NEEDED=true
 				else
 					bashio::log.error "Failed to upgrade $extname in $db. Aborting startup."
