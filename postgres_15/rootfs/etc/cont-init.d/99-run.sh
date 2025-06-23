@@ -402,7 +402,7 @@ main() {
 
 	upgrade_extension_if_needed "vectors"
 	upgrade_extension_if_needed "vchord"
-        reindex_vectorchord_if_needed
+	reindex_vectorchord_if_needed
 	show_db_extensions
 
 	if [ "$RESTART_NEEDED" = true ]; then
