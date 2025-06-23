@@ -246,6 +246,9 @@ upgrade_extension_if_needed() {
 				bashio::log.info "Upgrading $extname in $db from $installed_version to $available_version"
 				if psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -v ON_ERROR_STOP=1 -c "ALTER EXTENSION $extname UPDATE;"; then
 					RESTART_NEEDED=true
+					if [ "$extname" = "vectorchord" ]; then
+						VECTORCHORD_UPGRADED=true
+					fi
 				else
 					bashio::log.error "Failed to upgrade $extname in $db. Aborting startup."
 					exit 1
@@ -348,6 +351,30 @@ upgrade_postgres_if_needed() {
 	fi
 }
 
+reindex_vectorchord_if_needed() {
+	if [ "$VECTORCHORD_UPGRADED" = true ]; then
+		bashio::log.info "VectorChord was upgraded. Reindexing affected indexes..."
+		for db in $(get_user_databases); do
+			affected_indexes=$(psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -At -c "
+				SELECT indexrelid::regclass::text
+				FROM pg_index i
+				JOIN pg_class c ON c.oid = i.indexrelid
+				JOIN pg_namespace n ON n.oid = c.relnamespace
+				WHERE pg_get_indexdef(indexrelid) ILIKE '%vchord%'
+				AND indisvalid;
+			")
+			for idx in $affected_indexes; do
+				bashio::log.info "Reindexing $idx in $db..."
+				if ! psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -c "REINDEX INDEX CONCURRENTLY \"$idx\";"; then
+					bashio::log.warning "Failed to reindex $idx. You may need to reindex manually."
+				fi
+			done
+		done
+	else
+		bashio::log.info "VectorChord was not upgraded. No reindexing needed."
+	fi
+}
+
 main() {
 	bashio::log.info "Checking for required PostgreSQL cluster upgrade before server start..."
 	if [ -f /config/database/PG_VERSION ]; then
@@ -375,6 +402,7 @@ main() {
 
 	upgrade_extension_if_needed "vectors"
 	upgrade_extension_if_needed "vchord"
+        reindex_vectorchord_if_needed
 	show_db_extensions
 
 	if [ "$RESTART_NEEDED" = true ]; then
