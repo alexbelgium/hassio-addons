@@ -1,5 +1,6 @@
 ## 15.7-46 (23-06-2025)
-- Minor bugs fixed
+- Version 45 was erroneous : you need to restore prior to version 45 then update to 46 again. If you don't have a backup please create an issue in the github repo
+
 ## 15.7-45 (23-06-2025)
 - Minor bugs fixed
 ## 15.7-44 (30-05-2025)
