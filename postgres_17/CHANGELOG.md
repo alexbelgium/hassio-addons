@@ -1,3 +1,7 @@
+## 17.4-9 (24-06-2025)
+
+- Fix healthcheck to run with correct user and database
+
 ## 17.4-8 (23-06-2025)
 
 - Version 5, 6 and 7 had an issue : you need to restore prior to version 45 then update to 46 again. If you don't have a backup please create an issue in the github repo
