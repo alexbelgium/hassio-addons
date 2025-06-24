@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [Postgres 15 15.7-45 update break immich (opened 2025-06-23)](https://github.com/alexbelgium/hassio-addons/issues/1924) by [@lagge78](https://github.com/lagge78)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
