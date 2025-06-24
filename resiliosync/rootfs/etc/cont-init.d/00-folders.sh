@@ -78,15 +78,15 @@ fi
 # Add /backup and /media to dir_whitelist if missing
 for SYNC_CONF in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
 	if [ -f "$SYNC_CONF" ]; then
-	    TMP_FILE=$(mktemp)
-	
-	    jq 'if .webui.dir_whitelist
+		TMP_FILE=$(mktemp)
+
+		jq 'if .webui.dir_whitelist
 	        then
 	            .webui.dir_whitelist +=
 	            (["/backup", "/media"]
 	            | map(select(. as $item | (.webui.dir_whitelist | index($item) | not))))
 	        else
 	            .webui.dir_whitelist = ["/backup", "/media"]
-	        end' "$SYNC_CONF" > "$TMP_FILE" && mv "$TMP_FILE" "$SYNC_CONF"
+	        end' "$SYNC_CONF" >"$TMP_FILE" && mv "$TMP_FILE" "$SYNC_CONF"
 	fi
 done
