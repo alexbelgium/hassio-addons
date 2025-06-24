@@ -1,19 +1,18 @@
 ## 17.4-8 (23-06-2025)
-- Minor bugs fixed
-## 17.4-7 (23-06-2025)
-- Minor bugs fixed
-## 17.4-6 (23-06-2025)
-- Minor bugs fixed
-## 17.4-5 (23-06-2025)
-- Minor bugs fixed
+- Version 5, 6 and 7 had an issue : you need to restore prior to version 45 then update to 46 again. If you don't have a backup please create an issue in the github repo
+
 ## 17.4-4 (31-05-2025)
 - Minor bugs fixed
+
 ## 17.4-3 (30-05-2025)
 - Minor bugs fixed
+
 ## 17.4-1 (30-05-2025)
 - Minor bugs fixed
+
 ## 15.7-43 (30-05-2025)
 - Minor bugs fixed
+
 ## 15.7-41 (30-05-2025)
 - BREAKING CHANGE : please backup your database before updating
 - Automatically restarts immich addons after upgrade
