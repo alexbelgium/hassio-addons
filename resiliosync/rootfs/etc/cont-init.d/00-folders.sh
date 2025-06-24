@@ -76,7 +76,7 @@ if [[ ! -e "$(bashio::config 'config_location')"/sync.conf ]]; then
 fi
 
 # Add /backup and /media to dir_whitelist if missing
-for SYNC_CONF in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
+for SYNC_CONF in "$(bashio::config 'config_location')/sync.conf" "/defaults/sync.conf"; do
 	if [ -f "$SYNC_CONF" ]; then
 		TMP_FILE=$(mktemp)
 
