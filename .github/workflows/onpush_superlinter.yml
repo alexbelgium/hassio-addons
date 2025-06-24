@@ -69,6 +69,7 @@ jobs:
 
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
+        if: github.event_name != 'pull_request'
         with:
           commit: -u
           message: "GitHub bot: fix linting issues (nobuild)"
