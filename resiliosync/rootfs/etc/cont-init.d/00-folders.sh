@@ -74,3 +74,19 @@ change_folders "$(bashio::config 'downloads_location')" "/share/resiliosync_down
 if [[ ! -e "$(bashio::config 'config_location')"/sync.conf ]]; then
 	cp /defaults/sync.conf "$(bashio::config 'config_location')"/sync.conf
 fi
+
+# Add /backup and /media to dir_whitelist if missing
+for SYNC_CONF in "$ORIGINALLOCATION/sync.conf" "$CONFIGLOCATION/sync.conf" "/defaults/sync.conf"; do
+	if [ -f "$SYNC_CONF" ]; then
+	    TMP_FILE=$(mktemp)
+	
+	    jq 'if .webui.dir_whitelist
+	        then
+	            .webui.dir_whitelist +=
+	            (["/backup", "/media"]
+	            | map(select(. as $item | (.webui.dir_whitelist | index($item) | not))))
+	        else
+	            .webui.dir_whitelist = ["/backup", "/media"]
+	        end' "$SYNC_CONF" > "$TMP_FILE" && mv "$TMP_FILE" "$SYNC_CONF"
+	fi
+done
