@@ -9,29 +9,38 @@ on:
       - master
 
 jobs:
+  # 1. Detect which add-on folders changed (by config.json|yaml|yml modification)
   check-addon-changes:
+    if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message, 'nobuild') }}
     runs-on: ubuntu-latest
     outputs:
-      changedAddons: ${{ steps.filter.outputs.changes }}
+      changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
       changedChangelogFiles: ${{ steps.changed-files.outputs.changelogs_files }}
     steps:
-      - name: ↩️ Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: 📂 Detect changed addons
-        uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: .github/paths-filter.yml
-
-      - name: 📂 Detect changed files
-        uses: dorny/paths-filter@v3
+      - name: Find changed addon directories
+        id: find_addons
+        run: |
+          git fetch origin "${{ github.event.before }}" || true
+          changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
+          echo "Changed config files:"
+          echo "$changed_config_files"
+          changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          echo "Changed addons: $changed_addons"
+          echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
+      - name: Find changelog
         id: changed-files
-        with:
-          list-files: csv
-          filters: |
-            changelogs:
-              - '**/CHANGELOG.md'
+        run: |
+          git fetch origin "${{ github.event.before }}" || true
+          changed_changelog_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -iE '^([^/]+/)?changelog\.(md|txt|ya?ml|json)$' || true)
+          echo "$changed_changelog_files"
+          changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
+          echo "$changed_config_files"
+          all_changed_files=$(echo -e "$changed_config_files\n$changed_changelog_files" | sort -u)
+          changed_addons=$(echo "$all_changed_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          echo "Changed addons: $changed_addons"
+          echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
 
   check-changed-changelog:
     name: Check if CHANGELOG.md changed
