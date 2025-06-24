@@ -78,13 +78,13 @@ fi
 # Add directories to dir_whitelist if missing
 DIRS_TO_ADD=("/backup" "/media" "/share" "/addons")
 for CONFIG_FILE in "$(bashio::config 'config_location')/sync.conf" "/defaults/sync.conf"; do
-    if [ -f "$CONFIG_FILE" ]; then
-        echo "Checking dir_whitelist in $CONFIG_FILE"
-        for DIR in "${DIRS_TO_ADD[@]}"; do
-            if ! jq -e ".webui.dir_whitelist | index(\"$DIR\")" "$CONFIG_FILE" > /dev/null; then
-                echo "Adding $DIR to dir_whitelist"
-                jq ".webui.dir_whitelist += [\"$DIR\"]" "$CONFIG_FILE" | sponge "$CONFIG_FILE"
-            fi
-        done
-    fi
+	if [ -f "$CONFIG_FILE" ]; then
+		echo "Checking dir_whitelist in $CONFIG_FILE"
+		for DIR in "${DIRS_TO_ADD[@]}"; do
+			if ! jq -e ".webui.dir_whitelist | index(\"$DIR\")" "$CONFIG_FILE" >/dev/null; then
+				echo "Adding $DIR to dir_whitelist"
+				jq ".webui.dir_whitelist += [\"$DIR\"]" "$CONFIG_FILE" | sponge "$CONFIG_FILE"
+			fi
+		done
+	fi
 done
