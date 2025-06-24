@@ -350,6 +350,18 @@ upgrade_postgres_if_needed() {
 	fi
 }
 
+check_for_reindex() {
+	local log_tail
+	log_tail=$(timeout 15 cat /proc/1/fd/1 | tail -n 5)
+
+	if echo "$log_tail" | grep -q "please use REINDEX to rebuild the index"; then
+		bashio::log.warning "REINDEX needed, starting now"
+  		for db in $(get_user_databases); do
+   		    	psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -v ON_ERROR_STOP=1 -c "REINDEX DATABASE $db;"
+    		done
+	fi
+}
+
 main() {
 	bashio::log.info "Checking for required PostgreSQL cluster upgrade before server start..."
 	if [ -f /config/database/PG_VERSION ]; then
@@ -377,7 +389,7 @@ main() {
 
 	upgrade_extension_if_needed "vectors"
 	upgrade_extension_if_needed "vchord"
-	show_db_extensions
+	check_for_reindex & show_db_extensions
 
 	if [ "$RESTART_NEEDED" = true ]; then
 		bashio::log.warning "A critical update (Postgres or extension) occurred. Will trigger Immich add-on restart after DB comes back up."
