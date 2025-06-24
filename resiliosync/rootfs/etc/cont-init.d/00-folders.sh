@@ -76,17 +76,16 @@ if [[ ! -e "$(bashio::config 'config_location')"/sync.conf ]]; then
 fi
 
 # Add /backup and /media to dir_whitelist if missing
-for SYNC_CONF in "$(bashio::config 'config_location')/sync.conf" "/defaults/sync.conf"; do
-	if [ -f "$SYNC_CONF" ]; then
-		TMP_FILE=$(mktemp)
-
-		jq 'if .webui.dir_whitelist
-	        then
-	            .webui.dir_whitelist +=
-	            (["/backup", "/media"]
-	            | map(select(. as $item | (.webui.dir_whitelist | index($item) | not))))
-	        else
-	            .webui.dir_whitelist = ["/backup", "/media"]
-	        end' "$SYNC_CONF" >"$TMP_FILE" && mv "$TMP_FILE" "$SYNC_CONF"
+for CONFIG_FILE in "$(bashio::config 'config_location')/sync.conf" "/defaults/sync.conf"; do
+	if [ -f "$CONFIG_FILE" ]; then
+	    echo "Checking dir_whitelist in $CONFIG_FILE"
+	    if ! jq -e '.webui.dir_whitelist | index("/backup")' "$CONFIG_FILE" > /dev/null; then
+	        echo "Adding /backup to dir_whitelist"
+	        jq '.webui.dir_whitelist += ["/backup"]' "$CONFIG_FILE" | sponge "$CONFIG_FILE"
+	    fi
+	    if ! jq -e '.webui.dir_whitelist | index("/media")' "$CONFIG_FILE" > /dev/null; then
+	        echo "Adding /media to dir_whitelist"
+	        jq '.webui.dir_whitelist += ["/media"]' "$CONFIG_FILE" | sponge "$CONFIG_FILE"
+	    fi
 	fi
 done
