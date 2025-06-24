@@ -356,9 +356,9 @@ check_for_reindex() {
 
 	if echo "$log_tail" | grep -q "please use REINDEX to rebuild the index"; then
 		bashio::log.warning "REINDEX needed, starting now"
-  		for db in $(get_user_databases); do
-   		    	psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -v ON_ERROR_STOP=1 -c "REINDEX DATABASE $db;"
-    		done
+		for db in $(get_user_databases); do
+			psql -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" -d "$db" -v ON_ERROR_STOP=1 -c "REINDEX DATABASE $db;"
+		done
 	fi
 }
 
@@ -403,7 +403,8 @@ main() {
 		rm -r /config/backups
 	fi
 
-	check_for_reindex & bashio::log.info "All initialization/version check steps completed successfully!"
+	check_for_reindex &
+	bashio::log.info "All initialization/version check steps completed successfully!"
 
 }
 
