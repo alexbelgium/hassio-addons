@@ -389,7 +389,7 @@ main() {
 
 	upgrade_extension_if_needed "vectors"
 	upgrade_extension_if_needed "vchord"
-	check_for_reindex & show_db_extensions
+	show_db_extensions
 
 	if [ "$RESTART_NEEDED" = true ]; then
 		bashio::log.warning "A critical update (Postgres or extension) occurred. Will trigger Immich add-on restart after DB comes back up."
@@ -398,12 +398,13 @@ main() {
 		exit 0
 	fi
 
-	bashio::log.info "All initialization/version check steps completed successfully!"
-
 	if [ -d /config/backups ]; then
 		echo "Cleaning /config/backups now that upgrade is done"
 		rm -r /config/backups
 	fi
+
+	check_for_reindex & bashio::log.info "All initialization/version check steps completed successfully!"
+
 }
 
 main
