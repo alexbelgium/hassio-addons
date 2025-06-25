@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
 
 # Migrate files for new config location
 slug="resiliosync"
