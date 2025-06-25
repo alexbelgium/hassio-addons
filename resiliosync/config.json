@@ -70,9 +70,9 @@
   "ingress": true,
   "init": false,
   "map": [
-    "addons:rw",
+    "addon_config:rw",
     "backup:rw",
-    "config:rw",
+    "homeassistant_config:rw",
     "media:rw",
     "share:rw",
     "ssl:rw"
@@ -112,5 +112,5 @@
   "slug": "resiliosync",
   "udev": true,
   "url": "https://github.com/tyjtyj/hassio-addons",
-  "version": "3.0.3.1065-3"
+  "version": "3.0.3.1065-4"
 }
