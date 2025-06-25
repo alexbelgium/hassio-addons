@@ -32,9 +32,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
     sed -i "s|bash|bashio|g" /etc/s6-overlay/s6-rc.d/svc-resilio-sync/run \
-    && sed -i "s|/config/sync.conf|\$(bashio::config 'config_location')/sync.conf|g" /etc/s6-overlay/s6-rc.d/svc-resilio-sync/run \
     && sed -i "s|bash|bashio|g" /etc/s6-overlay/s6-rc.d/init-resilio-sync-config/run \
-    && sed -i "s|/config/sync.conf|\$(bashio::config 'config_location')/sync.conf|g" /etc/s6-overlay/s6-rc.d/init-resilio-sync-config/run \
     \
     # Correct sync folder
     && for file in $(grep -Esril "/sync[ '\"/]|/sync\$" /etc/logrotate.d /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d); do sed -i "s=/sync=/share/resiliosync=g" $file; done \
