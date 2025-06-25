@@ -1,21 +1,27 @@
 - BREAKING CHANGE, please backup. Logic change : the config is not configurable anymore, and only stored in /config.
 
 ## 3.0.3.1065-3 (24-06-2025)
+
 - Minor bugs fixed
 
 ## 3.0.3.1065-2 (20-06-2025)
+
 - Minor bugs fixed
 
 ## 3.0.3.1065 (15-03-2025)
+
 - Update to latest version from linuxserver/docker-resilio-sync (changelog : https://github.com/linuxserver/docker-resilio-sync/releases)
 
 ## 3.0.0.1409 (24-08-2024)
+
 - Update to latest version from linuxserver/docker-resilio-sync (changelog : https://github.com/linuxserver/docker-resilio-sync/releases)
 
 ## 2.8.1.1390 (08-06-2024)
+
 - Update to latest version from linuxserver/docker-resilio-sync (changelog : https://github.com/linuxserver/docker-resilio-sync/releases)
 
 ## 2.8.0.1389 (11-05-2024)
+
 - Update to latest version from linuxserver/docker-resilio-sync (changelog : https://github.com/linuxserver/docker-resilio-sync/releases)
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 - WARNING : update to supervisor 2022.11 before installing
