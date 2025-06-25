@@ -1,5 +1,8 @@
+- BREAKING CHANGE, please backup. Logic change : the config is not configurable anymore, and only stored in /config.
+
 ## 3.0.3.1065-3 (24-06-2025)
 - Minor bugs fixed
+
 ## 3.0.3.1065-2 (20-06-2025)
 - Minor bugs fixed
 
