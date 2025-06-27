@@ -1,3 +1,6 @@
+
+## 3.16.9 (28-06-2025)
+- Update to latest version from wiserain/flexget
 ## 3.16.6 (21-06-2025)
 
 - Update to latest version from wiserain/flexget
