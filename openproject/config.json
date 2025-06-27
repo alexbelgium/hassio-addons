@@ -1,5 +1,8 @@
 {
-  "arch": ["amd64", "aarch64"],
+  "arch": [
+    "amd64",
+    "aarch64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Openproject for Home Assistant",
   "environment": {
@@ -11,7 +14,10 @@
   },
   "image": "ghcr.io/alexbelgium/openproject-{arch}",
   "init": false,
-  "map": ["addon_config:rw", "share:rw"],
+  "map": [
+    "addon_config:rw",
+    "share:rw"
+  ],
   "name": "Openproject",
   "options": {
     "OPENPROJECT_DEFAULT__LANGUAGE": "en",
@@ -33,6 +39,6 @@
   "slug": "openproject",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/openproject",
-  "version": "16.1.0",
+  "version": "16.1.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }
