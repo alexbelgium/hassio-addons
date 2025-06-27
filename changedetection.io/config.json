@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "web page monitoring, notification and change detection",
   "environment": {
@@ -11,9 +8,7 @@
   },
   "image": "ghcr.io/alexbelgium/changedetection.io-{arch}",
   "init": false,
-  "map": [
-    "config:rw"
-  ],
+  "map": ["config:rw"],
   "name": "Changedetection.io",
   "options": {
     "PGID": 0,
