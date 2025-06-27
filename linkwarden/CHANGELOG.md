@@ -1,3 +1,6 @@
+
+## 2.11.1 (28-06-2025)
+- Update to latest version from linkwarden/linkwarden (changelog : https://github.com/linkwarden/linkwarden/releases)
 ## 2.10.2-2 (11-05-2025)
 - Minor bugs fixed
 
