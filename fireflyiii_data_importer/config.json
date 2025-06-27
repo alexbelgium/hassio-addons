@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Data importer for Firefly III (separate addon)",
   "devices": [
@@ -70,7 +73,12 @@
   },
   "image": "ghcr.io/alexbelgium/fireflyiii_data_importer-{arch}",
   "init": false,
-  "map": ["addon_config:rw", "homeassistant_config:rw", "share:rw", "ssl"],
+  "map": [
+    "addon_config:rw",
+    "homeassistant_config:rw",
+    "share:rw",
+    "ssl"
+  ],
   "name": "Firefly iii Data Importer",
   "options": {
     "CONFIG_LOCATION": "/config"
@@ -99,6 +107,6 @@
   "slug": "fireflyiii_data_importer",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "20250617.1",
+  "version": "20250627.1",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

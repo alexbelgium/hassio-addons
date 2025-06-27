@@ -1,3 +1,6 @@
+
+## 20250627.1 (28-06-2025)
+- Update to latest version from firefly-iii/data-importer (changelog : https://github.com/firefly-iii/data-importer/releases)
 ## 20250617.1 (21-06-2025)
 
 - Update to latest version from firefly-iii/data-importer (changelog : https://github.com/firefly-iii/data-importer/releases)
