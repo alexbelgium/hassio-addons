@@ -13,6 +13,9 @@ server {
     proxy_send_timeout 30m;
     proxy_read_timeout 30m;
     proxy_set_header Origin "";
+    # Ensure the backend knows the correct host
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Forwarded-Host $http_host;
 }
 
   location /api/websocket/ {
@@ -24,6 +27,9 @@ server {
     proxy_connect_timeout 30m;
     proxy_send_timeout 30m;
     proxy_read_timeout 30m;
+    # Ensure the backend knows the correct host
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Forwarded-Host $http_host;
   }
 }
 
