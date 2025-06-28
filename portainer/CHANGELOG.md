@@ -1,6 +1,7 @@
-
 ## 2.31.2 (28-06-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
+
 ## 2.31.1 (21-06-2025)
 
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
