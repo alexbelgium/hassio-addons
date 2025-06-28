@@ -12,8 +12,8 @@ server {
     proxy_connect_timeout 30m;
     proxy_send_timeout 30m;
     proxy_read_timeout 30m;
-    proxy_set_header Origin $http_origin;
     # Ensure the backend knows the correct host
+    proxy_set_header Origin $http_origin;
     proxy_set_header Host $http_host;
     proxy_set_header X-Forwarded-Host $http_host;
 }
@@ -22,12 +22,12 @@ server {
     proxy_pass {{ .protocol }}://backend/api/websocket/;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
-    proxy_set_header Origin "$http_origin";
     resolver 127.0.0.11 valid=180s;
     proxy_connect_timeout 30m;
     proxy_send_timeout 30m;
     proxy_read_timeout 30m;
     # Ensure the backend knows the correct host
+    proxy_set_header Origin $http_origin;
     proxy_set_header Host $http_host;
     proxy_set_header X-Forwarded-Host $http_host;
   }
