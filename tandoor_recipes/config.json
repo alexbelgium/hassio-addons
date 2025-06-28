@@ -1,9 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "recipe manager",
   "devices": [
@@ -77,11 +73,7 @@
     "TRUSTED_PROXIES": "**"
   },
   "image": "ghcr.io/alexbelgium/tandoor_recipes-{arch}",
-  "map": [
-    "config:rw",
-    "share:rw",
-    "media:rw"
-  ],
+  "map": ["config:rw", "share:rw", "media:rw"],
   "name": "Tandoor recipes",
   "options": {
     "ALLOWED_HOSTS": "",
@@ -111,9 +103,7 @@
     "SECRET_KEY": "str",
     "externalfiles_folder": "str?"
   },
-  "services": [
-    "mysql:want"
-  ],
+  "services": ["mysql:want"],
   "slug": "tandoor_recipes",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",

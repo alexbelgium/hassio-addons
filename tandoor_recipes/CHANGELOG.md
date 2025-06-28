@@ -1,56 +1,73 @@
-
 ## 1.5.35 (28-06-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.34 (07-06-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 2.0.0 (24-05-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 2.0.0 (17-05-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.34 (29-03-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.33 (22-03-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.32 (15-03-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.31 (08-02-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.30 (25-01-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.27 (11-01-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.26 (04-01-2025)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.24 (30-11-2024)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.22 (16-11-2024)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.20 (12-10-2024)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.19 (24-08-2024)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.18 (13-07-2024)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.17 (13-04-2024)
+
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)
 
 ## 1.5.15 (23-03-2024)
+
 - Update to latest version from TandoorRecipes/recipes
 
 ## 1.5.14 (09-03-2024)
@@ -77,6 +94,7 @@
 ## 1.5.9 (02-12-2023)
 
 - Update to latest version from TandoorRecipes/recipes
+
 ## 1.5.6-reverted (17-10-2023)
 
 - Minor bugs fixed
@@ -100,6 +118,7 @@
 ## 1.5.1 (24-06-2023)
 
 - Update to latest version from TandoorRecipes/recipes
+
 ## 1.4.12-4 (23-06-2023)
 
 - Minor bugs fixed
@@ -113,6 +132,7 @@
 ## 1.4.12-2 (09-06-2023)
 
 - Minor bugs fixed
+
 ## 1.4.13 (02-06-2023)
 
 - add configuration option to disable debug mode.
