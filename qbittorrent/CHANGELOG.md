@@ -1,39 +1,53 @@
-
 ## 5.1.1 (28-06-2025)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 
 ## 5.1.0 (10-05-2025)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 
 ## 5.0.4 (21-02-2025)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 
 ## 5.0.3 (21-12-2024)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 
 ## 5.0.2 (23-11-2024)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 
 ## 5.0.1 (02-11-2024)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
+
 ## 5.0.0-3 (13-10-2024)
+
 - Solve qbittorrent-nox error
 
 ## 5.0.0 (05-10-2024)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 
 ## 4.6.7 (21-09-2024)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 
 ## 4.6.6 (24-08-2024)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 
 ## 4.6.5 (01-06-2024)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
+
 ## 4.6.4-2 (19-04-2024)
+
 - Fix nmap bug
 
 ## 4.6.4 (30-03-2024)
+
 - Update to latest version from linuxserver/docker-qbittorrent (changelog : https://github.com/linuxserver/docker-qbittorrent/releases)
 
 ## 4.6.3-4 (21-01-2024)
