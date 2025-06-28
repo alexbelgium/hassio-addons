@@ -2,6 +2,7 @@
 - Improved code fix @lmagyar
 
 ## 2.31.2-2 (28-06-2025)
+
 - Fixed origin error with ssl
 
 ## 2.31.2 (28-06-2025)
