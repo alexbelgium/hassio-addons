@@ -1,5 +1,9 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Deprecated : Code-server is VS Code running on a remote server, accessible through the browser",
   "devices": [
@@ -67,7 +71,13 @@
   ],
   "image": "ghcr.io/alexbelgium/code_server-{arch}",
   "init": false,
-  "map": ["backup:rw", "config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "backup:rw",
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "name": "zzz_archived : Code-server (VScode)",
   "options": {
     "PGID": 0,
@@ -79,7 +89,10 @@
   "ports_description": {
     "8443/tcp": "WebUI"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -93,6 +106,6 @@
   "slug": "code-server",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/coder-server",
-  "version": "4.101.0",
+  "version": "4.101.2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8443]"
 }
