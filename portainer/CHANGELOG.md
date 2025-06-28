@@ -1,5 +1,4 @@
-## 2.31.2-3 (28-06-2025)
-- Improved code fix @lmagyar
+- Improved nginx fix @lmagyar
 
 ## 2.31.2-2 (28-06-2025)
 
