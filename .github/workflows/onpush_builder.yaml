@@ -214,11 +214,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+  
       - name: Revert the triggering commit
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          git fetch origin
+          git checkout master
+          git pull origin master
           git revert --no-commit ${{ github.sha }}
           git commit -m "Revert '${{ github.event.head_commit.message }}' [nobuild]"
           git push origin master
