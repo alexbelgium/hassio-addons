@@ -73,10 +73,7 @@ ENV PYTHONUNBUFFERED=1
 RUN \
     apk add --no-cache git && \
     git clone --branch master https://github.com/StuffAnThings/qbit_manage.git /qbit_manage && \
-    sed -i "s/\(qbittorrent-api\)==2025.4.1/\1/" /qbit_manage/requirements.txt && \
-    \
-    # Clean dependencies
-    sed -i "s/\\(qbittorrent-api\\)==2023.10.54/\\1/" /qbit_manage/requirements.txt && \
+    sed -i "/qbittorrent-api/d" /qbit_manage/pyproject.toml && \
     \
     # Install dependencies
     ## Allow python specific arch
