@@ -56,7 +56,7 @@ jobs:
 
       - name: Restore executable permissions
         run: |
-          find . -type f -name "*.sh" -exec chmod +x {} \;
+          find . -type f \( -name "*.sh" -o -name "run" \) -exec chmod +x {} \;
 
       - name: Remove Super-Linter output (prevent checkout conflict)
         run: sudo rm -rf super-linter-output/
