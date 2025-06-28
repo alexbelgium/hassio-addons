@@ -83,7 +83,7 @@ RUN \
     if test "${BUILD_ARCH}" != "*amd64*"; then apk add --no-cache python3-dev; else apk add --no-cache python3; fi && \
     ln -sf python3 /usr/bin/python && \
     apk add --no-cache py3-pip gcc musl-dev && \
-    pip3 install .
+    pip3 install --user .
 
 ##################
 # 3 Install apps #
