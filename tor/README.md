@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [qBittorrent] Cannot update to 5.1.1 (manifest unkown) (opened 2025-06-28)](https://github.com/alexbelgium/hassio-addons/issues/1928) by [@almico](https://github.com/almico)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
