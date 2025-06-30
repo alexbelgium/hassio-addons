@@ -1,6 +1,13 @@
 {
-  "arch": ["aarch64", "amd64"],
-  "backup_exclude": ["*/cache/", "*/transcoding-temp/", "*/logs/*"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "backup_exclude": [
+    "*/cache/",
+    "*/transcoding-temp/",
+    "*/logs/*"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A free Software Media System that puts you in control of managing and streaming your media (beta version)",
   "devices": [
@@ -102,7 +109,10 @@
     "8096/tcp": "web interface",
     "8920/tcp": "https web interface (optional)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",

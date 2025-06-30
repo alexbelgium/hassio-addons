@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Web based comic archive browser and reader",
   "devices": [
@@ -66,7 +69,11 @@
   "image": "ghcr.io/alexbelgium/codex-{arch}",
   "ingress": true,
   "ingress_stream": true,
-  "map": ["addon_config:rw", "media:rw", "share:rw"],
+  "map": [
+    "addon_config:rw",
+    "media:rw",
+    "share:rw"
+  ],
   "name": "Codex",
   "options": {
     "PGID": "0",
@@ -81,7 +88,10 @@
   "ports_description": {
     "9810/tcp": "Web UI port"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "CODEX_RESET_ADMIN": "int?",
     "CODEX_SKIP_INTEGRITY_CHECK": "int?",

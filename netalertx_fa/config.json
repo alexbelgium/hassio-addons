@@ -1,5 +1,9 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "🖧🔍 WIFI / LAN scanner, intruder, and presence detector",
   "environment": {
@@ -16,7 +20,12 @@
   "ingress_port": 0,
   "ingress_stream": true,
   "init": false,
-  "map": ["addon_config:rw", "media:rw", "share:rw", "ssl"],
+  "map": [
+    "addon_config:rw",
+    "media:rw",
+    "share:rw",
+    "ssl"
+  ],
   "name": "NetAlertX Full Access",
   "panel_icon": "mdi:wifi-check",
   "ports": {
@@ -27,12 +36,19 @@
     "20211/tcp": "WebUI port",
     "20212/tcp": "GraphQL port"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN", "NET_RAW"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN",
+    "NET_RAW"
+  ],
   "schema": {
     "APP_CONF_OVERRIDE": "str?",
     "TZ": "str?"
   },
-  "services": ["mqtt:want"],
+  "services": [
+    "mqtt:want"
+  ],
   "slug": "netalertx_fa",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
