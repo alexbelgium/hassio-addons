@@ -164,10 +164,10 @@ if [ -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
 
 while IFS= read -r line; do
 	# Clean output
-        if [[ $line == \"*\" ]]; then
-	        line="${line:1:-1}"
+	if [[ $line == \"*\" ]]; then
+		line="${line:1:-1}"
 	fi
- 
+
 	# Check if secret
 	if [[ "${line}" == *'!secret '* ]]; then
 		echo "secret detected"
@@ -186,11 +186,11 @@ while IFS= read -r line; do
 		KEYS="${line%%=*}"
 		VALUE="${line#*=}"
 		line="${KEYS}='${VALUE}'"
-  		export "${KEY}=${VALUE}"
+		export "${KEY}=${VALUE}"
 		# export to python
 		if command -v "python3" &>/dev/null; then
 			[ ! -f /env.py ] && echo "import os" >/env.py
-   			echo "os.environ['${KEY}'] = '${VALUE//\'/\\\'}'" >> /env.py
+			echo "os.environ['${KEY}'] = '${VALUE//\'/\\\'}'" >>/env.py
 			python3 /env.py
 		fi
 		# set .env
@@ -201,7 +201,7 @@ while IFS= read -r line; do
 		if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
 		if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
 		# For s6
-		if [ -d /var/run/s6/container_environment ]; then printf "%s='%s'\n" "$KEY" "$VALUE" >> /etc/environment; fi
+		if [ -d /var/run/s6/container_environment ]; then printf "%s='%s'\n" "$KEY" "$VALUE" >>/etc/environment; fi
 		echo "export $line" >>~/.bashrc
 		# Show in log
 		if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
