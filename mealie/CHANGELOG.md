@@ -1,6 +1,8 @@
+- Try to fix config.yaml : https://github.com/alexbelgium/hassio-addons/issues/1933
 
 ## v2.8.0 (22-03-2025)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
+
 ## v2.7.1-6 (02-03-2025)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 
