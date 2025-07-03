@@ -182,7 +182,7 @@ while IFS= read -r line; do
 		VALUE="${line#*=}"
 		if [[ "$VALUE" == \"*\"*\" ]]; then
 			VALUE="${VALUE:1:-1}"
-			VALUE="'$VALUE'"
+			VALUE="\"$VALUE\""
 		fi
 		export "${KEYS}=${VALUE}"
 		# export to python
