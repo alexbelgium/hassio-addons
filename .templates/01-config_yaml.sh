@@ -163,11 +163,6 @@ SECRETSFILE="/config/secrets.yaml"
 if [ -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
 
 while IFS= read -r line; do
-	# Clean output
-	if [[ $line == \"*\" ]]; then
-		line="${line:1:-1}"
-	fi
-
 	# Check if secret
 	if [[ "${line}" == *'!secret '* ]]; then
 		echo "secret detected"
@@ -185,27 +180,30 @@ while IFS= read -r line; do
 		# extract keys and values
 		KEYS="${line%%=*}"
 		VALUE="${line#*=}"
-		line="${KEYS}='${VALUE}'"
+		if [[ "$VALUE" == *\"* ]]; then
+		    [[ "$VALUE" == \"*\" ]] && VALUE="${VALUE:1:-1}"
+		    VALUE="'$VALUE'"
+		fi
 		export "${KEYS}=${VALUE}"
 		# export to python
 		if command -v "python3" &>/dev/null; then
 			[ ! -f /env.py ] && echo "import os" >/env.py
-			echo "os.environ['${KEYS}'] = '${VALUE//\'/\\\'}'" >>/env.py
+			echo "os.environ['${KEYS}'] = $VALUE" >>/env.py
 			python3 /env.py
 		fi
 		# set .env
-		if [ -f /.env ]; then echo "$line" >>/.env; fi
+		if [ -f /.env ]; then echo "${KEYS}=${VALUE}" >>/.env; fi
 		mkdir -p /etc
-		echo "$line" >>/etc/environment
+		echo "${KEYS}=${VALUE}" >>/etc/environment
 		# Export to scripts
-		if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
-		if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
+		if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export ${KEYS}=${VALUE}" /etc/services.d/*/*run* 2>/dev/null; fi
+		if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export ${KEYS}=${VALUE}" /etc/cont-init.d/*run* 2>/dev/null; fi
 		# For s6
 		if [ -d /var/run/s6/container_environment ]; then printf "%s='%s'\n" "$KEYS" "$VALUE" >>/etc/environment; fi
-		echo "export $line" >>~/.bashrc
+		echo "export ${KEYS}=${VALUE}" >>~/.bashrc
 		# Show in log
-		if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
+		if ! bashio::config.false "verbose"; then bashio::log.blue "${KEYS}=${VALUE}"; fi
 	else
-		bashio::log.red "$line does not follow the correct structure. Please check your yaml file."
+		bashio::log.red "${KEYS}=${VALUE} does not follow the correct structure. Please check your yaml file."
 	fi
 done <"/tmpfile"
