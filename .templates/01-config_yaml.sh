@@ -180,8 +180,8 @@ while IFS= read -r line; do
 		# extract keys and values
 		KEYS="${line%%=*}"
 		VALUE="${line#*=}"
-		if [[ "$VALUE" == *\"* ]]; then
-			[[ "$VALUE" == \"*\" ]] && VALUE="${VALUE:1:-1}"
+		if [[ "$VALUE" == \"*\"*\" ]]; then
+			VALUE="${VALUE:1:-1}"
 			VALUE="'$VALUE'"
 		fi
 		export "${KEYS}=${VALUE}"
