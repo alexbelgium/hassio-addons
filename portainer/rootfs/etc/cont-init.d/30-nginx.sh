@@ -19,6 +19,8 @@ if bashio::config.true 'ssl'; then
 	sed -i '7 i ssl_certificate /ssl/{{ .certfile }};' /etc/nginx/templates/ingress.gtpl
 	sed -i '7 i ssl_certificate_key /ssl/{{ .keyfile }};' /etc/nginx/templates/ingress.gtpl
 	bashio::log.info "Ssl enabled, please use https for connection"
+else
+	sed -i '/connection_upgrade/a\proxy_set_header Origin "";' /etc/nginx/templates/ingress.gtpl
 fi
 
 bashio::var.json \
