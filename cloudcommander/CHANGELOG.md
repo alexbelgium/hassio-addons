@@ -1,59 +1,77 @@
-
 ## 18.6.1 (05-07-2025)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.5.2 (12-04-2025)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.5.1 (08-02-2025)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.5.0 (25-01-2025)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.4.1 (14-12-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.4.0 (23-11-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.3.0 (16-11-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.2.1 (09-11-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.2.0 (02-11-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.1.0 (24-08-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 18.0.2 (17-08-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 17.4.3 (03-08-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 17.4.2 (06-07-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 17.4.1 (11-05-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 17.4.0 (20-04-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 17.3.3 (06-04-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 17.3.2 (30-03-2024)
+
 - Update to latest version from coderaiser/cloudcmd (changelog : https://github.com/coderaiser/cloudcmd/releases)
 
 ## 17.2.0 (23-03-2024)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 17.0.7 (16-03-2024)
+
 - Update to latest version from coderaiser/cloudcmd
 
 ## 17.0.3 (03-02-2024)
@@ -71,9 +89,11 @@
 ## 16.18.0 (09-12-2023)
 
 - Update to latest version from coderaiser/cloudcmd
+
 ## 16.17.7-6 (25-11-2023)
 
 - Minor bugs fixed
+
 ## 16.17.7-3 (19-11-2023)
 
 - Minor bugs fixed
