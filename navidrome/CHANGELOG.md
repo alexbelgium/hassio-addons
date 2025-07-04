@@ -1,40 +1,55 @@
-
 ## 0.57.0 (05-07-2025)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 
 ## 0.56.1 (31-05-2025)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 
 ## 0.55.2 (12-04-2025)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
+
 ## 0.55.1-2 (29-03-2025)
+
 - Minor bugs fixed
 
 ## 0.55.1 (22-03-2025)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 
 ## 0.55.0 (15-03-2025)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 
 ## 0.54.5 (21-02-2025)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
+
 ## 0.54.4-2 (15-02-2025)
+
 - Minor bugs fixed
 
 ## 0.54.4 (18-01-2025)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 
 ## 0.54.3 (04-01-2025)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 
 ## 0.54.2 (28-12-2024)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 
 ## 0.53.3 (28-09-2024)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
 
 ## 0.53.1 (21-09-2024)
+
 - Update to latest version from navidrome/navidrome (changelog : https://github.com/navidrome/navidrome/releases)
+
 ## 0.52.5-7 (20-08-2024)
 
 - Reduced access to media to read-only as write permissions are not required https://www.navidrome.org/docs/usage/security/#permissions
