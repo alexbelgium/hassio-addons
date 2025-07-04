@@ -188,7 +188,7 @@ while IFS= read -r line; do
 		# export to python
 		if command -v "python3" &>/dev/null; then
 			[ ! -f /env.py ] && echo "import os" >/env.py
-   			echo "os.environ['${KEYS}'] = \"${VALUE//\"/\\\"}\"" >>/env.py
+			echo "os.environ['${KEYS}'] = \"${VALUE//\"/\\\"}\"" >>/env.py
 			python3 /env.py
 		fi
 		# set .env
