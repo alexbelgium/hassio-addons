@@ -1,4 +1,7 @@
 
+## debian-2025-06-28 (2025-06-28)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## debian-2025-02-28 (2025-02-28)
 - Update to latest version from charlocharlie/epicgames-freegames
 
