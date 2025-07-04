@@ -1,5 +1,9 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "usenet downloader",
   "devices": [
@@ -72,7 +76,12 @@
   "image": "ghcr.io/alexbelgium/nzbget-{arch}",
   "ingress": true,
   "init": false,
-  "map": ["addon_config:rw", "homeassistant_config:rw", "share:rw", "media:rw"],
+  "map": [
+    "addon_config:rw",
+    "homeassistant_config:rw",
+    "share:rw",
+    "media:rw"
+  ],
   "name": "Nzbget",
   "options": {
     "PGID": 0,
@@ -86,7 +95,10 @@
   "ports_description": {
     "6789/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",
@@ -100,5 +112,5 @@
   "slug": "nzbget",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v25.1-ls202"
+  "version": "v25.2-ls203"
 }
