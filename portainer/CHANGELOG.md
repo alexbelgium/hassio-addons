@@ -1,11 +1,17 @@
-
 ## 2.31.3 (05-07-2025)
+
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
+
 ## 2.31.2-6 (03-07-2025)
+
 - Minor bugs fixed
+
 ## 2.31.2-5 (29-06-2025)
+
 - Minor bugs fixed
+
 ## 2.31.2-4 (28-06-2025)
+
 - Improved nginx fix @lmagyar
 
 ## 2.31.2-2 (28-06-2025)
