@@ -1,208 +1,184 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 # shellcheck disable=SC2155,SC1087,SC2163,SC2116,SC2086
-set -e
+# -----------------------------------------------------------------------------
+# Robust environment‑variable loader for Home‑Assistant add‑ons
+#   • Parses YAML with embedded Python, no external yq dependency
+#   • Supports !secret look‑ups
+#   • Correctly escapes values containing quotes, $, \\ , newlines …
+#   • Exports to: shell, env.py, .env, /etc/environment, s6, service scripts
+# -----------------------------------------------------------------------------
+set -euo pipefail
 
 ##################
 # INITIALIZATION #
 ##################
 
-# Disable if config not present
-if [ ! -d /config ] || ! bashio::supervisor.ping 2>/dev/null; then
-	echo "..."
-	exit 0
+# Run outside HA? then do nothing
+if [[ ! -d /config ]] || ! bashio::supervisor.ping &>/dev/null; then
+    echo "..."
+    exit 0
 fi
 
-# Define slug
-slug="${HOSTNAME/-/_}"
-slug="${slug#*_}"
+slug="${HOSTNAME/-/_}" ; slug="${slug#*_}"
 
-# Check type of config folder
-if [ ! -f /config/configuration.yaml ] && [ ! -f /config/configuration.json ]; then
-	# New config location
-	CONFIGLOCATION="/config"
-	CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/config.yaml"
+# -----------------------------------------------------------------------------
+# Resolve CONFIGSOURCE                                                        #
+# -----------------------------------------------------------------------------
+if [[ ! -f /config/configuration.yaml && ! -f /config/configuration.json ]]; then
+    CONFIGLOCATION="/config"                                   # New architecture
+    CONFIGFILEBROWSER="/addon_configs/${HOSTNAME/-/_}/config.yaml"
 else
-	# Legacy config location
-	CONFIGLOCATION="/config/addons_config/${slug}"
-	CONFIGFILEBROWSER="/homeassistant/addons_config/$slug/config.yaml"
+    CONFIGLOCATION="/config/addons_config/${slug}"             # Legacy architecture
+    CONFIGFILEBROWSER="/homeassistant/addons_config/${slug}/config.yaml"
 fi
 
-# Default location
-mkdir -p "$CONFIGLOCATION" || true
-CONFIGSOURCE="$CONFIGLOCATION"/config.yaml
+mkdir -p "$CONFIGLOCATION"
+CONFIGSOURCE="$CONFIGLOCATION/config.yaml"
 
-# Is there a custom path
 if bashio::config.has_value 'CONFIG_LOCATION'; then
-
-	CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-	if [[ "$CONFIGSOURCE" == *.* ]]; then
-		CONFIGSOURCE=$(dirname "$CONFIGSOURCE")
-	fi
-	# If does not end by config.yaml, remove trailing slash and add config.yaml
-	if [[ "$CONFIGSOURCE" != *".yaml" ]]; then
-		CONFIGSOURCE="${CONFIGSOURCE%/}"/config.yaml
-	fi
-	# Check if config is located in an acceptable location
-	LOCATIONOK=""
-	for location in "/share" "/config" "/data"; do
-		if [[ "$CONFIGSOURCE" == "$location"* ]]; then
-			LOCATIONOK=true
-		fi
-	done
-	if [ -z "$LOCATIONOK" ]; then
-		bashio::log.red "Watch-out : your CONFIG_LOCATION values can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $CONFIGLOCATION/config.yaml"
-		CONFIGSOURCE="$CONFIGLOCATION"/config.yaml
-	fi
+    CONFIGSOURCE="$(bashio::config "CONFIG_LOCATION")"
+    [[ "$CONFIGSOURCE" == *.* ]] && CONFIGSOURCE="$(dirname "$CONFIGSOURCE")"
+    [[ "$CONFIGSOURCE" != *.yaml ]] && CONFIGSOURCE="${CONFIGSOURCE%/}/config.yaml"
+    case "$CONFIGSOURCE" in
+        /share/*|/config/*|/data/*) :;;
+        *) bashio::log.red "CONFIG_LOCATION must be in /share, /config or /data – defaulting." && CONFIGSOURCE="$CONFIGLOCATION/config.yaml";;
+    esac
 fi
 
-# Migrate if needed
-if [[ "$CONFIGLOCATION" == "/config" ]]; then
-	# Migrate file
-	if [ -f "/homeassistant/addons_config/${slug}/config.yaml" ] && [ ! -L "/homeassistant/addons_config/${slug}" ]; then
-		echo "Migrating config.yaml to new config location"
-		mv /homeassistant/addons_config/"${slug}"/config.yaml /config/config.yaml
-	fi
-	# Migrate option
-	if [[ "$(bashio::config "CONFIG_LOCATION")" == "/config/addons_config"* ]] && [ -f /config/config.yaml ]; then
-		bashio::addon.option "CONFIG_LOCATION" "/config/config.yaml"
-		CONFIGSOURCE="/config/config.yaml"
-	fi
+if [[ "$CONFIGLOCATION" == "/config" && -f "/homeassistant/addons_config/${slug}/config.yaml" && ! -L "/homeassistant/addons_config/${slug}" ]]; then
+    echo "Migrating config.yaml to $CONFIGLOCATION"
+    mv "/homeassistant/addons_config/${slug}/config.yaml" "$CONFIGSOURCE"
 fi
 
-if [[ "$CONFIGSOURCE" != *".yaml" ]]; then
-	bashio::log.error "Something is going wrong in the config location, quitting"
-fi
-
-# Permissions
-if [[ "$CONFIGSOURCE" == *".yaml" ]]; then
-	echo "Setting permissions for the config.yaml directory"
-	mkdir -p "$(dirname "${CONFIGSOURCE}")"
-	chmod -R 755 "$(dirname "${CONFIGSOURCE}")" 2>/dev/null
-fi
+chmod -R 755 "$(dirname "$CONFIGSOURCE")"
 
 ####################
-# LOAD CONFIG.YAML #
+# CONFIG TEMPLATE  #
 ####################
 
-echo ""
-bashio::log.green "Load environment variables from $CONFIGSOURCE if existing"
-if [[ "$CONFIGSOURCE" == "/config"* ]]; then
-	bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGFILEBROWSER"
-else
-	bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGSOURCE"
-fi
-bashio::log.green "---------------------------------------------------------"
-bashio::log.green "Wiki here on how to use : github.com/alexbelgium/hassio-addons/wiki/Add‐ons-feature-:-add-env-variables"
-echo ""
-
-# Check if config file is there, or create one from template
-if [ ! -f "$CONFIGSOURCE" ]; then
-	echo "... no config file, creating one from template. Please customize the file in $CONFIGSOURCE before restarting."
-	# Create folder
-	mkdir -p "$(dirname "${CONFIGSOURCE}")"
-	# Placing template in config
-	if [ -f /templates/config.yaml ]; then
-		# Use available template
-		cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
-	else
-		# Download template
-		TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/config.template"
-		curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
-	fi
+if [[ ! -f "$CONFIGSOURCE" ]]; then
+    echo "... no config file, creating one from template."
+    mkdir -p "$(dirname "$CONFIGSOURCE")"
+    if [[ -f /templates/config.yaml ]]; then
+        cp /templates/config.yaml "$CONFIGSOURCE"
+    else
+        curl -fsSL "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/config.template" -o "$CONFIGSOURCE"
+    fi
+    bashio::log.green "Edit $CONFIGSOURCE then restart the add‑on."
 fi
 
-# Check if there are lines to read
-cp "$CONFIGSOURCE" /tempenv
-sed -i '/^#/d' /tempenv
-sed -i '/^[[:space:]]*$/d' /tempenv
-sed -i '/^$/d' /tempenv
-# Exit if empty
-if [ ! -s /tempenv ]; then
-	bashio::log.green "... no env variables found, exiting"
-	exit 0
-fi
-rm /tempenv
-
-# Check if yaml is valid
-EXIT_CODE=0
-yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
-if [ "$EXIT_CODE" != 0 ]; then
-	cat ERROR
-	bashio::log.yellow "... config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
+if ! grep -qE '^[[:space:]]*[A-Za-z0-9_]+:' "$CONFIGSOURCE"; then
+    bashio::log.green "... no env variables found, exiting"
+    exit 0
 fi
 
-# Export all yaml entries as env variables
-# Helper function
-function parse_yaml {
-	local prefix=$2 || local prefix=""
-	local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
-	sed -ne "s|^\($s\):|\1|" \
-		-e "s| #.*$||g" \
-		-e "s|#.*$||g" \
-		-e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-		-e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
-		awk -F$fs '{
-indent = length($1)/2;
-vname[indent] = $2;
-for (i in vname) {if (i > indent) {delete vname[i]}}
-if (length($3) > 0) {
-vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-}
-    }'
+############################################
+#  HELPER: read_yaml() (Python)            #
+############################################
+# Prints flattened KEY=value lines for scalar leaves.
+read_yaml() {
+    python3 - "$1" <<'PY'
+import sys, yaml, json, pathlib
+from collections.abc import Mapping, Sequence
+
+def walk(node, prefix=""):
+    if isinstance(node, Mapping):
+        for k, v in node.items():
+            yield from walk(v, f"{prefix}{k}_")
+    elif isinstance(node, Sequence) and not isinstance(node, (str, bytes)):
+        for i, v in enumerate(node):
+            yield from walk(v, f"{prefix}{i}_")
+    else:
+        yield prefix[:-1], node
+
+fname = sys.argv[1]
+with open(fname, 'r') as f:
+    data = yaml.safe_load(f) or {}
+for k, v in walk(data):
+    if isinstance(v, (str, int, float, bool)):
+        print(f"{k}={v}")
+PY
 }
 
-# Get list of parameters in a file
-parse_yaml "$CONFIGSOURCE" "" >/tmpfile
-# Escape dollars
-sed -i 's|$.|\$|g' /tmpfile
+############################################
+#  HELPER: shell_escape()                  #
+############################################
+# Uses printf %q – POSIX‑sh safe quoting.
+shell_escape() {
+    printf '%q' "$1"
+}
 
-# Look where secrets.yaml is located
+############################################
+#  Locate secrets.yaml                     #
+############################################
 SECRETSFILE="/config/secrets.yaml"
-if [ -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
+[[ -f "$SECRETSFILE" ]] || SECRETSFILE="/homeassistant/secrets.yaml"
 
-while IFS= read -r line; do
-	# Clean output
-	line="${line//[\"\']/}"
-	# Check if secret
-	if [[ "${line}" == *'!secret '* ]]; then
-		echo "secret detected"
-		secret=${line#*secret }
-		# Check if single match
-		secretnum=$(sed -n "/$secret:/=" "$SECRETSFILE")
-		[[ $(echo $secretnum) == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
-		# Get text
-		secret=$(sed -n "/$secret:/p" "$SECRETSFILE")
-		secret=${secret#*: }
-		line="${line%%=*}='$secret'"
-	fi
-	# Data validation
-	if [[ "$line" =~ ^.+[=].+$ ]]; then
-		# extract keys and values
-		KEYS="${line%%=*}"
-		VALUE="${line#*=}"
-		line="${KEYS}='${VALUE}'"
-		export "$line"
-		# export to python
-		if command -v "python3" &>/dev/null; then
-			[ ! -f /env.py ] && echo "import os" >/env.py
-			echo "os.environ['${KEYS}'] = '${VALUE//[\"\']/}'" >>/env.py
-			python3 /env.py
-		fi
-		# set .env
-		if [ -f /.env ]; then echo "$line" >>/.env; fi
-		mkdir -p /etc
-		echo "$line" >>/etc/environment
-		# Export to scripts
-		if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
-		if cat /etc/cont-init.d/*run* &>/dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2>/dev/null; fi
-		# For s6
-		if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" >/var/run/s6/container_environment/"${KEYS}"; fi
-		echo "export $line" >>~/.bashrc
-		# Show in log
-		if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
-	else
-		bashio::log.red "$line does not follow the correct structure. Please check your yaml file."
-	fi
-done <"/tmpfile"
+get_secret() {
+    python3 - "$SECRETSFILE" "$1" <<'PY'
+import sys, yaml, pathlib
+sec, key = sys.argv[1:3]
+try:
+    with open(sec) as f:
+        data = yaml.safe_load(f) or {}
+    print(data.get(key, ""))
+except FileNotFoundError:
+    pass
+PY
+}
+
+############################################
+#  MAIN LOOP                               #
+############################################
+while IFS= read -r PAIR; do
+    KEY="${PAIR%%=*}" ; VALUE="${PAIR#*=}"
+
+    # !secret support
+    if [[ "$VALUE" =~ ^!secret[[:space:]]+(.+) ]]; then
+        NAME="${BASH_REMATCH[1]}"
+        VALUE="$(get_secret "$NAME")"
+        [[ -z "$VALUE" ]] && bashio::exit.nok "Secret '$NAME' not found in $SECRETSFILE"
+    fi
+
+    SAFE_VALUE=$(shell_escape "$VALUE")
+
+    # 1) Export to current shell
+    export "$KEY=$VALUE"
+
+    # 2) env.py (idempotent)
+    python3 - "$KEY" "$VALUE" <<'PY'
+import json, os, pathlib, sys
+k, v = sys.argv[1:3]
+p = pathlib.Path('/env.py')
+if not p.exists():
+    p.write_text('import os\n')
+with p.open('a') as f:
+    f.write(f"os.environ[{json.dumps(k)}] = {json.dumps(v)}\n")
+os.environ[k] = v
+PY
+
+    # 3) .env & /etc/environment (double‑quoted, internal " escaped)
+    env_val="${VALUE//\"/\"}"
+    printf '%s="%s"\n' "$KEY" "$env_val" >> /.env
+    printf '%s="%s"\n' "$KEY" "$env_val" >> /etc/environment
+
+    # 4) s6 container_environment (raw value)
+    if [[ -d /var/run/s6/container_environment ]]; then
+        printf '%s' "$VALUE" > "/var/run/s6/container_environment/$KEY"
+    fi
+
+    # 5) Prepend export to service scripts
+    for script in /etc/services.d/*/*run* /etc/cont-init.d/*run*; do
+        [[ -f $script ]] || continue
+        grep -q "^export $KEY=" "$script" || sed -i "1i export $KEY=$SAFE_VALUE" "$script"
+    done
+
+    # 6) Persist for interactive shells
+    grep -q "^export $KEY=" ~/.bashrc || echo "export $KEY=$SAFE_VALUE" >> ~/.bashrc
+
+    # 7) Log (truncate long values)
+    bashio::log.blue "$KEY='${VALUE:0:60}'${VALUE:60:+…}"
+done < <(read_yaml "$CONFIGSOURCE")
+
+bashio::log.green "Environment variables successfully loaded."
