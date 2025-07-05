@@ -50,6 +50,7 @@ fi
 
 shell_escape() { printf '%q' "$1"; }
 
+# Prints key=value from YAML, ignoring comments/underscored keys
 read_config() {
     local file="$1"
     if $HAS_YQ; then
@@ -80,6 +81,12 @@ get_secret() {
     fi
 }
 
+# Safe double-quote for .env and /etc/environment (bash and python compatible)
+dq_escape() {
+    # Escape only embedded double quotes and dollar signs for shell (not for YAML)
+    printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g; s/\$/\\$/g'
+}
+
 while IFS= read -r LINE; do
     [[ -z "$LINE" || "$LINE" != *=* ]] && continue
     KEY="${LINE%%=*}"
@@ -105,7 +112,7 @@ with p.open('a') as f:
 os.environ[k] = v
 PY
     fi
-    env_val="${VALUE//"/\"}"
+    env_val=$(dq_escape "$VALUE")
     printf '%s="%s"\n' "$KEY" "$env_val" >> /.env
     printf '%s="%s"\n' "$KEY" "$env_val" >> /etc/environment
     [[ -d /var/run/s6/container_environment ]] && printf '%s' "$VALUE" > "/var/run/s6/container_environment/$KEY"
