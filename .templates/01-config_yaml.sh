@@ -55,8 +55,8 @@ shell_escape() { printf '%q' "$1"; }
 
 # Prints key=value from YAML, ignoring comments/underscored keys
 read_config() {
-        local file="$1"
-        yq eval 'to_entries | .[] | select(.key|test("^[#_]")|not) | "\(.key)=\(.value | @sh)"' "$file" 2>/dev/null
+	local file="$1"
+	yq eval 'to_entries | .[] | select(.key|test("^[#_]")|not) | "\(.key)=\(.value | @sh)"' "$file" 2>/dev/null
 }
 
 SECRETSFILE="/config/secrets.yaml"
