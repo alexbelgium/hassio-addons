@@ -155,7 +155,8 @@ function parse_yaml {
 }
 
 # Get list of parameters in a file
-parse_yaml "$CONFIGSOURCE" "" >/tmpfile
+parse_yaml "$CONFIGSOURCE" /tmpfile
+
 # Escape dollars
 sed -i 's|$.|\$|g' /tmpfile
 
