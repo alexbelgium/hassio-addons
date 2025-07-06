@@ -134,7 +134,7 @@ fi
 
 # Export all yaml entries as env variables
 # Helper function
-function parse_yaml_to_vars {
+function parse_yaml {
 	local input_file=$1
 	local output_file=$2
 
