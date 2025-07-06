@@ -135,26 +135,26 @@ fi
 # Export all yaml entries as env variables
 # Helper function
 function parse_yaml_to_vars {
-    local input_file=$1
-    local output_file=$2
+	local input_file=$1
+	local output_file=$2
 
-    # Clear the output file if it already exists
-    > "$output_file"
+	# Clear the output file if it already exists
+	>"$output_file"
 
-    # Process each line to escape special characters and format as needed
-    while IFS= read -r line; do
-        # Skip lines that are empty or only contain whitespace
-        [[ -z "$line" ]] && continue
+	# Process each line to escape special characters and format as needed
+	while IFS= read -r line; do
+		# Skip lines that are empty or only contain whitespace
+		[[ -z "$line" ]] && continue
 
-        # Replace the first occurrence of ": " with "="
-        line=${line/: /=}
+		# Replace the first occurrence of ": " with "="
+		line=${line/: /=}
 
-        # Escape special characters not within single quotes
-        line=$(sed -E "s/([^'])([][\$\`\"\\!&;|<>])/\1\\\\\\2/g" <<< "$line")
+		# Escape special characters not within single quotes
+		line=$(sed -E "s/([^'])([][\$\`\"\\!&;|<>])/\1\\\\\\2/g" <<<"$line")
 
-        # Write to output file
-        echo "$line" >> "$output_file"
-    done < "$input_file"
+		# Write to output file
+		echo "$line" >>"$output_file"
+	done <"$input_file"
 }
 
 # Get list of parameters in a file
