@@ -1,99 +1,137 @@
 - Increase timeout to 600s
 
 ## 31.0.6 (13-06-2025)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 31.0.5 (17-05-2025)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
+
 ## 31.0.4-3 (15-05-2025)
+
 - Minor bugs fixed
+
 ## 31.0.4-2 (15-05-2025)
+
 - Disable upload file limits
 
 ## 31.0.4 (19-04-2025)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 31.0.2-2 (23-03-2025)
+
 - Fix permissions check
 
 ## 31.0.2 (22-03-2025)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 31.0.1 (15-03-2025)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 31.0.0-2 (13-03-2025)
+
 - New option : skip_permissions_check to skip permissions check
 
 ## 31.0.0 (01-03-2025)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 30.0.6 (15-02-2025)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 30.0.5 (18-01-2025)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 30.0.4 (14-12-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 30.0.3 (07-12-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 - Use /addon_configs for config.yaml and nextcloud-ocr.sh to backup them with nextcloud
 - Use /config/data as default folder instead of /config/data for initial set-up
 
 ## 30.0.2 (09-11-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 30.0.1 (19-10-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 30.0.0 (28-09-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 29.0.7 (14-09-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 29.0.6 (07-09-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 29.0.5 (24-08-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
+
 ## 29.0.4-4 (23-08-2024)
+
 - Minor bugs fixed
+
 ## 29.0.4-3 (22-08-2024)
+
 - Minor bugs fixed
+
 ## 29.0.4-2 (21-08-2024)
+
 - Minor bugs fixed
 
 ## 29.0.4 (27-07-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 29.0.3 (29-06-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
+
 ## 29.0.2-3 (25-06-2024)
+
 - Fix "cannot enable app"
 
 ## 29.0.2-2 (12-06-2024)
+
 - Fix https://github.com/alexbelgium/hassio-addons/issues/1429
 
 ## 29.0.2 (08-06-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 29.0.1 (01-06-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 29.0.0 (27-04-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 - Add preview support for BMP GIF HEIC JPEG Krita PNG XBitmap
 - Checks if maintenance_window_start is set, or use 1 as default which corresponds to 1-5 am (https://docs.nextcloud.com/server/28/admin_manual/configuration_server/background_jobs_configuration.html#maintenance-window-start)
 
 ## 28.0.4 (30-03-2024)
+
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 
 ## 28.0.3 (02-03-2024)
 
 - Update to latest version from linuxserver/docker-nextcloud
+
 ## 28.0.2 (02-02-2024)
 
 - Update to latest version from linuxserver/docker-nextcloud
@@ -101,9 +139,11 @@
 ## 28.0.1-6 (14-01-2024)
 
 - Minor bugs fixed
+
 ## 28.0.1-5 (14-01-2024)
 
 - Minor bugs fixed
+
 ## 28.0.1-4 (12-01-2024)
 
 - Fix : webui won't start https://github.com/alexbelgium/hassio-addons/issues/1170 https://github.com/alexbelgium/hassio-addons/issues/1171
@@ -124,6 +164,7 @@
 ## 28.0.0 (16-12-2023)
 
 - Update to latest version from linuxserver/docker-nextcloud
+
 ## 27.1.4-6 (07-12-2023)
 
 - Crond output redirected to addon logs https://github.com/alexbelgium/hassio-addons/issues/1111
@@ -167,9 +208,11 @@
 ## 27.1.1 (23-09-2023)
 
 - Update to latest version from linuxserver/docker-nextcloud
+
 ## 27.0.2-10 (06-09-2023)
 
 - Minor bugs fixed
+
 ## 27.0.2-9 (06-09-2023)
 
 - Minor bugs fixed
@@ -192,6 +235,7 @@
 ## 27.0.2 (19-08-2023)
 
 - Update to latest version from linuxserver/docker-nextcloud
+
 ## 27.0.2 (12-08-2023)
 
 - Update to latest version from linuxserver/docker-nextcloud
