@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Navidrome] Error adding Navidrome to Music Assistant. (opened 2025-06-19)](https://github.com/alexbelgium/hassio-addons/issues/1919) by [@WCRalph](https://github.com/WCRalph)
 # Home assistant add-on: Navidrome
 
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)

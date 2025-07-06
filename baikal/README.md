@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Baikal - Allow using the Tailscale certificate and key to use HTTPS (opened 2025-07-03)](https://github.com/alexbelgium/hassio-addons/issues/1935) by [@frederickjh](https://github.com/frederickjh)
 # Home assistant add-on: Baikal
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

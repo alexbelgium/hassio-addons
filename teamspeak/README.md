@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Teamspeak server] Fail to initialize the database (opened 2025-06-18)](https://github.com/alexbelgium/hassio-addons/issues/1918) by [@vasilvestre](https://github.com/vasilvestre)
 # Hass.io Add-ons: Teamspeak
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
