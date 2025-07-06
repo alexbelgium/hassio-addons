@@ -135,28 +135,26 @@ fi
 # Export all yaml entries as env variables
 # Helper function
 function parse_yaml {
-	local input_file=$1
-	local output_file=$2
-
-	# Process each line to escape special characters and format as needed
-	while IFS= read -r line; do
-		# Skip lines that are empty or only contain whitespace
-		[[ -z "$line" ]] && continue
-
-		# Replace the first occurrence of ": " with "="
-		line=${line/: /=}
-
-		# Escape special characters not within single quotes
-		line=$(sed -E "s/([^'])([][\$\`\"\\!&;|<>])/\1\\\\\\2/g" <<<"$line")
-
-		# Write to output file
-		echo "$line" >>"$output_file"
-	done <"$input_file"
+	local prefix=$2 || local prefix=""
+	local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
+	sed -ne "s|^\($s\):|\1|" \
+		-e "s| #.*$||g" \
+		-e "s|#.*$||g" \
+		-e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+		-e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
+		awk -F$fs '{
+indent = length($1)/2;
+vname[indent] = $2;
+for (i in vname) {if (i > indent) {delete vname[i]}}
+if (length($3) > 0) {
+vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+}
+    }'
 }
 
 # Get list of parameters in a file
-parse_yaml "$CONFIGSOURCE" /tmpfile
-
+parse_yaml "$CONFIGSOURCE" "" >/tmpfile
 # Escape dollars
 sed -i 's|$.|\$|g' /tmpfile
 
@@ -165,6 +163,8 @@ SECRETSFILE="/config/secrets.yaml"
 if [ -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
 
 while IFS= read -r line; do
+	# Clean output
+	line="${line//[\"\']/}"
 	# Check if secret
 	if [[ "${line}" == *'!secret '* ]]; then
 		echo "secret detected"
