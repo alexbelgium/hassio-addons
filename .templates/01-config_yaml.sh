@@ -1,7 +1,14 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/env bashio
 # shellcheck shell=bash
-# shellcheck disable=SC2155,SC1087,SC2163,SC2116,SC2086
-set -e
+
+#################
+# CODE INJECTOR #
+#################
+
+# Any commands written in this bash script will be executed at addon start
+# See guide here : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-customisation
+
+apk add yamllint || apt-get install -y yamllint
 
 ##################
 # INITIALIZATION #
@@ -163,8 +170,6 @@ SECRETSFILE="/config/secrets.yaml"
 if [ -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
 
 while IFS= read -r line; do
-	# Clean output
-	line="${line//[\"\']/}"
 	# Check if secret
 	if [[ "${line}" == *'!secret '* ]]; then
 		echo "secret detected"
@@ -182,7 +187,7 @@ while IFS= read -r line; do
 		# extract keys and values
 		KEYS="${line%%=*}"
 		VALUE="${line#*=}"
-		line="${KEYS}='${VALUE}'"
+		line="${KEYS}="${VALUE}"
 		export "$line"
 		# export to python
 		if command -v "python3" &>/dev/null; then
