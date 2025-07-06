@@ -138,9 +138,6 @@ function parse_yaml {
 	local input_file=$1
 	local output_file=$2
 
-	# Clear the output file if it already exists
-	>"$output_file"
-
 	# Process each line to escape special characters and format as needed
 	while IFS= read -r line; do
 		# Skip lines that are empty or only contain whitespace
