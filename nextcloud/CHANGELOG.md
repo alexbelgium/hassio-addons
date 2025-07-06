@@ -1,3 +1,4 @@
+- Increase timeout to 600s
 
 ## 31.0.6 (13-06-2025)
 - Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
