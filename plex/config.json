@@ -1,5 +1,9 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "backup_exclude": [
     "**/Cache/**",
     "**/Plug-in Support/Caches/**",
@@ -117,7 +121,11 @@
   "host_network": true,
   "image": "ghcr.io/alexbelgium/plex_nas-{arch}",
   "init": false,
-  "map": ["share:rw", "media:rw", "ssl"],
+  "map": [
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "name": "Plex NAS",
   "options": {
     "PGID": 0,
@@ -150,7 +158,10 @@
     "33443/tcp": "WebTools",
     "8324/tcp": "Plex for Roku via Plex Companion"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",

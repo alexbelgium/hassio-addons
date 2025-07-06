@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Gitea for Home Assistant",
   "devices": [
@@ -67,7 +70,11 @@
   ],
   "image": "ghcr.io/alexbelgium/gitea-{arch}",
   "init": false,
-  "map": ["addon_config:rw", "share:rw", "ssl:rw"],
+  "map": [
+    "addon_config:rw",
+    "share:rw",
+    "ssl:rw"
+  ],
   "name": "Gitea",
   "options": {
     "APP_NAME": "Gitea for Homeassistant",
