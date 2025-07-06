@@ -75,8 +75,8 @@ dq_escape() {
 while IFS= read -r LINE; do
 	[[ -z "$LINE" || "$LINE" != *=* ]] && continue
 	# Escape special characters not within single quotes
-        LINE=$(sed -E "s/([^'])([][\$\`\"\\!&;|<>])/\1\\\\\\2/g" <<< "$LINE")
-        KEY="${LINE%%=*}"
+	LINE=$(sed -E "s/([^'])([][\$\`\"\\!&;|<>])/\1\\\\\\2/g" <<<"$LINE")
+	KEY="${LINE%%=*}"
 	VALUE="${LINE#*=}"
 	# !secret handling
 	if [[ "$VALUE" =~ ^!secret[[:space:]]+(.+) ]]; then
