@@ -135,7 +135,7 @@ sed -i 's/: /=/' /tempenv
 
 # Look where secrets.yaml is located
 SECRETSFILE="/config/secrets.yaml"
-if [ -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
+if [ ! -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
 
 while IFS= read -r line; do
 	# Skip empty lines
@@ -146,6 +146,10 @@ while IFS= read -r line; do
 	# Check if secret
 	if [[ "${line}" == *'!secret '* ]]; then
 		echo "secret detected"
+		if [ ! -f "$SECRETSFILE" ]; then
+  			bashio:log.fatal "Secrets file not found, ${line} skipped"
+     			continue
+		fi
 		secret=${line#*secret }
 		# Check if single match
 		secretnum=$(sed -n "/$secret:/=" "$SECRETSFILE")
