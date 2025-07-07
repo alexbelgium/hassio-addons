@@ -130,31 +130,12 @@ if [ "$EXIT_CODE" != 0 ]; then
 	bashio::log.yellow "... config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
 fi
 
-# Export all yaml entries as env variables
-# Helper function
-function parse_yaml {
-	local prefix=$2 || local prefix=""
-	local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @ | tr @ '\034')
-	sed -ne "s|^\($s\):|\1|" \
-		-e "s| #.*$||g" \
-		-e "s|#.*$||g" \
-		-e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-		-e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" $1 |
-		awk -F$fs '{
-indent = length($1)/2;
-vname[indent] = $2;
-for (i in vname) {if (i > indent) {delete vname[i]}}
-if (length($3) > 0) {
-vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-}
-    }'
-}
-
 # Get list of parameters in a file
-parse_yaml "$CONFIGSOURCE" "" >/tmpfile
-# Escape dollars
-sed -i 's|$.|\$|g' /tmpfile
+cp "$CONFIGSOURCE" /tmpfile
+# Remove comments
+sed -Ei 's/\s*#.*$//' /tmpfile
+# converts yaml to variables
+sed -i 's/: /=/' /tmpfile
 
 # Look where secrets.yaml is located
 SECRETSFILE="/config/secrets.yaml"
