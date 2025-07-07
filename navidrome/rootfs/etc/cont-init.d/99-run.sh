@@ -15,6 +15,7 @@ ND_LOGLEVEL=$(bashio::config 'log_level')
 export ND_LOGLEVEL
 
 ND_BASEURL=$(bashio::config 'base_url')
+ND_BASEURL="${ND_BASEURL%/}"
 export ND_BASEURL
 
 if bashio::config.true 'ssl'; then
