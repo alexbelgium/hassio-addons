@@ -159,13 +159,17 @@ while IFS= read -r line; do
 		# extract keys and values
 		KEYS="${line%%=*}"
 		VALUE="${line#*=}"
-		line="${KEYS}="${VALUE}"
+  		# Check if VALUE is quoted
+		if [[ "$VALUE" != \"*\" || "$VALUE" == '' ]]; then
+			VALUE="\"$VALUE\""
+		fi
+		line="${KEYS}"="${VALUE}"
 		export "$line"
 		# export to python
 		if command -v "python3" &>/dev/null; then
 			[ ! -f /env.py ] && echo "import os" >/env.py
-            # Escape single quotes in VALUE
-            VALUE_ESCAPED="${VALUE//\'/\'\"\'\"\'}"
+	  		# Escape single quotes in VALUE
+    			VALUE_ESCAPED="${VALUE//\'/\'\"\'\"\'}"
 			echo "os.environ['${KEYS}'] = '${VALUE_ESCAPED}'" >> /env.py
 			python3 /env.py
 		fi
