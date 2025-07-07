@@ -147,8 +147,8 @@ while IFS= read -r line; do
 	if [[ "${line}" == *'!secret '* ]]; then
 		echo "secret detected"
 		if [ ! -f "$SECRETSFILE" ]; then
-  			bashio:log.fatal "Secrets file not found, ${line} skipped"
-     			continue
+			bashio:log.fatal "Secrets file not found, ${line} skipped"
+			continue
 		fi
 		secret=${line#*secret }
 		# Check if single match
