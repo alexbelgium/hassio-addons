@@ -120,22 +120,17 @@ if [ ! -s /tempenv ]; then
 	bashio::log.green "... no env variables found, exiting"
 	exit 0
 fi
-rm /tempenv
 
 # Check if yaml is valid
 EXIT_CODE=0
-yamllint -d relaxed "$CONFIGSOURCE" &>ERROR || EXIT_CODE=$?
+yamllint -d relaxed /tempenv &>ERROR || EXIT_CODE=$?
 if [ "$EXIT_CODE" != 0 ]; then
 	cat ERROR
 	bashio::log.yellow "... config file has an invalid yaml format. Please check the file in $CONFIGSOURCE. Errors list above."
 fi
 
-# Get list of parameters in a file
-cp "$CONFIGSOURCE" /tmpfile
-# Remove comments
-sed -Ei 's/\s*#.*$//' /tmpfile
 # converts yaml to variables
-sed -i 's/: /=/' /tmpfile
+sed -i 's/: /=/' /tempenv
 
 # Look where secrets.yaml is located
 SECRETSFILE="/config/secrets.yaml"
@@ -188,4 +183,5 @@ while IFS= read -r line; do
 	else
 		bashio::log.red "$line does not follow the correct structure. Please check your yaml file."
 	fi
-done <"/tmpfile"
+done <"/tempenv"
+rm /tempenv
