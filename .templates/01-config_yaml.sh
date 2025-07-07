@@ -171,7 +171,7 @@ while IFS= read -r line; do
 		# set .env
 		echo "$line" >>/.env
 		# set environement
-  		mkdir -p /etc
+		mkdir -p /etc
 		echo "$line" >>/etc/environment
 		# Export to scripts
 		if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
