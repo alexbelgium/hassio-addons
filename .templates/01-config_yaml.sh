@@ -164,8 +164,8 @@ while IFS= read -r line; do
 		# export to python
 		if command -v "python3" &>/dev/null; then
 			[ ! -f /env.py ] && echo "import os" >/env.py
-                        # Escape single quotes in VALUE
-                        VALUE_ESCAPED="${VALUE//\'/\'\"\'\"\'}"
+            # Escape single quotes in VALUE
+            VALUE_ESCAPED="${VALUE//\'/\'\"\'\"\'}"
 			echo "os.environ['${KEYS}'] = '${VALUE_ESCAPED}'" >> /env.py
 			python3 /env.py
 		fi
