@@ -168,9 +168,9 @@ while IFS= read -r line; do
 		KEYS="${line%%=*}"
 		VALUE="${line#*=}"
 		# Check if VALUE is quoted
-		if [[ "$VALUE" != \"*\" ]] && [[ "$VALUE" != \'*\' ]]; then
-			VALUE="\"$VALUE\""
-		fi
+		#if [[ "$VALUE" != \"*\" ]] && [[ "$VALUE" != \'*\' ]]; then
+		#	VALUE="\"$VALUE\""
+		#fi
 		line="${KEYS}=${VALUE}"
 		export "$line"
 		# export to python
