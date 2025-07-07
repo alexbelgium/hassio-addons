@@ -75,4 +75,4 @@ jobs:
           message: "GitHub bot: fix linting issues (nobuild)"
           default_author: github_actions
           pull: --rebase --autostash
-          fetch: --tags --force
+          fetch: --tags
