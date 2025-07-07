@@ -115,7 +115,7 @@ cp "$CONFIGSOURCE" /tempenv
 sed -i '/^#/d' /tempenv
 sed -i '/^[[:space:]]*$/d' /tempenv
 sed -i '/^$/d' /tempenv
-echo "" >/tempenv
+echo "" >> /tempenv
 
 # Exit if empty
 if [ ! -s /tempenv ]; then
