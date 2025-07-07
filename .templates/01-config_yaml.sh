@@ -155,7 +155,7 @@ while IFS= read -r line; do
 		KEYS="${line%%=*}"
 		VALUE="${line#*=}"
 		# Check if VALUE is quoted
-		if [[ "$VALUE" != \"*\" || "$VALUE" == '' ]]; then
+		if [[ "$VALUE" != \"*\" || "$VALUE" == \'*\' ]]; then
 			VALUE="\"$VALUE\""
 		fi
 		line="${KEYS}"="${VALUE}"
@@ -169,8 +169,9 @@ while IFS= read -r line; do
 			python3 /env.py
 		fi
 		# set .env
-		if [ -f /.env ]; then echo "$line" >>/.env; fi
-		mkdir -p /etc
+		echo "$line" >>/.env
+		# set environement
+  		mkdir -p /etc
 		echo "$line" >>/etc/environment
 		# Export to scripts
 		if cat /etc/services.d/*/*run* &>/dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2>/dev/null; fi
