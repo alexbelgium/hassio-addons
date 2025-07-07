@@ -145,20 +145,20 @@ while IFS= read -r line; do
 
 	# Check if secret
 	if [[ "$line" == *!secret* ]]; then
-	    echo "Secret detected"
-	    if [ ! -f "$SECRETSFILE" ]; then
-	        bashio::log.fatal "Secrets file not found in $SECRETSFILE, $line skipped"
-	        continue
-	    fi
-	    secret=$(echo "$line" | sed 's/.*!secret \(.*\)/\1/')
-	    # Check if single match
-	    secretnum=$(sed -n "/$secret:/=" "$SECRETSFILE")
-	    if [[ $(echo "$secretnum" | grep -q ' ') ]]; then
-	        bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
-	    fi
-	    # Get text
-	    secret_value=$(sed -n "/$secret:/s/.*: //p" "$SECRETSFILE")
-	    line="${line%%=*}='$secret_value'"
+		echo "Secret detected"
+		if [ ! -f "$SECRETSFILE" ]; then
+			bashio::log.fatal "Secrets file not found in $SECRETSFILE, $line skipped"
+			continue
+		fi
+		secret=$(echo "$line" | sed 's/.*!secret \(.*\)/\1/')
+		# Check if single match
+		secretnum=$(sed -n "/$secret:/=" "$SECRETSFILE")
+		if [[ $(echo "$secretnum" | grep -q ' ') ]]; then
+			bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+		fi
+		# Get text
+		secret_value=$(sed -n "/$secret:/s/.*: //p" "$SECRETSFILE")
+		line="${line%%=*}='$secret_value'"
 	fi
 
 	# Data validation
