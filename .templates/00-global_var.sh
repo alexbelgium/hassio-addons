@@ -27,6 +27,15 @@ fi
 # echo "All addon options were exported as variables"
 mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 
+# Escape special characters using printf and enclose in double quotes
+sanitize_variable() {
+    local input="$1"
+    local escaped_input
+    printf -v escaped_input '%q' "$input"
+    escaped_input=\"${escaped_input//\'/\'\'}\"
+    echo "$escaped_input"
+}
+
 for KEYS in "${arr[@]}"; do
 	# export key
 	VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
@@ -34,9 +43,12 @@ for KEYS in "${arr[@]}"; do
 	if [[ "$VALUE" == \[* ]]; then
 		bashio::log.warning "One of your option is an array, skipping"
 	else
+ 		# Sanitize variable
+   		if [[ "$VALUE" <> \'*\' ]]; then
+	   		VALUE=$(sanitize_variable "$VALUE")
+      		fi
 		# Continue for single values
-		VALUE="${VALUE//[\"\']/}"
-		line="${KEYS}='${VALUE}'"
+		line="${KEYS}=${VALUE}"
 		# Check if secret
 		if [[ "${line}" == *"!secret "* ]]; then
 			echo "secret detected"
