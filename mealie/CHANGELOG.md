@@ -1,3 +1,4 @@
+## v2.8.0-24 (08-07-2025)
 - Fix variables export in config.yaml : https://github.com/alexbelgium/hassio-addons/issues/1933
 
 ## v2.8.0 (22-03-2025)
