@@ -60,7 +60,7 @@ fi
 chmod -R 777 /data
 mkdir -p "$DATA_DIR"
 cd "$DATA_DIR" || true
-chown -R "$PUID:$PGID" .
+chown -R "$(bashio::config "PUID"):$(bashio::config "PGID")" .
 echo "Permissions adapted"
 
 bashio::log.info "Starting nginx"
