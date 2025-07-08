@@ -10,8 +10,6 @@ touch /started
 # Starting scripts #
 ####################
 
-sed -i 's|/."$CONFIGSOURCE"|exec "$CONFIGSOURCE"|g' /etc/cont-init.d/01-custom_script.sh
-
 for SCRIPTS in /etc/cont-init.d/*; do
     [ -e "$SCRIPTS" ] || continue
     echo "$SCRIPTS: executing"
