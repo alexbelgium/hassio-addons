@@ -37,7 +37,6 @@ sanitize_variable() {
 		return
 	fi
 	printf -v escaped '%q' "$raw"
-	escaped="${escaped//\\ /} }"
 	# If nothing changed, return the original.
 	if [[ "$raw" == "$escaped" ]]; then
 		printf '%s' "$raw"
