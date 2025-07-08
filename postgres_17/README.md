@@ -58,6 +58,11 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Use any Postgres client to connect, e.g. to `homeassistant.local:5432`
 
+Migration from postgres 15 :
+- stop the postgres 15 addon
+- use the Filebrowser addon to copy the database folder from /addon_configs/xxx-postgres to /addon_configs/xxx-postgres_latest
+- start the postgres 17 addon. Upgrade of the database should proceed. In case it doesn't, your data is anyway safe in the postgres 15 addon
+
 ## Support
 
 Create an issue on github
