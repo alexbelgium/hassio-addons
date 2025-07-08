@@ -124,6 +124,12 @@ pull-filter ignore "ifconfig-ipv6"
 </details>
 
 <details>
+  <summary>### 100% cpu</summary>
+Delete your nova3 folder in /config and restart qbittorrent
+
+</details>
+
+<details>
   <summary>### Monitored folders (@FaliseDotCom)</summary>
 
 - go to config\addons_config\qBittorrent
