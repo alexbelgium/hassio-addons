@@ -61,6 +61,6 @@ while IFS= read -r line; do
 	if [[ -n "$line" ]] && [[ ! "$line" =~ ^# ]]; then
 		bashio::log.green "... script found, executing"
 		bash "$CONFIGSOURCE"
-                break
+		break
 	fi
 done <"$CONFIGSOURCE"
