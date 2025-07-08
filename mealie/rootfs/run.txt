@@ -26,16 +26,6 @@ rm /.env || true
 rm /env.py || true
 
 ####################
-# Export variables #
-####################
-
-bashio::log.info "Exporting variables"
-for k in $(bashio::jq "/data/options.json" 'keys | .[]'); do
-    bashio::log.blue "$k"="$(bashio::config "$k")"
-    export "$k"="$(bashio::config "$k")"
-done
-
-####################
 # MIGRATE DATA DIR #
 ####################
 
