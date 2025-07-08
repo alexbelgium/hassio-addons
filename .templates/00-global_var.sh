@@ -29,24 +29,30 @@ mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 
 # Escape special characters using printf and enclose in double quotes
 sanitize_variable() {
-	local input="$1"
-	local escaped_input
-	printf -v escaped_input '%q' "$input"
-	escaped_input=\"${escaped_input//\'/\'\'}\"
-	echo "$escaped_input"
+    local raw="$1"          # original value
+    local escaped           # value after printf %q
+    printf -v escaped '%q' "$raw"
+
+    # If nothing changed, return the original.
+    [[ "$raw" == "$escaped" ]] && {
+        printf '%s' "$raw"
+        return
+    }
+
+    # Otherwise protect the escaped string with double quotes.
+    printf '"%s"' "$escaped"
 }
 
 for KEYS in "${arr[@]}"; do
 	# export key
-	VALUE=$(jq ."$KEYS" "${JSONSOURCE}")
+	VALUE=$(jq -r --raw-output ".\"$KEYS\"" "$JSONSOURCE")
 	# Check if the value is an array
 	if [[ "$VALUE" == \[* ]]; then
 		bashio::log.warning "One of your option is an array, skipping"
 	else
 		# Sanitize variable
-		if [[ "$VALUE" != \'*\' ]] && [[ "$VALUE" =~ [^a-zA-Z0-9] ]]; then
-			VALUE=$(sanitize_variable "$VALUE")
-		fi
+                VALUE=$(sanitize_variable "$VALUE")
+  
 		# Continue for single values
 		line="${KEYS}=${VALUE}"
 		# Check if secret
