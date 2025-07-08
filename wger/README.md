@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [wger] Error during installation (opened 2025-07-07)](https://github.com/alexbelgium/hassio-addons/issues/1941) by [@devslash0](https://github.com/devslash0)
 # Hass.io Add-ons: Wger
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
