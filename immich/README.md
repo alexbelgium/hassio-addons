@@ -1,5 +1,4 @@
 ## &#9888; Open Request : [✨ [REQUEST] immich and Nextcloud Ingress support (opened 2025-03-15)](https://github.com/alexbelgium/hassio-addons/issues/1812) by [@bessertristan09](https://github.com/bessertristan09)
-## &#9888; Open Issue : [Postgres 15 15.7-45 update break immich (opened 2025-06-23)](https://github.com/alexbelgium/hassio-addons/issues/1924) by [@lagge78](https://github.com/lagge78)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)

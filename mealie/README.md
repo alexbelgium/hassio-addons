@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Mealie] Profile pictures do not show in ingress (opened 2025-01-11)](https://github.com/alexbelgium/hassio-addons/issues/1714) by [@IceBotYT](https://github.com/IceBotYT)
 ## &#9888; Open Request : [✨ [REQUEST] Mealie - add OpenAI support (opened 2025-03-05)](https://github.com/alexbelgium/hassio-addons/issues/1802) by [@tillmannschatz](https://github.com/tillmannschatz)
 ## &#9888; Open Issue : [🐛 [Mealie] Quotes in Env Variables are swallowed (opened 2025-07-02)](https://github.com/alexbelgium/hassio-addons/issues/1933) by [@eMerzh](https://github.com/eMerzh)
 # Hass.io Add-ons: Mealie
