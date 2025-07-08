@@ -1,4 +1,4 @@
-{
+7{
   "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Mealie is a self hosted recipe manager and meal planner built in Vue",
@@ -109,5 +109,5 @@
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v2.8.0-16"
+  "version": "v2.8.0-17"
 }
