@@ -44,7 +44,7 @@ for KEYS in "${arr[@]}"; do
 		bashio::log.warning "One of your option is an array, skipping"
 	else
 		# Sanitize variable
-		if [[ "$VALUE" != \'*\' ]] && [[ "$VALUE" == *[!\*]* ]]; then
+		if [[ "$VALUE" != \'*\' ]] && [[ "$VALUE" =~ [^a-zA-Z0-9] ]]; then
 			VALUE=$(sanitize_variable "$VALUE")
 		fi
 		# Continue for single values
