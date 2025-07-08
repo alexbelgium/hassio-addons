@@ -29,21 +29,21 @@ mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 
 # Escape special characters using printf and enclose in double quotes
 sanitize_variable() {
-    local raw="$1" # original value
-    local escaped  # value after printf %q
-    # Check if the value is an array
-    if [[ "$raw" == \[* ]]; then
-        echo "One of your options is an array, skipping"
-        return
-    fi
-    printf -v escaped '%q' "$raw"
-    # If nothing changed, return the original.
-    if [[ "$raw" == "$escaped" ]]; then
-        printf '%s' "$raw"
-        return
-    fi
-    # Otherwise protect the escaped string with double quotes.
-    printf '"%s"' "$escaped"
+	local raw="$1" # original value
+	local escaped  # value after printf %q
+	# Check if the value is an array
+	if [[ "$raw" == \[* ]]; then
+		echo "One of your options is an array, skipping"
+		return
+	fi
+	printf -v escaped '%q' "$raw"
+	# If nothing changed, return the original.
+	if [[ "$raw" == "$escaped" ]]; then
+		printf '%s' "$raw"
+		return
+	fi
+	# Otherwise protect the escaped string with double quotes.
+	printf '"%s"' "$escaped"
 }
 
 for KEYS in "${arr[@]}"; do
