@@ -33,8 +33,8 @@ CONFIGSOURCE="$CONFIGLOCATION"/config.yaml
 # Is there a custom path
 if bashio::config.has_value 'CONFIG_LOCATION'; then
 	CONFIGSOURCE=$(bashio::config "CONFIG_LOCATION")
-        if [[ "$CONFIGSOURCE" == *"."* ]]; then
-	        CONFIGSOURCE=$(dirname "$CONFIGSOURCE")
+	if [[ "$CONFIGSOURCE" == *"."* ]]; then
+		CONFIGSOURCE=$(dirname "$CONFIGSOURCE")
 	fi
 	# If does not end by config.yaml, remove trailing slash and add config.yaml
 	if [[ "$CONFIGSOURCE" != *".yaml" ]]; then
