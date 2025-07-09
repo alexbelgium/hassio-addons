@@ -66,8 +66,6 @@ Migration from postgres 15 :
 - use the Filebrowser addon to copy the database folder from /addon_configs/xxx-postgres to /addon_configs/xxx-postgres_latest
 - start the postgres 17 addon. Upgrade of the database should proceed. In case it doesn't, your data is anyway safe in the postgres 15 addon
 
-Sure! Here's the improved version in Markdown format for easy copy-pasting:
-
 ## Security
 
 By default, Postgres will be reachable on the local network of your host system. To improve security, you can disable this behavior and make Postgres available only to other Add-ons within Home Assistant.
