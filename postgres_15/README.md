@@ -34,6 +34,7 @@ default user: `postgres`
 password: `set by POSTGRES_PASSWORD`
 
 You can configure this options:
+
 ```yaml
 POSTGRES_PASSWORD
 POSTGRES_USER
@@ -41,6 +42,7 @@ POSTGRES_DB
 POSTGRES_INITDB_ARGS
 POSTGRES_HOST_AUTH_METHOD
 ```
+
 For more info check [base image docs](https://hub.docker.com/_/postgres).
 
 By default `postgresql.conf` is stored in volume accessible by other addons and Home Assistant, so you can conviniently modify it by e.g. File Editor addon. If you prefer better security change `CONFIG_LOCATION` to e.g. `/data/orig/postgresql.conf`, so it will be acessible only to this addon, but you will have to modify it by the [Hassio SSH](https://developers.home-assistant.io/docs/operating-system/debugging/).
