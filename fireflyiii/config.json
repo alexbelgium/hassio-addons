@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A free and open source personal finance manager",
   "devices": [
@@ -70,7 +73,10 @@
   },
   "image": "ghcr.io/alexbelgium/fireflyiii-{arch}",
   "init": false,
-  "map": ["config:rw", "share:rw"],
+  "map": [
+    "config:rw",
+    "share:rw"
+  ],
   "name": "Firefly iii",
   "options": {
     "APP_KEY": "CHANGEME_32_CHARS_EuC5dfn3LAPzeO",
@@ -98,7 +104,9 @@
     "Updates": "list(|hourly|daily|weekly)?",
     "silent": "bool?"
   },
-  "services": ["mysql:want"],
+  "services": [
+    "mysql:want"
+  ],
   "slug": "fireflyiii",
   "startup": "services",
   "udev": true,

@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "audio": true,
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Full linux desktop environment accessible via any modern web browser",
@@ -76,7 +79,12 @@
   "image": "ghcr.io/alexbelgium/webtop_kde-{arch}",
   "ingress": true,
   "init": false,
-  "map": ["addon_config:rw", "media:rw", "share:rw", "ssl"],
+  "map": [
+    "addon_config:rw",
+    "media:rw",
+    "share:rw",
+    "ssl"
+  ],
   "name": "Webtop KDE",
   "options": {
     "DNS_server": "8.8.8.8",
@@ -114,7 +122,10 @@
     "53/tcp": "DNS",
     "80/tcp": "http"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "DNS_server": "str?",
     "DRINODE": "list(/dev/dri/card0|/dev/dri/card1|/dev/dri/card2|/dev/dri/renderD128|/dev/dri/renderD129|)?",

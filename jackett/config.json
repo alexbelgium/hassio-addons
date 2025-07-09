@@ -1,5 +1,9 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Translates queries from apps (Sonarr, Sickrage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software",
   "devices": [
@@ -71,7 +75,12 @@
   },
   "image": "ghcr.io/alexbelgium/jackett_nas-{arch}",
   "init": false,
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "name": "Jackett NAS",
   "options": {
     "PGID": 0,
@@ -85,7 +94,10 @@
     "8889/tcp": "Alternative port",
     "9117/tcp": "Web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",

@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Fork of overseerr for jellyfin support",
   "devices": [
@@ -69,7 +72,9 @@
   "host_network": true,
   "image": "ghcr.io/alexbelgium/jellyseerr-{arch}",
   "init": false,
-  "map": ["config:rw"],
+  "map": [
+    "config:rw"
+  ],
   "name": "Jellyseerr",
   "options": {
     "TYPE": "emby",

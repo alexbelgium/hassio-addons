@@ -1,5 +1,9 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "backup": "cold",
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Postgres 15 with VectorChord support",
@@ -11,7 +15,11 @@
   "hassio_role": "manager",
   "image": "ghcr.io/alexbelgium/postgres-{arch}",
   "init": false,
-  "map": ["addon_config:rw", "homeassistant_config:rw", "media:rw"],
+  "map": [
+    "addon_config:rw",
+    "homeassistant_config:rw",
+    "media:rw"
+  ],
   "name": "Postgres 15",
   "options": {
     "POSTGRES_PASSWORD": "homeassistant"
