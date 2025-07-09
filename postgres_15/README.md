@@ -58,6 +58,15 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Use any Postgres client to connect, e.g. to `homeassistant.local:5432`
 
+## Security
+
+By default, Postgres will be reachable on the local network of your host system. To improve security, you can disable this behavior and make Postgres available only to other Add-ons within Home Assistant.
+
+1. Configure all Add-ons that use Postgres to connect via the internal DNS name: `db21ed7f-postgres:5432`.
+2. Go to **Settings → Add-ons → Postgres 15 → Configuration**, and under **Network**, remove port `5432` by clearing the text field.
+3. Click **Save** and restart the Add-on.
+4. Postgres is now only accessible from other Add-ons and no longer reachable from your local network (e.g., laptop, IoT devices, etc.).
+
 ## Support
 
 Create an issue on github
