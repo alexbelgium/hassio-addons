@@ -44,6 +44,7 @@ RUN \
     apt-get update -y && apt-get install curl gcc python3-dev git jq sudo php-mbstring procps -y && \
     \
     # Correct for systemctl
+    mkdir -p /helpers && \
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py -o /helpers/systemctl && \
     cp -rf /helpers/systemctl /bin/systemctl && \
     chmod a+x /bin/systemctl && \
