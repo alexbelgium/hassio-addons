@@ -1,3 +1,6 @@
+
+## v3.0.0 (12-07-2025)
+- Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 ## v2.8.0-24 (08-07-2025)
 - Fix variables export in config.yaml : https://github.com/alexbelgium/hassio-addons/issues/1933
 
