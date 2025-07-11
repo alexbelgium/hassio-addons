@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "FlexGet is a multipurpose automation tool for all of your media",
   "devices": [
@@ -71,7 +74,11 @@
   },
   "image": "ghcr.io/alexbelgium/flexget-{arch}",
   "init": false,
-  "map": ["share:rw", "config:rw", "media"],
+  "map": [
+    "share:rw",
+    "config:rw",
+    "media"
+  ],
   "name": "Flexget",
   "options": {
     "PGID": 0,
@@ -94,6 +101,6 @@
   "slug": "flexget",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.16.12",
+  "version": "3.16.13",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:5050]"
 }
