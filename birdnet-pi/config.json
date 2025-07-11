@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "audio": true,
   "backup": "cold",
   "codenotary": "alexandrep.github@gmail.com",
@@ -64,12 +61,7 @@
   "image": "ghcr.io/alexbelgium/birdnet-pi-{arch}",
   "ingress": true,
   "init": false,
-  "map": [
-    "addon_config:rw",
-    "media:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["addon_config:rw", "media:rw", "share:rw", "ssl"],
   "name": "BirdNET-pi",
   "options": {
     "BIRDSONGS_FOLDER": "/config/BirdSongs",
@@ -90,10 +82,7 @@
     "80/tcp": "Optional : set to 80 to use caddy's automatic ssl",
     "8081/tcp": "Web ui"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
     "LIVESTREAM_BOOT_ENABLED": "bool",
@@ -113,9 +102,7 @@
     "pi_password": "password",
     "ssl": "bool"
   },
-  "services": [
-    "mqtt:want"
-  ],
+  "services": ["mqtt:want"],
   "slug": "birdnet-pi",
   "tmpfs": true,
   "udev": true,
