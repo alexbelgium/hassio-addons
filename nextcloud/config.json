@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Nextcloud for Homeassistant",
   "devices": [
@@ -119,7 +122,10 @@
     "443/tcp": "Https Web Interface",
     "80/tcp": "Web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "Full_Text_Search": "bool?",
     "OCR": "bool?",
@@ -146,11 +152,13 @@
     "trusted_domains": "str?",
     "use_own_certs": "bool"
   },
-  "services": ["mysql:want"],
+  "services": [
+    "mysql:want"
+  ],
   "slug": "nextcloud_ocr",
   "uart": true,
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/nextcloud",
-  "version": "31.0.6-2",
+  "version": "31.0.7",
   "webui": "https://[HOST]:[PORT:443]"
 }
