@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Chromium as a service container",
   "devices": [
@@ -70,7 +73,9 @@
   },
   "image": "ghcr.io/alexbelgium/browserless_chrome-{arch}",
   "init": false,
-  "map": ["addon_config:rw"],
+  "map": [
+    "addon_config:rw"
+  ],
   "name": "Browserless Chromium",
   "options": {
     "TIMEOUT": "60000"
@@ -87,6 +92,6 @@
   "slug": "browserless_chrome",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/browserless_chrome",
-  "version": "2.32.1",
+  "version": "2.33.0",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]/docs"
 }
