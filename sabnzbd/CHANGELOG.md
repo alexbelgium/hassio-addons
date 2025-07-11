@@ -1,4 +1,7 @@
 
+## 4.5.2 (12-07-2025)
+- Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
+
 ## 4.5.1 (12-04-2025)
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
