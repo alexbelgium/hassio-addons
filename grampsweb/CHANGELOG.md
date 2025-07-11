@@ -1,3 +1,6 @@
+
+## 25.7.1 (12-07-2025)
+- Update to latest version from gramps-project/gramps-web (changelog : https://github.com/gramps-project/gramps-web/releases)
 ## "25.7.0" (05-07-2025)
 - Minor bugs fixed
 ## 25.7.0 (05-07-2025)
