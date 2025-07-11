@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "collaborative bookmark manager to collect, organize, and preserve webpages and articles",
   "environment": {
@@ -16,7 +19,9 @@
   },
   "image": "ghcr.io/alexbelgium/linkwarden-{arch}",
   "init": false,
-  "map": ["addon_config:rw"],
+  "map": [
+    "addon_config:rw"
+  ],
   "name": "Linkwarden",
   "ports": {
     "3000/tcp": 3000
@@ -41,6 +46,6 @@
   },
   "slug": "linkwarden",
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden",
-  "version": "2.11.2",
+  "version": "2.11.3",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:3000]"
 }
