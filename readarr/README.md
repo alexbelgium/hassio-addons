@@ -78,7 +78,7 @@ For more control, you can add enviroment variables by defining them as keys in a
 TZ: Europe/Paris
 ```
 
-more info : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-add-env-variables
+more info : https://github.com/alexbelgium/hassio-addons/wiki/Addons-feature:-add-env-variables
 
 ## Support
 
