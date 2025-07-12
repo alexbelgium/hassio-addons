@@ -3,6 +3,8 @@ name: Lint On Change
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - "**/config.*"
   pull_request:
     branches: [ master ]
 
