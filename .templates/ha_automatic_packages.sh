@@ -41,7 +41,7 @@ fi
 # ADD GENERAL ELEMENTS
 ######################
 
-PACKAGES="$PACKAGES jq yq curl ca-certificates"
+PACKAGES="$PACKAGES jq curl ca-certificates"
 
 # FOR EACH SCRIPT, SELECT PACKAGES
 ##################################
