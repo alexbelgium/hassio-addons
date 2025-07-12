@@ -236,5 +236,10 @@ fi
 # CLOSE  #
 ##########
 
+if grep -q "yify.foo" "$CONFIG_LOCATION"/qBittorrent.conf; then
+    bashio::log.warning "yify.foo found in qBittorrent.conf, this is a safety issue. It is removed now, but you should check your configuration."
+	sed -i '/yify.foo/d' "$CONFIG_LOCATION"/qBittorrent.conf
+fi
+
 bashio::log.info "Default username/password : $USERNAME/homeassistant"
 bashio::log.info "Configuration can be found in $CONFIG_LOCATION"
