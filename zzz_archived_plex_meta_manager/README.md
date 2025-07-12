@@ -1,4 +1,3 @@
-
 # ⚠️ It is recommended to use Kometa addon (<https://github.com/alexbelgium/hassio-addons>) instead of this. ⚠️
 
 # Home assistant add-on: Plex-meta-manager
@@ -69,7 +68,6 @@ PMM_NO_MISSING: False #Set to True to run without any of the missing movie/show 
 - Config.yaml (advanced usage)
 
 Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Addons-feature:-add-env-variables
-
 
 The complete list of ENV variables can be seen here : https://github.com/meisnate12/Plex-Meta-Manager/wiki/Run-Commands-&-Environmental-Variables
 

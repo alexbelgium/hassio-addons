@@ -1,16 +1,17 @@
-
 ## v5.3.2 (31-05-2025)
+
 - Update to latest version from haugene/docker-transmission-openvpn (changelog : https://github.com/haugene/docker-transmission-openvpn/releases)
 
 ## v5.3.1-6 (29-12-2023)
 
 - Minor bugs fixed
-- BREAKING CHANGE FOR CUSTOM VPN : if you are using a custom VPN provider, you must remove OPENVPN_CUSTOM_PROVIDER from your addon option and instead set OPENVPN_PROVIDER to "custom", then reference your ovpn file in your "OPENVPN_CONFIG". For example, if AIRVPN has provided to you an *.ovpn filed named AIRVPN.ovpn, you need to install an addon such as Filebrowser, go in the /config/addons_config/transmission/openvpn folder and put the AIRVPN.ovpn here. Then, in the addon option you need to write "AIRVPN" in the "OPENVPN_CONFIG" option
+- BREAKING CHANGE FOR CUSTOM VPN : if you are using a custom VPN provider, you must remove OPENVPN_CUSTOM_PROVIDER from your addon option and instead set OPENVPN_PROVIDER to "custom", then reference your ovpn file in your "OPENVPN_CONFIG". For example, if AIRVPN has provided to you an \*.ovpn filed named AIRVPN.ovpn, you need to install an addon such as Filebrowser, go in the /config/addons_config/transmission/openvpn folder and put the AIRVPN.ovpn here. Then, in the addon option you need to write "AIRVPN" in the "OPENVPN_CONFIG" option
 - Removed (not used anymore) : "OPENVPN_CUSTOM_PROVIDER", "OPENVPN_CUSTOM_PROVIDER_OVPN_LOCATION", "TRANSMISSION_V3_UPDATE"
 
 ## v5.3.1 (09-12-2023)
 
 - Update to latest version from haugene/docker-transmission-openvpn
+
 ## v5.2.0-6 (30-11-2023)
 
 - Minor bugs fixed
