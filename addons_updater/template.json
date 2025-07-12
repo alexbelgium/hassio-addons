@@ -1,7 +1,7 @@
 {
   "dockerhub_by_date": "",
   "dockerhub_list_size": "",
-  "fulltag": false,
+  "github_fulltag": false,
   "github_beta": false,
   "github_exclude": "",
   "github_havingasset": false,

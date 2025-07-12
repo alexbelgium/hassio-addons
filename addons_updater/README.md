@@ -49,7 +49,7 @@ Here is [an example](https://github.com/alexbelgium/hassio-addons/blob/master/ar
 
 You can add the following tags in the file :
 
-- fulltag: true is for example "v3.0.1-ls67" false is "3.0.1"
+- github_fulltag: true is for example "v3.0.1-ls67" false is "3.0.1"
 - github_beta: true/false ; should it look only for releases or prereleases ok
 - github_havingasset : true if there is a requirement that a release has binaries and not just source
 - github_tagfilter: filter a text in the release name

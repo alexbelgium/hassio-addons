@@ -173,10 +173,10 @@ for f in */; do
 
 			#Prepare tag flag
 			if [ "${FULLTAG}" = true ]; then
-				LOGINFO="... $SLUG : fulltag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+				LOGINFO="... $SLUG : github_fulltag is on" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 				ARGUMENTS="$ARGUMENTS --format tag"
 			else
-				LOGINFO="... $SLUG : fulltag is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+				LOGINFO="... $SLUG : github_fulltag is off" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 			fi
 
 			#Prepare tag flag
