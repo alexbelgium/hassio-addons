@@ -1,33 +1,46 @@
-
 ## ubuntu-2025-07-07 (2025-07-07)
+
 - Update to latest version from photoprism/photoprism
 
 ## ubuntu-2025-04-26 (2025-04-26)
+
 - Update to latest version from photoprism/photoprism
 
 ## ubuntu-2025-04-25 (2025-04-25)
+
 - Update to latest version from photoprism/photoprism
 
 ## ubuntu-2025-03-21 (2025-03-21)
+
 - Update to latest version from photoprism/photoprism
+
 ## ubuntu-2025-02-28-8 (02-03-2025)
+
 - Fix ssl error
 - Update to latest version from photoprism/photoprism
 
 ## ubuntu-2024-09-15 (2024-09-15)
+
 - Update to latest version from photoprism/photoprism
 
 ## ubuntu-2024-07-11 (2024-07-11)
+
 - Update to latest version from photoprism/photoprism
+
 ## ubuntu-2024-05-31-3 (10-06-2024)
+
 - Minor bugs fixed
 
 ## ubuntu-2024-05-31 (2024-05-31)
+
 - Update to latest version from photoprism/photoprism
 
 ## ubuntu-2024-05-23 (2024-05-23)
+
 - Update to latest version from photoprism/photoprism
+
 ## 240420-ef5f14bc4 (18-05-2024)
+
 - Minor bugs fixed
 
 ## preview-ubuntu-2023-04-29-4 (2023-12-04)
@@ -37,6 +50,7 @@
 ## preview-ubuntu-2023-04-29 (2023-04-29)
 
 - Update to latest version from photoprism/photoprism
+
 ## 231021 (22-10-2023)
 
 - Update to latest version from photoprism/photoprism
