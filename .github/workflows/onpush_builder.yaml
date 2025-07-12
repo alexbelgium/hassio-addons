@@ -45,28 +45,50 @@ jobs:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
       - uses: actions/checkout@v4
-      - name: Fix non-printable Unicode spaces in all text files for this add-on
+      # ────────────────────────────────────────────────────────────────
+      # 1. Replace non-printable Unicode spaces  ␣  and
+      #    convert Windows line endings (CRLF) → Unix (LF)
+      # ────────────────────────────────────────────────────────────────
+      - name: Sanitize text files (Unicode spaces + CRLF → LF)
         run: |
           cd "${{ matrix.addon }}"
           UNICODE_SPACES_REGEX=$'[\u00A0\u2002\u2003\u2007\u2008\u2009\u202F\u205F\u3000\u200B]'
+
           find . -type f | while read -r file; do
             MIME_TYPE=$(file --mime-type -b "$file")
+
             if [[ "$MIME_TYPE" == text/* ]]; then
-              echo "Fixing: $file"
-              perl -CSD -pe "s/$UNICODE_SPACES_REGEX/ /g" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+              echo "Sanitizing $file"
+              # 1️⃣ Replace exotic spaces → regular space
+              # 2️⃣ Strip 0x0D (CR) at end of every line
+              perl -CSD -pe "
+                s/${UNICODE_SPACES_REGEX}/ /g;  # space normalization
+                s/\r$//;                        # CRLF → LF
+              " "$file" > "$file.tmp" && mv "$file.tmp" "$file"
             else
               echo "Skipping non-text file: $file ($MIME_TYPE)"
             fi
           done
+      # ────────────────────────────────────────────────────────────────
+      # 2. Ensure every *.sh script is executable
+      # ────────────────────────────────────────────────────────────────
       - name: Make all .sh scripts executable
         run: |
           cd "${{ matrix.addon }}"
           find . -type f -iname "*.sh" -exec chmod u+x {} \;
+      # ────────────────────────────────────────────────────────────────
+      # 3. Verify nothing with mixed line endings slipped through
+      # ────────────────────────────────────────────────────────────────
+      - name: Assert no mixed CRLF/LF remain
+        uses: ymwymw/check-mixed-line-endings@v2
+      # ────────────────────────────────────────────────────────────────
+      # 4. Commit any changes we made
+      # ────────────────────────────────────────────────────────────────
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
           commit: -u
-          message: "GitHub bot: normalize and chmod"
+          message: "GitHub bot: sanitize (spaces + LF endings) & chmod"
           default_author: github_actions
           pull: --rebase --autostash
           fetch: --tags --force
@@ -121,6 +143,15 @@ jobs:
         uses: home-assistant/actions/helpers/info@master
         with:
           path: "./${{ matrix.addon }}"
+      - name: Check if Dockerfile exists
+        id: dockerfile_check
+        run: |
+          if [ -f "./${{ matrix.addon }}/Dockerfile" ]; then
+            echo "has_dockerfile=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No Dockerfile found in ${{ matrix.addon }}, skipping build."
+            echo "has_dockerfile=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Check if add-on should be built for arch
         id: check
         env:
@@ -136,8 +167,6 @@ jobs:
              echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
              echo "build_arch=false" >> "$GITHUB_OUTPUT";
           fi
-      - name: Use action to check for mixed line endings (CRLF and LF)
-        uses: ymwymw/check-mixed-line-endings@v2
       - name: Login to GitHub Container Registry
         if: env.BUILD_ARGS != '--test'
         uses: docker/login-action@v3.1.0
@@ -147,7 +176,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build ${{ matrix.addon }} add-on
         id: builderstep
-        if: steps.check.outputs.build_arch == 'true'
+        if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true'
         uses: home-assistant/builder@2025.03.0
         env:
           CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
