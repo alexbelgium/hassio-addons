@@ -1,34 +1,45 @@
-
 ## 4.5.2 (12-07-2025)
+
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
 ## 4.5.1 (12-04-2025)
+
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
 ## 4.5.0 (05-04-2025)
+
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
+
 ## 4.4.1-2 (10-02-2025)
+
 - New config logic, files migrated to /addon_configs/xxx-sabnzbd
 
 ## 4.4.1 (21-12-2024)
+
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
 ## 4.4.0 (14-12-2024)
+
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
 ## 4.3.3 (24-08-2024)
+
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
 ## 4.3.2 (01-06-2024)
+
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
 ## 4.3.1 (11-05-2024)
+
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
 ## 4.3.0 (04-05-2024)
+
 - Update to latest version from linuxserver/docker-sabnzbd (changelog : https://github.com/linuxserver/docker-sabnzbd/releases)
 
 ## 4.2.3 (16-03-2024)
+
 - Update to latest version from linuxserver/docker-sabnzbd
 
 ## 4.2.2 (03-02-2024)
