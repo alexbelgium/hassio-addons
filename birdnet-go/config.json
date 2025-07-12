@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "audio": true,
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Realtime BirdNET soundscape analyzer",
@@ -74,7 +77,11 @@
   "ingress": true,
   "ingress_stream": true,
   "init": false,
-  "map": ["addon_config:rw", "media:rw", "share:rw"],
+  "map": [
+    "addon_config:rw",
+    "media:rw",
+    "share:rw"
+  ],
   "name": "Birdnet-go",
   "options": {
     "BIRDSONGS_FOLDER": "/config/clips"
@@ -87,7 +94,10 @@
   "ports_description": {
     "8080/tcp": "Web ui"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "ALSA_CARD": "int?",
     "BIRDSONGS_FOLDER": "str?",
@@ -98,9 +108,12 @@
     "localdisks": "str?",
     "networkdisks": "str?"
   },
-  "services": ["mysql:want", "mqtt:want"],
+  "services": [
+    "mysql:want",
+    "mqtt:want"
+  ],
   "slug": "birdnet-go",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go",
-  "version": "20250710"
+  "version": "nightly-20250710"
 }

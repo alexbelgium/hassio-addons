@@ -7,5 +7,5 @@
   "slug": "birdnet-go",
   "source": "github",
   "upstream_repo": "tphakala/birdnet-go",
-  "upstream_version": "20250710"
+  "upstream_version": "nightly-20250710"
 }
