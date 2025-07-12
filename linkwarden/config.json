@@ -22,7 +22,7 @@
     "3000/tcp": 3000
   },
   "ports_description": {
-    "3000/tcp": "webui"
+    "3000/tcp": "Webui"
   },
   "schema": {
     "AUTHENTIK_CLIENT_ID": "str?",
