@@ -1,3 +1,4 @@
+## 5.1.2-2 (12-07-2025)
 - Safety check : check if yify.foo found in qbittorrent.conf
 
 ## 5.1.2 (05-07-2025)
