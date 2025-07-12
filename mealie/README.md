@@ -1,4 +1,5 @@
 ## &#9888; Open Request : [✨ [REQUEST] Mealie - add OpenAI support (opened 2025-03-05)](https://github.com/alexbelgium/hassio-addons/issues/1802) by [@tillmannschatz](https://github.com/tillmannschatz)
+## &#9888; Open Issue : [🐛 [Mealie] After updating Mealie to version 3.0.0 ingress not working (opened 2025-07-12)](https://github.com/alexbelgium/hassio-addons/issues/1948) by [@djtail](https://github.com/djtail)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
