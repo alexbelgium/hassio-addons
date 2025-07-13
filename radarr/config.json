@@ -1,5 +1,9 @@
 {
-  "arch": ["aarch64", "amd64", "armv7"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armv7"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "A fork of Sonarr to work with movies like Couchpotato",
   "devices": [
@@ -73,7 +77,12 @@
   "ingress": true,
   "ingress_entry": "radarr",
   "init": false,
-  "map": ["config:rw", "share:rw", "media:rw", "ssl"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw",
+    "ssl"
+  ],
   "name": "Radarr",
   "options": {
     "PGID": 0,
@@ -88,7 +97,10 @@
   "ports_description": {
     "7878/tcp": "Web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "PGID": "int",
     "PUID": "int",
