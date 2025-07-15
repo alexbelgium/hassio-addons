@@ -1,3 +1,5 @@
+## 2.4-2 (15-07-2025)
+- Minor bugs fixed
 
 ## 2.4-dev (12-04-2025)
 - Update to latest version from wger/server
