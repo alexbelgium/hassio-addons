@@ -45,9 +45,12 @@ install_vchord_and_vectors_for_old_pg() {
 	local vectorchord_tag="${VECTORCHORD_TAG:-0.3.0}"
 	local pgvectors_tag="${PGVECTORS_TAG:-0.3.0}"
 	case "$(uname -m)" in
-		x86_64 | amd64 | AMD64 | x86-64) targetarch=amd64 ;;
-		aarch64 | arm64 | ARM64)        targetarch=arm64 ;;
-		*) echo "Unsupported architecture: $(uname -m)" ; exit 1 ;;
+	x86_64 | amd64 | AMD64 | x86-64) targetarch=amd64 ;;
+	aarch64 | arm64 | ARM64) targetarch=arm64 ;;
+	*)
+		echo "Unsupported architecture: $(uname -m)"
+		exit 1
+		;;
 	esac
 
 	local old_pg_lib="/usr/lib/postgresql/$old_pgver/lib"
@@ -109,7 +112,10 @@ wait_for_postgres() {
 	local tries=0
 	while ! pg_isready -h "$DB_HOSTNAME" -p "$DB_PORT" -U "$DB_USERNAME" >/dev/null 2>&1; do
 		tries=$((tries + 1))
-		[ "$tries" -ge 60 ] && { bashio::log.error "Postgres did not start after 2 minutes, aborting." ; exit 1 ; }
+		[ "$tries" -ge 60 ] && {
+			bashio::log.error "Postgres did not start after 2 minutes, aborting."
+			exit 1
+		}
 		echo "PostgreSQL is starting up... ($tries/60)"
 		sleep 2
 	done
@@ -212,11 +218,17 @@ show_db_extensions() {
 
 upgrade_extension_if_needed() {
 	local extname="$1"
-	is_extension_available "$extname" || { bashio::log.info "$extname extension not available." ; return; }
+	is_extension_available "$extname" || {
+		bashio::log.info "$extname extension not available."
+		return
+	}
 
 	local available_version
 	available_version=$(get_available_extension_version "$extname")
-	[ -z "$available_version" ] && { bashio::log.info "Could not determine available version for $extname." ; return; }
+	[ -z "$available_version" ] && {
+		bashio::log.info "Could not determine available version for $extname."
+		return
+	}
 
 	for db in $(get_user_databases); do
 		local installed_version
@@ -242,7 +254,10 @@ upgrade_extension_if_needed() {
 upgrade_postgres_if_needed() {
 	CLUSTER_VERSION=$(get_pgdata_version)
 	IMAGE_VERSION="$PG_MAJOR_VERSION"
-	[ "$CLUSTER_VERSION" = "$IMAGE_VERSION" ] && { bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)." ; return; }
+	[ "$CLUSTER_VERSION" = "$IMAGE_VERSION" ] && {
+		bashio::log.info "PostgreSQL data directory version ($CLUSTER_VERSION) matches image version ($IMAGE_VERSION)."
+		return
+	}
 
 	bashio::log.warning "Postgres data directory version is $CLUSTER_VERSION but image wants $IMAGE_VERSION. Running upgrade..."
 	export DATA_DIR="$PGDATA" BINARIES_DIR="/usr/lib/postgresql" BACKUP_DIR="/config/backups"
@@ -251,15 +266,24 @@ upgrade_postgres_if_needed() {
 	apt-get update &>/dev/null
 	apt-get install -y procps rsync "postgresql-$IMAGE_VERSION" "postgresql-$CLUSTER_VERSION"
 
-	[ -d "$BINARIES_DIR/$CLUSTER_VERSION/bin" ] || { bashio::log.error "Old postgres binaries missing." ; exit 1 ; }
-	[ -d "$BINARIES_DIR/$IMAGE_VERSION/bin" ]   || { bashio::log.error "New postgres binaries missing." ; exit 1 ; }
+	[ -d "$BINARIES_DIR/$CLUSTER_VERSION/bin" ] || {
+		bashio::log.error "Old postgres binaries missing."
+		exit 1
+	}
+	[ -d "$BINARIES_DIR/$IMAGE_VERSION/bin" ] || {
+		bashio::log.error "New postgres binaries missing."
+		exit 1
+	}
 
 	install_vchord_and_vectors_for_old_pg "$CLUSTER_VERSION"
 
 	mkdir -p "$BACKUP_DIR"
 	local backup_target="$BACKUP_DIR/postgresql-$CLUSTER_VERSION"
 	bashio::log.info "Backing up data directory to $backup_target..."
-	rsync -a --delete "$PGDATA/" "$backup_target/" || { bashio::log.error "Backup with rsync failed!" ; exit 1 ; }
+	rsync -a --delete "$PGDATA/" "$backup_target/" || {
+		bashio::log.error "Backup with rsync failed!"
+		exit 1
+	}
 
 	cp -n --preserve=mode "/var/postgresql-conf-tpl/postgresql.hdd.conf" /etc/postgresql/postgresql.conf
 	sed -i "s@##PGDATA@$PGDATA@" /etc/postgresql/postgresql.conf
@@ -294,7 +318,7 @@ upgrade_postgres_if_needed() {
 		-O \"-c config_file=/etc/postgresql/postgresql.conf\""
 
 	[ -f "$backup_target/postgresql.conf" ] && cp "$backup_target/postgresql.conf" "$PGDATA"
-	[ -f "$backup_target/pg_hba.conf" ]     && cp -f "$backup_target/pg_hba.conf" "$PGDATA"
+	[ -f "$backup_target/pg_hba.conf" ] && cp -f "$backup_target/pg_hba.conf" "$PGDATA"
 
 	bashio::log.info "Upgrade completed successfully."
 	RESTART_NEEDED=true
