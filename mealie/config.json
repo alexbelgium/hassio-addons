@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Mealie is a self hosted recipe manager and meal planner built in Vue",
   "devices": [
@@ -68,9 +65,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "discovery": [
-    "mealie"
-  ],
+  "discovery": ["mealie"],
   "environment": {
     "BASE_SUBPATH": "/mealie/",
     "DATA_DIR": "/config",
@@ -82,12 +77,7 @@
   },
   "image": "ghcr.io/alexbelgium/mealie-{arch}",
   "ingress": true,
-  "map": [
-    "addon_config:rw",
-    "homeassistant_config:rw",
-    "share:rw",
-    "ssl:rw"
-  ],
+  "map": ["addon_config:rw", "homeassistant_config:rw", "share:rw", "ssl:rw"],
   "name": "Mealie",
   "options": {
     "ALLOW_SIGNUP": true,

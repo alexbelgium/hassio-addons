@@ -1,8 +1,5 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64"
-  ],
+  "arch": ["aarch64", "amd64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Makes Usenet as simple and streamlined as possible by automating everything we can",
   "devices": [
@@ -75,12 +72,7 @@
   "image": "ghcr.io/alexbelgium/sabnzbd-{arch}",
   "ingress_entry": "sabnzbd",
   "init": false,
-  "map": [
-    "addon_config:rw",
-    "homeassistant_config:rw",
-    "share:rw",
-    "media:rw"
-  ],
+  "map": ["addon_config:rw", "homeassistant_config:rw", "share:rw", "media:rw"],
   "name": "Sabnzbd",
   "options": {
     "PGID": 0,
@@ -94,10 +86,7 @@
   "ports_description": {
     "8080/tcp": "web interface"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
+  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
   "schema": {
     "PGID": "int",
     "PUID": "int",

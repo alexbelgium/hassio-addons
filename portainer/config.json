@@ -1,13 +1,6 @@
 {
-  "arch": [
-    "aarch64",
-    "amd64",
-    "armv7"
-  ],
-  "backup_exclude": [
-    "backups",
-    "docker_config/cli-plugins"
-  ],
+  "arch": ["aarch64", "amd64", "armv7"],
+  "backup_exclude": ["backups", "docker_config/cli-plugins"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Manage your Docker environment with ease",
   "docker_api": true,
@@ -17,11 +10,7 @@
   "ingress_port": 1337,
   "ingress_stream": true,
   "init": false,
-  "map": [
-    "addon_config:rw",
-    "share:rw",
-    "ssl"
-  ],
+  "map": ["addon_config:rw", "share:rw", "ssl"],
   "name": "Portainer",
   "options": {
     "certfile": "fullchain.pem",

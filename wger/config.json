@@ -1,16 +1,9 @@
 {
-  "arch": [
-    "amd64",
-    "aarch64"
-  ],
+  "arch": ["amd64", "aarch64"],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "manage your personal workouts, weight and diet plans",
   "image": "ghcr.io/alexbelgium/wger-{arch}",
-  "map": [
-    "share:rw",
-    "config:rw",
-    "ssl:ro"
-  ],
+  "map": ["share:rw", "config:rw", "ssl:ro"],
   "name": "Wger",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/wger/config.yaml"
