@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/imagegenius/ente:server-latest",
-    "amd64": "ghcr.io/imagegenius/ente:server-latest"
+    "aarch64": "ghcr.io/ente-io/server:latest",
+    "amd64": "ghcr.io/ente-io/server:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
