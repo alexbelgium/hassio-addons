@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Book manager and automation",
   "devices": [
@@ -73,7 +76,11 @@
   "ingress": true,
   "ingress_entry": "readarr",
   "init": false,
-  "map": ["config:rw", "share:rw", "media:rw"],
+  "map": [
+    "config:rw",
+    "share:rw",
+    "media:rw"
+  ],
   "name": "Readarr",
   "options": {
     "CONFIG_LOCATION": "/config/addons_config/readarr",
@@ -89,7 +96,10 @@
   "ports_description": {
     "8787/tcp": "web interface"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "CONFIG_LOCATION": "str",
     "PGID": "int",
