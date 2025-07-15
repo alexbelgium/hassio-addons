@@ -1,11 +1,16 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Display your immich gallery as a digital photo frame",
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/immich_frame-{arch}",
   "init": false,
-  "map": ["addon_config:rw"],
+  "map": [
+    "addon_config:rw"
+  ],
   "name": "Immich Frame",
   "ports": {
     "8080/tcp": 8171

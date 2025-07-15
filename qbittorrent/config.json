@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Bittorrent client with optional vpn",
   "devices": [
@@ -111,7 +114,11 @@
     "6882/udp": "Alternative peer port, do not change",
     "8080/tcp": "Web UI port (not required for Ingress)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH", "NET_ADMIN"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH",
+    "NET_ADMIN"
+  ],
   "schema": {
     "DNS_server": "str?",
     "PGID": "int?",
