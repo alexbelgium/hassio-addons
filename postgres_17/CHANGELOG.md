@@ -1,3 +1,5 @@
+- Allow for non standard user
+
 ## 17.4-9 (24-06-2025)
 
 - Fix healthcheck to run with correct user and database
