@@ -74,11 +74,14 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && \
     /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
+
 # ---------- Healthcheck ----------
-ENV HEALTH_PORT="8080" \
-    HEALTH_URL="/ping"
-HEALTHCHECK --interval=10s --retries=5 --timeout=20s CMD \
-    curl -A "HealthCheck: Docker/1.0" -fs "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" || exit 1
+#ENV HEALTH_PORT="8080" \
+#    HEALTH_URL="/ping"
+#HEALTHCHECK --interval=10s --retries=5 --timeout=20s CMD \
+#    curl -A "HealthCheck: Docker/1.0" -fs "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" || exit 1
 
 ############
 # 5 Labels #

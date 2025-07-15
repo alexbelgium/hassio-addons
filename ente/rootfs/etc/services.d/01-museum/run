@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv bash
+set -e
+
+CONFIG_FILE="/config/museum.yaml"
+
+# Safety: refuse to start if the config file is missing
+if [[ ! -f "$CONFIG_FILE" ]]; then
+  echo "[museum] ERROR: $CONFIG_FILE not found" >&2
+  exit 1
+fi
+
+# Exec so that S6 can reap the PID
+exec /usr/bin/museum --config "$CONFIG_FILE"

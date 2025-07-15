@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bash
+set -e
+[[ "${DISABLE_WEB_UI,,}" == "true" ]] && exit 0
+exec /usr/bin/ente-web
