@@ -1,76 +1,86 @@
 {
-  "name": "Ente",
-  "slug": "ente",
-  "version": "1.0.0",
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "description": "Self‑hosted, end‑to‑end‑encrypted photo & video storage (Ente server + MinIO).",
-  "url": "https://github.com/alexbelgium/hassio-addons",
-  "arch": ["aarch64", "amd64"],
+  "devices": [
+    "/dev/dri",
+    "/dev/dri/renderD128",
+    "/dev/vchiq",
+    "/dev/video10",
+    "/dev/video11",
+    "/dev/video12"
+  ],
+  "environment": {
+    "DB_DATABASE_NAME": "ente_db",
+    "DB_HOSTNAME": "homeassistant.local",
+    "DB_PASSWORD": "ente",
+    "DB_PORT": "5432",
+    "DB_USERNAME": "pguser",
+    "ENTE_API_ORIGIN": "http://[HOST]:[PORT:8080]",
+    "MINIO_ROOT_PASSWORD": "minioadmin",
+    "MINIO_ROOT_USER": "minioadmin",
+    "PGID": "0",
+    "PUID": "0",
+    "S3_BUCKET": "ente-media",
+    "S3_ENDPOINT": "http://localhost:3200",
+    "TZ": "Europe/Paris"
+  },
+  "hassio_api": true,
   "image": "ghcr.io/alexbelgium/ente-{arch}",
   "init": false,
-  "startup": "services",
-  "ports": {
-    "8080/tcp": 8280,
-    "3000/tcp": 8300,
-    "3200/tcp": 8320
-  },
-  "ports_description": {
-    "8080/tcp": "Ente API (museum)",
-    "3000/tcp": "Ente web UI",
-    "3200/tcp": "MinIO S3 endpoint"
-  },
   "map": [
     "addon_config:rw",
     "media:rw",
     "share:rw",
     "ssl:rw"
   ],
-  "devices": [
-    "/dev/dri", "/dev/dri/renderD128",
-    "/dev/vchiq", "/dev/video10", "/dev/video11", "/dev/video12"
-  ],
-  "environment": {
-    "PGID": "0",
-    "PUID": "0",
-    "DB_HOSTNAME": "homeassistant.local",
-    "DB_PORT": "5432",
-    "DB_USERNAME": "pguser",
-    "DB_PASSWORD": "ente",
-    "DB_DATABASE_NAME": "ente_db",
-    "MINIO_ROOT_USER": "minioadmin",
-    "MINIO_ROOT_PASSWORD": "minioadmin",
-    "S3_ENDPOINT": "http://localhost:3200",
-    "S3_BUCKET": "ente-media",
-    "ENTE_API_ORIGIN": "http://[HOST]:[PORT:8080]",
-    "TZ": "Europe/Paris"
-  },
+  "name": "Ente",
   "options": {
     "DB_DATABASE_NAME": "ente_db",
     "DB_HOSTNAME": "homeassistant.local",
     "DB_PASSWORD": "ente",
     "DB_PORT": 5432,
     "DB_USERNAME": "pguser",
-    "MINIO_ROOT_USER": "minioadmin",
+    "DISABLE_WEB_UI": false,
     "MINIO_ROOT_PASSWORD": "minioadmin",
+    "MINIO_ROOT_USER": "minioadmin",
     "S3_BUCKET": "ente-media",
-    "TZ": "Europe/Paris",
-    "DISABLE_WEB_UI": false
+    "TZ": "Europe/Paris"
   },
+  "panel_icon": "mdi:image-multiple",
+  "ports": {
+    "3000/tcp": 8300,
+    "3200/tcp": 8320,
+    "8080/tcp": 8280
+  },
+  "ports_description": {
+    "3000/tcp": "Ente web UI",
+    "3200/tcp": "MinIO S3 endpoint",
+    "8080/tcp": "Ente API (museum)"
+  },
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "DB_DATABASE_NAME": "str",
     "DB_HOSTNAME": "str",
     "DB_PASSWORD": "str",
     "DB_PORT": "int",
     "DB_USERNAME": "str",
-    "MINIO_ROOT_USER": "str",
+    "DISABLE_WEB_UI": "bool?",
     "MINIO_ROOT_PASSWORD": "str",
+    "MINIO_ROOT_USER": "str",
     "S3_BUCKET": "str",
-    "TZ": "str?",
-    "DISABLE_WEB_UI": "bool?"
+    "TZ": "str?"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
-  "hassio_api": true,
+  "slug": "ente",
+  "startup": "services",
   "udev": true,
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "1.0.0",
   "video": true,
-  "panel_icon": "mdi:image-multiple",
   "webui": "http://[HOST]:[PORT:3000]"
 }
