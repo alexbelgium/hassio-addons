@@ -48,7 +48,7 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_ALL_CODEBASE: true
           VALIDATE_CHECKOV: false
           VALIDATE_PYTHON_PYLINT: false
           VALIDATE_JSCPD: false
@@ -58,13 +58,27 @@ jobs:
           FIX_HTML_PRETTIER: true
           FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
-          FIX_JSON: true
-          FIX_JSON_PRETTIER: true
+          FIX_JSON: false
+          #FIX_JSON_PRETTIER: true
           FIX_MARKDOWN: true
-          FIX_MARKDOWN_PRETTIER: true
+          #FIX_MARKDOWN_PRETTIER: true
           FIX_PYTHON_BLACK: true
           FIX_PYTHON_ISORT: true
           FIX_PYTHON_RUFF: true
+
+      - name: Restore executable permissions
+        run: |
+          find . -type f \( -name "*.sh" -o -name "run" \) -exec chmod +x {} \;
+
+      - name: Sort json files
+        id: sort
+        run: |
+          for files in */*.json; do
+            echo "Sorting $files"
+            jq --sort-keys . "$files" > config2.json && cat config2.json > "$files" && rm config2.json
+            echo "changed=1" >> "$GITHUB_OUTPUT"
+          done
+        shell: bash
 
       - name: Remove Super-Linter output (prevent checkout conflict)
         run: sudo rm -rf super-linter-output/
