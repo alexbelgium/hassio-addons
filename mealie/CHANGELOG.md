@@ -1,9 +1,6 @@
-## v3.0.1-3 (15-07-2025)
-- Minor bugs fixed
-## v3.0.1-2 (15-07-2025)
-- Minor bugs fixed
-## v3.0.1 (15-07-2025)
-- Minor bugs fixed
+- Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
+- Fix ingress
+
 ## v3.0.0 (12-07-2025)
 
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
