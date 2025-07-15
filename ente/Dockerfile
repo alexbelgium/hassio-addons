@@ -102,7 +102,7 @@ LABEL \
     org.opencontainers.image.version=${BUILD_VERSION}
 
 #################
-# 6 Finish line #
+# 6 Finish line #
 #################
 # S6 will pick up run scripts from /etc/services.d supplied in rootfs
 # and launch:  › minio  › museum API  › (optional) web‑UI
