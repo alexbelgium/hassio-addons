@@ -1,3 +1,5 @@
+## 17.4-11 (15-07-2025)
+- Minor bugs fixed
 ## 17.4-10 (15-07-2025)
 - Allow for non standard user
 
