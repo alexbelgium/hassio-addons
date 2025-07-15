@@ -26,11 +26,13 @@ ENV MEALIE_VERSION="v3.0.1"
 # Clone the Mealie repository to get the frontend source code
 WORKDIR /frontend
 # hadolint ignore=DL3003
-RUN mkdir -p /frontend/tempdir && cd /frontend/tempdir || true && \
+RUN mkdir -p /frontend/tempdir && cd /frontend/tempdir && \
     git clone --branch "$MEALIE_VERSION" https://github.com/mealie-recipes/mealie.git . && \
-    cp -rf frontend/* /frontend && cd /frontend && rm -r tempdir && \
-    yarn install --prefer-offline --frozen-lockfile --non-interactive --production=false --network-timeout 1000000 && \
-    yarn generate
+    cp -rf frontend/* /frontend && cd /frontend && rm -rf tempdir && \
+    yarn install --prefer-offline --frozen-lockfile --non-interactive --production=false --network-timeout 1000000
+
+# Build the frontend
+RUN yarn generate
 
 # Stage 2: Build the Final Image
 FROM hkotel/mealie:latest
