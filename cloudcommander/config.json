@@ -1,5 +1,8 @@
 {
-  "arch": ["aarch64", "amd64"],
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Cloud Commander a file manager for the web with console and editor",
   "devices": [
@@ -88,7 +91,10 @@
   "ports_description": {
     "8000/tcp": "Web UI port (required)"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "CUSTOM_OPTIONS": "str?",
     "DROPBOX_TOKEN": "str?",
