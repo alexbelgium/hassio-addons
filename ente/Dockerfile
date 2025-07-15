@@ -38,12 +38,11 @@ RUN chmod 744 /ha_lsio.sh && \
 # ---------- MinIO & tools (needed by Ente) ----------
 # – server binary + client (`mc`)
 RUN set -eux; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends curl ca-certificates wget jq tini postgresql-client-15; \
+    apk add --no-cache \
+      bash curl ca-certificates wget jq tini postgresql15-client; \
     curl -fsSL https://dl.min.io/server/minio/release/linux-amd64/minio -o /usr/local/bin/minio; \
     curl -fsSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc; \
-    chmod +x /usr/local/bin/minio /usr/local/bin/mc; \
-    apt-get clean; rm -rf /var/lib/apt/lists/*
+    chmod +x /usr/local/bin/minio /usr/local/bin/mc
 
 ##################
 # 3 Install apps #
