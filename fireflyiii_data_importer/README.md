@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Firefly iii data importer] Updater pulls pre-releases (opened 2025-07-14)](https://github.com/alexbelgium/hassio-addons/issues/1956) by [@gmariotti](https://github.com/gmariotti)
+
 # Home assistant add-on: Fireflyiii data importer
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
