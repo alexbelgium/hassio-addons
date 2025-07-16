@@ -16,8 +16,10 @@ chmod 775 /run/postgresql
 PGDATA="${PGDATA:-/config/postgres-data}"
 export PGDATA
 
-mkdir -p "${PGDATA}"
-chown -R postgres:postgres "${PGDATA}"
+# Create and secure PGDATA
+mkdir -p "$PGDATA"
+chown -R postgres:postgres "$PGDATA"
+chmod 0700 "$PGDATA"
 
 INITDB="$(command -v initdb || echo /usr/bin/initdb)"
 POSTGRES="$(command -v postgres || echo /usr/bin/postgres)"
