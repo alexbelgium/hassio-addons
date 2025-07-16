@@ -3,6 +3,12 @@
 # shellcheck disable=SC2155,SC2016
 set -e
 
+mkdir -p /config/ente/custom-logs
+mkdir -p /config/data
+mkdir -p /config/minio-data
+mkdir -p /config/postgres-data
+mkdir -p /config/scripts/compose
+
 bashio::log.info "Starting services"
 
 # Loop through each directory in /etc/services.d/
