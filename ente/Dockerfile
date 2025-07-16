@@ -44,6 +44,15 @@ RUN set -eux; \
     curl -fsSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc; \
     chmod +x /usr/local/bin/minio /usr/local/bin/mc
 
+RUN apk update && \
+    apk add --no-cache \
+        lsb-release curl gnupg wget tini jq sudo \
+        postgresql postgresql-client
+
+# Put museum / web on a predictable path for your run-scripts
+RUN ln -sf $(command -v museum)    /usr/bin/museum     && \
+    ln -sf $(command -v ente-web)  /usr/bin/ente-web
+
 ##################
 # 3 Install apps #
 ##################

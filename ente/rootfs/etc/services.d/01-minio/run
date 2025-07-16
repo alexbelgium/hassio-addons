@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bashio
+set -euo pipefail
+bashio::log.info "Starting MinIO."
+exec /usr/local/bin/minio server /data --address ":3200"

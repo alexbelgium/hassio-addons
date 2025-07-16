@@ -1,3 +1,0 @@
-#!/usr/bin/with-contenv bash
-set -e
-exec /usr/local/bin/minio server /data --address ":3200"

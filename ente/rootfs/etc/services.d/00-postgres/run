@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bashio
+set -euo pipefail
+
+if bashio::config.true 'USE_EXTERNAL_DB'; then
+    bashio::log.info "External DB requested; not starting internal Postgres service."
+    exit 0
+fi
+
+export PGDATA=/data/postgres
+mkdir -p "$PGDATA"
+chown -R postgres:postgres /data
+
+if [[ ! -s "$PGDATA/PG_VERSION" ]]; then
+    bashio::log.info "Initializing Postgres 17 data directory."
+    su - postgres -c "/usr/lib/postgresql/17/bin/initdb -D $PGDATA"
+fi
+
+bashio::log.info "Starting Postgres 17 (listening on 127.0.0.1:5432)."
+exec su - postgres -c "/usr/lib/postgresql/17/bin/postgres -D $PGDATA -c listen_addresses='127.0.0.1'"
