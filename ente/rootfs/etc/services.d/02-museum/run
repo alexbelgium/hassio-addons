@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 set -euo pipefail
 
 CFG=/config/museum.yaml
@@ -11,14 +12,15 @@ if bashio::config.true 'USE_EXTERNAL_DB'; then
     DB_HOST="$(bashio::config 'DB_HOSTNAME')"
     DB_PORT="$(bashio::config 'DB_PORT')"
     DB_USER="$(bashio::config 'DB_USERNAME')"
-    bashio::log.info "Waiting for external Postgres at ${DB_HOST}:${DB_PORT}…"
+    bashio::log.info "Museum: waiting for external Postgres at ${DB_HOST}:${DB_PORT}..."
     until pg_isready -q -h "${DB_HOST}" -p "${DB_PORT}" -U "${DB_USER}"; do
         sleep 2
     done
 else
-    DB_USER="postgres"
-    bashio::log.info "Waiting for internal Postgres…"
-    until pg_isready -q -h localhost -p 5432 -U "${DB_USER}"; do
+    # We'll connect as DB_USER (the one we created), not postgres superuser
+    DB_USER="$(bashio::config 'DB_USERNAME')"
+    bashio::log.info "Museum: waiting for internal Postgres..."
+    until pg_isready -q -h 127.0.0.1 -p 5432 -U "${DB_USER}"; do
         sleep 2
     done
 fi
