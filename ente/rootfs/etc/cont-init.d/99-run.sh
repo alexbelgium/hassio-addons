@@ -36,7 +36,7 @@ DB_PASS="ente"
 
 if bashio::config.true 'USE_EXTERNAL_DB'; then
 	bashio::log.info "External DB in use; skipping internal Postgres bootstrap."
- 	DB_USER="$(bashio::config 'DB_USERNAME')"
+	DB_USER="$(bashio::config 'DB_USERNAME')"
 	DB_PASS="$(bashio::config 'DB_PASSWORD')"
 	DB_NAME="$(bashio::config 'DB_DATABASE_NAME')"
 fi
@@ -61,10 +61,9 @@ BEGIN
 END
 \$\$;
 SQL
-bashio::log.info "Internal Postgres ready."
+	bashio::log.info "Internal Postgres ready."
 
 done
-
 
 #################
 # Minio startup #
