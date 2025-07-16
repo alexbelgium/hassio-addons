@@ -7,6 +7,11 @@ if bashio::config.true 'USE_EXTERNAL_DB'; then
     exit 0
 fi
 
+# Create folder structure
+mkdir -p /run/postgresql
+chown postgres:postgres /run/postgresql
+chmod 775 /run/postgresql
+
 # Persistent location
 PGDATA="${PGDATA:-/config/postgres-data}"
 export PGDATA
