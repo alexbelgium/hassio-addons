@@ -20,7 +20,8 @@
     "PUID": "0",
     "S3_BUCKET": "ente-media",
     "S3_ENDPOINT": "http://localhost:3200",
-    "TZ": "Europe/Paris"
+    "TZ": "Europe/Paris",
+    "PGDATA": "/config/postgres"
   },
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/ente-{arch}",
