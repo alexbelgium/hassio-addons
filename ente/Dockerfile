@@ -11,89 +11,113 @@
 #=== Home Assistant Add‑on – ENTE ===#
 
 #################
-# 1 Build Image #
+# 1 Base Image  #
 #################
-
 ARG BUILD_VERSION
 FROM ghcr.io/ente-io/server:latest
 
-##################
-# 2 Modify Image #
-##################
-
-# S6 settings
+#########################
+# 2 S6 / base settings  #
+#########################
 ENV  S6_CMD_WAIT_FOR_SERVICES=1 \
      S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
      S6_SERVICES_GRACETIME=0
 
 USER root
 
-# LSIO helpers (same repo you already use)
+#############################################
+# 3 LSIO helper patch (same pattern as you) #
+#############################################
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && \
     if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && \
     rm /ha_lsio.sh
 
-# ---------- MinIO & tools (needed by Ente) ----------
-# – server binary + client (`mc`)
+#############################################
+# 4 System packages + Postgres 17 + tooling #
+#############################################
+# Use bash shell for multi-line RUNs
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# -- Install base deps, add PGDG repo, install PostgreSQL 17 server & client --
+RUN set -eux \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends \
+      curl ca-certificates gnupg wget jq sudo lsb-release tzdata \
+ && echo "deb [arch=$(dpkg --print-architecture)] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" \
+      > /etc/apt/sources.list.d/pgdg.list \
+ && wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends \
+      postgresql-17 postgresql-client-17 \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+###################################
+# 5 MinIO server + CLI (multi-arch)
+###################################
+# BuildKit sets TARGETARCH (amd64/arm64, etc.)
+ARG TARGETARCH
 RUN set -eux; \
-    apk add --no-cache \
-      bash curl ca-certificates wget jq tini postgresql15-client; \
-    curl -fsSL https://dl.min.io/server/minio/release/linux-amd64/minio -o /usr/local/bin/minio; \
-    curl -fsSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc; \
+    arch="${TARGETARCH:-amd64}"; \
+    case "$arch" in \
+      amd64|x86_64) minio_arch="amd64" ;; \
+      arm64|aarch64) minio_arch="arm64" ;; \
+      *) minio_arch="amd64" ;; \
+    esac; \
+    curl -fsSL "https://dl.min.io/server/minio/release/linux-${minio_arch}/minio" -o /usr/local/bin/minio; \
+    curl -fsSL "https://dl.min.io/client/mc/release/linux-${minio_arch}/mc" -o /usr/local/bin/mc; \
     chmod +x /usr/local/bin/minio /usr/local/bin/mc
 
-RUN apk update && \
-    apk add --no-cache \
-        lsb-release curl gnupg wget tini jq sudo \
-        postgresql postgresql-client
-
-# Put museum / web on a predictable path for your run-scripts
-RUN ln -sf $(command -v museum)    /usr/bin/museum     && \
-    ln -sf $(command -v ente-web)  /usr/bin/ente-web
+#####################################################
+# 6 Ensure predictable paths for museum & ente‑web  #
+#####################################################
+# (Base image already has binaries; create friendly symlinks if found.)
+RUN set -eux; \
+    MUSEUM_PATH="$(command -v museum || true)"; \
+    if [[ -n "$MUSEUM_PATH" ]]; then ln -sf "$MUSEUM_PATH" /usr/bin/museum; fi; \
+    WEB_PATH="$(command -v ente-web || true)"; \
+    if [[ -n "$WEB_PATH" ]]; then ln -sf "$WEB_PATH" /usr/bin/ente-web; fi
 
 ##################
-# 3 Install apps #
+# 7 Install apps #
 ##################
-
-COPY rootfs/ /
-
-# bind‑compat for some addons
-#RUN ln -sf /usr/bin/bash /bin/bash || true && \
-#    ln -sf /usr/bin/sh   /bin/sh   || true
-
-# Optional modules (same pattern as ente)
+# Optional modules (same pattern as your other add‑ons)
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh 00-local_mounts.sh 00-smb_mounts.sh"
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
-# Optional extra packages
+# Optional extra packages via your helper
 ENV PACKAGES="sudo jq yamllint"
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
 ################
-# 4 Entrypoint #
+# 8 Entrypoint #
 ################
-
 ENV  S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && \
     /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+############################
+# 9 Copy add‑on rootfs tree #
+############################
+# (includes bashio‑aware cont‑init.d and services.d scripts we prepared)
+COPY rootfs/ /
 
-# ---------- Healthcheck ----------
-#ENV HEALTH_PORT="8080" \
-#    HEALTH_URL="/ping"
-#HEALTHCHECK --interval=10s --retries=5 --timeout=20s CMD \
-#    curl -A "HealthCheck: Docker/1.0" -fs "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" || exit 1
+##########################################
+# 10 Healthcheck (museum exposes /ping)  #
+##########################################
+ENV HEALTH_PORT="8080" \
+    HEALTH_URL="/ping"
+HEALTHCHECK --interval=10s --retries=5 --timeout=20s CMD \
+    curl -A "HealthCheck: Docker/1.0" -fs "http://127.0.0.1:${HEALTH_PORT}${HEALTH_URL}" || exit 1
 
 ############
-# 5 Labels #
+# 11 Labels #
 ############
 ARG BUILD_ARCH BUILD_DATE BUILD_NAME BUILD_DESCRIPTION BUILD_REF BUILD_REPOSITORY
 LABEL \
@@ -113,7 +137,13 @@ LABEL \
     org.opencontainers.image.version=${BUILD_VERSION}
 
 #################
-# 6 Finish line #
+# 12 Finish line#
 #################
-# S6 will pick up run scripts from /etc/services.d supplied in rootfs
-# and launch:  › minio  › museum API  › (optional) web‑UI
+# S6 supervises:
+#   00-postgres (skipped if external DB)
+#   01-minio
+#   02-minio-init (one-shot)
+#   03-museum
+#   04-web (optional)
+#
+# No explicit ENTRYPOINT/CMD override: use base + S6 overlay.
