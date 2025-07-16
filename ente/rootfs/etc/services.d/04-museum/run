@@ -25,5 +25,5 @@ else
     done
 fi
 
+exec /usr/bin/museum --config "$CFG" & \
 bashio::log.info "Starting museum."
-exec /usr/bin/museum --config "$CFG"
