@@ -16,12 +16,12 @@
     "ENTE_API_ORIGIN": "http://[HOST]:[PORT:8080]",
     "MINIO_ROOT_PASSWORD": "minioadmin",
     "MINIO_ROOT_USER": "minioadmin",
+    "PGDATA": "/config/postgres",
     "PGID": "0",
     "PUID": "0",
     "S3_BUCKET": "ente-media",
     "S3_ENDPOINT": "http://localhost:3200",
-    "TZ": "Europe/Paris",
-    "PGDATA": "/config/postgres"
+    "TZ": "Europe/Paris"
   },
   "hassio_api": true,
   "image": "ghcr.io/alexbelgium/ente-{arch}",
