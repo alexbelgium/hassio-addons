@@ -78,7 +78,7 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.0test12",
+  "version": "1.0.0test13",
   "video": true,
   "webui": "http://[HOST]:[PORT:3000]"
 }
