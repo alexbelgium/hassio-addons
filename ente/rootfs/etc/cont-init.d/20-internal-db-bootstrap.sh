@@ -16,7 +16,6 @@ DB_NAME="$(bashio::config 'DB_DATABASE_NAME')"
 until pg_isready -q -h localhost -p 5432 -U postgres; do
 	bashio::log.info "Waiting for Postgres to accept connections…"
 	sleep 1
-done
 
 bashio::log.info "Creating role + database if needed…"
 su - postgres -c psql <<SQL
@@ -33,3 +32,5 @@ END
 SQL
 
 bashio::log.info "Internal Postgres ready."
+
+done
