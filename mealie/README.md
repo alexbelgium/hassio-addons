@@ -1,6 +1,7 @@
 ## &#9888; Open Request : [✨ [REQUEST] Mealie - add OpenAI support (opened 2025-03-05)](https://github.com/alexbelgium/hassio-addons/issues/1802) by [@tillmannschatz](https://github.com/tillmannschatz)
 ## &#9888; Open Issue : [🐛 [Mealie] After updating Mealie to version 3.0.0 ingress not working (opened 2025-07-12)](https://github.com/alexbelgium/hassio-addons/issues/1948) by [@djtail](https://github.com/djtail)
 ## &#9888; Open Issue : [🐛 [Mealie] Recipe import from websites no longer working after 3.x upgrade (opened 2025-07-16)](https://github.com/alexbelgium/hassio-addons/issues/1962) by [@donverse](https://github.com/donverse)
+## &#9888; Open Issue : [🐛  Mealie unable to login after upgrade to 3.x (opened 2025-07-16)](https://github.com/alexbelgium/hassio-addons/issues/1964) by [@motionist](https://github.com/motionist)
 # Hass.io Add-ons: Mealie
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
