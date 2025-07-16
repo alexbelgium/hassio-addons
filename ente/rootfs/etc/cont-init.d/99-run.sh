@@ -104,30 +104,33 @@ wait_postgres_ready() {
 }
 
 bootstrap_internal_db() {
-	if $USE_EXTERNAL_DB; then
-		return 0
-	fi
-	bashio::log.info "Creating role/database if needed..."
+    if $USE_EXTERNAL_DB; then
+        return 0
+    fi
 
-	# Create role if it doesn't exist
-	psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres <<SQL
-DO \$\$
-BEGIN
-   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = '${DB_USER}') THEN
-      EXECUTE 'CREATE ROLE ${DB_USER} LOGIN PASSWORD ''' || replace('${DB_PASS}','''','''''') || '''';
-   END IF;
-END
-\$\$;
-SQL
+    bashio::log.info "Creating role/database if needed..."
 
-	# Check and create database if it doesn't exist
-	if ! psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres -tAc "SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'"; then
-		psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres <<SQL
-CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};
-SQL
-	fi
+    # Create role if it doesn't exist, else update password to match config
+    if ! psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname = '${DB_USER}'" | grep -q 1; then
+        psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres \
+            -c "CREATE ROLE \"${DB_USER}\" LOGIN PASSWORD '${DB_PASS//\'/\'\'}';"
+    else
+        # update password in case it changed
+        psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres \
+            -c "ALTER ROLE \"${DB_USER}\" PASSWORD '${DB_PASS//\'/\'\'}';"
+    fi
 
-	bashio::log.info "Internal Postgres ready."
+    # Check and create database if it doesn't exist
+    if ! psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres -tAc "SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'" | grep -q 1; then
+        psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres \
+            -c "CREATE DATABASE \"${DB_NAME}\" OWNER \"${DB_USER}\";"
+    else
+        # Optional: ensure DB ownership
+        psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres \
+            -c "ALTER DATABASE \"${DB_NAME}\" OWNER TO \"${DB_USER}\";"
+    fi
+
+    bashio::log.info "Internal Postgres ready."
 }
 
 start_minio() {
