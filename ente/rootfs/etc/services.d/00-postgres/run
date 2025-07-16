@@ -35,5 +35,5 @@ if [[ ! -s "${PGDATA}/PG_VERSION" ]]; then
     su - postgres -c "$INITDB -D $PGDATA"
 fi
 
+exec su - postgres -c "$POSTGRES -D $PGDATA -c listen_addresses='127.0.0.1'" & \
 bashio::log.info "Starting Postgres (127.0.0.1:5432)..."
-exec su - postgres -c "$POSTGRES -D $PGDATA -c listen_addresses='127.0.0.1'"
