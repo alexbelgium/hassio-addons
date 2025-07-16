@@ -9,12 +9,11 @@ mkdir -p /config/minio-data
 mkdir -p /config/postgres-data
 mkdir -p /config/scripts/compose
 
-bashio::log.info "Starting services"
-
 ################
 # Run services #
 ################
 
+bashio::log.info "Starting services"
 for dir in /etc/services.d/*; do
 	# Check if the directory contains a 'run' file
 	if [ -f "$dir/run" ]; then
@@ -30,16 +29,19 @@ done
 # Internal db bootstrap #
 #########################
 
+#Default values for internal
+DB_NAME="ente_db"
+DB_USER="pguser"
+DB_PASS="ente"
+
 if bashio::config.true 'USE_EXTERNAL_DB'; then
 	bashio::log.info "External DB in use; skipping internal Postgres bootstrap."
-	exit 0
+ 	DB_USER="$(bashio::config 'DB_USERNAME')"
+	DB_PASS="$(bashio::config 'DB_PASSWORD')"
+	DB_NAME="$(bashio::config 'DB_DATABASE_NAME')"
 fi
 
-bashio::log.info "Bootstrapping internal Postgres cluster…"
-
-DB_USER="$(bashio::config 'DB_USERNAME')"
-DB_PASS="$(bashio::config 'DB_PASSWORD')"
-DB_NAME="$(bashio::config 'DB_DATABASE_NAME')"
+bashio::log.info "Bootstrapping Postgres cluster…"
 
 # Wait for postgres service (localhost)
 until pg_isready -q -h localhost -p 5432 -U postgres; do
@@ -59,10 +61,10 @@ BEGIN
 END
 \$\$;
 SQL
-
-	bashio::log.info "Internal Postgres ready."
+bashio::log.info "Internal Postgres ready."
 
 done
+
 
 #################
 # Minio startup #
