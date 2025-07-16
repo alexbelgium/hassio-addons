@@ -6,5 +6,5 @@ set -euo pipefail
 MINIO_DATA="/config/minio-data"
 mkdir -p "${MINIO_DATA}"
 
+exec /usr/local/bin/minio server "${MINIO_DATA}" --address ":3200" & \
 bashio::log.info "Starting MinIO (3200)..."
-exec /usr/local/bin/minio server "${MINIO_DATA}" --address ":3200"
