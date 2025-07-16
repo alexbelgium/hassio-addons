@@ -1,7 +1,7 @@
 {
   "name": "Ente",
   "slug": "ente",
-  "version": "1.0.0test4",
+  "version": "1.0.0test3",
   "description": "Self-hosted, end-to-end-encrypted photo & video storage (Ente server + MinIO).",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "arch": ["aarch64", "amd64"],
