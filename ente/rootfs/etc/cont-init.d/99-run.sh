@@ -109,19 +109,23 @@ bootstrap_internal_db() {
 	fi
 	bashio::log.info "Creating role/database if needed..."
 
-	# Use psql via local socket (faster, avoids password)
+	# Create role if it doesn't exist
 	psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres <<SQL
 DO \$\$
 BEGIN
    IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = '${DB_USER}') THEN
       EXECUTE 'CREATE ROLE ${DB_USER} LOGIN PASSWORD ''' || replace('${DB_PASS}','''','''''') || '''';
    END IF;
-   IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}') THEN
-      EXECUTE 'CREATE DATABASE ${DB_NAME} OWNER ${DB_USER}';
-   END IF;
 END
 \$\$;
 SQL
+
+	# Check and create database if it doesn't exist
+	if ! psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres -tAc "SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'"; then
+		psql -v ON_ERROR_STOP=1 -h "$DB_HOST_INTERNAL" -p "$DB_PORT_INTERNAL" -U postgres <<SQL
+CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};
+SQL
+	fi
 
 	bashio::log.info "Internal Postgres ready."
 }
