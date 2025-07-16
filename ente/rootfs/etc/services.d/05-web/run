@@ -7,5 +7,5 @@ if bashio::config.true 'DISABLE_WEB_UI'; then
     exit 0
 fi
 
+exec /usr/bin/ente-web & \
 bashio::log.info "Starting Ente web."
-exec /usr/bin/ente-web
