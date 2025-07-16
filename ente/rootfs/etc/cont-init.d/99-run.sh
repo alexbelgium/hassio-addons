@@ -11,6 +11,9 @@ mkdir -p /config/minio-data
 mkdir -p /config/postgres
 mkdir -p /config/scripts/compose
 
+# Symlink
+mv /museum /usr/bin/museum
+
 ############################################
 # Config / options
 ############################################
