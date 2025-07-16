@@ -14,6 +14,7 @@
   ],
   "environment": {
     "ENTE_API_ORIGIN": "http://[HOST]:[PORT:8080]",
+    "ENTE_ALBUMS_ORIGIN": "http://[HOST]:[PORT:3002]",
     "MINIO_ROOT_PASSWORD": "minioadmin",
     "MINIO_ROOT_USER": "minioadmin",
     "PGDATA": "/config/postgres",
@@ -78,7 +79,7 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.0test19",
+  "version": "1.0.0test21",
   "video": true,
   "webui": "http://[HOST]:[PORT:3000]"
 }
