@@ -1,18 +1,32 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 set -euo pipefail
 
 if bashio::config.true 'USE_EXTERNAL_DB'; then
-    bashio::log.info "External DB requested; not starting internal Postgres service."
+    bashio::log.info "External DB requested; skipping internal Postgres service."
     exit 0
 fi
 
-mkdir -p "$PGDATA"
-chown -R postgres:postgres /config/postgres
+# Persistent location
+PGDATA="${PGDATA:-/config/postgres-data}"
+export PGDATA
 
-if [[ ! -s "$PGDATA/PG_VERSION" ]]; then
-    bashio::log.info "Initializing Postgres 17 data directory."
-    su - postgres -c "/usr/lib/postgresql/17/bin/initdb -D $PGDATA"
+mkdir -p "${PGDATA}"
+chown -R postgres:postgres "${PGDATA}"
+
+INITDB="$(command -v initdb || echo /usr/bin/initdb)"
+POSTGRES="$(command -v postgres || echo /usr/bin/postgres)"
+
+if [[ ! -x "$INITDB" || ! -x "$POSTGRES" ]]; then
+    bashio::log.error "PostgreSQL binaries not found."
+    exit 1
 fi
 
-bashio::log.info "Starting Postgres 17 (listening on 127.0.0.1:5432)."
-exec su - postgres -c "/usr/lib/postgresql/17/bin/postgres -D $PGDATA -c listen_addresses='127.0.0.1'"
+if [[ ! -s "${PGDATA}/PG_VERSION" ]]; then
+    bashio::log.info "Initializing Postgres data directory..."
+    # Alpine’s initdb runs as the postgres user
+    s6-setuidgid postgres "$INITDB" -D "${PGDATA}"
+fi
+
+bashio::log.info "Starting Postgres (127.0.0.1:5432)..."
+exec s6-setuidgid postgres "$POSTGRES" -D "${PGDATA}" -c listen_addresses='127.0.0.1'
