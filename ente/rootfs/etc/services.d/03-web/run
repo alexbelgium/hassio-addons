@@ -1,8 +1,11 @@
 #!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 set -euo pipefail
+
 if bashio::config.true 'DISABLE_WEB_UI'; then
-    bashio::log.info "Web UI disabled by option."
+    bashio::log.info "Web UI disabled."
     exit 0
 fi
+
 bashio::log.info "Starting Ente web."
 exec /usr/bin/ente-web
