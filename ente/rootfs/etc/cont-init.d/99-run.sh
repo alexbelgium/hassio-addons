@@ -67,17 +67,22 @@ bashio::log.info "Postgres-init: done."
 # Minio startup #
 #################
 
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -euo pipefail
+
 MINIO_USER="$(bashio::config 'MINIO_ROOT_USER')"
 MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD')"
 S3_BUCKET="$(bashio::config 'S3_BUCKET')"
 
-bashio::log.info "Waiting for MinIO API…"
-until /usr/local/bin/mc alias set h0 http://localhost:3200 "${MINIO_USER}" "${MINIO_PASS}" 2>/dev/null; do
-	sleep 1
+bashio::log.info "MinIO-init: waiting for API..."
+until /usr/local/bin/mc alias set h0 http://127.0.0.1:3200 "${MINIO_USER}" "${MINIO_PASS}" 2>/dev/null; do
+    sleep 1
 done
 
-bashio::log.info "Ensuring bucket ${S3_BUCKET} exists…"
+bashio::log.info "MinIO-init: ensuring bucket ${S3_BUCKET}..."
 /usr/local/bin/mc mb -p "h0/${S3_BUCKET}" || true
-bashio::log.info "MinIO bucket ready."
+
+bashio::log.info "MinIO-init: done."
 
 sleep infinity
