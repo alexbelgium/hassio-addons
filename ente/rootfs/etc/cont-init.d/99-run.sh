@@ -43,7 +43,7 @@ fi
 
 bashio::log.info "Postgres-init: waiting for local Postgres..."
 until pg_isready -q -h 127.0.0.1 -p 5432 -U postgres; do
-    sleep 1
+	sleep 1
 done
 
 bashio::log.info "Postgres-init: creating role/database if missing..."
