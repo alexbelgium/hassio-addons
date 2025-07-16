@@ -6,9 +6,8 @@ if bashio::config.true 'USE_EXTERNAL_DB'; then
     exit 0
 fi
 
-export PGDATA=/data/postgres
 mkdir -p "$PGDATA"
-chown -R postgres:postgres /data
+chown -R postgres:postgres /config/postgres
 
 if [[ ! -s "$PGDATA/PG_VERSION" ]]; then
     bashio::log.info "Initializing Postgres 17 data directory."
