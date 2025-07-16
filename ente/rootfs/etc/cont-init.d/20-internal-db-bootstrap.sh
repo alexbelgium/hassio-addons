@@ -2,8 +2,8 @@
 set -euo pipefail
 
 if bashio::config.true 'USE_EXTERNAL_DB'; then
-    bashio::log.info "External DB in use; skipping internal Postgres bootstrap."
-    exit 0
+	bashio::log.info "External DB in use; skipping internal Postgres bootstrap."
+	exit 0
 fi
 
 bashio::log.info "Bootstrapping internal Postgres cluster…"
@@ -14,8 +14,8 @@ DB_NAME="$(bashio::config 'DB_DATABASE_NAME')"
 
 # Wait for postgres service (localhost)
 until pg_isready -q -h localhost -p 5432 -U postgres; do
-    bashio::log.info "Waiting for Postgres to accept connections…"
-    sleep 1
+	bashio::log.info "Waiting for Postgres to accept connections…"
+	sleep 1
 done
 
 bashio::log.info "Creating role + database if needed…"

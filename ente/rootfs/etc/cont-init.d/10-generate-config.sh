@@ -5,8 +5,8 @@ set -euo pipefail
 CFG=/config/museum.yaml
 
 if bashio::fs.file_exists "$CFG"; then
-    bashio::log.info "Using existing $CFG"
-    exit 0
+	bashio::log.info "Using existing $CFG"
+	exit 0
 fi
 
 bashio::log.info "Generating $CFG"
@@ -21,12 +21,12 @@ DB_PASS="$(bashio::config 'DB_PASSWORD')"
 DB_NAME="$(bashio::config 'DB_DATABASE_NAME')"
 
 if ${USE_EXTERNAL_DB}; then
-    # override host/port for external DB (fall back if missing)
-    DB_HOST="$(bashio::config 'DB_HOSTNAME')"
-    DB_PORT="$(bashio::config 'DB_PORT')"
-    bashio::log.info "museum.yaml will point to external Postgres at ${DB_HOST}:${DB_PORT}"
+	# override host/port for external DB (fall back if missing)
+	DB_HOST="$(bashio::config 'DB_HOSTNAME')"
+	DB_PORT="$(bashio::config 'DB_PORT')"
+	bashio::log.info "museum.yaml will point to external Postgres at ${DB_HOST}:${DB_PORT}"
 else
-    bashio::log.info "museum.yaml will use internal Postgres."
+	bashio::log.info "museum.yaml will use internal Postgres."
 fi
 
 MINIO_USER="$(bashio::config 'MINIO_ROOT_USER')"
