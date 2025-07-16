@@ -17,8 +17,8 @@ until pg_isready -q -h localhost -p 5432 -U postgres; do
 	bashio::log.info "Waiting for Postgres to accept connections…"
 	sleep 1
 
-bashio::log.info "Creating role + database if needed…"
-su - postgres -c psql <<SQL
+	bashio::log.info "Creating role + database if needed…"
+	su - postgres -c psql <<SQL
 DO \$\$
 BEGIN
    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '${DB_USER}') THEN
@@ -31,6 +31,6 @@ END
 \$\$;
 SQL
 
-bashio::log.info "Internal Postgres ready."
+	bashio::log.info "Internal Postgres ready."
 
 done
