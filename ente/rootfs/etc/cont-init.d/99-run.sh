@@ -151,25 +151,25 @@ wait_minio_ready_and_bucket() {
 }
 
 start_web() {
-    if $DISABLE_WEB_UI; then
-        bashio::log.info "Web UI disabled."
-        return 0
-    fi
+	if $DISABLE_WEB_UI; then
+		bashio::log.info "Web UI disabled."
+		return 0
+	fi
 
-    # Prepare static assets with actual origins (does safe sed replacements).
-    ENTE_API_ORIGIN="${ENTE_API_ORIGIN:-http://[HOST]:[PORT:8080]}"
-    ENTE_ALBUMS_ORIGIN="${ENTE_ALBUMS_ORIGIN:-${ENTE_API_ORIGIN}}"
-    export ENTE_API_ORIGIN ENTE_ALBUMS_ORIGIN
-    /usr/local/bin/ente-web-prepare || bashio::log.warning "Web env substitution step returned non‑zero; continuing."
+	# Prepare static assets with actual origins (does safe sed replacements).
+	ENTE_API_ORIGIN="${ENTE_API_ORIGIN:-http://[HOST]:[PORT:8080]}"
+	ENTE_ALBUMS_ORIGIN="${ENTE_ALBUMS_ORIGIN:-${ENTE_API_ORIGIN}}"
+	export ENTE_API_ORIGIN ENTE_ALBUMS_ORIGIN
+	/usr/local/bin/ente-web-prepare || bashio::log.warning "Web env substitution step returned non‑zero; continuing."
 
-    # nginx expects runtime dirs
-    mkdir -p /run/nginx
-    # log dir
-    mkdir -p /var/log/nginx
+	# nginx expects runtime dirs
+	mkdir -p /run/nginx
+	# log dir
+	mkdir -p /var/log/nginx
 
-    bashio::log.info "Starting Ente web (nginx, ports 3000‑3004)..."
-    nginx -c /etc/ente-web/nginx.conf -g 'daemon off;' &
-    WEB_PID=$!
+	bashio::log.info "Starting Ente web (nginx, ports 3000‑3004)..."
+	nginx -c /etc/ente-web/nginx.conf -g 'daemon off;' &
+	WEB_PID=$!
 }
 
 start_museum_foreground() {
