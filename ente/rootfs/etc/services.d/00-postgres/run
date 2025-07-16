@@ -25,8 +25,8 @@ fi
 if [[ ! -s "${PGDATA}/PG_VERSION" ]]; then
     bashio::log.info "Initializing Postgres data directory..."
     # Alpine’s initdb runs as the postgres user
-    s6-setuidgid postgres "$INITDB" -D "${PGDATA}"
+    su - postgres -c "$INITDB -D $PGDATA"
 fi
 
 bashio::log.info "Starting Postgres (127.0.0.1:5432)..."
-exec s6-setuidgid postgres "$POSTGRES" -D "${PGDATA}" -c listen_addresses='127.0.0.1'
+exec su - postgres -c "$POSTGRES -D $PGDATA -c listen_addresses='127.0.0.1'"
