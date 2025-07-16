@@ -49,10 +49,6 @@ RUN apk update && \
         lsb-release curl gnupg wget tini jq sudo \
         postgresql postgresql-client
 
-# Put museum / web on a predictable path for your run-scripts
-RUN ln -sf $(command -v museum)    /usr/bin/museum     && \
-    ln -sf $(command -v ente-web)  /usr/bin/ente-web
-
 ##################
 # 3 Install apps #
 ##################
