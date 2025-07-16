@@ -16,6 +16,7 @@
     "ENTE_API_ORIGIN": "http://[HOST]:[PORT:8080]",
     "MINIO_ROOT_PASSWORD": "minioadmin",
     "MINIO_ROOT_USER": "minioadmin",
+    "ENTE_ALBUMS_ORIGIN": "http://[HOST]:[PORT:3002]",
     "PGDATA": "/config/postgres",
     "PGID": "0",
     "PUID": "0",
