@@ -20,7 +20,7 @@ for dir in /etc/services.d/*; do
 	if [ -f "$dir/run" ]; then
 		# Execute the 'run' file
 		bashio::log.info "Starting service $dir"
-		bash "$dir/run"
+		/."$dir/run"
 	else
 		bashio::log.fatal "No run file found in $dir"
 	fi
