@@ -74,7 +74,7 @@ S3_BUCKET="$(bashio::config 'S3_BUCKET')"
 
 bashio::log.info "Waiting for MinIO API…"
 until /usr/local/bin/mc alias set h0 http://localhost:3200 "${MINIO_USER}" "${MINIO_PASS}" 2>/dev/null; do
-    sleep 1
+	sleep 1
 done
 
 bashio::log.info "Ensuring bucket ${S3_BUCKET} exists…"
