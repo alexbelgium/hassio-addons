@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [postgres 17] vector and chord library not loaded? (opened 2025-07-17)](https://github.com/alexbelgium/hassio-addons/issues/1967) by [@dothebart](https://github.com/dothebart)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
