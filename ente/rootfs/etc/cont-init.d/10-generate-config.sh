@@ -53,13 +53,26 @@ db:
   password: ${DB_PASS}
 
 s3:
-  are_local_buckets: true
-  b2-eu-cen:
-     key: ${MINIO_USER}
-     secret: ${MINIO_PASS}
-     endpoint: localhost:3200
-     region: eu-central-2
-     bucket: ${S3_BUCKET}
+are_local_buckets: true
+b2-eu-cen:
+   key: $MINIO_USER
+   secret: $MINIO_PASS
+   endpoint: localhost:3200
+   region: eu-central-2
+   bucket: b2-eu-cen
+wasabi-eu-central-2-v3:
+   key: $MINIO_USER
+   secret: $MINIO_PASS
+   endpoint: localhost:3200
+   region: eu-central-2
+   bucket: wasabi-eu-central-2-v3
+   compliance: false
+scw-eu-fr-v3:
+   key: $MINIO_USER
+   secret: $MINIO_PASS
+   endpoint: localhost:3200
+   region: eu-central-2
+   bucket: scw-eu-fr-v3
 EOF
 
 bashio::log.info "Generated $CFG"
