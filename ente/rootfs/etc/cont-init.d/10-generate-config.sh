@@ -31,7 +31,6 @@ fi
 
 MINIO_USER="$(bashio::config 'MINIO_ROOT_USER')"
 MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD')"
-S3_BUCKET="$(bashio::config 'S3_BUCKET')"
 
 # helpers
 _random_b64() { head -c "$1" /dev/urandom | base64 | tr -d '\n'; }
