@@ -168,25 +168,6 @@ RUN chmod +x /usr/local/bin/ente-web-prepare
 # Copy local files
 COPY rootfs/ /
 
-# Uses /bin for compatibility purposes
-# hadolint ignore=DL4005
-RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
-    if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
-
-# Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh"
-
-# Automatic modules download
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
-
-# Manual apps
-ENV PACKAGES="nginx"
-
-# Automatic apps & bashio
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
-
 ################
 # 8 Entrypoint #
 ################
