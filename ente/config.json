@@ -14,31 +14,28 @@
   ],
   "environment": {
     "ENTE_API_ORIGIN": "http://[HOST]:[PORT:8080]",
+    "ENTE_S3_ARE_LOCAL_BUCKETS": true,
+    "ENTE_S3_B2_EU_CEN_KEY": "miniouser",
+    "ENTE_S3_B2_EU_CEN_SECRET": "miniopass",
+    "ENTE_S3_B2_EU_CEN_ENDPOINT": "http://192.168.178.23:8320",
+    "ENTE_S3_B2_EU_CEN_REGION": "eu-central-2",
+    "ENTE_S3_B2_EU_CEN_BUCKET": "b2-eu-cen",
     "MINIO_ROOT_PASSWORD": "minioadmin",
     "MINIO_ROOT_USER": "minioadmin",
     "PGDATA": "/config/postgres",
     "PGID": "0",
     "PUID": "0",
-    "S3_ENDPOINT": "http://localhost:3200",
     "TZ": "Europe/Paris"
   },
-  "hassio_api": true,
   "image": "ghcr.io/alexbelgium/ente-{arch}",
   "init": false,
   "map": [
-    "addon_config:rw",
-    "media:rw",
-    "share:rw",
-    "ssl:rw"
+    "addon_config:rw"
   ],
   "name": "Ente",
   "options": {
-    "DB_DATABASE_NAME": "ente_db",
-    "DB_HOSTNAME": "homeassistant.local",
     "DB_PASSWORD": "ente",
-    "DB_PORT": 5432,
-    "DB_USERNAME": "pguser",
-    "DISABLE_WEB_UI": false,
+    "DISABLE_WEB_UI": true,
     "MINIO_ROOT_PASSWORD": "minioadmin",
     "MINIO_ROOT_USER": "minioadmin",
     "TZ": "Europe/Paris",
@@ -62,7 +59,7 @@
   "schema": {
     "DB_DATABASE_NAME": "str?",
     "DB_HOSTNAME": "str?",
-    "DB_PASSWORD": "str?",
+    "DB_PASSWORD": "str",
     "DB_PORT": "int?",
     "DB_USERNAME": "str?",
     "DISABLE_WEB_UI": "bool?",
@@ -75,7 +72,7 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.0_server_test5",
+  "version": "1.0.0_server_test6",
   "video": true,
   "webui": "http://[HOST]:[PORT:3000]"
 }
