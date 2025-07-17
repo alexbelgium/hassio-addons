@@ -59,6 +59,7 @@
     "DB_PORT": "int?",
     "DB_USERNAME": "str?",
     "DISABLE_WEB_UI": "bool?",
+    "MINIO_DATA_LOCATION": "str",
     "MINIO_ROOT_PASSWORD": "str",
     "MINIO_ROOT_USER": "str",
     "TZ": "str?",
