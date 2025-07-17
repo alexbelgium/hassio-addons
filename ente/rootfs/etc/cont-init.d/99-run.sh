@@ -49,17 +49,17 @@ else
     export ENTE_DB_HOST="$DB_HOST_INTERNAL"
     export ENTE_DB_PORT="$DB_PORT_INTERNAL"
 fi
-export ENTE_DB_USER="$DB_USER"
-export ENTE_DB_PASSWORD="$DB_PASS"
-export ENTE_DB_NAME="$DB_NAME"
-export ENTE_DB_SSLMODE=disable
 
 ############################################
 # Read add‑on options
 ############################################
-DB_NAME="$(bashio::config 'DB_DATABASE_NAME' || echo ente_db)"
-DB_USER="$(bashio::config 'DB_USERNAME' || echo pguser)"
-DB_PASS="$(bashio::config 'DB_PASSWORD' || echo ente)"
+export DB_NAME="$(bashio::config 'DB_DATABASE_NAME' || echo ente_db)"
+export DB_USER="$(bashio::config 'DB_USERNAME' || echo pguser)"
+export DB_PASS="$(bashio::config 'DB_PASSWORD' || echo ente)"
+export ENTE_DB_NAME="$DB_NAME"
+export ENTE_DB_USER="$DB_USER"
+export ENTE_DB_PASSWORD="$DB_PASS"
+export ENTE_DB_SSLMODE=disable
 
 # External DB opts (may be blank)
 DB_HOST_EXT="$(bashio::config 'DB_HOSTNAME' || echo '127.0.0.1')"
