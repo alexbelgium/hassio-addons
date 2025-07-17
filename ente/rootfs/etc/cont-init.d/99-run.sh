@@ -22,24 +22,37 @@ MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD' || echo minioadmin)"
 MINIO_DATA="$(bashio::config 'MINIO_DATA_LOCATION' || echo /config/minio-data)"
 
 # Env overrides Museum will merge over YAML
-export ENTE_API_ORIGIN="http://homeassistant.local:${API_PORT}"
+export ENTE_ENDPOINT_URL="$(bashio::config 'ENTE_ENDPOINT_URL')"
 export ENTE_S3_ARE_LOCAL_BUCKETS="true"
 # Primary bucket (b2-eu-cen)
-export ENTE_S3_B2_EU_CEN_ENDPOINT="http://127.0.0.1:${S3_PORT}"
+export ENTE_S3_B2_EU_CEN_ENDPOINT="$ENTE_ENDPOINT_URL"
 export ENTE_S3_B2_EU_CEN_REGION="eu-central-2"
 export ENTE_S3_B2_EU_CEN_BUCKET="b2-eu-cen"
 export ENTE_S3_B2_EU_CEN_KEY="${MINIO_USER}"
 export ENTE_S3_B2_EU_CEN_SECRET="${MINIO_PASS}"
-export ENTE_S3_WASABI_EU_CENTRAL_2_V3_ENDPOINT="http://127.0.0.1:${S3_PORT}"
+export ENTE_S3_WASABI_EU_CENTRAL_2_V3_ENDPOINT="$ENTE_ENDPOINT_URL"
 export ENTE_S3_WASABI_EU_CENTRAL_2_V3_REGION="eu-central-2"
 export ENTE_S3_WASABI_EU_CENTRAL_2_V3_BUCKET="wasabi-eu-central-2-v3"
 export ENTE_S3_WASABI_EU_CENTRAL_2_V3_KEY="${MINIO_USER}"
 export ENTE_S3_WASABI_EU_CENTRAL_2_V3_SECRET="${MINIO_PASS}"
-export ENTE_S3_SCW_EU_FR_V3_ENDPOINT="http://127.0.0.1:${S3_PORT}"
+export ENTE_S3_SCW_EU_FR_V3_ENDPOINT="$ENTE_ENDPOINT_URL"
 export ENTE_S3_SCW_EU_FR_V3_REGION="eu-central-2"
 export ENTE_S3_SCW_EU_FR_V3_BUCKET="scw-eu-fr-v3"
 export ENTE_S3_SCW_EU_FR_V3_KEY="${MINIO_USER}"
 export ENTE_S3_SCW_EU_FR_V3_SECRET="${MINIO_PASS}"
+
+# database variables
+if $USE_EXTERNAL_DB; then
+    export ENTE_DB_HOST="$DB_HOST_EXT"
+    export ENTE_DB_PORT="$DB_PORT_EXT"
+else
+    export ENTE_DB_HOST="$DB_HOST_INTERNAL"
+    export ENTE_DB_PORT="$DB_PORT_INTERNAL"
+fi
+export ENTE_DB_USER="$DB_USER"
+export ENTE_DB_PASSWORD="$DB_PASS"
+export ENTE_DB_NAME="$DB_NAME"
+export ENTE_DB_SSLMODE=disable
 
 ############################################
 # Read add‑on options
@@ -283,19 +296,6 @@ start_museum_foreground() {
         bashio::log.error "Museum binary not found; cannot launch Ente API."
         return 1
     fi
-
-    # Force env overrides (museum merges env > yaml)
-    if $USE_EXTERNAL_DB; then
-        export ENTE_DB_HOST="$DB_HOST_EXT"
-        export ENTE_DB_PORT="$DB_PORT_EXT"
-    else
-        export ENTE_DB_HOST="$DB_HOST_INTERNAL"
-        export ENTE_DB_PORT="$DB_PORT_INTERNAL"
-    fi
-    export ENTE_DB_USER="$DB_USER"
-    export ENTE_DB_PASSWORD="$DB_PASS"
-    export ENTE_DB_NAME="$DB_NAME"
-    export ENTE_DB_SSLMODE=disable
 
     bashio::log.info "Starting museum (foreground)..."
     exec "$MUSEUM_BIN" --config "$CFG"
