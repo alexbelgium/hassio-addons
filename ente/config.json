@@ -81,6 +81,7 @@
   "options": {
     "DB_PASSWORD": "ente",
     "DISABLE_WEB_UI": true,
+    "ENTE_ENDPOINT_URL": "http://homeassistant.local:8280",
     "MINIO_DATA_LOCATION": "/config/minio-data",
     "MINIO_ROOT_PASSWORD": "minioadmin",
     "MINIO_ROOT_USER": "minioadmin",
@@ -114,6 +115,7 @@
     "DB_PORT": "int?",
     "DB_USERNAME": "str?",
     "DISABLE_WEB_UI": "bool?",
+    "ENTE_ENDPOINT_URL": "str",
     "MINIO_DATA_LOCATION": "str",
     "MINIO_ROOT_PASSWORD": "str",
     "MINIO_ROOT_USER": "str",
@@ -123,7 +125,7 @@
   "slug": "ente",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.1.57",
+  "version": "1.1.57-2",
   "video": true,
   "webui": "http://[HOST]:[PORT:3000]"
 }
