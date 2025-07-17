@@ -146,9 +146,9 @@ wait_minio_ready_and_bucket() {
 		sleep 1
 	done
 	bashio::log.info "Ensuring bucket..."
-	"$MC_BIN" mb -p b2-eu-cen || true
-        "$MC_BIN" mb -p wasabi-eu-central-2-v3 || true
-        "$MC_BIN" mb -p scw-eu-fr-v3 || true
+	"$MC_BIN" mb -p h0/b2-eu-cen || true
+        "$MC_BIN" mb -p h0/wasabi-eu-central-2-v3 || true
+        "$MC_BIN" mb -p h0/scw-eu-fr-v3 || true
  	bashio::log.info "MinIO bucket ready."
 }
 
