@@ -59,7 +59,7 @@ s3:
      secret: ${MINIO_PASS}
      endpoint: localhost:3200
      region: eu-central-2
-     bucket: b2-eu-cen
+     bucket: ${S3_BUCKET}
 EOF
 
 bashio::log.info "Generated $CFG"
