@@ -48,23 +48,23 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_ALL_CODEBASE: false
           VALIDATE_CHECKOV: false
           VALIDATE_PYTHON_PYLINT: false
           VALIDATE_JSCPD: false
           VALIDATE_NATURAL_LANGUAGE: false
           FILTER_REGEX_EXCLUDE: .github/workflows/.*
-          FIX_ENV: true
-          FIX_HTML_PRETTIER: true
+          FIX_ENV: false
+          FIX_HTML_PRETTIER: false
           FIX_SHELL_SHFMT: true
-          FIX_YAML_PRETTIER: true
+          FIX_YAML_PRETTIER: false
           FIX_JSON: false
           #FIX_JSON_PRETTIER: true
-          FIX_MARKDOWN: true
+          FIX_MARKDOWN: false
           #FIX_MARKDOWN_PRETTIER: true
-          FIX_PYTHON_BLACK: true
-          FIX_PYTHON_ISORT: true
-          FIX_PYTHON_RUFF: true
+          FIX_PYTHON_BLACK: false
+          FIX_PYTHON_ISORT: false
+          FIX_PYTHON_RUFF: false
 
       - name: Restore executable permissions
         run: |
@@ -82,13 +82,3 @@ jobs:
 
       - name: Remove Super-Linter output (prevent checkout conflict)
         run: sudo rm -rf super-linter-output/
-
-      - name: Commit if needed
-        uses: EndBug/add-and-commit@v9
-        if: github.event_name != 'pull_request'
-        with:
-          commit: -u
-          message: "GitHub bot: fix linting issues (nobuild)"
-          default_author: github_actions
-          pull: --rebase --autostash
-          fetch: --tags
