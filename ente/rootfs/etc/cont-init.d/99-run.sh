@@ -30,7 +30,7 @@ DB_PORT_EXT="$(bashio::config 'DB_PORT')"
 
 MINIO_USER="$(bashio::config 'MINIO_ROOT_USER')"
 MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD')"
-S3_BUCKET="$(bashio::config 'S3_BUCKET')"
+S3_BUCKET="b2-eu-cen"
 
 DISABLE_WEB_UI=false
 if bashio::config.true 'DISABLE_WEB_UI'; then
