@@ -26,6 +26,7 @@
   "options": {
     "DB_PASSWORD": "ente",
     "DISABLE_WEB_UI": true,
+    "MINIO_DATA_LOCATION": "/config/minio-data",
     "MINIO_ROOT_PASSWORD": "minioadmin",
     "MINIO_ROOT_USER": "minioadmin",
     "TZ": "Europe/Paris",
@@ -62,7 +63,7 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.0_server_test8",
+  "version": "1.1.57",
   "video": true,
   "webui": "http://[HOST]:[PORT:3000]"
 }
