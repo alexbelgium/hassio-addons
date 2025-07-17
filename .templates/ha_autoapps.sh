@@ -20,9 +20,11 @@ if ! command -v curl >/dev/null 2>/dev/null; then
 fi
 
 # Call apps installer script if needed
-if ! curl -f -L -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automatic_packages.sh" --output /ha_automatic_packages.sh; then
-	echo "Failed to download the file" >&2
-	exit 1
+if [ ! -f /ha_automatic_packages.sh ]; then
+	if ! curl -f -L -S "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automatic_packages.sh" --output /ha_automatic_packages.sh; then
+		echo "Failed to download the file" >&2
+		exit 1
+	fi
 fi
 chmod 777 /ha_automatic_packages.sh
 eval /./ha_automatic_packages.sh "${PACKAGES:-}"
