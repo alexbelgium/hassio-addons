@@ -162,6 +162,8 @@ exit 0
 EOF
 RUN chmod +x /usr/local/bin/ente-web-prepare
 
+USER root
+
 ##################
 # 3 Install apps #
 ##################
