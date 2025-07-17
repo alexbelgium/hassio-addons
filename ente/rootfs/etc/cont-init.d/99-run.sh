@@ -12,6 +12,34 @@ PGDATA=/config/postgres
 DB_HOST_INTERNAL=127.0.0.1
 DB_PORT_INTERNAL=5432
 
+# Resolve mapped ports from Supervisor (fall back to defaults if missing)
+API_PORT="$(bashio::addon.port 8080 || echo 8080)"
+S3_PORT="$(bashio::addon.port 3200 || echo 3200)"
+
+# Read MinIO creds from add-on config
+MINIO_USER="$(bashio::config 'MINIO_ROOT_USER' || echo minioadmin)"
+MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD' || echo minioadmin)"
+
+# Env overrides Museum will merge over YAML
+export ENTE_API_ORIGIN="http://homeassistant.local:${API_PORT}"
+export ENTE_S3_ARE_LOCAL_BUCKETS="true"
+# Primary bucket (b2-eu-cen)
+export ENTE_S3_B2_EU_CEN_ENDPOINT="http://127.0.0.1:${S3_PORT}"
+export ENTE_S3_B2_EU_CEN_REGION="eu-central-2"
+export ENTE_S3_B2_EU_CEN_BUCKET="b2-eu-cen"
+export ENTE_S3_B2_EU_CEN_KEY="${MINIO_USER}"
+export ENTE_S3_B2_EU_CEN_SECRET="${MINIO_PASS}"
+export ENTE_S3_WASABI_EU_CENTRAL_2_V3_ENDPOINT="http://127.0.0.1:${S3_PORT}"
+export ENTE_S3_WASABI_EU_CENTRAL_2_V3_REGION="eu-central-2"
+export ENTE_S3_WASABI_EU_CENTRAL_2_V3_BUCKET="wasabi-eu-central-2-v3"
+export ENTE_S3_WASABI_EU_CENTRAL_2_V3_KEY="${MINIO_USER}"
+export ENTE_S3_WASABI_EU_CENTRAL_2_V3_SECRET="${MINIO_PASS}"
+export ENTE_S3_SCW_EU_FR_V3_ENDPOINT="http://127.0.0.1:${S3_PORT}"
+export ENTE_S3_SCW_EU_FR_V3_REGION="eu-central-2"
+export ENTE_S3_SCW_EU_FR_V3_BUCKET="scw-eu-fr-v3"
+export ENTE_S3_SCW_EU_FR_V3_KEY="${MINIO_USER}"
+export ENTE_S3_SCW_EU_FR_V3_SECRET="${MINIO_PASS}"
+
 ############################################
 # Read add‑on options
 ############################################
@@ -20,11 +48,9 @@ DB_USER="$(bashio::config 'DB_USERNAME' || echo pguser)"
 DB_PASS="$(bashio::config 'DB_PASSWORD' || echo ente)"
 
 # External DB opts (may be blank)
-DB_HOST_EXT="$(bashio::config 'DB_HOSTNAME' || echo '')"
-DB_PORT_EXT="$(bashio::config 'DB_PORT' || echo '')"
+DB_HOST_EXT="$(bashio::config 'DB_HOSTNAME' || echo '127.0.0.1')"
+DB_PORT_EXT="$(bashio::config 'DB_PORT' || echo '5432')"
 
-MINIO_USER="$(bashio::config 'MINIO_ROOT_USER')"
-MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD')"
 
 # Which bucket name we’ll auto‑create in MinIO
 S3_BUCKET="b2-eu-cen"
@@ -81,8 +107,7 @@ WEB_NGINX_CONF=/etc/ente-web/nginx.conf
 ############################################
 create_config() {
     bashio::log.info "Generating new museum config at $CFG"
-    # small helpers
-    _rand_b64() { head -c "$1" /dev/urandom | base64 | tr -d '\n'; }
+    _rand_b64()    { head -c "$1" /dev/urandom | base64 | tr -d '\n'; }
     _rand_b64url() { head -c "$1" /dev/urandom | base64 | tr '+/' '-_' | tr -d '\n'; }
 
     cat >"$CFG" <<EOF
@@ -99,8 +124,30 @@ db:
   name: ${DB_NAME}
   user: ${DB_USER}
   password: ${DB_PASS}
+
+s3:
+  are_local_buckets: true
+  b2-eu-cen:
+    key: ${MINIO_USER}
+    secret: ${MINIO_PASS}
+    endpoint: http://127.0.0.1:${S3_PORT}
+    region: eu-central-2
+    bucket: b2-eu-cen
+  wasabi-eu-central-2-v3:
+    key: ${MINIO_USER}
+    secret: ${MINIO_PASS}
+    endpoint: http://127.0.0.1:${S3_PORT}
+    region: eu-central-2
+    bucket: wasabi-eu-central-2-v3
+  scw-eu-fr-v3:
+    key: ${MINIO_USER}
+    secret: ${MINIO_PASS}
+    endpoint: http://127.0.0.1:${S3_PORT}
+    region: eu-central-2
+    bucket: scw-eu-fr-v3
 EOF
 }
+
 
 ############################################
 # Postgres
