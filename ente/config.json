@@ -3,7 +3,7 @@
     "aarch64",
     "amd64"
   ],
-  "description": "Self-hosted, end-to-end-encrypted photo & video storage (Ente server + MinIO).",
+  "description": "Self-hosted, end-to-end-encrypted photo & video storage (Ente server + MinIO)",
   "devices": [
     "/dev/dri",
     "/dev/dri/renderD128",
