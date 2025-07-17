@@ -19,7 +19,6 @@
     "PGDATA": "/config/postgres",
     "PGID": "0",
     "PUID": "0",
-    "S3_BUCKET": "ente-media",
     "S3_ENDPOINT": "http://localhost:3200",
     "TZ": "Europe/Paris"
   },
@@ -42,7 +41,6 @@
     "DISABLE_WEB_UI": false,
     "MINIO_ROOT_PASSWORD": "minioadmin",
     "MINIO_ROOT_USER": "minioadmin",
-    "S3_BUCKET": "ente-media",
     "TZ": "Europe/Paris",
     "USE_EXTERNAL_DB": false
   },
@@ -70,7 +68,6 @@
     "DISABLE_WEB_UI": "bool?",
     "MINIO_ROOT_PASSWORD": "str",
     "MINIO_ROOT_USER": "str",
-    "S3_BUCKET": "str",
     "TZ": "str?",
     "USE_EXTERNAL_DB": "bool?"
   },
@@ -78,7 +75,7 @@
   "startup": "services",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.0_server_test",
+  "version": "1.0.0_server_test2",
   "video": true,
   "webui": "http://[HOST]:[PORT:3000]"
 }
