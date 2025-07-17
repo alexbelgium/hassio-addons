@@ -19,7 +19,7 @@ S3_PORT="$(bashio::addon.port 3200 || echo 3200)"
 # Read MinIO creds from add-on config
 MINIO_USER="$(bashio::config 'MINIO_ROOT_USER' || echo minioadmin)"
 MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD' || echo minioadmin)"
-MINIO_DATA="$(bashio::config 'PHOTOS_LOCATION' || echo /config/minio-data)"
+MINIO_DATA="$(bashio::config 'MINIO_DATA_LOCATION' || echo /config/minio-data)"
 
 # Env overrides Museum will merge over YAML
 export ENTE_API_ORIGIN="http://homeassistant.local:${API_PORT}"
