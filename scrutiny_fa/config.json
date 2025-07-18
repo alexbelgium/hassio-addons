@@ -25,7 +25,7 @@
   "panel_admin": false,
   "panel_icon": "mdi:glasses",
   "ports": {
-    "8080/tcp": 8086,
+    "8080/tcp": null,
     "8086/tcp": null
   },
   "ports_description": {
