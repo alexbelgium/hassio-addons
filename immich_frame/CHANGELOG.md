@@ -1,3 +1,6 @@
+
+## 1.0.28.0 (18-07-2025)
+- Update to latest version from immichFrame/ImmichFrame (changelog : https://github.com/immichFrame/ImmichFrame/releases)
 ## 1.0.27.2 (28-06-2025)
 
 - Update to latest version from immichFrame/ImmichFrame (changelog : https://github.com/immichFrame/ImmichFrame/releases)
