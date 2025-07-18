@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Birdnet-go] USB microphones selectable in UI, but not working (opened 2025-03-12)](https://github.com/alexbelgium/hassio-addons/issues/1808) by [@melor](https://github.com/melor)
 ## &#9888; Open Issue : [🐛 [BirdNET-Go] HA Ingress url does not redirect to url with date (opened 2025-04-02)](https://github.com/alexbelgium/hassio-addons/issues/1830) by [@phobiac](https://github.com/phobiac)
 # Home assistant add-on: Birdnet-Go
 
