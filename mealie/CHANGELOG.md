@@ -1,3 +1,4 @@
+## v3.0.1-6 (18-07-2025)
 - Define NUXT_APP_BASE_URL as /mealie/
 
 ## v3.0.1-5 (15-07-2025)
