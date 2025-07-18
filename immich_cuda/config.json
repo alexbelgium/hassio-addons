@@ -1,6 +1,5 @@
 {
   "arch": [
-    "aarch64",
     "amd64"
   ],
   "backup_exclude": [
