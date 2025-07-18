@@ -1,8 +1,8 @@
 {
-  "last_update": "28-06-2025",
+  "last_update": "18-07-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "openproject",
   "source": "github",
   "upstream_repo": "opf/openproject",
-  "upstream_version": "16.1.1"
+  "upstream_version": "16.2.0"
 }
