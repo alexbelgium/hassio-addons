@@ -1,3 +1,6 @@
+
+## v2.7.1 (18-07-2025)
+- Update to latest version from Fallenbagel/jellyseerr (changelog : https://github.com/Fallenbagel/jellyseerr/releases)
 ## 2.7.0 (21-06-2025)
 
 - Update to latest version from Fallenbagel/jellyseerr (changelog : https://github.com/Fallenbagel/jellyseerr/releases)
