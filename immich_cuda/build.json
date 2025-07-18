@@ -1,6 +1,5 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/imagegenius/immich:cuda",
     "amd64": "ghcr.io/imagegenius/immich:cuda"
   },
   "codenotary": {
