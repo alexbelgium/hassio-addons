@@ -55,7 +55,7 @@ In HA, use the File Editor add-on (or Filebrowser) and edit the Changedetection.
 
 Add the following line to the end of it:
 ```yaml
-PLAYWRIGHT_DRIVER_URL: ws://2937404c-browserless-chrome:3000/chromium?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true
+PLAYWRIGHT_DRIVER_URL: ws://2937404c-browserless-chrome:3000/chromium?headless=true&blockAds=true&stealth=true
 ```
 
 Remember to add a blank line at the end of the file too according to yaml requirements.
