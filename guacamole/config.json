@@ -97,6 +97,6 @@
   "slug": "guacamole",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.5.5-bullseye",
+  "version": "1.6.0-bullseye",
   "video": true
 }
