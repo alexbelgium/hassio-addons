@@ -2,6 +2,13 @@
 # shellcheck shell=bash
 set -euo pipefail
 
+export ENTE_S3_ARE_LOCAL_BUCKETS=true
+export ENTE_S3_B2_EU_CEN_KEY=miniouser
+export ENTE_S3_B2_EU_CEN_SECRET=miniopass
+export ENTE_S3_B2_EU_CEN_ENDPOINT=http://192.168.178.23:8320
+export ENTE_S3_B2_EU_CEN_REGION=eu-central-2
+export ENTE_S3_B2_EU_CEN_BUCKET=b2-eu-cen
+
 ############################################
 # Paths & constants
 ############################################
@@ -12,59 +19,19 @@ PGDATA=/config/postgres
 DB_HOST_INTERNAL=127.0.0.1
 DB_PORT_INTERNAL=5432
 
-# Resolve mapped ports from Supervisor (fall back to defaults if missing)
-API_PORT="$(bashio::addon.port 8080 || echo 8080)"
-S3_PORT="$(bashio::addon.port 3200 || echo 3200)"
-
-# Read MinIO creds from add-on config
-MINIO_USER="$(bashio::config 'MINIO_ROOT_USER' || echo minioadmin)"
-MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD' || echo minioadmin)"
-MINIO_DATA="$(bashio::config 'MINIO_DATA_LOCATION' || echo /config/minio-data)"
-
-# Env overrides Museum will merge over YAML
-export ENTE_ENDPOINT_URL="$(bashio::config 'ENTE_ENDPOINT_URL')"
-export ENTE_S3_ARE_LOCAL_BUCKETS="true"
-# Primary bucket (b2-eu-cen)
-export ENTE_S3_B2_EU_CEN_ENDPOINT="$ENTE_ENDPOINT_URL"
-export ENTE_S3_B2_EU_CEN_REGION="eu-central-2"
-export ENTE_S3_B2_EU_CEN_BUCKET="b2-eu-cen"
-export ENTE_S3_B2_EU_CEN_KEY="${MINIO_USER}"
-export ENTE_S3_B2_EU_CEN_SECRET="${MINIO_PASS}"
-export ENTE_S3_WASABI_EU_CENTRAL_2_V3_ENDPOINT="$ENTE_ENDPOINT_URL"
-export ENTE_S3_WASABI_EU_CENTRAL_2_V3_REGION="eu-central-2"
-export ENTE_S3_WASABI_EU_CENTRAL_2_V3_BUCKET="wasabi-eu-central-2-v3"
-export ENTE_S3_WASABI_EU_CENTRAL_2_V3_KEY="${MINIO_USER}"
-export ENTE_S3_WASABI_EU_CENTRAL_2_V3_SECRET="${MINIO_PASS}"
-export ENTE_S3_SCW_EU_FR_V3_ENDPOINT="$ENTE_ENDPOINT_URL"
-export ENTE_S3_SCW_EU_FR_V3_REGION="eu-central-2"
-export ENTE_S3_SCW_EU_FR_V3_BUCKET="scw-eu-fr-v3"
-export ENTE_S3_SCW_EU_FR_V3_KEY="${MINIO_USER}"
-export ENTE_S3_SCW_EU_FR_V3_SECRET="${MINIO_PASS}"
-
-# database variables
-if $USE_EXTERNAL_DB; then
-    export ENTE_DB_HOST="$DB_HOST_EXT"
-    export ENTE_DB_PORT="$DB_PORT_EXT"
-else
-    export ENTE_DB_HOST="$DB_HOST_INTERNAL"
-    export ENTE_DB_PORT="$DB_PORT_INTERNAL"
-fi
-
 ############################################
 # Read add‑on options
 ############################################
-export DB_NAME="$(bashio::config 'DB_DATABASE_NAME' || echo ente_db)"
-export DB_USER="$(bashio::config 'DB_USERNAME' || echo pguser)"
-export DB_PASS="$(bashio::config 'DB_PASSWORD' || echo ente)"
-export ENTE_DB_NAME="$DB_NAME"
-export ENTE_DB_USER="$DB_USER"
-export ENTE_DB_PASSWORD="$DB_PASS"
-export ENTE_DB_SSLMODE=disable
+DB_NAME="$(bashio::config 'DB_DATABASE_NAME' || echo ente_db)"
+DB_USER="$(bashio::config 'DB_USERNAME' || echo pguser)"
+DB_PASS="$(bashio::config 'DB_PASSWORD' || echo ente)"
 
 # External DB opts (may be blank)
-DB_HOST_EXT="$(bashio::config 'DB_HOSTNAME' || echo '127.0.0.1')"
-DB_PORT_EXT="$(bashio::config 'DB_PORT' || echo '5432')"
+DB_HOST_EXT="$(bashio::config 'DB_HOSTNAME' || echo '')"
+DB_PORT_EXT="$(bashio::config 'DB_PORT' || echo '')"
 
+MINIO_USER="$(bashio::config 'MINIO_ROOT_USER')"
+MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD')"
 
 # Which bucket name we’ll auto‑create in MinIO
 S3_BUCKET="b2-eu-cen"
@@ -96,7 +63,7 @@ fi
 ############################################
 mkdir -p /config/ente/custom-logs \
          /config/data \
-         "$MINIO_DATA" \
+         /config/minio-data \
          "$PGDATA" \
          /config/scripts/compose
 
@@ -121,9 +88,11 @@ WEB_NGINX_CONF=/etc/ente-web/nginx.conf
 ############################################
 create_config() {
     bashio::log.info "Generating new museum config at $CFG"
-    _rand_b64()    { head -c "$1" /dev/urandom | base64 | tr -d '\n'; }
+    # small helpers
+    _rand_b64() { head -c "$1" /dev/urandom | base64 | tr -d '\n'; }
     _rand_b64url() { head -c "$1" /dev/urandom | base64 | tr '+/' '-_' | tr -d '\n'; }
 
+    # Write minimal functional YAML; you can expand if you ship a richer template.
     cat >"$CFG" <<EOF
 key:
   encryption: $(_rand_b64 32)
@@ -141,27 +110,14 @@ db:
 
 s3:
   are_local_buckets: true
-  b2-eu-cen:
+  ${S3_BUCKET}:
     key: ${MINIO_USER}
     secret: ${MINIO_PASS}
-    endpoint: http://127.0.0.1:${S3_PORT}
-    region: eu-central-2
-    bucket: b2-eu-cen
-  wasabi-eu-central-2-v3:
-    key: ${MINIO_USER}
-    secret: ${MINIO_PASS}
-    endpoint: http://127.0.0.1:${S3_PORT}
-    region: eu-central-2
-    bucket: wasabi-eu-central-2-v3
-  scw-eu-fr-v3:
-    key: ${MINIO_USER}
-    secret: ${MINIO_PASS}
-    endpoint: http://127.0.0.1:${S3_PORT}
-    region: eu-central-2
-    bucket: scw-eu-fr-v3
+    endpoint: http://127.0.0.1:3200
+    region: us-east-1
+    bucket: ${S3_BUCKET}
 EOF
 }
-
 
 ############################################
 # Postgres
@@ -237,8 +193,8 @@ bootstrap_internal_db() {
 ############################################
 start_minio() {
     bashio::log.info "Starting MinIO (:3200)..."
-    mkdir -p "$MINIO_DATA"
-    "$MINIO_BIN" server "$MINIO_DATA" --address ":3200" &
+    mkdir -p /config/minio-data
+    "$MINIO_BIN" server /config/minio-data --address ":3200" &
     MINIO_PID=$!
 }
 
@@ -296,6 +252,19 @@ start_museum_foreground() {
         bashio::log.error "Museum binary not found; cannot launch Ente API."
         return 1
     fi
+
+    # Force env overrides (museum merges env > yaml)
+    if $USE_EXTERNAL_DB; then
+        export ENTE_DB_HOST="$DB_HOST_EXT"
+        export ENTE_DB_PORT="$DB_PORT_EXT"
+    else
+        export ENTE_DB_HOST="$DB_HOST_INTERNAL"
+        export ENTE_DB_PORT="$DB_PORT_INTERNAL"
+    fi
+    export ENTE_DB_USER="$DB_USER"
+    export ENTE_DB_PASSWORD="$DB_PASS"
+    export ENTE_DB_NAME="$DB_NAME"
+    export ENTE_DB_SSLMODE=disable
 
     bashio::log.info "Starting museum (foreground)..."
     exec "$MUSEUM_BIN" --config "$CFG"
