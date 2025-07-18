@@ -76,6 +76,7 @@
     "DATA_DIR": "/config",
     "DB_ENGINE": "sqlite",
     "MAX_WORKERS": "1",
+    "NUXT_APP_BASE_URL": "/mealie/",
     "WEB_CONCURRENCY": "2",
     "WEB_GUNICORN": "true",
     "WORKERS_PER_CORE": "0.5"
@@ -119,5 +120,5 @@
   "slug": "mealie",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "v3.0.1-5"
+  "version": "v3.0.1-6"
 }
