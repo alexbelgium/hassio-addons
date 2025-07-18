@@ -1,3 +1,5 @@
+- Disable port by default for security purposes, it can be readded from the addon options. Ingress access is kept @soosp
+
 ## v0.8.1-9 (14-11-2024)
 - Align behavior with other addons : map /addons_config/xxx-scrutiny to enable env injection or custom scripts
 
