@@ -67,7 +67,10 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "environment": {},
+  "environment": {
+    "PGDATA": "/config/postgres",
+    "GUACAMOLE_HOME": "/config"
+  },
   "image": "ghcr.io/alexbelgium/guacamole-{arch}",
   "ingress": true,
   "init": false,
