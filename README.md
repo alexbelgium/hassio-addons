@@ -396,7 +396,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich_cuda%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich_cuda%2Fupdater.json)
-![aarch64][aarch64-badge]
+![aarch64no][aarch64no-badge]
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 ![MariaDB][mariadb-badge]
@@ -415,7 +415,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich_openvino%2Fconfig.json)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fimmich_openvino%2Fupdater.json)
-![aarch64][aarch64-badge]
+![aarch64no][aarch64no-badge]
 ![amd64][amd64-badge]
 ![armv7no][armv7no-badge]
 ![MariaDB][mariadb-badge]
