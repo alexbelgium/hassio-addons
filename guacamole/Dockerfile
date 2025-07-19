@@ -27,9 +27,11 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
 ENV PGDATA=/config/postgres
 ENV GUACAMOLE_HOME=/config
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 WORKDIR /config
 
 # hadolint ignore=SC2016
@@ -98,7 +100,6 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 #WORKDIR /data
 #ENTRYPOINT [ "/usr/bin/env" ]
 #CMD [ "/ha_entrypoint.sh" ]
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ############
 # 5 Labels #
