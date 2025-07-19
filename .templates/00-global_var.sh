@@ -117,7 +117,8 @@ done
 ################
 # Set timezone #
 ################
-set +e
+set +eu
+
 if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
 	if [ -f /usr/share/zoneinfo/"$TZ" ]; then
 		echo "Timezone set from $(cat /etc/timezone) to $TZ"
