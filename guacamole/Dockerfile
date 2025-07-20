@@ -100,8 +100,8 @@ RUN sed -i "s|with-contenv|env|g" && \
     echo "exec /init" >> "/ha_entrypoint.sh"
 
 #WORKDIR /data
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/ha_entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
