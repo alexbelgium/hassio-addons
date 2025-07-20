@@ -1,7 +1,4 @@
-## 1.6.0-3 (20-07-2025)
-- Minor bugs fixed
-## 1.6.0-2 (19-07-2025)
-- Minor bugs fixed
+
 ## 1.6.0-bullseye (18-07-2025)
 - Minor bugs fixed
 
