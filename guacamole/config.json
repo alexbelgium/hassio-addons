@@ -71,6 +71,7 @@
     "PGDATA": "/config/postgres",
     "GUACAMOLE_HOME": "/config"
   },
+  "hassio_api": true,
   "image": "ghcr.io/alexbelgium/guacamole-{arch}",
   "ingress": true,
   "init": false,
@@ -100,6 +101,6 @@
   "slug": "guacamole",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.6.0-2",
+  "version": "1.6.0-3",
   "video": true
 }
