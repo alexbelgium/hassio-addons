@@ -53,6 +53,18 @@ for SCRIPTS in /etc/cont-init.d/*; do
     rm "$SCRIPTS"
 done
 
+# Start services.d
+for service_dir in /etc/services.d/*; do
+    runfile="${service_dir}/run"
+    if [[ -f "$runfile" ]]; then
+        echo "Patching and starting: $runfile"
+        # Replace s6-setuidgid with su-based equivalent
+        sed -i -E 's|^s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
+        chmod +x "$runfile"
+        ( exec "$runfile" ) & true        
+    fi
+done
+
 ######################
 # Starting container #
 ######################
