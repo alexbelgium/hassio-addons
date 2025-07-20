@@ -90,9 +90,9 @@ done
         sed -i "s/bashio::exit.nok/return 1/g" "$SERVICE"
         sed -i "s/bashio::exit.ok/return 0/g" "$SERVICE"
         # shellcheck disable=SC1090
-        source "$SERVICE" || echo -e "\033[0;31mError\033[0m : $SERVICE exiting $?"
+        source "$SERVICE" || echo -e "\033[0;31mError\033[0m : $SERVICE exiting $?" & true
     else
-        "$SERVICE" || echo -e "\033[0;31mError\033[0m : $SERVICE exiting $?"
+        "$SERVICE" || echo -e "\033[0;31mError\033[0m : $SERVICE exiting $?" & true
     fi
 
     # Cleanup
