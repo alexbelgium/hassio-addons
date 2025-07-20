@@ -232,7 +232,7 @@ start_web() {
  return 1
   fi
 
-  bashio::log.info "Starting Ente web (nginx, ports 3000‑3004)..."
+  bashio::log.info "Starting Ente web (nginx, ports 3000‑3004)..."
   nginx -c "$WEB_NGINX_CONF" -g 'daemon off;' &
   WEB_PID=$!
 }
