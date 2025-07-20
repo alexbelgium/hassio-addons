@@ -53,52 +53,6 @@ for SCRIPTS in /etc/cont-init.d/*; do
     rm "$SCRIPTS"
 done
 
-# Loop through /etc/services.d/*/run
-[[ -d /etc/services.d ]] && for SERVICE in /etc/services.d/*/run; do
-    [ -e "$SERVICE" ] || continue
-    echo "$SERVICE: executing"
-
-    # Check if run as root
-    if [ "$(id -u)" -eq 0 ]; then
-        chown "$(id -u)":"$(id -g)" "$SERVICE"
-        chmod a+x "$SERVICE"
-    else
-        echo -e "\e[38;5;214m$(date) WARNING: Script executed with user $(id -u):$(id -g), things can break and chown won't work\e[0m"
-        # Disable chown and chmod in scripts
-        sed -i "s/^chown /true # chown /g" "$SERVICE"
-        sed -i "s/ chown / true # chown /g" "$SERVICE"
-        sed -i "s/^chmod /true # chmod /g" "$SERVICE"
-        sed -i "s/ chmod / true # chmod /g" "$SERVICE"
-    fi
-
-    # Get current shebang, if not available use another
-    currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$SERVICE")"
-    if [ ! -f "${currentshebang%% *}" ]; then
-        for shebang in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
-            command_path="${shebang%% *}"
-            if [ -x "$command_path" ] && "$command_path" echo "yes" >/dev/null 2>&1; then
-                echo "Valid shebang: $shebang"
-                break
-            fi
-        done
-        sed -i "s|$currentshebang|$shebang|g" "$SERVICE"
-    fi
-
-    # Use source to share env variables when requested
-    if [ "${ha_entry_source:-null}" = true ] && command -v "source" &>/dev/null; then
-        sed -i "s/(.*\s|^)exit \([0-9]\+\)/ \1 return \2 || exit \2/g" "$SERVICE"
-        sed -i "s/bashio::exit.nok/return 1/g" "$SERVICE"
-        sed -i "s/bashio::exit.ok/return 0/g" "$SERVICE"
-        # shellcheck disable=SC1090
-        /."$SERVICE" & true || echo -e "\033[0;31mError\033[0m : $SERVICE exiting $?"
-    else
-        "$SERVICE" & true || echo -e "\033[0;31mError\033[0m : $SERVICE exiting $?"
-    fi
-
-    # Cleanup
-    rm "$SERVICE"
-done
-
 ######################
 # Starting container #
 ######################
