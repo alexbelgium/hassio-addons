@@ -96,11 +96,11 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-RUN sed -i "s|/usr/bin/with-contenv|/command/with-contenv|g" /etc/cont-init.d/*
+RUN sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/cont-init.d/*
 
 #WORKDIR /data
-# ENTRYPOINT [ "/usr/bin/env" ]
-# CMD [ "/ha_entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
