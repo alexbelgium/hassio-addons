@@ -8,6 +8,8 @@ export ENTE_S3_B2_EU_CEN_SECRET=miniopass
 export ENTE_S3_B2_EU_CEN_ENDPOINT=http://192.168.178.23:8320
 export ENTE_S3_B2_EU_CEN_REGION=eu-central-2
 export ENTE_S3_B2_EU_CEN_BUCKET=b2-eu-cen
+export WEB_PREP_BIN=/usr/local/bin/ente-web-prepare
+export WEB_NGINX_CONF=/etc/ente-web/nginx.conf
 
 ############################################
 # Paths & constants
