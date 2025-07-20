@@ -14,8 +14,7 @@ FROM node:22-alpine AS web-builder
 ARG ENTE_WEB_TAG=main          
 
 # ---- tools we need to build (git, yarn)
-RUN apk add --no-cache git && \
-    npm install -g yarn
+RUN apk add --no-cache git
 
 # ---- pull the web source
 WORKDIR /src
