@@ -96,7 +96,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-RUN sed -i "s|with-contenv|env|g" && \
+RUN sed -i "s|with-contenv|env|g" "/ha_entrypoint.sh" && \
     echo "exec /init" >> "/ha_entrypoint.sh"
 
 #WORKDIR /data
