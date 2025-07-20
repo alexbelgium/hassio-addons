@@ -38,10 +38,11 @@ WORKDIR /config
 RUN \
     # Enable extensions
     sed -i 's|#!/usr/bin/with-contenv sh|#!/usr/bin/with-contenv bashio|g' /etc/cont-init.d/50-extensions.sh \
-    && sed -i 's|$EXTENSIONS|$(bashio::config "EXTENSIONS")|g' /etc/cont-init.d/50-extensions.sh \
-    \
+    && sed -i 's|$EXTENSIONS|$(bashio::config "EXTENSIONS")|g' /etc/cont-init.d/50-extensions.sh
+
+RUN \
     # Correct transfer
-    && sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
+    sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
     \
     # avoid error
     && sed -i 's|(cat /config/\.database-version)|(cat /config/\.database-version \&>/dev/null)|g' /etc/cont-init.d/* \
@@ -97,8 +98,8 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 #WORKDIR /data
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
