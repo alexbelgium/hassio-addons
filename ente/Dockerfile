@@ -2,7 +2,7 @@
 #  ALEXBELGIUM'S DOCKERFILE  #
 #============================#
 # ... ascii art omitted ...
-#=== Home Assistant Add‑on – ENTE (server + web UI) ===#
+#=== Home Assistant Add‑on – ENTE (server + web UI) ===#
 
 ########################################################
 # 0 ▸ Build the ente‑web static front‑end (multi‑stage) #
