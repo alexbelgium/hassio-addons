@@ -80,7 +80,7 @@ ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh 00-local_mounts.s
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
-ENV PACKAGES="sudo jq yamllint"
+ENV PACKAGES="sudo jq yamllint nginx"
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" /ha_autoapps.sh
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
