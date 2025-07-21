@@ -12,7 +12,6 @@ export ENTE_S3_B2_EU_CEN_SECRET="$MINIO_PASS"
 export ENTE_S3_B2_EU_CEN_ENDPOINT="http://192.168.178.23:$(bashio::addon.port "3200")"
 export ENTE_S3_B2_EU_CEN_REGION=eu-central-2
 export ENTE_S3_B2_EU_CEN_BUCKET="$S3_BUCKET"
-export WEB_NGINX_CONF=/etc/ente-web/nginx.conf
 
 ############################################
 # Paths & constants
@@ -78,8 +77,6 @@ MUSEUM_BIN="$(command -v museum || true)"
 [ -z "$MUSEUM_BIN" ] && [ -x /app/museum ] && MUSEUM_BIN=/app/museum
 [ -z "$MUSEUM_BIN" ] && [ -x /museum ]  && MUSEUM_BIN=/museum
 [ -z "$MUSEUM_BIN" ] && MUSEUM_BIN=museum   # fallback in PATH
-
-WEB_NGINX_CONF=/etc/ente-web/nginx.conf
 
 ############################################
 # Config generation
