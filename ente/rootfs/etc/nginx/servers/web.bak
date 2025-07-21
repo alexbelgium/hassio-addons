@@ -1,0 +1,20 @@
+server {
+    listen 3000; root /www/photos;
+    location / { try_files \$uri \$uri.html /index.html; }
+}
+server {
+    listen 3001; root /www/accounts;
+    location / { try_files \$uri \$uri.html /index.html; }
+}
+server {
+    listen 3002; root /www/photos;
+    location / { try_files \$uri \$uri.html /index.html; }
+}
+server {
+    listen 3003; root /www/auth;
+    location / { try_files \$uri \$uri.html /index.html; }
+}
+server {
+    listen 3004; root /www/cast;
+    location / { try_files \$uri \$uri.html /index.html; }
+}
