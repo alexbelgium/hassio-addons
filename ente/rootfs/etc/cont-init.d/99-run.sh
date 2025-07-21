@@ -209,7 +209,7 @@ start_web() {
  return 0
   fi
 
-  ENTE_API_ORIGIN="${ENTE_API_ORIGIN:-http://192.168.178.23:$(bashio::addon.port "8080")}"
+  ENTE_API_ORIGIN="127.0.0.1:8080"
   ENTE_ALBUMS_ORIGIN="${ENTE_ALBUMS_ORIGIN:-${ENTE_API_ORIGIN}}"
   export ENTE_API_ORIGIN ENTE_ALBUMS_ORIGIN
 
