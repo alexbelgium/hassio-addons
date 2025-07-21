@@ -221,7 +221,7 @@ start_web() {
   mkdir -p /run/nginx /var/log/nginx
 
   # Set nginx
-  mv /etc/nginx/servers/web.bak /etc/nginx/servers/web.conf
+  mv /etc/nginx/http.d/web.bak /etc/nginx/http.d/web.conf
 
   bashio::log.info "Starting Ente web (nginx, ports 3000‑3004)..."
   exec nginx -g 'daemon off;' &
