@@ -2,13 +2,16 @@
 # shellcheck shell=bash
 set -euo pipefail
 
+MINIO_USER="$(bashio::config 'MINIO_ROOT_USER')"
+MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD')"
+S3_BUCKET="b2-eu-cen"
+
 export ENTE_S3_ARE_LOCAL_BUCKETS=true
-export ENTE_S3_B2_EU_CEN_KEY=miniouser
-export ENTE_S3_B2_EU_CEN_SECRET=miniopass
-export ENTE_S3_B2_EU_CEN_ENDPOINT=http://192.168.178.23:8320
+export ENTE_S3_B2_EU_CEN_KEY="$MINIO_USER"
+export ENTE_S3_B2_EU_CEN_SECRET="$MINIO_PASS"
+export ENTE_S3_B2_EU_CEN_ENDPOINT="http://192.168.178.23:$(bashio::addon.port "3200")"
 export ENTE_S3_B2_EU_CEN_REGION=eu-central-2
-export ENTE_S3_B2_EU_CEN_BUCKET=b2-eu-cen
-export WEB_PREP_BIN=/usr/local/bin/ente-web-prepare
+export ENTE_S3_B2_EU_CEN_BUCKET="$S3_BUCKET"
 export WEB_NGINX_CONF=/etc/ente-web/nginx.conf
 
 ############################################
@@ -31,12 +34,6 @@ DB_PASS="$(bashio::config 'DB_PASSWORD' || echo ente)"
 # External DB opts (may be blank)
 DB_HOST_EXT="$(bashio::config 'DB_HOSTNAME' || echo '')"
 DB_PORT_EXT="$(bashio::config 'DB_PORT' || echo '')"
-
-MINIO_USER="$(bashio::config 'MINIO_ROOT_USER')"
-MINIO_PASS="$(bashio::config 'MINIO_ROOT_PASSWORD')"
-
-# Which bucket name we’ll auto‑create in MinIO
-S3_BUCKET="b2-eu-cen"
 
 USE_EXTERNAL_DB=false
 if bashio::config.true 'USE_EXTERNAL_DB'; then
@@ -82,7 +79,6 @@ MUSEUM_BIN="$(command -v museum || true)"
 [ -z "$MUSEUM_BIN" ] && [ -x /museum ]  && MUSEUM_BIN=/museum
 [ -z "$MUSEUM_BIN" ] && MUSEUM_BIN=museum   # fallback in PATH
 
-WEB_PREP_BIN=/usr/local/bin/ente-web-prepare
 WEB_NGINX_CONF=/etc/ente-web/nginx.conf
 
 ############################################
@@ -113,8 +109,8 @@ s3:
   ${S3_BUCKET}:
     key:      ${MINIO_USER}
     secret:   ${MINIO_PASS}
-    endpoint: http://127.0.0.1:3200
-    region:   us-east-1
+    endpoint: ${ENTE_S3_B2_EU_CEN_ENDPOINT}
+    region:   ${ENTE_S3_B2_EU_CEN_REGION}
     bucket:   ${S3_BUCKET}
 EOF
 }
@@ -204,8 +200,6 @@ wait_minio_ready_and_bucket() {
   done
   bashio::log.info "Ensuring buckets..."
   "$MC_BIN" mb -p "h0/${S3_BUCKET}"    || true
-  "$MC_BIN" mb -p "h0/wasabi-eu-central-2-v3"   || true
-  "$MC_BIN" mb -p "h0/scw-eu-fr-v3"    || true
   bashio::log.info "MinIO buckets ready."
 }
 
@@ -218,24 +212,22 @@ start_web() {
  return 0
   fi
 
-  ENTE_API_ORIGIN="${ENTE_API_ORIGIN:-http://[HOST]:[PORT:8080]}"
+  ENTE_API_ORIGIN="${ENTE_API_ORIGIN:-http://192.168.178.23:$(bashio::addon.port "8080")}"
   ENTE_ALBUMS_ORIGIN="${ENTE_ALBUMS_ORIGIN:-${ENTE_API_ORIGIN}}"
   export ENTE_API_ORIGIN ENTE_ALBUMS_ORIGIN
 
-  if [ -x "$WEB_PREP_BIN" ]; then
- "$WEB_PREP_BIN" || bashio::log.warning "Web env substitution step failed (non‑fatal)."
-  else
- bashio::log.warning "Web prep helper not found ($WEB_PREP_BIN); skipping substitution."
-  fi
+  # Running ente-web-prepare
+  echo "[ente-web-prepare] Substituting origins…"
+  find /www -name '*.js'       | xargs sed -i "s#ENTE_API_ORIGIN_PLACEHOLDER#${ENTE_API_ORIGIN}#g"
+  find /www/photos -name '*.js'| xargs sed -i "s#ENTE_ALBUMS_ORIGIN_PLACEHOLDER#${ENTE_ALBUMS_ORIGIN}#g"
 
   mkdir -p /run/nginx /var/log/nginx
-  if [ ! -f "$WEB_NGINX_CONF" ]; then
- bashio::log.error "Missing nginx conf at $WEB_NGINX_CONF; cannot start web."
- return 1
-  fi
+
+  # Set nginx
+  mv /etc/nginx/servers/web.bak /etc/nginx/servers/web.conf
 
   bashio::log.info "Starting Ente web (nginx, ports 3000‑3004)..."
-  nginx -c "$WEB_NGINX_CONF" -g 'daemon off;' &
+  exec nginx -g 'daemon off;' &
   WEB_PID=$!
 }
 
