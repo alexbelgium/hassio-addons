@@ -31,7 +31,6 @@ RUN yarn config set network-timeout 900000 -g \
  && yarn build:auth \
  && yarn build:cast
 
-
 #################
 # 1 ▸ Base image #
 #################
@@ -72,34 +71,6 @@ COPY --from=web-builder /src/web/apps/photos/out    /www/photos
 COPY --from=web-builder /src/web/apps/accounts/out  /www/accounts
 COPY --from=web-builder /src/web/apps/auth/out      /www/auth
 COPY --from=web-builder /src/web/apps/cast/out      /www/cast
-
-# nginx config & env‑patch helper
-RUN mkdir -p /etc/ente-web
-COPY <<'EOF' /etc/ente-web/nginx.conf
-worker_processes 1;
-events { worker_connections 1024; }
-http {
-    include       mime.types;  default_type application/octet-stream;
-    sendfile on;  keepalive_timeout 65;
-    server { listen 3000; root /www/photos;   location / { try_files $uri $uri.html /index.html; } }
-    server { listen 3001; root /www/accounts; location / { try_files $uri $uri.html /index.html; } }
-    server { listen 3002; root /www/photos;   location / { try_files $uri $uri.html /index.html; } }
-    server { listen 3003; root /www/auth;     location / { try_files $uri $uri.html /index.html; } }
-    server { listen 3004; root /www/cast;     location / { try_files $uri $uri.html /index.html; } }
-}
-EOF
-
-COPY <<'EOF' /usr/local/bin/ente-web-prepare
-#!/usr/bin/env ash
-set -eu
-: "${ENTE_API_ORIGIN:=http://localhost:8080}"
-: "${ENTE_ALBUMS_ORIGIN:=${ENTE_API_ORIGIN}}"
-echo "[ente-web-prepare] Substituting origins…"
-find /www -name '*.js'       | xargs sed -i "s#ENTE_API_ORIGIN_PLACEHOLDER#${ENTE_API_ORIGIN}#g"
-find /www/photos -name '*.js'| xargs sed -i "s#ENTE_ALBUMS_ORIGIN_PLACEHOLDER#${ENTE_ALBUMS_ORIGIN}#g"
-EOF
-RUN chmod +x /usr/local/bin/ente-web-prepare
-
 
 ##################
 # 3 ▸ Install add‑on helpers (unchanged) #
