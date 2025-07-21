@@ -209,8 +209,8 @@ start_web() {
  return 0
   fi
 
-  ENTE_API_ORIGIN="127.0.0.1:8080"
-  ENTE_ALBUMS_ORIGIN="${ENTE_ALBUMS_ORIGIN:-${ENTE_API_ORIGIN}}"
+  ENTE_API_ORIGIN=http://localhost:8080
+  ENTE_ALBUMS_ORIGIN=http://localhost:3002
   export ENTE_API_ORIGIN ENTE_ALBUMS_ORIGIN
 
   # Running ente-web-prepare
