@@ -1,3 +1,5 @@
+## nightly-20250718-2 (22-07-2025)
+- Minor bugs fixed
 ## nightly-20250718 (18-07-2025)
 - Minor bugs fixed
 ## nightly-20250710 (12-07-2025)
