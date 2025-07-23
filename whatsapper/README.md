@@ -1,4 +1,3 @@
-## &#9888; Open Request : [✨ [REQUEST] Whatsapper on HAOS Raspberry pi 5 (opened 2025-07-19)](https://github.com/alexbelgium/hassio-addons/issues/1970) by [@sanchetkore](https://github.com/sanchetkore)
 # Home assistant add-on: Whatsapper
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
