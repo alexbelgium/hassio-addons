@@ -146,7 +146,7 @@ sed -i "s|plotly_streamlit.py --browser.gatherUsageStats|plotly_streamlit.py --s
 
 # Clean saved mp3 files
 if [[ -f "$HOME/BirdNET-Pi/scripts/utils/reporting.py" ]]; then
-    echo ".. add highpass and lowpass to sox extracts"
+    echo "... add highpass and lowpass to sox extracts"
     sed -i "s|f'={stop}']|f'={stop}', 'highpass', '250']|g" "$HOME/BirdNET-Pi/scripts/utils/reporting.py"
 fi
 
