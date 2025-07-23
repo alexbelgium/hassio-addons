@@ -1,3 +1,5 @@
+## v0.14.5-2 (23-07-2025)
+- Minor bugs fixed
 
 ## v0.14.5 (12-07-2025)
 - Update to latest version from Unpackerr/unpackerr (changelog : https://github.com/Unpackerr/unpackerr/releases)
