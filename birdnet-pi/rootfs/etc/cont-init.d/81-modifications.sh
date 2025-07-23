@@ -42,6 +42,22 @@ fi
 # General elements
 ##################
 
+# Correct language labels according to birdnet.conf
+echo "... adapting labels according to birdnet.conf"
+if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
+    export "$(grep "^MODEL" /config/birdnet.conf)"
+    bashio::log.info "Setting language to ${DATABASE_LANG:-en}"
+    if [ "$MODEL" == "BirdNET_GLOBAL_6K_V2.4_Model_FP16" ]; then
+      BASEDIR=labels_nm
+    else
+      BASEDIR=labels_l18n
+    fi
+    label_file_name="labels_${DATABASE_LANG}.txt"
+    ln -sf "$HOME/BirdNET-Pi/model/${BASEDIR}/${label_file_name}" "$HOME/BirdNET-Pi/model/labels.txt" || bashio::log.warning "Failed to update language labels"
+else
+    bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
+fi
+
 # Remove Ram drive option from webui
 echo "... removing Ram drive from webui as it is handled from HA"
 if grep -q "Ram drive" "$HOME/BirdNET-Pi/scripts/service_controls.php"; then
@@ -153,11 +169,3 @@ grep -rl "RECS_DIR" "$HOME" --exclude="*.php" | while read -r file; do
 done
 mkdir -p /tmp
 
-# Correct language labels according to birdnet.conf
-echo "... adapting labels according to birdnet.conf"
-if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
-    bashio::log.info "Setting language to ${DATABASE_LANG:-en}"
-    "$HOME/BirdNET-Pi/scripts/install_language_label_nm.sh" -l "${DATABASE_LANG:-}" &> /dev/null || bashio::log.warning "Failed to update language labels"
-else
-    bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
-fi
