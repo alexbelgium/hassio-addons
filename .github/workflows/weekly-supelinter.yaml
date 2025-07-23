@@ -60,6 +60,8 @@ jobs:
 
       - name: Use 4 spaces in shell scripts
         run: |
+          curl -sSLo /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.12.0/shfmt_v3.12.0_linux_amd64
+          chmod +x /usr/local/bin/shfmt
           find . -type f \( -name "*.sh" -o -name "run" \) -exec shfmt -w -i 4 -ci -bn -sr {} +
 
       - name: Sort json files
