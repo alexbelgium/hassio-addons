@@ -4,8 +4,8 @@
 # Dependencies
 sockfile="empty"
 until [[ -e /var/run/dbus/system_bus_socket ]] && [[ -e "$sockfile" ]]; do
-	sleep 1s
-	sockfile="$(find /run/php -name "*.sock")"
+    sleep 1s
+    sockfile="$(find /run/php -name "*.sock")"
 done
 
 # Correct fpm.sock
@@ -19,7 +19,7 @@ TZ_VALUE="$(timedatectl show -p Timezone --value)"
 export TZ="$TZ_VALUE"
 
 # Update caddyfile with password
-/."$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh &>/dev/null || true
+/."$HOME"/BirdNET-Pi/scripts/update_caddyfile.sh &> /dev/null || true
 
 echo "Starting service: caddy"
 /usr/bin/caddy run --config /etc/caddy/Caddyfile

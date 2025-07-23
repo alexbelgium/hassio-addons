@@ -6,15 +6,15 @@ CONFIGSOURCE="/config"
 
 # Use ssl
 if [ -d /ssl ]; then
-	mkdir -p /cert
-	cp -r /ssl/* /cert
-	chown -R 508:508 /cert
+    mkdir -p /cert
+    cp -r /ssl/* /cert
+    chown -R 508:508 /cert
 fi
 
 # Create directory
 if [ ! -f "$CONFIGSOURCE" ]; then
-	echo "Creating directory"
-	mkdir -p "$CONFIGSOURCE"
+    echo "Creating directory"
+    mkdir -p "$CONFIGSOURCE"
 fi
 
 # Migrate previous files
@@ -30,17 +30,17 @@ echo "Creating symlink"
 
 # Create potentially missing folers
 for folders in html keystore pdf db portal; do
-	mkdir -p "$CONFIGSOURCE/$folders"
+    mkdir -p "$CONFIGSOURCE/$folders"
 done
 touch /config/LAST_RAN_OMADA_VER.txt
 
 # Create symlinks for all files in /data
 for item in "$CONFIGSOURCE"/*; do
-	# Get the base name of the file or folder
-	base_name=$(basename "$item")
-	# Create a symbolic link in the current working directory
-	ln -s "$item" /opt/tplink/EAPController/data/"$base_name"
-	echo "Created symlink for '$base_name'"
+    # Get the base name of the file or folder
+    base_name=$(basename "$item")
+    # Create a symbolic link in the current working directory
+    ln -s "$item" /opt/tplink/EAPController/data/"$base_name"
+    echo "Created symlink for '$base_name'"
 done
 
 # Create logfile

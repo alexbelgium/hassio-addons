@@ -22,24 +22,24 @@ export ROCKET_SECRET_KEY="${secret_key}"
 # Find the matching log level
 if bashio::config.has_value 'log_level'; then
     case "$(bashio::string.lower "$(bashio::config 'log_level')")" in
-    all | trace)
-        log_level="trace"
-        ;;
-    debug)
-        log_level="debug"
-        ;;
-    info | notice)
-        log_level="info"
-        ;;
-    warning)
-        log_level="warn"
-        ;;
-    error | fatal)
-        log_level="error"
-        ;;
-    off)
-        log_level="off"
-        ;;
+        all | trace)
+            log_level="trace"
+            ;;
+        debug)
+            log_level="debug"
+            ;;
+        info | notice)
+            log_level="info"
+            ;;
+        warning)
+            log_level="warn"
+            ;;
+        error | fatal)
+            log_level="error"
+            ;;
+        off)
+            log_level="off"
+            ;;
     esac
 
     export LOG_LEVEL="${log_level}"

@@ -13,17 +13,18 @@ else
     ########################################################
     # DRAFT : Start wireguard if needed
     if bashio::config.true 'wireguard_enabled'; then
-        wg-quick up /config/wireguard/config.conf & true
+        wg-quick up /config/wireguard/config.conf &
+        true
     fi
     ########################################################
 
     if bashio::config.true 'silent'; then
-    exec \
-        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
-                s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" >/dev/null
+        exec \
+            s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
+            s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" > /dev/null
     else
-    exec \
-        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
-                s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"
+        exec \
+            s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
+            s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"
     fi
 fi

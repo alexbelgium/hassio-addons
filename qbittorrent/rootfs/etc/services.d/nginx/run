@@ -10,32 +10,32 @@ bashio::log.info "Starting NGinx..."
 
 # Check vpn is working
 if [ -f /currentip ]; then
-  nginx || nginx -s reload & \
-  while true; do
-    # Get vpn ip
-    if ! bashio::config.true 'wireguard_enabled' && bashio::config.true 'openvpn_alt_mode'; then
-      curl -s ipecho.net/plain > /vpnip
-    else
-      curl -s ipecho.net/plain --interface tun0 > /vpnip
-    fi
+    nginx || nginx -s reload &
+    while true; do
+        # Get vpn ip
+        if ! bashio::config.true 'wireguard_enabled' && bashio::config.true 'openvpn_alt_mode'; then
+            curl -s ipecho.net/plain > /vpnip
+        else
+            curl -s ipecho.net/plain --interface tun0 > /vpnip
+        fi
 
-    # Verify ip has changed
-    if [[ "$(cat /vpnip)" = "$(cat /currentip)" ]]; then
-      bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
-      bashio::exit.nok
-    fi
+        # Verify ip has changed
+        if [[ "$(cat /vpnip)" = "$(cat /currentip)" ]]; then
+            bashio::log.fatal "VPN is not properly configured. Your ip is exposed. Please fix this, or do not use the vpn alt mode"
+            bashio::exit.nok
+        fi
 
-    # Get ip location
-    COUNTRY=$(curl -s https://ipinfo.io/$(cat /vpnip) | grep country -i -m 1 | cut -d ':' -f 2 |xargs | awk 'gsub(/,$/,x)' || true)
+        # Get ip location
+        COUNTRY=$(curl -s https://ipinfo.io/$(cat /vpnip) | grep country -i -m 1 | cut -d ':' -f 2 | xargs | awk 'gsub(/,$/,x)' || true)
 
-    # Inform by message
-    bashio::log.info "VPN is up and running with ip $(cat /vpnip), based in country : $COUNTRY"
+        # Inform by message
+        bashio::log.info "VPN is up and running with ip $(cat /vpnip), based in country : $COUNTRY"
 
-    # Check every 15m
-    sleep 15m
+        # Check every 15m
+        sleep 15m
 
-    true
-  done
+        true
+    done
 else
-  nginx || nginx -s reload
+    nginx || nginx -s reload
 fi

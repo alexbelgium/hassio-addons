@@ -7,10 +7,10 @@ set -e
 ##################
 
 if [[ "${BASH_SOURCE[0]}" == /etc/cont-init.d/* ]]; then
-	mkdir -p /etc/scripts-init
-	sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
-	sed -i "/ rm/d" /ha_entrypoint.sh
-	cp "${BASH_SOURCE[0]}" /etc/scripts-init/
+    mkdir -p /etc/scripts-init
+    sed -i "s|/etc/cont-init.d|/etc/scripts-init|g" /ha_entrypoint.sh
+    sed -i "/ rm/d" /ha_entrypoint.sh
+    cp "${BASH_SOURCE[0]}" /etc/scripts-init/
 fi
 
 ######################
@@ -25,22 +25,22 @@ configtemplate="$HOME"/BirdNET-Pi/birdnet.bak
 
 # Ensure both files exist before proceeding
 if [ ! -f "$configcurrent" ] || [ ! -f "$configtemplate" ]; then
-	bashio::log.fatal "Missing required birdnet.conf or birdnet.bak file. Please ensure both are present."
-	exit 1
+    bashio::log.fatal "Missing required birdnet.conf or birdnet.bak file. Please ensure both are present."
+    exit 1
 fi
 
 # Extract variable names from config template and read each one
 grep -o '^[^#=]*=' "$configtemplate" | sed 's/=//' | while read -r var; do
-	# Check if the variable is in configcurrent, if not, append it
-	if ! grep -q "^$var=" "$configcurrent"; then
-		bashio::log.warning "...$var was missing from your birdnet.conf file, it was re-added"
-		grep "^$var=" "$configtemplate" >>"$configcurrent"
-	fi
-	# Check for duplicates
-	if [ "$(grep -c "^$var=" "$configcurrent")" -gt 1 ]; then
-		bashio::log.error "Duplicate variable $var found in $configcurrent, all were commented out except for the first one"
-		sed -i "0,/^$var=/!s/^$var=/#$var=/" "$configcurrent"
-	fi
+    # Check if the variable is in configcurrent, if not, append it
+    if ! grep -q "^$var=" "$configcurrent"; then
+        bashio::log.warning "...$var was missing from your birdnet.conf file, it was re-added"
+        grep "^$var=" "$configtemplate" >> "$configcurrent"
+    fi
+    # Check for duplicates
+    if [ "$(grep -c "^$var=" "$configcurrent")" -gt 1 ]; then
+        bashio::log.error "Duplicate variable $var found in $configcurrent, all were commented out except for the first one"
+        sed -i "0,/^$var=/!s/^$var=/#$var=/" "$configcurrent"
+    fi
 done
 
 ##############
@@ -48,8 +48,8 @@ done
 ##############
 
 if [[ "$(bashio::addon.port "80")" == 3000 ]]; then
-	bashio::log.fatal "This is crazy but your port is set to 3000 and streamlit doesn't accept this port! You need to change it from the addon options and restart. Thanks"
-	sleep infinity
+    bashio::log.fatal "This is crazy but your port is set to 3000 and streamlit doesn't accept this port! You need to change it from the addon options and restart. Thanks"
+    sleep infinity
 fi
 
 ##################
