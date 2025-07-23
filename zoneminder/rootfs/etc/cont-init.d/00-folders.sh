@@ -8,9 +8,9 @@ CONFIGSOURCE="/config/addons_config/zoneminder"
 
 # Set image location
 if bashio::config.has_value "Images_location"; then
-	IMAGESOURCE=$(bashio::config "Images_location")
+    IMAGESOURCE=$(bashio::config "Images_location")
 else
-	IMAGESOURCE="$CONFIGSOURCE"/images
+    IMAGESOURCE="$CONFIGSOURCE"/images
 fi
 
 # Create directory

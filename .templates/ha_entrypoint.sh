@@ -30,7 +30,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
     if [ ! -f "${currentshebang%% *}" ]; then
         for shebang in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
             command_path="${shebang%% *}"
-            if [ -x "$command_path" ] && "$command_path" echo "yes" >/dev/null 2>&1; then
+            if [ -x "$command_path" ] && "$command_path" echo "yes" > /dev/null 2>&1; then
                 echo "Valid shebang: $shebang"
                 break
             fi
@@ -39,7 +39,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
     fi
 
     # Use source to share env variables when requested
-    if [ "${ha_entry_source:-null}" = true ] && command -v "source" &>/dev/null; then
+    if [ "${ha_entry_source:-null}" = true ] && command -v "source" &> /dev/null; then
         sed -i "s/(.*\s|^)exit \([0-9]\+\)/ \1 return \2 || exit \2/g" "$SCRIPTS"
         sed -i "s/bashio::exit.nok/return 1/g" "$SCRIPTS"
         sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
@@ -61,7 +61,8 @@ for service_dir in /etc/services.d/*; do
         # Replace s6-setuidgid with su-based equivalent
         sed -i -E 's|^s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
         chmod +x "$runfile"
-        ( exec "$runfile" ) & true        
+        (exec "$runfile") &
+        true
     fi
 done
 
@@ -76,19 +77,19 @@ if [ "$$" -eq 1 ]; then
     terminate() {
         echo "Termination signal received, forwarding to subprocesses..."
         # Terminate all subprocesses
-        if command -v pgrep &>/dev/null; then
+        if command -v pgrep &> /dev/null; then
             for pid in $(pgrep -P $$); do
                 echo "Terminating child PID $pid"
-                kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
+                kill -TERM "$pid" 2> /dev/null || echo "Failed to terminate PID $pid"
             done
         else
             # Fallback to iterating through /proc if pgrep is not available
             for pid in /proc/[0-9]*/; do
                 pid=${pid#/proc/}
                 pid=${pid%/}
-                if [[ "$pid" -ne 1 ]] && grep -q "^PPid:\s*$$" "/proc/$pid/status" 2>/dev/null; then
+                if [[ "$pid" -ne 1 ]] && grep -q "^PPid:\s*$$" "/proc/$pid/status" 2> /dev/null; then
                     echo "Terminating child PID $pid"
-                    kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
+                    kill -TERM "$pid" 2> /dev/null || echo "Failed to terminate PID $pid"
                 fi
             done
         fi

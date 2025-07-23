@@ -12,32 +12,32 @@ CONFIG_LOCATION=/config/addons_config/"$slug"/config.xml
 bashio::net.wait_for "$port" localhost 900
 
 if bashio::config.has_value 'CONFIG_LOCATION'; then
-  CONFIG_LOCATION="$(bashio::config 'CONFIG_LOCATION')"
-  # Modify if it is a base directory
-  if [[ "$CONFIG_LOCATION" == *.* ]]; then CONFIG_LOCATION="$(dirname $CONFIG_LOCATION)"; fi
-  CONFIG_LOCATION="$CONFIG_LOCATION"/config.xml
+    CONFIG_LOCATION="$(bashio::config 'CONFIG_LOCATION')"
+    # Modify if it is a base directory
+    if [[ "$CONFIG_LOCATION" == *.* ]]; then CONFIG_LOCATION="$(dirname $CONFIG_LOCATION)"; fi
+    CONFIG_LOCATION="$CONFIG_LOCATION"/config.xml
 fi
 
 # Delete external
 if grep -q "external" "$CONFIG_LOCATION"; then
-  bashio::log.warning "external is set, restarting"
-  sed -i "/external/d" "$CONFIG_LOCATION"
-  bashio::addon.restart
+    bashio::log.warning "external is set, restarting"
+    sed -i "/external/d" "$CONFIG_LOCATION"
+    bashio::addon.restart
 fi
 
 # Set UrlBase
 if ! grep -q "<UrlBase>$slug</UrlBase>" "$CONFIG_LOCATION" && ! bashio::config.true "ingress_disabled"; then
-  bashio::log.warning "BaseUrl not set properly, restarting"
-  sed -i "/UrlBase/d" "$CONFIG_LOCATION"
-  sed -i "/<Config>/a <UrlBase>$slug<\/UrlBase>" "$CONFIG_LOCATION"
-  bashio::addon.restart
+    bashio::log.warning "BaseUrl not set properly, restarting"
+    sed -i "/UrlBase/d" "$CONFIG_LOCATION"
+    sed -i "/<Config>/a <UrlBase>$slug<\/UrlBase>" "$CONFIG_LOCATION"
+    bashio::addon.restart
 fi
 
 echo ""
 if bashio::config.true "ingress_disabled"; then
-  bashio::log.info "Ingress is disabled. You can connect at http://homeassistant:$(bashio::addon.port 8787)"
+    bashio::log.info "Ingress is disabled. You can connect at http://homeassistant:$(bashio::addon.port 8787)"
 else
-  bashio::log.info "Ingress is enabled. You can connect from HA or at http://homeassistant:$(bashio::addon.port 8787)/readarr"
+    bashio::log.info "Ingress is enabled. You can connect from HA or at http://homeassistant:$(bashio::addon.port 8787)/readarr"
 fi
 echo ""
 

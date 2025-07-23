@@ -5,7 +5,7 @@ set -e
 
 # Set configuration directory
 if [ -d "/home/node/.signalk" ]; then
-	rm -r "/home/node/.signalk"
+    rm -r "/home/node/.signalk"
 fi
 
 # Variables
@@ -22,9 +22,9 @@ groupmod -o -g 0 node
 # Ensure 600 for SSL files
 echo "... specifying security files permissions"
 for file in ssl-key.pem ssl-cert.pem security.json; do
-	if [ -e "/config/$file" ]; then
-		chmod 600 "/config/$file"
-	fi
+    if [ -e "/config/$file" ]; then
+        chmod 600 "/config/$file"
+    fi
 done
 
 bashio::log.info "Starting application"

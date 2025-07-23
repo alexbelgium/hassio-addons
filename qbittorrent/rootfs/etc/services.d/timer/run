@@ -5,11 +5,11 @@ set -e
 RUNTIME=$(bashio::config 'run_duration')
 
 if bashio::config.has_value 'run_duration'; then
-  bashio::log.warning "The run_duration option is set. The addon will stop after $RUNTIME"
-  sleep $RUNTIME || bashio::log.fatal "run_duration format is not correct. Use 5d or 5h or 5m for example"
-  bashio::log.info "Timeout achieved, addon will stop !"
-  sleep 60s
-  bashio::addon.stop
+    bashio::log.warning "The run_duration option is set. The addon will stop after $RUNTIME"
+    sleep $RUNTIME || bashio::log.fatal "run_duration format is not correct. Use 5d or 5h or 5m for example"
+    bashio::log.info "Timeout achieved, addon will stop !"
+    sleep 60s
+    bashio::addon.stop
 else
-  rm -r /etc/services.d/timer
+    rm -r /etc/services.d/timer
 fi
