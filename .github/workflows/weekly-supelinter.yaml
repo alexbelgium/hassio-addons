@@ -58,6 +58,10 @@ jobs:
         run: |
           find . -type f \( -name "*.sh" -o -name "run" \) -exec chmod +x {} \;
 
+      - name: Use 4 spaces in shell scripts
+        run: |
+          find . -type f \( -name "*.sh" -o -name "run" \) -exec shfmt -w -i 4 -ci -bn -sr {} +
+
       - name: Sort json files
         id: sort
         run: |
