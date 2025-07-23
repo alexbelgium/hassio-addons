@@ -1,7 +1,7 @@
 {
   "build_from": {
-    "aarch64": "hotio/unpackerr:latest",
-    "amd64": "hotio/unpackerr:latest"
+    "aarch64": "ghcr.io/hotio/unpackerr:latest",
+    "amd64": "ghcr.io/hotio/unpackerr:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
