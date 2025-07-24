@@ -29,12 +29,12 @@ common_steps() {
         sed -i "s|%%mqtt_pass%%|$MQTT_PASS|g" /helpers/birdnet_to_mqtt.py
 
         # Copy script to the appropriate directory
-        cp /helpers/birdnet_to_mqtt.py "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
-        chown pi:pi "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
-        chmod +x "$HOME"/BirdNET-Pi/scripts/utils/birdnet_to_mqtt.py
+        cp /helpers/birdnet_to_mqtt.py "$HOME"/BirdNET-Pi/scripts/birdnet_to_mqtt.py
+        chown pi:pi "$HOME"/BirdNET-Pi/scripts/birdnet_to_mqtt.py
+        chmod +x "$HOME"/BirdNET-Pi/scripts/birdnet_to_mqtt.py
 
         # Add hooks to the main analysis script
-        sed -i "/load_global_model, run_analysis/a from utils.birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
+        sed -i "/load_global_model, run_analysis/a from birdnet_to_mqtt import automatic_mqtt_publish" "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
         sed -i '/write_to_db(/a\                automatic_mqtt_publish(file, detection, os.path.basename(detection.file_name_extr))' "$HOME"/BirdNET-Pi/scripts/birdnet_analysis.py
     else
         bashio::log.fatal "MQTT connection failed, it will not be configured"
