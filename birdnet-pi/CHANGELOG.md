@@ -1,3 +1,5 @@
+- Fix birdweather
+
 ## 2025.07.01 (11-07-2025)
 - Minor bugs fixed
 ## 2025.04.08 (29-04-2025)
