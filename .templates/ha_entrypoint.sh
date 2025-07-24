@@ -7,63 +7,85 @@ echo "Starting..."
 # Starting scripts #
 ####################
 
-# Loop through /etc/cont-init.d/*
-for SCRIPTS in /etc/cont-init.d/*; do
-    [ -e "$SCRIPTS" ] || continue
-    echo "$SCRIPTS: executing"
-
+run_script() {
+    runfile="$1"
+    script_kind="$2"
+    echo "$runfile: executing"
     # Check if run as root
     if [ "$(id -u)" -eq 0 ]; then
-        chown "$(id -u)":"$(id -g)" "$SCRIPTS"
-        chmod a+x "$SCRIPTS"
+        chown "$(id -u)":"$(id -g)" "$runfile"
+        chmod a+x "$runfile"
     else
         echo -e "\e[38;5;214m$(date) WARNING: Script executed with user $(id -u):$(id -g), things can break and chown won't work\e[0m"
         # Disable chown and chmod in scripts
-        sed -i "s/^chown /true # chown /g" "$SCRIPTS"
-        sed -i "s/ chown / true # chown /g" "$SCRIPTS"
-        sed -i "s/^chmod /true # chmod /g" "$SCRIPTS"
-        sed -i "s/ chmod / true # chmod /g" "$SCRIPTS"
+        sed -i -E 's/^([[:space:]]*)chown /\1true # chown /' "$runfile"
+        sed -i -E 's/^([[:space:]]*)chmod /\1true # chmod /' "$runfile"
+    fi
+
+    # Replace s6-setuidgid with su-based equivalent
+    if ! command -v s6-setuidgid >/dev/null 2>&1; then
+        sed -i -E 's|^s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
     fi
 
     # Get current shebang, if not available use another
-    currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$SCRIPTS")"
-    if [ ! -f "${currentshebang%% *}" ]; then
-        for shebang in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
-            command_path="${shebang%% *}"
-            if [ -x "$command_path" ] && "$command_path" echo "yes" > /dev/null 2>&1; then
-                echo "Valid shebang: $shebang"
+    currentshebang="$(sed -n '1{s/^#![[:space:]]*//p;q}' "$runfile")"
+    interp="${currentshebang%% *}"
+    
+    if [ -z "$currentshebang" ] || [ ! -x "$interp" ]; then
+        for candidate in \
+            "/command/with-contenv bashio" \
+            "/usr/bin/with-contenv bashio" \
+            "/usr/bin/env bashio" \
+            "/usr/bin/bashio" \
+            "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"
+        do
+            cmd="${candidate%% *}"
+            if [ -x "$cmd" ]; then
+                new_shebang="$candidate"
+                echo "Valid shebang: $new_shebang"
+                # Replace only the first line
+                if [ -n "$currentshebang" ]; then
+                    sed -i "1s|.*|#!${new_shebang}|" "$runfile"
+                else
+                    sed -i "1i#!"${new_shebang} "$runfile"
+                fi
                 break
             fi
         done
-        sed -i "s|$currentshebang|$shebang|g" "$SCRIPTS"
     fi
 
     # Use source to share env variables when requested
-    if [ "${ha_entry_source:-null}" = true ] && command -v "source" &> /dev/null; then
-        sed -i "s/(.*\s|^)exit \([0-9]\+\)/ \1 return \2 || exit \2/g" "$SCRIPTS"
-        sed -i "s/bashio::exit.nok/return 1/g" "$SCRIPTS"
-        sed -i "s/bashio::exit.ok/return 0/g" "$SCRIPTS"
-        # shellcheck disable=SC1090
-        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    if [[ "$script_kind" == service ]]; then
+        (exec "$runfile") & true
     else
-        "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+        if [ "${ha_entry_source:-null}" = true ]; then
+            sed -Ei 's/(^|[[:space:]])exit ([0-9]+)/\1return \2 || exit \2/g' "$runfile"
+            sed -i "s/bashio::exit.nok/return 1/g" "$runfile"
+            sed -i "s/bashio::exit.ok/return 0/g" "$runfile"
+            # shellcheck disable=SC1090
+            source "$runfile" || echo -e "\033[0;31mError\033[0m : $runfile exiting $?"
+        else
+            "$runfile" || echo -e "\033[0;31mError\033[0m : $runfile exiting $?"
+        fi
     fi
 
     # Cleanup
-    rm "$SCRIPTS"
+    if [[ "$script_kind" != service ]]; then
+        rm "$runfile"
+    fi
+}
+
+# Loop through /etc/cont-init.d/*
+for SCRIPTS in /etc/cont-init.d/*; do
+    [ -e "$SCRIPTS" ] || continue
+    run_script "$SCRIPTS" script
 done
 
 # Start services.d
 for service_dir in /etc/services.d/*; do
-    runfile="${service_dir}/run"
-    if [[ -f "$runfile" ]]; then
-        echo "Patching and starting: $runfile"
-        # Replace s6-setuidgid with su-based equivalent
-        sed -i -E 's|^s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
-        chmod +x "$runfile"
-        (exec "$runfile") &
-        true
-    fi
+    SCRIPTS="${service_dir}/run"
+    [ -e "$SCRIPTS" ] || continue
+    run_script "$SCRIPTS" service
 done
 
 ######################
@@ -93,16 +115,16 @@ if [ "$$" -eq 1 ]; then
                 fi
             done
         fi
-
+        kill -TERM -$$ 2>/dev/null || true
+        sleep 5
+        kill -KILL -$$ 2>/dev/null || true
+    
         wait
         echo "All subprocesses terminated. Exiting."
         exit 0
     }
     trap terminate SIGTERM SIGINT
-    while :; do
-        sleep infinity &
-        wait $!
-    done
+    wait -n
 else
     echo " "
     echo -e "\033[0;32mStarting the upstream container\033[0m"
