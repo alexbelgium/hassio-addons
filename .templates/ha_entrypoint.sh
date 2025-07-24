@@ -28,30 +28,16 @@ run_script() {
     fi
 
     # Get current shebang, if not available use another
-    currentshebang="$(sed -n '1{s/^#![[:space:]]*//p;q}' "$runfile")"
-    interp="${currentshebang%% *}"
-    
-    if [ -z "$currentshebang" ] || [ ! -x "$interp" ]; then
-        for candidate in \
-            "/command/with-contenv bashio" \
-            "/usr/bin/with-contenv bashio" \
-            "/usr/bin/env bashio" \
-            "/usr/bin/bashio" \
-            "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"
-        do
-            cmd="${candidate%% *}"
-            if [ -x "$cmd" ]; then
-                new_shebang="$candidate"
-                echo "Valid shebang: $new_shebang"
-                # Replace only the first line
-                if [ -n "$currentshebang" ]; then
-                    sed -i "1s|.*|#!${new_shebang}|" "$runfile"
-                else
-                    sed -i "1i#!"${new_shebang} "$runfile"
-                fi
+    currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$SCRIPTS")"
+    if [ ! -f "${currentshebang%% *}" ]; then
+        for shebang in "/command/with-contenv bashio" "/usr/bin/with-contenv bashio" "/usr/bin/env bashio" "/usr/bin/bashio" "/usr/bin/bash" "/usr/bin/sh" "/bin/bash" "/bin/sh"; do
+            command_path="${shebang%% *}"
+            if [ -x "$command_path" ] && "$command_path" echo "yes" > /dev/null 2>&1; then
+                echo "Valid shebang: $shebang"
                 break
             fi
         done
+        sed -i "s|$currentshebang|$shebang|g" "$SCRIPTS"
     fi
 
     # Use source to share env variables when requested
