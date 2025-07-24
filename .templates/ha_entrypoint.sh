@@ -24,7 +24,7 @@ run_script() {
 
     # Replace s6-setuidgid with su-based equivalent
     if ! command -v s6-setuidgid >/dev/null 2>&1; then
-        sed -i -E 's|^s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
+        sed -i -E 's|s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
     fi
 
     # Get current shebang, if not available use another
