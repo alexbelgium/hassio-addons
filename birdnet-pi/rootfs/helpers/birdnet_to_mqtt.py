@@ -10,7 +10,7 @@ import paho.mqtt.client as mqtt
 import requests
 from helpers import get_settings
 
-sys.path.append("/home/pi/BirdNET-Pi/scripts/utils")
+sys.path.append("/home/pi/BirdNET-Pi/scripts")
 
 # Setup basic configuration for logging
 logging.basicConfig(level=logging.INFO)
