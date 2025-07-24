@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [unpackerr (opened 2025-07-23)](https://github.com/alexbelgium/hassio-addons/issues/1975) by [@Arvid78](https://github.com/Arvid78)
 # Home assistant add-on: Unpackerr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
