@@ -1,5 +1,6 @@
 ## &#9888; Open Issue : [🐛 [Postgres 17] Error with Teslamate en HomeAssistant (opened 2025-07-09)](https://github.com/alexbelgium/hassio-addons/issues/1944) by [@cortesmario](https://github.com/cortesmario)
 ## &#9888; Open Issue : [🐛 [postgres 17] vector and chord library not loaded? (opened 2025-07-17)](https://github.com/alexbelgium/hassio-addons/issues/1967) by [@dothebart](https://github.com/dothebart)
+## &#9888; Open Issue : [🐛 [Guacamole] fresh install failes - cant start postgres (opened 2025-07-24)](https://github.com/alexbelgium/hassio-addons/issues/1976) by [@pietro4711](https://github.com/pietro4711)
 # Home assistant add-on: Postgres
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
