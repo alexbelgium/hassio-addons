@@ -1,3 +1,6 @@
+
+## v3.0.2 (25-07-2025)
+- Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 ## v3.0.1-6 (18-07-2025)
 - Define NUXT_APP_BASE_URL as /mealie/
 
