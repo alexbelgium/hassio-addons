@@ -68,11 +68,15 @@ for SCRIPTS in /etc/cont-init.d/*; do
 done
 
 # Start services.d
-for service_dir in /etc/services.d/*; do
-    SCRIPTS="${service_dir}/run"
-    [ -e "$SCRIPTS" ] || continue
-    run_script "$SCRIPTS" service
-done
+if [ "$$" -eq 1 ]; then
+    for service_dir in /etc/services.d/*; do
+        SCRIPTS="${service_dir}/run"
+        [ -e "$SCRIPTS" ] || continue
+        run_script "$SCRIPTS" service
+    done
+else
+    echo "Not PID 1 — skipping service startup"
+fi
 
 ######################
 # Starting container #
