@@ -1,8 +1,8 @@
 {
   "build_from": {
-    "aarch64": "filebrowser/filebrowser:latest",
-    "amd64": "filebrowser/filebrowser:latest",
-    "armv7": "filebrowser/filebrowser:latest"
+    "aarch64": "filebrowser/filebrowser:s6",
+    "amd64": "filebrowser/filebrowser:s6",
+    "armv7": "filebrowser/filebrowser:v2.32.0"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
