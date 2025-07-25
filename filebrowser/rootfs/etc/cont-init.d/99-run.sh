@@ -107,7 +107,7 @@ fi
 bashio::log.info "Starting..."
 
 # shellcheck disable=SC2086
-/./filebrowser --disable-preview-resize --disable-type-detection-by-header --cache-dir="/cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/filebrowser.dB "$NOAUTH" "$DISABLE_THUMBNAILS" &
+/./bin/filebrowser --disable-preview-resize --disable-type-detection-by-header --cache-dir="/cache" $CERTFILE $KEYFILE --root="$BASE_FOLDER" --address=0.0.0.0 --port=8080 --database=/config/filebrowser.dB "$NOAUTH" "$DISABLE_THUMBNAILS" &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 exec nginx
