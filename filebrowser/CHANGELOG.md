@@ -1,3 +1,5 @@
+## 2.41.0-2 (25-07-2025)
+- Minor bugs fixed
 ## 2.41.0 (25-07-2025)
 - Minor bugs fixed
 
