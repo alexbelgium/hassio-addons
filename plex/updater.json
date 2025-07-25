@@ -1,9 +1,9 @@
 {
   "github_fulltag": "true",
-  "last_update": "18-07-2025",
+  "last_update": "25-07-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "plex",
   "source": "github",
   "upstream_repo": "linuxserver/docker-plex",
-  "upstream_version": "1.41.9.9961-46083195d-ls273"
+  "upstream_version": "1.41.9.9961-46083195d-ls274"
 }
