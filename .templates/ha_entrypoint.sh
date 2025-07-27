@@ -23,7 +23,7 @@ run_script() {
     fi
 
     # Replace s6-setuidgid with su-based equivalent
-    if ! command -v s6-setuidgid >/dev/null 2>&1; then
+    if ! command -v s6-setuidgid > /dev/null 2>&1; then
         sed -i -E 's|s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
     fi
 
@@ -42,7 +42,8 @@ run_script() {
 
     # Use source to share env variables when requested
     if [[ "$script_kind" == service ]]; then
-        (exec "$runfile") & true
+        (exec "$runfile") &
+        true
     else
         if [ "${ha_entry_source:-null}" = true ]; then
             sed -Ei 's/(^|[[:space:]])exit ([0-9]+)/\1return \2 || exit \2/g' "$runfile"
@@ -105,10 +106,10 @@ if [ "$$" -eq 1 ]; then
                 fi
             done
         fi
-        kill -TERM -$$ 2>/dev/null || true
+        kill -TERM -$$ 2> /dev/null || true
         sleep 5
-        kill -KILL -$$ 2>/dev/null || true
-    
+        kill -KILL -$$ 2> /dev/null || true
+
         wait
         echo "All subprocesses terminated. Exiting."
         exit 0
