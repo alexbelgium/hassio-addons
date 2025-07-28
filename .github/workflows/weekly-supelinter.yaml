@@ -54,10 +54,6 @@ jobs:
           FIX_PYTHON_ISORT: true
           FIX_PYTHON_RUFF: true
 
-      - name: Restore executable permissions
-        run: |
-          find . -type f \( -name "*.sh" -o -name "run" \) -exec chmod +x {} \;
-
       - name: Use 4 spaces in shell scripts
         run: |
           curl -sSLo /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.12.0/shfmt_v3.12.0_linux_amd64
@@ -73,6 +69,10 @@ jobs:
             echo "changed=1" >> "$GITHUB_OUTPUT"
           done
         shell: bash
+
+      - name: Restore executable permissions
+        run: |
+          find . -type f \( -name "*.sh" -o -name "run" \) -exec chmod +x {} \;
 
       - name: Remove Super-Linter output (prevent checkout conflict)
         run: sudo rm -rf super-linter-output/
