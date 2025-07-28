@@ -1,3 +1,4 @@
+## nightly-20250725-2 (28-07-2025)
 - Fix /asset path
 - Added 9090 telemetry port
 
