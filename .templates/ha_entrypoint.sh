@@ -57,7 +57,7 @@ run_script() {
     fi
 
     # Replace s6-setuidgid with su fallback if s6-setuidgid is missing
-    if ! command -v s6-setuidgid >/dev/null 2>&1; then
+    if ! command -v s6-setuidgid > /dev/null 2>&1; then
         sed -i -E 's|s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
     fi
 
@@ -114,21 +114,21 @@ if "$PID1"; then
         if command -v pgrep &> /dev/null; then
             for pid in $(pgrep -P "$$"); do
                 echo "Terminating child PID $pid"
-                kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
+                kill -TERM "$pid" 2> /dev/null || echo "Failed to terminate PID $pid"
             done
         else
             for pid in /proc/[0-9]*/; do
                 pid=${pid#/proc/}
                 pid=${pid%/}
-                if [[ "$pid" -ne 1 ]] && grep -q "^PPid:\s*$$" "/proc/$pid/status" 2>/dev/null; then
+                if [[ "$pid" -ne 1 ]] && grep -q "^PPid:\s*$$" "/proc/$pid/status" 2> /dev/null; then
                     echo "Terminating child PID $pid"
-                    kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
+                    kill -TERM "$pid" 2> /dev/null || echo "Failed to terminate PID $pid"
                 fi
             done
         fi
 
         sleep 5
-        kill -KILL -$$ 2>/dev/null || true
+        kill -KILL -$$ 2> /dev/null || true
         wait
         echo "All subprocesses terminated. Exiting."
         exit 0

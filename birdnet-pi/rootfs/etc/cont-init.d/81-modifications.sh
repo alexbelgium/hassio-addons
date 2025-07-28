@@ -48,9 +48,9 @@ if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
     export "$(grep "^MODEL" /config/birdnet.conf)"
     bashio::log.info "Setting language to ${DATABASE_LANG:-en}"
     if [ "$MODEL" == "BirdNET_GLOBAL_6K_V2.4_Model_FP16" ]; then
-      BASEDIR=labels_nm
+        BASEDIR=labels_nm
     else
-      BASEDIR=labels_l18n
+        BASEDIR=labels_l18n
     fi
     label_file_name="labels_${DATABASE_LANG}.txt"
     ln -sf "$HOME/BirdNET-Pi/model/${BASEDIR}/${label_file_name}" "$HOME/BirdNET-Pi/model/labels.txt" || bashio::log.warning "Failed to update language labels"
@@ -168,4 +168,3 @@ grep -rl "RECS_DIR" "$HOME" --exclude="*.php" | while read -r file; do
     sed -i "/^\$RECS_DIR=/c \$RECS_DIR=/tmp" "$file"
 done
 mkdir -p /tmp
-
