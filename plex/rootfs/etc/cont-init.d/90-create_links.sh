@@ -9,7 +9,6 @@ if [ ! -d /share/plex ]; then
     mkdir -p /share/plex
 fi
 
-mkdir -p /config/Library
 if [ ! -d /share/plex/Library ]; then
     echo "moving Library folder"
     mv /config/Library /share/plex
