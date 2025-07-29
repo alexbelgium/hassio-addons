@@ -61,6 +61,9 @@ fi
 PUID="$(bashio::config "PUID")"
 PGID="$(bashio::config "PGID")"
 
-fix_owner_if_needed "/share/plex" "$PUID" "$PGID"
-fix_owner_if_needed "/share/plex/Library" "$PUID" "$PGID"
-fix_mode_if_needed "/share/plex" 777
+# Only run fixes if not root (UID/GID != 0)
+if [ "$PUID" != "0" ] && [ "$PGID" != "0" ]; then
+    fix_owner_if_needed "/share/plex" "$PUID" "$PGID"
+    fix_owner_if_needed "/share/plex/Library" "$PUID" "$PGID"
+    fix_mode_if_needed "/share/plex" 777
+fi
