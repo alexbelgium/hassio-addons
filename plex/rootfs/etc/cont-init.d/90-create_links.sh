@@ -9,16 +9,14 @@ if [ ! -d /share/plex ]; then
     mkdir -p /share/plex
 fi
 
-if [ ! -d /share/plex/Library ]; then
+if [ ! -d /share/plex/Library ] && [ -d /config/Library ]; then
     echo "moving Library folder"
     mv /config/Library /share/plex
-    ln -s /share/plex/Library /config
-    echo "links done"
 else
     rm -r /config/Library
-    ln -s /share/plex/Library /config
     echo "Using existing config"
 fi
+ln -sf /share/plex/Library /config
 
 # Only fix ownership/mode if needed (top-level only—*not* blindly every file)
 PUID="$(bashio::config "PUID")"
