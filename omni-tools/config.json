@@ -6,10 +6,14 @@
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser",
   "image": "ghcr.io/alexbelgium/omni-tools-{arch}",
+  "ingress": true,
+  "ingress_stream": true,
   "map": [
     "addon_config:rw"
   ],
   "name": "Omni Tools",
+  "panel_admin": false,
+  "panel_icon": "mdi:toolbox",
   "ports": {
     "80/tcp": 8188
   },
@@ -18,5 +22,5 @@
   },
   "slug": "omni-tools",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.5.0_test"
+  "version": "0.5.0"
 }
