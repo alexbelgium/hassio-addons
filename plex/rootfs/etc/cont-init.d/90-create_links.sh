@@ -24,7 +24,7 @@ if [ ! -L /config/Library ] || [ "$(readlink -f /config/Library || true)" != "/s
   # If a leftover dir/file exists at /config/Library, back it up instead of deleting
   if [ -e /config/Library ] && [ ! -L /config/Library ]; then
     TS="$(date +%s)"
-    bashio::log.warning "Found non-symlink at /config/Library; backing up to /config/Library.bak-${TS}"
+    # bashio::log.warning "Found non-symlink at /config/Library; backing up to /config/Library.bak-${TS}"
     mv /config/Library "/config/Library.bak-${TS}"
   else
     rm -f /config/Library || true
