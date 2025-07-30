@@ -33,7 +33,8 @@ ARG CONFIGLOCATION="/emby"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 # Save nginx confix
-RUN mv /etc/nginx /etc/nginx2
+RUN \
+    if [[ -d /etc/nginx2 ]]; then mv /etc/nginx /etc/nginx2; fi
 
 ##################
 # 3 Install apps #
@@ -67,7 +68,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 # Restore nginx configuration
 RUN \
     if [[ -d /etc/nginx ]]; then rm -r /etc/nginx; fi \
-    && mv /etc/nginx2 /etc/nginx
+    if [[ -d /etc/nginx2 ]]; then mv /etc/nginx2 /etc/nginx; fi
 
 # Add entrypoint
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
