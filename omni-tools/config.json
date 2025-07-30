@@ -5,48 +5,18 @@
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted web application offering various online utilities for everyday tasks",
-  "environment": {
-    "PGID": "0",
-    "PUID": "0"
-  },
-  "hassio_api": true,
-  "homeassistant_api": true,
   "image": "ghcr.io/alexbelgium/omni-tools-{arch}",
-  "ingress": true,
-  "ingress_stream": true,
   "map": [
-    "addon_config:rw",
-    "share:rw"
+    "addon_config:rw"
   ],
   "name": "Omni Tools",
-  "options": {
-    "PGID": "0",
-    "PUID": "0"
-  },
-  "panel_admin": false,
-  "panel_icon": "mdi:toolbox",
   "ports": {
     "80/tcp": 8188
   },
   "ports_description": {
     "80/tcp": "Web UI port"
   },
-  "privileged": [
-    "SYS_ADMIN",
-    "DAC_READ_SEARCH"
-  ],
-  "schema": {
-    "PGID": "int?",
-    "PUID": "int?",
-    "TZ": "str?",
-    "cifsdomain": "str?",
-    "cifspassword": "str?",
-    "cifsusername": "str?",
-    "localdisks": "str?",
-    "networkdisks": "str?"
-  },
   "slug": "omni-tools",
-  "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "0.5.0"
 }
