@@ -4,7 +4,7 @@
     "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
-  "description": "Various utilities for everyday tasks",
+  "description": "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser",
   "image": "ghcr.io/alexbelgium/omni-tools-{arch}",
   "map": [
     "addon_config:rw"
