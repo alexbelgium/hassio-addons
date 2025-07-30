@@ -65,7 +65,9 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ################
 
 # Restore nginx configuration
-RUN rm -r /etc/nginx && mv /etc/nginx2 /etc/nginx
+RUN \
+    if [[ -d /etc/nginx ]]; then rm -r /etc/nginx; fi \
+    && mv /etc/nginx2 /etc/nginx
 
 # Add entrypoint
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
