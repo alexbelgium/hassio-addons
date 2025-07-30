@@ -5,28 +5,13 @@
 # Starts omni-tools
 # ==============================================================================
 
-bashio::log.info "Starting omni-tools..."
+# Start omni-tools container content
+bashio::log.info "Starting application"
+/./docker-entrypoint.sh & true
 
-# Create nginx configuration
-mkdir -p /etc/nginx/http.d
-
-cat > /etc/nginx/http.d/default.conf << 'EOF'
-server {
-    listen 8080;
-    server_name _;
-    
-    location / {
-        proxy_pass http://localhost:80;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-EOF
+# Wait for app to become available
+bashio::net.wait_for 8096 localhost 900
 
 # Start nginx
-nginx
-
-# Start omni-tools container content
-exec docker run -d --name omni-tools-app --restart unless-stopped -p 80:80 iib0011/omni-tools:latest
+bashio::log.info "Starting NGinx..."
+exec nginx &>/proc/1/fd/1

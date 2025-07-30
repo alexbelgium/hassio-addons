@@ -26,10 +26,10 @@
   "panel_admin": false,
   "panel_icon": "mdi:toolbox",
   "ports": {
-    "8080/tcp": 8080
+    "80/tcp": 8188
   },
   "ports_description": {
-    "8080/tcp": "Web UI port"
+    "80/tcp": "Web UI port"
   },
   "privileged": [
     "SYS_ADMIN",
