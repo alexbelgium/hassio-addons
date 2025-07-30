@@ -1,0 +1,9 @@
+{
+  "github_beta": "false",
+  "last_update": "25-07-2025",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "omni-tools",
+  "source": "github",
+  "upstream_repo": "iib0011/omni-tools",
+  "upstream_version": "0.5.0"
+}
