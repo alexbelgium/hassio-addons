@@ -1,3 +1,5 @@
+## 0.5.0 (30-07-2025)
+- Minor bugs fixed
 # Changelog
 
 ## 1.0.0
