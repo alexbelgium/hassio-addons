@@ -13,6 +13,47 @@ if [ "$$" -eq 1 ]; then
     PID1=true
 fi
 
+# Choose a single shebang once and reuse it for all scripts (no re-testing per file)
+CHOSEN_SHEBANG_CACHE="/run/chosen_shebang"
+if [ -r "$CHOSEN_SHEBANG_CACHE" ]; then
+    CHOSEN_SHEBANG="$(cat "$CHOSEN_SHEBANG_CACHE")"
+else
+    mkdir -p "$(dirname "$CHOSEN_SHEBANG_CACHE")" 2>/dev/null || true
+    candidate_shebangs=()
+    if $PID1; then
+        candidate_shebangs+=("/command/with-contenv bashio" "/usr/bin/with-contenv bashio")
+    fi
+    candidate_shebangs+=(
+        "/usr/bin/env bashio"
+        "/usr/bin/bashio"
+        "/usr/bin/bash"
+        "/usr/bin/sh"
+        "/bin/bash"
+        "/bin/sh"
+    )
+
+    CHOSEN_SHEBANG=""
+    for shebang in "${candidate_shebangs[@]}"; do
+        command_path="${shebang%% *}"
+        if [ -x "$command_path" ]; then
+            tmpfile="$(mktemp)"
+            printf '#!%s\nbashio::addon.version\n' "$shebang" > "$tmpfile"
+            chmod +x "$tmpfile"
+            if "$tmpfile" >/dev/null 2>&1; then
+                CHOSEN_SHEBANG="$shebang"
+                printf '%s\n' "$CHOSEN_SHEBANG" > "$CHOSEN_SHEBANG_CACHE"
+                rm -f "$tmpfile"
+                break
+            fi
+            rm -f "$tmpfile"
+        fi
+    done
+
+    if [ -z "${CHOSEN_SHEBANG:-}" ]; then
+        echo "WARNING: No valid shebang found that can run bashio::addon.version." >&2
+    fi
+fi
+
 run_script() {
     runfile="$1"
     script_kind="$2"
@@ -34,39 +75,16 @@ run_script() {
         sed -i -E 's|s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
     fi
 
-    # Shebang check/replacement (only if missing or invalid)
-    currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$runfile")"
-    command_path="${currentshebang%% *}"
-    if [ ! -x "$command_path" ]; then
-        candidate_shebangs=()
-        if $PID1; then
-            candidate_shebangs+=("/command/with-contenv bashio" "/usr/bin/with-contenv bashio")
-        fi
-        candidate_shebangs+=(
-            "/usr/bin/env bashio"
-            "/usr/bin/bashio"
-            "/usr/bin/bash"
-            "/usr/bin/sh"
-            "/bin/bash"
-            "/bin/sh"
-        )
-
-        for shebang in "${candidate_shebangs[@]}"; do
-            command_path="${shebang%% *}"
-            if [ -x "$command_path" ]; then
-                tmpfile="$(mktemp)"
-                echo "#!$shebang" > "$tmpfile"
-                echo "bashio::addon.version" >> "$tmpfile"
-                chmod +x "$tmpfile"
-                output="$("$tmpfile" 2>/dev/null)"
-                rm -f "$tmpfile"
-                if [[ -n "$output" ]]; then
-                    echo "Valid shebang: $shebang (output: $output)"
-                    sed -i "1s|^#![^\n]*|#!$shebang|" "$runfile"
-                    break
-                fi
+    # Apply the previously chosen shebang to this file (no candidate re-testing)
+    if [ -n "${CHOSEN_SHEBANG:-}" ]; then
+        currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$runfile")"
+        if [ -n "$currentshebang" ]; then
+            if [ "$currentshebang" != "$CHOSEN_SHEBANG" ]; then
+                sed -i "1s|^#!.*$|#!$CHOSEN_SHEBANG|" "$runfile"
             fi
-        done
+        else
+            sed -i "1i #!$CHOSEN_SHEBANG" "$runfile"
+        fi
     fi
 
     # Use source to share env variables when requested
@@ -144,7 +162,7 @@ if $PID1; then
         kill -TERM -$$ 2>/dev/null || true
         sleep 5
         kill -KILL -$$ 2>/dev/null || true
-    
+
         wait
         echo "All subprocesses terminated. Exiting."
         exit 0
