@@ -1,0 +1,87 @@
+#include <tunables/global>
+
+profile omni-tools flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  # Capabilities
+  capability,
+  file,
+  signal (send) set=(kill,term,int,hup,cont),
+
+  # S6-Overlay
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /run/{,**} rwk,
+  /dev/tty rw,
+
+  # Bashio
+  /usr/lib/bashio/** ix,
+  /tmp/** rwk,
+
+  # Access to options.json and other files within your addon
+  /data/** rw,
+
+  # Start new profile for service
+  /usr/bin/omni-tools cx -> omni-tools,
+
+  profile omni-tools flags=(attach_disconnected,mediate_deleted) {
+    #include <abstractions/base>
+
+    # Receive signals from S6-Overlay
+    signal (receive) set=(kill,term,int,hup,cont),
+
+    # Access to options.json and other files within your addon
+    /data/** rw,
+    /usr/bin/omni-tools r,
+
+    # Access to mapped volumes
+    /share/** rw,
+    /config/** rw,
+
+    # Network access
+    network inet dgram,
+    network inet stream,
+    network inet6 dgram,
+    network inet6 stream,
+    network netlink raw,
+
+    # System directories
+    /etc/passwd r,
+    /etc/group r,
+    /etc/nsswitch.conf r,
+    /etc/hosts r,
+    /etc/resolv.conf r,
+    /etc/ssl/openssl.cnf r,
+    /etc/ssl/certs/ r,
+    /etc/ssl/certs/** r,
+    /usr/share/ca-certificates/ r,
+    /usr/share/ca-certificates/** r,
+
+    # Library access
+    /lib/** rm,
+    /usr/lib/** rm,
+    /usr/local/lib/** rm,
+
+    # Proc and sys access
+    /proc/ r,
+    /proc/** r,
+    /sys/fs/cgroup/** r,
+
+    # Tmp access
+    /tmp/** rwk,
+    /var/tmp/** rwk,
+
+    # Device access
+    /dev/null rw,
+    /dev/zero rw,
+    /dev/random r,
+    /dev/urandom r,
+  }
+}
