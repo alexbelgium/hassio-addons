@@ -48,5 +48,5 @@
   "slug": "omni-tools",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.0.0"
+  "version": "0.5.0"
 }
