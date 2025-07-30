@@ -7,10 +7,17 @@ echo "Starting..."
 # Starting scripts #
 ####################
 
+# Detect if this is PID1 (main container process) — do this once at the start
+PID1=false
+if [ "$$" -eq 1 ]; then
+    PID1=true
+fi
+
 run_script() {
     runfile="$1"
     script_kind="$2"
     echo "$runfile: executing"
+
     # Check if run as root
     if [ "$(id -u)" -eq 0 ]; then
         chown "$(id -u)":"$(id -g)" "$runfile"
@@ -27,36 +34,40 @@ run_script() {
         sed -i -E 's|s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
     fi
 
-    # Prepare candidate shebangs: contenv first if PID1
-    candidate_shebangs=()
-    if $PID1; then
-        candidate_shebangs+=("/command/with-contenv bashio" "/usr/bin/with-contenv bashio")
-    fi
-    candidate_shebangs+=(
-        "/usr/bin/env bashio"
-        "/usr/bin/bashio"
-        "/usr/bin/bash"
-        "/usr/bin/sh"
-        "/bin/bash"
-        "/bin/sh"
-    )
-
-    for shebang in "${candidate_shebangs[@]}"; do
-        command_path="${shebang%% *}"
-        if [ -x "$command_path" ]; then
-            tmpfile="$(mktemp)"
-            echo "#!$shebang" > "$tmpfile"
-            echo "bashio::addon.version" >> "$tmpfile"
-            chmod +x "$tmpfile"
-            output="$("$tmpfile" 2>/dev/null)"
-            rm -f "$tmpfile"
-            if [[ -n "$output" ]]; then
-                echo "Valid shebang: $shebang (output: $output)"
-                sed -i "1s|^#![^\n]*|#!$shebang|" "$SCRIPTS"
-                break
-            fi
+    # Shebang check/replacement (only if missing or invalid)
+    currentshebang="$(sed -n '1{s/^#![[:blank:]]*//p;q}' "$runfile")"
+    command_path="${currentshebang%% *}"
+    if [ ! -x "$command_path" ]; then
+        candidate_shebangs=()
+        if $PID1; then
+            candidate_shebangs+=("/command/with-contenv bashio" "/usr/bin/with-contenv bashio")
         fi
-    done
+        candidate_shebangs+=(
+            "/usr/bin/env bashio"
+            "/usr/bin/bashio"
+            "/usr/bin/bash"
+            "/usr/bin/sh"
+            "/bin/bash"
+            "/bin/sh"
+        )
+
+        for shebang in "${candidate_shebangs[@]}"; do
+            command_path="${shebang%% *}"
+            if [ -x "$command_path" ]; then
+                tmpfile="$(mktemp)"
+                echo "#!$shebang" > "$tmpfile"
+                echo "bashio::addon.version" >> "$tmpfile"
+                chmod +x "$tmpfile"
+                output="$("$tmpfile" 2>/dev/null)"
+                rm -f "$tmpfile"
+                if [[ -n "$output" ]]; then
+                    echo "Valid shebang: $shebang (output: $output)"
+                    sed -i "1s|^#![^\n]*|#!$shebang|" "$runfile"
+                    break
+                fi
+            fi
+        done
+    fi
 
     # Use source to share env variables when requested
     if [[ "$script_kind" == service ]]; then
@@ -93,7 +104,7 @@ for SCRIPTS in /etc/s6-overlay/s6-rc.d/*/run; do
 done || true
 
 # Start services.d
-if [ "$$" -eq 1 ]; then
+if $PID1; then
     for service_dir in /etc/services.d/*; do
         SCRIPTS="${service_dir}/run"
         [ -e "$SCRIPTS" ] || continue
@@ -108,7 +119,7 @@ fi
 ######################
 
 # If PID 1, keep alive and manage sigterm
-if [ "$$" -eq 1 ]; then
+if $PID1; then
     echo " "
     echo -e "\033[0;32mEverything started!\033[0m"
     terminate() {
