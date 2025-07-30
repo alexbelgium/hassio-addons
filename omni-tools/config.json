@@ -18,5 +18,6 @@
   },
   "slug": "omni-tools",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "0.5.0"
+  "version": "v0.5.0",
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:80]"
 }
