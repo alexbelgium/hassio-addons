@@ -1,7 +1,4 @@
-## 1.41.9.9961-46083195d-ls274-5 (29-07-2025)
-- Minor bugs fixed
-## 1.41.9.9961-46083195d-ls274-2 (25-07-2025)
-- Minor bugs fixed
+- Improves boot time
 
 ## 1.41.9.9961-46083195d-ls274 (25-07-2025)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
