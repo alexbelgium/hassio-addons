@@ -32,6 +32,9 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ARG CONFIGLOCATION="/emby"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
+# Save nginx confix
+RUN mv /etc/nginx /etc/nginx2
+
 ##################
 # 3 Install apps #
 ##################
@@ -60,6 +63,9 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ################
 # 4 Entrypoint #
 ################
+
+# Restore nginx configuration
+RUN rm -r /etc/nginx && mv /etc/nginx2 /etc/nginx
 
 # Add entrypoint
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
