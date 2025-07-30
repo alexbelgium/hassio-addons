@@ -1,8 +1,9 @@
 {
   "build_from": {
-    "aarch64": "ghcr.io/alexbelgium/base-alpine:3.19.1-5",
-    "amd64": "ghcr.io/alexbelgium/base-alpine:3.19.1-5"
+    "aarch64": "iib0011/omni-tools:latest",
+    "amd64": "iib0011/omni-tools:latest"
   },
-  "squash": false,
-  "args": {}
+  "codenotary": {
+    "signer": "alexandrep.github@gmail.com"
+  }
 }
