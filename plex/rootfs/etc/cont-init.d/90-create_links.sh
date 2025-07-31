@@ -24,6 +24,9 @@ PUID="$(bashio::config 'PUID')"
 PGID="$(bashio::config 'PGID')"
 
 if ! bashio::config.true "skip_permissions_check" && [ "${PUID:-0}" != "0" ] && [ "${PGID:-0}" != "0" ]; then
+    bashio::log.info "Starting permissions update"
     chown -R "${PUID}:${PGID}" /share/plex
     chmod -R 777 /share/plex
 fi
+
+bashio::log.info "Starting upstream code"
