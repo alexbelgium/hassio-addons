@@ -1,5 +1,4 @@
-#!/usr/bin/with-contenv bashio
-# shellcheck shell=bash
+#!/bin/bash
 set -e
 
 ##################
@@ -15,12 +14,14 @@ fi
 
 if [ -d "/config/Library/Application Support/Plex Media Server" ]; then
     echo "... creating /symlink"
-    rm -r "/config/Library/Application Support/*" 2>/dev/null || true
+    rm -r "/config/Library/Application Support/*"
     ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support"
-fi || true
+fi
 
 if [ ! -d "/config/Library/Application Support" ]; then
     echo "... creating /symlink"
     mkdir -p "/config/Library/Application Support"
     ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support"
-fi || true
+fi
+
+chown -R "$PUID:$PGID" /share/plex
