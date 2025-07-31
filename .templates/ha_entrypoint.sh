@@ -60,7 +60,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
 done
 
 # Start services.d
-if "$PID1"; then
+if $PID1; then
     if [ "$(ls -A /etc/services.d/*/run)" ]; then
         for runfile in /etc/services.d/*/run; do
             if [[ -f "$runfile" ]]; then
@@ -90,7 +90,7 @@ fi
 ######################
 
 # If PID 1, keep alive and manage sigterm
-if "$PID1"; then
+if $PID1; then
     echo " "
     echo -e "\033[0;32mEverything started!\033[0m"
     terminate() {
