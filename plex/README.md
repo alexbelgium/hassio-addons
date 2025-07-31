@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Plex] broken since update to ls274-9 (opened 2025-07-30)](https://github.com/alexbelgium/hassio-addons/issues/1986) by [@dm82m](https://github.com/dm82m)
 
 
 # Home assistant add-on: plex
