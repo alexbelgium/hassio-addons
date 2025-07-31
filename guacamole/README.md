@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Guacamole] fresh install failes - cant start postgres (opened 2025-07-24)](https://github.com/alexbelgium/hassio-addons/issues/1976) by [@pietro4711](https://github.com/pietro4711)
 # Home assistant add-on: guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
