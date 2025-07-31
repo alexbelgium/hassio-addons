@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashio
 
 ##################
 # SYMLINK CONFIG #
@@ -20,6 +20,8 @@ else
     echo "Using existing config"
 fi
 
-chown -R "$PUID:$PGID" /config/Library
-chown -R "$PUID:$PGID" /share/plex
-chmod -R 777 /share/plex
+# Adapt permissions if needed
+if ! bashio::config.true "skip_permissions_check" && [ "${PUID:-0}" != "0" ] && [ "${PGID:-0}" != "0" ]; then
+    chown -R "$PUID:$PGID" /share/plex
+    chmod -R 777 /share/plex
+fi
