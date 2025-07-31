@@ -22,6 +22,7 @@ fi
 
 # Adapt permissions if needed
 if ! bashio::config.true "skip_permissions_check" && [ "${PUID:-0}" != "0" ] && [ "${PGID:-0}" != "0" ]; then
+    bashio::log.info "Updating permissions"
     chown -R "$PUID:$PGID" /share/plex
     chmod -R 777 /share/plex
 fi
