@@ -88,7 +88,6 @@
     "TZ": "Europe/Paris",
     "USE_EXTERNAL_DB": false
   },
-  "panel_icon": "mdi:image-multiple",
   "ports": {
     "3000/tcp": 8300,
     "3200/tcp": 8320,
