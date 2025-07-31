@@ -12,8 +12,6 @@ if [ ! -d /config ] || ! bashio::supervisor.ping 2> /dev/null; then
     exit 0
 fi
 
-bashio::log.notice "This script is used to run custom commands at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons"
-
 # Define slug
 slug="${HOSTNAME/-/_}"
 slug="${slug#*_}"
@@ -33,8 +31,8 @@ fi
 mkdir -p "$CONFIGLOCATION" || true
 CONFIGSOURCE="$CONFIGLOCATION/$slug.sh"
 
+bashio::log.notice "This script is used to run custom commands at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons"
 bashio::log.green "Execute $CONFIGFILEBROWSER if existing"
-bashio::log.green "Wiki here : github.com/alexbelgium/hassio-addons/wiki/Add-ons-feature-:-customisation"
 
 # Download template if no script found and exit
 if [ ! -f "$CONFIGSOURCE" ]; then
