@@ -58,6 +58,7 @@ REDIS_PID=$!
 # Starting App #
 ###############
 echo "Starting Gramps Web App..."
+GUNICORN_NUM_WORKERS="(bashio::config "GUNICORN_NUM_WORKERS")"
 /docker-entrypoint.sh gunicorn -w "${GUNICORN_NUM_WORKERS:-8}" -b 0.0.0.0:5000 gramps_webapi.wsgi:app --timeout "${GUNICORN_TIMEOUT:-120}" --limit-request-line 8190 &
 APP_PID=$!
 
@@ -66,7 +67,8 @@ APP_PID=$!
 ##################
 bashio::net.wait_for 5000 localhost 900
 echo "Starting Celery..."
-celery -A gramps_webapi worker --loglevel=INFO --concurrency=2 &
+CELERY_NUM_WORKERS="(bashio::config "CELERY_NUM_WORKERS")"
+celery -A gramps_webapi worker --loglevel=INFO --concurrency="${CELERY_NUM_WORKERS:-2}" &
 CELERY_PID=$!
 
 #################
