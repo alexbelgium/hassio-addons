@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [[BirdNET-Pi Docker Standalone] Services wont start (opened 2025-06-24)](https://github.com/alexbelgium/hassio-addons/issues/1927) by [@sirtakahe](https://github.com/sirtakahe)
-## &#9888; Open Issue : [🐛 [BirdNET-Pi] Latest version seem not respecting database language setting (opened 2025-07-16)](https://github.com/alexbelgium/hassio-addons/issues/1963) by [@gco33](https://github.com/gco33)
 
 # Home assistant add-on: birdnet-pi
 
