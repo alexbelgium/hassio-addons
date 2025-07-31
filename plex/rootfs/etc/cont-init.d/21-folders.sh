@@ -17,10 +17,10 @@ if [ -d "/config/Library/Application Support/Plex Media Server" ]; then
     echo "... creating /symlink"
     rm -r "/config/Library/Application Support/*" 2>/dev/null || true
     ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support"
-fi
+fi || true
 
 if [ ! -d "/config/Library/Application Support" ]; then
     echo "... creating /symlink"
     mkdir -p "/config/Library/Application Support"
     ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support"
-fi
+fi || true
