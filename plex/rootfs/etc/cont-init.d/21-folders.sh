@@ -1,5 +1,4 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bashio
 
 ##################
 # SYMLINK CONFIG #
@@ -24,4 +23,8 @@ if [ ! -d "/config/Library/Application Support" ]; then
     ln -s "/share/plex/Plex Media Server" "/config/Library/Application Support"
 fi
 
-chown -R "$PUID:$PGID" /share/plex
+# Adapt permissions if needed
+if ! bashio::config.true "skip_permissions_check" && [ "${PUID:-0}" != "0" ] && [ "${PGID:-0}" != "0" ]; then
+    chown -R "$PUID:$PGID" /share/plex
+    chmod -R 777 /share/plex
+fi
