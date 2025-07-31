@@ -93,6 +93,14 @@ for files in "/etc/cont-init.d" "/etc/services.d"; do
         [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES cifs-utils keyutils"
     fi
 
+    COMMAND="nfs"
+    if grep -q -rnw "$files/" -e "$COMMAND"; then
+        [ "$VERBOSE" = true ] && echo "$COMMAND required"
+        [ "$PACKMANAGER" = "apk" ] && PACKAGES="$PACKAGES nfs-utils"
+        [ "$PACKMANAGER" = "apt" ] && PACKAGES="$PACKAGES nfs-common"
+        [ "$PACKMANAGER" = "pacman" ] && PACKAGES="$PACKAGES nfs-utils"
+    fi
+
     COMMAND="smbclient"
     if grep -q -rnw "$files/" -e "$COMMAND" && ! command -v $COMMAND &> /dev/null; then
         [ "$VERBOSE" = true ] && echo "$COMMAND required"
