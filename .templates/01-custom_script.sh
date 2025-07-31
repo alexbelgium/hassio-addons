@@ -12,6 +12,8 @@ if [ ! -d /config ] || ! bashio::supervisor.ping 2> /dev/null; then
     exit 0
 fi
 
+bashio::log.notice "This script is used to run custom commands at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons"
+
 # Define slug
 slug="${HOSTNAME/-/_}"
 slug="${slug#*_}"
