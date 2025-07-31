@@ -1,4 +1,3 @@
-## 1.41.9.9961-46083195d-ls274-13 (31-07-2025)
 - Improves boot time
 - New option skip_permissions_check to accelerate start
 
