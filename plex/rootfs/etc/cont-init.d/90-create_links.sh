@@ -29,4 +29,4 @@ if ! bashio::config.true "skip_permissions_check" && [ "${PUID:-0}" != "0" ] && 
     chmod -R 777 /share/plex
 fi
 
-bashio::log.info "Starting upstream code"
+bashio::log.info "Starting upstream code, please wait"
