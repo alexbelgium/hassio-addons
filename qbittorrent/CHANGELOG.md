@@ -1,4 +1,3 @@
-## 5.1.2-4 (31-07-2025)
 - Support mounting NFS shares https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons
 
 ## 5.1.2-2 (12-07-2025)
