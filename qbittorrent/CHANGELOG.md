@@ -1,3 +1,5 @@
+- Support mounting NFS shares https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons
+
 ## 5.1.2-2 (12-07-2025)
 - Safety check : check if yify.foo found in qbittorrent.conf
 
