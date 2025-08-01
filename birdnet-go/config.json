@@ -9,6 +9,10 @@
   "devices": [
     "/dev/dri",
     "/dev/snd",
+    "/dev/snd/controlC0",
+    "/dev/snd/controlC1",
+    "/dev/snd/pcmC1D0c",
+    "/dev/snd/pcmC1D0p",
     "/dev/dri/card0",
     "/dev/dri/card1",
     "/dev/dri/renderD128",
