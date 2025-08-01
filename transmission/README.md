@@ -40,20 +40,58 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Options :
+Webui can be found at <http://homeassistant:9091> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `download_dir` | str | `/share/downloads` | Directory for completed downloads |
+| `incomplete_dir` | str | `/share/incomplete` | Directory for incomplete downloads |
+| `watch_dir` | str | | Directory to watch for torrent files |
+| `customUI` | list | `flood-for-transmission` | Web UI (standard/transmission-web-control/kettu/flood-for-transmission) |
+| `user` | str | | Web UI username |
+| `pass` | str | | Web UI password |
+| `whitelist` | str | | IP whitelist for web access |
+| `DNS_server` | str | `8.8.8.8,1.1.1.1` | DNS servers |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+| `smbv1` | bool | | Enable SMB v1 protocol |
+
+### Example Configuration
 
 ```yaml
-download_dir: "/share/downloads" # where the files will be saved after download
-incomplete_dir: "/share/incomplete" # where the files are saved during download
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount, '' if none
-cifsusername: "<username>" # smb username
-cifspassword: "<password>" # smb password
+PGID: 0
+PUID: 0
+TZ: "Europe/London"
+download_dir: "/media/downloads"
+incomplete_dir: "/media/incomplete"
+watch_dir: "/media/torrents"
+customUI: "flood-for-transmission"
+user: "transmission"
+pass: "secure_password"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/downloads"
+cifsusername: "dluser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
 
-Complete transmission options are in /share/transmission (make sure addon is stopped before modifying it as Transmission writes its ongoing values when stopping and could erase your changes)
+### Mounting Drives
 
-Webui can be found at `<your-ip>:9091`.
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+**Advanced Settings**: Complete transmission settings are available in `/share/transmission/settings.json`. Stop the addon before modifying as Transmission overwrites settings on shutdown.
 
 ## Issues
 

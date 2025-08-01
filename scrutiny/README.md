@@ -36,19 +36,45 @@ Features :
 
 ## Configuration
 
----
-
-Webui can be found at <http://homeassistant:8080>, or through Ingress.
+Webui can be found at <http://homeassistant:8080> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 It automatically mounts all local drives.
 
-Enable full access only if you are encountering issues. SMART access should work without full access in all other scenarios.
+**Note**: Enable full access only if encountering issues. SMART access should work without full access in all scenarios.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `Updates` | list | `Hourly` | Update schedule (Quarterly/Hourly/Daily/Weekly/Custom) |
+| `Updates_custom_time` | str | | Custom update interval (e.g., "5m", "2h", "1w", "2mo") |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `Mode` | list | | Operating mode (Collector+WebUI or Collector only) |
+| `COLLECTOR_API_ENDPOINT` | str | | Collector API endpoint URL |
+| `COLLECTOR_HOST_ID` | str | | Host identifier for collector |
+| `SMARTCTL_COMMAND_DEVICE_TYPE` | list | | Device type for SMARTCTL commands |
+| `SMARTCTL_MEGARAID_DISK_NUM` | int | | MegaRAID disk number |
+| `expose_collector` | bool | | Expose collector port externally |
+
+### Example Configuration
 
 ```yaml
-Updates: Hourly, Daily, Weekly
-Updates_custom_time : if you select "Custom" as "Updates" variable, you can define specific updates in natural language in the "Updates_custom_time" field. Example : select "Custom" as "Updates", then type a custom intervals like "5m", "2h", "1w", or "2mo" to have an update every 5 minutes, or every 2 hours, or evey week, or every 2 months
-TZ: timezone
-Mode: Collector+WebUI or Collector only
+Updates: "Daily"
+Updates_custom_time: "12h"
+TZ: "Europe/London"
+Mode: "Collector+WebUI"
+COLLECTOR_API_ENDPOINT: "http://localhost:8080"
+COLLECTOR_HOST_ID: "home_assistant"
+SMARTCTL_COMMAND_DEVICE_TYPE: "auto"
+expose_collector: false
 ```
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ## Installation
 

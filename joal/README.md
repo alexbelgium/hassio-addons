@@ -28,14 +28,25 @@ All credits for the app go to Anthony Raymond, please visit his repository here 
 
 ## Configuration
 
-Joal configuration : in the addon log are all informations tailored for your system
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+Configuration details are available in the addon logs.
 
-Addon options
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `secret_token` | str | `lrMY24Byhx` | Authentication token for the web interface |
+| `ui_path` | str | `joal` | Web UI path |
+| `run_duration` | str | `12h` | Runtime duration (e.g., 5s, 2m, 12h, 5d) |
+| `verbose` | bool | | Enable verbose logging |
+
+### Example Configuration
 
 ```yaml
-secret_token: lrMY24Byhx #you can encode your own token here that will be used to identify in the app
-ui_path: joal #the path where Joal will be accessible
-run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
+secret_token: "your-custom-token-here"
+ui_path: "joal"
+run_duration: "24h"
+verbose: true
 ```
 
 ## Installation

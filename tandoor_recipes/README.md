@@ -26,23 +26,41 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## Configuration
 
-Ingress addition : https://community.home-assistant.io/t/ingress-access-for-tandoor-recipes/717859
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 
-Please check Tandoor Recipes documentation : https://docs.tandoor.dev/install/docker/
+For Ingress support, see: https://community.home-assistant.io/t/ingress-access-for-tandoor-recipes/717859
+Complete documentation: https://docs.tandoor.dev/install/docker/
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `SECRET_KEY` | str | `YOUR_SECRET_KEY` | **REQUIRED**: Django secret key for security |
+| `ALLOWED_HOSTS` | str | | **REQUIRED**: Comma-separated Home Assistant URLs for ingress |
+| `DB_TYPE` | list | `sqlite` | Database type (sqlite or postgresql_external) |
+| `DEBUG` | list | `0` | Debug mode (0=normal, 1=debug) |
+| `externalfiles_folder` | str | | Folder for external recipe file imports |
+| `POSTGRES_HOST` | str | | PostgreSQL host (required for postgresql_external) |
+| `POSTGRES_PORT` | str | | PostgreSQL port (required for postgresql_external) |
+| `POSTGRES_USER` | str | | PostgreSQL username (required for postgresql_external) |
+| `POSTGRES_PASSWORD` | str | | PostgreSQL password (required for postgresql_external) |
+| `POSTGRES_DB` | str | | PostgreSQL database name (required for postgresql_external) |
+
+### Example Configuration
 
 ```yaml
-Required :
-    "ALLOWED_HOSTS": "your system url", # You need to input your homeassistant urls (comma separated, without space) to allow ingress to work
-    "DB_TYPE": "list(sqlite|postgresql_external)" # Type of database to use.
-    "SECRET_KEY": "str", # Your secret key
-    "PORT": 9928 # By default, the webui is available on http://HAurl:9928. If you ever need to change the port, you should never do it within the app, but only through this option
-    "Environment": 0|1 # 1 is debug mode, 0 is normal mode. You should run in normal mode unless actively developing.
-Optional :
-    "POSTGRES_HOST": "str?", # Needed for postgresql_external
-    "POSTGRES_PORT": "str?", # Needed for postgresql_external
-    "POSTGRES_USER": "str?", # Needed for postgresql_external
-    "POSTGRES_PASSWORD": "str?", # Needed for postgresql_external
-    "POSTGRES_DB": "str?" # Needed for postgresql_external
+SECRET_KEY: "your-very-long-secret-key-here"
+ALLOWED_HOSTS: "homeassistant.local,192.168.1.100"
+DB_TYPE: "sqlite"
+DEBUG: "0"
+externalfiles_folder: "/config/addons_config/tandoor_recipes/externalfiles"
+# For external PostgreSQL:
+# POSTGRES_HOST: "core-postgres"
+# POSTGRES_PORT: "5432"
+# POSTGRES_USER: "tandoor"
+# POSTGRES_PASSWORD: "secure_password"
+# POSTGRES_DB: "tandoor_recipes"
 ```
 
 ## Installation

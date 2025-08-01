@@ -40,13 +40,24 @@ You can add a shortcut pointing to your Changedetection.io instance with the fol
 3. Select the <kbd>Webpage</kbd> option, and paste the Web UI URL you got from the add-on page.
 4. Fill in the title for the sidebar item, an icon (suggestion: `mdi:vector-difference`), and a **relative URL** for that panel (e.g. `change-detection`). Lastly, confirm it.
 
-### Configurable options
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `BASE_URL` | str | | Full URL when running behind reverse proxy |
+| `TIMEOUT` | int | `60000` | Request timeout in milliseconds |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
-BASE_URL: Specify the full URL (including protocol) when running behind a reverse proxy
+PGID: 0
+PUID: 0
+TZ: "Europe/London"
+BASE_URL: "https://changedetection.mydomain.com"
+TIMEOUT: 60000
 ```
 
 ### Connect to browserless Chrome (from @RhysMcW)

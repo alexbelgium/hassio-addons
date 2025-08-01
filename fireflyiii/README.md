@@ -28,30 +28,46 @@ This addon is based on the docker image https://hub.docker.com/r/fireflyiii/core
 
 ## Configuration
 
-PLEASE CHANGE YOUR APP_KEY BEFORE FIRST LAUNCH! YOU WON'T BE ABLE AFTERWRADS WITHOUT RESETTING YOUR DATABASE.
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 
-Options can be configured through two ways :
+**⚠️ IMPORTANT**: Change your `APP_KEY` before first launch! You won't be able to change it afterwards without resetting your database.
 
-- Addon options
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `APP_KEY` | str | `CHANGEME_32_CHARS_EuC5dfn3LAPzeO` | **CRITICAL**: 32-character encryption key - change before first run! |
+| `CONFIG_LOCATION` | str | `/config/addons_config/fireflyiii/config.yaml` | Location of additional config file |
+| `DB_CONNECTION` | list | `sqlite_internal` | Database type (sqlite_internal/mariadb_addon/mysql/pgsql) |
+| `DB_HOST` | str | | Database host (for external databases) |
+| `DB_PORT` | str | | Database port (for external databases) |
+| `DB_DATABASE` | str | | Database name (for external databases) |
+| `DB_USERNAME` | str | | Database username (for external databases) |
+| `DB_PASSWORD` | str | | Database password (for external databases) |
+| `Updates` | list | | Automatic update schedule (hourly/daily/weekly) |
+| `silent` | bool | `true` | Silent mode - set to false for debug info |
+
+### Example Configuration
 
 ```yaml
-"CONFIG_LOCATION": location of the config.yaml # Sets the location of the config.yaml (see below)
-"DB_CONNECTION": "list(sqlite_internal|mariadb_addon|mysql|pgsql)" # Defines the type of database to use : sqlite (default, embedded in the addon) ; MariaDB (auto-detection if the MariaDB addon is installed and runs), and external databases that requires that the other DB_ fields are set (mysql and pgsql)
-"APP_KEY": 32 characters # This is your encryption key, don't lose it!
-"DB_HOST": "CHANGEME" # only needed if using a remote database
-"DB_PORT": "CHANGEME" # only needed if using a remote database
-"DB_DATABASE": "CHANGEME" # only needed if using a remote database
-"DB_USERNAME": "CHANGEME" # only needed if using a remote database
-"DB_PASSWORD": "CHANGEME" # only needed if using a remote database
-"Updates": hourly|daily|weekly # Sets an automatic update
-"silent": true # If false, show debug info
+APP_KEY: "SomeRandomStringOf32CharsExactly"
+CONFIG_LOCATION: "/config/addons_config/fireflyiii/config.yaml"
+DB_CONNECTION: "mariadb_addon"
+DB_HOST: "core-mariadb"
+DB_PORT: "3306"
+DB_DATABASE: "firefly"
+DB_USERNAME: "firefly"
+DB_PASSWORD: "secure_password"
+Updates: "weekly"
+silent: false
 ```
 
-- Config.yaml (advanced usage)
+### Advanced Configuration
 
-Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Addons-feature:-add-env-variables
-
-The complete list of ENV variables can be seen here : https://raw.githubusercontent.com/firefly-iii/firefly-iii/main/.env.example
+Additional environment variables can be configured using the config.yaml file. See:
+- [Add Environment Variables Guide](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+- [Complete Firefly III environment variables](https://raw.githubusercontent.com/firefly-iii/firefly-iii/main/.env.example)
 
 ## Installation
 

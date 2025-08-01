@@ -39,21 +39,48 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-1. You must create a user and database for piwigo to use in a mysql/mariadb server.
-1. In the setup page for database, use the ip address rather than hostname.
-1. A basic nginx configuration file can be found in /config/piwigo/nginx/site-confs, edit the file to enable ssl (port 443 by default), set servername etc.
-1. Self-signed keys are generated the first time you run the container and can be found in /data/keys, if needed, you can replace them with your own.
-1. The easiest way to edit the configuration file is to go in /config/piwigo from home assistant local files editor to configure email settings etc.
+Webui can be found at <http://homeassistant:81> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 
-Webui can be found at <http://homeassistant:81>.
+### Setup Steps
+
+1. Create a user and database for Piwigo in a MySQL/MariaDB server
+2. In the database setup page, use IP address rather than hostname
+3. Edit nginx configuration in `/config/piwigo/nginx/site-confs` for SSL (port 443)
+4. Self-signed keys are in `/data/keys` (replace with your own if needed)
+5. Edit configuration files in `/config/piwigo` for email settings
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
-cifsusername: "username" # smb username (optional)
-cifspassword: "password" # smb password (optional)
+PGID: 1000
+PUID: 1000
+TZ: "Europe/London"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/gallery"
+cifsusername: "galleryuser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
 
 [repository]: https://github.com/alexbelgium/hassio-addons

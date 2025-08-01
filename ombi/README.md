@@ -39,11 +39,21 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Webui can be found at <http://homeassistant:3579>.
+Webui can be found at <http://homeassistant:3579> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
+PGID: 1000
+PUID: 1000
 ```
 
 ## Support

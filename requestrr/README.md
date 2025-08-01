@@ -44,17 +44,34 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
----
+Webui can be found at <http://homeassistant:4545> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 
-Webui can be found at <http://homeassistant:PORT>.
-The default username/password : described in the startup log.
-Please run a first time the addon, then customize using my Filebrowser addon the config file created in /addon_configs/db21ed7f_requestrr
+The default username/password is described in the startup log.
+Run the addon first, then customize the config file created in `/addon_configs/db21ed7f_requestrr` using the Filebrowser addon.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: timezone
+PGID: 1000
+PUID: 1000
+TZ: "Europe/London"
 ```
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ## Support
 

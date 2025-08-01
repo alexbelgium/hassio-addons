@@ -44,52 +44,80 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-Default user : admin
-Default password : please_change_password
+Webui can be found at <http://homeassistant:2342> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 
-To access webdav, use as url : http://local-ip:addon-port/api/hassio.../originals
-The second part (/api.../originals) Is described in the log when starting the addons
+**System Requirements**: Minimum 2 cores and 4GB RAM
+**Default Credentials**: 
+- Username: admin
+- Password: please_change_password
 
-Options can be configured through two ways :
+**WebDAV Access**: Use URL `http://local-ip:addon-port/api/hassio.../originals` (see addon logs for full path)
 
-- Addon options
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `ssl` | bool | `false` | Enable HTTPS for the web interface |
+| `certfile` | str | `fullchain.pem` | SSL certificate file (must be in /ssl) |
+| `keyfile` | str | `privkey.pem` | SSL key file (must be in /ssl) |
+| `DB_TYPE` | list | `sqlite` | Database type (sqlite/mariadb_addon/external) |
+| `ORIGINALS_PATH` | str | `/share/photoprism/originals` | Photo and video collection path |
+| `STORAGE_PATH` | str | `/share/photoprism/storage` | Cache, database and sidecar files path |
+| `IMPORT_PATH` | str | `/share/photoprism/import` | Import files path |
+| `BACKUP_PATH` | str | `/share/photoprism/backup` | Backup storage path |
+| `UPLOAD_NSFW` | bool | `true` | Allow uploads that may be offensive |
+| `CONFIG_LOCATION` | str | | Location of additional config.yaml |
+| `graphic_drivers` | list | | Graphics driver (mesa) |
+| `ingress_disabled` | bool | | Disable ingress for direct IP:port access |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+
+### Example Configuration
 
 ```yaml
-ssl: true/false
-certfile: fullchain.pem #ssl certificate, must be located in /ssl
-keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-DB_TYPE: "list(sqlite|mariadb_addon|external)" # Mariadb is automatically configured is the addon is installed, sqlite does not need configuration
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-cifsdomain: "domain" # optional, allow setting the domain for the smb share
-ingress_disable: false # optional, if true disable ingress and simplifies the url to access with IP:port
-UPLOAD_NSFW: "true" allow uploads that may be offensive
-STORAGE_PATH: "/share/photoprism/storage" # storage PATH for cache, database and sidecar files
-ORIGINALS_PATH: "/share/photoprism/originals" # originals PATH containing your photo and video collection
-IMPORT_PATH: "/share/photoprism/import" # PATH for importing files to originals
-BACKUP_PATH: "/share/photoprism/backup" # backup storage PATH
-CONFIG_LOCATION: "/config/addons_config/config.yaml" # Sets the location of the config.yaml (see below)
+ssl: false
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+DB_TYPE: "mariadb_addon"
+ORIGINALS_PATH: "/media/photos"
+STORAGE_PATH: "/share/photoprism/storage"
+IMPORT_PATH: "/share/photoprism/import"
+BACKUP_PATH: "/share/photoprism/backup"
+UPLOAD_NSFW: true
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/photos"
+cifsusername: "photouser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
 
-- Config.yaml
+### Advanced Configuration
 
-Configuration is done by customizing the config.yaml that can be found in /config/addons_config/config.yaml
+Additional options can be configured in `/config/addons_config/photoprism/config.yaml`.
+Complete list: https://github.com/photoprism/photoprism/blob/develop/docker-compose.yml
 
-The complete list of options can be seen here : https://github.com/photoprism/photoprism/blob/develop/docker-compose.yml
+### External Database Setup
 
-- External db setting (@wesleygas)
-
-Allow for the use of an external database. This can be done in photoprism by correctly setting the following options on the addons_config/photoprism/config.yaml file:
+For external database, add to `addons_config/photoprism/config.yaml`:
 
 ```yaml
 PHOTOPRISM_DATABASE_DRIVER: "mysql"
 PHOTOPRISM_DATABASE_SERVER: "IP:PORT"
 PHOTOPRISM_DATABASE_NAME: "photoprism"
 PHOTOPRISM_DATABASE_USER: "USERNAME"
-PHOTOPRISM_DATABASE_PASSWORD: "PASSWORD
+PHOTOPRISM_DATABASE_PASSWORD: "PASSWORD"
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
 ## Using Photoprism Command-Line Interface
 
 Photoprism also provides a command line interface:

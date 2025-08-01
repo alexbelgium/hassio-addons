@@ -33,30 +33,50 @@ This addon is based on the [docker image](https://hub.docker.com/r/hkotel/mealie
 
 ## Configuration
 
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
+
 - Start the addon. Wait a while and check the log for any errors.
-- Open yourdomain.com:9090 (where ":9090" is the port configured in the addon).
-- Default
+- Default credentials:
   - Username: changeme@example.com
   - Password: MyPassword
 
-Options can be configured through two ways :
+### Options
 
-- Addon options
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `1000` | Group ID for file permissions |
+| `PUID` | int | `1000` | User ID for file permissions |
+| `ssl` | bool | `false` | Enable HTTPS for the web interface |
+| `certfile` | str | `fullchain.pem` | SSL certificate file (must be in /ssl) |
+| `keyfile` | str | `privkey.pem` | SSL key file (must be in /ssl) |
+| `BASE_URL` | str | | Optional external base URL |
+| `DATA_DIR` | str | `/config` | Data directory path |
+| `ALLOW_SIGNUP` | bool | `true` | Allow new user signup |
+
+### Example Configuration
 
 ```yaml
-    "BASE_URL": Optional, external base url
-    "PGID": user ID
-    "PUID": "group ID
-    "certfile": fullchain.pem #ssl certificate, must be located in /ssl
-    "keyfile": privkey.pem #sslkeyfile, must be located in /ssl
-    "ssl": ssl: true/false
-    "ALLOW_SIGNUP": Allow signup of users
+PGID: 1000
+PUID: 1000
+ssl: false
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+BASE_URL: "https://mealie.mydomain.com"
+DATA_DIR: "/config"
+ALLOW_SIGNUP: false
 ```
 
-- Config.yaml
-  Additional options can be configured using the config.yaml file found in /homeassistant/addons_config/xxx-mealie/config.yaml
+### Custom Scripts and Environment Variables
 
-The complete list of options can be seen here : https://nightly.mealie.io/documentation/getting-started/installation/backend-config/
+This addon supports custom scripts and environment variables:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+
+You can add environment variables by creating `/homeassistant/addons_config/xxx-mealie/config.yaml`.
+
+The complete list of options can be found here: https://nightly.mealie.io/documentation/getting-started/installation/backend-config/
 
 ## Integration with HA
 

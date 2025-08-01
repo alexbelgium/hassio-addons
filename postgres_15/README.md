@@ -31,23 +31,38 @@ This addon is based on the official image : https://hub.docker.com/_/postgres
 ## Configuration
 
 Postgres port is by default 5432 and is exposed to the host network.
+Default user: `postgres`, password: set by `POSTGRES_PASSWORD`
 
-default user: `postgres`
-password: `set by POSTGRES_PASSWORD`
+### Options
 
-You can configure this options:
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `POSTGRES_PASSWORD` | password | `homeassistant` | Password for the postgres user |
+| `POSTGRES_USER` | str | | Optional custom username |
+| `POSTGRES_DB` | str | | Optional default database name |
+| `POSTGRES_INITDB_ARGS` | str | | Additional arguments to initdb |
+| `POSTGRES_HOST_AUTH_METHOD` | str | | Host authentication method |
+
+### Example Configuration
 
 ```yaml
-POSTGRES_PASSWORD
-POSTGRES_USER
-POSTGRES_DB
-POSTGRES_INITDB_ARGS
-POSTGRES_HOST_AUTH_METHOD
+POSTGRES_PASSWORD: "your-secure-password"
+POSTGRES_USER: "myuser"
+POSTGRES_DB: "mydatabase"
+POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=C --lc-ctype=C"
+POSTGRES_HOST_AUTH_METHOD: "md5"
 ```
 
-For more info check [base image docs](https://hub.docker.com/_/postgres).
+For more information, check the [official PostgreSQL image docs](https://hub.docker.com/_/postgres).
 
-By default `postgresql.conf` is stored in volume accessible by other addons and Home Assistant, so you can conviniently modify it by e.g. File Editor addon. If you prefer better security change `CONFIG_LOCATION` to e.g. `/data/orig/postgresql.conf`, so it will be acessible only to this addon, but you will have to modify it by the [Hassio SSH](https://developers.home-assistant.io/docs/operating-system/debugging/).
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+
+**Configuration File**: By default `postgresql.conf` is stored in `/config/postgresql.conf` accessible by other addons and Home Assistant. You can modify it using the File Editor addon. For better security, change `CONFIG_LOCATION` to `/data/orig/postgresql.conf` to make it accessible only to this addon.
 
 ## Installation
 
