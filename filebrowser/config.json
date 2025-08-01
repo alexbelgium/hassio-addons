@@ -80,7 +80,6 @@
   },
   "homeassistant": "2025.5.0",
   "image": "ghcr.io/alexbelgium/filebrowser-{arch}",
-  "init": false,
   "ingress": true,
   "ingress_port": 8071,
   "ingress_stream": true,
