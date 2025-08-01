@@ -1,4 +1,7 @@
 
+## 1.8.6 (01-08-2025)
+- Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
+
 ## 1.8.5 (26-07-2025)
 - Update to latest version from ajslater/codex (changelog : https://github.com/ajslater/codex/releases)
 
