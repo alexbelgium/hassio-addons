@@ -68,6 +68,8 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
+RUN sed -i "s|/command/with-contenv|/usr/bin/env|g" "/ha_entrypoint.sh"
+
 VOLUME [ "/data" ]
 WORKDIR /
 
