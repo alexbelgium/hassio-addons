@@ -1,4 +1,4 @@
-# Home assistant add-on: guacamole
+# Home assistant add-on: Guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
@@ -22,42 +22,68 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[Apache Guacamole](https://guacamole.apache.org/) is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH. This container is only the backend server component needed to use The official or 3rd party HTML5 frontends.
+[Apache Guacamole](https://guacamole.apache.org/) is a clientless remote desktop gateway that supports standard protocols like VNC, RDP, and SSH. It provides a web-based interface for accessing remote systems without requiring any client software on the user's device. Guacamole acts as a proxy, translating between the web-based frontend and the actual remote desktop protocols.
 
-This addon is based on the docker image here : https://github.com/abesnier/docker-guacamole
+This addon combines both the Guacamole server (guacd) and web application components with an integrated PostgreSQL database for storing connection configurations and user management. The solution provides a complete remote desktop gateway that can be used to securely access computers and servers from anywhere via a web browser.
+
+This addon is based on the docker image from: https://github.com/abesnier/docker-guacamole
 
 ## Configuration
 
-Webui can be found at <http://homeassistant:8080>.
+Webui can be found at `<your-ip>:8080` or through the sidebar using Ingress.
 
-The default username is guacadmin with password guacadmin.
+The default username is `guacadmin` with password `guacadmin`. It is strongly recommended to change this password immediately after first login.
 
-Addons options :
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `EXTENSIONS` | str | `auth-totp` | Guacamole extensions to enable (e.g., `auth-totp`) |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+
+### Example Configuration
 
 ```yaml
-EXTENSIONS: auth-totp # see https://github.com/maxwaldorf/guacamole#enabling-extensions
-TZ: Europe/Paris # Sets a specific timezone
+EXTENSIONS: "auth-totp"
+TZ: "Europe/London"
 ```
+
+### Database Setup
+
+The addon automatically configures a PostgreSQL database for storing Guacamole configurations, users, and connections. The database files are stored in `/config/postgres` and are automatically created on first startup.
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ## Installation
 
-The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
+The installation of this add-on is pretty straightforward and not different in
+comparison to installing any other Hass.io add-on.
 
-1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
-   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
-1. Set the add-on options to your preferences
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Open the webUI and adapt the software options
+1. Go to the web interface and log in with the default credentials (`guacadmin`/`guacadmin`).
+1. Change the default password immediately for security.
+1. Configure your remote connections through the Guacamole web interface.
+
+## Setup
+
+After installation and first login:
+
+1. **Change Default Password**: Go to Settings → Users → guacadmin and change the password
+2. **Create Connections**: Use the web interface to add RDP, VNC, or SSH connections to your remote systems
+3. **Configure Extensions**: If using TOTP authentication, configure it in the user settings
+4. **User Management**: Create additional users and assign connection permissions as needed
 
 ## Support
 
-Create an issue on github
-
-## Illustration
-
-![illustration](https://www.linuxserver.io/user/pages/content/images/2021/05/menu.png)
+Create an issue on [GitHub][repository]
 
 [repository]: https://github.com/alexbelgium/hassio-addons
