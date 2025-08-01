@@ -66,6 +66,12 @@ mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 NOAUTH=""
 
+# Prevent conflicts
+for folders in /etc/services.d /etc/s6-overlay; do
+    [[ -d "$folders" ]] && rm -r "$folders"
+fi
+
+# Disable authentification
 if bashio::config.true 'NoAuth'; then
     if ! bashio::fs.file_exists "/data/noauth"; then
         rm /data/auth &> /dev/null || true

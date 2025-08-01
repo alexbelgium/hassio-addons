@@ -1,3 +1,5 @@
+## 0.10.1-hafix2 (01-08-2025)
+- Minor bugs fixed
 
 ## 0.10.1+hafix (26-04-2025)
 - Update to latest version from ckulka/baikal-docker (changelog : https://github.com/ckulka/baikal-docker/releases)

@@ -1,3 +1,6 @@
+
+## 1.41.9.9961-46083195d-ls275 (01-08-2025)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 ## 1.41.9.9961-46083195d-ls274-14 (31-07-2025)
 - Improves boot time
 - New option skip_permissions_check to accelerate start

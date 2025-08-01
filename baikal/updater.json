@@ -1,8 +1,9 @@
 {
+  "github_exclude": "+",
   "last_update": "26-04-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "baikal",
   "source": "github",
   "upstream_repo": "ckulka/baikal-docker",
-  "upstream_version": "0.10.1+hafix"
+  "upstream_version": "0.10.1"
 }
