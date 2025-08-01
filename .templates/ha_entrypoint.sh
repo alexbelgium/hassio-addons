@@ -43,7 +43,8 @@ EOF
     chmod +x "$tmp"
 
     # Run the probe and check for at least one digit in the output
-    out="$(exec "$tmp" 2>/dev/null || true)"
+    out="$("$tmp" 2>/dev/null || true)"
+    echo "Output is $out"
     if printf '%s' "$out" | grep -qE '[0-9]'; then
         shebang="$candidate"
         break
