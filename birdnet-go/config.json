@@ -99,7 +99,8 @@
   },
   "privileged": [
     "SYS_ADMIN",
-    "DAC_READ_SEARCH"
+    "DAC_READ_SEARCH",
+    "SYS_RESOURCE"
   ],
   "schema": {
     "ALSA_CARD": "int?",
