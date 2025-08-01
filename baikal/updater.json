@@ -5,5 +5,5 @@
   "slug": "baikal",
   "source": "github",
   "upstream_repo": "ckulka/baikal-docker",
-  "upstream_version": "0.10.1+hafix"
+  "upstream_version": "0.10.1"
 }
