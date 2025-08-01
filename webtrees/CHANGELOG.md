@@ -1,3 +1,6 @@
+
+## 2.2.3 (01-08-2025)
+- Update to latest version from nathanvaughn/webtrees-docker (changelog : https://github.com/nathanvaughn/webtrees-docker/releases)
 ## 2.2.1-4 (06-01-2025)
 - BREAKING CHANGE : please be sure to backup your system (HA, and backup from webtrees UI) before updating
   - Major code refactor : there is no automatic first user creation, it now opens the wizard and provides additional instructions in the addon log (detecting if it is a first launch or not)
