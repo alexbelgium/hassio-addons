@@ -27,17 +27,48 @@ This addon is based on the [docker image](https://hub.docker.com/r/coderaiser/cl
 
 ## Configuration
 
-Webui can be found at `<your-ip>:8000`.
+Webui can be found at <http://homeassistant:8000> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `CUSTOM_OPTIONS` | str | | Custom CLI options (e.g., `--name Homeassistant`) |
+| `DROPBOX_TOKEN` | str | | Dropbox integration token (see https://cloudcmd.io/) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+| `smbv1` | bool | `false` | Enable SMB v1 protocol |
+
+### Example Configuration
 
 ```yaml
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-smbv1: "bool?" # smb v1
-DROPBOX_TOKEN: "str?" # see https://cloudcmd.io/
-CUSTOM_OPTIONS: "--name Homeassistant" # custom options from https://cloudcmd.io/
+CUSTOM_OPTIONS: "--name Homeassistant"
+DROPBOX_TOKEN: "your-dropbox-token"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/files"
+cifsusername: "fileuser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
+smbv1: false
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ## Installation
 

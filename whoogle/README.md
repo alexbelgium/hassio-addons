@@ -27,20 +27,60 @@ This addon is based on the docker image https://hub.docker.com/r/benbusby/whoogl
 
 ## Configuration
 
-Webui can be found at <http://homeassistant:PORT>.
-Configurations can be done through the app webUI, except for the following options
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 
-Options can be configured through two ways :
+### Options
 
-- Addon options
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `TZ` | str | `Europe/Amsterdam` | Timezone |
+| `WHOOGLE_CONFIG_LANGUAGE` | str | `lang_en` | Interface language |
+| `WHOOGLE_CONFIG_URL` | str | | Base URL for the service |
+| `WHOOGLE_CONFIG_THEME` | list | | Theme (system/light/dark) |
+| `WHOOGLE_CONFIG_COUNTRY` | str | | Country code for search results |
+| `WHOOGLE_CONFIG_SEARCH_LANGUAGE` | str | | Search language |
+| `WHOOGLE_CONFIG_BLOCK` | str | | Comma-separated list of sites to block |
+| `WHOOGLE_CONFIG_SAFE` | list | | Safe search (0/1) |
+| `WHOOGLE_CONFIG_ALTS` | list | | Use alternative frontends (0/1) |
+| `WHOOGLE_CONFIG_NEW_TAB` | list | | Open results in new tab (0/1) |
+| `WHOOGLE_CONFIG_VIEW_IMAGE` | list | | Enable view image option (0/1) |
+| `WHOOGLE_CONFIG_GET_ONLY` | list | | GET requests only (0/1) |
+| `WHOOGLE_CONFIG_DISABLE` | list | | Disable changing settings (0/1) |
+| `WHOOGLE_AUTOCOMPLETE` | list | | Enable autocomplete (0/1) |
+| `WHOOGLE_MINIMAL` | list | | Minimal mode (0/1) |
+| `WHOOGLE_CSP` | list | | Content Security Policy (0/1) |
+| `WHOOGLE_RESULTS_PER_PAGE` | int | | Results per page (5-100) |
+| `WHOOGLE_USER` | str | | Username for authentication |
+| `WHOOGLE_PASS` | password | | Password for authentication |
+| `WHOOGLE_PROXY_TYPE` | str | | Proxy type |
+| `WHOOGLE_PROXY_LOC` | str | | Proxy location |
+| `WHOOGLE_PROXY_USER` | str | | Proxy username |
+| `WHOOGLE_PROXY_PASS` | str | | Proxy password |
+| `WHOOGLE_ALT_TW` | str | | Twitter alternative frontend |
+| `WHOOGLE_ALT_YT` | str | | YouTube alternative frontend |
+| `WHOOGLE_ALT_IG` | str | | Instagram alternative frontend |
+| `WHOOGLE_ALT_RD` | str | | Reddit alternative frontend |
+| `WHOOGLE_ALT_MD` | str | | Medium alternative frontend |
+| `WHOOGLE_ALT_TL` | str | | TikTok alternative frontend |
+| `HTTPS_ONLY` | list | | HTTPS only mode (0/1) |
+
+### Example Configuration
 
 ```yaml
-"CONFIG_LOCATION": location of the config.yaml (see below)
+TZ: "Europe/London"
+WHOOGLE_CONFIG_LANGUAGE: "lang_en"
+WHOOGLE_CONFIG_URL: "https://search.mydomain.com"
+WHOOGLE_CONFIG_THEME: "dark"
+WHOOGLE_CONFIG_COUNTRY: "US"
+WHOOGLE_CONFIG_SAFE: "0"
+WHOOGLE_AUTOCOMPLETE: "1"
+WHOOGLE_USER: "admin"
+WHOOGLE_PASS: "secure-password"
+WHOOGLE_RESULTS_PER_PAGE: 20
 ```
 
-- Config.yaml
-
-Custom env variables can be added to the config.yaml file referenced in the addon options. Full env variables can be found here : https://github.com/benbusby/whoogle-search#environment-variables. It must be entered in a valid yaml format, that is verified at launch of the addon.
+For complete environment variable documentation, see: https://github.com/benbusby/whoogle-search#environment-variables
 
 ## Installation
 

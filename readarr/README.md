@@ -42,42 +42,66 @@ The installation of this add-on is pretty straightforward and not different in c
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and adapt the software options
 
-## Usage
+## Configuration  
 
-Webui can be found at <http://homeassistant:8787/readarr> or with ingress ☝️ by clicking the `Open Web UI` button.
+Webui can be found at <http://homeassistant:8787/readarr> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 
-The default username/password : described in the startup log.
+### Options
 
-## Configuration
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `CONFIG_LOCATION` | str | `/config` | Path where Readarr config is stored |
+| `connection_mode` | list | `ingress_noauth` | Connection mode (ingress_noauth/noingress_auth/ingress_auth) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
 
-Options can be configured through three ways :
+### Connection Modes
 
-### Addon options
+- `ingress_noauth` - Default, disables authentication for seamless ingress integration
+- `noingress_auth` - Disables ingress for external URL, enables authentication
+- `ingress_auth` - Enables both ingress and authentication
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: timezone
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-connection_mode: ingress_noauth (default, disables authentification to allow a seamless ingress integration), noingress_auth (disables ingress to allow a simpler external url, enables authentification), ingress_auth (enables both ingress and authentification)
+PGID: 0
+PUID: 0
+TZ: "Europe/London"
+CONFIG_LOCATION: "/config"
+connection_mode: "ingress_noauth"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/books,//nas.local/ebooks"
+cifsusername: "bookuser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
 
-### Within readarr itself
+### Mounting Drives
 
-All normal configuration from within the app
+This addon supports mounting both local drives and remote SMB shares:
 
-### The ENV override file: `/config/addons_config/readarr_nas.yml`
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
 
-For more control, you can add enviroment variables by defining them as keys in a valid `.yaml` file.
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+
+You can add environment variables by creating `/config/addons_config/readarr_nas.yml`:
 
 ```yaml
 TZ: Europe/Paris
 ```
-
-more info : https://github.com/alexbelgium/hassio-addons/wiki/Addons-feature:-add-env-variables
 
 ## Support
 

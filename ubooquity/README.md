@@ -49,22 +49,58 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
----
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+The default username/password is described in the startup log.
+Configurations can be done through the app webUI, except for the following options.
 
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+### Options
 
-Network disk is mounted to /mnt/share name
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `maxmem` | int | `200` | Maximum RAM usage for Java (MB) - **CRITICAL SETTING** |
+| `ssl` | bool | `false` | Enable HTTPS for the web interface |
+| `certfile` | str | `fullchain.pem` | Path for the TLS certificate |
+| `keyfile` | str | `privkey.pem` | Path for the TLS key file |
+| `theme` | list | `default` | Theme selection (default/comixology2/plextheme-master) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+| `smbv1` | bool | `false` | Enable SMB v1 protocol |
+
+**Important**: The `maxmem` setting controls Java heap space. Too low causes OutOfMemoryError; too high can crash Home Assistant. Default 200MB for RPi3B+, 512MB recommended for systems with 2GB+ RAM.
+
+### Example Configuration
 
 ```yaml
-PGID: user # https://docs.linuxserver.io/general/understanding-puid-and-pgid
-GPID: user # https://docs.linuxserver.io/general/understanding-puid-and-pgid
-maxmem: 200 # IMPORTANT read above. 200 is default for rpi3b+ ; 512 recommended if more 2gb RAM.
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
-cifsusername: "username" # smb username (optional)
-cifspassword: "password" # smb password (optional)
-smbv1: false # Should smbv1 be used instead of 2.1+?
+PGID: 0
+PUID: 0
+TZ: "Europe/London"
+maxmem: 512
+ssl: false
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+theme: "comixology2"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/comics,//nas.local/books"
+cifsusername: "comicuser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
+smbv1: false
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+Network disks are mounted to `/mnt/share_name`.
 
 ## Support
 

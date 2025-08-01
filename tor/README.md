@@ -40,7 +40,22 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
-You should follow to the initial guide for configuring base addon options. Here will described only extra options in comparisons with base:
+Configurations can be done through the app webUI, except for the following options.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `hidden_services` | bool | `true` | Enable Tor hidden services |
+| `http_tunnel` | bool | `false` | Enable HTTP tunnel on port 9080 |
+| `socks` | bool | `false` | Enable SOCKS proxy |
+| `stealth` | bool | `false` | Enable stealth mode |
+| `bridges` | list | `[]` | List of bridge configurations |
+| `client_names` | list | `[]` | Client names for stealth authentication |
+| `ports` | list | `["8123", "8123:80"]` | Ports to expose via Tor |
+| `log_level` | list | | Log level (trace/debug/info/notice/warning/error/fatal) |
+
+You should follow the initial guide for configuring base addon options. Here are the extra options specific to this extended version:
 
 ### Option: `http_tunnel`
 

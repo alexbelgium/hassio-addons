@@ -27,19 +27,70 @@ This addon is based on the [docker image](https://hub.docker.com/r/deluan/navidr
 
 ## Configuration
 
-see https://www.navidrome.org/docs/usage/configuration-options/#available-options
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
+
+See https://www.navidrome.org/docs/usage/configuration-options/ for additional configuration details.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `base_url` | str | `/` | Base URL to configure Navidrome behind a proxy |
+| `music_folder` | str | `/data/music` | Folder where your music library is stored |
+| `data_folder` | str | `/data` | Folder to store application data (DB) |
+| `log_level` | str | `info` | Log level (error, warn, info, debug, trace) |
+| `ssl` | bool | `false` | Enable HTTPS for the web interface |
+| `certfile` | str | | Path for the TLS certificate |
+| `keyfile` | str | | Path for the TLS key file |
+| `default_language` | str | | Default language for the interface |
+| `image_cache_size` | str | | Size of the image cache |
+| `transcoding_cache_size` | str | | Size of the transcoding cache |
+| `scan_schedule` | str | | Cron expression for automatic library scanning |
+| `password_encryption_key` | str | | Key for password encryption |
+| `welcome_message` | str | | Custom welcome message |
+| `lastfm_api_key` | str | | Last.fm API key for scrobbling |
+| `lastfm_secret` | str | | Last.fm secret for scrobbling |
+| `spotify_id` | str | | Spotify client ID for metadata |
+| `spotify_secret` | str | | Spotify client secret for metadata |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+
+### Example Configuration
 
 ```yaml
-    "base_url": "localhost",         # Base URL to configure Navidrome behind a proxy
-    "music_folder": "/data/music",   # Folder where your music library is stored. Can be read-only
-    "data_folder": "/data/data",     # Folder to store application data (DB)
-    "log_level": "info",             # Log level. Useful for troubleshooting. Possible values: error, warn, info, debug, trace
-    "certfile": "fullchain.pem",     # Path for the TLS certificate
-    "keyfile": "privkey.pem",        # Path for the TLS key file
-    "ssl": false                     # should the app use https or not
+base_url: "/"
+music_folder: "/data/music"
+data_folder: "/data"
+log_level: "info"
+ssl: false
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+scan_schedule: "0 2 * * *"
+lastfm_api_key: "your-lastfm-key"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/music"
+cifsusername: "musicuser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
 
-Webui can be found at `<your-ip>:port`.
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ## Installation
 
