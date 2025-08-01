@@ -23,27 +23,33 @@ fi
 candidate_shebangs+=(
     "/usr/bin/env bashio"
     "/usr/bin/bashio"
-    "/usr/bin/bash"
-    "/usr/bin/sh"
-    "/bin/bash"
-    "/bin/sh"
 )
 
-# Find the first valid shebang interpreter in candidate list
+# Find the first valid shebang interpreter in candidate list by probing bashio::addon.version
 shebang=""
+tmp="$(mktemp)"
+trap 'rm -f "$tmp"' EXIT
+
 for candidate in "${candidate_shebangs[@]}"; do
-    command_path="${candidate%% *}"
-    # Test if command exists and can actually execute a shell command (for shells)
-    if [ -x "$command_path" ]; then
-        # Try as both 'sh -c' and 'bashio echo' style
-        if "$command_path" -c 'echo yes' >/dev/null 2>&1 || "$command_path" echo "yes" >/dev/null 2>&1; then
-            shebang="$candidate"
-            break
-        fi
+    # Build a tiny probe script that prints the addon version
+    printf '#!%s\n' "$candidate" >"$tmp"
+    cat >>"$tmp" <<'EOF'
+out="$(bashio::addon.version 2>/dev/null || true)"
+[ -n "$out" ] && printf '%s\n' "$out"
+EOF
+    chmod +x "$tmp"
+
+    # Run the probe and check for at least one digit in the output
+    out="$("$tmp" 2>/dev/null || true)"
+    if printf '%s' "$out" | grep -qE '[0-9]'; then
+        shebang="$candidate"
+        echo "Valid shebang: $shebang (bashio::addon.version -> $out)"
+        break
     fi
 done
+
 if [ -z "$shebang" ]; then
-    echo "ERROR: No valid shebang found!"
+    echo "ERROR: No valid shebang found!" >&2
     exit 1
 fi
 
