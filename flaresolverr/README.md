@@ -23,29 +23,63 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-FlareSolverr starts a proxy server and it waits for user requests in an idle state using few resources. When some request arrives, it uses puppeteer with the stealth plugin to create a headless browser (Firefox). It opens the URL with user parameters and waits until the Cloudflare challenge is solved (or timeout). The HTML code and the cookies are sent back to the user, and those cookies can be used to bypass Cloudflare using other HTTP clients.
+[FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) is a proxy server to bypass Cloudflare protection. It starts a proxy server that waits for user requests in an idle state using few resources. When a request arrives, it uses Puppeteer with the stealth plugin to create a headless browser (Firefox) that solves Cloudflare challenges.
 
-NOTE: Web browsers consume a lot of memory. If you are running FlareSolverr on a machine with few RAM, do not make many requests at once. With each request a new browser is launched.
+Key features:
+- Bypasses Cloudflare protection automatically
+- Headless browser automation with Firefox
+- RESTful API for integration with other tools
+- Cookie extraction for subsequent requests
+- Support for various Cloudflare challenge types
 
-Project homepage : https://github.com/FlareSolverr/FlareSolverr
-
-Based on the docker image : https://hub.docker.com/r/flaresolverr/flaresolverr
-
-## Configuration
-
-Webui can be found at <http://homeassistant:port>
+**Note**: Web browsers consume significant memory. Avoid making many concurrent requests on systems with limited RAM.
 
 ## Installation
 
-The installation of this add-on is pretty straightforward and not different in
-comparison to installing any other Hass.io add-on.
+The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
-1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance.
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Carefully configure the add-on to your preferences, see the official documentation for for that.
+
+## Configuration
+
+Web interface can be found at <http://homeassistant:8191>.
+This addon has no configuration options - it works out of the box.
+
+### API Usage
+
+FlareSolverr provides a REST API for integration with other applications:
+
+**Endpoint**: `http://homeassistant:8191/v1`
+
+**Example Request**:
+```json
+{
+  "cmd": "request.get",
+  "url": "https://example.com",
+  "maxTimeout": 60000
+}
+```
+
+### Integration with *arr Apps
+
+Configure your indexers to use FlareSolverr:
+- **Prowlarr/Jackett**: Set FlareSolverr URL to `http://homeassistant:8191`
+- **Sonarr/Radarr**: Configure indexers to use the FlareSolverr proxy
+
+### Options
+
+No configuration options are available - FlareSolverr works automatically with default settings.
+
+### Resource Requirements
+
+- **Memory**: 512MB+ recommended
+- **CPU**: Moderate usage during challenge solving
+- **Network**: Requires internet access to function
 
 ## Support
 

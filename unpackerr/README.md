@@ -46,7 +46,66 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
-No webui.
+This addon has no web interface - it runs as a background service.
+Unpackerr monitors completed downloads and extracts archives automatically.
+
+### Setup Steps
+
+1. Configure your download client to save completed downloads to the extraction path
+2. Set the watch path where extracted files should be placed
+3. Configure *arr apps to monitor the watch path for imports
+4. Start the addon and monitor logs for activity
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `1000` | Group ID for file permissions |
+| `PUID` | int | `1000` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `extraction_path` | str | `/share/downloads_packed` | Path where downloaded archives are located |
+| `watch_path` | str | `/share/downloads_unpacked` | Path where extracted files are placed |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+
+### Example Configuration
+
+```yaml
+PGID: 1000
+PUID: 1000
+TZ: "Europe/London"
+extraction_path: "/share/downloads/completed"
+watch_path: "/share/downloads/extracted"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/downloads"
+cifsusername: "dluser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
+```
+
+### Integration with *arr Apps
+
+Configure your applications to use the appropriate paths:
+- **Download clients**: Save completed downloads to `extraction_path`
+- **Sonarr/Radarr/Lidarr**: Monitor `watch_path` for imports
+- **File structure**: Maintain consistent folder structures
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom script execution and environment variable injection:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 In /addon_configs/db21ed7f_unpackerr/unpackerr.conf you can set all variables according to this list of environment variables : https://github.com/davidnewhall/unpackerr
 

@@ -22,24 +22,79 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-FlexGet is a multipurpose automation tool for all of your media. See https://flexget.com/
+[FlexGet](https://flexget.com/) is a multipurpose automation tool for all of your media. It can support torrents, NZBs, podcasts, comics, TV, movies, RSS, HTML, CSV, and more.
 
-Default password is 'homeassistant123' , or can be set from the addons options
+Key features:
+- Powerful plugin system with 300+ plugins
+- RSS feed processing and filtering
+- Integration with download clients
+- Web-based management interface
+- Scheduled execution and daemon mode
 
-## Requirements
+## Installation
 
-## Config
+The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
-    "PUID": custom user (default root)
-    "PGID": custom user (default root)
-    "WebuiPass": webui password définition
-    "FG_PLUGINS": Plugins addition
-    "FG_LOG_LEVEL": Log level (critical|error|warning|info|verbose|debug|trace)
+1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+1. Install this add-on.
+1. Click the `Save` button to store your configuration.
+1. Set the add-on options to your preferences
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+1. Open the webUI and adapt the software options
 
-## Start
+## Configuration
 
-- Start the addon. Wait a while and check the log for any errors.
+Webui can be found at <http://homeassistant:5050>.
+Default password: `homeassistant123` (change via addon options).
 
-## Troubleshooting
+### Setup Steps
 
-If you have in issue with your installation, please be sure to checkout github.
+1. Access the web interface after starting the addon
+2. Create or edit your FlexGet configuration file
+3. Set up RSS feeds and download sources
+4. Configure output plugins for your download clients
+5. Test configuration and enable scheduling
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `WebuiPass` | str | `homeassistant123` | Web interface password |
+| `FG_PLUGINS` | str | | Additional plugins to install |
+| `FG_LOG_LEVEL` | list | | Log level (critical/error/warning/info/verbose/debug/trace) |
+
+### Example Configuration
+
+```yaml
+PGID: 1000
+PUID: 1000
+WebuiPass: "SecurePassword123"
+FG_PLUGINS: "flexget-plugins-extra"
+FG_LOG_LEVEL: "info"
+```
+
+### Configuration File
+
+FlexGet uses a YAML configuration file located at `/config/flexget/config.yml`. Example:
+
+```yaml
+tasks:
+  tv-shows:
+    rss: https://example.com/tv-shows.rss
+    series:
+      - Breaking Bad
+      - Game of Thrones
+    transmission:
+      host: localhost
+      port: 9091
+```
+
+For complete configuration documentation, see: https://flexget.com/Configuration
+
+## Support
+
+If you have an issue with your installation, please be sure to checkout github.

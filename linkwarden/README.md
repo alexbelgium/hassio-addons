@@ -1,5 +1,5 @@
 
-# Home assistant add-on: linkwarden
+# Home assistant add-on: Linkwarden
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
@@ -23,69 +23,97 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
----
+[Linkwarden](https://linkwarden.app/) is a collaborative bookmark manager to collect, organize, and preserve webpages and articles. It allows teams and individuals to save, categorize, and manage bookmarks with features like tags, collections, and full-text search capabilities.
 
-[linkwarden](https://linkwarden.app/) is a collaborative bookmark manager to collect, organize, and preserve webpages and articles.
-This addon is based on their docker image.
+This addon is based on the [official Linkwarden Docker image](https://github.com/linkwarden/linkwarden).
 
 ## Configuration
 
-Install, then start the addon a first time
-Webui can be found at <http://homeassistant:3000>.
-You'll need to create a new user at startup.
+Webui can be found at `<your-ip>:3000` or through the sidebar using Ingress.
+You'll need to create a new user account at startup.
 
-Options can be configured through two ways :
+### Options
 
-- Addon options
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `NEXTAUTH_SECRET` | str | **Required** | Secret key for NextAuth.js authentication (must be filled at start) |
+| `NEXTAUTH_URL` | str | | Custom NextAuth URL (optional, only if Linkwarden is kept externally) |
+| `NEXT_PUBLIC_DISABLE_REGISTRATION` | bool | `false` | Disable new user registration |
+| `NEXT_PUBLIC_CREDENTIALS_ENABLED` | bool | `true` | Enable username/password login |
+| `STORAGE_FOLDER` | str | `/config/library` | Directory for storing data files |
+| `DATABASE_URL` | str | | External PostgreSQL database URL (leave blank for internal database) |
+| `NEXT_PUBLIC_AUTHENTIK_ENABLED` | bool | `false` | Enable Authentik SSO integration |
+| `AUTHENTIK_CUSTOM_NAME` | str | `Authentik` | Custom provider name for Authentik button |
+| `AUTHENTIK_ISSUER` | str | | Authentik OpenID Configuration Issuer URL |
+| `AUTHENTIK_CLIENT_ID` | str | | Client ID from Authentik Provider Overview |
+| `AUTHENTIK_CLIENT_SECRET` | str | | Client Secret from Authentik Provider Overview |
+| `NEXT_PUBLIC_OLLAMA_ENDPOINT_URL` | str | | Ollama endpoint URL for AI features |
+| `OLLAMA_MODEL` | str | | Ollama model name for AI processing |
+
+### Example Configuration
 
 ```yaml
-"NEXTAUTH_SECRET": mandatory, must be filled at start
-"NEXTAUTH_URL": optional, only if linkwarden is kept externally
-"NEXT_PUBLIC_DISABLE_REGISTRATION": If set to true, registration will be disabled.
-"NEXT_PUBLIC_CREDENTIALS_ENABLED": If set to true, users will be able to login with username and password.
-"STORAGE_FOLDER": optional, is /config/library by default
-"DATABASE_URL": optional, if kept blank an internal database will be used. If an external database is used, modify according to this design postgresql://postgres:homeassistant@localhost:5432/linkwarden
-"NEXT_PUBLIC_AUTHENTIK_ENABLED": If set to true, Authentik will be enabled and you'll need to define the variables below.
-"AUTHENTIK_CUSTOM_NAME": Optionally set a custom provider name. (name on the button)
-"AUTHENTIK_ISSUER": This is the "OpenID Configuration Issuer" shown in the Provider Overview. Note that you must delete the "/" at the end of the URL. Should look like: `https://authentik.my-doma.in/application/o/linkwarden`
-"AUTHENTIK_CLIENT_ID": Client ID copied from the Provider Overview screen in Authentik
-"AUTHENTIK_CLIENT_SECRET": Client Secret copied from the Provider Overview screen in Authentik
+NEXTAUTH_SECRET: "your-very-long-secret-key-here-at-least-32-characters"
+NEXT_PUBLIC_DISABLE_REGISTRATION: false
+NEXT_PUBLIC_CREDENTIALS_ENABLED: true
+STORAGE_FOLDER: "/config/library"
+DATABASE_URL: "postgresql://postgres:homeassistant@localhost:5432/linkwarden"
+NEXT_PUBLIC_AUTHENTIK_ENABLED: false
+AUTHENTIK_CUSTOM_NAME: "My Authentik"
+AUTHENTIK_ISSUER: "https://authentik.my-domain.com/application/o/linkwarden"
+AUTHENTIK_CLIENT_ID: "your-client-id"
+AUTHENTIK_CLIENT_SECRET: "your-client-secret"
 ```
 
-- Config.yaml
-All other options can be configured using the config.yaml file found in /config/db21ed7f_filebrowser/config.yaml using the Filebrowser addon.
+### Setup Steps
 
-The complete list of options can be seen here : https://docs.linkwarden.app/self-hosting/environment-variables
+1. **First Time Setup**: After starting the addon, visit the web interface and create your first user account
+2. **NEXTAUTH_SECRET**: Generate a secure random string (at least 32 characters) for the `NEXTAUTH_SECRET` option
+3. **Database**: By default, Linkwarden uses an internal SQLite database. For production use, consider setting up PostgreSQL
+4. **Authentication**: Configure Authentik integration if you want SSO capabilities
+5. **Storage**: Bookmark data and files are stored in the configured `STORAGE_FOLDER`
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+
+### Authentik Integration
+
+To integrate with Authentik for Single Sign-On:
+
+1. Follow the instructions from the [Linkwarden documentation](https://docs.linkwarden.app/self-hosting/sso-oauth#authentik)
+2. Set `NEXT_PUBLIC_AUTHENTIK_ENABLED` to `true`
+3. Configure the Authentik-specific options with values from your Authentik Provider Overview
+4. Note: Remove the trailing "/" from the `AUTHENTIK_ISSUER` URL
+
+### Additional Configuration
+
+For advanced configuration options, refer to the complete list of environment variables in the [Linkwarden documentation](https://docs.linkwarden.app/self-hosting/environment-variables).
 
 ## Installation
 
----
+The installation of this add-on is pretty straightforward and not different in
+comparison to installing any other Hass.io add-on.
 
-The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
-
-1. Add my add-ons repository to your home assistant instance (in supervisor addons store at top right, or click button below if you have configured my HA)
-   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance. [![Add repository on my Home Assistant][repository-badge]][repository-url]
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
-1. Set the add-on options to your preferences
+1. Set the `NEXTAUTH_SECRET` option to a secure random string.
+1. Configure other options as needed.
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Open the webUI and adapt the software options
-
-## Integration with Authentik
-
-Follow the instruction from the Linkwarden docs page. https://docs.linkwarden.app/self-hosting/sso-oauth#authentik
-
-
-
-## Common issues
-
-<details>
-
+1. Open the webUI and create your first user account.
 
 ## Support
 
-Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-linkwarden/279247)
+Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-linkwarden/279247).
+
+[repository]: https://github.com/alexbelgium/hassio-addons
+[repository-badge]: https://img.shields.io/badge/Add%20repository%20to%20my-Home%20Assistant-41BDF5?logo=home-assistant&style=for-the-badge
+[repository-url]: https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons
 
 ---
 
