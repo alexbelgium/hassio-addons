@@ -63,18 +63,33 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
----
+Webui can be found at <http://homeassistant:port> or in your sidebar using Ingress.
+The default username is "admin" and the password is described in the startup log.
 
-Webui can be found at <http://homeassistant:port>, or in your sidebar using Ingress.
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `ssl` | bool | `false` | Enable HTTPS for web interface |
+| `certfile` | str | `fullchain.pem` | SSL certificate file (in `/ssl/`) |
+| `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |
+| `password` | str | `homeassistant` | Admin password (min 12 characters, leave blank to restore backup) |
+
+### Example Configuration
 
 ```yaml
-ssl: true/false
-certfile: fullchain.pem #ssl certificate, must be located in /ssl
-keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-password: define admin password. If kept blank, will allow manual restore of previous backup. At least 12 characters.
+ssl: true
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+password: "your-secure-password-123"
 ```
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ## Support
 
