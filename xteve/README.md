@@ -44,6 +44,20 @@ comparison to installing any other Hass.io add-on.
 
 Webui can be found at <http://homeassistant:34400/web>.
 
+This addon has minimal configuration options as most settings are configured through the web interface.
+
+### Options
+
+No configuration options are required for this addon. All configuration is done through the web interface at port 34400.
+
+### Example Configuration
+
+```yaml
+# No options needed - configure via web interface
+```
+
+**Note**: xTeVe stores its configuration in `/data/` and runs on port 34400. Access the web interface to configure M3U playlists and XMLTV sources.
+
 ## Support
 
 Create an issue on github

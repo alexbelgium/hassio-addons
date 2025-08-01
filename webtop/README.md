@@ -39,17 +39,58 @@ If graphics don't work, use the DRINODE feature to select your graphic device.
 
 See all potential ENV variables here : https://docs.linuxserver.io/images/docker-webtop#optional-environment-variables
 
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `additional_apps` | str | `engrampa,libreoffice` | Apps to install (comma-separated) |
+| `DRINODE` | str | `/dev/dri/renderD128` | Graphics device path |
+| `DNS_server` | str | `8.8.8.8` | Custom DNS server |
+| `KEYBOARD` | str | `en-us-qwerty` | Keyboard layout |
+| `PASSWORD` | str | | Custom password for web interface |
+| `data_location` | str | | Custom data storage path |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+
+### Example Configuration
+
 ```yaml
-TZ: timezone ; Country/City according to https://manpages.ubuntu.com/manpages/trusty/man3/DateTime::TimeZone::Catalog.3pm.html
-additional_apps: engrampa,thunderbird # Allows installation of apps, as they are not persistent
-DRINODE: specify a custom graphic device, default is /dev/dri/renderD128
-DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-cifsdomain: "domain" # optional, allow setting the domain for the smb share
+PGID: 1000
+PUID: 1000
+TZ: "Europe/London"
+additional_apps: "firefox,gimp,vlc"
+DRINODE: "/dev/dri/card0"
+KEYBOARD: "fr-fr-azerty"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/media"
+cifsusername: "mediauser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom script execution and environment variable injection:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+
+### Additional Resources
+
+See all potential environment variables: https://docs.linuxserver.io/images/docker-webtop#optional-environment-variables
 
 ## Installation
 

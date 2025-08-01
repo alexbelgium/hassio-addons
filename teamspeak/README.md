@@ -41,9 +41,26 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
-- Start the addon. Wait a while and check the log for any errors.
+This addon has no web interface - it runs a TeamSpeak 3 server.
+Connect using the TeamSpeak client at `homeassistant.local:9987`.
 
-In order to get the credentials for your TS server, check the container logs as it will output the serveradmin password and your ServerAdmin privilege key.
+### Getting Server Credentials
+
+1. Start the addon and wait for initialization
+2. Check the container logs for:
+   - ServerAdmin password
+   - ServerAdmin privilege key
+
+### Ports
+
+| Port | Protocol | Description |
+|------|----------|-------------|
+| `9987` | UDP | Voice communication |
+| `10011` | TCP | ServerQuery (raw) |
+| `30033` | TCP | File transfer |
+| `41144` | TCP | TSDNS |
+
+**Important**: Configure your router to forward these ports for external access.
 
 ## Support
 

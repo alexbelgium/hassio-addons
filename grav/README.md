@@ -44,25 +44,38 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
-Webui can be found at <http://homeassistant:PORT>.
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+Webui can be found at <http://homeassistant:9191>.
+Configurations can be done through the app webUI, except for the following options.
 
-## Add theme/squeleton
+### Setup Steps
 
-You can place the user folder from the theme/skeleton in /share/grav/www/user,
+1. Access the web interface after starting the addon
+2. Follow the Grav setup wizard for initial configuration
+3. Install themes/plugins through the admin panel
+4. Custom themes can be placed in `/share/grav/www/user`
 
-## Options
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `1000` | Group ID for file permissions |
+| `PUID` | int | `1000` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: timezone
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
+PGID: 1000
+PUID: 1000
+TZ: "Europe/London"
 ```
+
+### Adding Themes/Skeletons
+
+Place custom themes and skeletons in `/share/grav/www/user/` directory:
+- Themes: `/share/grav/www/user/themes/`
+- Plugins: `/share/grav/www/user/plugins/`
+- Pages: `/share/grav/www/user/pages/`
 
 ## Support
 

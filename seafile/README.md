@@ -45,30 +45,65 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
----
+Webui can be found at <http://homeassistant:8000> (Seahub) and <http://homeassistant:8082> (File server).
 
-Webui can be found at <http://homeassistant:PORT>.
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+### Setup Steps
 
-Default name : me@example.com
-Default password : a_very_secret_password
+1. Default login: `me@example.com` / `a_very_secret_password`
+2. Change admin credentials after first login
+3. Configure database (SQLite default, MariaDB recommended for production)
+4. Set proper file server root URL for external access
 
-If you store your database on a mounted drive, make sure to also host your sqlite database there : otherwise if there is an issue with the mount you'll lose your whole database (thanks @cokeman0)
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `1000` | Group ID for file permissions |
+| `PUID` | int | `1000` | User ID for file permissions |
+| `TZ` | str | `Europe/Paris` | Timezone (e.g., `Europe/London`) |
+| `SEAFILE_ADMIN_EMAIL` | email | `me@example.com` | Admin email address |
+| `SEAFILE_ADMIN_PASSWORD` | password | `a_very_secret_password` | Admin password |
+| `SERVER_IP` | str | `homeassistant.local` | Server IP or hostname |
+| `FILE_SERVER_ROOT` | str | `http://homeassistant.local:8082` | File server root URL |
+| `PORT` | str | `8082` | File server port |
+| `url` | str | | External URL for Seafile |
+| `database` | list | `sqlite` | Database type (sqlite/mariadb_addon) |
+| `data_location` | str | `/share/seafile` | Data storage location |
+| `CONFIG_LOCATION` | str | | Custom config file location |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: timezone
-PASSWORD: Optionally set a password for the gui
-CLI_ARGS: Optionally pass cli start arguments to seafile
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-force_scheme_https: if you have issues accessing ingress with https, check this box to force https
-force_external_port: if you have issues accessing ingress with https, note here your external port used to access HA
+PGID: 1000
+PUID: 1000
+TZ: "Europe/London"
+SEAFILE_ADMIN_EMAIL: "admin@mydomain.com"
+SEAFILE_ADMIN_PASSWORD: "SecurePassword123"
+SERVER_IP: "192.168.1.100"
+FILE_SERVER_ROOT: "https://seafile.mydomain.com:8082"
+url: "seafile.mydomain.com"
+database: "mariadb_addon"
+data_location: "/share/seafile"
+localdisks: "sda1,sdb1"
+networkdisks: "//nas.local/seafile"
+cifsusername: "seafileuser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+**Important**: If storing database on mounted drive, ensure SQLite database is also hosted there to prevent data loss during mount issues.
 
 ## Support
 

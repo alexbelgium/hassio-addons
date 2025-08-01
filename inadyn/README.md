@@ -41,10 +41,43 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
-To configure with addon options, no webUI.
-For configuration, see https://github.com/troglobit/inadyn
+This addon has no web interface - all configuration is done through addon options.
+For detailed configuration information, see the [official documentation](https://github.com/troglobit/inadyn).
 
-The available configuration options are as follows (this is filled in with some example data):
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `verify_address` | bool | | Verify the IP address with check IP service |
+| `fake_address` | bool | | Use fake address for testing |
+| `allow_ipv6` | bool | | Enable IPv6 support |
+| `iface` | str | | Network interface to use (e.g., `eth0`) |
+| `iterations` | int | | Number of iterations (0 = infinite) |
+| `period` | int | `300` | Update period in seconds |
+| `forced_update` | int | | Forced update interval in seconds |
+| `secure_ssl` | bool | | Enable secure SSL verification |
+| `providers` | list | | List of DDNS provider configurations |
+
+### Provider Configuration
+
+Each provider in the `providers` list supports these options:
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `provider` | str | Provider name or custom identifier |
+| `custom_provider` | bool | Whether this is a custom provider |
+| `username` | str | Username or token for authentication |
+| `password` | str | Password or API key |
+| `hostname` | str | Domain/hostname to update |
+| `ssl` | bool | Use SSL for updates |
+| `ddns_server` | str | Custom DDNS server |
+| `ddns_path` | str | Custom update path |
+| `checkip_server` | str | Custom IP check server |
+| `checkip_path` | str | Custom IP check path |
+| `checkip_ssl` | bool | Use SSL for IP checking |
+| `append_myip` | bool | Append IP to request |
+
+### Example Configurations
 
 ```json
 {

@@ -33,7 +33,39 @@ Feedback from @diamant-x :
 
 ## Configuration
 
-See https://github.com/gabe565/CastSponsorSkip
+This addon has no web interface - all configuration is done through addon options.
+The addon automatically discovers local Chromecast devices and monitors YouTube playback to skip sponsored content.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `CSS_CATEGORIES` | str | `sponsor, intro, outro, selfpromo` | SponsorBlock categories to skip (comma-separated) |
+| `CSS_DISCOVER_INTERVAL` | str | | Device discovery interval |
+| `CSS_MUTE_ADS` | bool | | Mute ads instead of skipping |
+| `CSS_PAUSED_INTERVAL` | str | | Check interval when video is paused |
+| `CSS_PLAYING_INTERVAL` | str | | Check interval when video is playing |
+| `CSS_YOUTUBE_API_KEY` | str | | YouTube API key for enhanced features |
+
+### Example Configuration
+
+```yaml
+CSS_CATEGORIES: "sponsor, intro, outro, selfpromo, interaction"
+CSS_MUTE_ADS: false
+CSS_PAUSED_INTERVAL: "30s"
+CSS_PLAYING_INTERVAL: "500ms"
+```
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom script execution and environment variable injection:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+
+### Additional Resources
+
+For detailed configuration options, see: https://github.com/gabe565/CastSponsorSkip
 
 ## Installation
 

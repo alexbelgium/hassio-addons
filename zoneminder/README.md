@@ -28,7 +28,42 @@ This addon is based on the docker image https://github.com/ZoneMinder/zmdockerfi
 
 ## Configuration
 
-Read official documentation for information how to set : https://github.com/ZoneMinder/zmdockerfiles/blob/master/utils/entrypoint.sh
+Webui can be found at <http://homeassistant:3778/zm>.
+
+### Setup Steps
+
+1. Access the web interface after starting the addon
+2. Configure cameras through the web interface
+3. Set up motion detection zones and alerts
+4. Configure storage locations for recordings
+5. Requires MariaDB addon for database storage
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `Images_location` | str | `/config/addons_config/zoneminder/images` | Path for storing camera images |
+
+### Example Configuration
+
+```yaml
+Images_location: "/share/zoneminder/images"
+```
+
+### Database Requirements
+
+ZoneMinder requires a MySQL/MariaDB database. Install the MariaDB addon and configure Zoneminder to use it.
+
+### Storage Paths
+
+- Images: Configured via `Images_location` option
+- Events: `/var/cache/zoneminder/events2`
+- Sounds: `/var/cache/zoneminder/sounds2`
+- Config: `/config/addons_config/zoneminder`
+
+### Additional Resources
+
+For detailed configuration: https://github.com/ZoneMinder/zmdockerfiles/blob/master/utils/entrypoint.sh
 
 ## Installation
 
