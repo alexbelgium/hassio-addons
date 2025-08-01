@@ -129,5 +129,5 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby",
   "version": "4.9.1.12",
-  "video": true
+  "video": tru
 }
