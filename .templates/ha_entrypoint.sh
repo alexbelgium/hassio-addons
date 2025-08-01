@@ -3,12 +3,14 @@
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
-echo "Starting..."
 
 # Detect if this is PID1 (main container process) — do this once at the start
 PID1=false
 if [ "$$" -eq 1 ]; then
     PID1=true
+    echo "Starting as entrypoint"
+else
+    echo "Starting custom scripts"
 fi
 
 ######################
@@ -31,6 +33,7 @@ tmp="$(mktemp)"
 trap 'rm -f "$tmp"' EXIT
 
 for candidate in "${candidate_shebangs[@]}"; do
+    echo "Trying $candidate"
     # Build a tiny probe script that prints the addon version
     printf '#!%s\n' "$candidate" >"$tmp"
     cat >>"$tmp" <<'EOF'
@@ -43,7 +46,6 @@ EOF
     out="$(exec "$tmp" 2>/dev/null || true)"
     if printf '%s' "$out" | grep -qE '[0-9]'; then
         shebang="$candidate"
-        echo "Valid shebang: $shebang (bashio::addon.version -> $out)"
         break
     fi
 done
