@@ -26,22 +26,43 @@ MyElectricalData allows an automated access to your Enedis data. See its github 
 
 ## Configuration
 
-Install, then start the addon a first time to initialize the templates.
+Webui can be found at <http://homeassistant:5000> or through Ingress.
+Initial setup requires starting the addon once to initialize configuration templates.
 
-Options can be configured through two ways :
+### Setup Steps
 
-- Addon options
+1. Start the addon to initialize configuration files
+2. Configure your Enedis credentials in the config.yaml file
+3. Set up MQTT connection details
+4. Access the web interface to monitor data retrieval
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `CONFIG_LOCATION` | str | `/config/myelectricaldata/config.yaml` | Path to configuration file |
+| `TZ` | str | `Europe/Paris` | Timezone (e.g., `Europe/London`) |
+| `mqtt_autodiscover` | bool | `true` | Enable MQTT autodiscovery |
+| `verbose` | bool | `true` | Enable verbose logging |
+
+### Example Configuration
 
 ```yaml
-CONFIG_LOCATION: /config/myelectricaldata/config.yaml # Sets the location of the config.yaml (see below)
-mqtt_autodiscover: true # Shows in the log the detail of the mqtt local server (if available). It can then be added to the config.yaml file.
-TZ: Europe/Paris # Sets a specific timezone
+CONFIG_LOCATION: "/config/myelectricaldata/config.yaml"
+TZ: "Europe/London"
+mqtt_autodiscover: true
+verbose: false
 ```
 
-- Config.yaml
-  Everything is configured using the config.yaml file found in /config/myelectricaldata/config.yaml.
+### Configuration File
 
-The complete list of options can be seen here : https://github.com/m4dm4rtig4n/myelectricaldata/wiki/03.-Configuration
+The main configuration is done via `/config/myelectricaldata/config.yaml`. This file contains:
+- Enedis API credentials
+- MQTT broker settings
+- Data retrieval intervals
+- Device configurations
+
+For complete configuration options, see: https://github.com/m4dm4rtig4n/myelectricaldata/wiki/03.-Configuration
 
 ## Installation
 

@@ -44,21 +44,55 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
----
+Webui can be found at <http://homeassistant:4040>.
+Default credentials are shown in the startup logs.
 
-Webui can be found at <http://homeassistant:PORT>.
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+### Setup Steps
+
+1. Access the web interface after starting the addon
+2. Initial setup wizard will guide you through configuration
+3. Add your audiobook directories via the web interface
+4. Configure transcoding settings if needed
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: timezone
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
+PGID: 1000
+PUID: 1000
+TZ: "Europe/London"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/audiobooks"
+cifsusername: "audiobookuser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom script execution and environment variable injection:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ## Support
 

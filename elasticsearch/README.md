@@ -54,7 +54,32 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
-Elasticsearch is using by calling it from another app, such as nextcloud.
+Elasticsearch runs as a single-node cluster accessible at <http://homeassistant:9200>.
+This addon has no web interface - it provides API endpoints for other applications.
+
+### API Endpoints
+
+- **HTTP API**: Port 9200 for REST API calls
+- **Transport**: Port 9300 for internal cluster communication
+
+### Options
+
+No configuration options are available through the addon interface. Elasticsearch is pre-configured for single-node operation with:
+- Memory allocation: 1GB heap (ES_JAVA_OPTS)
+- Discovery type: single-node
+- Memory lock: enabled
+- Tini subreaper: enabled
+
+### Example Usage
+
+Connect other applications to Elasticsearch using:
+- URL: `http://homeassistant:9200`
+- No authentication required (local network only)
+
+### Integration Examples
+
+- **Nextcloud**: Configure Full Text Search app to use this Elasticsearch instance
+- **Home Assistant**: Use with the Elasticsearch component for event publishing
 
 ## Integration with HA
 
