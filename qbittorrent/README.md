@@ -42,36 +42,73 @@ This addons has several configurable options :
 ---
 
 Webui can be found at <http://homeassistant:8080>, or in your sidebar using Ingress.
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+The default username/password is described in the startup log.
 
-Network disk is mounted to /mnt/share name
+Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port in your router for best speed and connectivity.
 
-You need to map the exposed port in your router if you want the best speed and connectivity.
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `Username` | str | `admin` | Admin username for web interface |
+| `SavePath` | str | `/share/qBittorrent` | Default download directory |
+| `ssl` | bool | `false` | Enable HTTPS for web interface |
+| `certfile` | str | `fullchain.pem` | SSL certificate file (in `/ssl/`) |
+| `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |
+| `whitelist` | str | `localhost,127.0.0.1,...` | IP subnets that don't need password |
+| `customUI` | list | `vuetorrent` | Alternative web UI (default/vuetorrent/qbit-matUI/qb-web/custom) |
+| `DNS_server` | str | `8.8.8.8,1.1.1.1` | Custom DNS servers |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+| `openvpn_enabled` | bool | `false` | Enable OpenVPN connection |
+| `openvpn_config` | str | | OpenVPN config file name (in `/config/openvpn/`) |
+| `openvpn_username` | str | | OpenVPN username |
+| `openvpn_password` | str | | OpenVPN password |
+| `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
+| `qbit_manage` | bool | `false` | Enable qBit Manage integration |
+| `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
+| `silent` | bool | `false` | Suppress debug messages |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-ssl: true/false
-certfile: fullchain.pem #ssl certificate, must be located in /ssl
-keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-whitelist: "localhost,192.168.0.0/16" # Type `null` to disable. List ip subnets that won't need a password (optional)
-customUI: selection from list # alternative webUI can be set here. Latest version set at each addon start. Select 'custom' to fill it yourself in the webui
-DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
-SavePath: "/share/qbittorrent" # Define the download directory
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-cifsdomain: "domain" # optional, allow setting the domain for the smb share
-openvpn_enabled: true/false # is openvpn required to start qbittorrent
-openvpn_config": For example "config.ovpn" # name of the file located in /config/openvpn. If empty, a random one will be used
-openvpn_username": USERNAME
-openvpn_password: YOURPASSWORD
-openvpn_alt_mode: bind at container level and not app level
-run_duration: 12h #for how long should the addon run. Must be formatted as number + time unit (ex : 5s, or 2m, or 12h, or 5d...)
-silent: true #suppresses debug messages
+PGID: 0
+PUID: 0
+TZ: "Europe/London"
+Username: "admin"
+SavePath: "/share/qBittorrent"
+ssl: true
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+whitelist: "localhost,192.168.0.0/16"
+customUI: "vuetorrent"
+DNS_server: "8.8.8.8,1.1.1.1"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/downloads"
+cifsusername: "username"
+cifspassword: "password"
+openvpn_enabled: false
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ## Installation
 

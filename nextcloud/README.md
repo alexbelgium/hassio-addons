@@ -31,56 +31,92 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
-### Custom scripts
+Webui can be found at `<your-ip>:port`.
 
-/config/addons_autoscripts/nextcloud-ocr.sh will be executed at boot.
-To run custom commands at boot you can try a code such as :
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `1000` | Group ID for file permissions |
+| `PUID` | int | `1000` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `additional_apps` | str | | Additional APK packages to install (comma-separated) |
+| `trusted_domains` | str | | Trusted domains for Nextcloud access |
+| `use_own_certs` | bool | `false` | Use custom SSL certificates |
+| `certfile` | str | `fullchain.pem` | SSL certificate file (in `/ssl/`) |
+| `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |
+| `OCR` | bool | `false` | Enable Tesseract OCR capability |
+| `OCRLANG` | str | | OCR languages (e.g., `fra,eng`) |
+| `Full_Text_Search` | bool | `false` | Enable full-text search with Elasticsearch |
+| `elasticsearch_server` | str | | Elasticsearch server address (ip:port) |
+| `enable_thumbnails` | bool | `true` | Enable thumbnail generation |
+| `default_phone_region` | str | | Default phone region (ISO 3166-1 alpha-2) |
+| `disable_updates` | bool | `false` | Prevent automatic app updates |
+| `env_memory_limit` | str | `512M` | PHP memory limit |
+| `env_post_max_size` | str | `512M` | Maximum POST size |
+| `env_upload_max_filesize` | str | `512M` | Maximum upload file size |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+| `skip_permissions_check` | bool | `false` | Skip file permissions checking |
+
+### Example Configuration
+
+```yaml
+PGID: 1000
+PUID: 1000
+TZ: "Europe/London"
+additional_apps: "vim,curl"
+trusted_domains: "nextcloud.example.com,192.168.1.100"
+use_own_certs: true
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+OCR: true
+OCRLANG: "eng,fra,deu"
+enable_thumbnails: true
+env_memory_limit: "1024M"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/nextcloud"
+cifsusername: "nextcloud_user"
+cifspassword: "password123"
+```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+
+### Custom Script Example
+
+Create `/config/addons_autoscripts/nextcloud-ocr.sh` for custom initialization:
+
 ```bash
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 
-#################
-# CODE INJECTOR #
-#################
+# Custom script executed at addon start
+# Runs only after initialization is done
 
-# Any commands written in this bash script will be executed at addon start
-# See guide here : https://github.com/alexbelgium/hassio-addons/wiki/Add%E2%80%90ons-feature-:-customisation
-
-# Runs only after initialization done
-# shellcheck disable=SC2128
 mkdir -p /scripts
-if [ ! -f /app/www/public/occ ]; then cp /config/addons_autoscripts/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0; fi
+if [ ! -f /app/www/public/occ ]; then
+    cp /config/addons_autoscripts/"$(basename "${BASH_SOURCE}")" /scripts/ && exit 0
+fi
 
 echo "Scanning files"
 sudo -u abc php /app/www/public/occ files:scan --all
-echo "This is done !"
+echo "File scan completed!"
 ```
-
-### Addon options
-
-```yaml
-default_phone_region: EN # Define the default phone region according to https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
-disable_updates: prevent automatic apps updating along addon
-additional_apps: vim,nextcloud #specify additional apk files to install ; separated by commas
-PGID/PUID: 1000 #allows setting user.
-trusted_domains: your-domain.com #allows to select the trusted domains. Domains not in this lis will be removed, except for the first one used in the initial configuration.
-OCR: false #set to true to install tesseract-ocr capability.
-OCRLANG: fra,eng #Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
-data_directory: path for the main data directory. Defaults to `/config/data`. Only used to set permissions and prefill the initial installation template. Once initial  installation is done it can't be changed
-enable_thumbnails: true/false # enable generations of thumbnails for media file (to disable for older systems)
-use_own_certs: true/false #if true, use the certfile and keyfile specified
-certfile: fullchain.pem #ssl certificate, must be located in /ssl
-keyfile: privkey.pem #sslkeyfile, must be located in /ssl
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password, same for all smb shares)
-env_memory_limit: nextcloud usable memory limit (default is 512M)
-env_post_max_size: nextcloud post size (default is 512M)
-env_upload_max_filesize; nextcloud upload size (default is 512M)
-```
-
-Webui can be found at `<your-ip>:port`.
 
 ### Change the temp folder to avoid bloating emmc on HA systems (thanks @senna1992)
 
@@ -134,3 +170,4 @@ See this component : https://www.home-assistant.io/integrations/nextcloud/
 
 [repository]: https://github.com/alexbelgium/hassio-addons
 [elasticsearch-shield]: https://img.shields.io/badge/Elasticsearch-optional-blue.svg?logo=elasticsearch
+continu

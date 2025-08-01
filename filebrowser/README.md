@@ -27,23 +27,56 @@ This addon is based on the [docker image](https://hub.docker.com/r/filebrowser/f
 
 ## Configuration
 
-Webui can be found at <http://homeassistant:port> at the port that you map to 8080 in the addon's options.
+Webui can be found at <http://homeassistant:port> or through the sidebar using Ingress.
 Default username: "admin" and password: "admin"
 
 Network disk is mounted to `/share/storagecifs`.
 
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `ssl` | bool | `false` | Enable HTTPS for web interface |
+| `certfile` | str | `fullchain.pem` | SSL certificate file (in `/ssl/`) |
+| `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |
+| `NoAuth` | bool | `true` | Disable authentication (resets database when changed) |
+| `disable_thumbnails` | bool | `true` | Disable thumbnail generation for speed |
+| `base_folder` | str | `/` | Root folder for file browser |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+
+### Example Configuration
+
 ```yaml
-ssl: true/false
-certfile: fullchain.pem #ssl certificate
-keyfile: privkey.pem #sslkeyfile
-NoAuth: true/false #Remove password. Resets database when changed.
-disable_thumbnails : true/false (set disable_thumbnails to true or false ; default true for speed)
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password, same for all smb shares)
-base_folder: root folder # optional, default is /
+ssl: true
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+NoAuth: false
+disable_thumbnails: false
+base_folder: "/share"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/files,//nas.local/documents"
+cifsusername: "fileuser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ## Installation
 

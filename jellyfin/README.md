@@ -28,21 +28,60 @@ This addon is based on the [docker image](https://github.com/linuxserver/docker-
 
 ## Configuration
 
-### Addon config
+Webui can be found at `<your-ip>:8096` or through the sidebar using Ingress.
 
-Webui can be found at `<your-ip>:8096`.
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `data_location` | str | `/share/jellyfin` | Path where Jellyfin data is stored |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+| `DOCKER_MODS` | list | | Additional Docker mods for hardware acceleration |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: timezone
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-cifsdomain: "domain" # optional, allow setting the domain for the smb share
-DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg # Install graphic drivers
+PGID: 0
+PUID: 0
+TZ: "Europe/London"
+data_location: "/share/jellyfin"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/media,//nas.local/movies"
+cifsusername: "mediauser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
+DOCKER_MODS:
+  - "linuxserver/mods:jellyfin-opencl-intel"
+  - "linuxserver/mods:jellyfin-amd"
 ```
+
+### Hardware Acceleration
+
+Available Docker mods for hardware acceleration:
+- `linuxserver/mods:jellyfin-opencl-intel` - Intel OpenCL support
+- `linuxserver/mods:jellyfin-amd` - AMD hardware acceleration
+- `linuxserver/mods:jellyfin-rffmpeg` - Custom FFmpeg build
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
 
 ### Enable ssl
 #### Creating the PFX certificate file first
