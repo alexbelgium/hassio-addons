@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] qbittorrent NFS (opened 2025-07-31)](https://github.com/alexbelgium/hassio-addons/issues/1987) by [@xaxexa](https://github.com/xaxexa)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
