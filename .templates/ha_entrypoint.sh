@@ -1,8 +1,6 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 
-set -e  # Exit immediately if a command exits with a non-zero status
-
 echo "Starting..."
 
 # Detect if this is PID1 (main container process) — do this once at the start
