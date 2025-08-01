@@ -36,6 +36,6 @@
   "slug": "changedetection.io",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/changedetection.io",
-  "version": "0.50.7",
+  "version": "0.50.8",
   "webui": "http://[HOST]:[PORT:5000]"
 }

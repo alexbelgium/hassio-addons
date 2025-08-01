@@ -1,4 +1,7 @@
 
+## 0.50.8 (01-08-2025)
+- Update to latest version from linuxserver/docker-changedetection.io (changelog : https://github.com/linuxserver/docker-changedetection.io/releases)
+
 ## 0.50.7 (18-07-2025)
 - Update to latest version from linuxserver/docker-changedetection.io (changelog : https://github.com/linuxserver/docker-changedetection.io/releases)
 ## 0.50.5 (05-07-2025)
