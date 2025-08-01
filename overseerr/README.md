@@ -44,16 +44,25 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
----
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 
-Webui can be found at <http://homeassistant:PORT>.
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `CONFIG_LOCATION` | str | `/config` | Path where Overseerr config is stored |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: timezone
+PGID: 0
+PUID: 0
+TZ: "Europe/London"
+CONFIG_LOCATION: "/config"
 ```
 
 ## Support

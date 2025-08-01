@@ -44,16 +44,21 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
----
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+Configurations can be done through the app webUI, except for the following options.
 
-Webui can be found at <http://homeassistant:PORT>.
-The default username/password : described in the startup log.
-Configurations can be done through the app webUI, except for the following options
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `TYPE` | list | `jellyfin` | Media server type (jellyfin/emby) |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: timezone
+TZ: "Europe/London"
+TYPE: "jellyfin"
 ```
 
 ## Support

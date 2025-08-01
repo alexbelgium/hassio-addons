@@ -47,23 +47,47 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ---
 
-Webui can be found at <http://homeassistant:PORT>.
-Configurations can be done through the app webUI, except for the following options.
-Please read the upstream container documentation for further info : https://github.com/linuxserver/docker-calibre/blob/35b5e3ae06ba95f666687150ca5fd632b8db9e87/README.md#application-setup
+Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
+Please read the upstream container documentation for further info: https://github.com/linuxserver/docker-calibre#application-setup
 
-In particular, the webserver and wireless connection needs to be manually enabled from the desktop app to be able to access it, using ports 8081 and 9090 respectively.
+**Note**: The webserver and wireless connection need to be manually enabled from the desktop app, using ports 8081 and 9090 respectively.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `PGID` | int | `0` | Group ID for file permissions |
+| `PUID` | int | `0` | User ID for file permissions |
+| `TZ` | str | | Timezone (e.g., `Europe/London`) |
+| `PASSWORD` | str | | Optional password for GUI access |
+| `CLI_ARGS` | str | | Optional CLI start arguments for Calibre |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | | SMB username for network shares |
+| `cifspassword` | str | | SMB password for network shares |
+| `cifsdomain` | str | | SMB domain for network shares |
+
+### Example Configuration
 
 ```yaml
-PGID: user
-GPID: user
-TZ: timezone
-PASSWORD: Optionally set a password for the gui
-CLI_ARGS: Optionally pass cli start arguments to calibre
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
+PGID: 0
+PUID: 0
+TZ: "Europe/London"
+PASSWORD: "secure-password"
+CLI_ARGS: "--with-library=/books"
+localdisks: "sda1,sdb1"
+networkdisks: "//192.168.1.100/books"
+cifsusername: "bookuser"
+cifspassword: "password123"
+cifsdomain: "workgroup"
 ```
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
 
 ## Support
 
