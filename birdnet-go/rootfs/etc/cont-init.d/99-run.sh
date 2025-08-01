@@ -6,8 +6,17 @@ set -e
 # INITALISATION #
 #################
 
-bashio::log.info "ALSA_CARD option is set to $(bashio::config "ALSA_CARD"). If the microphone doesn't work, please adapt it"
 echo " "
+
+# Check if alsa_card is provided
+CONFIG_LOCATION="/config/config.yaml"
+if bashio::config.has_value "ALSA_CARD"; then
+    alsa_card=$(bashio::config 'ALSA_CARD')
+    bashio::log.info "ALSA_CARD option set to $alsa_card"
+    bashio::log.info "ALSA_CARD option is set to ${alsa_card}. Please ensure it is the correct card"
+    sed -i "s/card:.*/card: ${alsa_card}/g" "$CONFIG_LOCATION"
+    yq -i -y ".audio.card = \"${alsa_card}\"" "${CONFIG_FILE}"
+fi
 
 # Adjust microphone volume if needed
 if command -v amixer > /dev/null 2> /dev/null; then
