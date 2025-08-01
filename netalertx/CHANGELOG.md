@@ -1,3 +1,6 @@
+
+## 25.7.30 (01-08-2025)
+- Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
 ## 25.7.4 (05-07-2025)
 
 - Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
