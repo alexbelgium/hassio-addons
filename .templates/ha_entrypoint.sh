@@ -40,7 +40,7 @@ EOF
     chmod +x "$tmp"
 
     # Run the probe and check for at least one digit in the output
-    out="$("$tmp" 2>/dev/null || true)"
+    out="$(exec "$tmp" 2>/dev/null || true)"
     if printf '%s' "$out" | grep -qE '[0-9]'; then
         shebang="$candidate"
         echo "Valid shebang: $shebang (bashio::addon.version -> $out)"
