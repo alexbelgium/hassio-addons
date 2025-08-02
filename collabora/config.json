@@ -1,0 +1,40 @@
+{
+  "arch": [
+    "aarch64",
+    "amd64"
+  ],
+  "codenotary": "alexandrep.github@gmail.com",
+  "description": "Collabora Online office suite",
+  "image": "ghcr.io/alexbelgium/collabora-{arch}",
+  "init": false,
+  "map": [
+    "addon_config:rw"
+  ],
+  "name": "Collabora",
+  "options": {
+    "domain": "",
+    "username": "",
+    "password": "",
+    "PGID": 1000,
+    "PUID": 1000
+  },
+  "panel_admin": false,
+  "panel_icon": "mdi:file-document-edit-outline",
+  "ports": {
+    "9980/tcp": 9980
+  },
+  "ports_description": {
+    "9980/tcp": "Web interface (Not required for Ingress)"
+  },
+  "schema": {
+    "domain": "str?",
+    "username": "str?",
+    "password": "password?",
+    "PGID": "int",
+    "PUID": "int",
+    "TZ": "str?"
+  },
+  "slug": "collabora",
+  "url": "https://github.com/alexbelgium/hassio-addons",
+  "version": "25.04.4.2.1-2"
+}

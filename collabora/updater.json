@@ -1,0 +1,8 @@
+{
+  "last_update": "02-08-2025",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "collabora",
+  "source": "github",
+  "upstream_repo": "CollaboraOnline/online",
+  "upstream_version": "25.04.4.2.1"
+}
