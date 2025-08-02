@@ -1,8 +1,7 @@
 {
   "arch": [
     "aarch64",
-    "amd64",
-    "armv7"
+    "amd64"
   ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "recipe manager",
@@ -72,7 +71,6 @@
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
     "DISABLE_INGRESS": "true",
-    "GUNICORN_MEDIA": "1",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
     "TRUSTED_PROXIES": "**"
   },
@@ -94,10 +92,10 @@
   "panel_icon": "mdi:silverware-fork-knife",
   "panel_title": "Tandoor Recipes",
   "ports": {
-    "8080/tcp": 9928
+    "80/tcp": 9928
   },
   "ports_description": {
-    "8080/tcp": "Web interface"
+    "80/tcp": "Web interface"
   },
   "schema": {
     "ALLOWED_HOSTS": "str?",
@@ -117,6 +115,6 @@
   "slug": "tandoor_recipes",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.5.35",
-  "webui": "http://[HOST]:[PORT:8080]"
+  "version": "2.0.0",
+  "webui": "http://[HOST]:[PORT:80]"
 }
