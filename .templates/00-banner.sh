@@ -26,7 +26,7 @@ if ! bashio::supervisor.ping 2> /dev/null; then
             -e 's/\$(bashio::addon.ingress_port)/""/g' \
             -e 's/\$(bashio::addon.ingress_entry)/""/g' \
             -e 's/\$(bashio::addon.ip_address)/""/g' "$scripts"
-    done < <(grep -srl "bashio" /etc/cont-init.d /custom-services.d)
+    done < <(grep -srl "bashio" /etc/cont-init.d /custom-services.d /etc/services.d /etc/s6-overlay)
     exit 0
 fi
 
