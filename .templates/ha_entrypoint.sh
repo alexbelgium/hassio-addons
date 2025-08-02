@@ -25,6 +25,9 @@ fi
 candidate_shebangs+=(
     "/usr/bin/env bashio"
     "/usr/bin/bashio"
+    "/usr/bin/bash"
+    "/bin/bash"
+    "/bin/sh"
 )
 
 # Find the first valid shebang interpreter in candidate list by probing bashio::addon.version
