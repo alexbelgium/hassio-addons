@@ -1,4 +1,4 @@
-## 2.0.0 (02-08-2025)
+## 2.0.1 (02-08-2025)
 
 - Update to latest version from TandoorRecipes/recipes (integrated nginx, removed armv7)
 
