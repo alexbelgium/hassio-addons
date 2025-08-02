@@ -41,6 +41,13 @@ There are no addon options. All configuration must be manually added in /config/
 
 If this file doesn't exist, it will be created at first boot.
 
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+
 ## Installation
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
