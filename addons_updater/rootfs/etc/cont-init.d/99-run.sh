@@ -12,7 +12,7 @@ if bashio::config.true "dry_run"; then
     bashio::log.warning "Dry run mode : on"
 fi
 
-bashio::log.info "Checking status of referenced repositoriess..."
+bashio::log.info "Checking status of referenced repositories..."
 VERBOSE=$(bashio::config 'verbose')
 
 #Defining github value
@@ -42,7 +42,8 @@ if [ ! -d "/data/$BASENAME" ]; then
 else
     LOGINFO="... updating ${REPOSITORY}" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
     cd "/data/$BASENAME" || exit
-    git pull --rebase origin > /dev/null || git reset --hard origin/master > /dev/null
+    DEFAULT_BRANCH=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
+    git pull --rebase origin > /dev/null || git reset --hard "origin/${DEFAULT_BRANCH}" > /dev/null
     git pull --rebase origin > /dev/null || (rm -r "/data/$BASENAME" && git clone "https://github.com/${REPOSITORY}")
 fi
 
