@@ -114,10 +114,10 @@ done
 # Set permissions for newly created files and folders
 echo "... checking and setting permissions"
 chmod -R 755 /config/*
-chmod 777 /config
+chmod 755 /config
 
 # Create folder for matplotlib
 echo "... setting up Matplotlabdir"
 mkdir -p "$HOME"/.cache/matplotlib
 chown -R "pi:pi" "$HOME"/.cache/matplotlib
-chmod 777 "$HOME"/.cache/matplotlib
+chmod 755 "$HOME"/.cache/matplotlib

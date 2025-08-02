@@ -38,7 +38,7 @@ if bashio::config.has_value 'Updates'; then
         # Sets cron // do not delete this message
         freqDir="/etc/periodic/${FREQUENCY}"
         cp /templates/cronupdate "$freqDir/"
-        chmod 777 "$freqDir/cronupdate"
+        chmod 755 "$freqDir/cronupdate"
 
         # Sets cron to run with www-data user
         # sed -i 's|root|www-data|g' /etc/crontab

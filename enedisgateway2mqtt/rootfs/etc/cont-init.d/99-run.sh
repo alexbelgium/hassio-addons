@@ -17,8 +17,8 @@ DATABASESOURCE="$(dirname "${CONFIGSOURCE}")/cache.db"
 # Make sure folder exist
 mkdir -p "$(dirname "${CONFIGSOURCE}")"
 mkdir -p "$(dirname "${DATABASESOURCE}")"
-chmod 777 -R "$(dirname "${CONFIGSOURCE}")"
-chmod 777 -R "$(dirname "${DATABASESOURCE}")"
+chmod 755 -R "$(dirname "${CONFIGSOURCE}")"
+chmod 755 -R "$(dirname "${DATABASESOURCE}")"
 
 # Check absence of config file
 if [ -f /data/config.yaml ] && [ ! -L /data/config.yaml ]; then

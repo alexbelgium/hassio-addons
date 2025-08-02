@@ -70,7 +70,7 @@ mkdir -p "$LOCATION"
 
 # Create cache
 mkdir -p /.cache
-chmod 777 /.cache
+chmod 755 /.cache
 if [ -d "/config/.cache" ]; then
     cp -rf /config/.cache /.cache
     rm -r /config/.cache

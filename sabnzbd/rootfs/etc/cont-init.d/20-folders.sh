@@ -15,4 +15,4 @@ if [ -f "/homeassistant/addons_autoscripts/$slug.sh" ]; then
     mv /homeassistant/addons_autoscripts/$slug.sh /config/
 fi
 
-chmod 777 /config/*
+chmod 755 /config/*

@@ -56,7 +56,7 @@ mkdir -p "$REVERSE_GEOCODING_DUMP_DIRECTORY"
 chown -R "$PUID":"$PGID" "$MACHINE_LEARNING_CACHE_FOLDER"
 chown -R "$PUID":"$PGID" "$REVERSE_GEOCODING_DUMP_DIRECTORY"
 chown -R "$PUID":"$PGID" /data
-chmod 777 /data
+chmod 755 /data
 
 ####################
 # LIBRARY LOCATION #
@@ -91,5 +91,5 @@ echo "sed -i \"s=/config/redis=/data/redis=g\" /etc/s6*/s6*/*/run" >> /docker-mo
 echo "sed -i \"s=/config/log/redis=/data/log=g\" /etc/s6*/s6*/*/run" >> /docker-mods
 mkdir -p /data/redis
 mkdir -p /data/log
-chmod 777 /data/redis
-chmod 777 /data/log
+chmod 755 /data/redis
+chmod 755 /data/log

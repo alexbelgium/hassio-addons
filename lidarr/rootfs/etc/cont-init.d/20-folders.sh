@@ -17,7 +17,7 @@ fi
 if [ -d /config/lidarr ] && [ ! -d /config/addons_config/lidarr ]; then
     echo "Moving to new location /config/addons_config/lidarr"
     mkdir -p /config/addons_config/lidarr
-    chmod 777 /config/addons_config/lidarr
+    chmod 755 /config/addons_config/lidarr
     mv /config/lidarr/* /config/addons_config/lidarr/
     rm -r /config/lidarr
 fi
@@ -25,5 +25,5 @@ fi
 if [ ! -d /config/addons_config/lidarr ]; then
     echo "Creating /config/addons_config/lidarr"
     mkdir -p /config/addons_config/lidarr
-    chmod 777 /config/addons_config/lidarr
+    chmod 755 /config/addons_config/lidarr
 fi

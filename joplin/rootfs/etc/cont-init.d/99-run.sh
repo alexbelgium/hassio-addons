@@ -29,7 +29,7 @@ ln -s "$LOCATION"/resources /home/joplin/packages/server
 
 chown -R joplin:joplin "$LOCATION"
 chmod -R 777 "$LOCATION"
-chmod 777 "$LOCATION/database.sqlite"
+chmod 755 "$LOCATION/database.sqlite"
 export SQLITE_DATABASE="$LOCATION/database.sqlite"
 
 if bashio::config.has_value 'POSTGRES_DATABASE'; then

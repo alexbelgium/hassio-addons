@@ -149,7 +149,7 @@ chmod -R 775 /config/addons_config/fireflyiii
 # Test
 f=/config/addons_config/fireflyiii
 while [[ $f != / ]]; do
-    chmod 777 "$f"
+    chmod 755 "$f"
     f=$(dirname "$f")
 done
 
@@ -166,7 +166,7 @@ if bashio::config.has_value 'Updates'; then
 
     # Sets cron // do not delete this message
     cp /templates/cronupdate /etc/cron."${FREQUENCY}"/
-    chmod 777 /etc/cron."${FREQUENCY}"/cronupdate
+    chmod 755 /etc/cron."${FREQUENCY}"/cronupdate
 
     # Sets cron to run with www-data user
     # sed -i 's|root|www-data|g' /etc/crontab
