@@ -1,3 +1,8 @@
+## 2.0.1 (02-08-2025)
+
+- WARNING : major update, prepare your backup
+- Update to latest version from TandoorRecipes/recipes (integrated nginx, removed armv7)
+
 ## 1.5.35 (28-06-2025)
 
 - Update to latest version from TandoorRecipes/recipes (changelog : https://github.com/TandoorRecipes/recipes/releases)

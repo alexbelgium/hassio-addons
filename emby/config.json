@@ -127,6 +127,6 @@
   "slug": "emby",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/emby",
-  "version": "4.8.11.0",
+  "version": "4.8.11.0-2",
   "video": true
 }

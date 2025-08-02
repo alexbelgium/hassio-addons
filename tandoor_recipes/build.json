@@ -1,8 +1,7 @@
 {
   "build_from": {
     "aarch64": "vabene1111/recipes:latest",
-    "amd64": "vabene1111/recipes:latest",
-    "armv7": "vabene1111/recipes:latest"
+    "amd64": "vabene1111/recipes:latest"
   },
   "codenotary": {
     "signer": "alexandrep.github@gmail.com"
