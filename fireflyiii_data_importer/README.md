@@ -29,34 +29,62 @@ This addon is based on the docker image https://hub.docker.com/r/fireflyiii/data
 
 ## Configuration
 
-Read official documentation for information how to set the variables: https://docs.firefly-iii.org/data-importer.
+Webui can be found at <http://homeassistant:3474>.
 
-Configurations can be added in the /addon_configs/xxx-fireflyiii_data_importer/configurations folder according to :https://docs.firefly-iii.org/data-importer/help/config/
+### Setup
 
-An auto import can be made by adding files in /addon_configs/xxx-fireflyiii_data_importer/import_files according to : https://docs.firefly-iii.org/data-importer/usage/command_line/
+1. Ensure you have a running Firefly III instance
+2. Configure the data importer to connect to your Firefly III installation
+3. Set up import configurations and files as needed
 
-Options can be configured through two ways :
+For complete setup documentation, see: https://docs.firefly-iii.org/data-importer
 
-- Addon options
+### Options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `FIREFLY_III_URL` | str | Yes | URL to your Firefly III instance |
+| `FIREFLY_III_ACCESS_TOKEN` | str | Yes | Personal Access Token from Firefly III |
+| `CONFIG_LOCATION` | str | Yes | Location for configuration files |
+| `FIREFLY_III_CLIENT_ID` | str | No | OAuth Client ID (alternative to access token) |
+| `NORDIGEN_ID` | str | No | Nordigen Client ID for bank integration |
+| `NORDIGEN_KEY` | str | No | Nordigen Client Secret |
+| `SPECTRE_APP_ID` | str | No | Spectre/Salt Edge Client ID |
+| `SPECTRE_SECRET` | str | No | Spectre/Salt Edge Client Secret |
+| `AUTO_IMPORT_SECRET` | str | No | Secret for auto-import webhook |
+| `CAN_POST_AUTOIMPORT` | bool | No | Allow auto-import functionality |
+| `CAN_POST_FILES` | bool | No | Allow file uploads |
+| `Updates` | list | No | Auto-import schedule (hourly, daily, weekly) |
+| `silent` | bool | No | Suppress debug messages |
+
+### Example Configuration
 
 ```yaml
-"CONFIG_LOCATION": location of the config.yaml # Sets the location of the config.yaml (see below)
-"FIREFLY_III_ACCESS_TOKEN": required to access Firefly
-"FIREFLY_III_CLIENT_ID": alternative way to access Firefly
-"FIREFLY_III_URL": your url, either local (docker IP), or external (public IP)
-"NORDIGEN_ID": your Nordigen Client ID
-"NORDIGEN_KEY": your Nordigen Client Secret
-"SPECTRE_APP_ID": your Spectre / Salt Edge Client ID
-"SPECTRE_SECRET": your Spectre / Salt Edge Client secret
-"Updates": hourly|daily|weekly # Sets an automatic upload of files set in /config/addons_config/fireflyiii_data_importer/import_files
-"silent": true # suppresses debug messages
+FIREFLY_III_URL: "http://homeassistant:8082"
+FIREFLY_III_ACCESS_TOKEN: "your-access-token-here"
+CONFIG_LOCATION: "/config"
+NORDIGEN_ID: "your-nordigen-id"
+NORDIGEN_KEY: "your-nordigen-key"
+Updates: ["daily"]
+silent: false
 ```
 
-- Config.yaml (advanced usage)
+### File Locations
 
-Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Addons-feature:-add-env-variables
+- **Configurations**: `/addon_configs/xxx-fireflyiii_data_importer/configurations/`
+  - Store import configuration files here
+  - See: https://docs.firefly-iii.org/data-importer/help/config/
 
-The complete list of ENV variables can be seen here : https://github.com/firefly-iii/data-importer/blob/main/.env.example
+- **Import Files**: `/addon_configs/xxx-fireflyiii_data_importer/import_files/`
+  - Place CSV files here for automatic importing
+  - See: https://docs.firefly-iii.org/data-importer/usage/command_line/
+
+### Getting a Firefly III Access Token
+
+1. Log into your Firefly III instance
+2. Go to Options → Profile → OAuth → Personal Access Tokens
+3. Create a new token with appropriate permissions
+4. Copy the token and use it in the `FIREFLY_III_ACCESS_TOKEN` option
 
 ### Custom Scripts and Environment Variables
 

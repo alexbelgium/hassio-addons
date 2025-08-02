@@ -54,17 +54,32 @@ You can place the user folder from the theme/skeleton in /share/codex/www/user,
 
 ## Options
 
+| Option | Description | Default | Example |
+|--------|-------------|---------|---------|
+| `PGID` | Group ID for file permissions | `0` | `1000` |
+| `PUID` | User ID for file permissions | `0` | `1000` |
+| `TZ` | Timezone in long format | - | `America/Los_Angeles` |
+| `CODEX_RESET_ADMIN` | Reset admin user and password to defaults | - | `1` |
+| `CODEX_SKIP_INTEGRITY_CHECK` | Skip database integrity repair on startup | - | `1` |
+| `csrf_allowed` | Comma separated list of addresses allowed to access the app | `http://homeassistant.local:8123,https://homeassistant.local:8123` | `http://localhost:8123` |
+| `localdisks` | Hardware name of drives to mount (comma separated) | - | `sda1,sdb1,MYNAS` |
+| `networkdisks` | SMB servers to mount (comma separated) | - | `//SERVER/SHARE` |
+| `cifsusername` | SMB username for all shares | - | `username` |
+| `cifspassword` | SMB password | - | `password` |
+| `cifsdomain` | SMB domain | - | `WORKGROUP` |
+
 ```yaml
-PGID: user
-GPID: user
-TZ : will explicitly the timezone in long format (e.g. "America/Los Angeles"). This is useful inside Docker because codex cannot automatically detect the host machine's timezone
-CODEX_RESET_ADMIN=1 : will reset the admin user and its password to defaults when codex starts.
-CODEX_SKIP_INTEGRITY_CHECK=1 : will skip the database integrity repair that runs when codex starts
-csrf_allowed : comma separated list of addresses allowed to access the app
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
+PGID: 1000
+PUID: 1000
+TZ: "America/Los_Angeles"
+CODEX_RESET_ADMIN: 1
+CODEX_SKIP_INTEGRITY_CHECK: 1
+csrf_allowed: "http://homeassistant.local:8123,https://homeassistant.local:8123"
+localdisks: "sda1,sdb1"
+networkdisks: "//SERVER/SHARE"
+cifsusername: "username"
+cifspassword: "password"
+cifsdomain: "WORKGROUP"
 ```
 
 ### Custom Scripts and Environment Variables

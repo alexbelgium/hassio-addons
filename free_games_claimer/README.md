@@ -35,11 +35,62 @@ This addon is based on the docker image https://github.com/vogler/free-games-cla
 
 ## Configuration
 
-Webui can be found at <http://homeassistant:PORT>.
+Webui can be found at <http://homeassistant:6080> (NoVNC interface - currently has issues on some machines).
 
-There are no addon options. All configuration must be manually added in /config/addons_config/free_games_claimer/config.env according to the documentation here for config files (https://github.com/vogler/free-games-claimer#configuration--options)
+### Options
 
-If this file doesn't exist, it will be created at first boot.
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `CMD_ARGUMENTS` | str | `node epic-games ; node prime-gaming ; node gog` | Commands to run for claiming games |
+| `CONFIG_LOCATION` | str | `/config/config.env` | Location of the configuration file |
+
+### Example Configuration
+
+```yaml
+CMD_ARGUMENTS: "node epic-games ; node prime-gaming ; node gog"
+CONFIG_LOCATION: "/config/config.env"
+```
+
+### Environment Configuration
+
+All main configuration is done via the `config.env` file located at `/config/addons_config/free_games_claimer/config.env`.
+
+If this file doesn't exist, it will be created at first boot with default settings.
+
+### Required Environment Variables
+
+Add these to your `config.env` file:
+
+```env
+# Epic Games Store
+EG_EMAIL=your-email@example.com
+EG_PASSWORD=your-password
+
+# Amazon Prime Gaming
+PG_EMAIL=your-amazon-email@example.com
+PG_PASSWORD=your-amazon-password
+
+# GOG (optional)
+GOG_EMAIL=your-gog-email@example.com
+GOG_PASSWORD=your-gog-password
+
+# Notifications (optional)
+EMAIL_SMTP_HOST=smtp.gmail.com
+EMAIL_SMTP_PORT=587
+EMAIL_USER=notifications@example.com
+EMAIL_PASS=your-app-password
+EMAIL_TO=recipient@example.com
+```
+
+### Additional Options
+
+For complete configuration options and advanced settings, see: https://github.com/vogler/free-games-claimer#configuration--options
+
+### Important Notes
+
+- **VNC Issues**: The NoVNC web interface is currently not working reliably on several machines
+- **Recommended**: Use the `config.env` file for configuration instead of the web interface
+- **Security**: Store credentials securely and consider using app-specific passwords where available
 
 ### Custom Scripts and Environment Variables
 

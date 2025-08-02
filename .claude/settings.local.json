@@ -1,10 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)",
+      "Bash(*)",
       "Bash(cp:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
-  }
+  },
+  "$schema": "https://json.schemastore.org/claude-code-settings.json"
 }

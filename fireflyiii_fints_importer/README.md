@@ -28,13 +28,56 @@ This addon is based on the docker image https://hub.docker.com/r/benkl/firefly-i
 
 ## Configuration
 
-Read official documentation for information how to set : https://github.com/bnw/firefly-iii-fints-importer
+Webui can be found at <http://homeassistant:3476>.
 
-Configurations can be added in the /config/addons_config/fireflyiii_fints_importer/ folder according to : https://github.com/bnw/firefly-iii-fints-importer#storing-configurations
+This tool allows you to import transactions from your FinTS enabled bank (primarily German banks) into Firefly III.
 
-### Cron job
+### Setup Steps
 
-A cron job running all configurations perdiodically can be activated by selecting a period. Please note the periods `daily2`, `daily4`, etc. run at 2am, 4am, etc., so you can select the hour when to update.
+1. Ensure you have a running Firefly III instance
+2. Access the web interface to configure bank connections
+3. Set up import configurations for each bank account
+4. Configure automatic import schedules if desired
+
+For detailed setup documentation, see: https://github.com/bnw/firefly-iii-fints-importer
+
+### Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `Updates` | list | Automatic import schedule (hourly, daily2, daily4, daily6, daily8, daily10, daily12, weekly) |
+| `silent` | bool | Suppress debug messages |
+
+### Example Configuration
+
+```yaml
+Updates: ["daily6"]  # Run daily at 6 AM
+silent: false
+```
+
+### Automatic Import Schedule
+
+The `Updates` option allows you to schedule automatic imports:
+
+- `hourly`: Every hour
+- `daily2`: Daily at 2:00 AM
+- `daily4`: Daily at 4:00 AM
+- `daily6`: Daily at 6:00 AM
+- `daily8`: Daily at 8:00 AM
+- `daily10`: Daily at 10:00 AM
+- `daily12`: Daily at 12:00 PM
+- `weekly`: Weekly (Sunday at 2:00 AM)
+
+### Configuration Storage
+
+Bank configurations and import settings are stored in:
+`/config/addons_config/fireflyiii_fints_importer/`
+
+For configuration file format, see: https://github.com/bnw/firefly-iii-fints-importer#storing-configurations
+
+### FinTS Support
+
+This importer supports German banks that use the FinTS (Financial Transaction Services) protocol. Most major German banks support FinTS for automated transaction retrieval.
 
 ## Installation
 

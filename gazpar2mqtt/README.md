@@ -27,21 +27,62 @@ See its github for all informations : https://github.com/yukulehe/gazpar2mqtt
 
 ## Configuration
 
-Options can be configured through two ways :
+This addon fetches gas consumption data from GRDF (French gas utility) and publishes it to MQTT for Home Assistant integration.
 
-- Addon options
+### Setup Steps
+
+1. Create a GRDF account at https://monespace.grdf.fr/
+2. Configure your GRDF credentials in the config.yaml file
+3. Set up MQTT connection details
+4. Monitor data retrieval in the addon logs
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `CONFIG_LOCATION` | str | `/config/gazpar2mqtt/config.yaml` | Path to configuration file |
+| `TZ` | str | `Europe/Paris` | Timezone (e.g., `Europe/London`) |
+| `mqtt_autodiscover` | bool | `true` | Enable MQTT autodiscovery |
+| `verbose` | bool | `true` | Enable verbose logging |
+
+### Example Configuration
 
 ```yaml
-CONFIG_LOCATION: /config/gazpar2mqtt/config.yaml # Sets the location of the config.yaml (see below)
-mqtt_autodiscover: true # Shows in the log the detail of the mqtt local server (if available). It can then be added to the config.yaml file.
-TZ: Europe/Paris # Sets a specific timezone
+CONFIG_LOCATION: "/config/gazpar2mqtt/config.yaml"
+TZ: "Europe/Paris"
+mqtt_autodiscover: true
+verbose: false
 ```
 
-- Config.yaml
+### Configuration File
 
-Configuration is done by customizing the config.yaml that can be found in /config/gazpar2mqtt/config.yaml
+The main configuration is done via `/config/gazpar2mqtt/config.yaml`. This file contains:
+- GRDF account credentials
+- MQTT broker settings
+- Data retrieval intervals
+- Device configurations
 
-The complete list of options can be seen here : https://github.com/yukulehe/gazpar2mqtt
+### Required Configuration in config.yaml
+
+```yaml
+# GRDF Credentials
+grdf:
+  username: "your-grdf-username"
+  password: "your-grdf-password"
+
+# MQTT Settings
+mqtt:
+  host: "homeassistant.local"
+  port: 1883
+  username: "mqtt-user"
+  password: "mqtt-password"
+  topic_prefix: "gazpar"
+
+# Optional: Update frequency
+update_frequency: 3600  # seconds
+```
+
+For complete configuration options, see: https://github.com/yukulehe/gazpar2mqtt
 
 ## Installation
 

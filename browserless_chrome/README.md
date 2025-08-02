@@ -33,8 +33,12 @@ This addon is based on the docker image https://hub.docker.com/r/browserless/chr
 Webui can be found at <http://homeassistant:PORT>.
 Configurations can be done through the app webUI, except for the following options
 
-```yaml
+| Option | Description | Default |
+|--------|-------------|---------|
+| `TIMEOUT` | Request timeout in milliseconds | `60000` |
 
+```yaml
+TIMEOUT: 60000
 ```
 
 ### Custom Scripts and Environment Variables

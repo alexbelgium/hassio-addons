@@ -28,13 +28,130 @@ This addon is based on the docker image https://hub.docker.com/r/charlocharlie/e
 
 ## Configuration
 
-Webui can be found at <http://homeassistant:PORT>.
+There are no addon options available through the Home Assistant interface. All configuration is done via JSON files.
 
-There are no addon options. All configuration files in json format (config and cookies) must be manually added in /config/addons_config/epicgamesfree/ according to the documentation here for config files (https://github.com/claabs/epicgames-freegames-node#json-configuration) and cookies (https://github.com/claabs/epicgames-freegames-node#cookie-import)
+### Configuration Files
 
-If this file doesn't exist, it will be created at first boot.
+Configuration files are stored in `/config/addons_config/epicgamesfree/`:
 
-The last release changelog mentions that automatic redemption is not possible anymore due to epic improvement on automation detection. A redemption link is sent to your preferred notification method instead of being automated (thanks @Shiroe93)
+- **config.json**: Main configuration file
+- **cookies.json**: Authentication cookies (optional)
+
+If these files don't exist, they will be created at first boot with default settings.
+
+### Basic Configuration
+
+Create `/config/addons_config/epicgamesfree/config.json`:
+
+```json
+{
+  "accounts": [
+    {
+      "email": "your-epic-email@example.com", 
+      "password": "your-password",
+      "totp": "OPTIONAL_2FA_SECRET"
+    }
+  ],
+  "intervalHours": 24,
+  "onlyWeekly": false,
+  "searchStrategy": "purchase",
+  "browserNavigationTimeout": 300000,
+  "notifications": {
+    "email": {
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "emailSenderAddress": "notifications@example.com",
+      "emailSenderName": "Epic Games Free",
+      "emailRecipientAddress": "recipient@example.com",
+      "secure": false,
+      "auth": {
+        "user": "notifications@example.com",
+        "pass": "your-app-password"
+      }
+    }
+  }
+}
+```
+
+### Configuration Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `accounts` | array | List of Epic Games accounts |
+| `intervalHours` | number | Check interval in hours (default: 24) |
+| `onlyWeekly` | boolean | Only claim weekly free games |
+| `searchStrategy` | string | Search strategy: "purchase" or "claim" |
+| `browserNavigationTimeout` | number | Browser timeout in milliseconds |
+| `notifications` | object | Notification settings (email, webhook, etc.) |
+
+### Account Configuration
+
+For each account in the `accounts` array:
+
+```json
+{
+  "email": "account@example.com",
+  "password": "password",
+  "totp": "TOTP_SECRET",
+  "onlyWeekly": true
+}
+```
+
+### Notification Methods
+
+#### Email Notifications
+```json
+"notifications": {
+  "email": {
+    "smtpHost": "smtp.gmail.com",
+    "smtpPort": 587,
+    "emailSenderAddress": "sender@example.com",
+    "emailRecipientAddress": "recipient@example.com",
+    "secure": false,
+    "auth": {
+      "user": "sender@example.com",
+      "pass": "app-password"
+    }
+  }
+}
+```
+
+#### Webhook Notifications
+```json
+"notifications": {
+  "webhook": {
+    "url": "https://your-webhook-url.com",
+    "events": ["purchase-success", "already-owned"]
+  }
+}
+```
+
+### Important Notes
+
+- **Automatic Redemption**: Due to Epic Games' improved automation detection, automatic redemption is no longer possible
+- **Notification System**: The addon now sends redemption links via your preferred notification method instead of automatically claiming games
+- **2FA Support**: TOTP (Time-based One-Time Password) is supported for accounts with two-factor authentication
+- **Multiple Accounts**: You can configure multiple Epic Games accounts
+
+### Cookie Import (Optional)
+
+You can import browser cookies to avoid login issues. Create `/config/addons_config/epicgamesfree/cookies.json`:
+
+For detailed cookie import instructions, see: https://github.com/claabs/epicgames-freegames-node#cookie-import
+
+### Troubleshooting
+
+#### Timeout Errors
+Add the following to your config.json:
+```json
+"browserNavigationTimeout": 300000
+```
+
+#### Login Issues
+1. Check your credentials are correct
+2. Verify 2FA/TOTP configuration if enabled
+3. Consider importing browser cookies
+4. Check the addon logs for specific error messages
 
 ## Installation
 
