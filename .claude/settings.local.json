@@ -17,7 +17,12 @@
       "Bash(echo)",
       "Bash(done)",
       "Bash(do if [ ! -f \"$dir/README.md\" ])",
-      "Bash(then echo \"MISSING README: $dir\")"
+      "Bash(then echo \"MISSING README: $dir\")",
+      "Bash(do if [ -f \"$dir/README.md\" ])",
+      "Bash(then if ! grep -q \"## About\" \"$dir/README.md\")",
+      "Bash(! grep -q \"## Installation\" \"$dir/README.md\")",
+      "Bash(! grep -q \"## Configuration\" \"$dir/README.md\")",
+      "Bash(then echo \"⚠️  MINIMAL STRUCTURE: $dir (missing About, Installation, AND Configuration sections)\")"
     ],
     "deny": []
   }
