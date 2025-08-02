@@ -4,6 +4,8 @@
     "allow": [
       "Bash"
     ],
-    "deny": []
+    "deny": [
+      "Bash(git push -u origin main:*"
+    ]
   }
 }
