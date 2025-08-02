@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Filebrowser] Crashing on new install (opened 2025-08-02)](https://github.com/alexbelgium/hassio-addons/issues/1993) by [@LivArt01](https://github.com/LivArt01)
 # Home assistant add-on: Filebrowser
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
