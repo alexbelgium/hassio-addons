@@ -1,12 +1,24 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
       "Bash(*)",
       "Bash(cp:*)",
       "Bash(find:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(for:*)",
+      "Bash(do echo \"=== Checking $dir ===\")",
+      "Bash(if [ -f \"$dir/README.md\" ])",
+      "Bash(then echo \"README.md exists\")",
+      "Bash(wc:*)",
+      "Bash(head:*)",
+      "Bash(else echo \"README.md MISSING\")",
+      "Bash(fi)",
+      "Bash(echo)",
+      "Bash(done)",
+      "Bash(do if [ ! -f \"$dir/README.md\" ])",
+      "Bash(then echo \"MISSING README: $dir\")"
     ],
     "deny": []
-  },
-  "$schema": "https://json.schemastore.org/claude-code-settings.json"
+  }
 }
