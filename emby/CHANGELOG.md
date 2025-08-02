@@ -1,3 +1,5 @@
+## 4.8.11.0-2 (02-08-2025)
+- Minor bugs fixed
 ## 4.8.11.0 (22-04-2025)
 - WARNING : migration of config to addon_config instead of homeassistant config folder. Allows automatic backups. The location of the database however is not changed.
 
