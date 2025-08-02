@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [[BirdNET-Pi Docker Standalone] Services wont start (opened 2025-06-24)](https://github.com/alexbelgium/hassio-addons/issues/1927) by [@sirtakahe](https://github.com/sirtakahe)
+## &#9888; Open Issue : [🐛 [Birdnet-Pi] Birdnet Docker cannot open web terminal login incorrect (opened 2025-08-02)](https://github.com/alexbelgium/hassio-addons/issues/1991) by [@ignmedia](https://github.com/ignmedia)
 
 # Home assistant add-on: birdnet-pi
 
