@@ -17,6 +17,7 @@ if ! bashio::supervisor.ping 2> /dev/null; then
     # Use environment variables instead of addon options
     echo "... convert scripts to use environment variables instead of addon options"
     while IFS= read -r scripts; do
+        [[ "$scripts" == *"00-banner.sh"* ]] && continue
         sed -i -e 's/bashio::config.has_value[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z "${\1:-}" ]/g' \
             -e 's/bashio::config.true[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"']/[ ! -z "${\1:-}" ] \&\& [ "${\1:-}" = "true" ]/g' \
             -e 's/\$(bashio::config[[:space:]]*["'"'"']\([^"'"'"']*\)["'"'"'])/${\1:-}/g' \
