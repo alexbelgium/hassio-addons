@@ -72,6 +72,10 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
+# Standalone bashio command
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
+RUN chmod 777 /.bashio-standalone.sh
+
 # hadolint ignore=SC2013
 RUN \
     for file in $(grep -Esril "/local/config/addons_config/piwigo" /etc /defaults); do sed -i "s=/local/config/addons_config/piwigo=/local/config=g" "$file"; done
