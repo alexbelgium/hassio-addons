@@ -15,7 +15,7 @@ if bashio::config.has_value "ALSA_CARD"; then
     bashio::log.info "ALSA_CARD option set to $alsa_card"
     bashio::log.info "ALSA_CARD option is set to ${alsa_card}. Please ensure it is the correct card"
     sed -i "s/card:.*/card: ${alsa_card}/g" "$CONFIG_LOCATION"
-    yq -i -y ".audio.card = \"${alsa_card}\"" "${CONFIG_FILE}"
+    yq -i -y ".audio.card = \"${alsa_card}\"" "$CONFIG_LOCATION"
 fi
 
 # Adjust microphone volume if needed
