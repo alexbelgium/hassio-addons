@@ -91,7 +91,7 @@ else
     bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGSOURCE"
 fi
 bashio::log.green "---------------------------------------------------------"
-bashio::log.notice "This script is used to run custom commands at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon"
+bashio::log.notice "This script is used to export custom environment variables at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon"
 echo ""
 
 # Check if config file is there, or create one from template
