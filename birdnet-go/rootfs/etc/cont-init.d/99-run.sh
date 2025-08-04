@@ -27,10 +27,6 @@ if command -v amixer > /dev/null 2> /dev/null; then
     fi || true
 fi
 
-# Give permission to group audio
-bashio::log.info "Adding user to audio group"
-usermod -aG audio "$USER" || true
-
 ########################
 # CONFIGURE birdnet-go #
 ########################
