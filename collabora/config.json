@@ -68,10 +68,11 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
+  "environment": {
+    "PGID": "0",
+    "PUID": "0"
+  },
   "image": "ghcr.io/alexbelgium/collabora-{arch}",
-  "ingress": true,
-  "ingress_port": 9980,
-  "ingress_stream": true,
   "init": false,
   "map": [
     "addon_config:rw"
@@ -80,27 +81,22 @@
   "options": {
     "domain": "",
     "username": "",
-    "password": "",
-    "PGID": 1000,
-    "PUID": 1000
+    "password": ""
   },
-  "panel_admin": false,
-  "panel_icon": "mdi:file-document-edit-outline",
   "ports": {
     "9980/tcp": 9980
   },
   "ports_description": {
-    "9980/tcp": "Web interface (Not required for Ingress)"
+    "9980/tcp": "Web interface"
   },
   "schema": {
     "domain": "str?",
     "username": "str?",
     "password": "password?",
-    "PGID": "int",
-    "PUID": "int",
     "TZ": "str?"
   },
   "slug": "collabora",
   "url": "https://github.com/alexbelgium/hassio-addons",
   "version": "25.04.4.2.2"
 }
+=
