@@ -111,7 +111,7 @@ RUN \
     groupmod -o -g 1000 caddy && usermod -o -u 1000 caddy && \
     \
     # Give access to audio group
-    groupmod -o -g 1000 audio && usermod -o -u 1000 audio && \
+    groupmod -o -g 1000 audio && usermod -aG audio "$USER" && \
     \
     # Ensure always pi is used
     grep -srl "/etc/passwd" "$HOME/BirdNET-Pi/" | while IFS= read -r file; do sed -i "s=/etc/passwd=/etc/passwd | head -1=g" "$file"; done && \
