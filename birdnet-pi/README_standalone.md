@@ -53,12 +53,25 @@ Ensure you have the following installed on your system:
          - MQTT_PASSWORD_manual=  # Optional: Manual MQTT password
          - MQTT_PORT_manual=  # Optional: Manual MQTT port
          - MQTT_USER_manual=  # Optional: Manual MQTT user
+         - PULSE_SERVER=unix:/tmp/pulseaudio.socket 
+         - PULSE_COOKIE=/tmp/pulseaudio.cookie 
+
        volumes:
          - ./config:/config  # All your configuration files - and location of the default Birdsongs folder
          - ./ssl:/ssl  # SSL certificates
          - /dev/shm:/dev/shm  # Shared memory
+         - /tmp/pulseaudio.socket:/tmp/pulseaudio.socket
+         - /tmp/pulseaudio.client.conf:/etc/pulse/client.conf
+
+       devices:
+         - /dev/snd:/dev/snd
+      
+       group_add:
+         - audio
+
        tmpfs:
          - /tmp # Optional
+
    ```
 
 3. **Start the Container**
