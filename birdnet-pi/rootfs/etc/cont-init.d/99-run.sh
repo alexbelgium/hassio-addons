@@ -64,10 +64,6 @@ if [ -n "${ALSA_CARD:-}" ]; then
     done
 fi
 
-# Give permission to group audio
-bashio::log.info "Adding user to audio group"
-usermod -aG audio pi || true
-
 # Fix timezone as per installer
 CURRENT_TIMEZONE="$(timedatectl show --value --property=Timezone)"
 [ -f /etc/timezone ] && echo "$CURRENT_TIMEZONE" | sudo tee /etc/timezone > /dev/null
