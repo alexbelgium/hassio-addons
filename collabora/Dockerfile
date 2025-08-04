@@ -32,6 +32,8 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ARG CONFIGLOCATION="/data"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
+USER root
+
 ##################
 # 3 Install apps #
 ##################
