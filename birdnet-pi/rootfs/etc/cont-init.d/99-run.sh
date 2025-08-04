@@ -18,10 +18,6 @@ fi
 # SET SYSTEM #
 ##############
 
-#####################
-# ADD USER TO AUDIO #
-#####################
-
 # Set password
 bashio::log.info "Setting password for the user pi"
 if bashio::config.has_value "pi_password"; then
@@ -70,7 +66,7 @@ fi
 
 # Give permission to group audio
 bashio::log.info "Adding user to audio group"
-sudo usermod -aG audio pi || true
+usermod -aG audio pi || true
 
 # Fix timezone as per installer
 CURRENT_TIMEZONE="$(timedatectl show --value --property=Timezone)"
