@@ -1,3 +1,5 @@
+- Fix pulseaudio standalone @ignmedia
+
 ## 2025.07.06 (03-08-2025)
 - Use wikipedia for images
 
