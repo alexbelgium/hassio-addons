@@ -84,7 +84,7 @@ fi
 
 # Allow pulseaudio system
 echo "... allow pulseaudio as root as backup"
-sed -i 's#pulseaudio --start#pulseaudio --start 2>/dev/null && pulseaudio --check || pulseaudio --system#g' "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
+sed -i 's#pulseaudio --start#su - pi -c "pulseaudio --start"#g' "$HOME"/BirdNET-Pi/scripts/birdnet_recording.sh
 
 # Send services log to container logs
 echo "... redirecting services logs to container logs"
