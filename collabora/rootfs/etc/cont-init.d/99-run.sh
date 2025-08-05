@@ -18,4 +18,4 @@ if bashio::config.has_value 'password'; then
 fi
 
 bashio::log.info "Starting Collabora Online..."
-/start-collabora-online.sh
+su -s /bin/bash -c "/start-collabora-online.sh" "$(getent passwd 1001 | cut -d: -f1)"
