@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [PLEX] mounting error (opened 2025-08-05)](https://github.com/alexbelgium/hassio-addons/issues/2006) by [@jgunther-provenir](https://github.com/jgunther-provenir)
 
 
 # Home assistant add-on: plex
