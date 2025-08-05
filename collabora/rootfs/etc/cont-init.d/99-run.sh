@@ -18,4 +18,4 @@ if bashio::config.has_value 'password'; then
 fi
 
 bashio::log.info "Starting Collabora Online..."
-exec su - cool -c "/usr/bin/entrypoint.sh coolwsd"
+/start-collabora-online.sh
