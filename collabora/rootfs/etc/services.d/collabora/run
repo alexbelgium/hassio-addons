@@ -1,0 +1,36 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+if bashio::config.has_value 'domain'; then
+    domain="$(bashio::config 'domain')"
+    export domain
+fi
+
+if bashio::config.has_value 'username'; then
+    username="$(bashio::config 'username')"
+    export username
+fi
+
+if bashio::config.has_value 'password'; then
+    password="$(bashio::config 'password')"
+    export password
+fi
+
+bashio::log.info "Starting Collabora Online..."
+if getent passwd cool | grep -Eq '(nologin|false)$'; then
+    if command -v usermod >/dev/null 2>&1; then
+        usermod -s /bin/bash cool
+    else
+        bashio::log.warning "usermod not found; proceeding with current shell"
+    fi
+fi
+
+if command -v runuser >/dev/null 2>&1; then
+    exec runuser -u cool -- /usr/bin/entrypoint.sh coolwsd
+elif command -v su >/dev/null 2>&1; then
+    exec su -s /bin/bash cool -c "/usr/bin/entrypoint.sh coolwsd"
+else
+    bashio::log.error "No su-compatible command found; cannot drop privileges"
+    exit 1
+fi
