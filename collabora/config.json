@@ -18,7 +18,10 @@
   "options": {
     "domain": "",
     "username": "",
-    "password": ""
+    "password": "",
+    "aliasgroup1": "",
+    "dictionaries": "",
+    "extra_params": ""
   },
   "ports": {
     "9980/tcp": 9980
@@ -30,9 +33,12 @@
     "domain": "str?",
     "username": "str?",
     "password": "password?",
+    "aliasgroup1": "str?",
+    "dictionaries": "str?",
+    "extra_params": "str?",
     "TZ": "str?"
   },
   "slug": "collabora",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "25.04.4.2.2-4"
+  "version": "25.04.4.2.2-5"
 }

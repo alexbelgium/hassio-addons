@@ -30,6 +30,9 @@ Configure the add-on to allow access from your Nextcloud instance:
 
 - `domain`: Regex matching the Nextcloud host (for example `cloud\\.example\\.com`).
 - `username` and `password`: Optional credentials for the Collabora admin console.
+- `aliasgroup1`: Additional allowed hostnames for WOPI connections.
+- `dictionaries`: Space separated list of dictionary languages to install.
+- `extra_params`: Extra parameters passed to the Collabora start script.
 
 ### Custom Scripts and Environment Variables
 

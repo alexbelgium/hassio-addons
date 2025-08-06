@@ -1,3 +1,6 @@
+## 25.04.4.2.2-5 (05-08-2025)
+- Expose additional Collabora environment options
+- Persist coolwsd.xml in /config and symlink original path
 ## 25.04.4.2.2-4 (05-08-2025)
 - Minor bugs fixed
 ## 25.04.4.2.2-3 (05-08-2025)
