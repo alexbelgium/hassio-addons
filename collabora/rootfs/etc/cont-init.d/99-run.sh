@@ -51,6 +51,8 @@ if [ -d "${SYSTEMPLATE_DIR}" ]; then
     cp /etc/hostname "${SYSTEMPLATE_DIR}/hostname" 2>/dev/null || true
     cp /etc/resolv.conf "${SYSTEMPLATE_DIR}/resolv.conf"
 fi
+chown 1001 /opt/cool/systemplate
+chmod -R 755 /opt/cool/systemplate
 
 bashio::log.info "Starting Collabora Online..."
 su -s /bin/bash -c "/start-collabora-online.sh" "$(getent passwd 1001 | cut -d: -f1)"
