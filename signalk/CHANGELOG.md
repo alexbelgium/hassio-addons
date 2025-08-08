@@ -1,3 +1,6 @@
+
+## 2.15.0 (09-08-2025)
+- Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
 ## 2.14.4-2 (28-06-2025)
 - Minor bugs fixed
 ## 2.14.4 (28-06-2025)

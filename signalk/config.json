@@ -54,6 +54,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
   "usb": true,
-  "version": "2.14.4-2",
+  "version": "2.15.0",
   "webui": "http://[HOST]:[PORT:3000]"
 }
