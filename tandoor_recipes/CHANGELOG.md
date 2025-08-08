@@ -1,3 +1,5 @@
+## 2.0.1-2 (08-08-2025)
+- Minor bugs fixed
 ## 2.0.1 (02-08-2025)
 
 - WARNING : major update, prepare your backup
