@@ -14,6 +14,9 @@ Optional :
     "POSTGRES_USER": "str?", # Needed for postgresql_external
     "POSTGRES_PASSWORD": "str?", # Needed for postgresql_external
     "POSTGRES_DB": "str?" # Needed for postgresql_external
+    "AI_MODEL_NAME": "str?", # Used when configuring llm integration
+    "AI_API_KEY": "str?", # Used when configuring llm integration
+    "AI_RATELIMIT": "int?", # Used when configuring llm integration
     "externalfiles_folder": "str?" # a folder that you want to map in to tandoor. Not needed as /share/ and /media/ are mapped. This folder will be created if it doesn't already exist.
 ```
 This add-on now uses Tandoor's integrated Nginx server and exposes port 80 (mapped to 9928 by default).
@@ -23,7 +26,7 @@ Mariadb is a popular addon in the home assistant community, however it is not su
 
 ### Debug mode
 This is the "Environment" setting.
-0 is normal mode  
+0 is normal mode
 1 is debug mode.
 
 ### Authentication
