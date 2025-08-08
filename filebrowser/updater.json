@@ -1,10 +1,10 @@
 {
   "github_beta": "true",
-  "last_update": "01-08-2025",
+  "last_update": "09-08-2025",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "filebrowser",
   "source": "github",
   "upstream_repo": "filebrowser/filebrowser",
-  "upstream_version": "2.42.1"
+  "upstream_version": "2.42.2"
 }
