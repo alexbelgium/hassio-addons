@@ -179,7 +179,7 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/plex",
   "usb": true,
-  "version": "1.41.9.9961-46083195d-ls275",
+  "version": "1.42.1.10054-f333bdaa8-ls277",
   "video": true,
   "webui": "[PROTO:ssl]://[HOST]:[PORT:32400]/web"
 }
