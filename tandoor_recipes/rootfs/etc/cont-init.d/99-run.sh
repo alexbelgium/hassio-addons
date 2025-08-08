@@ -10,6 +10,9 @@ set -e
 export ALLOWED_HOSTS=$(bashio::config 'ALLOWED_HOSTS') && bashio::log.blue "ALLOWED_HOSTS=$ALLOWED_HOSTS"
 export SECRET_KEY=$(bashio::config 'SECRET_KEY') && bashio::log.blue "SECRET_KEY=$SECRET_KEY"
 export DEBUG=$(bashio::config 'DEBUG') && bashio::log.blue "DEBUG=$DEBUG"
+export AI_MODEL_NAME=$(bashio::config 'AI_MODEL_NAME') && bashio::log.blue "AI_MODEL_NAME=$AI_MODEL_NAME"
+export AI_API_KEY=$(bashio::config 'AI_API_KEY') && bashio::log.blue "AI_API_KEY=$AI_API_KEY"
+export AI_RATELIMIT=$(bashio::config 'AI_RATELIMIT') && bashio::log.blue "AI_RATELIMIT=$AI_RATELIMIT"
 
 CSRF_TRUSTED_ORIGINS="http://localhost"
 for element in ${ALLOWED_HOSTS//,/ }; do # Separate comma separated values

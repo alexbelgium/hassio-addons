@@ -46,6 +46,9 @@ Complete documentation: https://docs.tandoor.dev/install/docker/
 | `POSTGRES_USER` | str | | PostgreSQL username (required for postgresql_external) |
 | `POSTGRES_PASSWORD` | str | | PostgreSQL password (required for postgresql_external) |
 | `POSTGRES_DB` | str | | PostgreSQL database name (required for postgresql_external) |
+| `AI_MODEL_NAME` | str | | Used for configuring LLMs, supported providers can be found [here](https://docs.litellm.ai/docs/providers/) |
+| `AI_API_KEY` | str | | API key for accessing LLMs |
+| `AI_RATELIMIT` | int | | Ratelimit for LLM access |
 
 ### Example Configuration
 
@@ -61,6 +64,8 @@ externalfiles_folder: "/config/addons_config/tandoor_recipes/externalfiles"
 # POSTGRES_USER: "tandoor"
 # POSTGRES_PASSWORD: "secure_password"
 # POSTGRES_DB: "tandoor_recipes"
+# AI_MODEL_NAME: "anthropic/claude-4"
+# AI_API_KEY: "SECRET KEY"
 ```
 
 ## Installation
