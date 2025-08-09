@@ -1,3 +1,5 @@
+## 2.42.2-2 (09-08-2025)
+- Minor bugs fixed
 
 ## 2.42.2 (09-08-2025)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
