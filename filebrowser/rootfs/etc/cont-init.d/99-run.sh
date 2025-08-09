@@ -69,7 +69,7 @@ NOAUTH=""
 # Prevent conflicts
 for folders in /etc/services.d /etc/s6-overlay; do
     [[ -d "$folders" ]] && rm -r "$folders"
-fi
+done
 
 # Disable authentification
 if bashio::config.true 'NoAuth'; then
