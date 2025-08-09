@@ -64,7 +64,7 @@ chmod -R 755 "/config"
 
 # Remove /data/data
 if [[ -d "$DATA_LOCATION"/data ]] && [[ "$(ls -A "$DATA_LOCATION"/data/*)" ]]; then
-    mv "$DATA_LOCATION"/data/* "$DATA_LOCATION"/
+    cp -rf "$DATA_LOCATION"/data/* "$DATA_LOCATION"/
     rm -r "$DATA_LOCATION"/data
 fi
 
