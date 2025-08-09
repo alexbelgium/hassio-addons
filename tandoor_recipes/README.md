@@ -48,7 +48,7 @@ Complete documentation: https://docs.tandoor.dev/install/docker/
 | `POSTGRES_DB` | str | | PostgreSQL database name (required for postgresql_external) |
 | `AI_MODEL_NAME` | str | | Used for configuring LLMs, supported providers can be found [here](https://docs.litellm.ai/docs/providers/) |
 | `AI_API_KEY` | str | | API key for accessing LLMs |
-| `AI_RATELIMIT` | int | | Ratelimit for LLM access |
+| `AI_RATELIMIT` | str | | Ratelimit for LLM access, specified with [DRF syntax](https://www.django-rest-framework.org/api-guide/throttling/) |
 
 ### Example Configuration
 
