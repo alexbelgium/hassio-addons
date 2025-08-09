@@ -1,5 +1,4 @@
 ## &#9888; Open Issue : [🐛 [PLEX] mounting error (opened 2025-08-05)](https://github.com/alexbelgium/hassio-addons/issues/2006) by [@jgunther-provenir](https://github.com/jgunther-provenir)
-## &#9888; Open Request : [✨ [REQUEST] Plex (opened 2025-08-09)](https://github.com/alexbelgium/hassio-addons/issues/2018) by [@dm82m](https://github.com/dm82m)
 
 
 # Home assistant add-on: plex
