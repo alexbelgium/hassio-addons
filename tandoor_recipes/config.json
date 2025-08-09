@@ -109,7 +109,7 @@
     "SECRET_KEY": "str",
     "AI_MODEL_NAME": "str?",
     "AI_API_KEY": "str?",
-    "AI_RATELIMIT": "int?",
+    "AI_RATELIMIT": "str?",
     "externalfiles_folder": "str?"
   },
   "services": [
@@ -118,6 +118,6 @@
   "slug": "tandoor_recipes",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.0.1-2",
+  "version": "2.0.1-3",
   "webui": "http://[HOST]:[PORT:80]"
 }
