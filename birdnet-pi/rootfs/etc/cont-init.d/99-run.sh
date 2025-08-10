@@ -21,9 +21,17 @@ fi
 # Set password
 bashio::log.info "Setting password for the user pi"
 if bashio::config.has_value "pi_password"; then
-    echo "pi:$(bashio::config "pi_password")" | chpasswd
+    PI_PASSWORD="$(bashio::config "pi_password")"
+elif [[ -n "${pi_password:-}" ]]; then
+    PI_PASSWORD="${pi_password}"
 fi
-bashio::log.info "Password set successfully for user pi."
+
+if [[ -n "${PI_PASSWORD:-}" ]]; then
+    echo "pi:${PI_PASSWORD}" | chpasswd
+    bashio::log.info "Password set successfully for user pi."
+else
+    bashio::log.info "No password specified for user pi. Keeping existing password."
+fi
 
 # Use timezone defined in add-on options if available
 bashio::log.info "Setting timezone :"
