@@ -77,7 +77,7 @@ cifsdomain: "workgroup"
 
 ### Setting up Distributed Transcoding
 
-1. **Configure the Server**: 
+1. **Configure the Server**:
    - Access the Web UI at `<your-ip>:8265`
    - Set up your media libraries and transcoding settings
    - Configure plugins and workflows as needed

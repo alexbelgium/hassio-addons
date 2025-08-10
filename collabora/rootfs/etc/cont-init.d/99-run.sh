@@ -48,7 +48,7 @@ ln -sf "${CONFIG_DEST}" "${COOL_CONFIG}"
 SYSTEMPLATE_DIR="/opt/cool/systemplate/etc"
 if [ -d "${SYSTEMPLATE_DIR}" ]; then
     cp /etc/hosts "${SYSTEMPLATE_DIR}/hosts"
-    cp /etc/hostname "${SYSTEMPLATE_DIR}/hostname" 2>/dev/null || true
+    cp /etc/hostname "${SYSTEMPLATE_DIR}/hostname" 2> /dev/null || true
     cp /etc/resolv.conf "${SYSTEMPLATE_DIR}/resolv.conf"
 fi
 chown 1001 /opt/cool/systemplate

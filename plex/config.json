@@ -170,10 +170,10 @@
     "cifspassword": "str?",
     "cifsusername": "str?",
     "claim": "str",
+    "clear_codecs_folder": "bool?",
     "localdisks": "str?",
     "networkdisks": "str?",
     "skip_permissions_check": "bool?",
-    "clear_codecs_folder": "bool?",
     "smbv1": "bool?"
   },
   "slug": "plex_nas",

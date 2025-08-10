@@ -1,4 +1,4 @@
-## &#9888; Open Issue : [🐛 [qBitTorrent] Reports both public and VPN IP ! (opened 2025-08-02)](https://github.com/alexbelgium/hassio-addons/issues/1992) by [@vincegre](https://github.com/vincegre)
+## &#9888; Open Issue : [🐛 [qBitTorrent] Reports both public and VPN IP ! (opened 2025-08-02)](https://github.com/alexbelgium/hassio-addons/issues/1992) by [@vincegre](https://github.com/vincegre)
 # Home assistant add-on: qbittorrent
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

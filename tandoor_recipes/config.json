@@ -98,6 +98,9 @@
     "80/tcp": "Web interface"
   },
   "schema": {
+    "AI_API_KEY": "str?",
+    "AI_MODEL_NAME": "str?",
+    "AI_RATELIMIT": "str?",
     "ALLOWED_HOSTS": "str?",
     "DB_TYPE": "list(sqlite|postgresql_external)",
     "DEBUG": "list(1|0)",
@@ -107,9 +110,6 @@
     "POSTGRES_PORT": "str?",
     "POSTGRES_USER": "str?",
     "SECRET_KEY": "str",
-    "AI_MODEL_NAME": "str?",
-    "AI_API_KEY": "str?",
-    "AI_RATELIMIT": "str?",
     "externalfiles_folder": "str?"
   },
   "services": [

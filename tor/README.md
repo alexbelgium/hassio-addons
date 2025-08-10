@@ -1,5 +1,5 @@
 ## &#9888; Open Issue : [🐛 [postgres 17] vector and chord library not loaded? (opened 2025-07-17)](https://github.com/alexbelgium/hassio-addons/issues/1967) by [@dothebart](https://github.com/dothebart)
-## &#9888; Open Issue : [🐛 [qBitTorrent] Reports both public and VPN IP ! (opened 2025-08-02)](https://github.com/alexbelgium/hassio-addons/issues/1992) by [@vincegre](https://github.com/vincegre)
+## &#9888; Open Issue : [🐛 [qBitTorrent] Reports both public and VPN IP ! (opened 2025-08-02)](https://github.com/alexbelgium/hassio-addons/issues/1992) by [@vincegre](https://github.com/vincegre)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

@@ -16,12 +16,12 @@
   ],
   "name": "Collabora",
   "options": {
-    "domain": "",
-    "username": "",
-    "password": "",
     "aliasgroup1": "",
     "dictionaries": "",
-    "extra_params": ""
+    "domain": "",
+    "extra_params": "",
+    "password": "",
+    "username": ""
   },
   "ports": {
     "9980/tcp": 9980
@@ -30,13 +30,13 @@
     "9980/tcp": "Web interface"
   },
   "schema": {
-    "domain": "str?",
-    "username": "str?",
-    "password": "password?",
+    "TZ": "str?",
     "aliasgroup1": "str?",
     "dictionaries": "str?",
+    "domain": "str?",
     "extra_params": "str?",
-    "TZ": "str?"
+    "password": "password?",
+    "username": "str?"
   },
   "slug": "collabora",
   "url": "https://github.com/alexbelgium/hassio-addons",
