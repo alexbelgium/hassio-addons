@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [webtrees] Upgrade failed (2.2.1-4 - 2.2.3 - 2.2.4) (opened 2025-08-09)](https://github.com/alexbelgium/hassio-addons/issues/2014) by [@arsenyspb](https://github.com/arsenyspb)
 # Home assistant add-on: Webtrees
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
