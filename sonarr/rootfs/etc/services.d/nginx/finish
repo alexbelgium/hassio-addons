@@ -2,7 +2,7 @@
 # ==============================================================================
 # Take down the S6 supervision tree when Nginx fails
 # ==============================================================================
-if { s6-test ${1} -ne 0 }
-if { s6-test ${1} -ne 256 }
+if { test ${1} -ne 0 }
+if { test ${1} -ne 256 }
 
 s6-svscanctl -t /var/run/s6/services
