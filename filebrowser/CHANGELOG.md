@@ -1,3 +1,5 @@
+## 2.42.2-4 (11-08-2025)
+- Minor bugs fixed
 ## 2.42.2-3 (10-08-2025)
 - Fix: disable PCRE JIT in Nginx to prevent crashes on some x86 systems
 
