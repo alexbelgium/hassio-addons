@@ -1,3 +1,6 @@
+## 2025.08.11 (11-08-2025)
+- Fix audio group to detect USB sound cards
+
 ## 2025.08.10 (10-08-2025)
 - Fix web terminal password when running container standalone
 
