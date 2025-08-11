@@ -179,8 +179,8 @@ jobs:
 
           echo "Writing patch..."
           cat > ai.patch <<'PATCH'
-${{ steps.genpatch.outputs.result }}
-PATCH
+          ${{ steps.genpatch.outputs.result }}
+          PATCH
 
           echo "Applying patch..."
           git config user.name "ai-triage-bot"
