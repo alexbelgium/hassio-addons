@@ -5,12 +5,11 @@ on:
     types: [opened]
 
 permissions:
-  contents: write          # needed if the PR job runs
+  contents: write
   pull-requests: write
   issues: write
 
 jobs:
-  # 1) Always: post a first AI reply to new issues
   ai_first_reply:
     runs-on: ubuntu-latest
     steps:
@@ -23,24 +22,19 @@ jobs:
             const issue = context.payload.issue;
             const { owner, repo } = context.repo;
 
-            // Pull a bit of repo context (README) to help the model
+            // Optionally pull README for a bit of repo context
             let readmeText = '';
             try {
               const readme = await github.rest.repos.getReadme({ owner, repo });
               readmeText = Buffer.from(readme.data.content, 'base64').toString('utf8');
-              // Keep the prompt lean
               if (readmeText.length > 18000) readmeText = readmeText.slice(0, 18000) + "\n...[truncated]...";
-            } catch (e) {
-              // repo may not have a README; ignore
-            }
+            } catch {}
 
-            // Craft prompt for the OpenAI Responses API
             const system = `
               You are an open-source triage assistant.
-              Goal: write a concise, actionable first reply for a new GitHub issue.
-              Style: factual, polite, link to existing docs or code where relevant in this repo, propose next steps.
-              If the issue lacks details, ask for the minimum set of specifics (versions, logs, repro steps).
-              Avoid making up repo facts; only use what’s in the issue and README excerpt.
+              Write a concise, actionable first reply for a new GitHub issue.
+              Ask for missing repro details; avoid inventing repo facts.
+              Propose next steps and link to repo files only when certain.
             `.trim();
 
             const user = `
@@ -50,12 +44,10 @@ jobs:
               Issue body:
               ${issue.body || '(no body provided)'}
 
-              README excerpt (context):
+              README excerpt:
               ${readmeText || '(none)'}
             `.trim();
 
-            // Call OpenAI Responses API (recommended by OpenAI docs)
-            // https://platform.openai.com/docs/api-reference
             const res = await fetch('https://api.openai.com/v1/responses', {
               method: 'POST',
               headers: {
@@ -73,14 +65,14 @@ jobs:
 
             if (!res.ok) {
               const txt = await res.text();
-              const fallback = `⚠️ AI reply failed (${res.status}). Raw error:\n\n${'```'}\n${txt}\n${'```'}`;
-              await github.rest.issues.createComment({ owner, repo, issue_number: issue.number, body: fallback });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: issue.number,
+                body: `⚠️ AI reply failed (${res.status}).\n\n\`\`\`\n${txt}\n\`\`\``
+              });
               return;
             }
 
             const data = await res.json();
-            // Official SDKs expose "output_text"; on raw HTTP it may be present too per docs.
-            // Fallback to common shapes if needed.
             const text = data.output_text
               || data?.choices?.[0]?.message?.content
               || 'Thanks for opening this issue — we will take a look!';
@@ -89,15 +81,15 @@ jobs:
               owner, repo, issue_number: issue.number, body: text
             });
 
-  # 2) Optional: create a PR when the issue is labeled auto-pr
   ai_autofix_pr:
     runs-on: ubuntu-latest
     needs: ai_first_reply
-    if: contains(join(github.event.issue.labels.*.name, ','), 'auto-pr')
+    if: ${{ contains(github.event.issue.labels.*.name, 'auto-pr') }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Generate patch with OpenAI (unified diff)
         id: genpatch
         uses: actions/github-script@v7
@@ -109,7 +101,6 @@ jobs:
             const { owner, repo } = context.repo;
             const issue = context.payload.issue;
 
-            // Grab README to guide proposed changes a bit
             let readmeText = '';
             try {
               const readme = await github.rest.repos.getReadme({ owner, repo });
@@ -117,15 +108,14 @@ jobs:
               if (readmeText.length > 12000) readmeText = readmeText.slice(0, 12000) + "\n...[truncated]...";
             } catch {}
 
-            // Ask for a STRICT unified diff with no code fences.
             const system = `
-              You are a code-change generator for Git patches.
-              Output ONLY a unified diff (git apply compatible), no backticks, no prose.
-              Keep changes minimal and safe. If unsure, return an empty diff.
+              You are a code-change generator.
+              Output ONLY a git unified diff (git apply compatible). No prose, no backticks.
+              Keep changes minimal and safe; if unsure, output an empty diff.
             `.trim();
 
             const user = `
-              Repository: ${owner}/${repo}
+              Repo: ${owner}/${repo}
               Issue #${issue.number}: ${issue.title}
 
               Issue body:
@@ -133,12 +123,6 @@ jobs:
 
               README excerpt:
               ${readmeText || '(none)'}
-
-              Task:
-              - Propose the smallest viable fix or improvement addressing the issue.
-              - Only modify files that almost certainly exist.
-              - If the request is a question, create either a docs tweak (README/CONTRIBUTING) or add comments.
-              - Output only a valid unified diff starting with "diff --git".
             `.trim();
 
             const res = await fetch('https://api.openai.com/v1/responses', {
@@ -164,6 +148,7 @@ jobs:
               const patch = (data.output_text || data?.choices?.[0]?.message?.content || '').trim();
               return patch;
             }
+
       - name: Apply patch (if any)
         id: apply
         shell: bash
@@ -171,18 +156,15 @@ jobs:
           set -euo pipefail
           branch="ai/autofix-${{ github.event.issue.number }}"
           patch="${{ steps.genpatch.outputs.result }}"
+
           if [ -z "$patch" ]; then
             echo "No patch produced; skipping PR."
-            echo "skip_pr=true" >> $GITHUB_OUTPUT
+            echo "skip_pr=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          echo "Writing patch..."
-          cat > ai.patch <<'PATCH'
-          ${{ steps.genpatch.outputs.result }}
-          PATCH
+          echo "$patch" > ai.patch
 
-          echo "Applying patch..."
           git config user.name "ai-triage-bot"
           git config user.email "ai-triage-bot@users.noreply.github.com"
           git checkout -b "$branch"
@@ -190,7 +172,8 @@ jobs:
           git add -A
           git commit -m "AI autofix for #${{ github.event.issue.number }}"
           git push -u origin "$branch"
-          echo "skip_pr=false" >> $GITHUB_OUTPUT
+          echo "skip_pr=false" >> "$GITHUB_OUTPUT"
+
       - name: Open PR
         if: steps.apply.outputs.skip_pr == 'false'
         uses: actions/github-script@v7
@@ -203,6 +186,7 @@ jobs:
               head,
               base: 'main',
               title: `AI autofix for #${{ github.event.issue.number }}`,
-              body: `This PR was generated automatically from issue #${{ github.event.issue.number }}.\n\n> Label \`auto-pr\` triggered patch creation. Please review carefully.`,
+              body: `This PR was generated automatically from issue #${{ github.event.issue.number }}.
+              > Label \`auto-pr\` triggered patch creation. Please review carefully.`,
               maintainer_can_modify: true
             });
