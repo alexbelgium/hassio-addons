@@ -96,11 +96,13 @@
   "ports": {
     "8080/tcp": 8080,
     "8081/tcp": 8081,
+    "8181/tcp": null,
     "9090/tcp": 9090
   },
   "ports_description": {
     "8080/tcp": "Calibre desktop gui",
     "8081/tcp": "Calibre webserver gui, to be enabled within the desktop gui",
+    "8181/tcp": "Calibre https webserver gui, to be enabled within the desktop gui",
     "9090/tcp": "Calibre wireless connection, to be enabled within the desktop gui"
   },
   "privileged": [
@@ -123,6 +125,6 @@
   "slug": "calibre",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/calibre",
-  "version": "8.8.0",
+  "version": "8.8.0-2",
   "video": true
 }
