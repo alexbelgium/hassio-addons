@@ -23,7 +23,7 @@ jobs:
       changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Find changed addon directories
         id: find_addons
         run: |
@@ -44,7 +44,7 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       # ────────────────────────────────────────────────────────────────
       # 1. Replace non-printable Unicode spaces  ␣  and
       #    convert Windows line endings (CRLF) → Unix (LF)
@@ -103,7 +103,7 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Run Home Assistant Add-on Lint
         uses: frenck/action-addon-linter@v2
         with:
@@ -121,7 +121,7 @@ jobs:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
         arch: ["aarch64", "amd64", "armv7"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Resolve Symlinks (in repo)
         run: |
           find . -type l | while read -r link; do
@@ -198,7 +198,7 @@ jobs:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 1
       - name: Update changelog for minor versions
@@ -240,7 +240,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
   
