@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Sonarr] Error started yesterday: if: fatal: unable to spawn s6-test: No such file or directory (opened 2025-08-09)](https://github.com/alexbelgium/hassio-addons/issues/2020) by [@georgeduckett](https://github.com/georgeduckett)
 
 # Home assistant add-on: Sonarr
 
