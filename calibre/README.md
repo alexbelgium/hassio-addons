@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Calibre] Last version of linuxserver/docker-calibre needs to open the port 8181 to access the main desktop GUI through https (opened 2025-08-11)](https://github.com/alexbelgium/hassio-addons/issues/2027) by [@matthieudevipa](https://github.com/matthieudevipa)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
