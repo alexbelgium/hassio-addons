@@ -96,12 +96,15 @@ The installation of this add-on is pretty straightforward and not different in c
 
 Integration with HA can be done with the [rest platform](https://www.home-assistant.io/integrations/rest) in configuration.yaml.
 
-Two types of api endpoints are available:
+The API is available on Home Assistant's internal network even when the port is not exposed. Use the add-on's internal
+domain name (`http://db21ed7f-scrutiny:8080`) to query it from Home Assistant or other add-ons. If you need to reach the API from your local network, expose the port in the add-on options and replace the domain with your Home Assistant IP address.
 
-- Summary data : http://YOURIP:ADDONPORT/api/summary
-- Detailed data : http://YOURIP:ADDONPORT/api/device/WWN/details
+Two types of API endpoints are available:
 
-For the detailed data, wmn can be found for each hdd within the scrutiny app. For example: http://192.168.178.23:8086/api/device/0x50014ee606c14537/details
+- Summary data: <http://db21ed7f-scrutiny:8080/api/summary>
+- Detailed data: <http://db21ed7f-scrutiny:8080/api/device/WWN/details>
+
+For the detailed data, wwn can be found for each HDD within the Scrutiny app. For example: <http://db21ed7f-scrutiny:8080/api/device/0x50014ee606c14537/details>
 
 Example to get data from the first hdd.
 
@@ -109,7 +112,7 @@ Example to get data from the first hdd.
 rest:
   - verify_ssl: false
     scan_interval: 60
-    resource: http://192.168.178.4:8086/api/device/0x57c35481f82a7a9c/details
+    resource: http://db21ed7f-scrutiny:8080/api/device/0x57c35481f82a7a9c/details
     sensor:
       - name: "HDD - WWN"
         value_template: "{{ value_json.data.smart_results[0].device_wwn }}"
@@ -151,6 +154,6 @@ rest:
 
 Create an issue on github, or ask on the [home assistant thread](https://community.home-assistant.io/t/home-assistant-addon-scrutiny-smart-dashboard/295747)
 
-https://github.com/alexbelgium/hassio-addons
+<https://github.com/alexbelgium/hassio-addons>
 
 [repository]: https://github.com/alexbelgium/hassio-addons
