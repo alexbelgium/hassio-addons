@@ -24,26 +24,13 @@ else
 fi
 
 # Export keys as env variables
-# echo "All addon options were exported as variables"
 mapfile -t arr < <(jq -r 'keys[]' "${JSONSOURCE}")
 
-# Escape special characters using printf and enclose in double quotes
+# Escape special characters using printf
 sanitize_variable() {
     local raw="$1" # original value
-    local escaped  # value after printf %q
-    # Check if the value is an array
-    if [[ "$raw" == \[* ]]; then
-        echo "One of your options is an array, skipping"
-        return
-    fi
-    printf -v escaped '%q' "$raw"
-    # If nothing changed, return the original.
-    if [[ "$raw" == "$escaped" ]]; then
-        printf '%s' "$raw"
-        return
-    fi
-    # Otherwise protect the escaped string with double quotes.
-    printf '"%s"' "$escaped"
+    # printf %q escapes characters for safe shell usage
+    printf '%q' "$raw"
 }
 
 for KEYS in "${arr[@]}"; do
@@ -53,15 +40,16 @@ for KEYS in "${arr[@]}"; do
     if [[ "$VALUE" == \[* ]]; then
         bashio::log.warning "One of your option is an array, skipping"
     else
-        # Sanitize variable
-        VALUE=$(sanitize_variable "$VALUE")
-        # Continue for single values
-        line="${KEYS}=${VALUE}"
+        # Store raw and escaped variants
+        VALUE_ESCAPED=$(sanitize_variable "$VALUE")
+        line_raw="${KEYS}=${VALUE}"
+        line_escaped="${KEYS}=${VALUE_ESCAPED}"
+
         # Check if secret
-        if [[ "${line}" == *"!secret "* ]]; then
+        if [[ "${line_raw}" == *"!secret "* ]]; then
             echo "secret detected"
             # Get argument
-            secret=${line#*secret }
+            secret=${line_raw#*secret }
             # Remove trailing ' or "
             secret="${secret%[\"\']}"
             # Stop if secret file not mounted
@@ -75,21 +63,25 @@ for KEYS in "${arr[@]}"; do
             # Get text
             secret=$(sed -n "/$secret:/p" "$SECRETSOURCE")
             secret=${secret#*: }
-            line="${line%%=*}='$secret'"
+            line_raw="${line_raw%%=*}='$secret'"
             VALUE="$secret"
+            VALUE_ESCAPED=$(sanitize_variable "$VALUE")
+            line_escaped="${line_raw%%=*}=${VALUE_ESCAPED}"
         fi
-        # text
+
+        # Log value
         if bashio::config.false "verbose" || [[ "${KEYS,,}" == *"pass"* ]]; then
             bashio::log.blue "${KEYS}=******"
         else
-            bashio::log.blue "$line"
+            bashio::log.blue "$line_raw"
         fi
 
         ######################################
         # Export the variable to run scripts #
         ######################################
         # shellcheck disable=SC2163
-        export "$line"
+        export "${line_raw}"
+
         # export to python
         if command -v "python3" &> /dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py
@@ -100,17 +92,18 @@ for KEYS in "${arr[@]}"; do
             echo "os.environ['${KEYS}'] = '$VALUEPY'" >> /env.py
             python3 /env.py
         fi
+
         # set .env
-        echo "$line" >> /.env || true
+        echo "$line_raw" >> /.env || true
         # set /etc/environment
         mkdir -p /etc
-        echo "$line" >> /etc/environment
+        echo "$line_raw" >> /etc/environment
         # For non s6
-        if cat /etc/services.d/*/*run* &> /dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2> /dev/null; fi
-        if cat /etc/cont-init.d/*.sh &> /dev/null; then sed -i "1a export $line" /etc/cont-init.d/*.sh 2> /dev/null; fi
+        if cat /etc/services.d/*/*run* &> /dev/null; then sed -i "1a export $line_escaped" /etc/services.d/*/*run* 2> /dev/null; fi
+        if cat /etc/cont-init.d/*.sh &> /dev/null; then sed -i "1a export $line_escaped" /etc/cont-init.d/*.sh 2> /dev/null; fi
         # For s6
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-        echo "export ${KEYS}='${VALUE}'" >> ~/.bashrc
+        echo "export ${KEYS}='${VALUE_ESCAPED}'" >> ~/.bashrc
     fi
 done
 
