@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Scrutiny] no ssd are shown (opened 2025-08-13)](https://github.com/alexbelgium/hassio-addons/issues/2033) by [@hoboristi](https://github.com/hoboristi)
 # Home assistant add-on: Scrutiny
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
