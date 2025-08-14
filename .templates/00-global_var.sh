@@ -53,7 +53,7 @@ for KEYS in "${arr[@]}"; do
         # Sanitize variable
         VALUE=$(sanitize_variable "$VALUE")
         # Continue for single values
-        line="${KEYS}=${VALUE}"
+        line="${KEYS}='${VALUE//\'/\'\\\'\'}'"
         # Check if secret
         if [[ "${line}" == *"!secret "* ]]; then
             echo "secret detected"
