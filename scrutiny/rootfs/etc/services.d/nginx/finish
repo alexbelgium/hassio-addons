@@ -1,9 +1,8 @@
-#!/usr/bin/with-contenv bashio
-# shellcheck shell=bash
+#!/usr/bin/execlineb -S0
 # ==============================================================================
-# Stop the container when Nginx fails
+# Take down the S6 supervision tree when Nginx fails
 # ==============================================================================
-if [[ "$1" -ne 0 && "$1" -ne 256 ]]; then
-    bashio::log.error "Nginx exited with code $1"
-    kill -15 1
-fi
+if { s6-test ${1} -ne 0 }
+if { s6-test ${1} -ne 256 }
+
+s6-svscanctl -t /var/run/s6/services
