@@ -99,8 +99,11 @@ if $PID1; then
         sed -i "1s|^.*|#!$shebang|" "$runfile"
         # Replace s6-setuidgid calls with 'su' (bash-based) equivalents
         sed -i -E 's|^s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
+        # Replace s6-svwait calls with bash-based waiting loops
+        sed -i -E 's|s6-svwait[[:space:]]+-d[[:space:]]+([^[:space:]]+)|bash -c '\''while [ -f \1/supervise/pid ]; do sleep 0.5; done'\''|g' "$runfile"
+        sed -i -E 's|s6-svwait[[:space:]]+-u[[:space:]]+([^[:space:]]+)|bash -c '\''until [ -f \1/supervise/pid ]; do sleep 0.5; done'\''|g' "$runfile"
         chmod +x "$runfile"
-        ( exec "$runfile" ) & true        
+        ( exec "$runfile" ) & true
     done
     shopt -u nullglob
 fi
