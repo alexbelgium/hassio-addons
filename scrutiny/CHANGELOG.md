@@ -1,3 +1,5 @@
+## v0.8.1-11 (15-08-2025)
+- Minor bugs fixed
 ## v0.8.1-10 (13-08-2025)
 - Disable port by default for security purposes; it can be readded from the addon options. Ingress access is not affected @soosp
 - Document internal domain name for accessing the REST API without exposing the port.
