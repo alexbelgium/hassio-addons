@@ -1,6 +1,3 @@
-## v0.8.1-12 (16-08-2025)
-- Replace s6-based shutdown with standard command to avoid s6-svwait error
-
 ## v0.8.1-11 (15-08-2025)
 - Minor bugs fixed
 ## v0.8.1-10 (13-08-2025)
