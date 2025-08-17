@@ -16,11 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     # Run when: issue opened OR a '/codex' comment on an issue (not PR)
     if: >
-      github.event_name == 'issues' ||
-      (github.event_name == 'issue_comment' &&
-       github.event.action == 'created' &&
-       github.event.comment.body == '/codex' &&
-       github.event.issue.pull_request == null)
+      (github.event_name == 'issues' ||
+       (github.event_name == 'issue_comment' &&
+        github.event.action == 'created' &&
+        github.event.comment.body == '/codex' &&
+        github.event.issue.pull_request == null))
+      && contains(github.event.issue.labels.*.name, 'bug')
     steps:
       - name: Compose and post AI reply
         uses: actions/github-script@v7
@@ -41,8 +42,9 @@ jobs:
 
             const system = `
               You are an open-source triage assistant.
-              Write a concise, actionable first reply for a new GitHub issue.
-              Ask for missing repro details; avoid inventing repo facts.
+              Write a concise, actionable first reply for a new bug report.
+              Focus on diagnosing the problem and suggesting potential fixes.
+              Minimize follow-up questions and avoid inventing repo facts.
               Propose next steps and link to repo files only when certain.
             `.trim();
 
@@ -102,6 +104,7 @@ jobs:
         github.event.comment.body == '/codex' &&
         github.event.issue.pull_request == null))
       && contains(github.event.issue.labels.*.name, 'auto-pr')
+      && contains(github.event.issue.labels.*.name, 'bug')
     steps:
       - uses: actions/checkout@v5
         with:
