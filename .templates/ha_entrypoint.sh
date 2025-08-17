@@ -1,8 +1,7 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 
-set -e  # Exit immediately if a command exits with a non-zero status
-
+set -e # Exit immediately if a command exits with a non-zero status
 
 # Detect if this is PID1 (main container process) — do this once at the start
 PID1=false
@@ -38,7 +37,7 @@ for candidate in "${candidate_shebangs[@]}"; do
     # Test if command exists and can actually execute a shell command (for shells)
     if [ -x "$command_path" ]; then
         # Try as both 'sh -c' and 'bashio echo' style
-        if "$command_path" -c 'echo yes' >/dev/null 2>&1 || "$command_path" echo "yes" >/dev/null 2>&1; then
+        if "$command_path" -c 'echo yes' > /dev/null 2>&1 || "$command_path" echo "yes" > /dev/null 2>&1; then
             shebang="$candidate"
             break
         fi
@@ -91,7 +90,7 @@ done
 
 # Start run scripts in services.d and s6-overlay/s6-rc.d if PID1
 if $PID1; then
-    shopt -s nullglob  # Don't expand unmatched globs to themselves
+    shopt -s nullglob # Don't expand unmatched globs to themselves
     for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run; do
         [ -f "$runfile" ] || continue
         echo "Starting: $runfile"
@@ -103,7 +102,8 @@ if $PID1; then
         sed -i -E 's|s6-svwait[[:space:]]+-d[[:space:]]+([^[:space:]]+)|bash -c '\''while [ -f \1/supervise/pid ]; do sleep 0.5; done'\''|g' "$runfile"
         sed -i -E 's|s6-svwait[[:space:]]+-u[[:space:]]+([^[:space:]]+)|bash -c '\''until [ -f \1/supervise/pid ]; do sleep 0.5; done'\''|g' "$runfile"
         chmod +x "$runfile"
-        ( exec "$runfile" ) & true
+        (exec "$runfile") &
+        true
     done
     shopt -u nullglob
 fi
@@ -119,19 +119,19 @@ if $PID1; then
     terminate() {
         echo "Termination signal received, forwarding to subprocesses..."
         # Terminate all direct child processes
-        if command -v pgrep &>/dev/null; then
+        if command -v pgrep &> /dev/null; then
             for pid in $(pgrep -P $$); do
                 echo "Terminating child PID $pid"
-                kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
+                kill -TERM "$pid" 2> /dev/null || echo "Failed to terminate PID $pid"
             done
         else
             # Fallback: Scan /proc for children
             for pid in /proc/[0-9]*/; do
                 pid=${pid#/proc/}
                 pid=${pid%/}
-                if [[ "$pid" -ne 1 ]] && grep -q "^PPid:\s*$$" "/proc/$pid/status" 2>/dev/null; then
+                if [[ "$pid" -ne 1 ]] && grep -q "^PPid:\s*$$" "/proc/$pid/status" 2> /dev/null; then
                     echo "Terminating child PID $pid"
-                    kill -TERM "$pid" 2>/dev/null || echo "Failed to terminate PID $pid"
+                    kill -TERM "$pid" 2> /dev/null || echo "Failed to terminate PID $pid"
                 fi
             done
         fi

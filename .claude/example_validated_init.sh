@@ -25,7 +25,7 @@ if [[ "${ADDON_TYPE:-media}" == "media" ]]; then
     if bashio::config.has_value "transcoding_quality"; then
         validate_string "transcoding_quality" "^(low|medium|high|ultra)$" "Transcoding quality (low, medium, high, ultra)" false
     fi
-    
+
     # Validate maximum concurrent streams
     if bashio::config.has_value "max_streams"; then
         validate_numeric "max_streams" 1 20 "Maximum concurrent streams (1-20)" false
@@ -38,7 +38,7 @@ if [[ "${ADDON_TYPE:-file}" == "file" ]]; then
     if bashio::config.has_value "base_folder"; then
         validate_path "base_folder" "/config" "Base folder for file browsing" false
     fi
-    
+
     # Validate disable thumbnails setting
     if bashio::config.has_value "disable_thumbnails"; then
         validate_boolean "disable_thumbnails" "Disable thumbnail generation" false
@@ -51,12 +51,12 @@ if [[ "${ADDON_TYPE:-network}" == "network" ]]; then
     if bashio::config.has_value "target_ip"; then
         validate_ip "target_ip" "Target device IP address"
     fi
-    
+
     # Validate gateway IP
     if bashio::config.has_value "gateway_ip"; then
         validate_ip "gateway_ip" "Network gateway IP address"
     fi
-    
+
     # Validate block duration
     if bashio::config.has_value "block_duration"; then
         validate_numeric "block_duration" 1 3600 "Block duration in seconds (1-3600)"
@@ -70,25 +70,25 @@ fi
 # Validate authentication settings
 if bashio::config.has_value "enable_auth"; then
     validate_boolean "enable_auth" "Enable authentication"
-    
+
     if bashio::config.true "enable_auth"; then
         # If auth is enabled, validate credentials
         validate_string "username" "^[a-zA-Z0-9_-]{3,20}$" "Username (3-20 alphanumeric characters)"
-        
+
         # Validate password strength
         if bashio::config.has_value "password"; then
             local password
             password=$(bashio::config "password")
-            
+
             if [[ ${#password} -lt 8 ]]; then
                 bashio::log.fatal "Password too short. Minimum 8 characters required."
                 exit 1
             fi
-            
+
             if [[ ! "$password" =~ [A-Z] ]] || [[ ! "$password" =~ [a-z] ]] || [[ ! "$password" =~ [0-9] ]]; then
                 bashio::log.warning "⚠️  Weak password detected. Consider using uppercase, lowercase, and numbers."
             fi
-            
+
             bashio::log.debug "✅ Validated password strength"
         fi
     fi

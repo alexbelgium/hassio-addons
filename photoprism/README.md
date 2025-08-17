@@ -48,7 +48,7 @@ Webui can be found at <http://homeassistant:2342> or through the sidebar using I
 Configurations can be done through the app webUI, except for the following options.
 
 **System Requirements**: Minimum 2 cores and 4GB RAM
-**Default Credentials**: 
+**Default Credentials**:
 - Username: admin
 - Password: please_change_password
 

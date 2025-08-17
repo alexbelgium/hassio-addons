@@ -78,12 +78,13 @@ environment:
   }
 image: ghcr.io/alexbelgium/grampsweb-{arch}
 init: false
-options: {
+options:
+  {
     "CELERY_NUM_WORKERS": 2,
     "GUNICORN_NUM_WORKERS": 8,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "ssl": false
+    "ssl": false,
   }
 map:
   - type: addon_config

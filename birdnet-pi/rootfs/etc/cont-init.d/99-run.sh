@@ -73,9 +73,9 @@ if [ -n "${ALSA_CARD:-}" ]; then
 fi
 
 # Define permissions for audio
-AUDIO_GID=$(stat -c %g /dev/snd/* | head -n1) && \
-( groupmod -o -g "$AUDIO_GID" audio 2>/dev/null || groupadd -o -g "$AUDIO_GID" audio || true ) && \
-usermod -aG audio "${USER:-pi}" || true
+AUDIO_GID=$(stat -c %g /dev/snd/* | head -n1) \
+    && (groupmod -o -g "$AUDIO_GID" audio 2> /dev/null || groupadd -o -g "$AUDIO_GID" audio || true) \
+    && usermod -aG audio "${USER:-pi}" || true
 
 # Fix timezone as per installer
 CURRENT_TIMEZONE="$(timedatectl show --value --property=Timezone)"
