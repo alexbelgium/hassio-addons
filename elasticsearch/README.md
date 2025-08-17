@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [Elasticsearch Server] Data location moved (opened 2025-07-15)](https://github.com/alexbelgium/hassio-addons/issues/1961) by [@vietde](https://github.com/vietde)
 # Home assistant add-on: elasticsearch server
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
