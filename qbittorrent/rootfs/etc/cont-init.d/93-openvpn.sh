@@ -1,3 +1,4 @@
+
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 set -e
@@ -56,7 +57,7 @@ if bashio::config.true 'openvpn_enabled'; then
 
             # Check if the line contains a txt file
             #######################################
-            if [[ ! $line =~ ^"#" ]] && [[ ! $line =~ ^";" ]] && [[ "$line" == *" "*"."* ]] || [[ "$line" == "auth-user-pass"* ]]; then
+            if [[ ! $line =~ ^"#" ]] && [[ ! $line =~ ^";" ]] && [[ ! $line =~ ^"remote" ]] && [[ "$line" == *" "*"."* ]] || [[ "$line" == "auth-user-pass"* ]]; then
                 # Extract the txt file name from the line
                 file_name="$(echo "$line" | awk -F' ' '{print $2}')"
                 # if contains only numbers and dots it is likely an ip, don't check it
