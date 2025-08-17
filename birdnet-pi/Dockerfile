@@ -84,6 +84,8 @@ RUN \
     \
     # Modify installer
     ##################
+    # Use my repository
+    sed -i "s|Nachtzuster|alexbelgium|g" /newinstaller.sh && \
     # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
     # Use apt-get as without user action
@@ -98,14 +100,6 @@ RUN \
     \
     # Execute installer
     /./newinstaller.sh && \
-    # Apply all open PRs
-    cd "$HOME/BirdNET-Pi" && \
-    git config --add remote.origin.fetch "+refs/pull/*/head:refs/remotes/origin/pr/*" && \
-    git pull && \
-    for pr in $(curl -s "https://api.github.com/repos/alexbelgium/BirdNET-Pi/pulls?state=open" | jq -r '.[].number'); do \
-        git merge --no-ff --no-edit "refs/remotes/origin/pr/$pr" || echo "Failed to merge PR $pr"; \
-    done && \
-    cd - && \
     \
     # Install dateparser and resampy, upgrade numpy
     $PYTHON_VIRTUAL_ENV /usr/bin/pip3 install dateparser resampy && \
