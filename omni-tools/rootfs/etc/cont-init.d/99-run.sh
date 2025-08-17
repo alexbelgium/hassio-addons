@@ -7,4 +7,4 @@
 
 # Start omni-tools container content
 bashio::log.info "Starting application"
-/./docker-entrypoint.sh nginx -g "daemon off;" &>/proc/1/fd/1
+/./docker-entrypoint.sh nginx -g "daemon off;" &> /proc/1/fd/1

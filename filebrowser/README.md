@@ -57,12 +57,12 @@ The web UI can be found at `<your-ip>:8071` or through the Home Assistant sideba
 | `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |
 | `NoAuth` | bool | `true` | Disable authentication (resets database when changed) |
 | `disable_thumbnails` | bool | `true` | Disable thumbnail generation for improved performance |
-| `base_folder` | str | *(optional)* | Root folder for file browser (defaults to all mapped folders) |
-| `localdisks` | str | *(optional)* | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
-| `networkdisks` | str | *(optional)* | SMB shares to mount (e.g., `//SERVER/SHARE`) |
-| `cifsusername` | str | *(optional)* | SMB username for network shares |
-| `cifspassword` | str | *(optional)* | SMB password for network shares |
-| `cifsdomain` | str | *(optional)* | SMB domain for network shares |
+| `base_folder` | str | _(optional)_ | Root folder for file browser (defaults to all mapped folders) |
+| `localdisks` | str | _(optional)_ | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | _(optional)_ | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | _(optional)_ | SMB username for network shares |
+| `cifspassword` | str | _(optional)_ | SMB password for network shares |
+| `cifsdomain` | str | _(optional)_ | SMB domain for network shares |
 
 ### Example Configuration
 

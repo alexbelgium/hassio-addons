@@ -149,8 +149,8 @@ if bashio::config.has_value 'networkdisks'; then
         fi
 
         diskname="$disk"
-        diskname="${diskname//\\//}"      # replace \ with /
-        diskname="${diskname##*/}"        # Get only last part of the name
+        diskname="${diskname//\\//}" # replace \ with /
+        diskname="${diskname##*/}"   # Get only last part of the name
         MOUNTED=false
 
         # Start
