@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Calibre] Failing to load addon (opened 2025-08-17)](https://github.com/alexbelgium/hassio-addons/issues/2046) by [@2higc](https://github.com/2higc)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
