@@ -60,6 +60,7 @@ Webui can be found at `<your-ip>:8080`. PostgreSQL can be either internal or ext
 | `DISABLE_MACHINE_LEARNING` | bool | `false` | Disable ML features (not recommended for CUDA variant) |
 | `MACHINE_LEARNING_WORKERS` | int | `1` | Number of ML workers (can be increased with CUDA) |
 | `MACHINE_LEARNING_WORKER_TIMEOUT` | int | `120` | ML worker timeout (seconds) |
+| `skip_permissions_check` | bool | `false` | Skip file permissions checking |
 
 ### Example Configuration
 

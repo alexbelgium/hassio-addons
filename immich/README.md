@@ -54,6 +54,7 @@ Webui can be found at `<your-ip>:8080`. PostgreSQL/MySQL can be either internal 
 | `DISABLE_MACHINE_LEARNING` | bool | `false` | Disable ML features |
 | `MACHINE_LEARNING_WORKERS` | int | `1` | Number of ML workers |
 | `MACHINE_LEARNING_WORKER_TIMEOUT` | int | `120` | ML worker timeout (seconds) |
+| `skip_permissions_check` | bool | `false` | Skip file permissions checking |
 
 ### Example Configuration
 
