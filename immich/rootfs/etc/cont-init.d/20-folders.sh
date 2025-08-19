@@ -41,21 +41,31 @@ printf "%s\n" "IMMICH_MEDIA_LOCATION=\"$DATA_LOCATION\"" >> ~/.bashrc
 echo "... check $DATA_LOCATION folder exists"
 mkdir -p "$DATA_LOCATION"
 
-echo "... setting permissions"
-chown -R "$PUID":"$PGID" "$DATA_LOCATION"
-
 echo "... correcting official script"
 # shellcheck disable=SC2013
 for file in $(grep -sril '/photos' /etc); do sed -i "s|/photos|$DATA_LOCATION|g" "$file"; done
 if [ -f /photos ]; then rm -r /photos; fi
 ln -sf "$DATA_LOCATION" /photos
-chown "$PUID":"$PGID" /photos
 
 mkdir -p "$MACHINE_LEARNING_CACHE_FOLDER"
 mkdir -p "$REVERSE_GEOCODING_DUMP_DIRECTORY"
-chown -R "$PUID":"$PGID" "$MACHINE_LEARNING_CACHE_FOLDER"
-chown -R "$PUID":"$PGID" "$REVERSE_GEOCODING_DUMP_DIRECTORY"
-chown -R "$PUID":"$PGID" /data
+
+if ! bashio::config.true "skip_permissions_check" && [ "${PUID:-0}" != "0" ] && [ "${PGID:-0}" != "0" ]; then
+    echo "... setting permissions, this might take a long time. If it takes too long at each boot, you could instead activate skip_permissions_check in the addon options"
+    echo "..... $DATA_LOCATION"
+    chmod -R 755 "$DATA_LOCATION"
+    chown -R "$PUID:$PGID" "$DATA_LOCATION"
+    echo "..... /photos"
+    chown "$PUID:$PGID" /photos
+    echo "..... $MACHINE_LEARNING_CACHE_FOLDER"
+    chown -R "$PUID:$PGID" "$MACHINE_LEARNING_CACHE_FOLDER"
+    echo "..... $REVERSE_GEOCODING_DUMP_DIRECTORY"
+    chown -R "$PUID:$PGID" "$REVERSE_GEOCODING_DUMP_DIRECTORY"
+    echo "..... /data"
+    chown -R "$PUID:$PGID" /data
+elif bashio::config.true "skip_permissions_check"; then
+    bashio::log.warning "... skipping permissions check as 'skip_permissions_check' is set"
+fi
 chmod 755 /data
 
 ####################

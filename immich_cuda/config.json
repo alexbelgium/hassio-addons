@@ -137,7 +137,8 @@
     "data_location": "str",
     "library_location": "str?",
     "localdisks": "str?",
-    "networkdisks": "str?"
+    "networkdisks": "str?",
+    "skip_permissions_check": "bool?"
   },
   "services": [
     "mysql:want"
