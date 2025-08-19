@@ -36,8 +36,6 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
-COPY merge_open_prs.sh /merge_open_prs.sh
-
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # hadolint ignore=DL3015,SC2016
 RUN \
@@ -72,11 +70,6 @@ RUN \
     # Download installer
     curl -f -L -s -S "https://raw.githubusercontent.com/alexbelgium/BirdNET-Pi/main/newinstaller.sh" -o /newinstaller.sh && \
     chmod 777 /newinstaller.sh && \
-    chmod +x /merge_open_prs.sh && \
-    /merge_open_prs.sh && \
-    chown -R 1000:1000 $HOME && \
-    chmod 777 $HOME/BirdNET-Pi/scripts/*.sh && \
-    sed -i "/CURRENT_TIMEZONE/s/$/ || true/" $HOME/BirdNET-Pi/scripts/install_birdnet.sh && \
     \
     # Use installer to modify other scripts
     #######################################
@@ -93,9 +86,19 @@ RUN \
     ##################
     # Use my repository
     sed -i "s|Nachtzuster|alexbelgium|g" /newinstaller.sh && \
-    sed -i '/git clone -b \$branch --depth=1/d' /newinstaller.sh && \
+    # Install open PR
+    sed -i 's|git clone|\#git clone|g' /newinstaller.sh && \
+    sed -i '/git clone/a exec \/helpers\/merge_open_prs.sh' /newinstaller.sh && \
+    # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
+    # Use apt-get as without user action
     sed -i "s|apt |apt-get |g" /newinstaller.sh && \
+    # Ensure chmod
+    sed -i "/git clone/a chown -R 1000:1000 $HOME" /newinstaller.sh && \
+    sed -i "/git clone/a chmod 777 \$HOME/BirdNET-Pi/scripts/*.sh" /newinstaller.sh && \
+    # Disable datetimectl
+    sed -i '/git clone/a sed -i "/CURRENT_TIMEZONE/s/$/ || true/" $HOME/BirdNET-Pi/scripts/install_birdnet.sh' /newinstaller.sh && \
+    # Remove all instances of sudo from the newinstaller
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     \
     # Execute installer
