@@ -25,9 +25,11 @@ fi
 
 # Adapt permissions if needed
 if ! bashio::config.true "skip_permissions_check" && [ "${PUID:-0}" != "0" ] && [ "${PGID:-0}" != "0" ]; then
-    echo "... setting permissions"
+    echo "... setting permissions, this might take a long time. If it takes too long at each boot, you could instead activate skip_permissions_check in the addon options"
+    chmod -R 755 /share/plex
     chown -R "$PUID:$PGID" /share/plex
-    chmod -R 777 /share/plex
+elif bashio::config.true "skip_permissions_check"; then
+    bashio::log.warning "... skipping permissions check as 'skip_permissions_check' is set"
 fi
 
 # Clear Codecs folder if checked
