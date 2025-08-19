@@ -87,7 +87,27 @@ RUN \
     # Use my repository
     sed -i "s|Nachtzuster|alexbelgium|g" /newinstaller.sh && \
     # Install open PR
-    sed -i '/^git clone/a for pr in $(curl -s https://api.github.com/repos/alexbelgium/BirdNET-Pi/pulls?state=open | jq -r ".[].number"); do echo "Merging PR #$pr" && git fetch origin pull/$pr/merge:pr-$pr && git merge --no-ff -m "Merge PR #$pr" pr-$pr || { echo "Skipping PR #$pr"; git merge --abort || true; }; done' /newinstaller.sh && \
+    sed -i '/^git clone/a for pr in $( \
+  curl -fsSL -H "Accept: application/vnd.github+json" \
+    "https://api.github.com/repos/alexbelgium/BirdNET-Pi/pulls?state=open&per_page=100" \
+  | jq -r ".[] | select(.draft|not) | .number" \
+); do \
+  echo "Merging PR #$pr"; \
+  # Fetch the PR HEAD into a local branch
+  if git -C "$HOME/BirdNET-Pi" fetch --depth=1 origin pull/$pr/head:pr-$pr; then \
+    # Try a non-FF merge; auto-message; no signing; temp identity
+    if git -C "$HOME/BirdNET-Pi" -c user.email=ci@local -c user.name=CI -c commit.gpgsign=false \
+         merge --no-ff --no-edit pr-$pr; then \
+      echo "Merged PR #$pr"; \
+    else \
+      echo "Conflict on PR #$pr — skipping"; \
+      git -C "$HOME/BirdNET-Pi" merge --abort || true; \
+      git -C "$HOME/BirdNET-Pi" reset --hard HEAD; \
+    fi; \
+  else \
+    echo "Fetch failed for PR #$pr — skipping"; \
+  fi; \
+done' /newinstaller.sh && \
     # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
     # Use apt-get as without user action
