@@ -1,3 +1,6 @@
+## 1.138.1 (19-08-2025)
+- Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
+
 ## 1.138.0-1 (19-08-2025)
 - New option : skip_permissions_check to skip permissions check
 

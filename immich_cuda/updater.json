@@ -5,5 +5,5 @@
   "slug": "immich",
   "source": "github",
   "upstream_repo": "imagegenius/docker-immich",
-  "upstream_version": "1.138.0"
+  "upstream_version": "1.138.1"
 }
