@@ -52,11 +52,16 @@ mkdir -p "$REVERSE_GEOCODING_DUMP_DIRECTORY"
 
 if ! bashio::config.true "skip_permissions_check" && [ "${PUID:-0}" != "0" ] && [ "${PGID:-0}" != "0" ]; then
     echo "... setting permissions, this might take a long time. If it takes too long at each boot, you could instead activate skip_permissions_check in the addon options"
+    echo "..... $DATA_LOCATION"
+    chmod -R 755 "$DATA_LOCATION"
     chown -R "$PUID:$PGID" "$DATA_LOCATION"
-    chmod -R 777 "$DATA_LOCATION"
+    echo "..... /photos"
     chown "$PUID:$PGID" /photos
+    echo "..... $MACHINE_LEARNING_CACHE_FOLDER"
     chown -R "$PUID:$PGID" "$MACHINE_LEARNING_CACHE_FOLDER"
+    echo "..... $REVERSE_GEOCODING_DUMP_DIRECTORY"
     chown -R "$PUID:$PGID" "$REVERSE_GEOCODING_DUMP_DIRECTORY"
+    echo "..... /data"
     chown -R "$PUID:$PGID" /data
 elif bashio::config.true "skip_permissions_check"; then
     bashio::log.warning "... skipping permissions check as 'skip_permissions_check' is set"
