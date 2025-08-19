@@ -38,6 +38,8 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # hadolint ignore=DL3015,SC2016
+# Add rootfs
+COPY rootfs/ /
 RUN \
     # Install dependencies
     echo "Install dependencies" && \
@@ -137,9 +139,6 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 ##################
 # 3 Install apps #
 ##################
-
-# Add rootfs
-COPY rootfs/ /
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
