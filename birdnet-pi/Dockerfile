@@ -87,7 +87,8 @@ RUN \
     # Use my repository
     sed -i "s|Nachtzuster|alexbelgium|g" /newinstaller.sh && \
     # Install open PR
-    sed -i '/^git clone/a for pr in $(curl -fsSL https://api.github.com/repos/alexbelgium/BirdNET-Pi/pulls?state=open\\&per_page=100 | jq -r ".[] | select(.draft|not) | .number"); do echo "Merging PR #$pr" && git -C "$HOME/BirdNET-Pi" fetch --depth=1 origin pull/$pr/head:pr-$pr && git -C "$HOME/BirdNET-Pi" -c user.email=ci@local -c user.name=CI -c commit.gpgsign=false merge --no-ff --no-edit pr-$pr || { echo "Skipping PR #$pr"; git -C "$HOME/BirdNET-Pi" merge --abort || true; git -C "$HOME/BirdNET-Pi" reset --hard HEAD; }; done' /newinstaller.sh && \
+    sed -i 's|git clone|\#git clone|g' /newinstaller.sh && \
+    sed -i '/git clone/a exec \/helpers\/merge_open_prs.sh' /newinstaller.sh && \
     # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
     # Use apt-get as without user action
