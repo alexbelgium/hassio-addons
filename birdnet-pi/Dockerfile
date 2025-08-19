@@ -89,8 +89,8 @@ RUN \
     # Use my repository
     sed -i "s|Nachtzuster|alexbelgium|g" /newinstaller.sh && \
     # Install open PR
-    sed -i 's|^\(.*git clone.*\)|# \1|' /newinstaller.sh && \
-    sed -i '/git clone/a bash /helpers/merge_open_prs.sh' /newinstaller.sh && \
+    #sed -i 's|^\(.*git clone.*\)|# \1|' /newinstaller.sh && \
+    #sed -i '/git clone/a bash /helpers/merge_open_prs.sh' /newinstaller.sh && \
     # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
     # Use apt-get as without user action
