@@ -90,7 +90,7 @@ RUN \
     sed -i "s|Nachtzuster|alexbelgium|g" /newinstaller.sh && \
     # Install open PR
     chmod +x /helpers/merge_open_prs.sh && \
-    sed -i '/git clone/a bash /helpers/merge_open_prs.sh' /newinstaller.sh && \
+    sed -i '/git clone/a echo "Merge PR" && bash /helpers/merge_open_prs.sh' /newinstaller.sh && \
     # Avoid rebooting at end of installation
     sed -i "/reboot/d" /newinstaller.sh && \
     # Use apt-get as without user action
