@@ -56,6 +56,10 @@ RUN \
     cp -rf /helpers/journalctl /bin/journalctl && \
     chmod a+x /bin/journalctl && \
     \
+    # Correct for timedatectl
+    cp /helpers/timedatectl /usr/bin/timedatectl && \
+    chmod a+x /usr/bin/timedatectl && \
+    \
     # Change user to pi and create /home/pi
     echo "setting users" && \
     if id abc >/dev/null 2>&1; then groupmod -o -g 101 abc && usermod -o -u 101 abc; fi && \
