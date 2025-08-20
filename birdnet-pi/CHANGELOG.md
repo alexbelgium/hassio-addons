@@ -1,3 +1,4 @@
+## 2025.08.16 (20-08-2025)
 - Cleaned code and clarify new options
     - Add interactive chart option : #107
     - New plot : #105
