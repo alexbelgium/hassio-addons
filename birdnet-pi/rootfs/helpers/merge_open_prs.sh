@@ -8,7 +8,7 @@ if [[ "$update" = "yes" ]]; then
   echo "Update with $branch of $repo"
 
   temp_dir="$(mktemp -d)"
-  target_dir="/home/${USER}/BirdNET-Pi"
+  target_dir="/home/${USER:-pi}/BirdNET-Pi"
 
   # Parse owner/repo from the URL
   _url_no_git="${repo%.git}"
