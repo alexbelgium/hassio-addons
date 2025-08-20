@@ -54,11 +54,11 @@ RUN \
     # Correct for journalctl
     curl -f -L -s -S https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/journalctl3.py -o /helpers/journalctl && \
     cp -rf /helpers/journalctl /bin/journalctl && \
-    chmod a+x /journalctl && \
+    chmod a+x /bin/journalctl && \
     \
     # Correct for timedatectl
     cp /helpers/timedatectl /bin/timedatectl && \
-    chmod a+x /usr/bin/timedatectl && \
+    chmod a+x /bin/timedatectl && \
     \
     # Change user to pi and create /home/pi
     echo "setting users" && \
