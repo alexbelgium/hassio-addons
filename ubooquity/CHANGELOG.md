@@ -1,4 +1,7 @@
 
+## 3.1.0 (23-08-2025)
+- Update to latest version from linuxserver/docker-ubooquity (changelog : https://github.com/linuxserver/docker-ubooquity/releases)
+
 ## 2.1.5 (19-10-2024)
 - Update to latest version from linuxserver/docker-ubooquity (changelog : https://github.com/linuxserver/docker-ubooquity/releases)
 
