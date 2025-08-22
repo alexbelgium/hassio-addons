@@ -16,6 +16,8 @@ mv tmpfile "${NGINX_CONFIG}"
 sed -i '/listen \[::\]/d' "${NGINX_CONFIG}"
 # Add ingress parameters
 sed -i "s|3000|$(bashio::addon.ingress_port)|g" "${NGINX_CONFIG}"
+sed -i 's|proxy_pass http://|proxy_pass https://|g' "${NGINX_CONFIG}"
+sed -i '/proxy_pass/a proxy_ssl_verify off;' "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a proxy_set_header Accept-Encoding "";' "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a sub_filter_once off;' "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a sub_filter_types *;' "${NGINX_CONFIG}"
