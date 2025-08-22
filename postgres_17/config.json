@@ -37,6 +37,7 @@
     "POSTGRES_USER": "str?"
   },
   "slug": "postgres_latest",
+  "startup": "system",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/postgres",
   "version": "17.4-12"
