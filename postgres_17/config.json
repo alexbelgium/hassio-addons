@@ -40,5 +40,5 @@
   "startup": "system",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/postgres",
-  "version": "17.4-12"
+  "version": "17.4-13"
 }
