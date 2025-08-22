@@ -1,5 +1,5 @@
 ## 8.8.0-4 (22-08-2025)
-- Fix ingress config to replace CWS port placeholder
+- Fix ingress config to replace CWS port plac
 
 ## 8.8.0-3 (22-08-2025)
 - Switch desktop GUI to HTTPS for ingress
