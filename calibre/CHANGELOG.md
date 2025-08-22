@@ -1,3 +1,6 @@
+
+## 8.9.0 (23-08-2025)
+- Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 ## 8.8.0-4 (22-08-2025)
 - Fix ingress config to replace CWS port plac
 
