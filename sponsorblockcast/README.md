@@ -26,7 +26,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 CastSponsorSkip is a Go program that skips sponsored YouTube content and skippable ads on all local Chromecasts, using the SponsorBlock API. It was inspired by CastBlock but written from scratch to avoid some of its pitfalls (see Differences from CastBlock).
 
-This app is developed by @gabe565 here : https://github.com/gabe565/CastSponsorSkip
+This app is developed by @gabe565 in the [CastSponsorSkip repository](https://github.com/gabe565/CastSponsorSkip).
 
 Feedback from @diamant-x :
 > Special attention that it only works when casting to a chromecast a youtube video. It mostly removes manual interaction, can't magically skip ads when they are forced to be viewed.
@@ -42,11 +42,13 @@ The addon automatically discovers local Chromecast devices and monitors YouTube 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `CSS_CATEGORIES` | str | `sponsor, intro, outro, selfpromo` | SponsorBlock categories to skip (comma-separated) |
-| `CSS_DISCOVER_INTERVAL` | str | | Device discovery interval |
-| `CSS_MUTE_ADS` | bool | | Mute ads instead of skipping |
-| `CSS_PAUSED_INTERVAL` | str | | Check interval when video is paused |
-| `CSS_PLAYING_INTERVAL` | str | | Check interval when video is playing |
-| `CSS_YOUTUBE_API_KEY` | str | | YouTube API key for enhanced features |
+| `CSS_DISCOVER_INTERVAL` | str | `5m` | Interval to restart the DNS discovery client |
+| `CSS_DEVICES` | str | `[]` | Comma-separated list of device addresses; disables discovery |
+| `CSS_MUTE_ADS` | bool | `true` | Mutes the device while an ad is playing |
+| `CSS_PAUSED_INTERVAL` | str | `1m` | Poll interval when the Cast device is paused |
+| `CSS_PLAYING_INTERVAL` | str | `500ms` | Poll interval when the Cast device is playing |
+| `CSS_SKIP_SPONSORS` | bool | `true` | Toggle SponsorBlock segment skipping; if disabled only YouTube ads are skipped |
+| `CSS_YOUTUBE_API_KEY` | str | `` | YouTube API key for fallback video identification |
 
 ### Example Configuration
 
@@ -55,6 +57,8 @@ CSS_CATEGORIES: "sponsor, intro, outro, selfpromo, interaction"
 CSS_MUTE_ADS: false
 CSS_PAUSED_INTERVAL: "30s"
 CSS_PLAYING_INTERVAL: "500ms"
+CSS_SKIP_SPONSORS: false
+CSS_DEVICES: "192.168.1.100,192.168.1.101"
 ```
 
 ### Custom Scripts and Environment Variables
@@ -66,7 +70,7 @@ This addon supports custom script execution and environment variable injection:
 
 ### Additional Resources
 
-For detailed configuration options, see: https://github.com/gabe565/CastSponsorSkip
+For detailed configuration options, see [CastSponsorSkip](https://github.com/gabe565/CastSponsorSkip).
 
 ## Installation
 
@@ -83,6 +87,6 @@ comparison to installing any other Hass.io add-on.
 ## Support and issues
 
 Addon : here
-App : https://github.com/gabe565/CastSponsorSkip
+App : [CastSponsorSkip](https://github.com/gabe565/CastSponsorSkip)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
