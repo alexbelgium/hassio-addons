@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [sponsorblockcast] title (opened 2025-08-22)](https://github.com/alexbelgium/hassio-addons/issues/2055) by [@glyph-se](https://github.com/glyph-se)
 
 # Home assistant add-on: CastSponsorSkip
 
