@@ -1,4 +1,7 @@
 
+## 25.4.5 (23-08-2025)
+- Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
+
 ## 25.4.4 (09-08-2025)
 - Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
 ## 25.04.4.2.2-6 (06-08-2025)
