@@ -36,10 +36,10 @@ Webui can be found at `<your-ip>:8443`.
 PGID: user
 GPID: user
 TZ: timezone
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smbv2/3 servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password, same for all smb shares)
+localdisks: sda1 # Local drives to mount (e.g., `sda1,sdb1,MYNAS`)
+networkdisks: "//SERVER/SHARE" # SMB shares to mount (e.g., `//SERVER/SHARE`)
+cifsusername: "username" # SMB username for network shares
+cifspassword: "password" # SMB password for network shares
 ```
 
 ## Installation

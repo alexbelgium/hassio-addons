@@ -65,7 +65,7 @@ Unpackerr monitors completed downloads and extracts archives automatically.
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 | `extraction_path` | str | `/share/downloads_packed` | Path where downloaded archives are located |
 | `watch_path` | str | `/share/downloads_unpacked` | Path where extracted files are placed |
-| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1`) |
+| `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |

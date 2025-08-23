@@ -39,7 +39,7 @@ See https://www.navidrome.org/docs/usage/configuration-options/ for additional c
 | `base_url` | str | `/` | Base URL to configure Navidrome behind a proxy |
 | `music_folder` | str | `/data/music` | Folder where your music library is stored |
 | `data_folder` | str | `/data` | Folder to store application data (DB) |
-| `log_level` | str | `info` | Log level (error, warn, info, debug, trace) |
+| `log_level` | str | `info` | Log level (trace|debug|info|notice|warning|error|fatal) |
 | `ssl` | bool | `false` | Enable HTTPS for the web interface |
 | `certfile` | str | | Path for the TLS certificate |
 | `keyfile` | str | | Path for the TLS key file |

@@ -52,10 +52,10 @@ Options can be configured through two ways :
 PGID: user
 GPID: user
 ocrlang: Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
-cifsusername: "username" # smb username (optional)
-cifspassword: "password" # smb password (optional)
+localdisks: sda1 # Local drives to mount (e.g., `sda1,sdb1,MYNAS`)
+networkdisks: "<//SERVER/SHARE>" # SMB shares to mount (e.g., `//SERVER/SHARE`)
+cifsusername: "username" # SMB username for network shares
+cifspassword: "password" # SMB password for network shares
 storage_dir: storage dir location (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html)
 import_dir: import dir location (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html)
 imaphost: import from email (https://papermerge.readthedocs.io/en/v2.0.1/consumption.html#imap-email)

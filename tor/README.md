@@ -52,7 +52,7 @@ Configurations can be done through the app webUI, except for the following optio
 | `bridges` | list | `[]` | List of bridge configurations |
 | `client_names` | list | `[]` | Client names for stealth authentication |
 | `ports` | list | `["8123", "8123:80"]` | Ports to expose via Tor |
-| `log_level` | list | | Log level (trace/debug/info/notice/warning/error/fatal) |
+| `log_level` | list | | Log level (trace|debug|info|notice|warning|error|fatal) |
 
 You should follow the initial guide for configuring base addon options. Here are the extra options specific to this extended version:
 

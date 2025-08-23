@@ -41,10 +41,10 @@ LANG: "en-US" # Default language for webtrees
 BASE_URL: "http://192.168.178.69" # The url with which you access webtrees
 DB_TYPE: "sqlite" # Your database type : sqlite for automatic configuration, or external for manual config
 CONFIG_LOCATION: location of the config.yaml (see below)
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
+localdisks: sda1 # Local drives to mount (e.g., `sda1,sdb1,MYNAS`)
+networkdisks: "//SERVER/SHARE" # SMB shares to mount (e.g., `//SERVER/SHARE`)
+cifsusername: "username" # SMB username for network shares
+cifspassword: "password" # SMB password for network shares
 trusted_headers: single address, or a range of addresses in CIDR format
 base_url_portless: base url without port
 ```

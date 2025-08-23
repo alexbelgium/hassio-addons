@@ -51,10 +51,10 @@ Options can be configured through two ways :
 ```yaml
 PGID: user
 GPID: user
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "<//SERVER/SHARE>" # list of smbv2/3 servers to mount (optional)
-cifsusername: "username" # smb username (optional)
-cifspassword: "password" # smb password (optional)
+localdisks: sda1 # Local drives to mount (e.g., `sda1,sdb1,MYNAS`)
+networkdisks: "<//SERVER/SHARE>" # SMB shares to mount (e.g., `//SERVER/SHARE`)
+cifsusername: "username" # SMB username for network shares
+cifspassword: "password" # SMB password for network shares
 CONFIG_LOCATION: Location of the config.yaml (see below)
 OCRLANG: eng fra #Any language can be set from this page (always three letters) [here](https://tesseract-ocr.github.io/tessdoc/Data-Files#data-files-for-version-400-november-29-2016).
 TZ: Europe/Paris # Sets a specific timezone

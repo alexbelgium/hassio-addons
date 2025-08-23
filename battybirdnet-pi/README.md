@@ -59,11 +59,11 @@ LIVESTREAM_BOOT_ENABLED: start livestream from boot, or from settings
 PROCESSED_FOLDER_ENABLED : if enabled, you need to set in the birdnet.conf (or the setting of birdnet) the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 pi_password: set the user password to access the web terminal
-localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
-networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
-cifsusername: "username" # optional, smb username, same for all smb shares
-cifspassword: "password" # optional, smb password
-cifsdomain: "domain" # optional, allow setting the domain for the smb share
+localdisks: sda1 # Local drives to mount (e.g., `sda1,sdb1,MYNAS`)
+networkdisks: "//SERVER/SHARE" # SMB shares to mount (e.g., `//SERVER/SHARE`)
+cifsusername: "username" # SMB username for network shares
+cifspassword: "password" # SMB password for network shares
+cifsdomain: "domain" # SMB domain for network shares
 ```
 
 - Config.yaml

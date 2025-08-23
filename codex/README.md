@@ -62,11 +62,11 @@ You can place the user folder from the theme/skeleton in /share/codex/www/user,
 | `CODEX_RESET_ADMIN` | Reset admin user and password to defaults | - | `1` |
 | `CODEX_SKIP_INTEGRITY_CHECK` | Skip database integrity repair on startup | - | `1` |
 | `csrf_allowed` | Comma separated list of addresses allowed to access the app | `http://homeassistant.local:8123,https://homeassistant.local:8123` | `http://localhost:8123` |
-| `localdisks` | Hardware name of drives to mount (comma separated) | - | `sda1,sdb1,MYNAS` |
-| `networkdisks` | SMB servers to mount (comma separated) | - | `//SERVER/SHARE` |
-| `cifsusername` | SMB username for all shares | - | `username` |
-| `cifspassword` | SMB password | - | `password` |
-| `cifsdomain` | SMB domain | - | `WORKGROUP` |
+| `localdisks` | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) | - | `sda1,sdb1,MYNAS` |
+| `networkdisks` | SMB shares to mount (e.g., `//SERVER/SHARE`) | - | `//SERVER/SHARE` |
+| `cifsusername` | SMB username for network shares | - | `username` |
+| `cifspassword` | SMB password for network shares | - | `password` |
+| `cifsdomain` | SMB domain for network shares | - | `WORKGROUP` |
 
 ```yaml
 PGID: 1000
