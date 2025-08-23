@@ -29,7 +29,7 @@ sed -i "s|CWS|8082|g" "${NGINX_CONFIG}"
 sed -i "s|REPLACE_HOME|${HOME:-/root}|g" "${NGINX_CONFIG}"
 
 # Correct image
-sed -i "s|SUBFOLDERwebsock|/websock|g" "${NGINX_CONFIG}"
+sed -i "s|SUBFOLDER|/|g" "${NGINX_CONFIG}"
 
 # Enable ingress
 cp /etc/nginx/sites-available/ingress.conf /etc/nginx/sites-enabled
