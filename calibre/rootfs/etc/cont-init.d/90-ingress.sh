@@ -10,7 +10,6 @@ SUBFOLDER="$(bashio::addon.ingress_entry)"
 cp /defaults/default.conf "${NGINX_CONFIG}"
 
 # Keep only the first (non-SSL) server block
-# Keep only the first (non-SSL) server block
 awk -v n=2 '/^[[:space:]]*server[[:space:]]*\{/{n--} n>0' "${NGINX_CONFIG}" > tmpfile
 mv tmpfile "${NGINX_CONFIG}"
 
