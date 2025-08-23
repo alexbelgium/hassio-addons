@@ -97,22 +97,14 @@ setup_root_user() {
         fi
     fi
 
-    # Try to connect as root using the default insecure password.
-    if psql "postgres://root:securepassword@${DB_HOSTNAME}:${DB_PORT}/postgres" -c '\q' 2> /dev/null; then
-        bashio::log.info "Detected root user with default password. Updating to new DB_ROOT_PASSWORD..."
-        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" << EOF
-ALTER ROLE root WITH PASSWORD '${DB_ROOT_PASSWORD}';
-EOF
-    else
         # Check if the root user exists.
-        if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" -tAc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
-            bashio::log.info "Root user does not exist. Creating root user with DB_ROOT_PASSWORD..."
-            psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" << EOF
+    if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" -tAc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
+        bashio::log.info "Root user does not exist. Creating root user with DB_ROOT_PASSWORD..."
+        psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" << EOF
 CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD '${DB_ROOT_PASSWORD}';
 EOF
-        else
-            bashio::log.info "Root user exists with a non-default password. No migration needed."
-        fi
+    else
+        bashio::log.info "Root user exists with a non-default password. No migration needed."
     fi
 }
 
