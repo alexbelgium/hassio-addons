@@ -1,6 +1,4 @@
-## 2025.08.21 (24-08-2025)
-- Minor bugs fixed
-## 2025.08.20 (24-08-2025)
+- Fix interactive graph
 - Fix weekly report
 
 ## 2025.08.16 (20-08-2025)
