@@ -4,11 +4,11 @@
 - Minor bugs fixed
 ## 2025.08.16 (20-08-2025)
 - Cleaned code and clarify new options
-    - Add interactive chart option : #107
-    - New plot : #105
-    - Add species management tools : #104
-    - Add species confirmation option to recordings : #102
-    - Add selectable duration mini-graphs for species pages : #101
+  - Add interactive chart option : #107
+  - New plot : #105
+  - Add species management tools : #104
+  - Add species confirmation option to recordings : #102
+  - Add selectable duration mini-graphs for species pages : #101
 
 ## 2025.08.15 (20-08-2025)
 - Minor bugs fixed
