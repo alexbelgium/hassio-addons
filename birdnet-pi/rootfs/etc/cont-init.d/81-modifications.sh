@@ -123,6 +123,8 @@ if ! grep -q "http://:8081" /etc/caddy/Caddyfile; then
         rm /etc/caddy/Caddyfile.original
     fi
 fi
+# Fix weekly report
+sed -i 's|localhost|localhost:8081|g' "$HOME/BirdNET-Pi/scripts/weekly_report.sh"
 
 # Correct webui paths
 echo "... correcting webui paths"
