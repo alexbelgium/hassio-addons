@@ -1,3 +1,4 @@
+## 2025.08.22 (24-08-2025)
 - Fix interactive graph
 - Fix weekly report
 
