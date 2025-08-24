@@ -97,7 +97,7 @@ setup_root_user() {
         fi
     fi
 
-        # Check if the root user exists.
+    # Check if the root user exists.
     if ! psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" -tAc "SELECT 1 FROM pg_roles WHERE rolname='root'" | grep -q 1; then
         bashio::log.info "Root user does not exist. Creating root user with DB_ROOT_PASSWORD..."
         psql "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}" << EOF

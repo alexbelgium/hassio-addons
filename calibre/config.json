@@ -94,13 +94,13 @@
   "panel_admin": false,
   "panel_icon": "mdi:book-multiple",
   "ports": {
-    "8181/tcp": 8181,
     "8081/tcp": 8081,
+    "8181/tcp": 8181,
     "9090/tcp": 9090
   },
   "ports_description": {
-    "8181/tcp": "Calibre desktop gui (https)",
     "8081/tcp": "Calibre webserver gui, to be enabled within the desktop gui",
+    "8181/tcp": "Calibre desktop gui (https)",
     "9090/tcp": "Calibre wireless connection, to be enabled within the desktop gui"
   },
   "privileged": [
