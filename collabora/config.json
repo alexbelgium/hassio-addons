@@ -17,7 +17,6 @@
   "name": "WIP - Collabora",
   "options": {
     "aliasgroup1": "",
-    "dictionaries": "",
     "domain": "",
     "extra_params": "--o:ssl.enable=false --o:user_interface.use_integration_theme=false --o:net.proto=IPv4",
     "password": "",
@@ -31,12 +30,12 @@
   },
   "schema": {
     "TZ": "str?",
-    "aliasgroup1": "str?",
+    "aliasgroup1": "str",
     "dictionaries": "str?",
     "domain": "str?",
     "extra_params": "str?",
-    "password": "password?",
-    "username": "str?"
+    "password": "password",
+    "username": "str"
   },
   "slug": "collabora",
   "url": "https://github.com/alexbelgium/hassio-addons",
