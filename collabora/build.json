@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "collabora/code:latest-aarch64",
+    "aarch64": "collabora/code:latest-arm64",
     "amd64": "collabora/code:latest-amd64"
   },
   "codenotary": {
