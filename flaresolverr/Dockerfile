@@ -15,7 +15,7 @@
 #################
 ARG BUILD_FROM
 ARG BUILD_VERSION
-FROM 21hsmw/flaresolverr:nodriver
+FROM flaresolverr/flaresolverr:latest
 
 ##################
 # 2 Modify Image #
