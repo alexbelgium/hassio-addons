@@ -19,7 +19,7 @@
     "aliasgroup1": "",
     "dictionaries": "",
     "domain": "",
-    "extra_params": "",
+    "extra_params": "--o:ssl.enable=false --o:user_interface.use_integration_theme=false --o:net.proto=IPv4",
     "password": "",
     "username": ""
   },
