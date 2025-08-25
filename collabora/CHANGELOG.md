@@ -1,3 +1,5 @@
+## 25.4.5-3 (25-08-2025)
+- Minor bugs fixed
 ## 25.4.5-2 (25-08-2025)
 - Minor bugs fixed
 
