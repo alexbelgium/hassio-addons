@@ -36,6 +36,8 @@ sanitize_variable() {
         return
     fi
     printf -v escaped '%q' "$raw"
+    # Do not espace spaces
+    escaped="${escaped//\\ / }"
     if [[ "$raw" == "$escaped" ]]; then
         printf '%s' "$raw"
     else
