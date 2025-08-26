@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 [MyElectricalData] Export MQTT Tempo - IndexError: list index out of range (opened 2025-08-22)](https://github.com/alexbelgium/hassio-addons/issues/2056) by [@gogui63](https://github.com/gogui63)
 # Home assistant add-on: MyElectricalData
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
