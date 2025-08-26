@@ -1,8 +1,8 @@
 name: AI triage (comment + optional PR)
 
 on:
-  issues:
-    types: [opened]
+#  issues:
+#    types: [opened]
   issue_comment:
     types: [created]
 
