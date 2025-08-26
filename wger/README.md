@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Wger] Environment variables ignored / CSRF verification failed (opened 2025-08-25)](https://github.com/alexbelgium/hassio-addons/issues/2070) by [@IceBotYT](https://github.com/IceBotYT)
 
 # Hass.io Add-ons: Wger
 
