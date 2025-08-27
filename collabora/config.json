@@ -31,6 +31,8 @@
   "schema": {
     "TZ": "str?",
     "aliasgroup1": "str",
+    "cert_domain": "bool?",
+    "server_name": "str?",
     "dictionaries": "str?",
     "domain": "str?",
     "extra_params": "str?",
