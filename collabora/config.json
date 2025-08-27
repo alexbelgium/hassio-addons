@@ -34,7 +34,7 @@
     "cert_domain": "bool?",
     "server_name": "str?",
     "dictionaries": "str?",
-    "domain": "str?",
+    "domain1": "str?",
     "extra_params": "str?",
     "password": "password",
     "username": "str"
