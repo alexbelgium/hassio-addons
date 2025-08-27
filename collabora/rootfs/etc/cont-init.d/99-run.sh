@@ -55,4 +55,4 @@ chown -R 1001 /opt/cool/systemplate
 chmod -R 755 /opt/cool/systemplate
 
 bashio::log.info "Starting Collabora Online..."
-su -s /bin/bash "$(getent passwd 1001 | cut -d: -f1)" -c "/start-collabora-online.sh --o:admin_console.username=$username --o:admin_console.password=$password"
+su -p -s /bin/bash "$(getent passwd 1001 | cut -d: -f1)" -c "/start-collabora-online.sh"
