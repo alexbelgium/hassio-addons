@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Immich] No upgrade path from before Immich 1.132.0 to 1.137.0 or later (opened 2025-08-18)](https://github.com/alexbelgium/hassio-addons/issues/2047) by [@efficiencynerd](https://github.com/efficiencynerd)
+## &#9888; Open Issue : [🐛 [immich] issue with jobs to create thumbnails , resolution is not possible with HA addon (opened 2025-08-26)](https://github.com/alexbelgium/hassio-addons/issues/2072) by [@samimasad](https://github.com/samimasad)
 # Home assistant add-on: immich
 
 ⚠️ The project is under very active development. Expect bugs and changes. Do not use it as the only way to store your photos and videos! (from the developer)
