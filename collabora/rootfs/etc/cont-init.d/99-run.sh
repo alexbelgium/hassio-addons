@@ -45,9 +45,9 @@ if bashio::config.true 'ssl'; then
         bashio::log.error "Key file /ssl/${keyfile} not found"
         exit 1
     fi
-    ln -sf /ssl/${keyfile} /etc/coolwsd/key.pem
-    ln -sf /ssl/${certfile} /etc/coolwsd/cert.pem
-    ln -sf /ssl/${certfile} /etc/coolwsd/ca-chain.cert.pem
+    cp -f /ssl/${keyfile} /etc/coolwsd/key.pem
+    cp -f /ssl/${certfile} /etc/coolwsd/cert.pem
+    cp -f /ssl/${certfile} /etc/coolwsd/ca-chain.cert.pem
     extra_params="${extra_params/--o:ssl.enable=false/}"
     extra_params="${extra_params} \
          --o:ssl.enable=true 
