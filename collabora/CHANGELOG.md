@@ -1,3 +1,7 @@
+## 25.4.5-7 (29-08-2025)
+- Avoid generating default SSL certificate when custom certificates are provided
+## 25.4.5-6 (28-08-2025)
+- Add option to use own SSL certificates
 ## 25.4.5-5 (27-08-2025)
 - Minor bugs fixed
 ## 25.4.5-4 (27-08-2025)
