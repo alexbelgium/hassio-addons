@@ -55,8 +55,8 @@ Webui can be found at `http://homeassistant:9980` or through Ingress.
 ### Example configuration
 
 ```yaml
-aliasgroup1: nextcloud_domain\.com
-domain1: code_domain\.com
+aliasgroup1: nextcloud_domain\\.com
+domain1: code_domain\\.com
 extra_params: ""
 username: admin
 password: changeme
