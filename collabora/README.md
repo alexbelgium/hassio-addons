@@ -45,8 +45,8 @@ Webui can be found at `http://homeassistant:9980` or through Ingress.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `aliasgroup1` | str | | Nextcloud external domain with escaped dots using two \ (e.g. `nextcloud_domain\\\.com`) |
-| `domain1` | str | | Collabora external domain with escaped dots using two \ (e.g. `code_domain\\\.com`) |
+| `aliasgroup1` | str | | Nextcloud external domain with escaped dots using two \ (e.g. `nextcloud_domain\\.com`) |
+| `domain1` | str | | Collabora external domain with escaped dots using two \ (e.g. `code_domain\\.com`) |
 | `extra_params` | str | | Extra parameters passed to the Collabora start script |
 | `username` | str | | Username for the Collabora admin console |
 | `password` | str | | Password for the Collabora admin console |
