@@ -79,7 +79,8 @@ if [ -d "${SYSTEMPLATE_DIR}" ]; then
     cp /etc/resolv.conf "${SYSTEMPLATE_DIR}/resolv.conf"
 fi
 chown -R 1001 /opt/cool/systemplate
-chmod -R 755 /opt/cool/systemplate
+chown -R 1001 /opt/cool/systemplate
+chmod -R 755 /etc/coolwsd
 
 bashio::log.info "Starting Collabora Online..."
 su -p -s /bin/bash "$(getent passwd 1001 | cut -d: -f1)" -c "/start-collabora-online.sh"
