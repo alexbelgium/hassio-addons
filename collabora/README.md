@@ -48,6 +48,9 @@ Webui can be found at `http://homeassistant:9980` or through Ingress.
 | `aliasgroup1` | str | | Nextcloud external domain with escaped dots using two \ (e.g. `nextcloud_domain\\.com`) |
 | `domain1` | str | | Collabora external domain with escaped dots using two \ (e.g. `code_domain\\.com`) |
 | `extra_params` | str | | Extra parameters passed to the Collabora start script |
+| `ssl` | bool | `false` | Enable SSL using certificates from /ssl |
+| `certfile` | str | `fullchain.pem` | Certificate file name located in /ssl |
+| `keyfile` | str | `privkey.pem` | Private key file name located in /ssl |
 | `username` | str | | Username for the Collabora admin console |
 | `password` | str | | Password for the Collabora admin console |
 | `dictionaries` | str | | Space-separated list of dictionary languages to install |
@@ -58,6 +61,9 @@ Webui can be found at `http://homeassistant:9980` or through Ingress.
 aliasgroup1: nextcloud_domain\\.com
 domain1: code_domain\\.com
 extra_params: ""
+ssl: true
+certfile: fullchain.pem
+keyfile: privkey.pem
 username: admin
 password: changeme
 ```

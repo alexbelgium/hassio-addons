@@ -27,10 +27,22 @@ if bashio::config.has_value 'dictionaries'; then
     export dictionaries
 fi
 
+extra_params=""
 if bashio::config.has_value 'extra_params'; then
     extra_params="$(bashio::config 'extra_params')"
-    export extra_params
 fi
+
+if bashio::config.true 'ssl'; then
+    bashio::config.require.ssl
+    certfile="$(bashio::config 'certfile')"
+    keyfile="$(bashio::config 'keyfile')"
+    export DONT_GEN_SSL_CERT=true
+    extra_params="${extra_params/--o:ssl.enable=false/}"
+    extra_params="${extra_params} --o:ssl.enable=true --o:ssl.termination=false --o:ssl.cert_file_path=/ssl/${certfile} \
+        --o:ssl.key_file_path=/ssl/${keyfile} --o:ssl.ca_file_path=/ssl/${certfile}"
+fi
+
+export extra_params
 
 COOL_CONFIG="/etc/coolwsd/coolwsd.xml"
 CONFIG_DEST="/config/coolwsd.xml"
