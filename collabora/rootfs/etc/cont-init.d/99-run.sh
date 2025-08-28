@@ -33,13 +33,25 @@ if bashio::config.has_value 'extra_params'; then
 fi
 
 if bashio::config.true 'ssl'; then
+    export DONT_GEN_SSL_CERT=true
     bashio::config.require.ssl
     certfile="$(bashio::config 'certfile')"
     keyfile="$(bashio::config 'keyfile')"
-    export DONT_GEN_SSL_CERT=true
+    if ! bashio::fs.file_exists "/ssl/${certfile}"; then
+        bashio::log.error "Certificate file /ssl/${certfile} not found"
+        exit 1
+    fi
+    if ! bashio::fs.file_exists "/ssl/${keyfile}"; then
+        bashio::log.error "Key file /ssl/${keyfile} not found"
+        exit 1
+    fi
     extra_params="${extra_params/--o:ssl.enable=false/}"
-    extra_params="${extra_params} --o:ssl.enable=true --o:ssl.termination=false --o:ssl.cert_file_path=/ssl/${certfile} \
-        --o:ssl.key_file_path=/ssl/${keyfile} --o:ssl.ca_file_path=/ssl/${certfile}"
+    extra_params="${extra_params} \
+         --o:ssl.enable=true 
+         --o:ssl.termination=false \
+         --o:ssl.cert_file_path=/ssl/${certfile} \
+         --o:ssl.key_file_path=/ssl/${keyfile} \
+         --o:ssl.ca_file_path=/ssl/${certfile}"
 fi
 
 export extra_params
