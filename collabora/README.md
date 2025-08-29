@@ -39,7 +39,7 @@ Collabora Online is a collaborative office suite based on LibreOffice technology
 
 ---
 
-Webui can be found at `http://homeassistant:9980` or through Ingress.
+Webui can be found at `https://homeassistant:9980/browser/dist/admin/admin.html`.
 
 ### Options
 
