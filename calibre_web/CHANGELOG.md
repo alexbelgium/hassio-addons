@@ -1,3 +1,6 @@
+
+## 0.6.25 (30-08-2025)
+- Update to latest version from linuxserver/docker-calibre-web (changelog : https://github.com/linuxserver/docker-calibre-web/releases)
 ## 0.6.24-10 (28-05-2025)
 - Fix migration script
 - Allow access to Calibre folder through /addon_configs/xxx-Calibre
