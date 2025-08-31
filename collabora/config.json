@@ -18,12 +18,12 @@
   "name": "Collabora",
   "options": {
     "aliasgroup1": "",
+    "certfile": "fullchain.pem",
     "domain": "",
     "extra_params": "--o:ssl.enable=false --o:user_interface.use_integration_theme=false --o:net.proto=IPv4",
-    "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
-    "ssl": false,
     "password": "",
+    "ssl": false,
     "username": ""
   },
   "ports": {
@@ -35,15 +35,15 @@
   "schema": {
     "TZ": "str?",
     "aliasgroup1": "str",
-    "certfile": "str",
-    "keyfile": "str",
-    "ssl": "bool",
     "cert_domain": "bool?",
-    "server_name": "str?",
+    "certfile": "str",
     "dictionaries": "str?",
     "domain1": "str?",
     "extra_params": "str?",
+    "keyfile": "str",
     "password": "password",
+    "server_name": "str?",
+    "ssl": "bool",
     "username": "str"
   },
   "slug": "collabora",
