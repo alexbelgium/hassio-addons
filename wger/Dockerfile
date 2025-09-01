@@ -83,7 +83,8 @@ RUN chmod 777 /.bashio-standalone.sh
 
 
 USER wger
-#CMD [ "/ha_entrypoint.sh" ]
+ENTRYPOINT ["/usr/bin/env"]
+CMD ["/ha_entrypoint.sh"]
 
 ############
 # 5 Labels #
