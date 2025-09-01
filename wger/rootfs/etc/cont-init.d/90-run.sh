@@ -40,3 +40,6 @@ chmod -R 777 /data
 bashio::log.info "Starting nginx"
 nginx || true &
 true
+
+bashio::log.info "Starting entrypoint"
+/./home/wger/entrypoint.sh
