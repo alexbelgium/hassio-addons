@@ -36,8 +36,8 @@ echo "... align permissions"
     set -o posix
     export -p
 ) > /data/env.sh
-chown -R 1000:1000 /data
-chown -R 1000:1000 /home/wger
+chown -R wger /data
+chown -R wger /home/wger
 chmod -R 777 /data
 
 bashio::log.info "Starting nginx"
