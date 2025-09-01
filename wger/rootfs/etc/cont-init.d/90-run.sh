@@ -40,6 +40,3 @@ chmod -R 777 /data
 bashio::log.info "Starting nginx"
 nginx || true &
 true
-
-bashio::log.info "Starting entrypoint"
-su -p -s /bin/bash wger -c "/home/wger/entrypoint.sh"
