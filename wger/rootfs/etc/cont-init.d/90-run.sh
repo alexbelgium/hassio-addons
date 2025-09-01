@@ -3,11 +3,13 @@
 ############################
 # Change database location #
 ############################
+echo "... set database path"
 sed -i "s|/home/wger/db/database.sqlite|/data/database.sqlite|g" /home/wger/src/settings.py
 
 #####################
 # Adapt directories #
 #####################
+echo "... create directories"
 mkdir -p /data/static
 if [ -d /home/wger/static ]; then
     if [ -n "$(ls -A /home/wger/static 2> /dev/null)" ]; then
@@ -29,6 +31,7 @@ ln -s /data/media /home/wger
 #####################
 # Align permissions #
 #####################
+echo "... align permissions"
 (
     set -o posix
     export -p
