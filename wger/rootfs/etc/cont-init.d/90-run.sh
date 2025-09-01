@@ -45,4 +45,4 @@ nginx || true &
 true
 
 bashio::log.info "Starting entrypoint"
-su -p -s /bin/bash wger -c "/home/wger/entrypoint.sh"
+su -p -s /bin/bash wger -c "cd /home/wger/src && exec /home/wger/entrypoint.sh"
