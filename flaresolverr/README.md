@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Flaresolverr] Fail to start: SessionNotCreatedException: cannot connect to chrome (opened 2025-08-27)](https://github.com/alexbelgium/hassio-addons/issues/2073) by [@tschoehuijs](https://github.com/tschoehuijs)
 
 # Home assistant add-on: Flaresolver
 
