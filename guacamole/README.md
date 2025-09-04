@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 Guacamole Add-on 1.6.0-7 fails with Bad Gateway; 1.6.0-4 was working (opened 2025-09-02)](https://github.com/alexbelgium/hassio-addons/issues/2082) by [@730522js](https://github.com/730522js)
 # Home assistant add-on: Guacamole
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
