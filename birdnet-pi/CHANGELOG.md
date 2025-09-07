@@ -1,3 +1,5 @@
+## 2025.09.07 (07-09-2025)
+- Improve pulseaudio start when running container standalone
 ## 2025.08.23 (25-08-2025)
 - Minor bugs fixed
 ## 2025.08.22 (24-08-2025)
