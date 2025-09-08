@@ -1,6 +1,10 @@
 {
-  "arch": ["amd64"],
-  "backup_exclude": ["**/machine-learning/*"],
+  "arch": [
+    "amd64"
+  ],
+  "backup_exclude": [
+    "**/machine-learning/*"
+  ],
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Self-hosted photo and video backup solution directly from your mobile phone",
   "devices": [
@@ -111,7 +115,10 @@
   "ports_description": {
     "8080/tcp": "Web UI port"
   },
-  "privileged": ["SYS_ADMIN", "DAC_READ_SEARCH"],
+  "privileged": [
+    "SYS_ADMIN",
+    "DAC_READ_SEARCH"
+  ],
   "schema": {
     "DB_DATABASE_NAME": "str",
     "DB_HOSTNAME": "str",
@@ -133,7 +140,9 @@
     "networkdisks": "str?",
     "skip_permissions_check": "bool?"
   },
-  "services": ["mysql:want"],
+  "services": [
+    "mysql:want"
+  ],
   "slug": "immich_openvino",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
