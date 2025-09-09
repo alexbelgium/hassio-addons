@@ -91,6 +91,7 @@ for file in "${CONFIG_FILES[@]}"; do
     [ ! -f "/config/$filename" ] && touch "/config/$filename"
     [ -e "$file" ] && rm "$file"
     sudo -u pi ln -fs "/config/$filename" "$file"
+    sudo -u pi ln -fs "/config/$filename" "$HOME/BirdNET-Pi/$filename"
     sudo -u pi ln -fs "/config/$filename" "$HOME/BirdNET-Pi/scripts/$filename"
     sudo -u pi ln -fs "/config/$filename" "/etc/birdnet/$filename"
 done
