@@ -1,3 +1,5 @@
+## 1.141.1-2 (09-09-2025)
+- Minor bugs fixed
 
 ## 1.141.1 (09-09-2025)
 - Update to latest version from imagegenius/docker-immich (changelog : https://github.com/imagegenius/docker-immich/releases)
