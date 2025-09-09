@@ -21,7 +21,7 @@ bashio::log.info "Ensuring the file structure is correct:"
 
 # Create default configuration files if not present
 echo "... creating default files"
-DEFAULT_FILES=("apprise.txt" "exclude_species_list.txt" "IdentifiedSoFar.txt" "disk_check_exclude.txt" "confirmed_species_list.txt" "blacklisted_images.txt" "whitelist_species_list.txt")
+DEFAULT_FILES=("body.txt" "apprise.txt" "exclude_species_list.txt" "IdentifiedSoFar.txt" "disk_check_exclude.txt" "confirmed_species_list.txt" "blacklisted_images.txt" "whitelist_species_list.txt")
 for file in "${DEFAULT_FILES[@]}"; do
     if [ ! -f "/config/$file" ]; then
         echo "" > "/config/$file"
@@ -84,7 +84,7 @@ fi
 
 # Symlink configuration files
 echo "... creating symlinks for configuration files"
-CONFIG_FILES=("$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/whitelist_species_list.txt" "$HOME/BirdNET-Pi/blacklisted_images.txt" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/BirdDB.txt" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt" "$HOME/BirdNET-Pi/scripts/confirmed_species_list.txt")
+CONFIG_FILES=("$HOME/BirdNET-Pi/body.txt" "$HOME/BirdNET-Pi/birdnet.conf" "$HOME/BirdNET-Pi/scripts/whitelist_species_list.txt" "$HOME/BirdNET-Pi/blacklisted_images.txt" "$HOME/BirdNET-Pi/scripts/birds.db" "$HOME/BirdNET-Pi/BirdDB.txt" "$HOME/BirdNET-Pi/scripts/disk_check_exclude.txt" "$HOME/BirdNET-Pi/apprise.txt" "$HOME/BirdNET-Pi/exclude_species_list.txt" "$HOME/BirdNET-Pi/include_species_list.txt" "$HOME/BirdNET-Pi/IdentifiedSoFar.txt" "$HOME/BirdNET-Pi/scripts/confirmed_species_list.txt")
 
 for file in "${CONFIG_FILES[@]}"; do
     filename="${file##*/}"
