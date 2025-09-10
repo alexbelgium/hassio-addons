@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [🐛 Spotweb 502 bad gateway (HA OS 16.2) (opened 2025-09-09)](https://github.com/alexbelgium/hassio-addons/issues/2093) by [@DomBoJan](https://github.com/DomBoJan)
 # Home Assistant Add-ons: Spotweb
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
