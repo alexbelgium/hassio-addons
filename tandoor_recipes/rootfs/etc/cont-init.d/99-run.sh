@@ -109,6 +109,9 @@ chmod -R 755 /config/addons_config/tandoor_recipes
 export MEDIA_ROOT="/config/addons_config/tandoor_recipes/mediafiles"
 export STATIC_ROOT="/config/addons_config/tandoor_recipes/staticfiles"
 
+# Adapt nginx user
+sed -i "s|user nginx|user root|g" /etc/nginx/nginx.conf
+
 if bashio::config.has_value "externalfiles_folder"; then
     externalfiles_folder="$(bashio::config "externalfiles_folder")"
 else
