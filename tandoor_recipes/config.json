@@ -71,6 +71,7 @@
   "environment": {
     "DB_ENGINE": "django.db.backends.sqlite3",
     "DISABLE_INGRESS": "true",
+    "MEDIA_ROOT": "",
     "POSTGRES_DB": "/config/addons_config/tandoor_recipes/recipes.db",
     "TRUSTED_PROXIES": "**"
   },
@@ -118,6 +119,6 @@
   "slug": "tandoor_recipes",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.0",
+  "version": "2.1.0-2",
   "webui": "http://[HOST]:[PORT:80]"
 }
