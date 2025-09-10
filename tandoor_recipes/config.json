@@ -83,7 +83,7 @@
   ],
   "name": "Tandoor recipes",
   "options": {
-    "ALLOWED_HOSTS": "",
+    "ALLOWED_HOSTS": "*",
     "DB_TYPE": "sqlite",
     "DEBUG": "0",
     "SECRET_KEY": "YOUR_SECRET_KEY",
@@ -119,6 +119,6 @@
   "slug": "tandoor_recipes",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "2.1.0-2",
+  "version": "2.1.0-3",
   "webui": "http://[HOST]:[PORT:80]"
 }
