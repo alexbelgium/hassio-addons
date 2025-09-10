@@ -54,8 +54,13 @@ for KEYS in "${arr[@]}"; do
     else
         # Sanitize variable
         VALUE=$(sanitize_variable "$VALUE")
-        # Continue for single values
-        line="${KEYS}='${VALUE//\'/\'\\\'\'}'"
+        # If value is empty, returns an empty value
+        if [[ -z "$VALUE" ]]; then
+            line="${KEYS}=''"
+        else
+            # Continue for single values
+            line="${KEYS}='${VALUE//\'/\'\\\'\'}'"
+        fi
         # Check if secret
         if [[ "${line}" == *"!secret "* ]]; then
             echo "secret detected"
