@@ -63,6 +63,9 @@ chmod +x /helpers/caddy_ingress.sh
 # Correct script execution
 /helpers/caddy_ingress.sh
 
+# Correct API images
+sed -i "s|localhost|localhost:8082|g" "$HOME/BirdNET-Pi/scripts/utils/notifications.py"
+
 # Update the Caddyfile if update script exists
 caddy_update_script="$HOME/BirdNET-Pi/scripts/update_caddyfile.sh"
 if [ -f "$caddy_update_script" ]; then
