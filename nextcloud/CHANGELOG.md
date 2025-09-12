@@ -1,3 +1,6 @@
+
+## 31.0.9 (13-09-2025)
+- Update to latest version from linuxserver/docker-nextcloud (changelog : https://github.com/linuxserver/docker-nextcloud/releases)
 ## 31.0.8-2 (09-09-2025)
 - Removed pdfannotate
 
