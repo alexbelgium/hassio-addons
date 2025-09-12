@@ -1,4 +1,7 @@
 
+## 12.0.14 (13-09-2025)
+- Update to latest version from franchetti/seafile-arm
+
 ## testing (10-06-2023)
 
 - Update to latest version from franchetti/seafile-arm
