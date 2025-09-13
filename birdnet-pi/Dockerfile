@@ -102,7 +102,7 @@ RUN \
     # Remove all instances of sudo from the newinstaller
     sed -i -e "s|== 0|== 7|g" -e "s|sudo -n true|true|g" -e "s|sudo -K|true|g" /newinstaller.sh && \
     # Merge all PR
-    sed -i '/git clone/a sed -i "/exit installation if anything fails/a cd $HOME/BirdNET-Pi && /./helpers/merge_open_prs.sh" $HOME/BirdNET-Pi/scripts/install_birdnet.sh' /newinstaller.sh && \
+    sed -i '/git clone/a sed -i "/exit installation if anything fails/a cd $HOME/BirdNET-Pi \&\& /./helpers/merge_open_prs.sh" $HOME/BirdNET-Pi/scripts/install_birdnet.sh' /newinstaller.sh && \
     \
     # Execute installer
     /./newinstaller.sh && \
