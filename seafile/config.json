@@ -135,6 +135,6 @@
   "slug": "seafile",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/seafile",
-  "version": "testing",
+  "version": "12.0.14",
   "webui": "http://[HOST]:[PORT:8000]"
 }
