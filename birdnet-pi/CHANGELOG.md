@@ -1,3 +1,5 @@
+- New option to use tphakala's modified model
+
 ## 2025.09.04 (12-09-2025)
 - Minor bugs fixed
 ## 2025.09.03 (09-09-2025)
