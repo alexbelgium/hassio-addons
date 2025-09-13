@@ -87,7 +87,9 @@ RUN \
     # Modify installer
     ##################
     # Use my repository
-    sed -i "s|Nachtzuster|alexbelgium|g" /newinstaller.sh && \
+    cd / && \
+    sed -i "s|Nachtzuster|alexbelgium|g" newinstaller.sh && \
+    cd /home/pi && \
     # Install open PR
     chmod +x /helpers/merge_open_prs.sh && \
     # Avoid rebooting at end of installation
