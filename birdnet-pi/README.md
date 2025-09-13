@@ -61,6 +61,7 @@ Options can be configured through three ways :
 BIRDSONGS_FOLDER: folder to store birdsongs file # It should be an ssd if you want to avoid clogging of analysis
 MQTT_DISABLED : if true, disables automatic mqtt publishing. Only valid if there is a local broker already available
 LIVESTREAM_BOOT_ENABLED: start livestream from boot, or from settings
+Use_tphakala_model_v2: false # switch to BirdNET-Go classifier files
 PROCESSED_FOLDER_ENABLED : if enabled, you need to set in the birdnet.conf (or the setting of birdnet) the number of last wav files that will be saved in the temporary folder "/tmp/Processed" within the tmpfs (so no disk wear) in case you want to retrieve them. This amount can be adapted from the addon options
 TZ: Etc/UTC specify a timezone to use, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 pi_password: set the user password to access the web terminal

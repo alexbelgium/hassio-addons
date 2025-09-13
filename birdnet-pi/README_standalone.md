@@ -45,6 +45,7 @@ Ensure you have the following installed on your system:
          - TZ=Europe/Vienna  # Optional: Set your timezone according to https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
          - BIRDSONGS_FOLDER=/config/BirdSongs  # Folder to store bird songs, be sure to use a path that is mapped to a volume (such as /config)
          - LIVESTREAM_BOOT_ENABLED=false  # Enable/disable livestream on boot
+         - Use_tphakala_model_v2=false  # Switch to BirdNET-Go classifier files
          - ssl=false  # Enable/disable SSL
          - certfile=fullchain.pem  # SSL certificate file (located in /ssl/)
          - keyfile=privkey.pem  # SSL key file (located in /ssl/)
@@ -53,8 +54,8 @@ Ensure you have the following installed on your system:
          - MQTT_PASSWORD_manual=  # Optional: Manual MQTT password
          - MQTT_PORT_manual=  # Optional: Manual MQTT port
          - MQTT_USER_manual=  # Optional: Manual MQTT user
-         - PULSE_SERVER=unix:/tmp/pulseaudio.socket 
-         - PULSE_COOKIE=/tmp/pulseaudio.cookie 
+         - PULSE_SERVER=unix:/tmp/pulseaudio.socket
+         - PULSE_COOKIE=/tmp/pulseaudio.cookie
 
        volumes:
          - ./config:/config  # All your configuration files - and location of the default Birdsongs folder
