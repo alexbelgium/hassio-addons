@@ -42,6 +42,27 @@ fi
 # General elements
 ##################
 
+# Use tphakala model v2 if enabled
+if [[ -f "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite2" ]]; then
+    mv "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite2" "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite"
+fi
+if [[ -d "$HOME/BirdNET-Pi/model/labels_nm2" ]]; then
+    mv "$HOME/BirdNET-Pi/model/labels_nm2" "$HOME/BirdNET-Pi/model/labels_nm"
+fi
+if bashio::config.true 'Use_tphakala_model_v2'; then
+    echo "... applying tphakala model v2"
+    if  [[ -f "$HOME/BirdNET-Pi/model/BirdNET-Go_classifier.tflite" ]] && [[ -d "$HOME/BirdNET-Pi/model/labels_go" ]]; then
+        # Move labels
+        mv "$HOME/BirdNET-Pi/model/labels_nm" "$HOME/BirdNET-Pi/model/labels_nm2" || bashio::log.warning "Failed to move labels_nm"
+        mv "$HOME/BirdNET-Pi/model/labels_go" "$HOME/BirdNET-Pi/model/labels_nm" || bashio::log.warning "Failed to move labels_go"
+        # Move model
+        mv "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite" "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite2" || bashio::log.warning "Failed to move base model"
+        mv "$HOME/BirdNET-Pi/model/BirdNET-Go_classifier.tflite" "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite" || bashio::log.warning "Failed to move Go classifier"
+    else
+    bashio::log.fatal "model or labels not found, skipping"
+    fi
+fi
+
 # Correct language labels according to birdnet.conf
 echo "... adapting labels according to birdnet.conf"
 if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
