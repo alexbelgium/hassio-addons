@@ -11,9 +11,9 @@ if ! git rev-parse --git-dir > /dev/null 2>&1; then
 fi
 
 # If this is a shallow clone, fetch enough history to compute merge bases
-if git rev-parse --is-shallow-repository >/dev/null 2>&1 && git rev-parse --is-shallow-repository | grep -q true; then
-  echo "🔄 Repository is shallow; fetching full history to enable merging…"
-  git fetch --unshallow || git fetch --deepen=100000
+if git rev-parse --is-shallow-repository > /dev/null 2>&1 && git rev-parse --is-shallow-repository | grep -q true; then
+    echo "🔄 Repository is shallow; fetching full history to enable merging…"
+    git fetch --unshallow || git fetch --deepen=100000
 fi
 
 # Get list of open, non-draft PR numbers via GitHub API
