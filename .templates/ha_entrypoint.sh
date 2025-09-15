@@ -103,7 +103,7 @@ done
 # Start run scripts in services.d and s6-overlay/s6-rc.d if PID1
 if $PID1; then
     shopt -s nullglob # Don't expand unmatched globs to themselves
-    for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run /etc/cont-init.d/*; do
+    for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run; do
         [ -f "$runfile" ] || continue
         echo "Starting: $runfile"
         apply_s6_mods "$runfile"
