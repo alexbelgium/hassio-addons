@@ -82,7 +82,9 @@ for SCRIPTS in /etc/cont-init.d/*; do
     fi
 
     # Apply s6 compatibility tweaks
-    apply_s6_mods "$SCRIPTS"
+    if $PID1; then
+        apply_s6_mods "$SCRIPTS"
+    fi
 
     # Optionally use 'source' to share env variables, when requested
     if [ "${ha_entry_source:-null}" = true ]; then
