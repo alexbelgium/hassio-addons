@@ -91,7 +91,7 @@ done
 # Start run scripts in services.d and s6-overlay/s6-rc.d if PID1
 if $PID1; then
     shopt -s nullglob # Don't expand unmatched globs to themselves
-    for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run; do
+    for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run /etc/cont-init.d/*; do
         [ -f "$runfile" ] || continue
         echo "Starting: $runfile"
         # Replace the shebang line in each runfile
@@ -100,7 +100,6 @@ if $PID1; then
         sed -i -E 's|^s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
         # Replace s6-svwait calls with bash-based waiting loops
         sed -i -E 's|s6-svwait[[:space:]]+-d[[:space:]]+([^[:space:]]+)|bash -c '\''while [ -f \1/supervise/pid ]; do sleep 0.5; done'\''|g' "$runfile"
-        sed -i -E 's|s6-svwait[[:space:]]+-u[[:space:]]+([^[:space:]]+)|bash -c '\''until [ -f \1/supervise/pid ]; do sleep 0.5; done'\''|g' "$runfile"
         chmod +x "$runfile"
         (exec "$runfile") &
         true
