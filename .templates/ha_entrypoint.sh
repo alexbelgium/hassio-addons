@@ -49,6 +49,18 @@ if [ -z "$shebang" ]; then
 fi
 
 ####################
+# Helper functions #
+####################
+
+apply_s6_mods() {
+    local file="$1"
+    sed -i "1s|^.*|#!$shebang|" "$file"
+    sed -i -E 's|^s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \\1 -c "\\2"|g' "$file"
+    sed -i -E 's|s6-svwait[[:space:]]+-d[[:space:]]+([^[:space:]]+)|bash -c '\''while [ -f \\1/supervise/pid ]; do sleep 0.5; done'\''|g' "$file"
+    chmod +x "$file" || true
+}
+
+####################
 # Starting scripts #
 ####################
 
@@ -69,8 +81,8 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s/^\s*chmod /true # chmod /g" "$SCRIPTS"
     fi
 
-    # Replace the shebang in the script with the valid one
-    sed -i "1s|^.*|#!$shebang|" "$SCRIPTS"
+    # Apply s6 compatibility tweaks
+    apply_s6_mods "$SCRIPTS"
 
     # Optionally use 'source' to share env variables, when requested
     if [ "${ha_entry_source:-null}" = true ]; then
@@ -94,13 +106,7 @@ if $PID1; then
     for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run /etc/cont-init.d/*; do
         [ -f "$runfile" ] || continue
         echo "Starting: $runfile"
-        # Replace the shebang line in each runfile
-        sed -i "1s|^.*|#!$shebang|" "$runfile"
-        # Replace s6-setuidgid calls with 'su' (bash-based) equivalents
-        sed -i -E 's|^s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$runfile"
-        # Replace s6-svwait calls with bash-based waiting loops
-        sed -i -E 's|s6-svwait[[:space:]]+-d[[:space:]]+([^[:space:]]+)|bash -c '\''while [ -f \1/supervise/pid ]; do sleep 0.5; done'\''|g' "$runfile"
-        chmod +x "$runfile"
+        apply_s6_mods "$runfile"
         (exec "$runfile") &
         true
     done
