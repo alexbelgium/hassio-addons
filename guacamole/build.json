@@ -1,6 +1,6 @@
 {
   "build_from": {
-    "aarch64": "abesnier/guacamole:latest",
-    "amd64": "abesnier/guacamole:latest"
+    "aarch64": "flcontainers/guacamole:latest",
+    "amd64": "flcontainers/guacamole:latest"
   }
 }
