@@ -103,14 +103,15 @@ RUN sed -i 's|with-contenv|env|g' "/ha_entrypoint.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
 
 # Standalone bashio command
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
-RUN chmod 777 /.bashio-standalone.sh
-RUN sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/cont-init.d/* && \
-    sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/services.d/*/run
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
+#RUN chmod 777 /.bashio-standalone.sh
+#RUN sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/cont-init.d/* && \
+#    sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/services.d/*/run && \
+#    sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/services.d/*/run
 
 #WORKDIR /data
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/ha_entrypoint.sh" ]
+ENTRYPOINT [ "/usr/bin/env" ]
+CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
