@@ -58,7 +58,8 @@ apply_s6_mods() {
     #sed -i -E 's|s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$file"
     sed -i -E 's|s6-svwait[[:space:]]+-d[[:space:]]+([^[:space:]]+)|bash -c '\''while [ -f \1/supervise/pid ]; do sleep 0.5; done'\''|g' "$file"
     sed -i -E 's|s6-setuidgid([[:space:]]+-[[:alnum:]-]+)?[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \2 -c "\3"|g' "$file"
-    sed -i -E 's|s6-envuidgid[[:space:]]+([a-zA-Z0-9._-]+)|id -u \1 \|\| true|g' "$file"
+    sed -i -E 's|s6-envuidgid([[:space:]]+-[^[:space:]]+)*[[:space:]]+([^[:space:]]+)|id -u \2 \|\| true|g' "$file"
+    sed -i -E '/^[[:space:]]*s6-applyuidgid\b/d' "$file"
     chmod +x "$file" || true
 }
 
