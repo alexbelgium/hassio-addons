@@ -3,6 +3,7 @@
     "aarch64",
     "amd64"
   ],
+  "audio": true,
   "codenotary": "alexandrep.github@gmail.com",
   "description": "Realtime BirdNET soundscape analyzer",
   "devices": [
@@ -122,5 +123,5 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-go",
   "usb": true,
-  "version": "nightly-20250904_test"
+  "version": "nightly-20250904_test2"
 }
