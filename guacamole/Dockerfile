@@ -109,8 +109,8 @@ RUN sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/cont-init.d/* && \
     sed -i "s|/usr/bin/with-contenv|/usr/bin/env|g" /etc/services.d/*/run
 
 #WORKDIR /data
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
