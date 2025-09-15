@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [[Whatsapper] {error:Client not initalized} (opened 2025-09-11)](https://github.com/alexbelgium/hassio-addons/issues/2097) by [@RetroTrek](https://github.com/RetroTrek)
 # Home assistant add-on: Whatsapper
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
