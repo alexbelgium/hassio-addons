@@ -32,16 +32,18 @@ ENV GUACAMOLE_HOME=/config
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-WORKDIR /config
+#WORKDIR /config
 
 # hadolint ignore=SC2016
 RUN \
     # Enable extensions
+    exit 0 && \
     sed -i 's|#!/usr/bin/with-contenv sh|#!/usr/bin/with-contenv bashio|g' /etc/cont-init.d/50-extensions.sh \
     && sed -i 's|$EXTENSIONS|$(bashio::config "EXTENSIONS")|g' /etc/cont-init.d/50-extensions.sh
 
 RUN \
     # Correct transfer
+    exit 0 && \
     sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
     \
     # avoid error
@@ -93,7 +95,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ################
 
 # Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+#ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 
 # Entrypoint modifications
