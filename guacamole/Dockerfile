@@ -51,7 +51,8 @@ RUN \
     && sed -i '\|<dir>/usr/share/fonts</dir>|a\ \ \ \ \ \ \ \ <dir>/config/fonts</dir>' /etc/fonts/fonts.conf \
     \
     # Avoid https://github.com/alexbelgium/hassio-addons/issues/659
-    && rm -r /run/shm
+    && rm -r /run/shm \
+    && sed -i "1a set +u" /etc/services.d/*/run
 
 ##################
 # 3 Install apps #
