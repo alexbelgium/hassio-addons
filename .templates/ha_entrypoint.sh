@@ -8,6 +8,10 @@ PID1=false
 if [ "$$" -eq 1 ]; then
     PID1=true
     echo "Starting as entrypoint"
+    # Allow s6 commands
+    if [ -d /command ]; then
+        ln -sf /command/* /usr/bin/
+    fi
 else
     echo "Starting custom scripts"
 fi
@@ -49,20 +53,6 @@ if [ -z "$shebang" ]; then
 fi
 
 ####################
-# Helper functions #
-####################
-
-apply_s6_mods() {
-    local file="$1"
-    sed -i "1s|^.*|#!$shebang|" "$file"
-    #sed -i -E 's|s6-setuidgid[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \1 -c "\2"|g' "$file"
-    sed -i -E 's|s6-svwait[[:space:]]+-d[[:space:]]+([^[:space:]]+)|bash -c '\''while [ -f \1/supervise/pid ]; do sleep 0.5; done'\''|g' "$file"
-    sed -i -E 's|s6-setuidgid([[:space:]]+-[[:alnum:]-]+)?[[:space:]]+([a-zA-Z0-9._-]+)[[:space:]]+(.*)$|su -s /bin/bash \2 -c "\3"|g' "$file"
-    sed -i -E 's|s6-envuidgid[[:space:]]+([a-zA-Z0-9._-]+)|id -u \1 \|\| true|g' "$file"
-    chmod +x "$file" || true
-}
-
-####################
 # Starting scripts #
 ####################
 
@@ -83,10 +73,9 @@ for SCRIPTS in /etc/cont-init.d/*; do
         sed -i "s/^\s*chmod /true # chmod /g" "$SCRIPTS"
     fi
 
-    # Apply s6 compatibility tweaks
-    if $PID1; then
-        apply_s6_mods "$SCRIPTS"
-    fi
+    # Prepare to run
+    sed -i "1s|^.*|#!$shebang|" "$SCRIPTS"
+    chmod +x "$SCRIPTS"
 
     # Optionally use 'source' to share env variables, when requested
     if [ "${ha_entry_source:-null}" = true ]; then
@@ -106,11 +95,13 @@ done
 
 # Start run scripts in services.d and s6-overlay/s6-rc.d if PID1
 if $PID1; then
-    shopt -s nullglob # Don't expand unmatched globs to themselves
+    # Run services
+    shopt -s nullglob
     for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run; do
         [ -f "$runfile" ] || continue
         echo "Starting: $runfile"
-        apply_s6_mods "$runfile"
+        sed -i "1s|^.*|#!$shebang|" "$runfile"
+        chmod +x "$runfile"
         (exec "$runfile") &
         true
     done
