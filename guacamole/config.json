@@ -69,6 +69,7 @@
   ],
   "environment": {
     "PGDATA": "/config/postgres",
+    "GUACAMOLE_HOME": "/config",
     "REMOTE_IP_VALVE_ENABLED": "true"
   },
   "image": "ghcr.io/alexbelgium/guacamole-{arch}",
@@ -100,6 +101,6 @@
   "slug": "guacamole",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.6.0-4_test11",
+  "version": "1.6.0-4_test12",
   "video": true
 }
