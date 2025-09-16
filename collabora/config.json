@@ -19,7 +19,7 @@
   "options": {
     "aliasgroup1": "",
     "certfile": "fullchain.pem",
-    "domain": "",
+    "domain1": "",
     "extra_params": "--o:ssl.enable=false --o:user_interface.use_integration_theme=false --o:net.proto=IPv4",
     "keyfile": "privkey.pem",
     "password": "",
@@ -48,6 +48,6 @@
   },
   "slug": "collabora",
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "25.4.5-11",
+  "version": "25.4.5-12",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:9980]/browser/dist/admin/admin.html"
 }
