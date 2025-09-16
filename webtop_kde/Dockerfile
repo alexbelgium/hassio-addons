@@ -36,7 +36,10 @@ VOLUME [ "/sys/fs/cgroup" ]
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
     # Change home folder location
-    usermod --home /config/data_kde abc
+    usermod --home /config/data_kde abc && \
+    \
+    # Set +e
+    [[ -d /etc/services.d ]] && sed -i "1a set +e" /etc/services.d/*/run
 
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
