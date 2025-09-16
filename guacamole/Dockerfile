@@ -52,7 +52,7 @@ RUN \
     \
     # Avoid https://github.com/alexbelgium/hassio-addons/issues/659
     && rm -r /run/shm \
-    && sed -i "1a set +u" /etc/services.d/*/run
+    && sed -i "1a set +e" /etc/services.d/*/run
 
 ##################
 # 3 Install apps #
