@@ -49,7 +49,7 @@ fi
 if [[ -d "$HOME/BirdNET-Pi/model/labels_nm2" ]]; then
     mv "$HOME/BirdNET-Pi/model/labels_nm2" "$HOME/BirdNET-Pi/model/labels_nm"
 fi
-if bashio::config.true 'Use_tphakala_model_v2'; then
+if false && bashio::config.true 'Use_tphakala_model_v2'; then
     echo "... applying tphakala model v2"
     if [[ -f "$HOME/BirdNET-Pi/model/BirdNET-Go_classifier.tflite" ]] && [[ -d "$HOME/BirdNET-Pi/model/labels_go" ]]; then
         # Move labels
