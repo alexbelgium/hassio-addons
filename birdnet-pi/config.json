@@ -76,7 +76,6 @@
     "LIVESTREAM_BOOT_ENABLED": false,
     "MQTT_DISABLED": true,
     "TZ": "Europe/Paris",
-    "Use_tphakala_model_v2": false,
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem",
     "ssl": false
@@ -104,7 +103,6 @@
     "MQTT_PORT_manual": "int?",
     "MQTT_USER_manual": "str?",
     "TZ": "str?",
-    "Use_tphakala_model_v2": "bool",
     "certfile": "str",
     "cifsdomain": "str?",
     "cifspassword": "str?",
@@ -123,6 +121,6 @@
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi",
   "usb": true,
-  "version": "2025.09.11",
+  "version": "2025.09.12",
   "video": true
 }
