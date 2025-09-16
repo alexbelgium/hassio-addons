@@ -68,7 +68,6 @@
     "/dev/nvme2"
   ],
   "environment": {
-    "GUACAMOLE_HOME": "/config",
     "PGDATA": "/config/postgres",
     "REMOTE_IP_VALVE_ENABLED": "true"
   },
@@ -101,6 +100,6 @@
   "slug": "guacamole",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.6.0-4_test10",
+  "version": "1.6.0-4_test11",
   "video": true
 }
