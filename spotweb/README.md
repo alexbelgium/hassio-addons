@@ -1,4 +1,4 @@
-## &#9888; Open Issue : [🐛 Spotweb 502 bad gateway (HA OS 16.2) (opened 2025-09-09)](https://github.com/alexbelgium/hassio-addons/issues/2093) by [@DomBoJan](https://github.com/DomBoJan)
+## &#9888; Open Request : [✨ [REQUEST] [spotweb] Own dbsettings.inc.php (opened 2025-04-29)](https://github.com/alexbelgium/hassio-addons/issues/1850) by [@wimb0](https://github.com/wimb0)
 # Home Assistant Add-ons: Spotweb
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
