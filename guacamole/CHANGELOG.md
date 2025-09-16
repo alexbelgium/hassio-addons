@@ -1,3 +1,5 @@
+## 1.6.0-10 (16-09-2025)
+- Minor bugs fixed
 ## 1.6.0-9 (16-09-2025)
 - Addon is now working again
 
