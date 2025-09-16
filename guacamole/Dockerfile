@@ -27,10 +27,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-
-ENV PGDATA=/config/postgres
-ENV GUACAMOLE_HOME=/config
-WORKDIR /config
+#ENV PGDATA=/config/postgres
+#ENV GUACAMOLE_HOME=/config
+#WORKDIR /config
 
 # hadolint ignore=SC2016
 RUN \
