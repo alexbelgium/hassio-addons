@@ -37,13 +37,11 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # hadolint ignore=SC2016
 RUN \
     # Enable extensions
-    exit 0 && \
     sed -i 's|#!/usr/bin/with-contenv sh|#!/usr/bin/with-contenv bashio|g' /etc/cont-init.d/50-extensions.sh \
     && sed -i 's|$EXTENSIONS|$(bashio::config "EXTENSIONS")|g' /etc/cont-init.d/50-extensions.sh
 
 RUN \
     # Correct transfer
-    exit 0 && \
     sed -i 's|cp -rn /app/guacamole|cp -rn /app/guacamole/*|g' /etc/cont-init.d/* \
     \
     # avoid error
