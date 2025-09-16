@@ -27,9 +27,9 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-#ENV PGDATA=/config/postgres
-#ENV GUACAMOLE_HOME=/config
-#WORKDIR /config
+ENV PGDATA=/config/postgres
+ENV GUACAMOLE_HOME=/config
+WORKDIR /config
 
 # hadolint ignore=SC2016
 RUN \
@@ -92,8 +92,6 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 # Entrypoint modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
 RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-
-ENV ha_entry_source=true
 
 #
 #WORKDIR /data
