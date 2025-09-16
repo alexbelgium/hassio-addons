@@ -90,7 +90,7 @@ for SCRIPTS in /etc/cont-init.d/*; do
     fi
 
     # Cleanup after execution
-    rm "$SCRIPTS"
+    sed -i '1a echo "Script already ran" && exit 0' "$SCRIPTS"
 done
 
 # Start run scripts in services.d and s6-overlay/s6-rc.d if PID1
