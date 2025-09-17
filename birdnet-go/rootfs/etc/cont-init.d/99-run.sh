@@ -13,8 +13,10 @@ CONFIG_LOCATION="/config/config.yaml"
 if bashio::config.true "homeassistant_microphone"; then
     audio_card="default"
     bashio::log.info "homeassistant_microphone option is selected. The audio card config value is set to 'default'. Set in the addon options to which this is set"
-    yq -iy ".realtime.audio.source = \"${audio_card}\"" "$CONFIG_LOCATION"
+else
+    audio_card=""
 fi
+yq -iy ".realtime.audio.source = \"${audio_card}\"" "$CONFIG_LOCATION"
 
 ########################
 # CONFIGURE birdnet-go #
