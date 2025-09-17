@@ -89,7 +89,8 @@
   ],
   "name": "Birdnet-go",
   "options": {
-    "BIRDSONGS_FOLDER": "/config/clips"
+    "BIRDSONGS_FOLDER": "/config/clips",
+    "audio_card": "default"
   },
   "panel_admin": false,
   "panel_icon": "mdi:bird",
@@ -109,6 +110,7 @@
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
     "TZ": "str?",
+    "audio_card": "str?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
