@@ -10,9 +10,9 @@ echo " "
 
 # Check if alsa_card is provided
 CONFIG_LOCATION="/config/config.yaml"
-if bashio::config.has_value "audio_card"; then
-    audio_card=$(bashio::config 'audio_card')
-    bashio::log.info "Audio card set to ${audio_card} if you use an USB card. This overwrites your value already set in your config. Please use 'default' when possible, and set in the addon options to which this 'default' device is set"
+if bashio::config.true "homeassistant_microphone"; then
+    audio_card="default"
+    bashio::log.info "homeassistant_microphone option is selected. The audio card config value is set to 'default'. Set in the addon options to which this is set"
     yq -iy ".realtime.audio.source = \"${audio_card}\"" "$CONFIG_LOCATION"
 fi
 
