@@ -12,7 +12,7 @@ echo " "
 CONFIG_LOCATION="/config/config.yaml"
 if bashio::config.has_value "audio_card"; then
     audio_card=$(bashio::config 'audio_card')
-    bashio::log.info "Audio card set to ${audio_card}. Please only Please ensure it is the correct card"
+    bashio::log.info "Audio card set to ${audio_card} if you use an USB card. This overwrites your value already set in your config. Please use 'default' when possible, and set in the addon options to which this 'default' device is set"
     yq -iy ".realtime.audio.source = \"${audio_card}\"" "$CONFIG_LOCATION"
 fi
 
