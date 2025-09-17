@@ -10,6 +10,11 @@ echo " "
 
 # Check if alsa_card is provided
 CONFIG_LOCATION="/config/config.yaml"
+if bashio::config.has_value "audio_card"; then
+    audio_card=$(bashio::config 'audio_card')
+    bashio::log.info "Audio card set to ${audio_card}. Please only Please ensure it is the correct card"
+    yq -iy ".realtime.audio.source = \"${audio_card}\"" "$CONFIG_LOCATION"
+fi
 
 ########################
 # CONFIGURE birdnet-go #
