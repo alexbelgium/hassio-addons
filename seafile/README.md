@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Seafile] 12.0.14 not started (opened 2025-09-15)](https://github.com/alexbelgium/hassio-addons/issues/2104) by [@KoalaMontana](https://github.com/KoalaMontana)
 # Home assistant add-on: seafile
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
