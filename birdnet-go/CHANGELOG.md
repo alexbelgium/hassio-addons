@@ -1,3 +1,4 @@
+## nightly-20250904_5 (17-09-2025)
 - New option "homeassistant_microphone". If set to true, will use homeassistant's microphone by setting the audio_card to "default". Please use the addon options to select the device to which "default" is allocated
 
 ## nightly-20250904 (06-09-2025)
