@@ -1,3 +1,4 @@
+## nightly-20250904_3 (17-09-2025)
 - New audio_card option added, set by default to "default". Please use the addon options to select the device to which "default" is allocated
 
 ## nightly-20250904 (06-09-2025)
