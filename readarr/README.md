@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [Readarr wont install (opened 2025-09-17)](https://github.com/alexbelgium/hassio-addons/issues/2111) by [@Blechbixn90](https://github.com/Blechbixn90)
 # Home assistant add-on: readarr
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
