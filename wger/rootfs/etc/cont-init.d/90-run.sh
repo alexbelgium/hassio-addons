@@ -48,6 +48,9 @@ while IFS= read -r line; do
   echo "export $line" >> /data/env.sh
 done < /.env
 
+chown wger /data/env.sh
+chmod +x /data/env.sh
+
 bashio::log.info "Starting nginx"
 nginx || true &
 true
