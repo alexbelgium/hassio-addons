@@ -1,4 +1,7 @@
 
+## 3.18.9 (20-09-2025)
+- Update to latest version from wiserain/flexget
+
 ## 3.18.7 (13-09-2025)
 - Update to latest version from wiserain/flexget
 
