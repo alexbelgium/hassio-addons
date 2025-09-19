@@ -32,13 +32,21 @@ ln -s /data/media /home/wger
 # Align permissions #
 #####################
 echo "... align permissions"
+chown -R wger /data
+chown -R wger /home/wger
+chmod -R 777 /data
+
+echo "... add env variables"
 (
     set -o posix
     export -p
 ) > /data/env.sh
-chown -R wger /data
-chown -R wger /home/wger
-chmod -R 777 /data
+while IFS= read -r line; do
+  [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+  var="${line%%=*}"
+  sed -i "/^export[[:space:]]\+$var=/d" /data/env.sh
+  echo "export $line" >> /data/env.sh
+done < /.env
 
 bashio::log.info "Starting nginx"
 nginx || true &
