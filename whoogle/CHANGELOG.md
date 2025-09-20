@@ -1,4 +1,7 @@
 
+## 0.9.4 (20-09-2025)
+- Update to latest version from benbusby/whoogle-search (changelog : https://github.com/benbusby/whoogle-search/releases)
+
 ## 0.9.3 (25-01-2025)
 - Update to latest version from benbusby/whoogle-search (changelog : https://github.com/benbusby/whoogle-search/releases)
 
