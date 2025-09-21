@@ -1,3 +1,5 @@
+## 6.4.0-3 (21-09-2025)
+- Minor bugs fixed
 ## 6.4.0-2 (21-09-2025)
 - Minor bugs fixed
 
