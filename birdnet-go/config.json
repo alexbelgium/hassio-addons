@@ -110,10 +110,10 @@
   "schema": {
     "BIRDSONGS_FOLDER": "str?",
     "TZ": "str?",
-    "homeassistant_microphone": "bool?",
     "cifsdomain": "str?",
     "cifspassword": "str?",
     "cifsusername": "str?",
+    "homeassistant_microphone": "bool?",
     "localdisks": "str?",
     "networkdisks": "str?"
   },

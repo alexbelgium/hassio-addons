@@ -42,10 +42,10 @@ echo "... add env variables"
     export -p
 ) > /data/env.sh
 while IFS= read -r line; do
-  [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
-  var="${line%%=*}"
-  sed -i "/^export[[:space:]]\+$var=/d" /data/env.sh
-  echo "export $line" >> /data/env.sh
+    [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+    var="${line%%=*}"
+    sed -i "/^export[[:space:]]\+$var=/d" /data/env.sh
+    echo "export $line" >> /data/env.sh
 done < /.env
 
 chown wger /data/env.sh
