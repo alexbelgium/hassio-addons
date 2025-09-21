@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Firefly iii] Add-on cannot start after update to version 6.4.0 (opened 2025-09-20)](https://github.com/alexbelgium/hassio-addons/issues/2113) by [@joluas](https://github.com/joluas)
 
 # Home assistant add-on: fireflyiii
 
