@@ -69,7 +69,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "image": "ghcr.io/flaresolverr/flaresolverr:latest",
+  "image": "flaresolverr/flaresolverr:latest",
   "name": "FlareSolverr",
   "ports": {
     "8191/tcp": 8191
