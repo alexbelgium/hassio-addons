@@ -1,4 +1,8 @@
 
+## 3.4.1-1 (21-09-2025)
+
+- Work around Chromium 140 wrapper regression by forcing the script to run with bash to avoid startup failures on Home Assistant.
+
 ## 3.4.1 (20-09-2025)
 - Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
 ## 3.4.0 (26-08-2025)
