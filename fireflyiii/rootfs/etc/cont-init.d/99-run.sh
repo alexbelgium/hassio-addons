@@ -111,13 +111,6 @@ case $(bashio::config 'DB_CONNECTION') in
                 -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
                 -h "${DB_HOST}" -P "${DB_PORT}" \
                 -e "CREATE DATABASE IF NOT EXISTS \`firefly\`;"
-
-        # Ensure the user does not require SSL
-        mysql \
-                --skip-ssl \
-                -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
-                -h "${DB_HOST}" -P "${DB_PORT}" \
-                -e "ALTER USER '${DB_USERNAME}'@'%' REQUIRE NONE;"
     ;;
 
         # Use remote
