@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Access to Gitea app.ini (opened 2025-06-10)](https://github.com/alexbelgium/hassio-addons/issues/1907) by [@UplandJacob](https://github.com/UplandJacob)
 # Home assistant add-on: Gitea
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

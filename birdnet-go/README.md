@@ -1,4 +1,3 @@
-## &#9888; Open Issue : [birdnet-go failed to start (opened 2025-09-06)](https://github.com/alexbelgium/hassio-addons/issues/2086) by [@smcdako](https://github.com/smcdako)
 # Home assistant add-on: Birdnet-Go
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
