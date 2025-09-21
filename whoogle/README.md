@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [Whoogle] BANGS.json error (opened 2025-09-21)](https://github.com/alexbelgium/hassio-addons/issues/2118) by [@bruvv](https://github.com/bruvv)
 # Home assistant add-on: whoogle-search
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)

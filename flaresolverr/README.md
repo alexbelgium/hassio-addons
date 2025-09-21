@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [FlareSolverr] Failing at startup after HA update to 2025.9.4 (opened 2025-09-21)](https://github.com/alexbelgium/hassio-addons/issues/2115) by [@xpucu](https://github.com/xpucu)
 
 # Home assistant add-on: Flaresolver
 
