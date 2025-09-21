@@ -69,7 +69,7 @@
     "/dev/nvme1",
     "/dev/nvme2"
   ],
-  "image": "ghcr.io/alexbelgium/flaresolverr-{arch}",
+  "image": "flaresolverr/flaresolverr:latest",
   "name": "FlareSolverr",
   "ports": {
     "8191/tcp": 8191
@@ -80,6 +80,6 @@
   "slug": "flaresolverr",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "3.4.1",
+  "version": "3.4.1-2",
   "webui": "[PROTO:ssl]://[HOST]:[PORT:8191]"
 }
