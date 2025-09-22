@@ -38,7 +38,7 @@ USER root
 
 RUN echo "wger ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     sed -i "1a sudo -E /./ha_entrypoint.sh" /home/wger/entrypoint.sh && \
-    sed -i "/ha_entrypoint/a source /data/env.sh" /home/wger/entrypoint.sh
+    sed -i "/ha_entrypoint/a . /data/env.sh" /home/wger/entrypoint.sh
 
 ##################
 # 3 Install apps #
