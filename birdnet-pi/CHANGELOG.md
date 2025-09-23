@@ -1,3 +1,5 @@
+- Remove updates indicator
+
 ## 2025.09.12 (20-09-2025)
 - Minor bugs fixed
 ## 2025.09.11 (14-09-2025)
