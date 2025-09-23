@@ -63,6 +63,10 @@ if false && bashio::config.true 'Use_tphakala_model_v2'; then
     fi
 fi
 
+# Avoid updates
+echo "... modifying the config to silence update indicators"
+sed -i "/SILENCE_UPDATE_INDICATOR/c SILENCE_UPDATE_INDICATOR=1" /config/birdnet.conf
+
 # Correct language labels according to birdnet.conf
 echo "... adapting labels according to birdnet.conf"
 if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
