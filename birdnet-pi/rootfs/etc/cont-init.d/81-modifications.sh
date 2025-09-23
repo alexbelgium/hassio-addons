@@ -66,6 +66,7 @@ fi
 # Avoid updates
 echo "... modifying the config to silence update indicators"
 sed -i "/SILENCE_UPDATE_INDICATOR/c SILENCE_UPDATE_INDICATOR=1" /config/birdnet.conf
+sed -i 's/"\.\$updatediv\.\"//g' "$HOME"/BirdNET-Pi/homepage/views.php
 
 # Correct language labels according to birdnet.conf
 echo "... adapting labels according to birdnet.conf"
