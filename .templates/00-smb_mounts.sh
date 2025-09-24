@@ -152,6 +152,8 @@ if bashio::config.has_value 'networkdisks'; then
         diskname="${diskname//\\//}" # replace \ with /
         diskname="${diskname##*/}"   # Get only last part of the name
         MOUNTED=false
+        SMBVERS_FORCE=""
+        SECVERS_FORCE=""
 
         # Start
         echo "... mounting ($FSTYPE) $disk"
@@ -216,9 +218,15 @@ if bashio::config.has_value 'networkdisks'; then
                     continue
                 elif echo "$OUTPUT" | grep -q "tree connect failed" || echo "$OUTPUT" | grep -q "NT_STATUS_CONNECTION_DISCONNECTED"; then
                     echo "... testing path"
-                    bashio::log.fatal "...... invalid or inaccessible SMB path. Script will stop."
-                    touch ERRORCODE
-                    continue
+                    if smbclient -t 2 "$disk" -m NT1 -U "$USERNAME%$PASSWORD" -c "exit" $DOMAINCLIENT &> /dev/null; then
+                        bashio::log.warning "...... share reachable only with legacy SMBv1 (NT1) negotiation. Forcing SMBv1 options."
+                        SMBVERS_FORCE=",vers=1.0"
+                        SECVERS_FORCE=",sec=ntlm"
+                    else
+                        bashio::log.fatal "...... invalid or inaccessible SMB path. Script will stop."
+                        touch ERRORCODE
+                        continue
+                    fi
                 elif ! echo "$OUTPUT" | grep -q "Disk"; then
                     echo "... testing path"
                     bashio::log.fatal "...... no shares found. Invalid or inaccessible SMB path?"
@@ -260,6 +268,16 @@ if bashio::config.has_value 'networkdisks'; then
                 else
                     echo "...... SMB version : couldn't detect, default used"
                     SMBVERS=""
+                fi
+
+                # Apply forced SMBv1 options when initial connection required NT1 fallback
+                if [[ -n "$SMBVERS_FORCE" ]]; then
+                    if [[ -z "$SMBVERS" ]]; then
+                        SMBVERS="$SMBVERS_FORCE"
+                    fi
+                    if [[ -z "$SECVERS" ]]; then
+                        SECVERS="$SECVERS_FORCE"
+                    fi
                 fi
 
                 # Test with different security versions
