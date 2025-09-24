@@ -280,6 +280,15 @@ if bashio::config.has_value 'networkdisks'; then
                     fi
                 fi
 
+                # Ensure the Samba client allows SMBv1 when those options are required
+                if [[ "${SMBVERS}${SMBVERS_FORCE}" == *"vers=1.0"* ]]; then
+                    if [[ -f /etc/samba/smb.conf ]]; then
+                        bashio::log.warning "...... enabling SMBv1 support in Samba client configuration"
+                        sed -i '/\[global\]/!b;n;/client min protocol = NT1/!a\
+        client min protocol = NT1' /etc/samba/smb.conf
+                    fi
+                fi
+
                 # Test with different security versions
                 #######################################
                 for SECVERS in "$SECVERS" ",sec=ntlmv2" ",sec=ntlmssp" ",sec=ntlmsspi" ",sec=krb5i" ",sec=krb5" ",sec=ntlm" ",sec=ntlmv2i"; do
