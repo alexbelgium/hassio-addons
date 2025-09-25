@@ -152,6 +152,8 @@ if bashio::config.has_value 'networkdisks'; then
         diskname="${diskname//\\//}" # replace \ with /
         diskname="${diskname##*/}"   # Get only last part of the name
         MOUNTED=false
+        SMBVERS_FORCE=""
+        SECVERS_FORCE=""
 
         # Start
         echo "... mounting ($FSTYPE) $disk"
@@ -215,10 +217,10 @@ if bashio::config.has_value 'networkdisks'; then
                     fi
                     continue
                 elif echo "$OUTPUT" | grep -q "tree connect failed" || echo "$OUTPUT" | grep -q "NT_STATUS_CONNECTION_DISCONNECTED"; then
-                    echo "... testing path"
-                    bashio::log.fatal "...... invalid or inaccessible SMB path. Script will stop."
-                    touch ERRORCODE
-                    continue
+                    echo "... using SMBv1"
+                    bashio::log.warning "...... share reachable only with legacy SMBv1 (NT1) negotiation. Forcing SMBv1 options."
+                    SMBVERS_FORCE=",vers=1.0"
+                     SECVERS_FORCE=",sec=ntlm"
                 elif ! echo "$OUTPUT" | grep -q "Disk"; then
                     echo "... testing path"
                     bashio::log.fatal "...... no shares found. Invalid or inaccessible SMB path?"
@@ -260,6 +262,25 @@ if bashio::config.has_value 'networkdisks'; then
                 else
                     echo "...... SMB version : couldn't detect, default used"
                     SMBVERS=""
+                fi
+
+                # Apply forced SMBv1 options when initial connection required NT1 fallback
+                if [[ -n "$SMBVERS_FORCE" ]]; then
+                    if [[ -z "$SMBVERS" ]]; then
+                        SMBVERS="$SMBVERS_FORCE"
+                    fi
+                    if [[ -z "$SECVERS" ]]; then
+                        SECVERS="$SECVERS_FORCE"
+                    fi
+                fi
+
+                # Ensure the Samba client allows SMBv1 when those options are required
+                if [[ "${SMBVERS}${SMBVERS_FORCE}" == *"vers=1.0"* ]]; then
+                    if [[ -f /etc/samba/smb.conf ]]; then
+                        bashio::log.warning "...... enabling SMBv1 support in Samba client configuration"
+                        sed -i '/\[global\]/!b;n;/client min protocol = NT1/!a\
+        client min protocol = NT1' /etc/samba/smb.conf
+                    fi
                 fi
 
                 # Test with different security versions
