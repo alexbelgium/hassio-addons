@@ -1,4 +1,7 @@
 
+## 8.11.1 (27-09-2025)
+- Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
+
 ## 8.10.0 (06-09-2025)
 - Update to latest version from linuxserver/docker-calibre (changelog : https://github.com/linuxserver/docker-calibre/releases)
 ## 8.9.0-7 (23-08-2025)
