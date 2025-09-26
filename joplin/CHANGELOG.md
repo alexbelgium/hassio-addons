@@ -1,4 +1,7 @@
 
+## 3.4.4 (27-09-2025)
+- Update to latest version from etechonomy/joplin-server (changelog : https://github.com/etechonomy/joplin-server/releases)
+
 ## 3.4.3 (13-09-2025)
 - Update to latest version from etechonomy/joplin-server (changelog : https://github.com/etechonomy/joplin-server/releases)
 
