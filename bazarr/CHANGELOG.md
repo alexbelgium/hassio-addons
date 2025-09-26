@@ -1,4 +1,7 @@
 
+## 1.5.3 (27-09-2025)
+- Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
+
 ## 1.5.2 (17-05-2025)
 - Update to latest version from linuxserver/docker-bazarr (changelog : https://github.com/linuxserver/docker-bazarr/releases)
 
