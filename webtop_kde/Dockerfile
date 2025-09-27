@@ -32,6 +32,9 @@ USER root
 # load volume
 VOLUME [ "/sys/fs/cgroup" ]
 
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # Allow UID and GID setting
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
