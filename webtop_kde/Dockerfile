@@ -42,7 +42,7 @@ RUN \
     usermod --home /config/data_kde abc && \
     \
     # Set +e
-    [[ -d /etc/services.d ]] && sed -i "1a set +e" /etc/services.d/*/run
+    if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
