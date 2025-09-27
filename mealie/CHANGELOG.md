@@ -1,4 +1,3 @@
-## v3.2.2 (27-09-2025)
 - Send discovery message to Home Assistant
 
 ## v3.2.1 (20-09-2025)
