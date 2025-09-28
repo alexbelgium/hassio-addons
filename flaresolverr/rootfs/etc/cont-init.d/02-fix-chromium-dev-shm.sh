@@ -6,7 +6,7 @@ fix_file="/etc/chromium.d/dev-shm"
 
 if [ -f "${fix_file}" ]; then
     bashio::log.info "Patching Chromium shared memory helper for reliable startup"
-    cat <<'PATCH' > "${fix_file}"
+    cat << 'PATCH' > "${fix_file}"
 # shellcheck shell=sh
 # Patched by alexbelgium/hassio-addons to avoid arithmetic errors with large values on some shells.
 shm_avail=$(findmnt -bnr -o avail -T /dev/shm 2>/dev/null)

@@ -107,11 +107,11 @@ case $(bashio::config 'DB_CONNECTION') in
         bashio::log.info "Creating database for Firefly-iii if required"
         # Create database without SSL requirement
         mysql \
-                --skip-ssl \
-                -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
-                -h "${DB_HOST}" -P "${DB_PORT}" \
-                -e "CREATE DATABASE IF NOT EXISTS \`firefly\`;"
-    ;;
+            --skip-ssl \
+            -u "${DB_USERNAME}" -p"${DB_PASSWORD}" \
+            -h "${DB_HOST}" -P "${DB_PORT}" \
+            -e "CREATE DATABASE IF NOT EXISTS \`firefly\`;"
+        ;;
 
         # Use remote
     *)

@@ -7,16 +7,16 @@ echo "Warning - minimum configuration recommended: 2 CPU cores and 4 GB of memor
 chromium_wrapper="/usr/bin/chromium"
 
 if [[ -f "${chromium_wrapper}" ]]; then
-  if [[ ! -x /bin/bash ]]; then
-    bashio::log.warning "Chromium wrapper patch skipped: /bin/bash is not available."
-  else
-    if grep -q '^#!/bin/sh' "${chromium_wrapper}"; then
-      if grep -q '==' "${chromium_wrapper}"; then
-        bashio::log.info "Adjusting Chromium wrapper to use bash for compatibility with Chromium 140."
-        sed -i '1s|/bin/sh|/bin/bash|' "${chromium_wrapper}"
-      fi
+    if [[ ! -x /bin/bash ]]; then
+        bashio::log.warning "Chromium wrapper patch skipped: /bin/bash is not available."
+    else
+        if grep -q '^#!/bin/sh' "${chromium_wrapper}"; then
+            if grep -q '==' "${chromium_wrapper}"; then
+                bashio::log.info "Adjusting Chromium wrapper to use bash for compatibility with Chromium 140."
+                sed -i '1s|/bin/sh|/bin/bash|' "${chromium_wrapper}"
+            fi
+        fi
     fi
-  fi
 fi
 
 ##############
