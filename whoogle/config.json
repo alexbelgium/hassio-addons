@@ -75,7 +75,7 @@
   "ingress": true,
   "ingress_stream": true,
   "map": [
-    "config:rw"
+    "addon_config:rw"
   ],
   "name": "Whoogle Search",
   "options": {
@@ -127,5 +127,5 @@
   "slug": "whoogle-search",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons/tree/master/whoogle",
-  "version": "0.9.4"
+  "version": "0.9.4-2"
 }
