@@ -1,3 +1,4 @@
+## 0.9.4-2 (30-09-2025)
 - Applied new homeassistant config logic, which will allow in the future all Mealie data to be backuped with the addon. All data (+ config) is moved to /addon_configs/db21ed7f_whoogle_search
 
 ## 0.9.4 (20-09-2025)
