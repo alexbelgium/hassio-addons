@@ -220,7 +220,7 @@ if bashio::config.has_value 'networkdisks'; then
                     echo "... using SMBv1"
                     bashio::log.warning "...... share reachable only with legacy SMBv1 (NT1) negotiation. Forcing SMBv1 options."
                     SMBVERS_FORCE=",vers=1.0"
-                     SECVERS_FORCE=",sec=ntlm"
+                    SECVERS_FORCE=",sec=ntlm"
                 elif ! echo "$OUTPUT" | grep -q "Disk"; then
                     echo "... testing path"
                     bashio::log.fatal "...... no shares found. Invalid or inaccessible SMB path?"
