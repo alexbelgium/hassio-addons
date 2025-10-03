@@ -1,3 +1,6 @@
+
+## 0.6.0 (04-10-2025)
+- Update to latest version from iib0011/omni-tools (changelog : https://github.com/iib0011/omni-tools/releases)
 ## v0.5.0 (30-07-2025)
 - Minor bugs fixed
 ## 0.5.0 (30-07-2025)
