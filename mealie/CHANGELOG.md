@@ -1,3 +1,6 @@
+
+## v3.3.1 (04-10-2025)
+- Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 ## v3.2.1-2 (27-09-2025)
 - Send discovery message to Home Assistant
 
