@@ -1,3 +1,5 @@
+## 2025.10.02 (07-10-2025)
+- Minor bugs fixed
 ## 2025.10.01 (05-10-2025)
 - Remove updates indicator
 
