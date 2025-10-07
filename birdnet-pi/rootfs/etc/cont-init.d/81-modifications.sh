@@ -65,7 +65,11 @@ fi
 
 # Avoid updates
 echo "... modifying the config to silence update indicators"
-sed -i "/SILENCE_UPDATE_INDICATOR/c SILENCE_UPDATE_INDICATOR=1" /config/birdnet.conf
+# Remove if two lines
+if [ "$(grep -c '^SILENCE_UPDATE_INDICATOR' /config/birdnet.conf)" -ge 2 ]; then
+    awk '/^SILENCE_UPDATE_INDICATOR/ { if (++n == 2) next } { print }' /config/birdnet.conf > /config/birdnet.conf.tmp && mv /config/birdnet.conf.tmp /config/birdnet.conf
+fi
+sed -i "/^SILENCE_UPDATE_INDICATOR/c SILENCE_UPDATE_INDICATOR=1" /config/birdnet.conf
 sed -i 's/"\.\$updatediv\.\"//g' "$HOME"/BirdNET-Pi/homepage/views.php
 
 # Correct language labels according to birdnet.conf
