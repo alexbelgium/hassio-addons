@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] Tandoor - Connectors (opened 2025-10-08)](https://github.com/alexbelgium/hassio-addons/issues/2135) by [@blowk](https://github.com/blowk)
 # Hass.io Add-ons: Tor with bridges
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
