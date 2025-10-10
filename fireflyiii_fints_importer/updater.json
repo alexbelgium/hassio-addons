@@ -1,9 +1,9 @@
 {
   "dockerhub_by_date": "true",
-  "last_update": "20-09-2025",
+  "last_update": "",
   "repository": "alexbelgium/hassio-addons",
   "slug": "fireflyiii_data_importer",
   "source": "dockerhub",
   "upstream_repo": "benkl/firefly-iii-fints-importer",
-  "upstream_version": "1.3.0"
+  "upstream_version": "-"
 }
