@@ -124,7 +124,7 @@
   "slug": "ente",
   "udev": true,
   "url": "https://github.com/alexbelgium/hassio-addons",
-  "version": "1.2.9",
+  "version": "4.4.5",
   "video": true,
   "webui": "http://[HOST]:[PORT:3000]"
 }

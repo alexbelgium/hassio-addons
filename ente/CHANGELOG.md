@@ -1,4 +1,7 @@
 
+## 4.4.5 (11-10-2025)
+- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
+
 ## 1.2.9 (04-10-2025)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
 
