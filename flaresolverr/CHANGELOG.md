@@ -1,4 +1,7 @@
 
+## 3.4.2 (11-10-2025)
+- Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
+
 ## 3.4.1-1 (21-09-2025)
 
 - Fix Chromium startup by hardening the shared memory helper for large reported sizes (thanks to community reports)
