@@ -1,3 +1,6 @@
+
+## nightly-20251008 (11-10-2025)
+- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 ## nightly-20250904_6 (17-09-2025)
 - New option "homeassistant_microphone". If set to true, will use homeassistant's microphone by setting the audio_card to "default". Please use the addon options to select the device to which "default" is allocated
 
