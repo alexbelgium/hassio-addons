@@ -1,3 +1,6 @@
+
+## 1.1.0 (11-10-2025)
+- Update to latest version from benbusby/whoogle-search (changelog : https://github.com/benbusby/whoogle-search/releases)
 ## 0.9.4-2 (30-09-2025)
 - Applied new homeassistant config logic, which will allow in the future all Mealie data to be backuped with the addon. All data (+ config) is moved to /addon_configs/db21ed7f_whoogle_search
 
