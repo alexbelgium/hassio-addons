@@ -1,4 +1,5 @@
 ## &#9888; Open Issue : [🐛 [Calibre] Waiting for stream... / WebSocket disconnected. Attempting to reconnect... / Connection established. Waiting for server mode... (opened 2025-09-25)](https://github.com/alexbelgium/hassio-addons/issues/2126) by [@codyc1515](https://github.com/codyc1515)
+## &#9888; Open Issue : [🐛 [CALIBRE] Calibre  will not start since the last update (opened 2025-10-09)](https://github.com/alexbelgium/hassio-addons/issues/2136) by [@matthieudevipa](https://github.com/matthieudevipa)
 # Home assistant add-on: calibre
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
