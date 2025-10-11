@@ -1,3 +1,4 @@
+## &#9888; Open Issue : [🐛 [LINKWARDEN] Never use STORAGE_FOLDER (opened 2025-10-11)](https://github.com/alexbelgium/hassio-addons/issues/2137) by [@guimex22](https://github.com/guimex22)
 
 # Home assistant add-on: Linkwarden
 
