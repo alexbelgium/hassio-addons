@@ -1,3 +1,4 @@
+## &#9888; Open Request : [✨ [REQUEST] [Joplin] Add Ingress (opened 2025-06-15)](https://github.com/alexbelgium/hassio-addons/issues/1913) by [@aluavin](https://github.com/aluavin)
 # Home assistant add-on: Joplin
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
