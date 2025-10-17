@@ -45,76 +45,101 @@ sanitize_variable() {
     fi
 }
 
+export_option() {
+    local key="$1"
+    local value="$2"
+    local line secret secretnum valuepy
+
+    value=$(sanitize_variable "$value")
+
+    if [[ -z "$value" ]]; then
+        line="${key}=''"
+    else
+        line="${key}='${value//\'/\'\\\'\'}'"
+    fi
+
+    if [[ "${line}" == *"!secret "* ]]; then
+        echo "secret detected"
+        secret=${line#*secret }
+        secret="${secret%[\"\']}"
+        if [[ "$SECRETSOURCE" == "false" ]]; then
+            bashio::log.warning "Homeassistant config not mounted, secrets are not supported"
+            return
+        fi
+        secretnum=$(sed -n "/$secret:/=" "$SECRETSOURCE")
+        [[ "$secretnum" == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+        secret=$(sed -n "/$secret:/p" "$SECRETSOURCE")
+        secret=${secret#*: }
+        line="${line%%=*}='$secret'"
+        value="$secret"
+    fi
+
+    if bashio::config.false "verbose" || [[ "${key,,}" == *"pass"* ]]; then
+        bashio::log.blue "${key}=******"
+    else
+        bashio::log.blue "$line"
+    fi
+
+    export "$line"
+
+    if command -v "python3" &> /dev/null; then
+        [ ! -f /env.py ] && echo "import os" > /env.py
+        valuepy="${value//\\/\\\\}"
+        valuepy="${valuepy//[\"\']/}"
+        echo "os.environ['${key}'] = '$valuepy'" >> /env.py
+        python3 /env.py
+    fi
+
+    echo "$line" >> /.env || true
+    mkdir -p /etc
+    echo "$line" >> /etc/environment
+    if cat /etc/services.d/*/*run* &> /dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2> /dev/null; fi
+    if cat /etc/cont-init.d/*.sh &> /dev/null; then sed -i "1a export $line" /etc/cont-init.d/*.sh 2> /dev/null; fi
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${value}" > /var/run/s6/container_environment/"${key}"; fi
+    echo "export ${key}='${value}'" >> ~/.bashrc
+}
+
 for KEYS in "${arr[@]}"; do
     # export key
     VALUE=$(jq -r --raw-output ".\"$KEYS\"" "$JSONSOURCE")
     # Check if the value is an array
     if [[ "$VALUE" == \[* ]]; then
-        bashio::log.warning "One of your option is an array, skipping"
-    else
-        # Sanitize variable
-        VALUE=$(sanitize_variable "$VALUE")
-        # If value is empty, returns an empty value
-        if [[ -z "$VALUE" ]]; then
-            line="${KEYS}=''"
-        else
-            # Continue for single values
-            line="${KEYS}='${VALUE//\'/\'\\\'\'}'"
-        fi
-        # Check if secret
-        if [[ "${line}" == *"!secret "* ]]; then
-            echo "secret detected"
-            # Get argument
-            secret=${line#*secret }
-            # Remove trailing ' or "
-            secret="${secret%[\"\']}"
-            # Stop if secret file not mounted
-            if [[ "$SECRETSOURCE" == "false" ]]; then
-                bashio::log.warning "Homeassistant config not mounted, secrets are not supported"
+        if [[ "$KEYS" == "env_vars" ]]; then
+            mapfile -t env_entries < <(jq -c ".\"$KEYS\"[]" "$JSONSOURCE")
+            if [[ "${#env_entries[@]}" -eq 0 ]]; then
                 continue
             fi
-            # Check if single match
-            secretnum=$(sed -n "/$secret:/=" "$SECRETSOURCE")
-            [[ "$secretnum" == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
-            # Get text
-            secret=$(sed -n "/$secret:/p" "$SECRETSOURCE")
-            secret=${secret#*: }
-            line="${line%%=*}='$secret'"
-            VALUE="$secret"
-        fi
-        # text
-        if bashio::config.false "verbose" || [[ "${KEYS,,}" == *"pass"* ]]; then
-            bashio::log.blue "${KEYS}=******"
+            env_processed=false
+            for entry in "${env_entries[@]}"; do
+                if [[ "$entry" == \{* ]]; then
+                    mapfile -t env_keys < <(jq -r 'keys[]' <<<"$entry")
+                    for env_key in "${env_keys[@]}"; do
+                        env_value=$(jq -r --arg key "$env_key" '.[$key]' <<<"$entry")
+                        export_option "$env_key" "$env_value"
+                        env_processed=true
+                    done
+                elif [[ "${entry:0:1}" == '"' ]]; then
+                    env_pair=$(jq -r '.' <<<"$entry")
+                    if [[ "$env_pair" == *=* ]]; then
+                        env_key=${env_pair%%=*}
+                        env_value=${env_pair#*=}
+                        export_option "$env_key" "$env_value"
+                        env_processed=true
+                    else
+                        bashio::log.warning "env_vars entry '$env_pair' is not in KEY=VALUE format, skipping"
+                    fi
+                else
+                    bashio::log.warning "env_vars entry format not supported, skipping"
+                fi
+            done
+            if [[ "$env_processed" == false ]]; then
+                bashio::log.warning "env_vars option format not supported, skipping"
+            fi
         else
-            bashio::log.blue "$line"
+            bashio::log.warning "One of your option is an array, skipping"
         fi
-
-        ######################################
-        # Export the variable to run scripts #
-        ######################################
-        # shellcheck disable=SC2163
-        export "$line"
-        # export to python
-        if command -v "python3" &> /dev/null; then
-            [ ! -f /env.py ] && echo "import os" > /env.py
-            # Escape \
-            VALUEPY="${VALUE//\\/\\\\}"
-            # Avoid " and '
-            VALUEPY="${VALUEPY//[\"\']/}"
-            echo "os.environ['${KEYS}'] = '$VALUEPY'" >> /env.py
-            python3 /env.py
-        fi
-        # set .env
-        echo "$line" >> /.env || true
-        # set /etc/environment
-        mkdir -p /etc
-        echo "$line" >> /etc/environment
-        # For non s6
-        if cat /etc/services.d/*/*run* &> /dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2> /dev/null; fi
-        if cat /etc/cont-init.d/*.sh &> /dev/null; then sed -i "1a export $line" /etc/cont-init.d/*.sh 2> /dev/null; fi
-        # For s6
-        if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-        echo "export ${KEYS}='${VALUE}'" >> ~/.bashrc
+    else
+        export_option "$KEYS" "$VALUE"
     fi
 done
 
