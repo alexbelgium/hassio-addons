@@ -1,0 +1,108 @@
+arch:
+  - aarch64
+  - amd64
+  - armv7
+codenotary: alexandrep.github@gmail.com
+description: A fork of Sonarr to work with movies like Couchpotato
+devices:
+  - /dev/dri
+  - /dev/dri/card0
+  - /dev/dri/card1
+  - /dev/dri/renderD128
+  - /dev/vchiq
+  - /dev/video10
+  - /dev/video11
+  - /dev/video12
+  - /dev/video13
+  - /dev/video14
+  - /dev/video15
+  - /dev/video16
+  - /dev/ttyUSB0
+  - /dev/sda
+  - /dev/sdb
+  - /dev/sdc
+  - /dev/sdd
+  - /dev/sde
+  - /dev/sdf
+  - /dev/sdg
+  - /dev/nvme
+  - /dev/nvme0
+  - /dev/nvme0n1
+  - /dev/nvme0n1p1
+  - /dev/nvme0n1p2
+  - /dev/nvme0n1p3
+  - /dev/nvme1n1
+  - /dev/nvme1n1p1
+  - /dev/nvme1n1p2
+  - /dev/nvme1n1p3
+  - /dev/nvme2n1
+  - /dev/nvme2n1p1
+  - /dev/nvme2n1p2
+  - /dev/nvme2n3p3
+  - /dev/mmcblk
+  - /dev/fuse
+  - /dev/sda1
+  - /dev/sdb1
+  - /dev/sdc1
+  - /dev/sdd1
+  - /dev/sde1
+  - /dev/sdf1
+  - /dev/sdg1
+  - /dev/sda2
+  - /dev/sdb2
+  - /dev/sdc2
+  - /dev/sdd2
+  - /dev/sde2
+  - /dev/sdf2
+  - /dev/sdg2
+  - /dev/sda3
+  - /dev/sdb3
+  - /dev/sda4
+  - /dev/sdb4
+  - /dev/sda5
+  - /dev/sda6
+  - /dev/sda7
+  - /dev/sda8
+  - /dev/nvme0
+  - /dev/nvme1
+  - /dev/nvme2
+environment:
+  PGID: '0'
+  PUID: '0'
+image: ghcr.io/alexbelgium/radarr_nas-{arch}
+ingress: true
+ingress_entry: radarr
+init: false
+map:
+  - config:rw
+  - share:rw
+  - media:rw
+  - ssl
+name: Radarr
+options:
+  PGID: 0
+  PUID: 0
+  connection_mode: ingress_noauth
+panel_admin: false
+panel_icon: mdi:movie-outline
+ports:
+  7878/tcp: 7878
+ports_description:
+  7878/tcp: Web interface
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
+schema:
+  PGID: int
+  PUID: int
+  TZ: str?
+  cifsdomain: str?
+  cifspassword: str?
+  cifsusername: str?
+  connection_mode: list(ingress_noauth|noingress_auth|ingress_auth)
+  localdisks: str?
+  networkdisks: str?
+slug: radarr_nas
+udev: true
+url: https://github.com/alexbelgium/hassio-addons/tree/master/radarr
+version: 5.27.5.10198

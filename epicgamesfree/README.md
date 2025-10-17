@@ -4,9 +4,9 @@
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
 
-![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fepicgamesfree%2Fconfig.json)
-![Ingress](https://img.shields.io/badge/dynamic/json?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fepicgamesfree%2Fconfig.json)
-![Arch](https://img.shields.io/badge/dynamic/json?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fepicgamesfree%2Fconfig.json)
+![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fepicgamesfree%2Fconfig.yaml)
+![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fepicgamesfree%2Fconfig.yaml)
+![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fepicgamesfree%2Fconfig.yaml)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
 [![GitHub Super-Linter](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/weekly-supelinter.yaml?label=Lint%20code%20base)](https://github.com/alexbelgium/hassio-addons/actions/workflows/weekly-supelinter.yaml)
@@ -34,14 +34,14 @@ There are no addon options available through the Home Assistant interface. All c
 
 Configuration files are stored in `/config/addons_config/epicgamesfree/`:
 
-- **config.json**: Main configuration file
+- **config.yaml**: Main configuration file
 - **cookies.json**: Authentication cookies (optional)
 
 If these files don't exist, they will be created at first boot with default settings.
 
 ### Basic Configuration
 
-Create `/config/addons_config/epicgamesfree/config.json`:
+Create `/config/addons_config/epicgamesfree/config.yaml`:
 
 ```json
 {
@@ -142,7 +142,7 @@ For detailed cookie import instructions, see: https://github.com/claabs/epicgame
 ### Troubleshooting
 
 #### Timeout Errors
-Add the following to your config.json:
+Add the following to your config.yaml:
 ```json
 "browserNavigationTimeout": 300000
 ```
@@ -170,7 +170,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ### Timeout error
 
-Please try adding `"browserNavigationTimeout": 300000,` to your config.json (https://github.com/alexbelgium/hassio-addons/issues/675#issuecomment-1407675351)
+Please try adding `"browserNavigationTimeout": 300000,` to your config.yaml (https://github.com/alexbelgium/hassio-addons/issues/675#issuecomment-1407675351)
 
 ### Other errors
 

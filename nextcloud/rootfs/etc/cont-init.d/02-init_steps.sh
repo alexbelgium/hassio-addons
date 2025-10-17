@@ -106,7 +106,7 @@ if bashio::config.has_value "default_phone_region"; then
 fi
 
 ######################
-# Modify config.json #
+# Modify config.yaml #
 ######################
 
 echo "... Disabling check_data_directory_permissions"
