@@ -46,7 +46,7 @@ if bashio::config.has_value 'log_level'; then
 fi
 
 # Show admin token in the log, if config does not exist.
-if ! bashio::fs.file_exists '/data/config.json'; then
+if ! bashio::fs.file_exists '/data/config.yaml'; then
     admin_token=$(openssl rand -base64 48)
     export ADMIN_TOKEN="${admin_token}"
 

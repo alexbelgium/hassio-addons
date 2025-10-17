@@ -1,0 +1,114 @@
+arch:
+  - aarch64
+  - amd64
+codenotary: alexandrep.github@gmail.com
+description: Automated Binance trading bot - Trade multiple cryptocurrencies. Buy
+  low/sell high with Grid Trading. Integrated with TradingView technical analysis
+devices:
+  - /dev/dri
+  - /dev/dri/card0
+  - /dev/dri/card1
+  - /dev/dri/renderD128
+  - /dev/vchiq
+  - /dev/video10
+  - /dev/video11
+  - /dev/video12
+  - /dev/video13
+  - /dev/video14
+  - /dev/video15
+  - /dev/video16
+  - /dev/ttyUSB0
+  - /dev/sda
+  - /dev/sdb
+  - /dev/sdc
+  - /dev/sdd
+  - /dev/sde
+  - /dev/sdf
+  - /dev/sdg
+  - /dev/nvme
+  - /dev/nvme0
+  - /dev/nvme0n1
+  - /dev/nvme0n1p1
+  - /dev/nvme0n1p2
+  - /dev/nvme0n1p3
+  - /dev/nvme1n1
+  - /dev/nvme1n1p1
+  - /dev/nvme1n1p2
+  - /dev/nvme1n1p3
+  - /dev/nvme2n1
+  - /dev/nvme2n1p1
+  - /dev/nvme2n1p2
+  - /dev/nvme2n3p3
+  - /dev/mmcblk
+  - /dev/fuse
+  - /dev/sda1
+  - /dev/sdb1
+  - /dev/sdc1
+  - /dev/sdd1
+  - /dev/sde1
+  - /dev/sdf1
+  - /dev/sdg1
+  - /dev/sda2
+  - /dev/sdb2
+  - /dev/sdc2
+  - /dev/sdd2
+  - /dev/sde2
+  - /dev/sdf2
+  - /dev/sdg2
+  - /dev/sda3
+  - /dev/sdb3
+  - /dev/sda4
+  - /dev/sdb4
+  - /dev/sda5
+  - /dev/sda6
+  - /dev/sda7
+  - /dev/sda8
+  - /dev/nvme0
+  - /dev/nvme1
+  - /dev/nvme2
+environment:
+  BINANCE_REDIS_HOST: localhost
+  BINANCE_REDIS_PASSWORD: ''
+  BINANCE_REDIS_PORT: '6379'
+  PYTHONUNBUFFERED: '1'
+  TRADINGVIEW_LOG_LEVEL: INFO
+image: ghcr.io/alexbelgium/binance_trading_bot-{arch}
+ingress: true
+ingress_stream: true
+map:
+  - config:rw
+name: Binance Trading Bot
+options:
+  BINANCE_AUTHENTICATION_ENABLED: true
+  BINANCE_AUTHENTICATION_PASSWORD: null
+  BINANCE_MODE: test
+  BINANCE_SLACK_ENABLED: false
+panel_admin: false
+panel_icon: mdi:bitcoin
+ports:
+  80/tcp: null
+  8080/tcp: null
+ports_description:
+  80/tcp: Web UI port
+  8080/tcp: Trading View port
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
+schema:
+  BINANCE_AUTHENTICATION_ENABLED: bool
+  BINANCE_AUTHENTICATION_PASSWORD: str
+  BINANCE_LIVE_API_KEY: str?
+  BINANCE_LIVE_SECRET_KEY: str?
+  BINANCE_LOCAL_TUNNEL_ENABLED: bool?
+  BINANCE_LOCAL_TUNNEL_SUBDOMAIN: str?
+  BINANCE_MODE: list(live|test)
+  BINANCE_SLACK_CHANNEL: str?
+  BINANCE_SLACK_ENABLED: bool?
+  BINANCE_SLACK_USERNAME: str?
+  BINANCE_SLACK_WEBHOOK_URL: str?
+  BINANCE_TEST_API_KEY: str?
+  BINANCE_TEST_SECRET_KEY: str?
+slug: binance-trading-bot
+udev: true
+url: https://github.com/alexbelgium/hassio-addons
+version: 0.0.101

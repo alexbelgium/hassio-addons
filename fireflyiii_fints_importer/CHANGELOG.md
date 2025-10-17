@@ -13,4 +13,4 @@
 - WARNING : update to supervisor 2022.11 before installing
 - Add codenotary sign
 - Initial release
-- Removes image reference from config.json so build config is used
+- Removes image reference from config.yaml so build config is used
