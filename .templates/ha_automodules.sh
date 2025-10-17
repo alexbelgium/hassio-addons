@@ -7,7 +7,7 @@ set -e
 ##############################
 
 MODULES="$1"
-MODULES="$MODULES 00-banner.sh 01-custom_script.sh 01-config_yaml.sh 00-global_var.sh"
+MODULES="$MODULES 00-banner.sh 01-custom_script.sh 01-config_yaml.sh 00-global_var.sh 01-env_vars.sh"
 echo "To download : $MODULES"
 
 # Install bash if not available
