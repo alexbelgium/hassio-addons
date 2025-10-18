@@ -1,3 +1,5 @@
+## "1.0.29.0" (18-10-2025)
+- Minor bugs fixed
 
 ## 1.0.29.0 (18-10-2025)
 - Update to latest version from immichFrame/ImmichFrame (changelog : https://github.com/immichFrame/ImmichFrame/releases)
