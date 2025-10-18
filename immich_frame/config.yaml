@@ -19,5 +19,5 @@ schema:
   TZ: str?
 slug: immich_frame
 url: https://github.com/alexbelgium/hassio-addons
-version: 1.0.28.0
+version: "1.0.29.0"
 webui: http://[HOST]:[PORT:8080]
