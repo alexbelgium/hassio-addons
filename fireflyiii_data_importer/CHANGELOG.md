@@ -1,7 +1,4 @@
 
-## 1.8.4 (18-10-2025)
-- Update to latest version from firefly-iii/data-importer (changelog : https://github.com/firefly-iii/data-importer/releases)
-
 ## 1.8.2 (11-10-2025)
 - Update to latest version from firefly-iii/data-importer (changelog : https://github.com/firefly-iii/data-importer/releases)
 ## 1.8.0-2 (06-10-2025)
