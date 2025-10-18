@@ -1,7 +1,4 @@
 
-## 16.5.1 (18-10-2025)
-- Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
-
 ## 16.5.0 (11-10-2025)
 - Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
 

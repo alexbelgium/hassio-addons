@@ -31,5 +31,5 @@ schema:
 slug: openproject
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/openproject
-version: "16.5.1"
+version: 16.5.0
 webui: '[PROTO:ssl]://[HOST]:[PORT:8080]'
