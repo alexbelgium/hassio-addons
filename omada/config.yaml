@@ -66,8 +66,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  SHOW_MONGODB_LOGS: 'false'
-  SHOW_SERVER_LOGS: 'true'
+  SHOW_MONGODB_LOGS: "false"
+  SHOW_SERVER_LOGS: "true"
   SSL_CERT_NAME: fullchain.pem
   SSL_KEY_NAME: privkey.pem
   TZ: Etc/UTC

@@ -3,13 +3,14 @@ arch:
   - amd64
   - armv7
 backup_exclude:
-  - '**/Cache/**'
-  - '**/Plug-in Support/Caches/**'
-  - '**/Logs/**'
-  - '**/Crash Reports/**'
-  - '**/Diagnostics/**'
+  - "**/Cache/**"
+  - "**/Plug-in Support/Caches/**"
+  - "**/Logs/**"
+  - "**/Crash Reports/**"
+  - "**/Diagnostics/**"
 codenotary: alexandrep.github@gmail.com
-description: Plex organizes video, music and photos from personal media libraries
+description:
+  Plex organizes video, music and photos from personal media libraries
   and streams them to smart TVs, streaming boxes and mobile devices
 devices:
   - /dev/dri
@@ -111,8 +112,8 @@ devices:
   - /dev/dvb/adapter8/frontend0
   - /dev/dvb/adapter8/net0
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
   VERSION: docker
 host_network: true
 image: ghcr.io/alexbelgium/plex_nas-{arch}
@@ -172,4 +173,4 @@ url: https://github.com/alexbelgium/hassio-addons/tree/master/plex
 usb: true
 version: "1.42.2.10156-f737b826c-ls283"
 video: true
-webui: '[PROTO:ssl]://[HOST]:[PORT:32400]/web'
+webui: "[PROTO:ssl]://[HOST]:[PORT:32400]/web"

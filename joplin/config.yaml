@@ -66,7 +66,7 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  APP_PORT: '22300'
+  APP_PORT: "22300"
 image: ghcr.io/alexbelgium/joplin-{arch}
 map:
   - config:rw
@@ -102,4 +102,4 @@ slug: joplin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 3.4.4
-webui: '[PROTO:ssl]://[HOST]:[PORT:22300]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:22300]"

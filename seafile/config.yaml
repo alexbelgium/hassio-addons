@@ -3,7 +3,8 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: High performance file syncing and sharing, with also Markdown WYSIWYG
+description:
+  High performance file syncing and sharing, with also Markdown WYSIWYG
   editing, Wiki, file label and other knowledge management features
 devices:
   - /dev/dri
@@ -68,9 +69,9 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  NOSWAG: '1'
-  PGID: '1000'
-  PUID: '1000'
+  NOSWAG: "1"
+  PGID: "1000"
+  PUID: "1000"
 image: ghcr.io/alexbelgium/seafile-{arch}
 map:
   - config:rw
@@ -81,7 +82,7 @@ options:
   CONFIG_LOCATION: /config/addons_config/seafile/config.yaml
   FILE_SERVER_ROOT: http://homeassistant.local:8082
   PGID: 1000
-  PORT: '8082'
+  PORT: "8082"
   PUID: 1000
   SEAFILE_ADMIN_EMAIL: me@example.com
   SEAFILE_ADMIN_PASSWORD: a_very_secret_password

@@ -66,8 +66,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  VPN_ENABLED: 'false'
-  VPN_PROVIDER: 'null'
+  VPN_ENABLED: "false"
+  VPN_PROVIDER: "null"
 image: ghcr.io/alexbelgium/unpackerr-{arch}
 init: false
 map:

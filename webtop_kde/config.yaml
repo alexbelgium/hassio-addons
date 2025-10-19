@@ -69,7 +69,7 @@ devices:
 environment:
   FM_HOME: /config/data
   HOME: /config/data
-  START_DOCKER: 'false'
+  START_DOCKER: "false"
   TITLE: Ubuntu KDE webtop
   shm_size: 1gb
 image: ghcr.io/alexbelgium/webtop_kde-{arch}

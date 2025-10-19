@@ -67,11 +67,11 @@ devices:
 environment:
   GUACAMOLE_HOME: /config
   PGDATA: /config/postgres
-  PROXY_ALLOWED_IPS_REGEX: '*'
+  PROXY_ALLOWED_IPS_REGEX: "*"
   PROXY_BY_HEADER: X-Forwarded-By
   PROXY_IP_HEADER: X-Forwarded-For
   PROXY_PROTOCOL_HEADER: X-Forwarded-Proto
-  REMOTE_IP_VALVE_ENABLED: 'true'
+  REMOTE_IP_VALVE_ENABLED: "true"
 image: ghcr.io/alexbelgium/guacamole-{arch}
 ingress: true
 init: false

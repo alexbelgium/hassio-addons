@@ -2,9 +2,10 @@ arch:
   - aarch64
   - amd64
 backup_exclude:
-  - '**/machine-learning/*'
+  - "**/machine-learning/*"
 codenotary: alexandrep.github@gmail.com
-description: Self-hosted photo and video backup solution directly from your mobile
+description:
+  Self-hosted photo and video backup solution directly from your mobile
   phone
 devices:
   - /dev/dri
@@ -70,15 +71,15 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  CI_PORT: '8080'
+  CI_PORT: "8080"
   DOCKER_MODS: imagegenius/mods:universal-redis
   MACHINE_LEARNING_CACHE_FOLDER: /data/machine-learning
-  MACHINE_LEARNING_WORKERS: '1'
-  MACHINE_LEARNING_WORKER_TIMEOUT: '120'
-  PGID: '0'
-  PUID: '0'
+  MACHINE_LEARNING_WORKERS: "1"
+  MACHINE_LEARNING_WORKER_TIMEOUT: "120"
+  PGID: "0"
+  PUID: "0"
   REDIS_HOSTNAME: localhost
-  REDIS_PORT: '6379'
+  REDIS_PORT: "6379"
   REVERSE_GEOCODING_DUMP_DIRECTORY: /data/.reverse-geocoding-dump/
   TRANSFORMERS_CACHE: /data/machine-learning
 hassio_api: true
@@ -96,7 +97,7 @@ options:
   DB_DATABASE_NAME: immich
   DB_HOSTNAME: homeassistant.local
   DB_PASSWORD: homeassistant
-  DB_PORT: '5432'
+  DB_PORT: "5432"
   DB_USERNAME: postgres
   DISABLE_MACHINE_LEARNING: false
   JWT_SECRET: jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=

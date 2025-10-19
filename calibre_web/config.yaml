@@ -69,8 +69,8 @@ environment:
   DOCKER_MODS: linuxserver/mods:universal-calibre
   FM_HOME: /config
   HOME: /config
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
   calibre-web_CONFIG_DIRECTORY: /config
   shm_size: 1gb
 hassio_api: true

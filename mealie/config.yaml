@@ -71,11 +71,11 @@ environment:
   BASE_SUBPATH: /mealie/
   DATA_DIR: /config
   DB_ENGINE: sqlite
-  MAX_WORKERS: '1'
+  MAX_WORKERS: "1"
   NUXT_APP_BASE_URL: /mealie/
-  WEB_CONCURRENCY: '2'
-  WEB_GUNICORN: 'true'
-  WORKERS_PER_CORE: '0.5'
+  WEB_CONCURRENCY: "2"
+  WEB_GUNICORN: "true"
+  WORKERS_PER_CORE: "0.5"
 image: ghcr.io/alexbelgium/mealie-{arch}
 ingress: true
 map:

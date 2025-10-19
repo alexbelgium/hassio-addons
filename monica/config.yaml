@@ -62,12 +62,12 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  APP_TRUSTED_PROXIES: '*'
+  APP_TRUSTED_PROXIES: "*"
   APP_ENV: production
-  APP_DEBUG: 'false'
+  APP_DEBUG: "false"
   MAIL_MAILER: log
-  DEFAULT_STORAGE_LIMIT: '1024'
-  DEFAULT_MAX_STORAGE_SIZE: '1024'
+  DEFAULT_STORAGE_LIMIT: "1024"
+  DEFAULT_MAX_STORAGE_SIZE: "1024"
 image: ghcr.io/alexbelgium/monica-{arch}
 init: false
 options:
@@ -101,4 +101,4 @@ services:
 slug: monica
 url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
 version: v5.0_beta4-2
-webui: '[PROTO:ssl]://[HOST]:[PORT:80]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:80]"

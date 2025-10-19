@@ -5,9 +5,9 @@ arch:
 codenotary: alexandrep.github@gmail.com
 description: "\U0001F5A7\U0001F50D WIFI / LAN scanner, intruder, and presence detector"
 environment:
-  PGID: '102'
-  PORT: '20211'
-  PUID: '102'
+  PGID: "102"
+  PORT: "20211"
+  PUID: "102"
   TZ: Europe/Berlin
 full_access: true
 hassio_api: true

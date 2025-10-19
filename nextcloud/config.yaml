@@ -80,8 +80,8 @@ devices:
   - /dev/nvme2
 environment:
   NEXTCLOUD_PATH: /data/config/www/nextcloud
-  SKIP_DATA_DIRECTORY_PERMISSION_CHECK: 'yes'
-  TRUSTED_PROXIES: '**'
+  SKIP_DATA_DIRECTORY_PERMISSION_CHECK: "yes"
+  TRUSTED_PROXIES: "**"
 hassio_api: true
 image: ghcr.io/alexbelgium/nextcloud_ocr-{arch}
 ingress_port: 0

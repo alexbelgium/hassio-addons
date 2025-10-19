@@ -5,12 +5,12 @@ arch:
 codenotary: alexandrep.github@gmail.com
 description: voice communication for online gaming, education and training
 environment:
-  DIST_UPDATE: '0'
-  INIFILE: '1'
-  PGID: '503'
-  PUID: '503'
+  DIST_UPDATE: "0"
+  INIFILE: "1"
+  PGID: "503"
+  PUID: "503"
   TS3SERVER_LICENSE: accept
-  TS_UPDATE: '1'
+  TS_UPDATE: "1"
 image: ghcr.io/alexbelgium/teamspeak-{arch}
 init: false
 map:

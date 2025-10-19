@@ -2,7 +2,8 @@ arch:
   - aarch64
   - amd64
 codenotary: alexandrep.github@gmail.com
-description: Automated Binance trading bot - Trade multiple cryptocurrencies. Buy
+description:
+  Automated Binance trading bot - Trade multiple cryptocurrencies. Buy
   low/sell high with Grid Trading. Integrated with TradingView technical analysis
 devices:
   - /dev/dri
@@ -68,9 +69,9 @@ devices:
   - /dev/nvme2
 environment:
   BINANCE_REDIS_HOST: localhost
-  BINANCE_REDIS_PASSWORD: ''
-  BINANCE_REDIS_PORT: '6379'
-  PYTHONUNBUFFERED: '1'
+  BINANCE_REDIS_PASSWORD: ""
+  BINANCE_REDIS_PORT: "6379"
+  PYTHONUNBUFFERED: "1"
   TRADINGVIEW_LOG_LEVEL: INFO
 image: ghcr.io/alexbelgium/binance_trading_bot-{arch}
 ingress: true

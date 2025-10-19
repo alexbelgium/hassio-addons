@@ -66,7 +66,7 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  TRUSTED_PROXIES: '**'
+  TRUSTED_PROXIES: "**"
 image: ghcr.io/alexbelgium/fireflyiii-{arch}
 init: false
 map:
@@ -77,7 +77,7 @@ options:
   APP_KEY: CHANGEME_32_CHARS_EuC5dfn3LAPzeO
   CONFIG_LOCATION: /config/addons_config/fireflyiii/config.yaml
   DB_CONNECTION: sqlite_internal
-  silent: 'true'
+  silent: "true"
 ports:
   8080/tcp: 3473
   8443/tcp: null
@@ -102,4 +102,4 @@ startup: services
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 6.4.2
-webui: '[PROTO:ssl]://[HOST]:[PORT:8080]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"

@@ -66,7 +66,7 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  FG_PLUGINS: ''
+  FG_PLUGINS: ""
   FG_WEBUI_PASSWD: homeassistant123
 image: ghcr.io/alexbelgium/flexget-{arch}
 init: false
@@ -93,4 +93,4 @@ slug: flexget
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: "3.18.16"
-webui: '[PROTO:ssl]://[HOST]:[PORT:5050]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:5050]"

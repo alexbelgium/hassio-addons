@@ -14,10 +14,10 @@ devices:
   - /dev/ttyACM1
 environment:
   HOME: /config
-  NMEA0183PORT: '10110'
-  PORT: '3000'
-  SSLPORT: '3443'
-  TCPSTREAMPORT: '8375'
+  NMEA0183PORT: "10110"
+  PORT: "3000"
+  SSLPORT: "3443"
+  TCPSTREAMPORT: "8375"
 image: ghcr.io/alexbelgium/signalk-{arch}
 map:
   - addon_config:rw

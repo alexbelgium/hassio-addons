@@ -66,12 +66,12 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  MANAGE_HTTPS_PORT: '8043'
-  MANAGE_HTTP_PORT: '8088'
-  PORTAL_HTTPS_PORT: '8843'
-  PORTAL_HTTP_PORT: '8888'
-  SHOW_MONGODB_LOGS: 'false'
-  SHOW_SERVER_LOGS: 'true'
+  MANAGE_HTTPS_PORT: "8043"
+  MANAGE_HTTP_PORT: "8088"
+  PORTAL_HTTPS_PORT: "8843"
+  PORTAL_HTTP_PORT: "8888"
+  SHOW_MONGODB_LOGS: "false"
+  SHOW_SERVER_LOGS: "true"
   SSL_CERT_NAME: fullchain.pem
   SSL_KEY_NAME: privkey.pem
   TZ: Etc/UTC

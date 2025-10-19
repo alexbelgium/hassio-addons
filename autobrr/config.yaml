@@ -68,10 +68,10 @@ devices:
   - /dev/nvme2
 environment:
   BASE_DOCKER_DATA_PATH: /data/autobrr
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
   WEBUI_PASSWORD: password
-  WEBUI_PORT: '7474'
+  WEBUI_PORT: "7474"
   WEBUI_USERNAME: admin
 image: ghcr.io/alexbelgium/autobrr-{arch}
 ingress: true

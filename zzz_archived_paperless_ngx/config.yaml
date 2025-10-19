@@ -72,8 +72,8 @@ environment:
   PAPERLESS_DATA_DIR: /config/data
   PAPERLESS_EXPORT_DIR: /config/export
   PAPERLESS_MEDIA_ROOT: /config/media
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/paperless_ng-{arch}
 init: false
 map:

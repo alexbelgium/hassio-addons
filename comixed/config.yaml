@@ -83,5 +83,5 @@ schema:
 slug: comixed
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: '1.4'
-webui: '[PROTO:ssl]://[HOST]:[PORT:7171]'
+version: "1.4"
+webui: "[PROTO:ssl]://[HOST]:[PORT:7171]"

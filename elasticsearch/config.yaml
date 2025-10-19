@@ -67,8 +67,8 @@ devices:
   - /dev/nvme2
 environment:
   ES_JAVA_OPTS: -Xms1024M -Xmx1024M
-  TINI_SUBREAPER: 'true'
-  bootstrap.memory_lock: 'true'
+  TINI_SUBREAPER: "true"
+  bootstrap.memory_lock: "true"
   discovery.type: single-node
 host_network: true
 image: ghcr.io/alexbelgium/elasticsearch-{arch}
