@@ -3,9 +3,9 @@ arch:
   - amd64
   - armv7
 backup_exclude:
-  - '**/Backups/*'
-  - '**/logs/*'
-  - '**/MediaCover/*'
+  - "**/Backups/*"
+  - "**/logs/*"
+  - "**/MediaCover/*"
 codenotary: alexandrep.github@gmail.com
 description: Companion application to Sonarr and Radarr to download subtitles
 devices:
@@ -71,8 +71,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/bazarr-{arch}
 init: false
 map:
@@ -104,4 +104,4 @@ slug: bazarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/bazarr
 version: 1.5.3
-webui: '[PROTO:ssl]://[HOST]:[PORT:6767]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:6767]"

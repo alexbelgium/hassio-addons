@@ -3,7 +3,8 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: Translates queries from apps (Sonarr, Sickrage, CouchPotato, Mylar, etc)
+description:
+  Translates queries from apps (Sonarr, Sickrage, CouchPotato, Mylar, etc)
   into tracker-site-specific http queries, parses the html response, then sends results
   back to the requesting software
 devices:
@@ -69,8 +70,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/jackett_nas-{arch}
 init: false
 map:

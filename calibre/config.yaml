@@ -68,9 +68,9 @@ environment:
   CALIBRE_CONFIG_DIRECTORY: /config
   FM_HOME: /config
   HOME: /config
-  PGID: '0'
-  PUID: '0'
-  START_DOCKER: 'false'
+  PGID: "0"
+  PUID: "0"
+  START_DOCKER: "false"
   shm_size: 1gb
 image: ghcr.io/alexbelgium/calibre-{arch}
 ingress: true

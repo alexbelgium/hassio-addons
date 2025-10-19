@@ -4,8 +4,8 @@ arch:
 codenotary: alexandrep.github@gmail.com
 description: Collabora Online office suite
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/collabora-{arch}
 init: false
 map:
@@ -13,15 +13,16 @@ map:
   - ssl:ro
 name: Collabora
 options:
-  aliasgroup1: ''
+  aliasgroup1: ""
   certfile: fullchain.pem
-  domain1: ''
-  extra_params: --o:ssl.enable=false --o:user_interface.use_integration_theme=false
+  domain1: ""
+  extra_params:
+    --o:ssl.enable=false --o:user_interface.use_integration_theme=false
     --o:net.proto=IPv4
   keyfile: privkey.pem
-  password: ''
+  password: ""
   ssl: false
-  username: ''
+  username: ""
 ports:
   9980/tcp: 9980
 ports_description:
@@ -42,4 +43,4 @@ schema:
 slug: collabora
 url: https://github.com/alexbelgium/hassio-addons
 version: 25.4.6
-webui: '[PROTO:ssl]://[HOST]:[PORT:9980]/browser/dist/admin/admin.html'
+webui: "[PROTO:ssl]://[HOST]:[PORT:9980]/browser/dist/admin/admin.html"

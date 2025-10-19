@@ -2,7 +2,8 @@ arch:
   - aarch64
   - amd64
 codenotary: alexandrep.github@gmail.com
-description: Automatically login and redeem promotional free games from Epic Games
+description:
+  Automatically login and redeem promotional free games from Epic Games
   Store
 devices:
   - /dev/dri
@@ -81,4 +82,4 @@ slug: epicgamesfree
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: "debian-2025-10-13"
-webui: '[PROTO:ssl]://[HOST]:[PORT:3000]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:3000]"

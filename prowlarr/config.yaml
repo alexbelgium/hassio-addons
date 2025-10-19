@@ -2,7 +2,8 @@ arch:
   - aarch64
   - amd64
 codenotary: alexandrep.github@gmail.com
-description: Torrent Trackers and Usenet indexers offering complete management ofSonarr,
+description:
+  Torrent Trackers and Usenet indexers offering complete management ofSonarr,
   Radarr, Lidarr, and Readarr indexers with no per app setup required
 devices:
   - /dev/dri
@@ -67,8 +68,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/prowlarr-{arch}
 init: false
 map:
@@ -101,4 +102,4 @@ slug: prowlarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: "nightly-2.1.5.5213-ls215"
-webui: '[PROTO:ssl]://[HOST]:[PORT:9696]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:9696]"

@@ -1,4 +1,4 @@
-apparmor: 'true'
+apparmor: "true"
 arch:
   - aarch64
   - amd64

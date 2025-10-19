@@ -66,7 +66,7 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  TRUSTED_PROXIES: '**'
+  TRUSTED_PROXIES: "**"
 image: ghcr.io/alexbelgium/fireflyiii_data_importer-{arch}
 init: false
 map:
@@ -99,4 +99,4 @@ slug: fireflyiii_data_importer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: "1.8.4"
-webui: '[PROTO:ssl]://[HOST]:[PORT:8080]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"

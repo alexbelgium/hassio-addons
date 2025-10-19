@@ -3,10 +3,10 @@ arch:
   - amd64
 backup: cold
 backup_exclude:
-  - '*/cache/'
-  - '*/logs/'
-  - '*/transcoding-temp/'
-  - '*/metadata/'
+  - "*/cache/"
+  - "*/logs/"
+  - "*/transcoding-temp/"
+  - "*/metadata/"
 codenotary: alexandrep.github@gmail.com
 description: Distributed transcode automation using FFmpeg/HandBrake
 devices:
@@ -74,16 +74,16 @@ devices:
 environment:
   NVIDIA_DRIVER_CAPABILITIES: all
   NVIDIA_VISIBLE_DEVICES: all
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
   TZ: Europe/London
-  internalNode: 'true'
+  internalNode: "true"
   nodeID: MyInternalNode
   nodeIP: 127.0.0.1
-  nodePort: '8267'
+  nodePort: "8267"
   serverIP: 127.0.0.1
-  serverPort: '8266'
-  webUIPort: '8265'
+  serverPort: "8266"
+  webUIPort: "8265"
 host_dbus: true
 image: ghcr.io/alexbelgium/tdarr-{arch}
 init: false
@@ -121,4 +121,4 @@ udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 2.49.01
 video: true
-webui: '[PROTO:ssl]://[HOST]:[PORT:8265]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:8265]"

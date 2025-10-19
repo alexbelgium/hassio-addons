@@ -82,7 +82,7 @@ ports:
   80/tcp: null
   8081/tcp: 8081
 ports_description:
-  80/tcp: 'Optional : set to 80 to use caddy''s automatic ssl'
+  80/tcp: "Optional : set to 80 to use caddy's automatic ssl"
   8081/tcp: Web ui
 privileged:
   - SYS_ADMIN

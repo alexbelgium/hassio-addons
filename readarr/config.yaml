@@ -66,8 +66,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/readarr_nas-{arch}
 ingress: true
 ingress_entry: readarr

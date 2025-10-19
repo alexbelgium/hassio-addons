@@ -72,8 +72,8 @@ map:
   - ssl
 name: Organizr
 options:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 ports:
   80/tcp: 88
 ports_description:
@@ -85,4 +85,4 @@ slug: organizr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 1.90-bugfix2
-webui: '[PROTO:ssl]://[HOST]:[PORT:80]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:80]"

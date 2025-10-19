@@ -69,9 +69,9 @@ devices:
 environment:
   FM_HOME: /share/webtop_kde
   HOME: /share/webtop_kde
-  PGID: '0'
-  PUID: '0'
-  START_DOCKER: 'false'
+  PGID: "0"
+  PUID: "0"
+  START_DOCKER: "false"
   TITLE: Ubuntu XFCE webtop
   shm_size: 1gb
 host_dbus: true

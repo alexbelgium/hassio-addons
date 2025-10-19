@@ -68,8 +68,8 @@ devices:
   - /dev/nvme2
 environment:
   DOCKER_MODS: linuxserver/mods:lidarr-flac2mp3
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/lidarr_nas-{arch}
 init: false
 map:
@@ -100,4 +100,4 @@ slug: lidarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/README.md
 version: 2.14.5.4836
-webui: '[PROTO:ssl]://[HOST]:[PORT:8686]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:8686]"

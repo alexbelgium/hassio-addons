@@ -68,7 +68,7 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  WEBUI_PORT: '8080'
+  WEBUI_PORT: "8080"
 homeassistant: 2023.12.0
 image: ghcr.io/alexbelgium/qbittorrent-{arch}
 ingress: true
@@ -82,8 +82,8 @@ map:
 name: qBittorrent
 options:
   DNS_server: 8.8.8.8,1.1.1.1
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
   SavePath: /share/qBittorrent
   Username: admin
   certfile: fullchain.pem

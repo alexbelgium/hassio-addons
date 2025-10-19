@@ -66,14 +66,14 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  TIMEOUT: '60000'
+  TIMEOUT: "60000"
 image: ghcr.io/alexbelgium/browserless_chrome-{arch}
 init: false
 map:
   - addon_config:rw
 name: Browserless Chromium
 options:
-  TIMEOUT: '60000'
+  TIMEOUT: "60000"
 ports:
   3000/tcp: 3000
 ports_description:
@@ -84,4 +84,4 @@ slug: browserless_chrome
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/browserless_chrome
 version: 2.37.1
-webui: '[PROTO:ssl]://[HOST]:[PORT:3000]/docs'
+webui: "[PROTO:ssl]://[HOST]:[PORT:3000]/docs"

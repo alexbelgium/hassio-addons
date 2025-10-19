@@ -58,8 +58,8 @@ devices:
   - /dev/nvme2
 environment:
   CODEX_CONFIG_DIR: /config
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 hassio_api: true
 homeassistant_api: true
 image: ghcr.io/alexbelgium/codex-{arch}
@@ -71,8 +71,8 @@ map:
   - share:rw
 name: Codex
 options:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
   csrf_allowed: http://homeassistant.local:8123,https://homeassistant.local:8123
 panel_admin: false
 panel_icon: mdi:book-open

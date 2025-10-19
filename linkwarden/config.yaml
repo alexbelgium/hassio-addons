@@ -2,7 +2,8 @@ arch:
   - aarch64
   - amd64
 codenotary: alexandrep.github@gmail.com
-description: collaborative bookmark manager to collect, organize, and preserve webpages
+description:
+  collaborative bookmark manager to collect, organize, and preserve webpages
   and articles
 environment:
   AUTHENTIK_CLIENT_ID: CLIENT_ID
@@ -11,9 +12,9 @@ environment:
   AUTHENTIK_ISSUER: https://authentik.my-doma.in/application/o/linkwarden
   DATABASE_URL: postgresql://postgres:homeassistant@localhost:5432/linkwarden
   NEXTAUTH_URL: http://localhost:3000/api/v1/auth
-  NEXT_PUBLIC_AUTHENTIK_ENABLED: 'false'
-  NEXT_PUBLIC_CREDENTIALS_ENABLED: 'true'
-  NEXT_PUBLIC_DISABLE_REGISTRATION: 'false'
+  NEXT_PUBLIC_AUTHENTIK_ENABLED: "false"
+  NEXT_PUBLIC_CREDENTIALS_ENABLED: "true"
+  NEXT_PUBLIC_DISABLE_REGISTRATION: "false"
   STORAGE_FOLDER: /config/library
 image: ghcr.io/alexbelgium/linkwarden-{arch}
 init: false
@@ -41,4 +42,4 @@ schema:
 slug: linkwarden
 url: https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden
 version: "2.13.1"
-webui: '[PROTO:ssl]://[HOST]:[PORT:3000]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:3000]"

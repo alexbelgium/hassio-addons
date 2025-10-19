@@ -5,7 +5,7 @@ codenotary: alexandrep.github@gmail.com
 description: web page monitoring, notification and change detection
 environment:
   LC_ALL: en_US.UTF-8
-  TIMEOUT: '60000'
+  TIMEOUT: "60000"
 image: ghcr.io/alexbelgium/changedetection.io-{arch}
 init: false
 map:
@@ -14,7 +14,7 @@ name: Changedetection.io
 options:
   PGID: 0
   PUID: 0
-  TIMEOUT: '60000'
+  TIMEOUT: "60000"
 ports:
   5000/tcp: 5000
 ports_description:

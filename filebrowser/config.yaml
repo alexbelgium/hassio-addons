@@ -3,7 +3,8 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: filebrowser provides a file managing interface within a specified directory
+description:
+  filebrowser provides a file managing interface within a specified directory
   and it can be used to upload, delete, preview, rename and edit your files
 devices:
   - /dev/dri
@@ -73,8 +74,8 @@ devices:
   - /dev/md3
 environment:
   FB_BASEURL: /filebrowser
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 homeassistant: 2025.5.0
 image: ghcr.io/alexbelgium/filebrowser-{arch}
 ingress: true

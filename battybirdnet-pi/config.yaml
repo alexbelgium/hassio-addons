@@ -4,7 +4,8 @@ arch:
 audio: true
 backup: cold
 codenotary: alexandrep.github@gmail.com
-description: A realtime acoustic bat & bird classification system for the Raspberry
+description:
+  A realtime acoustic bat & bird classification system for the Raspberry
   Pi 4/5 built on BattyBirdNET-Analyzer
 devices:
   - /dev/dri
@@ -82,7 +83,7 @@ ports:
   80/tcp: null
   8081/tcp: 8081
 ports_description:
-  80/tcp: 'Optional : set to 80 to use caddy''s automatic ssl'
+  80/tcp: "Optional : set to 80 to use caddy's automatic ssl"
   8081/tcp: Web ui
 privileged:
   - SYS_ADMIN
