@@ -1,3 +1,6 @@
+
+## ubuntu-2025-10-18 (2025-10-18)
+- Update to latest version from photoprism/photoprism
 ## ubuntu-2025-07-07 (2025-07-07)
 
 - Update to latest version from photoprism/photoprism
