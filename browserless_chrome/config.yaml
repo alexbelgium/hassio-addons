@@ -83,5 +83,5 @@ schema:
 slug: browserless_chrome
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/browserless_chrome
-version: 2.37.1
+version: "2.38.1"
 webui: '[PROTO:ssl]://[HOST]:[PORT:3000]/docs'
