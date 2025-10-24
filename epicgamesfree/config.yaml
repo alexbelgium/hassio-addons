@@ -80,5 +80,5 @@ ports_description:
 slug: epicgamesfree
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "debian-2025-10-13"
+version: "debian-2025-10-21"
 webui: '[PROTO:ssl]://[HOST]:[PORT:3000]'
