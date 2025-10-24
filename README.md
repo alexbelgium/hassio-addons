@@ -49,19 +49,19 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 1
-- Installed : 93916
+- Installed : 1206
 
 ### Top 3
 
-1. Portainer (14629x)
-2. Filebrowser (11537x)
-3. Myelectricaldata (3910x)
+1. Addons_updater (1206x)
+2. Lidarr_nas (99x)
+3. Overseerr (981x)
 
 ### Architectures used
 
-- amd64: 55%
-- aarch64: 41%
-- armv7: 4%
+- amd64: 61%
+- aarch64: 37%
+- armv7: 2%
 
 ### Stars evolution
 
