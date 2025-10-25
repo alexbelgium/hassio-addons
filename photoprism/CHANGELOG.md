@@ -1,3 +1,5 @@
+## "ubuntu-2025-10-18" (25-10-2025)
+- Minor bugs fixed
 
 ## ubuntu-2025-10-18 (2025-10-18)
 - Update to latest version from photoprism/photoprism
