@@ -3,7 +3,8 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: Python script to update metadata information for movies, shows, and collections
+description:
+  Python script to update metadata information for movies, shows, and collections
   as well as automatically build collections
 devices:
   - /dev/dri

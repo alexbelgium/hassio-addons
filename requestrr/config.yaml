@@ -3,7 +3,8 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the
+description:
+  Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the
   use of chat
 devices:
   - /dev/dri
@@ -68,8 +69,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/requestrr-{arch}
 init: false
 map:
@@ -93,4 +94,4 @@ slug: requestrr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 2.1.9
-webui: '[PROTO:ssl]://[HOST]:[PORT:4545]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:4545]"

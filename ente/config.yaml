@@ -1,7 +1,8 @@
 arch:
   - aarch64
   - amd64
-description: Self-hosted, end-to-end-encrypted photo & video storage (Ente server
+description:
+  Self-hosted, end-to-end-encrypted photo & video storage (Ente server
   + MinIO)
 devices:
   - /dev/dri
@@ -66,8 +67,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
   TZ: Europe/Paris
 image: ghcr.io/alexbelgium/ente-{arch}
 init: false

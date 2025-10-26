@@ -81,4 +81,4 @@ slug: baikal
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 0.10.1-hafix2
-webui: '[PROTO:ssl]://[HOST]:[PORT:80]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:80]"

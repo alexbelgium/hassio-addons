@@ -67,8 +67,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/mylar3-{arch}
 init: false
 map:
@@ -99,4 +99,4 @@ slug: mylar3
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 0.8.3
-webui: '[PROTO:ssl]://[HOST]:[PORT:8090]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:8090]"

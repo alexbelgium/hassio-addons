@@ -3,13 +3,14 @@ arch:
   - amd64
   - armv7
 backup_exclude:
-  - '**/cache/'
-  - '**/log/'
-  - '**/transcode/'
+  - "**/cache/"
+  - "**/log/"
+  - "**/transcode/"
 breaking_versions:
   - 10.10.6*
 codenotary: alexandrep.github@gmail.com
-description: A Free Software Media System that puts you in control of managing and
+description:
+  A Free Software Media System that puts you in control of managing and
   streaming your media
 devices:
   - /dev/dri
