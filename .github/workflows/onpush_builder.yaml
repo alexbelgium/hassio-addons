@@ -236,7 +236,7 @@ jobs:
   # 6. Revert if workflow fails
   revert-on-failure:
     if: failure()
-    needs: [detect-changed-addons, prebuild-sanitize, lint_config, build, make-changelog]
+    needs: [detect-changed-addons, prebuild-sanitize, lint_config, build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
