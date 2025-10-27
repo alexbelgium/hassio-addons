@@ -3,7 +3,8 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: Docker container running Transmission torrent client with WebUI over
+description:
+  Docker container running Transmission torrent client with WebUI over
   an OpenVPN tunnel
 devices:
   - /dev/dri
@@ -69,9 +70,9 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  CREATE_TUN_DEVICE: 'false'
-  OPENVPN_OPTS: ''
-  WEBPROXY_PORT: '8118'
+  CREATE_TUN_DEVICE: "false"
+  OPENVPN_OPTS: ""
+  WEBPROXY_PORT: "8118"
 image: ghcr.io/alexbelgium/transmission_openvpn-{arch}
 ingress: true
 map:
@@ -86,15 +87,15 @@ options:
   LOCAL_NETWORK: 192.168.178.0/24
   OPENVPN_PASSWORD: pass
   OPENVPN_USERNAME: user
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
   TRANSMISSION_DOWNLOAD_DIR: /share/downloads
   TRANSMISSION_HOME: /config/addons_config/transmission
   TRANSMISSION_INCOMPLETE_DIR: /share/incomplete
-  TRANSMISSION_V3_UPDATE: 'true'
+  TRANSMISSION_V3_UPDATE: "true"
   TRANSMISSION_WATCH_DIR: /share/watch_dir
   TRANSMISSION_WEB_UI: flood-for-transmission
-  WEBPROXY_ENABLED: 'true'
+  WEBPROXY_ENABLED: "true"
 panel_admin: false
 panel_icon: mdi:transmission-tower
 ports:

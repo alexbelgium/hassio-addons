@@ -109,4 +109,4 @@ slug: ubooquity
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 3.1.0
-webui: '[PROTO:ssl]://[HOST]:[PORT:2206]/ubooquity/admin'
+webui: "[PROTO:ssl]://[HOST]:[PORT:2206]/ubooquity/admin"

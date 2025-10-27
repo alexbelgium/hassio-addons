@@ -3,7 +3,8 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: A full-featured, open source, state-of-the-art video surveillance software
+description:
+  A full-featured, open source, state-of-the-art video surveillance software
   system
 devices:
   - /dev/dri
@@ -93,4 +94,4 @@ slug: zoneminder
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 1.36.36
-webui: '[PROTO:ssl]://[HOST]:[PORT:80]/zm'
+webui: "[PROTO:ssl]://[HOST]:[PORT:80]/zm"

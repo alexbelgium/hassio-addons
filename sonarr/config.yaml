@@ -3,7 +3,8 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: Can monitor multiple RSS feeds for new episodes of your favorite shows
+description:
+  Can monitor multiple RSS feeds for new episodes of your favorite shows
   and will grab, sort and rename them
 devices:
   - /dev/dri
@@ -68,8 +69,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  PGID: '0'
-  PUID: '0'
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/sonarr_nas-{arch}
 ingress: true
 ingress_entry: sonarr

@@ -2,7 +2,7 @@ arch:
   - amd64
   - aarch64
 backup_exclude:
-  - '**/cache/**'
+  - "**/cache/**"
 codenotary: alexandrep.github@gmail.com
 description: Navidrome for Home Assistant
 image: ghcr.io/alexbelgium/navidrome-{arch}
@@ -52,4 +52,4 @@ slug: navidrome
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/navidrome
 version: 0.58.0
-webui: '[PROTO:ssl]://[HOST]:[PORT:4533]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:4533]"

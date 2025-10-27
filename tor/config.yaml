@@ -15,7 +15,7 @@ options:
   hidden_services: true
   http_tunnel: false
   ports:
-    - '8123'
+    - "8123"
     - 8123:80
   socks: false
   stealth: false

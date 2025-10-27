@@ -18,7 +18,7 @@ name: Openproject
 options:
   OPENPROJECT_DEFAULT__LANGUAGE: en
   OPENPROJECT_HOST__NAME: homeassistant:8080
-  OPENPROJECT_HTTPS: 'false'
+  OPENPROJECT_HTTPS: "false"
 ports:
   8080/tcp: 8080
 ports_description:
@@ -32,4 +32,4 @@ slug: openproject
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/openproject
 version: "16.5.1"
-webui: '[PROTO:ssl]://[HOST]:[PORT:8080]'
+webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
