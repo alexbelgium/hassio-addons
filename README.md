@@ -49,13 +49,13 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 1
-- Installed : 1206
+- Installed : 1222
 
 ### Top 3
 
-1. Addons_updater (1206x)
-2. Lidarr_nas (99x)
-3. Overseerr (981x)
+1. Addons_updater (1222x)
+2. Lidarr_nas (0x)
+3. Overseerr (0x)
 
 ### Architectures used
 
