@@ -1,3 +1,5 @@
+## "1.25.0" (01-11-2025)
+- Minor bugs fixed
 
 ## 1.25.0 (01-11-2025)
 - Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
