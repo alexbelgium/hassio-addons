@@ -1,6 +1,3 @@
-
-## - ()
-- Update to latest version from benkl/firefly-iii-fints-importer
 ## 1.3.0-6 (18-10-2025)
 - Minor bugs fixed
 ## 1.3.0-5 (06-10-2025)
