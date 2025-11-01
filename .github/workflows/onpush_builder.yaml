@@ -11,10 +11,6 @@ on:
     paths:
       - "**/config.*"
 
-concurrency:
-  group: auto-commit-${{ github.ref }}
-  cancel-in-progress: false
-
 env:
   BUILD_ARGS: ""
 
