@@ -1,4 +1,7 @@
 
+## 3.0.1.4866 (01-11-2025)
+- Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
+
 ## 2.14.5.4836 (11-10-2025)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
