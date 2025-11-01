@@ -75,5 +75,5 @@ ports_description:
 slug: flaresolverr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 3.4.2
+version: "3.4.3"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8191]"
