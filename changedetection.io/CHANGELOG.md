@@ -1,3 +1,5 @@
+## "0.50.38" (01-11-2025)
+- Minor bugs fixed
 
 ## 0.50.38 (01-11-2025)
 - Update to latest version from linuxserver/docker-changedetection.io (changelog : https://github.com/linuxserver/docker-changedetection.io/releases)
