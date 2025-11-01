@@ -2,9 +2,13 @@
 ---
 # This workflow finds and fixes CRLF endings in a repository
 name: Fix CRLF Endings
-on: 
+on:
   workflow_call:
   workflow_dispatch:
+
+concurrency:
+  group: auto-commit-${{ github.ref }}
+  cancel-in-progress: false
   
 jobs:
   crlf-to-lf:

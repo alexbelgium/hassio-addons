@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: 0 17 * * *
   workflow_dispatch: null
+
+concurrency:
+  group: auto-commit-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   README_updater:
     if: github.repository_owner == 'alexbelgium'

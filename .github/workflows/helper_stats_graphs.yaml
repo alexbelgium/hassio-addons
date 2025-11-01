@@ -5,6 +5,10 @@ on:
   workflow_call:
   workflow_dispatch:
 
+concurrency:
+  group: auto-commit-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   stats_graphs:
     if: github.repository_owner == 'alexbelgium'

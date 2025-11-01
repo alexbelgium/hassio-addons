@@ -7,6 +7,10 @@ on:
   schedule:
     - cron: '00 23 * * 0'
 
+concurrency:
+  group: auto-commit-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   calibre:
     if: github.repository_owner == 'alexbelgium'
