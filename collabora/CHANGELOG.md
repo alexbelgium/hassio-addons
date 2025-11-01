@@ -1,3 +1,5 @@
+## "25.4.7" (01-11-2025)
+- Minor bugs fixed
 
 ## 25.4.7 (01-11-2025)
 - Update to latest version from CollaboraOnline/online (changelog : https://github.com/CollaboraOnline/online/releases)
