@@ -1,3 +1,5 @@
+## "4.0.16.2942" (01-11-2025)
+- Minor bugs fixed
 
 ## 4.0.16.2942 (01-11-2025)
 - Update to latest version from linuxserver/docker-sonarr (changelog : https://github.com/linuxserver/docker-sonarr/releases)
