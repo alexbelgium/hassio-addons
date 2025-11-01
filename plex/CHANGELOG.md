@@ -1,3 +1,5 @@
+## "1.42.2.10156-f737b826c-ls284" (01-11-2025)
+- Minor bugs fixed
 
 ## 1.42.2.10156-f737b826c-ls284 (01-11-2025)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
