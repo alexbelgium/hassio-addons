@@ -1,3 +1,5 @@
+## "2.2.1-2" (02-11-2025)
+- Minor bugs fixed
 ## 2.2.1-2 (02-11-2025)
 - 2.2.0 and 2.2.1 did not actually update immich correctly and still used 2.1.0. Fixed now
 
