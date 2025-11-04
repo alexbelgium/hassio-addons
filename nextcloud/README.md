@@ -146,7 +146,7 @@ and you want to overcome this, follow the below steps:
   Host-name : core-mariadb:3306
   ```
 
-- 3. Go back at `mariadb` add-on, configure it with above credentials and restart it. Make sure the add-on is creating the `netxcloud` database.
+- 3. Go back at `mariadb` add-on, configure it with above credentials and restart it. Make sure the add-on is creating the `nextcloud` database.
 - 4. Go in the webui and fill all required info. Here you can view an example:
 
 ![image](https://user-images.githubusercontent.com/19391765/207888717-50b43002-a5e2-4782-b5c9-1f582309df2b.png)
