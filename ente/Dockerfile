@@ -54,10 +54,11 @@ RUN chmod 744 /ha_lsio.sh && \
 
 # --- MinIO, psql client etc. (unchanged) ---
 RUN set -eux; \
+    if [ "$BUILD_ARCH" = "aarch64" ]; then BUILD_ARCH="arm64"; fi
     apk add --no-cache \
         bash curl ca-certificates wget jq tini postgresql15-client; \
-    curl -fsSL https://dl.min.io/server/minio/release/linux-amd64/minio -o /usr/local/bin/minio; \
-    curl -fsSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc; \
+    curl -fsSL https://dl.min.io/server/minio/release/linux-"$BUILD_ARCH"/minio -o /usr/local/bin/minio; \
+    curl -fsSL https://dl.min.io/client/mc/release/linux-"$BUILD_ARCH"/mc -o /usr/local/bin/mc; \
     chmod +x /usr/local/bin/minio /usr/local/bin/mc
 RUN apk add --no-cache \
         lsb-release curl gnupg wget tini jq sudo \
