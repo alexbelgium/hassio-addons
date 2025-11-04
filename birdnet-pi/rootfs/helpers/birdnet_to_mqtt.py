@@ -113,7 +113,7 @@ def automatic_mqtt_publish(file, detection, path):
         log.info("Posted to MQTT: ok")
 
 
-mqttc = mqtt.Client("birdnet_mqtt")
+mqttc = mqtt.Client("birdnet_mqtt", callback_api_version=4)
 mqttc.username_pw_set(mqtt_user, mqtt_pass)
 mqttc.on_connect = on_connect
 
