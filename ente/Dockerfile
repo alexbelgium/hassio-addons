@@ -61,8 +61,8 @@ RUN set -eux; \
     && if [[ "${BUILD_ARCH}" == *x86* ]]; then ARCH="amd64"; fi \
     && apk add --no-cache \
         bash curl ca-certificates wget jq tini postgresql15-client; \
-    curl -fsSL https://dl.min.io/server/minio/release/linux-"$BUILD_ARCH"/minio -o /usr/local/bin/minio; \
-    curl -fsSL https://dl.min.io/client/mc/release/linux-"$BUILD_ARCH"/mc -o /usr/local/bin/mc; \
+    curl -fsSL https://dl.min.io/server/minio/release/linux-"$ARCH"/minio -o /usr/local/bin/minio; \
+    curl -fsSL https://dl.min.io/client/mc/release/linux-"$ARCH"/mc -o /usr/local/bin/mc; \
     chmod +x /usr/local/bin/minio /usr/local/bin/mc
 RUN apk add --no-cache \
         lsb-release curl gnupg wget tini jq sudo \
