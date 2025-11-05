@@ -34,7 +34,6 @@ RUN yarn config set network-timeout 900000 -g \
 #################
 # 1 ▸ Base image #
 #################
-ARG BUILD_VERSION
 FROM ghcr.io/ente-io/server:latest
 
 ##################
@@ -106,7 +105,7 @@ CMD        ["/ha_entrypoint.sh"]
 ############
 # 5 ▸ Labels (unchanged) #
 ############
-ARG BUILD_ARCH BUILD_DATE BUILD_NAME BUILD_DESCRIPTION BUILD_REF BUILD_REPOSITORY
+ARG BUILD_VERSION BUILD_ARCH BUILD_DATE BUILD_NAME BUILD_DESCRIPTION BUILD_REF BUILD_REPOSITORY
 LABEL \
   io.hass.name="${BUILD_NAME}" \
   io.hass.description="${BUILD_DESCRIPTION}" \
