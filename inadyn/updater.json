@@ -1,6 +1,7 @@
 {
   "github_beta": "true",
   "last_update": "01-11-2025",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "inadyn",
   "source": "github",
