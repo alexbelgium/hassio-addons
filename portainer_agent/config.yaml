@@ -22,6 +22,9 @@ ports:
 ports_description:
   80/tcp: Portainer edge agent
   9001/tcp: Portainer agent
+options:
+  env_vars: []
+
 schema:
   AGENT_CLUSTER_ADDR: str?
   AGENT_CLUSTER_PROBE_INTERVAL: str?
@@ -42,5 +45,3 @@ slug: portainer_agent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: alpine-sts
-options:
-  env_vars: []

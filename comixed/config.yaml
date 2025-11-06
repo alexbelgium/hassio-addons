@@ -73,6 +73,9 @@ ports_description:
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
+options:
+  env_vars: []
+
 schema:
   TZ: str?
   cifsdomain: str?
@@ -88,5 +91,3 @@ udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: '1.4'
 webui: '[PROTO:ssl]://[HOST]:[PORT:7171]'
-options:
-  env_vars: []

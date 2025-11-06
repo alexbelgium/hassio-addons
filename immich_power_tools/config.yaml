@@ -13,6 +13,9 @@ ports:
   3000/tcp: 8001
 ports_description:
   3000/tcp: Web UI port
+options:
+  env_vars: []
+
 schema:
   DB_DATABASE_NAME: str
   DB_HOST: str
@@ -31,5 +34,3 @@ slug: immich_power_tools
 url: https://github.com/alexbelgium/hassio-addons
 version: 0.18.0
 webui: http://[HOST]:[PORT:3000]
-options:
-  env_vars: []

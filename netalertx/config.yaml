@@ -34,6 +34,9 @@ privileged:
   - DAC_READ_SEARCH
   - NET_ADMIN
   - NET_RAW
+options:
+  env_vars: []
+
 schema:
   APP_CONF_OVERRIDE: str?
   TZ: str?
@@ -46,5 +49,3 @@ slug: netalertx
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 25.10.1
-options:
-  env_vars: []

@@ -23,6 +23,9 @@ ports:
   3000/tcp: 3000
 ports_description:
   3000/tcp: Webui
+options:
+  env_vars: []
+
 schema:
   AUTHENTIK_CLIENT_ID: str?
   AUTHENTIK_CLIENT_SECRET: str?
@@ -44,5 +47,3 @@ slug: linkwarden
 url: https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden
 version: 2.13.0
 webui: '[PROTO:ssl]://[HOST]:[PORT:3000]'
-options:
-  env_vars: []

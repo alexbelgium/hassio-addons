@@ -88,6 +88,9 @@ ports_description:
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
+options:
+  env_vars: []
+
 schema:
   CUSTOM_OPTIONS: str?
   DROPBOX_TOKEN: str?
@@ -104,5 +107,3 @@ slug: cloudcommander
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander
 version: 19.0.13
-options:
-  env_vars: []
