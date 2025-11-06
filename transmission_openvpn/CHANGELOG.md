@@ -1,3 +1,5 @@
+- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## v5.3.2 (31-05-2025)
 
 - Update to latest version from haugene/docker-transmission-openvpn (changelog : https://github.com/haugene/docker-transmission-openvpn/releases)

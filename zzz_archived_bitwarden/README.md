@@ -1,5 +1,7 @@
 # Home assistant add-on: Vaultwarden (Bitwarden RS)
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 # ⚠️ It is recommended to use the official addon (https://github.com/hassio-addons/addon-bitwarden) instead of this fork. The only benefit of this fork is automated releases, now implemented in the offical one. ⚠️
 
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
@@ -27,3 +29,5 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 Created by Frenck, please see documentation here : https://github.com/hassio-addons/addon-bitwarden
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

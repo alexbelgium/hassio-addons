@@ -111,7 +111,7 @@ privileged:
   - NET_ADMIN
 schema:
   env_vars:
-    - name: match(^[A-Z0-9_]+$)
+    - name: match(^[A-Za-z0-9_]+$)
       value: str?
   DOCKER_MODS: list(linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg|)?
   PGID: int

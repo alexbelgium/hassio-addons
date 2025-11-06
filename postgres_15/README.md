@@ -58,7 +58,7 @@ For more information, check the [official PostgreSQL image docs](https://hub.doc
 This addon supports custom scripts and environment variables through the `addon_config` mapping:
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
-- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 **Configuration File**: By default `postgresql.conf` is stored in `/config/postgresql.conf` accessible by other addons and Home Assistant. You can modify it using the File Editor addon. For better security, change `CONFIG_LOCATION` to `/data/orig/postgresql.conf` to make it accessible only to this addon.
 
@@ -89,3 +89,5 @@ By default, Postgres will be reachable on the local network of your host system.
 Create an issue on github
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

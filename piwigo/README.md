@@ -39,6 +39,8 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:81> or through the sidebar using Ingress.
 Configurations can be done through the app webUI, except for the following options.
 
@@ -84,3 +86,5 @@ This addon supports mounting both local drives and remote SMB shares:
 - **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

@@ -1,3 +1,4 @@
+- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 0.8.2 (08-03-2025)
 - Update to latest version from gabe565/CastSponsorSkip (changelog : https://github.com/gabe565/CastSponsorSkip/releases)

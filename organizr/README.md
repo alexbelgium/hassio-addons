@@ -39,6 +39,8 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:80> or through the sidebar using Ingress.
 Configurations can be done through the app webUI, except for the following options.
 
@@ -74,3 +76,5 @@ Create an issue on github
 ![bjaSt3fTfdXhw5vyl-7Lqz1EOjJIyh8lrdqxA53qO6E](https://user-images.githubusercontent.com/44178713/123061812-43601b00-d40c-11eb-993c-2aed31072775.jpg)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

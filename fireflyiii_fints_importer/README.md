@@ -28,6 +28,8 @@ This addon is based on the docker image https://hub.docker.com/r/benkl/firefly-i
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:3476>.
 
 This tool allows you to import transactions from your FinTS enabled bank (primarily German banks) into Firefly III.
@@ -99,3 +101,5 @@ Create an issue on github
 ## Illustration
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

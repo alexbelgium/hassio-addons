@@ -1,3 +1,5 @@
+- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## 5.0.1-1 (13-08-2024)
 
 - Update apparmomr profile to fix start up

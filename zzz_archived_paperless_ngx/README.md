@@ -42,6 +42,8 @@ Alternative quality addon : https://github.com/BenoitAnastay/home-assistant-addo
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Default username:password is admin:admin. Once logged in, you can change it from within the administration panel.
 
 Options can be configured through two ways :
@@ -90,3 +92,5 @@ Create an issue on github
 ---
 
 ![illustration](https://paperless-ngx.readthedocs.io/en/latest/_images/documents-smallcards.png)
+
+

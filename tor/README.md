@@ -41,6 +41,8 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Configurations can be done through the app webUI, except for the following options.
 
 ### Options
@@ -126,3 +128,5 @@ If you have in issue with your installation, please be sure to checkout github.
 [tor-bridges-obfs4]: https://bridges.torproject.org/bridges/?transport=obfs4
 [tor-bridges-webtunnel]: https://bridges.torproject.org/bridges/?transport=webtunnel
 [what-is-snowflake]: https://support.torproject.org/censorship/what-is-snowflake/
+
+

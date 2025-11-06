@@ -1,6 +1,8 @@
 ## &#9888; Open Request : [✨ [REQUEST] [spotweb] Own dbsettings.inc.php (opened 2025-04-29)](https://github.com/alexbelgium/hassio-addons/issues/1850) by [@wimb0](https://github.com/wimb0)
 # Home Assistant Add-ons: Spotweb
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 [![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
 
@@ -61,3 +63,5 @@ To import your ownsettings.php, place the file in "/config/addons_config/spotweb
 [repository]: https://github.com/alexbelgium/hassio-addons
 [spotnet]: https://github.com/spotnet/spotnet/wiki
 [spotweb]: https://github.com/spotweb/spotweb
+
+

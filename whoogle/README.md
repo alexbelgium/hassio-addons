@@ -27,6 +27,8 @@ This addon is based on the docker image https://hub.docker.com/r/benbusby/whoogl
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
 Configurations can be done through the app webUI, except for the following options.
 
@@ -104,3 +106,5 @@ Create an issue on github
 ![illustration](https://github.com/benbusby/whoogle-search/raw/main/docs/screenshot_desktop.jpg)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

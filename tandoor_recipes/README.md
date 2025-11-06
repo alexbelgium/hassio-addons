@@ -26,6 +26,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
 Configurations can be done through the app webUI, except for the following options.
 
@@ -93,3 +95,5 @@ If you have in issue with your installation, please be sure to checkout github.
 ## External Recipe files
 The directory /config/addons_config/tandoor_recipes/externalfiles can be used for importing external files in to Tandoor. You can map this with /opt/recipes/externalfiles within Docker.
 As per directions here: https://docs.tandoor.dev/features/external_recipes/
+
+

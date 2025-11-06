@@ -25,7 +25,7 @@ ports_description:
   8081/tcp: Web UI port (required)
 schema:
   env_vars:
-    - name: match(^[A-Z0-9_]+$)
+    - name: match(^[A-Za-z0-9_]+$)
       value: str?
   run_duration: str?
   secret_token: str
