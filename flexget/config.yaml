@@ -79,6 +79,7 @@ options:
   PGID: 0
   PUID: 0
   WebuiPass: homeassistant123
+  env_vars: []
 ports:
   5050/tcp: 5050
 ports_description:
@@ -89,6 +90,9 @@ schema:
   PGID: int
   PUID: int
   WebuiPass: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: flexget
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

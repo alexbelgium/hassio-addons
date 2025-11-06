@@ -82,3 +82,9 @@ udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 0.10.1-hafix2
 webui: '[PROTO:ssl]://[HOST]:[PORT:80]'
+options:
+  env_vars: []
+schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str

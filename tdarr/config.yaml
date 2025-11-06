@@ -97,6 +97,7 @@ map:
 name: Tdarr
 options:
   CONFIG_LOCATION: /config/addons_config/tdarr
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:file-search
 ports:
@@ -116,6 +117,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: tdarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

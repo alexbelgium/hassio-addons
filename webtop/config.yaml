@@ -89,6 +89,7 @@ options:
   PGID: 0
   PUID: 0
   additional_apps: engrampa,libreoffice
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:monitor
 ports:
@@ -131,6 +132,9 @@ schema:
   data_location: str?
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: webtop-kde
 tmpfs: true
 udev: true

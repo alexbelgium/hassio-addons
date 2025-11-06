@@ -3,7 +3,7 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: "\U0001F5A7\U0001F50D WIFI / LAN scanner, intruder, and presence detector"
+description: "🖧🔍 WIFI / LAN scanner, intruder, and presence detector"
 environment:
   PGID: '102'
   PORT: '20211'
@@ -38,9 +38,14 @@ privileged:
 schema:
   APP_CONF_OVERRIDE: str?
   TZ: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mqtt:want
 slug: netalertx_fa
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 25.10.1
+options:
+  env_vars: []

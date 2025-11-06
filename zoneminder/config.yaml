@@ -3,8 +3,7 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: A full-featured, open source, state-of-the-art video surveillance software
-  system
+description: A full-featured, open source, state-of-the-art video surveillance software system
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -81,12 +80,16 @@ map:
 name: Zoneminder
 options:
   Images_location: /config/addons_config/zoneminder/images
+  env_vars: []
 ports:
   80/tcp: 3778
 ports_description:
   80/tcp: web interface
 schema:
   Images_location: str
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mysql:want
 slug: zoneminder

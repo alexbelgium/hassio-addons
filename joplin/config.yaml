@@ -75,6 +75,7 @@ name: Joplin Server
 options:
   APP_BASE_URL: http://your_domain:port
   data_location: /config/addons_config/joplin
+  env_vars: []
 ports:
   22300/tcp: 22300
 ports_description:
@@ -98,6 +99,9 @@ schema:
   POSTGRES_PORT: int?
   POSTGRES_USER: str?
   data_location: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: joplin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

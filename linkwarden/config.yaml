@@ -2,8 +2,7 @@ arch:
   - aarch64
   - amd64
 codenotary: alexandrep.github@gmail.com
-description: collaborative bookmark manager to collect, organize, and preserve webpages
-  and articles
+description: collaborative bookmark manager to collect, organize, and preserve webpages and articles
 environment:
   AUTHENTIK_CLIENT_ID: CLIENT_ID
   AUTHENTIK_CLIENT_SECRET: CLIENT_SECRET
@@ -38,7 +37,12 @@ schema:
   NEXT_PUBLIC_OLLAMA_ENDPOINT_URL: str?
   OLLAMA_MODEL: str?
   STORAGE_FOLDER: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: linkwarden
 url: https://github.com/alexbelgium/hassio-addons/tree/master/linkwarden
 version: 2.13.0
 webui: '[PROTO:ssl]://[HOST]:[PORT:3000]'
+options:
+  env_vars: []

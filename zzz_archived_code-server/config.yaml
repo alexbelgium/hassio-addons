@@ -3,8 +3,7 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: 'Deprecated : Code-server is VS Code running on a remote server, accessible
-  through the browser'
+description: 'Deprecated : Code-server is VS Code running on a remote server, accessible through the browser'
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -79,6 +78,7 @@ name: 'zzz_archived : Code-server (VScode)'
 options:
   PGID: 0
   PUID: 0
+  env_vars: []
 ports:
   8443/tcp: 8443
 ports_description:
@@ -95,6 +95,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: code-server
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/coder-server

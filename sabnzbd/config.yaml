@@ -2,8 +2,7 @@ arch:
   - aarch64
   - amd64
 codenotary: alexandrep.github@gmail.com
-description: Makes Usenet as simple and streamlined as possible by automating everything
-  we can
+description: Makes Usenet as simple and streamlined as possible by automating everything we can
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -81,6 +80,7 @@ name: Sabnzbd
 options:
   PGID: 0
   PUID: 0
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:arrow-down-bold-circle-outline
 ports:
@@ -99,6 +99,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: sabnzbd
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

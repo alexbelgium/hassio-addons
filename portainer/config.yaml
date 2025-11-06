@@ -24,6 +24,7 @@ options:
   keyfile: privkey.pem
   password: homeassistant
   ssl: false
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:docker
 ports:
@@ -37,6 +38,9 @@ schema:
   keyfile: str
   password: str?
   ssl: bool
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: portainer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

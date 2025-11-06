@@ -78,6 +78,7 @@ options:
   CONFIG_LOCATION: /config/addons_config/fireflyiii/config.yaml
   DB_CONNECTION: sqlite_internal
   silent: 'true'
+  env_vars: []
 ports:
   8080/tcp: 3473
   8443/tcp: null
@@ -95,6 +96,9 @@ schema:
   DB_USERNAME: str?
   Updates: list(|hourly|daily|weekly)?
   silent: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mysql:want
 slug: fireflyiii

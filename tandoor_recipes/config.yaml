@@ -83,6 +83,7 @@ options:
   DEBUG: '0'
   SECRET_KEY: YOUR_SECRET_KEY
   externalfiles_folder: /config/addons_config/tandoor_recipes/externalfiles
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:silverware-fork-knife
 panel_title: Tandoor Recipes
@@ -104,6 +105,9 @@ schema:
   POSTGRES_USER: str?
   SECRET_KEY: str
   externalfiles_folder: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mysql:want
 slug: tandoor_recipes

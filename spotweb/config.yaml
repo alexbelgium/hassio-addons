@@ -17,6 +17,7 @@ options:
   certfile: fullchain.pem
   keyfile: privkey.pem
   ssl: false
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:chart-timeline
 panel_title: Spotweb
@@ -34,6 +35,9 @@ schema:
   remote_mysql_port: int?
   remote_mysql_username: str?
   ssl: bool
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mysql:want
 slug: spotweb

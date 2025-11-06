@@ -74,6 +74,7 @@ name: Ombi
 options:
   PGID: 0
   PUID: 0
+  env_vars: []
 ports:
   3579/tcp: 3579
 ports_description:
@@ -81,6 +82,9 @@ ports_description:
 schema:
   PGID: int
   PUID: int
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: ombi
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/ombi

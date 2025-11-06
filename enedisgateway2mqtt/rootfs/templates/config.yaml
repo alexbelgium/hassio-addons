@@ -102,3 +102,9 @@ myelectricaldata:
     production_detail_max_date: "2021-06-01"
     refresh_addresse: "false"
     refresh_contract: "false"
+options:
+  env_vars: []
+schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str

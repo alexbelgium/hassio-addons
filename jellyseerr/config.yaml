@@ -75,6 +75,7 @@ name: Jellyseerr
 options:
   TYPE: emby
   TZ: Europe/Paris
+  env_vars: []
 ports:
   5055/tcp: 5055
 ports_description:
@@ -83,6 +84,9 @@ privileged: []
 schema:
   TYPE: list(emby|jellyfin)
   TZ: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: jellyseerr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/jellyseerr

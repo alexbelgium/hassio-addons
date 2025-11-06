@@ -83,6 +83,7 @@ options:
   config_location: /config/addons_config/resiliosync
   data_location: /share/resiliosync
   downloads_location: /share/resiliosync_downloads
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:cloud-sync-outline
 ports:
@@ -107,6 +108,9 @@ schema:
   downloads_location: str
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: resiliosync
 udev: true
 url: https://github.com/tyjtyj/hassio-addons

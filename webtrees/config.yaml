@@ -88,6 +88,7 @@ options:
   certfile: fullchain.pem
   keyfile: privkey.pem
   ssl: false
+  env_vars: []
 ports:
   443/tcp: null
   80/tcp: 9999
@@ -110,6 +111,9 @@ schema:
   networkdisks: str?
   ssl: bool
   trusted_headers: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mysql:want
 slug: webtrees

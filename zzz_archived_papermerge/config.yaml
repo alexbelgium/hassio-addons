@@ -81,6 +81,7 @@ options:
   import_dir: /share/papermerge/import
   ocrlang: eng,fra
   storage_dir: /data/media
+  env_vars: []
 ports:
   8000/tcp: 8000
 ports_description:
@@ -104,6 +105,9 @@ schema:
   ocrlang: str
   smbv1: bool?
   storage_dir: str
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: papermerge
 stage: deprecated
 udev: true

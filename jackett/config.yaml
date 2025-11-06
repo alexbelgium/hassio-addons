@@ -3,9 +3,7 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: Translates queries from apps (Sonarr, Sickrage, CouchPotato, Mylar, etc)
-  into tracker-site-specific http queries, parses the html response, then sends results
-  back to the requesting software
+description: Translates queries from apps (Sonarr, Sickrage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -82,6 +80,7 @@ name: Jackett NAS
 options:
   PGID: 0
   PUID: 0
+  env_vars: []
 ports:
   8889/tcp: 8889
   9117/tcp: 9117
@@ -100,6 +99,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: jackett_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/jackett

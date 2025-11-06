@@ -3,10 +3,7 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support.
-  A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers).
-  For those that are not, you can use a custom provider as per this project's documentation
-  (https://github.com/nalipaz/hassio-addons/blob/master/README.md)
+description: Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support. A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers). For those that are not, you can use a custom provider as per this project's documentation (https://github.com/nalipaz/hassio-addons/blob/master/README.md)
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -80,6 +77,7 @@ options:
       password: password
       provider: yourprovider
       username: username
+  env_vars: []
 schema:
   allow_ipv6: bool?
   fake_address: bool?
@@ -107,6 +105,9 @@ schema:
       wildcard: bool?
   secure_ssl: bool?
   verify_address: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: inadyn
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

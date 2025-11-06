@@ -85,6 +85,7 @@ map:
 name: Scrutiny
 options:
   Updates: Hourly
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:glasses
 ports:
@@ -107,6 +108,9 @@ schema:
   Updates: list(Quarterly|Hourly|Daily|Weekly|Custom)
   Updates_custom_time: str?
   expose_collector: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: scrutiny
 udev: true
 url: https://github.com/AnalogJ/scrutiny

@@ -76,6 +76,7 @@ options:
   TZ: Europe/Paris
   mqtt_autodiscover: true
   verbose: true
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:lightning-bolt-outline
 ports:
@@ -87,6 +88,9 @@ schema:
   TZ: str?
   mqtt_autodiscover: bool
   verbose: bool
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mqtt:want
 slug: enedisgateway2mqtt_dev

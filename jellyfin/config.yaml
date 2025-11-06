@@ -9,8 +9,7 @@ backup_exclude:
 breaking_versions:
   - 10.10.6*
 codenotary: alexandrep.github@gmail.com
-description: A Free Software Media System that puts you in control of managing and
-  streaming your media
+description: A Free Software Media System that puts you in control of managing and streaming your media
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -91,6 +90,7 @@ options:
   PGID: 0
   PUID: 0
   data_location: /share/jellyfin
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:billiards-rack
 ports:
@@ -118,6 +118,9 @@ schema:
   data_location: str
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: jellyfin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

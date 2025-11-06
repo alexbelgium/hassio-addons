@@ -97,7 +97,12 @@ schema:
   localdisks: str?
   networkdisks: str?
   smbv1: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: cloudcommander
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/cloudcommander
 version: 19.0.13
+options:
+  env_vars: []

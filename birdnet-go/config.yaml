@@ -86,6 +86,7 @@ name: Birdnet-go
 options:
   BIRDSONGS_FOLDER: /config/clips
   homeassistant_microphone: false
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:bird
 ports:
@@ -107,6 +108,9 @@ schema:
   homeassistant_microphone: bool?
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mysql:want
   - mqtt:want

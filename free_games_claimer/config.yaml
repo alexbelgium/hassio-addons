@@ -2,8 +2,7 @@ arch:
   - aarch64
   - amd64
 codenotary: alexandrep.github@gmail.com
-description: automatically claims free games on the Epic Games Store, Amazon Prime
-  Gaming and GOG
+description: automatically claims free games on the Epic Games Store, Amazon Prime Gaming and GOG
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -77,6 +76,7 @@ name: Free Games Claimer (NoVNC not working)
 options:
   CMD_ARGUMENTS: node epic-games ; node prime-gaming ; node gog
   CONFIG_LOCATION: /config/config.env
+  env_vars: []
 ports:
   5900/tcp: null
   6080/tcp: 6080
@@ -86,6 +86,9 @@ ports_description:
 schema:
   CMD_ARGUMENTS: str
   CONFIG_LOCATION: str
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: free_games_claimer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

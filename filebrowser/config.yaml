@@ -3,8 +3,7 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: filebrowser provides a file managing interface within a specified directory
-  and it can be used to upload, delete, preview, rename and edit your files
+description: filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -96,6 +95,7 @@ options:
   disable_thumbnails: true
   keyfile: privkey.pem
   ssl: false
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:file-search
 ports:
@@ -117,6 +117,9 @@ schema:
   localdisks: str?
   networkdisks: str?
   ssl: bool
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: filebrowser
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

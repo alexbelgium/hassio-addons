@@ -88,6 +88,7 @@ options:
   customUI: flood-for-transmission
   download_dir: /share/downloads
   incomplete_dir: /share/incomplete
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:transmission-tower
 ports:
@@ -119,6 +120,9 @@ schema:
   user: str?
   watch_dir: str?
   whitelist: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: transmission_ls
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

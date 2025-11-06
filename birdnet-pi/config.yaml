@@ -76,6 +76,7 @@ options:
   certfile: fullchain.pem
   keyfile: privkey.pem
   ssl: false
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:bird
 ports:
@@ -106,6 +107,9 @@ schema:
   networkdisks: str?
   pi_password: password
   ssl: bool
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mqtt:want
 slug: birdnet-pi

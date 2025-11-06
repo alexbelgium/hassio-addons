@@ -4,8 +4,7 @@ arch:
 backup_exclude:
   - '**/machine-learning/*'
 codenotary: alexandrep.github@gmail.com
-description: Self-hosted photo and video backup solution directly from your mobile
-  phone
+description: Self-hosted photo and video backup solution directly from your mobile phone
 devices:
   - /dev/dri
   - /dev/dxg
@@ -102,6 +101,7 @@ options:
   JWT_SECRET: jt+OVWY6WqKJXw3xF5qOxN5L5/f4u2jlIlCQgWS3E4w=
   TZ: Europe/Paris
   data_location: /share/immich
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:file-search
 ports:
@@ -131,6 +131,9 @@ schema:
   localdisks: str?
   networkdisks: str?
   skip_permissions_check: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mysql:want
 slug: immich

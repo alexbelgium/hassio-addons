@@ -14,6 +14,7 @@ options:
   run_duration: 12h
   secret_token: lrMY24Byhx
   ui_path: joal
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:owl
 ports:
@@ -27,6 +28,9 @@ schema:
   secret_token: str
   ui_path: str
   verbose: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: joal
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

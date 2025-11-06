@@ -106,6 +106,7 @@ options:
   keyfile: privkey.pem
   trusted_domains: your-domain, your-domain2
   use_own_certs: false
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:cloud
 ports:
@@ -142,6 +143,9 @@ schema:
   skip_permissions_check: bool?
   trusted_domains: str?
   use_own_certs: bool
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mysql:want
 slug: nextcloud_ocr

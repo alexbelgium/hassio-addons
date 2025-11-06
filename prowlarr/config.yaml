@@ -2,8 +2,7 @@ arch:
   - aarch64
   - amd64
 codenotary: alexandrep.github@gmail.com
-description: Torrent Trackers and Usenet indexers offering complete management ofSonarr,
-  Radarr, Lidarr, and Readarr indexers with no per app setup required
+description: Torrent Trackers and Usenet indexers offering complete management ofSonarr, Radarr, Lidarr, and Readarr indexers with no per app setup required
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -80,6 +79,7 @@ name: Prowlarr NAS
 options:
   PGID: 0
   PUID: 0
+  env_vars: []
 ports:
   9696/tcp: 9696
 ports_description:
@@ -97,6 +97,9 @@ schema:
   localdisks: str?
   networkdisks: str?
   smbv1: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: prowlarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

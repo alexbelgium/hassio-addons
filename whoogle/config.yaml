@@ -77,6 +77,7 @@ options:
   TZ: Europe/Amsterdam
   WHOOGLE_CONFIG_LANGUAGE: lang_en
   WHOOGLE_CONFIG_URL: https://website.com
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:magnify
 ports:
@@ -115,6 +116,9 @@ schema:
   WHOOGLE_PROXY_USER: str?
   WHOOGLE_RESULTS_PER_PAGE: int(5,100)?
   WHOOGLE_USER: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: whoogle-search
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/whoogle

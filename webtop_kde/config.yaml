@@ -90,6 +90,7 @@ options:
   data_location: /config/data
   keyfile: privkey.pem
   use_own_certs: true
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:monitor
 ports:
@@ -136,6 +137,9 @@ schema:
   localdisks: str?
   networkdisks: str?
   use_own_certs: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: webtop
 tmpfs: true
 udev: true

@@ -92,6 +92,7 @@ options:
   qbit_manage: false
   ssl: false
   whitelist: localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:progress-download
 ports:
@@ -135,6 +136,9 @@ schema:
   silent: bool?
   ssl: bool
   whitelist: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: qbittorrent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

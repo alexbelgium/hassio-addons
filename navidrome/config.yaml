@@ -21,6 +21,7 @@ options:
   log_level: info
   music_folder: /data/music
   ssl: false
+  env_vars: []
 ports:
   4533/tcp: 4533
 ports_description:
@@ -48,6 +49,9 @@ schema:
   ssl: bool
   transcoding_cache_size: str?
   welcome_message: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: navidrome
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/navidrome

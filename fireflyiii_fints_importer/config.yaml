@@ -2,8 +2,7 @@ arch:
   - amd64
   - aarch64
 codenotary: alexandrep.github@gmail.com
-description: Import financial transactions from your FinTS enabled bank into Firefly
-  III
+description: Import financial transactions from your FinTS enabled bank into Firefly III
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -81,8 +80,13 @@ ports_description:
 schema:
   Updates: list(|hourly|daily2|daily4|daily6|daily8|daily10|daily12|weekly)?
   silent: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: fireflyiii_fints_importer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 1.3.0-5
 webui: '[PROTO:ssl]://[HOST]:[PORT:8080]'
+options:
+  env_vars: []

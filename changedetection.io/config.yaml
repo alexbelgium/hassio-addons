@@ -15,6 +15,7 @@ options:
   PGID: 0
   PUID: 0
   TIMEOUT: '60000'
+  env_vars: []
 ports:
   5000/tcp: 5000
 ports_description:
@@ -25,6 +26,9 @@ schema:
   PUID: int
   TIMEOUT: int
   TZ: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: changedetection.io
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/changedetection.io

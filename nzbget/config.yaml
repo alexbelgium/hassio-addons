@@ -81,6 +81,7 @@ name: Nzbget
 options:
   PGID: 0
   PUID: 0
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:arrow-down-bold-circle-outline
 ports:
@@ -99,6 +100,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: nzbget
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

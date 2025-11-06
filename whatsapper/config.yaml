@@ -15,3 +15,9 @@ slug: whatsapper
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/whatsapper
 version: 1.0.4
+options:
+  env_vars: []
+schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str

@@ -16,12 +16,12 @@ options:
   aliasgroup1: ''
   certfile: fullchain.pem
   domain1: ''
-  extra_params: --o:ssl.enable=false --o:user_interface.use_integration_theme=false
-    --o:net.proto=IPv4
+  extra_params: --o:ssl.enable=false --o:user_interface.use_integration_theme=false --o:net.proto=IPv4
   keyfile: privkey.pem
   password: ''
   ssl: false
   username: ''
+  env_vars: []
 ports:
   9980/tcp: 9980
 ports_description:
@@ -39,6 +39,9 @@ schema:
   server_name: str?
   ssl: bool
   username: str
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: collabora
 url: https://github.com/alexbelgium/hassio-addons
 version: 25.4.6

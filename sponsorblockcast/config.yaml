@@ -13,6 +13,7 @@ map:
 name: Castsponsorskip
 options:
   CSS_CATEGORIES: sponsor, intro, outro, selfpromo
+  env_vars: []
 schema:
   CSS_CATEGORIES: str
   CSS_DISCOVER_INTERVAL: str?
@@ -20,6 +21,9 @@ schema:
   CSS_PAUSED_INTERVAL: str?
   CSS_PLAYING_INTERVAL: str?
   CSS_YOUTUBE_API_KEY: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: sponsorblockcast
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/sponsorblockcast

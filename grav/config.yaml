@@ -75,6 +75,7 @@ name: Grav web server
 options:
   PGID: 1000
   PUID: 1000
+  env_vars: []
 ports:
   80/tcp: 9191
 ports_description:
@@ -83,6 +84,9 @@ schema:
   PGID: int
   PUID: int
   TZ: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: grav
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

@@ -74,6 +74,7 @@ options:
   PGID: '0'
   PUID: '0'
   csrf_allowed: http://homeassistant.local:8123,https://homeassistant.local:8123
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:book-open
 ports:
@@ -95,6 +96,9 @@ schema:
   csrf_allowed: str
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: codex
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

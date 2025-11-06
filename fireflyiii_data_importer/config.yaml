@@ -77,6 +77,7 @@ map:
 name: Firefly iii Data Importer
 options:
   CONFIG_LOCATION: /config
+  env_vars: []
 ports:
   8080/tcp: 3474
 ports_description:
@@ -95,6 +96,9 @@ schema:
   SPECTRE_SECRET: str?
   Updates: list(hourly|daily|weekly)?
   silent: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: fireflyiii_data_importer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

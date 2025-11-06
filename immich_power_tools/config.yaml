@@ -24,7 +24,12 @@ schema:
   GOOGLE_MAPS_API_KEY: str?
   IMMICH_API_KEY: str
   IMMICH_URL: str
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: immich_power_tools
 url: https://github.com/alexbelgium/hassio-addons
 version: 0.18.0
 webui: http://[HOST]:[PORT:3000]
+options:
+  env_vars: []

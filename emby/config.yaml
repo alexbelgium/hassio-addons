@@ -6,8 +6,7 @@ backup_exclude:
   - '*/transcoding-temp/'
   - '*/logs/*'
 codenotary: alexandrep.github@gmail.com
-description: A free Software Media System that puts you in control of managing and
-  streaming your media
+description: A free Software Media System that puts you in control of managing and streaming your media
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -88,6 +87,7 @@ options:
   PGID: 0
   PUID: 0
   silent: true
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:emby
 ports:
@@ -114,6 +114,9 @@ schema:
   networkdisks: str?
   silent: bool?
   smbv1: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: emby
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/emby

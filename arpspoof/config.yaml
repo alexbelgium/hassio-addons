@@ -72,6 +72,7 @@ map: []
 name: Arpspoof
 options:
   ROUTER_IP: yourip
+  env_vars: []
 ports:
   7022/tcp: 7022
 ports_description:
@@ -82,6 +83,9 @@ privileged:
 schema:
   INTERFACE_NAME: str?
   ROUTER_IP: str
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: arpspoof
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/arpspoof

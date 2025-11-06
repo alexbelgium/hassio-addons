@@ -81,6 +81,7 @@ options:
   maxmem: 200
   ssl: false
   theme: default
+  env_vars: []
 ports:
   2205/tcp: 2202
   2206/tcp: 2203
@@ -105,6 +106,9 @@ schema:
   smbv1: bool?
   ssl: bool
   theme: list(default|comixology2|plextheme-master)
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: ubooquity
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

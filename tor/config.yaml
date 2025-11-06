@@ -19,6 +19,7 @@ options:
     - 8123:80
   socks: false
   stealth: false
+  env_vars: []
 ports:
   9050/tcp: 9050
   9080/tcp: 9080
@@ -37,6 +38,9 @@ schema:
     - match(^(.*:)?(?:[0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])?$)
   socks: bool
   stealth: bool
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: tor
 startup: services
 url: https://github.com/alexbelgium/hassio-addons

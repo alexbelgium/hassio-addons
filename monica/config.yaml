@@ -72,6 +72,7 @@ image: ghcr.io/alexbelgium/monica-{arch}
 init: false
 options:
   database: sqlite
+  env_vars: []
 map:
   - type: addon_config
     read_only: false
@@ -96,6 +97,9 @@ schema:
   MAIL_ENCRYPTION: str?
   MAIL_FROM_ADDRESS: str?
   MAIL_FROM_NAME: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 services:
   - mysql:want
 slug: monica

@@ -9,8 +9,7 @@ backup_exclude:
   - '**/Crash Reports/**'
   - '**/Diagnostics/**'
 codenotary: alexandrep.github@gmail.com
-description: Plex organizes video, music and photos from personal media libraries
-  and streams them to smart TVs, streaming boxes and mobile devices
+description: Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -126,6 +125,7 @@ options:
   PGID: 0
   PUID: 0
   claim: Get_from_https://www.plex.tv/claim
+  env_vars: []
 ports:
   1900/udp: 1900
   3005/tcp: 3005
@@ -166,6 +166,9 @@ schema:
   networkdisks: str?
   skip_permissions_check: bool?
   smbv1: bool?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: plex_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/plex

@@ -35,7 +35,12 @@ schema:
   EDGE_KEY: str?
   LOG_LEVEL: str?
   PORTAINER_AGENT_ARGS: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: portainer_agent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: alpine-sts
+options:
+  env_vars: []

@@ -17,7 +17,12 @@ schema:
   ApiKey: str
   ImmichServerUrl: str
   TZ: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: immich_frame
 url: https://github.com/alexbelgium/hassio-addons
 version: 1.0.28.0
 webui: http://[HOST]:[PORT:8080]
+options:
+  env_vars: []

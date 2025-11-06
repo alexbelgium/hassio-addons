@@ -80,6 +80,7 @@ name: Lidarr NAS
 options:
   PGID: 0
   PUID: 0
+  env_vars: []
 ports:
   8686/tcp: 8686
 ports_description:
@@ -96,6 +97,9 @@ schema:
   cifsusername: str?
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: lidarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/README.md

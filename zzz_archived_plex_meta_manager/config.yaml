@@ -3,8 +3,7 @@ arch:
   - amd64
   - armv7
 codenotary: alexandrep.github@gmail.com
-description: Python script to update metadata information for movies, shows, and collections
-  as well as automatically build collections
+description: Python script to update metadata information for movies, shows, and collections as well as automatically build collections
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -78,6 +77,7 @@ options:
   PGID: 0
   PMM_CONFIG: /config/addons_config/plex-data-manager/config.yml
   PUID: 0
+  env_vars: []
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
@@ -90,6 +90,9 @@ schema:
   PMM_TIME: str?
   PUID: int
   TZ: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: plex-meta-manager
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/plex_meta_manager

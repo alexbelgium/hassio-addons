@@ -48,3 +48,9 @@ notifiers:
     webhookUrl: https://ntfy.example.com/mytopic
     priority: urgent
     token: tk_mytoken
+options:
+  env_vars: []
+schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str

@@ -82,6 +82,7 @@ options:
   PGID: 0
   PUID: 0
   connection_mode: ingress_noauth
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:download-circle
 ports:
@@ -102,6 +103,9 @@ schema:
   connection_mode: list(ingress_noauth|noingress_auth|ingress_auth)
   localdisks: str?
   networkdisks: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: readarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/readarr

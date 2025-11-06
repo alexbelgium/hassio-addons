@@ -13,6 +13,7 @@ options:
   certfile: fullchain.pem
   keyfile: privkey.pem
   ssl: true
+  env_vars: []
 ports:
   7277/tcp: 7277
 ports_description:
@@ -23,6 +24,9 @@ schema:
   log_level: list(trace|debug|info|notice|warning|error|fatal)?
   request_size_limit: int?
   ssl: bool
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: bitwarden
 stage: deprecated
 udev: true

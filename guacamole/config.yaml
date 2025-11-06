@@ -84,6 +84,7 @@ map:
 name: Guacamole Client
 options:
   EXTENSIONS: auth-totp
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:lan
 ports:
@@ -93,6 +94,9 @@ ports_description:
 schema:
   EXTENSIONS: str?
   TZ: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: guacamole
 udev: true
 url: https://github.com/alexbelgium/hassio-addons

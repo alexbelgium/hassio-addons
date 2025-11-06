@@ -19,6 +19,7 @@ map:
 name: Postgres 15
 options:
   POSTGRES_PASSWORD: homeassistant
+  env_vars: []
 ports:
   5432/tcp: 5432
 ports_description:
@@ -29,6 +30,9 @@ schema:
   POSTGRES_INITDB_ARGS: str?
   POSTGRES_PASSWORD: password
   POSTGRES_USER: str?
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str
 slug: postgres
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/postgres
