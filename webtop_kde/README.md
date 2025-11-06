@@ -27,6 +27,8 @@ This addon is based on the docker image https://github.com/linuxserver/docker-we
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found with ingress or at <http://homeassistant:PORT>. The port is by default disabled but can be enabled through the addon options.
 
 By default the image is based around the abc user and we recommend using this user as all of the init/config is based around it. The default password is also abc . If you want to change this password and require authentication when accessing the interface simply issue passwd inside a gui terminal in the webtop. Then when accessing the web interface use the path:
@@ -73,3 +75,5 @@ Create an issue on github
 ![illustration](https://www.linuxserver.io/user/pages/content/images/2021/05/menu.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

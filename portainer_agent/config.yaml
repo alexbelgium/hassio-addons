@@ -24,7 +24,7 @@ ports_description:
   9001/tcp: Portainer agent
 schema:
   env_vars:
-    - name: match(^[A-Z0-9_]+$)
+    - name: match(^[A-Za-z0-9_]+$)
       value: str?
   AGENT_CLUSTER_ADDR: str?
   AGENT_CLUSTER_PROBE_INTERVAL: str?

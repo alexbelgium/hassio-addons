@@ -86,7 +86,7 @@ ports_description:
   5000/tcp: Web interface
 schema:
   env_vars:
-    - name: match(^[A-Z0-9_]+$)
+    - name: match(^[A-Za-z0-9_]+$)
       value: str?
   HTTPS_ONLY: list(0|1)?
   TZ: str

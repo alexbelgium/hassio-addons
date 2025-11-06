@@ -87,7 +87,7 @@ ports_description:
   6080/tcp: NOVNC port
 schema:
   env_vars:
-    - name: match(^[A-Z0-9_]+$)
+    - name: match(^[A-Za-z0-9_]+$)
       value: str?
   CMD_ARGUMENTS: str
   CONFIG_LOCATION: str

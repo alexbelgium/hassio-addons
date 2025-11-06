@@ -60,7 +60,7 @@ ROOT_URL: "http://homeassistant.local:3000"
 This addon supports custom scripts and environment variables through the `addon_config` mapping:
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
-- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## Installation
 
@@ -76,3 +76,5 @@ comparison to installing any other Hass.io add-on.
 1. Restart the addon, to apply any option that should be applied
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

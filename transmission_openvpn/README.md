@@ -39,6 +39,8 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Options : see https://github.com/haugene/docker-transmission-openvpn for documentation
 
 For setting a custom openvpn file (even if using AIRVPN), you should set OPENVPN_PROVIDER to "custom", then reference your ovpn file in your "OPENVPN_CONFIG". For example, if AIRVPN has provided to you an *.ovpn filed named AIRVPN.ovpn, you need to install an addon such as Filebrowser, go in the /config/addons_config/transmission/openvpn folder and put the AIRVPN.ovpn here. Then, in the addon option you need to write "AIRVPN" in the "OPENVPN_CONFIG" option
@@ -50,3 +52,5 @@ WEBPROXY_ENABLED : the webproxy is enabled by default on port 8118 but can be di
 Webui can be found at `<your-ip>:9091`.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

@@ -1,3 +1,5 @@
+- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## 5.1.2-7 (17-08-2025)
 - Minor bugs fixed
 ## 5.1.2-6 (31-07-2025)

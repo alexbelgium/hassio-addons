@@ -47,6 +47,8 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 There is a [walkthrough](https://github.com/meisnate12/Plex-Meta-Manager/wiki/Docker-Walkthrough#setting-up-the-initial-config-file) available to help get you up and running.
 For more information see the [official wiki](https://github.com/meisnate12/Plex-Meta-Manager/wiki).
 
@@ -80,3 +82,5 @@ Create an issue on github
 ---
 
 ![illustration](https://dausruddin.com/wp-content/uploads/2020/05/plex-meta-manager-v3-1024x515.png)
+
+

@@ -16,7 +16,7 @@ options:
   CSS_CATEGORIES: sponsor, intro, outro, selfpromo
 schema:
   env_vars:
-    - name: match(^[A-Z0-9_]+$)
+    - name: match(^[A-Za-z0-9_]+$)
       value: str?
   CSS_CATEGORIES: str
   CSS_DISCOVER_INTERVAL: str?

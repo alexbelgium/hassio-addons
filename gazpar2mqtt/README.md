@@ -27,6 +27,8 @@ See its github for all informations : https://github.com/yukulehe/gazpar2mqtt
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 This addon fetches gas consumption data from GRDF (French gas utility) and publishes it to MQTT for Home Assistant integration.
 
 ### Setup Steps
@@ -97,3 +99,5 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

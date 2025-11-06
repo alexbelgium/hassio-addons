@@ -28,6 +28,8 @@ This addon is based on the docker image https://github.com/ZoneMinder/zmdockerfi
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:3778/zm>.
 
 ### Setup Steps
@@ -91,3 +93,5 @@ Create an issue on github
 ![viewmonitor-stream](https://user-images.githubusercontent.com/44178713/157933856-33ed3d44-6b91-4ce2-8a9b-daf9b618176c.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

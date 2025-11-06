@@ -84,7 +84,7 @@ options:
       username: username
 schema:
   env_vars:
-    - name: match(^[A-Z0-9_]+$)
+    - name: match(^[A-Za-z0-9_]+$)
       value: str?
   allow_ipv6: bool?
   fake_address: bool?

@@ -1,3 +1,5 @@
+- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## v0.8.1-12 (16-08-2025)
 - Replace s6-based shutdown with standard command to avoid s6-svwait error
 

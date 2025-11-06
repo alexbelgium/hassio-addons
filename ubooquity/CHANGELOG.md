@@ -1,3 +1,4 @@
+- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 3.1.0 (23-08-2025)
 - Update to latest version from linuxserver/docker-ubooquity (changelog : https://github.com/linuxserver/docker-ubooquity/releases)

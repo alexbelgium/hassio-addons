@@ -106,7 +106,7 @@ privileged:
   - NET_ADMIN
 schema:
   env_vars:
-    - name: match(^[A-Z0-9_]+$)
+    - name: match(^[A-Za-z0-9_]+$)
       value: str?
   CONFIG_LOCATION: str?
   FILE_SERVER_ROOT: str

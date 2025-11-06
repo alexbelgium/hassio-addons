@@ -44,6 +44,8 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:9191>.
 Configurations can be done through the app webUI, except for the following options.
 
@@ -88,3 +90,5 @@ Create an issue on github
 ![illustration](https://getgrav.org/user/pages/01.tour/_easy-to-use/001-dashboard.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

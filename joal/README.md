@@ -28,6 +28,8 @@ All credits for the app go to Anthony Raymond, please visit his repository here 
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
 Configuration details are available in the addon logs.
 
@@ -72,3 +74,5 @@ For Joal : see the upstream repo here https://github.com/anthonyraymond/joal
 ![image](https://user-images.githubusercontent.com/44178713/117990142-29c3b200-b33d-11eb-86c8-a3007d73c3da.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

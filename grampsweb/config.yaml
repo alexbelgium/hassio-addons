@@ -95,7 +95,7 @@ ports_description:
   5001/tcp: webui
 schema:
   env_vars:
-    - name: match(^[A-Z0-9_]+$)
+    - name: match(^[A-Za-z0-9_]+$)
       value: str?
   CELERY_NUM_WORKERS: int
   GUNICORN_NUM_WORKERS: int

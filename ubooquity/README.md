@@ -49,6 +49,8 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:PORT> or through the sidebar using Ingress.
 The default username/password is described in the startup log.
 Configurations can be done through the app webUI, except for the following options.
@@ -113,3 +115,5 @@ Create an issue on the [repository github][repository], or ask on the [home assi
 ![alt text](https://vaemendis.net/ubooquity/data/images/screenshots/books_library.jpg)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

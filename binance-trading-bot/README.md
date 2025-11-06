@@ -29,6 +29,8 @@ This is a test app ; for any issues please contact the link above.
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at <http://homeassistant:80>.
 Please see https://github.com/chrisleekr/binance-trading-bot for configuration.
 
@@ -48,3 +50,5 @@ comparison to installing any other Hass.io add-on.
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
+
+

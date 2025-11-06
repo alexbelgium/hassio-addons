@@ -55,6 +55,8 @@ Disable protection mode, then from the other Portainer cluster, add a new enviro
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ---
 
 Main options :
@@ -67,3 +69,5 @@ Other options : see https://github.com/portainer/agent#deployment-options
 ## Support
 
 Create an issue on github
+
+

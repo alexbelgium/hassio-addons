@@ -1,3 +1,5 @@
+- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## 1.5.8-5 (13-01-2025)
 - Allow non ssl servers
 - Use /usr/bin/maria instead of mysql

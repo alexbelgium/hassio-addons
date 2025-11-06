@@ -26,6 +26,8 @@ This addon is based on the [docker image](https://hub.docker.com/r/openproject/o
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Fill the default addon options to be able to start the addon. Be sure especially to configure the hostname with your homeassistant ip + addon exposed port
 For additional options, use the config.yaml system : https://github.com/alexbelgium/hassio-addons/wiki/Addons-feature:-add-env-variables
 
@@ -47,3 +49,5 @@ comparison to installing any other Hass.io add-on.
 Default administration password (login: admin, password: admin).
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

@@ -40,6 +40,8 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 Webui can be found at `<your-ip>:8000`.
 
 Default name `admin` password `admin`
@@ -69,3 +71,5 @@ CONFIG_LOCATION: location of the papermerge.conf.py (see below)
   Full variables can be found here : https://papermerge.readthedocs.io/en/v2.0.1/settings.html.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+

@@ -41,6 +41,8 @@ comparison to installing any other Hass.io add-on.
 
 ## Configuration
 
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 This addon has no web interface - all configuration is done through addon options.
 For detailed configuration information, see the [official documentation](https://github.com/troglobit/inadyn).
 
@@ -189,3 +191,5 @@ If you want use this add-on with several subdomains with the same provider, you 
 ```
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
+
