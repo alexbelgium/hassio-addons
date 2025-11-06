@@ -120,15 +120,11 @@ for KEYS in "${arr[@]}"; do
                         continue
                     fi
 
-                    mapfile -t env_pairs < <(jq -r 'to_entries[] | [ .key, (.value // "") ] | @tsv' <<<"$entry")
-                    for env_pair in "${env_pairs[@]}"; do
-                        if [[ "$env_pair" == *$'\t'* ]]; then
-                            env_key=${env_pair%%$'\t'*}
-                            env_value=${env_pair#*$'\t'}
-                        else
-                            env_key="$env_pair"
-                            env_value=""
-                        fi
+                    # Preserve multiline values: iterate keys and extract raw values without @tsv
+                    mapfile -t env_keys < <(jq -r 'keys[]' <<<"$entry")
+                    for env_key in "${env_keys[@]}"; do
+                        # Use --arg to select the key; // empty to avoid "null"
+                        env_value=$(jq -r --arg k "$env_key" '.[$k] // empty' <<<"$entry")
                         export_option "$env_key" "$env_value"
                         env_processed=true
                     done
