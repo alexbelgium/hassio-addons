@@ -92,6 +92,7 @@ else
 fi
 bashio::log.green "---------------------------------------------------------"
 bashio::log.notice "This script is used to export custom environment variables at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon"
+bashio::log.warning "This methodology is deprecated and environment variables can be added from the addon options. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
 echo ""
 
 # Check if config file is there, or create one from template
