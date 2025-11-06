@@ -89,6 +89,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CUSTOM_OPTIONS: str?
   DROPBOX_TOKEN: str?
   cifsdomain: str?

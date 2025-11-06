@@ -71,6 +71,7 @@ map:
   - ssl
 name: BattyBirdNET-Pi
 options:
+  env_vars: []
   BIRDSONGS_FOLDER: /config/BirdSongs
   LIVESTREAM_BOOT_ENABLED: false
   TZ: Europe/Paris
@@ -89,6 +90,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   BIRDSONGS_FOLDER: str?
   LIVESTREAM_BOOT_ENABLED: bool
   MQTT_DISABLED: bool?

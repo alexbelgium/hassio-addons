@@ -79,6 +79,7 @@ map:
   - media:rw
 name: Nzbget
 options:
+  env_vars: []
   PGID: 0
   PUID: 0
 panel_admin: false
@@ -91,6 +92,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   PGID: int
   PUID: int
   TZ: str?

@@ -14,6 +14,7 @@ map:
   - backup:rw
 name: Spotweb
 options:
+  env_vars: []
   certfile: fullchain.pem
   keyfile: privkey.pem
   ssl: false
@@ -25,6 +26,9 @@ ports:
 ports_description:
   80/tcp: Not required for Ingress
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   certfile: str
   keyfile: str
   log_level: list(trace|debug|info|notice|warning|error|fatal)?

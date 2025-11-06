@@ -82,6 +82,7 @@ map:
   - ssl
 name: Transmission Openvpn
 options:
+  env_vars: []
   DEBUG: false
   DNS_server: 8.8.8.8,1.1.1.1
   LOCAL_NETWORK: 192.168.178.0/24
@@ -113,6 +114,9 @@ privileged:
   - DAC_READ_SEARCH
   - NET_ADMIN
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   DEBUG: bool
   DNS_server: str?
   LOCAL_NETWORK: str

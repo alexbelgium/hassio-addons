@@ -89,6 +89,7 @@ map:
   - ssl
 name: Jellyfin NAS
 options:
+  env_vars: []
   PGID: 0
   PUID: 0
   data_location: /share/jellyfin
@@ -109,6 +110,9 @@ privileged:
   - DAC_READ_SEARCH
   - NET_ADMIN
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   DOCKER_MODS: list(linuxserver/mods:jellyfin-opencl-intel|linuxserver/mods:jellyfin-amd|linuxserver/mods:jellyfin-rffmpeg|)?
   PGID: int
   PUID: int

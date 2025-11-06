@@ -84,6 +84,7 @@ map:
   - ssl:ro
 name: Photoprism
 options:
+  env_vars: []
   BACKUP_PATH: /share/photoprism/backup
   CONFIG_LOCATION: /config/addons_config/photoprism/config.yaml
   DB_TYPE: sqlite
@@ -105,6 +106,9 @@ privileged:
   - SYS_RAWIO
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   BACKUP_PATH: str
   CONFIG_LOCATION: str
   DB_TYPE: list(sqlite|mariadb_addon|external)

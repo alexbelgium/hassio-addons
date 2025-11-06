@@ -72,6 +72,7 @@ map:
   - ssl
 name: Organizr
 options:
+  env_vars: []
   PGID: "0"
   PUID: "0"
 ports:
@@ -79,6 +80,9 @@ ports:
 ports_description:
   80/tcp: web interface
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   PGID: int
   PUID: int
 slug: organizr

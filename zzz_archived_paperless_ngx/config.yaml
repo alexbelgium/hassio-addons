@@ -84,6 +84,7 @@ map:
   - ssl
 name: zzz_archived - Paperless NGX
 options:
+  env_vars: []
   CONFIG_LOCATION: /config/config.yaml
   OCRLANG: ENG FRA DEU
   PAPERLESS_OCR_MODE: skip
@@ -102,6 +103,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CONFIG_LOCATION: str
   OCRLANG: str?
   PAPERLESS_CONSUMPTION_DIR: str?

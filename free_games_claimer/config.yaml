@@ -76,6 +76,7 @@ map:
   - homeassistant_config:rw
 name: Free Games Claimer (NoVNC not working)
 options:
+  env_vars: []
   CMD_ARGUMENTS: node epic-games ; node prime-gaming ; node gog
   CONFIG_LOCATION: /config/config.env
 ports:
@@ -85,6 +86,9 @@ ports_description:
   5900/tcp: VNC port
   6080/tcp: NOVNC port
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CMD_ARGUMENTS: str
   CONFIG_LOCATION: str
 slug: free_games_claimer

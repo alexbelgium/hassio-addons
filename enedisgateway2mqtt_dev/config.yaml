@@ -72,6 +72,7 @@ map:
   - config:rw
 name: MyElectricalData Dev
 options:
+  env_vars: []
   CONFIG_LOCATION: /config/myelectricaldata_dev/config.yaml
   TZ: Europe/Paris
   mqtt_autodiscover: true
@@ -83,6 +84,9 @@ ports:
 ports_description:
   5000/tcp: Portail
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CONFIG_LOCATION: str
   TZ: str?
   mqtt_autodiscover: bool

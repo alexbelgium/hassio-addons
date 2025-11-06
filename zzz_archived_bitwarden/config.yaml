@@ -10,6 +10,7 @@ map:
   - ssl
 name: zzz_archived - Vaultwarden
 options:
+  env_vars: []
   certfile: fullchain.pem
   keyfile: privkey.pem
   ssl: true
@@ -18,6 +19,9 @@ ports:
 ports_description:
   7277/tcp: Bitwarden Vault
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   certfile: str
   keyfile: str
   log_level: list(trace|debug|info|notice|warning|error|fatal)?

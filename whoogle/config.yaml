@@ -74,6 +74,7 @@ map:
   - addon_config:rw
 name: Whoogle Search
 options:
+  env_vars: []
   TZ: Europe/Amsterdam
   WHOOGLE_CONFIG_LANGUAGE: lang_en
   WHOOGLE_CONFIG_URL: https://website.com
@@ -84,6 +85,9 @@ ports:
 ports_description:
   5000/tcp: Web interface
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   HTTPS_ONLY: list(0|1)?
   TZ: str
   WHOOGLE_ALT_IG: str?

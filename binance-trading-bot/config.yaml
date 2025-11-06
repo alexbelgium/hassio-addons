@@ -80,6 +80,7 @@ map:
   - config:rw
 name: Binance Trading Bot
 options:
+  env_vars: []
   BINANCE_AUTHENTICATION_ENABLED: true
   BINANCE_AUTHENTICATION_PASSWORD: null
   BINANCE_MODE: test
@@ -96,6 +97,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   BINANCE_AUTHENTICATION_ENABLED: bool
   BINANCE_AUTHENTICATION_PASSWORD: str
   BINANCE_LIVE_API_KEY: str?

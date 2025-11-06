@@ -73,6 +73,7 @@ map:
   - config:rw
 name: Jellyseerr
 options:
+  env_vars: []
   TYPE: emby
   TZ: Europe/Paris
 ports:
@@ -81,6 +82,9 @@ ports_description:
   5055/tcp: web interface
 privileged: []
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   TYPE: list(emby|jellyfin)
   TZ: str?
 slug: jellyseerr

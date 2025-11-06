@@ -71,6 +71,7 @@ environment:
 image: ghcr.io/alexbelgium/monica-{arch}
 init: false
 options:
+  env_vars: []
   database: sqlite
 map:
   - type: addon_config
@@ -81,6 +82,9 @@ ports:
 ports_description:
   80/tcp: webui
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   database: list(sqlite|MariaDB_addon|Mysql_external)
   APP_KEY: str?
   DB_DATABASE: str?

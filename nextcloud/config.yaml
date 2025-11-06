@@ -94,6 +94,7 @@ map:
   - ssl:rw
 name: Nextcloud
 options:
+  env_vars: []
   Full_Text_Search: false
   OCR: false
   OCRLANG: fra
@@ -118,6 +119,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   Full_Text_Search: bool?
   OCR: bool?
   OCRLANG: str?

@@ -16,6 +16,7 @@ map:
   - share:rw
 name: Openproject
 options:
+  env_vars: []
   OPENPROJECT_DEFAULT__LANGUAGE: en
   OPENPROJECT_HOST__NAME: homeassistant:8080
   OPENPROJECT_HTTPS: "false"
@@ -24,6 +25,9 @@ ports:
 ports_description:
   8080/tcp: Web interface
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   OPENPROJECT_DEFAULT__LANGUAGE: str
   OPENPROJECT_HOST__NAME: str
   OPENPROJECT_HTTPS: bool

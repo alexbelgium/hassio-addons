@@ -23,6 +23,9 @@ ports_description:
   80/tcp: Portainer edge agent
   9001/tcp: Portainer agent
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   AGENT_CLUSTER_ADDR: str?
   AGENT_CLUSTER_PROBE_INTERVAL: str?
   AGENT_CLUSTER_PROBE_TIMEOUT: str?

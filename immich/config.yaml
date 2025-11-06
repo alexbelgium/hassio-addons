@@ -94,6 +94,7 @@ map:
   - ssl:rw
 name: Immich
 options:
+  env_vars: []
   DB_DATABASE_NAME: immich
   DB_HOSTNAME: homeassistant.local
   DB_PASSWORD: homeassistant
@@ -113,6 +114,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   DB_DATABASE_NAME: str
   DB_HOSTNAME: str
   DB_PASSWORD: str

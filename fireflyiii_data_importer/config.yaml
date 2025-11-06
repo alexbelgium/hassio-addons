@@ -76,12 +76,16 @@ map:
   - ssl
 name: Firefly iii Data Importer
 options:
+  env_vars: []
   CONFIG_LOCATION: /config
 ports:
   8080/tcp: 3474
 ports_description:
   8080/tcp: web interface
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   AUTO_IMPORT_SECRET: str?
   CAN_POST_AUTOIMPORT: bool?
   CAN_POST_FILES: bool?

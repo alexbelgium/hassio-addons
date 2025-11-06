@@ -81,6 +81,7 @@ map:
   - ssl
 name: qBittorrent
 options:
+  env_vars: []
   DNS_server: 8.8.8.8,1.1.1.1
   PGID: "0"
   PUID: "0"
@@ -111,6 +112,9 @@ privileged:
   - DAC_READ_SEARCH
   - NET_ADMIN
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   DNS_server: str?
   PGID: int?
   PUID: int?

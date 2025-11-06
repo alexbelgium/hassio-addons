@@ -10,12 +10,16 @@ map:
   - ssl:ro
 name: Wger
 options:
+  env_vars: []
   CONFIG_LOCATION: /config/addons_config/wger/config.yaml
 ports:
   80/tcp: 9927
 ports_description:
   80/tcp: Web interface
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CONFIG_LOCATION: str
 slug: wger
 udev: true

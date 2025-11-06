@@ -76,12 +76,16 @@ map:
   - ssl
 name: Inadyn
 options:
+  env_vars: []
   providers:
     - hostname: dynamic-subdomain.example.com
       password: password
       provider: yourprovider
       username: username
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   allow_ipv6: bool?
   fake_address: bool?
   forced_update: int?

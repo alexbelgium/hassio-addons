@@ -77,6 +77,7 @@ environment:
 image: ghcr.io/alexbelgium/grampsweb-{arch}
 init: false
 options:
+  env_vars: []
   CELERY_NUM_WORKERS: 2
   GUNICORN_NUM_WORKERS: 8
   certfile: fullchain.pem
@@ -93,6 +94,9 @@ ports:
 ports_description:
   5001/tcp: webui
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CELERY_NUM_WORKERS: int
   GUNICORN_NUM_WORKERS: int
   GRAMPSWEB_SECRET_KEY: str?

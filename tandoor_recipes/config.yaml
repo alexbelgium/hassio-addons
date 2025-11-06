@@ -78,6 +78,7 @@ map:
   - media:rw
 name: Tandoor recipes
 options:
+  env_vars: []
   ALLOWED_HOSTS: "*"
   DB_TYPE: sqlite
   DEBUG: "0"
@@ -91,6 +92,9 @@ ports:
 ports_description:
   80/tcp: Web interface
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   AI_API_KEY: str?
   AI_MODEL_NAME: str?
   AI_RATELIMIT: str?

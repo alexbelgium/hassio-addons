@@ -96,6 +96,7 @@ map:
   - ssl:rw
 name: Tdarr
 options:
+  env_vars: []
   CONFIG_LOCATION: /config/addons_config/tdarr
 panel_admin: false
 panel_icon: mdi:file-search
@@ -109,6 +110,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CONFIG_LOCATION: str
   TZ: str?
   cifsdomain: str?

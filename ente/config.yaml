@@ -76,6 +76,7 @@ map:
   - addon_config:rw
 name: Ente
 options:
+  env_vars: []
   DB_PASSWORD: ente
   DISABLE_WEB_UI: true
   ENTE_ENDPOINT_URL: http://homeassistant.local:8280
@@ -96,6 +97,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   DB_DATABASE_NAME: str?
   DB_HOSTNAME: str?
   DB_PASSWORD: str

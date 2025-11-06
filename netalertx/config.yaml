@@ -35,6 +35,9 @@ privileged:
   - NET_ADMIN
   - NET_RAW
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   APP_CONF_OVERRIDE: str?
   TZ: str?
 services:

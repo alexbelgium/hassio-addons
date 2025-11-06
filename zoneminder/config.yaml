@@ -81,12 +81,16 @@ map:
   - ssl
 name: Zoneminder
 options:
+  env_vars: []
   Images_location: /config/addons_config/zoneminder/images
 ports:
   80/tcp: 3778
 ports_description:
   80/tcp: web interface
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   Images_location: str
 services:
   - mysql:want

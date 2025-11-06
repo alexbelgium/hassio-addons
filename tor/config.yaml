@@ -10,6 +10,7 @@ map:
   - ssl:rw
 name: Tor with bridges
 options:
+  env_vars: []
   bridges: []
   client_names: []
   hidden_services: true
@@ -26,6 +27,9 @@ ports_description:
   9050/tcp: Tor SOCKS proxy port
   9080/tcp: Tor HTTP tunnel port
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   bridges:
     - str
   client_names:

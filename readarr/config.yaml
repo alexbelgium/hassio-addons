@@ -78,6 +78,7 @@ map:
   - media:rw
 name: Readarr
 options:
+  env_vars: []
   CONFIG_LOCATION: /config/addons_config/readarr
   PGID: 0
   PUID: 0
@@ -92,6 +93,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CONFIG_LOCATION: str
   PGID: int
   PUID: int

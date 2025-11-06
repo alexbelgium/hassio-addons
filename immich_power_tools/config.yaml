@@ -14,6 +14,9 @@ ports:
 ports_description:
   3000/tcp: Web UI port
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   DB_DATABASE_NAME: str
   DB_HOST: str
   DB_PASSWORD: str

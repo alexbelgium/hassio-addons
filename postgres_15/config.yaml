@@ -18,12 +18,16 @@ map:
   - media:rw
 name: Postgres 15
 options:
+  env_vars: []
   POSTGRES_PASSWORD: homeassistant
 ports:
   5432/tcp: 5432
 ports_description:
   5432/tcp: Postgres
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   POSTGRES_DB: str?
   POSTGRES_HOST_AUTH_METHOD: str?
   POSTGRES_INITDB_ARGS: str?

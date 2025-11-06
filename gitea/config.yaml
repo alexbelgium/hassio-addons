@@ -73,6 +73,7 @@ map:
   - ssl:rw
 name: Gitea
 options:
+  env_vars: []
   APP_NAME: Gitea for Homeassistant
   DOMAIN: homeassistant.local
   certfile: fullchain.pem
@@ -85,6 +86,9 @@ ports_description:
   22/tcp: ssh
   3000/tcp: Web interface
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   APP_NAME: str?
   DOMAIN: str?
   ROOT_URL: str?

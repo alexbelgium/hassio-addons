@@ -11,6 +11,7 @@ map:
   - config:rw
 name: Joal
 options:
+  env_vars: []
   run_duration: 12h
   secret_token: lrMY24Byhx
   ui_path: joal
@@ -23,6 +24,9 @@ ports_description:
   49152/tcp: torrent port (not required)
   8081/tcp: Web UI port (required)
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   run_duration: str?
   secret_token: str
   ui_path: str

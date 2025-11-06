@@ -75,6 +75,7 @@ map:
   - media:rw
 name: Booksonic air
 options:
+  env_vars: []
   PGID: 0
   PUID: 0
 ports:
@@ -85,6 +86,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   PGID: int
   PUID: int
   TZ: str?

@@ -12,8 +12,12 @@ map:
   - addon_config:rw
 name: Castsponsorskip
 options:
+  env_vars: []
   CSS_CATEGORIES: sponsor, intro, outro, selfpromo
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CSS_CATEGORIES: str
   CSS_DISCOVER_INTERVAL: str?
   CSS_MUTE_ADS: bool?

@@ -73,6 +73,7 @@ map:
   - config:rw
 name: Grav web server
 options:
+  env_vars: []
   PGID: 1000
   PUID: 1000
 ports:
@@ -80,6 +81,9 @@ ports:
 ports_description:
   80/tcp: web interface
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   PGID: int
   PUID: int
   TZ: str?

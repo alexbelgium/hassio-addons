@@ -72,11 +72,15 @@ map:
   - share:rw
 name: Gazpar2mqtt
 options:
+  env_vars: []
   CONFIG_LOCATION: /config/gazpar2mqtt/config.yaml
   TZ: Europe/Paris
   mqtt_autodiscover: true
   verbose: true
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CONFIG_LOCATION: str
   TZ: str?
   mqtt_autodiscover: bool

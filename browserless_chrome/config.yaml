@@ -73,12 +73,16 @@ map:
   - addon_config:rw
 name: Browserless Chromium
 options:
+  env_vars: []
   TIMEOUT: "60000"
 ports:
   3000/tcp: 3000
 ports_description:
   3000/tcp: Webui
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   TIMEOUT: int
 slug: browserless_chrome
 udev: true

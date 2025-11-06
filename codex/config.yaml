@@ -71,6 +71,7 @@ map:
   - share:rw
 name: Codex
 options:
+  env_vars: []
   PGID: "0"
   PUID: "0"
   csrf_allowed: http://homeassistant.local:8123,https://homeassistant.local:8123
@@ -84,6 +85,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CODEX_RESET_ADMIN: int?
   CODEX_SKIP_INTEGRITY_CHECK: int?
   PGID: int?

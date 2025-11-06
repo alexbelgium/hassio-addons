@@ -84,6 +84,7 @@ map:
   - share:rw
 name: Birdnet-go
 options:
+  env_vars: []
   BIRDSONGS_FOLDER: /config/clips
   homeassistant_microphone: false
 panel_admin: false
@@ -99,6 +100,9 @@ privileged:
   - DAC_READ_SEARCH
   - SYS_RESOURCE
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   BIRDSONGS_FOLDER: str?
   TZ: str?
   cifsdomain: str?

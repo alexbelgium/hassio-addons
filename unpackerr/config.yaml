@@ -78,6 +78,7 @@ map:
   - ssl
 name: Unpackerr
 options:
+  env_vars: []
   PGID: 1000
   PUID: 1000
   extraction_path: /share/downloads_packed
@@ -86,6 +87,9 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   PGID: int
   PUID: int
   TZ: str?

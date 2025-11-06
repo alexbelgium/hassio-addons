@@ -83,6 +83,7 @@ map:
   - ssl
 name: Calibre
 options:
+  env_vars: []
   PGID: 0
   PUID: 0
 panel_admin: false
@@ -100,6 +101,9 @@ privileged:
   - DAC_READ_SEARCH
   - NET_ADMIN
 schema:
+  env_vars:
+    - name: match(^[A-Z0-9_]+$)
+      value: str?
   CLI_ARGS: str?
   PASSWORD: str?
   PGID: int
