@@ -142,15 +142,3 @@ for KEYS in "${arr[@]}"; do
         export_option "$KEYS" "$VALUE"
     fi
 done
-
-################
-# Set timezone #
-################
-set +eu
-
-if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
-    if [ -f /usr/share/zoneinfo/"$TZ" ]; then
-        echo "Timezone set from $(cat /etc/timezone) to $TZ"
-        ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
-    fi
-fi
