@@ -112,9 +112,23 @@ for KEYS in "${arr[@]}"; do
             env_processed=false
             for entry in "${env_entries[@]}"; do
                 if [[ "$entry" == \{* ]]; then
-                    mapfile -t env_keys < <(jq -r 'keys[]' <<<"$entry")
-                    for env_key in "${env_keys[@]}"; do
-                        env_value=$(jq -r --arg key "$env_key" '.[$key]' <<<"$entry")
+                    env_name=$(jq -r 'if has("name") and has("value") then .name else empty end' <<<"$entry")
+                    if [[ -n "$env_name" ]]; then
+                        env_value=$(jq -r '.value // empty' <<<"$entry")
+                        export_option "$env_name" "$env_value"
+                        env_processed=true
+                        continue
+                    fi
+
+                    mapfile -t env_pairs < <(jq -r 'to_entries[] | [ .key, (.value // "") ] | @tsv' <<<"$entry")
+                    for env_pair in "${env_pairs[@]}"; do
+                        if [[ "$env_pair" == *$'\t'* ]]; then
+                            env_key=${env_pair%%$'\t'*}
+                            env_value=${env_pair#*$'\t'}
+                        else
+                            env_key="$env_pair"
+                            env_value=""
+                        fi
                         export_option "$env_key" "$env_value"
                         env_processed=true
                     done
