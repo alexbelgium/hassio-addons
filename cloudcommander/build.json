@@ -2,8 +2,5 @@
   "build_from": {
     "aarch64": "coderaiser/cloudcmd:latest",
     "amd64": "coderaiser/cloudcmd:latest"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

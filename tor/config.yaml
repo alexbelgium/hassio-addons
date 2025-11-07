@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: Protect your privacy and access Home Assistant via Tor
 image: ghcr.io/alexbelgium/tor-{arch}
 init: false

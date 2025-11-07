@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: FlexGet is a multipurpose automation tool for all of your media
 devices:
   - /dev/dri

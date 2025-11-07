@@ -2,7 +2,6 @@ apparmor: "true"
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Scrutiny WebUI for smartd S.M.A.R.T monitoring (Full Access)
 environment:
   COLLECTOR_API_ENDPOINT: http://localhost:8080

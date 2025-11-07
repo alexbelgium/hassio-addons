@@ -3,8 +3,5 @@
     "aarch64": "thomst08/requestrr:arm64-latest",
     "amd64": "thomst08/requestrr:linux-latest",
     "armv7": "thomst08/requestrr:arm-latest"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

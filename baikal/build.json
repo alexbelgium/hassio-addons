@@ -3,8 +3,5 @@
     "aarch64": "ghcr.io/mralucarddante/baikal-docker-hass:latest",
     "amd64": "ghcr.io/mralucarddante/baikal-docker-hass:latest",
     "armv7": "ghcr.io/mralucarddante/baikal-docker-hass:latest"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

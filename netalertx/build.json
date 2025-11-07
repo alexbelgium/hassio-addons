@@ -3,8 +3,5 @@
     "aarch64": "ghcr.io/jokob-sk/netalertx:latest",
     "amd64": "ghcr.io/jokob-sk/netalertx:latest",
     "armv7": "ghcr.io/jokob-sk/netalertx:latest"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

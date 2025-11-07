@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: Use Enedis Gateway API to send data in your MQTT Broker (latest channel)
 devices:
   - /dev/dri

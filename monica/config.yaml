@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Personal Relationship Manager
 devices:
   - /dev/dri

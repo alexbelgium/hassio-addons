@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Fork of overseerr for jellyfin support
 devices:
   - /dev/dri

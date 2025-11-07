@@ -2,8 +2,5 @@
   "build_from": {
     "aarch64": "lscr.io/linuxserver/booksonic-air:arm64v8-",
     "amd64": "lscr.io/linuxserver/booksonic-air:amd64-"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description:
   A server-based application for browsing, organizing and sharing your
   personal photo collection

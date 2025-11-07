@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: Deprecated - please use community version
 image: ghcr.io/alexbelgium/vaultwarden-{arch}
 init: false

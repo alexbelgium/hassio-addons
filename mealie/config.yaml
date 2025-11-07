@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Mealie is a self hosted recipe manager and meal planner built in Vue
 devices:
   - /dev/dri

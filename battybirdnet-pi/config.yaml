@@ -3,7 +3,6 @@ arch:
   - amd64
 audio: true
 backup: cold
-codenotary: alexandrep.github@gmail.com
 description:
   A realtime acoustic bat & bird classification system for the Raspberry
   Pi 4/5 built on BattyBirdNET-Analyzer

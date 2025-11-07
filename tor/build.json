@@ -3,9 +3,5 @@
     "aarch64": "ghcr.io/hassio-addons/base:17.2.0",
     "amd64": "ghcr.io/hassio-addons/base:17.2.0",
     "armv7": "ghcr.io/hassio-addons/base:17.2.0"
-  },
-  "codenotary": {
-    "base_image": "codenotary@frenck.dev",
-    "signer": "codenotary@frenck.dev"
   }
 }

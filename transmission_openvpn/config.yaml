@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description:
   Docker container running Transmission torrent client with WebUI over
   an OpenVPN tunnel

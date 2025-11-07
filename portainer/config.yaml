@@ -5,7 +5,6 @@ arch:
 backup_exclude:
   - backups
   - docker_config/cli-plugins
-codenotary: alexandrep.github@gmail.com
 description: Manage your Docker environment with ease
 docker_api: true
 hassio_api: true

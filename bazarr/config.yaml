@@ -6,7 +6,6 @@ backup_exclude:
   - "**/Backups/*"
   - "**/logs/*"
   - "**/MediaCover/*"
-codenotary: alexandrep.github@gmail.com
 description: Companion application to Sonarr and Radarr to download subtitles
 devices:
   - /dev/dri

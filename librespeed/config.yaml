@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description:
   A very lightweight speed test implemented in Javascript, using XMLHttpRequest
   and Web Workers

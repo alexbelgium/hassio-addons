@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: An HTPC/Homelab services organizer that is written in PHP
 devices:
   - /dev/dri

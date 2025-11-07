@@ -2,8 +2,5 @@
   "build_from": {
     "aarch64": "lscr.io/linuxserver/prowlarr:arm64v8-nightly",
     "amd64": "lscr.io/linuxserver/prowlarr:amd64-nightly"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

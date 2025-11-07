@@ -1,8 +1,5 @@
 {
   "build_from": {
     "amd64": "baldarn/whatsapper:latest"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

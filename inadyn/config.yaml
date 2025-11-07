@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description:
   Inadyn is a small and simple Dynamic DNS, DDNS, client with HTTPS support.
   A large number of dynamic dns providers are supported (https://github.com/troglobit/inadyn#supported-providers).

@@ -2,8 +2,5 @@
   "build_from": {
     "aarch64": "techblog/arpspoof-docker:latest",
     "amd64": "techblog/arpspoof-docker:latest"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

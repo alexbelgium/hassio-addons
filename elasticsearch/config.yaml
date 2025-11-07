@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Free and Open, Distributed, RESTful Search Engine
 devices:
   - /dev/dri

@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: A fork of Sonarr to work with movies like Couchpotato
 devices:
   - /dev/dri
