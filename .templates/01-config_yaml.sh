@@ -126,6 +126,7 @@ fi
 
 # Duplicate sanitized yaml for addon options handling
 cp /tempenv /tempenv_options
+COMMENT_KEYS=()
 
 # Check if yaml is valid
 EXIT_CODE=0
@@ -146,60 +147,6 @@ fi
 # Look where secrets.yaml is located
 SECRETSFILE="/config/secrets.yaml"
 if [ ! -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
-
-# Export yaml content to addon options env_vars
-ENV_INDEX=0
-if [ -f /tempenv_options ]; then
-    existing_env_vars_json="$(bashio::addon.option 'env_vars' 2> /dev/null || true)"
-    if [[ -z "$existing_env_vars_json" || "$existing_env_vars_json" == "null" ]]; then
-        bashio::addon.option "env_vars" "[]"
-    else
-        existing_count="$(echo "$existing_env_vars_json" | jq 'length' 2> /dev/null || echo '')"
-        if [[ "$existing_count" =~ ^[0-9]+$ ]]; then
-            ENV_INDEX="$existing_count"
-        else
-            while true; do
-                existing_name="$(bashio::addon.option "env_vars[$ENV_INDEX].name" 2> /dev/null || true)"
-                existing_value="$(bashio::addon.option "env_vars[$ENV_INDEX].value" 2> /dev/null || true)"
-                if [[ -z "$existing_name" && -z "$existing_value" ]]; then
-                    break
-                fi
-                ENV_INDEX=$((ENV_INDEX + 1))
-            done
-        fi
-    fi
-    while IFS= read -r option_line; do
-        # Skip empty lines
-        if [[ -z "$option_line" ]]; then
-            continue
-        fi
-
-        option_processed="$option_line"
-
-        if [[ "$option_processed" =~ ^[^[:space:]]+.+[=].+$ ]]; then
-            option_key="${option_processed%%=*}"
-            option_value="${option_processed#*=}"
-
-            # Trim surrounding whitespace
-            option_value="$(printf '%s' "$option_value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-
-            # Remove matching quotes
-            first_char="${option_value:0:1}"
-            last_char="${option_value: -1}"
-            if [[ "$first_char" == '"' && "$last_char" == '"' ]]; then
-                option_value="${option_value:1:-1}"
-            elif [[ "$first_char" == "'" && "$last_char" == "'" ]]; then
-                option_value="${option_value:1:-1}"
-            fi
-
-            bashio::addon.option "env_vars[$ENV_INDEX].name" "$option_key"
-            bashio::addon.option "env_vars[$ENV_INDEX].value" "$option_value"
-            ENV_INDEX=$((ENV_INDEX + 1))
-        else
-            bashio::log.yellow "Skipping addon options export line that does not follow the correct structure: $option_processed"
-        fi
-    done < "/tempenv_options"
-fi
 
 while IFS= read -r line; do
     # Skip empty lines
@@ -261,6 +208,105 @@ while IFS= read -r line; do
         bashio::log.red "Skipping line that does not follow the correct structure: $line"
     fi
 done < "/tempenv"
+
+# Export yaml content to addon options env_vars
+ENV_INDEX=0
+if [ -f /tempenv_options ]; then
+    existing_env_vars_json="$(bashio::addon.option 'env_vars' 2> /dev/null || true)"
+    if [[ -z "$existing_env_vars_json" || "$existing_env_vars_json" == "null" ]]; then
+        bashio::addon.option "env_vars" "[]"
+    else
+        existing_count="$(echo "$existing_env_vars_json" | jq 'length' 2> /dev/null || echo '')"
+        if [[ "$existing_count" =~ ^[0-9]+$ ]]; then
+            ENV_INDEX="$existing_count"
+        else
+            while true; do
+                existing_name="$(bashio::addon.option "env_vars[$ENV_INDEX].name" 2> /dev/null || true)"
+                existing_value="$(bashio::addon.option "env_vars[$ENV_INDEX].value" 2> /dev/null || true)"
+                if [[ -z "$existing_name" && -z "$existing_value" ]]; then
+                    break
+                fi
+                ENV_INDEX=$((ENV_INDEX + 1))
+            done
+        fi
+    fi
+    while IFS= read -r option_line; do
+        # Skip empty lines
+        if [[ -z "$option_line" ]]; then
+            continue
+        fi
+
+        option_processed="$option_line"
+
+        if [[ "$option_processed" =~ ^[^[:space:]]+.+[=].+$ ]]; then
+            option_key="${option_processed%%=*}"
+            option_value="${option_processed#*=}"
+
+            # Trim surrounding whitespace
+            option_key="$(printf '%s' "$option_key" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+            option_value="$(printf '%s' "$option_value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+            if [[ -z "$option_key" ]]; then
+                bashio::log.yellow "Skipping addon options export line without a valid key: $option_processed"
+                continue
+            fi
+
+            # Remove matching quotes
+            first_char="${option_value:0:1}"
+            last_char="${option_value: -1}"
+            if [[ "$first_char" == '"' && "$last_char" == '"' ]]; then
+                option_value="${option_value:1:-1}"
+            elif [[ "$first_char" == "'" && "$last_char" == "'" ]]; then
+                option_value="${option_value:1:-1}"
+            fi
+
+            bashio::addon.option "env_vars[$ENV_INDEX].name" "$option_key"
+            bashio::addon.option "env_vars[$ENV_INDEX].value" "$option_value"
+            COMMENT_KEYS+=("$option_key")
+            ENV_INDEX=$((ENV_INDEX + 1))
+        else
+            bashio::log.yellow "Skipping addon options export line that does not follow the correct structure: $option_processed"
+        fi
+    done < "/tempenv_options"
+fi
+
+if [[ -f "$CONFIGSOURCE" && ${#COMMENT_KEYS[@]} -gt 0 ]]; then
+    if command -v python3 &> /dev/null; then
+        python3 - "$CONFIGSOURCE" "${COMMENT_KEYS[@]}" <<'PYCODE'
+import sys
+from pathlib import Path
+
+config_path = Path(sys.argv[1])
+keys = [key for key in sys.argv[2:] if key]
+if not keys:
+    sys.exit(0)
+
+try:
+    lines = config_path.read_text(encoding='utf-8').splitlines(keepends=True)
+except Exception:
+    sys.exit(0)
+
+pending = set(keys)
+updated = False
+for index, line in enumerate(lines):
+    stripped = line.lstrip()
+    leading = line[: len(line) - len(stripped)]
+    if stripped.startswith('#'):
+        continue
+    for key in list(pending):
+        if stripped.startswith(f"{key}:"):
+            lines[index] = f"{leading}# {stripped}"
+            pending.remove(key)
+            updated = True
+            break
+
+if updated:
+    config_path.write_text(''.join(lines), encoding='utf-8')
+PYCODE
+    else
+        bashio::log.yellow "python3 not available, unable to comment config entries synced to env_vars"
+    fi
+fi
 
 rm /tempenv
 rm -f /tempenv_options
