@@ -232,7 +232,24 @@ if [[ ${#__env_var_new_keys[@]} -gt 0 ]]; then
         __env_var_new_payload+="${__env_var_new_map["${key}"]}"$'\n'
     done
     if [[ -n "${__env_var_new_payload}" ]]; then
-        new_entries_json=$(printf '%s' "${__env_var_new_payload}" | jq -Rcn '[inputs]')
+        read -r -d '' __env_var_new_entries_filter <<'JQ' || true
+def trim: sub("^\\s+";"") | sub("\\s+$";"");
+def strip_wrapping_quotes:
+    if (startswith("\"") and endswith("\"") and (length >= 2)) then
+        .[1:-1]
+    elif (startswith("'") and endswith("'") and (length >= 2)) then
+        .[1:-1]
+    else
+        .
+    end;
+[
+  inputs
+  | select(length > 0)
+  | capture("(?<name>[^=]+)=(?<value>.*)")
+  | { name: (.name | trim), value: (.value | trim | strip_wrapping_quotes) }
+]
+JQ
+        new_entries_json=$(printf '%s' "${__env_var_new_payload}" | jq -Rcn "${__env_var_new_entries_filter}")
         if [[ -n "${new_entries_json}" ]] && [[ "${new_entries_json}" != "[]" ]]; then
             read -r -d '' jq_filter <<'JQ' || true
 def key_of:
