@@ -212,23 +212,41 @@ ENV_INDEX=0
 if [ -f /tempenv_options ]; then
     declare -a EXISTING_NAMES=()
     declare -a EXISTING_VALUES=()
+    OPTIONS_FILE="/data/options.json"
 
-    while true; do
-        existing_name="$(bashio::addon.option "env_vars[$ENV_INDEX].name" 2> /dev/null || true)"
-        existing_value="$(bashio::addon.option "env_vars[$ENV_INDEX].value" 2> /dev/null || true)"
-        if [[ "$existing_name" == "null" ]]; then
-            existing_name=""
-        fi
-        if [[ "$existing_value" == "null" ]]; then
-            existing_value=""
-        fi
-        if [[ -z "$existing_name" && -z "$existing_value" ]]; then
-            break
-        fi
-        EXISTING_NAMES+=("$existing_name")
-        EXISTING_VALUES+=("$existing_value")
-        ENV_INDEX=$((ENV_INDEX + 1))
-    done
+    if [ -f "$OPTIONS_FILE" ] && command -v python3 &> /dev/null; then
+        while IFS=$'\t' read -r existing_name existing_value; do
+            if [[ -z "$existing_name" && -z "$existing_value" ]]; then
+                continue
+            fi
+            EXISTING_NAMES+=("$existing_name")
+            EXISTING_VALUES+=("$existing_value")
+        done < <(python3 - "$OPTIONS_FILE" <<'PYCODE'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+try:
+    data = json.loads(path.read_text(encoding="utf-8"))
+except Exception:
+    sys.exit(0)
+
+env_vars = data.get("env_vars")
+if not isinstance(env_vars, list):
+    sys.exit(0)
+
+for item in env_vars:
+    if not isinstance(item, dict):
+        continue
+    name = item.get("name") or ""
+    value = item.get("value") or ""
+    print(f"{name}\t{value}")
+PYCODE
+)
+    elif [ -f "$OPTIONS_FILE" ]; then
+        bashio::log.yellow "python3 not available, unable to import existing env_vars from $OPTIONS_FILE"
+    fi
 
     if [[ ${#EXISTING_NAMES[@]} -gt 0 ]]; then
         for idx in "${!EXISTING_NAMES[@]}"; do
