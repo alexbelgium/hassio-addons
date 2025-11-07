@@ -16,6 +16,8 @@ map:
   - share:rw
   - ssl
 name: Portainer Agent
+options:
+  env_vars: []
 ports:
   80/tcp: null
   9001/tcp: 9001

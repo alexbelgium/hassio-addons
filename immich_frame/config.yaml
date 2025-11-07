@@ -9,6 +9,8 @@ init: false
 map:
   - addon_config:rw
 name: Immich Frame
+options:
+  env_vars: []
 ports:
   8080/tcp: 8171
 ports_description:
