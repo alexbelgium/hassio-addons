@@ -124,6 +124,9 @@ if [ ! -s /tempenv ]; then
     exit 0
 fi
 
+# Duplicate sanitized yaml for addon options handling
+cp /tempenv /tempenv_options
+
 # Check if yaml is valid
 EXIT_CODE=0
 yamllint -d relaxed /tempenv &> ERROR || EXIT_CODE=$?
@@ -135,9 +138,68 @@ fi
 # converts yaml to variables
 sed -i 's/: /=/' /tempenv
 
+# Duplicate conversion for addon options file
+if [ -f /tempenv_options ]; then
+    sed -i 's/: /=/' /tempenv_options
+fi
+
 # Look where secrets.yaml is located
 SECRETSFILE="/config/secrets.yaml"
 if [ ! -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
+
+# Export yaml content to addon options env_vars
+ENV_INDEX=0
+if [ -f /tempenv_options ]; then
+    existing_env_vars_json="$(bashio::addon.option 'env_vars' 2> /dev/null || true)"
+    if [[ -z "$existing_env_vars_json" || "$existing_env_vars_json" == "null" ]]; then
+        bashio::addon.option "env_vars" "[]"
+    else
+        existing_count="$(echo "$existing_env_vars_json" | jq 'length' 2> /dev/null || echo '')"
+        if [[ "$existing_count" =~ ^[0-9]+$ ]]; then
+            ENV_INDEX="$existing_count"
+        else
+            while true; do
+                existing_name="$(bashio::addon.option "env_vars[$ENV_INDEX].name" 2> /dev/null || true)"
+                existing_value="$(bashio::addon.option "env_vars[$ENV_INDEX].value" 2> /dev/null || true)"
+                if [[ -z "$existing_name" && -z "$existing_value" ]]; then
+                    break
+                fi
+                ENV_INDEX=$((ENV_INDEX + 1))
+            done
+        fi
+    fi
+    while IFS= read -r option_line; do
+        # Skip empty lines
+        if [[ -z "$option_line" ]]; then
+            continue
+        fi
+
+        option_processed="$option_line"
+
+        if [[ "$option_processed" =~ ^[^[:space:]]+.+[=].+$ ]]; then
+            option_key="${option_processed%%=*}"
+            option_value="${option_processed#*=}"
+
+            # Trim surrounding whitespace
+            option_value="$(printf '%s' "$option_value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+            # Remove matching quotes
+            first_char="${option_value:0:1}"
+            last_char="${option_value: -1}"
+            if [[ "$first_char" == '"' && "$last_char" == '"' ]]; then
+                option_value="${option_value:1:-1}"
+            elif [[ "$first_char" == "'" && "$last_char" == "'" ]]; then
+                option_value="${option_value:1:-1}"
+            fi
+
+            bashio::addon.option "env_vars[$ENV_INDEX].name" "$option_key"
+            bashio::addon.option "env_vars[$ENV_INDEX].value" "$option_value"
+            ENV_INDEX=$((ENV_INDEX + 1))
+        else
+            bashio::log.yellow "Skipping addon options export line that does not follow the correct structure: $option_processed"
+        fi
+    done < "/tempenv_options"
+fi
 
 while IFS= read -r line; do
     # Skip empty lines
@@ -201,3 +263,4 @@ while IFS= read -r line; do
 done < "/tempenv"
 
 rm /tempenv
+rm -f /tempenv_options
