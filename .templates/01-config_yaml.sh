@@ -212,24 +212,14 @@ done < "/tempenv"
 # Export yaml content to addon options env_vars
 ENV_INDEX=0
 if [ -f /tempenv_options ]; then
-    existing_env_vars_json="$(bashio::addon.option 'env_vars' 2> /dev/null || true)"
-    if [[ -z "$existing_env_vars_json" || "$existing_env_vars_json" == "null" ]]; then
-        bashio::addon.option "env_vars" "[]"
-    else
-        existing_count="$(echo "$existing_env_vars_json" | jq 'length' 2> /dev/null || echo '')"
-        if [[ "$existing_count" =~ ^[0-9]+$ ]]; then
-            ENV_INDEX="$existing_count"
-        else
-            while true; do
-                existing_name="$(bashio::addon.option "env_vars[$ENV_INDEX].name" 2> /dev/null || true)"
-                existing_value="$(bashio::addon.option "env_vars[$ENV_INDEX].value" 2> /dev/null || true)"
-                if [[ -z "$existing_name" && -z "$existing_value" ]]; then
-                    break
-                fi
-                ENV_INDEX=$((ENV_INDEX + 1))
-            done
+    while true; do
+        existing_name="$(bashio::addon.option "env_vars[$ENV_INDEX].name" 2> /dev/null || true)"
+        existing_value="$(bashio::addon.option "env_vars[$ENV_INDEX].value" 2> /dev/null || true)"
+        if [[ -z "$existing_name" && -z "$existing_value" ]]; then
+            break
         fi
-    fi
+        ENV_INDEX=$((ENV_INDEX + 1))
+    done
     while IFS= read -r option_line; do
         # Skip empty lines
         if [[ -z "$option_line" ]]; then
