@@ -3,7 +3,6 @@ arch:
   - amd64
 audio: true
 backup: cold
-codenotary: alexandrep.github@gmail.com
 description: Realtime acoustic bird classification system
 devices:
   - /dev/dri

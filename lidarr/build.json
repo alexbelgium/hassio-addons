@@ -3,8 +3,5 @@
     "aarch64": "lscr.io/linuxserver/lidarr:arm64v8-latest",
     "amd64": "lscr.io/linuxserver/lidarr:amd64-latest",
     "armv7": "lscr.io/linuxserver/lidarr:arm32v7-1.1.4"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

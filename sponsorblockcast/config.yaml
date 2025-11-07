@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: Skip YouTube ads and sponsorships on all local Google Cast devices
 environment: {}
 host_network: true

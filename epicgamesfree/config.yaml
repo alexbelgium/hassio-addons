@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description:
   Automatically login and redeem promotional free games from Epic Games
   Store

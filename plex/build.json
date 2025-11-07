@@ -3,8 +3,5 @@
     "aarch64": "lscr.io/linuxserver/plex:arm64v8-latest",
     "amd64": "lscr.io/linuxserver/plex:amd64-latest",
     "armv7": "lscr.io/linuxserver/plex:arm32v7-1.32.4"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

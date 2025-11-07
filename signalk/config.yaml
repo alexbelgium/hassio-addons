@@ -3,7 +3,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: An implementation of a Signal K central server for boats
 devices:
   - /dev/can0

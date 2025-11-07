@@ -3,7 +3,6 @@ arch:
   - amd64
   - armv7
 backup: cold
-codenotary: alexandrep.github@gmail.com
 description: Postgres 15 with VectorChord support
 environment:
   CONFIG_LOCATION: /config/postgresql.conf

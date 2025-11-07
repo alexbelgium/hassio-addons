@@ -3,8 +3,5 @@
     "aarch64": "ghcr.io/signalk/signalk-server:latest",
     "amd64": "ghcr.io/signalk/signalk-server:latest",
     "armv7": "ghcr.io/signalk/signalk-server:latest"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

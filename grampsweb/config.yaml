@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Open Source Online Genealogy System
 devices:
   - /dev/dri

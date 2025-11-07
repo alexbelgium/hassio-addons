@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: web page monitoring, notification and change detection
 environment:
   LC_ALL: en_US.UTF-8

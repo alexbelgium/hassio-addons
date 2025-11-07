@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: Piwigo is a photo gallery software for the web
 devices:
   - /dev/dri

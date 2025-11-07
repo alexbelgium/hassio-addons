@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: web's leading on-line collaborative genealogy application
 devices:
   - /dev/dri

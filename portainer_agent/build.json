@@ -3,8 +3,5 @@
     "aarch64": "ghcr.io/hassio-addons/base/aarch64:11.1.0",
     "amd64": "ghcr.io/hassio-addons/base/amd64:11.1.0",
     "armv7": "ghcr.io/hassio-addons/base/armv7:11.1.0"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

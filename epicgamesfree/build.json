@@ -2,8 +2,5 @@
   "build_from": {
     "aarch64": "charlocharlie/epicgames-freegames:latest",
     "amd64": "charlocharlie/epicgames-freegames:latest"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

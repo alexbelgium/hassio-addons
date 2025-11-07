@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Browsing, reading and downloading eBooks using an existing Calibre database
 devices:
   - /dev/dri

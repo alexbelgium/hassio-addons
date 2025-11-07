@@ -4,7 +4,6 @@ arch:
   - armv7
 backup_exclude:
   - backups
-codenotary: alexandrep.github@gmail.com
 description: An agent used to manage all the resources in a Swarm cluster
 docker_api: true
 full_access: true

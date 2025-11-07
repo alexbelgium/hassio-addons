@@ -2,8 +2,5 @@
   "build_from": {
     "aarch64": "wger/server:latest",
     "amd64": "wger/server:latest"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

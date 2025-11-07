@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Data importer for Firefly III (separate addon)
 devices:
   - /dev/dri

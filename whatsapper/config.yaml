@@ -1,6 +1,5 @@
 arch:
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Whatsapper for Home Assistant
 image: ghcr.io/alexbelgium/whatsapper-{arch}
 map:

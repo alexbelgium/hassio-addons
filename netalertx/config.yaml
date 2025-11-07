@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: "\U0001F5A7\U0001F50D WIFI / LAN scanner, intruder, and presence detector"
 environment:
   PGID: "102"

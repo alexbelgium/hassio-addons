@@ -3,8 +3,5 @@
     "aarch64": "ertagh/teamspeak3-server:latest-predownloaded",
     "amd64": "ertagh/teamspeak3-server:x64-latest-predownloaded",
     "armv7": "ertagh/teamspeak3-server:latest-predownloaded"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

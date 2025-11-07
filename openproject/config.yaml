@@ -1,7 +1,6 @@
 arch:
   - amd64
   - aarch64
-codenotary: alexandrep.github@gmail.com
 description: Openproject for Home Assistant
 environment:
   APP_DATA_PATH: /data/assets

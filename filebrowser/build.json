@@ -3,8 +3,5 @@
     "aarch64": "filebrowser/filebrowser:s6",
     "amd64": "filebrowser/filebrowser:s6",
     "armv7": "filebrowser/filebrowser:v2.32.0"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

@@ -2,8 +2,5 @@
   "build_from": {
     "aarch64": "ghcr.io/linuxserver/webtop:arm64v8-ubuntu-kde",
     "amd64": "ghcr.io/linuxserver/webtop:amd64-ubuntu-kde"
-  },
-  "codenotary": {
-    "signer": "alexandrep.github@gmail.com"
   }
 }

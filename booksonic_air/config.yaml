@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: platform for accessing the audiobooks you own wherever you are
 devices:
   - /dev/dri

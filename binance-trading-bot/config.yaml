@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description:
   Automated Binance trading bot - Trade multiple cryptocurrencies. Buy
   low/sell high with Grid Trading. Integrated with TradingView technical analysis

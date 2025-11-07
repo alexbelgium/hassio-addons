@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description:
   automatically claims free games on the Epic Games Store, Amazon Prime
   Gaming and GOG

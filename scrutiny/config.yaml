@@ -2,7 +2,6 @@ apparmor: "true"
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description: Scrutiny webUI for smartd S.M.A.R.T monitoring
 devices:
   - /dev/dri

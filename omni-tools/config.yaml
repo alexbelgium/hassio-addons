@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-codenotary: alexandrep.github@gmail.com
 description:
   Self-hosted collection of powerful web-based tools for everyday tasks.
   No ads, no tracking, just fast, accessible utilities right from your browser

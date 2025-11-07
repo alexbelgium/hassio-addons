@@ -2,7 +2,6 @@ arch:
   - aarch64
   - amd64
   - armv7
-codenotary: alexandrep.github@gmail.com
 description: Automated comic book downloader for use with NZB and torrents
 devices:
   - /dev/dri
