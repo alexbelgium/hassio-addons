@@ -232,8 +232,8 @@ if [ -f /tempenv_options ]; then
 
     if [[ ${#EXISTING_NAMES[@]} -gt 0 ]]; then
         for idx in "${!EXISTING_NAMES[@]}"; do
-            bashio::addon.option "env_vars[$idx].name" "${EXISTING_NAMES[$idx]}"
-            bashio::addon.option "env_vars[$idx].value" "${EXISTING_VALUES[$idx]}"
+            bashio::addon.option "env_vars[$idx].name" "${EXISTING_NAMES[$idx]}" >/dev/null
+            bashio::addon.option "env_vars[$idx].value" "${EXISTING_VALUES[$idx]}" >/dev/null
         done
     fi
 
@@ -268,8 +268,8 @@ if [ -f /tempenv_options ]; then
                 option_value="${option_value:1:-1}"
             fi
 
-            bashio::addon.option "env_vars[$ENV_INDEX].name" "$option_key"
-            bashio::addon.option "env_vars[$ENV_INDEX].value" "$option_value"
+            bashio::addon.option "env_vars[$ENV_INDEX].name" "$option_key" >/dev/null
+            bashio::addon.option "env_vars[$ENV_INDEX].value" "$option_value" >/dev/null
             COMMENT_KEYS+=("$option_key")
             ENV_INDEX=$((ENV_INDEX + 1))
         else
