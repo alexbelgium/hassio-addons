@@ -226,7 +226,7 @@ while IFS= read -r line; do
     fi
 done < "/tempenv"
 
-if [[ ${#__env_var_new_keys[@]} -gt 0 ]]; then
+if [[ ${__env_var_new_keys+x} == x ]] && (( ${#__env_var_new_keys[@]} > 0 )); then
     __env_var_new_payload=""
     for key in "${__env_var_new_keys[@]}"; do
         __env_var_new_payload+="${__env_var_new_map["${key}"]}"$'\n'
@@ -275,7 +275,8 @@ JQ
     fi
 fi
 
-if [[ ${#__env_var_processed_order[@]} -gt 0 ]] && [ -f "${CONFIGSOURCE}" ] && [ -w "${CONFIGSOURCE}" ]; then
+if [[ ${__env_var_processed_order+x} == x ]] && (( ${#__env_var_processed_order[@]} > 0 )) \
+    && [ -f "${CONFIGSOURCE}" ] && [ -w "${CONFIGSOURCE}" ]; then
     tmp_config_file=$(mktemp)
     if [[ -n "${tmp_config_file}" ]]; then
         while IFS= read -r original_line || [ -n "${original_line}" ]; do
