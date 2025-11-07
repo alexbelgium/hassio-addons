@@ -64,6 +64,8 @@ map:
   - media:rw
   - share:rw
 name: Comixed
+options:
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:book-open
 ports:

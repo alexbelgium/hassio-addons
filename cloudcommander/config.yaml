@@ -79,6 +79,8 @@ map:
   - backup:rw
   - addons:rw
 name: Cloudcommander
+options:
+  env_vars: []
 panel_admin: false
 panel_icon: mdi:file-search
 ports:

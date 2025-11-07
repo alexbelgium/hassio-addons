@@ -21,6 +21,8 @@ init: false
 map:
   - addon_config:rw
 name: Linkwarden
+options:
+  env_vars: []
 ports:
   3000/tcp: 3000
 ports_description:

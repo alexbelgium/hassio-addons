@@ -22,6 +22,8 @@ map:
   - share:rw
   - ssl
 name: NetAlertX
+options:
+  env_vars: []
 panel_icon: mdi:wifi-check
 ports:
   20211/tcp: 20211
