@@ -83,7 +83,6 @@ fi
 # LOAD CONFIG.YAML #
 ####################
 
-echo ""
 bashio::log.green "Load environment variables from $CONFIGSOURCE if existing"
 if [[ "$CONFIGSOURCE" == "/config"* ]]; then
     bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGFILEBROWSER"
@@ -93,7 +92,6 @@ fi
 bashio::log.green "---------------------------------------------------------"
 bashio::log.notice "This script is used to export custom environment variables at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon"
 bashio::log.warning "This methodology is deprecated. Environment variables can be added from the addon options using env_vars. Instructions can be found here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
-echo ""
 
 # Check if config file is there, or create one from template
 if [ ! -f "$CONFIGSOURCE" ]; then
@@ -212,14 +210,34 @@ done < "/tempenv"
 # Export yaml content to addon options env_vars
 ENV_INDEX=0
 if [ -f /tempenv_options ]; then
+    declare -a EXISTING_NAMES=()
+    declare -a EXISTING_VALUES=()
+
     while true; do
         existing_name="$(bashio::addon.option "env_vars[$ENV_INDEX].name" 2> /dev/null || true)"
         existing_value="$(bashio::addon.option "env_vars[$ENV_INDEX].value" 2> /dev/null || true)"
+        if [[ "$existing_name" == "null" ]]; then
+            existing_name=""
+        fi
+        if [[ "$existing_value" == "null" ]]; then
+            existing_value=""
+        fi
         if [[ -z "$existing_name" && -z "$existing_value" ]]; then
             break
         fi
+        EXISTING_NAMES+=("$existing_name")
+        EXISTING_VALUES+=("$existing_value")
         ENV_INDEX=$((ENV_INDEX + 1))
     done
+
+    if [[ ${#EXISTING_NAMES[@]} -gt 0 ]]; then
+        for idx in "${!EXISTING_NAMES[@]}"; do
+            bashio::addon.option "env_vars[$idx].name" "${EXISTING_NAMES[$idx]}"
+            bashio::addon.option "env_vars[$idx].value" "${EXISTING_VALUES[$idx]}"
+        done
+    fi
+
+    ENV_INDEX=${#EXISTING_NAMES[@]}
     while IFS= read -r option_line; do
         # Skip empty lines
         if [[ -z "$option_line" ]]; then
