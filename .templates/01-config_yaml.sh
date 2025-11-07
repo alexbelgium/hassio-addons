@@ -139,6 +139,16 @@ sed -i 's/: /=/' /tempenv
 SECRETSFILE="/config/secrets.yaml"
 if [ ! -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
 
+existing_env_vars_json=$(bashio::jq "$(bashio::addon.options)" '.env_vars // []')
+if [[ -z "${existing_env_vars_json}" ]] || [[ "${existing_env_vars_json}" == "null" ]]; then
+    existing_env_vars_json='[]'
+fi
+
+declare -A __env_var_new_map
+declare -a __env_var_new_keys
+declare -A __env_var_processed_keys
+declare -a __env_var_processed_order
+
 while IFS= read -r line; do
     # Skip empty lines
     if [[ -z "$line" ]]; then
@@ -174,6 +184,22 @@ while IFS= read -r line; do
         #fi
         line="${KEYS}=${VALUE}"
         export "$line"
+        # Track processed keys and values for migration to env_vars
+        key_clean="${KEYS}"
+        key_clean="${key_clean#"${key_clean%%[![:space:]]*}"}"
+        key_clean="${key_clean%"${key_clean##*[![:space:]]}"}"
+        value_clean="${VALUE}"
+        value_clean="${value_clean#"${value_clean%%[![:space:]]*}"}"
+        if [[ -n "${key_clean}" ]]; then
+            if [[ -z "${__env_var_new_map["${key_clean}"]}" ]]; then
+                __env_var_new_keys+=("${key_clean}")
+            fi
+            __env_var_new_map["${key_clean}"]="${key_clean}=${value_clean}"
+            if [[ -z "${__env_var_processed_keys["${key_clean}"]}" ]]; then
+                __env_var_processed_keys["${key_clean}"]=1
+                __env_var_processed_order+=("${key_clean}")
+            fi
+        fi
         # export to python
         if command -v "python3" &> /dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py
@@ -199,5 +225,69 @@ while IFS= read -r line; do
         bashio::log.red "Skipping line that does not follow the correct structure: $line"
     fi
 done < "/tempenv"
+
+if [[ ${#__env_var_new_keys[@]} -gt 0 ]]; then
+    __env_var_new_payload=""
+    for key in "${__env_var_new_keys[@]}"; do
+        __env_var_new_payload+="${__env_var_new_map["${key}"]}"$'\n'
+    done
+    if [[ -n "${__env_var_new_payload}" ]]; then
+        new_entries_json=$(printf '%s' "${__env_var_new_payload}" | jq -Rcn '[inputs]')
+        if [[ -n "${new_entries_json}" ]] && [[ "${new_entries_json}" != "[]" ]]; then
+            read -r -d '' jq_filter <<'JQ' || true
+def key_of:
+    if type == "string" then
+        (split("=") | .[0])
+    elif type == "object" then
+        if has("name") then .name
+        else (keys | .[0])
+        end
+    else
+        null
+    end;
+($new | map(key_of)) as $new_keys |
+($existing | map(select(
+    (key_of) as $k |
+    ($k != null and ($new_keys | index($k)) != null)
+    | not
+))) + $new
+JQ
+            merged_env_vars=$(jq -nc --argjson existing "${existing_env_vars_json}" --argjson new "${new_entries_json}" "${jq_filter}")
+            bashio::addon.option "env_vars" "^${merged_env_vars}"
+        fi
+    fi
+fi
+
+if [[ ${#__env_var_processed_order[@]} -gt 0 ]] && [ -f "${CONFIGSOURCE}" ] && [ -w "${CONFIGSOURCE}" ]; then
+    tmp_config_file=$(mktemp)
+    if [[ -n "${tmp_config_file}" ]]; then
+        while IFS= read -r original_line || [ -n "${original_line}" ]; do
+            trimmed_line="${original_line#"${original_line%%[![:space:]]*}"}"
+            if [[ -z "${trimmed_line}" ]]; then
+                printf '%s\n' "${original_line}" >> "${tmp_config_file}"
+                continue
+            fi
+            if [[ ${trimmed_line:0:1} == "#" ]]; then
+                printf '%s\n' "${original_line}" >> "${tmp_config_file}"
+                continue
+            fi
+            key_to_comment=""
+            for processed_key in "${__env_var_processed_order[@]}"; do
+                if [[ "${trimmed_line}" == "${processed_key}:"* ]]; then
+                    key_to_comment="${processed_key}"
+                    break
+                fi
+            done
+            if [[ -n "${key_to_comment}" ]]; then
+                indent="${original_line%"${trimmed_line}"}"
+                printf '%s# %s\n' "${indent}" "${trimmed_line}" >> "${tmp_config_file}"
+                printf '%s# Moved to env_vars configuration option.\n' "${indent}" >> "${tmp_config_file}"
+            else
+                printf '%s\n' "${original_line}" >> "${tmp_config_file}"
+            fi
+        done < "${CONFIGSOURCE}"
+        mv "${tmp_config_file}" "${CONFIGSOURCE}"
+    fi
+fi
 
 rm /tempenv
