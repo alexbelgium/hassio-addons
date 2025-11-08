@@ -1,3 +1,6 @@
+
+## 4.16-r0-ls95 (08-11-2025)
+- Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## "4.16-r0-ls94" (25-10-2025)
