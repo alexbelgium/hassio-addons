@@ -119,24 +119,24 @@ for KEYS in "${arr[@]}"; do
             env_processed=false
             for entry in "${env_entries[@]}"; do
                 if [[ "$entry" == \{* ]]; then
-                    env_name=$(jq -r 'if has("name") and has("value") then .name else empty end' <<<"$entry")
+                    env_name=$(jq -r 'if has("name") and has("value") then .name else empty end' <<< "$entry")
                     if [[ -n "$env_name" ]]; then
-                        env_value=$(jq -r '.value // empty' <<<"$entry")
+                        env_value=$(jq -r '.value // empty' <<< "$entry")
                         export_option "$env_name" "$env_value"
                         env_processed=true
                         continue
                     fi
 
                     # Preserve multiline values: iterate keys and extract raw values without @tsv
-                    mapfile -t env_keys < <(jq -r 'keys[]' <<<"$entry")
+                    mapfile -t env_keys < <(jq -r 'keys[]' <<< "$entry")
                     for env_key in "${env_keys[@]}"; do
                         # Use --arg to select the key; // empty to avoid "null"
-                        env_value=$(jq -r --arg k "$env_key" '.[$k] // empty' <<<"$entry")
+                        env_value=$(jq -r --arg k "$env_key" '.[$k] // empty' <<< "$entry")
                         export_option "$env_key" "$env_value"
                         env_processed=true
                     done
                 elif [[ "${entry:0:1}" == '"' ]]; then
-                    env_pair=$(jq -r '.' <<<"$entry")
+                    env_pair=$(jq -r '.' <<< "$entry")
                     if [[ "$env_pair" == *=* ]]; then
                         env_key=${env_pair%%=*}
                         env_value=${env_pair#*=}
