@@ -214,7 +214,7 @@ jobs:
           else
             exit 1
           fi
-          version="${version//"/}"
+          version="${version//\"/}"
           version="${version//'/}"
           version="$(echo "$version" | xargs)"
           if [[ "$version" == *"test"* ]]; then exit 0; fi
