@@ -1,4 +1,4 @@
-- Avoid blank config.json when using xonfig.yaml
+- Avoid blank config.json when using config.yaml
 
 ## 3.19.9
 
