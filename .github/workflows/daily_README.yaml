@@ -100,28 +100,29 @@ jobs:
             [[ "$SERVICES" == *"mysql"* ]]          && sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md
             [[ "$INGRESS" == "true" ]]              && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md
 
-            # --- Architecture shields (colored only, no text) ---
-            make_badge() {
-              local color="$1"
-              echo "![badge](https://img.shields.io/badge/--$color)"
+            # --- Architecture shields (with architecture name + color) ---
+            make_arch_badge() {
+              local arch="$1"
+              local color="$2"
+              echo "![${arch}](https://img.shields.io/badge/${arch}-${color}?style=flat)"
             }
 
             if [[ " $ARCHS " == *" armv7 "* ]]; then
-              sed -i "$ADDONSLINE"'a '"$(make_badge 'brightgreen')"' <!-- armv7 -->' README2.md
+              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'armv7' 'brightgreen')"' README2.md
             else
-              sed -i "$ADDONSLINE"'a '"$(make_badge 'orange')"' <!-- armv7 -->' README2.md
+              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'armv7' 'orange')"' README2.md
             fi
             if [[ " $ARCHS " == *" amd64 "* ]]; then
-              sed -i "$ADDONSLINE"'a '"$(make_badge 'brightgreen')"' <!-- amd64 -->' README2.md
+              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'amd64' 'brightgreen')"' README2.md
             else
-              sed -i "$ADDONSLINE"'a '"$(make_badge 'orange')"' <!-- amd64 -->' README2.md
+              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'amd64' 'orange')"' README2.md
             fi
             if [[ " $ARCHS " == *" aarch64 "* ]]; then
-              sed -i "$ADDONSLINE"'a '"$(make_badge 'brightgreen')"' <!-- aarch64 -->' README2.md
+              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'aarch64' 'brightgreen')"' README2.md
             else
-              sed -i "$ADDONSLINE"'a '"$(make_badge 'orange')"' <!-- aarch64 -->' README2.md
+              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'aarch64' 'orange')"' README2.md
             fi
-            # ----------------------------------------------------
+            # -------------------------------------------------------------
 
             [[ -f "$f/updater.json" ]] && sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md
 
@@ -157,9 +158,29 @@ jobs:
           sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
           sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
 
-          # Replace template
+          # Breakdown per arch
+          echo "Breakdown per arch..."
+          STATS_ARMV7="$(awk '{SUM+=$3}END{print SUM}' Stats2)"
+          STATS_AMD64="$(awk '{SUM+=$4}END{print SUM}' Stats2)"
+          STATS_AARCH64="$(awk '{SUM+=$5}END{print SUM}' Stats2)"
+          STATS_DOWNLOADS=$(( STATS_ARMV7 + STATS_AMD64 + STATS_AARCH64 ))
+          if [ "$STATS_DOWNLOADS" -gt 0 ]; then
+            PCT_ARMV7="$(awk -v a="$STATS_ARMV7" -v t="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", a/t*100}')"
+            PCT_AMD64="$(awk -v a="$STATS_AMD64" -v t="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", a/t*100}')"
+            PCT_AARCH64="$(awk -v a="$STATS_AARCH64" -v t="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", a/t*100}')"
+          else
+            PCT_ARMV7=0; PCT_AMD64=0; PCT_AARCH64=0
+          fi
+
+          sed -i "s|%%STATS_ARMV7%%|armv7: ${PCT_ARMV7}%|g" README2.md
+          sed -i "s|%%STATS_AMD64%%|amd64: ${PCT_AMD64}%|g" README2.md
+          sed -i "s|%%STATS_AARCH64%%|aarch64: ${PCT_AARCH64}%|g" README2.md
+
+          echo "Stats completed."
+
           mv README2.md README.md
           echo "README generated successfully."
+
       - name: Commit if needed
         uses: EndBug/add-and-commit@v9
         with:
