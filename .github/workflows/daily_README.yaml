@@ -18,6 +18,49 @@ jobs:
 
           echo "Starting"
 
+          # Ensure dependencies available
+          echo "Installing PyYAML"
+          python3 -m pip install --user --quiet PyYAML
+          export PATH="$HOME/.local/bin:$PATH"
+
+          get_config_file() {
+            if [ -f "$1/config.json" ]; then
+              echo "$1/config.json"
+            elif [ -f "$1/config.yaml" ]; then
+              echo "$1/config.yaml"
+            else
+              echo ""
+            fi
+          }
+
+          convert_config_to_json() {
+            local source="$1"
+            if [[ "$source" == *.yaml ]]; then
+              local temp_file
+              temp_file="$(mktemp)"
+              python3 - <<'PY' "$source" "$temp_file"
+import json
+import sys
+
+from pathlib import Path
+
+import yaml
+
+source = Path(sys.argv[1])
+target = Path(sys.argv[2])
+
+with source.open("r", encoding="utf-8") as fp:
+    data = yaml.safe_load(fp)
+
+with target.open("w", encoding="utf-8") as fp:
+    json.dump(data, fp)
+PY
+              echo "$temp_file"
+            else
+              echo "$source"
+            fi
+          }
+
           # Prepare template
 
           cp .templates/.README.md README2.md
@@ -30,12 +73,15 @@ jobs:
 
           # shellcheck disable=SC2086
           for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
-            if [ -f "$f"/config.json ]; then
-              NAME=$(jq -r '.name' "$f"/config.json)
+            CONFIG_SRC="$(get_config_file "$f")"
+            if [ -n "$CONFIG_SRC" ]; then
+              CONFIG_FILE="$(convert_config_to_json "$CONFIG_SRC")"
+              NAME=$(jq -r '.name' "$CONFIG_FILE")
               if [[ "$f" != "$NAME" ]]; then
                 echo "$f" > "$f"/oldname
                 mv "$f" "$NAME"
               fi
+              if [[ "$CONFIG_FILE" != "$CONFIG_SRC" ]]; then rm "$CONFIG_FILE"; fi
             fi
           done
 
@@ -44,17 +90,20 @@ jobs:
 
           find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
             # $f is an addon directory
-            if [ -f "$f/config.json" ]; then
+            CONFIG_SRC="$(get_config_file "$f")"
+            if [ -n "$CONFIG_SRC" ]; then
+
+              CONFIG_FILE="$(convert_config_to_json "$CONFIG_SRC")"
 
               echo "Project $f"
 
               # Get variables
               if [ -f "$f/oldname" ]; then FOLDERNAME="$(cat "$f/oldname")"; else FOLDERNAME="$f"; fi
-              NAME="$(jq -r '.name' "$f/config.json")"
-              DESCRIPTION="$(jq -r '.description' "$f/config.json")"
+              NAME="$(jq -r '.name' "$CONFIG_FILE")"
+              DESCRIPTION="$(jq -r '.description' "$CONFIG_FILE")"
               # Get icon
-              if [ "$(jq '.panel_icon' "$f/config.json")" != null ]; then
-                ICON="$(jq -r '.panel_icon' "$f/config.json")"
+              if [ "$(jq '.panel_icon' "$CONFIG_FILE")" != null ]; then
+                ICON="$(jq -r '.panel_icon' "$CONFIG_FILE")"
                 ICON="${ICON#*:}"
                 ICON="![image](https://api.iconify.design/mdi/$ICON.svg)"
               else
@@ -64,24 +113,29 @@ jobs:
               # Write infos
               echo "Writing infos"
               sed -i "$ADDONSLINE"'{G;}' README2.md
-              if [[ "$(jq '.schema' "$f/config.json" 2>/dev/null)" == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
-              if [[ "$(jq '.schema' "$f/config.json" 2>/dev/null)" == *"networkdisks"* ]]; then sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md; fi
-              if [[ "$(jq '.full_access' "$f/config.json" 2>/dev/null)" == "true" ]]; then sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md; fi
-              if [[ "$(jq '.services[]' "$f/config.json" 2>/dev/null)" == *"mqtt"* ]]; then sed -i "$ADDONSLINE"'a ![mqtt][mqtt-badge]' README2.md; fi
-              if [[ "$(jq '.services[]' "$f/config.json" 2>/dev/null)" == *"mysql"* ]]; then sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md; fi
-              if [[ "$(jq '.ingress' "$f/config.json" 2>/dev/null)" == "true" ]]; then sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md; fi
-              if [[ "$(jq '.arch[]' "$f/config.json")" == *"armv7"* ]]; then
+              if [[ "$(jq '.schema' "$CONFIG_FILE" 2>/dev/null)" == *"localdisks"* ]]; then sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md; fi
+              if [[ "$(jq '.schema' "$CONFIG_FILE" 2>/dev/null)" == *"networkdisks"* ]]; then sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md; fi
+              if [[ "$(jq '.full_access' "$CONFIG_FILE" 2>/dev/null)" == "true" ]]; then sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md; fi
+              if [[ "$(jq '.services[]' "$CONFIG_FILE" 2>/dev/null)" == *"mqtt"* ]]; then sed -i "$ADDONSLINE"'a ![mqtt][mqtt-badge]' README2.md; fi
+              if [[ "$(jq '.services[]' "$CONFIG_FILE" 2>/dev/null)" == *"mysql"* ]]; then sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md; fi
+              if [[ "$(jq '.ingress' "$CONFIG_FILE" 2>/dev/null)" == "true" ]]; then sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md; fi
+              if [[ "$(jq '.arch[]' "$CONFIG_FILE")" == *"armv7"* ]]; then
                 sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md
               else sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md; fi || true
-              if [[ "$(jq '.arch[]' "$f/config.json")" == *"amd64"* ]]; then
+              if [[ "$(jq '.arch[]' "$CONFIG_FILE")" == *"amd64"* ]]; then
                 sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md
               else sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md; fi || true
-              if [[ "$(jq '.arch[]' "$f/config.json")" == *"aarch64"* ]]; then
+              if [[ "$(jq '.arch[]' "$CONFIG_FILE")" == *"aarch64"* ]]; then
                 sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md
               else sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md; fi || true
               if [[ -f "$f/updater.json" ]]; then sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md; fi
-              sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.json)' README2.md || true
+              if [[ "$CONFIG_SRC" == *.yaml ]]; then
+                sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.yaml)' README2.md || true
+              else
+                sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.json)' README2.md || true
+              fi
               sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION\\n" README2.md
+              if [[ "$CONFIG_FILE" != "$CONFIG_SRC" ]]; then rm "$CONFIG_FILE"; fi
             fi
           done
 
