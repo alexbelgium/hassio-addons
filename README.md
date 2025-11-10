@@ -48,7 +48,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 1
+- In the repository : 110
 - Installed : 85365
 
 ### Top 3
