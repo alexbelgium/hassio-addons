@@ -1,0 +1,28 @@
+arch:
+  - aarch64
+  - amd64
+  - armv7
+boot: manual
+description: Automatic addons update by aligning version tag with upstream releases
+environment:
+  GIT_DISCOVERY_ACROSS_FILESYSTEM: "1"
+image: ghcr.io/alexbelgium/addons_updater-{arch}
+init: false
+map:
+  - addon_config:rw
+name: Repository Updater
+options:
+  gitapi: gitapi
+  gituser: gituser
+  repository: alexbelgium/hassio-addons
+schema:
+  dry_run: bool?
+  gitapi: str
+  gitmail: str?
+  gituser: str
+  repository: str
+  verbose: bool?
+slug: updater
+udev: true
+url: https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater
+version: "3.19.10"
