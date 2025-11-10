@@ -103,7 +103,8 @@ jobs:
           echo "Global stats..."
           STATS_DOWNLOADS="$(awk 'NR==2{print $1}' Stats)"
           sed -i "s|%%STATS_DOWNLOADS%%|$STATS_DOWNLOADS|g" README2.md && \
-          sed -i "s|%%STATS_ADDONS%%|$(find . -name "config.json" | wc -l)|g" README2.md && \
+          ADDONS_COUNT="$(find -- * -maxdepth 1 -type f \( -name "config.json" -o -name "config.yaml" \) -printf '%h\n' 2>/dev/null | sort -u | wc -l)" && \
+          sed -i "s|%%STATS_ADDONS%%|$ADDONS_COUNT|g" README2.md && \
           STATS_ONE="$(awk 'NR==3{print $(NF)}' Stats)" && \
           STATS_TWO="$(awk 'NR==4{print $(NF)}' Stats)" && \
           STATS_THREE="$(awk 'NR==5{print $(NF)}' Stats)"
