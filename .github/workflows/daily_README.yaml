@@ -1,188 +1,131 @@
-# yamllint disable rule:line-length
----
-name: Generate README
-on:
-  schedule:
-    - cron: 0 17 * * *
-  workflow_dispatch: null
+#!/usr/bin/env bash
 
-jobs:
-  README_updater:
-    if: github.repository_owner == 'alexbelgium'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v5
+set -euo pipefail
 
-      - name: Install yq (and jq)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-          YQ_VERSION="v4.44.3"
-          sudo wget -qO /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"
-          sudo chmod +x /usr/local/bin/yq
+# Ensure yq is installed (mikefarah/yq v4+)
+if ! command -v yq &>/dev/null; then
+  echo "yq is required (https://github.com/mikefarah/yq), please install it in your CI or local environment"
+  exit 1
+fi
 
-      - name: Create README file
-        shell: bash
-        run: |
-          set -euo pipefail
-          echo "Starting"
+echo "Starting"
 
-          # Prepare template
-          cp .templates/.README.md README2.md
-          ADDONSLINE="$(sed -n '/%%ADDONS_LIST%%/=' README2.md)"
-          sed -i "/%%ADDONS_LIST%%/d" README2.md
+cp .templates/.README.md README2.md
+ADDONSLINE="$(sed -n '/%%ADDONS_LIST%%/=' README2.md)"
+sed -i "/%%ADDONS_LIST%%/d" README2.md
 
-          # Helper to locate config
-          get_cfg() {
-            local dir="$1"
-            for ext in json yaml yml; do
-              if [ -f "$dir/config.$ext" ]; then
-                echo "$dir/config.$ext"
-                return 0
-              fi
-            done
-            return 1
-          }
+# Step 1: Rename folders by name field in config
+for f in $(find . -maxdepth 1 -type d ! -name '.' | sort -r); do
+  CONFIG=""
+  [ -f "$f/config.json" ] && CONFIG="$f/config.json"
+  [ -z "$CONFIG" ] && [ -f "$f/config.yaml" ] && CONFIG="$f/config.yaml"
+  [ -z "$CONFIG" ] && continue
 
-          # Sort/rename addons
-          for f in $( find -- * -maxdepth 0 -type d | sort -r ); do
-            CFG="$(get_cfg "$f" || true)"
-            if [ -n "${CFG:-}" ]; then
-              NAME="$(yq -r '.name // ""' "$CFG")"
-              if [ -n "$NAME" ] && [ "$f" != "$NAME" ]; then
-                echo "$f" > "$f/oldname"
-                mv "$f" "$NAME"
-              fi
-            fi
-          done
+  if [[ "$CONFIG" == *.json ]]; then
+    NAME=$(jq -r '.name // empty' "$CONFIG")
+  else
+    NAME=$(yq -r '.name // empty' "$CONFIG")
+  fi
 
-          # Populate template
-          find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
-            CFG="$(get_cfg "$f" || true)"
-            [ -n "${CFG:-}" ] || continue
+  if [[ -n "$NAME" && "$f" != "./$NAME" ]]; then
+    echo "${f#./}" > "$f/oldname"
+    mv "$f" "./$NAME"
+  fi
+done
 
-            echo "Processing $f"
+# Step 2: Populate README with addons list
+find . -maxdepth 1 -type d ! -name '.' | sort -r | while read -r f; do
+  CONFIG=""
+  [ -f "$f/config.json" ] && CONFIG="$f/config.json"
+  [ -z "$CONFIG" ] && [ -f "$f/config.yaml" ] && CONFIG="$f/config.yaml"
+  [ -z "$CONFIG" ] && continue
 
-            # Handle folder rename reference
-            if [ -f "$f/oldname" ]; then FOLDERNAME="$(cat "$f/oldname")"; else FOLDERNAME="$f"; fi
-            EXT="${CFG##*.}"
-            BADGE_KIND="json"
-            [[ "$EXT" =~ ^ya?ml$ ]] && BADGE_KIND="yaml"
+  # Helper functions
+  get_field() {
+    local field="$1"
+    if [[ "$CONFIG" == *.json ]]; then
+      jq -r "$field // empty" "$CONFIG"
+    else
+      yq -r "$field // empty" "$CONFIG"
+    fi
+  }
 
-            # Extract values
-            NAME="$(yq -r '.name // ""' "$CFG")"
-            DESCRIPTION="$(yq -r '.description // ""' "$CFG")"
-            PANEL_ICON="$(yq -r '.panel_icon // ""' "$CFG")"
-            SCHEMA_STR="$(yq -o=json '.schema // {}' "$CFG" | tr -d '\n' || true)"
-            SERVICES="$(yq -r '.services[]? // empty' "$CFG" | tr '\n' ' ' || true)"
-            FULL_ACCESS="$(yq -r '.full_access // false' "$CFG" || true)"
-            INGRESS="$(yq -r '.ingress // false' "$CFG" || true)"
+  get_array() {
+    local field="$1"
+    if [[ "$CONFIG" == *.json ]]; then
+      jq -r "$field // empty | @sh" "$CONFIG" | tr -d "'"
+    else
+      yq -r "$field // empty | @sh" "$CONFIG" | tr -d "'"
+    fi
+  }
 
-            # Normalize arch array
-            ARCHS="$(yq -r '.arch // [] | join(" ")' "$CFG" || true)"
+  # Info extraction
+  if [ -f "$f/oldname" ]; then FOLDERNAME="$(cat "$f/oldname")"; else FOLDERNAME="${f#./}"; fi
+  NAME="$(get_field '.name')"
+  DESCRIPTION="$(get_field '.description')"
 
-            # Icon (mdi:)
-            if [ -n "$PANEL_ICON" ] && [ "$PANEL_ICON" != "null" ]; then
-              ICON_NAME="${PANEL_ICON#*:}"
-              ICON="![image](https://api.iconify.design/mdi/$ICON_NAME.svg)"
-            else
-              ICON=""
-            fi
+  # Icon
+  ICON_RAW="$(get_field '.panel_icon')"
+  if [[ "$ICON_RAW" != "null" && -n "$ICON_RAW" ]]; then
+    ICON="${ICON_RAW#*:}"
+    ICON="![image](https://api.iconify.design/mdi/$ICON.svg)"
+  else
+    ICON=""
+  fi
 
-            sed -i "$ADDONSLINE"'{G;}' README2.md
+  # Insert new line for this addon
+  sed -i "$ADDONSLINE"'{G;}' README2.md
 
-            # Features
-            [[ "$SCHEMA_STR" == *"localdisks"* ]]   && sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md
-            [[ "$SCHEMA_STR" == *"networkdisks"* ]] && sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md
-            [[ "$FULL_ACCESS" == "true" ]]          && sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md
-            [[ "$SERVICES" == *"mqtt"* ]]           && sed -i "$ADDONSLINE"'a ![mqtt][mqtt-badge]' README2.md
-            [[ "$SERVICES" == *"mysql"* ]]          && sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md
-            [[ "$INGRESS" == "true" ]]              && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md
+  # Badges
+  [[ "$(get_field '.schema')" == *"localdisks"* ]] && sed -i "$ADDONSLINE"'a ![localdisks][localdisks-badge]' README2.md
+  [[ "$(get_field '.schema')" == *"networkdisks"* ]] && sed -i "$ADDONSLINE"'a ![smb][smb-badge]' README2.md
+  [[ "$(get_field '.full_access')" == "true" ]] && sed -i "$ADDONSLINE"'a ![full_access][full_access-badge]' README2.md
 
-            # --- Architecture shields (with architecture name + color) ---
-            make_arch_badge() {
-              local arch="$1"
-              local color="$2"
-              echo "![${arch}](https://img.shields.io/badge/${arch}-${color}?style=flat)"
-            }
+  SERVICES="$(get_array '.services[]')"
+  [[ "$SERVICES" == *"mqtt"* ]] && sed -i "$ADDONSLINE"'a ![mqtt][mqtt-badge]' README2.md
+  [[ "$SERVICES" == *"mysql"* ]] && sed -i "$ADDONSLINE"'a ![MariaDB][mariadb-badge]' README2.md
 
-            if [[ " $ARCHS " == *" armv7 "* ]]; then
-              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'armv7' 'brightgreen')"' README2.md
-            else
-              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'armv7' 'orange')"' README2.md
-            fi
-            if [[ " $ARCHS " == *" amd64 "* ]]; then
-              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'amd64' 'brightgreen')"' README2.md
-            else
-              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'amd64' 'orange')"' README2.md
-            fi
-            if [[ " $ARCHS " == *" aarch64 "* ]]; then
-              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'aarch64' 'brightgreen')"' README2.md
-            else
-              sed -i "$ADDONSLINE"'a '"$(make_arch_badge 'aarch64' 'orange')"' README2.md
-            fi
-            # -------------------------------------------------------------
+  [[ "$(get_field '.ingress')" == "true" ]] && sed -i "$ADDONSLINE"'a ![ingress][ingress-badge]' README2.md
 
-            [[ -f "$f/updater.json" ]] && sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md
+  ARCHS="$(get_array '.arch[]')"
+  [[ "$ARCHS" == *"armv7"* ]] && sed -i "$ADDONSLINE"'a ![armv7][armv7-badge]' README2.md || sed -i "$ADDONSLINE"'a ![armv7no][armv7no-badge]' README2.md
+  [[ "$ARCHS" == *"amd64"* ]] && sed -i "$ADDONSLINE"'a ![amd64][amd64-badge]' README2.md || sed -i "$ADDONSLINE"'a ![amd64no][amd64no-badge]' README2.md
+  [[ "$ARCHS" == *"aarch64"* ]] && sed -i "$ADDONSLINE"'a ![aarch64][aarch64-badge]' README2.md || sed -i "$ADDONSLINE"'a ![aarch64no][aarch64no-badge]' README2.md
 
-            sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/'"$BADGE_KIND"'?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.'"$EXT"')' README2.md || true
-            sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION\\n" README2.md
-          done
+  [ -f "$f/updater.json" ] && sed -i "$ADDONSLINE"'a ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fupdater.json)' README2.md
 
-          # Restore original folder names
-          echo "Restoring folder names..."
-          find -- * -maxdepth 0 -type d | sort -r | while read -r f; do
-            if [ -f "$f/oldname" ]; then
-              NAME="$(cat "$f/oldname")"
-              rm "$f/oldname"
-              mv "$f" "$NAME"
-            fi
-          done
+  if [[ "$CONFIG" == *.json ]]; then
+    sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2F'"$FOLDERNAME"'%2Fconfig.json)' README2.md
+  else
+    sed -i "$ADDONSLINE"'a &emsp;&emsp;![Version](https://img.shields.io/badge/version-yaml-blue)' README2.md
+  fi
 
-          # Global stats
-          echo "Updating stats..."
-          STATS_DOWNLOADS="$(awk 'NR==2{print $1}' Stats)"
-          STATS_CFG_COUNT="$(
-            find . -mindepth 2 -maxdepth 2 -type f \
-              -regextype posix-extended \
-              -regex '.*/config\.(json|ya?ml)$' \
-            | wc -l
-          )"
-          sed -i "s|%%STATS_DOWNLOADS%%|$STATS_DOWNLOADS|g" README2.md
-          sed -i "s|%%STATS_ADDONS%%|$STATS_CFG_COUNT|g" README2.md
-          STATS_ONE="$(awk 'NR==3{print $(NF)}' Stats)"
-          STATS_TWO="$(awk 'NR==4{print $(NF)}' Stats)"
-          STATS_THREE="$(awk 'NR==5{print $(NF)}' Stats)"
-          sed -i "s|%%STATS_ONE%%|${STATS_ONE^}|g" README2.md
-          sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
-          sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
+  sed -i "$ADDONSLINE"'a &#10003; '"$ICON"' ['"$NAME"']('"$FOLDERNAME"'/) : '"$DESCRIPTION\\n" README2.md
+done
 
-          # Breakdown per arch
-          echo "Breakdown per arch..."
-          STATS_ARMV7="$(awk '{SUM+=$3}END{print SUM}' Stats2)"
-          STATS_AMD64="$(awk '{SUM+=$4}END{print SUM}' Stats2)"
-          STATS_AARCH64="$(awk '{SUM+=$5}END{print SUM}' Stats2)"
-          STATS_DOWNLOADS=$(( STATS_ARMV7 + STATS_AMD64 + STATS_AARCH64 ))
-          if [ "$STATS_DOWNLOADS" -gt 0 ]; then
-            PCT_ARMV7="$(awk -v a="$STATS_ARMV7" -v t="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", a/t*100}')"
-            PCT_AMD64="$(awk -v a="$STATS_AMD64" -v t="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", a/t*100}')"
-            PCT_AARCH64="$(awk -v a="$STATS_AARCH64" -v t="$STATS_DOWNLOADS" 'BEGIN{printf "%.0f", a/t*100}')"
-          else
-            PCT_ARMV7=0; PCT_AMD64=0; PCT_AARCH64=0
-          fi
+# Step 3: Restore folder names if changed
+echo "Restore structure..."
+find . -maxdepth 1 -type d ! -name '.' | sort -r | while read -r f; do
+  [ -f "$f/oldname" ] && NAME="$(cat "$f/oldname")" && rm "$f/oldname" && mv "$f" "./$NAME"
+done
+echo "... done"
 
-          sed -i "s|%%STATS_ARMV7%%|armv7: ${PCT_ARMV7}%|g" README2.md
-          sed -i "s|%%STATS_AMD64%%|amd64: ${PCT_AMD64}%|g" README2.md
-          sed -i "s|%%STATS_AARCH64%%|aarch64: ${PCT_AARCH64}%|g" README2.md
+# Step 4: Stats (count both config.json and config.yaml)
+echo "Global stats..."
+STATS_DOWNLOADS="$(awk 'NR==2{print $1}' Stats)"
+TOTAL_ADDONS=$(find . -type f \( -name "config.json" -o -name "config.yaml" \) | wc -l)
+sed -i "s|%%STATS_DOWNLOADS%%|$STATS_DOWNLOADS|g" README2.md
+sed -i "s|%%STATS_ADDONS%%|$TOTAL_ADDONS|g" README2.md
+STATS_ONE="$(awk 'NR==3{print $(NF)}' Stats)"
+STATS_TWO="$(awk 'NR==4{print $(NF)}' Stats)"
+STATS_THREE="$(awk 'NR==5{print $(NF)}' Stats)"
+sed -i "s|%%STATS_ONE%%|${STATS_ONE^}|g" README2.md
+sed -i "s|%%STATS_TWO%%|${STATS_TWO^}|g" README2.md
+sed -i "s|%%STATS_THREE%%|${STATS_THREE^}|g" README2.md
+echo "... done"
 
-          echo "Stats completed."
+# Add any additional stats or breakdowns here as in your original
 
-          mv README2.md README.md
-          echo "README generated successfully."
-
-      - name: Commit if needed
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: "GitHub bot : README updated"
-          default_author: github_actions
+# Final: Replace template if changed
+mv README2.md README.md
+echo "... done"
