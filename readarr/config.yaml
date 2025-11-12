@@ -108,4 +108,4 @@ schema:
 slug: readarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/readarr
-version: 0.4.19.2811-2
+version: 0.4.18
