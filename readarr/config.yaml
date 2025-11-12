@@ -87,7 +87,7 @@ panel_icon: mdi:download-circle
 ports:
   8787/tcp: 8787
 ports_description:
-  8787/tcp: web interface
+  8787/tcp: Web Interface
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
