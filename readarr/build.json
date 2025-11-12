@@ -1,6 +1,6 @@
 {
   "build_from": {
     "aarch64": "linuxserver/readarr:arm64v8-develop",
-    "amd64": "linuxserver/readarr:amd64-develop"
+    "amd64": "linuxserver/readarr:amd64-nightly"
   }
 }
