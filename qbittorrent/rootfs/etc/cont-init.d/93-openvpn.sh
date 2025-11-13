@@ -7,6 +7,11 @@ declare openvpn_username
 declare openvpn_password
 
 QBT_CONFIG_FILE="/config/qBittorrent/qBittorrent.conf"
+VPN_INTERFACE_FILE="/var/run/vpn_interface"
+
+if bashio::config.true 'openvpn_enabled' && bashio::config.true 'wireguard_enabled'; then
+    bashio::exit.nok "OpenVPN and WireGuard cannot be enabled at the same time."
+fi
 
 if bashio::config.true 'openvpn_enabled'; then
 
@@ -200,6 +205,10 @@ if bashio::config.true 'openvpn_enabled'; then
     # CONFIGURE QBITTORRENT #
     #########################
 
+    # record vpn interface for other services
+    echo "tun0" > "${VPN_INTERFACE_FILE}"
+    chmod 600 "${VPN_INTERFACE_FILE}" || true
+
     # WITH CONTAINER BINDING
     #########################
     # If alternative mode enabled, bind container
@@ -260,9 +269,12 @@ else
     # REMOVE OPENVPN #
     ##################
 
-    # Ensure no redirection by removing the direction tag
-    if [ -f "$QBT_CONFIG_FILE" ]; then
-        sed -i '/Interface/d' "$QBT_CONFIG_FILE"
+    if ! bashio::config.true 'wireguard_enabled'; then
+        # Ensure no redirection by removing the direction tag
+        if [ -f "$QBT_CONFIG_FILE" ]; then
+            sed -i '/Interface/d' "$QBT_CONFIG_FILE"
+        fi
+        rm -f "${VPN_INTERFACE_FILE}"
     fi
     bashio::log.info "Direct connection without VPN enabled"
 

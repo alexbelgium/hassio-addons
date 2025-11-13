@@ -92,6 +92,9 @@ options:
   qbit_manage: false
   ssl: false
   whitelist: localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16
+  wireguard_config: wg0.conf
+  wireguard_enabled: false
+  wireguard_interface: wg0
 panel_admin: false
 panel_icon: mdi:progress-download
 ports:
@@ -133,6 +136,9 @@ schema:
   openvpn_enabled: bool?
   openvpn_password: str?
   openvpn_username: str?
+  wireguard_config: str?
+  wireguard_enabled: bool?
+  wireguard_interface: str?
   qbit_manage: bool?
   run_duration: str?
   silent: bool?
@@ -141,4 +147,4 @@ schema:
 slug: qbittorrent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 5.1.2-7
+version: 5.1.2-8

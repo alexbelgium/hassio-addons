@@ -10,13 +10,19 @@ bashio::log.info "Starting NGinx..."
 
 # Check vpn is working
 if [ -f /currentip ]; then
+    VPN_INTERFACE_FILE="/var/run/vpn_interface"
     nginx || nginx -s reload &
     while true; do
         # Get vpn ip
-        if ! bashio::config.true 'wireguard_enabled' && bashio::config.true 'openvpn_alt_mode'; then
-            curl -s ipecho.net/plain > /vpnip
+        vpn_interface=""
+        if [ -f "${VPN_INTERFACE_FILE}" ]; then
+            vpn_interface=$(tr -d ' \t\n\r' < "${VPN_INTERFACE_FILE}")
+        fi
+
+        if [[ -n "${vpn_interface}" ]] && ! (bashio::config.true 'openvpn_alt_mode' && ! bashio::config.true 'wireguard_enabled'); then
+            curl -s ipecho.net/plain --interface "${vpn_interface}" > /vpnip
         else
-            curl -s ipecho.net/plain --interface tun0 > /vpnip
+            curl -s ipecho.net/plain > /vpnip
         fi
 
         # Verify ip has changed

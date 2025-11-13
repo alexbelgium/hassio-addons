@@ -33,7 +33,7 @@ This addons has several configurable options :
 - [alternative webUI](https://github.com/qbittorrent/qBittorrent/wiki/List-of-known-alternate-WebUIs)
 - usage of ssl
 - ingress
-- optional openvpn support
+- optional OpenVPN or WireGuard support
 - allow setting specific DNS servers
 
 ## Configuration
@@ -70,6 +70,11 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `openvpn_username` | str | | OpenVPN username |
 | `openvpn_password` | str | | OpenVPN password |
 | `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
+| `wireguard_enabled` | bool | `false` | Enable WireGuard connection |
+| `wireguard_config` | str | `wg0.conf` | WireGuard config file name (in `/config/wireguard/`) |
+| `wireguard_interface` | str | `wg0` | WireGuard interface name to bind in qBittorrent |
+
+> **Note**: OpenVPN and WireGuard are mutually exclusive. Enable only one VPN protocol at a time.
 | `qbit_manage` | bool | `false` | Enable qBit Manage integration |
 | `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
 | `silent` | bool | `false` | Suppress debug messages |
@@ -93,6 +98,7 @@ networkdisks: "//192.168.1.100/downloads"
 cifsusername: "username"
 cifspassword: "password"
 openvpn_enabled: false
+wireguard_enabled: false
 ```
 
 ### Mounting Drives
