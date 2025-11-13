@@ -254,6 +254,10 @@ if bashio::config.true 'openvpn_enabled'; then
         sed -i "1a route-nopull" /config/openvpn/"$openvpn_config"
     fi
 
+elif bashio::config.true 'wireguard_enabled'; then
+
+    bashio::log.info "OpenVPN disabled. WireGuard configuration detected; skipping qBittorrent interface cleanup."
+
 else
 
     ##################

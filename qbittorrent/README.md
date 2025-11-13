@@ -34,6 +34,7 @@ This addons has several configurable options :
 - usage of ssl
 - ingress
 - optional openvpn support
+- optional wireguard support
 - allow setting specific DNS servers
 
 ## Configuration
@@ -70,6 +71,8 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `openvpn_username` | str | | OpenVPN username |
 | `openvpn_password` | str | | OpenVPN password |
 | `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
+| `wireguard_enabled` | bool | `false` | Enable WireGuard connection |
+| `wireguard_config` | str | `config.conf` | WireGuard config file name (in `/config/wireguard/`) |
 | `qbit_manage` | bool | `false` | Enable qBit Manage integration |
 | `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
 | `silent` | bool | `false` | Suppress debug messages |
@@ -93,7 +96,19 @@ networkdisks: "//192.168.1.100/downloads"
 cifsusername: "username"
 cifspassword: "password"
 openvpn_enabled: false
+wireguard_enabled: false
+wireguard_config: config.conf
 ```
+
+### WireGuard configuration
+
+When `wireguard_enabled` is set to `true`, the add-on expects a standard `wg-quick` configuration file in `/config/wireguard/` (default `config.conf`).
+
+1. Copy your provider configuration file to `/config/wireguard/` using the Filebrowser add-on or another file manager.
+2. Expose and forward UDP port `51820` on your router towards the Home Assistant host.
+3. Start the add-on and review the logs; the add-on stores the last connection attempt in `/config/wireguard/wireguard-last-start.log` and `/config/wireguard/wireguard-last-error.log` for troubleshooting.
+
+The add-on automatically binds qBittorrent to the WireGuard interface to avoid traffic leaks.
 
 ### Mounting Drives
 
