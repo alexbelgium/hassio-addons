@@ -10,13 +10,29 @@ fi
 if bashio::config.true 'openvpn_enabled'; then
     exec /usr/sbin/openvpn --config /config/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh --pull-filter ignore "route-ipv6" --pull-filter ignore "ifconfig-ipv6" --pull-filter ignore "tun-ipv6" --pull-filter ignore "redirect-gateway ipv6" --pull-filter ignore "dhcp-option DNS6"
 else
-    ########################################################
-    # DRAFT : Start wireguard if needed
     if bashio::config.true 'wireguard_enabled'; then
-        wg-quick up /config/wireguard/config.conf &
-        true
+        WIREGUARD_STATE_DIR="/var/run/wireguard"
+        if ! bashio::fs.file_exists "${WIREGUARD_STATE_DIR}/config"; then
+            bashio::exit.nok 'WireGuard runtime configuration not prepared. Please restart the add-on.'
+        fi
+        wireguard_config="$(cat "${WIREGUARD_STATE_DIR}/config")"
+        wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2>/dev/null || echo 'wg0')"
+        if ip link show "${wireguard_interface}" &> /dev/null; then
+            bashio::log.warning "WireGuard interface ${wireguard_interface} already exists. Attempting to reset it."
+            wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
+        fi
+        bashio::log.info "Starting WireGuard interface ${wireguard_interface} using ${wireguard_config##*/}."
+        if ! output=$(wg-quick up "${wireguard_config}" 2>&1); then
+            bashio::log.error 'WireGuard failed to establish a connection.'
+            bashio::log.error "wg-quick output: ${output}"
+            bashio::log.error 'Troubleshooting steps:'
+            bashio::log.error '  1. Confirm the WireGuard configuration file contains valid keys and endpoint information.'
+            bashio::log.error '  2. Ensure UDP port 51820 is forwarded from your router and not blocked by your ISP or firewall.'
+            bashio::log.error "  3. Verify that the configured endpoint is reachable from Home Assistant and credentials are correct."
+            bashio::exit.nok 'WireGuard start failed. See the log above for details.'
+        fi
+        bashio::log.info "WireGuard interface ${wireguard_interface} is up."
     fi
-    ########################################################
 
     if bashio::config.true 'silent'; then
         exec \

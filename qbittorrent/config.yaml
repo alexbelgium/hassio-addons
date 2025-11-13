@@ -91,6 +91,8 @@ options:
   keyfile: privkey.pem
   qbit_manage: false
   ssl: false
+  wireguard_enabled: false
+  wireguard_config: ""
   whitelist: localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16
 panel_admin: false
 panel_icon: mdi:progress-download
@@ -100,12 +102,14 @@ ports:
   6882/tcp: 6882
   6882/udp: 6882
   8080/tcp: 8081
+  51820/udp: 51820
 ports_description:
   59595/tcp: Peer port, do not change
   59595/udp: Peer port, do not change
   6882/tcp: Alternative peer port, do not change
   6882/udp: Alternative peer port, do not change
   8080/tcp: Web UI port (not required for Ingress)
+  51820/udp: WireGuard tunnel port
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
@@ -137,8 +141,10 @@ schema:
   run_duration: str?
   silent: bool?
   ssl: bool
+  wireguard_config: str?
+  wireguard_enabled: bool?
   whitelist: str?
 slug: qbittorrent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 5.1.2-7
+version: 5.1.2-8
