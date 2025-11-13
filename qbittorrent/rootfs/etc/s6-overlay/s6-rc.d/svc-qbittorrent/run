@@ -10,13 +10,26 @@ fi
 if bashio::config.true 'openvpn_enabled'; then
     exec /usr/sbin/openvpn --config /config/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh --pull-filter ignore "route-ipv6" --pull-filter ignore "ifconfig-ipv6" --pull-filter ignore "tun-ipv6" --pull-filter ignore "redirect-gateway ipv6" --pull-filter ignore "dhcp-option DNS6"
 else
-    ########################################################
-    # DRAFT : Start wireguard if needed
     if bashio::config.true 'wireguard_enabled'; then
-        wg-quick up /config/wireguard/config.conf &
-        true
+        wireguard_interface="${WIREGUARD_INTERFACE:-}"
+        if [ -z "${wireguard_interface}" ] && [ -f /var/run/s6/container_environment/WIREGUARD_INTERFACE ]; then
+            wireguard_interface="$(cat /var/run/s6/container_environment/WIREGUARD_INTERFACE)"
+        fi
+        wireguard_interface="${wireguard_interface:-wg0}"
+
+        bashio::log.info "Waiting for WireGuard interface ${wireguard_interface} to become available."
+        for _ in $(seq 1 60); do
+            if ip link show "${wireguard_interface}" >/dev/null 2>&1; then
+                break
+            fi
+            sleep 1
+        done
+
+        if ! ip link show "${wireguard_interface}" >/dev/null 2>&1; then
+            bashio::log.fatal "WireGuard interface ${wireguard_interface} is not available."
+            exit 1
+        fi
     fi
-    ########################################################
 
     if bashio::config.true 'silent'; then
         exec \

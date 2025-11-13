@@ -1,7 +1,7 @@
 arch:
   - aarch64
   - amd64
-description: Bittorrent client with optional vpn
+description: Bittorrent client with optional VPN (OpenVPN or WireGuard)
 devices:
   - /dev/net/tun
   - /dev/dri
@@ -89,8 +89,12 @@ options:
   certfile: fullchain.pem
   customUI: vuetorrent
   keyfile: privkey.pem
+  openvpn_alt_mode: false
+  openvpn_enabled: false
   qbit_manage: false
   ssl: false
+  wireguard_config: ""
+  wireguard_enabled: false
   whitelist: localhost,127.0.0.1,172.30.0.0/16,192.168.0.0/16
 panel_admin: false
 panel_icon: mdi:progress-download
@@ -133,6 +137,8 @@ schema:
   openvpn_enabled: bool?
   openvpn_password: str?
   openvpn_username: str?
+  wireguard_config: str?
+  wireguard_enabled: bool?
   qbit_manage: bool?
   run_duration: str?
   silent: bool?
@@ -141,4 +147,4 @@ schema:
 slug: qbittorrent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 5.1.2-7
+version: 5.1.2-8

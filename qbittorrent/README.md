@@ -33,7 +33,7 @@ This addons has several configurable options :
 - [alternative webUI](https://github.com/qbittorrent/qBittorrent/wiki/List-of-known-alternate-WebUIs)
 - usage of ssl
 - ingress
-- optional openvpn support
+- optional OpenVPN or WireGuard support
 - allow setting specific DNS servers
 
 ## Configuration
@@ -69,7 +69,9 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `openvpn_config` | str | | OpenVPN config file name (in `/config/openvpn/`) |
 | `openvpn_username` | str | | OpenVPN username |
 | `openvpn_password` | str | | OpenVPN password |
-| `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
+| `wireguard_enabled` | bool | `false` | Enable WireGuard connection |
+| `wireguard_config` | str | | WireGuard config file name (in `/config/wireguard/`) |
+| `openvpn_alt_mode` | bool | `false` | Bind VPN at container level instead of qBittorrent (also used for WireGuard) |
 | `qbit_manage` | bool | `false` | Enable qBit Manage integration |
 | `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
 | `silent` | bool | `false` | Suppress debug messages |
@@ -94,6 +96,17 @@ cifsusername: "username"
 cifspassword: "password"
 openvpn_enabled: false
 ```
+
+### WireGuard Configuration
+
+To use WireGuard instead of OpenVPN:
+
+1. Place your WireGuard `.conf` file(s) in `/addon_configs/<addon_host>/wireguard/` (exposed in Home Assistant as `/config/addon_configs/<slug>/wireguard`).
+1. Set `wireguard_enabled: true` in the add-on options.
+1. If you have multiple configuration files, set `wireguard_config` to the filename you want to use (for example `europe.conf`).
+1. (Optional) Enable `openvpn_alt_mode` to bind the entire container to WireGuard instead of only the qBittorrent process.
+
+The add-on automatically binds qBittorrent to the WireGuard interface (matching the configuration filename) and verifies that the tunnel replaces your public IP.
 
 ### Mounting Drives
 

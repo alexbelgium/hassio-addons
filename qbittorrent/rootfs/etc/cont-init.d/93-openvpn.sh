@@ -260,10 +260,15 @@ else
     # REMOVE OPENVPN #
     ##################
 
-    # Ensure no redirection by removing the direction tag
-    if [ -f "$QBT_CONFIG_FILE" ]; then
+    # Ensure no redirection by removing the direction tag when no VPN is active
+    if [ -f "$QBT_CONFIG_FILE" ] && ! bashio::config.true 'wireguard_enabled'; then
         sed -i '/Interface/d' "$QBT_CONFIG_FILE"
     fi
-    bashio::log.info "Direct connection without VPN enabled"
+
+    if bashio::config.true 'wireguard_enabled'; then
+        bashio::log.info "WireGuard will manage VPN connectivity."
+    else
+        bashio::log.info "Direct connection without VPN enabled"
+    fi
 
 fi

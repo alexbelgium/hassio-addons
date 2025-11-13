@@ -13,10 +13,42 @@ if [ -f /currentip ]; then
     nginx || nginx -s reload &
     while true; do
         # Get vpn ip
-        if ! bashio::config.true 'wireguard_enabled' && bashio::config.true 'openvpn_alt_mode'; then
-            curl -s ipecho.net/plain > /vpnip
+        vpn_interface="tun0"
+        use_interface=true
+
+        if bashio::config.true 'wireguard_enabled'; then
+            vpn_interface="${WIREGUARD_INTERFACE:-}"
+            if [ -z "${vpn_interface}" ] && [ -f /var/run/s6/container_environment/WIREGUARD_INTERFACE ]; then
+                vpn_interface="$(cat /var/run/s6/container_environment/WIREGUARD_INTERFACE)"
+            fi
+            vpn_interface="${vpn_interface:-wg0}"
+
+            if bashio::config.true 'openvpn_alt_mode'; then
+                use_interface=false
+            fi
         else
-            curl -s ipecho.net/plain --interface tun0 > /vpnip
+            if bashio::config.true 'openvpn_alt_mode'; then
+                use_interface=false
+            fi
+        fi
+
+        if ${use_interface}; then
+            if ! ip link show "${vpn_interface}" >/dev/null 2>&1; then
+                bashio::log.warning "VPN interface ${vpn_interface} is not ready yet. Retrying in 5 seconds."
+                sleep 5
+                continue
+            fi
+            if ! curl -s ipecho.net/plain --interface "${vpn_interface}" > /vpnip; then
+                bashio::log.warning "Unable to query public IP via interface ${vpn_interface}. Retrying in 5 seconds."
+                sleep 5
+                continue
+            fi
+        else
+            if ! curl -s ipecho.net/plain > /vpnip; then
+                bashio::log.warning "Unable to query public IP. Retrying in 5 seconds."
+                sleep 5
+                continue
+            fi
         fi
 
         # Verify ip has changed
