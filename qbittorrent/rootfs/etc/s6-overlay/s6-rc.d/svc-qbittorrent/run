@@ -47,6 +47,34 @@ else
         fi
     fi
 
+    # shellcheck disable=SC2317  # called via trap on EXIT
+    cleanup() {
+        if [ -n "${wireguard_interface}" ]; then
+            wg-quick down "${wireguard_interface}" >/dev/null 2>&1 || true
+        fi
+    }
+
+    # shellcheck disable=SC2317  # called via traps on INT/TERM
+    terminate() {
+        if [ -n "${qb_pid:-}" ] && kill -0 "${qb_pid}" >/dev/null 2>&1; then
+            kill "${qb_pid}" >/dev/null 2>&1 || true
+        fi
+
+        if [ -n "${qb_pid:-}" ] && [ -z "${qb_reaped:-}" ]; then
+            if wait "${qb_pid}" >/dev/null 2>&1; then
+                qb_exit_code=0
+            else
+                qb_exit_code=$?
+            fi
+            qb_reaped=1
+        fi
+    }
+
+    qb_exit_code=0
+
+    trap cleanup EXIT
+    trap 'terminate; exit ${qb_exit_code:-0}' INT TERM
+
     if bashio::config.true 'silent'; then
         s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
             s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" > /dev/null &
@@ -56,12 +84,12 @@ else
     fi
 
     qb_pid=$!
-    wait "${qb_pid}"
-    exit_code=$?
-
-    if [ -n "${wireguard_interface}" ]; then
-        wg-quick down "${wireguard_interface}" >/dev/null 2>&1 || true
+    if ! wait "${qb_pid}"; then
+        qb_exit_code=$?
+    else
+        qb_exit_code=0
     fi
+    qb_reaped=1
 
-    exit "${exit_code}"
+    exit "${qb_exit_code}"
 fi
