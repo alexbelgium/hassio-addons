@@ -8,15 +8,28 @@ bashio::net.wait_for 8080 localhost 900
 
 bashio::log.info "Starting NGinx..."
 
+# Determine which network interface to use for VPN checks
+vpn_interface="tun0"
+if bashio::config.true 'wireguard_enabled'; then
+    if [ -f /run/wireguard/interface ]; then
+        vpn_interface="$(cat /run/wireguard/interface)"
+    else
+        bashio::log.warning "WireGuard interface information is missing; falling back to 'wg0'."
+        vpn_interface="wg0"
+    fi
+fi
+
 # Check vpn is working
 if [ -f /currentip ]; then
     nginx || nginx -s reload &
     while true; do
         # Get vpn ip
-        if ! bashio::config.true 'wireguard_enabled' && bashio::config.true 'openvpn_alt_mode'; then
+        if bashio::config.true 'wireguard_enabled'; then
+            curl -s ipecho.net/plain --interface "${vpn_interface}" > /vpnip
+        elif bashio::config.true 'openvpn_alt_mode'; then
             curl -s ipecho.net/plain > /vpnip
         else
-            curl -s ipecho.net/plain --interface tun0 > /vpnip
+            curl -s ipecho.net/plain --interface "${vpn_interface}" > /vpnip
         fi
 
         # Verify ip has changed
