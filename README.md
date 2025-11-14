@@ -49,13 +49,13 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 116
-- Installed : 85365
+- Installed : 86290
 
 ### Top 3
 
 1. Filebrowser (11067x)
-2. Portainer (6676x)
-3. Myelectricaldata (4001x)
+2. Portainer (7128x)
+3. Myelectricaldata (4042x)
 
 ### Architectures used
 
@@ -679,7 +679,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![armv7][armv7-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (6676x)](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (7128x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
@@ -688,7 +688,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![armv7][armv7-badge]
 ![ingress][ingress-badge]
 
-&#10003;  [Portainer (6676x) Agent](portainer_agent/) : An agent used to manage all the resources in a Swarm cluster
+&#10003;  [Portainer (7128x) Agent](portainer_agent/) : An agent used to manage all the resources in a Swarm cluster
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_agent%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_agent%2Fupdater.json)
