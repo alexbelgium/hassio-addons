@@ -1,3 +1,5 @@
+## 0.58.0-1 (15-11-2025)
+- Allow mounting local disks by adding the required Linux capabilities to the add-on.
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 0.58.0 (01-08-2025)
