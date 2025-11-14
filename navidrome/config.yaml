@@ -25,6 +25,9 @@ ports:
   4533/tcp: 4533
 ports_description:
   4533/tcp: Web interface
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
@@ -54,5 +57,5 @@ schema:
 slug: navidrome
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/navidrome
-version: 0.58.0
+version: 0.58.0-1
 webui: "[PROTO:ssl]://[HOST]:[PORT:4533]"
