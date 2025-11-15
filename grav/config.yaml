@@ -89,5 +89,5 @@ schema:
 slug: grav
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.7.50.8"
+version: "1.7.50.9"
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
