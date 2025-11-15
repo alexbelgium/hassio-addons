@@ -112,15 +112,17 @@ def automatic_mqtt_publish(file, detection, path):
         mqttc.publish(mqtt_topic, json_bird, 1)
         log.info("Posted to MQTT: ok")
 
-
 # Create MQTT client using legacy callback API when available for
 # compatibility with paho-mqtt >= 2.0
 callback_api = getattr(mqtt, "CallbackAPIVersion", None)
 
 if callback_api is not None:
-    mqttc = mqtt.Client("birdnet_mqtt", callback_api_version=callback_api.VERSION1)
+    # paho-mqtt >= 2.0: first argument is callback_api_version
+    mqttc = mqtt.Client(callback_api.VERSION1, client_id="birdnet_mqtt")
 else:
-    mqttc = mqtt.Client("birdnet_mqtt")
+    # paho-mqtt < 2.0: old signature, first argument is client_id
+    mqttc = mqtt.Client(client_id="birdnet_mqtt")
+
 mqttc.username_pw_set(mqtt_user, mqtt_pass)
 mqttc.on_connect = on_connect
 
