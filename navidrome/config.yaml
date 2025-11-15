@@ -57,5 +57,5 @@ schema:
 slug: navidrome
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/navidrome
-version: 0.58.0-1
+version: "0.58.5"
 webui: "[PROTO:ssl]://[HOST]:[PORT:4533]"
