@@ -1,3 +1,6 @@
+
+## 5.3-amd64-2025-11-09 (2025-11-09)
+- Update to latest version from mbentley/omada-controller
 ## 5.3-2025-05-30 (31-05-2025)
 - Minor bugs fixed
 
