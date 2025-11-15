@@ -67,6 +67,10 @@ environment:
   MAIL_MAILER: log
   DEFAULT_STORAGE_LIMIT: "1024"
   DEFAULT_MAX_STORAGE_SIZE: "1024"
+  SCOUT_DRIVER: meilisearch
+  SCOUT_QUEUE: "false"
+  MEILISEARCH_URL: http://127.0.0.1:7700
+  MEILISEARCH_KEY: ""
 image: ghcr.io/alexbelgium/monica-{arch}
 init: false
 options:
@@ -103,5 +107,5 @@ services:
   - mysql:want
 slug: monica
 url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
-version: v5.0_beta5
+version: v5.0_beta5-2
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
