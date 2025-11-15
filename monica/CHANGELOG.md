@@ -1,6 +1,3 @@
-
-##  (15-11-2025)
-- Update to latest version from monicahq/monica
 ## v5.0_beta5 (14-11-2025)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
