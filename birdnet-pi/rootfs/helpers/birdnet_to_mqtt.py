@@ -118,7 +118,7 @@ def automatic_mqtt_publish(file, detection, path):
 callback_api = getattr(mqtt, "CallbackAPIVersion", None)
 
 if callback_api is not None:
-    mqttc = mqtt.Client("birdnet_mqtt", callback_api_version=callback_api.VERSION1)
+    mqttc = mqtt.Client(client_id="birdnet_mqtt", callback_api_version=callback_api.VERSION1)
 else:
     mqttc = mqtt.Client("birdnet_mqtt")
 mqttc.username_pw_set(mqtt_user, mqtt_pass)
