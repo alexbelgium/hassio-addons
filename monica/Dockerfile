@@ -50,6 +50,17 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 # Manual apps
 ENV PACKAGES="mariadb-client"
 
+# Meilisearch
+ARG MEILISEARCH_VERSION="v1.25.0"
+RUN case "${BUILD_ARCH}" in \
+        amd64) MEILI_ARCH="linux-amd64" ;; \
+        aarch64) MEILI_ARCH="linux-aarch64" ;; \
+        *) echo "Unsupported architecture: ${BUILD_ARCH}" >&2 && exit 1 ;; \
+    esac && \
+    curl -fsSL -o /usr/local/bin/meilisearch "https://github.com/meilisearch/meilisearch/releases/download/${MEILISEARCH_VERSION}/meilisearch-${MEILI_ARCH}" && \
+    chmod 755 /usr/local/bin/meilisearch && \
+    mkdir -p /data/meilisearch
+
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh

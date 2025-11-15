@@ -113,6 +113,40 @@ fi
 APP_KEY="$(bashio::config "APP_KEY")"
 export APP_KEY
 
+bashio::log.info "Starting Meilisearch"
+MEILISEARCH_DB_PATH="/data/meilisearch"
+mkdir -p "${MEILISEARCH_DB_PATH}"
+
+MEILISEARCH_ADDR="127.0.0.1:7700"
+MEILISEARCH_ENV_KEY="${MEILISEARCH_KEY:-}"
+S6_SUPERVISED_DIR="/run/s6/services"
+if [ ! -d "${S6_SUPERVISED_DIR}" ]; then
+    S6_SUPERVISED_DIR="/var/run/s6/services"
+fi
+
+if [ -n "${MEILISEARCH_ENV_KEY}" ]; then
+    MEILISEARCH_CMD=(
+        meilisearch
+        --http-addr "${MEILISEARCH_ADDR}"
+        --db-path "${MEILISEARCH_DB_PATH}"
+        --master-key "${MEILISEARCH_ENV_KEY}"
+    )
+else
+    MEILISEARCH_CMD=(
+        meilisearch
+        --http-addr "${MEILISEARCH_ADDR}"
+        --db-path "${MEILISEARCH_DB_PATH}"
+    )
+fi
+
+"${MEILISEARCH_CMD[@]}" &
+MEILISEARCH_PID=$!
+
+( wait "${MEILISEARCH_PID}"; exit_code=$?; bashio::log.error "Meilisearch exited unexpectedly (code ${exit_code}). Stopping add-on."; s6-svscanctl -t "${S6_SUPERVISED_DIR}" ) &
+
+bashio::log.info "Waiting for Meilisearch to be ready"
+bashio::net.wait_for "${MEILISEARCH_ADDR%:*}" "${MEILISEARCH_ADDR#*:}"
+
 bashio::log.info "Starting Monica"
 
 entrypoint.sh apache2-foreground

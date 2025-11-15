@@ -34,6 +34,7 @@ Key features:
 - Journal functionality
 - Gift ideas tracking
 - Multiple database options (SQLite, MariaDB, MySQL)
+- Built-in Meilisearch full-text search engine
 
 This addon is based on the official [Monica](https://github.com/monicahq/monica) application.
 
@@ -104,6 +105,7 @@ Configure SMTP settings to enable:
 
 This addon supports custom scripts and environment variables through the `addon_config` mapping:
 
+- **Meilisearch full-text search**: The addon ships with an embedded [Meilisearch](https://www.meilisearch.com/) service that Monica uses by default. The search API listens on `http://127.0.0.1:7700` inside the container and can be customized with additional environment variables through the `env_vars` option if needed.
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
@@ -136,5 +138,3 @@ Create an issue on github, or ask on the [home assistant community forum](https:
 For more information about Monica, visit: https://www.monicahq.com/
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
-
