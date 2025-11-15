@@ -113,6 +113,93 @@ fi
 APP_KEY="$(bashio::config "APP_KEY")"
 export APP_KEY
 
+bashio::log.info "Preparing Meilisearch"
+MEILISEARCH_URL="${MEILISEARCH_URL:-http://127.0.0.1:7700}"
+export MEILISEARCH_URL
+
+MEILISEARCH_URI="${MEILISEARCH_URL#*://}"
+MEILISEARCH_HOST_PORT="${MEILISEARCH_URI%%/*}"
+MEILISEARCH_HOST="${MEILISEARCH_HOST_PORT%%:*}"
+MEILISEARCH_PORT="${MEILISEARCH_HOST_PORT##*:}"
+if [ "${MEILISEARCH_PORT}" = "${MEILISEARCH_HOST_PORT}" ]; then
+    MEILISEARCH_PORT=""
+fi
+
+MEILISEARCH_LOCAL=false
+if [[ -n "${MEILISEARCH_PORT}" && ! ${MEILISEARCH_PORT} =~ ^[0-9]+$ ]]; then
+    bashio::log.warning "Ignoring bundled Meilisearch because MEILISEARCH_URL uses a non-numeric port (${MEILISEARCH_PORT})."
+elif [[ "${MEILISEARCH_HOST}" =~ ^(127\.0\.0\.1|localhost)$ ]]; then
+    MEILISEARCH_LOCAL=true
+    if [ -z "${MEILISEARCH_PORT}" ]; then
+        MEILISEARCH_PORT="7700"
+    fi
+    MEILISEARCH_ADDR="${MEILISEARCH_HOST}:${MEILISEARCH_PORT}"
+else
+    MEILISEARCH_ADDR="127.0.0.1:7700"
+fi
+
+if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
+    bashio::log.info "Starting bundled Meilisearch instance at ${MEILISEARCH_ADDR}"
+    MEILISEARCH_DB_PATH="/data/meilisearch"
+    mkdir -p "${MEILISEARCH_DB_PATH}"
+
+    MEILISEARCH_ENV_KEY="${MEILISEARCH_KEY:-}"
+    MEILISEARCH_ENVIRONMENT="${MEILI_ENV:-production}"
+    MEILISEARCH_NO_ANALYTICS="${MEILI_NO_ANALYTICS:-true}"
+
+    S6_SUPERVISED_DIR="/run/s6/services"
+    if [ ! -d "${S6_SUPERVISED_DIR}" ]; then
+        S6_SUPERVISED_DIR="/var/run/s6/services"
+    fi
+
+    MEILISEARCH_CMD=(
+        env \
+            MEILI_ENV="${MEILISEARCH_ENVIRONMENT}" \
+            MEILI_NO_ANALYTICS="${MEILISEARCH_NO_ANALYTICS}" \
+            meilisearch \
+            --http-addr "${MEILISEARCH_ADDR}" \
+            --db-path "${MEILISEARCH_DB_PATH}"
+    )
+
+    if [ -n "${MEILISEARCH_ENV_KEY}" ]; then
+        MEILISEARCH_CMD+=(--master-key "${MEILISEARCH_ENV_KEY}")
+    fi
+
+    "${MEILISEARCH_CMD[@]}" &
+    MEILISEARCH_PID=$!
+
+    (
+        set +e
+        wait "${MEILISEARCH_PID}"
+        exit_code=$?
+        set -e
+        if [ "${exit_code}" -ne 0 ]; then
+            bashio::log.error "Meilisearch exited unexpectedly (code ${exit_code}). Stopping add-on."
+            s6-svscanctl -t "${S6_SUPERVISED_DIR}"
+        fi
+    ) &
+
+    bashio::log.info "Waiting for Meilisearch TCP socket"
+    bashio::net.wait_for "${MEILISEARCH_ADDR%:*}" "${MEILISEARCH_ADDR#*:}"
+
+    bashio::log.info "Waiting for Meilisearch health endpoint"
+    MEILISEARCH_HEALTH_URL="${MEILISEARCH_URL%/}/health"
+    for attempt in $(seq 1 30); do
+        if curl -fs "${MEILISEARCH_HEALTH_URL}" | grep -q '"status":"available"'; then
+            bashio::log.info "Meilisearch is ready"
+            break
+        fi
+        sleep 1
+        if [ "${attempt}" -eq 30 ]; then
+            bashio::log.error "Meilisearch did not become ready in time. Stopping add-on."
+            s6-svscanctl -t "${S6_SUPERVISED_DIR}"
+            exit 1
+        fi
+    done
+else
+    bashio::log.info "Detected external Meilisearch endpoint (${MEILISEARCH_URL}); skipping bundled service startup"
+fi
+
 bashio::log.info "Starting Monica"
 
 entrypoint.sh apache2-foreground

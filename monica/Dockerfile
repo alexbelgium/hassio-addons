@@ -50,6 +50,33 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 # Manual apps
 ENV PACKAGES="mariadb-client"
 
+# Meilisearch
+ARG MEILISEARCH_VERSION="v1.25.0"
+RUN set -eux && \
+    DETECTED_ARCH="${BUILD_ARCH:-$(uname -m)}" && \
+    case "${DETECTED_ARCH}" in \
+        amd64|x86_64) MEILI_ARCH="linux-amd64" ;; \
+        aarch64|arm64) MEILI_ARCH="linux-aarch64" ;; \
+        *) echo "Unsupported architecture: ${DETECTED_ARCH}" >&2 && exit 1 ;; \
+    esac && \
+    TMP_DIR="$(mktemp -d)" && \
+    BASE_URL="https://github.com/meilisearch/meilisearch/releases/download/${MEILISEARCH_VERSION}" && \
+    if curl -fsSL -o "${TMP_DIR}/meilisearch.tar.gz" "${BASE_URL}/meilisearch-${MEILI_ARCH}.tar.gz"; then \
+        tar -xzf "${TMP_DIR}/meilisearch.tar.gz" -C "${TMP_DIR}" && \
+        MEILI_BIN="$(find "${TMP_DIR}" -maxdepth 1 -type f -name 'meilisearch' -print -quit)" && \
+        if [ -z "${MEILI_BIN}" ]; then \
+            echo "Unable to locate Meilisearch binary in archive" >&2; \
+            exit 1; \
+        fi && \
+        mv "${MEILI_BIN}" /usr/local/bin/meilisearch; \
+    else \
+        curl -fsSL -o "${TMP_DIR}/meilisearch" "${BASE_URL}/meilisearch-${MEILI_ARCH}" && \
+        mv "${TMP_DIR}/meilisearch" /usr/local/bin/meilisearch; \
+    fi && \
+    chmod 755 /usr/local/bin/meilisearch && \
+    rm -rf "${TMP_DIR}" && \
+    mkdir -p /data/meilisearch
+
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
