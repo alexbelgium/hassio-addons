@@ -1,3 +1,5 @@
+## v5.0_beta5-4 (15-11-2025)
+- Increment version for rebuilt add-on
 ## v5.0_beta5-3 (15-11-2025)
 - Minor bugs fixed
 ## v5.0_beta6 (06-01-2025)

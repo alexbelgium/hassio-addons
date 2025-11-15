@@ -152,6 +152,52 @@ if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
         S6_SUPERVISED_DIR="/var/run/s6/services"
     fi
 
+    S6_SVSCANCTL_BIN="$(command -v s6-svscanctl || true)"
+    if [ -z "${S6_SVSCANCTL_BIN}" ] && [ -x /command/s6-svscanctl ]; then
+        S6_SVSCANCTL_BIN="/command/s6-svscanctl"
+    fi
+
+    meilisearch_fail() {
+        local message="$1"
+        local exit_code="${2:-1}"
+
+        bashio::log.error "${message}"
+
+        if [ -n "${S6_SVSCANCTL_BIN}" ]; then
+            if ! "${S6_SVSCANCTL_BIN}" -t "${S6_SUPERVISED_DIR}" 2>/dev/null; then
+                bashio::log.error "Unable to signal s6-svscanctl to stop services"
+            fi
+        else
+            bashio::log.error "s6-svscanctl binary not found; unable to stop services gracefully"
+        fi
+
+        if [ "${exit_code}" -eq 0 ]; then
+            exit_code=1
+        fi
+
+        exit "${exit_code}"
+    }
+
+    meilisearch_ensure_running() {
+        if kill -0 "${MEILISEARCH_PID}" 2>/dev/null; then
+            return 0
+        fi
+
+        local exit_code=0
+
+        set +e
+        wait "${MEILISEARCH_PID}"
+        exit_code=$?
+        set -e
+
+        local wait_code="${exit_code}"
+        if [ "${exit_code}" -eq 0 ]; then
+            exit_code=1
+        fi
+
+        meilisearch_fail "Meilisearch exited unexpectedly (code ${wait_code}). Stopping add-on." "${exit_code}"
+    }
+
     MEILISEARCH_CMD=(
         env \
             MEILI_ENV="${MEILISEARCH_ENVIRONMENT}" \
@@ -168,19 +214,20 @@ if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
     "${MEILISEARCH_CMD[@]}" &
     MEILISEARCH_PID=$!
 
-    (
-        set +e
-        wait "${MEILISEARCH_PID}"
-        exit_code=$?
-        set -e
-        if [ "${exit_code}" -ne 0 ]; then
-            bashio::log.error "Meilisearch exited unexpectedly (code ${exit_code}). Stopping add-on."
-            s6-svscanctl -t "${S6_SUPERVISED_DIR}"
-        fi
-    ) &
-
     bashio::log.info "Waiting for Meilisearch TCP socket"
-    bashio::net.wait_for "${MEILISEARCH_ADDR%:*}" "${MEILISEARCH_ADDR#*:}"
+    for attempt in $(seq 1 30); do
+        if bash -c "cat < /dev/null > /dev/tcp/${MEILISEARCH_HOST}/${MEILISEARCH_PORT}" 2>/dev/null; then
+            break
+        fi
+
+        meilisearch_ensure_running
+
+        if [ "${attempt}" -eq 30 ]; then
+            meilisearch_fail "Meilisearch TCP socket did not become ready in time. Stopping add-on."
+        fi
+
+        sleep 1
+    done
 
     bashio::log.info "Waiting for Meilisearch health endpoint"
     MEILISEARCH_HEALTH_URL="${MEILISEARCH_URL%/}/health"
@@ -189,12 +236,13 @@ if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
             bashio::log.info "Meilisearch is ready"
             break
         fi
-        sleep 1
+        meilisearch_ensure_running
+
         if [ "${attempt}" -eq 30 ]; then
-            bashio::log.error "Meilisearch did not become ready in time. Stopping add-on."
-            s6-svscanctl -t "${S6_SUPERVISED_DIR}"
-            exit 1
+            meilisearch_fail "Meilisearch did not become ready in time. Stopping add-on."
         fi
+
+        sleep 1
     done
 else
     bashio::log.info "Detected external Meilisearch endpoint (${MEILISEARCH_URL}); skipping bundled service startup"
