@@ -112,6 +112,7 @@ def automatic_mqtt_publish(file, detection, path):
         mqttc.publish(mqtt_topic, json_bird, 1)
         log.info("Posted to MQTT: ok")
 
+
 # Create MQTT client using legacy callback API when available for
 # compatibility with paho-mqtt >= 2.0
 callback_api = getattr(mqtt, "CallbackAPIVersion", None)
