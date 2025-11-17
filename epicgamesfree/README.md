@@ -28,7 +28,7 @@ This addon is based on the docker image https://hub.docker.com/r/charlocharlie/e
 
 ## Configuration
 
-There are no addon options available through the Home Assistant interface. All configuration is done via JSON files.
+Addon options expose the `env_vars` field for passing extra environment variables; all other configuration is done via JSON files.
 
 ### Configuration Files
 
@@ -38,6 +38,8 @@ Configuration files are stored in `/config/addons_config/epicgamesfree/`:
 - **cookies.json**: Authentication cookies (optional)
 
 If these files don't exist, they will be created at first boot with default settings.
+
+- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ### Basic Configuration
 
