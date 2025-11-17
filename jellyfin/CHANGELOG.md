@@ -1,4 +1,7 @@
 
+## 10.11.3 (17-11-2025)
+- Add optional `i915_enable_guc` setting to apply Intel GuC mode at startup for improved hardware encoding stability, with runtime-only changes that rely on the host exposing `/sys/module/i915/parameters/enable_guc`.
+
 ## 10.11.2 (08-11-2025)
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.

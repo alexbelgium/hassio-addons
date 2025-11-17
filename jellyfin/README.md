@@ -43,6 +43,7 @@ Webui can be found at `<your-ip>:8096` or through the sidebar using Ingress.
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |
 | `cifsdomain` | str | | SMB domain for network shares |
+| `i915_enable_guc` | int | | Optional Intel iGPU `enable_guc` parameter (0-3) applied at startup for improved hardware encoding compatibility. Does not reconfigure the kernel; the host must already expose `/sys/module/i915/parameters/enable_guc`. |
 | `DOCKER_MODS` | list | | Additional Docker mods for hardware acceleration |
 
 ### Example Configuration
@@ -68,6 +69,8 @@ Available Docker mods for hardware acceleration:
 - `linuxserver/mods:jellyfin-opencl-intel` - Intel OpenCL support
 - `linuxserver/mods:jellyfin-amd` - AMD hardware acceleration
 - `linuxserver/mods:jellyfin-rffmpeg` - Custom FFmpeg build
+
+For Intel systems that require GuC submission for stable hardware encoding (e.g., N6005), set `i915_enable_guc` to `2` to apply the kernel parameter at container startup. The add-on only writes to the existing runtime module parameter; no kernel rebuild or boot parameter change is attempted. If the path `/sys/module/i915/parameters/enable_guc` is missing or read-only on the host kernel, the add-on logs a warning and continues without modification.
 
 ### Mounting Drives
 

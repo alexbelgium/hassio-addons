@@ -92,6 +92,7 @@ options:
   PGID: 0
   PUID: 0
   data_location: /share/jellyfin
+  i915_enable_guc: null
 panel_admin: false
 panel_icon: mdi:billiards-rack
 ports:
@@ -120,10 +121,11 @@ schema:
   cifspassword: str?
   cifsusername: str?
   data_location: str
+  i915_enable_guc: int?
   localdisks: str?
   networkdisks: str?
 slug: jellyfin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "10.11.2"
+version: "10.11.3"
 video: true
