@@ -1,3 +1,6 @@
+## "debian-2025-11-09" (09-11-2025)
+- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.json
+
 ## "debian-2025-10-28" (01-11-2025)
 - Minor bugs fixed
 
