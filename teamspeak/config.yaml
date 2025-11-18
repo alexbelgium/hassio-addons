@@ -34,4 +34,4 @@ schema:
 slug: teamspeak
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 3.13.6-9
+version: 3.13.6-8
