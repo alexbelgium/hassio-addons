@@ -1,5 +1,6 @@
 ## 5.1.2-8 (20-11-2025)
 - MAJOR FEAT: add WireGuard support with runtime validation and troubleshooting logs.
+- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 5.1.2-7 (17-08-2025)
 - Minor bugs fixed
