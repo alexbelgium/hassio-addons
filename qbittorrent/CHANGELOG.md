@@ -1,28 +1,5 @@
-## 5.1.2-17 (20-11-2025)
-- FEAT: restore dual-stack WireGuard runtime configs so IPv6 peers work alongside IPv4.
-- FIX: add ip6tables-restore shim with comment-stripping and legacy fallbacks to match the IPv4 handling.
-
-## 5.1.2-16 (19-11-2025)
-- FIX: add an iptables-restore shim that retries without comment matches and falls back to legacy backends when the host kernel lacks the comment module.
-
-## 5.1.2-15 (19-11-2025)
-- FIX: strip IPv6 configuration from the WireGuard runtime file to avoid host environments without IPv6 firewall or sysctl support.
-- FIX: add a sysctl shim to suppress `net.ipv4.conf.all.src_valid_mark` permission failures from wg-quick.
-
-## 5.1.2-14 (19-11-2025)
-- FIX: detect missing IPv6 nat/comment modules and fall back to IPv4-only WireGuard configs to avoid ip6tables-restore failures.
-
-## 5.1.2-13 (18-11-2025)
-- FIX: fall back to an IPv4-only WireGuard runtime config when the host is missing IPv6 firewall support to prevent ip6tables errors.
-- FIX: tighten WireGuard config file permissions to silence the "world accessible" warning from wg-quick.
-
-## 5.1.2-12 (17-11-2025)
-- FIX: make the WireGuard resolvconf shim executable so WireGuard uses it instead of the upstream tool that fails with signature errors.
-- Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
-
-## 5.1.2-8 (19-08-2025)
-- FEAT: add first-class WireGuard support with runtime validation and troubleshooting logs
-- FIX: allow WireGuard connections on arbitrary remote ports by removing the mandatory 51820/udp mapping check
+## 5.1.2-8 (20-11-2025)
+- FEAT: add WireGuard support with runtime validation and troubleshooting logs.
 
 ## 5.1.2-7 (17-08-2025)
 - Minor bugs fixed
