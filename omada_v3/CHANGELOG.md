@@ -1,3 +1,5 @@
+## 5.3-amd64-2025-11-09-2 (18-11-2025)
+- Minor bugs fixed
 
 ## 5.3-amd64-2025-11-09-1 (18-11-2025)
 - Added `env_vars` option to allow passing custom environment variables from the add-on configuration.
