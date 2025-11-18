@@ -1,3 +1,5 @@
+## 0.10.1-hafix4 (18-11-2025)
+- Minor bugs fixed
 ## 0.10.1-hafix3 (18-11-2025)
 - Added support for configuring extra environment variables via the `env_vars` option alongside config.yaml.
 
