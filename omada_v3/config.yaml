@@ -80,6 +80,8 @@ map:
   - config:rw
   - ssl:ro
 name: Omada v3.2
+options:
+  env_vars: []
 ports:
   29810/udp: 29810
   29811/tcp: 29811
@@ -100,8 +102,12 @@ ports_description:
   8088/tcp: web interface http
   8843/tcp: portal https
   8888/tcp: portal http
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
 slug: omada_v3
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "5.3-amd64-2025-11-09"
+version: "5.3-amd64-2025-11-09-1"
 webui: http://[HOST]:[PORT:8088]

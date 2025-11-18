@@ -62,6 +62,10 @@ Connect using the TeamSpeak client at `homeassistant.local:9987`.
 
 **Important**: Configure your router to forward these ports for external access.
 
+### Environment variables
+
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## Support
 
 If you have in issue with your installation, please be sure to checkout github.

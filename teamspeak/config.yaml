@@ -15,6 +15,8 @@ init: false
 map:
   - share:rw
 name: Teamspeak server
+options:
+  env_vars: []
 ports:
   10011/tcp: 10011
   30033/tcp: 30033
@@ -25,7 +27,11 @@ ports_description:
   30033/tcp: Filetransfer
   41144/tcp: TSDNS
   9987/udp: Voice
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
 slug: teamspeak
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 3.13.6-8
+version: 3.13.6-9

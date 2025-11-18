@@ -52,6 +52,10 @@ This addon provided the legacy TP-Link Omada Controller v3.x for managing older 
 3. **Import configuration** and reconnect devices
 4. **Verify functionality** before removing this legacy addon
 
+### Environment variables
+
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## Legacy Support
 
 This addon is maintained for compatibility only. No new features will be added.

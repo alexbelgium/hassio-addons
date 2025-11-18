@@ -8,11 +8,17 @@ image: ghcr.io/alexbelgium/omni-tools-{arch}
 map:
   - addon_config:rw
 name: Omni Tools
+options:
+  env_vars: []
 ports:
   80/tcp: 8188
 ports_description:
   80/tcp: Web UI port
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
 slug: omni-tools
 url: https://github.com/alexbelgium/hassio-addons
-version: 0.6.0
+version: 0.6.1
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"

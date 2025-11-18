@@ -21,6 +21,8 @@ image: ghcr.io/alexbelgium/signalk-{arch}
 map:
   - addon_config:rw
 name: Signalk Server
+options:
+  env_vars: []
 ports:
   10110/tcp: 10110
   1458/udp: null
@@ -37,6 +39,10 @@ ports_description:
   3000/tcp: web interface
   3443/tcp: ssl web interface
   8375/tcp: TCPSTREAM port
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
 privileged:
   - SYS_ADMIN
   - SYS_RAWIO
@@ -45,5 +51,5 @@ uart: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "2.18.0"
+version: "2.18.0-1"
 webui: http://[HOST]:[PORT:3000]

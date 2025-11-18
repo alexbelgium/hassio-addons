@@ -1,3 +1,7 @@
+## 3.19.12 (18-11-2025)
+
+- Added support for configuring extra environment variables through the `env_vars` option.
+
 ## 3.19.11
 
 - Avoid blank config.json when using config.yaml

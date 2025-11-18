@@ -67,12 +67,18 @@ devices:
   - /dev/nvme2
 image: ghcr.io/alexbelgium/flaresolverr-{arch}
 name: FlareSolverr
+options:
+  env_vars: []
 ports:
   8191/tcp: 8191
 ports_description:
   8191/tcp: Web interface
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
 slug: flaresolverr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "3.4.5"
+version: "3.4.5-1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8191]"

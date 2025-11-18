@@ -52,4 +52,8 @@ comparison to installing any other Hass.io add-on.
 1. Go to the webui, where you will initialize the app
 1. Restart the addon, to apply any option that should be applied
 
+### Environment variables
+
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 [repository]: https://github.com/alexbelgium/hassio-addons

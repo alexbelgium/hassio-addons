@@ -81,6 +81,10 @@ No configuration options are available - FlareSolverr works automatically with d
 - **CPU**: Moderate usage during challenge solving
 - **Network**: Requires internet access to function
 
+### Environment variables
+
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## Support
 
 Create an issue on github

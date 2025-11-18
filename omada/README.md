@@ -72,7 +72,7 @@ Webui can be found at `<your-ip>:8088` (HTTP) or `<your-ip>:8043` (HTTPS).
 This addon supports custom scripts and environment variables through the `addon_config` mapping:
 
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
-- **Environment variables**: See [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon)
+- **Environment variables**: Use the add-on `env_vars` option and see [Add Environment Variables to your Addon](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon) for details.
 
 ## Support
 

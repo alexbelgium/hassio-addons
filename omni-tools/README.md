@@ -50,6 +50,10 @@ Timezone setting for the application.
 
 All processing is done locally in your browser for maximum privacy and security.
 
+### Environment variables
+
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## Support
 
 Got questions?
