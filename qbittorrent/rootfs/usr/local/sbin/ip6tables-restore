@@ -17,10 +17,10 @@ cat > "${RULES_FILE}"
 
 ipv6_unavailable() {
     local message="$1"
-    [[ "${message}" =~ [Tt]able[[:space:]]does[[:space:]]not[[:space:]]exist ]] && return 0
-    [[ "${message}" =~ address[[:space:]]family[[:space:]]not[[:space:]]supported ]] && return 0
-    [[ "${message}" =~ can't[[:space:]]initialize[[:space:]]ip6tables[[:space:]]table ]] && return 0
-    [[ "${message}" =~ IPv6[[:space:]]support[[:space:]]not[[:space:]]available ]] && return 0
+    [[ $message =~ [Tt]able[[:space:]]does[[:space:]]not[[:space:]]exist ]] && return 0
+    [[ $message =~ address[[:space:]]family[[:space:]]not[[:space:]]supported ]] && return 0
+    [[ $message =~ can[[:punct:]]t[[:space:]]initialize[[:space:]]ip6tables[[:space:]]table ]] && return 0
+    [[ $message =~ IPv6[[:space:]]support[[:space:]]not[[:space:]]available ]] && return 0
     return 1
 }
 
