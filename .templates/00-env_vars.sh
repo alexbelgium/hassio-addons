@@ -1,0 +1,144 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+if ! bashio::supervisor.ping 2> /dev/null; then
+    echo "..."
+    exit 0
+fi
+
+JSONSOURCE="/data/options.json"
+
+if [ -f /homeassistant/secrets.yaml ]; then
+    SECRETSOURCE="/homeassistant/secrets.yaml"
+elif [ -f /config/secrets.yaml ]; then
+    SECRETSOURCE="/config/secrets.yaml"
+else
+    SECRETSOURCE="false"
+fi
+
+sanitize_variable() {
+    local raw="$1"
+    local escaped
+    if [[ "$raw" == \[* ]]; then
+        echo "One of your options is an array, skipping"
+        return
+    fi
+    printf -v escaped '%q' "$raw"
+    escaped="${escaped//\\ / }"
+    if [[ "$raw" == "$escaped" ]]; then
+        printf '%s' "$raw"
+    else
+        printf '%s' "$escaped"
+    fi
+}
+
+export_option() {
+    local key="$1"
+    local value="$2"
+    local line secret secretnum valuepy
+
+    value=$(sanitize_variable "$value")
+
+    if [[ -z "$value" ]]; then
+        line="${key}=''"
+    else
+        line="${key}='${value//\'/\'\\\'\'}'"
+    fi
+
+    if [[ "${line}" == *"!secret "* ]]; then
+        echo "secret detected"
+        secret=${line#*secret }
+        secret="${secret%[\"\']}"
+        if [[ "$SECRETSOURCE" == "false" ]]; then
+            bashio::log.warning "Homeassistant config not mounted, secrets are not supported"
+            return
+        fi
+        secretnum=$(sed -n "/$secret:/=" "$SECRETSOURCE")
+        [[ "$secretnum" == *' '* ]] && bashio::exit.nok "There are multiple matches for your password name. Please check your secrets.yaml file"
+        secret=$(sed -n "/$secret:/p" "$SECRETSOURCE")
+        secret=${secret#*: }
+        line="${line%%=*}='$secret'"
+        value="$secret"
+    fi
+
+    if bashio::config.false "verbose" || [[ "${key,,}" == *"pass"* ]]; then
+        bashio::log.blue "${key}=******"
+    else
+        bashio::log.blue "$line"
+    fi
+
+    export "$line"
+
+    if command -v "python3" &> /dev/null; then
+        [ ! -f /env.py ] && echo "import os" > /env.py
+        valuepy="${value//\\/\\\\}"
+        valuepy="${valuepy//[\"\']/}"
+        echo "os.environ['${key}'] = '$valuepy'" >> /env.py
+        python3 /env.py
+    fi
+
+    echo "$line" >> /.env || true
+    mkdir -p /etc
+    echo "$line" >> /etc/environment
+    if cat /etc/services.d/*/*run* &> /dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2> /dev/null; fi
+    if cat /etc/cont-init.d/*.sh &> /dev/null; then sed -i "1a export $line" /etc/cont-init.d/*.sh 2> /dev/null; fi
+    if [ -d /var/run/s6/container_environment ]; then printf "%s" "${value}" > /var/run/s6/container_environment/"${key}"; fi
+    echo "export ${key}='${value}'" >> ~/.bashrc
+}
+
+process_env_entry() {
+    local entry="$1"
+    local processed=false
+
+    if [[ "$entry" == \{* ]]; then
+        mapfile -t env_keys < <(jq -r 'keys[]' <<<"$entry")
+        for env_key in "${env_keys[@]}"; do
+            local env_value
+            env_value=$(jq -r --arg key "$env_key" '.[$key]' <<<"$entry")
+            export_option "$env_key" "$env_value"
+            processed=true
+        done
+    elif [[ "${entry:0:1}" == '"' ]]; then
+        local env_pair env_key env_value
+        env_pair=$(jq -r '.' <<<"$entry")
+        if [[ "$env_pair" == *=* ]]; then
+            env_key=${env_pair%%=*}
+            env_value=${env_pair#*=}
+            export_option "$env_key" "$env_value"
+            processed=true
+        else
+            bashio::log.warning "env_vars entry '$env_pair' is not in KEY=VALUE format, skipping"
+        fi
+    else
+        bashio::log.warning "env_vars entry format not supported, skipping"
+    fi
+
+    [[ "$processed" == true ]]
+}
+
+if ! jq -e '.env_vars' "$JSONSOURCE" &> /dev/null; then
+    exit 0
+fi
+
+env_type=$(jq -r '.env_vars | type' "$JSONSOURCE")
+if [[ "$env_type" != "array" ]]; then
+    bashio::log.warning "env_vars option format not supported, skipping"
+    exit 0
+fi
+
+mapfile -t env_entries < <(jq -c '.env_vars[]' "$JSONSOURCE")
+if [[ "${#env_entries[@]}" -eq 0 ]]; then
+    exit 0
+fi
+
+env_processed=false
+for entry in "${env_entries[@]}"; do
+    if process_env_entry "$entry"; then
+        env_processed=true
+    fi
+done
+
+if [[ "$env_processed" == false ]]; then
+    bashio::log.warning "env_vars option format not supported, skipping"
+fi
