@@ -1,3 +1,6 @@
+- 8.14.3-1 (18-11-2025)
+  - Added `env_vars` option to support custom environment variables from the add-on configuration.
+
 - BREAKING CHANGE : upgrade to v8.14.3. You'll need to rebuild your indexes
 
 ## v7

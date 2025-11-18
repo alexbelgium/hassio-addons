@@ -1,3 +1,6 @@
+## 1.0.5 (18-11-2025)
+- Added `env_vars` option to allow passing custom environment variables from the add-on configuration.
+
 ## 1.0.4 (15-09-2025)
 - Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases)
 

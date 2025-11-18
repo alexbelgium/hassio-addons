@@ -1,4 +1,7 @@
 
+## 2.18.0-1 (18-11-2025)
+- Added `env_vars` option to allow custom environment variables from the add-on configuration.
+
 ## 2.18.0 (08-11-2025)
 - Update to latest version from SignalK/signalk-server (changelog : https://github.com/SignalK/signalk-server/releases)
 ## "2.17.2" (18-10-2025)

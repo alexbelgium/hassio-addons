@@ -72,12 +72,18 @@ map:
   - share:rw
   - ssl:ro
 name: Baikal
+options:
+  env_vars: []
 ports:
   80/tcp: 8013
 ports_description:
   80/tcp: Web UI port
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
 slug: baikal
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 0.10.1-hafix2
+version: 0.10.1-hafix3
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"

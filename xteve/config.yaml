@@ -13,12 +13,18 @@ map:
   - share:rw
   - ssl:ro
 name: Xteve
+options:
+  env_vars: []
 ports:
   34400/tcp: 34400
 ports_description:
   34400/tcp: Web interface
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
 slug: xteve
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 2.5.3-2
+version: 2.5.3-3
 webui: "[PROTO:ssl]://[HOST]:[PORT:34400]/web"

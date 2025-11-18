@@ -1,3 +1,6 @@
+## 3.13.6-9 (18-11-2025)
+- Added `env_vars` option to allow passing custom environment variables from the add-on configuration.
+
 - WARNING : update to supervisor 2022.11 before installing
 - Allow persistence on arm devices
 - Add codenotary sign

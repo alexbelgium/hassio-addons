@@ -80,6 +80,10 @@ Connect other applications to Elasticsearch using:
 - **Nextcloud**: Configure Full Text Search app to use this Elasticsearch instance
 - **Home Assistant**: Use with the Elasticsearch component for event publishing
 
+### Environment variables
+
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
 ## Integration with HA
 
 Component : https://community.home-assistant.io/t/elasticsearch-component-publish-home-assistant-events-to-elasticsearch/66877

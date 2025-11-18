@@ -6,11 +6,17 @@ map:
   - addon_config:rw
   - share:rw
 name: Whatsapper
+options:
+  env_vars: []
 ports:
   3000/tcp: 4000
 ports_description:
   3000/tcp: Api interface
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
 slug: whatsapper
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/whatsapper
-version: 1.0.4
+version: 1.0.5

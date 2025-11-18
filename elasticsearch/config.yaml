@@ -74,14 +74,20 @@ image: ghcr.io/alexbelgium/elasticsearch-{arch}
 map:
   - config:rw
 name: Elasticsearch server
+options:
+  env_vars: []
 ports:
   9200/tcp: 9200
   9300/tcp: 9300
 ports_description:
   9200/tcp: API calls over HTTP
   9300/tcp: custom binary protoco
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
 slug: elasticsearch
 startup: services
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/elasticsearch
-version: 8.14.3
+version: 8.14.3-1
