@@ -77,13 +77,18 @@ echo "... adapting labels according to birdnet.conf"
 if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
     export "$(grep "^MODEL" /config/birdnet.conf)"
     bashio::log.info "Setting language to ${DATABASE_LANG:-en}"
-    if [ "$MODEL" == "BirdNET_GLOBAL_6K_V2.4_Model_FP16" ]; then
-        BASEDIR=labels_nm
+    labels_file="$HOME/BirdNET-Pi/model/labels.txt"
+    model_labels_file="$HOME/BirdNET-Pi/model/${MODEL}_Labels.txt"
+    language_labels_file="$HOME/BirdNET-Pi/model/l18n/labels_${DATABASE_LANG}.json"
+
+    if [[ -f "$model_labels_file" ]] && [[ -f "$language_labels_file" ]]; then
+        bashio::log.info "Generating labels file for ${DATABASE_LANG} using BirdNET-Pi helper"
+        if ! sudo -u pi bash -c "cd $HOME/BirdNET-Pi/scripts && $PYTHON_VIRTUAL_ENV -c 'from utils.helpers import set_label_file; set_label_file()'"; then
+            bashio::log.warning "Failed to generate labels.txt automatically for ${DATABASE_LANG}; keeping existing labels"
+        fi
     else
-        BASEDIR=labels_l18n
+        bashio::log.warning "Required label sources missing for ${MODEL} and language ${DATABASE_LANG}; keeping existing labels"
     fi
-    label_file_name="labels_${DATABASE_LANG}.txt"
-    ln -sf "$HOME/BirdNET-Pi/model/${BASEDIR}/${label_file_name}" "$HOME/BirdNET-Pi/model/labels.txt" || bashio::log.warning "Failed to update language labels"
 else
     bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
 fi
