@@ -1,3 +1,5 @@
+## 3.4.5-2 (18-11-2025)
+- Minor bugs fixed
 
 ## 3.4.5-1 (18-11-2025)
 - Added `env_vars` option to allow custom environment variables from the add-on configuration.
