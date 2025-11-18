@@ -3,20 +3,67 @@
 
 WEBUI_PORT=${WEBUI_PORT:-8080}
 
+export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
+
 if bashio::config.true 'silent'; then
     sed -i 's|/proc/1/fd/1 hassio;|off;|g' /etc/nginx/nginx.conf
 fi
 
 if bashio::config.true 'openvpn_enabled'; then
-    exec /usr/sbin/openvpn --config /config/openvpn/config.ovpn --script-security 2 --up /etc/openvpn/up.sh --down /etc/openvpn/down.sh --pull-filter ignore "route-ipv6" --pull-filter ignore "ifconfig-ipv6" --pull-filter ignore "tun-ipv6" --pull-filter ignore "redirect-gateway ipv6" --pull-filter ignore "dhcp-option DNS6"
+    exec /usr/sbin/openvpn \
+        --config /config/openvpn/config.ovpn \
+        --script-security 2 \
+        --up /etc/openvpn/up.sh \
+        --down /etc/openvpn/down.sh \
+        --pull-filter ignore "route-ipv6" \
+        --pull-filter ignore "ifconfig-ipv6" \
+        --pull-filter ignore "tun-ipv6" \
+        --pull-filter ignore "redirect-gateway ipv6" \
+        --pull-filter ignore "dhcp-option DNS6"
 else
-    ########################################################
-    # DRAFT : Start wireguard if needed
     if bashio::config.true 'wireguard_enabled'; then
-        wg-quick up /config/wireguard/config.conf &
-        true
+        WIREGUARD_STATE_DIR="/var/run/wireguard"
+
+        if ! bashio::fs.file_exists "${WIREGUARD_STATE_DIR}/config"; then
+            bashio::exit.nok 'WireGuard runtime configuration not prepared. Please restart the add-on.'
+        fi
+
+        wireguard_config="$(cat "${WIREGUARD_STATE_DIR}/config")"
+        wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2>/dev/null || echo 'wg0')"
+
+        if ip link show "${wireguard_interface}" &> /dev/null; then
+            bashio::log.warning "WireGuard interface ${wireguard_interface} already exists. Attempting to reset it."
+            wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
+        fi
+
+        bashio::log.info "Starting WireGuard interface ${wireguard_interface} using ${wireguard_config##*/}."
+
+        if ! output=$(wg-quick up "${wireguard_config}" 2>&1); then
+            bashio::log.error 'WireGuard failed to establish a connection.'
+            bashio::log.error "wg-quick output:"
+            bashio::log.error "${output}"
+            bashio::log.error 'Troubleshooting steps:'
+            bashio::log.error "  1. Confirm that the WireGuard configuration file '${wireguard_config}' exists inside the container and contains valid private/public keys, endpoint and AllowedIPs."
+            bashio::log.error '  2. Ensure UDP port 51820 (or the port defined in your config) is forwarded on your router to this host and not blocked by your firewall or ISP.'
+            bashio::log.error '  3. Verify that the configured endpoint (IP/hostname and port) is reachable from this container (e.g. ping or nc from a debug shell).'
+            bashio::log.error '  4. Check that the system time is correct (NTP); large time drift can break key handshakes.'
+            bashio::log.error '  5. Confirm that WireGuard kernel support / module is available in the host system.'
+            bashio::log.error '  6. If DNS names are used for the endpoint, verify DNS resolution from inside the container (e.g. nslookup or dig).'
+            bashio::exit.nok 'WireGuard start failed. See the log above for details.'
+        fi
+
+        bashio::log.info "WireGuard interface ${wireguard_interface} is up."
+
+        # Refresh DNS resolver configuration if resolvconf is present
+        if command -v resolvconf >/dev/null 2>&1; then
+            bashio::log.info 'Refreshing DNS resolver configuration via resolvconf -u.'
+            if ! resolvconf -u >/dev/null 2>&1; then
+                bashio::log.warning 'resolvconf -u failed. DNS configuration may not have been updated.'
+            fi
+        else
+            bashio::log.debug 'resolvconf not found in PATH; skipping DNS refresh.'
+        fi
     fi
-    ########################################################
 
     if bashio::config.true 'silent'; then
         exec \

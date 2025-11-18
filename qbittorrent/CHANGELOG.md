@@ -1,3 +1,8 @@
+## 5.1.2-8 (20-11-2025)
+- FEAT: add first-class WireGuard support with runtime validation and troubleshooting logs.
+- FEAT: allow WireGuard connections on arbitrary remote ports by removing the mandatory 51820/udp mapping check.
+- FEAT: add compatibility shims for iptables/ip6tables, sysctl, and resolvconf so WireGuard works across more host kernels and network setups.
+- FIX: tighten WireGuard config permissions and fall back to IPv4-only configs when IPv6 firewall support is unavailable.
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 5.1.2-7 (17-08-2025)
