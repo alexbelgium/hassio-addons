@@ -26,5 +26,5 @@ schema:
 slug: xteve
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 2.5.3-3
+version: 2.5.3-4
 webui: "[PROTO:ssl]://[HOST]:[PORT:34400]/web"
