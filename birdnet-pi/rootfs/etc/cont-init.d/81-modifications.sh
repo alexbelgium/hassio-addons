@@ -55,15 +55,33 @@ sed -i 's/"\.\$updatediv\.\"//g' "$HOME"/BirdNET-Pi/homepage/views.php
 echo "... adapting labels according to birdnet.conf"
 if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
     bashio::log.info "Setting language to ${DATABASE_LANG:-en}"
-    python3 - <<'PY'
+
+    if [[ -f "$HOME/BirdNET-Pi/scripts/utils/maintainer.py" ]]; then
+        PYTHONPATH="$HOME/BirdNET-Pi:$HOME/BirdNET-Pi/scripts:$HOME/BirdNET-Pi/scripts/utils:${PYTHONPATH:-}" \
+            python3 - <<'PY'
+import importlib.util
 import os
+import sys
+
+home = os.environ.get("HOME", "/home/pi")
+birdnet_root = os.path.join(home, "BirdNET-Pi")
+for path in (birdnet_root, os.path.join(birdnet_root, "scripts"), os.path.join(birdnet_root, "scripts", "utils")):
+    if path not in sys.path:
+        sys.path.insert(0, path)
+
+if importlib.util.find_spec("scripts.utils.maintainer") is None:
+    print("Language maintainer module not found; skipping translation generation.")
+    raise SystemExit(0)
+
 from scripts.utils.maintainer import create_language
 
 database_lang = os.environ.get("DATABASE_LANG", "en")
-
 print(f"Creating translations for {database_lang}")
 create_language(database_lang)
 PY
+    else
+        bashio::log.warning "Language maintainer script not found; skipping translation generation."
+    fi
 else
     bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
 fi
