@@ -33,7 +33,7 @@ This addons has several configurable options :
 - [alternative webUI](https://github.com/qbittorrent/qBittorrent/wiki/List-of-known-alternate-WebUIs)
 - usage of ssl
 - ingress
-- optional openvpn support
+- optional OpenVPN or WireGuard support
 - allow setting specific DNS servers
 
 ## Configuration
@@ -70,9 +70,15 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `openvpn_username` | str | | OpenVPN username |
 | `openvpn_password` | str | | OpenVPN password |
 | `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
+| `wireguard_enabled` | bool | `false` | Enable WireGuard tunnel |
+| `wireguard_config` | str | _(empty)_ | WireGuard config file name (in `/config/wireguard/`) |
 | `qbit_manage` | bool | `false` | Enable qBit Manage integration |
 | `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
 | `silent` | bool | `false` | Suppress debug messages |
+
+### WireGuard Setup
+
+WireGuard configuration files must be stored in `/config/wireguard`. If several `.conf` files are present, set `wireguard_config` to the file name you want to use (for example `wg0.conf`). Expose UDP port `51820` in the add-on options and forward it from your router only when your tunnel expects inbound peers (for example, site-to-site setups). Outbound-only commercial VPN providers usually do not require a mapped port. The runtime configuration now preserves both IPv4 and IPv6 entries, so you can use dual-stack WireGuard peers when your endpoint supports them.
 
 ### Example Configuration
 
@@ -93,6 +99,7 @@ networkdisks: "//192.168.1.100/downloads"
 cifsusername: "username"
 cifspassword: "password"
 openvpn_enabled: false
+wireguard_enabled: false
 ```
 
 ### Mounting Drives
@@ -164,6 +171,18 @@ pull-filter ignore "ifconfig-ipv6"
 <details>
   <summary>### 100% cpu</summary>
 Delete your nova3 folder in /config and restart qbittorrent
+
+</details>
+
+<details>
+  <summary>### WireGuard connection fails</summary>
+
+- If your deployment expects inbound peers, verify that the UDP port exposed in the add-on options maps 51820/udp and is forwarded by your router. Skip this step for outbound-only commercial VPN providers.
+- Confirm that the selected configuration file in `/config/wireguard` matches the `wireguard_config` option (or that only one `.conf` file is present).
+- Check the add-on logs for the detailed `wg-quick` error message printed by the startup routine.
+- Hosts missing the iptables `comment` kernel module are automatically retried without comment matches and, when available, using the legacy iptables backend. Inspect the log for messages about these fallbacks if you see iptables-restore errors.
+- Dual-stack WireGuard peers are supported. If you see ip6tables-restore errors, confirm that your host provides IPv6 firewall support or adjust your configuration to match your environment.
+- The startup scripts suppress the `net.ipv4.conf.all.src_valid_mark` sysctl failure emitted by `wg-quick` on some hosts, so persistent errors in the logs typically point to configuration or connectivity issues.
 
 </details>
 
