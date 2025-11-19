@@ -61,7 +61,7 @@ wireguard_runtime_config="${WIREGUARD_STATE_DIR}/${interface_name}.conf"
 
 cp "${wireguard_config}" "${wireguard_runtime_config}"
 chmod 600 "${wireguard_runtime_config}" 2>/dev/null || true
-bashio::log.info 'Prepared WireGuard runtime configuration with both IPv4 and IPv6 entries.'
+bashio::log.info 'Prepared WireGuard runtime configuration for initial connection attempt.'
 
 echo "${wireguard_runtime_config}" > "${WIREGUARD_STATE_DIR}/config"
 echo "${interface_name}" > "${WIREGUARD_STATE_DIR}/interface"
