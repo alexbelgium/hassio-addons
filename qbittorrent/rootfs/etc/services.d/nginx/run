@@ -93,7 +93,7 @@ wait_for_vpn_ip() {
 
 start_nginx_background() {
     bashio::log.info "Starting nginx..."
-    nginx -g 'daemon off;' &
+    nginx &
     echo $!
 }
 
@@ -135,7 +135,7 @@ fi
 if [[ "${vpn_enabled}" != true ]]; then
     # No VPN: just boot nginx, no IP leak monitoring
     bashio::log.info "No VPN enabled (OpenVPN/WireGuard). Starting nginx without IP monitoring."
-    exec nginx -g 'daemon off;'
+    exec nginx
 fi
 
 # Read the baseline "real" IP from /currentip
