@@ -1,3 +1,7 @@
+## 5.1.2-13 (21-11-2025)
+- Automatically retry WireGuard with an IPv4-only configuration when IPv6 connectivity (verified via ping to 2606:4700:4700::1111) is unavailable.
+- Allow wg-quick to proceed even when iptables/ip6tables firewall modules are missing by logging warnings and skipping the offending rules.
+
 ## 5.1.2-12 (19-11-2025)
 - Improve ip monitoring with wireguard
 

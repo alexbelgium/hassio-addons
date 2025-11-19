@@ -80,6 +80,8 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 
 WireGuard configuration files must be stored in `/config/wireguard`. If several `.conf` files are present, set `wireguard_config` to the file name you want to use (for example `wg0.conf`). Expose UDP port `51820` in the add-on options and forward it from your router only when your tunnel expects inbound peers (for example, site-to-site setups). Outbound-only commercial VPN providers usually do not require a mapped port. The runtime configuration now preserves both IPv4 and IPv6 entries, so you can use dual-stack WireGuard peers when your endpoint supports them.
 
+The add-on also prepares an IPv4-only version of your WireGuard configuration. If bringing the tunnel up fails and an IPv6 connectivity probe (`ping -6` to Cloudflare's `2606:4700:4700::1111` by default) does not succeed, the service automatically retries with the IPv4-only copy to keep the tunnel operational. You can override the probe target by defining the `WIREGUARD_IPV6_CHECK_TARGET` environment variable. Additionally, the bundled `iptables-restore`/`ip6tables-restore` wrappers now downgrade to warning-only behavior when the host kernel is missing the required firewall modules, allowing `wg-quick` to continue instead of aborting.
+
 ### Example Configuration
 
 ```yaml

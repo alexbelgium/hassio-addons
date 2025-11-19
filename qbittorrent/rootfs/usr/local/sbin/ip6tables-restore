@@ -21,6 +21,10 @@ ipv6_unavailable() {
     [[ $message =~ address[[:space:]]family[[:space:]]not[[:space:]]supported ]] && return 0
     [[ $message =~ can[[:punct:]]t[[:space:]]initialize[[:space:]]ip6tables[[:space:]]table ]] && return 0
     [[ $message =~ IPv6[[:space:]]support[[:space:]]not[[:space:]]available ]] && return 0
+    [[ $message =~ [Nn]o[[:space:]]chain/target/match[[:space:]]by[[:space:]]that[[:space:]]name ]] && return 0
+    [[ $message =~ [Cc]ouldn.t[[:space:]]load[[:space:]]target ]] && return 0
+    [[ $message =~ [Cc]ould[[:space:]]not[[:space:]]load[[:space:]]target ]] && return 0
+    [[ $message =~ [Pp]rotocol[[:space:]]not[[:space:]]supported ]] && return 0
     return 1
 }
 

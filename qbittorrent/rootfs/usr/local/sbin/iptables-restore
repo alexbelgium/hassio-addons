@@ -15,6 +15,18 @@ trap cleanup EXIT
 RULES_FILE="$(mktemp)"
 cat > "${RULES_FILE}"
 
+firewall_modules_missing() {
+    local message="$1"
+    [[ -z "${message}" ]] && return 1
+    [[ ${message} =~ [Nn]o[[:space:]]chain/target/match[[:space:]]by[[:space:]]that[[:space:]]name ]] && return 0
+    [[ ${message} =~ [Tt]able[[:space:]]does[[:space:]]not[[:space:]]exist ]] && return 0
+    [[ ${message} =~ [Cc]ouldn.t[[:space:]]load[[:space:]]target ]] && return 0
+    [[ ${message} =~ [Cc]ould[[:space:]]not[[:space:]]load[[:space:]]target ]] && return 0
+    [[ ${message} =~ [Pp]rotocol[[:space:]]not[[:space:]]supported ]] && return 0
+    [[ ${message} =~ [Ii]ptables[[:space:]]v[[:digit:]]+\.[[:digit:]]+:[[:space:]]cannot[[:space:]]initialize ]] && return 0
+    return 1
+}
+
 # First attempt with the original ruleset
 if output="$(${REAL_IPTABLES_RESTORE} "$@" < "${RULES_FILE}" 2>&1)"; then
     [[ -n "${output}" ]] && printf '%s\n' "${output}" >&2
@@ -35,6 +47,7 @@ fi
 retry_status=$?
 
 # Final fallback: try legacy backend if available
+legacy_output=""
 for legacy in /sbin/iptables-restore-legacy /usr/sbin/iptables-restore-legacy; do
     if [[ -x "${legacy}" ]]; then
         if legacy_output="$(${legacy} "$@" < "${RULES_FILE}" 2>&1)"; then
@@ -45,6 +58,14 @@ for legacy in /sbin/iptables-restore-legacy /usr/sbin/iptables-restore-legacy; d
         fi
     fi
 done
+
+if firewall_modules_missing "${output}" || firewall_modules_missing "${retry_output:-}" || firewall_modules_missing "${legacy_output:-}"; then
+    printf '%s\n' "iptables-restore failed because kernel firewall modules are unavailable; continuing without applying IPv4 rules." >&2
+    printf '%s\n' "Original error: ${output}" >&2
+    [[ -n "${retry_output}" ]] && printf '%s\n' "Sanitized retry error: ${retry_output}" >&2
+    [[ -n "${legacy_output:-}" ]] && printf '%s\n' "Legacy backend error: ${legacy_output}" >&2
+    exit 0
+fi
 
 printf '%s\n' "iptables-restore failed and fallbacks were unsuccessful." >&2
 printf '%s\n' "Original error: ${output}" >&2
