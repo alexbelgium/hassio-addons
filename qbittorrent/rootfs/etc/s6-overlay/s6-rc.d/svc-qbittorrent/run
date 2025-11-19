@@ -44,6 +44,7 @@ else
 
             ipv4_config="${WIREGUARD_STATE_DIR}/${wireguard_interface}-ipv4.conf"
             echo -n > "${ipv4_config}"
+            chmod 600 "${ipv4_config}" 2>/dev/null || true
 
             while IFS= read -r line; do
                 if [[ "${line}" =~ ^Endpoint ]]; then
