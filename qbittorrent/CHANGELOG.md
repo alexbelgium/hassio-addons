@@ -1,3 +1,5 @@
+- Add IPv4 fallback for WireGuard connections
+
 ## 5.1.2-12 (19-11-2025)
 - Improve ip monitoring with wireguard
 
