@@ -24,12 +24,82 @@ else
     if bashio::config.true 'wireguard_enabled'; then
         WIREGUARD_STATE_DIR="/var/run/wireguard"
 
+        wireguard_build_ipv4_only_config() {
+            local source_config="$1" target_config="$2" temp_config found_ipv4
+
+            temp_config="$(mktemp)"
+            found_ipv4=0
+
+            if awk '
+                function trim(s) { gsub(/^[ \t]+|[ \t]+$/, "", s); return s }
+
+                function filter_ipv4(list,    parts, i, ipv4, val, n) {
+                    n = split(list, parts, ",")
+                    ipv4 = ""
+                    for (i = 1; i <= n; i++) {
+                        val = trim(parts[i])
+                        if (val ~ /\./) {
+                            if (ipv4 != "") {
+                                ipv4 = ipv4 ", "
+                            }
+                            ipv4 = ipv4 val
+                        }
+                    }
+                    return ipv4
+                }
+
+                /^Address[ \t]*=/ {
+                    ipv4 = filter_ipv4(substr($0, index($0, "=") + 1))
+                    if (ipv4 != "") {
+                        found_ipv4 = 1
+                        print "Address = " ipv4
+                    }
+                    next
+                }
+
+                /^AllowedIPs[ \t]*=/ {
+                    ipv4 = filter_ipv4(substr($0, index($0, "=") + 1))
+                    if (ipv4 != "") {
+                        found_ipv4 = 1
+                        print "AllowedIPs = " ipv4
+                    }
+                    next
+                }
+
+                /^DNS[ \t]*=/ {
+                    ipv4 = filter_ipv4(substr($0, index($0, "=") + 1))
+                    if (ipv4 != "") {
+                        print "DNS = " ipv4
+                    }
+                    next
+                }
+
+                { print }
+
+                END {
+                    if (!found_ipv4) {
+                        exit 1
+                    }
+                }
+            ' "${source_config}" > "${temp_config}"; then
+                mv "${temp_config}" "${target_config}"
+                chmod 600 "${target_config}" 2>/dev/null || true
+                return 0
+            fi
+
+            rm -f "${temp_config}"
+            return 1
+        }
+
         if ! bashio::fs.file_exists "${WIREGUARD_STATE_DIR}/config"; then
             bashio::exit.nok 'WireGuard runtime configuration not prepared. Please restart the add-on.'
         fi
 
         wireguard_config="$(cat "${WIREGUARD_STATE_DIR}/config")"
         wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2>/dev/null || echo 'wg0')"
+        wireguard_original_config="${wireguard_config}.full"
+
+        cp "${wireguard_config}" "${wireguard_original_config}" >/dev/null 2>&1 || true
 
         if ip link show "${wireguard_interface}" &> /dev/null; then
             bashio::log.warning "WireGuard interface ${wireguard_interface} already exists. Attempting to reset it."
@@ -39,17 +109,37 @@ else
         bashio::log.info "Starting WireGuard interface ${wireguard_interface} using ${wireguard_config##*/}."
 
         if ! output=$(wg-quick up "${wireguard_config}" 2>&1); then
-            bashio::log.error 'WireGuard failed to establish a connection.'
-            bashio::log.error "wg-quick output:"
-            bashio::log.error "${output}"
-            bashio::log.error 'Troubleshooting steps:'
-            bashio::log.error "  1. Confirm that the WireGuard configuration file '${wireguard_config}' exists inside the container and contains valid private/public keys, endpoint and AllowedIPs."
-            bashio::log.error '  2. Ensure UDP port 51820 (or the port defined in your config) is forwarded on your router to this host and not blocked by your firewall or ISP.'
-            bashio::log.error '  3. Verify that the configured endpoint (IP/hostname and port) is reachable from this container (e.g. ping or nc from a debug shell).'
-            bashio::log.error '  4. Check that the system time is correct (NTP); large time drift can break key handshakes.'
-            bashio::log.error '  5. Confirm that WireGuard kernel support / module is available in the host system.'
-            bashio::log.error '  6. If DNS names are used for the endpoint, verify DNS resolution from inside the container (e.g. nslookup or dig).'
-            bashio::exit.nok 'WireGuard start failed. See the log above for details.'
+            bashio::log.warning 'WireGuard failed with the provided configuration. Attempting IPv4-only fallback.'
+            bashio::log.warning "wg-quick output: ${output}"
+
+            if wireguard_build_ipv4_only_config "${wireguard_original_config}" "${wireguard_config}"; then
+                bashio::log.info 'Retrying WireGuard connection using IPv4-only addresses.'
+                if ! output=$(wg-quick up "${wireguard_config}" 2>&1); then
+                    bashio::log.error 'WireGuard failed to establish a connection after IPv4-only retry.'
+                    bashio::log.error "wg-quick output:"
+                    bashio::log.error "${output}"
+                    bashio::log.error 'Troubleshooting steps:'
+                    bashio::log.error "  1. Confirm that the WireGuard configuration file '${wireguard_config}' exists inside the container and contains valid private/public keys, endpoint and AllowedIPs."
+                    bashio::log.error '  2. Ensure UDP port 51820 (or the port defined in your config) is forwarded on your router to this host and not blocked by your firewall or ISP.'
+                    bashio::log.error '  3. Verify that the configured endpoint (IP/hostname and port) is reachable from this container (e.g. ping or nc from a debug shell).'
+                    bashio::log.error '  4. Check that the system time is correct (NTP); large time drift can break key handshakes.'
+                    bashio::log.error '  5. Confirm that WireGuard kernel support / module is available in the host system.'
+                    bashio::log.error '  6. If DNS names are used for the endpoint, verify DNS resolution from inside the container (e.g. nslookup or dig).'
+                    bashio::exit.nok 'WireGuard start failed. See the log above for details.'
+                fi
+            else
+                bashio::log.error 'WireGuard failed to establish a connection and IPv4-only fallback configuration could not be created.'
+                bashio::log.error "wg-quick output:"
+                bashio::log.error "${output}"
+                bashio::log.error 'Troubleshooting steps:'
+                bashio::log.error "  1. Confirm that the WireGuard configuration file '${wireguard_config}' exists inside the container and contains valid private/public keys, endpoint and AllowedIPs."
+                bashio::log.error '  2. Ensure UDP port 51820 (or the port defined in your config) is forwarded on your router to this host and not blocked by your firewall or ISP.'
+                bashio::log.error '  3. Verify that the configured endpoint (IP/hostname and port) is reachable from this container (e.g. ping or nc from a debug shell).'
+                bashio::log.error '  4. Check that the system time is correct (NTP); large time drift can break key handshakes.'
+                bashio::log.error '  5. Confirm that WireGuard kernel support / module is available in the host system.'
+                bashio::log.error '  6. If DNS names are used for the endpoint, verify DNS resolution from inside the container (e.g. nslookup or dig).'
+                bashio::exit.nok 'WireGuard start failed. See the log above for details.'
+            fi
         fi
 
         bashio::log.info "WireGuard interface ${wireguard_interface} is up."
