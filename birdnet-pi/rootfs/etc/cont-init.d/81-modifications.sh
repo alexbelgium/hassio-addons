@@ -42,27 +42,6 @@ fi
 # General elements
 ##################
 
-# Use tphakala model v2 if enabled
-if [[ -f "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite2" ]]; then
-    mv "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite2" "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite"
-fi
-if [[ -d "$HOME/BirdNET-Pi/model/labels_nm2" ]]; then
-    mv "$HOME/BirdNET-Pi/model/labels_nm2" "$HOME/BirdNET-Pi/model/labels_nm"
-fi
-if false && bashio::config.true 'Use_tphakala_model_v2'; then
-    echo "... applying tphakala model v2"
-    if [[ -f "$HOME/BirdNET-Pi/model/BirdNET-Go_classifier.tflite" ]] && [[ -d "$HOME/BirdNET-Pi/model/labels_go" ]]; then
-        # Move labels
-        mv "$HOME/BirdNET-Pi/model/labels_nm" "$HOME/BirdNET-Pi/model/labels_nm2" || bashio::log.warning "Failed to move labels_nm"
-        mv "$HOME/BirdNET-Pi/model/labels_go" "$HOME/BirdNET-Pi/model/labels_nm" || bashio::log.warning "Failed to move labels_go"
-        # Move model
-        mv "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite" "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite2" || bashio::log.warning "Failed to move base model"
-        mv "$HOME/BirdNET-Pi/model/BirdNET-Go_classifier.tflite" "$HOME/BirdNET-Pi/model/BirdNET_GLOBAL_6K_V2.4_MData_Model_V2_FP16.tflite" || bashio::log.warning "Failed to move Go classifier"
-    else
-        bashio::log.fatal "model or labels not found, skipping"
-    fi
-fi
-
 # Avoid updates
 echo "... modifying the config to silence update indicators"
 # Remove if two lines
@@ -74,16 +53,36 @@ sed -i 's/"\.\$updatediv\.\"//g' "$HOME"/BirdNET-Pi/homepage/views.php
 
 # Correct language labels according to birdnet.conf
 echo "... adapting labels according to birdnet.conf"
-if export "$(grep "^DATABASE_LANG" /config/birdnet.conf)"; then
-    export "$(grep "^MODEL" /config/birdnet.conf)"
+if grep -q '^DATABASE_LANG=' /config/birdnet.conf; then
+    export "$(grep -m1 '^DATABASE_LANG=' /config/birdnet.conf)"
     bashio::log.info "Setting language to ${DATABASE_LANG:-en}"
-    if [ "$MODEL" == "BirdNET_GLOBAL_6K_V2.4_Model_FP16" ]; then
-        BASEDIR=labels_nm
+
+    if [[ -f "$HOME/BirdNET-Pi/scripts/utils/maintainer.py" ]]; then
+        PYTHONPATH="$HOME/BirdNET-Pi:$HOME/BirdNET-Pi/scripts:$HOME/BirdNET-Pi/scripts/utils:${PYTHONPATH:-}" \
+            python3 - <<'PY' 1>/dev/null
+import importlib.util
+import os
+import sys
+
+home = os.environ.get("HOME", "/home/pi")
+birdnet_root = os.path.join(home, "BirdNET-Pi")
+for path in (birdnet_root,
+             os.path.join(birdnet_root, "scripts"),
+             os.path.join(birdnet_root, "scripts", "utils")):
+    if path not in sys.path:
+        sys.path.insert(0, path)
+
+if importlib.util.find_spec("scripts.utils.maintainer") is None:
+    raise RuntimeError("Language maintainer module not found; skipping.")
+
+from scripts.utils.maintainer import create_language
+
+database_lang = os.environ.get("DATABASE_LANG", "en")
+create_language(database_lang)
+PY
     else
-        BASEDIR=labels_l18n
+        bashio::log.warning "Language maintainer script not found; skipping translation generation."
     fi
-    label_file_name="labels_${DATABASE_LANG}.txt"
-    ln -sf "$HOME/BirdNET-Pi/model/${BASEDIR}/${label_file_name}" "$HOME/BirdNET-Pi/model/labels.txt" || bashio::log.warning "Failed to update language labels"
 else
     bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
 fi
