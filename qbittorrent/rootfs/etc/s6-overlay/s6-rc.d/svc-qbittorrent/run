@@ -38,7 +38,50 @@ else
 
         bashio::log.info "Starting WireGuard interface ${wireguard_interface} using ${wireguard_config##*/}."
 
-        if ! output=$(wg-quick up "${wireguard_config}" 2>&1); then
+        # Prefer host-provided iptables-legacy binaries if the default backend fails.
+        _wireguard_prepare_iptables_legacy() {
+            local legacy_bin_dir="${WIREGUARD_STATE_DIR}/iptables-legacy-bin"
+            mkdir -p "${legacy_bin_dir}"
+
+            for cmd in iptables iptables-save iptables-restore ip6tables ip6tables-save ip6tables-restore; do
+                if command -v "${cmd}-legacy" >/dev/null 2>&1; then
+                    ln -sf "$(command -v "${cmd}-legacy")" "${legacy_bin_dir}/${cmd}"
+                fi
+            done
+
+            chmod 700 "${legacy_bin_dir}" 2>/dev/null || true
+            export PATH="${legacy_bin_dir}:${PATH}"
+            bashio::log.warning 'Retrying WireGuard bring-up using iptables-legacy wrappers.'
+        }
+
+        _wireguard_up_with_iptables_fallback() {
+            local config_path="$1"
+            local status
+
+            output=""
+            output=$(wg-quick up "${config_path}" 2>&1)
+            status=$?
+
+            if [ "$status" -eq 0 ]; then
+                return 0
+            fi
+
+            if echo "${output}" | grep -qiE 'iptables-restore|ip6tables-restore|xtables'; then
+                if command -v iptables-legacy >/dev/null 2>&1 || command -v ip6tables-legacy >/dev/null 2>&1; then
+                    wg-quick down "${config_path}" >/dev/null 2>&1 || true
+                    _wireguard_prepare_iptables_legacy
+                    output=$(wg-quick up "${config_path}" 2>&1)
+                    status=$?
+                else
+                    bashio::log.warning 'iptables errors detected but iptables-legacy binaries are unavailable in the image.'
+                    status=1
+                fi
+            fi
+
+            return "${status}"
+        }
+
+        if ! _wireguard_up_with_iptables_fallback "${wireguard_config}"; then
             bashio::log.warning 'Initial WireGuard connection attempt failed. Trying again with IPv4-only endpoints.'
             bashio::log.warning "First attempt output:${bashio::constants.LF}${output}"
 
@@ -68,7 +111,7 @@ else
 
             wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
 
-            if ! output=$(wg-quick up "${ipv4_config}" 2>&1); then
+            if ! _wireguard_up_with_iptables_fallback "${ipv4_config}"; then
                 bashio::log.error 'WireGuard failed to establish a connection after IPv4-only retry.'
                 bashio::log.error "wg-quick output:"
                 bashio::log.error "${output}"
