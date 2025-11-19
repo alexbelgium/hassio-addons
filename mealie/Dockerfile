@@ -102,7 +102,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /.bashio-standalone.sh
 
 RUN \
-    # Add custom instructions to run.sh on armv7
+    # Apply custom instructions to run.sh
     sed -i '1d' /app/run.sh \
     && cat /app/run.sh >> /run.txt \
     && cat /run.txt > /app/run.sh \

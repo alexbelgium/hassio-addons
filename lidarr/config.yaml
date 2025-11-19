@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-  - armv7
 description: Music collection manager for Usenet and BitTorrent users
 devices:
   - /dev/dri

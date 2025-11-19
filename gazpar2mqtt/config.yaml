@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-  - armv7
 description: fetch GRDF data and publish data to a mqtt broker
 devices:
   - /dev/dri

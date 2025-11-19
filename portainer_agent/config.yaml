@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-  - armv7
 backup_exclude:
   - backups
 description: An agent used to manage all the resources in a Swarm cluster

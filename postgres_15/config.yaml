@@ -1,7 +1,6 @@
 arch:
   - aarch64
   - amd64
-  - armv7
 backup: cold
 description: Postgres 15 with VectorChord support
 environment:

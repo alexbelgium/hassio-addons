@@ -99,12 +99,7 @@ drop_vectors_everywhere() {
 
 start_postgres() {
     bashio::log.info "Starting PostgreSQL..."
-    if [ "$(bashio::info.arch)" = "armv7" ]; then
-        bashio::log.warning "ARMv7 detected: Starting without vectors.so"
-        /usr/local/bin/immich-docker-entrypoint.sh postgres &
-    else
-        /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf &
-    fi
+    /usr/local/bin/immich-docker-entrypoint.sh postgres -c config_file=/etc/postgresql/postgresql.conf &
     true
 }
 

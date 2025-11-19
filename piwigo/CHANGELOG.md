@@ -1,3 +1,5 @@
+- The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
+
 
 ## 15.7.0 (08-11-2025)
 - Update to latest version from linuxserver/docker-piwigo (changelog : https://github.com/linuxserver/docker-piwigo/releases)
