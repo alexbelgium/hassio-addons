@@ -23,13 +23,6 @@ if bashio::config.true 'openvpn_alt_mode'; then
     bashio::log.warning 'The openvpn_alt_mode option is ignored when WireGuard is enabled.'
 fi
 
-port="$(bashio::addon.port '51820/udp' || true)"
-if bashio::var.has_value "${port}"; then
-    bashio::log.info "WireGuard host port ${port}/udp mapped to container port 51820."
-else
-    bashio::log.info 'WireGuard port 51820/udp is not exposed in the add-on options. Continuing with outbound-only connectivity.'
-fi
-
 if bashio::config.has_value 'wireguard_config'; then
     configured_name="$(bashio::config 'wireguard_config')"
     configured_name="${configured_name##*/}"
@@ -82,5 +75,8 @@ if bashio::fs.file_exists "${QBT_CONFIG_FILE}"; then
 else
     bashio::log.warning "qBittorrent config file not found. Bind the client manually to interface ${interface_name}."
 fi
+
+# Get current ip
+curl -s ipecho.net/plain > /currentip
 
 bashio::log.info "WireGuard prepared with interface ${interface_name} using configuration ${wireguard_config##*/}."
