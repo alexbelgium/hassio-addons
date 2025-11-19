@@ -1,3 +1,4 @@
+## 5.1.2-12 (19-11-2025)
 - Improve ip monitoring with wireguard
 
 ## 5.1.2-8 (20-11-2025)
