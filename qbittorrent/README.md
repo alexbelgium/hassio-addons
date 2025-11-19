@@ -78,7 +78,7 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 
 ### WireGuard Setup
 
-WireGuard configuration files must be stored in `/config/wireguard`. If several `.conf` files are present, set `wireguard_config` to the file name you want to use (for example `wg0.conf`). Expose UDP port `51820` in the add-on options and forward it from your router only when your tunnel expects inbound peers (for example, site-to-site setups). Outbound-only commercial VPN providers usually do not require a mapped port. The runtime configuration now preserves both IPv4 and IPv6 entries, so you can use dual-stack WireGuard peers when your endpoint supports them.
+WireGuard configuration files must be stored in `/config/wireguard`. If several `.conf` files are present, set `wireguard_config` to the file name you want to use (for example `wg0.conf`). Expose UDP port `51820` in the add-on options and forward it from your router only when your tunnel expects inbound peers (for example, site-to-site setups). Outbound-only commercial VPN providers usually do not require a mapped port. The runtime configuration now preserves IPv4 and IPv6 entries whenever the host supports both stacks, automatically strips IPv6-only assignments when IPv6 is disabled, and can fall back to a degraded (no iptables/ip6tables) mode when the host kernel lacks the necessary firewall modules.
 
 ### Example Configuration
 

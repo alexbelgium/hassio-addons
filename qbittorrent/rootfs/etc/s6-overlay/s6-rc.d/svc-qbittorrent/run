@@ -5,6 +5,62 @@ WEBUI_PORT=${WEBUI_PORT:-8080}
 
 export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
 
+wireguard_firewall_command_works() {
+    local cmd="$1"
+
+    if ! command -v "${cmd}" >/dev/null 2>&1; then
+        return 1
+    fi
+
+    if ! { printf '%s\n' '*filter'; printf '%s\n' 'COMMIT'; } | "${cmd}" -n >/dev/null 2>&1; then
+        return 1
+    fi
+
+    return 0
+}
+
+wireguard_create_firewall_wrapper() {
+    local cmd="$1"
+    local dir="$2"
+    local target="${dir}/${cmd}"
+
+    {
+        echo '#!/bin/sh'
+        printf 'echo "WireGuard firewall fallback: %s skipped." >&2\n' "${cmd}"
+        echo 'exit 0'
+    } > "${target}"
+
+    chmod +x "${target}"
+}
+
+wireguard_prepare_firewall_wrappers() {
+    local ipv6_state="$1"
+    local fallback_dir="${WIREGUARD_STATE_DIR}/iptables-fallback"
+    local wrappers_created=false
+
+    rm -rf "${fallback_dir}"
+    mkdir -p "${fallback_dir}"
+
+    if ! wireguard_firewall_command_works 'iptables-restore'; then
+        wrappers_created=true
+        bashio::log.warning 'iptables-restore is unavailable or failed to initialize. WireGuard will skip iptables firewall programming.'
+        wireguard_create_firewall_wrapper 'iptables-restore' "${fallback_dir}"
+    fi
+
+    if [[ "${ipv6_state}" != 'disabled' ]] && ! wireguard_firewall_command_works 'ip6tables-restore'; then
+        wrappers_created=true
+        bashio::log.warning 'ip6tables-restore is unavailable or failed to initialize. WireGuard will skip IPv6 firewall programming.'
+        wireguard_create_firewall_wrapper 'ip6tables-restore' "${fallback_dir}"
+    fi
+
+    if [[ "${wrappers_created}" == true ]]; then
+        export PATH="${fallback_dir}:${PATH}"
+        bashio::log.warning 'Continuing without kernel iptables support. Consider enabling the required modules on the host for full kill-switch protection.'
+    else
+        rmdir "${fallback_dir}" 2>/dev/null || true
+    fi
+}
+
 if bashio::config.true 'silent'; then
     sed -i 's|/proc/1/fd/1 hassio;|off;|g' /etc/nginx/nginx.conf
 fi
@@ -30,6 +86,9 @@ else
 
         wireguard_config="$(cat "${WIREGUARD_STATE_DIR}/config")"
         wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2>/dev/null || echo 'wg0')"
+        wireguard_ipv6_state="$(cat "${WIREGUARD_STATE_DIR}/ipv6_state" 2>/dev/null || echo 'unknown')"
+
+        wireguard_prepare_firewall_wrappers "${wireguard_ipv6_state}"
 
         if ip link show "${wireguard_interface}" &> /dev/null; then
             bashio::log.warning "WireGuard interface ${wireguard_interface} already exists. Attempting to reset it."
