@@ -56,36 +56,10 @@ echo "... adapting labels according to birdnet.conf"
 if grep -q '^DATABASE_LANG=' /config/birdnet.conf; then
     export "$(grep -m1 '^DATABASE_LANG=' /config/birdnet.conf)"
     bashio::log.info "Setting language to ${DATABASE_LANG:-en}"
-
-    if [[ -f "$HOME/BirdNET-Pi/scripts/utils/maintainer.py" ]]; then
-        PYTHONPATH="$HOME/BirdNET-Pi:$HOME/BirdNET-Pi/scripts:$HOME/BirdNET-Pi/scripts/utils:${PYTHONPATH:-}" \
-            python3 - <<'PY' 1>/dev/null
-import importlib.util
-import os
-import sys
-
-home = os.environ.get("HOME", "/home/pi")
-birdnet_root = os.path.join(home, "BirdNET-Pi")
-for path in (birdnet_root,
-             os.path.join(birdnet_root, "scripts"),
-             os.path.join(birdnet_root, "scripts", "utils")):
-    if path not in sys.path:
-        sys.path.insert(0, path)
-
-if importlib.util.find_spec("scripts.utils.maintainer") is None:
-    raise RuntimeError("Language maintainer module not found; skipping.")
-
-from scripts.utils.maintainer import create_language
-
-database_lang = os.environ.get("DATABASE_LANG", "en")
-create_language(database_lang)
-PY
-    else
-        bashio::log.warning "Language maintainer script not found; skipping translation generation."
-    fi
 else
     bashio::log.warning "DATABASE_LANG not found in configuration. Using default labels."
 fi
+/./"$HOME"/BirdNET-Pi/scripts/install_language_label.sh
 
 # Remove Ram drive option from webui
 echo "... removing Ram drive from webui as it is handled from HA"
