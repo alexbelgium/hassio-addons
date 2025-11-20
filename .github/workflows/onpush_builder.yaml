@@ -56,18 +56,14 @@ jobs:
 
           find . -type f | while read -r file; do
             MIME_TYPE=$(file --mime-type -b "$file")
+            [[ "$MIME_TYPE" != text/* ]] && continue
 
-            if [[ "$MIME_TYPE" == text/* ]]; then
-              echo "Sanitizing $file"
-              # 1️⃣ Replace exotic spaces → regular space
-              # 2️⃣ Strip 0x0D (CR) at end of every line
-              perl -CSD -pe "
-                s/${UNICODE_SPACES_REGEX}/ /g;  # space normalization
-                s/\r$//;                        # CRLF → LF
-              " "$file" > "$file.tmp" && mv "$file.tmp" "$file"
-            else
-              echo "Skipping non-text file: $file ($MIME_TYPE)"
-            fi
+            echo "Sanitizing $file"
+            # Edit in place, preserving file permissions and metadata
+            perl -i -CSD -pe "
+              s/${UNICODE_SPACES_REGEX}/ /g;  # space normalization
+              s/\r$//;                        # CRLF → LF
+            " "$file"
           done
       # ────────────────────────────────────────────────────────────────
       # 2. Ensure every *.sh script is executable
