@@ -76,7 +76,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Farpspoof%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/television-classic.svg) [Autobrr](autobrr/) : Automation for downloads
 
@@ -84,7 +84,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fautobrr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003;  [Baikal](baikal/) : Calendar+Contacts server
@@ -93,7 +93,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbaikal%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/bird.svg) [BattyBirdNET-Pi](battybirdnet-pi/) : A realtime acoustic bat & bird classification system for the Raspberry Pi 4/5 built on BattyBirdNET-Analyzer
 
@@ -111,7 +111,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbazarr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/bitcoin.svg) [Binance Trading Bot](binance-trading-bot/) : Automated Binance trading bot - Trade multiple cryptocurrencies. Buy low/sell high with Grid Trading. Integrated with TradingView technical analysis
 
@@ -183,7 +183,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsponsorblockcast%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Changedetection.io](changedetection.io/) : web page monitoring, notification and change detection
 
@@ -274,7 +274,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003;  [Firefly iii](fireflyiii/) : A free and open source personal finance manager
@@ -308,7 +308,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fflaresolverr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Flexget](flexget/) : FlexGet is a multipurpose automation tool for all of your media
 
@@ -332,7 +332,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fgazpar2mqtt%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![mqtt][mqtt-badge]
 
 &#10003;  [Gitea](gitea/) : Gitea for Home Assistant
@@ -427,7 +427,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Finadyn%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Jackett NAS](jackett/) : Translates queries from apps (Sonarr, Sickrage, CouchPotato, Mylar, etc) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software
 
@@ -435,7 +435,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjackett%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/billiards-rack.svg) [Jellyfin NAS](jellyfin/) : A Free Software Media System that puts you in control of managing and streaming your media
 
@@ -443,7 +443,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjellyfin%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003;  [Jellyseerr](jellyseerr/) : Fork of overseerr for jellyfin support
@@ -460,7 +460,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fjoal%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003;  [Joplin Server](joplin/) : Self-hosted open source note-taking application
@@ -494,7 +494,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Flidarr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Linkwarden](linkwarden/) : collaborative bookmark manager to collect, organize, and preserve webpages and articles
 
@@ -528,7 +528,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 
@@ -538,7 +538,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fenedisgateway2mqtt_dev%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 
@@ -548,7 +548,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fmylar3%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Navidrome](navidrome/) : Navidrome for Home Assistant
 
@@ -564,7 +564,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnetalertx%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 
@@ -574,7 +574,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnetalertx_fa%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 ![mqtt][mqtt-badge]
 ![full_access][full_access-badge]
@@ -594,7 +594,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fnzbget%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003;  [Omada](omada/) : TP-Link Omada Controller
@@ -619,7 +619,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fombi%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Omni Tools](omni-tools/) : Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser
 
@@ -643,7 +643,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Forganizr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Overseerr](overseerr/) : Request management and media discovery tool built to work with your existing Plex ecosystem
 
@@ -669,7 +669,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpiwigo%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Plex NAS](plex/) : Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices
 
@@ -677,7 +677,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fplex%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (7128x)](portainer/) : Manage your Docker environment with ease
 
@@ -685,7 +685,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003;  [Portainer (7128x) Agent](portainer_agent/) : An agent used to manage all the resources in a Swarm cluster
@@ -694,7 +694,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_agent%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![full_access][full_access-badge]
 
 &#10003;  [Postgres 15](postgres_15/) : Postgres 15 with VectorChord support
@@ -703,7 +703,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fpostgres_15%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Postgres 17](postgres_17/) : Postgres 17 with VectorChord support
 
@@ -727,7 +727,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fradarr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/download-circle.svg) [Readarr](readarr/) : Book manager and automation
@@ -744,7 +744,7 @@ If you want to do add the repository manually, please follow the procedure highl
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Faddons_updater%2Fconfig.yaml)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Requestrr](requestrr/) : Chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat
 
@@ -752,7 +752,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Frequestrr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/cloud-sync-outline.svg) [ResilioSync](resiliosync/) : Self-hosted file share and collaboration platform on the web
 
@@ -795,7 +795,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fseafile%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![MariaDB][mariadb-badge]
 
 &#10003;  [Signalk Server](signalk/) : An implementation of a Signal K central server for boats
@@ -804,7 +804,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsignalk%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/television-classic.svg) [Sonarr](sonarr/) : Can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them
 
@@ -812,7 +812,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fsonarr%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/chart-timeline.svg) [Spotweb](spotweb/) : Spotweb is a decentralized usenet community based on the Spotnet protocol
@@ -821,7 +821,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fspotweb%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 ![MariaDB][mariadb-badge]
 
@@ -847,14 +847,14 @@ If you want to do add the repository manually, please follow the procedure highl
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fteamspeak%2Fconfig.yaml)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Tor with bridges](tor/) : Protect your privacy and access Home Assistant via Tor
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftor%2Fconfig.yaml)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/transmission-tower.svg) [Transmission](transmission/) : Bittorrent client based on linuxserver image
 
@@ -862,7 +862,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/transmission-tower.svg) [Transmission Openvpn](transmission_openvpn/) : Docker container running Transmission torrent client with WebUI over an OpenVPN tunnel
@@ -871,7 +871,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftransmission_openvpn%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![ingress][ingress-badge]
 
 &#10003;  [Ubooquity](ubooquity/) : Free, lightweight, and easy-to-use home server for your comics and ebooks
@@ -914,7 +914,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtrees%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![MariaDB][mariadb-badge]
 
 &#10003;  [Wger](wger/) : manage your personal workouts, weight and diet plans
@@ -948,7 +948,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fxteve%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [Zoneminder](zoneminder/) : A full-featured, open source, state-of-the-art video surveillance software system
 
@@ -956,7 +956,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzoneminder%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 ![MariaDB][mariadb-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/progress-download.svg) [qBittorrent](qbittorrent/) : Bittorrent client with optional vpn
@@ -983,7 +983,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_papermerge%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [zzz_archived - Plex meta manager](zzz_archived_plex_meta_manager/) : Python script to update metadata information for movies, shows, and collections as well as automatically build collections
 
@@ -991,7 +991,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_plex_meta_manager%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [zzz_archived - Vaultwarden](zzz_archived_bitwarden/) : Deprecated - please use community version
 
@@ -999,7 +999,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_bitwarden%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 &#10003;  [zzz_archived : Code-server (VScode)](zzz_archived_code-server/) : Deprecated : Code-server is VS Code running on a remote server, accessible through the browser
 
@@ -1007,7 +1007,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fzzz_archived_code-server%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
-![armv7][armv7-badge]
+![armv7no][armv7no-badge]
 
 
 ## Support
