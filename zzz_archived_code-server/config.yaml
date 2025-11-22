@@ -101,5 +101,5 @@ schema:
 slug: code-server
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/coder-server
-version: "4.105.1"
+version: "4.106.2"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8443]"
