@@ -105,7 +105,7 @@ Configure SMTP settings to enable:
 
 This addon supports custom scripts and environment variables through the `addon_config` mapping:
 
-- **Meilisearch full-text search**: The addon ships with an embedded [Meilisearch](https://www.meilisearch.com/) service that Monica uses by default. The search API listens on `http://127.0.0.1:7700` inside the container. Override `MEILISEARCH_URL` via `env_vars` if you prefer an external Meilisearch instance—the init script will detect that and skip starting the bundled daemon. You can further tweak Meilisearch by defining extra environment variables through the `env_vars` option if needed.
+- **Meilisearch full-text search**: The addon ships with an embedded [Meilisearch](https://www.meilisearch.com/) service that Monica uses by default. The search API listens on `http://127.0.0.1:7700` inside the container. Override `MEILISEARCH_URL` via `env_vars` if you prefer an external Meilisearch instance—the init script will detect that and skip starting the bundled daemon. You can further tweak Meilisearch by defining extra environment variables through the `env_vars` option if needed. To secure (or disable) Meilisearch authentication without custom env vars, set the `meilisearch_key` add-on option; the init script will pass it to both Monica and the bundled Meilisearch instance.
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 

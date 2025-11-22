@@ -70,12 +70,13 @@ environment:
   SCOUT_DRIVER: meilisearch
   SCOUT_QUEUE: "false"
   MEILISEARCH_URL: http://127.0.0.1:7700
-  MEILISEARCH_KEY: ""
+  MEILISEARCH_KEY: "{{meilisearch_key}}"
 image: ghcr.io/alexbelgium/monica-{arch}
 init: false
 options:
   env_vars: []
   database: sqlite
+  meilisearch_key: ""
 map:
   - type: addon_config
     read_only: false
@@ -95,6 +96,7 @@ schema:
   DB_PASSWORD: str?
   DB_PORT: int?
   DB_USERNAME: str?
+  meilisearch_key: password?
   MAIL_MAILER: str?
   MAIL_HOST: str?
   MAIL_PORT: str?
@@ -107,5 +109,5 @@ services:
   - mysql:want
 slug: monica
 url: https://github.com/alexbelgium/hassio-addons/tree/master/monica
-version: v5.0_beta5-4
+version: v5.0_beta5-6
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"

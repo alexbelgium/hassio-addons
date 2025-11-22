@@ -143,7 +143,9 @@ if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
     MEILISEARCH_DB_PATH="/data/meilisearch"
     mkdir -p "${MEILISEARCH_DB_PATH}"
 
-    MEILISEARCH_ENV_KEY="${MEILISEARCH_KEY:-}"
+    MEILISEARCH_ENV_KEY="$(bashio::config 'meilisearch_key')"
+    MEILISEARCH_KEY="${MEILISEARCH_ENV_KEY}"
+    export MEILISEARCH_KEY
     MEILISEARCH_ENVIRONMENT="${MEILI_ENV:-production}"
     MEILISEARCH_NO_ANALYTICS="${MEILI_NO_ANALYTICS:-true}"
 
