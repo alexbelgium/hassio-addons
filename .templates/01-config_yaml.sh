@@ -72,8 +72,8 @@ if [[ "$CONFIGSOURCE" != *".yaml" ]]; then
     exit 1
 fi
 
-# Permissions
-if [[ "$CONFIGSOURCE" == *".yaml" ]]; then
+# Permissions only if the config file already exists
+if [[ "$CONFIGSOURCE" == *".yaml" ]] && [ -f "$CONFIGSOURCE" ]; then
     echo "Setting permissions for the config.yaml directory"
     mkdir -p "$(dirname "${CONFIGSOURCE}")"
     chmod -R 755 "$(dirname "${CONFIGSOURCE}")" 2> /dev/null
@@ -82,6 +82,24 @@ fi
 ####################
 # LOAD CONFIG.YAML #
 ####################
+
+# Exit if the config file is absent
+if [ ! -f "$CONFIGSOURCE" ]; then
+    exit 0
+fi
+
+# Check if there are lines to read
+cp "$CONFIGSOURCE" /tempenv
+sed -i '/^#/d' /tempenv
+sed -i '/^[[:space:]]*$/d' /tempenv
+sed -i '/^$/d' /tempenv
+echo "" >> /tempenv
+
+# Exit if empty
+if [ ! -s /tempenv ]; then
+    rm /tempenv
+    exit 0
+fi
 
 echo ""
 bashio::log.green "Load environment variables from $CONFIGSOURCE if existing"
@@ -94,35 +112,6 @@ bashio::log.green "---------------------------------------------------------"
 bashio::log.notice "This script is used to export custom environment variables at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon"
 bashio::log.warning "This methodology is deprecated, please convert your Environment variables to the addon options env_vars. Instructions can be found here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
 echo ""
-
-# Check if config file is there, or create one from template
-if [ ! -f "$CONFIGSOURCE" ]; then
-    echo "... no config file, creating one from template. Please customize the file in $CONFIGSOURCE before restarting."
-    # Create folder
-    mkdir -p "$(dirname "${CONFIGSOURCE}")"
-    # Placing template in config
-    if [ -f /templates/config.yaml ]; then
-        # Use available template
-        cp /templates/config.yaml "$(dirname "${CONFIGSOURCE}")"
-    else
-        # Download template
-        TEMPLATESOURCE="https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/config.template"
-        curl -f -L -s -S "$TEMPLATESOURCE" --output "$CONFIGSOURCE"
-    fi
-fi
-
-# Check if there are lines to read
-cp "$CONFIGSOURCE" /tempenv
-sed -i '/^#/d' /tempenv
-sed -i '/^[[:space:]]*$/d' /tempenv
-sed -i '/^$/d' /tempenv
-echo "" >> /tempenv
-
-# Exit if empty
-if [ ! -s /tempenv ]; then
-    bashio::log.green "... no env variables found, exiting"
-    exit 0
-fi
 
 # Check if yaml is valid
 EXIT_CODE=0
