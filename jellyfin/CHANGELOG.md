@@ -1,3 +1,6 @@
+
+## 10.11.3 (22-11-2025)
+- Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
 ## breaking_versions: 10.11.3 (17-11-2025)
