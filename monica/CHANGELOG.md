@@ -1,3 +1,9 @@
+## v5.0_beta5-6 (17-11-2025)
+- Rename the Meilisearch configuration option to `meilisearch_key` and align schema/options with Home Assistant add-on best practices.
+
+## v5.0_beta5-5 (16-11-2025)
+- Add a configurable `MEILISEARCH_KEY` option so the bundled Meilisearch can be secured (or left blank to disable auth) without relying on custom env vars.
+
 ## v5.0_beta5-4 (15-11-2025)
 - Increment version for rebuilt add-on
 ## v5.0_beta5-3 (15-11-2025)
