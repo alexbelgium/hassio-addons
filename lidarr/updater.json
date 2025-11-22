@@ -1,8 +1,8 @@
 {
-  "last_update": "01-11-2025",
+  "last_update": "22-11-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "lidarr",
   "source": "github",
   "upstream_repo": "linuxserver/docker-lidarr",
-  "upstream_version": "3.0.1.4866"
+  "upstream_version": "3.1.0.4875"
 }

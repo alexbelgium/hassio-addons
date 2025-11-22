@@ -101,5 +101,5 @@ schema:
 slug: lidarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/README.md
-version: "3.0.1.4866"
+version: "3.1.0.4875"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8686]"
