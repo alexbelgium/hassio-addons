@@ -1,3 +1,6 @@
+
+##  (22-11-2025)
+- Update to latest version from monicahq/monica
 ## v5.0_beta5-4 (15-11-2025)
 - Increment version for rebuilt add-on
 ## v5.0_beta5-3 (15-11-2025)
