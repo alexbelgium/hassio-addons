@@ -1,3 +1,5 @@
+## 2.3.1-3 (23-11-2025)
+- Minor bugs fixed
 ## 2.3.1-2 (22-11-2025)
 - Minor bugs fixed
 
