@@ -91,7 +91,6 @@ options:
   PGID: 0
   PUID: 0
   data_location: /share/jellyfin
-  i915_enable_guc: null
 panel_admin: false
 panel_icon: mdi:billiards-rack
 ports:
@@ -126,5 +125,5 @@ schema:
 slug: jellyfin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "10.11.3"
+version: "10.11.3-1"
 video: true

@@ -1,4 +1,7 @@
 
+## 10.11.3-1 (23-11-2025)
+- Fix optional `i915_enable_guc` setting so the add-on no longer requires a value after updates.
+
 ## 10.11.3 (22-11-2025)
 - Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
