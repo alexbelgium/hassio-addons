@@ -50,7 +50,7 @@ if [ -z "${wireguard_config:-}" ]; then
     fi
 fi
 
-dos2unix "${wireguard_config}" >/dev/null 2>&1 || true
+dos2unix "${wireguard_config}" > /dev/null 2>&1 || true
 
 interface_name="$(basename "${wireguard_config}" .conf)"
 if [[ -z "${interface_name}" ]]; then
@@ -60,7 +60,7 @@ fi
 wireguard_runtime_config="${WIREGUARD_STATE_DIR}/${interface_name}.conf"
 
 cp "${wireguard_config}" "${wireguard_runtime_config}"
-chmod 600 "${wireguard_runtime_config}" 2>/dev/null || true
+chmod 600 "${wireguard_runtime_config}" 2> /dev/null || true
 bashio::log.info 'Prepared WireGuard runtime configuration for initial connection attempt.'
 
 echo "${wireguard_runtime_config}" > "${WIREGUARD_STATE_DIR}/config"

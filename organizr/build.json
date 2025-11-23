@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "organizr/organizr:linux-arm64",
-        "amd64": "organizr/organizr:linux-amd64"
-    }
+  "build_from": {
+    "aarch64": "organizr/organizr:linux-arm64",
+    "amd64": "organizr/organizr:linux-amd64"
+  }
 }

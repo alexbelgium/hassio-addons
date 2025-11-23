@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "m4dm4rtig4n/myelectricaldata:latest",
-        "amd64": "m4dm4rtig4n/myelectricaldata:latest"
-    }
+  "build_from": {
+    "aarch64": "m4dm4rtig4n/myelectricaldata:latest",
+    "amd64": "m4dm4rtig4n/myelectricaldata:latest"
+  }
 }

@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "lscr.io/linuxserver/jackett:arm64v8-latest",
-        "amd64": "lscr.io/linuxserver/jackett:amd64-latest"
-    }
+  "build_from": {
+    "aarch64": "lscr.io/linuxserver/jackett:arm64v8-latest",
+    "amd64": "lscr.io/linuxserver/jackett:amd64-latest"
+  }
 }

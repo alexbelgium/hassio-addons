@@ -38,7 +38,7 @@ get_ip_info() {
     # Outputs: "<ip> <country>" on success
     local json ip country
 
-    if ! json="$(curl -fsS --max-time 10 "${VPN_INFO_URL}" 2>/dev/null)"; then
+    if ! json="$(curl -fsS --max-time 10 "${VPN_INFO_URL}" 2> /dev/null)"; then
         bashio::log.warning "Unable to reach VPN info service at ${VPN_INFO_URL}."
         return 1
     fi
@@ -173,7 +173,7 @@ trap '
 # Monitoring loop
 while true; do
     # If nginx died, stop this service and let s6 handle restart policy
-    if ! kill -0 "${nginx_pid}" 2>/dev/null; then
+    if ! kill -0 "${nginx_pid}" 2> /dev/null; then
         bashio::log.error "nginx process exited unexpectedly; leaving service."
         exit 1
     fi
@@ -193,8 +193,8 @@ while true; do
     if [[ -n "${REAL_IP}" ]] && [[ "${current_ip}" == "${REAL_IP}" ]]; then
         bashio::log.error "IP LEAK DETECTED: current external IP ${current_ip} matches real IP ${REAL_IP}."
         bashio::log.error "Stopping nginx and exiting so the supervisor can restart the add-on."
-        kill "${nginx_pid}" 2>/dev/null || true
-        wait "${nginx_pid}" 2>/dev/null || true
+        kill "${nginx_pid}" 2> /dev/null || true
+        wait "${nginx_pid}" 2> /dev/null || true
         exit 1
     fi
 done

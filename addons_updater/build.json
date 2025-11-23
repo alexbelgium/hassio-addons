@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "ghcr.io/hassio-addons/base-python/aarch64:stable",
-        "amd64": "ghcr.io/hassio-addons/base-python/amd64:stable"
-    }
+  "build_from": {
+    "aarch64": "ghcr.io/hassio-addons/base-python/aarch64:stable",
+    "amd64": "ghcr.io/hassio-addons/base-python/amd64:stable"
+  }
 }

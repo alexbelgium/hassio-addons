@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "lscr.io/linuxserver/bazarr:arm64v8-latest",
-        "amd64": "lscr.io/linuxserver/bazarr:amd64-latest"
-    }
+  "build_from": {
+    "aarch64": "lscr.io/linuxserver/bazarr:arm64v8-latest",
+    "amd64": "lscr.io/linuxserver/bazarr:amd64-latest"
+  }
 }

@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "ghcr.io/autobrr/autobrr:latest",
-        "amd64": "ghcr.io/autobrr/autobrr:latest"
-    }
+  "build_from": {
+    "aarch64": "ghcr.io/autobrr/autobrr:latest",
+    "amd64": "ghcr.io/autobrr/autobrr:latest"
+  }
 }

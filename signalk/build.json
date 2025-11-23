@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "ghcr.io/signalk/signalk-server:latest",
-        "amd64": "ghcr.io/signalk/signalk-server:latest"
-    }
+  "build_from": {
+    "aarch64": "ghcr.io/signalk/signalk-server:latest",
+    "amd64": "ghcr.io/signalk/signalk-server:latest"
+  }
 }

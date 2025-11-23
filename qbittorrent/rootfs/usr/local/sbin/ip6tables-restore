@@ -3,68 +3,68 @@ set -euo pipefail
 
 REAL_IP6TABLES_RESTORE="/sbin/ip6tables-restore"
 if [[ ! -x "${REAL_IP6TABLES_RESTORE}" ]]; then
-    REAL_IP6TABLES_RESTORE="/usr/sbin/ip6tables-restore"
+	REAL_IP6TABLES_RESTORE="/usr/sbin/ip6tables-restore"
 fi
 
 cleanup() {
-    [[ -n "${RULES_FILE:-}" && -f "${RULES_FILE}" ]] && rm -f "${RULES_FILE}"
-    [[ -n "${SANITIZED_FILE:-}" && -f "${SANITIZED_FILE}" ]] && rm -f "${SANITIZED_FILE}"
+	[[ -n "${RULES_FILE:-}" && -f "${RULES_FILE}" ]] && rm -f "${RULES_FILE}"
+	[[ -n "${SANITIZED_FILE:-}" && -f "${SANITIZED_FILE}" ]] && rm -f "${SANITIZED_FILE}"
 }
 trap cleanup EXIT
 
 RULES_FILE="$(mktemp)"
-cat > "${RULES_FILE}"
+cat >"${RULES_FILE}"
 
 ipv6_unavailable() {
-    local message="$1"
-    [[ $message =~ [Tt]able[[:space:]]does[[:space:]]not[[:space:]]exist ]] && return 0
-    [[ $message =~ address[[:space:]]family[[:space:]]not[[:space:]]supported ]] && return 0
-    [[ $message =~ can[[:punct:]]t[[:space:]]initialize[[:space:]]ip6tables[[:space:]]table ]] && return 0
-    [[ $message =~ IPv6[[:space:]]support[[:space:]]not[[:space:]]available ]] && return 0
-    return 1
+	local message="$1"
+	[[ $message =~ [Tt]able[[:space:]]does[[:space:]]not[[:space:]]exist ]] && return 0
+	[[ $message =~ address[[:space:]]family[[:space:]]not[[:space:]]supported ]] && return 0
+	[[ $message =~ can[[:punct:]]t[[:space:]]initialize[[:space:]]ip6tables[[:space:]]table ]] && return 0
+	[[ $message =~ IPv6[[:space:]]support[[:space:]]not[[:space:]]available ]] && return 0
+	return 1
 }
 
 # First attempt with the original ruleset
 output=""
-if output="$(${REAL_IP6TABLES_RESTORE} "$@" < "${RULES_FILE}" 2>&1)"; then
-    [[ -n "${output}" ]] && printf '%s\n' "${output}" >&2
-    exit 0
+if output="$(${REAL_IP6TABLES_RESTORE} "$@" <"${RULES_FILE}" 2>&1)"; then
+	[[ -n "${output}" ]] && printf '%s\n' "${output}" >&2
+	exit 0
 fi
 status=$?
 
 # Retry without comment matches if the kernel is missing the comment module
 SANITIZED_FILE="$(mktemp)"
-sed -E 's/-m[[:space:]]+comment[[:space:]]+--comment[[:space:]]+"[^"]*"//g' "${RULES_FILE}" > "${SANITIZED_FILE}"
+sed -E 's/-m[[:space:]]+comment[[:space:]]+--comment[[:space:]]+"[^"]*"//g' "${RULES_FILE}" >"${SANITIZED_FILE}"
 
 retry_output=""
-if retry_output="$(${REAL_IP6TABLES_RESTORE} "$@" < "${SANITIZED_FILE}" 2>&1)"; then
-    printf '%s\n' "ip6tables-restore failed with comment matches; reapplied without comments." >&2
-    printf '%s\n' "Original error: ${output}" >&2
-    [[ -n "${retry_output}" ]] && printf '%s\n' "${retry_output}" >&2
-    exit 0
+if retry_output="$(${REAL_IP6TABLES_RESTORE} "$@" <"${SANITIZED_FILE}" 2>&1)"; then
+	printf '%s\n' "ip6tables-restore failed with comment matches; reapplied without comments." >&2
+	printf '%s\n' "Original error: ${output}" >&2
+	[[ -n "${retry_output}" ]] && printf '%s\n' "${retry_output}" >&2
+	exit 0
 fi
 retry_status=$?
 
 # Final fallback: try legacy backend if available
 legacy_output=""
 for legacy in /sbin/ip6tables-restore-legacy /usr/sbin/ip6tables-restore-legacy; do
-    if [[ -x "${legacy}" ]]; then
-        if legacy_output="$(${legacy} "$@" < "${RULES_FILE}" 2>&1)"; then
-            printf '%s\n' "ip6tables-restore failed; succeeded using legacy backend." >&2
-            printf '%s\n' "Original error: ${output}" >&2
-            [[ -n "${legacy_output}" ]] && printf '%s\n' "${legacy_output}" >&2
-            exit 0
-        fi
-    fi
+	if [[ -x "${legacy}" ]]; then
+		if legacy_output="$(${legacy} "$@" <"${RULES_FILE}" 2>&1)"; then
+			printf '%s\n' "ip6tables-restore failed; succeeded using legacy backend." >&2
+			printf '%s\n' "Original error: ${output}" >&2
+			[[ -n "${legacy_output}" ]] && printf '%s\n' "${legacy_output}" >&2
+			exit 0
+		fi
+	fi
 
 done
 
 if ipv6_unavailable "${output}" || ipv6_unavailable "${retry_output}" || ipv6_unavailable "${legacy_output}"; then
-    printf '%s\n' "IPv6 firewall support not detected; skipping IPv6 ruleset restore and continuing." >&2
-    printf '%s\n' "Original error: ${output}" >&2
-    [[ -n "${retry_output}" ]] && printf '%s\n' "Sanitized retry error: ${retry_output}" >&2
-    [[ -n "${legacy_output}" ]] && printf '%s\n' "Legacy backend error: ${legacy_output}" >&2
-    exit 0
+	printf '%s\n' "IPv6 firewall support not detected; skipping IPv6 ruleset restore and continuing." >&2
+	printf '%s\n' "Original error: ${output}" >&2
+	[[ -n "${retry_output}" ]] && printf '%s\n' "Sanitized retry error: ${retry_output}" >&2
+	[[ -n "${legacy_output}" ]] && printf '%s\n' "Legacy backend error: ${legacy_output}" >&2
+	exit 0
 fi
 
 printf '%s\n' "ip6tables-restore failed and fallbacks were unsuccessful." >&2

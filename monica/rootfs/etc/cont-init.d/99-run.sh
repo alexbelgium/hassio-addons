@@ -166,7 +166,7 @@ if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
         bashio::log.error "${message}"
 
         if [ -n "${S6_SVSCANCTL_BIN}" ]; then
-            if ! "${S6_SVSCANCTL_BIN}" -t "${S6_SUPERVISED_DIR}" 2>/dev/null; then
+            if ! "${S6_SVSCANCTL_BIN}" -t "${S6_SUPERVISED_DIR}" 2> /dev/null; then
                 bashio::log.error "Unable to signal s6-svscanctl to stop services"
             fi
         else
@@ -181,7 +181,7 @@ if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
     }
 
     meilisearch_ensure_running() {
-        if kill -0 "${MEILISEARCH_PID}" 2>/dev/null; then
+        if kill -0 "${MEILISEARCH_PID}" 2> /dev/null; then
             return 0
         fi
 
@@ -201,12 +201,12 @@ if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
     }
 
     MEILISEARCH_CMD=(
-        env \
-            MEILI_ENV="${MEILISEARCH_ENVIRONMENT}" \
-            MEILI_NO_ANALYTICS="${MEILISEARCH_NO_ANALYTICS}" \
-            meilisearch \
-            --http-addr "${MEILISEARCH_ADDR}" \
-            --db-path "${MEILISEARCH_DB_PATH}"
+        env
+        MEILI_ENV="${MEILISEARCH_ENVIRONMENT}"
+        MEILI_NO_ANALYTICS="${MEILISEARCH_NO_ANALYTICS}"
+        meilisearch
+        --http-addr "${MEILISEARCH_ADDR}"
+        --db-path "${MEILISEARCH_DB_PATH}"
     )
 
     if [ -n "${MEILISEARCH_ENV_KEY}" ]; then
@@ -218,7 +218,7 @@ if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
 
     bashio::log.info "Waiting for Meilisearch TCP socket"
     for attempt in $(seq 1 30); do
-        if bash -c "cat < /dev/null > /dev/tcp/${MEILISEARCH_HOST}/${MEILISEARCH_PORT}" 2>/dev/null; then
+        if bash -c "cat < /dev/null > /dev/tcp/${MEILISEARCH_HOST}/${MEILISEARCH_PORT}" 2> /dev/null; then
             break
         fi
 

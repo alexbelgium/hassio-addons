@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "franchetti/seafile-arm:latest",
-        "amd64": "franchetti/seafile-arm:latest"
-    }
+  "build_from": {
+    "aarch64": "franchetti/seafile-arm:latest",
+    "amd64": "franchetti/seafile-arm:latest"
+  }
 }

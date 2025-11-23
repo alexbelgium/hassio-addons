@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "senexcrenshaw/xteve:latest",
-        "amd64": "senexcrenshaw/xteve:latest"
-    }
+  "build_from": {
+    "aarch64": "senexcrenshaw/xteve:latest",
+    "amd64": "senexcrenshaw/xteve:latest"
+  }
 }

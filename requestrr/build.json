@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "thomst08/requestrr:arm64-latest",
-        "amd64": "thomst08/requestrr:linux-latest"
-    }
+  "build_from": {
+    "aarch64": "thomst08/requestrr:arm64-latest",
+    "amd64": "thomst08/requestrr:linux-latest"
+  }
 }

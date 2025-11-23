@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "troglobit/inadyn:latest",
-        "amd64": "troglobit/inadyn:latest"
-    }
+  "build_from": {
+    "aarch64": "troglobit/inadyn:latest",
+    "amd64": "troglobit/inadyn:latest"
+  }
 }

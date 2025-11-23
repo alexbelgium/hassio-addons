@@ -29,11 +29,11 @@ else
         fi
 
         wireguard_config="$(cat "${WIREGUARD_STATE_DIR}/config")"
-        wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2>/dev/null || echo 'wg0')"
+        wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2> /dev/null || echo 'wg0')"
 
         if ip link show "${wireguard_interface}" &> /dev/null; then
             bashio::log.warning "WireGuard interface ${wireguard_interface} already exists. Attempting to reset it."
-            wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
+            wg-quick down "${wireguard_config}" > /dev/null 2>&1 || true
         fi
 
         bashio::log.info "Starting WireGuard interface ${wireguard_interface} using ${wireguard_config##*/}."
@@ -44,12 +44,12 @@ else
             mkdir -p "${legacy_bin_dir}"
 
             for cmd in iptables iptables-save iptables-restore ip6tables ip6tables-save ip6tables-restore; do
-                if command -v "${cmd}-legacy" >/dev/null 2>&1; then
+                if command -v "${cmd}-legacy" > /dev/null 2>&1; then
                     ln -sf "$(command -v "${cmd}-legacy")" "${legacy_bin_dir}/${cmd}"
                 fi
             done
 
-            chmod 700 "${legacy_bin_dir}" 2>/dev/null || true
+            chmod 700 "${legacy_bin_dir}" 2> /dev/null || true
             export PATH="${legacy_bin_dir}:${PATH}"
             bashio::log.warning 'Retrying WireGuard bring-up using iptables-legacy wrappers.'
         }
@@ -67,8 +67,8 @@ else
             fi
 
             if echo "${output}" | grep -qiE 'iptables-restore|ip6tables-restore|xtables'; then
-                if command -v iptables-legacy >/dev/null 2>&1 || command -v ip6tables-legacy >/dev/null 2>&1; then
-                    wg-quick down "${config_path}" >/dev/null 2>&1 || true
+                if command -v iptables-legacy > /dev/null 2>&1 || command -v ip6tables-legacy > /dev/null 2>&1; then
+                    wg-quick down "${config_path}" > /dev/null 2>&1 || true
                     _wireguard_prepare_iptables_legacy
                     output=$(wg-quick up "${config_path}" 2>&1)
                     status=$?
@@ -87,7 +87,7 @@ else
 
             ipv4_config="${WIREGUARD_STATE_DIR}/${wireguard_interface}-ipv4.conf"
             echo -n > "${ipv4_config}"
-            chmod 600 "${ipv4_config}" 2>/dev/null || true
+            chmod 600 "${ipv4_config}" 2> /dev/null || true
 
             while IFS= read -r line; do
                 if [[ "${line}" =~ ^Endpoint ]]; then
@@ -109,7 +109,7 @@ else
                 fi
             done < "${wireguard_config}"
 
-            wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
+            wg-quick down "${wireguard_config}" > /dev/null 2>&1 || true
 
             if ! _wireguard_up_with_iptables_fallback "${ipv4_config}"; then
                 bashio::log.error 'WireGuard failed to establish a connection after IPv4-only retry.'
@@ -129,9 +129,9 @@ else
         bashio::log.info "WireGuard interface ${wireguard_interface} is up."
 
         # Refresh DNS resolver configuration if resolvconf is present
-        if command -v resolvconf >/dev/null 2>&1; then
+        if command -v resolvconf > /dev/null 2>&1; then
             bashio::log.info 'Refreshing DNS resolver configuration via resolvconf -u.'
-            if ! resolvconf -u >/dev/null 2>&1; then
+            if ! resolvconf -u > /dev/null 2>&1; then
                 bashio::log.warning 'resolvconf -u failed. DNS configuration may not have been updated.'
             fi
         else

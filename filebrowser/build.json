@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "filebrowser/filebrowser:s6",
-        "amd64": "filebrowser/filebrowser:s6"
-    }
+  "build_from": {
+    "aarch64": "filebrowser/filebrowser:s6",
+    "amd64": "filebrowser/filebrowser:s6"
+  }
 }

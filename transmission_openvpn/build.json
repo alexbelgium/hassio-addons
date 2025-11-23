@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "haugene/transmission-openvpn:latest",
-        "amd64": "haugene/transmission-openvpn:latest"
-    }
+  "build_from": {
+    "aarch64": "haugene/transmission-openvpn:latest",
+    "amd64": "haugene/transmission-openvpn:latest"
+  }
 }

@@ -3,15 +3,15 @@ set -euo pipefail
 
 REAL_SYSCTL="/sbin/sysctl"
 if [[ ! -x "${REAL_SYSCTL}" ]]; then
-    REAL_SYSCTL="/usr/sbin/sysctl"
+	REAL_SYSCTL="/usr/sbin/sysctl"
 fi
 
 if [[ "$#" -ge 2 && "$1" == "-q" && "$2" == "net.ipv4.conf.all.src_valid_mark=1" ]]; then
-    if "${REAL_SYSCTL}" "$@" >/dev/null 2>&1; then
-        exit 0
-    fi
-    # Suppress failure for this specific key to keep wg-quick from aborting in unprivileged environments.
-    exit 0
+	if "${REAL_SYSCTL}" "$@" >/dev/null 2>&1; then
+		exit 0
+	fi
+	# Suppress failure for this specific key to keep wg-quick from aborting in unprivileged environments.
+	exit 0
 fi
 
 exec "${REAL_SYSCTL}" "$@"

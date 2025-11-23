@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "ghcr.io/jokob-sk/netalertx:latest",
-        "amd64": "ghcr.io/jokob-sk/netalertx:latest"
-    }
+  "build_from": {
+    "aarch64": "ghcr.io/jokob-sk/netalertx:latest",
+    "amd64": "ghcr.io/jokob-sk/netalertx:latest"
+  }
 }

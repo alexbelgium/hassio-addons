@@ -1,6 +1,6 @@
 {
-    "build_from": {
-        "aarch64": "ertagh/teamspeak3-server:latest-predownloaded",
-        "amd64": "ertagh/teamspeak3-server:x64-latest-predownloaded"
-    }
+  "build_from": {
+    "aarch64": "ertagh/teamspeak3-server:latest-predownloaded",
+    "amd64": "ertagh/teamspeak3-server:x64-latest-predownloaded"
+  }
 }

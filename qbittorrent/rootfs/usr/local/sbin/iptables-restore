@@ -3,47 +3,47 @@ set -euo pipefail
 
 REAL_IPTABLES_RESTORE="/sbin/iptables-restore"
 if [[ ! -x "${REAL_IPTABLES_RESTORE}" ]]; then
-    REAL_IPTABLES_RESTORE="/usr/sbin/iptables-restore"
+	REAL_IPTABLES_RESTORE="/usr/sbin/iptables-restore"
 fi
 
 cleanup() {
-    [[ -n "${RULES_FILE:-}" && -f "${RULES_FILE}" ]] && rm -f "${RULES_FILE}"
-    [[ -n "${SANITIZED_FILE:-}" && -f "${SANITIZED_FILE}" ]] && rm -f "${SANITIZED_FILE}"
+	[[ -n "${RULES_FILE:-}" && -f "${RULES_FILE}" ]] && rm -f "${RULES_FILE}"
+	[[ -n "${SANITIZED_FILE:-}" && -f "${SANITIZED_FILE}" ]] && rm -f "${SANITIZED_FILE}"
 }
 trap cleanup EXIT
 
 RULES_FILE="$(mktemp)"
-cat > "${RULES_FILE}"
+cat >"${RULES_FILE}"
 
 # First attempt with the original ruleset
-if output="$(${REAL_IPTABLES_RESTORE} "$@" < "${RULES_FILE}" 2>&1)"; then
-    [[ -n "${output}" ]] && printf '%s\n' "${output}" >&2
-    exit 0
+if output="$(${REAL_IPTABLES_RESTORE} "$@" <"${RULES_FILE}" 2>&1)"; then
+	[[ -n "${output}" ]] && printf '%s\n' "${output}" >&2
+	exit 0
 fi
 status=$?
 
 # Retry without comment matches if the kernel is missing the comment module
 SANITIZED_FILE="$(mktemp)"
-sed -E 's/-m[[:space:]]+comment[[:space:]]+--comment[[:space:]]+"[^"]*"//g' "${RULES_FILE}" > "${SANITIZED_FILE}"
+sed -E 's/-m[[:space:]]+comment[[:space:]]+--comment[[:space:]]+"[^"]*"//g' "${RULES_FILE}" >"${SANITIZED_FILE}"
 
-if retry_output="$(${REAL_IPTABLES_RESTORE} "$@" < "${SANITIZED_FILE}" 2>&1)"; then
-    printf '%s\n' "iptables-restore failed with comment matches; reapplied without comments." >&2
-    printf '%s\n' "Original error: ${output}" >&2
-    [[ -n "${retry_output}" ]] && printf '%s\n' "${retry_output}" >&2
-    exit 0
+if retry_output="$(${REAL_IPTABLES_RESTORE} "$@" <"${SANITIZED_FILE}" 2>&1)"; then
+	printf '%s\n' "iptables-restore failed with comment matches; reapplied without comments." >&2
+	printf '%s\n' "Original error: ${output}" >&2
+	[[ -n "${retry_output}" ]] && printf '%s\n' "${retry_output}" >&2
+	exit 0
 fi
 retry_status=$?
 
 # Final fallback: try legacy backend if available
 for legacy in /sbin/iptables-restore-legacy /usr/sbin/iptables-restore-legacy; do
-    if [[ -x "${legacy}" ]]; then
-        if legacy_output="$(${legacy} "$@" < "${RULES_FILE}" 2>&1)"; then
-            printf '%s\n' "iptables-restore failed; succeeded using legacy backend." >&2
-            printf '%s\n' "Original error: ${output}" >&2
-            [[ -n "${legacy_output}" ]] && printf '%s\n' "${legacy_output}" >&2
-            exit 0
-        fi
-    fi
+	if [[ -x "${legacy}" ]]; then
+		if legacy_output="$(${legacy} "$@" <"${RULES_FILE}" 2>&1)"; then
+			printf '%s\n' "iptables-restore failed; succeeded using legacy backend." >&2
+			printf '%s\n' "Original error: ${output}" >&2
+			[[ -n "${legacy_output}" ]] && printf '%s\n' "${legacy_output}" >&2
+			exit 0
+		fi
+	fi
 done
 
 printf '%s\n' "iptables-restore failed and fallbacks were unsuccessful." >&2
