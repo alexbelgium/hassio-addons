@@ -1,3 +1,5 @@
+- Cycle through ip providers to avoid rate limiting api
+
 ## 5.1.2-13 (19-11-2025)
 - Add IPv4 fallback for WireGuard connections
 
