@@ -15,7 +15,9 @@ if bashio::config.true 'openvpn_enabled'; then
     bashio::log.info "----------------------------"
 
     # Get current ip
-    curl -s ipecho.net/plain > /currentip
+    ( curl -fsS --max-time 10 https://ifconfig.co/ip \
+    || curl -fsS --max-time 10 https://api64.ipify.org \
+    || curl -fsS --max-time 10 https://ipecho.net/plain ) > /currentip
 
     # Function to check for files path
     function check_path() {
