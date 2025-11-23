@@ -1,4 +1,7 @@
 
+## debian-2025-11-18 (2025-11-18)
+- Restore the default configuration template to config.json with the expected sample values
+
 ## debian-2025-11-16 (2025-11-16)
 - Update to latest version from charlocharlie/epicgames-freegames
 ## "debian-2025-11-09" (09-11-2025)

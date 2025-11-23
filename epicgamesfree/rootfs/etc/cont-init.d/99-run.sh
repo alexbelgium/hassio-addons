@@ -7,15 +7,22 @@ set -e
 ##############
 
 HOME="/config/addons_config/epicgamesfree"
-if [ ! -f "$HOME"/config.json ]; then
-    # Copy default config.json
-    cp /templates/config.json "$HOME"/config.json
-    chmod 755 "$HOME"/config.json
-    bashio::log.warning "A default config.json file was copied in $HOME. Please customize according to https://github.com/claabs/epicgames-freegames-node#json-configuration and restart the add-on"
-    sleep 5
-    bashio::exit.nok
+CONFIG_JSON="$HOME/config.json"
+LEGACY_YAML="$HOME/config.yaml"
+
+if [ ! -f "$CONFIG_JSON" ]; then
+    if [ -f "$LEGACY_YAML" ]; then
+        bashio::log.warning "A config.yaml file was found but the add-on expects config.json. Please convert your configuration to JSON as documented upstream."
+    else
+        # Copy default config.json
+        cp /templates/config.json "$CONFIG_JSON"
+        chmod 755 "$CONFIG_JSON"
+        bashio::log.warning "A default config.json file was copied in $HOME. Please customize according to https://github.com/claabs/epicgames-freegames-node#configuration and restart the add-on"
+        sleep 5
+        bashio::exit.nok
+    fi
 else
-    bashio::log.warning "The config.json file found in $HOME will be used. Please customize according to https://github.com/claabs/epicgames-freegames-node#json-configuration and restart the add-on"
+    bashio::log.warning "The config.json file found in $HOME will be used. Please customize according to https://github.com/claabs/epicgames-freegames-node#configuration and restart the add-on"
 fi
 
 # Permissions

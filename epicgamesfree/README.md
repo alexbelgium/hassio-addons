@@ -28,13 +28,13 @@ This addon is based on the docker image https://hub.docker.com/r/charlocharlie/e
 
 ## Configuration
 
-Addon options expose the `env_vars` field for passing extra environment variables; all other configuration is done via JSON files.
+Addon options expose the `env_vars` field for passing extra environment variables; all other configuration is done via the JSON file.
 
 ### Configuration Files
 
 Configuration files are stored in `/config/addons_config/epicgamesfree/`:
 
-- **config.yaml**: Main configuration file
+- **config.json**: Main configuration file
 - **cookies.json**: Authentication cookies (optional)
 
 If these files don't exist, they will be created at first boot with default settings.
@@ -43,23 +43,26 @@ If these files don't exist, they will be created at first boot with default sett
 
 ### Basic Configuration
 
-Create `/config/addons_config/epicgamesfree/config.yaml`:
+Create `/config/addons_config/epicgamesfree/config.json`:
 
 ```json
 {
+  "runOnStartup": true,
+  "cronSchedule": "0 */6 * * *",
+  "logLevel": "info",
+  "webPortalConfig": {
+    "baseUrl": "https://epic.example.com"
+  },
   "accounts": [
     {
-      "email": "your-epic-email@example.com", 
+      "email": "your-epic-email@example.com",
       "password": "your-password",
       "totp": "OPTIONAL_2FA_SECRET"
     }
   ],
-  "intervalHours": 24,
-  "onlyWeekly": false,
-  "searchStrategy": "purchase",
-  "browserNavigationTimeout": 300000,
-  "notifications": {
-    "email": {
+  "notifiers": [
+    {
+      "type": "email",
       "smtpHost": "smtp.gmail.com",
       "smtpPort": 587,
       "emailSenderAddress": "notifications@example.com",
@@ -71,7 +74,7 @@ Create `/config/addons_config/epicgamesfree/config.yaml`:
         "pass": "your-app-password"
       }
     }
-  }
+  ]
 }
 ```
 
@@ -80,51 +83,52 @@ Create `/config/addons_config/epicgamesfree/config.yaml`:
 | Option | Type | Description |
 |--------|------|-------------|
 | `accounts` | array | List of Epic Games accounts |
-| `intervalHours` | number | Check interval in hours (default: 24) |
-| `onlyWeekly` | boolean | Only claim weekly free games |
-| `searchStrategy` | string | Search strategy: "purchase" or "claim" |
-| `browserNavigationTimeout` | number | Browser timeout in milliseconds |
-| `notifications` | object | Notification settings (email, webhook, etc.) |
+| `cronSchedule` | string | Cron schedule to claim games (default: `0 */6 * * *`) |
+| `runOnStartup` | boolean | Run a claim cycle when the add-on starts |
+| `logLevel` | string | Application log level |
+| `webPortalConfig.baseUrl` | string | Base URL used by the included web portal |
+| `notifiers` | array | Notification targets such as email, Discord, Telegram, Apprise, etc. |
 
 ### Account Configuration
 
 For each account in the `accounts` array:
 
-```json
-{
-  "email": "account@example.com",
-  "password": "password",
-  "totp": "TOTP_SECRET",
-  "onlyWeekly": true
-}
+```yaml
+email: account@example.com
+password: password
+totp: TOTP_SECRET
+onlyWeekly: true
 ```
 
 ### Notification Methods
 
 #### Email Notifications
-```json
-"notifications": {
-  "email": {
-    "smtpHost": "smtp.gmail.com",
-    "smtpPort": 587,
-    "emailSenderAddress": "sender@example.com",
-    "emailRecipientAddress": "recipient@example.com",
-    "secure": false,
-    "auth": {
-      "user": "sender@example.com",
-      "pass": "app-password"
-    }
-  }
-}
+```yaml
+notifications:
+  email:
+    smtpHost: smtp.gmail.com
+    smtpPort: 587
+    emailSenderAddress: sender@example.com
+    emailRecipientAddress: recipient@example.com
+    secure: false
+    auth:
+      user: sender@example.com
+      pass: app-password
 ```
 
 #### Webhook Notifications
 ```json
-"notifications": {
-  "webhook": {
-    "url": "https://your-webhook-url.com",
-    "events": ["purchase-success", "already-owned"]
-  }
+{
+  "notifiers": [
+    {
+      "type": "webhook",
+      "url": "https://your-webhook-url.com",
+      "events": [
+        "purchase-success",
+        "already-owned"
+      ]
+    }
+  ]
 }
 ```
 
@@ -144,9 +148,11 @@ For detailed cookie import instructions, see: https://github.com/claabs/epicgame
 ### Troubleshooting
 
 #### Timeout Errors
-Add the following to your config.yaml:
+Add the following to your config.json:
 ```json
-"browserNavigationTimeout": 300000
+{
+  "browserNavigationTimeout": 300000
+}
 ```
 
 #### Login Issues
@@ -172,7 +178,7 @@ The installation of this add-on is pretty straightforward and not different in c
 
 ### Timeout error
 
-Please try adding `"browserNavigationTimeout": 300000,` to your config.yaml (https://github.com/alexbelgium/hassio-addons/issues/675#issuecomment-1407675351)
+Please try adding `"browserNavigationTimeout": 300000,` to your config.json (https://github.com/alexbelgium/hassio-addons/issues/675#issuecomment-1407675351)
 
 ### Other errors
 
