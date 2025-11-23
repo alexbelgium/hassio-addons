@@ -1,3 +1,5 @@
+## breaking_versions: 10.11.3-1 (23-11-2025)
+- Minor bugs fixed
 
 ## 10.11.3-1 (23-11-2025)
 - Fix optional `i915_enable_guc` setting so the add-on no longer requires a value after updates.
