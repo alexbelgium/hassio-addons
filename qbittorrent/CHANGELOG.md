@@ -1,3 +1,5 @@
+## 5.1.2-17 (24-11-2025)
+- Minor bugs fixed
 ## 5.1.2-16 (23-11-2025)
 - Cycle through ip providers to avoid rate limiting api
 
