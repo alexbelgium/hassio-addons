@@ -15,6 +15,7 @@ VPN_INFO_URL="${VPN_INFO_URL:-https://ipinfo.io}"
 _fetch_public_ip() {
     local resp
     local url
+    local curl_iface_opts=()
     local urls=(
         "https://icanhazip.com"
         "https://ifconfig.me/ip"
@@ -24,10 +25,15 @@ _fetch_public_ip() {
         "https://ipinfo.io/ip"
     )
     local shuffled_urls
+
+    if [[ -n "${VPN_INTERFACE:-}" ]]; then
+        curl_iface_opts+=(--interface "${VPN_INTERFACE}")
+    fi
+
     mapfile -t shuffled_urls < <(printf "%s\n" "${urls[@]}" | shuf)
 
     for url in "${shuffled_urls[@]}"; do
-        resp=$(curl -fsS --max-time 5 "${url}" 2>/dev/null || true)
+        resp=$(curl -fsS --max-time 5 "${curl_iface_opts[@]}" "${url}" 2>/dev/null || true)
         resp="${resp//[[:space:]]/}"
 
         if [[ "${resp}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || [[ "${resp}" =~ ^[0-9a-fA-F:]+$ ]]; then
@@ -121,6 +127,13 @@ vpn_wireguard=false
 
 if bashio::config.true 'openvpn_enabled'; then
     vpn_openvpn=true
+fi
+
+if [[ "${vpn_openvpn}" == true ]] && bashio::config.false 'openvpn_alt_mode'; then
+    VPN_INTERFACE="tun0"
+    bashio::log.info "VPN monitor set to query external IP through interface ${VPN_INTERFACE} (interface binding)."
+else
+    VPN_INTERFACE=""
 fi
 
 if bashio::config.true 'wireguard_enabled'; then
