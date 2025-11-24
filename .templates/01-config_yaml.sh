@@ -11,6 +11,8 @@ if [ ! -d /config ] || ! bashio::supervisor.ping 2> /dev/null; then
     exit 0
 fi
 
+bashio::log.notice "This script is used to export custom environment variables at start of the addon using the env_vars addon options. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
+
 # Define slug
 slug="${HOSTNAME/-/_}"
 slug="${slug#*_}"
@@ -110,8 +112,6 @@ if [[ "$CONFIGSOURCE" == "/config"* ]]; then
 else
     bashio::log.green "If accessing the file with filebrowser it should be mapped to $CONFIGSOURCE"
 fi
-bashio::log.green "---------------------------------------------------------"
-bashio::log.notice "This script is used to export custom environment variables at start of the addon. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon"
 bashio::log.warning "This methodology is deprecated, please convert your Environment variables to the addon options env_vars. Instructions can be found here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
 echo ""
 
