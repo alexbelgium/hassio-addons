@@ -1,3 +1,5 @@
+## 5.1.2-22 (24-11-2025)
+- Minor bugs fixed
 ## 5.1.2-21 (24-11-2025)
 - Cycle through ip providers to avoid rate limiting api
 - Simplify vpn leakage verification script
