@@ -12,8 +12,6 @@ fi
 ###################################
 
 echo ""
-bashio::log.green "Convert addon options to environment variables"
-bashio::log.green "----------------------------------------------"
 bashio::log.notice "This script converts all addon options to environment variables. Custom variables can be set using env_vars."
 bashio::log.notice "Additional informations : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
 echo ""
