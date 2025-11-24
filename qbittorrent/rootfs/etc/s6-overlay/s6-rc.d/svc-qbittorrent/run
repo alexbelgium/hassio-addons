@@ -10,7 +10,8 @@ if bashio::config.true 'silent'; then
     sed -i 's|/proc/1/fd/1 hassio;|off;|g' /etc/nginx/nginx.conf
 fi
 
-# --- Helper for ip
+# --- Helper Functions ---
+
 _fetch_public_ip() {
     local resp
     local url
@@ -24,18 +25,100 @@ _fetch_public_ip() {
     )
     local shuffled_urls
     mapfile -t shuffled_urls < <(printf "%s\n" "${urls[@]}" | shuf)
-
+    # Loop through the now-randomized list
     for url in "${shuffled_urls[@]}"; do
         resp=$(curl -fsS --max-time 5 "${url}" 2>/dev/null || true)
         resp="${resp//[[:space:]]/}"
 
+        # Validate IPv4 or IPv6
         if [[ "${resp}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || [[ "${resp}" =~ ^[0-9a-fA-F:]+$ ]]; then
             printf '%s\n' "${resp}"
             return 0
         fi
     done
-
     return 1
+}
+
+_fetch_country_code() {
+    local resp
+    local url
+    local urls=(
+        "https://ipapi.co/country/"
+        "http://ip-api.com/line/?fields=countryCode"
+        "https://ipinfo.io/country"
+    )
+    local shuffled_urls_output
+    shuffled_urls_output=$(printf '%s\n' "${urls[@]}" | shuf)
+    while IFS= read -r url; do
+        # Skip empty lines if any
+        [[ -z "${url}" ]] && continue
+        # Fetch the response with a 5-second timeout
+        resp=$(curl -fsS --max-time 5 "${url}" 2>/dev/null || true)
+        # Clean whitespace/newlines
+        resp="${resp//[[:space:]]/}"
+        # Validation: Ensure the response is exactly 2 letters (ISO 3166-1 alpha-2)
+        if [[ "${resp}" =~ ^[A-Za-z]{2}$ ]]; then
+            # Convert to uppercase and print
+            printf '%s\n' "${resp^^}"
+            return 0
+        fi
+    done <<< "${shuffled_urls_output}" # Process the shuffled output
+    return 1
+}
+
+_vpn_monitor_public_ip() {
+    local vpn_label="${1:-VPN}"
+    local current_ip_file="/currentip"
+    local baseline_ip vpn_ip country
+    local interval=${VPN_LEAK_CHECK_INTERVAL:-300}
+    local initial_delay=${VPN_LEAK_INITIAL_DELAY:-30}
+
+    # Pre-flight checks
+    if ! command -v curl >/dev/null 2>&1; then
+        bashio::log.warning "${vpn_label}: curl not found; VPN leak monitoring disabled."
+        return 0
+    fi
+
+    if [[ ! -s "${current_ip_file}" ]]; then
+        bashio::log.warning "${vpn_label}: public ip could not be reached; VPN leak monitoring disabled."
+        return 0
+    fi
+
+    if ! bashio::fs.file_exists "${current_ip_file}"; then
+        bashio::log.warning "${vpn_label}: baseline IP file ${current_ip_file} not found; VPN leak monitoring disabled."
+        return 0
+    fi
+
+    baseline_ip="$(tr -d '[:space:]' < "${current_ip_file}")"
+    if [[ -z "${baseline_ip}" ]]; then
+        bashio::log.warning "${vpn_label}: baseline IP in ${current_ip_file} is empty; VPN leak monitoring disabled."
+        return 0
+    fi
+
+    bashio::log.debug "${vpn_label}: Waiting ${initial_delay}s before first leak check."
+    sleep "${initial_delay}"
+
+    while true; do
+        vpn_ip="$(_fetch_public_ip || true)"
+
+        if [[ -z "${vpn_ip}" ]]; then
+            bashio::log.warning "${vpn_label}: Failed to fetch public IP (rate limited or connection down)."
+        else
+            if country="$(_fetch_country_code || true)"; then
+                bashio::log.info "${vpn_label}: Current IP: ${vpn_ip} (${country})"
+            else
+                bashio::log.info "${vpn_label}: Current IP: ${vpn_ip} (Country Unknown)"
+            fi
+
+            # LEAK DETECTED
+            if [[ "${vpn_ip}" == "${baseline_ip}" ]]; then
+                bashio::log.fatal "${vpn_label}: VPN LEAK DETECTED! Current IP ${vpn_ip} matches baseline. Stopping container."
+                bashio::addon.stop
+                exit 1
+            fi
+        fi
+        sleep "${interval}"
+    done
 }
 
 # --- WireGuard Specific Logic ---
@@ -139,7 +222,7 @@ _setup_wireguard() {
     fi
 
     bashio::log.info "WireGuard interface ${wireguard_interface} is up."
-    
+
     # DNS Refresh
     if command -v resolvconf >/dev/null 2>&1; then
         resolvconf -u >/dev/null 2>&1 || bashio::log.warning 'resolvconf -u failed.'
@@ -147,9 +230,13 @@ _setup_wireguard() {
 }
 
 # --- Main Execution ---
+
 echo "$(_fetch_public_ip || true)" > /currentip
 
 if bashio::config.true 'openvpn_enabled'; then
+    # Start Leak Monitor
+    _vpn_monitor_public_ip "OpenVPN" &
+
     exec /usr/sbin/openvpn \
         --config /config/openvpn/config.ovpn \
         --script-security 2 \
@@ -161,8 +248,15 @@ if bashio::config.true 'openvpn_enabled'; then
         --pull-filter ignore "redirect-gateway ipv6" \
         --pull-filter ignore "dhcp-option DNS6" \
     &
-elif bashio::config.true 'wireguard_enabled'; then   
+
+elif bashio::config.true 'wireguard_enabled'; then
+
+    # Run modularized WireGuard setup
     _setup_wireguard
+
+    # Start Leak Monitor
+    _vpn_monitor_public_ip "WireGuard" &
+
 fi
 
 # --- Launch qBittorrent ---
