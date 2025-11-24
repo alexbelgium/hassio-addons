@@ -2,15 +2,15 @@
 # shellcheck shell=bash
 
 WEBUI_PORT=${WEBUI_PORT:-8080}
-
 export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
 
-# Global variable used by WireGuard bring-up helper
-output=""
+# --- Configuration & Pre-checks ---
 
 if bashio::config.true 'silent'; then
     sed -i 's|/proc/1/fd/1 hassio;|off;|g' /etc/nginx/nginx.conf
 fi
+
+# --- Helper Functions ---
 
 _fetch_public_ip() {
     local resp
@@ -70,18 +70,13 @@ _fetch_country_code() {
 }
 
 _vpn_monitor_public_ip() {
-    # Arg1: label ("OpenVPN", "WireGuard", etc.)
     local vpn_label="${1:-VPN}"
     local current_ip_file="/currentip"
-    local baseline_ip
-    local vpn_ip
-    local country
-    local interval
-    local initial_delay
+    local baseline_ip vpn_ip country
+    local interval=${VPN_LEAK_CHECK_INTERVAL:-300}
+    local initial_delay=${VPN_LEAK_INITIAL_DELAY:-60}
 
-    interval=${VPN_LEAK_CHECK_INTERVAL:-300}
-    initial_delay=${VPN_LEAK_INITIAL_DELAY:-60}
-
+    # Pre-flight checks
     if ! command -v curl >/dev/null 2>&1; then
         bashio::log.warning "${vpn_label}: curl not found; VPN leak monitoring disabled."
         return 0
@@ -98,39 +93,145 @@ _vpn_monitor_public_ip() {
         return 0
     fi
 
-    bashio::log.info "${vpn_label}: baseline (non-VPN) IP for leak detection: ${baseline_ip}"
-    bashio::log.debug "${vpn_label}: waiting ${initial_delay}s before first leak check."
+    bashio::log.info "${vpn_label}: Baseline (ISP) IP: ${baseline_ip}"
+    bashio::log.debug "${vpn_label}: Waiting ${initial_delay}s before first leak check."
     sleep "${initial_delay}"
 
     while true; do
         vpn_ip="$(_fetch_public_ip || true)"
+        
         if [[ -z "${vpn_ip}" ]]; then
-            bashio::log.warning "${vpn_label}: failed to obtain VPN public IP from all providers (rate limited or unreachable)."
+            bashio::log.warning "${vpn_label}: Failed to fetch public IP (rate limited or connection down)."
         else
             if country="$(_fetch_country_code || true)"; then
-                bashio::log.info "${vpn_label}: public IP: ${vpn_ip} (${country})."
+                bashio::log.info "${vpn_label}: Current IP: ${vpn_ip} (${country})"
             else
-                bashio::log.info "${vpn_label}: public IP: ${vpn_ip} (country unknown)."
+                bashio::log.info "${vpn_label}: Current IP: ${vpn_ip} (Country Unknown)"
             fi
 
+            # LEAK DETECTED
             if [[ "${vpn_ip}" == "${baseline_ip}" ]]; then
-                bashio::log.error "${vpn_label}: VPN leak detected: public IP ${vpn_ip} matches baseline ${baseline_ip}. Stopping add-on."
-                # Try to terminate the service tree cleanly.
+                bashio::log.fatal "${vpn_label}: VPN LEAK DETECTED! Current IP ${vpn_ip} matches baseline. Stopping container."
                 s6-svscanctl -t /var/run/s6/services 2>/dev/null || true
                 exit 1
             fi
         fi
-
         sleep "${interval}"
     done
 }
 
-#
-# --- Main logic: OpenVPN / WireGuard / qBittorrent ---
-#
+# --- WireGuard Specific Logic ---
+
+_setup_wireguard() {
+    local WIREGUARD_STATE_DIR="/var/run/wireguard"
+    local output=""
+    local status=0
+
+    if ! bashio::fs.file_exists "${WIREGUARD_STATE_DIR}/config"; then
+        bashio::exit.nok 'WireGuard runtime configuration not prepared. Please restart the add-on.'
+    fi
+
+    local wireguard_config
+    wireguard_config="$(cat "${WIREGUARD_STATE_DIR}/config")"
+    local wireguard_interface
+    wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2>/dev/null || echo 'wg0')"
+
+    if ip link show "${wireguard_interface}" &> /dev/null; then
+        bashio::log.warning "WireGuard interface ${wireguard_interface} already exists. Resetting."
+        wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
+    fi
+
+    bashio::log.info "Starting WireGuard interface ${wireguard_interface}..."
+
+    # Internal helper: fallback for iptables-legacy
+    _wg_prepare_legacy() {
+        local legacy_bin_dir="${WIREGUARD_STATE_DIR}/iptables-legacy-bin"
+        mkdir -p "${legacy_bin_dir}"
+        local cmd
+        for cmd in iptables iptables-save iptables-restore ip6tables ip6tables-save ip6tables-restore; do
+            if command -v "${cmd}-legacy" >/dev/null 2>&1; then
+                ln -sf "$(command -v "${cmd}-legacy")" "${legacy_bin_dir}/${cmd}"
+            fi
+        done
+        chmod 700 "${legacy_bin_dir}" 2>/dev/null || true
+        export PATH="${legacy_bin_dir}:${PATH}"
+        bashio::log.warning 'Retrying WireGuard using iptables-legacy wrappers.'
+    }
+
+    # Internal helper: Attempt connection
+    _wg_up_attempt() {
+        local config_path="$1"
+        output="$(wg-quick up "${config_path}" 2>&1)" || status=$?
+
+        if [ "${status}" -eq 0 ]; then return 0; fi
+
+        # Check for iptables errors and try legacy fallback
+        if echo "${output}" | grep -qiE 'iptables-restore|ip6tables-restore|xtables'; then
+            if command -v iptables-legacy >/dev/null 2>&1; then
+                wg-quick down "${config_path}" >/dev/null 2>&1 || true
+                _wg_prepare_legacy
+                output="$(wg-quick up "${config_path}" 2>&1)" || status=$?
+            else
+                bashio::log.warning 'iptables errors detected but iptables-legacy missing.'
+                status=1
+            fi
+        fi
+        return "${status}"
+    }
+
+    # 1. First Attempt
+    if ! _wg_up_attempt "${wireguard_config}"; then
+        bashio::log.warning 'Initial WireGuard connection failed. Trying IPv4-only endpoints.'
+        bashio::log.debug "Output: ${output}"
+
+        # 2. IPv4 Fallback Preparation
+        local ipv4_config="${WIREGUARD_STATE_DIR}/${wireguard_interface}-ipv4.conf"
+        : > "${ipv4_config}"
+        chmod 600 "${ipv4_config}" 2>/dev/null || true
+
+        local line endpoint endpoint_host endpoint_port
+        while IFS= read -r line || [ -n "$line" ]; do
+            if [[ "${line}" =~ ^Endpoint ]]; then
+                endpoint="${line#Endpoint = }"
+                endpoint_host="${endpoint%:*}"
+                endpoint_port="${endpoint##*:}"
+
+                # Resolve hostname to IPv4
+                mapfile -t ipv4_candidates < <(getent ahostsv4 "${endpoint_host}" | awk '{print $1}' | uniq)
+
+                if [ ${#ipv4_candidates[@]} -gt 0 ]; then
+                    bashio::log.debug "Resolved ${endpoint_host} to ${ipv4_candidates[0]}"
+                    echo "Endpoint = ${ipv4_candidates[0]}:${endpoint_port}" >> "${ipv4_config}"
+                else
+                    echo "${line}" >> "${ipv4_config}"
+                fi
+            else
+                echo "${line}" >> "${ipv4_config}"
+            fi
+        done < "${wireguard_config}"
+
+        wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
+
+        # 3. Second Attempt (IPv4 only)
+        if ! _wg_up_attempt "${ipv4_config}"; then
+            bashio::log.error 'WireGuard failed to establish connection.'
+            bashio::log.error "${output}"
+            bashio::exit.nok 'WireGuard start failed.'
+        fi
+    fi
+
+    bashio::log.info "WireGuard interface ${wireguard_interface} is up."
+    
+    # DNS Refresh
+    if command -v resolvconf >/dev/null 2>&1; then
+        resolvconf -u >/dev/null 2>&1 || bashio::log.warning 'resolvconf -u failed.'
+    fi
+}
+
+# --- Main Execution ---
 
 if bashio::config.true 'openvpn_enabled'; then
-    # Start leak monitor for OpenVPN in the background
+    # Start Leak Monitor
     _vpn_monitor_public_ip "OpenVPN" &
 
     exec /usr/sbin/openvpn \
@@ -143,134 +244,27 @@ if bashio::config.true 'openvpn_enabled'; then
         --pull-filter ignore "tun-ipv6" \
         --pull-filter ignore "redirect-gateway ipv6" \
         --pull-filter ignore "dhcp-option DNS6"
-else
-    if bashio::config.true 'wireguard_enabled'; then
-        WIREGUARD_STATE_DIR="/var/run/wireguard"
 
-        if ! bashio::fs.file_exists "${WIREGUARD_STATE_DIR}/config"; then
-            bashio::exit.nok 'WireGuard runtime configuration not prepared. Please restart the add-on.'
-        fi
+elif bashio::config.true 'wireguard_enabled'; then
+    
+    # Run modularized WireGuard setup
+    _setup_wireguard
 
-        wireguard_config="$(cat "${WIREGUARD_STATE_DIR}/config")"
-        wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2>/dev/null || echo 'wg0')"
+    # Start Leak Monitor
+    _vpn_monitor_public_ip "WireGuard" &
 
-        if ip link show "${wireguard_interface}" &> /dev/null; then
-            bashio::log.warning "WireGuard interface ${wireguard_interface} already exists. Attempting to reset it."
-            wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
-        fi
-
-        bashio::log.info "Starting WireGuard interface ${wireguard_interface} using ${wireguard_config##*/}."
-
-        # Prefer host-provided iptables-legacy binaries if the default backend fails.
-        _wireguard_prepare_iptables_legacy() {
-            local legacy_bin_dir="${WIREGUARD_STATE_DIR}/iptables-legacy-bin"
-            mkdir -p "${legacy_bin_dir}"
-
-            local cmd
-            for cmd in iptables iptables-save iptables-restore ip6tables ip6tables-save ip6tables-restore; do
-                if command -v "${cmd}-legacy" >/dev/null 2>&1; then
-                    ln -sf "$(command -v "${cmd}-legacy")" "${legacy_bin_dir}/${cmd}"
-                fi
-            done
-
-            chmod 700 "${legacy_bin_dir}" 2>/dev/null || true
-            export PATH="${legacy_bin_dir}:${PATH}"
-            bashio::log.warning 'Retrying WireGuard bring-up using iptables-legacy wrappers.'
-        }
-
-        _wireguard_up_with_iptables_fallback() {
-            local config_path="$1"
-            local status=0
-
-            output="$(wg-quick up "${config_path}" 2>&1)" || status=$?
-
-            if [ "${status}" -eq 0 ]; then
-                return 0
-            fi
-
-            if echo "${output}" | grep -qiE 'iptables-restore|ip6tables-restore|xtables'; then
-                if command -v iptables-legacy >/dev/null 2>&1 || command -v ip6tables-legacy >/dev/null 2>&1; then
-                    wg-quick down "${config_path}" >/dev/null 2>&1 || true
-                    _wireguard_prepare_iptables_legacy
-                    output="$(wg-quick up "${config_path}" 2>&1)" || status=$?
-                else
-                    bashio::log.warning 'iptables errors detected but iptables-legacy binaries are unavailable in the image.'
-                    status=1
-                fi
-            fi
-
-            return "${status}"
-        }
-
-        if ! _wireguard_up_with_iptables_fallback "${wireguard_config}"; then
-            bashio::log.warning 'Initial WireGuard connection attempt failed. Trying again with IPv4-only endpoints.'
-            bashio::log.warning "First attempt output:${bashio::constants.LF}${output}"
-
-            ipv4_config="${WIREGUARD_STATE_DIR}/${wireguard_interface}-ipv4.conf"
-            : > "${ipv4_config}"
-            chmod 600 "${ipv4_config}" 2>/dev/null || true
-
-            local line endpoint endpoint_host endpoint_port
-            while IFS= read -r line; do
-                if [[ "${line}" =~ ^Endpoint ]]; then
-                    endpoint="${line#Endpoint = }"
-                    endpoint_host="${endpoint%:*}"
-                    endpoint_port="${endpoint##*:}"
-
-                    mapfile -t ipv4_candidates < <(getent ahostsv4 "${endpoint_host}" | awk '{print $1}' | uniq)
-
-                    if [ ${#ipv4_candidates[@]} -gt 0 ]; then
-                        bashio::log.debug "Resolved ${endpoint_host} to IPv4 address ${ipv4_candidates[0]} for WireGuard fallback."
-                        echo "Endpoint = ${ipv4_candidates[0]}:${endpoint_port}" >> "${ipv4_config}"
-                    else
-                        bashio::log.warning "No IPv4 address found for ${endpoint_host}. Keeping original endpoint for fallback."
-                        echo "${line}" >> "${ipv4_config}"
-                    fi
-                else
-                    echo "${line}" >> "${ipv4_config}"
-                fi
-            done < "${wireguard_config}"
-
-            wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
-
-            if ! _wireguard_up_with_iptables_fallback "${ipv4_config}"; then
-                bashio::log.error 'WireGuard failed to establish a connection after IPv4-only retry.'
-                bashio::log.error "wg-quick output:"
-                bashio::log.error "${output}"
-                bashio::log.error 'Troubleshooting steps:'
-                bashio::log.error "  1. Confirm that the WireGuard configuration file '${wireguard_config}' exists inside the container and contains valid private/public keys, endpoint and AllowedIPs."
-                bashio::log.error '  2. Ensure UDP port 51820 (or the port defined in your config) is forwarded on your router to this host and not blocked by your firewall or ISP.'
-                bashio::log.error '  3. Verify that the configured endpoint (IP/hostname and port) is reachable from this container (e.g. ping or nc from a debug shell).'
-                bashio::log.error '  4. Check that the system time is correct (NTP); large time drift can break key handshakes.'
-                bashio::log.error '  5. Confirm that WireGuard kernel support / module is available in the host system.'
-                bashio::log.error '  6. If DNS names are used for the endpoint, verify DNS resolution from inside the container (e.g. nslookup or dig).'
-                bashio::exit.nok 'WireGuard start failed. See the log above for details.'
-            fi
-        fi
-
-        bashio::log.info "WireGuard interface ${wireguard_interface} is up."
-
-        # Refresh DNS resolver configuration if resolvconf is present
-        if command -v resolvconf >/dev/null 2>&1; then
-            bashio::log.info 'Refreshing DNS resolver configuration via resolvconf -u.'
-            if ! resolvconf -u >/dev/null 2>&1; then
-                bashio::log.warning 'resolvconf -u failed. DNS configuration may not have been updated.'
-            fi
-        else
-            bashio::log.debug 'resolvconf not found in PATH; skipping DNS refresh.'
-        fi
-
-        # Start VPN leak monitor for WireGuard in background
-        _vpn_monitor_public_ip "WireGuard" &
-    fi
-
-    if bashio::config.true 'silent'; then
-        exec \
-            s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
-            s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" > /dev/null
-    else
-        exec \
-            s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
-            s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}"
-    fi
 fi
+
+# --- Launch qBittorrent ---
+
+# Determine log output based on silent mode
+QB_OUTPUT="/dev/stdout"
+if bashio::config.true 'silent'; then
+    QB_OUTPUT="/dev/null"
+fi
+
+bashio::log.info "Starting qBittorrent..."
+
+exec \
+    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z localhost ${WEBUI_PORT}" \
+    s6-setuidgid abc /usr/bin/qbittorrent-nox --webui-port="${WEBUI_PORT}" > "${QB_OUTPUT}"
