@@ -11,17 +11,46 @@ REAL_IP_FILE="/currentip"
 # How often to re-check VPN IP (seconds)
 VPN_CHECK_INTERVAL="${VPN_CHECK_INTERVAL:-300}"
 
-# Service used to get IP + country (JSON)
-VPN_INFO_URL="${VPN_INFO_URL:-https://ipinfo.io/json}"
+# Service used to get country for a given IP.
+# If it contains "%s", the IP will be formatted into it.
+# Otherwise we assume an ipinfo-like base URL and call "${VPN_INFO_URL%/}/${ip}/json".
+VPN_INFO_URL="${VPN_INFO_URL:-https://ipinfo.io}"
 
 # -------------------------------
 # Helpers
 # -------------------------------
 
+_fetch_public_ip() {
+    local resp
+    local url
+    local urls=(
+        "https://icanhazip.com"
+        "https://ifconfig.me/ip"
+        "https://api64.ipify.org"
+        "https://checkip.amazonaws.com"
+        "https://domains.google.com/checkip"
+        "https://ipinfo.io/ip"
+    )
+    local shuffled_urls
+    mapfile -t shuffled_urls < <(printf "%s\n" "${urls[@]}" | shuf)
+
+    for url in "${shuffled_urls[@]}"; do
+        resp=$(curl -fsS --max-time 5 "${url}" 2>/dev/null || true)
+        resp="${resp//[[:space:]]/}"
+
+        # Validate IPv4 or IPv6
+        if [[ "${resp}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || [[ "${resp}" =~ ^[0-9a-fA-F:]+$ ]]; then
+            printf '%s\n' "${resp}"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
 read_real_ip() {
     # Reads the "real" IP saved before VPN start
     if [[ -f "${REAL_IP_FILE}" ]]; then
-        # Strip whitespace/newlines just in case
         local ip
         ip="$(tr -d '[:space:]' < "${REAL_IP_FILE}")"
         if [[ -n "${ip}" ]]; then
@@ -36,31 +65,37 @@ read_real_ip() {
 
 get_ip_info() {
     # Outputs: "<ip> <country>" on success
-    local json ip country
+    local ip country json info_url url
 
-    if ! json="$(curl -fsS --max-time 10 "${VPN_INFO_URL}" 2>/dev/null)"; then
-        bashio::log.warning "Unable to reach VPN info service at ${VPN_INFO_URL}."
+    if ! ip="$(_fetch_public_ip)"; then
+        bashio::log.warning "Unable to determine external IP from fallback IP services."
         return 1
     fi
 
-    # Extract "ip" and "country" without jq
-    ip="$(
-        printf '%s\n' "${json}" \
-            | sed -n 's/.*"ip"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
-            | head -n1
-    )"
-    country="$(
-        printf '%s\n' "${json}" \
-            | sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
-            | head -n1
-    )"
+    country="Unknown"
+    info_url="${VPN_INFO_URL:-}"
 
-    if [[ -z "${ip}" ]]; then
-        bashio::log.warning "Failed to parse IP from VPN info response."
-        return 1
+    if [[ -n "${info_url}" ]]; then
+        # Build URL used to get country for this IP
+        if [[ "${info_url}" == *"%s"* ]]; then
+            # Template style, e.g. "https://ipinfo.io/%s/json"
+            printf -v url "${info_url}" "${ip}"
+        else
+            # ipinfo-style base URL
+            url="${info_url%/}/${ip}/json"
+        fi
+
+        if json="$(curl -fsS --max-time 10 "${url}" 2>/dev/null || true)" && [[ -n "${json}" ]]; then
+            country="$(
+                printf '%s\n' "${json}" \
+                    | sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' \
+                    | head -n1
+            )"
+            [[ -z "${country}" ]] && country="Unknown"
+        fi
     fi
 
-    printf '%s %s\n' "${ip}" "${country:-Unknown}"
+    printf '%s %s\n' "${ip}" "${country}"
 }
 
 wait_for_vpn_ip() {
@@ -76,13 +111,13 @@ wait_for_vpn_ip() {
 
             if [[ -n "${REAL_IP:-}" ]] && [[ "${ip}" == "${REAL_IP}" ]]; then
                 bashio::log.warning \
-                    "External IP still equals real IP (${ip}); VPN not ready yet (attempt ${attempt}/20)."
+                    "External IP still equals real IP (${ip}); VPN not ready yet (attempt ${attempt}/5)."
             else
                 printf '%s %s\n' "${ip}" "${country}"
                 return 0
             fi
         else
-            bashio::log.warning "Unable to query external IP (attempt ${attempt}/20)."
+            bashio::log.warning "Unable to query external IP (attempt ${attempt}/5)."
         fi
 
         sleep 5
