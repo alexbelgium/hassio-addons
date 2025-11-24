@@ -95,7 +95,6 @@ _vpn_monitor_public_ip() {
         return 0
     fi
 
-    bashio::log.info "${vpn_label}: Baseline (ISP) IP: ${baseline_ip}"
     bashio::log.debug "${vpn_label}: Waiting ${initial_delay}s before first leak check."
     sleep "${initial_delay}"
 
