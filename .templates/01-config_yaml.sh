@@ -97,6 +97,7 @@ sed -i '/^$/d' /tempenv
 # Exit if empty
 if [ ! -s /tempenv ]; then
     rm /tempenv
+    mv "$CONFIGSOURCE" "$CONFIGSOURCE".old
     exit 0
 fi
 
