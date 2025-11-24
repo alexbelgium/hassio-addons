@@ -129,7 +129,7 @@ if bashio::config.true 'openvpn_enabled'; then
     vpn_openvpn=true
 fi
 
-if [[ "${vpn_openvpn}" == true ]] && bashio::config.false 'openvpn_alt_mode'; then
+if [[ "${vpn_openvpn}" == true ]] && ! bashio::config.true 'openvpn_alt_mode'; then
     VPN_INTERFACE="tun0"
     bashio::log.info "VPN monitor set to query external IP through interface ${VPN_INTERFACE} (interface binding)."
 else
