@@ -1,14 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# get-public-ip: query several IP services in random order and print the first result
+
+set -euo pipefail
 
 get_public_ip() {
-    local urls=(
+    local -a urls=(
         "https://ifconfig.co/ip"
         "https://api64.ipify.org"
         "https://ipecho.net/plain"
     )
-    local i j tmp url ip
+    local ip=""
+    local i=0
+    local j=0
+    local tmp=""
 
-    # Fisher–Yates shuffle to randomize the order
+    # Fisher–Yates shuffle to randomize order
     for ((i=${#urls[@]}-1; i>0; i--)); do
         j=$((RANDOM % (i + 1)))
         tmp=${urls[i]}
@@ -18,7 +24,8 @@ get_public_ip() {
 
     # Try each provider in random order until one works
     for url in "${urls[@]}"; do
-        if ip=$(curl -fsS --max-time 10 "$url"); then
+        # Suppress curl error messages
+        if ip=$(curl -fsS --max-time 10 "$url" 2>/dev/null); then
             printf '%s\n' "$ip"
             return 0
         fi
@@ -27,7 +34,7 @@ get_public_ip() {
     return 1
 }
 
-# Write to /currentip, fail if none of the services respond
-if ! get_public_ip > /currentip; then
-    echo "Failed to get public IP from all providers" >&2
+if ! get_public_ip; then
+    echo "get-public-ip: failed to get public IP from all providers" >&2
+    exit 1
 fi
