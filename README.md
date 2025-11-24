@@ -10,6 +10,8 @@ If this add-on saves you time or makes your setup easier, you can support my wor
 
 [![Buy me a coffee][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
 [![Donate via PayPal][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
+
+## Addon informations
 ![update-badge](https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update)
 
 [donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
