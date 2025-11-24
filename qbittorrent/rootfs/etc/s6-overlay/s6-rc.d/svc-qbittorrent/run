@@ -79,6 +79,11 @@ _vpn_monitor_public_ip() {
         return 0
     fi
 
+    if [[ ! -s "${current_ip_file}" ]]; then
+        bashio::log.warning "${vpn_label}: public ip could not be reached; VPN leak monitoring disabled."
+        return 0
+    fi
+
     if ! bashio::fs.file_exists "${current_ip_file}"; then
         bashio::log.warning "${vpn_label}: baseline IP file ${current_ip_file} not found; VPN leak monitoring disabled."
         return 0
@@ -231,11 +236,7 @@ echo "$(_fetch_public_ip || true)" > /currentip
 
 if bashio::config.true 'openvpn_enabled'; then
     # Start Leak Monitor
-    if [[ ! -s /currentip ]]; then
-        bashio::log.warning "Could not fetch public ip, the vpn leakage service will not run"
-    else
-        _vpn_monitor_public_ip "OpenVPN" &
-    fi
+    _vpn_monitor_public_ip "OpenVPN" &
 
     exec /usr/sbin/openvpn \
         --config /config/openvpn/config.ovpn \
@@ -255,11 +256,7 @@ elif bashio::config.true 'wireguard_enabled'; then
     _setup_wireguard
 
     # Start Leak Monitor
-    if [[ ! -s /currentip ]]; then
-        bashio::log.warning "Could not fetch public ip, the vpn leakage service will not run"
-    else
-        _vpn_monitor_public_ip "WireGuard" &
-    fi
+    _vpn_monitor_public_ip "WireGuard" &
 
 fi
 
