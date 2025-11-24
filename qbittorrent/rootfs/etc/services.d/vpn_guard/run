@@ -1,0 +1,215 @@
++212
+-0
+
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+
+set -euo pipefail
+
+export PATH="/usr/local/sbin:/usr/local/bin:${PATH}"
+
+REAL_IP_FILE="/currentip"
+READY_FLAG="/run/nginx.ready"
+CHECK_INTERVAL="${VPN_CHECK_INTERVAL:-${VPN_LEAK_CHECK_INTERVAL:-300}}"
+INITIAL_DELAY="${VPN_LEAK_INITIAL_DELAY:-30}"
+VPN_INFO_URL="${VPN_INFO_URL:-https://ipinfo.io}"
+
+# -------------------------------
+# Helpers
+# -------------------------------
+
+_fetch_public_ip() {
+    local resp
+    local url
+    local urls=(
+        "https://icanhazip.com"
+        "https://ifconfig.me/ip"
+        "https://api64.ipify.org"
+        "https://checkip.amazonaws.com"
+        "https://domains.google.com/checkip"
+        "https://ipinfo.io/ip"
+    )
+    local shuffled_urls
+    mapfile -t shuffled_urls < <(printf "%s\n" "${urls[@]}" | shuf)
+
+    for url in "${shuffled_urls[@]}"; do
+        resp=$(curl -fsS --max-time 5 "${url}" 2>/dev/null || true)
+        resp="${resp//[[:space:]]/}"
+
+        if [[ "${resp}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || [[ "${resp}" =~ ^[0-9a-fA-F:]+$ ]]; then
+            printf '%s\n' "${resp}"
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+read_real_ip() {
+    if [[ -f "${REAL_IP_FILE}" ]]; then
+        local ip
+        ip="$(tr -d '[:space:]' < "${REAL_IP_FILE}")"
+        if [[ -n "${ip}" ]]; then
+            echo "${ip}"
+            return 0
+        fi
+    fi
+
+    echo ""
+    return 0
+}
+
+get_ip_info() {
+    local ip country json info_url url
+
+    if ! ip="$(_fetch_public_ip)"; then
+        bashio::log.warning "Unable to determine external IP from fallback IP services."
+        return 1
+    fi
+
+    country="Unknown"
+    info_url="${VPN_INFO_URL:-}"
+
+    if [[ -n "${info_url}" ]]; then
+        if [[ "${info_url}" == *"%s"* ]]; then
+            printf -v url "${info_url}" "${ip}"
+        else
+            url="${info_url%/}/${ip}/json"
+        fi
+
+        if json="$(curl -fsS --max-time 10 "${url}" 2>/dev/null || true)" && [[ -n "${json}" ]]; then
+            country="$(
+                printf '%s\n' "${json}" |
+                    sed -n 's/.*"country"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' |
+                    head -n1
+            )"
+            [[ -z "${country}" ]] && country="Unknown"
+        fi
+    fi
+
+    printf '%s %s\n' "${ip}" "${country}"
+}
+
+wait_for_vpn_ip() {
+    local attempt out ip country
+
+    for attempt in {1..5}; do
+        if out="$(get_ip_info)"; then
+            read -r ip country <<< "${out}"
+
+            if [[ -n "${REAL_IP:-}" ]] && [[ "${ip}" == "${REAL_IP}" ]]; then
+                bashio::log.warning "External IP still equals real IP (${ip}); VPN not ready yet (attempt ${attempt}/5)."
+            else
+                printf '%s %s\n' "${ip}" "${country}"
+                return 0
+            fi
+        else
+            bashio::log.warning "Unable to query external IP (attempt ${attempt}/5)."
+        fi
+
+        sleep 5
+    done
+
+    return 1
+}
+
+allow_nginx_start() {
+    mkdir -p "$(dirname "${READY_FLAG}")"
+    touch "${READY_FLAG}"
+}
+
+# -------------------------------
+# Main logic
+# -------------------------------
+
+vpn_openvpn=false
+vpn_wireguard=false
+
+if bashio::config.true 'openvpn_enabled'; then
+    vpn_openvpn=true
+fi
+
+if bashio::config.true 'wireguard_enabled'; then
+    vpn_wireguard=true
+fi
+
+if [[ "${vpn_openvpn}" == true && "${vpn_wireguard}" == true ]]; then
+    bashio::log.error "Both OpenVPN and WireGuard are enabled. Only one VPN mode is supported."
+    exit 1
+fi
+
+vpn_enabled=false
+vpn_mode="none"
+
+if [[ "${vpn_openvpn}" == true ]]; then
+    vpn_enabled=true
+    vpn_mode="OpenVPN"
+fi
+
+if [[ "${vpn_wireguard}" == true ]]; then
+    vpn_enabled=true
+    vpn_mode="WireGuard"
+fi
+
+if [[ "${vpn_enabled}" != true ]]; then
+    bashio::log.info "No VPN enabled. Allowing nginx start without leak monitoring."
+    allow_nginx_start
+    exec tail -f /dev/null
+fi
+
+REAL_IP="$(read_real_ip)"
+
+if [[ -z "${REAL_IP}" ]]; then
+    for attempt in {1..5}; do
+        sleep 2
+        REAL_IP="$(read_real_ip)"
+        [[ -n "${REAL_IP}" ]] && break
+    done
+fi
+
+if [[ -n "${REAL_IP}" ]]; then
+    bashio::log.info "Real (non-VPN) IP from ${REAL_IP_FILE}: ${REAL_IP}"
+else
+    bashio::log.warning "Real IP file ${REAL_IP_FILE} missing or empty; IP leak detection will be less strict."
+fi
+
+bashio::log.info "VPN mode detected: ${vpn_mode}. Waiting for VPN to become active."
+
+if ! VPN_INFO_OUT="$(wait_for_vpn_ip)"; then
+    bashio::log.error "Unable to obtain a VPN external IP different from real IP. Exiting to avoid leaking traffic."
+    bashio::addon.stop
+    exit 1
+fi
+
+read -r VPN_IP VPN_COUNTRY <<< "${VPN_INFO_OUT}"
+bashio::log.info "VPN external IP: ${VPN_IP} (${VPN_COUNTRY})"
+
+allow_nginx_start
+
+if [[ "${INITIAL_DELAY}" -gt 0 ]]; then
+    bashio::log.debug "Initial leak-check delay: ${INITIAL_DELAY}s"
+    sleep "${INITIAL_DELAY}"
+fi
+
+bashio::log.info "Starting VPN leak monitoring (interval: ${CHECK_INTERVAL}s)."
+
+trap 'exit 0' SIGTERM SIGINT SIGHUP
+
+while true; do
+    sleep "${CHECK_INTERVAL}"
+
+    if ! current_out="$(get_ip_info)"; then
+        bashio::log.warning "Failed to refresh external IP; keeping previous assumptions."
+        continue
+    fi
+
+    read -r current_ip current_country <<< "${current_out}"
+    bashio::log.info "Current external IP: ${current_ip} (${current_country})"
+
+    if [[ -n "${REAL_IP}" ]] && [[ "${current_ip}" == "${REAL_IP}" ]]; then
+        bashio::log.fatal "IP LEAK DETECTED: current external IP ${current_ip} matches real IP ${REAL_IP}. Stopping add-on."
+        bashio::addon.stop
+        exit 1
+    fi
+
+done
