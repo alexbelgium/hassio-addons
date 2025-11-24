@@ -1,10 +1,16 @@
 # BirdNET-Pi Docker Installation Guide
 
-[![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
-[![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
+## 💖 Support development
 
-[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee%20(no%20paypal)-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
-[paypal-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee%20with%20Paypal-0070BA?logo=paypal&style=flat&logoColor=white
+I maintain this and other Home Assistant add-ons in my free time: keeping up with Immich changes, HA changes, and testing on real hardware takes a lot of time (and some money).
+
+If this add-on saves you time or makes your setup easier, you can support my work here:
+
+[![Buy me a coffee][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+[![Donate via PayPal][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
+
+[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
+[paypal-badge]: https://img.shields.io/badge/Donate%20via%20PayPal-0070BA?logo=paypal&style=flat&logoColor=white
 
 This guide provides instructions on how to install and run the BirdNET-Pi container using Docker Compose without dependency on HomeAssistant.
 
@@ -66,7 +72,7 @@ Ensure you have the following installed on your system:
 
        devices:
          - /dev/snd:/dev/snd
-      
+
        group_add:
          - audio
 

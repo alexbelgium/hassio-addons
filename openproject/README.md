@@ -1,7 +1,13 @@
 # Home assistant add-on: Openproject
 
-[![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
-[![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
+## 💖 Support development
+
+I maintain this and other Home Assistant add-ons in my free time: keeping up with Immich changes, HA changes, and testing on real hardware takes a lot of time (and some money).
+
+If this add-on saves you time or makes your setup easier, you can support my work here:
+
+[![Buy me a coffee][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+[![Donate via PayPal][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
 
 ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fopenproject%2Fconfig.yaml)
 ![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fopenproject%2Fconfig.yaml)

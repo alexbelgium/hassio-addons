@@ -2,12 +2,18 @@
 
 <!-- markdownlint-disable MD033 -->
 
-[![Donate][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
-[![Donate][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
+## 💖 Support development
+
+I maintain this and other Home Assistant add-ons in my free time: keeping up with Immich changes, HA changes, and testing on real hardware takes a lot of time (and some money).
+
+If this add-on saves you time or makes your setup easier, you can support my work here:
+
+[![Buy me a coffee][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+[![Donate via PayPal][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
 ![update-badge](https://img.shields.io/github/last-commit/alexbelgium/hassio-addons?label=last%20update)
 
-[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee%20(no%20paypal)-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
-[paypal-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee%20with%20Paypal-0070BA?logo=paypal&style=flat&logoColor=white
+[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
+[paypal-badge]: https://img.shields.io/badge/Donate%20via%20PayPal-0070BA?logo=paypal&style=flat&logoColor=white
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
 [![GitHub Super-Linter](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/weekly-supelinter.yaml?label=Lint%20code%20base)](https://github.com/alexbelgium/hassio-addons/actions/workflows/weekly-supelinter.yaml)
