@@ -70,7 +70,7 @@ wait_for_vpn_ip() {
     # Outputs "<ip> <country>" when ready.
     local attempt out ip country
 
-    for attempt in {1..20}; do
+    for attempt in {1..5}; do
         if out="$(get_ip_info)"; then
             read -r ip country <<< "${out}"
 
@@ -152,7 +152,7 @@ bashio::log.info "VPN mode detected: ${vpn_mode}. Enabling IP leak protection an
 # Wait until VPN is up and external IP != REAL_IP
 if ! VPN_INFO_OUT="$(wait_for_vpn_ip)"; then
     bashio::log.error "Unable to obtain a VPN external IP different from real IP. Exiting to avoid leaking traffic."
-    exit 1
+    bashio::addon.stop
 fi
 
 read -r VPN_IP VPN_COUNTRY <<< "${VPN_INFO_OUT}"
