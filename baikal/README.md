@@ -3,7 +3,7 @@
 
 ## 💖 Support development
 
-I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5 or my >110 addons so usually I install test machines that I don't use myself to better support you users
+I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5 or my >110 addons so usually I install test machines (and purchase some test services such as vpn) that I don't use myself to better support users
 
 If this add-on saves you time or makes your setup easier, I would be very grateful for your support !
 
