@@ -255,7 +255,7 @@ elif bashio::config.true 'wireguard_enabled'; then
     _setup_wireguard
 
     # Start Leak Monitor
-    if [[ -s /currentip ]]; then
+    if [[ ! -s /currentip ]]; then
         bashio::log.warning "Could not fetch public ip, the vpn leakage service will not run"
     else
         _vpn_monitor_public_ip "WireGuard" &
