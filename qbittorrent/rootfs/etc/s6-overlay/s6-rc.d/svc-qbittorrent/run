@@ -71,7 +71,7 @@ _vpn_monitor_public_ip() {
     local current_ip_file="/currentip"
     local baseline_ip vpn_ip country
     local interval=${VPN_LEAK_CHECK_INTERVAL:-300}
-    local initial_delay=${VPN_LEAK_INITIAL_DELAY:-60}
+    local initial_delay=${VPN_LEAK_INITIAL_DELAY:-30}
 
     # Pre-flight checks
     if ! command -v curl >/dev/null 2>&1; then
@@ -113,7 +113,7 @@ _vpn_monitor_public_ip() {
             # LEAK DETECTED
             if [[ "${vpn_ip}" == "${baseline_ip}" ]]; then
                 bashio::log.fatal "${vpn_label}: VPN LEAK DETECTED! Current IP ${vpn_ip} matches baseline. Stopping container."
-                s6-svscanctl -t /var/run/s6/services 2>/dev/null || true
+                bashio::addon.stop
                 exit 1
             fi
         fi
