@@ -30,9 +30,8 @@ _fetch_public_ip() {
         resp=$(curl -fsS --max-time 5 "${url}" 2>/dev/null || true)
         resp="${resp//[[:space:]]/}"
 
-        # Validation (IPv4 or IPv6 regex)
-        if [[ "${resp}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || \
-           [[ "${resp}" =~ ^[0-9a-fA-F:]+$ ]]; then
+        # Validate IPv4 or IPv6
+        if [[ "${resp}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || [[ "${resp}" =~ ^[0-9a-fA-F:]+$ ]]; then
             printf '%s\n' "${resp}"
             return 0
         fi
@@ -134,7 +133,7 @@ _setup_wireguard() {
     local wireguard_interface
     wireguard_interface="$(cat "${WIREGUARD_STATE_DIR}/interface" 2>/dev/null || echo 'wg0')"
 
-    if ip link show "${wireguard_interface}" &> /dev/null; then
+    if ip link show "${wireguard_interface}" >/dev/null 2>&1; then
         bashio::log.warning "WireGuard interface ${wireguard_interface} already exists. Resetting."
         wg-quick down "${wireguard_config}" >/dev/null 2>&1 || true
     fi
@@ -247,7 +246,8 @@ if bashio::config.true 'openvpn_enabled'; then
         --pull-filter ignore "ifconfig-ipv6" \
         --pull-filter ignore "tun-ipv6" \
         --pull-filter ignore "redirect-gateway ipv6" \
-        --pull-filter ignore "dhcp-option DNS6"
+        --pull-filter ignore "dhcp-option DNS6" \
+    &
 
 elif bashio::config.true 'wireguard_enabled'; then
     
