@@ -1,3 +1,6 @@
+## 5.1.2-23 (29-11-2025)
+- Default VPN container binding for OpenVPN and WireGuard with optional qBittorrent-only interface binding.
+
 ## 5.1.2-22 (24-11-2025)
 - Minor bugs fixed
 ## 5.1.2-21 (24-11-2025)

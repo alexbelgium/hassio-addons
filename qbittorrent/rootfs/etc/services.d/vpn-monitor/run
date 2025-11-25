@@ -129,15 +129,26 @@ if bashio::config.true 'openvpn_enabled'; then
     vpn_openvpn=true
 fi
 
-if [[ "${vpn_openvpn}" == true ]] && ! bashio::config.true 'openvpn_alt_mode'; then
-    VPN_INTERFACE="tun0"
-    bashio::log.info "VPN monitor set to query external IP through interface ${VPN_INTERFACE} (interface binding)."
-else
-    VPN_INTERFACE=""
-fi
-
 if bashio::config.true 'wireguard_enabled'; then
     vpn_wireguard=true
+fi
+
+if ! bashio::config.true 'openvpn_alt_mode'; then
+    if [[ "${vpn_openvpn}" == true ]]; then
+        VPN_INTERFACE="tun0"
+        bashio::log.info "VPN monitor set to query external IP through interface ${VPN_INTERFACE} (interface binding)."
+    elif [[ "${vpn_wireguard}" == true ]]; then
+        if [[ -f /var/run/wireguard/interface ]]; then
+            VPN_INTERFACE="$(cat /var/run/wireguard/interface)"
+        else
+            VPN_INTERFACE="wg0"
+        fi
+        bashio::log.info "VPN monitor set to query external IP through interface ${VPN_INTERFACE} (interface binding)."
+    else
+        VPN_INTERFACE=""
+    fi
+else
+    VPN_INTERFACE=""
 fi
 
 if [[ "${vpn_openvpn}" != true && "${vpn_wireguard}" != true ]]; then

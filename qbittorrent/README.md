@@ -77,12 +77,14 @@ Network disk is mounted to `/mnt/<share_name>`. You need to map the exposed port
 | `openvpn_config` | str | | OpenVPN config file name (in `/config/openvpn/`) |
 | `openvpn_username` | str | | OpenVPN username |
 | `openvpn_password` | str | | OpenVPN password |
-| `openvpn_alt_mode` | bool | `false` | Bind at container level instead of app level |
+| `openvpn_alt_mode` | bool | `true` | Container binding for VPN traffic (disable to bind qBittorrent only) |
 | `wireguard_enabled` | bool | `false` | Enable WireGuard tunnel |
 | `wireguard_config` | str | _(empty)_ | WireGuard config file name (in `/config/wireguard/`) |
 | `qbit_manage` | bool | `false` | Enable qBit Manage integration |
 | `run_duration` | str | | Run duration (e.g., `12h`, `5d`) |
 | `silent` | bool | `false` | Suppress debug messages |
+
+By default, VPN traffic is container-bound (OpenVPN and WireGuard). Disable `openvpn_alt_mode` only if you prefer binding qBittorrent itself to the VPN interface while exposing the rest of the container on the host network.
 
 ### WireGuard Setup
 

@@ -19,10 +19,6 @@ if bashio::config.true 'openvpn_enabled'; then
     bashio::exit.nok 'OpenVPN and WireGuard cannot be enabled simultaneously. Disable one of them.'
 fi
 
-if bashio::config.true 'openvpn_alt_mode'; then
-    bashio::log.warning 'The openvpn_alt_mode option is ignored when WireGuard is enabled.'
-fi
-
 if bashio::config.has_value 'wireguard_config'; then
     configured_name="$(bashio::config 'wireguard_config')"
     configured_name="${configured_name##*/}"
@@ -65,6 +61,17 @@ bashio::log.info 'Prepared WireGuard runtime configuration for initial connectio
 
 echo "${wireguard_runtime_config}" > "${WIREGUARD_STATE_DIR}/config"
 echo "${interface_name}" > "${WIREGUARD_STATE_DIR}/interface"
+
+if bashio::config.true 'openvpn_alt_mode'; then
+    bashio::log.info 'Using container-wide WireGuard binding (default).'
+    if bashio::fs.file_exists "${QBT_CONFIG_FILE}"; then
+        sed -i '/Interface/d' "${QBT_CONFIG_FILE}"
+    else
+        bashio::log.warning 'qBittorrent config file not found. Unable to remove interface binding entries.'
+    fi
+    bashio::log.info "WireGuard prepared with interface ${interface_name} using configuration ${wireguard_config##*/}."
+    exit 0
+fi
 
 if bashio::fs.file_exists "${QBT_CONFIG_FILE}"; then
     sed -i '/Interface/d' "${QBT_CONFIG_FILE}"
