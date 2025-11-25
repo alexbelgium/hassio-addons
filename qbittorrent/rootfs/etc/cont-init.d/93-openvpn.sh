@@ -197,58 +197,58 @@ if bashio::config.true 'openvpn_enabled'; then
     # CONFIGURE QBITTORRENT #
     #########################
 
-    # WITH CONTAINER BINDING
+    # WITH INTERFACE BINDING
     #########################
-    # If alternative mode enabled, bind container
+    # If alternative mode enabled, bind only the app
     if bashio::config.true 'openvpn_alt_mode'; then
-        echo "Using container binding"
+        echo "Using interface binding in the qBittorrent app"
 
-        # Remove interface
-        echo "... deleting previous interface settings"
-        sed -i '/Interface/d' "$QBT_CONFIG_FILE"
+        # Define preferences line
+        cd /config/qBittorrent/ || exit 1
+
+        # If qBittorrent.conf exists
+        if [ -f "$QBT_CONFIG_FILE" ]; then
+            # Remove previous line and bind tun0
+            echo "... deleting previous interface settings"
+            sed -i '/Interface/d' "$QBT_CONFIG_FILE"
+
+            # Bind tun0
+            echo "... binding tun0 interface in qBittorrent configuration"
+            sed -i "/\[Preferences\]/ i\Connection\\\Interface=tun0" "$QBT_CONFIG_FILE"
+            sed -i "/\[Preferences\]/ i\Connection\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
+
+            # Add to ongoing session
+            sed -i "/\[BitTorrent\]/a \Session\\\Interface=tun0" "$QBT_CONFIG_FILE"
+            sed -i "/\[BitTorrent\]/a \Session\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
+
+        else
+            bashio::log.error "qBittorrent config file doesn't exist, openvpn must be added manually to qbittorrent options "
+            exit 1
+        fi
 
         # Modify ovpn config
-        if grep -q route-nopull /config/openvpn/"$openvpn_config"; then
-            echo "... removing route-nopull from your config.ovpn"
-            sed -i '/route-nopull/d' /config/openvpn/"$openvpn_config"
+        if ! grep -q route-nopull /config/openvpn/"$openvpn_config"; then
+            echo "... adding route-nopull to your config.ovpn"
+            sed -i "1a route-nopull" /config/openvpn/"$openvpn_config"
         fi
 
         # Exit
         exit 0
     fi
 
-    # WITH INTERFACE BINDING
+    # WITH CONTAINER BINDING
     #########################
-    # Connection with interface binding
-    echo "Using interface binding in the qBittorrent app"
+    # Default: bind whole container
+    echo "Using container binding"
 
-    # Define preferences line
-    cd /config/qBittorrent/ || exit 1
-
-    # If qBittorrent.conf exists
-    if [ -f "$QBT_CONFIG_FILE" ]; then
-        # Remove previous line and bind tun0
-        echo "... deleting previous interface settings"
-        sed -i '/Interface/d' "$QBT_CONFIG_FILE"
-
-        # Bind tun0
-        echo "... binding tun0 interface in qBittorrent configuration"
-        sed -i "/\[Preferences\]/ i\Connection\\\Interface=tun0" "$QBT_CONFIG_FILE"
-        sed -i "/\[Preferences\]/ i\Connection\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
-
-        # Add to ongoing session
-        sed -i "/\[BitTorrent\]/a \Session\\\Interface=tun0" "$QBT_CONFIG_FILE"
-        sed -i "/\[BitTorrent\]/a \Session\\\InterfaceName=tun0" "$QBT_CONFIG_FILE"
-
-    else
-        bashio::log.error "qBittorrent config file doesn't exist, openvpn must be added manually to qbittorrent options "
-        exit 1
-    fi
+    # Remove interface
+    echo "... deleting previous interface settings"
+    sed -i '/Interface/d' "$QBT_CONFIG_FILE"
 
     # Modify ovpn config
-    if ! grep -q route-nopull /config/openvpn/"$openvpn_config"; then
-        echo "... adding route-nopull to your config.ovpn"
-        sed -i "1a route-nopull" /config/openvpn/"$openvpn_config"
+    if grep -q route-nopull /config/openvpn/"$openvpn_config"; then
+        echo "... removing route-nopull from your config.ovpn"
+        sed -i '/route-nopull/d' /config/openvpn/"$openvpn_config"
     fi
 
 else

@@ -133,7 +133,7 @@ if bashio::config.true 'wireguard_enabled'; then
     vpn_wireguard=true
 fi
 
-if ! bashio::config.true 'openvpn_alt_mode'; then
+if bashio::config.true 'openvpn_alt_mode'; then
     if [[ "${vpn_openvpn}" == true ]]; then
         VPN_INTERFACE="tun0"
         bashio::log.info "VPN monitor set to query external IP through interface ${VPN_INTERFACE} (interface binding)."

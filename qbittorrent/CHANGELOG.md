@@ -1,3 +1,6 @@
+## 5.1.2-24 (30-11-2025)
+- Reverse `openvpn_alt_mode`: enabled now binds only qBittorrent to the VPN interface; default keeps container-wide binding for OpenVPN and WireGuard.
+
 ## 5.1.2-23 (29-11-2025)
 - Default VPN container binding for OpenVPN and WireGuard with optional qBittorrent-only interface binding.
 

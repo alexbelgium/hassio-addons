@@ -89,7 +89,7 @@ options:
   certfile: fullchain.pem
   customUI: vuetorrent
   keyfile: privkey.pem
-  openvpn_alt_mode: true
+  openvpn_alt_mode: false
   openvpn_config: ""
   openvpn_enabled: false
   openvpn_password: ""
@@ -150,4 +150,4 @@ schema:
 slug: qbittorrent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 5.1.2-23
+version: 5.1.2-24

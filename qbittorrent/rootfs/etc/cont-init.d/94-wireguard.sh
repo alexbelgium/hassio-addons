@@ -63,24 +63,23 @@ echo "${wireguard_runtime_config}" > "${WIREGUARD_STATE_DIR}/config"
 echo "${interface_name}" > "${WIREGUARD_STATE_DIR}/interface"
 
 if bashio::config.true 'openvpn_alt_mode'; then
+    bashio::log.info 'Using qBittorrent interface binding for WireGuard.'
+    if bashio::fs.file_exists "${QBT_CONFIG_FILE}"; then
+        sed -i '/Interface/d' "${QBT_CONFIG_FILE}"
+        sed -i "/\\[Preferences\\]/ i\\Connection\\\\Interface=${interface_name}" "${QBT_CONFIG_FILE}"
+        sed -i "/\\[Preferences\\]/ i\\Connection\\\\InterfaceName=${interface_name}" "${QBT_CONFIG_FILE}"
+        sed -i "/\\[BitTorrent\\]/a \\Session\\\\Interface=${interface_name}" "${QBT_CONFIG_FILE}"
+        sed -i "/\\[BitTorrent\\]/a \\Session\\\\InterfaceName=${interface_name}" "${QBT_CONFIG_FILE}"
+    else
+        bashio::log.warning "qBittorrent config file not found. Bind the client manually to interface ${interface_name}."
+    fi
+else
     bashio::log.info 'Using container-wide WireGuard binding (default).'
     if bashio::fs.file_exists "${QBT_CONFIG_FILE}"; then
         sed -i '/Interface/d' "${QBT_CONFIG_FILE}"
     else
         bashio::log.warning 'qBittorrent config file not found. Unable to remove interface binding entries.'
     fi
-    bashio::log.info "WireGuard prepared with interface ${interface_name} using configuration ${wireguard_config##*/}."
-    exit 0
-fi
-
-if bashio::fs.file_exists "${QBT_CONFIG_FILE}"; then
-    sed -i '/Interface/d' "${QBT_CONFIG_FILE}"
-    sed -i "/\\[Preferences\\]/ i\\Connection\\\\Interface=${interface_name}" "${QBT_CONFIG_FILE}"
-    sed -i "/\\[Preferences\\]/ i\\Connection\\\\InterfaceName=${interface_name}" "${QBT_CONFIG_FILE}"
-    sed -i "/\\[BitTorrent\\]/a \\Session\\\\Interface=${interface_name}" "${QBT_CONFIG_FILE}"
-    sed -i "/\\[BitTorrent\\]/a \\Session\\\\InterfaceName=${interface_name}" "${QBT_CONFIG_FILE}"
-else
-    bashio::log.warning "qBittorrent config file not found. Bind the client manually to interface ${interface_name}."
 fi
 
 bashio::log.info "WireGuard prepared with interface ${interface_name} using configuration ${wireguard_config##*/}."
