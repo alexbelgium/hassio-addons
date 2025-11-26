@@ -34,7 +34,9 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## Configuration
 
-No optional variables
+### Options
+
+- `env_vars`: Extra environment variables passed to SignalK.
 
 ## Installation
 
