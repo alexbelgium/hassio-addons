@@ -1,280 +1,179 @@
 # yamllint disable rule:line-length
+# inspired by Poeschl/Hassio-Addons, optimized by ChatGPT
 ---
 name: Builder
 
 on:
   workflow_call:
   push:
-    branches: [master]
+    branches:
+      - master
     paths:
       - "**/config.*"
-
-permissions:
-  contents: write
-  packages: write
-
-concurrency:
-  group: builder-${{ github.ref }}
-  cancel-in-progress: true
 
 env:
   BUILD_ARGS: ""
 
 jobs:
+  # 1. Detect which add-on folders changed (by config.json|yaml|yml modification)
   detect-changed-addons:
     if: ${{ github.repository_owner == 'alexbelgium' && !contains(github.event.head_commit.message, 'nobuild') }}
     runs-on: ubuntu-latest
     outputs:
-      changedAddons: ${{ steps.find.outputs.changed_addons }}
-      hasChanges: ${{ steps.find.outputs.has_changes }}
+      changedAddons: ${{ steps.find_addons.outputs.changed_addons }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6  [oai_citation:0‡GitHub](https://github.com/actions/checkout?utm_source=chatgpt.com)
-        with:
-          fetch-depth: 0
-
-      - name: Find changed add-on directories (config.json|yaml|yml)
-        id: find
-        shell: bash
+        uses: actions/checkout@v6
+      - name: Find changed addon directories
+        id: find_addons
         run: |
-          set -euo pipefail
-
-          BASE_SHA="${{ github.event.before }}"
-          if [[ -z "${BASE_SHA}" || "${BASE_SHA}" == "0000000000000000000000000000000000000000" ]]; then
-            # workflow_call or unusual event: fall back to previous commit
-            BASE_SHA="$(git rev-parse HEAD~1)"
-          fi
-
-          mapfile -t files < <(git diff --name-only "${BASE_SHA}" "${{ github.sha }}" \
-            | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
-
+          git fetch origin "${{ github.event.before }}" || true
+          changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "Changed config files:"
-          printf '%s\n' "${files[@]:-}"
+          echo "$changed_config_files"
+          changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          echo "Changed addons: $changed_addons"
+          echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
 
-          if (( ${#files[@]} == 0 )); then
-            echo 'changed_addons=[]' >> "$GITHUB_OUTPUT"
-            echo 'has_changes=false' >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          changed_addons="$(printf '%s\n' "${files[@]}" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')"
-          echo "Changed addons: ${changed_addons}"
-          echo "changed_addons=${changed_addons}" >> "$GITHUB_OUTPUT"
-          echo "has_changes=true" >> "$GITHUB_OUTPUT"
-
+  # 2. Pre-build sanitize: normalize spaces, fix script permissions, single commit per add-on
   prebuild-sanitize:
-    if: ${{ needs.detect-changed-addons.outputs.hasChanges == 'true' }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: detect-changed-addons
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - uses: actions/checkout@v6  [oai_citation:1‡GitHub](https://github.com/actions/checkout?utm_source=chatgpt.com)
+      - uses: actions/checkout@v6
+      # ────────────────────────────────────────────────────────────────
+      # 1. Replace non-printable Unicode spaces  ␣  and
+      #    convert Windows line endings (CRLF) → Unix (LF)
+      # ────────────────────────────────────────────────────────────────
+      - name: Sanitize text files (Unicode spaces + CRLF → LF)
+        run: |
+          cd "${{ matrix.addon }}"
+          UNICODE_SPACES_REGEX=$'[\u00A0\u2002\u2003\u2007\u2008\u2009\u202F\u205F\u3000\u200B]'
+
+          find . -type f | while read -r file; do
+            MIME_TYPE=$(file --mime-type -b "$file")
+            [[ "$MIME_TYPE" != text/* ]] && continue
+
+            echo "Sanitizing $file"
+            # Edit in place, preserving file permissions and metadata
+            perl -i -CSD -pe "
+              s/${UNICODE_SPACES_REGEX}/ /g;  # space normalization
+              s/\r$//;                        # CRLF → LF
+            " "$file"
+          done
+      # ────────────────────────────────────────────────────────────────
+      # 2. Ensure every *.sh script is executable
+      # ────────────────────────────────────────────────────────────────
+      - name: Make all .sh scripts executable
+        run: |
+          cd "${{ matrix.addon }}"
+          find . -type f -iname "*.sh" -exec chmod u+x {} \;
+      # ────────────────────────────────────────────────────────────────
+      # 3. Verify nothing with mixed line endings slipped through
+      # ────────────────────────────────────────────────────────────────
+      - name: Assert no mixed CRLF/LF remain
+        uses: ymwymw/check-mixed-line-endings@v2
+      # ────────────────────────────────────────────────────────────────
+      # 4. Commit any changes we made
+      # ────────────────────────────────────────────────────────────────
+      - name: Commit if needed
+        uses: EndBug/add-and-commit@v9
         with:
-          fetch-depth: 0
+          commit: -u
+          message: "GitHub bot: sanitize (spaces + LF endings) & chmod"
+          default_author: github_actions
+          pull: --rebase --autostash
+          fetch: --tags --force
 
-      - name: Sanitize tracked text files (Unicode spaces + CRLF→LF) without changing modes
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          python3 - <<'PY'
-          import json, os, pathlib, re, stat, tempfile
-
-          changed_addons = json.loads(os.environ["CHANGED_ADDONS"])
-          repo = pathlib.Path(".").resolve()
-
-          # Unicode "space-like" chars you were targeting
-          space_re = re.compile(r"[\u00A0\u2002\u2003\u2007\u2008\u2009\u202F\u205F\u3000\u200B]")
-
-          def is_probably_text(data: bytes) -> bool:
-              # cheap binary check: NUL byte
-              return b"\0" not in data
-
-          def rewrite_preserving_metadata(path: pathlib.Path, new_bytes: bytes) -> None:
-              st = path.stat()
-              tmp = path.with_name(path.name + ".tmp_sanitize")
-              tmp.write_bytes(new_bytes)
-              os.chmod(tmp, stat.S_IMODE(st.st_mode))
-              os.utime(tmp, (st.st_atime, st.st_mtime))
-              os.replace(tmp, path)
-
-          for addon in changed_addons:
-              addon_path = repo / addon
-              if not addon_path.exists():
-                  continue
-
-              # Only tracked files inside the addon
-              import subprocess
-              res = subprocess.run(
-                  ["git", "ls-files", "-z", "--", str(addon_path)],
-                  check=True,
-                  stdout=subprocess.PIPE,
-              )
-              files = [pathlib.Path(p.decode("utf-8")) for p in res.stdout.split(b"\0") if p]
-
-              for f in files:
-                  try:
-                      data = f.read_bytes()
-                  except OSError:
-                      continue
-                  if not is_probably_text(data):
-                      continue
-
-                  # Decode "best effort" but keep bytes stable via surrogateescape
-                  try:
-                      text = data.decode("utf-8", errors="surrogateescape")
-                  except Exception:
-                      continue
-
-                  new_text = space_re.sub(" ", text)
-                  # Normalize CRLF and stray CR to LF
-                  new_text = new_text.replace("\r\n", "\n").replace("\r", "\n")
-
-                  if new_text != text:
-                      rewrite_preserving_metadata(f, new_text.encode("utf-8", errors="surrogateescape"))
-
-          PY
-        env:
-          CHANGED_ADDONS: ${{ needs.detect-changed-addons.outputs.changedAddons }}
-
-      - name: Add exec bit only where appropriate (never remove exec)
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          # Add +x only when:
-          # - file already executable (leave it alone), OR
-          # - it has a shebang, OR
-          # - it's a known s6/openrc-style run script location
-          python3 - <<'PY'
-          import json, os, pathlib, stat
-
-          changed_addons = json.loads(os.environ["CHANGED_ADDONS"])
-          repo = pathlib.Path(".").resolve()
-
-          def should_be_executable(p: pathlib.Path) -> bool:
-              rel = str(p.as_posix())
-              if rel.endswith(".sh"):
-                  # .sh often sourced, so require shebang to enforce executability
-                  pass
-              # common executable script locations in HA add-ons
-              if "/etc/cont-init.d/" in rel or "/etc/cont-finish.d/" in rel or "/etc/services.d/" in rel:
-                  return True
-              if "/etc/s6-overlay/s6-rc.d/" in rel and rel.endswith("/run"):
-                  return True
-              return False
-
-          def has_shebang(p: pathlib.Path) -> bool:
-              try:
-                  with p.open("rb") as f:
-                      return f.read(2) == b"#!"
-              except OSError:
-                  return False
-
-          for addon in changed_addons:
-              addon_path = repo / addon
-              if not addon_path.exists():
-                  continue
-              for p in addon_path.rglob("*"):
-                  if not p.is_file():
-                      continue
-                  st = p.stat()
-                  mode = stat.S_IMODE(st.st_mode)
-                  is_exec = bool(mode & stat.S_IXUSR)
-
-                  if is_exec:
-                      continue  # do not touch existing executable files
-
-                  if has_shebang(p) or should_be_executable(p):
-                      os.chmod(p, mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
-
-          PY
-        env:
-          CHANGED_ADDONS: ${{ needs.detect-changed-addons.outputs.changedAddons }}
-
-      - name: Commit sanitize if needed
-        shell: bash
-        run: |
-          set -euo pipefail
-          if git diff --quiet; then
-            echo "No sanitize changes."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add -A
-          git commit -m "GitHub bot: sanitize (spaces/LF/exec) [nobuild]"
-          git pull --rebase --autostash
-          git push
-
+  # 3. Lint add-on configs
   lint_config:
-    if: ${{ needs.detect-changed-addons.outputs.hasChanges == 'true' }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, prebuild-sanitize]
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
-      fail-fast: false
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - uses: actions/checkout@v6  [oai_citation:2‡GitHub](https://github.com/actions/checkout?utm_source=chatgpt.com)
+      - uses: actions/checkout@v6
       - name: Run Home Assistant Add-on Lint
-        uses: frenck/action-addon-linter@v2  [oai_citation:3‡GitHub](https://github.com/frenck/action-addon-linter)
+        uses: frenck/action-addon-linter@v2
         with:
           path: "./${{ matrix.addon }}"
 
+  # 4. Build images for changed addons/arches
   build:
-    if: ${{ needs.detect-changed-addons.outputs.hasChanges == 'true' }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, lint_config]
     runs-on: ubuntu-latest
+    environment: CR_PAT
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
     strategy:
-      fail-fast: false
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
         arch: ["aarch64", "amd64", "armv7"]
     steps:
-      - uses: actions/checkout@v6  [oai_citation:4‡GitHub](https://github.com/actions/checkout?utm_source=chatgpt.com)
-
+      - uses: actions/checkout@v6
+      - name: Resolve Symlinks (in repo)
+        run: |
+          find . -type l | while read -r link; do
+            target="$(readlink -f "$link")"
+            if [ -z "$target" ]; then
+              echo "Skipping broken symlink: $link"
+              continue
+            fi
+            rm "$link"
+            if [ -d "$target" ]; then
+              mkdir -p "$link"
+              cp -a "$target/." "$link/"
+            else
+              cp "$target" "$link"
+            fi
+          done
       - name: Get information
         id: info
         uses: home-assistant/actions/helpers/info@master
         with:
           path: "./${{ matrix.addon }}"
-
-      - name: Skip if no Dockerfile
-        id: dockerfile
-        shell: bash
+      - name: Check if Dockerfile exists
+        id: dockerfile_check
         run: |
-          if [[ -f "./${{ matrix.addon }}/Dockerfile" ]]; then
-            echo "has=true" >> "$GITHUB_OUTPUT"
+          if [ -f "./${{ matrix.addon }}/Dockerfile" ]; then
+            echo "has_dockerfile=true" >> "$GITHUB_OUTPUT"
           else
-            echo "has=false" >> "$GITHUB_OUTPUT"
+            echo "No Dockerfile found in ${{ matrix.addon }}, skipping build."
+            echo "has_dockerfile=false" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Check if add-on supports arch
+      - name: Check if add-on should be built for arch
         id: check
-        shell: bash
+        env:
+          HEAD: "${{ github.head_ref }}"
         run: |
           if [[ "${{ steps.info.outputs.architectures }}" =~ ${{ matrix.arch }} ]]; then
-            echo "build_arch=true" >> "$GITHUB_OUTPUT"
-            echo "image=$(echo "${{ steps.info.outputs.image }}" | cut -d'/' -f3)" >> "$GITHUB_OUTPUT"
+             echo "build_arch=true" >> "$GITHUB_OUTPUT";
+             echo "image=$(echo "${{ steps.info.outputs.image }}" | cut -d'/' -f3)" >> "$GITHUB_OUTPUT";
+             if [[ -z "$HEAD" ]] && [[ "${{ github.event_name }}" == "push" ]]; then
+                 echo "BUILD_ARGS=" >> "$GITHUB_ENV";
+             fi
           else
-            echo "build_arch=false" >> "$GITHUB_OUTPUT"
+             echo "${{ matrix.arch }} is not a valid arch for ${{ matrix.addon }}, skipping build";
+             echo "build_arch=false" >> "$GITHUB_OUTPUT";
           fi
-
       - name: Login to GitHub Container Registry
-        if: ${{ env.BUILD_ARGS != '--test' }}
+        if: env.BUILD_ARGS != '--test'
         uses: docker/login-action@v3.6.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build ${{ matrix.addon }} add-on
-        if: ${{ steps.check.outputs.build_arch == 'true' && steps.dockerfile.outputs.has == 'true' }}
-        uses: home-assistant/builder@2025.09.0  [oai_citation:5‡GitHub](https://github.com/home-assistant/builder/releases?utm_source=chatgpt.com)
+        id: builderstep
+        if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true'
+        uses: home-assistant/builder@2025.09.0
         env:
           CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
         with:
@@ -286,59 +185,71 @@ jobs:
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon
 
+  # 5. Update changelog if needed (for each changed add-on)
   make-changelog:
-    if: ${{ needs.detect-changed-addons.outputs.hasChanges == 'true' }}
+    if: ${{ needs.detect-changed-addons.outputs.changedAddons != '' && needs.detect-changed-addons.outputs.changedAddons != '[]' }}
     needs: [detect-changed-addons, build]
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
     steps:
-      - uses: actions/checkout@v6  [oai_citation:6‡GitHub](https://github.com/actions/checkout?utm_source=chatgpt.com)
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+      - name: Update changelog for minor versions
+        run: |
+          echo "Starting"
+          git pull || true
+          cd "${{ matrix.addon }}"
+          if [ -f config.yaml ]; then
+            version="$(sed -e '/version/!d' -e 's/.*version: //' config.yaml)"
+          elif [ -f config.json ]; then
+            version="$(sed -e '/version/!d' -e 's/.*[^"]*"\([^"]*\)"/\1/' config.json)"
+            version="${version//,}"
+          else
+            exit 1
+          fi
+          version="${version//\"/}"
+          version="${version//\'/}"
+          version="$(echo "$version" | xargs)"
+          if [[ "$version" == *"test"* ]]; then exit 0; fi
+          touch CHANGELOG.md
+          if ! grep -q "$version" CHANGELOG.md; then
+            first_line="$(sed -n '/./p' CHANGELOG.md | head -n 1)"
+            if [[ "$first_line" != "-"* ]]; then
+              sed -i "1i\- Minor bugs fixed" CHANGELOG.md
+            fi
+            sed -i "1i\## $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
+          fi
+      - name: Commit if needed
+        uses: EndBug/add-and-commit@v9
+        with:
+          commit: -u
+          message: "GitHub bot: changelog"
+          default_author: github_actions
+          pull: --rebase --autostash
+          fetch: --force
+          push: --force
+
+  # 6. Revert if workflow fails
+  revert-on-failure:
+    if: failure()
+    needs: [detect-changed-addons, prebuild-sanitize, lint_config, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
-
-      - name: Update changelog for minor versions
-        shell: bash
+  
+      - name: Revert the triggering commit
         run: |
-          set -euo pipefail
-          cd "${{ matrix.addon }}"
-
-          if [[ -f config.yaml ]]; then
-            version="$(yq -r '.version // ""' config.yaml 2>/dev/null || true)"
-          elif [[ -f config.json ]]; then
-            version="$(jq -r '.version // ""' config.json 2>/dev/null || true)"
-          else
-            exit 0
-          fi
-
-          version="$(echo "$version" | xargs)"
-          [[ -z "$version" ]] && exit 0
-          [[ "$version" == *"test"* ]] && exit 0
-
-          touch CHANGELOG.md
-          if ! grep -qF "## $version " CHANGELOG.md; then
-            first_line="$(sed -n '/./p' CHANGELOG.md | head -n 1 || true)"
-            if [[ "$first_line" != "-"* ]]; then
-              sed -i "1i\\- Minor bugs fixed" CHANGELOG.md
-            fi
-            sed -i "1i\\## $version ($(date '+%d-%m-%Y'))" CHANGELOG.md
-          fi
-
-      - name: Commit changelog if needed
-        shell: bash
-        run: |
-          set -euo pipefail
-          if git diff --quiet; then
-            echo "No changelog changes."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add -A
-          git commit -m "GitHub bot: changelog [nobuild]"
-          git pull --rebase --autostash
-          git push
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git fetch origin
+          git checkout master
+          git pull origin master
+          git revert --no-commit ${{ github.sha }}
+          git commit -m "Revert '${{ github.event.head_commit.message }}' [nobuild]"
+          git push origin master
