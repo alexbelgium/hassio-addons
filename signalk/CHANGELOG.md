@@ -1,5 +1,17 @@
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
+## 2.18.0-6 (26-11-2025)
+- Add /dev/can device mapping to expose CAN bus interfaces in the container
+
+## 2.18.0-5 (26-11-2025)
+- Remove the optional init commands while keeping CAN capabilities to simplify configuration
+
+## 2.18.0-4 (26-11-2025)
+- Add NET_ADMIN and NET_RAW capabilities and optional init commands to allow configuring CAN interfaces without host networking
+
+## 2.18.0-3 (18-11-2025)
+- Enable host networking so CAN interfaces (can0/can1) are available inside the add-on container
+
 ## 2.18.0-2 (18-11-2025)
 - Minor bugs fixed
 

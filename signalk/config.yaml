@@ -4,6 +4,7 @@ arch:
   - amd64
 description: An implementation of a Signal K central server for boats
 devices:
+  - /dev/can
   - /dev/can0
   - /dev/can1
   - /dev/ttyUSB0
@@ -43,6 +44,8 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
 privileged:
+  - NET_ADMIN
+  - NET_RAW
   - SYS_ADMIN
   - SYS_RAWIO
 slug: signalk
@@ -50,5 +53,5 @@ uart: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: 2.18.0-2
+version: 2.18.0-6
 webui: http://[HOST]:[PORT:3000]
