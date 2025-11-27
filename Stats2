@@ -1,112 +1,112 @@
-Name Total armv7 amd64 aarch64
+Name Total amd64 aarch64
 ------------------------------
-plex-media-manager 457 - 313 144
-papermerge 931 - 478 453
-paperless_ng 250 - 163 87
-code_server 59 - 38 21
-vaultwarden 30 - 20 10
-zoneminder 246 - 162 84
-xteve 134 - 93 41
-whoogle-search 214 - 153 61
-whatsapper 232 - 232 -
-wger 243 - 171 72
-webtrees 164 - 106 58
-webtop_kde 110 - 77 33
-webtop 883 - 632 251
-unpackerr 84 - 59 25
-ubooquity 121 - 73 48
-transmission_openvpn 520 - 322 198
-transmission_ls 2029 - 1266 763
-tor 176 - 99 77
-teamspeak 2232 - 1242 990
-tdarr 79 - 59 20
-tandoor_recipes 1031 - 662 369
-spotweb 316 - 229 87
-sponsorblockcast 2296 - 1457 839
-sonarr_nas 499 - 348 151
-signalk 8 - 3 5
-seafile 185 - 108 77
-scrutiny-fa 1733 - 1093 640
-scrutiny 523 - 323 200
-sabnzbd 182 - 132 50
-resiliosync 311 - 177 134
-requestrr 86 - 52 34
-readarr_nas 14 - 7 7
-radarr_nas 552 - 367 185
-qbittorrent 496 - 309 187
-prowlarr 341 - 233 108
-postgres_17 2299 - 1482 817
-postgres 2264 - 1466 798
-portainer_agent 1390 - 923 467
-portainer 7502 - 4738 2764
-plex_nas 546 - 370 176
-piwigo 40 - 23 17
-photoprism 268 - 170 98
-overseerr 1072 - 724 348
-organizr 2544 - 1575 969
-openproject 80 - 53 27
-omni-tools 145 - 86 59
-ombi 351 - 255 96
-omada_v3 21 - 16 5
-omada 48 - 32 16
-nzbget 86 - 56 30
-nextcloud_ocr 1566 - 919 647
-netalertx 3150 - 2143 1007
-netalertx 3150 - 2143 1007
-navidrome 102 - 58 44
-mylar3 50 - 36 14
-monica 139 - 78 61
-mealie 1436 - 950 486
-linkwarden 340 - 224 116
-lidarr_nas 123 - 86 37
-librespeed 700 - 441 259
-kometa 113 - 73 40
-joplin 427 - 271 156
-joal 889 - 369 520
-jellyseerr 751 - 491 260
-jellyfin 1006 - 681 325
-jackett_nas 305 - 203 102
-inadyn 1 - 1 0
-immich_power_tools 206 - 133 73
-immich_openvino 77 - 77 -
-immich_noml 45 - 15 30
-immich_frame 192 - 148 44
-immich_cuda 8 - 8 -
-immich 1035 - 648 387
-guacamole 797 - 563 234
-grav 78 - 52 26
-grampsweb 149 - 101 48
-gitea 267 - 153 114
-gazpar2mqtt 1845 - 938 907
-free_games_claimer 830 - 527 303
-flexget 44 - 33 11
-flaresolverr 289 - 200 89
-fireflyiii_fints_importer 95 - 62 33
-fireflyiii_data_importer 187 - 125 62
-fireflyiii 368 - 232 136
-filebrowser 10076 - 6540 3536
-epicgamesfree 606 - 421 185
-ente 26 - 14 12
-myelectricaldata_dev 252 - 135 117
-myelectricaldata 3997 - 2256 1741
-emby 185 - 117 68
-emby_stable 154 - 92 62
-elasticsearch 0 - 0 0
-comixed 519 - 237 282
-collabora 80 - 52 28
-codex 49 - 35 14
-cloudcommander 483 - 334 149
-changedetection.io 397 - 240 157
-calibre_web 598 - 372 226
-calibre 231 - 152 79
-browserless_chrome 583 - 375 208
-calibre_web 598 - 372 226
-birdnet-pi 73 - 47 26
-birdnet-go 271 - 210 61
-binance_trading_bot 265 - 167 98
-bazarr 234 - 166 68
-battybirdnet-pi 139 - 91 48
-baikal 142 - 92 50
-autobrr 61 - 32 29
-arpspoof 3086 - 1829 1257
-addons_updater 266 - 167 99
+plex-media-manager 457 313 144
+papermerge 931 478 453
+paperless_ng 250 163 87
+code_server 59 38 21
+vaultwarden 30 20 10
+zoneminder 246 162 84
+xteve 134 93 41
+whoogle-search 214 153 61
+whatsapper 232 232 -
+wger 243 171 72
+webtrees 164 106 58
+webtop_kde 110 77 33
+webtop 883 632 251
+unpackerr 84 59 25
+ubooquity 121 73 48
+transmission_openvpn 520 322 198
+transmission_ls 2029 1266 763
+tor 176 99 77
+teamspeak 2232 1242 990
+tdarr 79 59 20
+tandoor_recipes 1031 662 369
+spotweb 316 229 87
+sponsorblockcast 2296 1457 839
+sonarr_nas 499 348 151
+signalk 8 3 5
+seafile 185 108 77
+scrutiny-fa 1733 1093 640
+scrutiny 523 323 200
+sabnzbd 182 132 50
+resiliosync 311 177 134
+requestrr 86 52 34
+readarr_nas 14 7 7
+radarr_nas 552 367 185
+qbittorrent 496 309 187
+prowlarr 341 233 108
+postgres_17 2299 1482 817
+postgres 2264 1466 798
+portainer_agent 1390 923 467
+portainer 7502 4738 2764
+plex_nas 546 370 176
+piwigo 40 23 17
+photoprism 268 170 98
+overseerr 1072 724 348
+organizr 2544 1575 969
+openproject 80 53 27
+omni-tools 145 86 59
+ombi 351 255 96
+omada_v3 21 16 5
+omada 48 32 16
+nzbget 86 56 30
+nextcloud_ocr 1566 919 647
+netalertx 3150 2143 1007
+netalertx 3150 2143 1007
+navidrome 102 58 44
+mylar3 50 36 14
+monica 139 78 61
+mealie 1436 950 486
+linkwarden 340 224 116
+lidarr_nas 123 86 37
+librespeed 700 441 259
+kometa 113 73 40
+joplin 427 271 156
+joal 889 369 520
+jellyseerr 751 491 260
+jellyfin 1006 681 325
+jackett_nas 305 203 102
+inadyn 1 1 0
+immich_power_tools 206 133 73
+immich_openvino 77 77 -
+immich_noml 45 15 30
+immich_frame 192 148 44
+immich_cuda 8 8 -
+immich 1035 648 387
+guacamole 797 563 234
+grav 78 52 26
+grampsweb 149 101 48
+gitea 267 153 114
+gazpar2mqtt 1845 938 907
+free_games_claimer 830 527 303
+flexget 44 33 11
+flaresolverr 289 200 89
+fireflyiii_fints_importer 95 62 33
+fireflyiii_data_importer 187 125 62
+fireflyiii 368 232 136
+filebrowser 10076 6540 3536
+epicgamesfree 606 421 185
+ente 26 14 12
+myelectricaldata_dev 252 135 117
+myelectricaldata 3997 2256 1741
+emby 185 117 68
+emby_stable 154 92 62
+elasticsearch 0 0 0
+comixed 519 237 282
+collabora 80 52 28
+codex 49 35 14
+cloudcommander 483 334 149
+changedetection.io 397 240 157
+calibre_web 598 372 226
+calibre 231 152 79
+browserless_chrome 583 375 208
+calibre_web 598 372 226
+birdnet-pi 73 47 26
+birdnet-go 271 210 61
+binance_trading_bot 265 167 98
+bazarr 234 166 68
+battybirdnet-pi 139 91 48
+baikal 142 92 50
+autobrr 61 32 29
+arpspoof 3086 1829 1257
+addons_updater 266 167 99
