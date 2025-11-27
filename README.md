@@ -69,6 +69,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 - amd64: 63%
 - aarch64: 37%
+- %%STATS_ARMV7%%
 
 ### Stars evolution
 
@@ -918,8 +919,10 @@ You have several options to get them answered:
 
 [aarch64-badge]: https://img.shields.io/badge/aarch64--green.svg?logo=arm
 [amd64-badge]: https://img.shields.io/badge/amd64--green.svg?logo=amd
+[armv7-badge]: https://img.shields.io/badge/armv7--green.svg?logo=arm
 [aarch64no-badge]: https://img.shields.io/badge/aarch64--orange.svg?logo=arm
 [amd64no-badge]: https://img.shields.io/badge/amd64--orange.svg?logo=amd
+[armv7no-badge]: https://img.shields.io/badge/armv7--orange.svg?logo=arm
 [ingress-badge]: https://img.shields.io/badge/-ingress-blueviolet.svg?logo=Ingress
 [mariadb-badge]: https://img.shields.io/badge/Service-MariaDB-green.svg?logo=mariadb&logoColor=white
 [mqtt-badge]: https://img.shields.io/badge/Service-MQTT-green.svg?logo=chromecast&logoColor=white
