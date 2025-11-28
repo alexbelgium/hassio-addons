@@ -107,6 +107,7 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
   - NET_ADMIN
+  - SYS_RAWIO
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
@@ -125,5 +126,5 @@ schema:
 slug: jellyfin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "10.11.3-1"
+version: "10.11.3-2"
 video: true

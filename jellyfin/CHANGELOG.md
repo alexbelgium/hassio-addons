@@ -1,3 +1,6 @@
+## 10.11.3-2 (30-11-2025)
+- Allow `i915_enable_guc` to be applied on hosts that expose the runtime parameter by granting raw I/O capability and AppArmor access to `/sys/module/i915/parameters/enable_guc`.
+
 ## breaking_versions: 10.11.3-1 (23-11-2025)
 - Minor bugs fixed
 
