@@ -21,9 +21,9 @@ profile addon_db21ed7f_jellyfin_nas flags=(attach_disconnected,mediate_deleted) 
   capability setgid,
   capability setuid,
   capability sys_admin,
+  capability sys_rawio,
   capability dac_read_search,
   # capability dac_override,
-  # capability sys_rawio,
 
 # S6-Overlay
   /init ix,
@@ -53,6 +53,7 @@ profile addon_db21ed7f_jellyfin_nas flags=(attach_disconnected,mediate_deleted) 
   /dev/mmcblk0p1 mrwkl,
   /dev/ttyUSB0 mrwkl,
   /dev/* mrwkl,
+  /sys/module/i915/parameters/enable_guc rwk,
   /tmp/** mrkwl,
   /opt/vc/lib/ mrkwl,
 
