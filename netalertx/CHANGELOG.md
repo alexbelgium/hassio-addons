@@ -1,5 +1,6 @@
+- Breaking change: data directories now use /data symlinks to /config; back up your installation before updating. Migration is supported only from version v25.5.24.
+- Added tmpfs support for temporary storage.
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
-
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 25.10.1 (04-10-2025)

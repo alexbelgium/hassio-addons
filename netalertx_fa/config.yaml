@@ -44,6 +44,7 @@ schema:
 services:
   - mqtt:want
 slug: netalertx_fa
+tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 25.10.1
+version: 25.10.1-2

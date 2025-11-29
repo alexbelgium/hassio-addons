@@ -12,13 +12,22 @@ bashio::log.info "Update structure"
 echo "Creating symlinks"
 for folder in config db; do
     echo "Creating for $folder"
-    # Create symlinks
-    mkdir -p /config/"$folder"
-    if [ -d /app/"$folder" ] && [ "$(ls -A /app/"$folder")" ]; then
-        cp -rn /app/"$folder"/* /config/"$folder"/
-    fi
-    rm -r /app/"$folder"
-    ln -sf /config/"$folder" /app/"$folder"
+    target="/config/${folder}"
+    mkdir -p "$target"
+
+    # Migrate existing data from previous locations while avoiding self-copies
+    for legacy_path in "/app/${folder}" "/data/${folder}"; do
+        if [ -d "$legacy_path" ]; then
+            legacy_target="$(readlink -f "$legacy_path" || true)"
+            if [ "$legacy_target" != "$target" ] && [ "$(ls -A "$legacy_path")" ]; then
+                # -n prevents clobbering anything already present in /config
+                cp -rn "$legacy_path"/. "$target"/
+            fi
+        fi
+    done
+
+    rm -rf /data/"$folder"
+    ln -sf "$target" /data/"$folder"
 done
 
 sudo chown -R nginx:www-data /config/db/
