@@ -39,7 +39,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # Add rootfs
 COPY rootfs/ /
 
-USER root
+USER 0
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
