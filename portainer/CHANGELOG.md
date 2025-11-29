@@ -1,4 +1,7 @@
 
+## 2.36.0 (29-11-2025)
+- Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
+
 ## 2.33.4 (22-11-2025)
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
