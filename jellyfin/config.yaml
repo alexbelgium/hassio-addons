@@ -107,7 +107,6 @@ privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
   - NET_ADMIN
-  - SYS_RAWIO
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
