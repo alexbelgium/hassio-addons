@@ -1,3 +1,6 @@
+
+## 1.42.2.10156-f737b826c-ls286 (29-11-2025)
+- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
 
