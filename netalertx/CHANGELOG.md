@@ -1,3 +1,4 @@
+## 25.10.1-3 (29-11-2025)
 - Breaking change: data directories now use /data symlinks to /config; back up your installation before updating. Migration is supported only from version v25.5.24.
 - Added tmpfs support for temporary storage.
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
