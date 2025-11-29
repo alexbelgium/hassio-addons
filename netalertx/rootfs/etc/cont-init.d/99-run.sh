@@ -21,7 +21,7 @@ for folder in config db; do
             legacy_target="$(readlink -f "$legacy_path" || true)"
             if [ "$legacy_target" != "$target" ] && [ "$(ls -A "$legacy_path")" ]; then
                 # -n prevents clobbering anything already present in /config
-                cp -rn "$legacy_path"/* "$target"/
+                cp -rn "$legacy_path"/. "$target"/
             fi
         fi
     done
