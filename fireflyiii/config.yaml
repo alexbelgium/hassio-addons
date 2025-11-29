@@ -104,5 +104,5 @@ slug: fireflyiii
 startup: services
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "6.4.8"
+version: "6.4.9"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
