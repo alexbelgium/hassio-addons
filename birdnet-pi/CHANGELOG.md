@@ -1,3 +1,6 @@
+
+## 0.11 (29-11-2025)
+- Update to latest version from Nachtzuster/BirdNET-Pi (changelog : https://github.com/Nachtzuster/BirdNET-Pi/releases)
 ## 2025.11.09 (20-11-2025)
 - Minor bugs fixed
 ## 2025.11.07 (16-11-2025)
