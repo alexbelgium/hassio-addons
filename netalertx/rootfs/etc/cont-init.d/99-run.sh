@@ -23,7 +23,7 @@ for folder in config db; do
         fi
     done
 
-    ln -sf "$target" /config/"$folder"
+    ln -sf "$target" /data/"$folder"
 done
 
 sudo chown -R nginx:www-data /config/db/
