@@ -1,4 +1,7 @@
 
+## debian-2025-11-25 (2025-11-25)
+- Update to latest version from charlocharlie/epicgames-freegames
+
 ## debian-2025-11-19 (2025-11-19)
 - Recreate a default config.json when only a legacy config.yaml is present so upgrades keep a usable configuration file
 
