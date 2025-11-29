@@ -2,6 +2,10 @@
 
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
+## 25.10.1-2 (29-11-2025)
+- Breaking change: data directories now use /data symlinks to /config; back up your installation before updating. Migration is supported only from version v25.5.24.
+- Added tmpfs support for temporary storage.
+
 ## 25.10.1 (04-10-2025)
 - Update to latest version from jokob-sk/NetAlertX (changelog : https://github.com/jokob-sk/NetAlertX/releases)
 
