@@ -31,5 +31,5 @@ schema:
 slug: changedetection.io
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/changedetection.io
-version: "0.51.3"
+version: "0.51.4"
 webui: http://[HOST]:[PORT:5000]
