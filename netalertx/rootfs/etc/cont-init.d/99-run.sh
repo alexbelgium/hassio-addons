@@ -18,11 +18,15 @@ for folder in config db; do
     # Migrate existing data from previous locations while avoiding self-copies
     for legacy_path in "/app/${folder}" "/data/${folder}"; do
         if [ -d "$legacy_path" ]; then
-            cp -rn "$legacy_path"/. "$target"/
-            rm -rf "$legacy_target"
+            legacy_target="$(readlink -f "$legacy_path" || true)"
+            if [ "$legacy_target" != "$target" ] && [ "$(ls -A "$legacy_path")" ]; then
+                # -n prevents clobbering anything already present in /config
+                cp -rn "$legacy_path"/. "$target"/
+            fi
         fi
     done
 
+    rm -rf /data/"$folder"
     ln -sf "$target" /data/"$folder"
 done
 
