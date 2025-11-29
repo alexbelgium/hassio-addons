@@ -1,3 +1,6 @@
+
+##  (29-11-2025)
+- Update to latest version from monicahq/monica
 ## v5.0_beta5-6 (17-11-2025)
 - Rename the Meilisearch configuration option to `meilisearch_key` and align schema/options with Home Assistant add-on best practices.
 
