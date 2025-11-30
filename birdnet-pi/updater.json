@@ -1,5 +1,6 @@
 {
   "last_update": "29-11-2025",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "birdnet-pi",
   "source": "github",
