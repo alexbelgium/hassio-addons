@@ -1,3 +1,5 @@
+## 25.10.1-4 (01-12-2025)
+- Minor bugs fixed
 ## 25.10.1-3 (29-11-2025)
 - Breaking change: data directories now use /data symlinks to /config; back up your installation before updating. Migration is supported only from version v25.5.24.
 - Added tmpfs support for temporary storage.
