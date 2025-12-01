@@ -1,7 +1,6 @@
 ## &#9888; Open Issue : [🐛 [Seafile] 12.0.14 not started (opened 2025-09-15)](https://github.com/alexbelgium/hassio-addons/issues/2104) by [@KoalaMontana](https://github.com/KoalaMontana)
 # Home assistant add-on: seafile
 
-## 💖 Support development
 
 I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
 

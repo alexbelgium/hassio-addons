@@ -2,7 +2,6 @@
 ## &#9888; Open Issue : [🐛 [LINKWARDEN] Never use STORAGE_FOLDER (opened 2025-10-11)](https://github.com/alexbelgium/hassio-addons/issues/2137) by [@guimex22](https://github.com/guimex22)
 # Hass.io Add-ons: Tor with bridges
 
-## 💖 Support development
 
 I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
 

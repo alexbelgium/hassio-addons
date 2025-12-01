@@ -1,7 +1,6 @@
 ## &#9888; Open Issue : [🐛 [NextCloud] Mounted localdisk does not have write permissions (opened 2025-09-23)](https://github.com/alexbelgium/hassio-addons/issues/2123) by [@Patabugen](https://github.com/Patabugen)
 # Home assistant add-on: Nextcloud
 
-## 💖 Support development
 
 I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
 
