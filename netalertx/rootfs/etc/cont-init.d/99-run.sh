@@ -8,6 +8,11 @@ set -e
 
 bashio::log.info "Update structure"
 
+# Ensure required runtime directories exist before any migration
+for dir in /data/config /data/db /tmp/api /tmp/log /tmp/run; do
+    mkdir -p "$dir"
+done
+
 # In the addon script, make symlinks on the fly
 echo "Creating symlinks"
 for folder in config db; do
@@ -29,6 +34,15 @@ for folder in config db; do
     rm -rf /data/"$folder"
     ln -sf "$target" /data/"$folder"
 done
+
+# Populate missing default files from the application image when available
+if [ -f /app/config/app.conf ] && [ ! -f /config/config/app.conf ]; then
+    cp -n /app/config/app.conf /config/config/app.conf
+fi
+
+if [ -f /app/db/app.db ] && [ ! -f /config/db/app.db ]; then
+    cp -n /app/db/app.db /config/db/app.db
+fi
 
 sudo chown -R nginx:www-data /config/db/
 sudo chown -R nginx:www-data /config/config/
