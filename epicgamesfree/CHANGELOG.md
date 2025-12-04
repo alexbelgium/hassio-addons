@@ -1,4 +1,7 @@
 
+## debian-2025-12-04-1 (2025-12-04)
+- Add an add-on option to disable the bundled cron service and honor it at startup
+
 ## debian-2025-11-25 (2025-11-25)
 - Update to latest version from charlocharlie/epicgames-freegames
 
