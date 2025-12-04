@@ -28,6 +28,27 @@ fi
 # Permissions
 chmod -R 777 "$HOME"
 
+######################
+# APPLY ADDON CONFIG #
+######################
+
+# Handle run_on_startup option
+if bashio::config.has_value "run_on_startup"; then
+    if bashio::config.true "run_on_startup"; then
+        bashio::log.info "run_on_startup is enabled"
+        jq '.runOnStartup = true' "$CONFIG_JSON" > "${CONFIG_JSON}.tmp" && mv "${CONFIG_JSON}.tmp" "$CONFIG_JSON"
+    else
+        bashio::log.info "run_on_startup is disabled"
+        jq '.runOnStartup = false' "$CONFIG_JSON" > "${CONFIG_JSON}.tmp" && mv "${CONFIG_JSON}.tmp" "$CONFIG_JSON"
+    fi
+fi
+
+# Handle disable_cron option
+if bashio::config.true "disable_cron"; then
+    bashio::log.info "Cron schedule is disabled - the addon will only run on startup"
+    jq 'del(.cronSchedule)' "$CONFIG_JSON" > "${CONFIG_JSON}.tmp" && mv "${CONFIG_JSON}.tmp" "$CONFIG_JSON"
+fi
+
 ##############
 # Launch App #
 ##############

@@ -37,6 +37,14 @@ This addon is based on the docker image https://hub.docker.com/r/charlocharlie/e
 
 Addon options expose the `env_vars` field for passing extra environment variables; all other configuration is done via the JSON file.
 
+### Add-on Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `run_on_startup` | boolean | `true` | Run a claim cycle when the add-on starts |
+| `disable_cron` | boolean | `false` | Disable the cron schedule (only run on startup) |
+| `env_vars` | list | `[]` | Extra environment variables to pass to the container |
+
 ### Configuration Files
 
 Configuration files are stored in `/config/addons_config/epicgamesfree/`:
