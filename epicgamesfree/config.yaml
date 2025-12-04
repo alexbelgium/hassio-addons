@@ -75,6 +75,7 @@ map:
 name: Epic Games Free
 options:
   env_vars: []
+  disable_cron: false
 ports:
   3000/tcp: 3000
 ports_description:
@@ -83,8 +84,9 @@ schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
+  disable_cron: bool?
 slug: epicgamesfree
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "debian-2025-11-25"
+version: "debian-2025-12-04-1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:3000]"

@@ -35,7 +35,7 @@ This addon is based on the docker image https://hub.docker.com/r/charlocharlie/e
 
 ## Configuration
 
-Addon options expose the `env_vars` field for passing extra environment variables; all other configuration is done via the JSON file.
+Addon options expose the `env_vars` field for passing extra environment variables and a `disable_cron` switch to stop the built-in cron service; all other application configuration is done via the JSON file.
 
 ### Configuration Files
 
@@ -95,6 +95,7 @@ Create `/config/addons_config/epicgamesfree/config.json`:
 | `logLevel` | string | Application log level |
 | `webPortalConfig.baseUrl` | string | Base URL used by the included web portal |
 | `notifiers` | array | Notification targets such as email, Discord, Telegram, Apprise, etc. |
+| `disable_cron` | boolean | Disable the add-on's cron service if an external scheduler is used |
 
 ### Account Configuration
 
