@@ -63,6 +63,11 @@ cd "$DATA_DIR" || true
 chown -R "$(bashio::config "PUID"):$(bashio::config "PGID")" .
 echo "Permissions adapted"
 
+if bashio::config.has_value "FORWARDED_ALLOW_IPS"; then
+    export FORWARDED_ALLOW_IPS="$(bashio::config "FORWARDED_ALLOW_IPS")"
+    bashio::log.info "Configured FORWARDED_ALLOW_IPS for Gunicorn"
+fi
+
 bashio::log.info "Starting nginx"
 nginx & true
 
