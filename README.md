@@ -57,13 +57,13 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 116
-- Installed : 72911
+- Installed : 74263
 
 ### Top 3
 
-1. Filebrowser (10081x)
-2. Myelectricaldata (4033x)
-3. Netalertx (3312x)
+1. Filebrowser (10172x)
+2. Portainer (5642x)
+3. Myelectricaldata (4081x)
 
 ### Architectures used
 
@@ -253,7 +253,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (10081x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
+&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (10172x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser%2Fupdater.json)
@@ -616,7 +616,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer](portainer/) : Manage your Docker environment with ease
+&#10003; ![image](https://api.iconify.design/mdi/docker.svg) [Portainer (5642x)](portainer/) : Manage your Docker environment with ease
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer%2Fupdater.json)
@@ -624,7 +624,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![ingress][ingress-badge]
 
-&#10003;  [Portainer Agent](portainer_agent/) : An agent used to manage all the resources in a Swarm cluster
+&#10003;  [Portainer (5642x) Agent](portainer_agent/) : An agent used to manage all the resources in a Swarm cluster
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_agent%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fportainer_agent%2Fupdater.json)
