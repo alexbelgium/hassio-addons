@@ -58,6 +58,8 @@ Configurations can be done through the app webUI, except for the following optio
 | `DATA_DIR` | str | `/config` | Data directory path |
 | `ALLOW_SIGNUP` | bool | `true` | Allow new user signup |
 
+To configure Gunicorn's `--forwarded-allow-ips` setting for trusted reverse proxies, manually add a `FORWARDED_ALLOW_IPS` entry to your add-on configuration (comma-separated IPs). It is optional and hidden from the default options tab.
+
 ### Example Configuration
 
 ```yaml

@@ -103,6 +103,7 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
   ALLOW_SIGNUP: bool
+  FORWARDED_ALLOW_IPS: str?
   BASE_URL: str?
   DATA_DIR: str?
   PGID: int
@@ -113,4 +114,4 @@ schema:
 slug: mealie
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "v3.5.0"
+version: "v3.5.2"

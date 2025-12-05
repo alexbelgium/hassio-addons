@@ -1,6 +1,12 @@
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
 
+## v3.5.2 (06-12-2025)
+- Document `FORWARDED_ALLOW_IPS` as an advanced option without exposing it in the default options tab
+
+## v3.5.1 (06-12-2025)
+- Allow configuring Gunicorn's `--forwarded-allow-ips` value to support OIDC behind reverse proxies
+
 ## v3.5.0 (15-11-2025)
 - Update to latest version from mealie-recipes/mealie (changelog : https://github.com/mealie-recipes/mealie/releases)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
