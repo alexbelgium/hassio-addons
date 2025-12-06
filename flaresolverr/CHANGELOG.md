@@ -1,3 +1,6 @@
+
+## 3.4.6 (06-12-2025)
+- Update to latest version from FlareSolverr/FlareSolverr (changelog : https://github.com/FlareSolverr/FlareSolverr/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
 ## 3.4.5-2 (18-11-2025)
