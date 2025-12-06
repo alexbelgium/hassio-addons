@@ -1,3 +1,5 @@
+## v5.0_beta5-7 (06-12-2025)
+- Minor bugs fixed
 ## v5.0_beta5-6 (17-11-2025)
 - Rename the Meilisearch configuration option to `meilisearch_key` and align schema/options with Home Assistant add-on best practices.
 
