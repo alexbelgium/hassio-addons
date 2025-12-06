@@ -1,3 +1,6 @@
+
+## 10.11.4 (06-12-2025)
+- Update to latest version from linuxserver/docker-jellyfin (changelog : https://github.com/linuxserver/docker-jellyfin/releases)
 ## breaking_versions: 10.11.3-2 (28-11-2025)
 - Minor bugs fixed
 ## 10.11.3-2 (30-11-2025)
