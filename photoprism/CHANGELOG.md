@@ -1,3 +1,4 @@
+- Increase healthcheck interval to reduce background CPU usage
 
 ## ubuntu-2025-11-30 (2025-11-30)
 - Update to latest version from photoprism/photoprism

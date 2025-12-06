@@ -139,7 +139,7 @@ RUN \
 ENV HEALTH_PORT="" \
     HEALTH_URL=""
 HEALTHCHECK \
-    --interval=30s \
+    --interval=5m \
     --retries=5 \
     --start-period=30s \
     --timeout=60s \
