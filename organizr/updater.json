@@ -1,8 +1,8 @@
 {
-  "last_update": "06-12-2025",
+  "last_update": "27-04-2022",
   "repository": "alexbelgium/hassio-addons",
   "slug": "organizr",
   "source": "github",
   "upstream_repo": "causefx/organizr",
-  "upstream_version": "1.601"
+  "upstream_version": "1.90"
 }
