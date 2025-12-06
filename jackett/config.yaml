@@ -106,5 +106,5 @@ schema:
 slug: jackett_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/jackett
-version: "0.24.364"
+version: "0.24.404"
 webui: http://[HOST]:[PORT:9117]
