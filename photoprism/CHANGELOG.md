@@ -1,4 +1,3 @@
-
 - Increase healthcheck interval to reduce background CPU usage
 
 ## ubuntu-2025-11-30 (2025-11-30)
