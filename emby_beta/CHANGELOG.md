@@ -1,3 +1,5 @@
+## streaming your media (beta version) 4.9.2.7 (06-12-2025)
+- Minor bugs fixed
 
 ## 4.9.2.7 (06-12-2025)
 - Update to latest version from linuxserver/docker-emby (changelog : https://github.com/linuxserver/docker-emby/releases)
