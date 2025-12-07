@@ -1,3 +1,6 @@
+## v5.0_beta5-8 (07-12-2025)
+- Generate and persist a secure Meilisearch master key when none is provided or when configured keys are too short.
+
 ## v5.0_beta5-7 (06-12-2025)
 - Minor bugs fixed
 ## v5.0_beta5-6 (17-11-2025)
