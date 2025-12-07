@@ -144,6 +144,40 @@ if [[ "${MEILISEARCH_LOCAL}" == true ]]; then
     mkdir -p "${MEILISEARCH_DB_PATH}"
 
     MEILISEARCH_ENV_KEY="$(bashio::config 'meilisearch_key')"
+    GENERATED_MEILI_KEY_FILE="/data/meilisearch_master_key"
+
+    # Treat unset/"null" config as empty so we don't feed an invalid key to Meilisearch
+    if [ "${MEILISEARCH_ENV_KEY}" = "null" ]; then
+        MEILISEARCH_ENV_KEY=""
+    fi
+
+    # Reject too-short keys so the service can start even with a bad config
+    if [ -n "${MEILISEARCH_ENV_KEY}" ] && [ "${#MEILISEARCH_ENV_KEY}" -lt 16 ]; then
+        bashio::log.warning "Configured meilisearch_key is shorter than 16 bytes; generating a secure key instead."
+        MEILISEARCH_ENV_KEY=""
+    fi
+
+    # Fall back to MEILI_MASTER_KEY when present and valid
+    if [ -z "${MEILISEARCH_ENV_KEY}" ]; then
+        if [ -n "${MEILI_MASTER_KEY:-}" ] && [ "${#MEILI_MASTER_KEY}" -ge 16 ]; then
+            MEILISEARCH_ENV_KEY="${MEILI_MASTER_KEY}"
+        elif [ -n "${MEILI_MASTER_KEY:-}" ] && [ "${#MEILI_MASTER_KEY}" -lt 16 ]; then
+            bashio::log.warning "Provided MEILI_MASTER_KEY is shorter than 16 bytes; generating a secure key instead."
+        fi
+    fi
+
+    # Persist and reuse a generated key when none was provided
+    if [ -z "${MEILISEARCH_ENV_KEY}" ]; then
+        if [ -s "${GENERATED_MEILI_KEY_FILE}" ]; then
+            MEILISEARCH_ENV_KEY="$(cat "${GENERATED_MEILI_KEY_FILE}")"
+        else
+            MEILISEARCH_ENV_KEY="$(openssl rand -hex 32)"
+            echo "${MEILISEARCH_ENV_KEY}" > "${GENERATED_MEILI_KEY_FILE}"
+            chmod 600 "${GENERATED_MEILI_KEY_FILE}"
+            bashio::log.info "Generated persistent Meilisearch master key at ${GENERATED_MEILI_KEY_FILE}."
+        fi
+    fi
+
     MEILISEARCH_KEY="${MEILISEARCH_ENV_KEY}"
     export MEILISEARCH_KEY
     MEILISEARCH_ENVIRONMENT="${MEILI_ENV:-production}"
