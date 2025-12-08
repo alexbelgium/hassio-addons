@@ -10,16 +10,67 @@ touch /started
 # Starting scripts #
 ####################
 
+candidate_shebangs+=(
+    "/usr/bin/env bashio"
+    "/usr/bin/bashio"
+    "/usr/bin/bash"
+    "/usr/bin/sh"
+    "/bin/bash"
+    "/bin/sh"
+)
+
+# Find the first valid shebang interpreter in candidate list
+shebang=""
+for candidate in "${candidate_shebangs[@]}"; do
+    command_path="${candidate%% *}"
+    # Test if command exists and can actually execute a shell command (for shells)
+    if [ -x "$command_path" ]; then
+        # Try as both 'sh -c' and 'bashio echo' style
+        if "$command_path" -c 'echo yes' > /dev/null 2>&1 || "$command_path" echo "yes" > /dev/null 2>&1; then
+            shebang="$candidate"
+            break
+        fi
+    fi
+done
+if [ -z "$shebang" ]; then
+    echo "ERROR: No valid shebang found!"
+    exit 1
+fi
+
 for SCRIPTS in /etc/cont-init.d/*; do
     [ -e "$SCRIPTS" ] || continue
     echo "$SCRIPTS: executing"
-    chown "$(id -u)":"$(id -g)" "$SCRIPTS"
-    chmod a+x "$SCRIPTS"
-    # Change shebang if no s6 supervision
-    sed -i 's|/usr/bin/with-contenv bashio|/usr/bin/env bashio|g' "$SCRIPTS"
-    sed -i "/exit 0/d" "$SCRIPTS"
-    . "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
-    rm "$SCRIPTS"
+
+    # Check if run as root (UID 0)
+    if [ "$(id -u)" -eq 0 ]; then
+        # Fix permissions for root user
+        chown "$(id -u)":"$(id -g)" "$SCRIPTS"
+        chmod a+x "$SCRIPTS"
+    else
+        echo -e "\e[38;5;214m$(date) WARNING: Script executed with user $(id -u):$(id -g), things can break and chown won't work\e[0m"
+        # Disable chown and chmod commands inside the script for non-root users
+        sed -i "s/^\s*chown /true # chown /g" "$SCRIPTS"
+        sed -i "s/^\s*chmod /true # chmod /g" "$SCRIPTS"
+    fi
+
+    # Prepare to run
+    sed -i "1s|^.*|#!$shebang|" "$SCRIPTS"
+    chmod +x "$SCRIPTS"
+
+    # Optionally use 'source' to share env variables, when requested
+    if [ "${ha_entry_source:-null}" = true ]; then
+        # Replace exit with return, so sourced scripts can return errors
+        sed -i -E 's/^\s*exit ([0-9]+)/return \1 \|\| exit \1/g' "$SCRIPTS"
+        sed -i 's/bashio::exit\.nok/return 1/g' "$SCRIPTS"
+        sed -i 's/bashio::exit\.ok/return 0/g' "$SCRIPTS"
+        # shellcheck disable=SC1090
+        source "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    else
+        "$SCRIPTS" || echo -e "\033[0;31mError\033[0m : $SCRIPTS exiting $?"
+    fi
+
+    # Cleanup after execution
+    sed -i '1a exit 0' "$SCRIPTS"
 done
 
 rm /.env || true
