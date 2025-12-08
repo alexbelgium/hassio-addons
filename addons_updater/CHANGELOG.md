@@ -1,6 +1,6 @@
-## description: Automatic addons update by aligning version tag with upstream releases 3.19.14 (08-12-2025)
+## description: Automatic addons update by aligning version tag with upstream releases 3.19.15 (08-12-2025)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
-- Add support for codeberg source handling and increment version
+- Improve Codeberg handling with a Gitea API fallback when lastversion lacks custom host support
 
 
 ## 3.19.12 (18-11-2025)

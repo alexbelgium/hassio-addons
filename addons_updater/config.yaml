@@ -28,4 +28,4 @@ schema:
 slug: updater
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater
-version: "3.19.14"
+version: "3.19.15"

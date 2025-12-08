@@ -170,12 +170,14 @@ for f in */; do
 
             # Use source as upstream
             ARGUMENTS="--at $SOURCE"
+            LASTVERSION_REPO="$UPSTREAM"
 
             if [ "${SOURCE}" = "codeberg" ]; then
-                # Codeberg is a hosted Gitea instance; lastversion needs the API base to resolve releases
-                CODEBERG_API_BASE="https://codeberg.org/api/v1"
-                ARGUMENTS="--at gitea --api-base ${CODEBERG_API_BASE}"
-                LOGINFO="... $SLUG : source is codeberg (gitea, using ${CODEBERG_API_BASE})" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                # Codeberg is a hosted Gitea instance; pass the repository as a full URL for lastversion
+                CODEBERG_BASE_URL="https://codeberg.org"
+                ARGUMENTS="--at gitea"
+                LASTVERSION_REPO="${CODEBERG_BASE_URL}/${UPSTREAM}"
+                LOGINFO="... $SLUG : source is codeberg (gitea, using ${CODEBERG_BASE_URL})" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
             else
                 LOGINFO="... $SLUG : source is $SOURCE" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
             fi
@@ -262,7 +264,40 @@ for f in */; do
             }
 
             # shellcheck disable=SC2086
-            LASTVERSION="$(lastversion "$UPSTREAM" $ARGUMENTS || test_packages)"
+            LASTVERSION="$(lastversion "$LASTVERSION_REPO" $ARGUMENTS || test_packages)"
+
+            # Codeberg fallback: lastversion may not support custom Gitea hosts in older builds
+            if [[ -z "$LASTVERSION" && "${SOURCE}" = "codeberg" ]]; then
+                LOGINFO="... $SLUG : attempting Codeberg API fallback" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+                RELEASES_URL="https://codeberg.org/api/v1/repos/${UPSTREAM}/releases"
+                JQ_FILTER='.[] | select(.draft == false)'
+                if [ "$BETA" != true ]; then
+                    JQ_FILTER='.[] | select(.draft == false and .prerelease == false)'
+                fi
+                CODEBERG_TAGS=$(curl -fsSL "$RELEASES_URL" | jq -r "$JQ_FILTER | .tag_name" || true)
+
+                if [ -n "$CODEBERG_TAGS" ]; then
+                    if [ -n "$FILTER_TEXT" ]; then
+                        CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | grep "$FILTER_TEXT" || true)
+                    fi
+
+                    if [ -n "$EXCLUDE_TEXT" ]; then
+                        CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | sed "/${EXCLUDE_TEXT}/d")
+                    fi
+
+                    CODEBERG_TAGS=$(echo "$CODEBERG_TAGS" | sed '/^$/d' | sort -V)
+                    LASTVERSION=$(echo "$CODEBERG_TAGS" | tail -n 1)
+                fi
+
+                if [ -n "$LASTVERSION" ] && [ "$FULLTAG" != true ]; then
+                    LASTVERSION="${LASTVERSION#v}"
+                fi
+
+                if [ -z "$LASTVERSION" ]; then
+                    bashio::log.warning "... $SLUG : unable to determine Codeberg release"
+                    set_continue=true
+                fi
+            fi
 
             # Continue if issue
             if [[ "${set_continue:-false}" == true ]]; then
