@@ -66,7 +66,7 @@ You can add the following tags in the file :
 - repository: 'name/repo' coming from github
 - paused: true # Pauses the updates
 - slug: the slug name from your addon
-- source: dockerhub/github,gitlab,bitbucket,pip,hg,sf,website-feed,local,helm_chart,wiki,system,wp
+- source: dockerhub/github,gitlab,bitbucket,pip,hg,sf,website-feed,local,helm_chart,wiki,system,wp,codeberg (Codeberg is Gitea-based and requires the Codeberg API base)
 - upstream_repo: name/repo, example is 'linuxserver/docker-emby'
 - upstream_version: automatically populated, corresponds to the current upstream version referenced in the addon
 - dockerhub_by_date: in dockerhub, uses the last_update date instead of the version

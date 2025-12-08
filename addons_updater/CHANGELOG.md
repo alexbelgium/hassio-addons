@@ -1,5 +1,14 @@
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
+## 3.19.14
+
+- Document why Codeberg uses Gitea arguments and clarify handling
+
+## 3.19.13
+
+- Fix codeberg source handling and increment version
+
+
 ## 3.19.12 (18-11-2025)
 
 - Added support for configuring extra environment variables through the `env_vars` option.
