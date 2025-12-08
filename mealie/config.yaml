@@ -114,4 +114,4 @@ schema:
 slug: mealie
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "v3.6.1"
+version: v3.6.1-2
