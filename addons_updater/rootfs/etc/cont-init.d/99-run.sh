@@ -170,7 +170,15 @@ for f in */; do
 
             # Use source as upstream
             ARGUMENTS="--at $SOURCE"
-            LOGINFO="... $SLUG : source is $SOURCE" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+
+            if [ "${SOURCE}" = "codeberg" ]; then
+                # Codeberg is a hosted Gitea instance; lastversion needs the API base to resolve releases
+                CODEBERG_API_BASE="https://codeberg.org/api/v1"
+                ARGUMENTS="--at gitea --api-base ${CODEBERG_API_BASE}"
+                LOGINFO="... $SLUG : source is codeberg (gitea, using ${CODEBERG_API_BASE})" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+            else
+                LOGINFO="... $SLUG : source is $SOURCE" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
+            fi
 
             #Prepare tag flag
             if [ "${FULLTAG}" = true ]; then
