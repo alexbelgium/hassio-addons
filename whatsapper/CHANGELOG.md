@@ -1,3 +1,7 @@
+## 1.1 (9-12-2025)
+- Move docker image from docker to github
+- Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases)
+
 ## 1.0.5 (18-11-2025)
 - Added `env_vars` option to allow passing custom environment variables from the add-on configuration.
 

@@ -14,7 +14,7 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=baldarn/whatsapper
+ARG BUILD_FROM=ghcr.io/baldarn/whatsapper
 
 FROM ${BUILD_FROM}
 
