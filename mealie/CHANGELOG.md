@@ -1,3 +1,5 @@
+## v3.6.1-3 (12-12-2025)
+- Minor bugs fixed
 ## v3.6.1-2 (08-12-2025)
 - Allow to start with sign up disabled
 
