@@ -78,6 +78,12 @@ done
 rm /.env || true
 rm /env.py || true
 
+# Unset allow_signup
+
+if [[ "${ALLOW_SIGNUP:-}" == "false" ]]; then
+  unset ALLOW_SIGNUP
+fi
+
 ####################
 # MIGRATE DATA DIR #
 ####################
