@@ -10,6 +10,8 @@ touch /started
 # Starting scripts #
 ####################
 
+ha_entry_source=true
+
 candidate_shebangs+=(
     "/usr/bin/env bashio"
     "/usr/bin/bashio"
