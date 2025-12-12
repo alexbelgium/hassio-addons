@@ -75,15 +75,6 @@ for SCRIPTS in /etc/cont-init.d/*; do
     sed -i '1a exit 0' "$SCRIPTS"
 done
 
-rm /.env || true
-rm /env.py || true
-
-# Unset allow_signup
-
-if [[ "${ALLOW_SIGNUP:-}" == "false" ]]; then
-  unset ALLOW_SIGNUP
-fi
-
 ####################
 # MIGRATE DATA DIR #
 ####################
@@ -125,6 +116,13 @@ echo "Permissions adapted"
 if bashio::config.has_value "FORWARDED_ALLOW_IPS"; then
     export FORWARDED_ALLOW_IPS="$(bashio::config "FORWARDED_ALLOW_IPS")"
     bashio::log.info "Configured FORWARDED_ALLOW_IPS for Gunicorn"
+fi
+
+# Unset allow_signup
+
+if bashio::config.false "ALLOW_SIGNUP"; then
+  echo "ALLOW_SIGNUP is deactivated"
+  unset ALLOW_SIGNUP
 fi
 
 bashio::log.info "Starting nginx"
