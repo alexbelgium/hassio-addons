@@ -3,6 +3,28 @@
 set -e
 
 LOCATION=$(bashio::config 'data_location')
+PUID=$(bashio::config "PUID")
+PGID=$(bashio::config "PGID")
+
+create_link() {
+    local target_dir="$1"
+    local link_path="$2"
+
+    mkdir -p "$target_dir"
+    mkdir -p "$(dirname "$link_path")"
+
+    if [ -L "$link_path" ]; then
+        rm "$link_path"
+    elif [ -d "$link_path" ]; then
+        cp -a "$link_path/." "$target_dir/" || true
+        rm -r "$link_path"
+    elif [ -e "$link_path" ]; then
+        rm "$link_path"
+    fi
+
+    ln -sfn "$target_dir" "$link_path"
+    chown -R "$PUID:$PGID" "$target_dir"
+}
 
 # Check if config is located in an acceptable location
 LOCATIONOK=""
@@ -45,50 +67,25 @@ fi
 
 # links
 
-if [ ! -d /jellyfin/cache ]; then
-    echo "Creating link for /jellyfin/cache"
-    mkdir -p "$LOCATION"/cache
-    chown -R "$PUID:$PGID" "$LOCATION"/cache
-    ln -s "$LOCATION"/cache /jellyfin/cache
-fi
+echo "Creating link for /jellyfin/cache"
+create_link "$LOCATION/cache" /jellyfin/cache
 
-if [ ! -d /jellyfin/data ]; then
-    echo "Creating link for /jellyfin/data"
-    mkdir -p "$LOCATION"/data
-    chown -R "$PUID:$PGID" "$LOCATION"/data
-    ln -s "$LOCATION"/data /jellyfin/data
-fi
+echo "Creating link for /jellyfin/data"
+create_link "$LOCATION/data" /jellyfin/data
 
-if [ ! -d /jellyfin/log ]; then
-    echo "Creating link for /jellyfin/log"
-    mkdir -p "$LOCATION"/log
-    chown -R "$PUID:$PGID" "$LOCATION"/log
-    ln -s "$LOCATION"/log /jellyfin/log
-fi
+echo "Creating link for /jellyfin/log"
+create_link "$LOCATION/log" /jellyfin/log
 
-if [ ! -d /jellyfin/metadata ]; then
-    echo "Creating link for /jellyfin/metadata"
-    mkdir -p "$LOCATION"/metadata
-    chown -R "$PUID:$PGID" "$LOCATION"/metadata
-    ln -s "$LOCATION"/metadata /jellyfin/metadata
-fi
+echo "Creating link for /jellyfin/metadata"
+create_link "$LOCATION/metadata" /jellyfin/metadata
 
-if [ ! -d /jellyfin/plugins ]; then
-    echo "Creating link for /jellyfin/plugins"
-    mkdir -p "$LOCATION"/plugins
-    chown -R "$PUID:$PGID" "$LOCATION"/plugins
-    ln -s "$LOCATION"/plugins /jellyfin/plugins
-fi
+echo "Creating link for /jellyfin/plugins"
+create_link "$LOCATION/plugins" /jellyfin/plugins
 
-if [ ! -d /jellyfin/root ]; then
-    echo "Creating link for /jellyfin/root"
-    mkdir -p "$LOCATION"/root
-    chown -R "$PUID:$PGID" "$LOCATION"/root
-    ln -s "$LOCATION"/root /jellyfin/root
-fi
+echo "Creating link for /jellyfin/root"
+create_link "$LOCATION/root" /jellyfin/root
 
 # Legacy mode
 echo "Enable legacy mode"
-mkdir -p /config/addons_config
-ln -sf "$LOCATION" /config/addons_config/jellyfin
+create_link "$LOCATION" /config/addons_config/jellyfin
 chown -R "$PUID:$PGID" "$LOCATION"
