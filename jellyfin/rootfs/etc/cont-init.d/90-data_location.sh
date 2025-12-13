@@ -30,8 +30,10 @@ mkdir -p /data/transcodes
 if [ -d "$LOCATION"/data/transcodes ]; then
     cp -rT "$LOCATION"/data/transcodes /data/transcodes || true
     rm -r "$LOCATION"/data/transcodes
+elif [ -L "$LOCATION"/data/transcodes ]; then
+    rm "$LOCATION"/data/transcodes
 fi
-ln -s /data/transcodes "$LOCATION"/data/transcodes
+ln -sfn /data/transcodes "$LOCATION"/data/transcodes
 chown -R "$PUID":"$PGID" /data/transcodes
 
 # Permissions
