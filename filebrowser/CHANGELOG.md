@@ -1,4 +1,7 @@
 
+## 2.51.2 (13-12-2025)
+- Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
+
 ## 2.50.0 (06-12-2025)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
 
