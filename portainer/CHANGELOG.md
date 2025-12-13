@@ -1,4 +1,7 @@
 
+## 2.37.0 (13-12-2025)
+- Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
+
 ## 2.36.0 (29-11-2025)
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 
