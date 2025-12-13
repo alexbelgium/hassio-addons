@@ -179,7 +179,7 @@ if bashio::config.has_value 'networkdisks'; then
 
         # Quickly try to mount with defaults
         if [[ "$FSTYPE" == "cifs" ]]; then
-            mount_drive "rw,file_mode=0775,dir_mode=0775,username=${USERNAME},password=${PASSWORD},nobrl${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}${DOMAIN}"
+            mount_drive "rw,file_mode=0775,dir_mode=0775,username=${USERNAME},password=${PASSWORD},nobrl,mfsymlinks${SMBVERS}${SECVERS}${PUID}${PGID}${CHARSET}${DOMAIN}"
         elif [[ "$FSTYPE" == "nfs" ]]; then
             mount_drive "rw,nfsvers=4.2,proto=tcp,hard,timeo=600,retrans=2"
         fi
