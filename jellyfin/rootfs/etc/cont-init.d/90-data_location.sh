@@ -27,11 +27,11 @@ sed -i "s|/usr/share/jellyfin|$LOCATION|g" /etc/nginx/servers/ingress.conf
 
 # Custom transcode location
 mkdir -p /data/transcodes
-if [ -L "$LOCATION"/data/transcodes ]; then
-    rm "$LOCATION"/data/transcodes
-elif [ -d "$LOCATION"/data/transcodes ]; then
+if [ -d "$LOCATION"/data/transcodes ]; then
     cp -rT "$LOCATION"/data/transcodes /data/transcodes || true
     rm -r "$LOCATION"/data/transcodes
+elif [ -L "$LOCATION"/data/transcodes ]; then
+    rm "$LOCATION"/data/transcodes
 fi
 ln -sfn /data/transcodes "$LOCATION"/data/transcodes
 chown -R "$PUID":"$PGID" /data/transcodes
