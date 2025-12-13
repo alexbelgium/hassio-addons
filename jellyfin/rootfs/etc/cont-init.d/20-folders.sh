@@ -10,8 +10,20 @@ create_link() {
     local target_dir="$1"
     local link_path="$2"
 
+    local target_real
+    local link_real
+
+    target_real=$(realpath -m "$target_dir")
+    link_real=$(realpath -m "$link_path")
+
     mkdir -p "$target_dir"
     mkdir -p "$(dirname "$link_path")"
+
+    # If the link path is the same as the target, just ensure ownership and exit
+    if [ "$target_real" = "$link_real" ]; then
+        chown -R "$PUID:$PGID" "$target_dir"
+        return
+    fi
 
     if [ -L "$link_path" ]; then
         rm "$link_path"

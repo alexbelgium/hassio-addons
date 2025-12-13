@@ -1,3 +1,6 @@
+## 10.11.4-1 (07-12-2025)
+- Avoid deleting the configured data directory when it matches the legacy path while rebuilding symlinks.
+
 ## breaking_versions: 10.11.4 (06-12-2025)
 - Minor bugs fixed
 
