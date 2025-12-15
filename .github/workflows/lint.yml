@@ -166,7 +166,7 @@ jobs:
 
       - name: Create New Pull Request If Needed
         if: steps.changed.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           title: "Github bot: fix linting issues nobuild"
           commit-message: "fix: auto-fix linting issues"
