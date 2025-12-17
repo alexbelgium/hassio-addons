@@ -7,7 +7,11 @@ CONFIGSOURCE="/config"
 # Use ssl
 if [ -d /ssl ]; then
     mkdir -p /cert
-    cp -r /ssl/* /cert
+    if compgen -G "/ssl/*" > /dev/null; then
+        cp -r /ssl/* /cert
+    else
+        echo "No SSL files found in /ssl, skipping copy"
+    fi
     chown -R 508:508 /cert
 fi
 
