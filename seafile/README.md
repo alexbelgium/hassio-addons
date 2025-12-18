@@ -64,6 +64,8 @@ Webui can be found at <http://homeassistant:8000> (Seahub) and <http://homeassis
 3. Configure database (SQLite default, MariaDB recommended for production)
 4. Set proper file server root URL for external access
 
+> **File server URL**: The add-on now writes `SERVICE_URL` and `FILE_SERVER_ROOT` directly to `conf/seahub_settings.py` using `SERVER_IP` (default `homeassistant.local`), the web UI port `8000`, and the file server port (`PORT`, default `8082`). If you are not using a reverse proxy, keep `FILE_SERVER_ROOT` set to `http://<your host>:8082` so download links point to the correct file server endpoint.
+
 ### Options
 
 | Option | Type | Default | Description |

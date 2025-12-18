@@ -65,6 +65,33 @@ sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
 sed -i "s|/shared|$DATA_LOCATION|g" /home/seafile/*.sh
 #sed -i "s=cp -r ./media $DATA_LOCATION/=chown -R seafile:seafile $DATA_LOCATION/* && chmod -R 777 $DATA_LOCATION/media && cp -rnf ./media/. $DATA_LOCATION/media ||true=g" /home/seafile/*.sh
 
+#############################################
+# Configure service URL and file server root #
+#############################################
+
+bashio::log.info "Configuring Seafile URLs"
+
+DEFAULT_HOST=${SERVER_IP:-homeassistant.local}
+DEFAULT_FILE_PORT=${PORT:-8082}
+
+SERVICE_URL_VALUE="http://${DEFAULT_HOST}:8000"
+FILE_SERVER_ROOT_VALUE=${FILE_SERVER_ROOT:-"http://${DEFAULT_HOST}:${DEFAULT_FILE_PORT}"}
+
+SEAHUB_SETTINGS_FILE="${DATA_LOCATION}/conf/seahub_settings.py"
+mkdir -p "$(dirname "${SEAHUB_SETTINGS_FILE}")"
+touch "${SEAHUB_SETTINGS_FILE}"
+
+sed -i '/^SERVICE_URL *=/d' "${SEAHUB_SETTINGS_FILE}"
+sed -i '/^FILE_SERVER_ROOT *=/d' "${SEAHUB_SETTINGS_FILE}"
+
+{
+    echo "SERVICE_URL = \"${SERVICE_URL_VALUE}\""
+    echo "FILE_SERVER_ROOT = \"${FILE_SERVER_ROOT_VALUE}\""
+} >> "${SEAHUB_SETTINGS_FILE}"
+
+bashio::log.info "SERVICE_URL set to ${SERVICE_URL_VALUE}"
+bashio::log.info "FILE_SERVER_ROOT set to ${FILE_SERVER_ROOT_VALUE}"
+
 ###################
 # Define database #
 ###################
