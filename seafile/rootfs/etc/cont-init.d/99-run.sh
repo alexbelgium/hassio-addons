@@ -65,6 +65,54 @@ sed -i "s|/shared|$DATA_LOCATION|g" /docker_entrypoint.sh
 sed -i "s|/shared|$DATA_LOCATION|g" /home/seafile/*.sh
 #sed -i "s=cp -r ./media $DATA_LOCATION/=chown -R seafile:seafile $DATA_LOCATION/* && chmod -R 777 $DATA_LOCATION/media && cp -rnf ./media/. $DATA_LOCATION/media ||true=g" /home/seafile/*.sh
 
+#############################################
+# Configure service URL and file server root #
+#############################################
+
+bashio::log.info "Configuring Seafile URLs"
+
+SERVER_IP_CONFIG=$(bashio::config 'SERVER_IP')
+SERVICE_URL_CONFIG=$(bashio::config 'url')
+FILE_SERVER_ROOT_CONFIG=$(bashio::config 'FILE_SERVER_ROOT')
+FILE_PORT_CONFIG=$(bashio::config 'PORT')
+
+DEFAULT_HOST=${SERVER_IP_CONFIG:-homeassistant.local}
+DEFAULT_FILE_PORT=${FILE_PORT_CONFIG:-8082}
+
+normalize_url() {
+    local raw_url="${1%/}"
+    local default_scheme="$2"
+
+    if [[ -z "${raw_url}" || "${raw_url}" == "null" ]]; then
+        echo ""
+        return
+    fi
+
+    if [[ "${raw_url}" =~ ^https?:// ]]; then
+        echo "${raw_url}"
+    else
+        echo "${default_scheme}://${raw_url}"
+    fi
+}
+
+SERVICE_URL_VALUE=$(normalize_url "${SERVICE_URL_CONFIG:-${DEFAULT_HOST}:8000}" "http")
+FILE_SERVER_ROOT_VALUE=$(normalize_url "${FILE_SERVER_ROOT_CONFIG:-${DEFAULT_HOST}:${DEFAULT_FILE_PORT}}" "http")
+
+SEAHUB_SETTINGS_FILE="${DATA_LOCATION}/conf/seahub_settings.py"
+mkdir -p "$(dirname "${SEAHUB_SETTINGS_FILE}")"
+touch "${SEAHUB_SETTINGS_FILE}"
+
+sed -i '/^SERVICE_URL *=/d' "${SEAHUB_SETTINGS_FILE}"
+sed -i '/^FILE_SERVER_ROOT *=/d' "${SEAHUB_SETTINGS_FILE}"
+
+{
+    echo "SERVICE_URL = \"${SERVICE_URL_VALUE}\""
+    echo "FILE_SERVER_ROOT = \"${FILE_SERVER_ROOT_VALUE}\""
+} >> "${SEAHUB_SETTINGS_FILE}"
+
+bashio::log.info "SERVICE_URL set to ${SERVICE_URL_VALUE}"
+bashio::log.info "FILE_SERVER_ROOT set to ${FILE_SERVER_ROOT_VALUE}"
+
 ###################
 # Define database #
 ###################
