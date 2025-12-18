@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv /tmp/bashio/lib/bashio.sh
+#!/usr/bin/with-contenv /tmp/bashio/lib/bashio
 # shellcheck shell=bash
 set -e
 
