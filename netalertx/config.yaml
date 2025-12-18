@@ -7,6 +7,7 @@ environment:
   PORT: "20211"
   PUID: "102"
   TZ: Europe/Berlin
+  SKIP_STARTUP_CHECKS: "true"
 hassio_api: true
 host_network: true
 image: ghcr.io/alexbelgium/netalertx-{arch}
