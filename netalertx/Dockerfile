@@ -30,7 +30,7 @@ ENV READ_WRITE_FOLDERS="$READ_WRITE_FOLDERS $NETALERTX_DATA"
 ##################
 
 # Add rootfs
-COPY rootfs/ /
+COPY --chown=212:212 rootfs/ /
 RUN BASHIO_VERSION="0.14.3" && \
     mkdir -p /tmp/bashio && \
     curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio && \
