@@ -22,15 +22,8 @@ FROM ${BUILD_FROM}
 # 2 Modify Image #
 ##################
 
-# Set S6 wait time
-ENV S6_CMD_WAIT_FOR_SERVICES=1 \
-    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-    S6_SERVICES_GRACETIME=0
-
-# Global LSIO modifications
-#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-#ARG CONFIGLOCATION="/config/addons_config/netalertx"
-#RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
+ENV NETALERTX_DATA=/config
+ENV READ_WRITE_FOLDERS="$READ_WRITE_FOLDERS $NETALERTX_DATA"
 
 ##################
 # 3 Install apps #
@@ -38,48 +31,19 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 
 # Add rootfs
 COPY rootfs/ /
-
-USER 0
-
-# Uses /bin for compatibility purposes
-# hadolint ignore=DL4005
-RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
-    if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
-
-# Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 00-local_mounts.sh 00-smb_mounts.sh"
-
-# Automatic modules download
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
-
-# Manual apps
-ENV PACKAGES=""
-
-# Automatic apps & bashio
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
-
-################
-# 4 Entrypoint #
-################
-
-# Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
-
-# Entrypoint modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
-RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-
-# Standalone bashio command
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
-RUN chmod 777 /.bashio-standalone.sh
-
-#WORKDIR /
-#ENTRYPOINT [ "/usr/bin/env" ]
-#CMD [ "/ha_entrypoint.sh" ]
-#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN chown 102:102 /etc/cont-init.d/* && \
+    chmod +x /etc/cont-init.d/* && \
+    \
+    # Install bashio
+    BASHIO_VERSION="0.14.3" && \
+    mkdir -p /tmp/bashio && \
+    curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio && \
+    mv /tmp/bashio/lib /usr/lib/bashio && \
+    ln -s /usr/lib/bashio/bashio /usr/bin/bashio && \
+    rm -rf /tmp/bashio && \
+    \
+    # Install packages
+    apk add jq
 
 ############
 # 5 Labels #
