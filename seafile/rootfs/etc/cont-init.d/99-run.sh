@@ -71,11 +71,32 @@ sed -i "s|/shared|$DATA_LOCATION|g" /home/seafile/*.sh
 
 bashio::log.info "Configuring Seafile URLs"
 
-DEFAULT_HOST=${SERVER_IP:-homeassistant.local}
-DEFAULT_FILE_PORT=${PORT:-8082}
+SERVER_IP_CONFIG=$(bashio::config 'SERVER_IP')
+SERVICE_URL_CONFIG=$(bashio::config 'url')
+FILE_SERVER_ROOT_CONFIG=$(bashio::config 'FILE_SERVER_ROOT')
+FILE_PORT_CONFIG=$(bashio::config 'PORT')
 
-SERVICE_URL_VALUE="http://${DEFAULT_HOST}:8000"
-FILE_SERVER_ROOT_VALUE=${FILE_SERVER_ROOT:-"http://${DEFAULT_HOST}:${DEFAULT_FILE_PORT}"}
+DEFAULT_HOST=${SERVER_IP_CONFIG:-homeassistant.local}
+DEFAULT_FILE_PORT=${FILE_PORT_CONFIG:-8082}
+
+normalize_url() {
+    local raw_url="${1%/}"
+    local default_scheme="$2"
+
+    if [[ -z "${raw_url}" || "${raw_url}" == "null" ]]; then
+        echo ""
+        return
+    fi
+
+    if [[ "${raw_url}" =~ ^https?:// ]]; then
+        echo "${raw_url}"
+    else
+        echo "${default_scheme}://${raw_url}"
+    fi
+}
+
+SERVICE_URL_VALUE=$(normalize_url "${SERVICE_URL_CONFIG:-${DEFAULT_HOST}:8000}" "http")
+FILE_SERVER_ROOT_VALUE=$(normalize_url "${FILE_SERVER_ROOT_CONFIG:-${DEFAULT_HOST}:${DEFAULT_FILE_PORT}}" "http")
 
 SEAHUB_SETTINGS_FILE="${DATA_LOCATION}/conf/seahub_settings.py"
 mkdir -p "$(dirname "${SEAHUB_SETTINGS_FILE}")"
