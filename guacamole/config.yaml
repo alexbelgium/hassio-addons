@@ -85,6 +85,7 @@ name: Guacamole Client
 options:
   env_vars: []
   EXTENSIONS: auth-totp
+  recording_search_path: /config/recordings
 panel_admin: false
 panel_icon: mdi:lan
 ports:
@@ -96,9 +97,10 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
   EXTENSIONS: str?
+  recording_search_path: str?
   TZ: str?
 slug: guacamole
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 1.6.0-11
+version: 1.6.0-12
 video: true
