@@ -31,8 +31,7 @@ ENV READ_WRITE_FOLDERS="$READ_WRITE_FOLDERS $NETALERTX_DATA"
 
 # Add rootfs
 COPY rootfs/ /
-RUN chown 102:102 /etc/cont-init.d/* && \
-    chmod +x /etc/cont-init.d/* && \
+RUN chmod 755 /etc/cont-init.d/32-ingress.sh /etc/cont-init.d/99-run.sh && \
     \
     # Install bashio
     BASHIO_VERSION="0.14.3" && \
