@@ -99,3 +99,5 @@ else
     wait_for_config_file &
     true
 fi
+
+sudo -u "#${PUID}" -g "#${PGID}" /bin/sh /entrypoint.sh
