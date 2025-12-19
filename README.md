@@ -57,13 +57,13 @@ If you want to do add the repository manually, please follow the procedure highl
 ### Number of addons
 
 - In the repository : 116
-- Installed : 76680
+- Installed : 76368
 
 ### Top 3
 
 1. Filebrowser (10314x)
 2. Portainer (6404x)
-3. Myelectricaldata (4123x)
+3. Myelectricaldata (4177x)
 
 ### Architectures used
 
