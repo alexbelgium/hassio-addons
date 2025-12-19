@@ -5,6 +5,52 @@ set -e
 
 bashio::log.warning "Warning - minimum configuration recommended : 2 cpu cores and 4 GB of memory. Otherwise the system will become unresponsive and crash."
 
+unlock_sqlite_migrations() {
+    local db_path="$1"
+
+    if ! command -v sqlite3 >/dev/null 2>&1; then
+        bashio::log.warning "sqlite3 not available; skipping SQLite migration lock check."
+        return
+    fi
+
+    if ! sqlite3 "$db_path" "SELECT name FROM sqlite_master WHERE type='table' AND name='knex_migrations_lock';" | grep -q "knex_migrations_lock"; then
+        return
+    fi
+
+    local is_locked
+    is_locked=$(sqlite3 "$db_path" "SELECT is_locked FROM knex_migrations_lock LIMIT 1;" 2>/dev/null || true)
+
+    if [[ "$is_locked" == "1" ]]; then
+        bashio::log.warning "Locked SQLite migration table detected, attempting to unlock."
+        sqlite3 "$db_path" "UPDATE knex_migrations_lock SET is_locked = 0;" || bashio::log.warning "Failed to clear SQLite migration lock."
+    fi
+}
+
+unlock_postgres_migrations() {
+    if ! command -v psql >/dev/null 2>&1; then
+        bashio::log.warning "psql not available; skipping PostgreSQL migration lock check."
+        return
+    fi
+
+    if [[ -z "${POSTGRES_DATABASE:-}" || -z "${POSTGRES_USER:-}" || -z "${POSTGRES_HOST:-}" ]]; then
+        bashio::log.warning "PostgreSQL configuration incomplete; skipping migration lock check."
+        return
+    fi
+
+    local pg_port="${POSTGRES_PORT:-5432}"
+    export PGPASSWORD="${POSTGRES_PASSWORD:-}"
+
+    local is_locked
+    is_locked=$(psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc "SELECT is_locked FROM knex_migrations_lock LIMIT 1;" 2>/dev/null || true)
+
+    if [[ "$is_locked" == "1" ]]; then
+        bashio::log.warning "Locked PostgreSQL migration table detected, attempting to unlock."
+        psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc "UPDATE knex_migrations_lock SET is_locked = 0;" || bashio::log.warning "Failed to clear PostgreSQL migration lock."
+    fi
+
+    unset PGPASSWORD
+}
+
 # Check data location
 LOCATION=$(bashio::config 'data_location')
 if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
@@ -41,9 +87,11 @@ if bashio::config.has_value 'POSTGRES_DATABASE'; then
     bashio::config.has_value 'POSTGRES_USER' && export POSTGRES_USER=$(bashio::config 'POSTGRES_USER') && bashio::log.info 'Postgrep User set'
     bashio::config.has_value 'POSTGRES_PORT' && export POSTGRES_PORT=$(bashio::config 'POSTGRES_PORT') && bashio::log.info 'Postgrep Port set'
     bashio::config.has_value 'POSTGRES_HOST' && export POSTGRES_HOST=$(bashio::config 'POSTGRES_HOST') && bashio::log.info 'Postgrep Host set'
+    unlock_postgres_migrations
 else
 
     bashio::log.info "Using sqlite"
+    unlock_sqlite_migrations "$SQLITE_DATABASE"
 
 fi
 
