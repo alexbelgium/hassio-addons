@@ -3,14 +3,16 @@ arch:
   - amd64
 description: "\U0001F5A7\U0001F50D WIFI / LAN scanner, intruder, and presence detector"
 environment:
-  PGID: "102"
+  PGID: "20211"
   PORT: "20211"
-  PUID: "102"
+  PUID: "20211"
   TZ: Europe/Berlin
-  SKIP_STARTUP_CHECKS: "true"
+  NETALERTX_DATA: /config
+  NETALERTX_CONFIG: /config/config
+  NETALERTX_DB: /config/db
+  TMP_DIR: /tmp/tmp
 hassio_api: true
 host_network: true
-image: ghcr.io/alexbelgium/netalertx-{arch}
 ingress: true
 ingress_port: 0
 ingress_stream: true
