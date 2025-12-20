@@ -3,7 +3,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "netalertx",
   "source": "github",
-  "paused": true,
   "upstream_repo": "jokob-sk/NetAlertX",
-  "upstream_version": "25.5.24"
+  "upstream_version": "25.11.29"
 }
