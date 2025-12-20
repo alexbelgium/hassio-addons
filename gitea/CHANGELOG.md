@@ -1,4 +1,7 @@
 
+## 1.25.3 (20-12-2025)
+- Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
+
 ## 1.25.2 (29-11-2025)
 - Update to latest version from go-gitea/gitea (changelog : https://github.com/go-gitea/gitea/releases)
 
