@@ -116,5 +116,5 @@ tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pi
 usb: true
-version: 2025.12-04
+version: 2025.12-05
 video: true
