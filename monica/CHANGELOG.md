@@ -1,3 +1,6 @@
+
+##  (20-12-2025)
+- Update to latest version from monicahq/monica
 ## v5.0_beta5-8 (07-12-2025)
 - Generate and persist a secure Meilisearch master key when none is provided or when configured keys are too short.
 
