@@ -1,4 +1,7 @@
 
+## 3.5.2 (20-12-2025)
+- Update to latest version from etechonomy/joplin-server (changelog : https://github.com/etechonomy/joplin-server/releases)
+
 ## 3.5.2 (22-12-2025)
 - Automatically clear stale migration locks for SQLite and PostgreSQL databases on startup to avoid blocked fresh installs
 - Add database client utilities for unlocking migrations
