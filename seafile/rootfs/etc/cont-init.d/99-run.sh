@@ -119,7 +119,14 @@ bashio::log.info "FILE_SERVER_ROOT set to ${FILE_SERVER_ROOT_VALUE}"
 
 bashio::log.info "Defining database"
 
-case $(bashio::config 'database') in
+# The option is defined as a list, so grab the first entry when an array is
+# provided (Home Assistant stores multi-select options this way). Fallback to
+# the raw value to stay compatible with older configurations that used a
+# string.
+DATABASE_SELECTION=$(bashio::config 'database[0]' 2>/dev/null || true)
+DATABASE_SELECTION=${DATABASE_SELECTION:-$(bashio::config 'database')}
+
+case "${DATABASE_SELECTION}" in
 
     # Use sqlite
     sqlite)
