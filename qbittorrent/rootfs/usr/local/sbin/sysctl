@@ -1,17 +1,40 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REAL_SYSCTL="/sbin/sysctl"
-if [[ ! -x "${REAL_SYSCTL}" ]]; then
-    REAL_SYSCTL="/usr/sbin/sysctl"
+SCRIPT_PATH="$(readlink -f "$0")"
+REAL_SYSCTL_CMD=()
+
+_maybe_set_backend() {
+    local candidate="$1"
+    if [[ -x "${candidate}" && "$(readlink -f "${candidate}")" != "${SCRIPT_PATH}" ]]; then
+        REAL_SYSCTL_CMD=("${candidate}")
+        return 0
+    fi
+    return 1
+}
+
+# Prefer system binaries that are not the wrapper itself
+_maybe_set_backend "/sbin/sysctl" \
+    || _maybe_set_backend "/usr/sbin/sysctl" \
+    || _maybe_set_backend "/bin/sysctl" \
+    || _maybe_set_backend "/usr/bin/sysctl"
+
+# Fallback to the busybox applet if no dedicated binary was found
+if [[ ${#REAL_SYSCTL_CMD[@]} -eq 0 ]] && command -v busybox >/dev/null 2>&1; then
+    REAL_SYSCTL_CMD=("$(command -v busybox)" sysctl)
+fi
+
+if [[ ${#REAL_SYSCTL_CMD[@]} -eq 0 ]]; then
+    echo "sysctl wrapper: no backend sysctl binary found" >&2
+    exit 1
 fi
 
 if [[ "$#" -ge 2 && "$1" == "-q" && "$2" == "net.ipv4.conf.all.src_valid_mark=1" ]]; then
-    if "${REAL_SYSCTL}" "$@" >/dev/null 2>&1; then
+    if "${REAL_SYSCTL_CMD[@]}" "$@" >/dev/null 2>&1; then
         exit 0
     fi
     # Suppress failure for this specific key to keep wg-quick from aborting in unprivileged environments.
     exit 0
 fi
 
-exec "${REAL_SYSCTL}" "$@"
+exec "${REAL_SYSCTL_CMD[@]}" "$@"
