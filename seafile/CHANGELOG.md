@@ -2,6 +2,9 @@
 
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
+## 12.0.16 (15-02-2026)
+- Handle list-based `database` options correctly so SQLite configurations skip MySQL initialization.
+
 ## 12.0.15 (18-12-2025)
 - Normalize `SERVICE_URL` and `FILE_SERVER_ROOT` values in `conf/seahub_settings.py` based on the add-on configuration to generate valid download links.
 
