@@ -111,7 +111,7 @@ RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_auto
 #    && chmod a+x /etc/s6-overlay/s6-rc.d/$SCRIPTSNAME/* ; done; fi
 
 # Manual apps
-ARG PACKAGES="wireguard-tools iptables ip6tables"
+ARG PACKAGES="wireguard-tools iptables ip6tables iptables-legacy ip6tables-legacy"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
