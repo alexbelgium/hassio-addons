@@ -1,3 +1,5 @@
+## 5.1.4-3 (22-12-2025)
+- Minor bugs fixed
 
 ## 5.1.4-1 (21-12-2025)
 - Fix WireGuard sysctl wrapper paths to resolve #2289.
