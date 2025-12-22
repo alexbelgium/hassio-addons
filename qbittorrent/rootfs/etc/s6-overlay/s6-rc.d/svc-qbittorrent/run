@@ -55,6 +55,17 @@ _setup_wireguard() {
 
         if [ "${status}" -eq 0 ]; then return 0; fi
 
+        # Allow sysctl failures on read-only hosts while keeping the interface up
+        if echo "${output}" | grep -qi 'net\.ipv4\.conf\.all\.src_valid_mark=1'; then
+            if echo "${output}" | grep -qiE 'read-only file system|operation not permitted'; then
+                if ip link show "${wireguard_interface}" >/dev/null 2>&1; then
+                    bashio::log.warning 'WireGuard applied but sysctl net.ipv4.conf.all.src_valid_mark=1 could not be set (read-only). Continuing.'
+                    status=0
+                    return 0
+                fi
+            fi
+        fi
+
         # Check for iptables errors and try legacy fallback
         if echo "${output}" | grep -qiE 'iptables-restore|ip6tables-restore|xtables'; then
             if command -v iptables-legacy >/dev/null 2>&1; then

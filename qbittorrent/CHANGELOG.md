@@ -1,3 +1,6 @@
+## 5.1.4-4 (30-12-2025)
+- Allow WireGuard to continue when src_valid_mark sysctl cannot be set on read-only hosts
+
 ## 5.1.4-3 (22-12-2025)
 - Minor bugs fixed
 
