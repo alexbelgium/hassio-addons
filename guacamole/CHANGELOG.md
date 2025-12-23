@@ -1,3 +1,6 @@
+
+##  (23-12-2025)
+- Update to latest version from abesnier/guacamole
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 1.6.0-12 (02-10-2025)

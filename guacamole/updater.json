@@ -2,10 +2,10 @@
   "github_beta": false,
   "github_exclude": "pg",
   "github_tagfilter": "bullseye",
-  "last_update": "25-01-2025",
+  "last_update": "23-12-2025",
   "repository": "alexbelgium/hassio-addons",
   "slug": "guacamole",
   "source": "dockerhub",
   "upstream_repo": "abesnier/guacamole",
-  "upstream_version": "1.6.0-bullseye"
+  "upstream_version": ""
 }
