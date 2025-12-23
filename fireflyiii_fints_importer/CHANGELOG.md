@@ -1,6 +1,3 @@
-
-##  (23-12-2025)
-- Update to latest version from benkl/firefly-iii-fints-importer
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 1.3.0-6 (18-10-2025)
