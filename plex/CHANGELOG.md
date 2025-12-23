@@ -1,7 +1,4 @@
 
-## 1.42.2.10156-f737b826c-ls288 (23-12-2025)
-- Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
-
 ## 1.42.2.10156-f737b826c-ls287 (20-12-2025)
 - Update to latest version from linuxserver/docker-plex (changelog : https://github.com/linuxserver/docker-plex/releases)
 
