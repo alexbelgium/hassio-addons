@@ -1,6 +1,3 @@
-
-##  (23-12-2025)
-- Update to latest version from wger/server
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 ## 2.4-11 (19-09-2025)
