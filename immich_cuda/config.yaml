@@ -140,6 +140,6 @@ slug: immich_cuda
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "2.3.1"
+version: "2.4.1"
 video: true
 webui: http://[HOST]:[PORT:8080]
