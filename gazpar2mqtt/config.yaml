@@ -88,4 +88,4 @@ services:
 slug: gazpar2mqtt
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: ""
+version: "0.8.2"

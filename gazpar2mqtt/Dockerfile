@@ -2,11 +2,11 @@
 #  ALEXBELGIUM'S DOCKERFILE  #
 #============================#
 #           _.------.
-#       _.-`    ('>.-`"""-.
+#       _.-`    ('>.-`"0.8.2""-.
 # '.--'`       _'`   _ .--.)
 #    -'         '-.-';`   `
 #    ' -      _.'  ``'--.
-#        '---`    .-'""`
+#        '---`    .-'"0.8.2"`
 #               /`
 #=== Home Assistant Addon ===#
 
@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_FROM
-ARG BUILD_UPSTREAM=""
+ARG BUILD_UPSTREAM="0.8.2"
 FROM yukulehe/gazpar2mqtt:$BUILD_UPSTREAM
 
 ##################
@@ -50,7 +50,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES=""
+ENV PACKAGES="0.8.2"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
