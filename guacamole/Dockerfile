@@ -2,11 +2,11 @@
 #  ALEXBELGIUM'S DOCKERFILE  #
 #============================#
 #           _.------.
-#       _.-`    ('>.-`"""-.
+#       _.-`    ('>.-`"1.6.0-bullseye""-.
 # '.--'`       _'`   _ .--.)
 #    -'         '-.-';`   `
 #    ' -      _.'  ``'--.
-#        '---`    .-'""`
+#        '---`    .-'"1.6.0-bullseye"`
 #               /`
 #=== Home Assistant Addon ===#
 
@@ -132,7 +132,7 @@ LABEL \
 #################
 
 ENV HEALTH_PORT="8080" \
-    HEALTH_URL=""
+    HEALTH_URL="1.6.0-bullseye"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
