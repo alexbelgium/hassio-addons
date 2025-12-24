@@ -2,11 +2,11 @@
 #  ALEXBELGIUM'S DOCKERFILE  #
 #============================#
 #           _.------.
-#       _.-`    ('>.-`"""-.
+#       _.-`    ('>.-`"ubuntu-2025-11-30""-.
 # '.--'`       _'`   _ .--.)
 #    -'         '-.-';`   `
 #    ' -      _.'  ``'--.
-#        '---`    .-'""`
+#        '---`    .-'"ubuntu-2025-11-30"`
 #               /`
 #=== Home Assistant Addon ===#
 
@@ -136,8 +136,8 @@ RUN \
         mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf; \
     fi
 
-ENV HEALTH_PORT="" \
-    HEALTH_URL=""
+ENV HEALTH_PORT="ubuntu-2025-11-30" \
+    HEALTH_URL="ubuntu-2025-11-30"
 HEALTHCHECK \
     --interval=5m \
     --retries=5 \
