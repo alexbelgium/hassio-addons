@@ -2,11 +2,11 @@
 #  ALEXBELGIUM'S DOCKERFILE  #
 #============================#
 #           _.------.
-#       _.-`    ('>.-`"""-.
+#       _.-`    ('>.-`"2.58.02""-.
 # '.--'`       _'`   _ .--.)
 #    -'         '-.-';`   `
 #    ' -      _.'  ``'--.
-#        '---`    .-'""`
+#        '---`    .-'"2.58.02"`
 #               /`
 #=== Home Assistant Addon ===#
 
@@ -121,7 +121,7 @@ RUN \
     fi
 
 ENV HEALTH_PORT="8265" \
-    HEALTH_URL=""
+    HEALTH_URL="2.58.02"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \

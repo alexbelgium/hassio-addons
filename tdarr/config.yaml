@@ -122,6 +122,6 @@ schema:
 slug: tdarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: ""
+version: "2.58.02"
 video: true
 webui: "[PROTO:ssl]://[HOST]:[PORT:8265]"

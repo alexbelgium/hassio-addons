@@ -1,4 +1,7 @@
 
+## 2.58.02 (24-12-2025)
+- Update to latest version from haveagitgat/tdarr
+
 ##  (23-12-2025)
 - Update to latest version from haveagitgat/tdarr
 
