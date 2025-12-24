@@ -1,3 +1,5 @@
+## nightly-20251224 (24-12-2025)
+- Minor bugs fixed
 
 ## nightly-20251223 (23-12-2025)
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
