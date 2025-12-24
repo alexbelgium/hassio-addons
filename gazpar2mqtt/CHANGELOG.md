@@ -1,3 +1,5 @@
+## 0.2.4 (24-12-2025)
+- Update to latest version from ssenart/gazpar2mqtt
 
 ## 0.8.2 (24-12-2025)
 - Update to latest version from yukulehe/gazpar2mqtt

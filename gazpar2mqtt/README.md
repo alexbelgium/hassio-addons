@@ -30,7 +30,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 ## About
 
 Python script to fetch GRDF data and publish data to a mqtt broker.
-See its github for all informations : https://github.com/yukulehe/gazpar2mqtt
+See its github for all informations : https://github.com/ssenart/gazpar2mqtt
 
 ## Configuration
 
@@ -91,7 +91,7 @@ mqtt:
 update_frequency: 3600  # seconds
 ```
 
-For complete configuration options, see: https://github.com/yukulehe/gazpar2mqtt
+For complete configuration options, see: https://github.com/ssenart/gazpar2mqtt
 
 ## Installation
 
@@ -106,5 +106,4 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
 

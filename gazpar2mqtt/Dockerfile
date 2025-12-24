@@ -15,8 +15,8 @@
 #################
 
 ARG BUILD_FROM
-ARG BUILD_UPSTREAM="0.8.2"
-FROM yukulehe/gazpar2mqtt:$BUILD_UPSTREAM
+ARG BUILD_UPSTREAM="0.2.4"
+FROM ssenart/gazpar2mqtt:$BUILD_UPSTREAM
 
 ##################
 # 2 Modify Image #
@@ -50,7 +50,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="0.8.2"
+ENV PACKAGES="0.2.4"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
