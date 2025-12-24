@@ -3,6 +3,6 @@
   "repository": "alexbelgium/hassio-addons",
   "slug": "gazpar2mqtt",
   "source": "dockerhub",
-  "upstream_repo": "yukulehe/gazpar2mqtt",
-  "upstream_version": "0.8.2"
+  "upstream_repo": "ssenart/gazpar2mqtt",
+  "upstream_version": "0.2.4"
 }
