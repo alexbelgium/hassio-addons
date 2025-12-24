@@ -2,11 +2,11 @@
 #  ALEXBELGIUM'S DOCKERFILE  #
 #============================#
 #           _.------.
-#       _.-`    ('>.-`"""-.
+#       _.-`    ('>.-`"alpine-sts""-.
 # '.--'`       _'`   _ .--.)
 #    -'         '-.-';`   `
 #    ' -      _.'  ``'--.
-#        '---`    .-'""`
+#        '---`    .-'"alpine-sts"`
 #               /`
 #=== Home Assistant Addon ===#
 
@@ -19,7 +19,7 @@ ARG BUILD_FROM
 
 # Get agent
 FROM portainer/agent:alpine as original_agent
-ENV PORTAINER_AGENT_ARGS=""
+ENV PORTAINER_AGENT_ARGS="alpine-sts"
 
 # Build using base
 FROM $BUILD_FROM
@@ -139,8 +139,8 @@ RUN \
         mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf; \
     fi
 
-ENV HEALTH_PORT="" \
-    HEALTH_URL=""
+ENV HEALTH_PORT="alpine-sts" \
+    HEALTH_URL="alpine-sts"
 HEALTHCHECK \
     --interval=5s \
     --retries=5 \
