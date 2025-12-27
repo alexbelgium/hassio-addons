@@ -198,6 +198,7 @@ jobs:
         with:
           args: |
             ${{ env.BUILD_ARGS }} \
+            --no-cache \
             --${{ matrix.arch }} \
             --target "/data/${{ matrix.addon }}" \
             --image "${{ steps.check.outputs.image }}" \
