@@ -16,6 +16,7 @@ for var in "${required_vars[@]}"; do
         bashio::exit.nok "Configuration option $var is required"
     fi
     export "$var"="$(bashio::config "$var")"
+    sed -i "1a export $var=$(bashio::config "$var")" /app/entrypoint.sh    
     bashio::log.info "$var configured"
 done
 
@@ -29,6 +30,7 @@ optional_vars=(
 for var in "${optional_vars[@]}"; do
     if bashio::config.has_value "$var"; then
         export "$var"="$(bashio::config "$var")"
+        sed -i "1a export $var=$(bashio::config "$var")" /app/entrypoint.sh
         bashio::log.info "$var configured"
     fi
 done
@@ -40,6 +42,7 @@ if bashio::config.has_value "env_vars"; then
         value=$(echo "$item" | jq -r '.value // empty')
         if [ -n "$name" ]; then
             export "$name"="$value"
+            sed -i "1a export $name=$value" /app/entrypoint.sh
             bashio::log.info "Custom env $name configured"
         fi
     done
