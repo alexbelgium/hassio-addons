@@ -186,9 +186,15 @@ jobs:
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon
 
-      - name: Wait 3 minutes before retry
+      - name: Cleanup and wait 3 minutes before retry
         if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true' && steps.builderstep1.outcome == 'failure'
-        run: sleep 180
+        run: |
+          df -h
+          sudo docker system df || true
+          sudo docker builder prune -af || true
+          sudo docker system prune -af --volumes || true
+          df -h
+          sleep 180
 
       - name: Build ${{ matrix.addon }} add-on (attempt 2)
         if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true' && steps.builderstep1.outcome == 'failure'
