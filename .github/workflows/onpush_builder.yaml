@@ -170,6 +170,16 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Free disk space (runner)
+        uses: endersonmenezes/free-disk-space@v3
+        with:
+          remove_android: true
+          remove_dotnet: true
+          remove_haskell: true
+          remove_tool_cache: true
+          remove_swap: true
+          rm_cmd: "rmz"
+          rmz_version: "3.1.1"       
       - name: Build ${{ matrix.addon }} add-on (attempt 1)
         id: builderstep1
         if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true'
@@ -180,17 +190,16 @@ jobs:
         with:
           args: |
             ${{ env.BUILD_ARGS }} \
-            --no-cache \
             --${{ matrix.arch }} \
             --target "/data/${{ matrix.addon }}" \
             --image "${{ steps.check.outputs.image }}" \
             --docker-hub "ghcr.io/${{ github.repository_owner }}" \
             --addon
 
-      - name: Wait 3 minutes before retry
+      - name: Wait 1 minute before retry
         if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true' && steps.builderstep1.outcome == 'failure'
         run: |
-          sleep 180
+          sleep 60
 
       - name: Build ${{ matrix.addon }} add-on (attempt 2)
         if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true' && steps.builderstep1.outcome == 'failure'
@@ -200,6 +209,7 @@ jobs:
         with:
           args: |
             ${{ env.BUILD_ARGS }} \
+            --no-cache \            
             --${{ matrix.arch }} \
             --target "/data/${{ matrix.addon }}" \
             --image "${{ steps.check.outputs.image }}" \
