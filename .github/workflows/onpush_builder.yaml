@@ -170,9 +170,28 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build ${{ matrix.addon }} add-on
-        id: builderstep
+      - name: Build ${{ matrix.addon }} add-on (attempt 1)
+        id: builderstep1
         if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true'
+        continue-on-error: true
+        uses: home-assistant/builder@2025.11.0
+        env:
+          CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
+        with:
+          args: |
+            ${{ env.BUILD_ARGS }} \
+            --${{ matrix.arch }} \
+            --target "/data/${{ matrix.addon }}" \
+            --image "${{ steps.check.outputs.image }}" \
+            --docker-hub "ghcr.io/${{ github.repository_owner }}" \
+            --addon
+
+      - name: Wait 3 minutes before retry
+        if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true' && steps.builderstep1.outcome == 'failure'
+        run: sleep 180
+
+      - name: Build ${{ matrix.addon }} add-on (attempt 2)
+        if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true' && steps.builderstep1.outcome == 'failure'
         uses: home-assistant/builder@2025.11.0
         env:
           CAS_API_KEY: ${{ secrets.CAS_API_KEY }}
