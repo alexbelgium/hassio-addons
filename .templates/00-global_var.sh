@@ -189,7 +189,7 @@ update_scripts_with_block() {
     shopt -s nullglob
 
     # Added /etc/s6-overlay/s6-rc.d/*/run for newer S6 implementation (optional)
-    for f in /etc/services.d/*/run /etc/services.d/*/*run* /etc/cont-init.d/*.sh /etc/s6-overlay/s6-rc.d/*/run; do
+    for f in /etc/services.d/*/run /etc/services.d/*/*run* /etc/cont-init.d/*.sh /etc/s6-overlay/s6-rc.d/*/run /*/entrypoint.sh /entrypoint.sh; do
         [[ -f "$f" ]] || continue
         [[ -n "${seen[$f]:-}" ]] && continue
         seen["$f"]=1
