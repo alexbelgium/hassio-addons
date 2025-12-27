@@ -1,4 +1,7 @@
 
+## 12.0.14 (27-12-2025)
+- Update to latest version from franchetti/seafile-arm
+
 ##  (23-12-2025)
 - Update to latest version from franchetti/seafile-arm
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
