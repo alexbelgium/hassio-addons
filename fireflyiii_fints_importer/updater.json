@@ -2,6 +2,7 @@
   "dockerhub_by_date": "true",
   "github_fulltag": "true",
   "last_update": "20-09-2025",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "fireflyiii_data_importer",
   "source": "dockerhub",
