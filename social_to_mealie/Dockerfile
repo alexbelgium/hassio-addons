@@ -31,6 +31,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 # 3 Install apps #
 ##################
 
+USER root
+
 # Add rootfs
 COPY rootfs/ /
 
