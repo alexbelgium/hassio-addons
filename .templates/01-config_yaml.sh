@@ -178,6 +178,9 @@ while IFS= read -r line; do
         # set environment
         mkdir -p /etc
         echo "$line" >> /etc/environment
+        # Export to entrypoint
+        if [ -f /entrypoint.sh ]; then sed -i "1a export $line" /entrypoint.sh 2> /dev/null; fi
+        if [ -f /*/entrypoint.sh ]; then sed -i "1a export $line" /*/entrypoint.sh 2> /dev/null; fi
         # Export to scripts
         if cat /etc/services.d/*/*run* &> /dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2> /dev/null; fi
         if cat /etc/cont-init.d/*run* &> /dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2> /dev/null; fi
