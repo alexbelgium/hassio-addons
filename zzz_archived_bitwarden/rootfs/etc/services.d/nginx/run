@@ -1,6 +1,8 @@
-#!/command/with-contenv bashio
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
 # ==============================================================================
-# Home Assistant Community Add-on: Vaultwarden
+# Home Assistant Community Add-on: Bitwarden
 # Runs the Nginx daemon
 # ==============================================================================
 bashio::net.wait_for 80
