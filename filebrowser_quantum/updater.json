@@ -1,10 +1,10 @@
 {
   "github_beta": "true",
-  "last_update": "20-12-2025",
+  "last_update": "28-12-2025",
   "paused": false,
   "repository": "alexbelgium/hassio-addons",
   "slug": "filebrowser_quantum",
   "source": "github",
   "upstream_repo": "gtsteffaniak/filebrowser",
-  "upstream_version": "1.1.0-stable"
+  "upstream_version": "1.2.0"
 }
