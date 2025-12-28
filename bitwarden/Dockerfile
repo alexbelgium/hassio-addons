@@ -14,17 +14,42 @@
 # 1 Build Image #
 #################
 
-ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base/amd64:7.1.0
-ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="1.35.0"
-FROM "vaultwarden/server:${BUILD_UPSTREAM}" as vaultwarden
+ARG BUILD_FROM=ghcr.io/hassio-addons/debian-base:9.1.0
+###############################################################################
+# Get prebuild containers from Vaultwarden
+###############################################################################
+FROM "vaultwarden/server:latest" AS vaultwarden
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+###############################################################################
+# Build the actual add-on.
+###############################################################################
+# hadolint ignore=DL3006
 FROM ${BUILD_FROM}
+
+# Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Get the Bitwarden from official images
 COPY --from=vaultwarden /vaultwarden /opt/vaultwarden
-#COPY --from=vaultwarden /Rocket.toml /opt/Rocket.toml
 COPY --from=vaultwarden /web-vault /opt/web-vault
+
+# add Nginx
+# hadolint ignore=DL3009
+RUN \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        libmariadb-dev-compat=1:11.8.3-0+deb13u1 \
+        libpq5=17.6-0+deb13u1 \
+        nginx=1.26.3-3+deb13u1 \
+        sqlite3=3.46.1-7 \
+    && apt-get clean \
+    && rm -f -r \
+        /etc/nginx \
+    \
+    && mkdir -p /var/log/nginx \
+    && touch /var/log/nginx/error.log
 
 ##################
 # 2 Modify Image #

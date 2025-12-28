@@ -1,8 +1,7 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
-set -e
 # ==============================================================================
-# Home Assistant Community Add-on: Bitwarden
+# Home Assistant Community Add-on: Vaultwarden
 # Runs the Vaultwarden server
 # ==============================================================================
 declare admin_token
@@ -22,19 +21,19 @@ export ROCKET_SECRET_KEY="${secret_key}"
 # Find the matching log level
 if bashio::config.has_value 'log_level'; then
     case "$(bashio::string.lower "$(bashio::config 'log_level')")" in
-        all | trace)
+        all|trace)
             log_level="trace"
             ;;
         debug)
             log_level="debug"
             ;;
-        info | notice)
+        info|notice)
             log_level="info"
             ;;
         warning)
             log_level="warn"
             ;;
-        error | fatal)
+        error|fatal)
             log_level="error"
             ;;
         off)
@@ -46,7 +45,7 @@ if bashio::config.has_value 'log_level'; then
 fi
 
 # Show admin token in the log, if config does not exist.
-if ! bashio::fs.file_exists '/data/config.yaml'; then
+if ! bashio::fs.file_exists '/data/config.json'; then
     admin_token=$(openssl rand -base64 48)
     export ADMIN_TOKEN="${admin_token}"
 
@@ -72,10 +71,6 @@ if bashio::config.has_value 'request_size_limit'; then
     request_size_limit=$(bashio::config 'request_size_limit')
     export ROCKET_LIMITS="{json=${request_size_limit}}"
 fi
-
-# Always enable Websockets
-export WEBSOCKET_ENABLED=true
-export WEBSOCKET_PORT=8080
 
 # Run the Bitwarden server
 bashio::log.info 'Starting the Vaultwarden server...'
