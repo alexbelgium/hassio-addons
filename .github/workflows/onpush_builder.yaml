@@ -169,17 +169,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Free disk space (runner)
-        uses: endersonmenezes/free-disk-space@v3
-        with:
-          remove_android: true
-          remove_dotnet: true
-          remove_haskell: true
-          remove_tool_cache: true
-          remove_swap: true
-          rm_cmd: "rmz"
-          rmz_version: "3.1.1"       
+          password: ${{ secrets.GITHUB_TOKEN }} 
       - name: Build ${{ matrix.addon }} add-on (attempt 1)
         id: builderstep1
         if: steps.check.outputs.build_arch == 'true' && steps.dockerfile_check.outputs.has_dockerfile == 'true'
