@@ -41,7 +41,7 @@ RUN \
     && apt-get install -y --no-install-recommends \
         libmariadb-dev \
         libpq5 \
-        nginx1 \
+        nginx \
         sqlite3 \
     && apt-get clean \
     && rm -f -r \
