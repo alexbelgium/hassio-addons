@@ -42,6 +42,40 @@ unlock_sqlite_migrations() {
     fi
 }
 
+repair_notifications_migration_sqlite() {
+    local db_path="$1"
+
+    if ! command -v sqlite3 >/dev/null 2>&1; then
+        return 0
+    fi
+
+    if [[ ! -f "$db_path" ]]; then
+        return 0
+    fi
+
+    local has_notifications
+    has_notifications="$(sqlite3 "$db_path" "SELECT 1 FROM sqlite_master WHERE type='table' AND name='notifications' LIMIT 1;" 2>/dev/null || true)"
+    [[ "$has_notifications" == "1" ]] || return 0
+
+    local has_migrations
+    has_migrations="$(sqlite3 "$db_path" "SELECT 1 FROM sqlite_master WHERE type='table' AND name='knex_migrations' LIMIT 1;" 2>/dev/null || true)"
+    [[ "$has_migrations" == "1" ]] || return 0
+
+    local has_entry
+    has_entry="$(sqlite3 "$db_path" "SELECT 1 FROM knex_migrations WHERE name='20203012152842_notifications.js' LIMIT 1;" 2>/dev/null || true)"
+    [[ "$has_entry" == "1" ]] && return 0
+
+    bashio::log.warning "Notifications table exists but migration is missing; repairing knex_migrations entry."
+    sqlite3 "$db_path" "
+        PRAGMA busy_timeout=5000;
+        INSERT INTO knex_migrations(name, batch, migration_time)
+        VALUES ('20203012152842_notifications.js',
+            COALESCE((SELECT MAX(batch) FROM knex_migrations), 1),
+            CAST(strftime('%s','now') AS INTEGER) * 1000
+        );
+    " >/dev/null 2>&1 || bashio::log.warning "Failed to repair notifications migration entry."
+}
+
 unlock_postgres_migrations() {
     if ! command -v psql >/dev/null 2>&1; then
         bashio::log.warning "psql not available; skipping PostgreSQL migration lock check."
@@ -77,6 +111,47 @@ unlock_postgres_migrations() {
             "UPDATE knex_migrations_lock SET is_locked = 0 WHERE \"index\"=1 AND is_locked=1;" \
             >/dev/null 2>&1 || bashio::log.warning "Failed to clear PostgreSQL migration lock."
     fi
+
+    unset PGPASSWORD
+}
+
+repair_notifications_migration_postgres() {
+    if ! command -v psql >/dev/null 2>&1; then
+        return 0
+    fi
+
+    if [[ -z "${POSTGRES_DATABASE:-}" || -z "${POSTGRES_USER:-}" || -z "${POSTGRES_HOST:-}" ]]; then
+        return 0
+    fi
+
+    local pg_port="${POSTGRES_PORT:-5432}"
+    export PGPASSWORD="${POSTGRES_PASSWORD:-}"
+
+    local has_notifications
+    has_notifications="$(psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc \
+        "SELECT 1 FROM information_schema.tables WHERE table_name='notifications' LIMIT 1;" 2>/dev/null || true)"
+    [[ "$has_notifications" == "1" ]] || { unset PGPASSWORD; return 0; }
+
+    local has_migrations
+    has_migrations="$(psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc \
+        "SELECT 1 FROM information_schema.tables WHERE table_name='knex_migrations' LIMIT 1;" 2>/dev/null || true)"
+    [[ "$has_migrations" == "1" ]] || { unset PGPASSWORD; return 0; }
+
+    local has_entry
+    has_entry="$(psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc \
+        "SELECT 1 FROM knex_migrations WHERE name='20203012152842_notifications.js' LIMIT 1;" 2>/dev/null || true)"
+    [[ "$has_entry" == "1" ]] && { unset PGPASSWORD; return 0; }
+
+    bashio::log.warning "Notifications table exists but migration is missing; repairing knex_migrations entry."
+    psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc \
+        "INSERT INTO knex_migrations(name, batch, migration_time)
+         SELECT '20203012152842_notifications.js',
+                COALESCE(MAX(batch), 1),
+                (EXTRACT(EPOCH FROM NOW()) * 1000)::bigint
+         FROM knex_migrations
+         WHERE NOT EXISTS (
+             SELECT 1 FROM knex_migrations WHERE name='20203012152842_notifications.js'
+         );" >/dev/null 2>&1 || bashio::log.warning "Failed to repair notifications migration entry."
 
     unset PGPASSWORD
 }
@@ -117,9 +192,11 @@ if bashio::config.has_value 'POSTGRES_DATABASE'; then
     bashio::config.has_value 'POSTGRES_HOST' && export POSTGRES_HOST="$(bashio::config 'POSTGRES_HOST')"
 
     unlock_postgres_migrations
+    repair_notifications_migration_postgres
 else
     bashio::log.info "Using sqlite"
     unlock_sqlite_migrations "$SQLITE_DATABASE"
+    repair_notifications_migration_sqlite "$SQLITE_DATABASE"
 fi
 
 # -------------------
