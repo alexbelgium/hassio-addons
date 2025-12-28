@@ -1,3 +1,5 @@
+## 1.35.0-4 (28-12-2025)
+- Minor bugs fixed
 ## 1.35.0-2 (28-12-2025)
 - Minor bugs fixed
 ## description: Deprecated - please use community version 1.35.0 (28-12-2025)
