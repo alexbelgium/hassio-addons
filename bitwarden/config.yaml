@@ -1,12 +1,12 @@
 arch:
   - aarch64
   - amd64
-description: Deprecated - please use community version
+description: Open source password management solution
 image: ghcr.io/alexbelgium/vaultwarden-{arch}
 init: false
 map:
   - ssl
-name: zzz_archived - Vaultwarden
+name: Vaultwarden
 options:
   env_vars: []
   certfile: fullchain.pem
@@ -26,8 +26,7 @@ schema:
   request_size_limit: int?
   ssl: bool
 slug: bitwarden
-stage: deprecated
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/bitwarden
-version: "1.35.0"
+version: 1.35.0
 webui: "[PROTO:ssl]://[HOST]:[PORT:7277]"
