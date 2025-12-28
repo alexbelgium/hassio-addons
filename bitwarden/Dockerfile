@@ -48,7 +48,9 @@ RUN \
         /etc/nginx \
     \
     && mkdir -p /var/log/nginx \
-    && touch /var/log/nginx/error.log
+    && touch /var/log/nginx/error.log &&
+    \
+    chmod +x /etc/s6-overlay/s6-rc.d/*/run
 
 ##################
 # 2 Modify Image #
