@@ -91,7 +91,7 @@ map:
 name: FileBrowser Quantum
 options:
   env_vars: []
-  auth_method: password
+  auth_method: noauth
 panel_admin: false
 panel_icon: mdi:file-search
 privileged:
