@@ -33,6 +33,21 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY --from=vaultwarden /vaultwarden /opt/vaultwarden
 COPY --from=vaultwarden /web-vault /opt/web-vault
 
+RUN \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        libmariadb-dev-compat \
+        libpq5 \
+        nginx \
+        sqlite3 \
+    && apt-get clean \
+    && rm -f -r \
+        /etc/nginx \
+    \
+    && mkdir -p /var/log/nginx \
+    && touch /var/log/nginx/error.log
+
 ##################
 # 2 Modify Image #
 ##################
@@ -64,10 +79,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="libmariadb-dev-compat \
-    libpq5 \
-    nginx \
-    sqlite3"
+ENV PACKAGES=""
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
