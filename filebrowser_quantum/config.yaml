@@ -75,7 +75,6 @@ environment:
   FB_BASEURL: /filebrowser_quantum
   PGID: "0"
   PUID: "0"
-homeassistant: 2025.5.0
 image: ghcr.io/alexbelgium/filebrowser_quantum-{arch}
 ingress: true
 ingress_port: 8071
@@ -91,120 +90,16 @@ map:
   - ssl:rw
 name: FileBrowser Quantum
 options:
-  admin_password: admin
-  admin_username: admin
-  auth_method: password
-  base_url: ""
-  cache_dir_cleanup: true
-  disable_preview_resize: false
-  disable_previews: false
-  disable_type_detection_by_header: false
-  disable_update_check: false
   env_vars: []
-  external_url: ""
-  internal_url: ""
-  localdisks: ""
-  log_levels: info|warning|error
-  max_archive_size_gb: 0
-  networkdisks: ""
-  password_enforced_otp: false
-  password_min_length: 5
-  password_signup: false
-  proxy_auth_create_user: false
-  proxy_auth_header: ""
-  proxy_auth_logout_redirect_url: ""
-  sources:
-    - create_user_dir: false
-      default_enabled: true
-      default_user_scope: "/"
-      deny_by_default: false
-      disable_indexing: false
-      ignore_hidden: false
-      ignore_zero_size_folders: false
-      indexing_interval_minutes: 0
-      name: Root
-      path: "/"
-      private: false
-  ssl: false
-  certfile: fullchain.pem
-  keyfile: privkey.pem
-  token_expiration_hours: 2
-  oidc_admin_group: ""
-  oidc_client_id: ""
-  oidc_client_secret: ""
-  oidc_create_user: false
-  oidc_disable_verify_tls: false
-  oidc_groups_claim: ""
-  oidc_issuer_url: ""
-  oidc_logout_redirect_url: ""
-  oidc_scopes: ""
-  oidc_user_identifier: ""
-  cifsdomain: ""
-  cifspassword: ""
-  cifsusername: ""
 panel_admin: false
 panel_icon: mdi:file-search
-ports:
-  80/tcp: 8071
-ports_description:
-  80/tcp: Web UI port
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
 schema:
-  admin_password: password
-  admin_username: str
-  auth_method: list(password|noauth|proxy|oidc)
-  base_url: str?
-  cache_dir_cleanup: bool
-  disable_preview_resize: bool
-  disable_previews: bool
-  disable_type_detection_by_header: bool
-  disable_update_check: bool
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
-  external_url: str?
-  internal_url: str?
-  localdisks: str?
-  log_levels: str
-  max_archive_size_gb: int
-  networkdisks: str?
-  password_enforced_otp: bool
-  password_min_length: int
-  password_signup: bool
-  proxy_auth_create_user: bool
-  proxy_auth_header: str?
-  proxy_auth_logout_redirect_url: str?
-  sources:
-    - create_user_dir: bool?
-      default_enabled: bool?
-      default_user_scope: str?
-      deny_by_default: bool?
-      disable_indexing: bool?
-      ignore_hidden: bool?
-      ignore_zero_size_folders: bool?
-      indexing_interval_minutes: int?
-      name: str?
-      path: str
-      private: bool?
-  ssl: bool
-  certfile: str
-  keyfile: str
-  token_expiration_hours: int
-  oidc_admin_group: str?
-  oidc_client_id: str?
-  oidc_client_secret: password?
-  oidc_create_user: bool
-  oidc_disable_verify_tls: bool
-  oidc_groups_claim: str?
-  oidc_issuer_url: str?
-  oidc_logout_redirect_url: str?
-  oidc_scopes: str?
-  oidc_user_identifier: str?
-  cifsdomain: str?
-  cifspassword: str?
-  cifsusername: str?
 slug: filebrowser_quantum
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
