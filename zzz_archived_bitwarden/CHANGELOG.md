@@ -1,3 +1,5 @@
+## description: Deprecated - please use community version 1.35.0 (28-12-2025)
+- Minor bugs fixed
 
 ## 1.35.0 (28-12-2025)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
