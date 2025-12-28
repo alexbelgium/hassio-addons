@@ -115,7 +115,7 @@ jobs:
     strategy:
       matrix:
         addon: ${{ fromJSON(needs.detect-changed-addons.outputs.changedAddons) }}
-        arch: ["aarch64", "amd64", "armv7"]
+        arch: ["aarch64", "amd64"]
     steps:
       - uses: actions/checkout@v6
       - name: Resolve Symlinks (in repo)
