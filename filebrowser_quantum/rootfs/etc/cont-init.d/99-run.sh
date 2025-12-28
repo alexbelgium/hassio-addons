@@ -234,7 +234,8 @@ done
 
 bashio::log.info "Starting..."
 
-/home/filebrowser/filebrowser &
+cd /home/filebrowser
+./filebrowser &
 bashio::net.wait_for 8080 localhost 900 || true
 bashio::log.info "Started !"
 nginx || bashio::log.fatal "Nginx failed"
