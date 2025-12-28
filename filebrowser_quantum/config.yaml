@@ -145,9 +145,9 @@ options:
 panel_admin: false
 panel_icon: mdi:file-search
 ports:
-  8080/tcp: 8071
+  80/tcp: 8071
 ports_description:
-  8080/tcp: Web UI port
+  80/tcp: Web UI port
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
@@ -208,4 +208,4 @@ schema:
 slug: filebrowser_quantum
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.1.0"
+version: 1.1.0
