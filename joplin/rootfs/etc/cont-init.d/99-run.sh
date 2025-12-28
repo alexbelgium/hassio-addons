@@ -13,16 +13,16 @@ unlock_sqlite_migrations() {
         return
     fi
 
-    if ! sqlite3 "$db_path" "SELECT name FROM sqlite_master WHERE type='table' AND name='knex_migrations_lock';" | grep -q "knex_migrations_lock"; then
-        return
-    fi
-
     local is_locked
-    is_locked=$(sqlite3 "$db_path" "SELECT is_locked FROM knex_migrations_lock LIMIT 1;" 2>/dev/null || true)
+    is_locked=$(sqlite3 "$db_path" "SELECT is_locked FROM knex_migrations_lock WHERE \"index\" = 1;" 2>/dev/null || true)
+
+    sqlite3 "$db_path" "CREATE TABLE IF NOT EXISTS knex_migrations_lock (\"index\" integer PRIMARY KEY, is_locked integer); \
+        INSERT OR IGNORE INTO knex_migrations_lock (\"index\", is_locked) VALUES (1, 0); \
+        UPDATE knex_migrations_lock SET is_locked = 0 WHERE \"index\" = 1;" \
+        || bashio::log.warning "Failed to ensure SQLite migration lock table."
 
     if [[ "$is_locked" == "1" ]]; then
         bashio::log.warning "Locked SQLite migration table detected, attempting to unlock."
-        sqlite3 "$db_path" "UPDATE knex_migrations_lock SET is_locked = 0;" || bashio::log.warning "Failed to clear SQLite migration lock."
     fi
 }
 
@@ -41,11 +41,16 @@ unlock_postgres_migrations() {
     export PGPASSWORD="${POSTGRES_PASSWORD:-}"
 
     local is_locked
-    is_locked=$(psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc "SELECT is_locked FROM knex_migrations_lock LIMIT 1;" 2>/dev/null || true)
+    is_locked=$(psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc "SELECT is_locked FROM knex_migrations_lock WHERE index = 1;" 2>/dev/null || true)
+
+    psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc \
+        "CREATE TABLE IF NOT EXISTS knex_migrations_lock (index integer PRIMARY KEY, is_locked integer); \
+        INSERT INTO knex_migrations_lock (index, is_locked) VALUES (1, 0) ON CONFLICT (index) DO NOTHING; \
+        UPDATE knex_migrations_lock SET is_locked = 0 WHERE index = 1;" \
+        || bashio::log.warning "Failed to ensure PostgreSQL migration lock table."
 
     if [[ "$is_locked" == "1" ]]; then
         bashio::log.warning "Locked PostgreSQL migration table detected, attempting to unlock."
-        psql -h "$POSTGRES_HOST" -p "$pg_port" -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atqc "UPDATE knex_migrations_lock SET is_locked = 0;" || bashio::log.warning "Failed to clear PostgreSQL migration lock."
     fi
 
     unset PGPASSWORD
