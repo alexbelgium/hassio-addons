@@ -59,66 +59,12 @@ The web UI can be found at `<your-ip>:8071` or through the Home Assistant sideba
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `ssl` | bool | `false` | Enable HTTPS for web interface |
-| `certfile` | str | `fullchain.pem` | SSL certificate file (in `/ssl/`) |
-| `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |
 | `auth_method` | list | `password` | Authentication method (`password`, `noauth`, `proxy`, `oidc`) |
-| `admin_username` | str | `admin` | Admin username for initial setup |
-| `admin_password` | str | `admin` | Admin password for initial setup |
-| `token_expiration_hours` | int | `2` | Auth session token lifetime |
-| `password_min_length` | int | `5` | Minimum password length for password auth |
-| `password_signup` | bool | `false` | Allow signup on login page (password auth) |
-| `password_enforced_otp` | bool | `false` | Enforce OTP for password users |
-| `proxy_auth_header` | str | _(optional)_ | Header name for proxy auth |
-| `proxy_auth_create_user` | bool | `false` | Auto-create users with proxy auth |
-| `proxy_auth_logout_redirect_url` | str | _(optional)_ | Logout redirect URL for proxy auth |
-| `oidc_client_id` | str | _(optional)_ | OIDC client ID |
-| `oidc_client_secret` | str | _(optional)_ | OIDC client secret |
-| `oidc_issuer_url` | str | _(optional)_ | OIDC issuer URL |
-| `oidc_scopes` | str | _(optional)_ | OIDC scopes (space-separated) |
-| `oidc_user_identifier` | str | _(optional)_ | OIDC user identifier claim |
-| `oidc_admin_group` | str | _(optional)_ | OIDC admin group |
-| `oidc_groups_claim` | str | _(optional)_ | OIDC groups claim |
-| `oidc_logout_redirect_url` | str | _(optional)_ | OIDC logout redirect URL |
-| `oidc_create_user` | bool | `false` | Auto-create users with OIDC |
-| `oidc_disable_verify_tls` | bool | `false` | Disable TLS verification for OIDC |
-| `base_url` | str | _(optional)_ | Base URL override (defaults to ingress path) |
-| `external_url` | str | _(optional)_ | External URL used for share links |
-| `internal_url` | str | _(optional)_ | Internal URL used for integrations |
-| `disable_update_check` | bool | `false` | Disable update checking |
-| `disable_previews` | bool | `false` | Disable all previews |
-| `disable_preview_resize` | bool | `false` | Disable preview resizing |
-| `disable_type_detection_by_header` | bool | `false` | Disable type detection by header |
-| `cache_dir_cleanup` | bool | `true` | Automatically clean cache directory |
-| `max_archive_size_gb` | int | `0` | Max archive size in GB (0 = default) |
-| `log_levels` | str | `info|warning|error` | Log levels configuration |
-| `sources` | list | _(see example)_ | File sources to expose |
 | `localdisks` | str | _(optional)_ | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
 | `networkdisks` | str | _(optional)_ | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | _(optional)_ | SMB username for network shares |
 | `cifspassword` | str | _(optional)_ | SMB password for network shares |
 | `cifsdomain` | str | _(optional)_ | SMB domain for network shares |
-
-### Example Configuration
-
-```yaml
-ssl: true
-certfile: "fullchain.pem"
-keyfile: "privkey.pem"
-auth_method: password
-admin_username: "admin"
-admin_password: "supersecret"
-password_min_length: 8
-sources:
-  - path: "/share"
-    name: "Share"
-    default_enabled: true
-    default_user_scope: "/"
-    create_user_dir: false
-    disable_indexing: false
-    deny_by_default: false
-    private: false
-```
 
 ## Setup
 
