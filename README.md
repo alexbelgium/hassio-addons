@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 117
+- In the repository : 118
 - Installed : 76650
 
 ### Top 3
@@ -252,6 +252,14 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fepicgamesfree%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [FileBrowser Quantum](filebrowser_quantum/) : FileBrowser Quantum provides a modern, responsive file manager with multi-source support, advanced authentication options, and realtime indexing for your Home Assistant files.
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser_quantum%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser_quantum%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Filebrowser (10195x)](filebrowser/) : filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files
 
