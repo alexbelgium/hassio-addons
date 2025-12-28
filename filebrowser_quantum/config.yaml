@@ -91,6 +91,7 @@ map:
 name: FileBrowser Quantum
 options:
   env_vars: []
+  auth_method: password
 panel_admin: false
 panel_icon: mdi:file-search
 privileged:
@@ -100,6 +101,12 @@ schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
+  auth_method: list(password|noauth|proxy|oidc)
+  cifsdomain: str?
+  cifspassword: str?
+  cifsusername: str?
+  localdisks: str?
+  networkdisks: str?
 slug: filebrowser_quantum
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
