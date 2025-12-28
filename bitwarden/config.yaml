@@ -15,7 +15,7 @@ options:
 ports:
   7277/tcp: 7277
 ports_description:
-  7277/tcp: Bitwarden Vault
+  7277/tcp: Vaultwarden Vault
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
