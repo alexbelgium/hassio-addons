@@ -1,0 +1,152 @@
+# Home assistant add-on: FileBrowser Quantum
+
+
+I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
+
+If this add-on saves you time or makes your setup easier, I would be very grateful for your support!
+
+[![Buy me a coffee][donation-badge]](https://www.buymeacoffee.com/alexbelgium)
+[![Donate via PayPal][paypal-badge]](https://www.paypal.com/donate/?hosted_button_id=DZFULJZTP3UQA)
+
+## Addon informations
+
+![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser_quantum%2Fconfig.yaml)
+![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser_quantum%2Fconfig.yaml)
+![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ffilebrowser_quantum%2Fconfig.yaml)
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
+[![GitHub Super-Linter](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/weekly-supelinter.yaml?label=Lint%20code%20base)](https://github.com/alexbelgium/hassio-addons/actions/workflows/weekly-supelinter.yaml)
+[![Builder](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/onpush_builder.yaml?label=Builder)](https://github.com/alexbelgium/hassio-addons/actions/workflows/onpush_builder.yaml)
+
+[donation-badge]: https://img.shields.io/badge/Buy%20me%20a%20coffee-%23d32f2f?logo=buy-me-a-coffee&style=flat&logoColor=white
+[paypal-badge]: https://img.shields.io/badge/Donate%20via%20PayPal-0070BA?logo=paypal&style=flat&logoColor=white
+
+_Thanks to everyone having starred my repo! To star it click on the image below, then it will be on top right. Thanks!_
+
+[![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
+
+## About
+
+FileBrowser Quantum is a modern, responsive, multi-source file manager with realtime indexing, advanced sharing, and expanded authentication options (password, proxy, OIDC, or no-auth). It is a major fork of the original Filebrowser project, designed for faster browsing and richer previews.
+
+This addon is based on the [docker image](https://hub.docker.com/r/gtstef/filebrowser) from the FileBrowser Quantum project.
+
+## Installation
+
+The installation of this add-on is pretty straightforward and not different in
+comparison to installing any other Home Assistant add-on.
+
+1. [Add my Home Assistant add-ons repository][repository] to your Home Assistant instance.
+1. Install this add-on.
+1. Click the `Save` button to store your configuration.
+1. Start the add-on.
+1. Check the logs of the add-on to see if everything went well.
+1. Access the web UI through the sidebar or at `<your-ip>:8071`.
+
+## Configuration
+
+The web UI can be found at `<your-ip>:8071` or through the Home Assistant sidebar when using Ingress.
+
+**Default credentials:**
+- Username: `admin`
+- Password: `admin`
+
+**Important:** Change the default credentials immediately after first login for security.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `ssl` | bool | `false` | Enable HTTPS for web interface |
+| `certfile` | str | `fullchain.pem` | SSL certificate file (in `/ssl/`) |
+| `keyfile` | str | `privkey.pem` | SSL private key file (in `/ssl/`) |
+| `auth_method` | list | `password` | Authentication method (`password`, `noauth`, `proxy`, `oidc`) |
+| `admin_username` | str | `admin` | Admin username for initial setup |
+| `admin_password` | str | `admin` | Admin password for initial setup |
+| `token_expiration_hours` | int | `2` | Auth session token lifetime |
+| `password_min_length` | int | `5` | Minimum password length for password auth |
+| `password_signup` | bool | `false` | Allow signup on login page (password auth) |
+| `password_enforced_otp` | bool | `false` | Enforce OTP for password users |
+| `proxy_auth_header` | str | _(optional)_ | Header name for proxy auth |
+| `proxy_auth_create_user` | bool | `false` | Auto-create users with proxy auth |
+| `proxy_auth_logout_redirect_url` | str | _(optional)_ | Logout redirect URL for proxy auth |
+| `oidc_client_id` | str | _(optional)_ | OIDC client ID |
+| `oidc_client_secret` | str | _(optional)_ | OIDC client secret |
+| `oidc_issuer_url` | str | _(optional)_ | OIDC issuer URL |
+| `oidc_scopes` | str | _(optional)_ | OIDC scopes (space-separated) |
+| `oidc_user_identifier` | str | _(optional)_ | OIDC user identifier claim |
+| `oidc_admin_group` | str | _(optional)_ | OIDC admin group |
+| `oidc_groups_claim` | str | _(optional)_ | OIDC groups claim |
+| `oidc_logout_redirect_url` | str | _(optional)_ | OIDC logout redirect URL |
+| `oidc_create_user` | bool | `false` | Auto-create users with OIDC |
+| `oidc_disable_verify_tls` | bool | `false` | Disable TLS verification for OIDC |
+| `base_url` | str | _(optional)_ | Base URL override (defaults to ingress path) |
+| `external_url` | str | _(optional)_ | External URL used for share links |
+| `internal_url` | str | _(optional)_ | Internal URL used for integrations |
+| `disable_update_check` | bool | `false` | Disable update checking |
+| `disable_previews` | bool | `false` | Disable all previews |
+| `disable_preview_resize` | bool | `false` | Disable preview resizing |
+| `disable_type_detection_by_header` | bool | `false` | Disable type detection by header |
+| `cache_dir_cleanup` | bool | `true` | Automatically clean cache directory |
+| `max_archive_size_gb` | int | `0` | Max archive size in GB (0 = default) |
+| `log_levels` | str | `info|warning|error` | Log levels configuration |
+| `sources` | list | _(see example)_ | File sources to expose |
+| `localdisks` | str | _(optional)_ | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
+| `networkdisks` | str | _(optional)_ | SMB shares to mount (e.g., `//SERVER/SHARE`) |
+| `cifsusername` | str | _(optional)_ | SMB username for network shares |
+| `cifspassword` | str | _(optional)_ | SMB password for network shares |
+| `cifsdomain` | str | _(optional)_ | SMB domain for network shares |
+
+### Example Configuration
+
+```yaml
+ssl: true
+certfile: "fullchain.pem"
+keyfile: "privkey.pem"
+auth_method: password
+admin_username: "admin"
+admin_password: "supersecret"
+password_min_length: 8
+sources:
+  - path: "/share"
+    name: "Share"
+    default_enabled: true
+    default_user_scope: "/"
+    create_user_dir: false
+    disable_indexing: false
+    deny_by_default: false
+    private: false
+```
+
+## Setup
+
+1. Start the add-on and wait for it to initialize.
+1. Access the web interface through the Home Assistant sidebar or at `<your-ip>:8071`.
+1. Log in using the default credentials:
+   - Username: `admin`
+   - Password: `admin`
+1. **Important:** Immediately change the default password by clicking on "Settings" > "User Management".
+1. Configure additional sources and authentication settings through the add-on options or the web interface.
+
+### Mounting Drives
+
+This addon supports mounting both local drives and remote SMB shares:
+
+- **Local drives**: See [Mounting Local Drives in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons)
+- **Remote shares**: See [Mounting Remote Shares in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Mounting-remote-shares-in-Addons)
+
+### Custom Scripts and Environment Variables
+
+This addon supports custom scripts and environment variables through the `addon_config` mapping:
+
+- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
+- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
+
+## Support
+
+Create an issue on GitHub, or ask on the [Home Assistant Community thread](https://community.home-assistant.io/t/home-assistant-addon-filebrowser/282108/3).
+
+[repository]: https://github.com/alexbelgium/hassio-addons
+[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
+[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+[armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
