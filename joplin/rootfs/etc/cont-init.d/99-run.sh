@@ -71,7 +71,7 @@ repair_notifications_migration_sqlite() {
         INSERT INTO knex_migrations(name, batch, migration_time)
         VALUES ('20203012152842_notifications.js',
             COALESCE((SELECT MAX(batch) FROM knex_migrations), 1),
-            CAST(strftime('%s','now') AS INTEGER) * 1000
+            CURRENT_TIMESTAMP
         );
     " >/dev/null 2>&1 || bashio::log.warning "Failed to repair notifications migration entry."
 }
@@ -147,7 +147,7 @@ repair_notifications_migration_postgres() {
         "INSERT INTO knex_migrations(name, batch, migration_time)
          SELECT '20203012152842_notifications.js',
                 COALESCE(MAX(batch), 1),
-                (EXTRACT(EPOCH FROM NOW()) * 1000)::bigint
+                NOW()
          FROM knex_migrations
          WHERE NOT EXISTS (
              SELECT 1 FROM knex_migrations WHERE name='20203012152842_notifications.js'
