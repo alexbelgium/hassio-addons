@@ -1,149 +1,112 @@
-#============================#
-#  ALEXBELGIUM'S DOCKERFILE  #
-#============================#
-#           _.------.
-#       _.-`    ('>.-`"alpine-sts""-.
-# '.--'`       _'`   _ .--.)
-#    -'         '-.-';`   `
-#    ' -      _.'  ``'--.
-#        '---`    .-'"alpine-sts"`
-#               /`
-#=== Home Assistant Addon ===#
+# Portainer Agent with bashio main + simplified protection mode check
+# Fix for: FATAL: PROTECTION MODE IS ENABLED! error when protection mode is OFF
+# Approach: Level 1 (standard bashio) + Level 2 (socket fallback)
 
-#################
-# 1 Build Image #
-#################
-
-# Must be declared before first FROM
 ARG BUILD_FROM
-
-# Get agent
-FROM portainer/agent:alpine as original_agent
-ENV PORTAINER_AGENT_ARGS="alpine-sts"
-
-# Build using base
+ARG BUILD_ARCH
 FROM $BUILD_FROM
 
-# Copy Portainer agent binaries
-COPY --from=original_agent /app /app
+# Step 1: Replace bashio v0.17.5 with main branch for improved API error handling
+RUN rm -rf /usr/lib/bashio /usr/bin/bashio && \
+    curl -J -L -o /tmp/bashio.tar.gz \
+        "https://github.com/hassio-addons/bashio/archive/main.tar.gz" && \
+    mkdir /tmp/bashio && \
+    tar -xzf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio && \
+    mv /tmp/bashio/lib /usr/lib/bashio && \
+    ln -s /usr/lib/bashio/bashio /usr/bin/bashio && \
+    rm -rf /tmp/bashio /tmp/bashio.tar.gz
 
-# Add tzdata
+# Step 2: Get agent from official image
+COPY --from=ghcr.io/alexbelgium/portainer_agent-${BUILD_ARCH}:alpine-sts /app /app
+
+# Step 3: Add tzdata and timezone support
 RUN apk add --no-cache tzdata
 ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo.zip
 ENV ZONEINFO /zoneinfo.zip
 
-##################
-# 2 Modify Image #
-##################
-
-# Set S6 wait time
+# Step 4: Set S6 init system wait times
 ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
     S6_SERVICES_GRACETIME=0
 
-##################
-# 3 Install apps #
-##################
+# Step 5: Copy rootfs from official image
+COPY --from=ghcr.io/alexbelgium/portainer_agent-${BUILD_ARCH}:alpine-sts / /
 
-# Add rootfs
-COPY rootfs/ /
+# Step 6: Override the run script with simplified protection mode check
+RUN mkdir -p /etc/services.d/portainer_agent
 
-# Uses /bin for compatibility purposes
-# hadolint ignore=DL4005
-RUN if [ ! -f /bin/sh ] && [ -f /usr/bin/sh ]; then ln -s /usr/bin/sh /bin/sh; fi && \
-    if [ ! -f /bin/bash ] && [ -f /usr/bin/bash ]; then ln -s /usr/bin/bash /bin/bash; fi
+RUN cat > /etc/services.d/portainer_agent/run <<'EOF'
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
+# Home Assistant Community Add-on: portainer_agent
+# PATCHED: Simplified protection mode check with socket fallback
 
-# Modules
-ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh"
+bashio::require.unprotected.fixed() {
+    local protected
 
-# Automatic modules download
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" "/ha_automodules.sh"
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+    bashio::log.info "Checking protection mode..."
 
-# Manual apps
-ENV PACKAGES="nginx"
+    # Level 1: Try standard bashio method
+    protected=$(bashio::addon.protected 'self' 2>/dev/null || echo "unknown")
 
-# Automatic apps & bashio
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+    if [[ "${protected}" != "unknown" ]]; then
+        # API call succeeded - use result
+        bashio::log.debug "Protection mode: ${protected}"
+        if [[ "${protected}" == "false" ]] || [[ -z "${protected}" ]]; then
+            return 0
+        fi
+    else
+        # Level 2: Fallback - Check Docker socket directly
+        # Logic: If protection mode is OFF, Docker socket WILL be accessible
+        bashio::log.warning "Could not determine protection mode via API, checking Docker socket..."
 
-################
-# 4 Entrypoint #
-################
-
-# Add entrypoint
-ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
-
-# Entrypoint modifications
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" "/ha_entrypoint_modif.sh"
-RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
-
-# Standalone bashio command
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
-RUN chmod 777 /.bashio-standalone.sh
-
-RUN chmod a+x /usr/sbin/healthcheck && \
-    chmod a+x /usr/sbin/wait-for-signal
-WORKDIR "/app"
-ENTRYPOINT [ "/init" ]
-
-############
-# 5 Labels #
-############
-
-ARG BUILD_ARCH
-ARG BUILD_DATE
-ARG BUILD_DESCRIPTION
-ARG BUILD_NAME
-ARG BUILD_REF
-ARG BUILD_REPOSITORY
-ARG BUILD_VERSION
-ENV BUILD_VERSION="${BUILD_VERSION}"
-LABEL \
-    io.hass.name="${BUILD_NAME}" \
-    io.hass.description="${BUILD_DESCRIPTION}" \
-    io.hass.arch="${BUILD_ARCH}" \
-    io.hass.type="addon" \
-    io.hass.version=${BUILD_VERSION} \
-    maintainer="alexbelgium (https://github.com/alexbelgium)" \
-    org.opencontainers.image.title="${BUILD_NAME}" \
-    org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
-    org.opencontainers.image.vendor="Home Assistant Add-ons" \
-    org.opencontainers.image.authors="alexbelgium (https://github.com/alexbelgium)" \
-    org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.url="https://github.com/alexbelgium" \
-    org.opencontainers.image.source="https://github.com/${BUILD_REPOSITORY}" \
-    org.opencontainers.image.documentation="https://github.com/${BUILD_REPOSITORY}/blob/main/README.md" \
-    org.opencontainers.image.created=${BUILD_DATE} \
-    org.opencontainers.image.revision=${BUILD_REF} \
-    org.opencontainers.image.version=${BUILD_VERSION}
-
-#################
-# 6 Healthcheck #
-#################
-
-# Avoid spamming logs
-# hadolint ignore=SC2016
-RUN \
-    # Handle Apache configuration
-    if [ -d /etc/apache2/sites-available ]; then \
-        for file in /etc/apache2/sites-*/*.conf; do \
-            sed -i '/<VirtualHost/a \ \n    # Match requests with the custom User-Agent "HealthCheck" \n    SetEnvIf User-Agent "HealthCheck" dontlog \n    # Exclude matching requests from access logs \n    CustomLog ${APACHE_LOG_DIR}/access.log combined env=!dontlog' "$file"; \
-        done; \
-    fi && \
-    \
-    # Handle Nginx configuration
-    if [ -f /etc/nginx/nginx.conf ]; then \
-        awk '/http \{/{print; print "map $http_user_agent $dontlog {\n  default 0;\n  \"~*HealthCheck\" 1;\n}\naccess_log /var/log/nginx/access.log combined if=$dontlog;"; next}1' /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.new && \
-        mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf; \
+        if [ -S /run/docker.sock ]; then
+            bashio::log.info "Docker socket is accessible - protection mode is OFF"
+            return 0
+        else
+            bashio::log.fatal "Docker socket not accessible!"
+            return 1
+        fi
     fi
 
-ENV HEALTH_PORT="alpine-sts" \
-    HEALTH_URL="alpine-sts"
-HEALTHCHECK \
-    --interval=5s \
-    --retries=5 \
-    --start-period=30s \
-    --timeout=25s \
-    CMD healthcheck &>/dev/null || exit 1
+    # If we get here, protection mode is ON
+    bashio::log.fatal "PROTECTION MODE IS ENABLED!"
+    bashio::log.fatal ""
+    bashio::log.fatal "To be able to use this add-on, you'll need to disable"
+    bashio::log.fatal "protection mode on this add-on. Without it, the add-on"
+    bashio::log.fatal "is unable to access Docker."
+    bashio::log.fatal ""
+    bashio::log.fatal "Steps:"
+    bashio::log.fatal " - Go to the Supervisor Panel."
+    bashio::log.fatal " - Click on this add-on."
+    bashio::log.fatal " - Set the 'Protection mode' switch to off."
+    bashio::log.fatal " - Restart the add-on."
+    bashio::log.fatal ""
+    bashio::log.fatal "Access to Docker allows you to do really powerful things"
+    bashio::log.fatal "including complete destruction of your system."
+    bashio::log.fatal "Please, be sure you know what you are doing before"
+    bashio::log.fatal "enabling this feature (and this add-on)!"
+    return 1
+}
+
+# Call our fixed function
+bashio::require.unprotected.fixed
+
+bashio::log.info "Starting Portainer Agent"
+
+# Launch app
+cd /app
+if bashio::config.has_value 'PORTAINER_AGENT_ARGS'; then
+    ./agent "$PORTAINER_AGENT_ARGS"
+else
+    ./agent
+fi
+EOF
+
+RUN chmod +x /etc/services.d/portainer_agent/run
+
+ENTRYPOINT ["/init"]
+
+HEALTHCHECK --interval=5s --start-period=30s --timeout=5s --retries=3 \
+  CMD /usr/sbin/healthcheck || exit 1
