@@ -1,4 +1,5 @@
 ## alpine-sts-bashio-fix (29-12-2025)
+
 - Fix: PROTECTION MODE IS ENABLED error when protection mode is OFF (Fixes #2307)
 - Update bashio from v0.17.5 → main branch for improved API error handling
 - Add robust protection mode check with Docker socket fallback
