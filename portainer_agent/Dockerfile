@@ -2,7 +2,9 @@
 # Fix for: FATAL: PROTECTION MODE IS ENABLED! error when protection mode is OFF
 # Approach: Level 1 (standard bashio) + Level 2 (socket fallback)
 
-FROM ghcr.io/hassio-addons/base/amd64:11.1.0
+ARG BUILD_FROM
+ARG BUILD_ARCH
+FROM $BUILD_FROM
 
 # Step 1: Replace bashio v0.17.5 with main branch for improved API error handling
 RUN rm -rf /usr/lib/bashio /usr/bin/bashio && \
@@ -96,7 +98,7 @@ bashio::log.info "Starting Portainer Agent"
 # Launch app
 cd /app || true
 if bashio::config.has_value 'PORTAINER_AGENT_ARGS'; then
-    ./agent "$PORTAINER_AGENT_ARGS" 2> /dev/null
+    ./agent "$PORTAINER_AGENT_ARGS"
 else
     ./agent
 fi
