@@ -2,9 +2,7 @@
 # Fix for: FATAL: PROTECTION MODE IS ENABLED! error when protection mode is OFF
 # Approach: Level 1 (standard bashio) + Level 2 (socket fallback)
 
-ARG BUILD_FROM
-ARG BUILD_ARCH
-FROM $BUILD_FROM
+FROM ghcr.io/hassio-addons/base/amd64:11.1.0
 
 # Step 1: Replace bashio v0.17.5 with main branch for improved API error handling
 RUN rm -rf /usr/lib/bashio /usr/bin/bashio && \
@@ -17,7 +15,7 @@ RUN rm -rf /usr/lib/bashio /usr/bin/bashio && \
     rm -rf /tmp/bashio /tmp/bashio.tar.gz
 
 # Step 2: Get agent from official image
-COPY --from=ghcr.io/alexbelgium/portainer_agent-${BUILD_ARCH}:alpine-sts /app /app
+COPY --from=ghcr.io/portainerci/agent:latest /app /app
 
 # Step 3: Add tzdata and timezone support
 RUN apk add --no-cache tzdata
@@ -30,7 +28,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Step 5: Copy rootfs from official image
-COPY --from=ghcr.io/alexbelgium/portainer_agent-${BUILD_ARCH}:alpine-sts / /
+COPY --from=ghcr.io/portainerci/agent:latest / /
 
 # Step 6: Override the run script with simplified protection mode check
 RUN mkdir -p /etc/services.d/portainer_agent
@@ -96,9 +94,9 @@ bashio::require.unprotected.fixed
 bashio::log.info "Starting Portainer Agent"
 
 # Launch app
-cd /app
+cd /app || true
 if bashio::config.has_value 'PORTAINER_AGENT_ARGS'; then
-    ./agent "$PORTAINER_AGENT_ARGS"
+    ./agent "$PORTAINER_AGENT_ARGS" 2> /dev/null
 else
     ./agent
 fi
