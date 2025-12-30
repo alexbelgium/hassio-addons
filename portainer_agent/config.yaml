@@ -41,4 +41,4 @@ schema:
 slug: portainer_agent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: alpine-sts-2
+version: alpine-sts-3
