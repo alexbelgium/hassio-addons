@@ -8,16 +8,21 @@ FROM $BUILD_FROM
 
 # Step 1: Replace bashio v0.17.5 with main branch for improved API error handling
 RUN rm -rf /usr/lib/bashio /usr/bin/bashio && \
-    curl -J -L -o /tmp/bashio.tar.gz \
+    curl -f -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/main.tar.gz" && \
+    test -f /tmp/bashio.tar.gz && test -s /tmp/bashio.tar.gz || \
+        (echo "ERROR: bashio download failed or file is empty" && exit 1) && \
     mkdir /tmp/bashio && \
-    tar -xzf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio && \
+    tar -xzf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio || \
+        (echo "ERROR: bashio tar extraction failed" && exit 1) && \
+    test -d /tmp/bashio/lib || \
+        (echo "ERROR: bashio lib directory not found after extraction" && exit 1) && \
     mv /tmp/bashio/lib /usr/lib/bashio && \
     ln -s /usr/lib/bashio/bashio /usr/bin/bashio && \
     rm -rf /tmp/bashio /tmp/bashio.tar.gz
 
 # Step 2: Get agent from official image
-COPY --from=ghcr.io/alexbelgium/portainer_agent-${BUILD_ARCH}:alpine-sts /app /app
+COPY --from=ghcr.io/portainerci/agent:latest /app /app
 
 # Step 3: Add tzdata and timezone support
 RUN apk add --no-cache tzdata
@@ -30,7 +35,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Step 5: Copy rootfs from official image
-COPY --from=ghcr.io/alexbelgium/portainer_agent-${BUILD_ARCH}:alpine-sts / /
+COPY --from=ghcr.io/portainerci/agent:latest / /
 
 # Step 6: Override the run script with simplified protection mode check
 RUN mkdir -p /etc/services.d/portainer_agent
@@ -96,7 +101,7 @@ bashio::require.unprotected.fixed
 bashio::log.info "Starting Portainer Agent"
 
 # Launch app
-cd /app
+cd /app || true
 if bashio::config.has_value 'PORTAINER_AGENT_ARGS'; then
     ./agent "$PORTAINER_AGENT_ARGS"
 else
