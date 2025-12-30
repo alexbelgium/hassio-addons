@@ -82,7 +82,7 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 RUN chmod a+x /usr/sbin/healthcheck && \
     chmod a+x /usr/sbin/wait-for-signal
 WORKDIR "/app"
-ENTRYPOINT [ "/init" ]
+ENTRYPOINT [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
