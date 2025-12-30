@@ -1,4 +1,17 @@
+## alpine-sts (30-12-2025)
+
+- Fix: Restore official Portainer Agent image source - Fix circular dependency (Fixes #2318)
+- Revert COPY --from to use official ghcr.io/portainerci/agent:latest instead of self-reference
+- This fixes build failures that prevented users from updating to the bashio protection mode fix
+- Updated config.yaml version tag to match buildable image tag
+
 ## alpine-sts-bashio-fix (29-12-2025)
+
+- Fix: PROTECTION MODE IS ENABLED error when protection mode is OFF (Fixes #2307)
+- Update bashio from v0.17.5 → main branch for improved API error handling
+- Add robust protection mode check with Docker socket fallback
+- Tested and verified working on Home Assistant OS
+
 
 - Fix: PROTECTION MODE IS ENABLED error when protection mode is OFF (Fixes #2307)
 - Update bashio from v0.17.5 → main branch for improved API error handling
