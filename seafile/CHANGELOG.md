@@ -1,4 +1,7 @@
 
+## 12.0.17 (12-03-2026)
+- Ensure `SERVICE_URL` and `FILE_SERVER_ROOT` are written to the active Seafile config path.
+
 ## 12.0.14 (28-12-2025)
 - Update to latest version from franchetti/seafile-arm
 
