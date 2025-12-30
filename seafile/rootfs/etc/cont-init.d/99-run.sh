@@ -98,17 +98,30 @@ normalize_url() {
 SERVICE_URL_VALUE=$(normalize_url "${SERVICE_URL_CONFIG:-${DEFAULT_HOST}:8000}" "http")
 FILE_SERVER_ROOT_VALUE=$(normalize_url "${FILE_SERVER_ROOT_CONFIG:-${DEFAULT_HOST}:${DEFAULT_FILE_PORT}}" "http")
 
-SEAHUB_SETTINGS_FILE="${DATA_LOCATION}/conf/seahub_settings.py"
-mkdir -p "$(dirname "${SEAHUB_SETTINGS_FILE}")"
-touch "${SEAHUB_SETTINGS_FILE}"
+SEAHUB_CONF_DIRS=()
+if [[ -d "${DATA_LOCATION}/conf" || ! -d "${DATA_LOCATION}/seafile/conf" ]]; then
+    SEAHUB_CONF_DIRS+=("${DATA_LOCATION}/conf")
+fi
+if [[ -d "${DATA_LOCATION}/seafile/conf" ]]; then
+    SEAHUB_CONF_DIRS+=("${DATA_LOCATION}/seafile/conf")
+fi
+if [[ "${#SEAHUB_CONF_DIRS[@]}" -eq 0 ]]; then
+    SEAHUB_CONF_DIRS+=("${DATA_LOCATION}/conf")
+fi
 
-sed -i '/^SERVICE_URL *=/d' "${SEAHUB_SETTINGS_FILE}"
-sed -i '/^FILE_SERVER_ROOT *=/d' "${SEAHUB_SETTINGS_FILE}"
+for conf_dir in "${SEAHUB_CONF_DIRS[@]}"; do
+    SEAHUB_SETTINGS_FILE="${conf_dir}/seahub_settings.py"
+    mkdir -p "${conf_dir}"
+    touch "${SEAHUB_SETTINGS_FILE}"
 
-{
-    echo "SERVICE_URL = \"${SERVICE_URL_VALUE}\""
-    echo "FILE_SERVER_ROOT = \"${FILE_SERVER_ROOT_VALUE}\""
-} >> "${SEAHUB_SETTINGS_FILE}"
+    sed -i '/^SERVICE_URL *=/d' "${SEAHUB_SETTINGS_FILE}"
+    sed -i '/^FILE_SERVER_ROOT *=/d' "${SEAHUB_SETTINGS_FILE}"
+
+    {
+        echo "SERVICE_URL = \"${SERVICE_URL_VALUE}\""
+        echo "FILE_SERVER_ROOT = \"${FILE_SERVER_ROOT_VALUE}\""
+    } >> "${SEAHUB_SETTINGS_FILE}"
+done
 
 bashio::log.info "SERVICE_URL set to ${SERVICE_URL_VALUE}"
 bashio::log.info "FILE_SERVER_ROOT set to ${FILE_SERVER_ROOT_VALUE}"
