@@ -22,7 +22,7 @@ RUN rm -rf /usr/lib/bashio /usr/bin/bashio && \
     rm -rf /tmp/bashio /tmp/bashio.tar.gz
 
 # Step 2: Get agent from official image
-COPY --from=ghcr.io/portainerci/agent:latest /app /app
+COPY --from=FROM portainer/agent:alpine /app /app
 
 # Step 3: Add tzdata and timezone support
 RUN apk add --no-cache tzdata
@@ -35,7 +35,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
     S6_SERVICES_GRACETIME=0
 
 # Step 5: Copy rootfs from official image
-COPY --from=ghcr.io/portainerci/agent:latest / /
+COPY --from=FROM portainer/agent:alpine / /
 
 # Step 6: Override the run script with simplified protection mode check
 RUN mkdir -p /etc/services.d/portainer_agent
