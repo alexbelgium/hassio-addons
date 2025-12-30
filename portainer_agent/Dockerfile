@@ -8,10 +8,15 @@ FROM $BUILD_FROM
 
 # Step 1: Replace bashio v0.17.5 with main branch for improved API error handling
 RUN rm -rf /usr/lib/bashio /usr/bin/bashio && \
-    curl -J -L -o /tmp/bashio.tar.gz \
+    curl -f -J -L -o /tmp/bashio.tar.gz \
         "https://github.com/hassio-addons/bashio/archive/main.tar.gz" && \
+    test -f /tmp/bashio.tar.gz && test -s /tmp/bashio.tar.gz || \
+        (echo "ERROR: bashio download failed or file is empty" && exit 1) && \
     mkdir /tmp/bashio && \
-    tar -xzf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio && \
+    tar -xzf /tmp/bashio.tar.gz --strip 1 -C /tmp/bashio || \
+        (echo "ERROR: bashio tar extraction failed" && exit 1) && \
+    test -d /tmp/bashio/lib || \
+        (echo "ERROR: bashio lib directory not found after extraction" && exit 1) && \
     mv /tmp/bashio/lib /usr/lib/bashio && \
     ln -s /usr/lib/bashio/bashio /usr/bin/bashio && \
     rm -rf /tmp/bashio /tmp/bashio.tar.gz
