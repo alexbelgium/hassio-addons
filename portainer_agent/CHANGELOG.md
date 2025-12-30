@@ -2,7 +2,9 @@
 
 - Fix: Restore official Portainer Agent image source - Fix circular dependency (Fixes #2318)
 - Revert COPY --from to use official ghcr.io/portainerci/agent:latest instead of self-reference
-- This fixes build failures that prevented users from updating to the bashio protection mode fix
+- Restored multi-architecture support via ARG BUILD_FROM/ARG BUILD_ARCH (fixes aarch64 builds)
+- Removed stderr suppression to preserve error messages for user diagnostics
+- This fixes build failures that prevented users from updating
 - Updated config.yaml version tag to match buildable image tag
 
 ## alpine-sts-bashio-fix (29-12-2025)
