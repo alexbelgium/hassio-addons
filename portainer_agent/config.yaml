@@ -16,7 +16,6 @@ map:
 name: Portainer Agent
 options:
   env_vars: []
-  PORTAINER_AGENT_ARGS: "server_addr=127.0.0.1"
 ports:
   80/tcp: null
   9001/tcp: 9001
@@ -42,4 +41,4 @@ schema:
 slug: portainer_agent
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 2025.12-3
+version: 2025.12-4
