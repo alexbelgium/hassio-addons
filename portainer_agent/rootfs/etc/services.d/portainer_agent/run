@@ -13,7 +13,7 @@ bashio::log.info "Starting app"
 # Launch app
 cd /app || true
 if bashio::config.has_value 'PORTAINER_AGENT_ARGS'; then
-    ./agent "$PORTAINER_AGENT_ARGS"
+    ./agent $PORTAINER_AGENT_ARGS
 else
     ./agent
 fi
