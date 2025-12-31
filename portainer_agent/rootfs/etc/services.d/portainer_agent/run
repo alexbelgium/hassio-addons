@@ -12,4 +12,4 @@ if bashio::config.has_value 'PORTAINER_AGENT_ARGS'; then
   read -r -a args <<<"$(bashio::config 'PORTAINER_AGENT_ARGS')"
 fi
 
-exec ./agent "${args[@]}"
+./agent "${args[@]}"
