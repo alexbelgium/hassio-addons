@@ -1,19 +1,15 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-set -e
-# ==============================================================================
-# Home Assistant Community Add-on: portainer_agent
-# Runs some initializations for portainer_agent
-# ==============================================================================
+set -euo pipefail
 
 bashio::require.unprotected
-
 bashio::log.info "Starting app"
 
-# Launch app
-cd /app || true
+cd /app || exit 1
+
+args=()
 if bashio::config.has_value 'PORTAINER_AGENT_ARGS'; then
-    ./agent $PORTAINER_AGENT_ARGS
-else
-    ./agent
+  read -r -a args <<<"$(bashio::config 'PORTAINER_AGENT_ARGS')"
 fi
+
+exec ./agent "${args[@]}"
