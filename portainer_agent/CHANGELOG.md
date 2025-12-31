@@ -1,3 +1,5 @@
+## 2025.12-3 (31-12-2025)
+- Minor bugs fixed
 ## 2025.12-2 (31-12-2025)
 - Minor bugs fixed
 ## alpine-sts-3 (30-12-2025)
