@@ -1,4 +1,8 @@
 
+## 2.37.2 (02-01-2026)
+- Improve Docker socket detection with fallback path logging
+- Stop startup when no Docker socket is available
+
 ## 2.37.0 (13-12-2025)
 - Update to latest version from portainer/portainer (changelog : https://github.com/portainer/portainer/releases)
 

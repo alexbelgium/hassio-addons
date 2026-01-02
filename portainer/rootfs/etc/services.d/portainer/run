@@ -11,7 +11,20 @@ declare -a options
 options+=(--data /data)
 options+=(--bind 0.0.0.0:9000)
 #options+=(--templates /opt/portainer/templates.json)
-options+=(--host unix:///var/run/docker.sock)
+
+docker_socket="/var/run/docker.sock"
+if [[ ! -S "$docker_socket" ]]; then
+    fallback_socket="/run/docker.sock"
+    if [[ -S "$fallback_socket" ]]; then
+        docker_socket="$fallback_socket"
+        bashio::log.info "Docker socket not found at /var/run/docker.sock, using /run/docker.sock."
+    else
+        bashio::log.error "Docker socket not found at /var/run/docker.sock or /run/docker.sock."
+        exit 1
+    fi
+fi
+
+options+=(--host "unix://${docker_socket}")
 
 ##############
 # SSL CONFIG #
