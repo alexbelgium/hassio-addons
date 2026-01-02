@@ -1,5 +1,5 @@
 
-## 2.37.2 (02-01-2026)
+## 2.37.0-2 (02-01-2026)
 - Improve Docker socket detection with fallback path logging
 - Stop startup when no Docker socket is available
 
