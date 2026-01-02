@@ -1,3 +1,6 @@
+## 4.53.0-1 (01-01-2026)
+- Enable DOTNET_USE_POLLING_FILE_WATCHER to avoid inotify startup failures.
+
 ## 4.53.0 (04-12-2025)
 - Development branch
 
