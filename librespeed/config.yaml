@@ -98,4 +98,4 @@ schema:
   TZ: str?
 slug: librespeed
 url: https://github.com/alexbelgium/hassio-addons
-version: 5.4.1b
+version: "5.5.0"
