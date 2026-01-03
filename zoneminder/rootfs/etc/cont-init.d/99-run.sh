@@ -1,4 +1,4 @@
-#!/usr/bin/env bashio
+#!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 set -euo pipefail
 # hadolint ignore=SC2155
@@ -11,7 +11,6 @@ CONFIGSOURCE="/config/addons_config/zoneminder"
 mkdir -p "$CONFIGSOURCE"
 
 if [ ! -f "$CONFIGSOURCE/zm.conf" ]; then
-    # Copy conf file on first run
     cp -f /etc/zm/zm.conf "$CONFIGSOURCE/zm.conf"
 fi
 
@@ -30,7 +29,6 @@ case "$(bashio::config "DB_CONNECTION")" in
             bashio::exit.nok "Please ensure it is installed and started"
         fi
 
-        # Use values from MariaDB service
         DB_CONNECTION="mysql"
         remoteDB="1"
         ZM_DB_HOST="$(bashio::services "mysql" "host")"
@@ -61,21 +59,42 @@ case "$(bashio::config "DB_CONNECTION")" in
             --skip-column-names
         )
 
+        db_exists() {
+            local db="$1"
+            local out
+            out="$("${mysql_base[@]}" -e \
+                "SELECT schema_name FROM information_schema.schemata WHERE schema_name='${db}';" \
+                2>/dev/null || true)"
+            [ -n "$out" ]
+        }
+
+        table_count() {
+            local db="$1"
+            # If schema doesn't exist, count should be 0
+            "${mysql_base[@]}" -e \
+                "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='${db}';" \
+                2>/dev/null || echo 0
+        }
+
         is_likely_zoneminder_db() {
             # Returns 0 if DB looks like ZoneMinder, 1 otherwise
             local db="$1"
 
-            # Strict requirement: these two tables are very characteristic for ZM
-            local required_count
-            required_count="$("${mysql_base[@]}" -e \
+            if ! db_exists "$db"; then
+                return 1
+            fi
+
+            # Strong ZoneMinder signature: Config + Monitors (required)
+            local zm_required
+            zm_required="$("${mysql_base[@]}" -e \
                 "SELECT COUNT(*) FROM information_schema.tables
                  WHERE table_schema='${db}'
                    AND LOWER(table_name) IN ('config','monitors');" \
                 2>/dev/null || echo 0)"
 
-            # Firefly III-ish signature tables (heuristic)
-            local firefly_count
-            firefly_count="$("${mysql_base[@]}" -e \
+            # Firefly-ish signature tables (heuristic blacklist)
+            local ff_sig
+            ff_sig="$("${mysql_base[@]}" -e \
                 "SELECT COUNT(*) FROM information_schema.tables
                  WHERE table_schema='${db}'
                    AND LOWER(table_name) IN (
@@ -84,63 +103,77 @@ case "$(bashio::config "DB_CONNECTION")" in
                    );" \
                 2>/dev/null || echo 0)"
 
-            # Must have BOTH required ZM tables and none of the Firefly signature tables
-            [ "${required_count:-0}" -ge 2 ] && [ "${firefly_count:-0}" -eq 0 ]
+            [ "${zm_required:-0}" -ge 2 ] && [ "${ff_sig:-0}" -eq 0 ]
         }
 
-        bashio::log.info "Creating database for ZoneMinder if required"
-        "${mysql_base[@]}" -e "CREATE DATABASE IF NOT EXISTS \`${ZM_DB_NAME}\`;"
+        create_db_if_missing() {
+            local db="$1"
+            "${mysql_base[@]}" -e "CREATE DATABASE IF NOT EXISTS \`${db}\`;" >/dev/null
+        }
 
         # --- Legacy fix: previous buggy addon used DB name 'firefly' ---
         LEGACY_DB_NAME="firefly"
+        need_migration="0"
 
-        legacy_db="$("${mysql_base[@]}" -e "SHOW DATABASES LIKE '${LEGACY_DB_NAME}';" || true)"
-        if [ -n "$legacy_db" ]; then
-            # First: verify legacy DB looks like ZoneMinder, not an actual Firefly DB
-            if ! is_likely_zoneminder_db "$LEGACY_DB_NAME"; then
-                bashio::log.warning "Legacy database '${LEGACY_DB_NAME}' exists but does NOT look like ZoneMinder. Skipping migration to avoid touching a real Firefly database."
-            else
-                # Second: migrate only if target appears empty and legacy has data
-                target_tables="$("${mysql_base[@]}" -e \
-                    "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='${ZM_DB_NAME}';" \
-                    2>/dev/null || echo 0)"
-                legacy_tables="$("${mysql_base[@]}" -e \
-                    "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='${LEGACY_DB_NAME}';" \
-                    2>/dev/null || echo 0)"
+        if db_exists "$LEGACY_DB_NAME"; then
+            if is_likely_zoneminder_db "$LEGACY_DB_NAME"; then
+                legacy_tables="$(table_count "$LEGACY_DB_NAME")"
+                target_tables="0"
+                if db_exists "$ZM_DB_NAME"; then
+                    target_tables="$(table_count "$ZM_DB_NAME")"
+                fi
 
-                if [ "${target_tables:-0}" -eq 0 ] && [ "${legacy_tables:-0}" -gt 0 ]; then
-                    bashio::log.warning "Detected legacy ZoneMinder DB named '${LEGACY_DB_NAME}'. Migrating to '${ZM_DB_NAME}'..."
-
-                    dump_bin=""
-                    if command -v mysqldump >/dev/null 2>&1; then
-                        dump_bin="mysqldump"
-                    elif command -v mariadb-dump >/dev/null 2>&1; then
-                        dump_bin="mariadb-dump"
-                    fi
-
-                    if [ -z "$dump_bin" ]; then
-                        bashio::log.warning "mysqldump/mariadb-dump not available; please migrate manually."
-                    else
-                        if "$dump_bin" \
-                            -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
-                            -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
-                            --routines --events --triggers \
-                            "${LEGACY_DB_NAME}" | \
-                            mysql \
-                                -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
-                                -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
-                                "${ZM_DB_NAME}"; then
-                            bashio::log.info "Legacy database migration completed."
-                            bashio::log.warning "Optional: you may now drop '${LEGACY_DB_NAME}' manually if desired."
-                        else
-                            bashio::log.warning "Legacy database migration failed; please migrate manually."
-                        fi
-                    fi
+                # Only migrate if:
+                # - legacy has data
+                # - target has 0 tables (either missing or empty)
+                if [ "${legacy_tables:-0}" -gt 0 ] && [ "${target_tables:-0}" -eq 0 ]; then
+                    need_migration="1"
                 else
-                    bashio::log.info "Legacy DB '${LEGACY_DB_NAME}' found but migration skipped (target not empty or legacy empty)."
+                    bashio::log.info "Legacy DB '${LEGACY_DB_NAME}' detected but migration skipped (target not empty or legacy empty)."
+                fi
+            else
+                bashio::log.warning "Database '${LEGACY_DB_NAME}' exists but does NOT look like ZoneMinder. Skipping migration to avoid touching a real Firefly database."
+            fi
+        fi
+
+        # IMPORTANT: do NOT pre-create target DB before deciding on migration.
+        # Create target only when needed (migration) and finally ensure it exists for normal start.
+
+        if [ "$need_migration" = "1" ]; then
+            bashio::log.warning "Detected legacy ZoneMinder DB named '${LEGACY_DB_NAME}'. Migrating to '${ZM_DB_NAME}'..."
+
+            create_db_if_missing "$ZM_DB_NAME"
+
+            dump_bin=""
+            if command -v mysqldump >/dev/null 2>&1; then
+                dump_bin="mysqldump"
+            elif command -v mariadb-dump >/dev/null 2>&1; then
+                dump_bin="mariadb-dump"
+            fi
+
+            if [ -z "$dump_bin" ]; then
+                bashio::log.warning "mysqldump/mariadb-dump not available; please migrate manually."
+            else
+                if "$dump_bin" \
+                    -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
+                    -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
+                    --routines --events --triggers \
+                    "${LEGACY_DB_NAME}" | \
+                    mysql \
+                        -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
+                        -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
+                        "${ZM_DB_NAME}"; then
+                    bashio::log.info "Legacy database migration completed."
+                    bashio::log.warning "Optional: you may now drop '${LEGACY_DB_NAME}' manually if desired."
+                else
+                    bashio::log.warning "Legacy database migration failed; please migrate manually."
                 fi
             fi
         fi
+
+        # Ensure target DB exists for ZoneMinder startup (after migration decision)
+        bashio::log.info "Ensuring ZoneMinder database '${ZM_DB_NAME}' exists"
+        create_db_if_missing "$ZM_DB_NAME"
         ;;
 
     external)
@@ -178,4 +211,4 @@ esac
 ##############
 
 bashio::log.info "Please wait while the app is loading !"
-/./usr/local/bin/entrypoint.sh
+exec /usr/local/bin/entrypoint.sh
