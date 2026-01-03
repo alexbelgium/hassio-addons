@@ -100,5 +100,5 @@ schema:
 slug: piwigo
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "16.1.0"
+version: "16.2.0"
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
