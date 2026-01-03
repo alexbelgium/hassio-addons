@@ -31,7 +31,9 @@ RUN set -eux; \
     curl -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain stable; \
     rustup target add wasm32-unknown-unknown; \
     \
-    npm install -g yarn@1.22.22 wasm-pack@0.13.1
+    corepack enable; \
+    corepack prepare yarn@1.22.22 --activate; \
+    npm install -g wasm-pack@0.13.1
 
 # Pull the web source
 WORKDIR /src
