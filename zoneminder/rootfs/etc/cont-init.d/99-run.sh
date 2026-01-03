@@ -35,7 +35,7 @@ case "$(bashio::config "DB_CONNECTION")" in
         DB_CONNECTION=mysql
         ZM_DB_HOST=$(bashio::services "mysql" "host")
         ZM_DB_PORT=$(bashio::services "mysql" "port")
-        ZM_DB_NAME=firefly
+        ZM_DB_NAME=zm
         ZM_DB_USER=$(bashio::services "mysql" "username")
         ZM_DB_PASS=$(bashio::services "mysql" "password")
         export DB_CONNECTION
@@ -46,15 +46,51 @@ case "$(bashio::config "DB_CONNECTION")" in
         export ZM_DB_USER && bashio::log.blue "ZM_DB_USER=$ZM_DB_USER"
         export ZM_DB_PASS && bashio::log.blue "ZM_DB_PASS=$ZM_DB_PASS"
 
-        bashio::log.warning "Firefly-iii is using the Maria DB addon"
+        bashio::log.warning "Zoneminder is using the MariaDB addon"
         bashio::log.warning "Please ensure this is included in your backups"
         bashio::log.warning "Uninstalling the MariaDB addon will remove any data"
 
-        bashio::log.info "Creating database for Firefly-iii if required"
+        bashio::log.info "Creating database for Zoneminder if required"
         mysql \
             -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
             -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
-            -e "CREATE DATABASE IF NOT EXISTS \`firefly\` ;"
+            -e "CREATE DATABASE IF NOT EXISTS \`${ZM_DB_NAME}\` ;"
+
+        legacy_db=$(mysql \
+            -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
+            -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
+            --batch --skip-column-names \
+            -e "SHOW DATABASES LIKE 'firefly';" || true)
+        if [ -n "$legacy_db" ]; then
+            target_db=$(mysql \
+                -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
+                -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
+                --batch --skip-column-names \
+                -e "SHOW DATABASES LIKE '${ZM_DB_NAME}';" || true)
+            if [ -z "$target_db" ]; then
+                bashio::log.warning "Detected legacy database 'firefly'. Attempting migration to '${ZM_DB_NAME}'."
+                mysql \
+                    -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
+                    -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
+                    -e "CREATE DATABASE IF NOT EXISTS \`${ZM_DB_NAME}\` ;"
+                if command -v mysqldump >/dev/null 2>&1; then
+                    if mysqldump \
+                        -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
+                        -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
+                        --routines --events --triggers \
+                        firefly | mysql \
+                            -u "${ZM_DB_USER}" -p"${ZM_DB_PASS}" \
+                            -h "${ZM_DB_HOST}" -P "${ZM_DB_PORT}" \
+                            "${ZM_DB_NAME}"; then
+                        bashio::log.info "Legacy database migration completed."
+                    else
+                        bashio::log.warning "Legacy database migration failed; please migrate manually."
+                    fi
+                else
+                    bashio::log.warning "mysqldump not available; please migrate manually."
+                fi
+            fi
+        fi
         ;;
 
         # Use remote
