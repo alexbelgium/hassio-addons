@@ -1,116 +1,136 @@
 #============================#
-#  ALEXBELGIUM'S DOCKERFILE  #
+# ALEXBELGIUM'S DOCKERFILE  #
 #============================#
-#=== Home Assistant Add‑on – ENTE (server + web UI) ===#
+# Home Assistant Add-on – ENTE (server + web UI)
 
 ########################################################
-# 0 Build the ente‑web static front‑end (multi‑stage) #
+# 0) Build the ente-web static front-end (multi-stage) #
 ########################################################
-FROM node:22-alpine AS web-builder
+FROM node:22-bookworm-slim AS web-builder
 
-# ---- build‑time selector; set `--build-arg ENTE_WEB_TAG=v3.6.0` if you
-#      want a specific release instead of main
-ARG ENTE_WEB_TAG=main          
+# Build-time selector; set `--build-arg ENTE_WEB_TAG=vX.Y.Z` if you want a specific release
+ARG ENTE_WEB_TAG=main
 
-# ---- tools we need to build (git, yarn)
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
-    PATH=/usr/local/cargo/bin:$PATH
+    PATH=/usr/local/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN apk add --no-cache \
-      git curl ca-certificates build-base \
- && curl -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain stable \
- && rustup target add wasm32-unknown-unknown \
- && npm install -g wasm-pack@0.13.1
+# Tools needed to build (git, rust, wasm-pack, yarn classic)
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+      git \
+      curl \
+      ca-certificates \
+      build-essential \
+      pkg-config \
+      python3 \
+    ; \
+    rm -rf /var/lib/apt/lists/*; \
+    \
+    curl -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain stable; \
+    rustup target add wasm32-unknown-unknown; \
+    \
+    npm install -g yarn@1.22.22 wasm-pack@0.13.1
 
-# ---- pull the web source
+# Pull the web source
 WORKDIR /src
 RUN git clone --depth 1 --branch "${ENTE_WEB_TAG}" https://github.com/ente-io/ente.git .
 
-# ---- build web workspace (lives in ./web)
+# Build web workspace (lives in ./web)
 WORKDIR /src/web
 ENV NEXT_PUBLIC_ENTE_ENDPOINT=ENTE_API_ORIGIN_PLACEHOLDER \
     NEXT_PUBLIC_ENTE_ALBUMS_ENDPOINT=ENTE_ALBUMS_ORIGIN_PLACEHOLDER
-RUN yarn config set network-timeout 900000 -g \
- && yarn install --frozen-lockfile \
- && yarn build:photos \
- && yarn build:accounts \
- && yarn build:auth \
- && yarn build:cast
+
+RUN set -eux; \
+    yarn config set network-timeout 900000 -g; \
+    yarn install --frozen-lockfile; \
+    yarn build:photos; \
+    yarn build:accounts; \
+    yarn build:auth; \
+    yarn build:cast
 
 #################
-# 1 Base image #
+# 1) Base image #
 #################
 FROM ghcr.io/ente-io/server:latest
 
 ##################
-# 2 Tune image #
+# 2) Tune image  #
 ##################
-ENV  S6_CMD_WAIT_FOR_SERVICES=1 \
-     S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
-     S6_SERVICES_GRACETIME=0
+ENV S6_CMD_WAIT_FOR_SERVICES=1 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_SERVICES_GRACETIME=0
+
 USER root
 
 # --- LSIO helper ---
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" /ha_lsio.sh
 ARG CONFIGLOCATION="/config"
-RUN chmod 744 /ha_lsio.sh && \
-    if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && \
+RUN set -eux; \
+    chmod 744 /ha_lsio.sh; \
+    if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi; \
     rm /ha_lsio.sh
 
-# --- MinIO, psql client etc. ---
+# --- MinIO, psql client etc.
 RUN set -eux; \
-    BUILD_ARCH=$(uname -m) \
-    && echo "${BUILD_ARCH}" \
-    && BUILD_ARCH=${BUILD_ARCH:-x86} \
-    && if [[ "${BUILD_ARCH}" == *aarch64* ]]; then ARCH="arm64"; fi \
-    && if [[ "${BUILD_ARCH}" == *armv8* ]]; then ARCH="arm64"; fi \
-    && if [[ "${BUILD_ARCH}" == *arm64* ]]; then ARCH="arm64"; fi \
-    && if [[ "${BUILD_ARCH}" == *x86* ]]; then ARCH="amd64"; fi \
-    && apk add --no-cache \
-        bash curl ca-certificates wget jq tini postgresql15-client; \
-    curl -fsSL https://dl.min.io/server/minio/release/linux-"$ARCH"/minio -o /usr/local/bin/minio; \
-    curl -fsSL https://dl.min.io/client/mc/release/linux-"$ARCH"/mc -o /usr/local/bin/mc; \
+    BUILD_ARCH="$(uname -m)"; \
+    echo "${BUILD_ARCH}"; \
+    ARCH="amd64"; \
+    if echo "${BUILD_ARCH}" | grep -Eq 'aarch64|armv8|arm64'; then ARCH="arm64"; fi; \
+    apk add --no-cache bash curl ca-certificates wget jq tini postgresql15-client; \
+    curl -fsSL "https://dl.min.io/server/minio/release/linux-${ARCH}/minio" -o /usr/local/bin/minio; \
+    curl -fsSL "https://dl.min.io/client/mc/release/linux-${ARCH}/mc" -o /usr/local/bin/mc; \
     chmod +x /usr/local/bin/minio /usr/local/bin/mc
-RUN apk add --no-cache \
-        lsb-release curl gnupg wget tini jq sudo \
-        postgresql postgresql-client
 
-# ---------- ente‑web bundle ----------
+RUN apk add --no-cache \
+    lsb-release curl gnupg wget tini jq sudo \
+    postgresql postgresql-client
+
+# ---------- ente-web bundle ----------
 RUN apk add --no-cache nginx
 
-# static files built in the previous stage
+# Static files built in the previous stage
 COPY --from=web-builder /src/web/apps/photos/out    /www/photos
 COPY --from=web-builder /src/web/apps/accounts/out  /www/accounts
 COPY --from=web-builder /src/web/apps/auth/out      /www/auth
 COPY --from=web-builder /src/web/apps/cast/out      /www/cast
 
-##################
-# 3 Install add‑on helpers #
-##################
+############################
+# 3) Install add-on helpers #
+############################
 COPY rootfs/ /
+
 ARG MODULES="00-banner.sh 01-custom_script.sh 00-global_var.sh 00-local_mounts.sh 00-smb_mounts.sh"
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_automodules.sh" /ha_automodules.sh
-RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
+RUN set -eux; \
+    chmod 744 /ha_automodules.sh; \
+    /ha_automodules.sh "$MODULES"; \
+    rm /ha_automodules.sh
 
 ENV PACKAGES="sudo jq yamllint nginx"
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" /ha_autoapps.sh
-RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
+RUN set -eux; \
+    chmod 744 /ha_autoapps.sh; \
+    /ha_autoapps.sh "$PACKAGES"; \
+    rm /ha_autoapps.sh
 
-
-################
-# 4 Entrypoint #
-################
-ENV  S6_STAGE2_HOOK=/ha_entrypoint.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh"       /ha_entrypoint.sh
+###############
+# 4) Entrypoint
+###############
+ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" /ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint_modif.sh" /ha_entrypoint_modif.sh
-RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && \
-    /ha_entrypoint_modif.sh && rm /ha_entrypoint_modif.sh
+RUN set -eux; \
+    chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh; \
+    /ha_entrypoint_modif.sh; \
+    rm /ha_entrypoint_modif.sh
+
 ENTRYPOINT ["/usr/bin/env"]
-CMD        ["/ha_entrypoint.sh"]
+CMD ["/ha_entrypoint.sh"]
 
 ############
-# 5 Labels #
+# 5) Labels
 ############
 ARG BUILD_VERSION BUILD_ARCH BUILD_DATE BUILD_NAME BUILD_DESCRIPTION BUILD_REF BUILD_REPOSITORY
 LABEL \
@@ -130,6 +150,6 @@ LABEL \
   org.opencontainers.image.version=${BUILD_VERSION}
 
 #################
-# 6 Finish line #
+# 6) Finish line
 #################
 EXPOSE 3000 3001 3002 3003 3004
