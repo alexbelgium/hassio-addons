@@ -19,11 +19,12 @@ if [ ! -d "$CONFIGSOURCE" ]; then mkdir "$CONFIGSOURCE"; fi
 if [ ! -d "$CONFIGSOURCE"/events ]; then mkdir "$CONFIGSOURCE"/events; fi
 if [ ! -d "$CONFIGSOURCE"/sounds ]; then mkdir "$CONFIGSOURCE"/sounds; fi
 if [ ! -d "$IMAGESOURCE" ]; then mkdir "$IMAGESOURCE"; fi
+if [ ! -d "$CONFIGSOURCE"/mysql ]; then mkdir "$CONFIGSOURCE"/mysql; fi
 
 # Make sure permissions are right
 echo "... checking permissions"
-chown -R "$(id -u):$(id -g)" "$CONFIGSOURCE"
-chown -R "$(id -u):$(id -g)" "$IMAGESOURCE"
+chown -R "$(id -u):$(id -g)" "$CONFIGSOURCE"/events "$CONFIGSOURCE"/sounds "$IMAGESOURCE"
+chown -R mysql:mysql "$CONFIGSOURCE"/mysql
 
 # Make symlinks
 echo "... making symlinks"

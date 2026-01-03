@@ -1,4 +1,8 @@
 
+## 1.36.37-2 (03-01-2026)
+- Fix MariaDB addon defaults and migrate legacy database name when detected
+- Ensure MySQL data directory is created with correct ownership
+
 ## 1.36.37 (23-12-2025)
 - Update to latest version from zoneminder-containers/zoneminder-base (changelog : https://github.com/zoneminder-containers/zoneminder-base/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
