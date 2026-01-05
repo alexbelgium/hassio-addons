@@ -1,5 +1,5 @@
 
-## 2.1.38 (05-01-2026)
+## 2.1.37-2 (05-01-2026)
 - Align configuration mapping with addon_config and homeassistant_config
 - Migrate legacy /homeassistant/addons_config/joal data to the addon config folder
 
