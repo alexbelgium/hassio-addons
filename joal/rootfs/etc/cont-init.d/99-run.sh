@@ -33,15 +33,25 @@ bashio::log.info "Joal updated"
 # SYMLINK CONFIG #
 ##################
 
+slug=joal
+
+# Migrate legacy config location
+if [ -d "/homeassistant/addons_config/$slug" ] \
+    && [ ! -f "/homeassistant/addons_config/$slug/migrated" ] \
+    && [ -n "$(find "/homeassistant/addons_config/$slug" -mindepth 1 -maxdepth 1 -print -quit)" ]; then
+    bashio::log.info "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
+    cp -rnf /homeassistant/addons_config/"$slug"/* /config/ || true
+    mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
+fi
+
 # If config doesn't exist, create it
-if [ ! -f /config/addons_config/joal/config.json ]; then
+if [ ! -f /config/config.json ]; then
     bashio::log.info "Symlinking config files"
-    mkdir -p /config/addons_config/joal
-    cp /data/joal/config.json /config/addons_config/joal/config.json
+    cp /data/joal/config.json /config/config.json
 fi
 
 # Refresh symlink
-ln -sf /config/addons_config/joal/config.json /data/joal/config.json
+ln -sf /config/config.json /data/joal/config.json
 
 ###############
 # SET VARIABLES #
