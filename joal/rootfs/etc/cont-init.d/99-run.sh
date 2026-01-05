@@ -33,15 +33,25 @@ bashio::log.info "Joal updated"
 # SYMLINK CONFIG #
 ##################
 
+slug=joal
+
+# Migrate legacy config location
+if [ -d "/homeassistant/addons_config/$slug" ] \
+    && [ ! -f "/homeassistant/addons_config/$slug/migrated" ] \
+    && [ -n "$(find "/homeassistant/addons_config/$slug" -mindepth 1 -maxdepth 1 -print -quit)" ]; then
+    bashio::log.info "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
+    cp -rnf /homeassistant/addons_config/"$slug"/* /config/ || true
+    mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
+fi
+
 # If config doesn't exist, create it
-if [ ! -f /config/addons_config/joal/config.json ]; then
+if [ ! -f /config/config.json ]; then
     bashio::log.info "Symlinking config files"
-    mkdir -p /config/addons_config/joal
-    cp /data/joal/config.json /config/addons_config/joal/config.json
+    cp /data/joal/config.json /config/config.json
 fi
 
 # Refresh symlink
-ln -sf /config/addons_config/joal/config.json /data/joal/config.json
+ln -sf /config/config.json /data/joal/config.json
 
 ###############
 # SET VARIABLES #
@@ -63,6 +73,12 @@ UIPATH=$(bashio::config 'ui_path')
 #port=$(bashio::addon.port 80)
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
+ui_credentials_json=$(jq -n --arg host "${host_ip}:${host_port}${ingress_url}/" \
+    --arg port "${host_port}" \
+    --arg pathPrefix "${UIPATH}" \
+    --arg secretToken "${TOKEN}" \
+    '{host:$host,port:$port,pathPrefix:$pathPrefix,secretToken:$secretToken}')
+ui_credentials_encoded=$(printf '%s' "$ui_credentials_json" | jq -sRr @uri)
 
 #################
 # NGINX SETTING #
@@ -80,6 +96,7 @@ ingress_interface=$(bashio::addon.ip_address)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%path%%/${UIPATH}/g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%ui_credentials%%|${ui_credentials_encoded}|g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 ###############

@@ -1,4 +1,8 @@
 
+## 2.1.38 (05-01-2026)
+- Align configuration mapping with addon_config and homeassistant_config
+- Migrate legacy /homeassistant/addons_config/joal data to the addon config folder
+
 ## 2.1.37 (23-12-2025)
 - Update to latest version from anthonyraymond/joal (changelog : https://github.com/anthonyraymond/joal/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
