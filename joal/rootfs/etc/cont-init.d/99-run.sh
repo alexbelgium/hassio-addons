@@ -34,14 +34,14 @@ bashio::log.info "Joal updated"
 ##################
 
 # If config doesn't exist, create it
-if [ ! -f /config/addons_config/joal/config.yaml ]; then
+if [ ! -f /config/addons_config/joal/config.json ]; then
     bashio::log.info "Symlinking config files"
     mkdir -p /config/addons_config/joal
-    cp /data/joal/config.yaml /config/addons_config/joal/config.yaml
+    cp /data/joal/config.json /config/addons_config/joal/config.json
 fi
 
 # Refresh symlink
-ln -sf /config/addons_config/joal/config.yaml /data/joal/config.yaml
+ln -sf /config/addons_config/joal/config.json /data/joal/config.json
 
 ###############
 # SET VARIABLES #
