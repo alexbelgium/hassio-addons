@@ -73,12 +73,6 @@ UIPATH=$(bashio::config 'ui_path')
 #port=$(bashio::addon.port 80)
 ingress_port=$(bashio::addon.ingress_port)
 ingress_interface=$(bashio::addon.ip_address)
-ui_credentials_json=$(jq -n --arg host "${host_ip}:${host_port}${ingress_url}/" \
-    --arg port "${host_port}" \
-    --arg pathPrefix "${UIPATH}" \
-    --arg secretToken "${TOKEN}" \
-    '{host:$host,port:$port,pathPrefix:$pathPrefix,secretToken:$secretToken}')
-ui_credentials_encoded=$(printf '%s' "$ui_credentials_json" | jq -sRr @uri)
 
 #################
 # NGINX SETTING #
@@ -96,7 +90,6 @@ ui_credentials_encoded=$(printf '%s' "$ui_credentials_json" | jq -sRr @uri)
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%path%%/${UIPATH}/g" /etc/nginx/servers/ingress.conf
-sed -i "s|%%ui_credentials%%|${ui_credentials_encoded}|g" /etc/nginx/servers/ingress.conf
 mkdir -p /var/log/nginx && touch /var/log/nginx/error.log
 
 ###############
@@ -126,7 +119,7 @@ bashio::log.info "... Path prefix : ${UIPATH}"
 bashio::log.info "... Secret token : $TOKEN"
 bashio::log.info "Everything loaded."
 
-nginx &
+exec nginx &
 
 ###########
 # TIMEOUT #
