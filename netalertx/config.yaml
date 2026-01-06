@@ -11,6 +11,8 @@ environment:
   NETALERTX_CONFIG: /config/config
   NETALERTX_DB: /config/db
   TMP_DIR: /tmp/tmp
+  NETALERTX_CONFIG_FILE: /config/config/app.conf
+  NETALERTX_DB_FILE: /config/db/app.db
 hassio_api: true
 host_network: true
 image: ghcr.io/alexbelgium/netalertx-{arch}
@@ -50,4 +52,4 @@ slug: netalertx
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 25.11.29
+version: 25.11.29-2
