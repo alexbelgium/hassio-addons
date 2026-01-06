@@ -1,3 +1,5 @@
+## 2.1.37-3 (06-01-2026)
+- Minor bugs fixed
 
 ## 2.1.37-2 (05-01-2026)
 - Align configuration mapping with addon_config and homeassistant_config
