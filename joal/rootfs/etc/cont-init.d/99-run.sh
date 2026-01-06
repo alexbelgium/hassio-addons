@@ -126,7 +126,7 @@ bashio::log.info "... Path prefix : ${UIPATH}"
 bashio::log.info "... Secret token : $TOKEN"
 bashio::log.info "Everything loaded."
 
-exec nginx &
+nginx &
 
 ###########
 # TIMEOUT #
