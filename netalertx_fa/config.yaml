@@ -38,7 +38,6 @@ ports_description:
   20212/tcp: GraphQL port
 privileged:
   - NET_ADMIN
-  - NET_BIND_SERVICE
   - NET_RAW
 schema:
   env_vars:
