@@ -37,7 +37,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
 - Start the addon. Wait a while and check the log for any errors. Initial start can take up to 15 minutes !
-- Open yourdomain.com:8000 (where ":8000" is the port configured in the addon).
+- Open yourdomain.com:9927 (default host mapping for the add-on port `80/tcp`, as indicated by the `webui` hint).
 - Default
   - Username: `admin`
   - Password: `adminadmin`
@@ -73,5 +73,4 @@ comparison to installing any other Hass.io add-on.
 If you have in issue with your installation, please be sure to checkout github.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
 
