@@ -37,9 +37,8 @@ ports_description:
   20211/tcp: WebUI port
   20212/tcp: GraphQL port
 privileged:
-  - SYS_ADMIN
-  - DAC_READ_SEARCH
   - NET_ADMIN
+  - NET_BIND_SERVICE
   - NET_RAW
 schema:
   env_vars:
