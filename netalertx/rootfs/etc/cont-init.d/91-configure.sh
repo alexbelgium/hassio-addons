@@ -10,11 +10,9 @@ APP_UID=20211
 
 # 1. Fix the directories
 for folder in /tmp/run/tmp /tmp/api /tmp/log /tmp/run /tmp/nginx/active-config "$TMP_DIR" "$NETALERTX_DATA" "$NETALERTX_DB" "$NETALERTX_CONFIG"; do
-    if [ -n "$folder" ]; then
-        mkdir -p "$folder"
-        chown -R $APP_UID:$APP_UID "$folder"
-        chmod 755 "$folder"
-    fi
+    mkdir -p "$folder"
+    chown -R $APP_UID:$APP_UID "$folder"
+    chmod -R 755 "$folder"
 done
 
 # 2. Fix /tmp and Standard Streams (CRITICAL)
