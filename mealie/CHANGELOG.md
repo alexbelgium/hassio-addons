@@ -1,3 +1,5 @@
+## v3.9.2-3 (07-01-2026)
+- Minor bugs fixed
 ## v3.9.2-2 (07-01-2026)
 - Minor bugs fixed
 
