@@ -18,7 +18,7 @@ slug=radarr
 
 if [ -d "/homeassistant/addons_config/$slug" ]; then
     echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
-    cp -rnf /homeassistant/addons_config/"$slug"/* /config/ || true
+    cp -rnf /homeassistant/addons_config/"$slug"/. /config/ || true
     mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi
 
