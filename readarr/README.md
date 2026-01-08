@@ -104,7 +104,7 @@ This addon supports custom scripts and environment variables:
 - **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
 - **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-You can add environment variables by creating `/config/addons_config/readarr_nas.yml`:
+You can add environment variables by creating `/addon_configs/xxx-readarr_nas/readarr_nas.yml`:
 
 ```yaml
 TZ: Europe/Paris
@@ -121,5 +121,4 @@ Create an issue on github
 ![illustration](https://readarr.com/img/slider/artistdetails.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
 

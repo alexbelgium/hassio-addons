@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
 
 if [ ! -d /share/storage/movies ]; then
     echo "Creating /share/storage/movies"
@@ -12,16 +14,10 @@ if [ ! -d /share/downloads ]; then
     chown -R "$PUID:$PGID" /share/downloads
 fi
 
-if [ -d /config/radarr ] && [ ! -d /config/addons_config/radarr ]; then
-    echo "Moving to new location /config/addons_config/radarr"
-    mkdir -p /config/addons_config/radarr
-    chown -R "$PUID:$PGID" /config/addons_config/radarr
-    mv /config/radarr/* /config/addons_config/radarr/
-    rm -r /config/radarr
-fi
+slug=radarr
 
-if [ ! -d /config/addons_config/radarr ]; then
-    echo "Creating /config/addons_config/radarr"
-    mkdir -p /config/addons_config/radarr
-    chown -R "$PUID:$PGID" /config/addons_config/radarr
+if [ -d "/homeassistant/addons_config/$slug" ]; then
+    echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
+    cp -rnf /homeassistant/addons_config/"$slug"/* /config/ || true
+    mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi

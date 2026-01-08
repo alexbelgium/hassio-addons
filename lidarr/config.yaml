@@ -71,7 +71,8 @@ environment:
 image: ghcr.io/alexbelgium/lidarr_nas-{arch}
 init: false
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
   - share:rw
   - media:rw
 name: Lidarr NAS
@@ -101,5 +102,5 @@ schema:
 slug: lidarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/blob/master/lidarr/README.md
-version: "3.1.0.4875"
+version: "3.1.0.4875-1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8686]"

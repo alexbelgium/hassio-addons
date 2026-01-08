@@ -72,13 +72,14 @@ ingress: true
 ingress_entry: readarr
 init: false
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
   - share:rw
   - media:rw
 name: Readarr
 options:
   env_vars: []
-  CONFIG_LOCATION: /config/addons_config/readarr
+  CONFIG_LOCATION: /config
   PGID: 0
   PUID: 0
   connection_mode: ingress_noauth
@@ -108,4 +109,4 @@ schema:
 slug: readarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/readarr
-version: 0.4.18
+version: "0.4.18-1"

@@ -1,15 +1,11 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
 
-if [ -d /config/prowlarr ] && [ ! -d /config/addons_config/prowlarr ]; then
-    echo "Moving to new location /config/addons_config/prowlarr"
-    mkdir -p /config/addons_config/prowlarr
-    chown -R "$PUID:$PGID" /config/addons_config/prowlarr
-    mv /config/prowlarr/* /config/addons_config/prowlarr/
-    rm -r /config/prowlarr
-fi
+slug=prowlarr
 
-if [ ! -d /config/addons_config/prowlarr ]; then
-    echo "Creating /config/addons_config/prowlarr"
-    mkdir -p /config/addons_config/prowlarr
-    chown -R "$PUID:$PGID" /config/addons_config/prowlarr
+if [ -d "/homeassistant/addons_config/$slug" ]; then
+    echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
+    cp -rnf /homeassistant/addons_config/"$slug"/* /config/ || true
+    mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi

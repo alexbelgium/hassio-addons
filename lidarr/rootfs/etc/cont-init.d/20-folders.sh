@@ -14,16 +14,10 @@ if [ ! -d /share/downloads ]; then
     chown -R "$PUID:$PGID" /share/downloads
 fi
 
-if [ -d /config/lidarr ] && [ ! -d /config/addons_config/lidarr ]; then
-    echo "Moving to new location /config/addons_config/lidarr"
-    mkdir -p /config/addons_config/lidarr
-    chmod 755 /config/addons_config/lidarr
-    mv /config/lidarr/* /config/addons_config/lidarr/
-    rm -r /config/lidarr
-fi
+slug=lidarr
 
-if [ ! -d /config/addons_config/lidarr ]; then
-    echo "Creating /config/addons_config/lidarr"
-    mkdir -p /config/addons_config/lidarr
-    chmod 755 /config/addons_config/lidarr
+if [ -d "/homeassistant/addons_config/$slug" ]; then
+    echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
+    cp -rnf /homeassistant/addons_config/"$slug"/* /config/ || true
+    mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi
