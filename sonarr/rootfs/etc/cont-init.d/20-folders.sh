@@ -18,7 +18,7 @@ slug=sonarr
 
 if [ -d "/homeassistant/addons_config/$slug" ]; then
     echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
-    tar -C /homeassistant/addons_config/"$slug" --exclude=addons_config -cf - . | tar -C /config -xf - || true
+    cp -rnf /homeassistant/addons_config/"$slug"/* /config/ || true
     mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi
 
