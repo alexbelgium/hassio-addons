@@ -79,7 +79,6 @@ map:
 name: Readarr
 options:
   env_vars: []
-  CONFIG_LOCATION: /config
   PGID: 0
   PUID: 0
   connection_mode: ingress_noauth
@@ -96,7 +95,6 @@ schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
-  CONFIG_LOCATION: str
   PGID: int
   PUID: int
   TZ: str?
@@ -109,4 +107,4 @@ schema:
 slug: readarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/readarr
-version: "0.4.18-1"
+version: "0.4.18-2"

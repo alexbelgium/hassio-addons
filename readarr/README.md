@@ -61,7 +61,6 @@ Configurations can be done through the app webUI, except for the following optio
 | `PGID` | int | `0` | Group ID for file permissions |
 | `PUID` | int | `0` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
-| `CONFIG_LOCATION` | str | `/config` | Path where Readarr config is stored |
 | `connection_mode` | list | `ingress_noauth` | Connection mode (ingress_noauth/noingress_auth/ingress_auth) |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
@@ -81,7 +80,6 @@ Configurations can be done through the app webUI, except for the following optio
 PGID: 0
 PUID: 0
 TZ: "Europe/London"
-CONFIG_LOCATION: "/config"
 connection_mode: "ingress_noauth"
 localdisks: "sda1,sdb1"
 networkdisks: "//192.168.1.100/books,//nas.local/ebooks"
@@ -121,4 +119,3 @@ Create an issue on github
 ![illustration](https://readarr.com/img/slider/artistdetails.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
