@@ -1,5 +1,6 @@
 {
   "last_update": "27-07-2024",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "BattyBirdNET-pi",
   "source": "github",
