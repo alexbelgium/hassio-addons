@@ -18,6 +18,10 @@ slug=lidarr
 
 if [ -d "/homeassistant/addons_config/$slug" ]; then
     echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
-    cp -rnf /homeassistant/addons_config/"$slug"/* /config/ || true
+    tar -C /homeassistant/addons_config/"$slug" --exclude=addons_config -cf - . | tar -C /config -xf - || true
     mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
+fi
+
+if [ -d /config/addons_config ]; then
+    rm -rf /config/addons_config
 fi
