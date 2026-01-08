@@ -72,7 +72,8 @@ ingress: true
 ingress_entry: radarr
 init: false
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
   - share:rw
   - media:rw
   - ssl
@@ -107,4 +108,4 @@ schema:
 slug: radarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/radarr
-version: "6.0.4.10291"
+version: "6.0.4.10291-1"

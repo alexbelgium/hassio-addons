@@ -6,7 +6,7 @@ set -e
 # Set variables
 slug=radarr
 port=7878
-CONFIG_LOCATION=/config/addons_config/"$slug"/config.xml
+CONFIG_LOCATION=/config/config.xml
 
 # Wait for transmission to become available
 bashio::net.wait_for "$port" localhost 900

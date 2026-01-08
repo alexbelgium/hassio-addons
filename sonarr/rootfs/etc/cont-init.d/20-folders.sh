@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
 
 if [ ! -d /share/storage/tv ]; then
     echo "Creating /share/storage/tv"
@@ -12,16 +14,14 @@ if [ ! -d /share/downloads ]; then
     chown -R "$PUID:$PGID" /share/downloads
 fi
 
-if [ -d /config/sonarr ] && [ ! -d /config/addons_config/sonarr ]; then
-    echo "Moving to new location /config/addons_config/sonarr"
-    mkdir -p /config/addons_config/sonarr
-    chown -R "$PUID:$PGID" /config/addons_config/sonarr
-    mv /config/sonarr/* /config/addons_config/sonarr/
-    rm -r /config/sonarr
+slug=sonarr
+
+if [ -d "/homeassistant/addons_config/$slug" ]; then
+    echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
+    cp -rnf /homeassistant/addons_config/"$slug"/. /config/ || true
+    mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi
 
-if [ ! -d /config/addons_config/sonarr ]; then
-    echo "Creating /config/addons_config/sonarr"
-    mkdir -p /config/addons_config/sonarr
-    chown -R "$PUID:$PGID" /config/addons_config/sonarr
+if [ -d /config/addons_config ]; then
+    rm -rf /config/addons_config
 fi

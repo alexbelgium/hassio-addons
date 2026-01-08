@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -e
 
 if [ ! -d /share/storage/movies ]; then
     echo "Creating /share/storage/movies"
@@ -18,16 +20,14 @@ if [ ! -d /share/downloads ]; then
     chown -R "$PUID:$PGID" /share/downloads
 fi
 
-if [ -d /config/bazarr ] && [ ! -d /config/addons_config/bazarr ]; then
-    echo "Moving to new location /config/addons_config/bazarr"
-    mkdir -p /config/addons_config/bazarr
-    chown -R "$PUID:$PGID" /config/addons_config/bazarr
-    mv /config/bazarr/* /config/addons_config/bazarr/
-    rm -r /config/bazarr
+slug=bazarr
+
+if [ -d "/homeassistant/addons_config/$slug" ]; then
+    echo "Migrating /homeassistant/addons_config/$slug to /addon_configs/xxx-$slug"
+    cp -rnf /homeassistant/addons_config/"$slug"/. /config/ || true
+    mv /homeassistant/addons_config/"$slug" /homeassistant/addons_config/"$slug"_migrated
 fi
 
-if [ ! -d /config/addons_config/bazarr ]; then
-    echo "Creating /config/addons_config/bazarr"
-    mkdir -p /config/addons_config/bazarr
-    chown -R "$PUID:$PGID" /config/addons_config/bazarr
+if [ -d /config/addons_config ]; then
+    rm -rf /config/addons_config
 fi

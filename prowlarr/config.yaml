@@ -72,7 +72,8 @@ environment:
 image: ghcr.io/alexbelgium/prowlarr-{arch}
 init: false
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
   - share:rw
   - media:rw
   - ssl
@@ -104,5 +105,5 @@ schema:
 slug: prowlarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "develop-2.3.2.5245-ls249"
+version: "develop-2.3.2.5245-ls249-1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:9696]"

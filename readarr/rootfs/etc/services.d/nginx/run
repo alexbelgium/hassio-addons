@@ -6,17 +6,10 @@ set -e
 # Set variables
 slug=readarr
 port=8787
-CONFIG_LOCATION=/config/addons_config/"$slug"/config.xml
+CONFIG_LOCATION=/config/config.xml
 
 # Wait for transmission to become available
 bashio::net.wait_for "$port" localhost 900
-
-if bashio::config.has_value 'CONFIG_LOCATION'; then
-    CONFIG_LOCATION="$(bashio::config 'CONFIG_LOCATION')"
-    # Modify if it is a base directory
-    if [[ "$CONFIG_LOCATION" == *.* ]]; then CONFIG_LOCATION="$(dirname $CONFIG_LOCATION)"; fi
-    CONFIG_LOCATION="$CONFIG_LOCATION"/config.xml
-fi
 
 # Delete external
 if grep -q "external" "$CONFIG_LOCATION"; then

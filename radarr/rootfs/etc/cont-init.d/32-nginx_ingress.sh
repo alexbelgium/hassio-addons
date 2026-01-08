@@ -21,7 +21,7 @@ sed -i "s|%%ingress_entry%%|${ingress_entry}|g" /etc/nginx/servers/ingress.conf
 
 # Values
 slug=radarr
-CONFIG_LOCATION=/config/addons_config/"$slug"/config.xml
+CONFIG_LOCATION=/config/config.xml
 
 if [ -f "$CONFIG_LOCATION" ]; then
 

@@ -74,7 +74,8 @@ ingress: true
 ingress_entry: sonarr
 init: false
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
   - share:rw
   - media:rw
   - ssl
@@ -109,4 +110,4 @@ schema:
 slug: sonarr_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/sonarr
-version: "4.0.16.2946"
+version: "4.0.16.2946-1"
