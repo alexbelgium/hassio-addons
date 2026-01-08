@@ -86,6 +86,12 @@ ingress_interface=$(bashio::addon.ip_address)
 #  bashio::log.info "Ingress url not set. Connection must be done manually."
 #fi
 
+# AUTO AUTHENTIFICATION
+sed -i "s|%%TOKEN%%|$TOKEN|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%UIPATH%%|$UIPATH|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%PORT%%|8123|g" /etc/nginx/servers/ingress.conf
+sed -i "s|%%INGRESS_URL%%|$ingress_url|g" /etc/nginx/servers/ingress.conf
+
 # NGINX
 sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
 sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
