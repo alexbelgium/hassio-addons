@@ -1,9 +1,9 @@
 {
   "github_beta": false,
-  "last_update": "29-11-2025",
+  "last_update": "08-01-2026",
   "repository": "alexbelgium/hassio-addons",
   "slug": "grav",
   "source": "github",
   "upstream_repo": "linuxserver/docker-grav",
-  "upstream_version": "1.8.0"
+  "upstream_version": "1.7.49.5"
 }
