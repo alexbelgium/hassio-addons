@@ -121,11 +121,10 @@ schema:
   cifspassword: str?
   cifsusername: str?
   data_location: str
-  i915_enable_guc: int?
   localdisks: str?
   networkdisks: str?
 slug: jellyfin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "10.11.5"
+version: 10.11.5-2
 video: true
