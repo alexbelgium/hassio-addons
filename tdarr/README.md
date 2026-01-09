@@ -62,7 +62,7 @@ The server port is `8266` for connecting external Tdarr nodes.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `CONFIG_LOCATION` | str | `/config/addons_config/tdarr` | Path where Tdarr config is stored |
+| `CONFIG_LOCATION` | str | `/addon_configs/xxx-tdarr` | Path where Tdarr config is stored |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
@@ -73,7 +73,7 @@ The server port is `8266` for connecting external Tdarr nodes.
 ### Example Configuration
 
 ```yaml
-CONFIG_LOCATION: "/config/addons_config/tdarr"
+CONFIG_LOCATION: "/addon_configs/xxx-tdarr"
 TZ: "Europe/London"
 localdisks: "sda1,sdb1"
 networkdisks: "//192.168.1.100/media,//nas.local/transcoding"
@@ -129,5 +129,4 @@ Configure hardware acceleration in the Tdarr Web UI under Settings > FFmpeg/Hand
 - Ask on the [Home Assistant Community thread](https://community.home-assistant.io/t/home-assistant-addon-tdarr/282108/3)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
 

@@ -80,7 +80,7 @@ Webui can be found at <http://homeassistant:8000> (Seahub) and <http://homeassis
 | `url` | str | | External URL for Seafile |
 | `database` | list | `sqlite` | Database type (sqlite/mariadb_addon) |
 | `data_location` | str | `/share/seafile` | Data storage location |
-| `CONFIG_LOCATION` | str | | Custom config file location |
+| `CONFIG_LOCATION` | str | `/addon_configs/xxx-seafile/config.yaml` | Custom config file location |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1`) |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
@@ -127,5 +127,4 @@ Create an issue on github
 ![illustration](https://seafile.com/img/slider/artistdetails.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
 

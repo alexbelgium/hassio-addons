@@ -67,7 +67,7 @@ Options can be configured through two ways :
 PUID: 1000 #for UserID - see below for explanation
 PGID: 1000 #for GroupID - see below for explanation
 TZ: Europe/London #Specify a timezone to use EG Europe/London.
-KOMETA_CONFIG: /config/addons_config/kometa/config/config.yml #Specify a custom config file to use.
+KOMETA_CONFIG: /addon_configs/xxx-kometa/config.yml #Specify a custom config file to use.
 KOMETA_TIME: 03:00 #Comma-separated list of times to update each day. Format: HH:MM.
 KOMETA_RUN: False #Set to True to run without the scheduler.
 KOMETA_TEST: False #Set to True to run in debug mode with only collections that have test: true.
@@ -89,5 +89,4 @@ Create an issue on github
 ---
 
 ![illustration](https://dausruddin.com/wp-content/uploads/2020/05/plex-meta-manager-v3-1024x515.png)
-
 

@@ -63,7 +63,7 @@ Configurations can be done through the app webUI, except for the following optio
 | `PGID` | int | `0` | Group ID for file permissions |
 | `PUID` | int | `0` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
-| `CONFIG_LOCATION` | str | `/config` | Path where Overseerr config is stored |
+| `CONFIG_LOCATION` | str | `/addon_configs/xxx-overseerr` | Path where Overseerr config is stored |
 
 ### Example Configuration
 
@@ -71,7 +71,7 @@ Configurations can be done through the app webUI, except for the following optio
 PGID: 0
 PUID: 0
 TZ: "Europe/London"
-CONFIG_LOCATION: "/config"
+CONFIG_LOCATION: "/addon_configs/xxx-overseerr"
 ```
 
 ## Support
@@ -85,5 +85,4 @@ Create an issue on github
 ![illustration](https://overseerr.com/img/slider/artistdetails.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
 

@@ -25,7 +25,25 @@ bashio::log.info "Setting PUID=$PUID, PGID=$PGID"
 cd /
 
 # Config location
-CONFIGLOCATION="$(bashio::config 'CONFIG_LOCATION')"
+CONFIGLOCATION="/config"
+legacy_path="/homeassistant/addons_config/tdarr"
+target_path="$CONFIGLOCATION"
+
+mkdir -p "$target_path"
+
+# Use custom location for migration only if configured
+if bashio::config.has_value 'CONFIG_LOCATION' && [ "$(bashio::config 'CONFIG_LOCATION')" != "/config" ]; then
+    legacy_path="$(bashio::config 'CONFIG_LOCATION')"
+fi
+
+# Migrate legacy config
+if [ -d "$legacy_path" ]; then
+    if [ ! -f "$legacy_path/.migrated" ] || [ -z "$(ls -A "$target_path" 2>/dev/null)" ]; then
+        echo "Migrating $legacy_path to $target_path"
+        cp -rnf "$legacy_path"/. "$target_path"/ || true
+        touch "$legacy_path/.migrated"
+    fi
+fi
 
 # Create folder
 mkdir -p "$CONFIGLOCATION"

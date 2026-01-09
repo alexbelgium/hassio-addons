@@ -1,4 +1,7 @@
 
+## 2.58.02-1 (09-01-2026)
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/tdarr to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-tdarr. Please make a backup before updating.
+
 ## 2.58.02 (24-12-2025)
 - Update to latest version from haveagitgat/tdarr
 

@@ -72,13 +72,14 @@ environment:
   PUID: "1000"
 image: ghcr.io/alexbelgium/seafile-{arch}
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
   - share:rw
   - ssl
 name: Seafile
 options:
   env_vars: []
-  CONFIG_LOCATION: /config/addons_config/seafile/config.yaml
+  CONFIG_LOCATION: /config/config.yaml
   FILE_SERVER_ROOT: http://homeassistant.local:8082
   PGID: 1000
   PORT: "8082"
@@ -128,5 +129,5 @@ services:
 slug: seafile
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/seafile
-version: "12.0.17"
+version: "12.0.17-1"
 webui: http://[HOST]:[PORT:8000]

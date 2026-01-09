@@ -1,4 +1,7 @@
 
+## 6.4.15-1 (09-01-2026)
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/fireflyiii to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-fireflyiii. Please make a backup before updating.
+
 ## 6.4.15 (08-01-2026)
 - Update to latest version from firefly-iii/firefly-iii (changelog : https://github.com/firefly-iii/firefly-iii/releases)
 

@@ -3,6 +3,24 @@
 set -e
 # hadolint ignore=SC2155
 
+slug=fireflyiii
+legacy_path="/homeassistant/addons_config/$slug"
+target_path="/config"
+
+mkdir -p "$target_path"
+
+if bashio::config.has_value 'CONFIG_LOCATION' && [ "$(bashio::config 'CONFIG_LOCATION')" != "/config" ]; then
+    legacy_path="$(bashio::config 'CONFIG_LOCATION')"
+fi
+
+if [ -d "$legacy_path" ]; then
+    if [ ! -f "$legacy_path/.migrated" ] || [ -z "$(ls -A "$target_path" 2>/dev/null)" ]; then
+        echo "Migrating $legacy_path to $target_path"
+        cp -rnf "$legacy_path"/. "$target_path"/ || true
+        touch "$legacy_path/.migrated"
+    fi
+fi
+
 ########
 # Init #
 ########
@@ -17,24 +35,24 @@ if [[ ! "$APP_KEY" == *"base64"* ]]; then
 fi
 
 # Backup APP_KEY file
-bashio::log.info "Backuping APP_KEY to /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt"
+bashio::log.info "Backuping APP_KEY to /config/APP_KEY_BACKUP.txt"
 bashio::log.warning "Changing this value will require to reset your database"
 
 # Get current app_key
-mkdir -p /config/addons_config/fireflyiii
-touch /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
-CURRENT=$(sed -e '/^[<blank><tab>]*$/d' /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt | sed -n -e '$p')
+mkdir -p /config
+touch /config/APP_KEY_BACKUP.txt
+CURRENT=$(sed -e '/^[<blank><tab>]*$/d' /config/APP_KEY_BACKUP.txt | sed -n -e '$p')
 
 # Save if new
 if [ "$CURRENT" != "$APP_KEY" ]; then
-    echo "$APP_KEY" >> /config/addons_config/fireflyiii/APP_KEY_BACKUP.txt
+    echo "$APP_KEY" >> /config/APP_KEY_BACKUP.txt
 fi
 
 # Update permissions
-mkdir -p /config/addons_config/fireflyiii
-chown -R www-data:www-data /config/addons_config/fireflyiii
+mkdir -p /config
+chown -R www-data:www-data /config
 chown -R www-data:www-data /var/www/html/storage
-chmod -R 775 /config/addons_config/fireflyiii
+chmod -R 775 /config
 
 ###################
 # Define database #
@@ -49,16 +67,16 @@ case $(bashio::config 'DB_CONNECTION') in
 
         # Set variable
         export DB_CONNECTION=sqlite
-        export DB_DATABASE=/config/addons_config/fireflyiii/database/database.sqlite
+        export DB_DATABASE=/config/database/database.sqlite
 
         # Creating folders
-        mkdir -p /config/addons_config/fireflyiii/database
-        chown -R www-data:www-data /config/addons_config/fireflyiii/database
+        mkdir -p /config/database
+        chown -R www-data:www-data /config/database
 
         # Creating database
-        if [ ! -f /config/addons_config/fireflyiii/database/database.sqlite ]; then
+        if [ ! -f /config/database/database.sqlite ]; then
             # Create database
-            touch /config/addons_config/fireflyiii/database/database.sqlite
+            touch /config/database/database.sqlite
             # Install database
             echo "updating database"
             php artisan migrate:refresh --seed --quiet
@@ -68,11 +86,11 @@ case $(bashio::config 'DB_CONNECTION') in
 
         # Creating symlink
         rm -r /var/www/html/storage/database
-        ln -s /config/addons_config/fireflyiii/database /var/www/html/storage
+        ln -s /config/database /var/www/html/storage
 
         # Updating permissions
-        chmod 775 /config/addons_config/fireflyiii/database/database.sqlite
-        chown -R www-data:www-data /config/addons_config/fireflyiii
+        chmod 775 /config/database/database.sqlite
+        chown -R www-data:www-data /config
         chown -R www-data:www-data /var/www/html/storage
         ;;
 
@@ -132,24 +150,24 @@ esac
 bashio::log.info "Defining upload folder"
 
 # Creating folder
-if [ ! -d /config/addons_config/fireflyiii/upload ]; then
-    mkdir -p /config/addons_config/fireflyiii/upload
-    chown -R www-data:www-data /config/addons_config/fireflyiii/upload
+if [ ! -d /config/upload ]; then
+    mkdir -p /config/upload
+    chown -R www-data:www-data /config/upload
 fi
 
 # Creating symlink
 if [ -d /var/www/html/storage/ha_upload ]; then
     rm -r /var/www/html/storage/ha_upload
 fi
-ln -s /config/addons_config/fireflyiii/upload /var/www/html/storage/ha_upload
+ln -s /config/upload /var/www/html/storage/ha_upload
 
 # Updating permissions
-chown -R www-data:www-data /config/addons_config/fireflyiii
+chown -R www-data:www-data /config
 chown -R www-data:www-data /var/www/html/storage
-chmod -R 775 /config/addons_config/fireflyiii
+chmod -R 775 /config
 
 # Test
-f=/config/addons_config/fireflyiii
+f=/config
 while [[ $f != / ]]; do
     chmod 755 "$f"
     f=$(dirname "$f")

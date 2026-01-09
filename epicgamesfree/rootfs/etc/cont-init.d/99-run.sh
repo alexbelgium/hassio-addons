@@ -6,7 +6,7 @@ set -e
 # Initialize #
 ##############
 
-HOME="/config/addons_config/epicgamesfree"
+HOME="/config"
 CONFIG_JSON="$HOME/config.json"
 LEGACY_YAML="$HOME/config.yaml"
 

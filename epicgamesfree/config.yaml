@@ -67,11 +67,12 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  CONFIG_DIR: /config/addons_config/epicgamesfree
+  CONFIG_DIR: /config
 image: ghcr.io/alexbelgium/epicgamesfree-{arch}
 init: false
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
 name: Epic Games Free
 options:
   env_vars: []
@@ -88,5 +89,5 @@ schema:
 slug: epicgamesfree
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "debian-2025-12-02"
+version: "debian-2025-12-04-2"
 webui: "[PROTO:ssl]://[HOST]:[PORT:3000]"

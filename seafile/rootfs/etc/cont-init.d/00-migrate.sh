@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -e
 
-slug=epicgamesfree
+slug=seafile
 legacy_path="/homeassistant/addons_config/$slug"
 target_path="/config"
 
@@ -19,8 +19,3 @@ if [ -d "$legacy_path" ]; then
         touch "$legacy_path/.migrated"
     fi
 fi
-
-# Define home
-HOME="/config"
-mkdir -p $HOME
-chmod -R 777 $HOME

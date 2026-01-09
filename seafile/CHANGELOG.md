@@ -1,4 +1,7 @@
 
+## 12.0.17-1 (09-01-2026)
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/seafile to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-seafile. Please make a backup before updating.
+
 ## 12.0.17 (12-03-2026)
 - Ensure `SERVICE_URL` and `FILE_SERVER_ROOT` are written to the active Seafile config path.
 

@@ -47,7 +47,7 @@ Configurations can be done through the app webUI, except for the following optio
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `APP_KEY` | str | `CHANGEME_32_CHARS_EuC5dfn3LAPzeO` | **CRITICAL**: 32-character encryption key - change before first run! |
-| `CONFIG_LOCATION` | str | `/config/addons_config/fireflyiii/config.yaml` | Location of additional config file |
+| `CONFIG_LOCATION` | str | `/addon_configs/xxx-fireflyiii/config.yaml` | Location of additional config file |
 | `DB_CONNECTION` | list | `sqlite_internal` | Database type (sqlite_internal/mariadb_addon/mysql/pgsql) |
 | `DB_HOST` | str | | Database host (for external databases) |
 | `DB_PORT` | str | | Database port (for external databases) |
@@ -61,7 +61,7 @@ Configurations can be done through the app webUI, except for the following optio
 
 ```yaml
 APP_KEY: "SomeRandomStringOf32CharsExactly"
-CONFIG_LOCATION: "/config/addons_config/fireflyiii/config.yaml"
+CONFIG_LOCATION: "/addon_configs/xxx-fireflyiii/config.yaml"
 DB_CONNECTION: "mariadb_addon"
 DB_HOST: "core-mariadb"
 DB_PORT: "3306"
@@ -100,5 +100,4 @@ Create an issue on github
 ![illustration](https://raw.githubusercontent.com/firefly-iii/firefly-iii/develop/.github/assets/img/imac-complete.png)
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
 

@@ -47,12 +47,12 @@ Options can be configured through two ways :
 - Addon options
 
 ```yaml
-"CONFIG_LOCATION": location of the config.yaml # Sets the location of the config.yaml (see below)
+"CONFIG_LOCATION": location of the config.yaml # Defaults to /addon_configs/xxx-wger/config.yaml
 ```
 
 - Config.yaml (advanced usage)
 
-Additional variables can be set as ENV variables by adding them in the config.yaml in the location defined in your addon options according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Addons-feature:-add-env-variables
+Additional variables can be set as ENV variables by adding them in the config.yaml stored in `/addon_configs/xxx-wger/config.yaml` according to this guide : https://github.com/alexbelgium/hassio-addons/wiki/Addons-feature:-add-env-variables
 
 The complete list of ENV variables can be seen here : not available
 
@@ -73,4 +73,3 @@ comparison to installing any other Hass.io add-on.
 If you have in issue with your installation, please be sure to checkout github.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-

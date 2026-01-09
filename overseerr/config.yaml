@@ -70,11 +70,12 @@ environment: {}
 image: ghcr.io/alexbelgium/overseerr-{arch}
 init: false
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
 name: Overseerr
 options:
   env_vars: []
-  CONFIG_LOCATION: /config/addons_config/overseerr
+  CONFIG_LOCATION: /config
   PGID: "0"
   PUID: "0"
 ports:
@@ -93,5 +94,5 @@ schema:
 slug: overseerr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/overseerr
-version: 1.34.0
+version: 1.34.0-1
 webui: "[PROTO:ssl]://[HOST]:[PORT:5055]"

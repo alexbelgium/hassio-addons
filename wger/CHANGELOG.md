@@ -1,5 +1,8 @@
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
+## 2.4-12 (09-01-2026)
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/wger to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-wger. Please make a backup before updating.
+
 ## 2.4-11 (19-09-2025)
 - Minor bugs fixed
 ## 2.4-10 (19-09-2025)

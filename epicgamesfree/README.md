@@ -39,7 +39,7 @@ Addon options expose the `env_vars` field for passing extra environment variable
 
 ### Configuration Files
 
-Configuration files are stored in `/config/addons_config/epicgamesfree/`:
+Configuration files are stored in `/addon_configs/xxx-epicgamesfree/`:
 
 - **config.json**: Main configuration file
 - **cookies.json**: Authentication cookies (optional)
@@ -50,7 +50,7 @@ If these files don't exist, they will be created at first boot with default sett
 
 ### Basic Configuration
 
-Create `/config/addons_config/epicgamesfree/config.json`:
+Create `/addon_configs/xxx-epicgamesfree/config.json`:
 
 ```json
 {
@@ -149,7 +149,7 @@ notifications:
 
 ### Cookie Import (Optional)
 
-You can import browser cookies to avoid login issues. Create `/config/addons_config/epicgamesfree/cookies.json`:
+You can import browser cookies to avoid login issues. Create `/addon_configs/xxx-epicgamesfree/cookies.json`:
 
 For detailed cookie import instructions, see: https://github.com/claabs/epicgames-freegames-node#cookie-import
 

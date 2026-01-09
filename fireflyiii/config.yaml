@@ -69,13 +69,14 @@ environment:
 image: ghcr.io/alexbelgium/fireflyiii-{arch}
 init: false
 map:
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
   - share:rw
 name: Firefly iii
 options:
   env_vars: []
   APP_KEY: CHANGEME_32_CHARS_EuC5dfn3LAPzeO
-  CONFIG_LOCATION: /config/addons_config/fireflyiii/config.yaml
+  CONFIG_LOCATION: /config/config.yaml
   DB_CONNECTION: sqlite_internal
   silent: "true"
 ports:
@@ -104,5 +105,5 @@ slug: fireflyiii
 startup: services
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "6.4.15"
+version: "6.4.15-1"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"

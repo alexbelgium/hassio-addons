@@ -88,7 +88,8 @@ image: ghcr.io/alexbelgium/tdarr-{arch}
 init: false
 map:
   - media:rw
-  - config:rw
+  - addon_config:rw
+  - homeassistant_config:rw
   - addons:rw
   - backup:rw
   - share:rw
@@ -96,7 +97,7 @@ map:
 name: Tdarr
 options:
   env_vars: []
-  CONFIG_LOCATION: /config/addons_config/tdarr
+  CONFIG_LOCATION: /config
 panel_admin: false
 panel_icon: mdi:file-search
 ports:
@@ -122,6 +123,6 @@ schema:
 slug: tdarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.58.02"
+version: "2.58.02-1"
 video: true
 webui: "[PROTO:ssl]://[HOST]:[PORT:8265]"

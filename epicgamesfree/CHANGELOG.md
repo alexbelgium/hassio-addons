@@ -1,4 +1,7 @@
 
+## debian-2025-12-04-2 (2026-01-09)
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/epicgamesfree to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-epicgamesfree. Please make a backup before updating.
+
 ## debian-2025-12-02 (2025-12-02)
 - Update to latest version from charlocharlie/epicgames-freegames
 
