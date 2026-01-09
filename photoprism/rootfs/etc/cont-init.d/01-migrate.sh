@@ -7,7 +7,7 @@ new_config_location="/config"
 new_config_dir="$new_config_location"
 mkdir -p "$new_config_dir"
 
-if bashio::config.has_value "CONFIG_LOCATION"; then
+if bashio::config.has_value "CONFIG_LOCATION" && [[ "$(bashio::config "CONFIG_LOCATION")" != "/config" ]]; then
     old_config_location="$(bashio::config "CONFIG_LOCATION")"
 else
     old_config_location="/config/addons_config/photoprism/config.yaml"
