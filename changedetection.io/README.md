@@ -57,6 +57,7 @@ You can add a shortcut pointing to your Changedetection.io instance with the fol
 | `PUID` | int | `0` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
 | `BASE_URL` | str | | Full URL when running behind reverse proxy |
+| `PLAYWRIGHT_DRIVER_URL` | str | | Playwright driver WebSocket URL |
 | `TIMEOUT` | int | `60000` | Request timeout in milliseconds |
 
 ### Example Configuration
@@ -66,21 +67,23 @@ PGID: 0
 PUID: 0
 TZ: "Europe/London"
 BASE_URL: "https://changedetection.mydomain.com"
+PLAYWRIGHT_DRIVER_URL: "ws://db21ed7f-browserless-chrome:3000/chromium?headless=true&blockAds=true&stealth=true"
 TIMEOUT: 60000
 ```
 
 ### Connect to browserless Chrome (from @RhysMcW)
 
+Install and start the Browserless Chrome add-on, then use the `PLAYWRIGHT_DRIVER_URL` option to connect to it. This option must be filled with the Browserless Chrome URL:
 In HA, use the File Editor add-on (or Filebrowser) and edit the Changedetection.io config file at `/homeassistant/addons_config/changedetection.io/config.yaml`.
 
 Add the following line to the end of it:
 ```yaml
-PLAYWRIGHT_DRIVER_URL: ws://2937404c-browserless-chrome:3000/chromium?headless=true&blockAds=true&stealth=true
+PLAYWRIGHT_DRIVER_URL: ws://db21ed7f-browserless-chrome:3000/chromium?headless=true&blockAds=true&stealth=true
 ```
 
 Remember to add a blank line at the end of the file too according to yaml requirements.
 
-The `2937404c-browserless-chrome` hostname is displayed in the UI, on the  Browserless Chromium addon page:
+The `db21ed7f-browserless-chrome` hostname is displayed in the UI, on the Browserless Chromium addon page:
 ![image](https://github.com/user-attachments/assets/a63514f6-027a-4361-a33f-0d8f87461279)
 
 You can also fetch it:
@@ -103,5 +106,3 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
-

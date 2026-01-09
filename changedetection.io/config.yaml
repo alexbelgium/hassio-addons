@@ -25,11 +25,12 @@ schema:
       value: str?
   BASE_URL: str?
   PGID: int
+  PLAYWRIGHT_DRIVER_URL: str?
   PUID: int
   TIMEOUT: int
   TZ: str?
 slug: changedetection.io
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/changedetection.io
-version: "0.51.4"
+version: "0.51.4-2"
 webui: http://[HOST]:[PORT:5000]
