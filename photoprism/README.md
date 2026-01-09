@@ -76,7 +76,6 @@ Configurations can be done through the app webUI, except for the following optio
 | `IMPORT_PATH` | str | `/share/photoprism/import` | Import files path |
 | `BACKUP_PATH` | str | `/share/photoprism/backup` | Backup storage path |
 | `UPLOAD_NSFW` | bool | `true` | Allow uploads that may be offensive |
-| `CONFIG_LOCATION` | str | | Location of additional config.yaml |
 | `graphic_drivers` | list | | Graphics driver (mesa) |
 | `ingress_disabled` | bool | | Disable ingress for direct IP:port access |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
