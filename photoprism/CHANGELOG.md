@@ -1,3 +1,5 @@
+## ubuntu-2025-11-30-3 (2026-01-10)
+- ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/photoprism to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-photoprism. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data should be automatic, but update any custom paths or permissions to avoid breakage. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
 ## ubuntu-2025-11-30 (2025-11-30)
 - Update to latest version from photoprism/photoprism

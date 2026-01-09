@@ -12,6 +12,8 @@ fi
 
 bashio::log.info "Preparing scripts"
 echo "... creating structure"
+CONFIG_DIR="$(dirname "$(bashio::config "CONFIG_LOCATION")")"
+mkdir -p "$CONFIG_DIR"
 mkdir -p \
     /data/photoprism/originals \
     /data/photoprism/import \
@@ -23,6 +25,8 @@ echo "... setting permissions"
 chmod -R 777 /data/photoprism
 chown -Rf photoprism:photoprism /data/photoprism
 chmod -Rf a+rwx /data/photoprism
+chmod -R 777 "$CONFIG_DIR"
+chown -Rf photoprism:photoprism "$CONFIG_DIR"
 for line in BACKUP_PATH IMPORT_PATH ORIGINALS_PATH STORAGE_PATH; do
     mkdir -p "$line"
     chmod -R 777 "$line"
