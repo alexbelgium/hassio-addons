@@ -1,7 +1,7 @@
 arch:
   - aarch64
   - amd64
-description: TP-Link Omada Controller
+description: "TP-Link Omada Controller (obsolete, use https://github.com/jkunczik/home-assistant-omada)"
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -74,7 +74,7 @@ image: ghcr.io/alexbelgium/omada-{arch}
 map:
   - addon_config:rw
   - ssl:ro
-name: Omada
+name: "Omada (obsolete)"
 options:
   env_vars: []
 ports:
@@ -106,6 +106,7 @@ schema:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
 slug: omada
+stage: deprecated
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 version: 5.14.26.1-2024-08-29-2
