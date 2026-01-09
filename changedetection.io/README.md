@@ -67,13 +67,13 @@ PGID: 0
 PUID: 0
 TZ: "Europe/London"
 BASE_URL: "https://changedetection.mydomain.com"
-PLAYWRIGHT_DRIVER_URL: "ws://db21ed7f-browserless-chrome:3000/chromium?headless=true&stealth=true&blockAds=true&launch={"args":["--no-sandbox","--disable-dev-shm-usage"]}"
+PLAYWRIGHT_DRIVER_URL: "ws://db21ed7f-browserless-chrome:3000/chromium?headless=true&stealth=true&blockAds=true"
 TIMEOUT: 60000
 ```
 
 ### Connect to browserless Chrome (from @RhysMcW)
 
-Install and start the Browserless Chrome add-on, then use the `PLAYWRIGHT_DRIVER_URL` option to connect to it. This option must be filled with the Browserless Chrome URL: "ws://db21ed7f-browserless-chrome:3000/chromium?headless=true&stealth=true&blockAds=true&launch={"args":["--no-sandbox","--disable-dev-shm-usage"]}"
+Install and start the Browserless Chrome add-on, then use the `PLAYWRIGHT_DRIVER_URL` option to connect to it. This option must be filled with the Browserless Chrome URL: "ws://db21ed7f-browserless-chrome:3000/chromium?headless=true&stealth=true&blockAds=true"
 
 The `db21ed7f-browserless-chrome` hostname is displayed in the UI, on the Browserless Chromium addon page:
 ![image](https://github.com/user-attachments/assets/a63514f6-027a-4361-a33f-0d8f87461279)
