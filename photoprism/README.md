@@ -76,7 +76,6 @@ Configurations can be done through the app webUI, except for the following optio
 | `IMPORT_PATH` | str | `/share/photoprism/import` | Import files path |
 | `BACKUP_PATH` | str | `/share/photoprism/backup` | Backup storage path |
 | `UPLOAD_NSFW` | bool | `true` | Allow uploads that may be offensive |
-| `CONFIG_LOCATION` | str | | Location of additional config.yaml |
 | `graphic_drivers` | list | | Graphics driver (mesa) |
 | `ingress_disabled` | bool | | Disable ingress for direct IP:port access |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
@@ -84,6 +83,8 @@ Configurations can be done through the app webUI, except for the following optio
 | `cifsusername` | str | | SMB username for network shares |
 | `cifspassword` | str | | SMB password for network shares |
 | `cifsdomain` | str | | SMB domain for network shares |
+
+⚠ **Migration notice**: Configuration files now live under `/addon_configs/xxx-photoprism/`. The add-on will attempt to migrate files from the old `/config/addons_config/photoprism/` location automatically, but any hard-coded paths, scripts, or backups pointing at the old location will need to be updated. Make a backup before upgrading in case custom paths or permissions cause the migration to fail.
 
 ### Example Configuration
 
@@ -106,12 +107,12 @@ cifsdomain: "workgroup"
 
 ### Advanced Configuration
 
-Additional options can be configured in `/config/addons_config/photoprism/config.yaml`.
+Additional options can be configured in `/addon_configs/xxx-photoprism/config.yaml`.
 Complete list: https://github.com/photoprism/photoprism/blob/develop/docker-compose.yml
 
 ### External Database Setup
 
-For external database, add to `addons_config/photoprism/config.yaml`:
+For external database, add to `/addon_configs/xxx-photoprism/config.yaml`:
 
 ```yaml
 PHOTOPRISM_DATABASE_DRIVER: "mysql"
@@ -146,5 +147,3 @@ You can access it via portainer addon or executing `docker exec -it <photoprism 
 Create an issue on github
 
 [repository]: https://github.com/alexbelgium/hassio-addons
-
-

@@ -77,15 +77,16 @@ image: ghcr.io/alexbelgium/photoprism-{arch}
 ingress: true
 ingress_stream: true
 map:
+  - addon_config:rw
+  - homeassistant_config:rw
   - media:rw
   - share:rw
-  - config:rw
   - ssl:ro
 name: Photoprism
 options:
   env_vars: []
   BACKUP_PATH: /share/photoprism/backup
-  CONFIG_LOCATION: /config/addons_config/photoprism/config.yaml
+  CONFIG_LOCATION: /config
   DB_TYPE: sqlite
   IMPORT_PATH: /share/photoprism/import
   ORIGINALS_PATH: /share/photoprism/originals
@@ -130,5 +131,5 @@ services:
 slug: photoprism
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "ubuntu-2025-11-30"
+version: "ubuntu-2025-11-30-3"
 video: true
