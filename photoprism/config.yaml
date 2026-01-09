@@ -86,7 +86,7 @@ name: Photoprism
 options:
   env_vars: []
   BACKUP_PATH: /share/photoprism/backup
-  CONFIG_LOCATION: /config/photoprism/config.yaml
+  CONFIG_LOCATION: /config
   DB_TYPE: sqlite
   IMPORT_PATH: /share/photoprism/import
   ORIGINALS_PATH: /share/photoprism/originals

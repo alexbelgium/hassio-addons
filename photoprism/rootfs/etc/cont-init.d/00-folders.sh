@@ -12,7 +12,7 @@ fi
 
 bashio::log.info "Preparing scripts"
 echo "... creating structure"
-mkdir -p /config/photoprism
+mkdir -p /config
 mkdir -p \
     /data/photoprism/originals \
     /data/photoprism/import \
@@ -24,8 +24,8 @@ echo "... setting permissions"
 chmod -R 777 /data/photoprism
 chown -Rf photoprism:photoprism /data/photoprism
 chmod -Rf a+rwx /data/photoprism
-chmod -R 777 /config/photoprism
-chown -Rf photoprism:photoprism /config/photoprism
+chmod -R 777 /config
+chown -Rf photoprism:photoprism /config
 for line in BACKUP_PATH IMPORT_PATH ORIGINALS_PATH STORAGE_PATH; do
     mkdir -p "$line"
     chmod -R 777 "$line"

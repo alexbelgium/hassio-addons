@@ -3,8 +3,8 @@
 set -e
 
 slug=photoprism
-new_config_location="/config/photoprism/config.yaml"
-new_config_dir="$(dirname "$new_config_location")"
+new_config_location="/config"
+new_config_dir="$new_config_location"
 mkdir -p "$new_config_dir"
 
 if bashio::config.has_value "CONFIG_LOCATION"; then
