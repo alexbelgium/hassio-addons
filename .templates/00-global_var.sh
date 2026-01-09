@@ -32,7 +32,13 @@ fi
 BLOCK_BEGIN="# --- BEGIN ADDON ENV (generated) ---"
 BLOCK_END="# --- END ADDON ENV (generated) ---"
 
-EXPORT_BLOCK_FILE="$(mktemp)"
+mktemp_safe() {
+    local tmpdir="${TMPDIR:-/tmp}"
+    mkdir -p "$tmpdir"
+    mktemp -p "$tmpdir"
+}
+
+EXPORT_BLOCK_FILE="$(mktemp_safe)"
 trap 'rm -f "$EXPORT_BLOCK_FILE"' EXIT
 
 {
@@ -148,7 +154,7 @@ is_shell_run_script() {
 inject_block_into_file() {
     local file="$1"
     local tmp
-    tmp="$(mktemp)"
+    tmp="$(mktemp_safe)"
 
     awk -v bfile="${EXPORT_BLOCK_FILE}" -v begin="${BLOCK_BEGIN}" -v end="${BLOCK_END}" '
         function print_block() {
