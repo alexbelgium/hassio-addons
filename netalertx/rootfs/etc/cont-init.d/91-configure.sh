@@ -105,7 +105,6 @@ wait_for_config_file() {
     done
     echo "$config_file is now available. Rebooting the addon."
     bashio::addon.restart
-    execute_main_logic
 }
 
 # Main script logic
