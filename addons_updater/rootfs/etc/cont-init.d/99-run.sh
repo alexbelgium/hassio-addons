@@ -14,6 +14,11 @@ fi
 
 bashio::log.info "Checking status of referenced repositories..."
 VERBOSE=$(bashio::config 'verbose')
+if bashio::config.true "date_iso8601"; then
+    DATE_FORMAT="+%Y-%m-%d"
+else
+    DATE_FORMAT="+%d-%m-%Y"
+fi
 
 #Defining github value
 LOGINFO="... github authentification" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
@@ -80,7 +85,7 @@ for f in */; do
         EXCLUDE_TEXT=$(jq -r .github_exclude updater.json)
         EXCLUDE_TEXT="${EXCLUDE_TEXT:-zzzzzzzzzzzzzzzz}"
         PAUSED=$(jq -r .paused updater.json)
-        DATE="$(date '+%d-%m-%Y')"
+        DATE="$(date "$DATE_FORMAT")"
         BYDATE=$(jq -r .dockerhub_by_date updater.json)
 
         # Number of elements to check in dockerhub
@@ -163,6 +168,7 @@ for f in */; do
                         | jq '.results[] | select(.name==$LASTVERSION) | .last_updated' -r --arg LASTVERSION "$LASTVERSION"
                 ) \
                 && DATE="${DATE%T*}" \
+                && DATE="$(date -d "$DATE" "$DATE_FORMAT")" \
                 && LASTVERSION="$LASTVERSION-$DATE"
             LOGINFO="... $SLUG : bydate is true, version is $LASTVERSION" && if [ "$VERBOSE" = true ]; then bashio::log.info "$LOGINFO"; fi
 

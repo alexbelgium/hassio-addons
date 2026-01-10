@@ -11,11 +11,13 @@ map:
   - addon_config:rw
 name: Repository Updater
 options:
+  date_iso8601: true
   env_vars: []
   gitapi: gitapi
   gituser: gituser
   repository: alexbelgium/hassio-addons
 schema:
+  date_iso8601: bool?
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
@@ -28,4 +30,4 @@ schema:
 slug: updater
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/addons_updater
-version: "3.19.15"
+version: "3.19.16"
