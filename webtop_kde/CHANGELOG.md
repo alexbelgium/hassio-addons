@@ -1,159 +1,159 @@
 
-## 4.16-r0-ls92 (08-01-2026)
+## 4.16-r0-ls92 (2026-01-08)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94 (24-12-2025)
+## 4.16-r0-ls94 (2025-12-24)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls93 (20-12-2025)
+## 4.16-r0-ls93 (2025-12-20)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls95 (13-12-2025)
+## 4.16-r0-ls95 (2025-12-13)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94 (22-11-2025)
+## 4.16-r0-ls94 (2025-11-22)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls92 (15-11-2025)
+## 4.16-r0-ls92 (2025-11-15)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls95 (08-11-2025)
+## 4.16-r0-ls95 (2025-11-08)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-## "4.16-r0-ls94" (25-10-2025)
+## "4.16-r0-ls94" (2025-10-25)
 - Minor bugs fixed
 
-## 4.16-r0-ls94 (25-10-2025)
+## 4.16-r0-ls94 (2025-10-25)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls93 (18-10-2025)
+## 4.16-r0-ls93 (2025-10-18)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94 (06-09-2025)
+## 4.16-r0-ls94 (2025-09-06)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls95 (23-08-2025)
+## 4.16-r0-ls95 (2025-08-23)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94 (16-08-2025)
+## 4.16-r0-ls94 (2025-08-16)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls95 (09-08-2025)
+## 4.16-r0-ls95 (2025-08-09)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94 (01-08-2025)
+## 4.16-r0-ls94 (2025-08-01)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls95 (25-07-2025)
+## 4.16-r0-ls95 (2025-07-25)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
-## 4.16-r0-ls94 (05-07-2025)
-
-- Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
-
-## 4.16-r0-ls95 (28-06-2025)
+## 4.16-r0-ls94 (2025-07-05)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls93 (21-06-2025)
+## 4.16-r0-ls95 (2025-06-28)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94 (13-06-2025)
+## 4.16-r0-ls93 (2025-06-21)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls93 (07-06-2025)
+## 4.16-r0-ls94 (2025-06-13)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94-6 (01-06-2025)
+## 4.16-r0-ls93 (2025-06-07)
 
-- Minor bugs fixed
+- Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94-4 (28-05-2025)
+## 4.16-r0-ls94-6 (2025-06-01)
 
 - Minor bugs fixed
 
-## 4.16-r0-ls94-2 (28-05-2025)
+## 4.16-r0-ls94-4 (2025-05-28)
 
 - Minor bugs fixed
 
-## 4.16-r0-ls94 (24-05-2025)
-
-- Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
-
-## 4.16-r0-ls93-2 (17-05-2025)
+## 4.16-r0-ls94-2 (2025-05-28)
 
 - Minor bugs fixed
 
-## 4.16-r0-ls93 (17-05-2025)
+## 4.16-r0-ls94 (2025-05-24)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94 (26-04-2025)
+## 4.16-r0-ls93-2 (2025-05-17)
+
+- Minor bugs fixed
+
+## 4.16-r0-ls93 (2025-05-17)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls93 (19-04-2025)
+## 4.16-r0-ls94 (2025-04-26)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94 (05-04-2025)
+## 4.16-r0-ls93 (2025-04-19)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls93 (29-03-2025)
+## 4.16-r0-ls94 (2025-04-05)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls95 (22-03-2025)
+## 4.16-r0-ls93 (2025-03-29)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94 (15-03-2025)
+## 4.16-r0-ls95 (2025-03-22)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls93 (08-03-2025)
+## 4.16-r0-ls94 (2025-03-15)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls95 (01-03-2025)
+## 4.16-r0-ls93 (2025-03-08)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94-5 (21-02-2025)
+## 4.16-r0-ls95 (2025-03-01)
+
+- Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
+
+## 4.16-r0-ls94-5 (2025-02-21)
 
 - Option to install microsoft edge
 
-## 4.16-r0-ls94-3 (15-02-2025)
+## 4.16-r0-ls94-3 (2025-02-15)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## 4.16-r0-ls94-9 (29-01-2025)
+## 4.16-r0-ls94-9 (2025-01-29)
 
 - Minor bugs fixed
 
-## 4.16-r0-ls94-7 (29-01-2025)
+## 4.16-r0-ls94-7 (2025-01-29)
 
 - External port disabled by default to rely on ingress
 - Added a message that opening a port without password is a very high risk
 - Add microsoft edge
 
-## 4.16-r0-ls94 (25-01-2025)
+## 4.16-r0-ls94 (2025-01-25)
 
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 
-## fb06d0b4-ls71-5 (24-01-2025)
+## fb06d0b4-ls71-5 (2025-01-24)
 
 - Minor bugs fixed
 
-## fb06d0b4-ls71-4 (24-01-2025)
+## fb06d0b4-ls71-4 (2025-01-24)
 
 - Minor bugs fixed
 
-## fb06d0b4-ls71-2 (24-01-2025)
+## fb06d0b4-ls71-2 (2025-01-24)
 
 - First version of Ubuntu KDE
 - Use own ssl certificates

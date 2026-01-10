@@ -20,20 +20,20 @@
 
 ## debian-2025-11-16 (2025-11-16)
 - Update to latest version from charlocharlie/epicgames-freegames
-## "debian-2025-11-09" (09-11-2025)
+## "debian-2025-11-09" (2025-11-09)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.json
 
-## "debian-2025-10-28" (01-11-2025)
+## "debian-2025-10-28" (2025-11-01)
 - Minor bugs fixed
 
 ## debian-2025-10-28 (2025-10-28)
 - Update to latest version from charlocharlie/epicgames-freegames
-## "debian-2025-10-21" (25-10-2025)
+## "debian-2025-10-21" (2025-10-25)
 - Minor bugs fixed
 
 ## debian-2025-10-21 (2025-10-21)
 - Update to latest version from charlocharlie/epicgames-freegames
-## "debian-2025-10-13" (18-10-2025)
+## "debian-2025-10-13" (2025-10-18)
 - Minor bugs fixed
 
 ## debian-2025-10-13 (2025-10-13)
@@ -92,7 +92,7 @@ A redemption link is sent to your preferred notification method instead of being
 ## debian-2024-04-28 (2024-04-28)
 - Update to latest version from charlocharlie/epicgames-freegames
 
-## debian-2024-03-17-2 (31-03-2024)
+## debian-2024-03-17-2 (2024-03-31)
 - Minor bugs fixed
 
 ## debian-2024-03-17 (2024-03-17)
@@ -162,7 +162,7 @@ A redemption link is sent to your preferred notification method instead of being
 ## bullseye-slim-2023-05-03 (2023-05-03)
 
 - Update to latest version from charlocharlie/epicgames-freegames
-## c0dfe30ee94fa609a9efcb5eb2b8fd0c1dafe6e2-2023-05-03-2 (24-05-2023)
+## c0dfe30ee94fa609a9efcb5eb2b8fd0c1dafe6e2-2023-05-03-2 (2023-05-24)
 
 - Minor bugs fixed
 
@@ -256,6 +256,6 @@ A redemption link is sent to your preferred notification method instead of being
 
 - Update to latest version from charlocharlie/epicgames-freegames
 
-## 4.1.0 (21-07-2022)
+## 4.1.0 (2022-07-21)
 
 - Initial release

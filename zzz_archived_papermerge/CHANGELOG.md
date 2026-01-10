@@ -4,89 +4,89 @@
 
 - Feat : cifsdomain added
 
-## v2.1.5-ls61 (19-02-2023)
+## v2.1.5-ls61 (2023-02-19)
 
 - Update to latest version from linuxserver/docker-papermerge
 - WARNING : update to supervisor 2022.11 before installing
 
-## v2.0.1-ls60 (26-08-2022)
+## v2.0.1-ls60 (2022-08-26)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls59 (20-08-2022)
+## v2.0.1-ls59 (2022-08-20)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls58 (06-08-2022)
+## v2.0.1-ls58 (2022-08-06)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls57 (30-07-2022)
+## v2.0.1-ls57 (2022-07-30)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls56 (23-07-2022)
+## v2.0.1-ls56 (2022-07-23)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls55 (16-07-2022)
+## v2.0.1-ls55 (2022-07-16)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls53 (09-07-2022)
+## v2.0.1-ls53 (2022-07-09)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls52 (02-07-2022)
+## v2.0.1-ls52 (2022-07-02)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls51 (25-06-2022)
+## v2.0.1-ls51 (2022-06-25)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls50 (18-06-2022)
+## v2.0.1-ls50 (2022-06-18)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls49 (11-06-2022)
+## v2.0.1-ls49 (2022-06-11)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls48 (31-05-2022)
+## v2.0.1-ls48 (2022-05-31)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls47 (21-05-2022)
+## v2.0.1-ls47 (2022-05-21)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls46 (14-05-2022)
+## v2.0.1-ls46 (2022-05-14)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls45 (06-05-2022)
+## v2.0.1-ls45 (2022-05-06)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls44 (16-04-2022)
+## v2.0.1-ls44 (2022-04-16)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls43 (09-04-2022)
+## v2.0.1-ls43 (2022-04-09)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls42 (02-04-2022)
+## v2.0.1-ls42 (2022-04-02)
 
 - Update to latest version from linuxserver/docker-papermerge
 
-## v2.0.1-ls41 (25-03-2022)
+## v2.0.1-ls41 (2022-03-25)
 
 - Update to latest version from linuxserver/docker-papermerge
 - Add codenotary sign
 
-## v2.0.1-ls40 (22-03-2022)
+## v2.0.1-ls40 (2022-03-22)
 
 - Update to latest version from linuxserver/docker-papermerge
 - OCR corrected

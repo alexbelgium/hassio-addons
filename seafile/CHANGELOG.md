@@ -1,98 +1,98 @@
 
-## 12.0.17 (12-03-2026)
+## 12.0.17 (2026-03-12)
 - Ensure `SERVICE_URL` and `FILE_SERVER_ROOT` are written to the active Seafile config path.
 
-## 12.0.14 (28-12-2025)
+## 12.0.14 (2025-12-28)
 - Update to latest version from franchetti/seafile-arm
 
-##  (23-12-2025)
+##  (2025-12-23)
 - Update to latest version from franchetti/seafile-arm
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-## 12.0.16 (15-02-2026)
+## 12.0.16 (2026-02-15)
 - Handle list-based `database` options correctly so SQLite configurations skip MySQL initialization.
 
-## 12.0.15 (18-12-2025)
+## 12.0.15 (2025-12-18)
 - Normalize `SERVICE_URL` and `FILE_SERVER_ROOT` values in `conf/seahub_settings.py` based on the add-on configuration to generate valid download links.
 
-## 12.0.14 (13-09-2025)
+## 12.0.14 (2025-09-13)
 - Update to latest version from franchetti/seafile-arm
 
-## testing (10-06-2023)
+## testing (2023-06-10)
 
 - Update to latest version from franchetti/seafile-arm
-## 10.0.1-fixed (22-05-2023)
+## 10.0.1-fixed (2023-05-22)
 
 - Minor bugs fixed
 - Fix : allow app to start
 
-## 10.0.1 (19-05-2023)
+## 10.0.1 (2023-05-19)
 
 - Update to latest version from franchetti/seafile-arm
 - Feat : cifsdomain added
 
-## 10.0.0 (24-03-2023)
+## 10.0.0 (2023-03-24)
 
 - Update to latest version from franchetti/seafile-arm
 
-## 9.0.10 (28-01-2023)
+## 9.0.10 (2023-01-28)
 
 - Update to latest version from franchetti/seafile-arm
 - Allow setting server url
 - Allow custom env variables through config.yaml
 
-## v9.0.14-pro (01-12-2022)
+## v9.0.14-pro (2022-12-01)
 
 - Update to latest version from haiwen/seahub
 - WARNING : update to supervisor 2022.11 before installing
 
-## v9.0.13-pro (11-11-2022)
+## v9.0.13-pro (2022-11-11)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.12-pro (05-11-2022)
+## v9.0.12-pro (2022-11-05)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.11-pro (29-10-2022)
+## v9.0.11-pro (2022-10-29)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.10-pro (13-10-2022)
+## v9.0.10-pro (2022-10-13)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.9-pro (24-09-2022)
+## v9.0.9-pro (2022-09-24)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.9-server (20-09-2022)
+## v9.0.9-server (2022-09-20)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.8-pro (09-09-2022)
+## v9.0.8-pro (2022-09-09)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.7-server (09-08-2022)
+## v9.0.7-server (2022-08-09)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.7-pro (04-08-2022)
+## v9.0.7-pro (2022-08-04)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.6-pro (02-07-2022)
+## v9.0.6-pro (2022-07-02)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.6-server (18-06-2022)
+## v9.0.6-server (2022-06-18)
 
 - Update to latest version from haiwen/seahub
 
-## v9.0.5-server (11-06-2022)
+## v9.0.5-server (2022-06-11)
 
 - Update to latest version from haiwen/seahub
 - Initial release

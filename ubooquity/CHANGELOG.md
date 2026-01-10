@@ -1,12 +1,12 @@
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-## 3.1.0 (23-08-2025)
+## 3.1.0 (2025-08-23)
 - Update to latest version from linuxserver/docker-ubooquity (changelog : https://github.com/linuxserver/docker-ubooquity/releases)
 
-## 2.1.5 (19-10-2024)
+## 2.1.5 (2024-10-19)
 - Update to latest version from linuxserver/docker-ubooquity (changelog : https://github.com/linuxserver/docker-ubooquity/releases)
 
-## 2.1.4 (21-09-2024)
+## 2.1.4 (2024-09-21)
 - Update to latest version from linuxserver/docker-ubooquity (changelog : https://github.com/linuxserver/docker-ubooquity/releases)
 - Arm32v7 discontinued by linuxserver, latest working version pinned
 - Feat : cifsdomain added

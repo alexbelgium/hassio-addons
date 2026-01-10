@@ -1,156 +1,156 @@
 
-## 1.35.2 (10-01-2026)
+## 1.35.2 (2026-01-10)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.35.1 (03-01-2026)
+## 1.35.1 (2026-01-03)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
-## 1.35.0-6 (28-12-2025)
+## 1.35.0-6 (2025-12-28)
 - Minor bugs fixed
-## 1.35.0-4 (28-12-2025)
+## 1.35.0-4 (2025-12-28)
 - Minor bugs fixed
-## 1.35.0-2 (28-12-2025)
+## 1.35.0-2 (2025-12-28)
 - Minor bugs fixed
-## description: Deprecated - please use community version 1.35.0 (28-12-2025)
+## description: Deprecated - please use community version 1.35.0 (2025-12-28)
 - Minor bugs fixed
 
-## 1.35.0 (28-12-2025)
+## 1.35.0 (2025-12-28)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-## 1.34.3 (01-08-2025)
+## 1.34.3 (2025-08-01)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.34.1 (31-05-2025)
+## 1.34.1 (2025-05-31)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.33.2 (15-02-2025)
+## 1.33.2 (2025-02-15)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.33.1 (08-02-2025)
+## 1.33.1 (2025-02-08)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.33.0 (01-02-2025)
+## 1.33.0 (2025-02-01)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.32.7 (21-12-2024)
+## 1.32.7 (2024-12-21)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.32.6 (14-12-2024)
+## 1.32.6 (2024-12-14)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.32.5 (23-11-2024)
+## 1.32.5 (2024-11-23)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.32.4 (16-11-2024)
+## 1.32.4 (2024-11-16)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.32.3 (02-11-2024)
+## 1.32.3 (2024-11-02)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.32.2 (19-10-2024)
+## 1.32.2 (2024-10-19)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.32.1 (05-10-2024)
+## 1.32.1 (2024-10-05)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.32.0 (17-08-2024)
+## 1.32.0 (2024-08-17)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.31.0 (13-07-2024)
+## 1.31.0 (2024-07-13)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 
-## 1.30.5 (04-05-2024)
+## 1.30.5 (2024-05-04)
 - Update to latest version from dani-garcia/bitwarden_rs (changelog : https://github.com/dani-garcia/bitwarden_rs/releases)
 - Deprecated, please use version from community repository. Just export your vault from this addon, and import it in the official addon.
 
-## 1.30.1 (21-11-2023)
+## 1.30.1 (2023-11-21)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.30.0 (11-11-2023)
+## 1.30.0 (2023-11-11)
 
 - Update to latest version from dani-garcia/bitwarden_rs
-## 1.29.2-2 (02-09-2023)
+## 1.29.2-2 (2023-09-02)
 
 - Minor bugs fixed
 - Fix https://github.com/alexbelgium/hassio-addons/issues/975
 
-## 1.29.2 (02-09-2023)
+## 1.29.2 (2023-09-02)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.29.1 (29-07-2023)
+## 1.29.1 (2023-07-29)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.29.0 (15-07-2023)
+## 1.29.0 (2023-07-15)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.28.1 (08-04-2023)
+## 1.28.1 (2023-04-08)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.28.0 (31-03-2023)
+## 1.28.0 (2023-03-31)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 - Implemented healthcheck
 
-## 1.27.0 (25-12-2022)
+## 1.27.0 (2022-12-25)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 - WARNING : update to supervisor 2022.11 before installing
 
-## 1.26.0 (15-10-2022)
+## 1.26.0 (2022-10-15)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.25.2 (28-07-2022)
+## 1.25.2 (2022-07-28)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.25.1 (17-07-2022)
+## 1.25.1 (2022-07-17)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.25.0 (24-05-2022)
+## 1.25.0 (2022-05-24)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.24.0 (27-04-2022)
+## 1.24.0 (2022-04-27)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 - Add codenotary sign
 
-## 1.24.0 (31-01-2022)
+## 1.24.0 (2022-01-31)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.23.1 (15-12-2021)
+## 1.23.1 (2021-12-15)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 - New standardized logic for Dockerfile build and packages installation
 
-## 1.23.0 (21-10-2021)
+## 1.23.0 (2021-10-21)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.22.2 (26-07-2021)
+## 1.22.2 (2021-07-26)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.22.1 (30-06-2021)
+## 1.22.1 (2021-06-30)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 
-## 1.22.0 (29-06-2021)
+## 1.22.0 (2021-06-29)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 - Project renamed to vaultwarden
 
-## 1.21.0 (30-04-2021)
+## 1.21.0 (2021-04-30)
 
 - Update to latest version from dani-garcia/bitwarden_rs
 

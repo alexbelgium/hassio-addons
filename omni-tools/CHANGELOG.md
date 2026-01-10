@@ -1,12 +1,12 @@
 
-## 0.6.1 (18-11-2025)
+## 0.6.1 (2025-11-18)
 - Added `env_vars` option to allow passing custom environment variables from the add-on configuration.
 
-## 0.6.0 (04-10-2025)
+## 0.6.0 (2025-10-04)
 - Update to latest version from iib0011/omni-tools (changelog : https://github.com/iib0011/omni-tools/releases)
-## v0.5.0 (30-07-2025)
+## v0.5.0 (2025-07-30)
 - Minor bugs fixed
-## 0.5.0 (30-07-2025)
+## 0.5.0 (2025-07-30)
 - Minor bugs fixed
 # Changelog
 

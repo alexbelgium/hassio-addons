@@ -1,5 +1,5 @@
 
-## 1.601 (27-12-2025)
+## 1.601 (2025-12-27)
 - Update to latest version from causefx/organizr (changelog : https://github.com/causefx/organizr/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
