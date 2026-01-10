@@ -1,3 +1,6 @@
+
+## 4.54.0 (10-01-2026)
+- Update to latest version from linuxserver/docker-ombi (changelog : https://github.com/linuxserver/docker-ombi/releases)
 ## 4.53.0-1 (01-01-2026)
 - Enable DOTNET_USE_POLLING_FILE_WATCHER to avoid inotify startup failures.
 
