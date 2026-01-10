@@ -81,6 +81,7 @@ repository: 'name/repo' coming from github
 gituser: your github username
 gitapi: your github api token(classic) https://github.com/settings/tokens
 gitmail: your github email
+date_iso8601: true # use ISO8601 dates (YYYY-MM-DD) instead of DD-MM-YYYY
 verbose: 'false'
 ```
 
@@ -91,6 +92,7 @@ repository: alexbelgium/hassio-addons
 gituser: your github username
 gitapi: your github api token
 gitmail: your github email
+date_iso8601: true
 verbose: "false"
 ```
 
