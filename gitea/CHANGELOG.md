@@ -142,7 +142,7 @@
 
 - Update to latest version from go-gitea/gitea
 
-## 1.20.5 (3-10-2023)
+## 1.20.5 (2023-10-03)
 
 - Update to latest version from go-gitea/gitea
 
@@ -154,7 +154,7 @@
 
 - Minor bugs fixed
 
-## 1.20.4 (8-09-2023)
+## 1.20.4 (2023-09-08)
 
 - Update to latest version from go-gitea/gitea
 
@@ -178,11 +178,11 @@
 
 - Update to latest version from go-gitea/gitea
 
-## 1.19.4 (5-07-2023)
+## 1.19.4 (2023-07-05)
 
 - Update to latest version from go-gitea/gitea
 
-## 1.19.3 (5-05-2023)
+## 1.19.3 (2023-05-05)
 
 - Update to latest version from go-gitea/gitea
 

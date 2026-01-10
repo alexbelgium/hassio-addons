@@ -1,4 +1,4 @@
-## 1.1.0 (9-12-2025)
+## 1.1.0 (2025-12-09)
 - Move docker image from docker to github
 - Update to latest version from baldarn/whatsapper (changelog : https://github.com/baldarn/whatsapper/releases/tag/1.1.0)
 
