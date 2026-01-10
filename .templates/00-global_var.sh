@@ -300,6 +300,13 @@ done
 
 update_scripts_with_block
 
+# --- MINIMAL CHANGE: also inject into /etc/bash.bashrc (for interactive bash shells)
+mkdir -p /etc "$HOME"
+touch "/etc/bash.bashrc"
+touch "$HOME/bash.bashrc"
+inject_block_into_file "/etc/bash.bashrc"
+inject_block_into_file "$HOME/bash.bashrc"
+
 ################
 # Set timezone #
 ################
