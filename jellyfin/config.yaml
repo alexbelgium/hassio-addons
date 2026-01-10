@@ -73,7 +73,7 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  - ATTACHED_DEVICES_PERMS: "/dev/dri /dev/dvb /dev/vchiq /dev/vc-mem /dev/video1? -type c -o -type f"
+  - ATTACHED_DEVICES_PERMS: '/dev/dri /dev/dvb /dev/vchiq /dev/vc-mem /dev/video1? -type c -o -type f'
 host_dbus: true
 host_network: true
 image: ghcr.io/alexbelgium/jellyfin-{arch}
