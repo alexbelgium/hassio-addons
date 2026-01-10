@@ -1,301 +1,301 @@
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-## 2201.1.0 (26-08-2023)
+## 2201.1.0 (2023-08-26)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls103 (26-08-2023)
+## v2201.1.0-ls103 (2023-08-26)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls102 (19-08-2023)
+## v2201.1.0-ls102 (2023-08-19)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls101 (12-08-2023)
+## v2201.1.0-ls101 (2023-08-12)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls100 (05-08-2023)
+## v2201.1.0-ls100 (2023-08-05)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls99 (29-07-2023)
+## v2201.1.0-ls99 (2023-07-29)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls98 (22-07-2023)
+## v2201.1.0-ls98 (2023-07-22)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls97 (15-07-2023)
+## v2201.1.0-ls97 (2023-07-15)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls96 (08-07-2023)
+## v2201.1.0-ls96 (2023-07-08)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls95 (24-06-2023)
+## v2201.1.0-ls95 (2023-06-24)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls94 (10-06-2023)
+## v2201.1.0-ls94 (2023-06-10)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls93 (03-06-2023)
+## v2201.1.0-ls93 (2023-06-03)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls92 (27-05-2023)
+## v2201.1.0-ls92 (2023-05-27)
 
 - Update to latest version from linuxserver/docker-booksonic-air
-## v2201.1.0-ls91 (13-05-2023)
+## v2201.1.0-ls91 (2023-05-13)
 
 - Minor bugs fixed
 - Feat : cifsdomain added
 - Armv7 not supported anymore
 
-## v2201.1.0-ls90 (29-04-2023)
+## v2201.1.0-ls90 (2023-04-29)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls89 (21-04-2023)
+## v2201.1.0-ls89 (2023-04-21)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls88 (15-04-2023)
+## v2201.1.0-ls88 (2023-04-15)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls87 (08-04-2023)
+## v2201.1.0-ls87 (2023-04-08)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls85 (31-03-2023)
+## v2201.1.0-ls85 (2023-03-31)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls84 (11-03-2023)
+## v2201.1.0-ls84 (2023-03-11)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 - Implemented healthcheck
 
-## v2201.1.0-ls83 (04-03-2023)
+## v2201.1.0-ls83 (2023-03-04)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls82 (25-02-2023)
+## v2201.1.0-ls82 (2023-02-25)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls81 (19-02-2023)
+## v2201.1.0-ls81 (2023-02-19)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls80 (11-02-2023)
+## v2201.1.0-ls80 (2023-02-11)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls78 (07-01-2023)
+## v2201.1.0-ls78 (2023-01-07)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls77 (25-12-2022)
+## v2201.1.0-ls77 (2022-12-25)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls76 (06-12-2022)
+## v2201.1.0-ls76 (2022-12-06)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls75 (27-11-2022)
+## v2201.1.0-ls75 (2022-11-27)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 - WARNING : update to supervisor 2022.11 before installing
 
-## v2201.1.0-ls74 (14-11-2022)
+## v2201.1.0-ls74 (2022-11-14)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls73 (08-11-2022)
+## v2201.1.0-ls73 (2022-11-08)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls72 (01-11-2022)
+## v2201.1.0-ls72 (2022-11-01)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls71 (18-10-2022)
+## v2201.1.0-ls71 (2022-10-18)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls70 (27-09-2022)
+## v2201.1.0-ls70 (2022-09-27)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls69 (20-09-2022)
+## v2201.1.0-ls69 (2022-09-20)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls68 (09-09-2022)
+## v2201.1.0-ls68 (2022-09-09)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls67 (30-08-2022)
+## v2201.1.0-ls67 (2022-08-30)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls66 (23-08-2022)
+## v2201.1.0-ls66 (2022-08-23)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls65 (16-08-2022)
+## v2201.1.0-ls65 (2022-08-16)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls64 (09-08-2022)
+## v2201.1.0-ls64 (2022-08-09)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls63 (04-08-2022)
+## v2201.1.0-ls63 (2022-08-04)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls62 (26-07-2022)
+## v2201.1.0-ls62 (2022-07-26)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls61 (19-07-2022)
+## v2201.1.0-ls61 (2022-07-19)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls60 (12-07-2022)
+## v2201.1.0-ls60 (2022-07-12)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls59 (05-07-2022)
+## v2201.1.0-ls59 (2022-07-05)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls58 (06-06-2022)
+## v2201.1.0-ls58 (2022-06-06)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls57 (24-05-2022)
+## v2201.1.0-ls57 (2022-05-24)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls56 (10-05-2022)
+## v2201.1.0-ls56 (2022-05-10)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls55 (01-05-2022)
+## v2201.1.0-ls55 (2022-05-01)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls54 (27-04-2022)
+## v2201.1.0-ls54 (2022-04-27)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls54 (22-04-2022)
+## v2201.1.0-ls54 (2022-04-22)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls53 (19-04-2022)
+## v2201.1.0-ls53 (2022-04-19)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls52 (11-04-2022)
+## v2201.1.0-ls52 (2022-04-11)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls51 (05-04-2022)
+## v2201.1.0-ls51 (2022-04-05)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls50 (27-03-2022)
+## v2201.1.0-ls50 (2022-03-27)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 - Add codenotary sign
 
-## v2201.1.0-ls49 (22-03-2022)
+## v2201.1.0-ls49 (2022-03-22)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls48 (14-03-2022)
+## v2201.1.0-ls48 (2022-03-14)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls47 (06-03-2022)
+## v2201.1.0-ls47 (2022-03-06)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls46 (27-02-2022)
+## v2201.1.0-ls46 (2022-02-27)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls45 (13-02-2022)
+## v2201.1.0-ls45 (2022-02-13)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls44 (07-02-2022)
+## v2201.1.0-ls44 (2022-02-07)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls43 (27-01-2022)
+## v2201.1.0-ls43 (2022-01-27)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2201.1.0-ls42 (15-01-2022)
+## v2201.1.0-ls42 (2022-01-15)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2112.2.0-ls41 (04-01-2022)
+## v2112.2.0-ls41 (2022-01-04)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2112.2.0-ls39 (18-12-2021)
+## v2112.2.0-ls39 (2021-12-18)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## v2112.1.0-ls38 (12-12-2021)
+## v2112.1.0-ls38 (2021-12-12)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 - New standardized logic for Dockerfile build and packages installation
 
-## nightly-0.1.0.1024-ls29 (14-11-2021)
+## nightly-0.1.0.1024-ls29 (2021-11-14)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## nightly-0.1.0.1019-ls28 (13-11-2021)
+## nightly-0.1.0.1019-ls28 (2021-11-13)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## nightly-0.1.0.1011-ls25 (11-11-2021)
+## nightly-0.1.0.1011-ls25 (2021-11-11)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## nightly-0.1.0.1006-ls24 (07-11-2021)
+## nightly-0.1.0.1006-ls24 (2021-11-07)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 - Allow mounting local drives by label. Just pust the label instead of sda1 for example
 
-## nightly-0.1.0.1003-ls22 (28-10-2021)
+## nightly-0.1.0.1003-ls22 (2021-10-28)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## nightly-0.1.0.998-ls20 (23-10-2021)
+## nightly-0.1.0.998-ls20 (2021-10-23)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 - SMB : accepts several disks separated by commas mounted in /mnt/$sharename
 
-## nightly-0.1.0.997-ls19 (19-10-2021)
+## nightly-0.1.0.997-ls19 (2021-10-19)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 
-## nightly-0.1.0.991-ls16 (13-10-2021)
+## nightly-0.1.0.991-ls16 (2021-10-13)
 
 - Update to latest version from linuxserver/docker-booksonic-air
 - Initial release (nightly builds)

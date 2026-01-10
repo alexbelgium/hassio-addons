@@ -1,7 +1,7 @@
-## 5.14.26.1-2024-08-29-2 (18-11-2025)
+## 5.14.26.1-2024-08-29-2 (2025-11-18)
 - Minor bugs fixed
 
-## 5.14.26.1-2024-08-29-1 (18-11-2025)
+## 5.14.26.1-2024-08-29-1 (2025-11-18)
 - Added `env_vars` option to allow passing custom environment variables from the add-on configuration.
 
 ## 5.14.26.1-2024-08-29 (2024-08-29)
@@ -27,7 +27,7 @@
 
 ## 5.13-2024-07-12 (2024-07-12)
 - Update to latest version from mbentley/omada-controller
-## 5.13-2024-07-03-2 (06-07-2024)
+## 5.13-2024-07-03-2 (2024-07-06)
 - Minor bugs fixed
 
 ## 5.13-2024-07-03 (2024-07-03)
@@ -84,7 +84,7 @@
 ## 5.13-2024-03-06 (2024-03-06)
 
 - Update to latest version from mbentley/omada-controller
-## 5.13-2024-02-28-2 (05-03-2024)
+## 5.13-2024-02-28-2 (2024-03-05)
 
 - additional ports needed in the latest controller version
 
@@ -143,22 +143,22 @@
 ## 5.12-2023-12-01 (2023-12-01)
 
 - Update to latest version from mbentley/omada-controller
-## DONOTUPDATE_TEST3 (30-11-2023)
+## DONOTUPDATE_TEST3 (2023-11-30)
 
 - Minor bugs fixed
-## DONOTUPDATE_TEST2 (30-11-2023)
+## DONOTUPDATE_TEST2 (2023-11-30)
 
 - Minor bugs fixed
-## 5.12-2023-11-22-DONOTUPDATE6 (30-11-2023)
+## 5.12-2023-11-22-DONOTUPDATE6 (2023-11-30)
 
 - Minor bugs fixed
-## 5.12-2023-11-22-DONOTUPDATE5 (30-11-2023)
+## 5.12-2023-11-22-DONOTUPDATE5 (2023-11-30)
 
 - Minor bugs fixed
-## 5.12-2023-11-22-DONOTUPDATE4 (30-11-2023)
+## 5.12-2023-11-22-DONOTUPDATE4 (2023-11-30)
 
 - Minor bugs fixed
-## 5.12-2023-11-22-DONOTUPDATE (30-11-2023)
+## 5.12-2023-11-22-DONOTUPDATE (2023-11-30)
 
 - Minor bugs fixed
 TEST, DO NOT UPDATE
@@ -169,7 +169,7 @@ TEST, DO NOT UPDATE
 - Recommendation : please backup your database and migrated to this addon https://github.com/jkunczik/home-assistant-omada
 - It is dedicated and seems in active development ; it should be more stable
 
-## 5.12-2023-11-21-2 (22-11-2023)
+## 5.12-2023-11-21-2 (2023-11-22)
 
 - Minor bugs fixed
 - Restored functionality of data retention
@@ -197,10 +197,10 @@ TEST, DO NOT UPDATE
 ## 5.12-2023-10-13 (2023-10-13)
 
 - Update to latest version from mbentley/omada-controller
-## 5.12-2023-10-06-3 (08-10-2023)
+## 5.12-2023-10-06-3 (2023-10-08)
 
 - Minor bugs fixed
-## 5.12-2023-10-06-2 (08-10-2023)
+## 5.12-2023-10-06-2 (2023-10-08)
 
 - Minor bugs fixed
 - Fix : disappearing data
@@ -212,13 +212,13 @@ TEST, DO NOT UPDATE
 ## beta-arm64-2023-09-22 (2023-09-22)
 
 - Update to latest version from mbentley/omada-controller
-## 5.9-chromium-amd64-2023-06-05-2 (06-06-2023)
+## 5.9-chromium-amd64-2023-06-05-2 (2023-06-06)
 
 - Minor bugs fixed
-## 5.9-chromium-amd64-2023-06-05 (05-06-2023)
+## 5.9-chromium-amd64-2023-06-05 (2023-06-05)
 
 - Minor bugs fixed
-## 5.9-chromium-amd64-2023-06-03 (03-06-2023)
+## 5.9-chromium-amd64-2023-06-03 (2023-06-03)
 
 - Minor bugs fixed
 - Correction of portal http port to 8888
@@ -458,11 +458,11 @@ TEST, DO NOT UPDATE
 
 - Update to latest version from mbentley/omada-controller
 
-## 5.4-chromium-arm64 (11-08-2022)
+## 5.4-chromium-arm64 (2022-08-11)
 
 - Update to latest version from mbentley/omada-controller
 
-## 5.1.7 (14-04-2022)
+## 5.1.7 (2022-04-14)
 
 - Update to latest version from mbentley/omada-controller
 - Initial release

@@ -1,52 +1,52 @@
-## 4.4.15 (03-01-2026)
+## 4.4.15 (2026-01-03)
 - Minor bugs fixed
 
-## 4.4.13 (20-12-2025)
+## 4.4.13 (2025-12-20)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
 
-## 4.4.12 (29-11-2025)
+## 4.4.12 (2025-11-29)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
 
-## 4.4.10 (22-11-2025)
+## 4.4.10 (2025-11-22)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
 
-## 4.4.11 (15-11-2025)
+## 4.4.11 (2025-11-15)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
 
-## 4.4.10 (08-11-2025)
+## 4.4.10 (2025-11-08)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-## "4.4.6-3" (05-11-2025)
+## "4.4.6-3" (2025-11-05)
 - Minor bugs fixed
-## "4.4.6-2" (04-11-2025)
+## "4.4.6-2" (2025-11-04)
 - Minor bugs fixed
-## "4.4.6" (01-11-2025)
-- Minor bugs fixed
-
-## 4.4.6 (01-11-2025)
-- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
-
-## 4.4.5 (11-10-2025)
-- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
-
-## 1.2.9 (04-10-2025)
-- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
-
-## 4.4.4 (09-08-2025)
-- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
-
-## 4.4.3 (25-07-2025)
-- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
-## 4.4.0-2 (20-07-2025)
+## "4.4.6" (2025-11-01)
 - Minor bugs fixed
 
-## 4.4.0 (18-07-2025)
+## 4.4.6 (2025-11-01)
 - Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
-## 1.1.57-3 (18-07-2025)
+
+## 4.4.5 (2025-10-11)
+- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
+
+## 1.2.9 (2025-10-04)
+- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
+
+## 4.4.4 (2025-08-09)
+- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
+
+## 4.4.3 (2025-07-25)
+- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
+## 4.4.0-2 (2025-07-20)
 - Minor bugs fixed
-## 1.1.57-2 (17-07-2025)
+
+## 4.4.0 (2025-07-18)
+- Update to latest version from ente-io/ente (changelog : https://github.com/ente-io/ente/releases)
+## 1.1.57-3 (2025-07-18)
 - Minor bugs fixed
-## 1.1.57 (17-07-2025)
+## 1.1.57-2 (2025-07-17)
+- Minor bugs fixed
+## 1.1.57 (2025-07-17)
 - Minor bugs fixed
 

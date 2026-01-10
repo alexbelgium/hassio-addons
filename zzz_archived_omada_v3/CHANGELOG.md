@@ -1,15 +1,15 @@
 
-##  (23-12-2025)
+##  (2025-12-23)
 - Update to latest version from mbentley/omada-controller
-## 5.3-amd64-2025-11-09-2 (18-11-2025)
+## 5.3-amd64-2025-11-09-2 (2025-11-18)
 - Minor bugs fixed
 
-## 5.3-amd64-2025-11-09-1 (18-11-2025)
+## 5.3-amd64-2025-11-09-1 (2025-11-18)
 - Added `env_vars` option to allow passing custom environment variables from the add-on configuration.
 
 ## 5.3-amd64-2025-11-09 (2025-11-09)
 - Update to latest version from mbentley/omada-controller
-## 5.3-2025-05-30 (31-05-2025)
+## 5.3-2025-05-30 (2025-05-31)
 - Minor bugs fixed
 
 ## 5.3-amd64-2025-05-30 (2025-05-30)
@@ -189,12 +189,12 @@
 ## 5.3-test-2022-06-13 (2022-06-13)
 
 - Update to latest version from mbentley/omada-controller
-## 5.3-chromium-2023-06-05 (03-06-2023)
+## 5.3-chromium-2023-06-05 (2023-06-03)
 
 - Minor bugs fixed
 - Correction of portal http port to 8888
 
-## 5.1.7 (14-04-2022)
+## 5.1.7 (2022-04-14)
 
 - Update to latest version from mbentley/omada-controller
 - Initial release

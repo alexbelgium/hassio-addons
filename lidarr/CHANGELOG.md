@@ -1,332 +1,332 @@
 
-## 3.1.0.4875-1 (08-01-2026)
+## 3.1.0.4875-1 (2026-01-08)
 - ⚠ MAJOR CHANGE : switch to the new config logic from homeassistant. Your configuration files will have migrated from /config/addons_config/lidarr to a folder only accessible from my Filebrowser addon called /addon_configs/xxx-lidarr_nas. This avoids the addon to mess with your homeassistant configuration folder, and allows to backup the options. Migration of data should be automatic. Please be sure to update all your links however ! For more information, see here : https://developers.home-assistant.io/blog/2023/11/06/public-addon-config/
 
-## 3.1.0.4875 (22-11-2025)
+## 3.1.0.4875 (2025-11-22)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-## 3.0.1.4866 (01-11-2025)
+## 3.0.1.4866 (2025-11-01)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.14.5.4836 (11-10-2025)
+## 2.14.5.4836 (2025-10-11)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.13.3.4711 (30-08-2025)
+## 2.13.3.4711 (2025-08-30)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.12.4.4658 (13-06-2025)
+## 2.12.4.4658 (2025-06-13)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.11.2.4629 (03-05-2025)
+## 2.11.2.4629 (2025-05-03)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.10.3.4602 (29-03-2025)
+## 2.10.3.4602 (2025-03-29)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.9.6.4552 (08-02-2025)
+## 2.9.6.4552 (2025-02-08)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.8.2.4493 (21-12-2024)
+## 2.8.2.4493 (2024-12-21)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.7.1.4417 (02-11-2024)
+## 2.7.1.4417 (2024-11-02)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.6.4.4402 (12-10-2024)
+## 2.6.4.4402 (2024-10-12)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.5.3.4341 (07-09-2024)
+## 2.5.3.4341 (2024-09-07)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.4.3.4248 (20-07-2024)
+## 2.4.3.4248 (2024-07-20)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.3.3.4204 (18-05-2024)
+## 2.3.3.4204 (2024-05-18)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.2.5.4141 (20-04-2024)
+## 2.2.5.4141 (2024-04-20)
 - Update to latest version from linuxserver/docker-lidarr (changelog : https://github.com/linuxserver/docker-lidarr/releases)
 
-## 2.1.7.4030 (17-02-2024)
+## 2.1.7.4030 (2024-02-17)
 
 - Update to latest version from linuxserver/docker-lidarr
 - There is now an official addon in the community repository, you should migrate to it !
 
-## 2.0.7.3849 (16-12-2023)
+## 2.0.7.3849 (2023-12-16)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.4.5.3639 (14-10-2023)
+## 1.4.5.3639 (2023-10-14)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.3.5.3530 (26-08-2023)
+## 1.3.5.3530 (2023-08-26)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.3.5.3530-ls134 (26-08-2023)
+## 1.3.5.3530-ls134 (2023-08-26)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.2.6.3313-ls133 (19-08-2023)
+## 1.2.6.3313-ls133 (2023-08-19)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.2.6.3313-ls132 (12-08-2023)
+## 1.2.6.3313-ls132 (2023-08-12)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.2.6.3313-ls131 (05-08-2023)
+## 1.2.6.3313-ls131 (2023-08-05)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.2.6.3313-ls130 (29-07-2023)
+## 1.2.6.3313-ls130 (2023-07-29)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.2.6.3313-ls129 (22-07-2023)
+## 1.2.6.3313-ls129 (2023-07-22)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.2.6.3313-ls128 (15-07-2023)
+## 1.2.6.3313-ls128 (2023-07-15)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.2.6.3313-ls127 (08-07-2023)
+## 1.2.6.3313-ls127 (2023-07-08)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.1.4.3027-ls126 (01-07-2023)
+## 1.1.4.3027-ls126 (2023-07-01)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.1.4.3027-ls125 (24-06-2023)
+## 1.1.4.3027-ls125 (2023-06-24)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.1.4.3027-ls123 (10-06-2023)
+## 1.1.4.3027-ls123 (2023-06-10)
 
 - Update to latest version from linuxserver/docker-lidarr
-## 1.1.4.3027-ls122-2 (08-06-2023)
+## 1.1.4.3027-ls122-2 (2023-06-08)
 
 - Minor bugs fixed
 
-## 1.1.4.3027-ls122 (03-06-2023)
+## 1.1.4.3027-ls122 (2023-06-03)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.1.4.3027-ls121 (27-05-2023)
+## 1.1.4.3027-ls121 (2023-05-27)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.1.4.3027-ls120 (13-05-2023)
+## 1.1.4.3027-ls120 (2023-05-13)
 
 - Update to latest version from linuxserver/docker-lidarr
 - Feat : cifsdomain added
 
-## 1.1.4.3027-ls119 (29-04-2023)
+## 1.1.4.3027-ls119 (2023-04-29)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.1.4.3027-ls118 (21-04-2023)
+## 1.1.4.3027-ls118 (2023-04-21)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls117-2 (15-04-2023)
+## 1.0.2.2592-ls117-2 (2023-04-15)
 
 - Minor bugs fixed
 
-## 1.0.2.2592-ls117 (15-04-2023)
+## 1.0.2.2592-ls117 (2023-04-15)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls116 (08-04-2023)
+## 1.0.2.2592-ls116 (2023-04-08)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls114 (31-03-2023)
+## 1.0.2.2592-ls114 (2023-03-31)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls113-2 (12-03-2023)
+## 1.0.2.2592-ls113-2 (2023-03-12)
 
 - Minor bugs fixed
 - Implemented healthcheck
 
-## 1.0.2.2592-ls113 (11-03-2023)
+## 1.0.2.2592-ls113 (2023-03-11)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls112 (04-03-2023)
+## 1.0.2.2592-ls112 (2023-03-04)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls111 (19-02-2023)
+## 1.0.2.2592-ls111 (2023-02-19)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls109 (28-01-2023)
+## 1.0.2.2592-ls109 (2023-01-28)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls108 (22-01-2023)
+## 1.0.2.2592-ls108 (2023-01-22)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls107 (21-01-2023)
+## 1.0.2.2592-ls107 (2023-01-21)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls106 (25-12-2022)
+## 1.0.2.2592-ls106 (2022-12-25)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls104 (03-12-2022)
+## 1.0.2.2592-ls104 (2022-12-03)
 
 - Update to latest version from linuxserver/docker-lidarr
 - WARNING : update to supervisor 2022.11 before installing
 
-## 1.0.2.2592-ls103 (14-11-2022)
+## 1.0.2.2592-ls103 (2022-11-14)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls102 (08-11-2022)
+## 1.0.2.2592-ls102 (2022-11-08)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls101 (02-11-2022)
+## 1.0.2.2592-ls101 (2022-11-02)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls100 (01-11-2022)
+## 1.0.2.2592-ls100 (2022-11-01)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls99 (18-10-2022)
+## 1.0.2.2592-ls99 (2022-10-18)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls98 (27-09-2022)
+## 1.0.2.2592-ls98 (2022-09-27)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls97 (20-09-2022)
+## 1.0.2.2592-ls97 (2022-09-20)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls96 (09-09-2022)
+## 1.0.2.2592-ls96 (2022-09-09)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls95 (30-08-2022)
+## 1.0.2.2592-ls95 (2022-08-30)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls94 (16-08-2022)
+## 1.0.2.2592-ls94 (2022-08-16)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls93 (09-08-2022)
+## 1.0.2.2592-ls93 (2022-08-09)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls92 (04-08-2022)
+## 1.0.2.2592-ls92 (2022-08-04)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls91 (26-07-2022)
+## 1.0.2.2592-ls91 (2022-07-26)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls90 (12-07-2022)
+## 1.0.2.2592-ls90 (2022-07-12)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls89 (05-07-2022)
+## 1.0.2.2592-ls89 (2022-07-05)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls88 (23-06-2022)
+## 1.0.2.2592-ls88 (2022-06-23)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls87 (16-06-2022)
+## 1.0.2.2592-ls87 (2022-06-16)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls86 (14-06-2022)
+## 1.0.2.2592-ls86 (2022-06-14)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 1.0.2.2592-ls85 (06-06-2022)
+## 1.0.2.2592-ls85 (2022-06-06)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls85 (31-05-2022)
+## 0.8.1.2135-ls85 (2022-05-31)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls84 (24-05-2022)
+## 0.8.1.2135-ls84 (2022-05-24)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls83 (17-05-2022)
+## 0.8.1.2135-ls83 (2022-05-17)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls82 (07-05-2022)
+## 0.8.1.2135-ls82 (2022-05-07)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls80 (01-05-2022)
+## 0.8.1.2135-ls80 (2022-05-01)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls79 (19-04-2022)
+## 0.8.1.2135-ls79 (2022-04-19)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls78 (05-04-2022)
+## 0.8.1.2135-ls78 (2022-04-05)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls77 (27-03-2022)
+## 0.8.1.2135-ls77 (2022-03-27)
 
 - Update to latest version from linuxserver/docker-lidarr
 - Add codenotary sign
 
-## 0.8.1.2135-ls76 (22-03-2022)
+## 0.8.1.2135-ls76 (2022-03-22)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls75 (14-03-2022)
+## 0.8.1.2135-ls75 (2022-03-14)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls74 (06-03-2022)
+## 0.8.1.2135-ls74 (2022-03-06)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls73 (27-02-2022)
+## 0.8.1.2135-ls73 (2022-02-27)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls72 (13-02-2022)
+## 0.8.1.2135-ls72 (2022-02-13)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls71 (08-02-2022)
+## 0.8.1.2135-ls71 (2022-02-08)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls70 (07-02-2022)
+## 0.8.1.2135-ls70 (2022-02-07)
 
 - Update to latest version from linuxserver/docker-lidarr
 
-## 0.8.1.2135-ls69 (16-01-2022)
+## 0.8.1.2135-ls69 (2022-01-16)
 
 - Update to latest version from linuxserver/docker-lidarr
 

@@ -1,13 +1,13 @@
-## description: Automatic addons update by aligning version tag with upstream releases 3.19.16 (10-01-2026)
+## description: Automatic addons update by aligning version tag with upstream releases 3.19.16 (2026-01-10)
 - Minor bugs fixed
 ## 3.19.16 (2026-01-10)
 - Add config option to choose ISO8601 (YYYY-MM-DD) or DD-MM-YYYY dates for last_update/changelog entries
 
-## 3.19.15 (08-12-2025)
+## 3.19.15 (2025-12-08)
 - The Home Assistant project has deprecated support for the armv7, armhf and i386 architectures. Support wil be fully dropped in the upcoming Home Assistant 2025.12 release
 - Improve Codeberg handling with a Gitea API fallback when lastversion lacks custom host support
 
-## 3.19.12 (18-11-2025)
+## 3.19.12 (2025-11-18)
 
 - Added support for configuring extra environment variables through the `env_vars` option.
 
