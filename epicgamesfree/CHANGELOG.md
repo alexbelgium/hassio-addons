@@ -240,7 +240,7 @@ A redemption link is sent to your preferred notification method instead of being
 ## 3d0cbfc49854ad026fd10a36966442235084baff-2022-11-05 (2022-11-05)
 
 - Update to latest version from charlocharlie/epicgames-freegames
-## 30-10-2022
+## 2022-10-30
 
 - New config.js update
 

@@ -84,7 +84,7 @@
 
 - Minor bugs fixed
 
-## 25-05-2024
+## 2024-05-25
 
 - Update to latest version from openproject/openproject (changelog : https://github.com/openproject/openproject/releases)
 
