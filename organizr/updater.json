@@ -1,5 +1,6 @@
 {
   "last_update": "27-12-2025",
+  "paused": true,
   "repository": "alexbelgium/hassio-addons",
   "slug": "organizr",
   "source": "github",

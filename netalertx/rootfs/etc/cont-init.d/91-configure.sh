@@ -101,10 +101,10 @@ execute_main_logic() {
 wait_for_config_file() {
     echo "Waiting for $config_file to become available..."
     while [ ! -f "$config_file" ]; do
-        sleep 5 # Wait for 5 seconds before checking again
+        sleep 1
     done
-    echo "$config_file is now available. Starting the script."
-    execute_main_logic
+    echo "$config_file is now available. Rebooting the addon."
+    bashio::addon.restart
 }
 
 # Main script logic

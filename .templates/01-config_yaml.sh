@@ -135,6 +135,16 @@ sed -i 's/: /=/' /tempenv
 SECRETSFILE="/config/secrets.yaml"
 if [ ! -f "$SECRETSFILE" ]; then SECRETSFILE="/homeassistant/secrets.yaml"; fi
 
+# --- minimal helper: append line only if missing
+append_unique_line() {
+    # $1=file, $2=line
+    local _file="$1"
+    local _line="$2"
+    mkdir -p "$(dirname "$_file")" 2>/dev/null || true
+    touch "$_file" 2>/dev/null || true
+    grep -qxF -- "$_line" "$_file" 2>/dev/null || echo "$_line" >> "$_file"
+}
+
 while IFS= read -r line; do
     # Skip empty lines
     if [[ -z "$line" ]]; then
@@ -164,12 +174,9 @@ while IFS= read -r line; do
         # extract keys and values
         KEYS="${line%%=*}"
         VALUE="${line#*=}"
-        # Check if VALUE is quoted
-        #if [[ "$VALUE" != \"*\" ]] && [[ "$VALUE" != \'*\' ]]; then
-        #	VALUE="\"$VALUE\""
-        #fi
         line="${KEYS}=${VALUE}"
         export "$line"
+
         # export to python
         if command -v "python3" &> /dev/null; then
             [ ! -f /env.py ] && echo "import os" > /env.py
@@ -178,20 +185,29 @@ while IFS= read -r line; do
             echo "os.environ['${KEYS}'] = '${VALUE_ESCAPED}'" >> /env.py
             python3 /env.py
         fi
+
         # set .env
         echo "$line" >> "$ENV_FILE"
+
         # set environment
         mkdir -p /etc
         echo "$line" >> /etc/environment
+
         # Export to entrypoint
         if [ -f /entrypoint.sh ]; then sed -i "1a export $line" /entrypoint.sh 2> /dev/null; fi
         if [ -f /*/entrypoint.sh ]; then sed -i "1a export $line" /*/entrypoint.sh 2> /dev/null; fi
+
         # Export to scripts
         if cat /etc/services.d/*/*run* &> /dev/null; then sed -i "1a export $line" /etc/services.d/*/*run* 2> /dev/null; fi
         if cat /etc/cont-init.d/*run* &> /dev/null; then sed -i "1a export $line" /etc/cont-init.d/*run* 2> /dev/null; fi
+
         # For s6
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
-        echo "export $line" >> ~/.bashrc
+
+        # Persist for interactive shells
+        append_unique_line "$HOME/.bashrc" "export $line"
+        append_unique_line "/etc/bash.bashrc" "export $line"
+
         # Show in log
         if ! bashio::config.false "verbose"; then bashio::log.blue "$line"; fi
     else
