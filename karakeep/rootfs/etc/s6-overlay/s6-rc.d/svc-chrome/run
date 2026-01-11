@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 set -e
 
-EXTENSIONS_DIR="${CHROME_EXTENSIONS_DIR:-/share/karakeep/extensions}"
+EXTENSIONS_DIR="${CHROME_EXTENSIONS_DIR:-/usr/src/chrome/extensions}"
 
 extensions=()
 for extension in "${EXTENSIONS_DIR}/i-dont-care-about-cookies" "${EXTENSIONS_DIR}/ublock-origin"; do

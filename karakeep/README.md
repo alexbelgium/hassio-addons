@@ -63,7 +63,7 @@ Webui can be found at `<your-ip>:3000`.
 | `CRAWLER_VIDEO_DOWNLOAD_MAX_SIZE` | int | | Max video size (MB). |
 | `CRAWLER_VIDEO_DOWNLOAD_TIMEOUT_SEC` | int | | Video download timeout. |
 | `CRAWLER_ENABLE_ADBLOCKER` | bool | `true` | Enable ad blocking in the crawler. |
-| `CHROME_EXTENSIONS_DIR` | str | `/share/karakeep/extensions` | Host-mounted extensions directory for headless Chromium. |
+| `CHROME_EXTENSIONS_DIR` | str | `/usr/src/chrome/extensions` | Extensions directory for headless Chromium. |
 | `MEILI_MASTER_KEY` | password | | Meilisearch master key (auto-generated if left blank). |
 | `MEILI_ADDR` | str | | Meilisearch URL. |
 | `BROWSER_WEB_URL` | str | | Chromium remote debugging URL. |
@@ -72,15 +72,9 @@ Webui can be found at `<your-ip>:3000`.
 
 ### Extensions for headless Chromium
 
-This add-on loads extensions in headless Chromium with the `--headless=new` flag. To use the included defaults:
+This add-on loads extensions in headless Chromium with the `--headless=new` flag. The defaults are downloaded automatically during the image build and refreshed each time the add-on starts into `/usr/src/chrome/extensions` (non-persistent).
 
-1. Create these folders on the host (via the `/share` mount):
-   - `/share/karakeep/extensions/i-dont-care-about-cookies`
-   - `/share/karakeep/extensions/ublock-origin`
-2. Unzip each extension into its corresponding folder.
-3. Restart the add-on.
-
-You can override the base folder with the `CHROME_EXTENSIONS_DIR` option. Any missing extension folder is skipped at runtime.
+You can override the base folder with the `CHROME_EXTENSIONS_DIR` option to point to a host-mounted directory if you prefer to manage extensions manually. Any missing extension folder is skipped at runtime.
 
 ### Custom Scripts and Environment Variables
 
