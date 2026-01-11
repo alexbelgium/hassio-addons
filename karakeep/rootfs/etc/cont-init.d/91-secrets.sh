@@ -1,9 +1,13 @@
-#!/command/with-contenv bashio
+#!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 set -e
 
 generate_secret() {
-  tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 64
+  # Avoid SIGPIPE from `tr` when `head` terminates early under pipefail.
+  (
+    set +o pipefail 2>/dev/null || true
+    tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 64
+  )
 }
 
 set_option() {
