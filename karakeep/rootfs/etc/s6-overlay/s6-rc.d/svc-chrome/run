@@ -1,0 +1,21 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+EXTENSIONS_DIR="${CHROME_EXTENSIONS_DIR:-/share/karakeep/extensions}"
+
+extensions=()
+for extension in "${EXTENSIONS_DIR}/i-dont-care-about-cookies" "${EXTENSIONS_DIR}/ublock-origin"; do
+  if [ -d "$extension" ]; then
+    extensions+=("$extension")
+  fi
+done
+
+extension_flag=""
+if [ ${#extensions[@]} -gt 0 ]; then
+  extension_flag="--load-extension=$(IFS=,; echo "${extensions[*]}")"
+fi
+
+cd /usr/src/chrome
+
+exec su chrome -c "chromium-browser --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --hide-scrollbars --disable-crash-reporter --no-crash-upload --user-data-dir=/data/chrome ${extension_flag}" 
