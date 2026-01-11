@@ -36,7 +36,7 @@ ENV \
     DISABLE_NEW_RELEASE_CHECK=true \
     BROWSER_WEB_URL="http://127.0.0.1:9222" \
     MEILI_ADDR="http://127.0.0.1:7700" \
-    MEILI_MASTER_KEY="0uIHQXWthY2L2yqCWGVGu2axN+l4qcDEc+Of/7e8X7bEyZ8k" \
+    MEILI_MASTER_KEY="" \
     MEILI_NO_ANALYTICS=true \
     XDG_CACHE_HOME="/data/cache"
 
