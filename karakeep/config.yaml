@@ -4,7 +4,7 @@ arch:
 name: Karakeep
 slug: karakeep
 description: A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search
-version: 0.30.0-2
+version: 0.30.0-3
 url: https://github.com/alexbelgium/hassio-addons/tree/master/karakeep
 image: ghcr.io/alexbelgium/karakeep-{arch}
 init: false
