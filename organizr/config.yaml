@@ -71,6 +71,7 @@ map:
 name: Organizr
 options:
   env_vars: []
+  branch: "v2-master"
   PGID: "1000"
   PUID: "1000"
 ports:
@@ -81,6 +82,7 @@ schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
+  branch: list(v2-master|v2-develop)
   PGID: int
   PUID: int
 slug: organizr
