@@ -1,7 +1,7 @@
 arch:
   - aarch64
   - amd64
-description: bookmark-everything app with a touch of AI for the data hoarders out there
+description: A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search
 environment:
   BROWSER_WEB_URL: http://127.0.0.1:9222
   CHROME_EXTENSIONS_DIR: /usr/src/chrome/extensions
