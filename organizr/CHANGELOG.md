@@ -1,3 +1,5 @@
+## v2 (11-01-2026)
+- Minor bugs fixed
 
 ## 1.601 (2025-12-27)
 - Update to latest version from causefx/organizr (changelog : https://github.com/causefx/organizr/releases)
