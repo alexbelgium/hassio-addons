@@ -4,7 +4,7 @@ arch:
 description: bookmark-everything app with a touch of AI for the data hoarders out there
 environment:
   BROWSER_WEB_URL: http://127.0.0.1:9222
-  CHROME_EXTENSIONS_DIR: /share/karakeep/extensions
+  CHROME_EXTENSIONS_DIR: /usr/src/chrome/extensions
   DATA_DIR: /data
   DISABLE_NEW_RELEASE_CHECK: "true"
   MEILI_ADDR: http://127.0.0.1:7700
@@ -19,7 +19,7 @@ map:
 name: Karakeep
 options:
   env_vars: []
-  CHROME_EXTENSIONS_DIR: /share/karakeep/extensions
+  CHROME_EXTENSIONS_DIR: /usr/src/chrome/extensions
   CRAWLER_DOWNLOAD_BANNER_IMAGE: true
   CRAWLER_ENABLE_ADBLOCKER: true
   CRAWLER_FULL_PAGE_ARCHIVE: false

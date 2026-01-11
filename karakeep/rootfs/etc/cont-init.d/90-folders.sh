@@ -7,9 +7,9 @@ bashio::log.info "Creating folders"
 mkdir -p \
   /data/cache \
   /data/chrome \
-  /share/karakeep/extensions \
-  /config/meili
+  /config/meili \
+  /usr/src/chrome/extensions
 
 if id chrome &>/dev/null; then
-  chown -R chrome:chrome /data/cache /data/chrome
+  chown -R chrome:chrome /data/cache /data/chrome /usr/src/chrome/extensions
 fi

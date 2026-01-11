@@ -57,6 +57,7 @@ RUN \
         ttf-freefont \
         font-noto-emoji \
         font-wqy-zenhei \
+        unzip \
     && mkdir -p /usr/src/chrome \
     && adduser -D chrome \
     && chown -R chrome:chrome /usr/src/chrome
@@ -108,6 +109,23 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /.bashio-standalone.sh
 
 RUN sed -i "s|/usr/bin/env|/usr/bin/with-contenv|g" /etc/cont-init.d/*
+
+RUN set -e; \
+    extensions_dir="/usr/src/chrome/extensions"; \
+    mkdir -p "${extensions_dir}"; \
+    for entry in \
+      "i-dont-care-about-cookies:fllaojicojecljbmefodhfapmkghcbnh" \
+      "ublock-origin:cjpalhdlnbpafiamejdnhcphjbkeiagm"; do \
+        name="${entry%%:*}"; \
+        ext_id="${entry##*:}"; \
+        curl -fsSL "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=120.0&acceptformat=crx2,crx3&x=id%3D${ext_id}%26installsource%3Dondemand%26uc" \
+          -o "/tmp/${name}.crx"; \
+        rm -rf "${extensions_dir:?}/${name}"; \
+        mkdir -p "${extensions_dir}/${name}"; \
+        unzip -q "/tmp/${name}.crx" -d "${extensions_dir}/${name}"; \
+        rm "/tmp/${name}.crx"; \
+    done; \
+    chown -R chrome:chrome "${extensions_dir}"
 
 ############
 # 5 Labels #
