@@ -122,8 +122,13 @@ RUN set -e; \
           -o "/tmp/${name}.crx"; \
         rm -rf "${extensions_dir:?}/${name}"; \
         mkdir -p "${extensions_dir}/${name}"; \
-        unzip -q "/tmp/${name}.crx" -d "${extensions_dir}/${name}"; \
-        rm "/tmp/${name}.crx"; \
+        rc=0; \
+        unzip -q "/tmp/${name}.crx" -d "${extensions_dir}/${name}" || rc=$$?; \
+        if [ "$$rc" -ne 0 ] && [ "$$rc" -ne 1 ]; then \
+          echo "ERROR: unzip failed for ${name} (rc=$$rc)"; \
+          exit "$$rc"; \
+        fi; \
+        rm -f "/tmp/${name}.crx"; \
     done; \
     chown -R chrome:chrome "${extensions_dir}"
 
