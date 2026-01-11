@@ -1,0 +1,78 @@
+arch:
+  - aarch64
+  - amd64
+description: bookmark-everything app with a touch of AI for the data hoarders out there
+environment:
+  BROWSER_WEB_URL: http://127.0.0.1:9222
+  CHROME_EXTENSIONS_DIR: /share/karakeep/extensions
+  DATA_DIR: /data
+  DISABLE_NEW_RELEASE_CHECK: "true"
+  MEILI_ADDR: http://127.0.0.1:7700
+  MEILI_MASTER_KEY: 0uIHQXWthY2L2yqCWGVGu2axN+l4qcDEc+Of/7e8X7bEyZ8k
+  MEILI_NO_ANALYTICS: "true"
+  XDG_CACHE_HOME: /data/cache
+image: ghcr.io/alexbelgium/karakeep-{arch}
+init: false
+map:
+  - addon_config:rw
+  - share:rw
+name: Karakeep
+options:
+  env_vars: []
+  CHROME_EXTENSIONS_DIR: /share/karakeep/extensions
+  CRAWLER_DOWNLOAD_BANNER_IMAGE: true
+  CRAWLER_ENABLE_ADBLOCKER: true
+  CRAWLER_FULL_PAGE_ARCHIVE: false
+  CRAWLER_FULL_PAGE_SCREENSHOT: false
+  CRAWLER_STORE_SCREENSHOT: false
+  DISABLE_SIGNUPS: false
+  BROWSER_WEB_URL: http://127.0.0.1:9222
+  DATA_DIR: /data
+  MAX_ASSET_SIZE_MB: 4
+  MEILI_ADDR: http://127.0.0.1:7700
+  MEILI_MASTER_KEY: 0uIHQXWthY2L2yqCWGVGu2axN+l4qcDEc+Of/7e8X7bEyZ8k
+  NEXTAUTH_SECRET: jnE2An0WyIKZvO+WgKJrn8WPW+c3DzV+c9ntBp8CdobTOmpJ
+  TZ: Etc/UTC
+ports:
+  3000/tcp: 3000
+ports_description:
+  3000/tcp: Web UI
+schema:
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
+  BROWSER_WEB_URL: str?
+  CHROME_EXTENSIONS_DIR: str?
+  DATA_DIR: str?
+  DISABLE_SIGNUPS: bool
+  MEILI_ADDR: str?
+  MEILI_MASTER_KEY: password
+  MAX_ASSET_SIZE_MB: int?
+  NEXTAUTH_SECRET: password
+  NEXTAUTH_URL: str?
+  OCR_LANGS: str?
+  OCR_CONFIDENCE_THRESHOLD: int(0,100)?
+  OPENAI_BASE_URL: str?
+  OPENAI_API_KEY: password?
+  OLLAMA_BASE_URL: str?
+  INFERENCE_TEXT_MODEL: str?
+  INFERENCE_IMAGE_MODEL: str?
+  EMBEDDING_TEXT_MODEL: str?
+  INFERENCE_CONTEXT_LENGTH: int(0,)?
+  INFERENCE_LANG: str?
+  INFERENCE_JOB_TIMEOUT_SEC: int(0,)?
+  CRAWLER_DOWNLOAD_BANNER_IMAGE: bool
+  CRAWLER_STORE_SCREENSHOT: bool
+  CRAWLER_FULL_PAGE_SCREENSHOT: bool
+  CRAWLER_FULL_PAGE_ARCHIVE: bool
+  CRAWLER_JOB_TIMEOUT_SEC: int(0,)?
+  CRAWLER_NAVIGATE_TIMEOUT_SEC: int(0,)?
+  CRAWLER_VIDEO_DOWNLOAD: bool?
+  CRAWLER_VIDEO_DOWNLOAD_MAX_SIZE: int?
+  CRAWLER_VIDEO_DOWNLOAD_TIMEOUT_SEC: int(0,)?
+  CRAWLER_ENABLE_ADBLOCKER: bool
+  TZ: str?
+slug: karakeep
+url: https://github.com/alexbelgium/hassio-addons/tree/master/karakeep
+version: "0.30.0"
+webui: "[PROTO:ssl]://[HOST]:[PORT:3000]"

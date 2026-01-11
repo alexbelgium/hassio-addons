@@ -1,0 +1,7 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+set -e
+
+mkdir -p "${MEILI_DIR}"
+
+exec /bin/meilisearch --db-path "${MEILI_DIR}" --no-analytics --experimental-dumpless-upgrade
