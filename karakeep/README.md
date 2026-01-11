@@ -38,7 +38,7 @@ Webui can be found at `<your-ip>:3000`.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `NEXTAUTH_SECRET` | password | **Required** | Secret key for authentication (generate a long random string). |
+| `NEXTAUTH_SECRET` | password | | Secret key for authentication (auto-generated if left blank). |
 | `NEXTAUTH_URL` | str | | Public URL used by NextAuth (optional). |
 | `DISABLE_SIGNUPS` | bool | `false` | Disable new account signups. |
 | `MAX_ASSET_SIZE_MB` | int | `4` | Max asset upload size. |
@@ -64,7 +64,7 @@ Webui can be found at `<your-ip>:3000`.
 | `CRAWLER_VIDEO_DOWNLOAD_TIMEOUT_SEC` | int | | Video download timeout. |
 | `CRAWLER_ENABLE_ADBLOCKER` | bool | `true` | Enable ad blocking in the crawler. |
 | `CHROME_EXTENSIONS_DIR` | str | `/share/karakeep/extensions` | Host-mounted extensions directory for headless Chromium. |
-| `MEILI_MASTER_KEY` | password | | Meilisearch master key. |
+| `MEILI_MASTER_KEY` | password | | Meilisearch master key (auto-generated if left blank). |
 | `MEILI_ADDR` | str | | Meilisearch URL. |
 | `BROWSER_WEB_URL` | str | | Chromium remote debugging URL. |
 | `DATA_DIR` | str | | Data directory (leave default). |
@@ -97,8 +97,7 @@ comparison to installing any other Hass.io add-on.
 1. [Add my Hass.io add-ons repository][repository] to your Hass.io instance. [![Add repository on my Home Assistant][repository-badge]][repository-url]
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
-1. Set the `NEXTAUTH_SECRET` option to a secure random string.
-1. Start the add-on.
+1. Start the add-on (secrets are auto-generated if left blank).
 1. Check the logs of the add-on to see if everything went well.
 1. Open the webUI and complete the onboarding.
 

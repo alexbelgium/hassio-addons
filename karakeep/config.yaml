@@ -8,7 +8,7 @@ environment:
   DATA_DIR: /data
   DISABLE_NEW_RELEASE_CHECK: "true"
   MEILI_ADDR: http://127.0.0.1:7700
-  MEILI_MASTER_KEY: 0uIHQXWthY2L2yqCWGVGu2axN+l4qcDEc+Of/7e8X7bEyZ8k
+  MEILI_MASTER_KEY: ""
   MEILI_NO_ANALYTICS: "true"
   XDG_CACHE_HOME: /data/cache
 image: ghcr.io/alexbelgium/karakeep-{arch}
@@ -30,8 +30,8 @@ options:
   DATA_DIR: /data
   MAX_ASSET_SIZE_MB: 4
   MEILI_ADDR: http://127.0.0.1:7700
-  MEILI_MASTER_KEY: 0uIHQXWthY2L2yqCWGVGu2axN+l4qcDEc+Of/7e8X7bEyZ8k
-  NEXTAUTH_SECRET: jnE2An0WyIKZvO+WgKJrn8WPW+c3DzV+c9ntBp8CdobTOmpJ
+  MEILI_MASTER_KEY: ""
+  NEXTAUTH_SECRET: ""
   TZ: Etc/UTC
 ports:
   3000/tcp: 3000
@@ -46,9 +46,9 @@ schema:
   DATA_DIR: str?
   DISABLE_SIGNUPS: bool
   MEILI_ADDR: str?
-  MEILI_MASTER_KEY: password
+  MEILI_MASTER_KEY: password?
   MAX_ASSET_SIZE_MB: int?
-  NEXTAUTH_SECRET: password
+  NEXTAUTH_SECRET: password?
   NEXTAUTH_URL: str?
   OCR_LANGS: str?
   OCR_CONFIDENCE_THRESHOLD: int(0,100)?

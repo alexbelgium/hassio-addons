@@ -36,7 +36,7 @@ ENV \
     DISABLE_NEW_RELEASE_CHECK=true \
     BROWSER_WEB_URL="http://127.0.0.1:9222" \
     MEILI_ADDR="http://127.0.0.1:7700" \
-    MEILI_MASTER_KEY="0uIHQXWthY2L2yqCWGVGu2axN+l4qcDEc+Of/7e8X7bEyZ8k" \
+    MEILI_MASTER_KEY="" \
     MEILI_NO_ANALYTICS=true \
     XDG_CACHE_HOME="/data/cache"
 
@@ -106,6 +106,8 @@ RUN chmod 777 /ha_entrypoint.sh /ha_entrypoint_modif.sh && /ha_entrypoint_modif.
 # Standalone bashio command
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
 RUN chmod 777 /.bashio-standalone.sh
+
+RUN sed -i "s|/usr/bin/env|/usr/bin/with-contenv|g" /etc/cont-init.d/*
 
 ############
 # 5 Labels #
