@@ -205,7 +205,10 @@ while IFS= read -r line; do
         if [ -d /var/run/s6/container_environment ]; then printf "%s" "${VALUE}" > /var/run/s6/container_environment/"${KEYS}"; fi
 
         # Persist for interactive shells
-        append_unique_line "$HOME/.bashrc" "export $line"
+        if [[ -n "${HOME:-}" ]]; then
+            mkdir -p "$HOME"
+            append_unique_line "$HOME/.bashrc" "export $line"
+        fi
         append_unique_line "/etc/bash.bashrc" "export $line"
 
         # Show in log
