@@ -1,3 +1,5 @@
+## v2-3 (11-01-2026)
+- Minor bugs fixed
 ## v2-2 (18-03-2026)
 - Ensure folder permissions use configured PUID/PGID values
 
