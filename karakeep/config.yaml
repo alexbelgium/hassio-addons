@@ -33,6 +33,7 @@ options:
   OPENAI_API_KEY: ""
   OCR_LANGS: ""
   INFERENCE_LANG: ""
+  MEILI_MASTER_KEY: ""        # <-- add this
   CRAWLER_DOWNLOAD_BANNER_IMAGE: true
   CRAWLER_STORE_SCREENSHOT: true
   CRAWLER_FULL_PAGE_SCREENSHOT: true
@@ -48,7 +49,7 @@ schema:
   OPENAI_API_KEY: password?
   OCR_LANGS: str?
   INFERENCE_LANG: str?
-  MEILI_MASTER_KEY: str?
+  MEILI_MASTER_KEY: password?  # <-- change to password?
   CRAWLER_DOWNLOAD_BANNER_IMAGE: bool
   CRAWLER_STORE_SCREENSHOT: bool
   CRAWLER_FULL_PAGE_SCREENSHOT: bool
