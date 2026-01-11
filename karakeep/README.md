@@ -37,7 +37,7 @@ This Home Assistant add-on integrates Karakeep in a **Supervisor-native way**:
 - Secrets are **auto-generated and persisted**
 - Only meaningful user settings are exposed
 
-Add additional environment variables with env_vars : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2
+Add additional environment variables with [env_vars](https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2)
 
 ---
 
