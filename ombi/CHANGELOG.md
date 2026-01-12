@@ -1,4 +1,7 @@
 
+## 4.54.1 (2026-01-12)
+- Update to latest version from linuxserver/docker-ombi (changelog : https://github.com/linuxserver/docker-ombi/releases)
+
 ## 4.54.0 (2026-01-10)
 - Update to latest version from linuxserver/docker-ombi (changelog : https://github.com/linuxserver/docker-ombi/releases)
 ## 4.53.0-1 (2026-01-01)
