@@ -1,4 +1,7 @@
 
+## 5.5.1 (2026-01-12)
+- Update to latest version from linuxserver/docker-librespeed (changelog : https://github.com/linuxserver/docker-librespeed/releases)
+
 ## 5.5.0 (2026-01-03)
 - Update to latest version from linuxserver/docker-librespeed (changelog : https://github.com/linuxserver/docker-librespeed/releases)
 - Added support for configuring extra environment variables via the `env_vars` add-on option alongside config.yaml. See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
