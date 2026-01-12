@@ -24,6 +24,7 @@ schema:
   ssl: bool
   certfile: str?
   keyfile: str?
+  BROWSER_WEB_URL: str?
   DISABLE_SIGNUPS: bool
   NEXTAUTH_SECRET: password
   MAX_ASSET_SIZE_MB: int?
