@@ -7,6 +7,7 @@ webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
 arch:
   - aarch64
   - amd64
+image: ghcr.io/alexbelgium/karakeep-{arch}
 init: false
 hassio_api: true
 map:
