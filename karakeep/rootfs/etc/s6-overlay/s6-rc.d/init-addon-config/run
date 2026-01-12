@@ -1,0 +1,59 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+
+set -e
+
+echo "  Loading env variables:"
+
+OPTIONS_SOURCE=/data/options.json
+
+while read -r -d $'\0' key && read -r value; do
+
+    line="$key=$value"
+
+    # log redacted config
+    case "$key" in
+        *PASS*|*SECRET*|*KEY*|*TOKEN*)
+            echo "  $key=******"
+            ;;
+        *)
+            echo "  $line"
+            ;;
+    esac
+
+    export $key=$value
+
+    # set .env
+    echo "$line" >> /.env || true
+
+    # set /etc/environment
+    echo "$line" >> /etc/environment
+
+    # For s6
+    if [ -d /var/run/s6/container_environment ]; then
+        printf "%s" "$value" > /var/run/s6/container_environment/"$key"
+    fi
+
+    echo "export $line" >> ~/.bashrc
+done < <(
+    jq -r '
+        reduce to_entries[] as $item (
+            {};
+            if $item.value | type == "object" then
+                . + $item.value
+            else
+                . + { ($item.key): $item.value }
+            end
+        )
+        | to_entries[]
+        | "\(.key)\u0000\(.value|tostring)"
+    ' "$OPTIONS_SOURCE"
+)
+
+if [ -n "$TZ" ] && [ -f /etc/localtime ]; then
+    if [ -f /usr/share/zoneinfo/"$TZ" ]; then
+        echo "Timezone set to $TZ"
+        ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime
+        echo "$TZ" >/etc/timezone
+    fi
+fi

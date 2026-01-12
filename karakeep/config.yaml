@@ -1,58 +1,67 @@
+name: Karakeep
+version: 0.30.0-4
+slug: karakeep
+description: bookmark-everything app with a touch of AI for the data hoarders out there
+url: https://karakeep.app/
+webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
 arch:
   - aarch64
   - amd64
-name: Karakeep
-slug: karakeep
-description: A self-hostable bookmark-everything app (links, notes and images) with AI-based automatic tagging and full text search
-version: "1.8.5"
-url: https://github.com/alexbelgium/hassio-addons/tree/master/karakeep
-image: ghcr.io/alexbelgium/karakeep-{arch}
 init: false
-ports:
-  3000/tcp: 3000
-ports_description:
-  3000/tcp: Web UI
-webui: "[PROTO:ssl]://[HOST]:[PORT:3000]"
+hassio_api: true
 map:
-  - addon_config:rw
-  - share:rw
-environment:
-  DATA_DIR: /data
-  XDG_CACHE_HOME: /data/cache
-  BROWSER_WEB_URL: http://127.0.0.1:9222
-  CHROME_EXTENSIONS_DIR: /usr/src/chrome/extensions
-  MEILI_ADDR: http://127.0.0.1:7700
-  MEILI_NO_ANALYTICS: "true"
-  DISABLE_NEW_RELEASE_CHECK: "true"
-options:
-  TZ: Etc/UTC
-  DISABLE_SIGNUPS: false
-  NEXTAUTH_SECRET: ""
-  NEXTAUTH_URL: ""
-  MAX_ASSET_SIZE_MB: 4
-  OPENAI_API_KEY: ""
-  OCR_LANGS: ""
-  INFERENCE_LANG: ""
-  MEILI_MASTER_KEY: ""        # <-- add this
-  CRAWLER_DOWNLOAD_BANNER_IMAGE: true
-  CRAWLER_STORE_SCREENSHOT: true
-  CRAWLER_FULL_PAGE_SCREENSHOT: true
-  CRAWLER_FULL_PAGE_ARCHIVE: true
-  CRAWLER_ENABLE_ADBLOCKER: true
-  CRAWLER_VIDEO_DOWNLOAD: false
+  - type: addon_config
+    read_only: false
+  - type: share
+    read_only: false
+  - type: ssl
+backup: cold
+backup_exclude:
+  - "**/logs"
 schema:
   TZ: str?
+  ssl: bool
+  certfile: str?
+  keyfile: str?
   DISABLE_SIGNUPS: bool
-  NEXTAUTH_SECRET: password?
-  NEXTAUTH_URL: str?
+  NEXTAUTH_SECRET: password
   MAX_ASSET_SIZE_MB: int?
-  OPENAI_API_KEY: password?
+  NEXTAUTH_URL: str?
   OCR_LANGS: str?
+  OCR_CONFIDENCE_THRESHOLD: int(0,100)?
+  OPENAI_BASE_URL: str?
+  OPENAI_API_KEY: password?
+  OLLAMA_BASE_URL: str?
+  INFERENCE_TEXT_MODEL: str?
+  INFERENCE_IMAGE_MODEL: str?
+  EMBEDDING_TEXT_MODEL: str?
+  INFERENCE_CONTEXT_LENGTH: int(0,)?
   INFERENCE_LANG: str?
-  MEILI_MASTER_KEY: password?  # <-- change to password?
+  INFERENCE_JOB_TIMEOUT_SEC: int(0,)?
   CRAWLER_DOWNLOAD_BANNER_IMAGE: bool
   CRAWLER_STORE_SCREENSHOT: bool
   CRAWLER_FULL_PAGE_SCREENSHOT: bool
   CRAWLER_FULL_PAGE_ARCHIVE: bool
-  CRAWLER_ENABLE_ADBLOCKER: bool
+  CRAWLER_JOB_TIMEOUT_SEC: int(0,)?
+  CRAWLER_NAVIGATE_TIMEOUT_SEC: int(0,)?
   CRAWLER_VIDEO_DOWNLOAD: bool?
+  CRAWLER_VIDEO_DOWNLOAD_MAX_SIZE: int?
+  CRAWLER_VIDEO_DOWNLOAD_TIMEOUT_SEC: int(0,)?
+  CRAWLER_ENABLE_ADBLOCKER: bool
+options:
+  TZ: Etc/UTC
+  ssl: true
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+  DISABLE_SIGNUPS: false
+  NEXTAUTH_SECRET: jnE2An0WyIKZvO+WgKJrn8WPW+c3DzV+c9ntBp8CdobTOmpJ
+  MAX_ASSET_SIZE_MB: 4
+  CRAWLER_DOWNLOAD_BANNER_IMAGE: true
+  CRAWLER_STORE_SCREENSHOT: false
+  CRAWLER_FULL_PAGE_SCREENSHOT: false
+  CRAWLER_FULL_PAGE_ARCHIVE: false
+  CRAWLER_ENABLE_ADBLOCKER: true
+ports:
+  8080/tcp: 3011
+ports_description:
+  8080/tcp: Web UI

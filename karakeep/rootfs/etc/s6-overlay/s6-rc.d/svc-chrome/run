@@ -1,21 +1,148 @@
-#!/command/with-contenv bashio
+#!/bin/bash
 # shellcheck shell=bash
-set -e
+set -euo pipefail
 
-EXTENSIONS_DIR="${CHROME_EXTENSIONS_DIR:-/usr/src/chrome/extensions}"
+############################
+# Configurable directories #
+############################
 
-extensions=()
-for extension in "${EXTENSIONS_DIR}/i-dont-care-about-cookies" "${EXTENSIONS_DIR}/ublock-origin"; do
-  if [ -d "$extension" ]; then
-    extensions+=("$extension")
+CHROME_CACHE_DIR="/data/cache"
+CHROME_PROFILE_DIR="/data/chrome-profile"
+EXT_BASE_DIR="/data/extensions"
+
+# Extension IDs (Chrome Web Store)
+# uBlock Origin (MV2): cjpalhdlnbpafiamejdnhcphjbkeiagm
+# I don't care about cookies: fihnjjcciajhdojfnbdddfaoknhalnja
+UBLOCK_ID="cjpalhdlnbpafiamejdnhcphjbkeiagm"
+IDCAC_ID="fihnjjcciajhdojfnbdddfaoknhalnja"
+
+UBLOCK_DIR="${EXT_BASE_DIR}/ublock"
+IDCAC_DIR="${EXT_BASE_DIR}/idontcareaboutcookies"
+
+#################################
+# Ensure persistent writable FS #
+#################################
+
+mkdir -p "$CHROME_CACHE_DIR" "$CHROME_PROFILE_DIR" "$EXT_BASE_DIR"
+chown -R chrome:chrome "$CHROME_CACHE_DIR" "$CHROME_PROFILE_DIR" "$EXT_BASE_DIR"
+
+########################
+# Helper: download CRX  #
+########################
+
+need_bin() {
+  local b="$1"
+  if ! command -v "$b" >/dev/null 2>&1; then
+    echo "Missing required binary: $b"
+    exit 1
   fi
-done
+}
 
-extension_flag=""
-if [ ${#extensions[@]} -gt 0 ]; then
-  extension_flag="--load-extension=$(IFS=,; echo "${extensions[*]}")"
-fi
+crx_to_zip() {
+  # CRX2/CRX3 contains a header before the ZIP payload.
+  # We locate the first ZIP local-file header "PK\003\004" and write from there.
+  local crx="$1"
+  local zip="$2"
+
+  python3 - "$crx" "$zip" <<'PY'
+import sys
+
+crx_path, zip_path = sys.argv[1], sys.argv[2]
+with open(crx_path, "rb") as f:
+    data = f.read()
+
+sig = b"PK\x03\x04"
+i = data.find(sig)
+if i == -1:
+    raise SystemExit("Could not find ZIP signature in CRX (PK\\x03\\x04).")
+
+with open(zip_path, "wb") as f:
+    f.write(data[i:])
+PY
+}
+
+download_and_unpack_extension() {
+  local ext_id="$1"
+  local out_dir="$2"
+  local name="$3"
+
+  # Skip if already unpacked
+  if [ -f "${out_dir}/manifest.json" ]; then
+    return 0
+  fi
+
+  need_bin python3
+  need_bin curl
+  need_bin unzip
+
+  mkdir -p "$out_dir"
+  chown -R chrome:chrome "$out_dir"
+
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  # shellcheck disable=SC2064
+  trap "rm -rf '$tmpdir'" EXIT
+
+  local crx="${tmpdir}/${name}.crx"
+  local zip="${tmpdir}/${name}.zip"
+
+  # CWS update endpoint (works for most public extensions)
+  # Note: prodversion is just a hint; keep it reasonably recent.
+  local url
+  url="https://clients2.google.com/service/update2/crx?response=redirect&prodversion=120.0.0.0&acceptformat=crx2,crx3&x=id%3D${ext_id}%26installsource%3Dondemand%26uc"
+
+  echo "Downloading ${name} (${ext_id})..."
+  curl -fsSL "$url" -o "$crx"
+
+  echo "Unpacking ${name}..."
+  crx_to_zip "$crx" "$zip"
+
+  # Unzip into a clean directory
+  rm -rf "${out_dir:?}/"*
+  unzip -q "$zip" -d "$out_dir"
+
+  chown -R chrome:chrome "$out_dir"
+
+  # Basic validation
+  if [ ! -f "${out_dir}/manifest.json" ]; then
+    echo "Failed to unpack ${name}: manifest.json not found in ${out_dir}"
+    exit 1
+  fi
+
+  rm -rf "$tmpdir"
+  trap - EXIT
+}
+
+#########################
+# Download extensions   #
+#########################
+
+download_and_unpack_extension "$UBLOCK_ID" "$UBLOCK_DIR" "ublock-origin"
+download_and_unpack_extension "$IDCAC_ID" "$IDCAC_DIR" "i-dont-care-about-cookies"
+
+EXTENSIONS="${UBLOCK_DIR},${IDCAC_DIR}"
+
+#########################
+# Start Chromium        #
+#########################
 
 cd /usr/src/chrome
 
-exec su chrome -c "chromium-browser --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --hide-scrollbars --disable-crash-reporter --no-crash-upload --user-data-dir=/data/chrome ${extension_flag}" 
+# Use exec so s6 can manage the process; avoid backgrounding and /dev/null-ing
+exec su chrome -c "
+  chromium-browser \
+    --headless=new \
+    --no-sandbox \
+    --disable-gpu \
+    --disable-dev-shm-usage \
+    --disable-crash-reporter \
+    --no-crash-upload \
+    --hide-scrollbars \
+    --remote-debugging-address=0.0.0.0 \
+    --remote-debugging-port=9222 \
+    --user-data-dir='${CHROME_PROFILE_DIR}' \
+    --disk-cache-dir='${CHROME_CACHE_DIR}' \
+    --disable-extensions-except='${EXTENSIONS}' \
+    --load-extension='${EXTENSIONS}' \
+    about:blank
+"

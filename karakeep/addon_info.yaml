@@ -1,0 +1,16 @@
+source:
+  type: docker
+  repo: ghcr.io/karakeep-app/karakeep
+  current_version: 0.30.0
+  version_template: regex:^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
+config:
+  version_template: "{{major}}.{{minor}}.{{patch}}"
+  patch: 0
+  image: fabioogaravini/hassio-karakeep
+build:
+  image: ghcr.io/karakeep-app/karakeep
+  version_template: "{{major}}.{{minor}}.{{patch}}"
+changelog:
+  source: github-releases
+  repo: karakeep-app/karakeep
+  version_template: v{{major}}.{{minor}}.{{patch}}
