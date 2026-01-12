@@ -75,7 +75,6 @@ environment:
   BIRDNET_UID: "0"
 image: ghcr.io/alexbelgium/birdnet-go-{arch}
 ingress: true
-ingress_entry: ui
 ingress_stream: true
 init: false
 map:
