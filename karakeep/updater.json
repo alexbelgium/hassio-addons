@@ -1,0 +1,8 @@
+{
+  "last_update": "2026-01-12",
+  "repository": "alexbelgium/hassio-addons",
+  "slug": "karakeep",
+  "source": "github",
+  "upstream_repo": "karakeep-app/karakeep",
+  "upstream_version": "1.8.5"
+}
