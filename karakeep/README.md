@@ -1,1 +1,0 @@
-Borrowed from Fabio Garavini
