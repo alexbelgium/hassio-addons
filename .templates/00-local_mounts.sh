@@ -9,29 +9,29 @@ fi
 
 bashio::log.notice "This script is used to mount local USB/SATA/SD/NVMe drives. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Mounting-Local-Drives-in-Addons"
 
+# Available devices
+blkid | awk '{print substr($1, 0, length($1) - 1)}' | awk -F'/' '{print $NF}' > availabledisks
+echo "NAME" >> availabledisks
+
+## List available Disk with Labels and Id
+bashio::log.blue "---------------------------------------------------"
+bashio::log.info "Available Disks for mounting :"
+lsblk -o name,label,size,fstype,ro | awk '$4 != "" { print $0 }' | grep -f availabledisks
+bashio::log.blue "---------------------------------------------------"
+rm availabledisks
+
+# Show support fs https://github.com/dianlight/hassio-addons/blob/2e903184254617ac2484fe7c03a6e33e6987151c/sambanas/rootfs/etc/s6-overlay/s6-rc.d/init-automount/run#L106
+fstypessupport=$(grep -v nodev < /proc/filesystems | awk '{$1=" "$1}1' | tr -d '\n\t')
+bashio::log.green "Supported fs : ${fstypessupport}"
+bashio::log.green "Inspired from : github.com/dianlight"
+bashio::log.blue "---------------------------------------------------"
+
 ######################
 # MOUNT LOCAL SHARES #
 ######################
 
 # Mount local Share if configured
 if bashio::config.has_value 'localdisks'; then
-
-    # Available devices
-    blkid | awk '{print substr($1, 0, length($1) - 1)}' | awk -F'/' '{print $NF}' > availabledisks
-    echo "NAME" >> availabledisks
-
-    ## List available Disk with Labels and Id
-    bashio::log.blue "---------------------------------------------------"
-    bashio::log.info "Available Disks for mounting :"
-    lsblk -o name,label,size,fstype,ro | awk '$4 != "" { print $0 }' | grep -f availabledisks
-    bashio::log.blue "---------------------------------------------------"
-    rm availabledisks
-
-    # Show support fs https://github.com/dianlight/hassio-addons/blob/2e903184254617ac2484fe7c03a6e33e6987151c/sambanas/rootfs/etc/s6-overlay/s6-rc.d/init-automount/run#L106
-    fstypessupport=$(grep -v nodev < /proc/filesystems | awk '{$1=" "$1}1' | tr -d '\n\t')
-    bashio::log.green "Supported fs : ${fstypessupport}"
-    bashio::log.green "Inspired from : github.com/dianlight"
-    bashio::log.blue "---------------------------------------------------"
 
     MOREDISKS=$(bashio::config 'localdisks')
     echo "Local Disks mounting..."
