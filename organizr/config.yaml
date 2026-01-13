@@ -88,5 +88,5 @@ schema:
 slug: organizr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "v2-4"
+version: "v2-5"
 webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
