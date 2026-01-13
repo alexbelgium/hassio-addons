@@ -10,7 +10,7 @@ mkdir -p /data/organizr
 chown "$PUID:$PGID" /data/organizr
 
 # Only act if the symlink target does not exist
-if [[ ! -f /data/organizr/www/organizr/api/data/organizr/default.php ]]; then
+if [[ -d /data/organizr/www/organizr ]] && [[ ! -f /data/organizr/www/organizr/api/data/organizr/default.php ]]; then
     echo "Fix issues in upstream"
     mkdir -p /data/organizr/www/organizr/api/data/organizr
     if [[ -f /data/organizr/www/organizr/api/config/default.php ]]; then
