@@ -6,6 +6,7 @@ environment:
   LC_ALL: en_US.UTF-8
   TIMEOUT: "60000"
 image: ghcr.io/alexbelgium/changedetection.io-{arch}
+ingress: true
 init: false
 map:
   - config:rw
@@ -18,7 +19,7 @@ options:
 ports:
   5000/tcp: 5000
 ports_description:
-  5000/tcp: Webui
+  5000/tcp: Webui (not required for Ingress)
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
@@ -32,5 +33,5 @@ schema:
 slug: changedetection.io
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/changedetection.io
-version: "0.52.2"
+version: "0.52.2-1"
 webui: http://[HOST]:[PORT:5000]

@@ -39,7 +39,7 @@ Use the add-on `env_vars` option to pass extra environment variables (uppercase 
 
 ### Main app
 
-Web UI can be found at `<your-ip>:5000`, also accessible from the add-on page.
+Web UI can be found at `<your-ip>:5000`, also accessible from the add-on page or through the sidebar using Ingress.
 
 #### Sidebar shortcut
 
