@@ -1,3 +1,5 @@
+## 2.54.0-2 (14-01-2026)
+- Minor bugs fixed
 
 ## 2.54.0 (2026-01-10)
 - Update to latest version from filebrowser/filebrowser (changelog : https://github.com/filebrowser/filebrowser/releases)
