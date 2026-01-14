@@ -1,4 +1,7 @@
 
+## 0.52.4 (2026-01-14)
+- Update to latest version from linuxserver/docker-changedetection.io (changelog : https://github.com/linuxserver/docker-changedetection.io/releases)
+
 ## 0.52.2-1 (2026-01-13)
 - Add ingress support
 
