@@ -11,6 +11,7 @@ init: false
 map:
   - config:rw
 name: Changedetection.io
+panel_icon: mdi:vector-difference
 options:
   env_vars: []
   PGID: 0
