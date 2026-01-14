@@ -180,12 +180,13 @@ If you want to do add the repository manually, please follow the procedure highl
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
-&#10003;  [Changedetection.io](changedetection.io/) : web page monitoring, notification and change detection
+&#10003; ![image](https://api.iconify.design/mdi/vector-difference.svg) [Changedetection.io](changedetection.io/) : web page monitoring, notification and change detection
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fchangedetection.io%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fchangedetection.io%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
+![ingress][ingress-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/file-search.svg) [Cloudcommander](cloudcommander/) : Cloud Commander a file manager for the web with console and editor
 
