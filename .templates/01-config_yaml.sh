@@ -11,8 +11,6 @@ if [ ! -d /config ] || ! bashio::supervisor.ping 2> /dev/null; then
     exit 0
 fi
 
-bashio::log.notice "This script is used to export custom environment variables at start of the addon using the env_vars addon options. Instructions here : https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2"
-
 # Define slug
 slug="${HOSTNAME/-/_}"
 slug="${slug#*_}"
