@@ -2,7 +2,7 @@ arch:
   - aarch64
   - amd64
 audio: true
-description: Brave browser accessible via a web-based desktop
+description: Brave browser
 devices:
   - /dev/dri
   - /dev/dri/card0
@@ -66,36 +66,54 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  HOME: /config
-  PGID: "0"
-  PUID: "0"
+  FM_HOME: /config/data
+  HOME: /config/data
   START_DOCKER: "false"
-  TITLE: Brave Browser
-  TZ: UTC
+  TITLE: Brave browser
   shm_size: 1gb
 image: ghcr.io/alexbelgium/brave-{arch}
 ingress: true
 init: false
 map:
   - addon_config:rw
+  - media:rw
   - share:rw
   - ssl
-name: Brave Browser
+name: Brave
 options:
   env_vars: []
-  PUID: 0
+  DNS_server: 8.8.8.8
   PGID: 0
-  TZ: UTC
+  PUID: 0
+  additional_apps: engrampa,libreoffice
+  certfile: fullchain.pem
+  data_location: /config/data
+  keyfile: privkey.pem
+  use_own_certs: true
 panel_admin: false
-panel_icon: mdi:shield
+panel_icon: mdi:monitor
 ports:
+  20/tcp: null
+  21/tcp: null
+  22/tcp: null
+  23/tcp: null
+  25/tcp: null
   3000/tcp: null
   3001/tcp: null
-  8082/tcp: null
+  3002/tcp: null
+  53/tcp: null
+  80/tcp: null
 ports_description:
-  3000/tcp: Web interface (http)
-  3001/tcp: Web interface (https)
-  8082/tcp: Websocket port
+  20/tcp: FTP
+  21/tcp: FTP
+  22/tcp: SSH
+  23/tcp: TELNET
+  25/tcp: SMTP
+  3000/tcp: Web interface
+  3001/tcp: Web interface https
+  3002/tcp: custom port 2
+  53/tcp: DNS
+  80/tcp: http
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
@@ -103,16 +121,27 @@ schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
-  CUSTOM_USER: str?
-  DRI_NODE: str?
-  DRINODE: str?
-  ingress_user: str?
+  DNS_server: str?
+  DRINODE: list(/dev/dri/card0|/dev/dri/card1|/dev/dri/card2|/dev/dri/renderD128|/dev/dri/renderD129|)?
+  KEYBOARD: list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?
   PASSWORD: str?
-  PUID: int
   PGID: int
-  TZ: str?
+  PUID: int
+  TZ: match([A-Z][a-z]*./[A-Z][a-z]*.)?
+  additional_apps: str?
+  certfile: str
+  cifsdomain: str?
+  cifspassword: str?
+  cifsusername: str?
+  data_location: str?
+  install_ms_edge: bool?
+  keyfile: str
+  localdisks: str?
+  networkdisks: str?
+  use_own_certs: bool?
 slug: brave
+tmpfs: true
 udev: true
-url: https://github.com/alexbelgium/hassio-addons/tree/master/brave
-version: 1.85.120-ls68-3
+url: https://github.com/alexbelgium/hassio-addons
+version: "4.16-r0-ls93"
 video: true

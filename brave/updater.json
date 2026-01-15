@@ -1,9 +1,9 @@
 {
-  "github_fulltag": "false",
-  "last_update": "15-01-2026",
+  "github_fulltag": "true",
+  "last_update": "2026-01-14",
   "repository": "alexbelgium/hassio-addons",
-  "slug": "brave",
+  "slug": "webtop",
   "source": "github",
-  "upstream_repo": "linuxserver/docker-brave",
-  "upstream_version": "1.85.120-ls68"
+  "upstream_repo": "linuxserver/docker-webtop",
+  "upstream_version": "4.16-r0-ls93"
 }

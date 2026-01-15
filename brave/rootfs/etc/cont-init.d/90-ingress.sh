@@ -2,28 +2,28 @@
 # shellcheck shell=bash
 set -e
 
-declare ingress_user
-declare ingress_interface
-declare ingress_port
-
-ingress_user='admin'
-if bashio::config.has_value 'ingress_user'; then
-    ingress_user=$(bashio::config 'ingress_user')
-fi
-
-ingress_port=$(bashio::addon.ingress_port)
-ingress_interface=$(bashio::addon.ip_address)
-
-sed -i "s/%%ingress_user%%/${ingress_user}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
-sed -i "s|%%UIPATH%%|$(bashio::addon.ingress_entry)|g" /etc/nginx/servers/ingress.conf
-
+# nginx Path
+NGINX_CONFIG=/etc/nginx/sites-available/ingress.conf
 SUBFOLDER="$(bashio::addon.ingress_entry)"
-if [[ -n "${SUBFOLDER}" && "${SUBFOLDER}" != "/" ]]; then
-    [[ "${SUBFOLDER}" == */ ]] || SUBFOLDER="${SUBFOLDER}/"
-fi
 
-if [ -d /var/run/s6/container_environment ]; then
-    printf "%s" "${SUBFOLDER}" > /var/run/s6/container_environment/SUBFOLDER
-fi
+# Copy template
+cp /defaults/default.conf "${NGINX_CONFIG}"
+# Remove ssl part
+awk -v n=4 '/server/{n--}; n > 0' "${NGINX_CONFIG}" > tmpfile
+mv tmpfile "${NGINX_CONFIG}"
+
+# Remove ipv6
+sed -i '/listen \[::\]/d' "${NGINX_CONFIG}"
+# Add ingress parameters
+sed -i "s|3000|$(bashio::addon.ingress_port)|g" "${NGINX_CONFIG}"
+sed -i '/proxy_buffering/a proxy_set_header Accept-Encoding "";' "${NGINX_CONFIG}"
+sed -i '/proxy_buffering/a sub_filter_once off;' "${NGINX_CONFIG}"
+sed -i '/proxy_buffering/a sub_filter_types *;' "${NGINX_CONFIG}"
+sed -i '/proxy_buffering/a sub_filter "vnc/index.html?autoconnect" "vnc/index.html?path=%%path%%/websockify?autoconnect";' "${NGINX_CONFIG}"
+sed -i "s|%%path%%|${SUBFOLDER:1}|g" "${NGINX_CONFIG}"
+
+# Correct image
+sed -i "s|SUBFOLDERwebsockify|/websockify|g" "${NGINX_CONFIG}"
+
+# Enable ingress
+cp "${NGINX_CONFIG}" /etc/nginx/sites-enabled

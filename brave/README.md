@@ -1,4 +1,5 @@
-# Home assistant add-on: Brave Browser
+# Home assistant add-on: Webtop KDE Alpine
+
 
 I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
 
@@ -9,9 +10,9 @@ If this add-on saves you time or makes your setup easier, I would be very gratef
 
 ## Addon informations
 
-![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbrave%2Fconfig.yaml)
-![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbrave%2Fconfig.yaml)
-![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbrave%2Fconfig.yaml)
+![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop%2Fconfig.yaml)
+![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop%2Fconfig.yaml)
+![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop%2Fconfig.yaml)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
 [![GitHub Super-Linter](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/weekly-supelinter.yaml?label=Lint%20code%20base)](https://github.com/alexbelgium/hassio-addons/actions/workflows/weekly-supelinter.yaml)
@@ -24,42 +25,42 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/webtop/stats.png)
+
 ## About
 
----
-
-[Brave](https://brave.com/) is a fast, private and secure web browser. This add-on is based on the docker image https://github.com/linuxserver/docker-brave.
+[webtop](https://github.com/webtop/webtop) is a full desktop environments accessible via any modern web browser.
+This addon is based on the docker image https://github.com/linuxserver/docker-webtop
 
 ## Configuration
 
----
+Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
 
-Webui can be found with ingress or at <https://homeassistant:PORT> (port 3001). Ports 3000 and 3001 are disabled by default and can be enabled through the add-on options.
+Webui can be found with ingress or at <http://homeassistant:PORT>. The port is by default disabled but can be enabled through the addon options.
 
-| Option | Description | Default |
-|--------|-------------|---------|
-| `PUID` | Permissions user ID | `0` |
-| `PGID` | Permissions group ID | `0` |
-| `TZ` | Timezone for the container | `UTC` |
-| `CUSTOM_USER` | Basic auth username (optional) | `null` |
-| `PASSWORD` | Basic auth password (optional) | `null` |
+By default the image is based around the abc user and we recommend using this user as all of the init/config is based around it. The default password is also abc . If you want to change this password and require authentication when accessing the interface simply issue passwd inside a gui terminal in the webtop. Then when accessing the web interface use the path:
+
+http://localhost:3000/?login=true
+
+Apps installations are not remanent, you need to do it via addon options. Their config, however, is.
+
+If graphics don't work, use the DRINODE feature to select your graphic device.
+
+See all potential ENV variables here : https://docs.linuxserver.io/images/docker-webtop#optional-environment-variables
 
 ```yaml
-PUID: 0
-PGID: 0
-TZ: UTC
+TZ: timezone ; Country/City according to https://manpages.ubuntu.com/manpages/trusty/man3/DateTime::TimeZone::Catalog.3pm.html
+additional_apps: engrampa,thunderbird # Allows installation of apps, as they are not persistent
+DRINODE: specify a custom graphic device, default is /dev/dri/renderD128
+DNS_servers: 8.8.8.8,1.1.1.1 # Keep blank to use router’s DNS, or set custom DNS to avoid spamming in case of local DNS ad-remover
+localdisks: sda1 #put the hardware name of your drive to mount separated by commas, or its label. ex. sda1, sdb1, MYNAS...
+networkdisks: "//SERVER/SHARE" # optional, list of smb servers to mount, separated by commas
+cifsusername: "username" # optional, smb username, same for all smb shares
+cifspassword: "password" # optional, smb password
+cifsdomain: "domain" # optional, allow setting the domain for the smb share
 ```
 
-### Custom Scripts and Environment Variables
-
-This addon supports custom scripts and environment variables through the `addon_config` mapping:
-
-- **Custom scripts**: See [Running Custom Scripts in Addons](https://github.com/alexbelgium/hassio-addons/wiki/Running-custom-scripts-in-Addons)
-- **env_vars option**: Use the add-on `env_vars` option to pass extra environment variables (uppercase or lowercase names). See https://github.com/alexbelgium/hassio-addons/wiki/Add-Environment-variables-to-your-Addon-2 for details.
-
 ## Installation
-
----
 
 The installation of this add-on is pretty straightforward and not different in comparison to installing any other add-on.
 
@@ -67,11 +68,19 @@ The installation of this add-on is pretty straightforward and not different in c
    [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
 1. Install this add-on.
 1. Click the `Save` button to store your configuration.
-1. Set the add-on options to your preferences.
+1. Set the add-on options to your preferences
 1. Start the add-on.
 1. Check the logs of the add-on to see if everything went well.
-1. Open the webUI and adapt the software options.
+1. Open the webUI and adapt the software options
 
 ## Support
 
 Create an issue on github
+
+## Illustration
+
+![illustration](https://www.linuxserver.io/user/pages/content/images/2021/05/menu.png)
+
+[repository]: https://github.com/alexbelgium/hassio-addons
+
+
