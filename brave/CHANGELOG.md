@@ -1,3 +1,5 @@
+## 1.0.1 (15-01-2026)
+- Minor bugs fixed
 
 ## 1.0.0 (2026-01-14)
 - Switch addon base to linuxserver/docker-brave and use /config as the data folder
