@@ -114,5 +114,5 @@ schema:
 slug: brave
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/brave
-version: 1.85.120-ls68-2
+version: 1.85.120-ls68-3
 video: true
