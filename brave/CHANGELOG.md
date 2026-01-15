@@ -1,4 +1,7 @@
 
+## 1.0.0 (2026-01-14)
+- Switch addon base to linuxserver/docker-brave and use /config as the data folder
+
 ## 4.16-r0-ls93 (2026-01-14)
 - Update to latest version from linuxserver/docker-webtop (changelog : https://github.com/linuxserver/docker-webtop/releases)
 

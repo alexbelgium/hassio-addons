@@ -1,5 +1,4 @@
-# Home assistant add-on: Webtop KDE Alpine
-
+# Home assistant add-on: Brave
 
 I maintain this and other Home Assistant add-ons in my free time: keeping up with upstream changes, HA changes, and testing on real hardware takes a lot of time (and some money). I use around 5-10 of my >110 addons so regularly I install test machines (and purchase some test services such as vpn) that I don't use myself to troubleshoot and improve the addons
 
@@ -10,9 +9,9 @@ If this add-on saves you time or makes your setup easier, I would be very gratef
 
 ## Addon informations
 
-![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop%2Fconfig.yaml)
-![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop%2Fconfig.yaml)
-![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwebtop%2Fconfig.yaml)
+![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbrave%2Fconfig.yaml)
+![Ingress](https://img.shields.io/badge/dynamic/yaml?label=Ingress&query=%24.ingress&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbrave%2Fconfig.yaml)
+![Arch](https://img.shields.io/badge/dynamic/yaml?color=success&label=Arch&query=%24.arch&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbrave%2Fconfig.yaml)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9c6cf10bdbba45ecb202d7f579b5be0e)](https://www.codacy.com/gh/alexbelgium/hassio-addons/dashboard?utm_source=github.com&utm_medium=referral&utm_content=alexbelgium/hassio-addons&utm_campaign=Badge_Grade)
 [![GitHub Super-Linter](https://img.shields.io/github/actions/workflow/status/alexbelgium/hassio-addons/weekly-supelinter.yaml?label=Lint%20code%20base)](https://github.com/alexbelgium/hassio-addons/actions/workflows/weekly-supelinter.yaml)
@@ -25,12 +24,12 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 [![Stargazers repo roster for @alexbelgium/hassio-addons](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.github/stars2.svg)](https://github.com/alexbelgium/hassio-addons/stargazers)
 
-![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/webtop/stats.png)
+![downloads evolution](https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/brave/stats.png)
 
 ## About
 
-[webtop](https://github.com/webtop/webtop) is a full desktop environments accessible via any modern web browser.
-This addon is based on the docker image https://github.com/linuxserver/docker-webtop
+[Brave](https://brave.com/) is a fast, private and secure web browser for PC, Mac and mobile.
+This addon is based on the docker image https://github.com/linuxserver/docker-brave
 
 ## Configuration
 
@@ -38,7 +37,7 @@ Use the add-on `env_vars` option to pass extra environment variables (uppercase 
 
 Webui can be found with ingress or at <http://homeassistant:PORT>. The port is by default disabled but can be enabled through the addon options.
 
-By default the image is based around the abc user and we recommend using this user as all of the init/config is based around it. The default password is also abc . If you want to change this password and require authentication when accessing the interface simply issue passwd inside a gui terminal in the webtop. Then when accessing the web interface use the path:
+By default the image is based around the abc user and we recommend using this user as all of the init/config is based around it. The default password is also abc . If you want to change this password and require authentication when accessing the interface simply issue passwd inside a GUI terminal in the container. Then when accessing the web interface use the path:
 
 http://localhost:3000/?login=true
 
@@ -46,7 +45,7 @@ Apps installations are not remanent, you need to do it via addon options. Their 
 
 If graphics don't work, use the DRINODE feature to select your graphic device.
 
-See all potential ENV variables here : https://docs.linuxserver.io/images/docker-webtop#optional-environment-variables
+See all potential ENV variables here : https://docs.linuxserver.io/images/docker-brave#optional-environment-variables
 
 ```yaml
 TZ: timezone ; Country/City according to https://manpages.ubuntu.com/manpages/trusty/man3/DateTime::TimeZone::Catalog.3pm.html
@@ -78,9 +77,3 @@ The installation of this add-on is pretty straightforward and not different in c
 Create an issue on github
 
 ## Illustration
-
-![illustration](https://www.linuxserver.io/user/pages/content/images/2021/05/menu.png)
-
-[repository]: https://github.com/alexbelgium/hassio-addons
-
-

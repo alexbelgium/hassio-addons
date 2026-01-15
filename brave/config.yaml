@@ -66,8 +66,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  FM_HOME: /config/data
-  HOME: /config/data
+  FM_HOME: /config
+  HOME: /config
   START_DOCKER: "false"
   TITLE: Brave browser
   shm_size: 1gb
@@ -87,7 +87,7 @@ options:
   PUID: 0
   additional_apps: engrampa,libreoffice
   certfile: fullchain.pem
-  data_location: /config/data
+  data_location: /config
   keyfile: privkey.pem
   use_own_certs: true
 panel_admin: false
@@ -143,5 +143,5 @@ slug: brave
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "4.16-r0-ls93"
+version: "1.0.0"
 video: true
