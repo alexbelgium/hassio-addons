@@ -39,14 +39,14 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # hadolint ignore=SC2015,DL4006,SC2013,SC2086
 RUN \
     # Change home folder location
-    usermod --home /config/data_kde abc && \
+    usermod --home /config abc && \
     \
     # Set +e
     if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
-ARG CONFIGLOCATION="/config/data_kde"
+ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
 
 ##################

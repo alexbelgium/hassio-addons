@@ -12,8 +12,8 @@ if bashio::config.true 'use_own_certs'; then
     echo "... checking if referenced files exist"
     if [ -f /ssl/"$CERTFILE" ] && [ -f /ssl/"$KEYFILE" ]; then
         # Add ssl file
-        sed -i "s|/config/data/ssl/cert.pem|/ssl/$CERTFILE|g" "$NGINX_CONFIG"
-        sed -i "s|/config/data/ssl/cert.key|/ssl/$KEYFILE|g" "$NGINX_CONFIG"
+        sed -i "s|/config/ssl/cert.pem|/ssl/$CERTFILE|g" "$NGINX_CONFIG"
+        sed -i "s|/config/ssl/cert.key|/ssl/$KEYFILE|g" "$NGINX_CONFIG"
         echo "... done"
     else
         bashio::log.warning "...  certificate /ssl/$CERTFILE and /ssl/$KEYFILE and not found, using self-generated certificates"

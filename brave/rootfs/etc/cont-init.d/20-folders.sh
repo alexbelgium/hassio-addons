@@ -18,7 +18,7 @@ LOCATION=$(bashio::config 'data_location')
 
 if [[ "$LOCATION" = "null" || -z "$LOCATION" ]]; then
     # Default location
-    LOCATION="/config/data_kde"
+    LOCATION="/config"
 else
     # Check if config is located in an acceptable location
     LOCATIONOK=""
@@ -29,7 +29,7 @@ else
     done
 
     if [ -z "$LOCATIONOK" ]; then
-        LOCATION="/config/data_kde"
+        LOCATION="/config"
         bashio::log.fatal "Your data_location value can only be set in /share, /config or /data (internal to addon). It will be reset to the default location : $LOCATION"
     fi
 fi
@@ -48,7 +48,7 @@ done
 # Correct home location
 for folders in /defaults /etc/cont-init.d /etc/services.d /etc/s6-overlay/s6-rc.d; do
     if [ -d "$folders" ]; then
-        sed -i "s|/config/data_kde|$LOCATION|g" $(find "$folders" -type f) &> /dev/null || true
+        sed -i "s|/config|$LOCATION|g" $(find "$folders" -type f) &> /dev/null || true
     fi
 done
 
