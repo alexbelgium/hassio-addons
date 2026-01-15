@@ -51,7 +51,19 @@ resolve_secret() {
     [[ "$v" =~ ^[[:space:]]*\!secret[[:space:]]+(.+)$ ]] || { printf '%s' "$v"; return; }
     name="${BASH_REMATCH[1]}"
     [[ -n "$SECRETSOURCE" ]] || bashio::exit.nok "Secrets not mounted"
-    line="$(awk -v k="$name" '$1==k":"{sub("^[^:]+:[[:space:]]*","");print;exit}' "$SECRETSOURCE")"
+
+    # Exact key match at start of line; ignore comments
+    line="$(
+        awk -v k="$name" '
+            /^[[:space:]]*#/ {next}
+            $0 ~ "^[[:space:]]*" k ":[[:space:]]*" {
+                sub("^[[:space:]]*" k ":[[:space:]]*", "", $0)
+                print
+                exit
+            }
+        ' "$SECRETSOURCE"
+    )"
+
     [[ -n "$line" ]] || bashio::exit.nok "Secret $name not found"
     printf '%s' "$line"
 }
@@ -60,14 +72,17 @@ resolve_secret() {
 # Quoting
 ################################################################################
 dotenv_quote() {
+    # For /.env and /etc/environment: double quotes + minimal escaping
     local v="$1"
     v="${v//\\/\\\\}"
     v="${v//\"/\\\"}"
     v="${v//$'\n'/\\n}"
+    v="${v//$'\r'/\\r}"
     printf '"%s"' "$v"
 }
 
 shell_quote() {
+    # Single-quote for safe injection in shell code
     local s="$1"
     s="${s//\\/\\\\}"
     s="${s//\'/\'\"\'\"\' }"
@@ -92,28 +107,38 @@ trap 'rm -f "$EXPORT_BLOCK" "$KV_FILE"' EXIT
 } > "$EXPORT_BLOCK"
 
 append_export() {
-    local k="$1" v="$2"
-    local q
+    local k="$1" v="$2" q
     q="$(shell_quote "$v")"
-    awk -v k="$k" -v q="$q" -v e="$BLOCK_END" '$0==e{print "export "k"="q}1' "$EXPORT_BLOCK" > "$EXPORT_BLOCK.tmp"
+
+    awk -v k="$k" -v q="$q" -v e="$BLOCK_END" '
+        $0==e { print "export " k "=" q }
+        { print }
+    ' "$EXPORT_BLOCK" > "$EXPORT_BLOCK.tmp"
     mv "$EXPORT_BLOCK.tmp" "$EXPORT_BLOCK"
 }
 
 inject_block() {
     local f="$1" tmp
     tmp="$(mktemp_safe)"
+
     awk -v b="$BLOCK_BEGIN" -v e="$BLOCK_END" -v bf="$EXPORT_BLOCK" '
-    function emit(){while((getline l<bf)>0)print l;close(bf)}
-    BEGIN{p=0}
-    {
-        if($0==b){skip=1;emit();next}
-        if($0==e){skip=0;next}
-        if(skip)next
-        if(NR==1 && $0~/^#!/){print;emit();next}
-        print
-    }
-    END{if(!skip)emit()}
+        function emit(){ while((getline l<bf)>0) print l; close(bf) }
+        BEGIN{ skip=0; injected=0 }
+        {
+            if($0==b){ skip=1; if(!injected){ emit(); injected=1 } next }
+            if($0==e){ skip=0; next }
+            if(skip) next
+
+            if(NR==1 && $0~/^#!/){
+                print
+                if(!injected){ emit(); injected=1 }
+                next
+            }
+            print
+        }
+        END{ if(!injected) emit() }
     ' "$f" > "$tmp"
+
     cat "$tmp" > "$f"
     rm -f "$tmp"
 }
@@ -124,57 +149,79 @@ inject_block() {
 export_var() {
     local k="$1" v="$2"
 
-    [[ "$k" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]] || return
+    # Valid env var identifier only
+    [[ "$k" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]] || {
+        bashio::log.warning "Skipping invalid env var name: $k"
+        return 0
+    }
 
     v="$(resolve_secret "$v")"
 
-    if [[ "${k,,}" =~ pass|token|secret|key ]]; then
+    if [[ "${k,,}" =~ pass|token|secret|apikey|api_key|private|pwd|key ]]; then
         bashio::log.blue "$k=******"
     else
         bashio::log.blue "$k=$v"
     fi
 
+    # Runtime environment (no eval, safe for special chars)
     export "$k=$v"
 
-    [[ -d /var/run/s6/container_environment ]] && printf '%s' "$v" > "/var/run/s6/container_environment/$k"
+    # S6 environment (preferred for services)
+    if [[ -d /var/run/s6/container_environment ]]; then
+        printf '%s' "$v" > "/var/run/s6/container_environment/$k"
+    fi
 
+    # Queue for .env and /etc/environment (written once, idempotent)
     echo "$k=$(dotenv_quote "$v")" >> "$KV_FILE"
+
+    # Add to injected export block for scripts
     append_export "$k" "$v"
 }
 
 ################################################################################
-# JSON parsing (safe + jq bug fixed)
+# JSON parsing (jq bug fixed: use "? //", not "?//")
 ################################################################################
 while IFS= read -r -d $'\0' k && IFS= read -r v; do
     export_var "$k" "$v"
 done < <(
-jq -r '
-def emit(k;v): "\((k|tostring))\u0000\((v|tostring))";
-. as $root
-|
-(
- ($root.env_vars?//[])[]? as $e
- | if $e|type=="object" then
-      if $e|has("name") and has("value") then emit($e.name;$e.value)
-      else $e|to_entries[]|emit(.key;.value) end
-   else
-      ($e|tostring) as $s
-      | if $s|test("=") then
-           ($s|capture("^(?<k>[^=]+)=(?<v>.*)$"))|emit(.k;.v)
-        else empty end
-   end
-),
-(
- $root|to_entries[]
- | select(.key!="env_vars")
- | select((.value|type)!="object" and (.value|type)!="array")
- | emit(.key;.value)
-)
-' "$JSONSOURCE"
+    jq -r '
+        def emit(k; v): "\((k|tostring))\u0000\((v|tostring))";
+
+        . as $root
+        | (
+            # 1) env_vars[] (supported shapes)
+            ($root.env_vars? // [])[] as $e
+            | if ($e|type) == "object" then
+                  if ($e|has("name") and has("value")) then
+                      emit($e.name; ($e.value // ""))
+                  else
+                      $e|to_entries[]|emit(.key; (.value // ""))
+                  end
+              else
+                  # string "KEY=VALUE" form (value may contain '=')
+                  ($e|tostring) as $s
+                  | if ($s|test("^[^=]+=")) then
+                        ($s|capture("^(?<k>[^=]+)=(?<v>.*)$")) as $m
+                        | emit($m.k; $m.v)
+                    else empty end
+              end
+          ),
+          (
+            # 2) top-level scalar options excluding env_vars
+            $root
+            | to_entries[]
+            | select(.key != "env_vars")
+            | select((.value|type) != "object" and (.value|type) != "array" and (.value|type) != "null")
+            | emit(.key; .value)
+          )
+    ' "$JSONSOURCE"
 )
 
 ################################################################################
-# Write .env and /etc/environment (idempotent)
+# Write .env and /etc/environment (idempotent: replace whole file content)
+# Notes:
+# - /.env is commonly used by apps expecting dotenv format
+# - /etc/environment is read by PAM/system tooling; KEY="value" is acceptable
 ################################################################################
 {
     echo "$BLOCK_BEGIN"
@@ -185,14 +232,20 @@ mv "$ENV_FILE.tmp" "$ENV_FILE"
 cp "$ENV_FILE" "$ETC_ENV_FILE"
 
 ################################################################################
-# Inject into scripts and shells
+# Inject into scripts and shells (best-effort)
 ################################################################################
-for f in /etc/services.d/*/run /etc/cont-init.d/*.sh /entrypoint.sh /etc/bash.bashrc "$HOME/.bashrc"; do
+for f in /etc/services.d/*/run /etc/cont-init.d/*.sh /entrypoint.sh /etc/bash.bashrc; do
     [[ -f "$f" ]] && inject_block "$f"
 done
 
+if [[ -n "${HOME:-}" ]]; then
+    mkdir -p "$HOME"
+    touch "$HOME/.bashrc"
+    inject_block "$HOME/.bashrc"
+fi
+
 ################################################################################
-# Timezone
+# Timezone (best-effort)
 ################################################################################
 set +e
 if [[ -n "$TZ" && -f "/usr/share/zoneinfo/$TZ" ]]; then
