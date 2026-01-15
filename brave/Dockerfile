@@ -93,8 +93,8 @@ RUN chmod 777 /.bashio-standalone.sh
 RUN sed -i "s|/usr/bin/env|/usr/bin/with-contenv|g" /etc/cont-init.d/*
 
 #WORKDIR /
-ENTRYPOINT [ "/usr/bin/env" ]
-CMD [ "/ha_entrypoint.sh" ]
+#ENTRYPOINT [ "/usr/bin/env" ]
+#CMD [ "/ha_entrypoint.sh" ]
 
 ############
 # 5 Labels #
