@@ -42,25 +42,11 @@ options:
 panel_admin: false
 panel_icon: mdi:monitor
 ports:
-  20/tcp: null
-  21/tcp: null
-  22/tcp: null
-  23/tcp: null
-  25/tcp: null
-  3001/tcp: null
-  3002/tcp: null
-  53/tcp: null
-  80/tcp: null
+  3001/tcp: 3001
+  8082/tcp: 8082
 ports_description:
-  20/tcp: FTP
-  21/tcp: FTP
-  22/tcp: SSH
-  23/tcp: TELNET
-  25/tcp: SMTP
   3001/tcp: Web interface https
-  3002/tcp: custom port 2
-  53/tcp: DNS
-  80/tcp: http
+  8082/tcp: Web sockets port
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
