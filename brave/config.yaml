@@ -16,7 +16,6 @@ devices:
   - /dev/video14
   - /dev/video15
   - /dev/video16
-  - /dev/ttyUSB0
 environment:
   FM_HOME: /config
   HOME: /config
@@ -34,18 +33,20 @@ map:
 name: Brave
 options:
   env_vars: []
+  DNS_server: 8.8.8.8
   PGID: 0
   PUID: 0
   certfile: fullchain.pem
   keyfile: privkey.pem
   use_own_certs: true
+panel_admin: false
+panel_icon: mdi:monitor
 ports:
   20/tcp: null
   21/tcp: null
   22/tcp: null
   23/tcp: null
   25/tcp: null
-  3000/tcp: null
   3001/tcp: null
   3002/tcp: null
   53/tcp: null
@@ -56,7 +57,6 @@ ports_description:
   22/tcp: SSH
   23/tcp: TELNET
   25/tcp: SMTP
-  3000/tcp: Web interface
   3001/tcp: Web interface https
   3002/tcp: custom port 2
   53/tcp: DNS
@@ -68,9 +68,14 @@ schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?
+  DNS_server: str?
+  DRINODE: list(/dev/dri/card0|/dev/dri/card1|/dev/dri/card2|/dev/dri/renderD128|/dev/dri/renderD129|)?
+  KEYBOARD: list(da-dk-qwerty|de-de-qwertz|en-gb-qwerty|en-us-qwerty|es-es-qwerty|fr-ch-qwertz|fr-fr-azerty|it-it-qwerty|ja-jp-qwerty|pt-br-qwerty|sv-se-qwerty|tr-tr-qwerty)?
+  PASSWORD: str?
   PGID: int
   PUID: int
   TZ: match([A-Z][a-z]*./[A-Z][a-z]*.)?
+  additional_apps: str?
   certfile: str
   keyfile: str
   use_own_certs: bool?
