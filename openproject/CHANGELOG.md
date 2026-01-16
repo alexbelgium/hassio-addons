@@ -1,4 +1,7 @@
 
+## 17.0.1 (2026-01-16)
+- Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
+
 ## 17.0.0 (2026-01-14)
 - Update to latest version from opf/openproject (changelog : https://github.com/opf/openproject/releases)
 
