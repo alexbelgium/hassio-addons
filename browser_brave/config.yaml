@@ -69,5 +69,5 @@ slug: brave
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.86.139-ls69-5"
+version: "1.86.139-ls69-6"
 video: true
