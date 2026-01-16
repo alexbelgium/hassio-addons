@@ -28,8 +28,8 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[Chromium](https://www.chromium.org/Home/) is the open-source browser project behind modern web browsers.
-This addon is based on the docker image https://github.com/linuxserver/docker-chromium
+[Brave](https://brave.com/) is a fast, private and secure web browser for PC, Mac and mobile.
+This addon is based on the docker image https://github.com/linuxserver/docker-brave
 
 ## Configuration
 
@@ -45,7 +45,7 @@ Apps installations are not remanent, you need to do it via addon options. Their 
 
 If graphics don't work, use the DRINODE feature to select your graphic device.
 
-See all potential ENV variables here : https://docs.linuxserver.io/images/docker-chromium#optional-environment-variables
+See all potential ENV variables here : https://docs.linuxserver.io/images/docker-brave#optional-environment-variables
 
 ```yaml
 TZ: timezone ; Country/City according to https://manpages.ubuntu.com/manpages/trusty/man3/DateTime::TimeZone::Catalog.3pm.html
