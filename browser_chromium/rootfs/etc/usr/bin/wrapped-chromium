@@ -3,7 +3,7 @@
 
 set -Eeuo pipefail
 
-# Prefer the real chromium binary used by LSIO images; fall back safely.
+# Resolve chromium binary (LSIO uses this path)
 if [[ -x /usr/lib/chromium/chromium ]]; then
   BIN=/usr/lib/chromium/chromium
 elif command -v chromium >/dev/null 2>&1; then
@@ -13,32 +13,39 @@ else
   exit 127
 fi
 
-# Pick a deterministic profile dir (LSIO commonly sets HOME=/config).
-HOME_DIR="${HOME:-/config}"
-USER_DATA_DIR="${CHROME_USER_DATA_DIR:-${HOME_DIR}/.config/chromium}"
-
+# Fixed profile dir as requested
+USER_DATA_DIR="/data/profile"
 mkdir -p "${USER_DATA_DIR}"
 
-# Cleanup stale singleton locks only if chromium is not running
+# Cleanup stale locks if chromium is not already running
 if ! pgrep -f 'chromium' >/dev/null 2>&1; then
   rm -f "${USER_DATA_DIR}/Singleton"* || true
 fi
 
-# Detect seccomp mode properly (0=disabled). This is still a heuristic.
+# Detect seccomp mode (0 = disabled)
 seccomp_mode="$(awk -F':' '/^Seccomp:/{gsub(/[[:space:]]/,"",$2); print $2}' /proc/1/status || echo "")"
 
+# Base arguments (exactly what you requested + required safety flags)
 args=(
+  --remote-debugging-address=0.0.0.0
+  --remote-debugging-port=9221
+  --user-data-dir="${USER_DATA_DIR}"
+  --disable-dev-shm-usage
   --no-first-run
+  --no-default-browser-check
+  --disable-background-networking
+  --disable-sync
   --password-store=basic
   "--simulate-outdated-no-au=Tue, 31 Dec 2099 23:59:59 GMT"
   --start-maximized
-  "--user-data-dir=${USER_DATA_DIR}"
 )
 
-# If seccomp is not disabled, sandboxing often breaks in containers; use no-sandbox.
+# Container reality: sandbox usually breaks unless seccomp is fully disabled
 if [[ "${seccomp_mode}" != "0" ]]; then
   args+=( --no-sandbox --test-type )
 fi
 
-# IMPORTANT: do NOT redirect to /dev/null while debugging
+# IMPORTANT:
+#  - no output redirection
+#  - exec replaces PID 1 cleanly
 exec "${BIN}" "${args[@]}" "$@"
