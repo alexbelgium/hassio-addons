@@ -15,7 +15,7 @@
 #################
 
 ARG BUILD_VERSION
-ARG BUILD_UPSTREAM="2.2.4"
+ARG BUILD_UPSTREAM="2.2.5"
 FROM nathanvaughn/webtrees:latest
 
 ##################
