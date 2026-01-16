@@ -42,9 +42,11 @@ options:
 panel_admin: false
 panel_icon: mdi:monitor
 ports:
+  3000/tcp: 3000
   3001/tcp: 3001
   9221/tcp: null
 ports_description:
+  3000/tcp: Web interface http
   3001/tcp: Web interface https
   9221/tcp: Chrome devtools
 privileged:
