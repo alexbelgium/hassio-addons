@@ -1,3 +1,6 @@
+## 1.86.139-ls69-3 (2026-01-16)
+- Switch upstream base to linuxserver/docker-chromium
+
 ## 1.86.139-ls69-2 (16-01-2026)
 - Minor bugs fixed
 
