@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# shellcheck shell=bash
+
+set -Eeuo pipefail
+
+# Prefer the real chromium binary used by LSIO images; fall back safely.
+if [[ -x /usr/lib/chromium/chromium ]]; then
+  BIN=/usr/lib/chromium/chromium
+elif command -v chromium >/dev/null 2>&1; then
+  BIN="$(command -v chromium)"
+else
+  echo "ERROR: chromium binary not found" >&2
+  exit 127
+fi
+
+# Pick a deterministic profile dir (LSIO commonly sets HOME=/config).
+HOME_DIR="${HOME:-/config}"
+USER_DATA_DIR="${CHROME_USER_DATA_DIR:-${HOME_DIR}/.config/chromium}"
+
+mkdir -p "${USER_DATA_DIR}"
+
+# Cleanup stale singleton locks only if chromium is not running
+if ! pgrep -f 'chromium' >/dev/null 2>&1; then
+  rm -f "${USER_DATA_DIR}/Singleton"* || true
+fi
+
+# Detect seccomp mode properly (0=disabled). This is still a heuristic.
+seccomp_mode="$(awk -F':' '/^Seccomp:/{gsub(/[[:space:]]/,"",$2); print $2}' /proc/1/status || echo "")"
+
+args=(
+  --no-first-run
+  --password-store=basic
+  "--simulate-outdated-no-au=Tue, 31 Dec 2099 23:59:59 GMT"
+  --start-maximized
+  "--user-data-dir=${USER_DATA_DIR}"
+)
+
+# If seccomp is not disabled, sandboxing often breaks in containers; use no-sandbox.
+if [[ "${seccomp_mode}" != "0" ]]; then
+  args+=( --no-sandbox --test-type )
+fi
+
+# IMPORTANT: do NOT redirect to /dev/null while debugging
+exec "${BIN}" "${args[@]}" "$@"
