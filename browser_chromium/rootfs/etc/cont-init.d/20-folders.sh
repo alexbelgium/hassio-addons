@@ -9,13 +9,13 @@ PGID=$(bashio::config "PGID")
 
 
 # Create cache
-mkdir -p /.cache
-chmod 755 /.cache
-if [ -d "/config/.cache" ]; then
-    cp -rf /config/.cache /.cache
-    rm -r /config/.cache
-fi
-ln -sf /config/.cache /.cache
+#mkdir -p /.cache
+#chmod 755 /.cache
+#if [ -d "/config/.cache" ]; then
+#    cp -rf /config/.cache/. /.cache/.
+#    rm -r /config/.cache
+#fi
+#ln -sf /config/.cache /.cache
 
 # Set ownership
 bashio::log.info "Setting ownership to $PUID:$PGID"
