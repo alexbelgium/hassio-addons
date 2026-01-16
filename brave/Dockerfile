@@ -44,6 +44,9 @@ RUN \
     # Set +e
     if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
+# Modify brave commands
+RUN sed -i '/no-first-run/a\  --remote-debugging-port=9221 --disable-background-networking --metrics-recording-only --disable-blink-features=AutomationControlled --autoplay-policy=no-user-gesture-required \' /usr/bin/wrapped-brave
+
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
