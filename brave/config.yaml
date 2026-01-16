@@ -43,10 +43,10 @@ panel_admin: false
 panel_icon: mdi:monitor
 ports:
   3001/tcp: 3001
-  8082/tcp: 8082
+  9221/tcp: null
 ports_description:
   3001/tcp: Web interface https
-  8082/tcp: Web sockets port
+  9221/tcp: Chrome devtools
 privileged:
   - SYS_ADMIN
   - DAC_READ_SEARCH
@@ -69,5 +69,5 @@ slug: brave
 tmpfs: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "1.0.4"
+version: "1.0.5"
 video: true
