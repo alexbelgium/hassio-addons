@@ -47,26 +47,3 @@ elif ! bashio::config.has_value 'PASSWORD' && [[ -n "$(bashio::addon.port "3000"
     bashio::log.warning "You are opening an external port but your password is not defined"
     bashio::log.warning "You risk being hacked ! Please disable the external ports, or use a password"
 fi
-
-# Set password
-if bashio::config.true 'install_ms_edge'; then
-    bashio::log.info "Adding microsoft edge"
-    # Install edge
-    apt-get update
-    echo "**** install edge ****"
-    apt-get install --no-install-recommends -y ca-certificates
-    if [ -z ${EDGE_VERSION+x} ]; then
-        EDGE_VERSION=$(curl -sL https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/ \
-            | awk -F'(<a href="microsoft-edge-stable_|_amd64.deb\")' '/href=/ {print $2}' | sort --version-sort | tail -1)
-    fi
-    curl -o /tmp/edge.deb -L "https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_${EDGE_VERSION}_amd64.deb"
-    dpkg -I /tmp/edge.deb
-    apt-get install --no-install-recommends -y /tmp/edge.deb
-    echo "**** edge docker tweaks ****"
-    if [ -f /usr/bin/microsoft-edge-stable ]; then
-        mv /usr/bin/microsoft-edge-stable /usr/bin/microsoft-edge-real
-    else
-        mv /usr/bin/microsoft-edge /usr/bin/microsoft-edge-real
-    fi
-    mv /helpers/microsoft-edge-stable /usr/bin/
-fi
