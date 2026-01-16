@@ -44,8 +44,8 @@ RUN \
     # Set +e
     if [[ -d /etc/services.d ]] && ls /etc/services.d/*/run 1> /dev/null 2>&1; then sed -i "1a set +e" /etc/services.d/*/run; fi
 
-# Modify brave commands
-RUN sed -i '/no-first-run/a\  --no-default-browser-check --disable-dev-shm-usage --remote-debugging-address=0.0.0.0 --remote-debugging-port=9221 --disable-background-networking --disable-sync \\' /usr/bin/wrapped-brave
+# Modify commands
+RUN sed -i '/no-first-run/a\  --no-default-browser-check --disable-dev-shm-usage --remote-debugging-address=0.0.0.0 --remote-debugging-port=9221 --disable-background-networking --disable-sync \\' /usr/bin/wrapped-*
 
 # Global LSIO modifications
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
@@ -85,6 +85,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 # Add entrypoint
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
+RUN chmod 777 /ha_entrypoint.sh
 
 # Standalone bashio command
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
