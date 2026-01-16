@@ -21,7 +21,7 @@ sed -i '/proxy_buffering/a proxy_set_header Accept-Encoding "";' "${NGINX_CONFIG
 sed -i '/proxy_buffering/a sub_filter_once off;' "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a sub_filter_types *;' "${NGINX_CONFIG}"
 sed -i '/proxy_buffering/a sub_filter "vnc/index.html?autoconnect" "vnc/index.html?path=%%path%%/websockify?autoconnect";' "${NGINX_CONFIG}"
-sed -i "s|location SUBFOLDER|location |g" "${NGINX_CONFIG}"
+sed -i "s|location SUBFOLDER|location /|g" "${NGINX_CONFIG}"
 sed -i "s|SUBFOLDER|${SUBFOLDER}|g" "${NGINX_CONFIG}"
 
 # Enable ingress
