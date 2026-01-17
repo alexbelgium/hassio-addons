@@ -101,5 +101,5 @@ schema:
 slug: fireflyiii_data_importer
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "2.0.4"
+version: "2.0.5"
 webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
