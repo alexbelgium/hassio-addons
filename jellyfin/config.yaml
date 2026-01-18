@@ -5,8 +5,6 @@ backup_exclude:
   - "**/cache/"
   - "**/log/"
   - "**/transcode/"
-breaking_versions:
-  - 10.10.6*
 description:
   A Free Software Media System that puts you in control of managing and
   streaming your media
