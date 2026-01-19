@@ -70,6 +70,8 @@ environment:
   PGID: "0"
   PUID: "0"
 image: ghcr.io/alexbelgium/prowlarr-{arch}
+ingress: true
+ingress_entry: prowlarr
 init: false
 map:
   - addon_config:rw
@@ -82,6 +84,7 @@ options:
   env_vars: []
   PGID: 0
   PUID: 0
+  connection_mode: ingress_noauth
 ports:
   9696/tcp: 9696
 ports_description:
@@ -99,11 +102,12 @@ schema:
   cifsdomain: str?
   cifspassword: str?
   cifsusername: str?
+  connection_mode: list(ingress_noauth|noingress_auth|ingress_auth)
   localdisks: str?
   networkdisks: str?
   smbv1: bool?
 slug: prowlarr
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: "nightly-2.3.2.5251-ls221"
+version: "nightly-2.3.2.5251-ls221-2"
 webui: "[PROTO:ssl]://[HOST]:[PORT:9696]"
