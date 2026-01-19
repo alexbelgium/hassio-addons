@@ -1,4 +1,7 @@
 
+## 0.24.863-1 (2026-01-16)
+- Add ingress support for Jackett.
+
 ## 0.24.863 (2026-01-16)
 - Update to latest version from linuxserver/docker-jackett (changelog : https://github.com/linuxserver/docker-jackett/releases)
 
