@@ -71,8 +71,6 @@ environment:
   PGID: "0"
   PUID: "0"
 image: ghcr.io/alexbelgium/jackett_nas-{arch}
-ingress: true
-ingress_entry: jackett
 init: false
 map:
   - config:rw
@@ -84,9 +82,6 @@ options:
   env_vars: []
   PGID: 0
   PUID: 0
-  connection_mode: ingress_noauth
-panel_admin: false
-panel_icon: mdi:cloud-search-outline
 ports:
   8889/tcp: 8889
   9117/tcp: 9117
@@ -106,11 +101,10 @@ schema:
   cifsdomain: str?
   cifspassword: str?
   cifsusername: str?
-  connection_mode: list(ingress_noauth|noingress_auth|ingress_auth)
   localdisks: str?
   networkdisks: str?
 slug: jackett_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/jackett
-version: "0.24.863-1"
+version: "0.24.863"
 webui: http://[HOST]:[PORT:9117]
