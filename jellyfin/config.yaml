@@ -124,5 +124,5 @@ schema:
 slug: jellyfin
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
-version: 10.11.5-3
+version: 10.11.5-4
 video: true
