@@ -37,6 +37,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 ##################
 # Copy local files
 COPY rootfs/ /
+RUN find . -type f \( -name "*.sh" -o -name "run" \) -print -exec chmod +x {} \;
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
@@ -66,7 +67,8 @@ ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 RUN chmod 777 /ha_entrypoint.sh
 
-# Standalone bashio command
+COPY rootfs/ /
+RUN find . -type f \( -name "*.sh" -o -name "run" \) -print -exec chmod +x {} \;ashio command
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/.bashio-standalone.sh"
 RUN chmod 777 /.bashio-standalone.sh
 

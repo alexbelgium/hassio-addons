@@ -58,6 +58,7 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 
 # Add rootfs
 COPY rootfs/ /
+RUN find . -type f \( -name "*.sh" -o -name "run" \) -print -exec chmod +x {} \;
 
 RUN chmod 777 /etc/usr/bin/wrapped-*
 
