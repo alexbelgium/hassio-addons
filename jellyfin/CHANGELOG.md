@@ -1,3 +1,5 @@
+## 10.11.5-4 (20-01-2026)
+- Minor bugs fixed
 ## 10.11.5-3 (2026-01-20)
 - Fix web player version stuck
 ## breaking_versions: 10.11.5-2 (2026-01-09)
