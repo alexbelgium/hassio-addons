@@ -29,7 +29,7 @@ _Thanks to everyone having starred my repo! To star it click on the image below,
 
 ## About
 
-[Jackett](https://github.com/Jackett/Jackett) works as a proxy server: it translates queries from supported apps into tracker-site-specific HTTP queries, parses the responses, and then sends results back to the requesting software.
+[jackett](https://github.com/jackett/jackett) - A fork of jackett to work with movies like Couchpotato.
 
 This addon is based on the [docker image](https://github.com/linuxserver/docker-jackett) from linuxserver.io.
 
@@ -47,7 +47,6 @@ Configurations can be done through the app webUI, except for the following optio
 | `PGID` | int | `0` | Group ID for file permissions |
 | `PUID` | int | `0` | User ID for file permissions |
 | `TZ` | str | | Timezone (e.g., `Europe/London`) |
-| `connection_mode` | list | `ingress_noauth` | Connection mode (ingress_noauth/noingress_auth/ingress_auth) |
 | `localdisks` | str | | Local drives to mount (e.g., `sda1,sdb1,MYNAS`) |
 | `networkdisks` | str | | SMB shares to mount (e.g., `//SERVER/SHARE`) |
 | `cifsusername` | str | | SMB username for network shares |
@@ -60,7 +59,6 @@ Configurations can be done through the app webUI, except for the following optio
 PGID: 0
 PUID: 0
 TZ: "Europe/London"
-connection_mode: "ingress_noauth"
 localdisks: "sda1,sdb1"
 networkdisks: "//192.168.1.100/downloads"
 cifsusername: "mediauser"
@@ -88,4 +86,5 @@ comparison to installing any other Hass.io add-on.
 1. Carefully configure the add-on to your preferences, see the official documentation for for that.
 
 [repository]: https://github.com/alexbelgium/hassio-addons
+
 
