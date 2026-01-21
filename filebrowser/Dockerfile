@@ -66,8 +66,6 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 RUN chmod 777 /ha_entrypoint.sh
 
-RUN \ sed -i "s|/command/with-contenv|/usr/bin/env|g" "/ha_entrypoint.sh"
-
 VOLUME [ "/data" ]
 WORKDIR /
 
