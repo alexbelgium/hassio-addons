@@ -1,4 +1,7 @@
 
+## nightly-20260118 (2026-01-21)
+- Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
+
 ## nightly-20260113 (2026-01-14)
 - Update to latest version from tphakala/birdnet-go (changelog : https://github.com/tphakala/birdnet-go/releases)
 
