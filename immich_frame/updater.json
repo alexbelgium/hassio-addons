@@ -1,9 +1,9 @@
 {
   "github_beta": "false",
-  "last_update": "13-12-2025",
+  "last_update": "2026-01-21",
   "repository": "alexbelgium/hassio-addons",
   "slug": "immich_frame",
   "source": "github",
   "upstream_repo": "immichFrame/ImmichFrame",
-  "upstream_version": "1.0.30.0"
+  "upstream_version": "1.0.31.0"
 }
