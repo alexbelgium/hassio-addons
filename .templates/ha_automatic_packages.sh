@@ -41,7 +41,7 @@ fi
 # ADD GENERAL ELEMENTS
 ######################
 
-PACKAGES="$PACKAGES jq curl ca-certificates"
+PACKAGES="$PACKAGES jq curl ca-certificates micro"
 
 # FOR EACH SCRIPT, SELECT PACKAGES
 ##################################
@@ -222,12 +222,6 @@ fi
 #######################
 # INSTALL MANUAL APPS #
 #######################
-
-# Install micro texteditor
-if ! command -v "micro" &> /dev/null; then
-    curl https://getmic.ro | bash || true
-    mv micro /usr/bin || true
-fi
 
 for files in "/etc/services.d" "/etc/cont-init.d"; do
 
