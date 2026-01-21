@@ -30,7 +30,9 @@ if [[ -n "${PI_PASSWORD:-}" ]]; then
     echo "pi:${PI_PASSWORD}" | chpasswd
     bashio::log.info "Password set successfully for user pi."
 else
-    bashio::log.info "No password specified for user pi. Keeping existing password."
+    # Set empty password to allow web terminal login when no password is configured
+    passwd -d pi
+    bashio::log.info "No password specified for user pi. Enabled passwordless login."
 fi
 
 # Use timezone defined in add-on options if available

@@ -1,3 +1,5 @@
+- Fix passwordless terminal
+
 ## 2025.12-05 (2025-12-20)
 - Minor bugs fixed
 ## 2025.12-04 (2025-12-19)
