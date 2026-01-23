@@ -7,8 +7,10 @@ if [[ ! -x "${REAL_IP6TABLES_RESTORE}" ]]; then
 fi
 
 cleanup() {
+    local exit_code=$?
     [[ -n "${RULES_FILE:-}" && -f "${RULES_FILE}" ]] && rm -f "${RULES_FILE}"
     [[ -n "${SANITIZED_FILE:-}" && -f "${SANITIZED_FILE}" ]] && rm -f "${SANITIZED_FILE}"
+    return $exit_code
 }
 trap cleanup EXIT
 
