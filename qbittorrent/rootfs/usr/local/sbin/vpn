@@ -220,6 +220,11 @@ _wireguard_up() {
     else
         _cmd "wg set ${config["Interface"]} peer ${config["PublicKey"]} endpoint ${config["EndpointIP"]}:${config["EndpointPort"]} allowed-ips ${allowed_ips}" || return 1
     fi
+
+    if [ -v config["MTU"] ] && [ -n "${config["MTU"]}" ]; then
+        _cmd "ip link set ${config["Interface"]} mtu ${config["MTU"]}" || return 1
+    fi
+
     _cmd "ip link set ${config["Interface"]} up" || return 1
     _routing_add
 }
