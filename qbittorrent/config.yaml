@@ -129,7 +129,6 @@ schema:
   keyfile: str
   localdisks: str?
   networkdisks: str?
-  openvpn_alt_mode: bool?
   openvpn_config: match(^\w+\.(ovpn|conf)$)?
   openvpn_enabled: bool?
   openvpn_password: str?

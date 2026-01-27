@@ -322,26 +322,26 @@ _openvpn_up() {
     bashio::log.warning "Qbittorrent bittorrent client shall be set to use the VPN interface ${config["Interface"]} only."
 
     # Register this script as OpenVPN up/down handlers to manage routing
-    echo "${config["MySelf"]} openvpn postup" > ${config["PostUpScript"]}
+    echo '#!/bin/bash' > ${config["PostUpScript"]}
+    echo "${config["MySelf"]} openvpn postup" >> ${config["PostUpScript"]}
     chmod 755 ${config["PostUpScript"]}
-    echo "${config["MySelf"]} openvpn postdown" > ${config["PostDownScript"]}
+    echo '#!/bin/bash' > ${config["PostDownScript"]}
+    echo "${config["MySelf"]} openvpn postdown" >> ${config["PostDownScript"]}
     chmod 755 ${config["PostDownScript"]}
 
     # Start OpenVPN in the background
-    # (maybe use setsid instead of nohup to detach completely?)
-    nohup /usr/sbin/openvpn \
+    _cmd "/usr/sbin/openvpn
         --config "${config["ConfigFile"]}" \
-        --script-security 2 \
+        --script-security 2 --daemon --log /dev/null \
+        --auth-user-pass "${OPENVPN_STATE_DIR}/credentials.conf" \
+        --auth-retry none \
         --up ${config["PostUpScript"]} \
+        --up_delay 5 \
         --down ${config["PostDownScript"]} \
+        --down-delay 5 \
+        --up-restart \
         --route-nopull \
-        --pull-filter ignore "route" \
-        --pull-filter ignore "redirect-gateway" \
-        --pull-filter ignore "dhcp-option DNS" \
-        --pull-filter ignore "route-ipv6" \
-        --pull-filter ignore "redirect-gateway ipv6" \
-        --pull-filter ignore "dhcp-option DNS6" \
-    &
+        --route-noexec" || return 1
 }
 
 _openvpn_down() {
@@ -383,8 +383,11 @@ openvpn() {
     if [ "${mode}" = "up" ]; then
         # register up and down scripts
         bashio::log.info "Starting OpenVPN on interface ${config["Interface"]}..."
-        _openvpn_up
-        bashio::exit.ok 'OpenVPN started.'
+        if _openvpn_up; then
+            bashio::exit.ok 'OpenVPN started.'
+        fi
+        bashio::log.error 'OpenVPN failed to establish connection.'
+        _openvpn_down
     elif [ "${mode}" = "down" ]; then
         bashio::log.info "Stopping OpenVPN on interface ${config["Interface"]}..."
         _openvpn_down
