@@ -26,7 +26,7 @@ jobs:
           changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "Changed config files:"
           echo "$changed_config_files"
-          changed_addons=$(echo "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          changed_addons=$(printf '%s' "$changed_config_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "Changed addons: $changed_addons"
           echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
       - name: Find changelog
@@ -38,7 +38,7 @@ jobs:
           changed_config_files=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -E '^[^/]+/config\.(json|ya?ml)$' || true)
           echo "$changed_config_files"
           all_changed_files=$(echo -e "$changed_config_files\n$changed_changelog_files" | sort -u)
-          changed_addons=$(echo "$all_changed_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          changed_addons=$(printf '%s' "$all_changed_files" | awk -F/ '{print $1}' | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "Changed addons: $changed_addons"
           echo "changed_addons=$changed_addons" >> "$GITHUB_OUTPUT"
 
