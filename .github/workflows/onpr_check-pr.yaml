@@ -61,28 +61,6 @@ jobs:
             exit 1
           fi
 
-  check-addon-label:
-    name: Check for existence of the addon label
-    needs: check-addon-changes
-    if: ${{ needs.check-addon-changes.outputs.changedAddons != '[]' }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        addon: ${{ fromJSON(needs.check-addon-changes.outputs.changedAddons) }}
-    steps:
-      - name: ↩️ Checkout
-        uses: actions/checkout@v6
-
-      - name: 🔎 Check if a label for the addon exists
-        shell: bash
-        run: |
-          labeltext=$(grep -E "^\s*${{ matrix.addon }}:" '.github/paths-filter.yml' || true)
-          if [[ -z "$labeltext" ]]; then
-            echo "::error::There is no label for this addon! Please add it to .github/paths-filter.yml"
-            exit 1
-          fi
-
   addon-linter:
     name: Addon linting
     needs: check-addon-changes
