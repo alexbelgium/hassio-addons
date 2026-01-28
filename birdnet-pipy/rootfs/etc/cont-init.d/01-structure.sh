@@ -18,7 +18,6 @@ LEGACY1="/config/birdnet-pipy/data"
 LEGACY2="/data"
 
 mkdir -p "${DATA_LOCATION}"
-mkdir -p "${DATA_LOCATION}/config" "${DATA_LOCATION}/clips" "${DATA_LOCATION}/logs" "${DATA_LOCATION}/cache" || true
 
 if [ -z "$(ls -A "${DATA_LOCATION}" 2>/dev/null || true)" ]; then
   if [ -d "${LEGACY1}" ] && [ -n "$(ls -A "${LEGACY1}" 2>/dev/null || true)" ]; then
@@ -29,6 +28,8 @@ if [ -z "$(ls -A "${DATA_LOCATION}" 2>/dev/null || true)" ]; then
     cp -a "${LEGACY2}/." "${DATA_LOCATION}/" || true
   fi
 fi
+
+mkdir -p "${DATA_LOCATION}/config" "${DATA_LOCATION}/clips" "${DATA_LOCATION}/logs" "${DATA_LOCATION}/cache" || true
 
 rm -rf /app/data
 ln -s "${DATA_LOCATION}" /app/data
