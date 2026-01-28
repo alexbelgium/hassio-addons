@@ -126,6 +126,7 @@ options:
   PGID: 0
   PUID: 0
   claim: Get_from_https://www.plex.tv/claim
+  data_location: /share/plex
 ports:
   1900/udp: 1900
   3005/tcp: 3005
@@ -165,6 +166,7 @@ schema:
   cifsusername: str?
   claim: str
   clear_codecs_folder: bool?
+  data_location: str
   localdisks: str?
   networkdisks: str?
   skip_permissions_check: bool?
@@ -173,6 +175,6 @@ slug: plex_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/plex
 usb: true
-version: "1.42.2.10156-f737b826c-ls289"
+version: "1.42.2.10156-f737b826c-ls289-1"
 video: true
 webui: "[PROTO:ssl]://[HOST]:[PORT:32400]/web"
