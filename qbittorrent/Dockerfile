@@ -126,7 +126,7 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 # 4 Entrypoint #
 ################
 
-RUN chmod +x /usr/local/bin/* /usr/local/sbin/*
+RUN chmod +x /usr/local/sbin/*
 
 # Add entrypoint
 ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
