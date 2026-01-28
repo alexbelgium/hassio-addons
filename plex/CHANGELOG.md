@@ -1,5 +1,6 @@
 
 ## 1.42.2.10156-f737b826c-ls289-1 (2026-01-30)
+- PLEASE BACKUP
 - Add configurable data_location for Plex storage (default /share/plex) with migration support when the target folder is empty.
 
 ## 1.42.2.10156-f737b826c-ls289 (2026-01-21)
