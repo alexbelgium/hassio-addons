@@ -71,13 +71,9 @@ ENV PACKAGES="python3 python3-pip python3-venv build-essential ffmpeg sox libpul
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
 RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.sh
 
-RUN mkdir -p /opt/birdnet-pipy \
-    && curl -fsSL "https://codeload.github.com/Suncuss/BirdNET-PiPy/tar.gz/refs/heads/${BIRDNET_PIPY_VERSION}" \
-        | tar -xz -C /opt/birdnet-pipy --strip-components=1
-
-RUN mkdir -p /app \
-    && cp -a /opt/birdnet-pipy/backend/. /app/ \
-    && pip install --no-cache-dir -r /app/requirements.txt
+RUN mkdir -p /app
+COPY --from=frontend-builder /src/backend/ /app/
+RUN pip install --no-cache-dir --extra-index-url https://www.piwheels.org/simple -r /app/requirements.txt
 
 # Patch service hostnames for single-container usage
 RUN sed -i \
@@ -85,7 +81,8 @@ RUN sed -i \
     -e "s/BIRDNET_HOST = 'model-server'/BIRDNET_HOST = '127.0.0.1'/" \
     /app/config/settings.py
 
-RUN install -m 755 /opt/birdnet-pipy/deployment/audio/scripts/start-icecast.sh /usr/local/bin/start-icecast.sh
+COPY --from=frontend-builder /src/deployment/audio/scripts/start-icecast.sh /usr/local/bin/start-icecast.sh
+RUN chmod 755 /usr/local/bin/start-icecast.sh
 
 COPY --from=frontend-builder /src/frontend/dist /usr/share/nginx/html
 
