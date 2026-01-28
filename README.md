@@ -56,7 +56,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 ### Number of addons
 
-- In the repository : 120
+- In the repository : 121
 - Installed : 69094
 
 ### Top 3
@@ -120,6 +120,14 @@ If you want to do add the repository manually, please follow the procedure highl
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbinance-trading-bot%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbinance-trading-bot%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
+
+&#10003; ![image](https://api.iconify.design/mdi/bird.svg) [BirdNET-PiPy](birdnet-pipy/) : BirdNET-PiPy bird detection with a modern web dashboard
+
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbirdnet-pipy%2Fconfig.yaml)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fbirdnet-pipy%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 ![ingress][ingress-badge]
