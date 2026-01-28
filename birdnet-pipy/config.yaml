@@ -1,0 +1,33 @@
+name: BirdNET-PiPy
+slug: birdnet-pipy
+description: BirdNET-PiPy bird detection with a modern web dashboard
+version: 0.1.0
+url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pipy
+arch:
+  - aarch64
+  - amd64
+ingress: true
+ingress_entry: /
+ingress_stream: true
+panel_icon: mdi:bird
+init: false
+map:
+  - addon_config:rw
+ports:
+  8099/tcp: 8099
+ports_description:
+  8099/tcp: Web UI
+options:
+  TZ: Etc/UTC
+  ICECAST_PASSWORD: ""
+  STREAM_BITRATE: 320k
+  env_vars: []
+schema:
+  TZ: str?
+  ICECAST_PASSWORD: str?
+  STREAM_BITRATE: str?
+  env_vars:
+    - name: match(^[A-Za-z0-9_]+$)
+      value: str?
+audio: true
+image: ghcr.io/alexbelgium/birdnet-pipy-{arch}
