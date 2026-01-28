@@ -11,8 +11,10 @@ ingress_entry: /
 ingress_stream: true
 panel_icon: mdi:bird
 init: false
+share: true
 map:
   - addon_config:rw
+  - data:rw
 ports:
   8099/tcp: 8099
 ports_description:
@@ -21,11 +23,17 @@ options:
   TZ: Etc/UTC
   ICECAST_PASSWORD: ""
   STREAM_BITRATE: 320k
+  RECORDING_MODE: "rtsp"
+  RTSP_URL: ""
+  data_location: /config/data
   env_vars: []
 schema:
   TZ: str?
   ICECAST_PASSWORD: str?
   STREAM_BITRATE: str?
+  RECORDING_MODE: list(pulseaudio|http_stream|rtsp)
+  RTSP_URL: str?
+  data_location: str
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
       value: str?

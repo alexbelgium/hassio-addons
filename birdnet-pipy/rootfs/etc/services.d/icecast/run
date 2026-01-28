@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+set -euo pipefail
+export PULSE_SERVER=unix:/run/pulse/native
+exec /usr/local/bin/start-icecast.sh
