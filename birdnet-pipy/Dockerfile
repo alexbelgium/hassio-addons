@@ -50,7 +50,7 @@ USER root
 
 # Copy local files
 COPY rootfs/ /
-RUN find . -type f \( -name "*.sh" -o -name "run" \) -print -exec chmod +x {} \;
+RUN find /etc -type f \( -name "*.sh" -o -path "*/services.d/*/run" \) -exec chmod +x {} \;
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005

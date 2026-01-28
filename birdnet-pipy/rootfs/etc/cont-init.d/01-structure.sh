@@ -1,24 +1,36 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-set -e
+set -euo pipefail
 
-DATA_ROOT="/config/birdnet-pipy"
-DATA_DIR="${DATA_ROOT}/data"
+DEFAULT_LOCATION="/config/data"
+DATA_LOCATION="$(bashio::config 'data_location' || true)"
+DATA_LOCATION="${DATA_LOCATION:-$DEFAULT_LOCATION}"
 
-mkdir -p "${DATA_DIR}"
+case "${DATA_LOCATION}" in
+  /config/*|/share/*|/data/*) ;;
+  *)
+    bashio::log.warning "Invalid data_location '${DATA_LOCATION}', falling back to ${DEFAULT_LOCATION}"
+    DATA_LOCATION="${DEFAULT_LOCATION}"
+    ;;
+esac
 
-if [ -e /app/data ] && [ ! -L /app/data ]; then
-    rm -rf /app/data
+LEGACY1="/config/birdnet-pipy/data"
+LEGACY2="/data"
+
+mkdir -p "${DATA_LOCATION}"
+mkdir -p "${DATA_LOCATION}/config" "${DATA_LOCATION}/clips" "${DATA_LOCATION}/logs" "${DATA_LOCATION}/cache" || true
+
+if [ -z "$(ls -A "${DATA_LOCATION}" 2>/dev/null || true)" ]; then
+  if [ -d "${LEGACY1}" ] && [ -n "$(ls -A "${LEGACY1}" 2>/dev/null || true)" ]; then
+    bashio::log.notice "Migrating legacy data from ${LEGACY1} to ${DATA_LOCATION}"
+    cp -a "${LEGACY1}/." "${DATA_LOCATION}/" || true
+  elif [ -d "${LEGACY2}" ] && [ "${LEGACY2}" != "${DATA_LOCATION}" ] && [ -n "$(ls -A "${LEGACY2}" 2>/dev/null || true)" ]; then
+    bashio::log.notice "Migrating legacy data from ${LEGACY2} to ${DATA_LOCATION}"
+    cp -a "${LEGACY2}/." "${DATA_LOCATION}/" || true
+  fi
 fi
 
-if [ ! -L /app/data ]; then
-    ln -s "${DATA_DIR}" /app/data
-fi
+rm -rf /app/data
+ln -s "${DATA_LOCATION}" /app/data
 
-mkdir -p \
-    /app/data/config \
-    /app/data/db \
-    /app/data/audio/recordings \
-    /app/data/audio/extracted_songs \
-    /app/data/spectrograms \
-    /app/data/flags
+bashio::log.notice "Data location set to: ${DATA_LOCATION}"
