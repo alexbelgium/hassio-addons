@@ -57,6 +57,7 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 # Copy local files
 COPY rootfs/ /
 RUN find /etc -type f \( -name "*.sh" -o -path "*/services.d/*/run" \) -exec chmod +x {} \;
+COPY --from=frontend-builder /src/frontend/nginx.conf /etc/nginx/servers/nginx.conf
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
