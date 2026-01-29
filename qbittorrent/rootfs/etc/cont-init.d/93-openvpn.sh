@@ -68,7 +68,7 @@ fi
 
 interface_name="$(sed -n "/^dev tun/p" "${openvpn_config}" | awk -F' ' '{print $2}')"
 if [[ -z "${interface_name}" ]]; then
-    bashio::exit.nok "OpenVPN configuration '/config/openvpn/${openvpn_config}' miss device directive."
+    bashio::exit.nok "OpenVPN configuration '${openvpn_config}' misses device directive."
 elif [[ ${interface_name} = "tun" ]]; then
     interface_name='tun0'
 elif [[ ${interface_name} = "tap" ]]; then
