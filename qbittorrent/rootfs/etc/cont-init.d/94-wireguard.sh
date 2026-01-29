@@ -8,7 +8,7 @@ declare wireguard_config=""
 declare wireguard_runtime_config=""
 declare interface_name=""
 
-if bashio::file_exists "${WIREGUARD_STATE_DIR}"; then
+if bashio::fs.directory_exists "${WIREGUARD_STATE_DIR}"; then
     bashio::log.warning "Previous WireGuard state directory found, cleaning up."
     rm -Rf "${WIREGUARD_STATE_DIR}"
 fi

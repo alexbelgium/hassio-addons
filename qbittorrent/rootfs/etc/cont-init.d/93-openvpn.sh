@@ -10,7 +10,7 @@ declare interface_name=""
 declare openvpn_username
 declare openvpn_password
 
-if bashio::file_exists "${OPENVPN_STATE_DIR}"; then
+if bashio::fs.directory_exists "${OPENVPN_STATE_DIR}"; then
     bashio::log.warning "Previous OpenVPN state directory found, cleaning up."
     rm -Rf "${OPENVPN_STATE_DIR}"
 fi
