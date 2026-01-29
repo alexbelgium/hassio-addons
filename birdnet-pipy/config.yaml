@@ -54,7 +54,7 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 description: BirdNET-PiPy bird detection with a modern web dashboard
-version: "0.1"
+version: 0.1
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pipy
 arch:
   - aarch64
