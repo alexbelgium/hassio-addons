@@ -57,8 +57,8 @@ devices:
   - /dev/nvme1
   - /dev/nvme2
 environment:
-  - PUID: "0"
-  - PGID: "0"
+  PGID: "0"
+  PUID: "0"
 image: ghcr.io/alexbelgium/birdnet-pipy-{arch}
 ingress: true
 ingress_stream: true
