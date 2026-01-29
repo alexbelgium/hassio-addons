@@ -84,6 +84,7 @@ RUN python3 -m venv "${VIRTUAL_ENV}"
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 RUN pip install --no-cache-dir --extra-index-url https://www.piwheels.org/simple -r /app/requirements.txt
 
+# Add frontend nginx
 ADD "https://raw.githubusercontent.com/Suncuss/BirdNET-PiPy/refs/heads/main/frontend/nginx.conf" "/etc/nginx/servers/nginx.conf"
 
 # Patch service hostnames for single-container usage
