@@ -236,7 +236,7 @@ for files in "/etc/services.d" "/etc/cont-init.d"; do
         BASHIO_TAG="$(curl -f -L -s -S "https://api.github.com/repos/hassio-addons/bashio/releases/${BASHIO_VERSION}" | awk -F '\"' '/tag_name/{print $4; exit}')"
         curl -f -L -s -S "https://github.com/hassio-addons/bashio/archive/${BASHIO_TAG}.tar.gz" | tar -xzf - --strip 1 -C /tmp/bashio
         mv /tmp/bashio/lib /usr/lib/bashio
-        ln -sf /usr/lib/bashio/bashio /usr/bin/bashio.real
+        ln -s /usr/lib/bashio/bashio /usr/bin/bashio
         rm -rf /tmp/bashio
     fi
 
