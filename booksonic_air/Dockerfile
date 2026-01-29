@@ -75,6 +75,12 @@ ENV S6_STAGE2_HOOK=/ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_entrypoint.sh" "/ha_entrypoint.sh"
 RUN chmod 777 /ha_entrypoint.sh
 
+# Install bashio
+ENV PATH="/usr/local/bin:${PATH}"
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/usr/local/lib/bashio-standalone.sh"
+RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
+ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-router.sh" "/usr/local/bin/bashio"
+RUN chmod 0755 /usr/local/bin/bashio
 
 #
 #WORKDIR /
