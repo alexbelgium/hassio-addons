@@ -56,6 +56,9 @@ devices:
   - /dev/nvme0
   - /dev/nvme1
   - /dev/nvme2
+environment:
+  - PUID: "0"
+  - PGID: "0"
 image: ghcr.io/alexbelgium/birdnet-pipy-{arch}
 ingress: true
 ingress_stream: true
@@ -98,4 +101,4 @@ schema:
   ssl: bool?
 slug: birdnet-pipy
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pipy
-version: "0.6.2"
+version: "0.6.3"
