@@ -68,11 +68,10 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 RUN chmod 777 /ha_entrypoint.sh
 
 # Install bashio
-ENV PATH="/usr/bin:${PATH}"
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/usr/local/lib/bashio-standalone.sh"
-RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-router.sh" "/usr/bin/bashio"
-RUN chmod 0755 /usr/bin/bashio
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/usr/local/lib/bashio-standalone.sh"
+#RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-router.sh" "/usr/bin/bashio"
+#RUN chmod 0755 /usr/bin/bashio
 
 # Add custom scripts
 RUN sed -i "2a source /ha_entrypoint.sh" /sbin/docker-entrypoint.sh && \

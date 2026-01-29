@@ -79,11 +79,10 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 777 /ha_entrypoint.sh
 
 # Install bashio
-ENV PATH="/usr/bin:${PATH}"
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/usr/local/lib/bashio-standalone.sh"
-RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
-ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-router.sh" "/usr/bin/bashio"
-RUN chmod 0755 /usr/bin/bashio
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/usr/local/lib/bashio-standalone.sh"
+#RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
+#ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-router.sh" "/usr/bin/bashio"
+#RUN chmod 0755 /usr/bin/bashio
 
 RUN \ sed -i "s|postgresql-16|postgresql-15|g" /etc/s6-overlay/s6-rc.d/init-test-run/run
 
