@@ -10,7 +10,7 @@
 ## Access
 
 - **Ingress:** Use the Home Assistant sidebar entry.
-- **Direct:** `http://<host>:8099`
+- **Direct:** `http://<host>:8011` (or the port you configure)
 
 ## Options
 
