@@ -73,6 +73,9 @@ RUN chmod 744 /ha_autoapps.sh && /ha_autoapps.sh "$PACKAGES" && rm /ha_autoapps.
 
 RUN mkdir -p /app
 COPY --from=frontend-builder /src/backend/ /app/
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv "${VIRTUAL_ENV}"
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 RUN pip install --no-cache-dir --extra-index-url https://www.piwheels.org/simple -r /app/requirements.txt
 
 # Patch service hostnames for single-container usage

@@ -7,11 +7,9 @@ arch:
   - aarch64
   - amd64
 ingress: true
-ingress_entry: /
 ingress_stream: true
 panel_icon: mdi:bird
 init: false
-share: true
 map:
   - addon_config:rw
   - data:rw
