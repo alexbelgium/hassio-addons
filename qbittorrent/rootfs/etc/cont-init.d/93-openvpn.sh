@@ -47,7 +47,7 @@ if bashio::config.has_value 'openvpn_config'; then
     openvpn_config="${openvpn_config##*/}"
     if [[ -z "${openvpn_config}" ]]; then
         bashio::log.info 'openvpn_config option left empty. Attempting automatic selection.'
-         mapfile -t configs < <(find /config/openvpn -maxdepth 1 -type f -name '*.conf' -o -name '*.ovpn' -print)
+         mapfile -t configs < <(find /config/openvpn -maxdepth 1 \( -type f -name '*.conf' -o -name '*.ovpn' \) -print)
         if [ "${#configs[@]}" -eq 0 ]; then
             bashio::exit.nok 'OpenVPN is enabled but no .conf or .ovpn file was found in /config/openvpn.'
         elif [ "${#configs[@]}" -eq 1 ]; then
