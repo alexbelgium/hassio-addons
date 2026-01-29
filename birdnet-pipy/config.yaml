@@ -1,7 +1,7 @@
 name: BirdNET-PiPy
 slug: birdnet-pipy
 description: BirdNET-PiPy bird detection with a modern web dashboard
-version: 0.1.0
+version: 0.1
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pipy
 arch:
   - aarch64
