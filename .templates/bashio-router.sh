@@ -2,22 +2,14 @@
 set -euo pipefail
 
 REAL_BASHIO="/usr/bin/bashio.real"
-if [ -x "/usr/bin/bashio" ] && [ ! -x "$REAL_BASHIO" ]; then
-  REAL_BASHIO="/usr/bin/bashio"
-fi
 
 # ---- Supervisor detection ----
 
-if [ -x "$REAL_BASHIO" ]; then
-  # Fast HA detection (s6)
-  if [ -S /run/s6/services/supervisor ]; then
-    exec "$REAL_BASHIO" "$@"
-  fi
-
-  # Fallback ping detection (DNS/API)
-  if "$REAL_BASHIO" supervisor ping >/dev/null 2>&1; then
-    exec "$REAL_BASHIO" "$@"
-  fi
+# Fast HA detection (s6)
+if [ -S /run/s6/services/supervisor ]; then
+  exec "$REAL_BASHIO" "$@"
+elif "$REAL_BASHIO" supervisor ping >/dev/null 2>&1; then
+  exec "$REAL_BASHIO" "$@"
 fi
 
 # ---- Standalone fallback ----
