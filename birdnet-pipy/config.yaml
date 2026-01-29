@@ -75,9 +75,9 @@ options:
   data_location: /config/data
 panel_icon: mdi:bird
 ports:
-  8099/tcp: 8099
+  80/tcp: 8011
 ports_description:
-  8099/tcp: Web UI
+  80/tcp: Web UI
 schema:
   env_vars:
     - name: match(^[A-Za-z0-9_]+$)
@@ -98,4 +98,4 @@ schema:
   ssl: bool?
 slug: birdnet-pipy
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pipy
-version: '0.3'
+version: '0.4'
