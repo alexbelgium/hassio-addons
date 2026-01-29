@@ -36,6 +36,7 @@ RUN \
     && sed -i 's|papermerge/confi|papermerge/config|g' /etc/cont-init.d/*
 
 # Global LSIO modifications
+ENV LSIO_NON_ROOT_USER=1
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh

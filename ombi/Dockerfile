@@ -29,6 +29,7 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=1 \
     S6_SERVICES_GRACETIME=0
 
 # Global LSIO modifications
+ENV LSIO_NON_ROOT_USER=1
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config/addons_config/ombi"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
