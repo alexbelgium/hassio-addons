@@ -14,12 +14,19 @@ ingress_interface="$(bashio::addon.ip_address)"
 ingress_entry="$(bashio::addon.ingress_entry)"
 ingress_entry_modified="$(echo "$ingress_entry" | sed 's/[@_!#$%^&*()<>?/\|}{~:]//g')"
 
-sed -i "s/%%port%%/${ingress_port}/g" /etc/nginx/servers/ingress.conf
-sed -i "s/%%interface%%/${ingress_interface}/g" /etc/nginx/servers/ingress.conf
-sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/nginx/servers/ingress.conf
-sed -i "s#%%ingress_entry_modified%%#/${ingress_entry_modified}#g" /etc/nginx/servers/ingress.conf
-sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/nginx/servers/nginx.conf
-sed -i "s#%%ingress_entry_modified%%#/${ingress_entry_modified}#g" /etc/nginx/servers/nginx.conf
+sed -i \
+    -e "s|proxy_pass http://api|proxy_pass http://127.0.0.1|g" \
+    -e "s|proxy_pass http://icecast|proxy_pass http://127.0.0.1|g" \
+    /etc/nginx/servers/nginx.conf
+
+cp /etc/nginx/servers/nginx.conf /etc/nginx/servers/ingress.conf
+sed -i \
+    -e "s|listen 80;|listen ${ingress_interface}:${ingress_port} default_server;|g" \
+    -e "/index index.html;/a\\    include /etc/nginx/includes/ingress_params.conf;" \
+    /etc/nginx/servers/ingress.conf
+
+sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/nginx/includes/ingress_params.conf
+sed -i "s#%%ingress_entry_modified%%#/${ingress_entry_modified}#g" /etc/nginx/includes/ingress_params.conf
 
 # Set DNS resolver for internal requests
 sed -i "s/%%dns_host%%/127.0.0.11/g" /etc/nginx/includes/resolver.conf
