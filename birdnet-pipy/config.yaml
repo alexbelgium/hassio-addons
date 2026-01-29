@@ -12,7 +12,8 @@ panel_icon: mdi:bird
 init: false
 map:
   - addon_config:rw
-  - data:rw
+  - ssl:rw
+  - share:rw
 ports:
   8099/tcp: 8099
 ports_description:
