@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 set -euo pipefail
-exec nginx -g "daemon off;"
+nginx
