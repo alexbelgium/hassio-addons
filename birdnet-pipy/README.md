@@ -9,7 +9,7 @@ BirdNET-PiPy is a self-hosted system that uses the BirdNET deep-learning model t
 
 ## Configuration
 
-Install, then start the add-on a first time. Open the Web UI from Home Assistant (Ingress) or directly at `http://<host>:8099`.
+Install, then start the add-on a first time. Open the Web UI from Home Assistant (Ingress) or directly at `http://<host>:8011` (or the port you configure).
 Configure location, audio source, and other settings in the BirdNET-PiPy UI after the container starts.
 
 Options can be configured through three ways:
