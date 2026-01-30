@@ -2,16 +2,6 @@
 # shellcheck shell=bash
 set -euo pipefail
 
-######################################
-# Accept running without supervisor  #
-######################################
-
-if ! bashio::supervisor.ping 2> /dev/null; then
-    bashio::log.warning "Using standalone mode to run bashio commands without HA supervisor"
-    mv /usr/local/lib/bashio-standalone.sh /usr/bin/bashio
-    chmod +x /usr/bin/bashio
-fi
-
 ##########################################
 # Detect if this is PID1 (main process)  #
 ##########################################
