@@ -175,6 +175,6 @@ slug: plex_nas
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/plex
 usb: true
-version: "1.42.2.10156-f737b826c-ls289-2"
+version: "1.43.0.10467-2b1ba6e69-ls290"
 video: true
 webui: "[PROTO:ssl]://[HOST]:[PORT:32400]/web"
