@@ -12,6 +12,13 @@ if ! bashio::supervisor.ping 2>/dev/null; then
     bashio::log.blue "Version : ${BUILD_VERSION:-1.0}"
     bashio::log.blue "Config source: ENV + /data/options.json"
     bashio::log.blue '-----------------------------------------------------------'
+    source /usr/local/lib/bashio-standalone.sh
+    cp -rf /usr/local/lib/bashio-standalone.sh /usr/bin/bashio
+    grep -rlZ "^#!.*bashio" /etc |
+    while IFS= read -r -d '' f; do
+        grep -qF "source /usr/local/lib/bashio-standalone.sh" "$f" && continue
+        sed -i '1a source /usr/local/lib/bashio-standalone.sh' "$f"
+    done
 else
     bashio::log.blue '-----------------------------------------------------------'
     bashio::log.blue " Add-on: $(bashio::addon.name)"
