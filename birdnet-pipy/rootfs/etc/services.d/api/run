@@ -2,6 +2,7 @@
 # shellcheck shell=bash
 set -euo pipefail
 export PYTHONPATH=/app
+export API_PORT="${API_PORT:-5002}"
 bashio::net.wait_for 5001 127.0.0.1 300
 cd /app
 exec python3 -m core.api

@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
-set -e
+set -euo pipefail
 
 #################
 # NGINX SETTING #
@@ -9,9 +9,14 @@ set -e
 declare ingress_interface
 declare ingress_port
 
-ingress_port="$(bashio::addon.ingress_port)"
-ingress_interface="$(bashio::addon.ip_address)"
-ingress_entry="$(bashio::addon.ingress_entry)"
+if ! bashio::supervisor.ping 2>/dev/null; then
+    bashio::log.warning "Supervisor unavailable; skipping ingress configuration."
+    exit 0
+fi
+
+ingress_port="$(bashio::addon.ingress_port || true)"
+ingress_interface="$(bashio::addon.ip_address || true)"
+ingress_entry="$(bashio::addon.ingress_entry || true)"
 ingress_entry_modified="$(echo "$ingress_entry" | sed 's/[@_!#$%^&*()<>?/\|}{~:]//g')"
 
 sed -i \

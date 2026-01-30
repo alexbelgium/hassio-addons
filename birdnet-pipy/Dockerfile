@@ -92,6 +92,7 @@ RUN sed -i \
     /app/config/settings.py
 
 COPY --from=frontend-builder /src/deployment/audio/scripts/start-icecast.sh /usr/local/bin/start-icecast.sh
+COPY rootfs/usr/local/bin/start-icecast.sh /usr/local/bin/start-icecast.sh
 RUN chmod 755 /usr/local/bin/start-icecast.sh
 
 COPY --from=frontend-builder /src/frontend/dist /usr/share/nginx/html

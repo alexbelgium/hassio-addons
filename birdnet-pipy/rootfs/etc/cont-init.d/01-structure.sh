@@ -34,4 +34,18 @@ mkdir -p "${DATA_LOCATION}/config" "${DATA_LOCATION}/clips" "${DATA_LOCATION}/lo
 rm -rf /app/data
 ln -s "${DATA_LOCATION}" /app/data
 
+if [ "${DATA_LOCATION}" != "/data" ]; then
+  if [ -L /data ]; then
+    rm -f /data
+  fi
+  if [ ! -e /data ]; then
+    ln -s "${DATA_LOCATION}" /data
+  elif [ -d /data ] && [ -z "$(ls -A /data 2>/dev/null || true)" ]; then
+    rmdir /data || true
+    ln -s "${DATA_LOCATION}" /data
+  else
+    bashio::log.warning "/data exists and is not empty; leaving it unchanged."
+  fi
+fi
+
 bashio::log.notice "Data location set to: ${DATA_LOCATION}"

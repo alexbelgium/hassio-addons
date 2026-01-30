@@ -2,5 +2,6 @@
 # shellcheck shell=bash
 set -euo pipefail
 export PYTHONPATH=/app
+export BIRDNET_SERVICE_PORT="${BIRDNET_SERVICE_PORT:-5001}"
 cd /app
 exec python3 -m model_service.inference_server

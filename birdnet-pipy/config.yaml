@@ -65,6 +65,7 @@ ingress_stream: true
 init: false
 map:
   - addon_config:rw
+  - data:rw
   - ssl:rw
   - share:rw
 name: BirdNET-PiPy
