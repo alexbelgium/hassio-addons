@@ -23,6 +23,7 @@ cp /etc/nginx/servers/nginx.conf /etc/nginx/servers/ingress.conf
 sed -i \
     -e "s|listen 80;|listen ${ingress_interface}:${ingress_port} default_server;|g" \
     -e "/index index.html;/a\\    include /etc/nginx/includes/ingress_params.conf;" \
+    -e 's|^[[:space:]]*add_header X|#&|g' \
     /etc/nginx/servers/ingress.conf
 
 sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/nginx/includes/ingress_params.conf
