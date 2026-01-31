@@ -152,6 +152,11 @@ echo "Selected shebang: #!$shebang"
 # Starting scripts #
 ####################
 
+if [ -f /docker-mods ]; then
+  echo "Running docker mods"
+  /docker-mods
+fi
+
 run_one_script() {
   local script="$1"
 
@@ -190,11 +195,6 @@ if [ -d /etc/cont-init.d ]; then
 fi
 
 if $PID1; then
-  if [ -f /docker-mods ]; then
-    echo "Running docker mods"
-    /docker-mods
-  fi
-
   shopt -s nullglob
   for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run; do
     [ -f "$runfile" ] || continue
@@ -247,7 +247,4 @@ else
   echo " "
   echo -e "\033[0;32mStarting the upstream container\033[0m"
   echo " "
-  if [ -f /docker-mods ]; then
-    exec /docker-mods
-  fi
 fi
