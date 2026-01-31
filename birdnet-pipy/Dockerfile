@@ -27,7 +27,7 @@ RUN mkdir -p /src \
 
 WORKDIR /src/frontend
 RUN npm ci --prefer-offline
-RUN npm run build -- --base=/birdnet/
+RUN npm run build
 
 FROM ${BUILD_FROM}
 
