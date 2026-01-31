@@ -48,7 +48,7 @@ RUN \
 RUN sed -i '/no-first-run/a\  --remote-debugging-address=0.0.0.0 --remote-debugging-port=9221 \\' /usr/bin/wrapped-*
 
 # Global LSIO modifications
-ENV LSIO_NON_ROOT_USER=1
+ENV LSIO_NON_ROOT_USER=0
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
