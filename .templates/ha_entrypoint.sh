@@ -190,6 +190,11 @@ if [ -d /etc/cont-init.d ]; then
 fi
 
 if $PID1; then
+  if [ -f /docker-mods ]; then
+    echo "Running docker mods"
+    /docker-mods
+  fi
+
   shopt -s nullglob
   for runfile in /etc/services.d/*/run /etc/s6-overlay/s6-rc.d/*/run; do
     [ -f "$runfile" ] || continue
