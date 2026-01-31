@@ -37,7 +37,7 @@ RUN \
     && curl -f -L -s -S "https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager/master/config/config.yml.template" -o /templates/config.yml
 
 # Global LSIO modifications
-ENV LSIO_NON_ROOT_USER=1
+ENV LSIO_NON_ROOT_USER=0
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config/addons_config/plex-meta-manager"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh

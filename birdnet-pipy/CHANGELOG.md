@@ -1,3 +1,5 @@
+## 0.3.2-2 (31-01-2026)
+- Minor bugs fixed
 
 ## 0.3.2-3 (2026-01-30)
 - Build frontend with /birdnet/ base path and serve under /birdnet/ for ingress compatibility.
