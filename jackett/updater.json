@@ -1,8 +1,8 @@
 {
-  "last_update": "2026-01-30",
+  "last_update": "2026-01-31",
   "repository": "alexbelgium/hassio-addons",
   "slug": "jackett",
   "source": "github",
   "upstream_repo": "linuxserver/docker-jackett",
-  "upstream_version": "0.24.988"
+  "upstream_version": "0.24.993"
 }
