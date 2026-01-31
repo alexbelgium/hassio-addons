@@ -1,3 +1,6 @@
+## 2.5.2-4 (2026-02-02)
+- Minor bugs fixed
+
 ## 2.5.2-3 (31-01-2026)
 - Minor bugs fixed
 
