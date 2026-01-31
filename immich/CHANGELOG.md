@@ -1,4 +1,7 @@
 
+## 2.5.2-3 (2026-02-02)
+- Minor bugs fixed
+
 ## 2.5.2-2 (2026-02-01)
 - Ensure docker mods (Redis) run by keeping the container in root mode.
 
