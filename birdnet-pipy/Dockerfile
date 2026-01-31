@@ -45,6 +45,7 @@ ENV S6_CMD_WAIT_FOR_SERVICES=1 \
 USER root
 
 # Global LSIO modifications
+ENV LSIO_NON_ROOT_USER=1
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_lsio.sh" "/ha_lsio.sh"
 ARG CONFIGLOCATION="/config"
 RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGLOCATION"; fi && rm /ha_lsio.sh
@@ -56,7 +57,7 @@ RUN chmod 744 /ha_lsio.sh && if grep -qr "lsio" /etc; then /ha_lsio.sh "$CONFIGL
 # Copy local files
 COPY rootfs/ /
 RUN find /etc -type f \( -name "*.sh" -o -path "*/services.d/*/run" \) -exec chmod +x {} \;
-COPY rootfs/etc/nginx/servers/nginx.conf /etc/nginx/servers/nginx.conf
+COPY --from=frontend-builder /src/frontend/nginx.conf /etc/nginx/servers/nginx.conf
 
 # Uses /bin for compatibility purposes
 # hadolint ignore=DL4005
@@ -93,7 +94,7 @@ RUN sed -i \
 COPY --from=frontend-builder /src/deployment/audio/scripts/start-icecast.sh /usr/local/bin/start-icecast.sh
 RUN chown icecast2 /usr/local/bin/start-icecast.sh && chmod 755 /usr/local/bin/start-icecast.sh
 
-COPY --from=frontend-builder /src/frontend/dist /usr/share/nginx/html/birdnet
+COPY --from=frontend-builder /src/frontend/dist /usr/share/nginx/html
 
 ################
 # 4 Entrypoint #
