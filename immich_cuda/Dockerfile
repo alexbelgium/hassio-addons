@@ -83,7 +83,8 @@ RUN chmod 777 /ha_entrypoint.sh
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/bashio-standalone.sh" "/usr/local/lib/bashio-standalone.sh"
 RUN chmod 0755 /usr/local/lib/bashio-standalone.sh
 
-RUN \ sed -i "s|postgresql-16|postgresql-15|g" /etc/s6-overlay/s6-rc.d/init-test-run/run
+RUN apt-get update && apt-get install -y --no-install-recommends sed \
+    && sed -i "s|postgresql-16|postgresql-15|g" /etc/s6-overlay/s6-rc.d/init-test-run/run
 
 # Install dependencies
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
