@@ -72,7 +72,7 @@ ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templat
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps
-ENV PACKAGES="python3 python3-pip python3-venv build-essential ffmpeg sox libpulse0 icecast2 nginx jq curl"
+ENV PACKAGES="python3 python3-pip python3-venv build-essential ffmpeg sox libpulse0 icecast2 nginx jq curl gosu"
 
 # Automatic apps & bashio
 ADD "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/ha_autoapps.sh" "/ha_autoapps.sh"
