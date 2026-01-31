@@ -2,4 +2,4 @@
 # shellcheck shell=bash
 set -euo pipefail
 export PULSE_SERVER=unix:/run/pulse/native
-exec /usr/local/bin/start-icecast.sh
+gosu icecast2 /usr/local/bin/start-icecast.sh
