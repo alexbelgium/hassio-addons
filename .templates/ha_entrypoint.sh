@@ -1,6 +1,5 @@
 #!/bin/bash
 # shellcheck shell=bash
-set -euo pipefail
 
 ##########################################
 # Detect if this is PID1 (main process)  #
@@ -152,11 +151,6 @@ echo "Selected shebang: #!$shebang"
 # Starting scripts #
 ####################
 
-if [ -f /docker-mods ]; then
-  echo "Running docker mods"
-  /docker-mods
-fi
-
 run_one_script() {
   local script="$1"
 
@@ -247,4 +241,7 @@ else
   echo " "
   echo -e "\033[0;32mStarting the upstream container\033[0m"
   echo " "
+  if [ -f /docker-mods ]; then
+    exec /docker-mods
+  fi
 fi
