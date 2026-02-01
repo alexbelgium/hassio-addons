@@ -1,3 +1,5 @@
+## 2026.02.01 (01-02-2026)
+- Minor bugs fixed
 ## 2026.01.21 (21-01-2026)
 - Fix passwordless terminal
 
