@@ -117,5 +117,5 @@ schema:
 slug: calibre
 udev: true
 url: https://github.com/alexbelgium/hassio-addons/tree/master/calibre
-version: "9.0.0"
+version: "9.1.0"
 video: true
