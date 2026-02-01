@@ -53,5 +53,5 @@ uart: true
 udev: true
 url: https://github.com/alexbelgium/hassio-addons
 usb: true
-version: "2.20.2"
+version: "2.20.3"
 webui: http://[HOST]:[PORT:3000]
