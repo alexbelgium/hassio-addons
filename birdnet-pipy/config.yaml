@@ -60,8 +60,6 @@ environment:
   PGID: "0"
   PUID: "0"
 image: ghcr.io/alexbelgium/birdnet-pipy-{arch}
-ingress: true
-ingress_stream: true
 init: false
 map:
   - addon_config:rw
@@ -102,3 +100,4 @@ schema:
 slug: birdnet-pipy
 url: https://github.com/alexbelgium/hassio-addons/tree/master/birdnet-pipy
 version: "0.3.2-6"
+webui: "[PROTO:ssl]://[HOST]:[PORT:80]"
