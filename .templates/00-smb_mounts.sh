@@ -23,6 +23,7 @@ cleanup_cred() {
 }
 
 test_mount() {
+  local _werr
   MOUNTED=false
   ERROR_MOUNT=false
 
@@ -31,10 +32,21 @@ test_mount() {
   fi
 
   [[ -e "/mnt/$diskname/testaze" ]] && rm -rf "/mnt/$diskname/testaze"
-  mkdir "/mnt/$diskname/testaze" \
-    && touch "/mnt/$diskname/testaze/testaze" \
-    && rm -rf "/mnt/$diskname/testaze" \
+  _werr="$(mktemp /tmp/mount_write_test.XXXXXX)"
+  : >"$_werr" || true
+  mkdir "/mnt/$diskname/testaze" 2>"$_werr" \
+    && touch "/mnt/$diskname/testaze/testaze" 2>>"$_werr" \
+    && rm -rf "/mnt/$diskname/testaze" 2>>"$_werr" \
     || ERROR_MOUNT=true
+
+  # Accept read-only mounts: warn but do not fail
+  if [[ "$ERROR_MOUNT" == "true" ]] && grep -qiE 'read-only file system|EROFS' "$_werr" 2>/dev/null; then
+    bashio::log.warning "Disk is mounted but READ-ONLY (/mnt/$diskname). Write test failed due to read-only filesystem. Continuing."
+    rm -f "$_werr" 2>/dev/null || true
+    MOUNTED=true
+    return 0
+  fi
+  rm -f "$_werr" 2>/dev/null || true
 
   # CIFS-only: noserverino fallback
   if [[ "$ERROR_MOUNT" == "true" && "$FSTYPE" == "cifs" ]]; then
