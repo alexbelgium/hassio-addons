@@ -35,7 +35,7 @@ test_mount() {
   # ---- Write test function ----
   _test_write() {
     local testfile="$mountpoint/.writetest_$$"
-    if : > "$testfile" 2>/dev/null; then
+    if : >"$testfile" 2>/dev/null; then
       rm -f "$testfile"
       return 0
     else
@@ -54,7 +54,7 @@ test_mount() {
     echo "... retrying mount with noserverino"
     MOUNTOPTIONS="${MOUNTOPTIONS},noserverino"
 
-    umount "$mountpoint" 2>/dev/null
+    umount "$mountpoint" 2>/dev/null || true
     if mount_drive "$MOUNTOPTIONS"; then
       # retest with new options
       if _test_write; then
@@ -93,6 +93,7 @@ retry_cifs_with_vers_ladder_on_einval() {
   local err
   err="$(cat "$ERRORCODE_FILE" 2>/dev/null || true)"
 
+  # Only step down dialects on EINVAL
   if ! echo "$err" | grep -q "mount error(22)"; then
     return 0
   fi
@@ -101,6 +102,7 @@ retry_cifs_with_vers_ladder_on_einval() {
 
   local base_opts try_opts vers
 
+  # Start from current options but remove any existing vers=/sec= (avoid stacking)
   base_opts="$MOUNTOPTIONS"
   base_opts="$(echo "$base_opts" | sed -E 's/,vers=[^,]+//g; s/,sec=[^,]+//g')"
 
@@ -156,7 +158,15 @@ if bashio::config.has_value 'networkdisks'; then
   SECVERS=""
   CHARSET=",iocharset=utf8"
 
-  # Clean data (keeps NFS entries intact)
+  # ----------------------------
+  # Normalize / clean networkdisks
+  # ----------------------------
+
+  # Normalize Windows CRLF and multiline entries (HA UI/YAML can introduce these)
+  MOREDISKS="${MOREDISKS//$'\r'/}"
+  MOREDISKS="${MOREDISKS//$'\n'/,}"
+
+  # Clean data (keeps NFS entries intact): normalize "comma with spaces" to plain commas
   MOREDISKS="$(echo "$MOREDISKS" | sed -E 's/[[:space:]]*,[[:space:]]*/,/g; s/^[[:space:]]+//; s/[[:space:]]+$//')"
 
   # CIFS domain/workgroup
@@ -177,17 +187,17 @@ if bashio::config.has_value 'networkdisks'; then
     PGID=",gid=$(bashio::config 'PGID')"
   fi
 
-  # ----------------------------
-  # FIX: robust comma-splitting
-  # ----------------------------
+  # Split strictly on commas (no word-splitting/globbing)
   IFS=',' read -r -a DISK_LIST <<< "$MOREDISKS"
 
   for disk in "${DISK_LIST[@]}"; do
     CRED_FILE=""
     cleanup_cred
 
-    # FIX: tolerate CRLF / trailing \r
+    # Per-item trim + safety cleanup
     disk="${disk//$'\r'/}"
+    disk="$(echo "$disk" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')"
+    [[ -z "$disk" ]] && continue
 
     disk="$(echo "$disk" | sed 's,/$,,')"
     disk="${disk//"\040"/ }"
