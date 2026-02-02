@@ -91,7 +91,6 @@ options:
   TRANSMISSION_DOWNLOAD_DIR: /share/downloads
   TRANSMISSION_HOME: /config/addons_config/transmission
   TRANSMISSION_INCOMPLETE_DIR: /share/incomplete
-  TRANSMISSION_V3_UPDATE: "true"
   TRANSMISSION_WATCH_DIR: /share/watch_dir
   TRANSMISSION_WEB_UI: flood-for-transmission
   WEBPROXY_ENABLED: "true"
