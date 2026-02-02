@@ -184,11 +184,6 @@ retry_cifs_with_vers_ladder_on_einval() {
 ########################
 
 if bashio::config.has_value 'networkdisks'; then
-  if [[ "$(date +"%Y%m%d")" -lt "20240201" ]]; then
-    bashio::log.warning "------------------------"
-    bashio::log.warning "This is a new code, please report any issues on https://github.com/alexbelgium/hassio-addons"
-    bashio::log.warning "------------------------"
-  fi
 
   echo "Mounting network share(s)..."
 
