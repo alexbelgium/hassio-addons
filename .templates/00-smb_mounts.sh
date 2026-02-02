@@ -23,52 +23,51 @@ cleanup_cred() {
 }
 
 test_mount() {
-  local _werr
   MOUNTED=false
   ERROR_MOUNT=false
+  mountpoint="/mnt/$diskname"
 
-  if ! mountpoint -q "/mnt/$diskname"; then
+  # Not mounted → not an error for this function
+  if ! mountpoint -q "$mountpoint"; then
     return 0
   fi
 
-  [[ -e "/mnt/$diskname/testaze" ]] && rm -rf "/mnt/$diskname/testaze"
-  _werr="$(mktemp /tmp/mount_write_test.XXXXXX)"
-  : >"$_werr" || true
-  mkdir "/mnt/$diskname/testaze" 2>"$_werr" \
-    && touch "/mnt/$diskname/testaze/testaze" 2>>"$_werr" \
-    && rm -rf "/mnt/$diskname/testaze" 2>>"$_werr" \
-    || ERROR_MOUNT=true
+  # ---- Write test function ----
+  _test_write() {
+    local testfile="$mountpoint/.writetest_$$"
+    if : > "$testfile" 2>/dev/null; then
+      rm -f "$testfile"
+      return 0
+    else
+      return 1
+    fi
+  }
 
-  # Accept read-only mounts: warn but do not fail
-  if [[ "$ERROR_MOUNT" == "true" ]] && grep -qiE 'read-only file system|EROFS' "$_werr" 2>/dev/null; then
-    bashio::log.warning "Disk is mounted but READ-ONLY (/mnt/$diskname). Write test failed due to read-only filesystem. Continuing."
-    rm -f "$_werr" 2>/dev/null || true
+  # First write test
+  if _test_write; then
     MOUNTED=true
     return 0
   fi
-  rm -f "$_werr" 2>/dev/null || true
 
-  # CIFS-only: noserverino fallback
-  if [[ "$ERROR_MOUNT" == "true" && "$FSTYPE" == "cifs" ]]; then
-    if [[ "$MOUNTOPTIONS" == *"noserverino"* ]]; then
-      bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check UID/GID for permissions, and if the share is rw"
-      return 0
-    fi
+  # ---- CIFS fallback check ----
+  if [[ "$FSTYPE" == "cifs" && "$MOUNTOPTIONS" != *"noserverino"* ]]; then
+    echo "... retrying mount with noserverino"
     MOUNTOPTIONS="${MOUNTOPTIONS},noserverino"
-    echo "... testing with noserverino"
-    mount_drive "$MOUNTOPTIONS"
-    return 0
+
+    umount "$mountpoint" 2>/dev/null
+    if mount_drive "$MOUNTOPTIONS"; then
+      # retest with new options
+      if _test_write; then
+        MOUNTED=true
+        return 0
+      fi
+    fi
   fi
 
-  # IMPORTANT: do not claim success when mounted but not writable (all FS types)
-  if [[ "$ERROR_MOUNT" == "true" ]]; then
-    MOUNTED=false
-    bashio::log.fatal "Disk is mounted, however unable to write in the shared disk. Please check permissions/export options (rw), and UID/GID mapping."
-    return 0
-  fi
-
-  MOUNTED=true
-  return 0
+  # ---- Final: mounted but not writable ----
+  ERROR_MOUNT=true
+  bashio::log.fatal "Disk mounted, but cannot write. Check permissions/export options and UID/GID mapping."
+  return 1
 }
 
 mount_drive() {
