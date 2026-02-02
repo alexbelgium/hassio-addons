@@ -93,45 +93,6 @@ retry_cifs_with_vers_ladder_on_einval() {
   local err
   err="$(cat "$ERRORCODE_FILE" 2>/dev/null || true)"
 
-  # Only step down dialects on EINVAL
-  if ! echo "$err" | grep -q "mount error(22)"; then
-    return 0
-  fi
-
-  bashio::log.warning "...... EINVAL (22): trying SMB dialect ladder (3.x -> 2.x)."
-
-  local base_opts try_opts vers
-
-  # Start from current options but remove any existing vers=/sec= (avoid stacking)
-  base_opts="$MOUNTOPTIONS"
-  base_opts="$(echo "$base_opts" | sed -E 's/,vers=[^,]+//g; s/,sec=[^,]+//g')"
-
-  for vers in "3.1.1" "3.02" "3.0" "2.1" "2.0"; do
-    if [[ "$MOUNTED" == "false" ]]; then
-      try_opts="${base_opts},vers=${vers}"
-      mount_drive "$try_opts"
-    fi
-  done
-
-  # If still failing with EINVAL, simplify options that sometimes trip older servers/clients
-  if [[ "$MOUNTED" == "false" ]]; then
-    bashio::log.warning "...... still failing after vers ladder; retrying with reduced CIFS options."
-    base_opts="$MOUNTOPTIONS"
-    base_opts="$(echo "$base_opts" | sed -E 's/,vers=[^,]+//g; s/,sec=[^,]+//g')"
-    base_opts="${base_opts//,mfsymlinks/}"
-    base_opts="${base_opts//,nobrl/}"
-    base_opts="$(echo "$base_opts" | sed - differing='')"
-  fi
-}
-
-# Fix: previous line accidentally inserted? Remove.
-retry_cifs_with_vers_ladder_on_einval() {
-  [[ "${FSTYPE:-}" == "cifs" ]] || return 0
-  [[ "${MOUNTED:-false}" == "false" ]] || return 0
-
-  local err
-  err="$(cat "$ERRORCODE_FILE" 2>/dev/null || true)"
-
   if ! echo "$err" | grep -q "mount error(22)"; then
     return 0
   fi
@@ -216,9 +177,17 @@ if bashio::config.has_value 'networkdisks'; then
     PGID=",gid=$(bashio::config 'PGID')"
   fi
 
-  for disk in ${MOREDISKS//,/ }; do
+  # ----------------------------
+  # FIX: robust comma-splitting
+  # ----------------------------
+  IFS=',' read -r -a DISK_LIST <<< "$MOREDISKS"
+
+  for disk in "${DISK_LIST[@]}"; do
     CRED_FILE=""
     cleanup_cred
+
+    # FIX: tolerate CRLF / trailing \r
+    disk="${disk//$'\r'/}"
 
     disk="$(echo "$disk" | sed 's,/$,,')"
     disk="${disk//"\040"/ }"
