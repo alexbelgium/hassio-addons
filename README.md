@@ -876,7 +876,7 @@ If you want to do add the repository manually, please follow the procedure highl
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwhatsapper%2Fconfig.yaml)
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Fwhatsapper%2Fupdater.json)
-![aarch64no][aarch64no-badge]
+![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
 
 &#10003; ![image](https://api.iconify.design/mdi/magnify.svg) [Whoogle Search](whoogle/) : Self-hosted, ad-free, privacy-respecting metasearch engine
