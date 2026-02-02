@@ -196,9 +196,7 @@ if bashio::config.has_value 'networkdisks'; then
   CHARSET=",iocharset=utf8"
 
   # Clean data (keeps NFS entries intact)
-  MOREDISKS=${MOREDISKS// \/\//,\/\/}
-  MOREDISKS=${MOREDISKS//, /,}
-  MOREDISKS=${MOREDISKS// /"\040"}
+  MOREDISKS="$(echo "$MOREDISKS" | sed -E 's/[[:space:]]*,[[:space:]]*/,/g; s/^[[:space:]]+//; s/[[:space:]]+$//')"
 
   # CIFS domain/workgroup
   DOMAINCLIENT=""
