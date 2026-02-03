@@ -72,8 +72,10 @@ _is_ip_address() {
         return 1  # IPv4
     elif [ "$1" != "${1#*:[0-9a-fA-F]}" ]; then
         return 2  # IPv6
+    elif host "$1" >/dev/null 2>&1; then
+        return 3  # resolvable hostname
     else
-        return 0  # Not an IP address
+        return 0  # neither IP nor resolvable hostname
     fi
 }
 
@@ -286,7 +288,12 @@ wireguard() {
 
     if [ "${mode}" = "up" ]; then
         bashio::log.info "Starting WireGuard on interface ${config["Interface"]}..."
-        if _is_ip_address ${config["EndpointHost"]}; then
+        _is_ip_address ${config["EndpointHost"]}
+        local is_ip=$?
+        if [ "$is_ip" -eq 0 ]; then
+            bashio::log.error "WireGuard endpoint ${config["EndpointHost"]} is neither a valid IP address nor a resolvable hostname."
+            bashio::exit.nok 'WireGuard start failed.'
+        elif [ "$is_ip" -eq 3 ]; then
             local -a endpoint_ips=()
             mapfile -d ' ' -t endpoint_ips < <(_resolve_hostname ${config["EndpointHost"]})
             if [ ${#endpoint_ips[@]} -eq 0 ]; then
