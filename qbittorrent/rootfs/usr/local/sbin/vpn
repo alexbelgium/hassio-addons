@@ -31,13 +31,14 @@ _parse_dns() {
     local -a dns_conf=()
     local -a dns_backup_ipv4=("8.8.8.8" "1.1.1.1")
     local -a dns_backup_ipv6=("2001:4860:4860::8888" "2606:4700:4700::1111")
+    local dns_servers=$(bashio::config 'DNS_server')
 
-    mapfile -d ',' -t dns_conf < <(bashio::config 'DNS_server' | tr -d ' ')
+    mapfile -d ',' -t dns_conf < <(echo "${dns_servers}" | tr -d ' ')
     if [ ${config["IPv4Enabled"]} = "true" ]; then
         for dns_ip in "${dns_conf[@]}"; do
-            _is_ip_address "${dns_ip}"
-            local is_ip=$?
-            if [ "${is_ip}" -eq 1 ]; then
+            local result=0
+            _check_host "${dns_ip}" || result=$?
+            if [ "${result}" -eq 1 ]; then
                 dns_servers_ipv4+=("${dns_ip}")
             fi
         done
@@ -48,9 +49,9 @@ _parse_dns() {
     fi
     if [ ${config["IPv6Enabled"]} = "true" ]; then
         for dns_ip in "${dns_conf[@]}"; do
-            _is_ip_address "${dns_ip}"
-            local is_ip=$?
-            if [ "${is_ip}" -eq 2 ]; then
+            local result=0
+            _check_host "${dns_ip}" || result=$?
+            if [ "${result}" -eq 2 ]; then
                 dns_servers_ipv6+=("${dns_ip}")
             fi
         done
@@ -67,13 +68,13 @@ _cmd() {
     eval "${cmd}"
 }
 
-_is_ip_address() {
-    if [ "$1" != "${1#*[0-9].[0-9]}" ]; then
+_check_host() {
+    if ipcalc -c -4 "$1" >/dev/null 2>&1; then
         return 1  # IPv4
-    elif [ "$1" != "${1#*:[0-9a-fA-F]}" ]; then
+    elif ipcalc -c -6 "$1" >/dev/null 2>&1; then
         return 2  # IPv6
     elif getent ahosts "$1" >/dev/null 2>&1; then
-        return 3  # resolvable hostname
+        return 3  # resolvable hostnamee
     else
         return 0  # neither IP nor resolvable hostname
     fi
@@ -133,12 +134,6 @@ _resolve_hostname() {
     fi
 
     echo "${ips[@]}"
-
-    if [ ${#ips[@]} -gt 0 ]; then
-        return 0
-    else
-        return 1
-    fi
 }
 
 _routing_add() {
@@ -210,12 +205,12 @@ _wireguard_up() {
     local -a local_ips=()
     mapfile -d ',' -t local_ips < <(echo "${config["Address"]}" | tr -d ' ')
     for local_ip in ${local_ips[@]}; do
-        _is_ip_address "${local_ip}"
-        local is_ip=$?
-        if [ "${is_ip}" -eq 1 ]; then
+        local result=0
+        _check_host "${local_ip}" || result=$?
+        if [ "${result}" -eq 1 ]; then
             allowed_ips="${allowed_ips},0.0.0.0/0"
             _cmd "ip addr add ${local_ip} dev ${config["Interface"]}" || return 1
-        elif [ "${is_ip}" -eq 2 ]; then
+        elif [ "${result}" -eq 2 ]; then
             allowed_ips="${allowed_ips},::/0"
             _cmd "ip addr add ${local_ip} dev ${config["Interface"]}" || return 1
         else
@@ -290,12 +285,12 @@ wireguard() {
 
     if [ "${mode}" = "up" ]; then
         bashio::log.info "Starting WireGuard on interface ${config["Interface"]}..."
-        _is_ip_address ${config["EndpointHost"]}
-        local is_ip=$?
-        if [ "$is_ip" -eq 0 ]; then
+        local result=0
+        _check_host ${config["EndpointHost"]} || result=$?
+        if [ "${result}" -eq 0 ]; then
             bashio::log.error "WireGuard endpoint ${config["EndpointHost"]} is neither a valid IP address nor a resolvable hostname."
             bashio::exit.nok 'WireGuard start failed.'
-        elif [ "$is_ip" -eq 3 ]; then
+        elif [ "${result}" -eq 3 ]; then
             local -a endpoint_ips=()
             mapfile -d ' ' -t endpoint_ips < <(_resolve_hostname ${config["EndpointHost"]})
             if [ ${#endpoint_ips[@]} -eq 0 ]; then
