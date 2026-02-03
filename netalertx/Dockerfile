@@ -56,7 +56,7 @@ USER 0
 
 # Add rootfs
 COPY rootfs/ /
-RUN find . -type f \( -name "*.sh" -o -name "run" \) -print -exec chmod +x {} \;
+RUN find . -type f \( -name "*.sh" -o -name "run" -o -name "finish"\) -print -exec chmod +x {} \;
 
 # Bring in jq + gosu (and their libs). NO apk in final stage.
 COPY --from=ha_tools /out/ /
