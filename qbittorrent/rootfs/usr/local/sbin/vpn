@@ -352,7 +352,7 @@ _openvpn_up() {
     chmod 755 ${config["PostDownScript"]}
 
     # Start OpenVPN in the background
-    _cmd "/usr/sbin/openvpn
+    _cmd "/usr/sbin/openvpn \
         --config "${config["ConfigFile"]}" \
         --script-security 2 --daemon --log /dev/null \
         --auth-user-pass "${OPENVPN_STATE_DIR}/credentials.conf" \
